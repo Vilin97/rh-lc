@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ZelevinskyJacquet.LSegJacquet
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetMultiplicityNeZeroSubquotient
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,9 +39,52 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetMultiplicityNeZeroSubquotient
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult
+
+namespace GlobalTheory.CompanionTheory.JmSub
+
+theorem exists_subQuot_of_jm_ne_zero :
+    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
+    ∀ {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]
+      (π : Representation ℂ (GL (Fin N) k) V), Zc.jm x hd π ≠ 0 →
+      ∃ S T : Subrepresentation (jac (stdBlocks (fun a => (x a).1) hd) π),
+        Nonempty ((subQuot S T).Equiv (piTensor fun a => (x a).rep)) := by
+  intro k _ _ _ _ h N x hd V _ _ π hjm
+  obtain ⟨r, hr, hpos⟩ : ∃ r, GlobalTheory.SmGL.OccursTimes (GlobalTheory.SmGL.piTensor fun a => (x a).rep)
+      (GlobalTheory.SmGL.jac (GlobalTheory.SmGL.stdBlocks (fun a => (x a).1) hd) π) r ∧ 0 < r := by
+    by_contra hcon
+    apply hjm
+    unfold Zc.jm GlobalTheory.SmGL.jhMult
+    refine le_antisymm (iSup_le fun r => iSup_le fun hr' => ?_) zero_le
+    have hr0 : r = 0 := by
+      by_contra hne
+      exact hcon ⟨r, hr', Nat.pos_of_ne_zero hne⟩
+    simp [hr0]
+  obtain ⟨S, T, -, -, hST⟩ := hr
+  exact ⟨S ⟨0, hpos⟩, T ⟨0, hpos⟩, hST ⟨0, hpos⟩⟩
+
+end GlobalTheory.CompanionTheory.JmSub
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetMultiplicityNeZeroSubquotientStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult
 
 theorem _root_.GlobalTheory.T.jacquet_multiplicity_ne_zero_subquotient : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], ∀ {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), Zc.jm x hd π ≠ 0 → ∃ S T : Subrepresentation (jac (stdBlocks (fun a => (x a).1) hd) π), Nonempty ((subQuot S T).Equiv (piTensor fun a => (x a).rep)) := by
   first | exact @GlobalTheory.CompanionTheory.JmSub.exists_subQuot_of_jm_ne_zero | exact GlobalTheory.CompanionTheory.JmSub.exists_subQuot_of_jm_ne_zero | (intros; apply GlobalTheory.CompanionTheory.JmSub.exists_subQuot_of_jm_ne_zero <;> assumption)
+end
+end

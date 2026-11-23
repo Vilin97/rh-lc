@@ -1,12 +1,11 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.SigmaStarUniq
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DiscrNe
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SigmaStarEx
+public import Formalism.PeriodIntegrals.DiscrNe
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NonzeroDiscriminants.DiscMain
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -39,6 +38,22 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SigmaStarEx
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DiscrNe
+
+section
+
+@[expose] public section
+
+theorem discrNe' : PI.DiscrNe := DiscrNeWork.discrNe_all
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.RetLat
+
+section
 
 @[expose] public section
 
@@ -49,3 +64,5 @@ theorem discrNe_holds : DiscrNe := discrNe'
 theorem sigmaStarEx_holds : SigmaStarEx := sigma_star_exists
 
 end Formalism.MainNotions.Ext
+end
+end

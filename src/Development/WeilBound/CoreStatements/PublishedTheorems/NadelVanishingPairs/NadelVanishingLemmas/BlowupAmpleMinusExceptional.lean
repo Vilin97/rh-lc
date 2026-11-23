@@ -3,9 +3,6 @@ module
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsGloballyGeneratedIffGeneratingSections
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsEqnIffGeneratesAtInv
 import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.MemNonzeroLocusIffPowFn
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.EffectiveCartierLocalEquation
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.IdealPullbackLocallyGenerated
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.IdealSectionsLocallyGenerated
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +40,176 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtCoord
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsQuasicoherentOfForallExistsAffine
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.IdealPullbackLocallyGenerated
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsAlgHomOfIsBaseChange
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EffectiveCartierLocalEquation
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.Cartier.IdealDiv
+
+theorem unitAt_div_of_ideal_eq {Y : Scheme.{0}} [IsIntegral Y] (J : Y.IdealSheafData) {y : Y}
+    {U V : Y.affineOpens} {f : Γ(Y, U.1)} {f' : Γ(Y, V.1)} (hU : y ∈ U.1) (hV : y ∈ V.1)
+    (hf : J.ideal U = Ideal.span {f}) (hf' : J.ideal V = Ideal.span {f'})
+    (h0 : fnOf U.1 (gen_mem hU) f ≠ 0) :
+    UnitAt y (fnOf V.1 (gen_mem hV) f' / fnOf U.1 (gen_mem hU) f) := by
+  obtain ⟨h, hhW, hxh⟩ := U.2.exists_basicOpen_le (V := U.1 ⊓ V.1) ⟨_, ⟨hU, hV⟩⟩ hU
+  let Wa : Y.affineOpens := ⟨Y.basicOpen h, U.2.basicOpen h⟩
+  have hWU : Wa.1 ≤ U.1 := hhW.trans inf_le_left
+  have hWV : Wa.1 ≤ V.1 := hhW.trans inf_le_right
+  haveI : Nonempty Wa.1 := ⟨⟨_, hxh⟩⟩
+  have e1 : J.ideal Wa = Ideal.span {resG Y hWU f} := by
+    rw [← Scheme.IdealSheafData.map_ideal _ (U := Wa) (V := U) hWU, hf, Ideal.map_span, Set.image_singleton]
+    rfl
+  have e2 : J.ideal Wa = Ideal.span {resG Y hWV f'} := by
+    rw [← Scheme.IdealSheafData.map_ideal _ (U := Wa) (V := V) hWV, hf', Ideal.map_span, Set.image_singleton]
+    rfl
+  obtain ⟨u, hu⟩ := Ideal.span_singleton_eq_span_singleton.1 (e1.symm.trans e2)
+  have hg := gen_mem (U := Wa.1) hxh
+  have e := congrArg (fnOf Wa.1 hg) hu
+  rw [map_mul, fnOf_resG, fnOf_resG] at e
+  rw [← e, mul_div_cancel_left₀ _ h0]
+  exact unitAt_fnOf hxh hg u
+
+theorem exists_cartierDiv_of_effCartier : ∀ (Y : Scheme.{0}) [IsIntegral Y] (J : Y.IdealSheafData),
+    FinalTheorems.EffCartier J → ∃ E : CartierDiv Y, E.Eff ∧ E.supp = J.support ∧
+      ∀ (y : Y) (U : Y.affineOpens) (f : Γ(Y, U.1)) (hy : y ∈ U.1) (hf : fnOf U.1 (gen_mem hy) f ≠ 0),
+        J.ideal U = Ideal.span {f} → E.IsEqn y (Units.mk0 _ hf) := by
+  intro Y _ J hJ
+  choose U f hyU hnzd hid using hJ
+  have hne : ∀ y, fnOf (U y).1 (gen_mem (hyU y)) (f y) ≠ 0 := by
+    intro y h
+    haveI : Nonempty (U y).1 := ⟨⟨y, hyU y⟩⟩
+    have h0 : f y = 0 := fnOf_injective _ _ (h.trans (map_zero _).symm)
+    exact nonZeroDivisors.ne_zero (hnzd y) h0
+  let v : ∀ y : Y, Y.functionFieldˣ := fun y => Units.mk0 _ (hne y)
+  let E : CartierDiv Y := show cartierGroup Y from ⟨fun y => germOf y (v y), fun x =>
+    ⟨(U x).1, hyU x, v x, fun y hy =>
+      germOf_eq_iff.2 (unitAt_div_of_ideal_eq J (hyU y) hy (hid y) (hid x) (hne y))⟩⟩
+  have hE : ∀ y, E.IsEqn y (v y) := fun y => rfl
+  refine ⟨E, fun x => ⟨v x, hE x, by rw [one_mul]; exact regAt_fnOf (hyU x) _ _⟩, ?_, ?_⟩
+  · ext x
+    rw [SetLike.mem_coe, SetLike.mem_coe, (hE x).mem_supp_iff, Units.val_mk0, unitAt_fnOf_iff (hyU x),
+      Scheme.IdealSheafData.mem_support_iff_of_mem (U := U x) (hyU x), hid x, Scheme.zeroLocus_span,
+      Scheme.zeroLocus_singleton]
+    rfl
+  · intro y V g hy hg hV
+    exact (hE y).iff_unitAt.2 (unitAt_div_of_ideal_eq J (hyU y) hy (hid y) hV (hne y))
+
+end GlobalTheory.Cartier.IdealDiv
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.EffectiveCartierLocalEquation
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
+theorem _root_.GlobalTheory.T.effective_cartier_local_equation : ∀ (Y : Scheme.{0}) [IsIntegral Y] (J : Y.IdealSheafData), FinalTheorems.EffCartier J → ∃ E : CartierDiv Y, E.Eff ∧ E.supp = J.support ∧ ∀ (y : Y) (U : Y.affineOpens) (f : Γ(Y, U.1)) (hy : y ∈ U.1) (hf : fnOf U.1 (gen_mem hy) f ≠ 0), J.ideal U = Ideal.span {f} → E.IsEqn y (Units.mk0 _ hf) := by
+  first | exact @_root_.GlobalTheory.Cartier.IdealDiv.exists_cartierDiv_of_effCartier | exact _root_.GlobalTheory.Cartier.IdealDiv.exists_cartierDiv_of_effCartier | (intros; apply _root_.GlobalTheory.Cartier.IdealDiv.exists_cartierDiv_of_effCartier <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSectionsLocallyGenerated
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
+
+namespace GlobalTheory
+
+theorem Twist.exists_secs_generating_ideal : ∀ (X : Scheme.{0}) (M : LB X), M.IsLB → ∀ (I : X.IdealSheafData), IsGloballyGenerated (twist (idealModule I) M) → ∃ (n : ℕ) (σ : Fin n → M.Sec), (∀ (k : Fin n) (i : M.ι) (W : X.affineOpens) (h : W.1 ≤ M.U i), resG X h ((σ k).f i) ∈ I.ideal W) ∧ ∀ (x : X) (i : M.ι) (hx : x ∈ M.U i) (W : X.affineOpens) (hxW : x ∈ W.1) (a : Γ(X, W.1)), a ∈ I.ideal W → X.presheaf.germ W.1 x hxW a ∈ Ideal.span (Set.range fun k => X.presheaf.germ (M.U i) x hx ((σ k).f i)) := by
+  intro X M hM I hg
+  obtain ⟨n, a, ha⟩ := isGloballyGenerated_iff_spanStalks.1 hg
+  refine ⟨n, fun k => Twist.secOfTwist (idealModuleι I) (a k), ?_, ?_⟩
+  · intro k i W h
+    have hW : W.1 ≤ ⊤ ⊓ M.U i := le_inf le_top h
+    rw [Twist.secOfTwist_f, LB.resG_resG]
+    refine (exists_idealModuleι_app_eq_iff_mem I W _).1
+      ⟨Twist.resM _ hW (Twist.coord (a k) i), ?_⟩
+    rw [Twist.app_resM]
+    exact structureModuleSectionsEquiv_res hW _
+  · intro x i hx W hxW f hf
+    obtain ⟨t, rfl⟩ := (exists_idealModuleι_app_eq_iff_mem I W f).2 hf
+    let l := (structureModuleStalkEquiv x).toLinearMap ∘ₗ stalkLinear (idealModuleι I) x ∘ₗ
+      (Twist.stalkEquiv (idealModule I) hM i hx).toLinearMap
+    have hm : x ∈ ⊤ ⊓ M.U i := ⟨trivial, hx⟩
+    have e : (l ∘ fun k => ((twist (idealModule I) M).presheaf.germ ⊤ x trivial (a k) :
+        ((twist (idealModule I) M).presheaf.stalk x :))) =
+        fun k => X.presheaf.germ (M.U i) x hx ((Twist.secOfTwist (idealModuleι I) (a k)).f i) := by
+      funext k
+      rw [Twist.secOfTwist_f, X.presheaf.germ_res_apply (homOfLE _) x hx]
+      rw [Function.comp_apply, ← structureModuleStalkEquiv_germ, ← stalkLinear_germ]
+      exact congrArg (fun u => structureModuleStalkEquiv x (stalkLinear (idealModuleι I) x u))
+        (Twist.stalkEquiv_germ hM i hx (V := ⊤) trivial (a k))
+    have hu : X.presheaf.germ W.1 x hxW
+        (structureModuleSectionsEquiv W.1 ((idealModuleι I).app W t)) =
+        l ((Twist.stalkEquiv (idealModule I) hM i hx).symm
+          ((idealModule I).presheaf.germ W.1 x hxW t)) := by
+      simp only [l, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply,
+        stalkLinear_germ, structureModuleStalkEquiv_germ]
+    have hmem : (Twist.stalkEquiv (idealModule I) hM i hx).symm
+        ((idealModule I).presheaf.germ W.1 x hxW t) ∈ Submodule.span (X.presheaf.stalk x)
+          (Set.range fun k => ((twist (idealModule I) M).presheaf.germ ⊤ x trivial (a k) :
+            ((twist (idealModule I) M).presheaf.stalk x :))) := by
+      rw [ha x]; exact Submodule.mem_top
+    have h2 := Submodule.apply_mem_span_image_of_mem_span l hmem
+    rw [← Set.range_comp, e] at h2
+    rw [hu]
+    exact h2
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.IdealSectionsLocallyGenerated
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
+theorem _root_.GlobalTheory.T.ideal_sections_locally_generated : ∀ (X : Scheme.{0}) (M : LB X), M.IsLB → ∀ (I : X.IdealSheafData), IsGloballyGenerated (twist (idealModule I) M) → ∃ (n : ℕ) (σ : Fin n → M.Sec), (∀ (k : Fin n) (i : M.ι) (W : X.affineOpens) (h : W.1 ≤ M.U i), resG X h ((σ k).f i) ∈ I.ideal W) ∧ ∀ (x : X) (i : M.ι) (hx : x ∈ M.U i) (W : X.affineOpens) (hxW : x ∈ W.1) (a : Γ(X, W.1)), a ∈ I.ideal W → X.presheaf.germ W.1 x hxW a ∈ Ideal.span (Set.range fun k => X.presheaf.germ (M.U i) x hx ((σ k).f i)) := by
+  first | exact @_root_.GlobalTheory.Twist.exists_secs_generating_ideal | exact _root_.GlobalTheory.Twist.exists_secs_generating_ideal | (intros; apply _root_.GlobalTheory.Twist.exists_secs_generating_ideal <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.BlowupAmpleMinusExceptional
+
+section
 
 @[expose] public section
 
@@ -169,3 +331,6 @@ theorem exists_eff_isGenerated : ∀ (Y₀ Y₁ : Scheme.{0}) [IsNoetherian Y₀
     exact ⟨k, hg.generatesAt_iff.2 hk⟩
 
 end GlobalTheory.TwistBelow
+end
+end
+end

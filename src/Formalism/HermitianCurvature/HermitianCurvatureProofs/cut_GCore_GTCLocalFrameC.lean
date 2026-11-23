@@ -3,19 +3,14 @@ module
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTCLocalCut
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CoordinateCommuteRaisingConstant
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEnTrSmooth
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTCLocalFrameA
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTCLocalFrameB
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTConnGaugeA
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTConnGaugeB
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedA
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedF
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NfRadOrder0OfRadRed
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
@@ -52,9 +46,232 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GTConnCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCRadSpSmooth
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Polynomial.Basic
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTConnGaugeA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTConnGaugeB
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NfRadOrder0OfRadRed
+import Mathlib.Analysis.InnerProductSpace.Calculus
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTCLocalFrameA
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt
+open scoped ContDiff
+
+namespace Formalism.FourierDecayAlt.P.CutMP.Gauge.GC
+
+noncomputable section
+
+theorem gcl_slice_iter {r : ℕ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
+    (F : (Fin r → ℂ) × ℂ → V) (s : Set ((Fin r → ℂ) × ℂ)) (hs : IsOpen s)
+    (hF : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) F s) (q : (Fin r → ℂ) × ℂ) (hq : q ∈ s) (j : ℕ) :
+    iteratedFDeriv ℝ j (fun ζ => F (q.1, ζ)) q.2 =
+      (iteratedFDeriv ℝ j F q).compContinuousLinearMap (fun _ => ContinuousLinearMap.inr ℝ (Fin r → ℂ) ℂ) := by
+  let a : (Fin r → ℂ) × ℂ := (q.1, 0)
+  let L : ℂ →L[ℝ] (Fin r → ℂ) × ℂ := ContinuousLinearMap.inr ℝ (Fin r → ℂ) ℂ
+  let G : (Fin r → ℂ) × ℂ → V := fun p => F (a + p)
+  let s' : Set ((Fin r → ℂ) × ℂ) := (fun p => a + p) ⁻¹' s
+  have hs' : IsOpen s' := hs.preimage (continuous_const.add continuous_id)
+  have hG : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) G s' :=
+    hF.comp ((contDiff_const.add contDiff_id).contDiffOn) (fun p hp => hp)
+  have hslice : (fun ζ : ℂ => F (q.1, ζ)) = G ∘ L := by
+    funext ζ
+    simp [G, a, L]
+  have hq' : L q.2 ∈ s' := by
+    show a + L q.2 ∈ s
+    simpa [a, L] using hq
+  have hpre : IsOpen (L ⁻¹' s') := hs'.preimage L.continuous
+  have hmem : q.2 ∈ L ⁻¹' s' := hq'
+  rw [hslice, ← iteratedFDerivWithin_of_isOpen j hpre hmem,
+    L.iteratedFDerivWithin_comp_right hG hs'.uniqueDiffOn hpre.uniqueDiffOn hq'
+      (by exact_mod_cast (le_top : ((j : ℕ∞)) ≤ ⊤)),
+    iteratedFDerivWithin_of_isOpen j hs' hq']
+  have hGq : iteratedFDeriv ℝ j G (L q.2) = iteratedFDeriv ℝ j F q := by
+    show iteratedFDeriv ℝ j (fun p => F (a + p)) (L q.2) = _
+    rw [iteratedFDeriv_comp_add_left']
+    show iteratedFDeriv ℝ j F (a + L q.2) = _
+    congr 1
+    ext <;> simp [a, L]
+  rw [hGq]
+
+theorem gcl_isRadDiff {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+    [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wq] (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq)
+    (hRB : NF.RadBase P.k P.r Bs.z Bs.z' Bs.μsec Bs.π Bs.π')
+    (T : Module.End ℂ (Q.RadSp P.k P.r Bs.z Bs.z' Bs.π Bs.π')) (hT : RadDZ P Bs T) :
+    NF.IsRadDiff P.k P.r Bs.z Bs.z' Bs.μsec Bs.π Bs.π' T := by
+  obtain ⟨n, A, hA, hT'⟩ := hT
+  have hmem : ∀ Φ : Q.RadSp P.k P.r Bs.z Bs.z' Bs.π Bs.π',
+      ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
+        (NF.radR P.k P.r Bs.z Bs.z' Bs.μsec (Φ : Q.Fn P.k P.r (Wq →L[ℂ] Wp))) (NF.QR P.k P.r Bs.z Bs.z') :=
+    fun Φ => (Formalism.FourierDecayAlt.P.radical_reduction_mem Wp Wq P.k P.r Bs.z Bs.z' Bs.μsec Bs.π Bs.π' hRB Φ Φ.2).1
+  have hopen : IsOpen (NF.QR P.k P.r Bs.z Bs.z') := by
+    have h1 : IsOpen (Formalism.QuantumDeterminants.OmX P.r) := by
+      have h2 : Formalism.QuantumDeterminants.OmX P.r = ⋂ l, {x : Fin P.r → ℂ | x l ≠ 0} := by
+        ext x
+        simp [Formalism.QuantumDeterminants.OmX]
+      rw [h2]
+      exact isOpen_iInter_of_finite (fun l => isOpen_ne_fun (continuous_apply l) continuous_const)
+    exact (h1.preimage continuous_fst).inter
+      (isOpen_lt continuous_const (Complex.continuous_normSq.comp continuous_snd))
+  refine ⟨n, fun j q => (A j q.2).comp (ContinuousMultilinearMap.compContinuousLinearMapL
+    (fun _ : Fin j => ContinuousLinearMap.inr ℝ (Fin P.r → ℂ) ℂ)), ?_, ?_⟩
+  · intro j
+    have hA' : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun q : (Fin P.r → ℂ) × ℂ => A j q.2)
+        (NF.QR P.k P.r Bs.z Bs.z') :=
+      (hA j).comp contDiff_snd.contDiffOn (fun q hq => hq.2)
+    exact hA'.clm_comp contDiffOn_const
+  · intro Φ q hq
+    rw [hT' Φ q hq]
+    refine Finset.sum_congr rfl (fun j _ => ?_)
+    rw [gcl_slice_iter _ _ hopen (hmem Φ) q hq j]
+    simp only [ContinuousLinearMap.comp_apply, ContinuousMultilinearMap.compContinuousLinearMapL_apply]
+
+end
+
+end Formalism.FourierDecayAlt.P.CutMP.Gauge.GC
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGTCLocalFrameB
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt
+open scoped ContDiff
+
+namespace Formalism.FourierDecayAlt.P.CutMP.Gauge.GC
+
+noncomputable section
+
+section frame
+
+variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+  [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
+
+theorem gcl_hsVec_add (A A' : Wq →L[ℂ] Wp) : B.hsVec (A + A') = B.hsVec A + B.hsVec A' := by
+  ext i
+  simp [B.hsVec]
+
+theorem gcl_hsVec_sum {ι : Type} (s : Finset ι) (A : ι → (Wq →L[ℂ] Wp)) :
+    B.hsVec (∑ i ∈ s, A i) = ∑ i ∈ s, B.hsVec (A i) := by
+  classical
+  refine Finset.induction_on s ?_ ?_
+  · ext i
+    simp [B.hsVec]
+  · intro a s ha ih
+    rw [Finset.sum_insert ha, Finset.sum_insert ha, gcl_hsVec_add, ih]
+
+theorem gcl_hsVec_smul (c : ℂ) (A : Wq →L[ℂ] Wp) : B.hsVec (c • A) = c • B.hsVec A := by
+  ext i
+  simp [B.hsVec]
+
+theorem gcl_wRc_smooth (P : M.Par) :
+    ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun ζ : ℂ => ((wR P.k P.TT ζ : ℝ) : ℂ)) (Ann P) := by
+  have hre : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun ζ : ℂ => ζ.re) := Complex.reCLM.contDiff
+  have him : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun ζ : ℂ => ζ.im) := Complex.imCLM.contDiff
+  have h1 : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun ζ : ℂ => Complex.normSq ζ - P.TT) := by
+    simp_rw [Complex.normSq_apply]
+    exact ((hre.mul hre).add (him.mul him)).sub contDiff_const
+  have h2 : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun ζ : ℂ => wR P.k P.TT ζ) (Ann P) := by
+    simp only [wR]
+    exact ((h1.pow _).contDiffOn).sqrt (fun ζ hζ => (pow_pos (sub_pos.2 hζ) _).ne')
+  exact Complex.ofRealCLM.contDiff.comp_contDiffOn h2
+
+theorem gcl_wR_ne (P : M.Par) {ζ : ℂ} (hζ : ζ ∈ Ann P) : ((wR P.k P.TT ζ : ℝ) : ℂ) ≠ 0 := by
+  have h : 0 < Complex.normSq ζ - P.TT := sub_pos.2 hζ
+  have hw : 0 < wR P.k P.TT ζ := by
+    unfold wR
+    exact Real.sqrt_pos.2 (pow_pos h _)
+  exact Complex.ofReal_ne_zero.2 hw.ne'
+
+theorem gcl_dZ_smooth {g : ℂ → ℂ} {s : Set ℂ} (hs : IsOpen s) (hg : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) g s) :
+    ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (NF.dZ g) s ∧ ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (NF.dZb g) s := by
+  have hd : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun y => fderiv ℝ g y) s :=
+    ((contDiffOn_infty_iff_fderiv_of_isOpen hs).1 hg).2
+  have h1 : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun y => fderiv ℝ g y 1) s :=
+    hd.clm_apply contDiffOn_const
+  have hI : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun y => fderiv ℝ g y Complex.I) s :=
+    hd.clm_apply contDiffOn_const
+  refine ⟨?_, ?_⟩
+  · exact contDiffOn_const.mul (h1.sub (contDiffOn_const.mul hI))
+  · exact contDiffOn_const.mul (h1.add (contDiffOn_const.mul hI))
+
+theorem gcl_wirt_slice {r : ℕ} (F : MA.E r → ℂ) (x : MA.E r) (hF : DifferentiableAt ℝ F x) :
+    MA.wirt M.vz F x = NF.dZ (fun ζ => F (x.1, ζ)) x.2 ∧
+      MA.wirt M.vzb F x = NF.dZb (fun ζ => F (x.1, ζ)) x.2 := by
+  have hmap : HasFDerivAt (fun ζ : ℂ => (x.1, ζ))
+      ((0 : ℂ →L[ℝ] (Fin r → ℂ)).prod (ContinuousLinearMap.id ℝ ℂ)) x.2 :=
+    (hasFDerivAt_const x.1 x.2).prodMk (hasFDerivAt_id x.2)
+  have hF' : HasFDerivAt F (fderiv ℝ F x) (x.1, x.2) := by
+    simpa using hF.hasFDerivAt
+  have hcomp : HasFDerivAt (fun ζ => F (x.1, ζ))
+      ((fderiv ℝ F x).comp ((0 : ℂ →L[ℝ] (Fin r → ℂ)).prod (ContinuousLinearMap.id ℝ ℂ))) x.2 :=
+    hF'.comp x.2 hmap
+  have hd : ∀ v : ℂ, fderiv ℝ (fun ζ => F (x.1, ζ)) x.2 v = fderiv ℝ F x (0, v) := by
+    intro v
+    rw [hcomp.fderiv]
+    simp
+  have e1 : MA.dirE (r := r) M.vz = ((0 : Fin r → ℂ), (1 : ℂ)) := by
+    simp [MA.dirE, M.vz]
+  have e2 : MA.dirE (r := r) M.vzb = ((0 : Fin r → ℂ), (1 : ℂ)) := by
+    simp [MA.dirE, M.vzb]
+  refine ⟨?_, ?_⟩
+  · simp only [MA.wirt, NF.dZ, e1, hd]
+    simp [M.vz] <;> ring
+  · simp only [MA.wirt, NF.dZb, e2, hd]
+    simp [M.vzb] <;> ring
+
+theorem gcl_radR_sum {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ}
+    {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ι : Type} (s : Finset ι) (F : ι → Q.Fn k r E)
+    (x : (Fin r → ℂ) × ℂ) :
+    NF.radR k r z z' μsec (∑ i ∈ s, F i) x = ∑ i ∈ s, NF.radR k r z z' μsec (F i) x := by
+  by_cases hx : x ∈ NF.QR k r z z'
+  · simp [NF.radR, Set.indicator, hx, Finset.sum_apply]
+  · simp [NF.radR, Set.indicator, hx]
+
+theorem gcl_trR_val (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π')
+    (hk : 2 ≤ P.k) (e : M.Ty P → ℂ → (Wq →L[ℂ] Wp)) (he : IsFrameB P Bs e)
+    (Φ : Q.RadSp P.k P.r Bs.z Bs.z' Bs.π Bs.π') (ρ : M.Ty P) (q : MA.Qp P.r P.TT) :
+    ((trR P Bs e Φ ρ : MA.SmQ P.r P.TT) : MA.Qp P.r P.TT → ℂ) q =
+      ((wR P.k P.TT q.1.2 : ℝ) : ℂ) *
+        inner ℂ (B.hsVec (e ρ q.1.2)) (B.hsVec (NF.radR P.k P.r Bs.z Bs.z' Bs.μsec (Φ : Q.Fn P.k P.r (Wq →L[ℂ] Wp)) q.1)) := by
+  have hmem := radial_space_smoothness Wp Wq P Bs hpl hk e he Φ ρ
+  have hq : q.1 ∈ NF.QR P.k P.r Bs.z Bs.z' := by
+    obtain ⟨h1, h2⟩ := q.2
+    refine ⟨h1, ?_⟩
+    rw [hpl.2.2.2.1, hpl.2.2.2.2.1]
+    exact h2
+  have h1 : ((trR P Bs e Φ ρ : MA.SmQ P.r P.TT) : MA.Qp P.r P.TT → ℂ) =
+      rawR P Bs.μsec e (Φ : Q.Fn P.k P.r (Wq →L[ℂ] Wp)) ρ := by
+    simp only [trR, MA.toSm, dif_pos hmem]
+  rw [h1]
+  simp [rawR, NF.radR, Set.indicator_of_mem hq]
+
+end frame
+
+end
+
+end Formalism.FourierDecayAlt.P.CutMP.Gauge.GC
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GTCLocalFrameC
+
+section
 
 @[expose] public section
 
@@ -298,3 +515,5 @@ end core
 end
 
 end Formalism.FourierDecayAlt.P.CutMP.Gauge.GC
+end
+end

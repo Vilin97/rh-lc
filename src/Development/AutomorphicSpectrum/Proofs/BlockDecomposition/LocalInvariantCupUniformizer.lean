@@ -6,14 +6,11 @@ public import GroundTheory.ProfiniteCohomology.ContinuousCochains.Functoriality
 public import GroundTheory.ProfiniteCohomology.CupProducts
 public import GroundTheory.ProfiniteCohomology.LocalClassFormation.InvariantSplit
 public import GroundTheory.ProfiniteCohomology.PoincareDuality.Torsion
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DecompositionGroupLocalGaloisStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsAlgHomMulEquivDec
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KummerCharacterTameFormulaStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniformizerOrderEqOneStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnramifiedCharacterContinuousStatement
-public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
-import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+public import GroundTheory.GlobalFields.LocalFieldAtPlace
+public import ReciprocityTheory.GaloisValuations.Global
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPowCharPowEqSelf
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+import GroundTheory.LocalFields.UnitsPowers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +30,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +37,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,8 +49,138 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits
+import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.PoitouTateNineTermTransgressionZeroApply
+import GroundTheory.ProfiniteCohomology.ProcyclicDefs
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsAlgHomMulEquivDec
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KummerCharacterTameFormulaStatement
+public import GroundTheory.LocalFields.UnitsBasic
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ValuationOfMemNotMemSq
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.AdicCompletionValuationMapUniformiser
+import Formalism.ConjugateSelfDual.Statement
+import Mathlib.RepresentationTheory.Basic
+import ReciprocityTheory.GaloisValuations.GlobalA
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnramifiedCharacterContinuousStatement
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
+import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.TransportA
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DecompositionGroupLocalGalois
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Representation Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.Published GlobalTheory.Published.PoitouTate
+open GroundTheory.ProfCoh GroundTheory.LocalField ValuativeRel CategoryTheory
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Dict
+
+theorem isFrob_of_unramifiedDegree_eq_one : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 F)) [IsSepClosure (v.adicCompletion F) (AlgebraicClosure (v.adicCompletion F))], IsPlaceOver A v → ∀ (ι : Ω →ₐ[F] AlgebraicClosure (v.adicCompletion F)) (σ : G F Ω) (g : Gal(AlgebraicClosure (v.adicCompletion F)/v.adicCompletion F)), σ ∈ Dec (F := F) A → (∀ x, ι (σ x) = g (ι x)) → unramifiedDegree (v.adicCompletion F) (AlgebraicClosure (v.adicCompletion F)) g = Multiplicative.ofAdd 1 → IsFrob (F := F) A (normV v) σ := by
+  intro F Ω _ _ _ _ _ A v _ hA ι σ g hσ hι hg
+  refine (GlobalTheory.FrobTeich.isFrob_iff_teichmuller F Ω A v hA σ).2 ⟨hσ, fun z m hm hz => ?_⟩
+  have hcard : Nat.card 𝓀[v.adicCompletion F] = normV v := by
+    rw [GroundTheory.Global.natCard_residueField_adicCompletion, Ideal.absNorm_apply,
+      Submodule.cardQuot_apply]
+    rfl
+  have hfrob := (unramifiedDegree_eq_ofAdd_one_iff g).1 hg
+  rw [hcard] at hfrob
+  have hq : 1 < normV v := hcard ▸ one_lt_card_residueField (v.adicCompletion F)
+  suffices h : ι (σ z) = ι (z ^ normV v) from (RingHom.injective ι.toRingHom) h
+  rw [hι, map_pow]
+  have hξ : (ι z) ^ normV v ^ m = ι z := by rw [← map_pow, hz]
+  by_cases h0 : ι z = 0
+  · rw [h0, map_zero, zero_pow (by omega)]
+  · refine hfrob _ ⟨m, hm.ne', mul_right_cancel₀ h0 ?_⟩
+    have e : normV v ^ m = (normV v ^ m - 1) + 1 :=
+      (Nat.sub_add_cancel (Nat.one_le_pow _ _ (by omega))).symm
+    rw [hcard, ← pow_succ, ← e, hξ, one_mul]
+
+end GlobalTheory.CompanionTheory.Dict
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DecompositionGroupLocalGaloisStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Representation Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.Published GlobalTheory.Published.PoitouTate
+open GroundTheory.ProfCoh GroundTheory.LocalField ValuativeRel CategoryTheory
+
+theorem _root_.GlobalTheory.T.decomposition_group_local_galois : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 F)) [IsSepClosure (v.adicCompletion F) (AlgebraicClosure (v.adicCompletion F))], IsPlaceOver A v → ∀ (ι : Ω →ₐ[F] AlgebraicClosure (v.adicCompletion F)) (σ : G F Ω) (g : Gal(AlgebraicClosure (v.adicCompletion F)/v.adicCompletion F)), σ ∈ Dec (F := F) A → (∀ x, ι (σ x) = g (ι x)) → unramifiedDegree (v.adicCompletion F) (AlgebraicClosure (v.adicCompletion F)) g = Multiplicative.ofAdd 1 → IsFrob (F := F) A (normV v) σ := by
+  first | exact @GlobalTheory.CompanionTheory.Dict.isFrob_of_unramifiedDegree_eq_one | exact GlobalTheory.CompanionTheory.Dict.isFrob_of_unramifiedDegree_eq_one | (intros; apply GlobalTheory.CompanionTheory.Dict.isFrob_of_unramifiedDegree_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniformizerOrderEqOne
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Representation Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.Published GlobalTheory.Published.PoitouTate
+open GroundTheory.ProfCoh GroundTheory.LocalField ValuativeRel CategoryTheory
+
+namespace GlobalTheory.CompanionTheory.Completion
+
+theorem valuation_eq_exp_neg_one_of_mem_of_notMem (F : Type) [Field F] [NumberField F]
+    (v : HeightOneSpectrum (𝓞 F)) (ϖ : 𝓞 F) (h1 : ϖ ∈ v.asIdeal) (h2 : ϖ ∉ v.asIdeal ^ 2) :
+    v.valuation F (ϖ : F) = WithZero.exp (-1 : ℤ) := by
+  apply GlobalTheory.LFun.EulerTie.valuation_of_mem_notMem_sq <;> assumption
+
+theorem ord_algebraMap_eq_one : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (ϖ : 𝓞 F), ϖ ∈ v.asIdeal → ϖ ∉ v.asIdeal ^ 2 → ord (algebraMap F (v.adicCompletion F) (ϖ : F)) = 1 := by
+  intro F _ _ v ϖ h1 h2
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[v.adicCompletion F]
+  have hv : Valued.v (π : v.adicCompletion F) = WithZero.exp (-1 : ℤ) :=
+    GlobalTheory.adicCompletion_valuation_map_uniformiser F v (v.adicCompletion F) (RingEquiv.refl _)
+      (fun a => by
+        rw [GroundTheory.Global.mem_valuationInteger_iff]
+        exact Iff.rfl) π hπ
+  have hx : Valued.v (algebraMap F (v.adicCompletion F) (ϖ : F)) = WithZero.exp (-1 : ℤ) := by
+    exact (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v (ϖ : F)).trans
+      (valuation_eq_exp_neg_one_of_mem_of_notMem F v ϖ h1 h2)
+  have heq : valuation (v.adicCompletion F) (algebraMap F (v.adicCompletion F) (ϖ : F)) =
+      valuation (v.adicCompletion F) (π : v.adicCompletion F) :=
+    le_antisymm
+      ((ValuativeRel.isEquiv (valuation (v.adicCompletion F)) Valued.v _ _).2
+        (le_of_eq (hx.trans hv.symm)))
+      ((ValuativeRel.isEquiv (valuation (v.adicCompletion F)) Valued.v _ _).2
+        (le_of_eq (hv.trans hx.symm)))
+  have hn := (normalizedValuation_eq_iff (K := v.adicCompletion F)).2 heq
+  rw [← ord_uniformizer hπ]
+  simp only [ord, hn]
+
+end GlobalTheory.CompanionTheory.Completion
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniformizerOrderEqOneStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Representation Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.Published GlobalTheory.Published.PoitouTate
+open GroundTheory.ProfCoh GroundTheory.LocalField ValuativeRel CategoryTheory
+
+theorem _root_.GlobalTheory.T.uniformizer_order_eq_one : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (ϖ : 𝓞 F), ϖ ∈ v.asIdeal → ϖ ∉ v.asIdeal ^ 2 → ord (algebraMap F (v.adicCompletion F) (ϖ : F)) = 1 := by
+  first | exact @GlobalTheory.CompanionTheory.Completion.ord_algebraMap_eq_one | exact GlobalTheory.CompanionTheory.Completion.ord_algebraMap_eq_one | (intros; apply GlobalTheory.CompanionTheory.Completion.ord_algebraMap_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalInvariantCupUniformizer
+
+section
 
 @[expose] public section
 
@@ -284,3 +409,5 @@ theorem span_class_eq_top : ∀ (F Ω : Type) [Field F] [NumberField F] [Field �
     exact h7 _ (GlobalTheory.T.decomposition_group_local_galois F Ω A v hA ι _ g (e g).2 (hl g) hg)
 
 end GlobalTheory.CompanionTheory.KummerCup
+end
+end

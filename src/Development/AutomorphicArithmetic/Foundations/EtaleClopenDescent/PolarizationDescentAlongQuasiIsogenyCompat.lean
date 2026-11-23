@@ -3,7 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsQuasiInv
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdditiveOfTrivAxes
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSurjectiveQcPow
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowCompMonHomOverSchemeGrpObj
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsAdditiveOfUniversal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +41,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Divisors.NotCompactOfMEqOne
+import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.GoodClass
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowCompMonHomOverSchemeGrpObj
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT
+open GlobalTheory.ZM GlobalTheory.SiegelTor
+open GlobalTheory.AbDual GlobalTheory.CechPic GlobalTheory.AbLaw
+
+namespace GlobalTheory.KerCalc
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem evc_pow_left {S : Scheme.{0}} {A B Y : Over S} [GrpObj A] [GrpObj B] {P : LB (A ⊗ B).left}
+    (hP : P.IsLB) (h : IsAdditive P) (a : Y ⟶ A) (b : Y ⟶ B) (n : ℕ) :
+    evc hP (a ^ n) b = n • evc hP a b := by
+  induction n with
+  | zero => rw [pow_zero, zero_smul, h.evc_one hP]
+  | succ n ih => rw [pow_succ, (isAdditive_iff hP).1 h, ih, succ_nsmul]
+
+end GlobalTheory.KerCalc
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.PolarizationDescentAlongQuasiIsogenyCompat
+
+section
 
 @[expose] public section
 
@@ -160,3 +194,5 @@ theorem UpperTheory.Cb.polarization_descent_along_quasi_isogeny_compat :
   simp only [Over.comp_left, Over.homMk_left, πo] at e2
   ext1
   exact (cancel_epi _).mp e2
+end
+end

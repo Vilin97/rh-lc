@@ -1,21 +1,19 @@
 module
 
 public import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.HasLevel
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.OpOfAevalExists
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsSplitChartOfBasis
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SatakeParameterSphericalProductSpehQuotients
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.EsymmInvMulProd
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIntPolyEsymmEqPowerSumMultiset
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SatakeParameterOfSpherical
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.ConjSep
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PolyApproxZeroPadic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -23,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,9 +40,209 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsSplitChartOfBasis
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SatakeParameterSphericalProductSpehQuotients
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BlochKatoSelmerVanishes
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
+public import Mathlib.RingTheory.MvPolynomial.Symmetric.FundamentalTheorem
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PolyApproxZeroPadic
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SatakeParameterOfSpherical
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.ConjSep
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousMapPFin
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.OpOfAevalExists
+
+section
+
+@[expose] public section
+
+open GlobalTheory.Cong
+
+noncomputable section
+
+namespace GlobalTheory.Cong.OpPoly
+
+variable {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
+
+def opHom (v : V) : (G →₀ ℂ) →+ V :=
+  Finsupp.liftAddHom fun g => (smulAddHom ℂ V).flip (ρ g v)
+
+theorem opHom_apply (v : V) (F : G →₀ ℂ) : opHom ρ v F = opOf ρ F v := by
+  rw [opHom, Finsupp.liftAddHom_apply, opOf]
+  exact Finsupp.sum_congr fun g _ => rfl
+
+theorem opOf_single (g : G) (c : ℂ) (v : V) : opOf ρ (Finsupp.single g c) v = c • ρ g v := by
+  simp [opOf, Finsupp.sum_single_index]
+
+theorem opOf_add (F F' : G →₀ ℂ) (v : V) : opOf ρ (F + F') v = opOf ρ F v + opOf ρ F' v := by
+  simp only [← opHom_apply, map_add (f := _)]
+
+theorem opOf_smul (F : G →₀ ℂ) (c : ℂ) (v : V) : opOf ρ F (c • v) = c • opOf ρ F v := by
+  simp [opOf, Finsupp.smul_sum, smul_comm c]
+
+def conv (F f : G →₀ ℂ) : G →₀ ℂ :=
+  F.sum fun g a => f.sum fun h b => Finsupp.single (g * h) (a * b)
+
+theorem opOf_conv (F f : G →₀ ℂ) (v : V) : opOf ρ (conv F f) v = opOf ρ F (opOf ρ f v) := by
+  rw [← opHom_apply]
+
+  simp only [conv, Finsupp.sum, map_sum, opHom_apply, opOf_single]
+
+  simp only [opOf, Finsupp.sum, map_sum, map_smul, Finset.smul_sum, mul_smul, map_mul, Module.End.mul_apply]
+
+end GlobalTheory.Cong.OpPoly
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.EsymmInvMulProd
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.ElementarySymmetricInverse
+
+theorem esymm_deg_zero (s : Multiset ℂ) : s.esymm 0 = 1 := by
+  simp [Multiset.esymm]
+
+theorem esymm_cons_succ (x : ℂ) (s : Multiset ℂ) (k : ℕ) :
+    (x ::ₘ s).esymm (k + 1) = s.esymm (k + 1) + x * s.esymm k := by
+  simp only [Multiset.esymm, Multiset.powersetCard_cons, Multiset.map_add (f := _), Multiset.sum_add,
+    Multiset.map_map, Function.comp_def, Multiset.prod_cons, Multiset.sum_map_mul_left]
+
+theorem esymm_top (s : Multiset ℂ) (k : ℕ) (hk : Multiset.card s = k) : s.esymm k = s.prod := by
+  subst hk
+  simp [Multiset.esymm]
+
+theorem esymm_inv_mul_prod (s : Multiset ℂ) (hs : ∀ x ∈ s, x ≠ 0) :
+    ∀ i j : ℕ, i + j = Multiset.card s →
+      (s.map fun x => x⁻¹).esymm i * s.prod = s.esymm j := by
+  induction s using Multiset.induction_on with
+  | empty =>
+    intro i j h
+    have hi : i = 0 := by simp at h; exact h.1
+    have hj : j = 0 := by simp at h; exact h.2
+    subst hi hj
+    simp [esymm_deg_zero]
+  | cons x s ih =>
+    intro i j h
+    have hx : x ≠ 0 := hs x (Multiset.mem_cons_self x s)
+    have ih' := ih (fun y hy => hs y (Multiset.mem_cons_of_mem hy))
+    rcases i with _ | i
+    · rw [esymm_deg_zero, one_mul, esymm_top _ j (by omega)]
+    rcases j with _ | j
+    · rw [esymm_deg_zero, esymm_top _ (i + 1) (by rw [Multiset.card_map]; omega),
+        Multiset.prod_map_inv']
+      exact inv_mul_cancel₀ (Multiset.prod_ne_zero (fun h0 => hs 0 h0 rfl))
+    rw [Multiset.card_cons] at h
+    rw [Multiset.map_cons, Multiset.prod_cons, esymm_cons_succ, esymm_cons_succ,
+      ← ih' (i + 1) j (by omega), ← ih' i (j + 1) (by omega)]
+    field_simp
+    ring
+
+theorem half_pow (q a : ℕ) :
+    (((q : ℝ) ^ (((a : ℝ) - 1) / 2) : ℝ) : ℂ) ^ a = (q : ℂ) ^ Nat.choose a 2 := by
+  have h : ((q : ℝ) ^ (((a : ℝ) - 1) / 2)) ^ a = (q : ℝ) ^ Nat.choose a 2 := by
+    rw [← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg q), ← Real.rpow_natCast,
+      Nat.cast_choose_two]
+    congr 1
+    ring
+  exact_mod_cast congrArg (fun r : ℝ => (r : ℂ)) h
+
+theorem algSat_eq (a q : ℕ) (B : Multiset ℂˣ) :
+    UpperTheory.V.Af.algSat a q B =
+      B.map fun b : ℂˣ => (((q : ℝ) ^ (((a : ℝ) - 1) / 2) : ℝ) : ℂ) * (b : ℂ) := by
+  unfold UpperTheory.V.Af.algSat
+  simp only [Multiset.pure_def, Multiset.bind_def, Multiset.bind_singleton, Multiset.map_map,
+    Function.comp_def]
+
+theorem esymm_inv_algSat : ∀ {q : ℕ}, q ≠ (0 : ℕ) → ∀ {a : ℕ} {B : Multiset ℂˣ},
+    Multiset.card B = a → ∀ {j : ℕ}, j ≤ a → GlobalTheory.LFun.satEig q a B a ≠ (0 : ℂ) →
+    Multiset.esymm (Multiset.map (fun (x : ℂ) ↦ x⁻¹) (UpperTheory.V.Af.algSat a q B)) j =
+      Multiset.esymm (UpperTheory.V.Af.algSat a q B) (a - j) *
+        (((↑q : ℂ) ^ Nat.choose a (2 : ℕ))⁻¹ * (GlobalTheory.LFun.satEig q a B a)⁻¹) := by
+  intro q hq a B hB j hj hne
+  have hsat : GlobalTheory.LFun.satEig q a B a = (B.map fun b : ℂˣ => (b : ℂ)).prod := by
+    unfold GlobalTheory.LFun.satEig
+    rw [esymm_top _ a (by rw [Multiset.card_map, hB])]
+    simp
+  have hcard : Multiset.card (UpperTheory.V.Af.algSat a q B) = a := by
+    rw [algSat_eq, Multiset.card_map, hB]
+  have hprod : (UpperTheory.V.Af.algSat a q B).prod =
+      (q : ℂ) ^ Nat.choose a 2 * GlobalTheory.LFun.satEig q a B a := by
+    rw [hsat, ← half_pow, algSat_eq, Multiset.prod_map_mul,
+      Multiset.map_const', Multiset.prod_replicate, hB]
+  have hq' : (q : ℂ) ^ Nat.choose a 2 ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.mpr hq)
+  have hP : (UpperTheory.V.Af.algSat a q B).prod ≠ 0 := by
+    rw [hprod]
+    exact mul_ne_zero hq' hne
+  have hall : ∀ x ∈ UpperTheory.V.Af.algSat a q B, x ≠ 0 := by
+    rintro x hx rfl
+    exact hP (Multiset.prod_eq_zero hx)
+  rw [← esymm_inv_mul_prod _ hall j (a - j) (by omega), hprod]
+  field_simp
+
+end GlobalTheory.ElementarySymmetricInverse
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIntPolyEsymmEqPowerSumMultiset
+
+section
+
+@[expose] public section
+
+open GlobalTheory.Cong
+
+namespace GlobalTheory.PowerSumPoly
+open MvPolynomial
+
+theorem exists_intPoly_psum_eq : ∀ a n : ℕ, 1 ≤ n → ∃ P : MvPolynomial (Fin (a + 1)) ℤ, ∀ s : Multiset ℂ,
+    Multiset.card s = a → MvPolynomial.aeval (fun j : Fin (a + 1) => s.esymm j) P = (s.map (· ^ n)).sum := by
+  intro a n _
+  obtain ⟨Q, hQ⟩ := esymmAlgHom_surjective ℤ (σ := Fin a) (n := a) (by simp)
+    ⟨psum (Fin a) ℤ n, psum_isSymmetric (Fin a) ℤ n⟩
+  have hQ' : aeval (fun i : Fin a => esymm (Fin a) ℤ (i + 1)) Q = psum (Fin a) ℤ n := by
+    rw [← esymmAlgHom_apply, hQ]
+  refine ⟨rename Fin.succ Q, fun s hs => ?_⟩
+  set f : Fin a → ℂ := fun i => s.toList[(i : ℕ)]'(by simp [hs]) with hf
+  have hsf : (Finset.univ.val.map f) = s := by
+    rw [Fin.univ_val_map]
+    conv_rhs => rw [← Multiset.coe_toList s]
+    congr 1
+    apply List.ext_getElem (by simp [hs])
+    intro i h1 h2
+    simp [f]
+  have key : aeval f (aeval (fun i : Fin a => esymm (Fin a) ℤ (i + 1)) Q) =
+      aeval (fun i : Fin a => aeval f (esymm (Fin a) ℤ (i + 1))) Q := by
+    rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
+  rw [hQ'] at key
+  rw [aeval_rename]
+  have lhs : (fun j : Fin (a + 1) => s.esymm j) ∘ Fin.succ = fun i : Fin a => aeval f (esymm (Fin a) ℤ (i + 1)) := by
+    funext i
+    simp [aeval_esymm_eq_multiset_esymm, hsf]
+  rw [lhs, ← key]
+
+  rw [psum, map_sum]
+  simp only [map_pow, aeval_X]
+  conv_rhs => rw [← hsf]
+  simp [Multiset.map_map, Finset.sum_eq_multiset_sum]
+  rfl
+
+end GlobalTheory.PowerSumPoly
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.SphericalOperatorsExist
+
+section
 
 @[expose] public section
 
@@ -249,4 +445,6 @@ theorem sphOps : SphOps := by
 
 end GlobalTheory.Cong.SphOpsProof
 
+end
+end
 end

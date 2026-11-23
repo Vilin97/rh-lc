@@ -5,11 +5,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry�
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.NotInSupportOfSubsingleton
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgebraMapIntertwiningMapBijectiveOfIsSmooth
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Mono0OfLpDimEqOne
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IrreducibleWdEigenEqualNormStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LpCharacterEigenProductStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentSumTemperedStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedDirectSumStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedSpecialOfUnitEigen
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +15,7 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -28,8 +24,6 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,9 +44,201 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LpCharacterEigenProductStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RootsCharpolySmulMatrix
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedDirectSumStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedSpecialOfUnitEigen
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IrreducibleWdEigenEqualNorm
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace GlobalTheory.IrrWeilAbs
+
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
+  {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
+
+theorem exists_pow_central {n : ℕ} (a : WDRep h (Fin n → ℂ)) {φ : Weil h} (hφ : deg φ = 1) :
+    ∃ m : ℕ, 0 < m ∧ ∀ σ : Weil h, a.ρ (φ ^ m) * a.ρ σ = a.ρ σ * a.ρ (φ ^ m) := by
+  classical
+  let S : Set (Module.End ℂ (Fin n → ℂ)) := Set.range fun τ : Ine (F := E) A => a.ρ (ineIncl h τ)
+  haveI : Finite S := a.smooth.finite_range.to_subtype
+  have conj_mem : ∀ (k : ℕ), ∀ s ∈ S, a.ρ (φ ^ k) * s * a.ρ ((φ ^ k)⁻¹) ∈ S := by
+    rintro k _ ⟨τ, rfl⟩
+    have h0 : deg (φ ^ k * ineIncl h τ * (φ ^ k)⁻¹) = 0 := by simp
+    refine ⟨⟨_, deg_eq_zero_iff.mp h0⟩, ?_⟩
+    simp only [← map_mul]
+    exact congrArg a.ρ (Subtype.ext rfl)
+  let g : ℕ → (S → S) := fun k s => ⟨_, conj_mem k s.1 s.2⟩
+  obtain ⟨k1, k2, hne, heq⟩ := Finite.exists_ne_map_eq_of_infinite g
+  obtain ⟨k, m, hm, hkm⟩ : ∃ k m : ℕ, 0 < m ∧ g k = g (k + m) := by
+    rcases lt_or_gt_of_ne hne with hl | hl
+    · exact ⟨k1, k2 - k1, by omega, by rw [show k1 + (k2 - k1) = k2 by omega]; exact heq⟩
+    · exact ⟨k2, k1 - k2, by omega, by rw [show k2 + (k1 - k2) = k1 by omega]; exact heq.symm⟩
+  have comm_ine : ∀ τ : Ine (F := E) A,
+      a.ρ (φ ^ m) * a.ρ (ineIncl h τ) = a.ρ (ineIncl h τ) * a.ρ (φ ^ m) := by
+    intro τ
+    have e1 : a.ρ (φ ^ k * ineIncl h τ * (φ ^ k)⁻¹) =
+        a.ρ (φ ^ (k + m) * ineIncl h τ * (φ ^ (k + m))⁻¹) := by
+      have := congrArg Subtype.val (congrFun hkm ⟨_, τ, rfl⟩)
+      rw [map_mul, map_mul, map_mul, map_mul]
+      exact this
+    have e2 := congrArg (fun X => a.ρ ((φ ^ k)⁻¹) * X * a.ρ (φ ^ k * φ ^ m)) e1
+    simp only [← map_mul] at e2
+    rw [← map_mul, ← map_mul]
+    convert e2.symm using 2 <;> group
+  refine ⟨m, hm, fun σ => ?_⟩
+  obtain ⟨τ, hτ⟩ := exists_eq_zpow_mul hφ σ
+  have hc : φ ^ m * φ ^ deg σ = φ ^ deg σ * φ ^ m :=
+    ((Commute.refl φ).pow_left m).zpow_right (deg σ)
+  rw [hτ, map_mul, ← mul_assoc, ← map_mul, hc, map_mul, mul_assoc, comm_ine, ← mul_assoc]
+
+theorem exists_smul_of_commute {n : ℕ} (a : WDRep h (Fin n → ℂ)) (hirr : a.ρ.IsIrreducible)
+    (P : Module.End ℂ (Fin n → ℂ)) (hP : ∀ σ : Weil h, P * a.ρ σ = a.ρ σ * P) :
+    ∃ c : ℂ, ∀ v, P v = c • v := by
+  haveI := hirr
+  let f : Representation.IntertwiningMap a.ρ a.ρ :=
+    ⟨P, fun σ => LinearMap.ext fun v => LinearMap.congr_fun (hP σ) v⟩
+  obtain ⟨c, hc⟩ :=
+    (Representation.IsIrreducible.algebraMap_intertwiningMap_bijective_of_isAlgClosed (ρ := a.ρ)).2 f
+  refine ⟨c, fun v => ?_⟩
+  have := congrArg (fun F : Representation.IntertwiningMap a.ρ a.ρ => F v) hc
+  rw [Algebra.algebraMap_eq_smul_one] at this
+  simpa [f] using this.symm
+
+theorem irrWD_eig_norm_eq : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), IsIrrWD x → ∀ φ : Weil h, deg φ = 1 → ∀ α ∈ x.eig φ, ∀ β ∈ x.eig φ, ‖α‖ = ‖β‖ := by
+  intro E Ω _ _ _ _ _ A w h x hx φ hφ α hα β hβ
+  obtain ⟨n, a, rfl, hirr⟩ := hx
+  rw [WD.eig_mk] at hα hβ
+  obtain ⟨m, hm, hcomm⟩ := exists_pow_central a hφ
+  obtain ⟨c, hc⟩ := exists_smul_of_commute a hirr _ hcomm
+  have hev : ∀ γ ∈ (a.ρ φ).charpoly.roots, γ ^ m = c := by
+    intro γ hγ
+    obtain ⟨v, hv⟩ := ((Module.End.hasEigenvalue_iff_isRoot_charpoly _ _).mpr
+      (Polynomial.isRoot_of_mem_roots hγ)).exists_hasEigenvector
+    have hpow : ∀ k : ℕ, ((a.ρ φ) ^ k) v = γ ^ k • v := by
+      intro k
+      induction k with
+      | zero => simp
+      | succ k ih =>
+        rw [pow_succ', Module.End.mul_apply, ih, map_smul, hv.apply_eq_smul, smul_smul, pow_succ]
+    have h1 : γ ^ m • v = c • v := by rw [← hpow, ← map_pow, hc]
+    exact smul_left_injective ℂ hv.2 h1
+  have h2 : ‖α‖ ^ m = ‖β‖ ^ m := by rw [← norm_pow, ← norm_pow, hev α hα, hev β hβ]
+  exact (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) hm.ne').mp h2
+
+end GlobalTheory.IrrWeilAbs
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IrreducibleWdEigenEqualNormStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+theorem _root_.GlobalTheory.T.irreducible_wd_eigen_equal_norm : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), IsIrrWD x → ∀ φ : Weil h, deg φ = 1 → ∀ α ∈ x.eig φ, ∀ β ∈ x.eig φ, ‖α‖ = ‖β‖ := by
+  first | exact @GlobalTheory.IrrWeilAbs.irrWD_eig_norm_eq | exact GlobalTheory.IrrWeilAbs.irrWD_eig_norm_eq | (intros; apply GlobalTheory.IrrWeilAbs.irrWD_eig_norm_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentSumTempered
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace GlobalTheory.UnitaryPrecedes
+
+theorem not_precedes_of_unitary : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc → ∀ Δ Δ' : Segment (w.adicCompletion E), (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).eig φ, ‖α‖ = 1) → (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ ((rc Δ'.first).lpTw (((Δ'.len : ℝ) - 1) / 2)).eig φ, ‖α‖ = 1) → ¬ Δ.Precedes Δ' := by
+  intro E Ω _ _ _ _ _ A w h rc hrc Δ Δ' hΔ hΔ' hP
+  obtain ⟨a, ha, ε, -, H⟩ := hrc
+  obtain ⟨hL, j, hj, hfirst⟩ := hP
+  have hy' : rc Δ'.first = (rc Δ.first).lpTw (j : ℝ) := by
+    rw [hfirst, ← H.nu_eq]
+    norm_cast
+  have hdeg : deg (frob h) = 1 := deg_frob
+  have hcard : Multiset.card ((rc Δ.first).eig (frob h)) = Δ.d := by
+    rw [WD.card_eig, H.dim]
+    rfl
+  obtain ⟨β, hβ⟩ := Multiset.card_pos_iff_exists_mem.1 (hcard ▸ Δ.d_pos)
+  have hq : (1 : ℝ) < ((normV w : ℕ) : ℝ) := by exact_mod_cast one_lt_normV w
+  set q : ℝ := ((normV w : ℕ) : ℝ) with hqdef
+  have hn : ∀ s : ℝ, ‖((normV w : ℕ) : ℂ) ^ ((s : ℝ) : ℂ)‖ = q ^ s := by
+    intro s
+    rw [← coe_qPow, norm_qPow]
+  have h1 := hΔ (frob h) hdeg (β * ((normV w : ℕ) : ℂ) ^ (((((Δ.len : ℝ) - 1) / 2 : ℝ)) : ℂ))
+    (by rw [GlobalTheory.RowTie.EigTwist.eig_lpTw _ hdeg]; exact Multiset.mem_map_of_mem _ hβ)
+  have h2 := hΔ' (frob h) hdeg (β * ((normV w : ℕ) : ℂ) ^ (((j : ℕ) : ℝ) : ℂ) *
+      ((normV w : ℕ) : ℂ) ^ (((((Δ'.len : ℝ) - 1) / 2 : ℝ)) : ℂ))
+    (by
+      rw [hy', GlobalTheory.RowTie.EigTwist.eig_lpTw _ hdeg, GlobalTheory.RowTie.EigTwist.eig_lpTw _ hdeg]
+      exact Multiset.mem_map_of_mem _ (Multiset.mem_map_of_mem _ hβ))
+  rw [norm_mul, hn] at h1
+  rw [norm_mul, norm_mul, hn, hn] at h2
+  have hb : ‖β‖ ≠ 0 := by
+    intro h0
+    rw [h0, zero_mul] at h1
+    exact zero_ne_one h1
+  have heq : q ^ (((Δ.len : ℝ) - 1) / 2) = q ^ (((j : ℕ) : ℝ) + (((Δ'.len : ℝ) - 1) / 2)) := by
+    rw [Real.rpow_add (by linarith)]
+    apply mul_left_cancel₀ hb
+    rw [h1, ← mul_assoc, h2]
+  have hexp : ((Δ.len : ℝ) - 1) / 2 = ((j : ℕ) : ℝ) + (((Δ'.len : ℝ) - 1) / 2) := by
+    rcases lt_trichotomy (((Δ.len : ℝ) - 1) / 2) (((j : ℕ) : ℝ) + (((Δ'.len : ℝ) - 1) / 2)) with hlt | heq' | hgt
+    · exact absurd heq (Real.rpow_lt_rpow_of_exponent_lt hq hlt).ne
+    · exact heq'
+    · exact absurd heq (Real.rpow_lt_rpow_of_exponent_lt hq hgt).ne'
+  have hlen : Δ.len = Δ'.len + 2 * j := by
+    have : (Δ.len : ℝ) = Δ'.len + 2 * j := by linarith
+    exact_mod_cast this
+  apply hL.2.2
+  intro x hx
+  rw [Segment.mem_carrier] at hx ⊢
+  obtain ⟨b, hb', rfl⟩ := hx
+  refine ⟨j + b, by omega, ?_⟩
+  rw [hfirst, IrrGL.nu_nu]
+  push_cast
+  rfl
+
+end GlobalTheory.UnitaryPrecedes
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentSumTemperedStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+theorem _root_.GlobalTheory.T.segment_sum_tempered : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc → ∀ Δ Δ' : Segment (w.adicCompletion E), (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).eig φ, ‖α‖ = 1) → (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ ((rc Δ'.first).lpTw (((Δ'.len : ℝ) - 1) / 2)).eig φ, ‖α‖ = 1) → ¬ Δ.Precedes Δ' := by
+  first | exact @GlobalTheory.UnitaryPrecedes.not_precedes_of_unitary | exact GlobalTheory.UnitaryPrecedes.not_precedes_of_unitary | (intros; apply GlobalTheory.UnitaryPrecedes.not_precedes_of_unitary <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedRepTemperedParameter
+
+section
 
 @[expose] public section
 
@@ -193,3 +380,6 @@ theorem tempered_of_isTemperedGL : ∀ (E Ω : Type) [Field E] [NumberField E] [
   exact tempered_lpChar_lpSp E Ω A w h _ (monodromy_zero_of_irreducible_weilDeligne E Ω A w h _ hirr) (hunit i) _
 
 end GlobalTheory.LocLanglands
+end
+end
+end

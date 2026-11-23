@@ -5,13 +5,14 @@ public import Development.AbelianVarietyTheory.CrystallinePeriods.RingBasics
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DeRhamExistsHodgeTateEigenbasisStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateNoTwistedInvariantsComplexPadicStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalIndepBridge
-public import Formalism.LocalToGlobal.CyclotomicLocalNorms.AddValuationAlgebraMapPadicIntUnitEqZero
+public import Formalism.LocalToGlobal.CyclotomicLocalNorms.NormSubToZModPowVal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,9 +44,91 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.HerbrandA
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
+
+-- Source module: Formalism.LocalToGlobal.CyclotomicLocalNorms.AddValuationAlgebraMapPadicIntUnitEqZero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.LocGap.Gal
+
+open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.DiscreteGroups Filter Topology
+open scoped Classical
+
+variable {l : ℕ} [Fact l.Prime]
+
+theorem modEq_of_pow_eq {k : ℕ} (hk : 0 < k) {ζ : Om l} (hz : IsPrimitiveRoot ζ k) {a b : ℕ}
+    (h : ζ ^ a = ζ ^ b) : a ≡ b [MOD k] := by
+  obtain ⟨U, rfl⟩ := hz.isUnit hk.ne'
+  rw [← Units.val_pow_eq_pow_val, ← Units.val_pow_eq_pow_val, Units.val_inj,
+    pow_eq_pow_iff_modEq, ← orderOf_units, ← hz.eq_orderOf] at h
+  exact h
+
+theorem norm_χZ_sub_le (g : GQ l) (k c : ℕ) (h : ∀ z : Om l, z ^ (l ^ k) = 1 → g z = z ^ c) :
+    ‖((χZ l g : ℤ_[l]ˣ) : ℤ_[l]) - (c : ℤ_[l])‖ ≤ (l : ℝ) ^ (-(k : ℤ)) := by
+  have : NeZero (l ^ k) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
+  have hz := ζQ_primitive l k
+  have h1 := χZ_spec g k (ζQ l k) hz.pow_eq_one
+  rw [h _ hz.pow_eq_one] at h1
+  have h2 := modEq_of_pow_eq (pow_pos (Fact.out : l.Prime).pos k) hz h1
+  rw [← ZMod.natCast_eq_natCast_iff, ZMod.natCast_zmod_val] at h2
+  rw [PadicInt.norm_le_pow_iff_mem_span_pow, ← PadicInt.ker_toZModPow, RingHom.mem_ker, map_sub,
+    map_natCast, ← h2, sub_self]
+
+theorem eq_of_norm_sub_le {x y : ℚ_[l]} (h : ∀ m : ℕ, ‖x - y‖ ≤ (l : ℝ) ^ (-(m : ℤ))) : x = y := by
+  by_contra hne
+  have hpos : 0 < ‖x - y‖ := norm_pos_iff.2 (sub_ne_zero.2 hne)
+  obtain ⟨k, hk⟩ := PadicInt.exists_pow_neg_lt l hpos
+  exact absurd (h k) (not_le.2 hk)
+
+theorem eq_χQ_of_cyc (χ' : GQ l →* ℚ_[l]ˣ)
+    (h : ∀ (g : GQ l) (m : ℕ) (ζ : Om l), ζ ^ (l ^ m) = 1 →
+      ∃ a : ℕ, ‖(χ' g : ℚ_[l]) - (a : ℚ_[l])‖ ≤ (l : ℝ) ^ (-(m : ℤ)) ∧ g ζ = ζ ^ a) :
+    χ' = χQ l := by
+  refine MonoidHom.ext fun g => Units.ext ?_
+  apply eq_of_norm_sub_le
+  intro m
+  have : NeZero (l ^ m) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
+  have hz := ζQ_primitive l m
+  obtain ⟨a, ha, hga⟩ := h g m (ζQ l m) hz.pow_eq_one
+  have h1 := norm_χZ_sub_le g m a (fun z hz' => by
+    obtain ⟨b, -, rfl⟩ := hz.eq_pow_of_pow_eq_one hz'
+    rw [map_pow, hga, ← pow_mul, ← pow_mul, mul_comm])
+  have h2 : ‖(χQ l g : ℚ_[l]) - (a : ℚ_[l])‖ ≤ (l : ℝ) ^ (-(m : ℤ)) := by
+    rw [χQ_coe]
+    rw [PadicInt.norm_def] at h1
+    push_cast at h1
+    exact h1
+  have h3 : (χ' g : ℚ_[l]) - (χQ l g : ℚ_[l]) =
+      ((χ' g : ℚ_[l]) - (a : ℚ_[l])) - ((χQ l g : ℚ_[l]) - (a : ℚ_[l])) := by ring
+  rw [h3, sub_eq_add_neg]
+  refine (Padic.nonarchimedean _ _).trans ?_
+  rw [norm_neg]
+  exact max_le ha h2
+
+section W
+
+variable {LL : FinExt l}
+
+end W
+
+end Formalism.L2.LocGap.Gal
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.PAdicWittLattices.JJumpOfHT2
+
+section
 
 @[expose] public section
 
@@ -244,4 +327,6 @@ theorem UpperTheory.Gal.G3.jJumpOfHT2 :
   rw [← hJm, ← hki]
   exact Multiset.mem_map_of_mem k (Finset.mem_univ_val i)
 
+end
+end
 end

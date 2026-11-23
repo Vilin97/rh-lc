@@ -1,16 +1,14 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOneLeLambdaZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffLeOfBounded
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfFrameNormEqZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogEvalSubLeBlockSphereMeanMultidegreeStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.JoinCastSucc
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -18,13 +16,13 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Harmonic.Bounds
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,7 +42,213 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.GaussAbsMulSupportFinite
+import ReciprocityTheory.SemistableReduction.GaussAbsMulOfMonomialOrder
+import ReciprocityTheory.SemistableReduction.LogNormCoeffSubLeBlockSphereLogMean
+import Development.AbelianVarietyTheory.Definitions.Divisors.MemSubPtsCutBaseChangeIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.WellChosen
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfFrameNormEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PointHeight
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockSphereMeanEqOfFrameNormEq
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import ReciprocityTheory.SemistableReduction.RestBlockSubstIsMultiHomogeneous
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasBoundedPolesGlobalData
+import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOneLeLambdaZero
+import Development.AbelianVarietyTheory.Definitions.Divisors.JoinCastSucc
+import Development.AbelianVarietyTheory.Definitions.Divisors.LinearIndependentBasisCoords
+import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+import Mathlib.NumberTheory.Harmonic.Bounds
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.SemistableReduction.LagrangeIdealLiftsFact
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogGaussAbsSupportFinite
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HSCore GlobalTheory.HSChoice
+open Polynomial (nthRootsFinset)
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+
+namespace GlobalTheory.HSFinPart
+
+theorem log_gaussAbs_support_finite {E : Type} [Field E] [NumberField E] {σ : Type}
+    (g : MvPolynomial σ E) :
+    (Function.support fun v : FinitePlace E => Real.log (gaussAbs v g)).Finite :=
+  ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors.gaussAbs_support_finite g
+
+theorem finPart_props : ∀ (E : Type) [Field E] [NumberField E] (σ τ : Type),
+    (∀ g : MvPolynomial σ E, g ≠ 0 → {v : FinitePlace E | gaussAbs v g ≠ 1}.Finite ∧
+      ∀ v : FinitePlace E, 0 < gaussAbs v g) ∧
+    (∀ (g : MvPolynomial σ E) (g' : MvPolynomial τ E), g ≠ 0 → g' ≠ 0 →
+      (∀ v : FinitePlace E, gaussAbs v g' ≤ gaussAbs v g) → finPart g' ≤ finPart g) ∧
+    ∀ (g : MvPolynomial σ E) (m : σ →₀ ℕ), g.coeff m ≠ 0 →
+      -mean E (fun s => Real.log ‖s (g.coeff m)‖) ≤ finPart g := by
+  intro E _ _ σ τ
+  have hd : (0 : ℝ) < (Module.finrank ℚ E : ℝ) := by
+    exact_mod_cast Module.finrank_pos
+  refine ⟨fun g hg => ⟨?_, fun v => gauss_abs_pos_of_ne_zero v g hg⟩, ?_, ?_⟩
+  · exact ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors.gaussAbs_mulSupport_finite g hg
+  · intro g g' hg hg' hle
+    unfold finPart
+    refine div_le_div_of_nonneg_right ?_ hd.le
+    exact finsum_le_finsum' (log_gaussAbs_support_finite g') (log_gaussAbs_support_finite g)
+      (fun v => Real.log_le_log (gauss_abs_pos_of_ne_zero v g' hg') (hle v))
+  · intro g m hm
+    have hg : g ≠ 0 := by
+      rintro rfl; exact hm (by simp)
+    set c := g.coeff m with hc
+    have h1 : ∑ᶠ v : FinitePlace E, Real.log (v c) ≤ ∑ᶠ v : FinitePlace E, Real.log (gaussAbs v g) :=
+      finsum_le_finsum'
+        ((FinitePlace.hasFiniteMulSupport hm).subset (by
+          intro v hv h1; apply hv; simp only at h1 ⊢; rw [h1, Real.log_one]))
+        (log_gaussAbs_support_finite g)
+        (fun v => Real.log_le_log (FinitePlace.pos_iff.mpr hm) (coeff_le_gauss_abs v g m))
+    rw [ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors.finsum_log_norm c hm] at h1
+    unfold mean finPart
+    rw [sum_log_norm_embedding_eq c hm, ← neg_div]
+    exact div_le_div_of_nonneg_right h1 hd.le
+
+end GlobalTheory.HSFinPart
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffLeOfBounded
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HSCore GlobalTheory.HSChoice
+open Polynomial (nthRootsFinset)
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+
+namespace GlobalTheory.HSFloor
+
+theorem coeff_le_of_bounded {E : Type} [Field E] {σ : Type} [Fintype σ] (k : MvPolynomial σ E)
+    (s : E →+* ℂ) (B : ℝ) (hB : ∀ z : σ → ℂ, (∀ i, ‖z i‖ ≤ 1) → ‖eval₂ s z k‖ ≤ B) (m : σ →₀ ℕ) :
+    ‖s (k.coeff m)‖ ≤ B := by
+
+  obtain ⟨θ, hθ⟩ := (ReciprocityTheory.MultiplicativeHeights.Closed.torus_l2_cauchy_inequality σ (MvPolynomial.map s k)).2 m
+  have hz : ∀ i, ‖ReciprocityTheory.MultiplicativeHeights.torusPoint θ i‖ ≤ 1 := by
+    intro i
+    simp [ReciprocityTheory.MultiplicativeHeights.torusPoint, Complex.norm_exp]
+  rw [MvPolynomial.coeff_map, MvPolynomial.eval_map] at hθ
+  exact hθ.trans (hB _ hz)
+
+theorem floor : ∀ (E : Type) [Field E] [NumberField E] (σ : Type) [Fintype σ] (k : MvPolynomial σ E)
+    (B : (E →+* ℂ) → ℝ), k ≠ 0 →
+    (∀ (s : E →+* ℂ) (z : σ → ℂ), (∀ i, ‖z i‖ ≤ 1) → ‖eval₂ s z k‖ ≤ B s) →
+    -mean E (fun s => Real.log (B s)) ≤ finPart k := by
+  intro E _ _ σ _ k B hk hB
+  obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.mp hk
+  refine le_trans (b := -mean E (fun s => Real.log ‖s (k.coeff m)‖)) ?_
+    ((GlobalTheory.HSFinPart.finPart_props E σ σ).2.2 k m hm)
+  rw [neg_le_neg_iff]
+  unfold mean
+  gcongr with τ _
+
+  have hpos : 0 < ‖τ (k.coeff m)‖ := norm_pos_iff.mpr ((map_ne_zero τ).mpr hm)
+  exact Real.log_le_log hpos (coeff_le_of_bounded k τ (B τ) (hB τ) m)
+
+end GlobalTheory.HSFloor
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogEvalSubLeBlockSphereMeanMultidegree
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+namespace GlobalTheory.LelongBlocksMulti
+
+theorem log_eval_sub_le_blockSphereMean : ∀ (B N : ℕ) (a : Fin B → ℕ) (A : Matrix (Fin N) (Fin N) ℂ) (h : MvPolynomial (Fin B × Fin N) ℂ), A.det ≠ 0 → IsMultiHomogeneous a h → ∀ p : Fin B × Fin N → ℂ, (∀ i, frameNorm A (fun j => p (i, j)) = 1) → eval p h ≠ 0 → Real.log ‖eval p h‖ - (∑ i, (a i : ℝ)) * (harmonic (N - 1) : ℝ) / 2 ≤ blockSphereMean B N (linSubst A h) := by
+  intro B N a A h hA hh p hp hne
+  rcases Nat.eq_zero_or_pos N with rfl | hN
+  · rcases Nat.eq_zero_or_pos B with rfl | hB
+    · have hev : ∀ z : BlockSphere 0 0, eval (blockPoint z) (linSubst A h) = eval p h := by
+        intro z
+        rw [GlobalTheory.SphereMeanFrame.eval_linSubst]
+        refine congrArg (fun v => eval v h) (funext fun x => ?_)
+        exact x.2.elim0
+      have hc : (fun z : BlockSphere 0 0 => Real.log ‖eval (blockPoint z) (linSubst A h)‖) =
+          fun _ => Real.log ‖eval p h‖ := funext fun z => by rw [hev z]
+      unfold blockSphereMean blockSphereProb
+      rw [hc, MeasureTheory.Measure.pi_of_empty _ (fun i => i.elim0)]
+      simp
+    · have := hp ⟨0, hB⟩
+      simp [frameNorm] at this
+  · let q : Fin B → Fin N → ℂ := fun i => A⁻¹.mulVec (fun j => p (i, j))
+    have hq : ∀ i, ‖(WithLp.toLp 2 (q i) : EuclideanSpace ℂ (Fin N))‖ = 1 := by
+      intro i
+      rw [EuclideanSpace.norm_eq]
+      exact hp i
+    let u : BlockSphere B N := fun i =>
+      ⟨WithLp.toLp 2 (q i), mem_sphere_zero_iff_norm.mpr (hq i)⟩
+    have hev : eval (blockPoint u) (linSubst A h) = eval p h := by
+      rw [GlobalTheory.SphereMeanFrame.eval_linSubst]
+      refine congrArg (fun v => eval v h) (funext fun x => ?_)
+      obtain ⟨b, j⟩ := x
+      have h1 : A.mulVec (q b) = fun j => p (b, j) := by
+        simp only [q]
+        rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hA.isUnit, Matrix.one_mulVec]
+      exact congrFun h1 j
+    have key := blockSphere_logMean_bound ReciprocityTheory.MultiplicativeHeights.Closed.sj ReciprocityTheory.MultiplicativeHeights.Closed.sphereLogIntegrable hN B
+      a (linSubst A h) u (GlobalTheory.HeightUnique.linSubst_homog A hh) (by rw [hev]; exact hne)
+    rw [hev] at key
+    calc Real.log ‖eval p h‖ - (∑ i, (a i : ℝ)) * (harmonic (N - 1) : ℝ) / 2
+        = Real.log ‖eval p h‖ - (∑ i, (a i : ℝ)) / 2 * (harmonic (N - 1) : ℝ) := by ring
+      _ ≤ _ := by push_cast at key ⊢; exact key
+
+end GlobalTheory.LelongBlocksMulti
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogEvalSubLeBlockSphereMeanMultidegreeStatement
+
+section
+
+@[expose] public section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+theorem _root_.GlobalTheory.T.log_eval_sub_le_blockSphereMean_multidegree : ∀ (B N : ℕ) (a : Fin B → ℕ) (A : Matrix (Fin N) (Fin N) ℂ) (h : MvPolynomial (Fin B × Fin N) ℂ), A.det ≠ 0 → IsMultiHomogeneous a h → ∀ p : Fin B × Fin N → ℂ, (∀ i, frameNorm A (fun j => p (i, j)) = 1) → eval p h ≠ 0 → Real.log ‖eval p h‖ - (∑ i, (a i : ℝ)) * (harmonic (N - 1) : ℝ) / 2 ≤ blockSphereMean B N (linSubst A h) := by
+  first | exact @GlobalTheory.LelongBlocksMulti.log_eval_sub_le_blockSphereMean | exact GlobalTheory.LelongBlocksMulti.log_eval_sub_le_blockSphereMean | (intros; apply GlobalTheory.LelongBlocksMulti.log_eval_sub_le_blockSphereMean <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MultiformHeightLowerBound
+
+section
 
 @[expose] public section
 
@@ -201,3 +404,6 @@ theorem htLow : HtLow := by
   nlinarith [mul_le_mul_of_nonneg_left hHle hdeg0]
 
 end GlobalTheory.HtLowProof
+end
+end
+end

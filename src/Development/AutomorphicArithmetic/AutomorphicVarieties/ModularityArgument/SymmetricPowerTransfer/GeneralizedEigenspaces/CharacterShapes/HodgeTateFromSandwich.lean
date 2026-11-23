@@ -2,15 +2,28 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GeneralizedEigenspaces.CharacterShapes.GlobIn
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GeneralizedEigenspaces.GlobalRationalGL.BridgeEx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.ToUnitsTheta
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GlobalUnitaryForms.LevelTwoFiniteIndex
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.RepGApply
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.ThFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.DetE
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.FinMH
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.HqKappa
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.MainOf
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.Scalars
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.ThFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.TwineC
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,6 +50,88 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.WeightDeterminantTwists.WtMain
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.V.Z.Sym.Wt.wtMain : UpperTheory.V.Z.Sym.Wt.WtMain :=
+  UpperTheory.V.Z.Sym.Wt.wtMain_of UpperTheory.V.Z.Sym.Wt.finMH UpperTheory.V.Z.Sym.Wt.thFacts UpperTheory.V.Z.Sym.Wt.twineC UpperTheory.V.Z.Sym.Wt.trDC
+    UpperTheory.V.Z.Sym.Wt.scalars UpperTheory.V.Z.Sym.Wt.hqKappa
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.WeightTraceProducts.ToUnitsTheta
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Glob
+
+namespace UpperTheory.V.Z.Sym.Wt
+
+variable {K I : Type} [Field K] [Fintype I] {Δ : K} (em : I → Lsq K Δ →+* ℂ) (j : ℕ)
+
+def cG : Representation ℂ (U3 Δ) (VG I j) := (WG em j).comp Unitary.toUnits
+
+def cD (n : ℕ) (e : ℤ) : Representation ℂ (DX Δ) (VD I n) := (WD em n e).comp (DX Δ).subtype
+
+def cS : Representation ℂ (SU Δ) (VD I j) := (cD em j 0).comp (SU Δ).subtype
+
+abbrev cK : Representation ℂ (DX Δ) (VD I (2 * j + 1)) := cD em (2 * j + 1) (-((j : ℤ) + 1))
+
+def ch (τ : K) : ℂ := chi em j (algebraMap K _ τ)
+
+theorem toUnits_theta (g : U3 Δ) :
+    (Unitary.toUnits (theta Δ g) : GL (Fin 3) (Lsq K Δ)) = invT _ 3 (Unitary.toUnits g) := by
+  exact Units.ext (Matrix.ext fun _ _ => rfl)
+
+variable {j}
+
+theorem cG_int (hj : 1 ≤ j) (γ : U3 Δ) (v : VG I j) : thG I j (cG em j γ v) = cG em j (theta Δ γ) (thG I j v) := by
+  have := LinearMap.congr_fun ((wtMain _ I em j hj).th_rep (Unitary.toUnits γ)) v
+  rw [← toUnits_theta] at this
+  exact this
+
+theorem cG_tr (hj : 1 ≤ j) (δ : U3 Δ) (τ : K) (h : HasTau δ τ) : LinearMap.trace ℂ _ (cG em j δ ∘ₗ thG I j) = ch em j τ := by
+  refine (wtMain _ I em j hj).twine (Unitary.toUnits δ) _ ?_
+  rw [← toUnits_theta, ← map_mul]
+  exact h
+
+theorem cS_tr (hj : 1 ≤ j) (γ : SU Δ) (τ : K) (h : HasTr (γ : DX Δ) τ) : LinearMap.trace ℂ _ (cS em j γ) = ch em j τ := by
+  have := (wtMain _ I em j hj).stable 0 ((γ : DX Δ) : GL (Fin 2) (Lsq K Δ)) h.1
+  rw [h.2] at this
+  exact this
+
+theorem cK_tr (hj : 1 ≤ j) (g : DX Δ) (τ : K) (h : (mt g).trace = algebraMap K _ (2 + τ)) (h' : (mt g).det = algebraMap K _ (2 + τ)) :
+    LinearMap.trace ℂ _ (cK em j g) = ch em j τ :=
+  (wtMain _ I em j hj).kappa g _ (by rw [h, map_add (f := _), map_ofNat]) (by rw [h', map_add (f := _), map_ofNat])
+
+theorem cK_scal (hj : 1 ≤ j) (z : Kˣ) (s : DX Δ) (h : IsScal z s) (v : VD I (2 * j + 1)) :
+    cK em j s v = (∏ w, em w (algebraMap K _ (z : K)))⁻¹ • v := by
+  have e : (s : GL (Fin 2) (Lsq K Δ)) =
+      Matrix.GeneralLinearGroup.scalar (Fin 2) (Units.map (algebraMap K (Lsq K Δ) : K →* Lsq K Δ) z) := Units.ext h
+  have := LinearMap.congr_fun ((wtMain _ I em j hj).scalD (2 * j + 1) (-((j : ℤ) + 1)) (Units.map (algebraMap K (Lsq K Δ) : K →* Lsq K Δ) z)) v
+  rw [← e, show ((2 * j + 1 : ℕ) : ℤ) + 2 * -((j : ℤ) + 1) = -1 by push_cast; ring] at this
+  rw [← Finset.prod_inv_distrib]
+  simp only [zpow_neg_one] at this
+  exact this
+
+end UpperTheory.V.Z.Sym.Wt
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GeneralizedEigenspaces.CharacterShapes.HodgeTateFromSandwich
+
+section
 
 @[expose] public section
 
@@ -216,4 +311,6 @@ def OutS : Prop :=
 
 end UpperTheory.V.Z.Sym.So
 
+end
+end
 end

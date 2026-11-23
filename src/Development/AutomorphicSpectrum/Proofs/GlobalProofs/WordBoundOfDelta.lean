@@ -8,9 +8,6 @@ public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DerivedActionO
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.HermitianFormLieWordGrowthStatement
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LieAlgebraOfLinearGroupClosedStatement
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LieBasisCoordinateGrowthBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LinearIndependentCoefficientNormBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SmoothVectorHermitianFormGrowthStatement
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SmoothVectorsInvariantSubspaceStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,11 +42,207 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DefClassNum
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsAdmOnOfFiniteDimensional
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsStandardIndModule
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SmoothVectorsInvariantSubspaceStatement
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.LinearIndependentCoefficientNormBound
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA.Coord
+
+theorem sum_abs_coord_le_mnorm {n d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ)
+    (hli : LinearIndependent ℝ b) :
+    ∃ D : ℝ, 0 ≤ D ∧ ∀ r : Fin d → ℝ, ∑ i, |r i| ≤ D * mnorm (∑ i, r i • b i) := by
+  let L : (Fin d → ℝ) →ₗ[ℝ] (Fin n → Fin n → ℂ) :=
+    { toFun := fun r a c => ∑ i, r i • b i a c
+      map_add' := fun r s => by
+        funext a c
+        simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
+      map_smul' := fun t r => by
+        funext a c
+        simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.smul_sum, mul_smul] }
+  have hL : ∀ r a c, L r a c = (∑ i, r i • b i) a c := by
+    intro r a c
+    simp [L, Matrix.sum_apply, Matrix.smul_apply]
+  have hker : LinearMap.ker L = ⊥ := by
+    refine LinearMap.ker_eq_bot'.mpr fun r hr => ?_
+    have hsum : ∑ i, r i • b i = 0 := by
+      ext a c
+      have h := congrFun (congrFun hr a) c
+      rw [hL] at h
+      simpa using h
+    funext i
+    exact Fintype.linearIndependent_iff.mp hli r hsum i
+  obtain ⟨K, -, hK⟩ := L.exists_antilipschitzWith hker
+  refine ⟨(d : ℝ) * K, by positivity, fun r => ?_⟩
+  have h1 : ‖r‖ ≤ K * ‖L r‖ := by
+    have h := hK.le_mul_dist r 0
+    simpa [dist_zero_right] using h
+  have hN : 0 ≤ GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm (∑ i, r i • b i) := by
+    unfold GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm
+    exact Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _
+  have h2 : ‖L r‖ ≤ GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm (∑ i, r i • b i) := by
+    refine (pi_norm_le_iff_of_nonneg hN).mpr fun a => ?_
+    refine (pi_norm_le_iff_of_nonneg hN).mpr fun c => ?_
+    rw [hL]
+    unfold GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm
+    calc ‖(∑ i, r i • b i) a c‖ ≤ ∑ c', ‖(∑ i, r i • b i) a c'‖ :=
+          Finset.single_le_sum (f := fun c' => ‖(∑ i, r i • b i) a c'‖)
+            (fun _ _ => norm_nonneg _) (Finset.mem_univ c)
+      _ ≤ ∑ a', ∑ c', ‖(∑ i, r i • b i) a' c'‖ :=
+          Finset.single_le_sum (f := fun a' => ∑ c', ‖(∑ i, r i • b i) a' c'‖)
+            (fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ a)
+  have h3 : ∑ i, |r i| ≤ d * ‖r‖ := by
+    calc ∑ i, |r i| ≤ ∑ _i : Fin d, ‖r‖ :=
+          Finset.sum_le_sum fun i _ => by
+            rw [← Real.norm_eq_abs]
+            exact norm_le_pi_norm r i
+      _ = d * ‖r‖ := by simp
+  calc ∑ i, |r i| ≤ d * ‖r‖ := h3
+    _ ≤ d * (K * ‖L r‖) := mul_le_mul_of_nonneg_left h1 (Nat.cast_nonneg _)
+    _ ≤ d * (K * GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm (∑ i, r i • b i)) :=
+        mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left h2 K.coe_nonneg) (Nat.cast_nonneg _)
+    _ = d * K * GlobalTheory.CompanionTheory.Hypotheses₂.HCA.mnorm (∑ i, r i • b i) := by ring
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.Coord
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.LinearIndependentCoefficientNormBoundStatement
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+theorem _root_.GlobalTheory.T.linearIndependent_coefficient_norm_bound : ∀ {n d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) (hli : LinearIndependent ℝ b), ∃ D : ℝ, 0 ≤ D ∧ ∀ r : Fin d → ℝ, ∑ i, |r i| ≤ D * mnorm (∑ i, r i • b i) := by
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.HCA.Coord.sum_abs_coord_le_mnorm | exact GlobalTheory.CompanionTheory.Hypotheses₂.HCA.Coord.sum_abs_coord_le_mnorm | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.HCA.Coord.sum_abs_coord_le_mnorm <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.SmoothVectorHermitianFormGrowth
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+
+theorem deriv_nonneg_of_nonneg_right {e : ℝ → ℝ} {e' : ℝ} (h : HasDerivAt e e' 0) (h0 : e 0 = 0)
+    (hpos : ∀ t, 0 < t → 0 ≤ e t) : 0 ≤ e' := by
+  refine ge_of_tendsto h.tendsto_slope_zero_right ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  rw [zero_add, h0, sub_zero, smul_eq_mul]
+  exact mul_nonneg (inv_nonneg.mpr (le_of_lt ht)) (hpos t ht)
+
+theorem isBoundedBilinearMap_re_form {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (Q : H → H → ℂ) (Mb : ℝ) (hadd : ∀ x y z, Q x (y + z) = Q x y + Q x z)
+    (hsmul : ∀ (c : ℂ) x y, Q x (c • y) = c * Q x y) (hconj : ∀ x y, Q y x = star (Q x y))
+    (hbd : ∀ x y, ‖Q x y‖ ≤ Mb * ‖x‖ * ‖y‖) :
+    IsBoundedBilinearMap ℝ (fun p : H × H => (Q p.1 p.2).re) := by
+  have hsmulR : ∀ (c : ℝ) (x y : H), Q x (c • y) = (c : ℂ) * Q x y := fun c x y => by
+    rw [← hsmul, Complex.coe_smul]
+  have haddL : ∀ x₁ x₂ y, Q (x₁ + x₂) y = Q x₁ y + Q x₂ y := fun x₁ x₂ y => by
+    rw [hconj, hadd, star_add, ← hconj, ← hconj]
+  have hsmulL : ∀ (c : ℝ) (x y : H), Q (c • x) y = (c : ℂ) * Q x y := fun c x y => by
+    rw [hconj, hsmulR, star_mul', ← hconj, show star (c : ℂ) = c from Complex.conj_ofReal c]
+  refine ⟨fun x₁ x₂ y => ?_, fun c x y => ?_, fun x y₁ y₂ => ?_, fun c x y => ?_, ?_⟩
+  · simp only [haddL, Complex.add_re]
+  · simp only [hsmulL, Complex.re_ofReal_mul, smul_eq_mul]
+  · simp only [hadd, Complex.add_re]
+  · simp only [hsmulR, Complex.re_ofReal_mul, smul_eq_mul]
+  · refine ⟨max Mb 1, lt_of_lt_of_le one_pos (le_max_right _ _), fun x y => ?_⟩
+    rw [Real.norm_eq_abs]
+    calc |(Q x y).re| ≤ ‖Q x y‖ := Complex.abs_re_le_norm _
+      _ ≤ Mb * ‖x‖ * ‖y‖ := hbd x y
+      _ ≤ max Mb 1 * ‖x‖ * ‖y‖ := by gcongr; exact le_max_left _ _
+
+theorem abs_two_re_form_dRep_le : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hG : IsLinRed G) (hrep : Formalism.QuantumDeterminants.IsCRepOn G π) (Q : H → H → ℂ) (Mb a : ℝ) (hadd : ∀ x y z, Q x (y + z) = Q x y + Q x z) (hsmul : ∀ (c : ℂ) x y, Q x (c • y) = c * Q x y) (hconj : ∀ x y, Q y x = star (Q x y)) (hbd : ∀ x y, ‖Q x y‖ ≤ Mb * ‖x‖ * ‖y‖) (hgrow : ∀ X ∈ HCSS.lieOf G, ∀ (t : ℝ) (x : H), (Q (π (NormedSpace.exp (t • X)) x) (π (NormedSpace.exp (t • X)) x)).re ≤ Real.exp (a * |t| * mnorm X) * (Q x x).re) {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ HCSS.lieOf G) {x : H} (hx : IsSmoothVec G π x), |2 * (Q (dRep π X x) x).re| ≤ a * mnorm X * (Q x x).re := by
+  intro n G H _ _ π hG hrep Q Mb a hadd hsmul hconj hbd hgrow X hX x hx
+  have hB := isBoundedBilinearMap_re_form Q Mb hadd hsmul hconj hbd
+  have hv : HasDerivAt (fun t : ℝ => π (NormedSpace.exp (t • X)) x) (dRep π X x) 0 :=
+    (GlobalTheory.T.derived_action_of_smooth_vector hG hrep hx hX).1
+  have hv0 : π (NormedSpace.exp ((0 : ℝ) • X)) x = x := by
+    rw [zero_smul, NormedSpace.exp_zero, hrep.1]
+    rfl
+  set d := dRep π X x with hd
+  set f : ℝ → ℝ := fun t => (Q (π (NormedSpace.exp (t • X)) x) (π (NormedSpace.exp (t • X)) x)).re with hf_def
+  have hf : HasDerivAt f (2 * (Q d x).re) 0 := by
+    have h1 := (hB.hasFDerivAt (π (NormedSpace.exp ((0 : ℝ) • X)) x, π (NormedSpace.exp ((0 : ℝ) • X)) x)).comp_hasDerivAt
+      (0 : ℝ) (hv.prodMk hv)
+    rw [hB.deriv_apply] at h1
+    simp only [hv0] at h1
+    have e : (Q x d).re + (Q d x).re = 2 * (Q d x).re := by
+      rw [hconj d x, Complex.star_def, Complex.conj_re]
+      ring
+    rw [e] at h1
+    exact h1
+  have hf0 : f 0 = (Q x x).re := by
+    simp only [hf_def, hv0]
+  have hexp : HasDerivAt (fun t : ℝ => Real.exp (a * t * mnorm X) * (Q x x).re) (a * mnorm X * (Q x x).re) 0 := by
+    have h2 : HasDerivAt (fun t : ℝ => a * t * mnorm X) (a * 1 * mnorm X) 0 :=
+      ((hasDerivAt_id (0 : ℝ)).const_mul a).mul_const (mnorm X)
+    have h3 := (h2.exp).mul_const (Q x x).re
+    simpa using h3
+  have up : 2 * (Q d x).re ≤ a * mnorm X * (Q x x).re := by
+    have := deriv_nonneg_of_nonneg_right (hexp.sub hf) (by simp [hf0]) (fun t ht => by
+      have := hgrow X hX t x
+      rw [abs_of_pos ht] at this
+      simp only [hf_def, Pi.sub_apply]
+      linarith)
+    linarith
+  have hfn : HasDerivAt (fun t : ℝ => f (-t)) (2 * (Q d x).re * -1) 0 := by
+    have hf' : HasDerivAt f (2 * (Q d x).re) (-(0 : ℝ)) := by rwa [neg_zero]
+    exact hf'.comp (0 : ℝ) (hasDerivAt_neg (0 : ℝ))
+  have low : -(a * mnorm X * (Q x x).re) ≤ 2 * (Q d x).re := by
+    have := deriv_nonneg_of_nonneg_right (hexp.sub hfn) (by simp [hf0]) (fun t ht => by
+      have := hgrow X hX (-t) x
+      rw [abs_neg, abs_of_pos ht] at this
+      simp only [hf_def, Pi.sub_apply]
+      linarith)
+    linarith
+  rw [abs_le]
+  exact ⟨low, up⟩
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.SmoothVectorHermitianFormGrowthStatement
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+theorem _root_.GlobalTheory.T.smooth_vector_hermitian_form_growth : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hG : IsLinRed G) (hrep : Formalism.QuantumDeterminants.IsCRepOn G π) (Q : H → H → ℂ) (Mb a : ℝ) (hadd : ∀ x y z, Q x (y + z) = Q x y + Q x z) (hsmul : ∀ (c : ℂ) x y, Q x (c • y) = c * Q x y) (hconj : ∀ x y, Q y x = star (Q x y)) (hbd : ∀ x y, ‖Q x y‖ ≤ Mb * ‖x‖ * ‖y‖) (hgrow : ∀ X ∈ HCSS.lieOf G, ∀ (t : ℝ) (x : H), (Q (π (NormedSpace.exp (t • X)) x) (π (NormedSpace.exp (t • X)) x)).re ≤ Real.exp (a * |t| * mnorm X) * (Q x x).re) {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ HCSS.lieOf G) {x : H} (hx : IsSmoothVec G π x), |2 * (Q (dRep π X x) x).re| ≤ a * mnorm X * (Q x x).re := by
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.HCA.abs_two_re_form_dRep_le | exact GlobalTheory.CompanionTheory.Hypotheses₂.HCA.abs_two_re_form_dRep_le | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.HCA.abs_two_re_form_dRep_le <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.WordBoundOfDelta
+
+section
 
 @[expose] public section
 
@@ -197,4 +389,6 @@ theorem word_bound_of_delta : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ
 
 end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.WordDelta
 
+end
+end
 end

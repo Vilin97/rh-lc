@@ -1,11 +1,11 @@
 module
 
 public import Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.LamConjLat0
-public import Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.LatticeAreaPositivity.LambdaConjLatticeUniform
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.LeadingConstantNeZero
+public import Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.LatticeAreaPositivity.Bridge
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -34,10 +34,45 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.Bridge
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Tactic.NormNum.Parity
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.LatticeAreaPositivity.LambdaConjLatticeUniform
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.Th1.F2
+
+open NumberField
+open scoped Pointwise
+open Formalism.BasicNotions (D7)
+open Formalism.L2.GlobalTheoryTheory Formalism.MainNotions
+open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+
+theorem lambda_of_lattice_holds : LamOfLat := by
+  intro D cc δ hcc hδ
+  exact lattice_ideal_lattice_holds D.host.K D.host.d (discriminant_mod_four D) ⟨D.host.sqrtMinusD, br_sqrt_mem D⟩
+    (br_sqrt_sq D) (br_finrank_K D) (brPhi D) cc δ hcc hδ
+
+
+
+
+end Formalism.L2.Th1.F2
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.LamConjTheta0
+
+section
 
 @[expose] public section
 
@@ -46,3 +81,5 @@ namespace Formalism.L2.Th1.F2
 theorem lamOfLat : LamOfLat := lambda_of_lattice_holds
 
 end Formalism.L2.Th1.F2
+end
+end

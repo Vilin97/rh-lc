@@ -2,8 +2,9 @@ module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MassSelfDualLatticeFirstSpaceEq
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SelfDualLatticeOverColumnBaseLatticeStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StabiliserSelfDualLatticeLevelIndexFormulaStatement
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SplittingProjection
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemLocLatOverLat
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.OverLatticeIffSelfDualOverBase
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +40,105 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SelfDualLatticeIndex
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LocalLevelRelIndexAtLevelPrimeSelfDual
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SelfDualStabiliserIndex
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SelfDualLatticeOverColumnBaseLattice
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.OverObj
+
+theorem selfDualOverBase : GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.SelfDualOverBase :=
+  GlobalTheory.OverCompare.overLattice_iff_selfDualOverBase.mp GlobalTheory.OverLat.overLattice
+
+end GlobalTheory.OverObj
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SelfDualLatticeOverColumnBaseLatticeStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.selfDualLattice_over_columnBaseLattice : GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.SelfDualOverBase := by
+  first | exact @GlobalTheory.OverObj.selfDualOverBase | exact GlobalTheory.OverObj.selfDualOverBase | (intros; apply GlobalTheory.OverObj.selfDualOverBase <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SelfDualLatticeLevel
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeLevel
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.UG Formalism.MainNotions.StandardLattice
+
+theorem isSelfDualLat_iff {E : Type} [Field E] [NumberField E] {n : Type} [Fintype n]
+    (σ : E →+* E) (J : Matrix n n E) (N : Submodule (𝓞 E) (n → E)) :
+    SelfDualStabiliserIndex.IsSelfDualLat σ J N ↔ SelfDualLatticeIndex.IsSelfDualLat σ J N :=
+  and_congr_right fun _ => and_congr_right fun _ => eq_comm
+
+theorem self_dual_lattice_iff_x0 (D : D7) (N : Submodule (𝓞 D.host.E) (Fin D.R.k → D.host.E)) :
+    (letI := D.host.cmStar
+     SelfDualStabiliserIndex.IsSelfDualLat (D.sp.cm.sig : D.host.E →+* D.host.E) D.sp.gram0 N) ↔
+      SelfDualLatticeIndex.IsSelfDualDefiniteLattice D N :=
+  isSelfDualLat_iff _ _ _
+
+theorem indexAt_iff (D : D7) (Lv : LevelData D) (u : D.what₂.Word) :
+    SelfDualStabiliserIndex.IndexAt D Lv u ↔ SelfDualLatticeIndex.IndexAt D Lv u :=
+  forall_congr' fun _ => forall_congr' fun _ => forall_congr' fun N =>
+    imp_congr (self_dual_lattice_iff_x0 D N) Iff.rfl
+
+theorem indexKU_iff : SelfDualStabiliserIndex.IndexKU ↔ SelfDualLatticeIndex.StabiliserLevelIndexFormula :=
+  forall_congr' fun D => forall_congr' fun Lv => forall_congr' fun u => indexAt_iff D Lv u
+
+end GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeLevel
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StabiliserSelfDualLatticeLevelIndexFormula
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.LevelIndex
+
+theorem selfDualLatticeIndex_stabiliserLevelIndexFormula : GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeIndex.StabiliserLevelIndexFormula :=
+  GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeLevel.indexKU_iff.mp
+    (GlobalTheory.LevelIndex.indexKU_of_selfDualOverBase
+      (GlobalTheory.OverCompare.overLattice_iff_selfDualOverBase.mp GlobalTheory.OverLat.overLattice))
+
+end GlobalTheory.LevelIndex
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StabiliserSelfDualLatticeLevelIndexFormulaStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.stabiliser_self_dual_lattice_level_index_formula : GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeIndex.StabiliserLevelIndexFormula := by
+  first | exact @GlobalTheory.LevelIndex.selfDualLatticeIndex_stabiliserLevelIndexFormula | exact GlobalTheory.LevelIndex.selfDualLatticeIndex_stabiliserLevelIndexFormula | (intros; apply GlobalTheory.LevelIndex.selfDualLatticeIndex_stabiliserLevelIndexFormula <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ClassNumberAll
+
+section
 
 @[expose] public section
 
@@ -50,3 +150,5 @@ theorem classNumber_all (D : D7) (Lv : LevelData D) : ClassNumberFormula₂ D Lv
   classNumber_of_index GlobalTheory.T.selfDualLattice_over_columnBaseLattice GlobalTheory.T.stabiliser_self_dual_lattice_level_index_formula D Lv
 
 end GlobalTheory.ColClassNumber
+end
+end

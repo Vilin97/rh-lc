@@ -5,38 +5,8 @@ public import Mathlib.Algebra.Polynomial.Laurent
 public import Mathlib.RingTheory.TensorProduct.Maps
 public import Mathlib.RingTheory.Valuation.ValuationRing
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AicValOfIsColim
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AltAlt
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BijectiveAlgebraMapZero
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CancelLTensor
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CofaceRel
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ComplVal
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompletionComplete
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CovOfAlgHom
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DirectedSystemTrR
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsConstOfRhoEq
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsIsWP
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsKill
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsPQ
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsRetraction
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsComplExistsUnique
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsComplNonZeroDivisor
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LaurentEqToLaurentSubInvert
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MemPowSmulTopIff
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqZeroOfCPowMemSpan
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OneTmulMemRangeIff
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfFacts
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfOfIsCompl
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PqBaseChangePolynomial
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PqLift
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdLeftEqRTensor
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmulMemRangeLTensorOfLTensorEqZero
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SolvAtStage
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorPunitEqZero
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TmulEqZeroOfMemSpan
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorsQuot
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitTZpow
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WpHomotopy
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WpPf
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FaceFaceApply
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CofaceRel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -76,6 +46,268 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CancelLTensor
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CofaceRel
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ComplVal
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompletionComplete
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CovOfAlgHom
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DirectedSystemTrR
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsConstOfRhoEq
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsIsWP
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsKill
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsPQ
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsRetraction
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsComplExistsUnique
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsComplNonZeroDivisor
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsRingHomPowPrimePow
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfFacts
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MemPowSmulTopIff
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.GroupTheory.MonoidLocalization.Away
+public import Mathlib.RingTheory.Localization.Away.Basic
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OneTmulMemRangeIff
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfFacts
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfOfIsCompl
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PqBaseChangePolynomial
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PqLift
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdLeftEqRTensor
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmulMemRangeLTensorOfLTensorEqZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SolvAtStage
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorPunitEqZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TmulEqZeroOfMemSpan
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorsQuot
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitTZpow
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WpHomotopy
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WpPf
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AltAlt
+
+section
+
+@[expose] public section
+
+open TensorProduct CrystallineSemistableComparison.D
+open scoped LaurentPolynomial
+
+namespace GlobalTheory.CompanionTheory.WpCoface
+
+theorem alt_alt (A : Type) [CommRing A] (B : Type) [CommRing B] [Algebra A B] (K : ℕ → Type)
+    [∀ n, CommRing (K n)] [∀ n, Algebra A (K n)] (ι : ∀ n, Fin n → (B →ₐ[A] K n))
+    (δ : ∀ n, Fin (n + 1) → (K n →ₐ[A] K (n + 1))) (hwp : ∀ n, IsWP (ι n))
+    (hδ : ∀ n k i, (δ n k).comp (ι n i) = ι (n + 1) (k.succAbove i)) (n : ℕ) (z : K n) :
+    alt (δ (n + 1)) (alt (δ n) z) = 0 := by
+  have hrel : ∀ (j : Fin (n + 2)) (i : Fin (n + 1)),
+      δ (n + 1) (j.succAbove i) (δ n (i.predAbove j) z) = δ (n + 1) j (δ n i z) := fun j i =>
+    DFunLike.congr_fun (coface_rel A B K ι δ hwp hδ n j i) z
+  have hexp : alt (δ (n + 1)) (alt (δ n) z) = ∑ p : Fin (n + 2) × Fin (n + 1),
+      ((-1 : ℤ) ^ (p.1 : ℕ) * (-1 : ℤ) ^ (p.2 : ℕ)) • δ (n + 1) p.1 (δ n p.2 z) := by
+    rw [Fintype.sum_prod_type]
+
+    simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_sum,
+    map_zsmul, Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => by rw [mul_comm]
+  rw [hexp]
+  refine Finset.sum_involution (fun p _ => (p.1.succAbove p.2, p.2.predAbove p.1)) ?_ ?_ ?_ ?_
+  · rintro ⟨j, i⟩ _
+    dsimp only
+    rw [hrel, GlobalTheory.CatH.DSq.sign_swap, neg_smul, add_neg_cancel]
+  · rintro ⟨j, i⟩ _ _ h
+    exact Fin.succAbove_ne j i (congrArg Prod.fst h)
+  · intro _ _; exact Finset.mem_univ _
+  · rintro ⟨j, i⟩ _
+    simp only [Fin.succAbove_succAbove_predAbove, Fin.predAbove_predAbove_succAbove]
+
+end GlobalTheory.CompanionTheory.WpCoface
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BijectiveAlgebraMapZero
+
+section
+
+@[expose] public section
+
+open TensorProduct CrystallineSemistableComparison.D
+open scoped LaurentPolynomial
+
+namespace GlobalTheory.CompanionTheory.Coproduct
+
+theorem bijective_algebraMap_zero {A B K : Type} [CommRing A] [CommRing B] [CommRing K]
+    [Algebra A B] [Algebra A K] {ι : Fin 0 → (B →ₐ[A] K)} (h : IsWP ι) :
+    Function.Bijective (algebraMap A K) := by
+  obtain ⟨z, hz, -⟩ := h.ex A (RingHom.id A) (fun i => i.elim0) (fun i => i.elim0)
+  have hzx : ∀ a, z (algebraMap A K a) = a := fun a => by
+    simpa using congrArg (fun f : A →+* A => f a) hz
+  have hid : (algebraMap A K).comp z = RingHom.id K := by
+    refine h.uniq K _ _ ?_ (fun i => i.elim0)
+    ext a
+    simp [hzx]
+  refine Function.bijective_iff_has_inverse.mpr ⟨z, hzx, fun k => ?_⟩
+  simpa using congrArg (fun f : K →+* K => f k) hid
+
+theorem bijective_one {A B K : Type} [CommRing A] [CommRing B] [CommRing K]
+    [Algebra A B] [Algebra A K] {ι : Fin 1 → (B →ₐ[A] K)} (h : IsWP ι) :
+    Function.Bijective (ι 0) := by
+  obtain ⟨z, hz, hy⟩ := h.ex B (algebraMap A B) (fun _ => RingHom.id B)
+    (fun _ => RingHom.id_comp _)
+  have hzi : ∀ b, z (ι 0 b) = b := fun b => by
+    simpa using congrArg (fun f : B →+* B => f b) (hy 0)
+  have hza : ∀ a, z (algebraMap A K a) = algebraMap A B a := fun a => by
+    simpa using congrArg (fun f : A →+* B => f a) hz
+  have hid : ((ι 0 : B →ₐ[A] K) : B →+* K).comp z = RingHom.id K := by
+    refine h.uniq K _ _ ?_ (fun i => ?_)
+    · ext a
+      simp [hza]
+    · obtain rfl : i = 0 := Subsingleton.elim _ _
+      ext b
+      simp [hzi]
+  refine Function.bijective_iff_has_inverse.mpr ⟨z, hzi, fun k => ?_⟩
+  simpa using congrArg (fun f : K →+* K => f k) hid
+
+theorem exists_coface {A B : Type} [CommRing A] [CommRing B] [Algebra A B]
+    (K : ℕ → Type) [∀ n, CommRing (K n)] [∀ n, Algebra A (K n)]
+    (ι : ∀ n, Fin n → (B →ₐ[A] K n)) (h : ∀ n, IsWP (ι n)) :
+    ∃ δ : ∀ n, Fin (n + 1) → (K n →ₐ[A] K (n + 1)),
+      ∀ n k i, (δ n k).comp (ι n i) = ι (n + 1) (k.succAbove i) := by
+  have key : ∀ (n : ℕ) (k : Fin (n + 1)), ∃ d : K n →ₐ[A] K (n + 1),
+      ∀ i, d.comp (ι n i) = ι (n + 1) (k.succAbove i) := by
+    intro n k
+    obtain ⟨z, hz, hy⟩ := (h n).ex (K (n + 1)) (algebraMap A (K (n + 1)))
+      (fun i => (ι (n + 1) (k.succAbove i) : B →+* K (n + 1)))
+      (fun i => by ext a; simp)
+    refine ⟨{ z with commutes' := fun a => congrArg (fun f : A →+* K (n + 1) => f a) hz },
+      fun i => ?_⟩
+    ext b
+    exact congrArg (fun f : B →+* K (n + 1) => f b) (hy i)
+  choose δ hδ using key
+  exact ⟨δ, hδ⟩
+
+theorem coproduct_low_and_coface : ∀ (A : Type) [CommRing A](B : Type) [CommRing B] [Algebra A B] (K : ℕ → Type) [∀ n, CommRing (K n)] [∀ n, Algebra A (K n)] (ι : ∀ n, Fin n → (B →ₐ[A] K n)), (∀ n, IsWP (ι n)) → Function.Bijective (algebraMap A (K 0)) ∧ Function.Bijective (ι 1 0) ∧ ∃ δ : ∀ n, Fin (n + 1) → (K n →ₐ[A] K (n + 1)), ∀ n k i, (δ n k).comp (ι n i) = ι (n + 1) (k.succAbove i) := by
+  intro A _ B _ _ K _ _ ι h
+  exact ⟨bijective_algebraMap_zero (h 0), bijective_one (h 1), exists_coface K ι h⟩
+
+end GlobalTheory.CompanionTheory.Coproduct
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LaurentEqToLaurentSubInvert
+
+section
+
+@[expose] public section
+
+open TensorProduct CrystallineSemistableComparison.D
+open scoped LaurentPolynomial
+
+namespace GlobalTheory.CompanionTheory.PerfectRing
+
+theorem laurent_eq_toLaurent_sub_invert {K : Type} [CommRing K] (h : K[T;T⁻¹]) :
+    ∃ α β : Polynomial K, h = Polynomial.toLaurent α -
+      LaurentPolynomial.invert (Polynomial.toLaurent β) := by
+  induction h using LaurentPolynomial.induction_on' with
+  | add f g hf hg =>
+    obtain ⟨α₁, β₁, rfl⟩ := hf
+    obtain ⟨α₂, β₂, rfl⟩ := hg
+    refine ⟨α₁ + α₂, β₁ + β₂, ?_⟩
+    simp only [map_add (f := _)]
+    ring
+  | C_mul_T n a =>
+    rcases le_total 0 n with hn | hn
+    · obtain ⟨m, rfl⟩ := Int.eq_ofNat_of_zero_le hn
+      refine ⟨Polynomial.monomial m a, 0, ?_⟩
+      simp [Polynomial.toLaurent_C_mul_T]
+    · obtain ⟨m, hm⟩ := Int.eq_ofNat_of_zero_le (neg_nonneg.2 hn)
+      refine ⟨0, -Polynomial.monomial m a, ?_⟩
+      have hn' : n = -(m : ℤ) := by omega
+      subst hn'
+      simp [Polynomial.toLaurent_C_mul_T, map_mul, LaurentPolynomial.invert_T,
+        LaurentPolynomial.invert_C]
+
+theorem b_surj : ∀ (p : ℕ) [Fact p.Prime] (K : Type) [CommRing K] (K₁ : Type) [CommRing K₁] (K₂ : Type) [CommRing K₂] (K₃ : Type) [CommRing K₃] (f g : K) (i₁ : Polynomial K →+* K₁) (i₂ : Polynomial K →+* K₂) (i₃ : K[T;T⁻¹] →+* K₃) (ρ₁ : K₁ →+* K₃) (ρ₂ : K₂ →+* K₃), Pf p K → PQ p i₁ (Ideal.span {Polynomial.C f - Polynomial.X * Polynomial.C g}) → PQ p i₂ (Ideal.span {Polynomial.C g - Polynomial.X * Polynomial.C f}) → PQ p i₃ (Ideal.span {LaurentPolynomial.C f - LaurentPolynomial.T 1 * LaurentPolynomial.C g}) → (∀ α, ρ₁ (i₁ α) = i₃ (Polynomial.toLaurent α)) → (∀ β, ρ₂ (i₂ β) = i₃ (LaurentPolynomial.invert (Polynomial.toLaurent β))) → ∀ y : K₃, ∃ (b₁ : K₁) (b₂ : K₂), y = ρ₁ b₁ - ρ₂ b₂ := by
+  intro p _ K _ K₁ _ K₂ _ K₃ _ f g i₁ i₂ i₃ ρ₁ ρ₂ _ h₁ h₂ h₃ e₁ e₂ y
+  obtain ⟨k, h, hy⟩ := h₃.pow y
+  obtain ⟨α, β, rfl⟩ := laurent_eq_toLaurent_sub_invert h
+  obtain ⟨-, -, root₁, -, -⟩ := pf_facts p K₁ h₁.pf
+  obtain ⟨-, -, root₂, -, -⟩ := pf_facts p K₂ h₂.pf
+  obtain ⟨-, -, -, inj₃, -⟩ := pf_facts p K₃ h₃.pf
+  obtain ⟨b₁, hb₁⟩ := root₁ k (i₁ α)
+  obtain ⟨b₂, hb₂⟩ := root₂ k (i₂ β)
+  obtain ⟨F, hF⟩ := GlobalTheory.CompanionTheory.Frobenius.exists_ringHom_pow_prime_pow p K₃ h₃.pf.char k
+  refine ⟨b₁, b₂, inj₃ k _ _ ?_⟩
+  have key : (ρ₁ b₁ - ρ₂ b₂) ^ p ^ k = ρ₁ (b₁ ^ p ^ k) - ρ₂ (b₂ ^ p ^ k) := by
+    rw [← hF (ρ₁ b₁ - ρ₂ b₂), map_sub F, hF, hF, map_pow, map_pow]
+  rw [hy, key, hb₁, hb₂, e₁, e₂, map_sub]
+
+end GlobalTheory.CompanionTheory.PerfectRing
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqZeroOfCPowMemSpan
+
+section
+
+@[expose] public section
+
+open TensorProduct CrystallineSemistableComparison.D
+open scoped LaurentPolynomial
+
+namespace GlobalTheory.CompanionTheory.PerfectRing
+
+theorem mul_eq_zero_of_C_pow_mem_span (K : Type) [CommRing K]
+    (hred : ∀ (x : K) (n : ℕ), x ^ n = 0 → x = 0) (f g a : K) (n : ℕ)
+    (h : (Polynomial.C a) ^ n ∈
+      Ideal.span {Polynomial.C f - Polynomial.X * Polynomial.C g}) : g * a = 0 := by
+  let L := Localization.Away g
+  let u : L := IsLocalization.Away.invSelf g
+  have hu : algebraMap K L g * u = 1 := IsLocalization.Away.mul_invSelf g
+  let φ : Polynomial K →+* L := Polynomial.eval₂RingHom (algebraMap K L) (u * algebraMap K L f)
+  have h0 : φ (Polynomial.C f - Polynomial.X * Polynomial.C g) = 0 := by
+    have e1 : φ (Polynomial.C f) = algebraMap K L f := by simp [φ]
+    have e2 : φ Polynomial.X = u * algebraMap K L f := by simp [φ]
+    have e3 : φ (Polynomial.C g) = algebraMap K L g := by simp [φ]
+    rw [map_sub, map_mul, e1, e2, e3]
+    linear_combination (-(algebraMap K L f)) * hu
+  have h1 : φ ((Polynomial.C a) ^ n) = 0 := by
+    obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 h
+    rw [← hc, map_mul, h0, mul_zero]
+  have h2 : algebraMap K L (a ^ n) = 0 := by
+    have e : φ ((Polynomial.C a) ^ n) = algebraMap K L (a ^ n) := by simp [φ]
+    rw [← e, h1]
+  obtain ⟨⟨m, hm⟩, e⟩ := (IsLocalization.map_eq_zero_iff (Submonoid.powers g) L _).1 h2
+  obtain ⟨M, rfl⟩ := hm
+  have e' : g ^ M * a ^ n = 0 := e
+  apply hred _ (M + n)
+  calc (g * a) ^ (M + n) = g ^ n * a ^ M * (g ^ M * a ^ n) := by ring
+    _ = 0 := by rw [e', mul_zero]
+
+theorem b_inj : ∀ (p : ℕ) [Fact p.Prime] (K : Type) [CommRing K] (K₁ : Type) [CommRing K₁]
+    (K₂ : Type) [CommRing K₂] (f g : K) (i₁ : Polynomial K →+* K₁) (i₂ : Polynomial K →+* K₂)
+    (r : ℕ → K) (N : ℕ), Pf p K → IsRt p r → r 0 ^ N ∈ Ideal.span {f, g} →
+    PQ p i₁ (Ideal.span {Polynomial.C f - Polynomial.X * Polynomial.C g}) →
+    PQ p i₂ (Ideal.span {Polynomial.C g - Polynomial.X * Polynomial.C f}) →
+    ∀ a : K, i₁ (Polynomial.C a) = 0 → i₂ (Polynomial.C a) = 0 → ∀ k, r k * a = 0 := by
+  intro p _ K _ K₁ _ K₂ _ f g i₁ i₂ r N hK hr hN h₁ h₂ a ha₁ ha₂
+  obtain ⟨-, hred, -, -, hroots⟩ := pf_facts p K hK
+  obtain ⟨k₁, hk₁⟩ := (h₁.ker _).1 ha₁
+  obtain ⟨k₂, hk₂⟩ := (h₂.ker _).1 ha₂
+  have hg : g * a = 0 := mul_eq_zero_of_C_pow_mem_span K hred f g a _ hk₁
+  have hf : f * a = 0 := mul_eq_zero_of_C_pow_mem_span K hred g f a _ hk₂
+  obtain ⟨u, v, huv⟩ := Ideal.mem_span_pair.1 hN
+  have h0 : r 0 ^ N * a = 0 := by
+    rw [← huv]
+    linear_combination u * hf + v * hg
+  exact (hroots r hr).2.2 N a h0
+
+end GlobalTheory.CompanionTheory.PerfectRing
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.WittExactSequences.TensCompl
+
+section
 
 @[expose] public section
 
@@ -150,3 +382,5 @@ theorem tens_compl : ∀ (R : Type) [CommRing R] (r : ℕ → R) (M : ℕ) (N : 
 theorem wp_rel : ∀ (A : Type) [CommRing A](B : Type) [CommRing B] [Algebra A B] (K : ℕ → Type) [∀ n, CommRing (K n)] [∀ n, Algebra A (K n)] (ι : ∀ n, Fin n → (B →ₐ[A] K n)) (δ : ∀ n, Fin (n + 1) → (K n →ₐ[A] K (n + 1))), (∀ n, IsWP (ι n)) → (∀ n k i, (δ n k).comp (ι n i) = ι (n + 1) (k.succAbove i)) → ∀ (n : ℕ) (k : Fin (n + 2)) (i : Fin (n + 1)), (δ (n + 1) (k.succAbove i)).comp (δ n (i.predAbove k)) = (δ (n + 1) k).comp (δ n i) := GlobalTheory.CompanionTheory.WpCoface.coface_rel
 
 end CrystallineSemistableComparison.D.Leaf
+end
+end

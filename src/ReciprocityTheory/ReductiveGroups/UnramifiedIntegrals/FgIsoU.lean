@@ -55,11 +55,202 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.CoeffOneSubstOfConstantCoeffEqZero
-public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnIso
-public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgPhInt
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.IsogenyFormulaInstance
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnWp
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.EndoZInstance
+import Formalism.TorsionNormIteration.InvIntegralOfClass
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.IsotropicVanish
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.Points
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.UnitaryInverseIdentity
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.PhNormFromDatum
+import Mathlib.Tactic.Polynomial.Basic
+import Formalism.LocalToGlobal.TorsionIntegrality.CMGoodModels.Statement
 public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormNatCastClOfNotDvd
 public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ShortWIntModel
 public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.CurveHyp
+
+-- Source module: ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnIso
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.ChartRestriction.L1
+
+open PowerSeries Formalism.G Formalism.LT Formalism.L2.Th1.CM
+open Formalism.L2.Th1
+
+section MapLemmas
+
+variable {K K' : Type} [Field K] [Field K'] (φ : K →+* K')
+
+theorem anIso_map_dblInt (e : PowerSeries K) :
+    PowerSeries.map φ (C.dblInt e) = C.dblInt (PowerSeries.map φ e) := by
+  ext n
+  simp only [C.dblInt, PowerSeries.coeff_map, PowerSeries.coeff_mk]
+  split_ifs
+  · simp
+  · simp [map_div₀]
+
+theorem anIso_constantCoeff_dblInt (e : PowerSeries K) :
+    PowerSeries.constantCoeff (C.dblInt e) = 0 := by
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
+  simp [C.dblInt]
+
+theorem anIso_map_lam (e : PowerSeries K) (s2 : K) :
+    PowerSeries.map φ (C.lam e s2) = C.lam (PowerSeries.map φ e) (φ s2) := by
+  simp only [C.lam, map_add (f := _), map_mul, map_pow, anIso_map_dblInt, PowerSeries.map_C, PowerSeries.map_X,
+    map_div₀, map_ofNat]
+
+theorem anIso_constantCoeff_lam (e : PowerSeries K) (s2 : K) :
+    PowerSeries.constantCoeff (C.lam e s2) = 0 := by
+  simp [C.lam, anIso_constantCoeff_dblInt]
+
+theorem anIso_map_sgStar [CharZero K] [CharZero K'] (e : PowerSeries K) (s2 : K) :
+    PowerSeries.map φ (C.sgStar e s2) = C.sgStar (PowerSeries.map φ e) (φ s2) := by
+  have h0 : PowerSeries.constantCoeff (-(C.lam e s2)) = 0 := by
+    simp [anIso_constantCoeff_lam]
+  have h1 : PowerSeries.map φ (C.mvExp (-(C.lam e s2)))
+      = C.mvExp (-(C.lam (PowerSeries.map φ e) (φ s2))) := by
+    unfold C.mvExp
+    have := PowerSeries.map_subst (h := φ) (PowerSeries.HasSubst.of_constantCoeff_zero' h0)
+      (PowerSeries.exp K)
+    rw [PowerSeries.map_exp] at this
+    rw [← anIso_map_lam, ← map_neg]
+    exact this
+  rw [C.sgStar, map_mul, PowerSeries.map_X, h1, C.sgStar]
+
+theorem anIso_map_wpShift (e : PowerSeries K) (c : K) :
+    PowerSeries.map φ (C.wpShift e c) = C.wpShift (PowerSeries.map φ e) (φ c) := by
+  simp only [C.wpShift, map_add (f := _), map_one, map_mul, map_pow, map_sub, PowerSeries.map_C,
+    PowerSeries.map_X]
+
+end MapLemmas
+
+theorem isogenyFormula_map {K K' : Type} [Field K] [CharZero K] [Field K'] [CharZero K']
+    (φ : K →+* K') (e : PowerSeries K) (s2 : K) {κ : Type} [Fintype κ] (c : κ → K) (al : K)
+    (h : C.IsogenyFormula e s2 c al) :
+    C.IsogenyFormula (PowerSeries.map φ e) (φ s2) (fun P => φ (c P)) (φ al) := by
+  have h' := congrArg (PowerSeries.map φ) h
+  unfold C.IsogenyFormula
+  simp only [map_mul, map_pow, map_prod, PowerSeries.map_X, PowerSeries.map_C, anIso_map_wpShift,
+    anIso_map_sgStar, ← PowerSeries.rescale_map] at h'
+  rw [map_pow]
+  exact h'
+
+theorem iso_formula (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (α : ℂ)
+    (S : Finset ℂ) (hα : α ≠ 0) (hst : F.MulStable L α) (hS : F.IsKerReps L α S) :
+    C.IsogenyFormula (A.wpReg (A.shortW (ι L.g₂) (ι L.g₃))) (ι (F.s2 L))
+      (fun P : S => ι (L.weierstrassP (P : ℂ))) (ι α) := by
+  rw [wp_bridge]
+  exact isogenyFormula_map (ι : ℂ →+* ℂ_[l]) (F.pSeries L) (F.s2 L)
+    (fun P : S => L.weierstrassP (P : ℂ)) α (F.isogenyFormulaInstance L α S hα hst hS)
+
+end ReciprocityTheory.ChartRestriction.L1
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgPhInt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.ChartRestriction.L1
+
+open PowerSeries Formalism.G Formalism.LT Formalism.L2.Th1.CM
+open Formalism.L2.Th1
+
+theorem phNorm_int {K : Type} [Field K] [CharZero K] (R : Subring K) (l linv ph : PowerSeries K)
+    (hF : C.Frame R l linv ph) (h1 : C.F1 R l linv ph) (hneg : C.PhNormAt R l linv ph (-1) (-1))
+    (h2 : (2 : K)⁻¹ ∈ R) (n : ℤ) : C.PhNormAt R l linv ph (n : K) (n : K) := by
+  have hl : C.IsLogPair l linv := hF.1
+  have hX : MvPowerSeries.constantCoeff (PowerSeries.X : MvPowerSeries Unit K) = 0 :=
+    PowerSeries.constantCoeff_X
+  have hXpt : C.IsPt R (PowerSeries.X : MvPowerSeries Unit K) := C.Pts.isPt_X
+
+  set q : K → MvPowerSeries Unit K :=
+    fun a => PowerSeries.subst (C.fmul l linv a (PowerSeries.X : MvPowerSeries Unit K)) ph with hq
+  set B : MvPowerSeries Unit K :=
+    C.be0 l linv ph (PowerSeries.X : MvPowerSeries Unit K) (PowerSeries.X : MvPowerSeries Unit K)
+    with hB
+  have hphX : PowerSeries.subst (PowerSeries.X : MvPowerSeries Unit K) ph = ph :=
+    PowerSeries.X_subst ph
+
+  have hE : ∀ m : ℤ, C.LG R (q (1 + (m : K)) - ph - q (m : K) - (m : K) • B) := by
+    intro m
+    have h := C.zLinInt K R l linv ph hF h1 m Unit _ _ hXpt hXpt
+    unfold C.Cong at h
+    rw [C.be0] at h
+    have e : C.fadd l linv (PowerSeries.X : MvPowerSeries Unit K)
+        (C.fmul l linv (m : K) (PowerSeries.X : MvPowerSeries Unit K)) =
+        C.fmul l linv (1 + (m : K)) (PowerSeries.X : MvPowerSeries Unit K) := by
+      rw [C.Pts.fmul_add hl 1 (m : K) hX, C.Pts.fmul_one hl hX]
+    rw [e, hphX] at h
+    exact h
+  have hq0 : q 0 = 0 := by
+    simp only [hq]
+    rw [C.Pts.fmul_zero_left hl, PowerSeries.subst_zero_of_constantCoeff_zero hF.2.2]
+  have hN : C.LG R (q (-1) - (((-1 : K) * (-1 : K)) • (ph : MvPowerSeries Unit K))) := by
+    have h := hneg
+    unfold C.PhNormAt C.Cong at h
+    rw [C.Pts.mulBy_eq_fmul] at h
+    exact h
+
+  have hG : C.LG R (B - (2 : K) • (ph : MvPowerSeries Unit K)) := by
+    have h := C.Calc.lg_add (hE (-1)) hN
+    have e : (q (1 + ((-1 : ℤ) : K)) - ph - q ((-1 : ℤ) : K) - ((-1 : ℤ) : K) • B) +
+        (q (-1) - (((-1 : K) * (-1 : K)) • (ph : MvPowerSeries Unit K))) =
+        B - (2 : K) • (ph : MvPowerSeries Unit K) := by
+      have e0 : (1 : K) + ((-1 : ℤ) : K) = 0 := by push_cast; ring
+      have e1 : (((-1 : ℤ) : K)) = -1 := by push_cast; ring
+      rw [e0, hq0, e1]
+      module
+    rwa [e] at h
+  have hstep : ∀ m : ℤ, C.LG R ((q (((m + 1 : ℤ)) : K) -
+      ((((m + 1 : ℤ)) : K) * (((m + 1 : ℤ)) : K)) • (ph : MvPowerSeries Unit K)) -
+      (q (m : K) - ((m : K) * (m : K)) • (ph : MvPowerSeries Unit K))) := by
+    intro m
+    have h := C.Calc.lg_add (hE m) (C.lGBinom K R Unit (m : K) (C.intBinomScalar K R m) _ hG)
+    have e1 : (((m + 1 : ℤ)) : K) = 1 + (m : K) := by push_cast; ring
+    rw [e1]
+    convert h using 1
+    module
+  have main : ∀ m : ℤ, C.LG R (q (m : K) - ((m : K) * (m : K)) • (ph : MvPowerSeries Unit K)) := by
+    intro m
+    induction m using Int.induction_on with
+    | zero =>
+      have : q ((0 : ℤ) : K) - (((0 : ℤ) : K) * ((0 : ℤ) : K)) • (ph : MvPowerSeries Unit K) = 0 := by
+        rw [Int.cast_zero, hq0]; simp
+      rw [this]; exact C.Calc.lg_zero
+    | succ i ih =>
+      have h := C.Calc.lg_add (hstep i) ih
+      rwa [sub_add_cancel] at h
+    | pred i ih =>
+      have h := C.Calc.lg_add (C.Calc.lg_neg (hstep (-(i : ℤ) - 1))) ih
+      rw [sub_add_cancel] at h
+      convert h using 1
+      abel
+  have h := main n
+  unfold C.PhNormAt C.Cong
+  rw [C.Pts.mulBy_eq_fmul]
+  exact h
+
+end ReciprocityTheory.ChartRestriction.L1
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgIsoU
+
+section
 
 @[expose] public section
 
@@ -181,3 +372,6 @@ theorem sq_formula (l : ℕ) [Fact l.Prime] (hl : l ≠ 2) (L : PeriodPair) (ι 
     (fun P => A.xS W - C (ι (L.weierstrassP P)) * X ^ 2)]
 
 end ReciprocityTheory.ChartRestriction.L1
+end
+end
+end

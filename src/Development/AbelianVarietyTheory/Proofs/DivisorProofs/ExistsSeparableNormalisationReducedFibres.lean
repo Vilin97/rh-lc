@@ -4,13 +4,12 @@ public import GroundTheory.FunctionField.PlaceDefs
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.Kaehler.Basic
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RingKrullDimQuotientEqOfMemMinimalPrimes
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NoetherNormalizationFiniteAevalPowAddStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedFibresAlmostAllOfSeparableDedekindCurveStatement
-public import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.KaehlerPlace
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -26,17 +25,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.NoetherNormalization
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -57,7 +49,237 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.DedekindDomain.Basic
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+public import Mathlib.RingTheory.DedekindDomain.Different
+import Mathlib.RingTheory.Polynomial.IsIntegral
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.KaehlerPlace
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.KrullDimension.Field
+import Mathlib.RingTheory.KrullDimension.Polynomial
+import Mathlib.RingTheory.NoetherNormalization
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NoetherNormalizationFiniteAevalPowAdd
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem noether_trick_monic {k : Type} [Field k] (f : Polynomial (Polynomial k)) (hf : f.Monic)
+    (M : ℕ) (hM0 : M ≠ 0) (hM : ∀ i, (f.coeff i).natDegree < M) :
+    (f.eval₂ (Polynomial.mapRingHom (Polynomial.C : k →+* Polynomial k))
+      ((Polynomial.X : Polynomial (Polynomial k)) ^ M - Polynomial.C Polynomial.X)).Monic := by
+  set r : Polynomial (Polynomial k) := X ^ M - C X with hr
+  have hrm : r.Monic := monic_X_pow_sub_C _ hM0
+  have hrd : r.natDegree = M := natDegree_X_pow_sub_C _
+  rw [eval₂_eq_sum_range, Finset.sum_range_succ]
+  have hlead : f.coeff f.natDegree = 1 := hf
+  rw [hlead, map_one, one_mul]
+  apply Monic.add_of_right (hrm.pow _)
+  rw [degree_eq_natDegree (hrm.pow _).ne_zero, hrm.natDegree_pow, hrd]
+  refine lt_of_le_of_lt (degree_sum_le _ _) ?_
+  rw [Finset.sup_lt_iff (WithBot.bot_lt_coe _)]
+  intro i hi
+  rw [Finset.mem_range] at hi
+  refine lt_of_le_of_lt degree_le_natDegree ?_
+  rw [Nat.cast_lt]
+  have h1 : (mapRingHom (C : k →+* Polynomial k) (f.coeff i)).natDegree ≤ (f.coeff i).natDegree := by
+    rw [coe_mapRingHom]; exact natDegree_map_le
+  have h2 : (r ^ i).natDegree ≤ i * M := by
+    rw [← hrd]; exact natDegree_pow_le
+  have h3 := hM i
+  have h4 : (i + 1) * M ≤ f.natDegree * M := Nat.mul_le_mul_right M hi
+  calc _ ≤ _ := natDegree_mul_le
+    _ ≤ (f.coeff i).natDegree + i * M := Nat.add_le_add h1 h2
+    _ < f.natDegree * M := by nlinarith
+
+theorem noether_trick : ∀ (k A : Type) [Field k] [CommRing A] [Algebra k A] (t a : A),
+    (Polynomial.aeval (R := k) t).Finite → ∃ M : ℕ, (Polynomial.aeval (R := k) (t ^ M + a)).Finite := by
+  intro k A _ _ _ t a ht
+  have hint : (aeval (R := k) t).toRingHom.IsIntegral := RingHom.Finite.to_isIntegral ht
+  obtain ⟨f, hfm, hf0⟩ := hint (-a)
+  set M := 1 + ∑ i ∈ Finset.range (f.natDegree + 1), (f.coeff i).natDegree with hMdef
+  have hM : ∀ i, (f.coeff i).natDegree < M := by
+    intro i
+    by_cases hi : i ≤ f.natDegree
+    · have := Finset.single_le_sum (f := fun i => (f.coeff i).natDegree)
+        (fun _ _ => Nat.zero_le _) (Finset.mem_range.2 (Nat.lt_succ_of_le hi))
+      have h' : (f.coeff i).natDegree ≤ ∑ j ∈ Finset.range (f.natDegree + 1), (f.coeff j).natDegree := this
+      omega
+    · rw [coeff_eq_zero_of_natDegree_lt (by omega)]; simp only [natDegree_zero]; omega
+  refine ⟨M, ?_⟩
+  set φ : Polynomial k →+* A := (aeval (R := k) (t ^ M + a)).toRingHom with hφ
+  set q : Polynomial (Polynomial k) :=
+    f.eval₂ (mapRingHom (C : k →+* Polynomial k)) (X ^ M - C X) with hqdef
+  have hq : q.Monic := noether_trick_monic f hfm M (by omega) hM
+  set ψ : Polynomial (Polynomial k) →+* A := eval₂RingHom φ t with hψ
+  have hcomp : ψ.comp (mapRingHom C) = (aeval (R := k) t).toRingHom := by
+    apply Polynomial.ringHom_ext
+    · intro c; simp [ψ, φ]
+    · simp [ψ, φ]
+  have hψq : ψ q = 0 := by
+    simp only [hqdef]
+    rw [hom_eval₂, hcomp]
+    have : ψ (X ^ M - C X) = -a := by simp [ψ, φ]
+    rw [this]; exact hf0
+  have hqt : q.eval₂ φ t = 0 := by simpa [ψ] using hψq
+  let L : AdjoinRoot q →+* A := AdjoinRoot.lift φ t hqt
+  have hL : L.comp (AdjoinRoot.mk q) = ψ := by
+    ext g <;> simp [L, ψ, AdjoinRoot.lift_mk]
+  have hψfin : ψ.Finite := by
+    apply RingHom.Finite.of_comp_finite (f := mapRingHom (C : k →+* Polynomial k))
+    rw [hcomp]; exact ht
+  have hLfin : L.Finite := by
+    apply RingHom.Finite.of_comp_finite (f := AdjoinRoot.mk q)
+    rw [hL]; exact hψfin
+  have hof : (AdjoinRoot.of q).Finite := by
+    haveI : Module.Finite (Polynomial k) (AdjoinRoot q) := (AdjoinRoot.powerBasis' hq).finite
+    exact RingHom.finite_algebraMap.mpr this
+  have hφeq : L.comp (AdjoinRoot.of q) = φ := by
+    ext c <;> simp [L, AdjoinRoot.lift_of]
+  have : φ.Finite := by rw [← hφeq]; exact hLfin.comp hof
+  exact this
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NoetherNormalizationFiniteAevalPowAddStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.noether_normalization_finite_aeval_pow_add : ∀ (k A : Type) [Field k] [CommRing A] [Algebra k A] (t a : A), (Polynomial.aeval (R := k) t).Finite → ∃ M : ℕ, (Polynomial.aeval (R := k) (t ^ M + a)).Finite := by
+  first | exact @GlobalTheory.noether_trick | exact GlobalTheory.noether_trick | (intros; apply GlobalTheory.noether_trick <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedFibresAlmostAllOfSeparableDedekindCurve
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem reduced_fibres_almost_all_sep : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CommRing A] [IsDedekindDomain A] [Algebra k A] (y : A), (Polynomial.aeval (R := k) y).Finite → Function.Injective (Polynomial.aeval (R := k) y) → Algebra.IsSeparable (IntermediateField.adjoin k {algebraMap A (FractionRing A) y}) (FractionRing A) → ∃ δ : k[X], δ ≠ 0 ∧ ∀ α : k, δ.eval α ≠ 0 → ∀ Q : Ideal A, Q.IsMaximal → y - algebraMap k A α ∉ Q ^ 2 := by
+  intro k A _ _ _ _ _ y hfin hinj hsep
+  letI : Algebra k[X] A := (Polynomial.aeval (R := k) y).toRingHom.toAlgebra
+  have hmap : ∀ p : k[X], algebraMap k[X] A p = Polynomial.aeval y p := fun p => rfl
+  haveI : IsScalarTower k k[X] A := IsScalarTower.of_algebraMap_eq (fun c => by
+    rw [hmap, Polynomial.algebraMap_apply, Polynomial.aeval_C]; rfl)
+  haveI : Module.Finite k[X] A := hfin
+  haveI : FaithfulSMul k[X] A := (faithfulSMul_iff_algebraMap_injective k[X] A).mpr hinj
+  letI : Algebra (FractionRing k[X]) (FractionRing A) := FractionRing.liftAlgebra k[X] (FractionRing A)
+  haveI : IsScalarTower k[X] (FractionRing k[X]) (FractionRing A) :=
+    FractionRing.isScalarTower_liftAlgebra k[X] (FractionRing A)
+  set L := FractionRing A
+  set K := FractionRing k[X]
+  set ybar : L := algebraMap A L y
+  set E := IntermediateField.adjoin k {ybar}
+  have hpoly : ∀ p : k[X], algebraMap K L (algebraMap k[X] K p) = algebraMap A L (Polynomial.aeval y p) := by
+    intro p
+    rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply k[X] A L]; rfl
+  have hpolyE : ∀ p : k[X], algebraMap A L (Polynomial.aeval y p) ∈ E := by
+    intro p
+    have : algebraMap A L (Polynomial.aeval y p) = Polynomial.aeval ybar p := by
+      rw [Polynomial.aeval_algebraMap_apply]
+    rw [this]
+    have hy : ybar ∈ E := IntermediateField.mem_adjoin_simple_self k ybar
+    have := Polynomial.aeval_algHom_apply E.val (⟨ybar, hy⟩ : E) p
+    simp only [IntermediateField.coe_val] at this
+    rw [show ybar = ((⟨ybar, hy⟩ : E) : L) from rfl, this]
+    exact (Polynomial.aeval (⟨ybar, hy⟩ : E) p).2
+  have hrange : ∀ z : K, algebraMap K L z ∈ E := by
+    intro z
+    obtain ⟨a, b, _, rfl⟩ := IsFractionRing.div_surjective (A := k[X]) z
+    rw [map_div₀, hpoly, hpoly]
+    exact div_mem (hpolyE a) (hpolyE b)
+  let f : K →+* E := (algebraMap K L).codRestrict E hrange
+  have hf : ∀ z : K, (f z : L) = algebraMap K L z := fun z => rfl
+  let S : IntermediateField k L := (algebraMap K L).fieldRange.toIntermediateField (fun c =>
+    ⟨algebraMap k[X] K (Polynomial.C c), by
+      rw [hpoly, Polynomial.aeval_C, ← IsScalarTower.algebraMap_apply]⟩)
+  have hES : E ≤ S := IntermediateField.adjoin_simple_le_iff.2
+    ⟨algebraMap k[X] K Polynomial.X, by rw [hpoly, Polynomial.aeval_X]⟩
+  have hsurj : Function.Surjective f := by
+    intro e
+    obtain ⟨z, hz⟩ := hES e.2
+    exact ⟨z, Subtype.ext (by rw [hf]; exact hz)⟩
+  let e₁ : E ≃+* K := (RingEquiv.ofBijective f ⟨f.injective, hsurj⟩).symm
+  have he : (algebraMap K L).comp (e₁ : E →+* K) = (RingEquiv.refl L : L →+* L).comp (algebraMap E L) := by
+    ext x
+    simp only [RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe, RingEquiv.refl_apply]
+    rw [← hf]
+    change ((RingEquiv.ofBijective f ⟨f.injective, hsurj⟩) ((RingEquiv.ofBijective f ⟨f.injective, hsurj⟩).symm x) : L) = _
+    rw [RingEquiv.apply_symm_apply]; rfl
+  haveI : Algebra.IsSeparable K L := Algebra.IsSeparable.of_equiv_equiv e₁ (RingEquiv.refl L) he
+  have hD := differentIdeal_ne_bot (A := k[X]) (B := A)
+  obtain ⟨d, hd, hd0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hD
+  have hc := Ideal.comap_ne_bot_of_integral_mem hd0 hd (Algebra.IsIntegral.isIntegral (R := k[X]) d)
+  obtain ⟨δ, hδ, hδ0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hc
+  refine ⟨δ, hδ0, fun α hα Q hQ hmem' => hα ?_⟩
+  have hmem : algebraMap k[X] A (X - C α) ∈ Q ^ 2 := by
+    rw [hmap, map_sub, Polynomial.aeval_X, Polynomial.aeval_C]; exact hmem'
+  set p : Ideal k[X] := Ideal.span {X - C α} with hpdef
+  haveI hpmax : p.IsMaximal := PrincipalIdealRing.isMaximal_of_irreducible (irreducible_X_sub_C α)
+  have hp0 : p ≠ ⊥ := by
+    rw [hpdef, Ne, Ideal.span_singleton_eq_bot]; exact X_sub_C_ne_zero α
+  have hP : Q ^ 2 ∣ p.map (algebraMap k[X] A) := by
+    rw [Ideal.dvd_iff_le, hpdef, Ideal.map_span, Ideal.span_le]
+    rintro _ ⟨y, hy, rfl⟩
+    rw [Set.mem_singleton_iff] at hy
+    subst hy; exact hmem
+  have hdiv := pow_sub_one_dvd_differentIdeal (A := k[X]) (B := A) Q 2 hp0 hP
+  rw [show 2 - 1 = 1 from rfl, pow_one, Ideal.dvd_iff_le] at hdiv
+  have hδQ : δ ∈ Q.comap (algebraMap k[X] A) := hdiv hδ
+  have hXQ : X - C α ∈ Q.comap (algebraMap k[X] A) :=
+    Ideal.mem_comap.mpr (Ideal.pow_le_self two_ne_zero hmem)
+  have hle : p ≤ Q.comap (algebraMap k[X] A) := by
+    rw [hpdef, Ideal.span_le, Set.singleton_subset_iff]; exact hXQ
+  have heq : p = Q.comap (algebraMap k[X] A) :=
+    hpmax.eq_of_le (hQ.isPrime.comap _).ne_top hle
+  rw [← heq, hpdef, Ideal.mem_span_singleton, dvd_iff_isRoot] at hδQ
+  exact hδQ
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedFibresAlmostAllOfSeparableDedekindCurveStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.reduced_fibres_almost_all_of_separable_dedekind_curve : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CommRing A] [IsDedekindDomain A] [Algebra k A] (y : A), (Polynomial.aeval (R := k) y).Finite → Function.Injective (Polynomial.aeval (R := k) y) → Algebra.IsSeparable (IntermediateField.adjoin k {algebraMap A (FractionRing A) y}) (FractionRing A) → ∃ δ : k[X], δ ≠ 0 ∧ ∀ α : k, δ.eval α ≠ 0 → ∀ Q : Ideal A, Q.IsMaximal → y - algebraMap k A α ∉ Q ^ 2 := by
+  first | (exact @GlobalTheory.reduced_fibres_almost_all_sep) | (exact GlobalTheory.reduced_fibres_almost_all_sep) | (intros; apply GlobalTheory.reduced_fibres_almost_all_sep  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSeparableNormalisationReducedFibres
+
+section
 
 @[expose] public section
 
@@ -220,3 +442,5 @@ theorem exists_separable_normalisation_reduced_fibres : ∀ (k A : Type) [Field 
   exact ⟨y, hy, GlobalTheory.T.reduced_fibres_almost_all_of_separable_dedekind_curve k A y hy (aeval_injective_of_finite_of_not_isField k A y hy hA) this⟩
 
 end GlobalTheory
+end
+end

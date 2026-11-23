@@ -4,18 +4,15 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.TemperedEigenvalueNorms.Centred
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.CongrProd
 import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PCentred
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PComb
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PNueq
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PReorder
-import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PUnit
-import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.GenericUnitaryDualGLOfTwo
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.BernsteinExponentBounds.ExpBound
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.GenericIrreducibility.GenericUnitary.IsGenericOfEquiv
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,6 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,7 +45,274 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.EquivFin
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsListPairwiseNotRel
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.TemperedEigenvalueNorms.AddOneLeOfPrecedes
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivMultiProdOne
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LanglandsQuotientOfSpehTypeProductIsL
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SquareIntegrableSegments.SegmentProductEquivalence.CsReorderord
+public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.ComplementarySeries.ConjDual
+public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.GenericUnitaryDualGLOfTwo
+import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PUnit
+import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.GenericUnitaryDualGLOfTwo
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.BernsteinExponentBounds.ExpBound
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.GenericIrreducibility.GenericUnitary.IsGenericOfEquiv
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PComb
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.Gud.Pf
+
+theorem list_symmetric_pair_decomposition {α : Type*} : ∀ (n : ℕ) (l : List (α × ℝ)), l.length = n →
+    List.Perm (l.map (fun p => (p.1, -p.2))) l →
+    ∃ (a : List α) (b : List (α × ℝ)), (∀ p ∈ b, 0 < p.2 ∧ p ∈ l) ∧
+      List.Perm (a.map (fun x => (x, (0 : ℝ))) ++ b.flatMap (fun p => [p, (p.1, -p.2)])) l := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+  intro l hlen hl
+  rcases l with _ | ⟨p, l'⟩
+  · exact ⟨[], [], by simp, by simp⟩
+  by_cases h0 : p.2 = 0
+  · have hp : ((p.1, -p.2) : α × ℝ) = p := Prod.ext rfl (by simp [h0])
+    have hl' : List.Perm (l'.map (fun p => (p.1, -p.2))) l' := by
+      rw [List.map_cons, hp] at hl
+      exact hl.cons_inv
+    obtain ⟨a', b', hb', hperm'⟩ := ih l'.length (by simp at hlen; omega) l' rfl hl'
+    have hp0 : ((p.1, (0 : ℝ)) : α × ℝ) = p := Prod.ext rfl h0.symm
+    refine ⟨p.1 :: a', b', fun q hq => ⟨(hb' q hq).1, List.mem_cons_of_mem _ (hb' q hq).2⟩, ?_⟩
+    simp only [List.map_cons, List.cons_append, hp0]
+    exact hperm'.cons p
+  · have hnp : ((p.1, -p.2) : α × ℝ) ≠ p := by
+      intro h
+      have h2 := congrArg Prod.snd h
+      simp only at h2
+      exact h0 (by linarith)
+    have hmem : ((p.1, -p.2) : α × ℝ) ∈ p :: l' := hl.subset (by simp)
+    have hmem' : ((p.1, -p.2) : α × ℝ) ∈ l' := (List.mem_cons.mp hmem).resolve_left hnp
+    obtain ⟨s, t, rfl⟩ := List.append_of_mem hmem'
+    have hmid : List.Perm (p :: (s ++ (p.1, -p.2) :: t)) (p :: (p.1, -p.2) :: (s ++ t)) :=
+      List.perm_middle.cons p
+    have h1 : List.Perm ((p :: (p.1, -p.2) :: (s ++ t)).map (fun p => (p.1, -p.2)))
+        (p :: (p.1, -p.2) :: (s ++ t)) :=
+      ((hmid.map _).symm.trans hl).trans hmid
+    simp only [List.map_cons, neg_neg, Prod.mk.eta] at h1
+    have h2 : List.Perm ((s ++ t).map (fun p => (p.1, -p.2))) (s ++ t) :=
+      ((h1.trans (List.Perm.swap ((p.1, -p.2) : α × ℝ) p (s ++ t))).cons_inv).cons_inv
+    obtain ⟨a'', b'', hb'', hperm''⟩ :=
+      ih (s ++ t).length (by simp only [List.length_cons, List.length_append] at hlen ⊢; omega) (s ++ t) rfl h2
+    have hin : ∀ q ∈ b'', q ∈ p :: (s ++ (p.1, -p.2) :: t) := by
+      intro q hq
+      have hq' := (hb'' q hq).2
+      simp only [List.mem_cons, List.mem_append] at hq' ⊢
+      tauto
+    rcases lt_or_gt_of_ne h0 with hneg | hpos
+    · refine ⟨a'', (p.1, -p.2) :: b'', ?_, ?_⟩
+      · intro q hq
+        rcases List.mem_cons.mp hq with rfl | hq
+        · exact ⟨by simp only; linarith, hmem⟩
+        · exact ⟨(hb'' q hq).1, hin q hq⟩
+      · simp only [List.flatMap_cons, List.cons_append, List.nil_append, neg_neg, Prod.mk.eta]
+        exact List.perm_middle.trans ((List.perm_middle.cons _).trans (((hperm''.cons _).cons _).trans
+          ((List.Perm.swap p ((p.1, -p.2) : α × ℝ) (s ++ t)).trans hmid.symm)))
+    · refine ⟨a'', p :: b'', ?_, ?_⟩
+      · intro q hq
+        rcases List.mem_cons.mp hq with rfl | hq
+        · exact ⟨hpos, List.mem_cons_self ..⟩
+        · exact ⟨(hb'' q hq).1, hin q hq⟩
+      · simp only [List.flatMap_cons, List.cons_append, List.nil_append]
+        exact List.perm_middle.trans ((List.perm_middle.cons _).trans (((hperm''.cons _).cons _).trans
+          hmid.symm))
+
+theorem comb {α : Type*} (l : List (α × ℝ)) (hl : List.Perm (l.map (fun p => (p.1, -p.2))) l) :
+    ∃ (a : List α) (b : List (α × ℝ)), (∀ p ∈ b, 0 < p.2 ∧ p ∈ l) ∧
+      List.Perm (a.map (fun x => (x, (0 : ℝ))) ++ b.flatMap (fun p => [p, (p.1, -p.2)])) l := list_symmetric_pair_decomposition l.length l rfl hl
+
+theorem perm_ofFn {β : Type*} {h : ℕ} (x : Fin h → β) (l : List β) (hp : List.Perm l (List.ofFn x)) :
+    ∃ (y : Fin h → β), List.ofFn y = l ∧ ∃ σ : Equiv.Perm (Fin h), y = fun j => x (σ j) := by
+  classical
+  have hlen : l.length = h := by rw [hp.length_eq, List.length_ofFn]
+  subst hlen
+  refine ⟨l.get, List.ofFn_get l, ?_⟩
+  have key : ∀ (f : Fin l.length → β) (c : β), Fintype.card {a // f a = c} = (List.ofFn f).count c := by
+    intro f c
+    rw [Fintype.card_subtype, ← Multiset.coe_count, ← Fin.univ_val_map, Multiset.count_map,
+      Finset.card_def, Finset.filter_val]
+    congr 1
+    exact Multiset.filter_congr (fun a _ => eq_comm)
+  have hcard : ∀ c, Fintype.card {a // l.get a = c} = Fintype.card {b // x b = c} := by
+    intro c
+    rw [key, key, List.ofFn_get, hp.count_eq]
+  exact ⟨Equiv.ofFiberEquiv (fun c => Fintype.equivOfCardEq (hcard c)),
+    funext fun j => (Equiv.ofFiberEquiv_map _ j).symm⟩
+
+end PositivityTheory.Gud.Pf
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.LanglandsClassification.Bridge
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.JHMult ValuativeRel
+
+namespace PositivityTheory.Lit1
+
+section
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem eq_of_isLSeg {Δ : Segment k} {x y : IrrGL (k := k)} (hx : IsLSeg Δ x.rep) (hy : IsLSeg Δ y.rep) : x = y := by
+  obtain ⟨n, a⟩ := x
+  obtain ⟨m, b⟩ := y
+  have hn : n = m := hx.deg_eq.symm.trans hy.deg_eq
+  subst hn
+  obtain ⟨e⟩ := hx.unique hy
+  have hab : a = b := Quotient.out_equiv_out.mp ⟨e.symm⟩
+  rw [hab]
+
+variable {Lseg : Segment k → IrrGL (k := k)} {L : Multiset (Segment k) → IrrGL (k := k)} (h1 : ∀ Δ, IsLSeg Δ (Lseg Δ).rep)
+  (h3 : ∀ (𝔪 : Multiset (Segment k)) (h : ℕ) (Δ : Fin h → Segment k), IsOrderedForm Δ 𝔪 →
+    ∃ hd : ∑ a, (Lseg (Δ a)).1 = (L 𝔪).1, IsCosocle (L 𝔪).rep (prodIrr (fun a => Lseg (Δ a)) hd))
+
+
+
+end
+
+end PositivityTheory.Lit1
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PNueq
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL ValuativeRel
+
+namespace PositivityTheory.Gud.Pf
+
+section Local
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem eq_of_nu_eq {Δ Δ' : Segment k} (hΔ : PositivityTheory.UdReth2.IsCentred Δ) (hΔ' : PositivityTheory.UdReth2.IsCentred Δ')
+    {s s' : ℝ} (h : Δ.nu (s : ℂ) = Δ'.nu (s' : ℂ)) : s = s' ∧ Δ = Δ' := by
+  have nn : ∀ (Γ : Segment k) (a b : ℂ), (Γ.nu a).nu b = Γ.nu (a + b) := by
+    intro Γ a b
+    apply GlobalTheory.SmGL.Segment.ext_first
+    · show (Γ.first.nu a).nu b = Γ.first.nu (a + b)
+      exact GlobalTheory.LocGL.IrrGL.nu_nu _ _ _
+    · rfl
+  have n0 : ∀ (Γ : Segment k), Γ.nu 0 = Γ := by
+    intro Γ
+    apply GlobalTheory.SmGL.Segment.ext_first
+    · show Γ.first.nu 0 = Γ.first
+      exact GlobalTheory.LocGL.IrrGL.nu_zero _
+    · rfl
+  have pr : ∀ (Γ : Segment k), Γ.Precedes (Γ.nu 1) := by
+    intro Γ
+    rw [GlobalTheory.SmGL.Segment.precedes_iff]
+    refine ⟨1, Nat.one_pos, Γ.len_pos, ?_, ?_⟩
+    · show Γ.len < 1 + Γ.len
+      omega
+    · show Γ.first.nu 1 = Γ.first.nu ((1 : ℕ) : ℂ)
+      simp
+  have le1 : s ≤ s' := by
+    have hp : (Δ.nu (s : ℂ)).Precedes (Δ'.nu ((s' + 1 : ℝ) : ℂ)) := by
+      have : Δ'.nu ((s' + 1 : ℝ) : ℂ) = (Δ.nu (s : ℂ)).nu 1 := by
+        rw [h, nn]
+        push_cast
+        rfl
+      rw [this]
+      exact pr _
+    have := PositivityTheory.UdReth2.add_one_le_of_precedes Δ Δ' hΔ hΔ' s (s' + 1) hp
+    linarith
+  have le2 : s' ≤ s := by
+    have hp : (Δ'.nu (s' : ℂ)).Precedes (Δ.nu ((s + 1 : ℝ) : ℂ)) := by
+      have : Δ.nu ((s + 1 : ℝ) : ℂ) = (Δ'.nu (s' : ℂ)).nu 1 := by
+        rw [← h, nn]
+        push_cast
+        rfl
+      rw [this]
+      exact pr _
+    have := PositivityTheory.UdReth2.add_one_le_of_precedes Δ' Δ hΔ' hΔ s' (s + 1) hp
+    linarith
+  have hs : s = s' := le_antisymm le1 le2
+  refine ⟨hs, ?_⟩
+  subst hs
+  have := congrArg (fun Γ => Γ.nu (-(s : ℂ))) h
+  simp only [nn, add_neg_cancel, n0] at this
+  exact this
+
+theorem eq_of_isLSeg' {Δ : Segment k} {δ δ' : IrrGL (k := k)} (h : IsLSeg Δ δ.rep) (h' : IsLSeg Δ δ'.rep) : δ = δ' :=
+  PositivityTheory.Lit1.eq_of_isLSeg h h'
+
+end Local
+
+end PositivityTheory.Gud.Pf
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.PReorder
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL ValuativeRel
+
+namespace PositivityTheory.Gud.Pf
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem reorder {h N : ℕ} (δ : Fin h → IrrGL (k := k)) (Δ : Fin h → Segment k) (s : Fin h → ℝ)
+    (hL : ∀ j, IsLSeg (Δ j) (δ j).rep) (hc : ∀ j, PositivityTheory.UdReth2.IsCentred (Δ j)) (hs : ∀ j, |s j| < 1 / 2)
+    (σ : Equiv.Perm (Fin h)) (hd : ∑ j, ((δ j).nu (s j)).1 = N) (hd' : ∑ j, ((δ (σ j)).nu (s (σ j))).1 = N) :
+    Nonempty ((prodIrr (fun j => (δ j).nu (s j)) hd).Equiv (prodIrr (fun j => (δ (σ j)).nu (s (σ j))) hd')) := by
+  have hnp : ∀ i j, ¬ ((Δ i).nu ((s i : ℝ) : ℂ)).Precedes ((Δ j).nu ((s j : ℝ) : ℂ)) := by
+    intro i j hp
+    have h1 := PositivityTheory.UdReth2.add_one_le_of_precedes (Δ i) (Δ j) (hc i) (hc j) (s i) (s j) hp
+    have := hs i
+    have := hs j
+    rw [abs_lt] at *
+    linarith
+  exact PositivityTheory.PfEss.Zc2.cs_reorderord PositivityTheory.RgGu.NR.ConjDual.irrAdm' (GlobalTheory.RgGu.Holds.lUnlinkedComm_holds k)
+    (fun j => (Δ j).nu ((s j : ℝ) : ℂ)) σ (fun j => (δ j).nu (s j)) hd hd'
+    (fun i j _ => hnp i j) (fun i j _ => hnp (σ i) (σ j)) (fun j => GlobalTheory.isLSeg_nu (hL j) _)
+
+end PositivityTheory.Gud.Pf
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.GenericUnitaryDual.GenericUnitaryDualGLHolds
+
+section
 
 @[expose] public section
 
@@ -151,4 +416,6 @@ theorem genericUnitaryDualGL_holds : GlobalTheory.Published.GenericUnitaryDualGL
 
 end PositivityTheory.Gud.Fin
 
+end
+end
 end

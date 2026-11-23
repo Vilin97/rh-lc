@@ -16,16 +16,15 @@ public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.RulePow
 public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsLevelGoodAtAllPrimesAndIdx
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.LevelOfSplitAndLevelCoeffExist
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoDatum
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoExt
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoFrame
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoHost
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoModel
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoPoint
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoSquare
+public import Formalism.LocalToGlobal.ProjectiveLattices.OneLtAbsNormReal
+public import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.CompletionDVR
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -38,7 +37,7 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -47,7 +46,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -57,8 +56,29 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoFrame
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoHost
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.FibreFramesOnModels
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaKeyScalarIsUnitOnIntegralModelsStatement
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsValuationSubringComapEqNonunits
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.CompactifiedModuliPartOne
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsModuliSchemePolarizedAbelianLevel
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SemiAbelianModelDeterminedByGenericFibre
+import Formalism.LocalToGlobal.ProjectiveLattices.ExtPtUnique
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.Valuation.LocalSubring
+import Mathlib.Tactic.Linter.Style
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.CubePullbacks.CubePull
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.UnifAt
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoPoint
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoSquare
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.OneArc
@@ -66,7 +86,210 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.Uni
 public import Development.AbelianVarietyTheory.Definitions.CMLattices.IsDiffOf
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsThetaMeanSquareNorm
 import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.PermFinTwoUniv
-import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoExt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open IsLocalRing Formalism.L2.Pj
+
+namespace PositivityTheory.HtPt.Kftwo
+
+theorem exists_completion (W : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [CharZero W] :
+    ∃ (T : CDVR) (g : W →+* T.V), IsLocalHom g ∧ Function.Injective g := by
+  obtain ⟨⟨hdom, hdvr⟩, hcpl, hinj, hloc, -⟩ := ReciprocityTheory.CA.Pt.completionDVR W
+  haveI : CharZero (AdicCompletion (maximalIdeal W) W) := charZero_of_injective_algebraMap hinj
+  exact ⟨CDVR.mk (AdicCompletion (maximalIdeal W) W),
+    algebraMap W (AdicCompletion (maximalIdeal W) W), hloc, hinj⟩
+
+theorem exists_cdvr_of_isIntegral {V A : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CommRing A]
+    [IsDedekindDomain A] [CharZero A] [Algebra V A] [Algebra.IsIntegral V A] (hinj : Function.Injective (algebraMap V A)) :
+    ∃ (T : CDVR) (g : A →+* T.V), IsLocalHom (g.comp (algebraMap V A)) ∧ Function.Injective g := by
+  have hker : RingHom.ker (algebraMap V A) ≤ maximalIdeal V := by
+    rw [(RingHom.injective_iff_ker_eq_bot _).mp hinj]
+    exact bot_le
+  obtain ⟨P, hPmax, hPc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (maximalIdeal V) hker
+  haveI : P.IsPrime := hPmax.isPrime
+  have hP0 : P ≠ ⊥ := by
+    rintro rfl
+    apply IsDiscreteValuationRing.not_a_field V
+    rw [← hPc, Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).mp hinj]
+  haveI : IsDomain (Localization.AtPrime P) :=
+    IsLocalization.isDomain_localization (Ideal.primeCompl_le_nonZeroDivisors P)
+  haveI : IsDiscreteValuationRing (Localization.AtPrime P) :=
+    IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain A hP0 (Localization.AtPrime P)
+  have hAinj : Function.Injective (algebraMap A (Localization.AtPrime P)) :=
+    IsLocalization.injective (Localization.AtPrime P) (Ideal.primeCompl_le_nonZeroDivisors P)
+  haveI : CharZero (Localization.AtPrime P) := charZero_of_injective_algebraMap hAinj
+  obtain ⟨T, g0, hg0, hg0inj⟩ := exists_completion (Localization.AtPrime P)
+  refine ⟨T, g0.comp (algebraMap A (Localization.AtPrime P)), ⟨fun x hx => ?_⟩, hg0inj.comp hAinj⟩
+  simp only [RingHom.comp_apply] at hx
+  have h1 : IsUnit (algebraMap A (Localization.AtPrime P) (algebraMap V A x)) := isUnit_of_map_unit g0 _ hx
+  rw [IsLocalization.AtPrime.isUnit_to_map_iff (Localization.AtPrime P) P] at h1
+  by_contra hxu
+  have hx' : x ∈ maximalIdeal V := hxu
+  rw [← hPc] at hx'
+  exact h1 (Ideal.mem_comap.mp hx')
+
+theorem exists_cdvr {V K K' : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [CharZero K]
+    [Algebra V K] [IsFractionRing V K] [Field K'] [Algebra K K'] [FiniteDimensional K K'] :
+    ∃ (T : CDVR) (g : V →+* T.V) (j : K' →+* T.Fr), IsLocalHom g ∧
+      (algebraMap T.V T.Fr).comp g = (j.comp (algebraMap K K')).comp (algebraMap V K) := by
+  letI : Algebra V K' := ((algebraMap K K').comp (algebraMap V K)).toAlgebra
+  haveI : IsScalarTower V K K' := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI : CharZero K' := charZero_of_injective_algebraMap (algebraMap K K').injective
+  haveI : IsDedekindDomain (integralClosure V K') := integralClosure.isDedekindDomain V K K'
+  haveI : IsFractionRing (integralClosure V K') K' :=
+    integralClosure.isFractionRing_of_finite_extension K K'
+  haveI : CharZero (integralClosure V K') :=
+    ⟨fun m n h => Nat.cast_injective (R := K')
+      (by simpa using congrArg (algebraMap (integralClosure V K') K') h)⟩
+  have hVK' : Function.Injective (algebraMap V K') :=
+    (algebraMap K K').injective.comp (IsFractionRing.injective V K)
+  have hinj : Function.Injective (algebraMap V (integralClosure V K')) := by
+    refine Function.Injective.of_comp (f := algebraMap (integralClosure V K') K') ?_
+    rw [← RingHom.coe_comp, ← IsScalarTower.algebraMap_eq]
+    exact hVK'
+  obtain ⟨T, g, hg, hginj⟩ := exists_cdvr_of_isIntegral hinj
+  have hjinj : Function.Injective ((algebraMap T.V T.Fr).comp g) :=
+    (IsFractionRing.injective T.V T.Fr).comp hginj
+  refine ⟨T, g.comp (algebraMap V (integralClosure V K')),
+    IsFractionRing.lift (K := K') hjinj, hg, ?_⟩
+  ext x
+  simp only [RingHom.comp_apply]
+  rw [← IsScalarTower.algebraMap_apply V K K',
+    IsScalarTower.algebraMap_apply V (integralClosure V K') K', IsFractionRing.lift_algebraMap]
+  rfl
+
+end PositivityTheory.HtPt.Kftwo
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoModel
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.IndefiniteRowSideFullHecke.FibreFramesOnModels Formalism.L2.Pj
+
+namespace PositivityTheory.HtPt.Kftwo
+
+theorem exists_valuationSubring_two : ∃ W : ValuationSubring ℂ, ((2 : ℕ) : ℂ) ∈ W.nonunits := by
+  have h : Ideal.span {(2 : (⊥ : Subring ℂ))} ≠ ⊤ := by
+    rw [Ne, Ideal.span_singleton_eq_top]
+    intro hu
+    obtain ⟨⟨b, hb⟩, e⟩ := hu.exists_right_inv
+    obtain ⟨n, rfl⟩ := Subring.mem_bot.1 hb
+    have e' : (2 : ℂ) * n = 1 := congrArg Subtype.val e
+    have e'' : (2 : ℤ) * n = 1 := by exact_mod_cast e'
+    omega
+  obtain ⟨W, -, hW⟩ := Ideal.image_subset_nonunits_valuationSubring _ h
+  exact ⟨W, hW ⟨2, Ideal.mem_span_singleton_self _, (map_ofNat _ 2).trans (by simp)⟩⟩
+
+theorem exists_place (F : IntermediateField ℚ ℂ) [FiniteDimensional ℚ F] {V K : Type} [CommRing V] [IsDomain V]
+    [ValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] (io : F →+* K) :
+    ∃ (p : ℕ) (W : ValuationSubring ℂ) (b : W.comap F.val.toRingHom →+* V), p.Prime ∧ (p : ℂ) ∈ W.nonunits ∧
+      (algebraMap V K).comp b = io.comp (W.comap F.val.toRingHom).subtype := by
+  have hinj := IsFractionRing.injective V K
+  let U : ValuationSubring F :=
+    { (algebraMap V K).range.comap io with
+      mem_or_inv_mem' := fun a => by
+        have := ValuationRing.isInteger_or_isInteger V (io a)
+        rw [← map_inv₀] at this
+        exact this }
+  obtain ⟨p, W, hp, hW, hle⟩ : ∃ (p : ℕ) (W : ValuationSubring ℂ), p.Prime ∧ (p : ℂ) ∈ W.nonunits ∧
+      W.comap F.val.toRingHom ≤ U := by
+    by_cases h : ∃ p : ℕ, p.Prime ∧ (p : F) ∈ U.nonunits
+    · obtain ⟨p, hp, hpU⟩ := h
+      obtain ⟨W, hWe, hWn⟩ := GlobalTheory.Reg.exists_valuationSubring_comap_eq_nonunits F.val.toRingHom U
+      exact ⟨p, W, hp, by simpa using hWn _ hpU, hWe.le⟩
+    · obtain ⟨W, hW⟩ := exists_valuationSubring_two
+      refine ⟨2, W, Nat.prime_two, hW, fun a _ => ?_⟩
+      have hn : ∀ n : ℕ, (n : F)⁻¹ ∈ U := fun n => by
+        induction n using Nat.recOnMul with
+        | zero => simp
+        | one => simp
+        | prime p hp =>
+          by_contra hc
+          refine h ⟨p, hp, ?_⟩
+          rw [ValuationSubring.mem_nonunits_iff_or]
+          exact Or.inr hc
+        | mul a b ha hb => rw [Nat.cast_mul, mul_inv]; exact U.mul_mem _ _ ha hb
+      have hq : ∀ q : ℚ, algebraMap ℚ F q ∈ U := fun q => by
+        rw [eq_ratCast, Rat.cast_def, div_eq_mul_inv]
+        exact U.mul_mem _ _ (intCast_mem U _) (hn _)
+      let _ : Algebra ℚ U := ((algebraMap ℚ F).codRestrict U.toSubring hq).toAlgebra
+      have : IsScalarTower ℚ U F := IsScalarTower.of_algebraMap_eq fun _ => rfl
+      have hi : IsIntegral U a := (Algebra.IsIntegral.isIntegral (R := ℚ) a).tower_top
+      obtain ⟨y, hy⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hi
+      exact hy ▸ y.2
+  let e := RingEquiv.ofBijective (algebraMap V K).rangeRestrict
+    ⟨fun a a' h => hinj (congrArg Subtype.val h), (algebraMap V K).rangeRestrict_surjective⟩
+  refine ⟨p, W, e.symm.toRingHom.comp ((io.comp (W.comap F.val.toRingHom).subtype).codRestrict (algebraMap V K).range
+    fun a => hle a.2), hp, hW, RingHom.ext fun a => ?_⟩
+  exact congrArg Subtype.val (e.apply_symm_apply _)
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
+  {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
+
+theorem key_unit {κ : KeyRule} (hκ : IsKeyRule κ) (hpq : 1 ≤ Dw.p + Dw.q) (hg : ∀ p : ℕ, p.Prime → l.GoodAt p)
+    {T : CDVR} (z : Sp T.Fr ⟶ Xo.XF c) {G : SAB H (Sp T.V)} {t' : SAB H (Sp T.Fr)}
+    (m1 : SABMap t' Xo.univ.t (z ≫ pullback.fst _ _)) (m2 : SABMap t' G (spMap (algebraMap T.V T.Fr))) {n : ℕ}
+    {w : Fin n → (epsR T.V ⟶ G.G)} (hw : IsLieBasis w) {θ : G.PP.L.Sec} (hθ : Generates (X := G.G) θ) (k : KeyIn T.Fr)
+    (hk : IsFibreOf k G.G G.PP.L G.PP.rig θ w (algebraMap T.V T.Fr)) :
+    ∃ u : T.Vˣ, (κ T.Fr k : T.Fr) = algebraMap T.V T.Fr u := by
+  classical
+  obtain ⟨io, hzs⟩ : ∃ io : c.F →+* T.Fr, spMap io = z ≫ pullback.snd _ _ := ⟨_, Spec.map_preimage _⟩
+  have := c.fin
+  obtain ⟨p, W, b, hp, hW, hb⟩ := exists_place c.F (V := T.V) io
+  have key : ∀ X : ∀ l : Level H, Moduli Dw l, ∃ Y : Model (X l) c (c.V W).subtype,
+      Y.LevelStructureConditions p ∧ Y.N3 ∧ Y.N4 ∧ Y.SplitFibres := fun X => by
+    obtain ⟨Y, hY, -⟩ := GlobalTheory.partI_closed.2 E H Dw hpq X
+    obtain ⟨h1, h2⟩ := hY p W hp hW
+    obtain ⟨h3, h4, h5⟩ := h2 ⟨l, c, hg p hp⟩
+    exact ⟨_, h1.1 ⟨l, c, hg p hp⟩, h4, h5, h3⟩
+  have h := key (Function.update (fun l' => Classical.choice (GlobalTheory.Moduli.moduli_scheme_exists E H Dw l' hpq)) l Xo)
+  rw [Function.update_self] at h
+  obtain ⟨Y, h2, h3, h4, h5⟩ := h
+  have hx : z ≫ Y.j ≫ Y.s = Out.jK T.V ≫ spMap b := by
+    show z ≫ (Y.jQ ≫ pullback.fst _ _) ≫ Y.s = _
+    rw [Category.assoc, pullback.condition, ← Category.assoc Y.jQ, Y.jQ_over, ← Category.assoc, ← hzs]
+    show Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
+    exact congrArg (fun q => Spec.map (CommRingCat.ofHom q)) hb.symm
+  obtain ⟨yt, h1, -⟩ := extPt Y T b z hx
+  obtain ⟨tP, ⟨mP'⟩⟩ : ∃ t : SAB H (Sp T.V), Nonempty (SABMap t Y.t yt) := by
+    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull yt Y.t
+    exact ⟨_, ⟨m⟩⟩
+  obtain ⟨mF, -⟩ := sabCancel pullCubCancel E H _ _ _ Xo.univ.t Y.oF.t t' (pullback.fst _ _) z Y.m0.toSABMap m1
+  obtain ⟨mJ, -⟩ := sabComp pullCubComp E H _ _ _ Y.t Y.oF.t t' (Y.jQ ≫ pullback.fst _ _) z Y.m mF
+  have hj : z ≫ Y.jQ ≫ pullback.fst _ _ = Out.jK T.V ≫ yt := h1.symm
+  obtain ⟨mK, -⟩ := sabCancel pullCubCancel E H _ _ _ Y.t tP t' yt (Out.jK T.V) mP' (PullbackSections.sabMapCast mJ hj)
+  have hprop : IsProper t'.G.hom :=
+    MorphismProperty.of_isPullback (P := @IsProper) m1.cart.1 Xo.univ.proper
+  obtain ⟨ψ, -⟩ := GlobalTheory.semiAbelian_model_determined_by_generic_fibre E H T.V inferInstance G tP t' hprop m2 mK
+  obtain ⟨n', -⟩ := sabComp pullCubComp E H _ _ _ Y.t tP G yt (𝟙 _) mP' ψ
+  exact (((GlobalTheory.T.thetaKeyScalar_isUnit_on_integralModels κ hκ E H Dw l Xo c _ _ Y p hpq (isBaseRing_local c W) hp h2 h3 h4 h5).1 T.V T.Fr z yt h1 G
+    (PullbackSections.sabMapCast n' (Category.id_comp yt)) n w hw θ k hk).1 hθ).1
+
+end PositivityTheory.HtPt.Kftwo
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.LieMultComp
+
+section
 
 @[expose] public section
 
@@ -217,3 +440,6 @@ theorem kp : KeyBadSt :=
 end Main
 
 end PositivityTheory.HtPt.Kftwo
+end
+end
+end

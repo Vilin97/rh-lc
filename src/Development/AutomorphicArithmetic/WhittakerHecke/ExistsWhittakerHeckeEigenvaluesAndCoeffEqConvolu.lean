@@ -2,17 +2,11 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.FacDefs
 public import Development.AutomorphicArithmetic.WhittakerHecke.EqConvolutionSquareIndicatorOfEulerFactors
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsMultiplicativeOfPrimePowerValues
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerHeckeEigenvaluesAtInertPlace
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerHeckeEigenvaluesAtSplitPlace
-import Development.AutomorphicArithmetic.WhittakerHecke.HeightOneSpectrumRatCorrespondPrimes
-public import Development.AutomorphicArithmetic.WhittakerHecke.IdeleOfNatMulAndPrimePow
-public import Development.AutomorphicArithmetic.WhittakerHecke.InertOrSplitOfGoodDeltaRat
-public import Development.AutomorphicArithmetic.WhittakerHecke.KAtDiagIdeleOfNatMulRotationOfNotDvd
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnramifiedSplitting.SplitAt
+public import Development.AutomorphicArithmetic.WhittakerHecke.HeightOneSpectrumRatCorrespondPrimes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -31,6 +25,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,8 +38,96 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.GaussianProducts.ExistsRowSec
+public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerHeckeEigenvaluesAtInertPlace
+public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerHeckeEigenvaluesAtSplitPlace
+import Development.AutomorphicArithmetic.WhittakerHecke.HeightOneSpectrumRatCorrespondPrimes
+public import Development.AutomorphicArithmetic.WhittakerHecke.InertOrSplitOfGoodDeltaRat
+public import Development.AutomorphicArithmetic.WhittakerHecke.KAtDiagIdeleOfNatMulRotationOfNotDvd
+import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.ExistsMultiplicativeOfPrimePowerValues
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent
+open scoped Classical
+open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
+open UpperTheory.V.Af.Smo (EigAt)
+open scoped ComplexOrder
+
+theorem UpperTheory.exists_multiplicative_of_prime_power_values :
+    ∀ M : H.P ℚ → ℕ → ℂ, (∀ v, M v 0 = 1) → ∃ μ : ℕ → ℂ, μ 1 = 1 ∧
+          (∀ m n : ℕ, 0 < m → 0 < n → m.Coprime n → μ (m * n) = μ m * μ n) ∧
+          ∀ (v : H.P ℚ) (k : ℕ), μ (normV v ^ k) = M v k := by
+  intro M hM
+  obtain ⟨hp, -, hinj, -⟩ := UpperTheory.heightOneSpectrum_rat_correspond_primes
+  let f : ℕ → ℕ → ℂ := fun p k =>
+    if h : ∃ v : H.P ℚ, normV v = p then M h.choose k else 1
+  have hf : ∀ (v : H.P ℚ) (k : ℕ), f (normV v) k = M v k := by
+    intro v k
+    have h : ∃ w : H.P ℚ, normV w = normV v := ⟨v, rfl⟩
+    have h2 : h.choose = v := hinj _ _ h.choose_spec
+    simp only [f]
+    rw [dite_eq_left h, h2]
+  refine ⟨fun n => n.factorization.prod f, by simp, ?_, ?_⟩
+  · intro m n hm hn hmn
+    show (m * n).factorization.prod f = m.factorization.prod f * n.factorization.prod f
+    rw [Nat.factorization_mul hm.ne' hn.ne']
+    exact Finsupp.prod_add_index_of_disjoint
+      (by simpa using hmn.disjoint_primeFactors) f
+  · intro v k
+    show (normV v ^ k).factorization.prod f = M v k
+    rw [(hp v).factorization_pow, Finsupp.prod_single_index (by rw [hf, hM]), hf]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.IdeleOfNatMulAndPrimePow
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent
+open scoped Classical
+open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
+open UpperTheory.V.Af.Smo (EigAt)
+open scoped ComplexOrder
+
+theorem UpperTheory.ideleOfNat_mul_and_prime_pow :
+    (∀ m n : ℕ, 0 < m → 0 < n → pin (m * n) = pin m * pin n) ∧ (∀ (v : H.P ℚ) (k : ℕ), pin (normV v ^ k) = pv v ^ k) := by
+  obtain ⟨hp, -, hinj, -⟩ := UpperTheory.heightOneSpectrum_rat_correspond_primes
+  have hfin : ∀ n : ℕ, (Function.mulSupport fun v : H.P ℚ => pv v ^ (n.factorization (normV v))).Finite := by
+    intro n
+    have h1 : ((fun v : H.P ℚ => normV v) ⁻¹' (n.factorization.support : Set ℕ)).Finite :=
+      Set.Finite.preimage (fun a _ b _ h => hinj a b h) (Finset.finite_toSet _)
+    refine h1.subset fun v hv => ?_
+    simp only [Set.mem_preimage, Finset.mem_coe, Finsupp.mem_support_iff]
+    intro h0
+    exact hv (by simp only [h0, pow_zero])
+  refine ⟨fun m n hm hn => ?_, fun v k => ?_⟩
+  · unfold pin
+    rw [← finprod_mul_distrib (hfin m) (hfin n), Nat.factorization_mul hm.ne' hn.ne']
+    exact finprod_congr fun v => by rw [Finsupp.add_apply, pow_add]
+  · unfold pin
+    rw [(hp v).factorization_pow, finprod_eq_single _ v]
+    · rw [Finsupp.single_eq_same]
+    · intro w hw
+      rw [Finsupp.single_eq_of_ne (fun h => hw (hinj _ _ h)), pow_zero]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerHeckeEigenvaluesAndCoeffEqConvolu
+
+section
 
 @[expose] public section
 
@@ -149,3 +232,5 @@ theorem UpperTheory.exists_whittaker_hecke_eigenvalues_and_coeff_eq_convolution 
       simp only [bN, if_pos hc]
       rw [ppow, map_pow, Units.val_pow_eq_pow_val, hμv v k hvb]
       rfl
+end
+end

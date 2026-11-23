@@ -2,10 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TypeConditions.TrivialLocalCondition
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsGaloisRepBaseChange
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsGaloisRepTwist
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaloisRepWeilJumps
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeightLocalisationRegularAlgebraicStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AwayRepIsoLoc
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,8 +18,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,9 +37,144 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AwayRepIsoLoc
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsGaloisRepTwist
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+namespace GlobalTheory.HalfTwist
+
+theorem eta_char (D : D7) (w : PlE D.host) :
+    D.naut.lpChar (D.naut.locG D.naut.etaT w) (D.naut.locG D.naut.etaTinv w) = D.naut.lpUnr w {1} := by
+  have hu := D.naut.etaT_unr w
+  have hinv := D.naut.etaTinv_def w
+  have hd1 : D.naut.lpDim (D.naut.locG D.naut.etaTinv w) = 1 := D.naut.locG_dim _ _
+  have hcard : Multiset.card (D.naut.frobEig (D.naut.locG D.naut.etaT w)) = 1 := by
+    rw [D.naut.frobEig_card _ hu, D.naut.locG_dim]
+  obtain ⟨b, hb⟩ := Multiset.card_eq_one.1 hcard
+  have hb0 : b ≠ 0 := by
+    have h0 := D.naut.frobEig_ne_zero _ hu
+    rw [hb] at h0
+    intro hb'
+    exact h0 (by simp [hb'])
+  have hinvb : D.naut.frobEig (D.naut.locG D.naut.etaTinv w) = {b⁻¹} := by
+    rw [hinv.2, hb, Multiset.map_singleton]
+  have hunr := D.naut.unr_char _ _ hd1 hu hinv.1
+  have hf := D.naut.frobEig_char _ _ b⁻¹ hu hinv.1 hd1 hinvb
+  rw [D.naut.unr_eq_lpUnr _ hunr, hf, hb, Multiset.map_singleton, mul_inv_cancel₀ hb0]
+
+theorem eta_inf (D : D7) (hA : SumRepresentations.At.TieAut D.nd D.naut) (τ : D.host.E →+* ℂ) :
+    ∃ h : ℂ, D.naut.infG D.naut.etaT τ = {h} ∧ D.naut.infG D.naut.etaTinv τ = {-h} ∧
+      (h = 1 / 2 ∨ h = -(1 / 2)) := by
+  obtain ⟨h1, h2⟩ := hA.2.1 τ
+  rcases h1 with h1 | h1
+  · exact ⟨1 / 2, h1, by rw [h2, h1, Multiset.map_singleton], Or.inl rfl⟩
+  · exact ⟨-(1 / 2), h1, by rw [h2, h1, Multiset.map_singleton], Or.inr rfl⟩
+
+end GlobalTheory.HalfTwist
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaloisRepWeilJumps
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+namespace GlobalTheory
+open Formalism.MainNotions.SumRepresentations.At
+
+section Tw
+variable {Γ : Type} [Group Γ] {k : Type} [Field k] {a : ℕ}
+
+theorem twGL_val (ρ : Γ →* GL (Fin a) k) (χ : Γ →* GL (Fin 1) k) (g : Γ) :
+    ((twGL ρ (Matrix.GeneralLinearGroup.det.comp χ) g : GL (Fin a) k) : Matrix (Fin a) (Fin a) k) =
+      ((χ g : GL (Fin 1) k) : Matrix (Fin 1) (Fin 1) k).det • ((ρ g : GL (Fin a) k) : Matrix (Fin a) (Fin a) k) := by
+  simp only [twGL, MonoidHom.coe_mk, OneHom.coe_mk, Units.val_mul, Units.coe_map]
+  simp [Algebra.algebraMap_eq_smul_one, Matrix.GeneralLinearGroup.val_det_apply]
+
+theorem isInv_twGL_iff (ρ : Γ →* GL (Fin a) k) (χ : Γ →* GL (Fin 1) k) (W : Submodule k (Fin a → k)) :
+    IsInv (twGL ρ (Matrix.GeneralLinearGroup.det.comp χ)) W ↔ IsInv ρ W := by
+  constructor
+  · intro h g v hv
+    have hu : ((χ g : GL (Fin 1) k) : Matrix (Fin 1) (Fin 1) k).det ≠ 0 :=
+      (Matrix.isUnit_iff_isUnit_det _).1 (χ g).isUnit |>.ne_zero
+    have := W.smul_mem (((χ g : GL (Fin 1) k) : Matrix (Fin 1) (Fin 1) k).det)⁻¹ (h g v hv)
+    rw [twGL_val, Matrix.smul_mulVec, smul_smul, inv_mul_cancel₀ hu, one_smul] at this
+    exact this
+  · intro h g v hv
+    rw [twGL_val, Matrix.smul_mulVec]
+    exact W.smul_mem _ (h g v hv)
+
+theorem isSSRep_twGL (ρ : Γ →* GL (Fin a) k) (χ : Γ →* GL (Fin 1) k) (h : IsSSRep ρ) :
+    IsSSRep (twGL ρ (Matrix.GeneralLinearGroup.det.comp χ)) := by
+  intro W hW
+  obtain ⟨W', hW', hc⟩ := h W ((isInv_twGL_iff ρ χ W).1 hW)
+  exact ⟨W', (isInv_twGL_iff ρ χ W').2 hW', hc⟩
+
+end Tw
+
+theorem contQ_twGL (D : D7) (i : D.nd.Loc) {a : ℕ} (ρ : GE D.nd →* GL (Fin a) (Qbar (D.nd.l i)))
+    (χ : GE D.nd →* GL (Fin 1) (Qbar (D.nd.l i))) (hρ : ContQ D.nd i ρ) (hχ : ContQ D.nd i χ) :
+    ContQ D.nd i (twGL ρ (Matrix.GeneralLinearGroup.det.comp χ)) := by
+  unfold ContQ at *
+  simp only [twGL_val]
+  exact (hχ.matrix_det).smul hρ
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeightLocalisationRegularAlgebraic
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+namespace GlobalTheory
+
+theorem weight_localisation_regular_algebraic : ∀ (D : D7) (i : D.nd.Loc) (P : D.naut.AV i) (τ : D.host.E →+* ℂ),
+    (D.naut.infWt i τ).Nodup ∧ ∀ z ∈ D.naut.infWt i τ, ∃ k : ℤ, z = (k : ℂ) + ((D.R.nV : ℂ) - 1) / 2 := by
+  intro D i P τ
+  rw [D.nbc.embAV_inf i P]
+  exact D.nbc.infW_alg _ _ τ
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeightLocalisationRegularAlgebraicStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+theorem _root_.GlobalTheory.T.infWt_nodup_and_half_integral : ∀ (D : D7) (i : D.nd.Loc) (P : D.naut.AV i) (τ : D.host.E →+* ℂ), (D.naut.infWt i τ).Nodup ∧ ∀ z ∈ D.naut.infWt i τ, ∃ k : ℤ, z = (k : ℂ) + ((D.R.nV : ℂ) - 1) / 2 := by
+  first | exact @GlobalTheory.weight_localisation_regular_algebraic | exact GlobalTheory.weight_localisation_regular_algebraic | (intros; apply GlobalTheory.weight_localisation_regular_algebraic <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TypeConditions.GoodRCongr
+
+section
 
 @[expose] public section
 
@@ -338,3 +468,5 @@ theorem UpperTheory.GalS.isoRep : ∀ D : D7, SumRepresentations.tie0 D → Uppe
   refine ⟨d, r, fun τ hτ => ?_⟩
   apply Multiset.map_injective (f := fun n : ℤ => (n : ℂ)) Int.cast_injective
   rw [j τ hτ, D.naut.locAut_hodgeTateWeightsLevelZero_def i τ]
+end
+end

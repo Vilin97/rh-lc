@@ -1,6 +1,6 @@
 module
 
-public import Development.EtaleCohomology.TateTwists.EtaleComplexTensorPairingExists
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +39,23 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleComplexTensorPairingExists
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+def LateralTheory.EtaleFoundations.EtaleComplexTensorPairingExists : Prop :=
+  ∀ (R : Type) [CommRing R] (I J : Cx R), ∃ (K : Cx R) (τ : Pair I J K), τ.IsTensor
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleTensorComplexExistsOfSheafTensorComplex
+
+section
 
 @[expose] public section
 
@@ -94,3 +111,6 @@ theorem etale_tensor_complex_exists_of_sheaf_tensor_complex (hS : EtaleSheafTens
     exact hinj U w x (by simpa [hlift] using hx)
 
 end LateralTheory.EtaleFoundations
+end
+end
+end

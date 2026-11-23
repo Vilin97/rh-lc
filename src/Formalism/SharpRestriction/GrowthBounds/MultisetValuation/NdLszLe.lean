@@ -1,7 +1,6 @@
 module
 
 public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
-public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.LambdaIndexTwo
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,7 +17,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +37,46 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MultisetValuation.LambdaIndexTwo
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.FormalGroupSystem.Pf
+
+open Formalism.BasicNotions Finset
+
+section Local
+
+variable {p : ℕ} {G : Formalism.MainNotions.G.GAtP p} (Fl : Formalism.MainNotions.G.Fills G) (v : Fin G.P.nV)
+
+theorem lambda_index_one (s : Fin (G.P.n' v)) (hm : 2 ≤ G.P.m) : lamI (G.P.lam0 v) s 1 = G.P.lam0 v s ⟨0, by omega⟩ := by
+  unfold lamI; rw [dite_eq_left ⟨le_rfl, by omega⟩]
+
+theorem lambda_index_two (s : Fin (G.P.n' v)) (hm : 2 ≤ G.P.m) : lamI (G.P.lam0 v) s 2 = G.P.lam0 v s ⟨1, by omega⟩ := by
+  unfold lamI; rw [dite_eq_left ⟨by omega, by omega⟩]
+
+theorem nc_w_ge (s : Fin (G.P.n' v)) (j : ℕ) (hj : 1 ≤ j) : Fl.w v 1 s ≤ Fl.w v j s := by
+  induction j, hj using Nat.le_induction with
+  | base => exact le_rfl
+  | succ l hl ih => exact le_trans ih (Fl.w_mono v s l hl)
+
+end Local
+
+end Formalism.MainNotions.FormalGroupSystem.Pf
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NdLszLe
+
+section
 
 @[expose] public section
 
@@ -119,3 +156,6 @@ theorem nd_lsz_le (s : Fin (G.P.n' v)) (hm : 2 ≤ G.P.m) (j : ℕ) (hj : 1 ≤ 
 end Local
 
 end Formalism.MainNotions.FormalGroupSystem.Pf
+end
+end
+end

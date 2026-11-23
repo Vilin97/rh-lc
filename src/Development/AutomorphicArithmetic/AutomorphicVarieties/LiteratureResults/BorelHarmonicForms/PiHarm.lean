@@ -7,10 +7,9 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.WignerHighestWeights.TensDer
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.AbsHarm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.CasTens
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.CasZero
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.EllFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.OneEig
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.PiForm
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.DelCochain
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.KugaSucc
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.KugaZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,6 +44,87 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.EllFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.OneEig
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.AdmEx
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.CuspSq
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.InclFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.PetEx
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.SmForm
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.TformPos
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.CasZero
+
+section
+
+@[expose] public section
+
+open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
+open scoped TensorProduct
+
+theorem UpperTheory.V.Lit.Bor.casZero :
+    UpperTheory.V.Lit.Bor.CasZero := by
+  intro E _ _ _ a n e he M _ _ _ _ κ A B hA hB hAB hκ hinf c hc hcoh
+  by_contra hne
+  have hdel : ∀ (q : ℕ) (X : Fin q → Herm E a),
+      del (B - A) e (0 : Herm E a [⋀^Fin (q + 1)]→ₗ[ℝ] M) X = 0 := fun q X => by
+    rw [del_apply]
+    simp
+  rcases hcoh with ⟨ω, hco, hcl, hnz⟩ | ⟨q, ω, hco, hcl, hne'⟩
+  · apply hnz
+    ext X
+    have h := kugaZero E a n e M A B hAB ω (hinf 0 ω hco) X
+    rw [hcl, hdel, hc] at h
+    exact (smul_eq_zero.1 h.symm).resolve_left hne
+  · have hδ := delCochain E a n e he M κ (B - A) hκ q ω hco
+    let s : M →ₗ[ℝ] M := (c⁻¹ • LinearMap.id : M →ₗ[ℂ] M).restrictScalars ℝ
+    have hs : ∀ X, s.compAlternatingMap (del (B - A) e ω) X = c⁻¹ • del (B - A) e ω X := fun X => rfl
+    refine hne' (s.compAlternatingMap (del (B - A) e ω)) (fun k X => ?_) (AlternatingMap.ext fun X => ?_)
+    · rw [hs, hs, map_smul, hδ k X]
+    · have h := kugaSucc E a n e he M A B hA hB hAB q ω (hinf _ ω hco) X
+      rw [hcl, hdel, add_zero, hc, dCo_apply] at h
+      have h2 : ω X = c⁻¹ • (c • ω X) := (inv_smul_smul₀ hne _).symm
+      rw [dCo_apply, h2, ← h, Finset.smul_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [hs, map_smul, smul_comm c⁻¹]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.PiForm
+
+section
+
+@[expose] public section
+
+open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
+open scoped TensorProduct
+
+theorem UpperTheory.V.Lit.Bor.piForm :
+    UpperTheory.V.Lit.Bor.PiForm := by
+  intro E _ _ _ a ha π Ξ r hone
+  obtain ⟨G, hG⟩ := admEx E a Ξ
+  obtain ⟨H, hH⟩ := petEx E a ha r
+  obtain ⟨hinj, hcmp, -, hlie, hadj⟩ := inclFacts E a π Ξ r
+  have hpos := tformPos _ Ξ.d H _ G hH.pos hG.pos
+  have hmem : ∀ m, incl π Ξ m ∈ tens Ξ.d (sqSub E a r) := fun m =>
+    mem_tens.2 fun i => by
+      rw [hcmp]
+      exact Submodule.subset_span (cuspSq E a ha π r hone _ (UpperTheory.V.Lit.Bor.cmp i m).2)
+  refine ⟨((tform H G) ∘ₛₗ (incl π Ξ)).compl₂ (incl π Ξ), ⟨fun x y => ?_, fun x _ => ?_, fun x _ hx => ?_⟩,
+    fun X x y => ?_⟩
+  · exact hpos.herm _ _
+  · exact hpos.nonneg _ (hmem x)
+  · exact hinj ((hpos.definite _ (hmem x) hx).trans (map_zero _).symm)
+  · show tform H G (incl π Ξ x) (incl π Ξ _) = tform H G (incl π Ξ _) (incl π Ξ y)
+    rw [hlie, hadj]
+    exact smForm E a Ξ r H G hH hG X _ (hmem x) _ (hmem y)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.BorelHarmonicForms.PiHarm
+
+section
 
 @[expose] public section
 
@@ -94,3 +174,5 @@ theorem UpperTheory.V.Lit.Bor.piHarm :
   obtain ⟨H, hH, hadj⟩ := piForm E a ha π Ξ r (oneEig E a π Ξ r hr hC)
   exact piHarm_abs E a n e he _ (tensorK π Ξ) (lieA π Ξ) (lieB π Ξ) r a1 b1 (lieA_commute π Ξ) a2 b2
     (tensDer E a π Ξ) c hc hC H hH hadj q ω hω
+end
+end

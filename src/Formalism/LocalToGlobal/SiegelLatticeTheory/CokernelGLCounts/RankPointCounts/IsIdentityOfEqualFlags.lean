@@ -6,18 +6,20 @@ public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankP
 import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellFin
 public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.ClauseAOfIdentityFlag
 public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdLift
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdRoot
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdScal
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdUnit
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SplittingAdmissibleOfTermData
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.UnitriangularFrameLift
+public import Mathlib.RingTheory.Ideal.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -25,6 +27,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +47,225 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
+import Mathlib.Algebra.Order.Star.Int
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdScal
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SplittingAdmissibleOfTermData
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SplittingAdmissibleOfTermData
+
+-- Source module: Lemmata.GeneralBFactUpperVersion.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_upper_version
+
+theorem goal1 :
+  ∀ {R : Type} [inst : CommRing.{0} R] [IsDomain.{0} R] (ζ : R) (M : Nat) (P : Ideal.{0} R),
+  Ne.{1} ζ 1 →
+    Eq.{1} (HPow.hPow.{0, 0, 0} ζ M) 1 →
+      Membership.mem.{0, 0} P (HSub.hSub.{0, 0, 0} ζ 1) → Membership.mem.{0, 0} P (Nat.cast.{0} M) := by
+  intro R _ _ ζ M P h1 hM hP
+  have hs : (∑ i ∈ Finset.range M, ζ ^ i) = 0 := by
+    have h := geom_sum_mul ζ M
+    rw [hM, sub_self] at h
+    exact (mul_eq_zero.mp h).resolve_right (sub_ne_zero.mpr h1)
+  rw [← Ideal.Quotient.eq_zero_iff_mem] at hP ⊢
+  have h2 : Ideal.Quotient.mk P ζ = 1 := by
+    rw [map_sub, map_one, sub_eq_zero] at hP
+    exact hP
+  have h3 := congrArg (Ideal.Quotient.mk P) hs
+
+  simpa [map_sum, map_pow, h2] using h3
+
+end Bl.general_b_fact_upper_version
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdRoot
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.BridgeLemma
+
+open NumberField IsDedekindDomain
+
+theorem iroot_mem {R : Type} [CommRing R] [IsDomain R] (ζ : R) (M : ℕ) (P : Ideal R) (h1 : ζ ≠ 1) (hM : ζ ^ M = 1)
+    (hP : ζ - 1 ∈ P) : (M : R) ∈ P := by
+  first | exact Bl.general_b_fact_upper_version.goal1 .. | (apply Bl.general_b_fact_upper_version.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_upper_version.goal1 <;> assumption) | (apply @Bl.general_b_fact_upper_version.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_upper_version.goal1 <;> assumption) | (apply @Bl.general_b_fact_upper_version.goal1 <;> first | assumption | infer_instance) | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ M P h1 hM hP | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ M P h1 hM | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ M P h1 | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ M P | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ M | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› ζ | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› ‹_› | exact @Bl.general_b_fact_upper_version.goal1 R ‹_› | exact @Bl.general_b_fact_upper_version.goal1 R
+
+theorem id_root : RootsOfUnityFormal := by
+  intro R _ _ ζ N g1 g2 P1 P2 hN hζN hg1 hg2 hne hP1 hP2 h1 h2 hz1 hz2
+  by_contra hζ
+  have hfin : IsOfFinOrder ζ := isOfFinOrder_iff_pow_eq_one.2 ⟨N, hN, hζN⟩
+  have hMpos : 0 < orderOf ζ := orderOf_pos_iff.2 hfin
+  have hM1 : ((orderOf ζ : ℕ) : R) ∈ P1 := iroot_mem ζ _ P1 hζ (pow_orderOf_eq_one ζ) hz1
+  have hdvd : g1 ∣ orderOf ζ := by
+    by_contra hnd
+    exact id_coprime_notMem P1 hP1 g1 _ ((Nat.Prime.coprime_iff_not_dvd hg1).2 hnd) h1 hM1
+  obtain ⟨k, hk⟩ := hdvd
+  have hk0 : k ≠ 0 := by
+    rintro rfl
+    rw [mul_zero] at hk
+    omega
+  have hklt : k < orderOf ζ := by
+    rw [hk]
+    have := hg1.two_le
+    have hkpos : 0 < k := Nat.pos_of_ne_zero hk0
+    nlinarith
+  have hη : ζ ^ k ≠ 1 := pow_ne_one_of_lt_orderOf hk0 hklt
+  have hηg : (ζ ^ k) ^ g1 = 1 := by
+    rw [← pow_mul, mul_comm, ← hk]
+    exact pow_orderOf_eq_one ζ
+  have hηP : ζ ^ k - 1 ∈ P2 := by
+    obtain ⟨w, hw⟩ := sub_dvd_pow_sub_pow ζ 1 k
+    rw [one_pow] at hw
+    rw [hw]
+    exact P2.mul_mem_right _ hz2
+  have hg1P2 : (g1 : R) ∈ P2 := iroot_mem (ζ ^ k) g1 P2 hη hηg hηP
+  exact id_coprime_notMem P2 hP2 g2 g1 ((Nat.coprime_primes hg2 hg1).2 hne.symm) h2 hg1P2
+
+theorem id_over : ExistsPrimeAbove := by
+  intro E _ _ p hp
+  have hmax : (Ideal.span {(p : ℤ)}).IsMaximal :=
+    (Ideal.span_singleton_prime (Int.natCast_ne_zero.2 hp.ne_zero)).2 (Nat.prime_iff_prime_int.1 hp) |>.isMaximal
+      (by rw [Ne, Ideal.span_singleton_eq_bot]; exact Int.natCast_ne_zero.2 hp.ne_zero)
+  obtain ⟨Q, hQ, hc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := 𝓞 E) (Ideal.span {(p : ℤ)}) (by
+    rw [(RingHom.injective_iff_ker_eq_bot _).1 (FaithfulSMul.algebraMap_injective ℤ (𝓞 E))]
+    exact bot_le)
+  have hpQ : (p : 𝓞 E) ∈ Q := by
+    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+      change (p : ℤ) ∈ Ideal.under ℤ Q
+      rw [hc]; exact Ideal.mem_span_singleton_self _
+    simpa using this
+  refine ⟨⟨Q, hQ.isPrime, ?_⟩, hpQ⟩
+  rintro rfl
+  exact (Nat.cast_ne_zero.2 hp.ne_zero) ((Submodule.mem_bot _).1 hpQ)
+
+end Formalism.MainNotions.BridgeLemma
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdUnit
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.BridgeLemma
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.LatticeGluingRadicals NumberField Module IsDedekindDomain
+
+theorem id_unit : ScalarRootOfUnity := by
+  intro E _ _ _ S r T Λ F F' c hsc hzΛ hprim hcc hz hX
+  have hz'o : F'.fl.z ∈ orth S (Xsp F) := by
+    rw [p_mem_orth]
+    intro x hx
+    have hx' : x ∈ F'.fl.X := by rw [hX]; exact hx
+    exact tie_X_le_ker F'.fl _ F'.fl.z_orth x hx'
+  have hzo : F.fl.z ∈ orth S (Xsp F) := by
+    rw [p_mem_orth]
+    exact tie_X_le_ker F.fl _ F.fl.z_orth
+  have hmem : c • F.fl.z ∈ Lsub Λ F := by
+    unfold Lsub
+    refine ⟨?_, (orth S (Xsp F)).smul_mem c hzo⟩
+    have e : c • F.fl.z = F'.fl.z - (F'.fl.z - c • F.fl.z) := by abel
+    rw [e]
+    refine Submodule.sub_mem _ (Submodule.mem_sup_left ?_) (Submodule.mem_sup_right hz)
+    exact ⟨hzΛ, hz'o⟩
+  obtain ⟨o, ho⟩ := hprim c hmem
+  refine ⟨o, ho, ?_⟩
+  have hn : ∀ φ : E →+* ℂ, ‖φ (o : E)‖ = 1 := by
+    intro φ
+    have h1 := b_tau_norm hsc φ c
+    rw [mul_comm, hcc, map_one] at h1
+    have h2 : ‖φ c‖ ^ 2 = 1 := by exact_mod_cast h1.symm
+    rw [ho]
+    have h3 : 0 ≤ ‖φ c‖ := norm_nonneg _
+    nlinarith
+  obtain ⟨n, hn0, h⟩ := NumberField.Embeddings.pow_eq_one_of_norm_eq_one E ℂ (x := (o : E)) o.isIntegral_coe hn
+  refine ⟨n, hn0, ?_⟩
+  apply RingOfIntegers.coe_injective
+  simpa using h
+
+theorem id_cong : ScalarCongruentOne := by
+  intro E _ _ _ S r T Λ g F F' o hU hzΛ hadm hz P hg hT
+  obtain ⟨ξ, _, hξ2, hξ3⟩ := hadm
+  obtain ⟨s, hs, hw⟩ := hξ3 (Fin.last r) P hg
+
+  have hzX : ∀ x ∈ Xsp F, S.hT F.fl.z x = 0 := fun x hx =>
+    p_symm_zero S (tie_X_le_ker F.fl _ F.fl.z_orth x hx)
+  have hze : ∀ a : Fin r, S.hT F.fl.z (F.fl.e a) = 0 := fun a => hzX _ (Submodule.subset_span ⟨a, rfl⟩)
+  have h1 : S.hT F.fl.z F'.fl.z = (o : E) * (-(T : E)) := by
+    have e : F'.fl.z = (F'.fl.z - (o : E) • F.fl.z) + (o : E) • F.fl.z := by abel
+    rw [e, map_add (f := _), hzX _ hz, zero_add, map_smul, smul_eq_mul, F.fl.z_norm]
+  have h2 : S.hT F.fl.z (frameAct (frame F) ξ (Fin.last r)) = -(T : E) := by
+    unfold frameAct
+
+    rw [map_sum, Fin.sum_univ_castSucc]
+    have hl : frame F (Fin.last r) = F.fl.z := by simp [FlagG.fvec]
+    have hc : ∀ a : Fin r, frame F a.castSucc = F.fl.e a := fun a => by simp [FlagG.fvec]
+    rw [hl, hξ2, map_smul, F.fl.z_norm]
+    have : ∑ a : Fin r, S.hT F.fl.z (((ξ a.castSucc (Fin.last r) : 𝓞 E) : E) • frame F a.castSucc) = 0 :=
+      Finset.sum_eq_zero fun a _ => by rw [hc, map_smul, hze, smul_zero]
+    rw [this, zero_add]
+    simp
+  have h3 : S.hT F.fl.z (frame F' (Fin.last r) - frameAct (frame F) ξ (Fin.last r)) =
+      -(((o - 1 : 𝓞 E) : E) * (T : E)) := by
+    have hl : frame F' (Fin.last r) = F'.fl.z := by simp [FlagG.fvec]
+    rw [map_sub, hl, h1, h2]
+    push_cast
+    ring
+
+  have h4 : ∀ y ∈ Ideal.span {(g : 𝓞 E)} • Λ, ∃ a : 𝓞 E, S.hT F.fl.z y = (((g : 𝓞 E) * a : 𝓞 E) : E) := by
+    intro y hy
+    rw [Submodule.ideal_span_singleton_smul] at hy
+    obtain ⟨l, hl, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hy
+    have hd : l ∈ Formalism.HermitianLatticesTheory.dual S.hT Λ := by rw [hU]; exact hl
+    obtain ⟨a, ha⟩ := d_mem_dual.1 hd _ hzΛ
+    refine ⟨a, ?_⟩
+    rw [← algebraMap_smul E (g : 𝓞 E) l, map_smul, smul_eq_mul, ← ha]
+    push_cast
+    rfl
+  obtain ⟨a, ha⟩ := h4 _ hw
+  rw [← algebraMap_smul E s, map_smul, smul_eq_mul, h3] at ha
+  have h5 : s * ((o - 1) * (T : 𝓞 E)) = -((g : 𝓞 E) * a) := by
+    apply RingOfIntegers.coe_injective
+    have : (algebraMap (𝓞 E) E s) * (((o - 1 : 𝓞 E) : E) * (T : E)) = -(((g : 𝓞 E) * a : 𝓞 E) : E) := by
+      rw [← ha]; ring
+    simpa using this
+  have h6 : s * ((o - 1) * (T : 𝓞 E)) ∈ P.asIdeal := by
+    rw [h5]
+    exact P.asIdeal.neg_mem (P.asIdeal.mul_mem_right _ hg)
+  rcases P.isPrime.mem_or_mem h6 with h | h
+  · exact absurd h hs
+  · rcases P.isPrime.mem_or_mem h with h | h
+    · exact h
+    · exact absurd h hT
+
+end Formalism.MainNotions.BridgeLemma
+
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.IsIdentityOfEqualFlags
+
+section
 
 @[expose] public section
 
@@ -150,3 +371,6 @@ theorem JPosC_holds : JPosC := by
   exact ⟨key 0 (dvd_mul_right _ _), key 1 (dvd_mul_left _ _)⟩
 
 end Formalism.L2.SG.KappaOffDiagonal
+end
+end
+end

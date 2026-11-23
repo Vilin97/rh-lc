@@ -2,19 +2,20 @@ module
 
 public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
 public import Mathlib.Tactic.ENatToNat
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreducibleSpacePullbackAffineOpenOfIsDomainTensStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreducibleSpacePullbackFieldOfIrreducibleCoverStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.GeometricallyIntegralIffGeometricallyConnectedOf
-public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.LinearDisjointAlgebraicClosure
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,6 +42,14 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.GeometricallyIntegralIffGeometricallyConnectedOf
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.LinearDisjointAlgebraicClosure
 import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
 import Development.AbelianVarietyTheory.Definitions.Divisors.HtValOnSubset
 import Development.AbelianVarietyTheory.Definitions.Divisors.LogAbsVpOfNormalised
@@ -52,6 +61,163 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.AlWellDefSt
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreducibleSpacePullbackAffineOpenOfIsDomainTensStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped TensorProduct
+
+
+set_option backward.isDefEq.respectTransparency false in
+
+theorem _root_.GlobalTheory.T.irreducibleSpace_pullback_affine_open_of_isDomain_tensor : ∀ {F : Type} [Field F] {X : Scheme.{0}} (g : X ⟶ Sp F) (V : X.Opens), IsAffineOpen V →
+    ∀ (k : Type) [Field k] (f : F →+* k),
+    (letI : Algebra F Γ(X, V) :=
+      ((Scheme.ΓSpecIso (CommRingCat.of F)).inv ≫ g.appTop ≫ X.presheaf.map (homOfLE le_top).op).hom.toAlgebra
+    letI : Algebra F k := f.toAlgebra
+    IsDomain (k ⊗[F] Γ(X, V)) → IrreducibleSpace ↑(pullback (V.ι ≫ g) (spMap f))) := by
+  intro F _ X g V hV k _ f
+  let : Algebra F Γ(X, V) :=
+    ((Scheme.ΓSpecIso (CommRingCat.of F)).inv ≫ g.appTop ≫ X.presheaf.map (homOfLE le_top).op).hom.toAlgebra
+  let : Algebra F k := f.toAlgebra
+  intro hdom
+  have hSpec : hV.fromSpec ≫ g = Spec.map (CommRingCat.ofHom (algebraMap F Γ(X, V))) := by
+    rw [← IsAffineOpen.SpecMap_appLE_fromSpec g (isAffineOpen_top _) hV le_top,
+      IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv, ← Spec.map_comp]
+    rfl
+  have hComp : V.ι ≫ g = hV.isoSpec.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap F Γ(X, V))) := by
+    rw [← hSpec, IsAffineOpen.isoSpec_hom_fromSpec_assoc]
+  let m := pullback.map (V.ι ≫ g) (spMap f) (Spec.map (CommRingCat.ofHom (algebraMap F Γ(X, V))))
+    (Spec.map (CommRingCat.ofHom (algebraMap F k))) hV.isoSpec.hom (𝟙 _) (𝟙 _)
+    (by rw [Category.comp_id, hComp]) (by simp only [Category.comp_id, Category.id_comp]; rfl)
+  let e : pullback (V.ι ≫ g) (spMap f) ≅ Spec (CommRingCat.of (Γ(X, V) ⊗[F] k)) :=
+    asIso m ≪≫ pullbackSpecIso F Γ(X, V) k
+  have : IsDomain (Γ(X, V) ⊗[F] k) :=
+    MulEquiv.isDomain (k ⊗[F] Γ(X, V)) (Algebra.TensorProduct.comm F Γ(X, V) k).toRingEquiv.toMulEquiv
+  have : IrreducibleSpace (Spec (CommRingCat.of (Γ(X, V) ⊗[F] k))) :=
+    PrimeSpectrum.irreducibleSpace (R := Γ(X, V) ⊗[F] k)
+  exact Function.Surjective.irreducibleSpace e.inv.homeomorph.continuous e.inv.homeomorph.surjective
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreducibleSpacePullbackFieldOfIrreducibleCover
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped TensorProduct
+
+namespace GlobalTheory
+
+theorem irreducibleSpace_of_open_cover_meeting {P : Type} [TopologicalSpace P] [Nonempty P]
+    (S : Set (Set P)) (hopen : ∀ W ∈ S, IsOpen W) (hirr : ∀ W ∈ S, IsPreirreducible W)
+    (hcov : ∀ p : P, ∃ W ∈ S, p ∈ W) (hmeet : ∀ W ∈ S, ∀ W' ∈ S, (W ∩ W').Nonempty) :
+    IrreducibleSpace P := by
+  refine { isPreirreducible_univ := ?_, toNonempty := inferInstance }
+  intro u v hu hv ⟨x, _, hxu⟩ ⟨y, _, hyv⟩
+  obtain ⟨Wx, hWx, hxW⟩ := hcov x
+  obtain ⟨Wy, hWy, hyW⟩ := hcov y
+  obtain ⟨w, hwx, hwu, hwy⟩ :=
+    hirr Wx hWx u Wy hu (hopen Wy hWy) ⟨x, hxW, hxu⟩ (hmeet Wx hWx Wy hWy)
+  obtain ⟨z, hzW, hz⟩ := hirr Wy hWy u v hu hv ⟨w, hwy, hwu⟩ ⟨y, hyW, hyv⟩
+  exact ⟨z, trivial, hz⟩
+
+theorem scheme_homOfLE_apply_mk {X : Scheme.{0}} {U V : X.Opens} (e : V ≤ U) (x : X) (hx : x ∈ V) :
+    (X.homOfLE e) ⟨x, hx⟩ = ⟨x, e hx⟩ := by
+  apply Subtype.ext
+  have h1 : (X.homOfLE e ≫ U.ι) ⟨x, hx⟩ = V.ι ⟨x, hx⟩ := by rw [X.homOfLE_ι]
+  simpa using h1
+
+theorem surjective_spMap_of_field {F k : Type} [Field F] [Field k] (f : F →+* k) :
+    Surjective (spMap f) := by
+  constructor
+  intro x
+  obtain ⟨y⟩ : Nonempty (Sp k) := inferInstance
+  exact ⟨y, Subsingleton.elim _ _⟩
+
+theorem irreducibleSpace_pullback_of_cover : ∀ {F : Type} [Field F] {X : Scheme.{0}} (h : X ⟶ Sp F) (k : Type)
+    [Field k] (f : F →+* k) (U : X.Opens),
+    IsIrreducible (U : Set X) →
+    (∀ y ∈ U, ∃ V : X.Opens, V ≤ U ∧ y ∈ V ∧ IrreducibleSpace ↑(pullback (V.ι ≫ h) (spMap f))) →
+    IrreducibleSpace ↑(pullback (U.ι ≫ h) (spMap f)) := by
+  intro F _ X h k _ f U hU hV
+  haveI := surjective_spMap_of_field f
+  set q := pullback.fst (U.ι ≫ h) (spMap f) with hq
+  have hqs : Function.Surjective q := q.surjective
+
+  have key : ∀ (V : X.Opens) (hVU : V ≤ U), IrreducibleSpace ↑(pullback (V.ι ≫ h) (spMap f)) →
+      IsOpen (Set.range (pullback.snd (X.homOfLE hVU) q)) ∧
+      IsPreirreducible (Set.range (pullback.snd (X.homOfLE hVU) q)) ∧
+      ∀ p, U.ι (q p) ∈ V → p ∈ Set.range (pullback.snd (X.homOfLE hVU) q) := by
+    intro V hVU hirrV
+    refine ⟨(pullback.snd (X.homOfLE hVU) q).isOpenEmbedding.isOpen_range, ?_, ?_⟩
+    · let e : pullback (V.ι ≫ h) (spMap f) ≅ pullback (X.homOfLE hVU) q :=
+        pullback.congrHom (by rw [← X.homOfLE_ι hVU, Category.assoc]) rfl ≪≫
+          (pullbackRightPullbackFstIso (U.ι ≫ h) (spMap f) (X.homOfLE hVU)).symm
+      haveI : IrreducibleSpace ↑(pullback (X.homOfLE hVU) q) :=
+        (Scheme.homeoOfIso e).surjective.irreducibleSpace (Scheme.homeoOfIso e).continuous
+      rw [← Set.image_univ]
+      exact (PreirreducibleSpace.isPreirreducible_univ (X := ↑(pullback (X.homOfLE hVU) q))).image _
+        (pullback.snd (X.homOfLE hVU) q).continuous.continuousOn
+    · intro p hp
+      rw [Scheme.Pullback.range_snd]
+      refine ⟨⟨U.ι (q p), hp⟩, ?_⟩
+      show (X.homOfLE hVU) ⟨U.ι (q p), hp⟩ = q p
+      rw [scheme_homOfLE_apply_mk]
+      rfl
+  have hUne : (U : Set X).Nonempty := hU.nonempty
+  obtain ⟨y₀, hy₀⟩ := hUne
+  obtain ⟨p₀, -⟩ := hqs ⟨y₀, hy₀⟩
+  haveI : Nonempty ↑(pullback (U.ι ≫ h) (spMap f)) := ⟨p₀⟩
+  let S : Set (Set ↑(pullback (U.ι ≫ h) (spMap f))) :=
+    {W | ∃ (V : X.Opens) (hVU : V ≤ U), IrreducibleSpace ↑(pullback (V.ι ≫ h) (spMap f)) ∧
+      (V : Set X).Nonempty ∧ W = Set.range (pullback.snd (X.homOfLE hVU) q)}
+  refine irreducibleSpace_of_open_cover_meeting S ?_ ?_ ?_ ?_
+  · rintro W ⟨V, hVU, hi, -, rfl⟩
+    exact (key V hVU hi).1
+  · rintro W ⟨V, hVU, hi, -, rfl⟩
+    exact (key V hVU hi).2.1
+  · intro p
+    have hyU : U.ι (q p) ∈ U := (q p).2
+    obtain ⟨V, hVU, hyV, hi⟩ := hV _ hyU
+    exact ⟨_, ⟨V, hVU, hi, ⟨_, hyV⟩, rfl⟩, (key V hVU hi).2.2 p hyV⟩
+  · rintro W ⟨V, hVU, hi, ⟨a, ha⟩, rfl⟩ W' ⟨V', hVU', hi', ⟨b, hb⟩, rfl⟩
+    obtain ⟨z, hzU, hzV, hzV'⟩ :=
+      hU.2 (V : Set X) (V' : Set X) V.isOpen V'.isOpen ⟨a, hVU ha, ha⟩ ⟨b, hVU' hb, hb⟩
+    obtain ⟨p, hp⟩ := hqs ⟨z, hzU⟩
+    have hpz : U.ι (q p) = z := by rw [hp]; rfl
+    exact ⟨p, (key V hVU hi).2.2 p (hpz ▸ hzV), (key V' hVU' hi').2.2 p (hpz ▸ hzV')⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreducibleSpacePullbackFieldOfIrreducibleCoverStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.irreducibleSpace_pullback_field_of_irreducible_cover : ∀ {F : Type} [Field F] {X : Scheme.{0}} (h : X ⟶ Sp F) (k : Type) [Field k] (f : F →+* k) (U : X.Opens),
+    IsIrreducible (U : Set X) →
+    (∀ y ∈ U, ∃ V : X.Opens, V ≤ U ∧ y ∈ V ∧ IrreducibleSpace ↑(pullback (V.ι ≫ h) (spMap f))) →
+    IrreducibleSpace ↑(pullback (U.ι ≫ h) (spMap f)) := by
+  first | exact @GlobalTheory.irreducibleSpace_pullback_of_cover | exact GlobalTheory.irreducibleSpace_pullback_of_cover | (intros; apply GlobalTheory.irreducibleSpace_pullback_of_cover <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComponentGeometricallyIrreducible
+
+section
 
 @[expose] public section
 
@@ -190,3 +356,6 @@ theorem GlobalTheory.GeomIrrComp.exists_open_irreducibleSpace_baseChange : ∀ (
     rwa [hZc.closure_eq] at this
   exact irreducibleSpace_pullback strK (genPt Z) (fun a ha => algClosed_kap hac Z a ha)
     (GlobalTheory.IsNormalScheme.component Z) hg.mem (fun y hy => hg.specializes hy) k f
+end
+end
+end

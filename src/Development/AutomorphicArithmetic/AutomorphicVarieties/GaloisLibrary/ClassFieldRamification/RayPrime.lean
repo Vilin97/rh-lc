@@ -1,7 +1,8 @@
 module
 
 public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassField
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RayPrimeSpan
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +41,41 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.ClassFieldRamification.IsClassFieldHilbert
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.KummerTheory.Mk0IdMapCongr
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RayPrimeSpan
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi16.rayPrime_span :
+    ∀
+    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers ℚ)) (p : ℕ),
+    Nat.Prime p →
+      (↑p : NumberField.RingOfIntegers ℚ) ∈ v.asIdeal → v.asIdeal = Ideal.span {(↑p : NumberField.RingOfIntegers ℚ)} := by
+  intro v p hp hmem
+  have hprime : Prime (p : NumberField.RingOfIntegers ℚ) := by
+    rw [← MulEquiv.prime_iff Rat.ringOfIntegersEquiv]
+    rw [map_natCast]
+    exact Nat.prime_iff_prime_int.mp hp
+  have hP : (Ideal.span {(p : NumberField.RingOfIntegers ℚ)}).IsPrime :=
+    (Ideal.span_singleton_prime hprime.ne_zero).mpr hprime
+  have hne : Ideal.span {(p : NumberField.RingOfIntegers ℚ)} ≠ ⊥ := by
+    rw [Ne, Ideal.span_singleton_eq_bot]
+    exact hprime.ne_zero
+  have hmax : (Ideal.span {(p : NumberField.RingOfIntegers ℚ)}).IsMaximal :=
+    hP.isMaximal hne
+  exact (hmax.eq_of_le v.isPrime.ne_top ((Ideal.span_singleton_le_iff_mem _).mpr hmem)).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.ClassFieldRamification.RayPrime
+
+section
 
 @[expose] public section
 
@@ -82,3 +115,5 @@ theorem UpperTheory.V.CF.rayPrime :
     change _ = ((v.asIdeal : Ideal (𝓞 ℚ)) : FractionalIdeal (nonZeroDivisors (𝓞 ℚ)) ℚ)
     rw [rayPrime_span v p hp hpv, FractionalIdeal.coeIdeal_span_singleton]
     simp
+end
+end

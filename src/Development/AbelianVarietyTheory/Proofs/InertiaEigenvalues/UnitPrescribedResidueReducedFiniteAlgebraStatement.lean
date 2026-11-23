@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnitPrescribedResidueReducedFiniteAlgebra
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +19,14 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,6 +34,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,9 +49,63 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnitPrescribedResidueReducedFiniteAlgebra
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+namespace GlobalTheory
+
+theorem UnitLemma.exists_unit_residue (K : UQ) (B : InvAlg K) (hB : IsReduced B.A) (m : MaximalSpectrum B.A)
+    (z : B.A ⧸ m.asIdeal) (hz : z ≠ 0) :
+    ∃ y : B.Aˣ, Ideal.Quotient.mk m.asIdeal (y : B.A) = z ∧
+      ∀ m' : MaximalSpectrum B.A, m' ≠ m → Ideal.Quotient.mk m'.asIdeal (y : B.A) = 1 := by
+  classical
+  haveI : IsArtinianRing B.A := IsArtinianRing.of_finite K.E B.A
+  let e := IsArtinianRing.equivPi B.A
+  let v : (I : MaximalSpectrum B.A) → B.A ⧸ I.asIdeal := fun I =>
+    if h : I = m then h ▸ z else 1
+  have hv : IsUnit v := by
+    rw [Pi.isUnit_iff]
+    intro I
+    letI := Ideal.Quotient.field I.asIdeal
+    rw [isUnit_iff_ne_zero]
+    by_cases h : I = m
+    · subst h; simpa [v] using hz
+    · simp [v, h]
+  have hy : IsUnit (e.symm v) := hv.map e.symm
+  refine ⟨hy.unit, ?_, ?_⟩
+  · have := IsArtinianRing.equivPi_apply B.A (e.symm v) m
+    rw [AlgEquiv.apply_symm_apply] at this
+    simp only [IsUnit.unit_spec]
+    rw [← this]; simp [v]
+  · intro m' hm'
+    have := IsArtinianRing.equivPi_apply B.A (e.symm v) m'
+    rw [AlgEquiv.apply_symm_apply] at this
+    simp only [IsUnit.unit_spec]
+    rw [← this]; simp [v, hm']
+
+theorem UnitLemma.unit_prescribed_residue : ∀ (K : UQ) (B : InvAlg K), IsReduced B.A → ∀ (m : MaximalSpectrum B.A)
+    (z : B.A ⧸ m.asIdeal), z ≠ 0 → ∃ y : B.Aˣ, Ideal.Quotient.mk m.asIdeal (y : B.A) = z ∧
+      ∀ m' : MaximalSpectrum B.A, m' ≠ m → Ideal.Quotient.mk m'.asIdeal (y : B.A) = 1 :=
+  fun K B hB m z hz => UnitLemma.exists_unit_residue K B hB m z hz
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnitPrescribedResidueReducedFiniteAlgebraStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.UnitLemma Polynomial
 
 theorem _root_.GlobalTheory.T.unit_prescribed_residue_reduced_finite_algebra : ∀ (K : UQ) (B : InvAlg K), IsReduced B.A → ∀ (m : MaximalSpectrum B.A) (z : B.A ⧸ m.asIdeal), z ≠ 0 → ∃ y : B.Aˣ, Ideal.Quotient.mk m.asIdeal (y : B.A) = z ∧ ∀ m' : MaximalSpectrum B.A, m' ≠ m → Ideal.Quotient.mk m'.asIdeal (y : B.A) = 1 := by
   first | exact @GlobalTheory.UnitLemma.unit_prescribed_residue | exact GlobalTheory.UnitLemma.unit_prescribed_residue | (intros; apply GlobalTheory.UnitLemma.unit_prescribed_residue <;> assumption)
+end
+end

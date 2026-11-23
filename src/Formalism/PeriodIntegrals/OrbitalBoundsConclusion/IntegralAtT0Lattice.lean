@@ -2,11 +2,18 @@ module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.IntegralityOfRationalityLocal
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.AwayCore
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.IntegralityAtFormsOfAway
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.UpLatLoc0Of
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.DnIncInt0Of
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrCore
+public import Formalism.LocalToGlobal.HermitianForms.PrkSmul
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiagonalSlopes.StabiliserOfLocalTransport
+import Formalism.LocalToGlobal.GlobalTheory.GL6.PKerAtP
+import Formalism.LocalToGlobal.GlobalTheory.GL6.PRLocV
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -18,6 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -25,6 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,7 +46,167 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.IntInvOfLoc
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.IntegralityAtFormsOfAwayUp
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.DnLatKer
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField Ideal IsDedekindDomain
+
+namespace PI.UnitaryGroupMassFormula.IAT
+
+open Formalism.BasicNotions Formalism.L2.Forms Formalism.L2.GlobalTheoryTheory.LocalLatticeBases Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.S0 Matrix Formalism.UG
+
+variable {D : D7} {u : D.what₂.Word} {i : ℕ} {hi : i ≤ D.R.m}
+
+
+
+
+theorem cls_tLd (K : ClsTied u i hi) (c : (D.mem u).C.cls i) (y : Fin (D.R.N i) → D.host.E) (hy : y ∈ Ld D u i hi c) :
+    (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • y ∈ clsCrd D u i hi c := by
+  have hM : clsCrd D u i hi c = Formalism.UG.CS.globLat (K.y c).1 K.lev.Lb :=
+    Formalism.L2.GlobalTheoryTheory.Comp.eq_glob_of_hat (tld_isLat i hi c) (K.y c).1 (fun w => K.y_lat c w)
+  rw [dual_class_lattice_eq_global K c] at hy
+  rw [hM]
+  have key : Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) K.lev.Lb ≤
+      K.lev.Lb.comap ((((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • LinearMap.id) := by
+    unfold Formalism.L2.GlobalTheoryTheory.Comp.dl
+    refine Submodule.span_le.mpr ?_
+    intro z hz
+    have h2 := K.lev.Lb_dual z hz
+    simpa [Nat.cast_smul_eq_nsmul] using h2
+  have hG : ∀ x ∈ Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) K.lev.Lb,
+      ((((D.mem u).A.T : ℕ) : D.host.E) • (1 : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)) *ᵥ x ∈
+        K.lev.Lb := by
+    intro x hx
+    have h2 := key hx
+    simp only [Submodule.mem_comap, LinearMap.smul_apply, LinearMap.id_apply] at h2
+    have h3 : ((((D.mem u).A.T : ℕ) : D.host.E) • (1 : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)) *ᵥ x =
+        (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • x := by
+      ext j
+      simp [Matrix.mulVec, dotProduct, Matrix.one_apply, Nat.cast_smul_eq_nsmul, nsmul_eq_mul]
+    rw [h3]
+    exact h2
+  have hy' : ((((K.y c).1)⁻¹ : GL _ _) : Matrix _ _ _) *ᵥ Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi D.host.F y ∈
+      Formalism.L2.GlobalTheoryTheory.Comp.hat D.host.F (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) K.lev.Lb) := hy
+  have h1 := Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.hat_fwd _ hG _ hy'
+  show ((((K.y c).1)⁻¹ : GL _ _) : Matrix _ _ _) *ᵥ
+      Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi D.host.F ((((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • y) ∈
+    Formalism.L2.GlobalTheoryTheory.Comp.hat D.host.F K.lev.Lb
+  convert h1 using 1
+  have hv : Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi D.host.F ((((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • y) =
+      ((D.mem u).A.T) • Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi D.host.F y := by
+    ext k
+    simp [Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi, Nat.cast_smul_eq_nsmul]
+  have hGm : ∀ w : Fin (D.R.N i) → TensorProduct D.host.F D.host.E (FiniteAdeleRing (𝓞 D.host.F) D.host.F),
+      ((((D.mem u).A.T : ℕ) : D.host.E) • (1 : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
+        (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) *ᵥ w = ((D.mem u).A.T) • w := by
+    intro w
+    ext k
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.smul_apply, Matrix.one_apply,
+      smul_eq_mul, mul_ite, mul_one, mul_zero, apply_ite, map_zero, ite_mul, zero_mul,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true, map_natCast, Pi.smul_apply, nsmul_eq_mul]
+  rw [hv, hGm, Matrix.mulVec_smul]
+
+
+
+theorem lk_locP (A : AtTTied u) (K : ClsTied u i hi) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) :
+    Formalism.HermitianLatticesTheory.localization₂ (A.Pv v) (Lk A i hi v c) = Formalism.HermitianLatticesTheory.localization₂ (A.Pv v) (clsCrd D u i hi c) := by
+  apply le_antisymm
+  · obtain ⟨s, hs, h⟩ := unr_smul A v
+    intro x hx
+    obtain ⟨r, hr, hrx⟩ := (rlv_mem_locP _ _ _).1 hx
+    obtain ⟨l, hl, m, hm, ex⟩ := Submodule.mem_sup.1 hrx
+    obtain ⟨y, hy, ey⟩ := h (Ld D u i hi c) m hm
+    refine (rlv_mem_locP _ _ _).2 ⟨s * r, fun h' => (Ideal.IsPrime.mem_or_mem inferInstance h').elim hs hr, ?_⟩
+    rw [mul_smul, ← ex, smul_add, ey]
+    exact Submodule.add_mem _ (Submodule.smul_mem _ _ hl) (cls_tLd K c y hy)
+  · intro x hx
+    obtain ⟨r, hr, hrx⟩ := (rlv_mem_locP _ _ _).1 hx
+    exact (rlv_mem_locP _ _ _).2 ⟨r, hr, Submodule.mem_sup_left hrx⟩
+
+end PI.UnitaryGroupMassFormula.IAT
+
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.DnLatB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField Ideal Matrix IsDedekindDomain
+
+namespace PI.UnitaryGroupMassFormula.IAT
+
+open Formalism.BasicNotions Formalism.L2.Forms Formalism.L2.Host Formalism.L2.GlobalTheoryTheory.LocalLatticeBases Formalism.UG
+
+variable {D : D7} {u : D.what₂.Word}
+
+theorem dnLatLoc0_of_away (T : Forms0 D u) (hA : AwayLat0 T) : DnLatLoc0 T := by
+  intro w hw hs v c g hg γ η κ hη hy hP B B' B₂ hB hB' hB₂ τ
+  split_ifs with hτ
+  · subst hτ
+    have hk := lk_locP T.atT T.cls0 v c
+    refine intInv_of_loc T.atT w hw hs v B₂ B' γ.1 hB₂ hB' ?_ ?_
+    · rw [hP, ← hk]
+      exact le_locP' _ _
+    · rw [hk, ← hP]
+      exact le_locP' _ _
+  · obtain ⟨v', rfl⟩ : ∃ v', (D.fm u).tauOf w v' = τ := ⟨((D.fm u).tauOf w).symm τ, by simp⟩
+    have hv' : v' ≠ v := fun h => hτ (h ▸ rfl)
+    have hA' := hA v v' hv' c ((D.fm u).dn 0 v c g) γ η κ hη hy
+    refine intInv_of_loc T.atT w hw hs v' B₂ B γ.1 hB₂ hB ?_ ?_
+    · rw [hA']
+      exact le_locP' _ _
+    · rw [← hA']
+      exact le_locP' _ _
+
+end PI.UnitaryGroupMassFormula.IAT
+
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegralityAtPrimeLattices.IntegralityAtFormsOfAway
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.UnitaryGroupMassFormula.IAT
+
+open Formalism.BasicNotions Formalism.MainNotions.product_first_zeroth_parts Formalism.L2.Forms Formalism.L2.GlobalTheoryTheory Formalism.L2.GlobalTheoryTheory.LocalLatticeBases
+
+theorem integrality_at_forms_of_away
+    (hA : ∀ (D : D7) (u : D.what₂.Word) (T : Forms0 D u), LocalLatticeBases.ChiFin0 T → admS D u → HidaSetting D u → AwayLat0 T)
+    (D : D7) (u : D.what₂.Word) : Formalism.MainNotions.RT.IntegralityLevelZeroUnderForms D u :=
+  integrality_at_forms_of_away_up hA (fun D u T hC hA' hS => dnLatLoc0_of_away T (hA D u T hC hA' hS)) D u
+
+end PI.UnitaryGroupMassFormula.IAT
+
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.IntegralAtT0Lattice
+
+section
 
 @[expose] public section
 
@@ -47,3 +216,5 @@ theorem integral_at_t0_lattice : ∀ (D : Formalism.BasicNotions.D7) (u : D.what
   PI.UnitaryGroupMassFormula.IAT.integrality_at_forms_of_away (fun _ _ T _ _ _ => PI.UnitaryGroupMassFormula.IAT.lattices_away_from_place T)
 
 end PI.IntegralAtBasePointLattice
+end
+end

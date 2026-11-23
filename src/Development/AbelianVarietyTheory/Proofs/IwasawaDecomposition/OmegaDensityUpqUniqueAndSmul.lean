@@ -1,7 +1,7 @@
 module
 
 public import Formalism.LocalRingCardinality.DataCD
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OmegaLebUnique
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.HaarUpqEqOfOmegaDensity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,28 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OmegaLebUnique
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions MeasureTheory Filter Topology Matrix
+
+namespace GlobalTheory.OmegaLebUnique
+
+theorem omegaLeb_unique :
+    ∀ (P Q : ℕ) (l l' : Measure (lieU P Q)), IsOmegaLeb l → IsOmegaLeb l' → l = l' :=
+  fun _ _ _ _ h h' => GlobalTheory.CompactDualUnique.isOmegaLeb_unique h h'
+
+end GlobalTheory.OmegaLebUnique
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OmegaDensityUpqUniqueAndSmul
+
+section
+
 @[expose] public section
 
 open Formalism.BasicNotions MeasureTheory Filter Topology Matrix
@@ -70,3 +92,5 @@ theorem omegaDensity_unique_and_smul : ∀ (P Q : ℕ) (μ : Measure (UpqT P Q))
   fun _ _ _ _ h => ⟨fun _ h' => omegaDensity_unique h h', fun a => omegaDensity_smul h a⟩
 
 end GlobalTheory.OmegaDensityScale
+end
+end

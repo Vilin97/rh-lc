@@ -1,11 +1,10 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StProjectionUnramifiedGeneric
-public import GroundTheory.HeightsAndTheta.Theta.SplitLinear.RankMinors
+public import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -21,13 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.LocalProperties.Reduced
-import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
-import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,10 +44,91 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Tactic.TypeStar
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.RingTheory.LocalProperties.Reduced
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Algebra.CharP.Algebra
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRowsLinearIndependent
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qm10.exists_rows_linearIndependent.{u, u_1, u_2} :
+    ∀ {K : Type u_1} [inst : Field K] {r : Type u} {c : Type u_2} [Fintype r] [inst_2 : Fintype c]
+    (P : Matrix r c K) {k : ℕ}, k ≤ P.rank → ∃ (I : Fin k → r), LinearIndependent K fun (p : Fin k) ↦ P (I p) := by
+  intro K _ r c _ _ P k hk
+  obtain ⟨κ, a, ha, hspan, hli⟩ := exists_linearIndependent' K P.row
+  haveI : Finite κ := Finite.of_injective a ha
+  haveI : Fintype κ := Fintype.ofFinite κ
+  have hcard : Fintype.card (Fin k) ≤ Fintype.card κ := by
+    rw [Fintype.card_fin, ← finrank_span_eq_card hli, hspan, ← Matrix.rank_eq_finrank_span_row]
+    exact hk
+  obtain ⟨e⟩ := Function.Embedding.nonempty_of_card_le hcard
+  exact ⟨fun p ↦ a (e p), hli.comp e e.injective⟩
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Theta.SplitLinear.RankMinors
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Theta
+
+namespace SplitLinear
+
+open Matrix Module
+
+universe u
+
+variable {K : Type*} [Field K]
+
+theorem exists_rows_linearIndependent {r : Type u} {c : Type*} [Fintype r] [Fintype c]
+    (P : Matrix r c K) {k : ℕ}
+    (hk : k ≤ P.rank) : ∃ I : Fin k → r, LinearIndependent K (fun p => P (I p)) :=
+  _root_.UpperTheory.Reformulated.B.Qm10.exists_rows_linearIndependent P hk
+
+theorem exists_minor_ne_zero {r c : Type*} [Fintype r] [Fintype c] (P : Matrix r c K) {k : ℕ}
+    (hk : k ≤ P.rank) : ∃ (I : Fin k → r) (J : Fin k → c), (P.submatrix I J).det ≠ 0 := by
+  classical
+  obtain ⟨I, hI⟩ := exists_rows_linearIndependent P hk
+  set N : Matrix (Fin k) c K := P.submatrix I id with hNdef
+  have hN : N.rank = k := by
+    have := LinearIndependent.rank_matrix (M := N) hI
+    simpa using this
+  have hNt : k ≤ Nᵀ.rank := by rw [rank_transpose, hN]
+  obtain ⟨J, hJ⟩ := exists_rows_linearIndependent Nᵀ hNt
+  refine ⟨I, J, ?_⟩
+  have hQ : IsUnit (Nᵀ.submatrix J id) := linearIndependent_rows_iff_isUnit.1 hJ
+  have e : P.submatrix I J = (Nᵀ.submatrix J id)ᵀ := by ext p q; rfl
+  rw [e, det_transpose]
+  exact ((isUnit_iff_isUnit_det _).1 hQ).ne_zero
+
+end SplitLinear
+
+end GroundTheory.Heights₂.Theta
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PProjectionUnramifiedGeneric
+
+section
 
 @[expose] public section
 
@@ -223,3 +300,5 @@ end ProjectionUnramifiedGeneric
 end
 
 end GroundTheory.Heights₂.Heights
+end
+end

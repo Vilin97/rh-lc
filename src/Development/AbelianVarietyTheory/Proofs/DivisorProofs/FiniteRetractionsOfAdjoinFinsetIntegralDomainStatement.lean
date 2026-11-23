@@ -2,7 +2,6 @@ module
 
 public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteRetractionsOfAdjoinFinsetIntegralDomain
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,7 +43,63 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Topology.Sheaves.Presheaf
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteRetractionsOfAdjoinFinsetIntegralDomain
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+open scoped TensorProduct
+
+namespace GlobalTheory
+
+theorem finite_retractions_of_adjoin_finset_integral
+    (D T E : Type) [CommRing D] [IsDomain D] [CommRing T] [IsDomain T] [Algebra D T]
+    [CommRing E] [Algebra D E] [Algebra.IsIntegral D E] (ι : T →ₐ[D] E) (F : Finset E)
+    (hF : Algebra.adjoin D (Set.range ι ∪ (F : Set E)) = ⊤) :
+    {χ : E →ₐ[D] T | χ.comp ι = AlgHom.id D T}.Finite := by
+  classical
+  choose p hpm hp0 using fun x : E => (Algebra.IsIntegral.isIntegral (R := D) x)
+  have hfin : (Set.pi Set.univ fun f : F =>
+      ((((p f.1).map (algebraMap D T)).roots.toFinset : Finset T) : Set T)).Finite :=
+    Set.Finite.pi (fun f => Finset.finite_toSet _)
+  refine Set.Finite.of_finite_image (f := fun χ : E →ₐ[D] T => fun f : F => χ f.1)
+    (hfin.subset ?_) ?_
+  · rintro _ ⟨χ, _, rfl⟩
+    refine Set.mem_univ_pi.2 fun f => ?_
+    simp only [Finset.mem_coe, Multiset.mem_toFinset]
+    rw [Polynomial.mem_roots ((hpm f.1).map (algebraMap D T)).ne_zero, Polynomial.IsRoot,
+      Polynomial.eval_map, ← Polynomial.aeval_def, Polynomial.aeval_algHom_apply,
+      Polynomial.aeval_def, hp0, map_zero]
+  · intro χ₁ h₁ χ₂ h₂ he
+    apply AlgHom.ext_of_adjoin_eq_top hF
+    rintro x (⟨t, rfl⟩ | hx)
+    · have e₁ := AlgHom.congr_fun (show χ₁.comp ι = AlgHom.id D T from h₁) t
+      have e₂ := AlgHom.congr_fun (show χ₂.comp ι = AlgHom.id D T from h₂) t
+      simp only [AlgHom.comp_apply, AlgHom.id_apply] at e₁ e₂
+      rw [e₁, e₂]
+    · exact congrFun he ⟨x, hx⟩
+
+theorem finite_retractions_of_adjoin_finset_integral' :
+    ∀ (D T E : Type) [CommRing D] [IsDomain D] [CommRing T] [IsDomain T] [Algebra D T]
+      [CommRing E] [Algebra D E] [Algebra.IsIntegral D E] (ι : T →ₐ[D] E) (F : Finset E),
+      Algebra.adjoin D (Set.range ι ∪ (F : Set E)) = ⊤ →
+        {χ : E →ₐ[D] T | χ.comp ι = AlgHom.id D T}.Finite :=
+  fun D T E _ _ _ _ _ _ _ _ ι F hF => finite_retractions_of_adjoin_finset_integral D T E ι F hF
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteRetractionsOfAdjoinFinsetIntegralDomainStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +108,5 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.finite_retractions_of_adjoin_finset_integral_domain : ∀ (D T E : Type) [CommRing D] [IsDomain D] [CommRing T] [IsDomain T] [Algebra D T] [CommRing E] [Algebra D E] [Algebra.IsIntegral D E] (ι : T →ₐ[D] E) (F : Finset E), Algebra.adjoin D (Set.range ι ∪ (F : Set E)) = ⊤ → {χ : E →ₐ[D] T | χ.comp ι = AlgHom.id D T}.Finite := by
   first | (exact @GlobalTheory.finite_retractions_of_adjoin_finset_integral') | (exact GlobalTheory.finite_retractions_of_adjoin_finset_integral') | (intros; apply GlobalTheory.finite_retractions_of_adjoin_finset_integral'  <;> assumption)
+end
+end

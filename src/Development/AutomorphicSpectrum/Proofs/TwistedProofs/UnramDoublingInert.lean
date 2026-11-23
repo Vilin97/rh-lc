@@ -6,38 +6,17 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasLenOfL
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsOpenIsCompactUnitaryIntegralPoints
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InvMemDoubleCosetAndComm
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasSumSpherical
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.AdditiveVectorExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CompletionExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetInjectiveStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetIntegralStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetSurjectiveOfLeviStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CountOfHeisenbergIndexStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.DoubleCosetSwapStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.DualPairingExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.FractionExistsOfSmithStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.GeneratingFunctionIdentityStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.HeisenbergMatrixFactsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.LatticeIndexOfSmithStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.LeviDecompositionExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.PointwiseOfSpanHeisenbergStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.RecursionIdentityStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmallCornerOfHeisenbergDualStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmallRankBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmithNormalFormExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SpanEqualityStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SphericalTransitiveOfLeviStatement
-public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.TraceIndexFormulaStatement
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.FSatakeA
-import Formalism.SatakeDualWeyl.KpqSubgroupCompact
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -45,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -66,10 +43,156 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeAddVectorDetValuationStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DoubledLatticePrimitiveIsotropicFrameCompletion
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryIwasawaCellsDisjointStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralRightInvariantEqSumOpenSubgroupCosetsStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetSurjectiveOfLeviStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmallRadicalCosetCountOfHeisenberg
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.BiInvariantReplaceSameDoubleCosetSumsStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DualInterEqSumStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MatrixLengthExistsOfElementaryDivisors
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LengthCountGeneratingSeriesFormulaStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.HeisenbergMatrixFactsStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.LatticeIndexOfSmithStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.LeviDecompositionExistsStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.PointwiseOfSpanHeisenbergStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.RecursionIdentityStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmallCornerOfHeisenbergDualStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmallRankBoundStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SmithNormalFormExistsStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SpanEqualityStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SphericalTransitiveOfLeviStatement
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.TraceIndexFormulaStatement
+import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.FSatakeA
+import Formalism.SatakeDualWeyl.KpqSubgroupCompact
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.AdditiveVectorExistsStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.additive_vector_exists : AddVec :=
+  @_root_.GlobalTheory.T.lattice_add_vector_det_valuation
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.CompletionExistsStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.completion_exists : Completion :=
+  @_root_.GlobalTheory.FrameCompletion.completion
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetInjectiveStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.coset_injective : CosetInj :=
+  @_root_.GlobalTheory.T.unitary_iwasawa_cells_disjoint
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.CosetIntegralStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.cosetIntegral' : CosetIntegral :=
+  @_root_.GlobalTheory.T.integral_right_invariant_eq_sum_open_subgroup_cosets
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.CountOfHeisenbergIndexStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.count_of_heisenberg_index : Heis → LatIndex → TraceIndex → Count :=
+  GlobalTheory.InertZeta.count_of_heis
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.DoubleCosetSwapStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.double_coset_swap : DosetSwap :=
+  @_root_.GlobalTheory.T.biInvariant_replace_same_double_coset_sums
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.DualPairingExistsStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.dual_pairing_exists : Dual :=
+  @_root_.GlobalTheory.T.dual_inter_eq_sum'
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.FractionExistsOfSmithStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.fraction_exists_of_smith : Smith → FracExists :=
+  @_root_.GlobalTheory.InertZeta.fracExists_of_smith
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.GeneratingFunctionIdentityStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.InertZeta
+
+theorem _root_.GlobalTheory.T.generating_function_identity : GenFun :=
+  @_root_.GlobalTheory.T.length_count_generating_series_formula
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.TwistedProofs.UnramDoublingInert
+
+section
 
 @[expose] public section
 
@@ -147,4 +270,6 @@ theorem unramDoublingInert : UnramDoublingInert := by
 
 end GlobalTheory.CompanionTheory.InertZetaTop
 
+end
+end
 end

@@ -5,32 +5,30 @@ public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HeckeLPartialContinuationHolds
 public import Development.AbelianVarietyTheory.Definitions.Foundations.NotIsSplitOfIsInertAt
 public import Formalism.UnipotentAdelicQuotients.ThmBInHecke
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmCharacterConjugateInverse
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmCharacterConjugationSymmetry
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmConjugationOnPrimesProperties
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmLocalCharacterValueBounded
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ContinuousInfiniteAdeleMap
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.OneSubRePosOfNormLeHalf
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RealPosAtOneOfRight
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeCharacterInfinityExponentGroupLaws
-public import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.InputsHecke
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,10 +48,203 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmConjugationOnPrimesProperties
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmLocalCharacterValueBounded
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ContinuousInfiniteAdeleMap
+import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.OneSubRePosOfNormLeHalf
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeCharacterInfinityExponentGroupLaws
+public import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.InputsHecke
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.MemRangeAlgebraMapOfConjFixed
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding Complex Classical
+open scoped TensorProduct ContDiff nonZeroDivisors
+
+namespace GlobalTheory
+
+theorem mem_range_algebraMap_of_conj_fixed (F E : Type) [Field F] [Field E] [NumberField E]
+    [Algebra F E] (σ : E →ₐ[F] E) (hE : IsTotallyComplex E) (h2 : Module.finrank F E = 2)
+    (hσ : ∀ (τ : E →+* ℂ) (x : E), τ (σ x) = star (τ x)) (e : E) (he : σ e = e) :
+    ∃ c : F, algebraMap F E c = e := by
+  have := Subalgebra.isSimpleOrder_of_finrank h2
+  rcases eq_bot_or_eq_top (AlgHom.equalizer σ (AlgHom.id F E)) with h | h
+  · have hm : e ∈ AlgHom.equalizer σ (AlgHom.id F E) := by
+      rw [AlgHom.mem_equalizer]; simpa using he
+    rw [h] at hm
+    exact Algebra.mem_bot.mp hm
+  · exfalso
+    obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
+    apply IsTotallyComplex.complexEmbedding_not_isReal τ
+    rw [ComplexEmbedding.isReal_iff]
+    ext x
+    have hm : x ∈ AlgHom.equalizer σ (AlgHom.id F E) := by rw [h]; trivial
+    rw [AlgHom.mem_equalizer] at hm
+    have h1 := hσ τ x
+    rw [hm] at h1
+    rw [ComplexEmbedding.conjugate_coe_eq]
+    exact h1.symm
+
+theorem exists_mul_conj_eq_algebraMap (F E : Type) [Field F] [NumberField F] [Field E]
+    [NumberField E]
+    [Algebra F E] (σ : E →ₐ[F] E) (hE : IsTotallyComplex E) (h2 : Module.finrank F E = 2)
+    (hσ : ∀ (τ : E →+* ℂ) (x : E), τ (σ x) = star (τ x)) (R : Type) [CommRing R] [Algebra F R]
+    (y : R ⊗[F] E) :
+    ∃ n : R, y * Algebra.TensorProduct.map (AlgHom.id F R) σ y = algebraMap R (R ⊗[F] E) n := by
+  have hinv : ∀ x, σ (σ x) = x := by
+    intro x
+    obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
+    apply τ.injective
+    rw [hσ, hσ, star_star]
+  set φ := Algebra.TensorProduct.map (AlgHom.id F R) σ with hφ
+  have key : ∀ y z : R ⊗[F] E, ∃ n : R, y * φ z + z * φ y = algebraMap R (R ⊗[F] E) n := by
+    intro y z
+    induction y using TensorProduct.induction_on with
+    | zero => exact ⟨0, by simp⟩
+    | add y₁ y₂ h₁ h₂ =>
+      obtain ⟨n₁, h₁⟩ := h₁
+      obtain ⟨n₂, h₂⟩ := h₂
+      exact ⟨n₁ + n₂, by rw [map_add (f := _), map_add (f := _), ← h₁, ← h₂]; ring⟩
+    | tmul a e =>
+      induction z using TensorProduct.induction_on with
+      | zero => exact ⟨0, by simp⟩
+      | add z₁ z₂ h₁ h₂ =>
+        obtain ⟨n₁, h₁⟩ := h₁
+        obtain ⟨n₂, h₂⟩ := h₂
+        exact ⟨n₁ + n₂, by rw [map_add (f := _), map_add (f := _), ← h₁, ← h₂]; ring⟩
+      | tmul b f =>
+        obtain ⟨c, hc⟩ := mem_range_algebraMap_of_conj_fixed F E σ hE h2 hσ
+          (e * σ f + f * σ e) (by rw [map_add (f := _), map_mul, map_mul, hinv, hinv]; ring)
+        refine ⟨c • (a * b), ?_⟩
+        rw [hφ, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul,
+          Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul,
+          AlgHom.id_apply, AlgHom.id_apply, mul_comm b a, ← TensorProduct.tmul_add, ← hc,
+          Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
+          TensorProduct.smul_tmul, Algebra.algebraMap_eq_smul_one]
+  obtain ⟨n, hn⟩ := key y y
+  refine ⟨algebraMap F R (1 / 2) * n, ?_⟩
+  have h : algebraMap F R (1 / 2) * 2 = 1 := by
+    rw [← map_ofNat (algebraMap F R) 2, ← map_mul]; norm_num
+  have h' : algebraMap R (R ⊗[F] E) (algebraMap F R (1 / 2)) * 2 = 1 := by
+    rw [← map_ofNat (algebraMap R (R ⊗[F] E)) 2, ← map_mul, h, map_one]
+  rw [map_mul, ← hn, ← two_mul, ← mul_assoc, h', one_mul]
+
+theorem exists_unit_mul_conj_eq_algebraMap :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsTotallyReal F → IsTotallyComplex E → Module.finrank F E = 2 → (∀ (τ : E →+* ℂ) (x : E), τ (σ x) = star (τ x)) → ∀ (R : Type) [CommRing R] [Algebra F R] (x : (R ⊗[F] E)ˣ), ∃ n : Rˣ, (x : R ⊗[F] E) * Algebra.TensorProduct.map (AlgHom.id F R) σ (x : R ⊗[F] E) = algebraMap R (R ⊗[F] E) n := by
+  intro F E _ _ _ _ _ σ _ hE h2 hσ R _ _ x
+  obtain ⟨n, hn⟩ := exists_mul_conj_eq_algebraMap F E σ hE h2 hσ R (x : R ⊗[F] E)
+  obtain ⟨m, hm⟩ := exists_mul_conj_eq_algebraMap F E σ hE h2 hσ R ((x⁻¹ : (R ⊗[F] E)ˣ) : R ⊗[F] E)
+  have hinj : Function.Injective (algebraMap R (R ⊗[F] E)) :=
+    Algebra.TensorProduct.includeLeft_injective (S := R) (algebraMap F E).injective
+  have hnm : n * m = 1 := by
+    apply hinj
+    rw [map_mul, map_one, ← hn, ← hm, mul_mul_mul_comm, ← map_mul, Units.mul_inv, map_one, mul_one]
+  exact ⟨⟨n, m, hnm, by rw [mul_comm, hnm]⟩, hn⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmCharacterConjugateInverse
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding Complex Classical HeckeCharacterZeroLocus.ThmBIn
+open scoped TensorProduct ContDiff nonZeroDivisors
+
+namespace GlobalTheory
+
+theorem ideleChar_conj_eq_inv_of_trivial_on_base :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ χ : (AE F E)ˣ →* Circle, (∀ a : (AF F)ˣ, χ (idF F E a) = 1) → ∀ x y : (AE F E)ˣ, (y : AE F E) = cA σ x → χ y = (χ x)⁻¹ := by
+  intro F E _ _ _ _ _ σ h χ hχ x y hy
+  obtain ⟨h1, h2, h3, h4⟩ := h
+  obtain ⟨n, hn⟩ := exists_unit_mul_conj_eq_algebraMap F E σ h1 h2 h3 h4 (AF F) x
+  have hxy : x * y = idF F E n := by
+    apply Units.ext
+    rw [Units.val_mul, hy]
+    exact hn
+  have h5 : χ x * χ y = 1 := by rw [← map_mul, hxy, hχ]
+  exact eq_inv_of_mul_eq_one_right h5
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CmCharacterConjugationSymmetry
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding Complex Classical HeckeCharacterZeroLocus.ThmBIn
+open scoped TensorProduct ContDiff nonZeroDivisors
+
+namespace GlobalTheory
+
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding Complex Classical in
+open scoped TensorProduct ContDiff nonZeroDivisors in
+theorem _root_.GlobalTheory.cA_incA_apply {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
+    [Algebra F E] (σ : E →ₐ[F] E) (x : E) :
+    _root_.HeckeCharacterZeroLocus.ThmBIn.cA σ (_root_.HeckeCharacterZeroLocus.ThmBIn.incA F E x) = _root_.HeckeCharacterZeroLocus.ThmBIn.incA F E (σ x) := by
+  unfold _root_.HeckeCharacterZeroLocus.ThmBIn.cA _root_.HeckeCharacterZeroLocus.ThmBIn.incA _root_.HeckeCharacterZeroLocus.ThmBIn.AE
+  exact rfl
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RealPosAtOneOfRight
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory
+
+theorem real_pos_at_one_of_right (L : ℂ → ℂ) (hc : ContinuousAt L 1) (h1 : L 1 ≠ 0)
+    (h : ∀ s : ℂ, 1 < s.re → s.im = 0 → (L s).im = 0 ∧ 0 < (L s).re) :
+    (L 1).im = 0 ∧ 0 < (L 1).re := by
+  have ht : Tendsto (fun t : ℝ => L (t : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝 (L 1)) := by
+    have h0 : Tendsto (fun t : ℝ => (t : ℂ)) (𝓝 (1 : ℝ)) (𝓝 (1 : ℂ)) := by
+      simpa using Complex.continuous_ofReal.tendsto 1
+    exact (hc.tendsto.comp h0).mono_left nhdsWithin_le_nhds
+  have hev : ∀ᶠ t : ℝ in 𝓝[>] (1 : ℝ), (L (t : ℂ)).im = 0 ∧ 0 < (L (t : ℂ)).re := by
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    exact h t (by simpa using ht) (by simp)
+  have him : (L 1).im = 0 := by
+    have h2 := (Complex.continuous_im.tendsto _).comp ht
+    have h3 : Tendsto (Complex.im ∘ fun t : ℝ => L (t : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝 0) :=
+      tendsto_const_nhds.congr' (hev.mono fun t ht => ht.1.symm)
+    exact tendsto_nhds_unique h2 h3
+  have hre : 0 ≤ (L 1).re :=
+    ge_of_tendsto ((Complex.continuous_re.tendsto _).comp ht) (hev.mono fun t ht => ht.2.le)
+  refine ⟨him, lt_of_le_of_ne hre fun h0 => h1 ?_⟩
+  exact Complex.ext h0.symm him
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeckeRatioPosOfPublished
+
+section
 
 @[expose] public section
 
@@ -263,4 +454,6 @@ theorem heckeRatioPos (D : D7) : HeckeRatioPos D :=
 
 end GlobalTheory.HeckeRatio
 
+end
+end
 end

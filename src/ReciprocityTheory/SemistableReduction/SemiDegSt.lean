@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.SemistableReduction.LatSemiSt
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CutSub
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +40,33 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CutSub
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.FirstCoordinatesSubmodule.cutSub :
+    (K : Type) → [inst : Field K] → [NumberField K] → (r : ℕ) → ℕ → Submodule (NumberField.RingOfIntegers K) (Fin r → K) :=
+  fun K _ _ r n =>
+    { carrier := {v : Fin r → K | ∀ i : Fin r, n ≤ (i : ℕ) → v i = 0}
+      add_mem' := by
+        intro v w hv hw i hi
+        rw [Pi.add_apply, hv i hi, hw i hi, add_zero]
+      zero_mem' := fun _ _ => rfl
+      smul_mem' := by
+        intro c v hv i hi
+        rw [Pi.smul_apply, hv i hi, smul_zero] }
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.SemiDegSt
+
+section
 
 @[expose] public section
 
@@ -120,3 +144,6 @@ def AbsDetStatement : Prop :=
     (∀ v : Fin n → ℂ, ‖star v ⬝ᵥ (C *ᵥ v)‖ ≤ (star v ⬝ᵥ (A *ᵥ v)).re) → ‖C.det‖ ≤ A.det.re
 
 end ReciprocityTheory.MultiplicativeHeights
+end
+end
+end

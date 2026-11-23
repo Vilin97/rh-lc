@@ -1,9 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
-public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.RemovableLogGrowthSingularityStatement
-public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.SeesawThetaDualPairStatement
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumAdmissibility
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.RemovableLogGrowthSingularity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,10 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,9 +40,33 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.SeesawThetaDualPairStatement
+import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumAdmissibility
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MembershipProofs.RemovableLogGrowthSingularityStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.WeilM MeasureTheory
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.theta_sum_tensor_product : ∀ (F : Type) [Field F] [NumberField F] [Invertible (2 : AdeleRing (𝓞 F) F)] (κ κ' : Type) [Fintype κ] [Fintype κ'], ∀ φ₁ ∈ schA F κ, ∀ φ₂ ∈ schA F κ', boxFun φ₁ φ₂ ∈ schA F (κ ⊕ κ') ∧ thetaSum F (boxFun φ₁ φ₂) = thetaSum F φ₁ * thetaSum F φ₂ := by
+  first | exact @GlobalTheory.CompanionTheory.ThetaBox.theta_box | exact GlobalTheory.CompanionTheory.ThetaBox.theta_box | (intros; apply GlobalTheory.CompanionTheory.ThetaBox.theta_box <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumTensorProduct
+
+section
 
 @[expose] public section
 
@@ -152,3 +170,5 @@ theorem theta_om_rational : ∀ (F : Type) [Field F] [NumberField F] [LocallyCom
     · by_cases h : i = j <;> simp [h, Matrix.one_apply, Algebra.TensorProduct.one_def]
 
 end GlobalTheory.CompanionTheory.ThetaMember
+end
+end

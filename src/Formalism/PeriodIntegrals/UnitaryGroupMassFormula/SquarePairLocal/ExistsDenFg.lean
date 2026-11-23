@@ -2,8 +2,8 @@ module
 
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.SqPairLocalOfSteps
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-public import Lemmata.GeneralBFactLeftBis.Imports
-import Mathlib.Algebra.AffineMonoid.Basic
+import ReciprocityTheory.SemistableReduction.SemiContractC
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,7 +43,33 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.AffineMonoid.Basic
 public import Mathlib.RingTheory.DedekindDomain.Dvr
+
+-- Source module: Lemmata.GeneralBFactLeftBis.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_left_bis
+
+theorem goal1 :
+  ∀ {E : Type} [inst : Field.{0} E] [NumberField.{0} E] {N : Nat}
+  (L'' : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} E) (Fin N → E)),
+  Eq.{1} (Submodule.span.{0, 0} E (SetLike.coe.{0, 0} L'')) Top.top.{0} →
+    ∀ (v : Fin N → E),
+      Exists.{1} fun (d : NumberField.RingOfIntegers.{0} E) ↦
+        And (Ne.{1} d 0) (Membership.mem.{0, 0} L'' (HSMul.hSMul.{0, 0, 0} d v)) := by
+  apply ReciprocityTheory.MultiplicativeHeights.sc_scale <;> assumption
+
+end Bl.general_b_fact_left_bis
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.ExistsDenFg
+
+section
 
 @[expose] public section
 
@@ -193,3 +219,6 @@ theorem intMul : IntMul := by
   ring
 
 end PI.SqPairLocal
+end
+end
+end

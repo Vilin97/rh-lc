@@ -2,16 +2,13 @@ module
 
 public import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
 public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsInfiniteAdelicCharNeOne
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FactorialTendstoZero
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnitaryAnnihilator
-public import GroundTheory.GlobalFields.TateThesis.AdelicCharDual
-public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -44,7 +41,42 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FactorialTendstoZero
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnitaryAnnihilator
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharDual
+public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
 import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsInfiniteAdelicCharNeOne
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Rd3.exists_infiniteAdelicChar_ne_one :
+    ∀ {F : Type} [inst : Field F] [inst_1 : NumberField F]
+    (w : NumberField.InfinitePlace F),
+    ∃ (z : w.Completion),
+      (GroundTheory.Global.infiniteAdelicChar F w : w.Completion → Circle) z ≠
+        (1 : Circle) := by
+  intro F _ _ w
+  refine ⟨((2 * w.mult : ℕ) : w.Completion)⁻¹, fun h => ?_⟩
+  have hm : (w.mult : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr NumberField.InfinitePlace.mult_pos.ne'
+  have hx : 2 * Real.pi * -((w.mult : ℝ) * (((2 * w.mult : ℕ) : ℝ))⁻¹) = -Real.pi := by
+    push_cast
+    field_simp
+  rw [GroundTheory.Global.infiniteAdelicChar_apply, map_inv₀, map_natCast, ← Complex.ofReal_natCast,
+    ← Complex.ofReal_inv, Complex.ofReal_re] at h
+  have h2 := congrArg (fun c : Circle => (c : ℂ)) h
+  simp only [Real.fourierChar_apply, hx, Circle.coe_one] at h2
+  rw [Complex.ofReal_neg, neg_mul, Complex.exp_neg, Complex.exp_pi_mul_I] at h2
+  norm_num at h2
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaDistributionHeisenbergInvariant
+
+section
 
 @[expose] public section
 
@@ -108,3 +140,5 @@ theorem unitary_and_annihilator_eq : ∀ (F : Type) [Field F] [NumberField F] [L
   _root_.UpperTheory.Reformulated.B.UnitaryAnnihilator.unitary_and_annihilator_eq
 
 end GlobalTheory.CompanionTheory.AdeleAnn
+end
+end

@@ -5,7 +5,6 @@ public import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality
 public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.ExistsSIdelesCohomologyEqZero
 public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.SmulOfEqOfMemFixingSubgroup
 import GroundTheory.GlobalFields.CyclotomicCharacters.Character
-public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Invariants
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,8 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +44,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Invariants
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.ProfCoh
+
+open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
+
+noncomputable section
+
+namespace IdeleLimit
+
+open FiniteSubfield
+
+theorem smul_of_eq_of_ideleEquiv {M : FiniteSubfield}
+    (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) (τ : M.1 ≃+* M.1)
+    (h : ∀ x : M.1, σ x = τ x) (x : IdeleGroup M.1) :
+    σ • of M x = of M (ideleEquiv τ x) :=
+  (smul_of σ M x).trans (of_ideleEquiv_congr _ _ h x)
+
+end IdeleLimit
+
+end
+
+end GroundTheory.ProfCoh
+end
+end
+
+-- Source module: GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.NormalFixingSubgroupGaloisClosure
+
+section
 
 @[expose] public section
 
@@ -158,3 +193,5 @@ end Level
 end
 
 end GroundTheory.ProfCoh
+end
+end

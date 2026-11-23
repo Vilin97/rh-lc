@@ -4,13 +4,6 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.IsCoreMod
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PRVComponents.TensorActionLieRelations
 public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.DiscreteSeriesInfinitesimalCharacter
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CliffordVectorSpinWeightStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCliffordLowestVectorStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsHighestWeightModuleStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HighestWeightAntitoneOfFiniteDimensionalStable
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Sl2SquareKillsVectorStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SpinGlRelationsAdjointStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SpinTensorHighestWeightStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +12,6 @@ import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
@@ -27,9 +19,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,9 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,10 +43,141 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCliffordLowestVectorStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsHighestWeightModuleStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HighestWeightAntitoneOfFiniteDimensionalStable
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Sl2SquareKillsVectorStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SpinGlRelationsAdjointStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SpinTensorHighestWeightStatement
+import Mathlib.Data.Fin.Tuple.Sort
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
 public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.CapelliDeterminantBlockProduct
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CliffordVectorSpinWeight
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Finset
+open scoped InnerProductSpace
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD GlobalTheory.CompanionTheory.RealCount
+
+namespace GlobalTheory.CompanionTheory.RealCount
+
+theorem spinM_vacuum_lowest : ∀ {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι] (c : Fin n → Fin n → Matrix ι ι ℂ), IsCliff c →
+    ∀ q : ι → ℂ, (∀ a b, a < b → c b a *ᵥ q = 0) →
+    (∀ a, spinM c a a *ᵥ q = ((-(rhoV n a) : ℝ) : ℂ) • q) ∧ ∀ a b, a < b → spinM c b a *ᵥ q = 0 := by
+  intro n ι _ _ c hc q hq
+  obtain ⟨h1, _⟩ := hc
+  have two : (2 : Matrix ι ι ℂ) *ᵥ q = (2 : ℂ) • q := by
+    have : (2 : Matrix ι ι ℂ) = (2 : ℂ) • (1 : Matrix ι ι ℂ) := by
+      rw [two_smul]; exact one_add_one_eq_two.symm
+    rw [this, Matrix.smul_mulVec, Matrix.one_mulVec]
+  have anti : ∀ a b d e, c a b *ᵥ (c d e *ᵥ q) =
+      (if a = e ∧ b = d then (2 : ℂ) • q else 0) - c d e *ᵥ (c a b *ᵥ q) := by
+    intro a b d e
+    have h := congrArg (fun M => M *ᵥ q) (h1 a b d e)
+    simp only [Matrix.add_mulVec, Matrix.mulVec_mulVec] at h
+    simp only [Matrix.mulVec_mulVec]
+    rw [eq_sub_iff_add_eq, h]
+    split_ifs
+    · exact two
+    · simp
+  have sumv : ∀ (a b : Fin n), (∑ e, c a e * c e b) *ᵥ q = ∑ e, c a e *ᵥ (c e b *ᵥ q) := by
+    intro a b
+    simp only [Matrix.mulVec_mulVec]
+    exact map_sum (Matrix.mulVec.addMonoidHomLeft q) _ _
+  have hT : ∀ a e : Fin n, c a e *ᵥ (c e a *ᵥ q) =
+      (if e < a then (2 : ℂ) else if e = a then 1 else 0) • q := by
+    intro a e
+    rcases lt_trichotomy e a with h | h | h
+    · rw [if_pos h, anti a e e a, hq e a h]
+      simp
+    · subst h
+      have h2 := anti e e e e
+      simp only [and_self, if_true] at h2
+      have h3 : (2 : ℂ) • (c e e *ᵥ (c e e *ᵥ q)) = (2 : ℂ) • q := by
+        rw [two_smul]
+        nth_rewrite 1 [h2]
+        rw [two_smul]
+        abel
+      have h4 := smul_right_injective (ι → ℂ) (two_ne_zero : (2 : ℂ) ≠ 0) h3
+      simpa using h4
+    · rw [if_neg (not_lt.mpr h.le), if_neg h.ne', hq a e h]
+      simp
+  have hs : ∀ a : Fin n, ∑ e : Fin n, (if e < a then (2 : ℂ) else if e = a then 1 else 0) =
+      2 * ((a : ℕ) : ℂ) + 1 := by
+    intro a
+    have h0 : ∀ e : Fin n, (if e < a then (2 : ℂ) else if e = a then 1 else 0) =
+        (if e < a then 2 else 0) + (if e = a then 1 else 0) := by
+      intro e
+      rcases lt_trichotomy e a with h | h | h
+      · simp [h, h.ne]
+      · simp [h]
+      · simp [not_lt.mpr h.le, h.ne']
+    simp only [h0]
+    rw [sum_add_distrib, ← Finset.sum_filter]
+    have h5 : univ.filter (fun e : Fin n => e < a) = Finset.Iio a := by ext; simp
+    rw [h5]
+    simp [Fin.card_Iio, mul_comm]
+  refine ⟨fun a => ?_, fun a b hab => ?_⟩
+  · unfold spinM
+    rw [if_pos rfl, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, sumv]
+    simp only [hT]
+    rw [← Finset.sum_smul, hs, smul_smul, ← sub_smul]
+    congr 1
+    simp only [rhoV]
+    push_cast
+    ring
+  · unfold spinM
+    rw [if_neg hab.ne', sub_zero, Matrix.smul_mulVec, sumv]
+    have : ∀ e : Fin n, c b e *ᵥ (c e a *ᵥ q) = 0 := by
+      intro e
+      rcases lt_trichotomy e a with h | h | h
+      · rw [anti b e e a, if_neg (fun hh => hab.ne' hh.1), hq e b (h.trans hab)]
+        simp
+      · subst h
+        rw [anti b e e e, if_neg (fun hh => hab.ne' hh.1), hq e b hab]
+        simp
+      · rw [hq a e h]
+        simp
+    simp [this]
+
+end GlobalTheory.CompanionTheory.RealCount
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CliffordVectorSpinWeightStatement
+
+section
+
+@[expose] public section
+
+open Matrix Finset
+open scoped InnerProductSpace
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD GlobalTheory.CompanionTheory.RealCount
+
+theorem _root_.GlobalTheory.T.clifford_vector_spin_weight : ∀ {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι] (c : Fin n → Fin n → Matrix ι ι ℂ), IsCliff c →
+    ∀ q : ι → ℂ, (∀ a b, a < b → c b a *ᵥ q = 0) →
+    (∀ a, spinM c a a *ᵥ q = ((-(rhoV n a) : ℝ) : ℂ) • q) ∧ ∀ a b, a < b → spinM c b a *ᵥ q = 0 := by
+  first | exact @GlobalTheory.CompanionTheory.RealCount.spinM_vacuum_lowest | exact GlobalTheory.CompanionTheory.RealCount.spinM_vacuum_lowest | (intros; apply GlobalTheory.CompanionTheory.RealCount.spinM_vacuum_lowest <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ParthasarathyRaoVaradarajan
+
+section
 
 @[expose] public section
 
@@ -316,3 +438,6 @@ theorem spin_parthasarathy_rao_varadarajan : ∀ n : ℕ, ∃ (ι : Type) (_ : F
   exact assemble c hc q hq0 h1 h2 V Kf S ν v hK hKu hfd hst hvS hv0 hv
 
 end GlobalTheory.CompanionTheory.SpinPRV
+end
+end
+end

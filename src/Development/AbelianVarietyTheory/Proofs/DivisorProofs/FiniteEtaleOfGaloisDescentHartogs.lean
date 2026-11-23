@@ -2,12 +2,6 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionFreeOver
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleLocalizationAtPrimeTensorOfLowHeightStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulDvdOfLocalizationAtPrimeTensorStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteOfGaloisTraceRelationStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaloisComparisonMapInjectiveOfFlatStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaloisElementDvdOfFormallyUnramifiedStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HartTensorOfFlatStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,13 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-public import Mathlib.RingTheory.Etale.Descent
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,10 +41,197 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaloisComparisonMapInjectiveOfFlatStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaloisElementDvdOfFormallyUnramifiedStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HartTensorOfFlatStatement
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Etale.Descent
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GalMapGalElt
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleLocalizationAtPrimeTensorOfLowHeight
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory.GoodEtale
+
+theorem etale_localization_of_etaleLow : ∀ (A R C O : Type) [CommRing A] [CommRing R] [Algebra A R] [CommRing C] [Algebra R C]
+    [CommRing O] [Algebra R O] (Q : Ideal O) [Q.IsPrime],
+    GlobalTheory.GoodEtale.EtaleLow A R C → ((Q.comap (algebraMap R O)).comap (algebraMap A R)).height ≤ 1 →
+    Algebra.Etale (Localization.AtPrime Q) (Localization.AtPrime Q ⊗[R] C) := by
+  intro A R C O _ _ _ _ _ _ _ Q _ hE hh
+  have h := hE (Q.comap (algebraMap R O)) hh
+  letI : Algebra (Localization.AtPrime (Q.comap (algebraMap R O))) (Localization.AtPrime Q) :=
+    (Localization.localRingHom _ Q (algebraMap R O) rfl).toAlgebra
+  haveI : IsScalarTower R (Localization.AtPrime (Q.comap (algebraMap R O))) (Localization.AtPrime Q) := by
+    refine IsScalarTower.of_algebraMap_eq (fun a => ?_)
+    simp [RingHom.algebraMap_toAlgebra, Localization.localRingHom_to_map,
+      IsScalarTower.algebraMap_apply R O (Localization.AtPrime Q)]
+  haveI := Algebra.Etale.baseChange (R := Localization.AtPrime (Q.comap (algebraMap R O)))
+    (B := Localization.AtPrime Q) (A := Localization.AtPrime (Q.comap (algebraMap R O)) ⊗[R] C)
+  exact Algebra.Etale.of_equiv (Algebra.TensorProduct.cancelBaseChange R
+    (Localization.AtPrime (Q.comap (algebraMap R O))) (Localization.AtPrime Q) (Localization.AtPrime Q) C)
+
+end GlobalTheory.GoodEtale
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleLocalizationAtPrimeTensorOfLowHeightStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.etale_localizationAtPrime_tensor_of_low_height : ∀ (A R C O : Type) [CommRing A] [CommRing R] [Algebra A R] [CommRing C] [Algebra R C]
+    [CommRing O] [Algebra R O] (Q : Ideal O) [Q.IsPrime],
+    GlobalTheory.GoodEtale.EtaleLow A R C → ((Q.comap (algebraMap R O)).comap (algebraMap A R)).height ≤ 1 →
+    Algebra.Etale (Localization.AtPrime Q) (Localization.AtPrime Q ⊗[R] C) := by
+  first | (exact @GlobalTheory.GoodEtale.etale_localization_of_etaleLow) | (exact GlobalTheory.GoodEtale.etale_localization_of_etaleLow) | (intros; apply GlobalTheory.GoodEtale.etale_localization_of_etaleLow  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulDvdOfLocalizationAtPrimeTensor
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open TensorProduct
+
+namespace GlobalTheory
+
+theorem exists_smul_dvd_of_localization_atPrime_tensor :
+    ∀ (R C O : Type) [CommRing R] [CommRing C] [Algebra R C] [CommRing O] [Algebra R O]
+    (Q : Ideal O) [Q.IsPrime] (b : R) (m : O ⊗[R] C),
+    (∃ m' : Localization.AtPrime Q ⊗[R] C,
+      (IsScalarTower.toAlgHom R O (Localization.AtPrime Q)).toLinearMap.rTensor C m = algebraMap R (Localization.AtPrime Q) b • m') →
+    ∃ s ∉ Q, ∃ m' : O ⊗[R] C, s • m = algebraMap R O b • m' := by
+  intro R C O _ _ _ _ _ Q _ b m ⟨m', hm'⟩
+  let f := AlgebraTensorModule.rTensor R C (Algebra.linearMap O (Localization.AtPrime Q))
+  haveI : IsLocalizedModule Q.primeCompl f := inferInstance
+  have hf : ∀ x, (IsScalarTower.toAlgHom R O (Localization.AtPrime Q)).toLinearMap.rTensor C x = f x := by
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a c => simp [f]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  rw [hf, algebraMap_smul] at hm'
+  obtain ⟨⟨m'', t⟩, rfl⟩ := IsLocalizedModule.mk'_surjective Q.primeCompl f m'
+  simp only [Function.uncurry_apply_pair] at hm'
+  have h2 : f ((t : O) • m) = f (b • m'') := by
+    rw [LinearMap.map_smul, hm', smul_comm (t : O) b, ← Submonoid.smul_def, IsLocalizedModule.mk'_cancel',
+      LinearMap.map_smul_of_tower]
+  obtain ⟨u, hu⟩ := IsLocalizedModule.exists_of_eq (S := Q.primeCompl) h2
+  refine ⟨(u : O) * t, (Q.primeCompl.mul_mem u.2 t.2 : _), (u : O) • m'', ?_⟩
+  rw [algebraMap_smul, mul_smul]
+  simpa [Submonoid.smul_def, smul_comm (u : O) b] using hu
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulDvdOfLocalizationAtPrimeTensorStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_smul_dvd_of_localization_atPrime_tensor' : ∀ (R C O : Type) [CommRing R] [CommRing C] [Algebra R C] [CommRing O] [Algebra R O]
+    (Q : Ideal O) [Q.IsPrime] (b : R) (m : O ⊗[R] C),
+    (∃ m' : Localization.AtPrime Q ⊗[R] C,
+      (IsScalarTower.toAlgHom R O (Localization.AtPrime Q)).toLinearMap.rTensor C m = algebraMap R (Localization.AtPrime Q) b • m') →
+    ∃ s ∉ Q, ∃ m' : O ⊗[R] C, s • m = algebraMap R O b • m' := by
+  first | (exact @GlobalTheory.exists_smul_dvd_of_localization_atPrime_tensor) | (exact GlobalTheory.exists_smul_dvd_of_localization_atPrime_tensor) | (intros; apply GlobalTheory.exists_smul_dvd_of_localization_atPrime_tensor  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteOfGaloisTraceRelation
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory.GoodEtaleFinite
+
+theorem finite_of_trace_relation (A R C : Type) [CommRing A] [CommRing R] [Algebra A R] [IsNoetherianRing R] [CommRing C] [Algebra R C]
+    (G : Type) [Group G] [Fintype G] [DecidableEq G] (act : G →* (C ≃ₐ[R] C)) (T : C →ₗ[R] R) :
+    (∀ c, algebraMap R C (T c) = ∑ g, act g c) →
+    ∀ (a : A), a ≠ 0 → ∀ (n : ℕ) (x y : Fin n → C),
+      (∀ g, ∑ i, x i * act g (y i) = if g = 1 then algebraMap R C (algebraMap A R a) else 0) →
+    GlobalTheory.GoodEtale.TorsionFreeOver A R C → Module.Finite R C := by
+  intro hT a ha n x y hrel htf
+  set b : R := algebraMap A R a with hb
+
+  have key : ∀ c : C, b • c = ∑ i, T (y i * c) • x i := by
+    intro c
+    have h1 : ∀ i, T (y i * c) • x i = ∑ g, x i * act g (y i) * act g c := by
+      intro i
+      rw [Algebra.smul_def, hT, Finset.sum_mul]
+      refine Finset.sum_congr rfl fun g _ => ?_
+      rw [map_mul]; ring
+    simp_rw [h1]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_mul, hrel]
+    simp [Algebra.smul_def]
+  let S : Submodule R C := Submodule.span R (Set.range x)
+  have hmem : ∀ c : C, b • c ∈ S := by
+    intro c
+    rw [key c]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+  let f : C →ₗ[R] S := LinearMap.codRestrict S (b • LinearMap.id) (fun c => by simpa using hmem c)
+  have hf : Function.Injective f := by
+    intro c d hcd
+    have : b • c = b • d := by simpa [f] using congrArg Subtype.val hcd
+    have h0 : b • (c - d) = 0 := by rw [smul_sub, this, sub_self]
+    exact sub_eq_zero.mp (htf a ha _ h0)
+  haveI : Module.Finite R S := Module.Finite.span_of_finite R (Set.finite_range x)
+  haveI : IsNoetherian R S := isNoetherian_of_isNoetherianRing_of_finite R S
+  exact Module.Finite.of_injective f hf
+
+end GlobalTheory.GoodEtaleFinite
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteOfGaloisTraceRelationStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.finite_of_galois_trace_relation : ∀ (A R C : Type) [CommRing A] [CommRing R] [Algebra A R] [IsNoetherianRing R] [CommRing C] [Algebra R C]
+    (G : Type) [Group G] [Fintype G] [DecidableEq G] (act : G →* (C ≃ₐ[R] C)) (T : C →ₗ[R] R),
+    (∀ c, algebraMap R C (T c) = ∑ g, act g c) →
+    ∀ (a : A), a ≠ 0 → ∀ (n : ℕ) (x y : Fin n → C),
+      (∀ g, ∑ i, x i * act g (y i) = if g = 1 then algebraMap R C (algebraMap A R a) else 0) →
+    GlobalTheory.GoodEtale.TorsionFreeOver A R C → Module.Finite R C := by
+  first | (exact @GlobalTheory.GoodEtaleFinite.finite_of_trace_relation) | (exact GlobalTheory.GoodEtaleFinite.finite_of_trace_relation) | (intros; apply GlobalTheory.GoodEtaleFinite.finite_of_trace_relation  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteEtaleOfGaloisDescentHartogs
+
+section
 
 @[expose] public section
 
@@ -183,3 +358,6 @@ theorem descent_finiteEtale : ∀ (A R C O : Type) [CommRing A] [IsDomain A] [Is
   exact Algebra.Etale.of_etale_tensorProduct_of_faithfullyFlat O
 
 end GlobalTheory.GoodEtale
+end
+end
+end

@@ -3,7 +3,7 @@ module
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SepChars
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,8 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +42,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.LinearAlgebra.Matrix.Block
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.Reformulated.B.S8
+
+theorem diag_mul {R : Type} [CommRing R] {n : ℕ} (X Y : Matrix (Fin n) (Fin n) R) (hX : ∀ i j, j < i → X i j = 0)
+    (hY : ∀ i j, j < i → Y i j = 0) (a : Fin n) : (X * Y) a a = X a a * Y a a := by
+  rw [Matrix.mul_apply]
+  refine Finset.sum_eq_single_of_mem a (Finset.mem_univ a) ?_
+  intro b _ hb
+  rcases lt_or_gt_of_ne hb with h | h
+  · rw [hX a b h, zero_mul]
+  · rw [hY b a h, mul_zero]
+
+end UpperTheory.Reformulated.B.S8
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.FlagCharsUnique
+
+section
 
 @[expose] public section
 
@@ -150,3 +175,5 @@ theorem UpperTheory.V.AlgebraTools.flag_chars_unique :
   have h := congrFun (congrFun (hcomm s) i) i
   rw [diag_mul _ _ (h1 s).1 hV, diag_mul _ _ hV (h2 s).1, (h1 s).2 i, (h2 s).2 i, mul_comm] at h
   exact hu.mul_left_cancel h
+end
+end

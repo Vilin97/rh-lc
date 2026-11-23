@@ -5,17 +5,19 @@ public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitt
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryAdelicGroupTopology
 import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
 import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.StabClosed
-public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.StageSub
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.UnipotentGroups.ContinuousExpG
-import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.RightOfFd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -23,7 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,8 +49,108 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.WeilBound.ThetaLifts.EigenvalueEndgame.UnipotentGroups.ContinuousExpG
+import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjugateSubgroup
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ConjugateSubgroup.conj_sub :
+    ∀ {G : Type} [inst : Group G] [inst_1 : TopologicalSpace G] [IsTopologicalGroup G]
+    [inst_3 : MeasurableSpace G] [BorelSpace G] [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G]
+    {Γ A : Subgroup G},
+    IsClosed (↑A : Set G) →
+      PositivityTheory.ThKEnd.Two.Lat (Γ.subgroupOf A) →
+        ∀ {f c : G → ℂ},
+          PositivityTheory.ThKEnd.Two.IsAv (Γ.subgroupOf A) Subtype.val f c →
+            ∀ {γ : G},
+              γ ∈ Γ →
+                (∀ u ∈ A, γ⁻¹ * u * γ ∈ A) →
+                  (∀ u ∈ A, γ * u * γ⁻¹ ∈ A) →
+                    (∀ (x : G), f (γ * x) = f x) →
+                      ∀ (x : G),
+                        c (γ * x) =
+                          c
+                            x := by
+  intro G _ _ _ _ _ _ _ _ Γ A hA L f c h γ hγ h1 h2 hf x
+  haveI : LocallyCompactSpace A := hA.isClosedEmbedding_subtypeVal.locallyCompactSpace
+  haveI : SecondCountableTopology A := Topology.IsInducing.subtypeVal.secondCountableTopology
+  let e : A ≃ₜ* A :=
+    { toFun := fun u => ⟨γ⁻¹ * u * γ, h1 u u.2⟩
+      invFun := fun u => ⟨γ * u * γ⁻¹, h2 u u.2⟩
+      left_inv := fun u => Subtype.ext (by simp [mul_assoc])
+      right_inv := fun u => Subtype.ext (by simp [mul_assoc])
+      map_mul' := fun u v => Subtype.ext (by simp [mul_assoc])
+      continuous_toFun := Continuous.subtype_mk (by fun_prop) _
+      continuous_invFun := Continuous.subtype_mk (by fun_prop) _ }
+  refine PositivityTheory.ThKEnd.Two.IsAv.conj (ι := A.subtype) L h e (fun u => ?_) (fun u => ?_) hf x
+  · exact (Γ.mul_mem_cancel_right hγ).trans (Γ.mul_mem_cancel_left (inv_mem hγ))
+  · exact show (u : G) * γ = γ * (γ⁻¹ * u * γ) by group
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.StageSub
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+set_option linter.unusedSectionVars false
+
+namespace PositivityTheory.ThKEnd.Two
+
+open MeasureTheory
+
+variable {G B : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G]
+  [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] {Γ S A : Subgroup G}
+
+theorem cnt_sub [Countable Γ] [DiscreteTopology Γ] (S : Subgroup G) : Countable (Γ.subgroupOf S) ∧ DiscreteTopology (Γ.subgroupOf S) := by
+  let j : Γ.subgroupOf S → Γ := fun γ => ⟨γ.1.1, γ.2⟩
+  have ji : Function.Injective j := fun a b h => Subtype.ext (Subtype.ext (congrArg Subtype.val h :))
+  exact ⟨ji.countable, DiscreteTopology.of_continuous_injective ((continuous_subtype_val.comp continuous_subtype_val).subtype_mk _) ji⟩
+
+theorem IsAv.conj_sub (hA : IsClosed (A : Set G)) (L : Lat (Γ.subgroupOf A)) {f c : G → ℂ} (h : IsAv (Γ.subgroupOf A) Subtype.val f c)
+    {γ : G} (hγ : γ ∈ Γ) (h1 : ∀ u ∈ A, γ⁻¹ * u * γ ∈ A) (h2 : ∀ u ∈ A, γ * u * γ⁻¹ ∈ A) (hf : ∀ x, f (γ * x) = f x) (x : G) :
+    c (γ * x) = c x :=
+  _root_.UpperTheory.Reformulated.B.ConjugateSubgroup.conj_sub hA L h hγ h1 h2 hf x
+
+variable [Group B] [TopologicalSpace B] [IsTopologicalGroup B] [MeasurableSpace B] [BorelSpace B]
+  [LocallyCompactSpace B] [SecondCountableTopology B] [T2Space B] {ΓB : Subgroup B}
+
+theorem stage_sub [Countable Γ] [DiscreteTopology Γ] (hS : IsClosed (S : Set G)) (hA : IsClosed (A : Set G)) (hAS : A ≤ S)
+    {ι : B →* G} (cι : Continuous ι) (hι : ∀ b, ι b ∈ S) {π : S →* B} (cπ : Continuous π) (πι : ∀ b, π ⟨ι b, hι b⟩ = b)
+    (ker : ∀ s : S, π s = 1 ↔ s.1 ∈ A) (hB : ∀ b ∈ ΓB, ι b ∈ Γ) (hπ : ∀ s : S, s.1 ∈ Γ → π s ∈ ΓB)
+    (LA : Lat (Γ.subgroupOf A)) (LB : Lat ΓB) : Lat (Γ.subgroupOf S) ∧ ∀ f cA c : G → ℂ, Continuous f →
+      (∀ γ ∈ Γ, ∀ x, f (γ * x) = f x) → IsAv (Γ.subgroupOf A) Subtype.val f cA → IsAv ΓB ι cA c →
+      IsAv (Γ.subgroupOf S) Subtype.val f c := by
+  have : LocallyCompactSpace A := hA.isClosedEmbedding_subtypeVal.locallyCompactSpace
+  have : LocallyCompactSpace S := hS.isClosedEmbedding_subtypeVal.locallyCompactSpace
+  have : SecondCountableTopology A := TopologicalSpace.Subtype.secondCountableTopology _
+  have : SecondCountableTopology S := TopologicalSpace.Subtype.secondCountableTopology _
+  have h : Semi (Γ.subgroupOf S) (Γ.subgroupOf A) ΓB (Subgroup.inclusion hAS) (ι.codRestrict S hι)
+      (fun s => ⟨s.1 * (ι (π s))⁻¹, (ker (s * (⟨ι (π s), hι _⟩ : S)⁻¹)).1 (by rw [map_mul, map_inv, πι, mul_inv_cancel])⟩) π :=
+    ⟨continuous_subtype_val.subtype_mk _, cι.subtype_mk _, Continuous.subtype_mk (by fun_prop) _, cπ, Subgroup.inclusion_injective _,
+      fun s => Subtype.ext (inv_mul_cancel_right _ _), fun a => (ker _).2 a.2, πι, fun _ => Iff.rfl, hB, hπ⟩
+  have L := h.lat LA LB (cnt_sub S).1 (cnt_sub S).2
+  exact ⟨L, fun f cA c a b d e => h.stage L LA LB (inc := S.subtype) continuous_subtype_val a (fun γ hγ => b _ hγ) d e⟩
+
+end PositivityTheory.ThKEnd.Two
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.SpanPairIff
+
+section
 
 @[expose] public section
 
@@ -304,4 +406,6 @@ theorem two_kill (hd : W.J.det ≠ 0) (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.
 
 end PositivityTheory.ThKEnd.Two
 
+end
+end
 end

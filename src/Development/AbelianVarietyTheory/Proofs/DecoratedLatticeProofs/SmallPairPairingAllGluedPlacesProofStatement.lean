@@ -1,7 +1,21 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.SmallPair
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallPairPairingAllGluedPlacesProof
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RamifiedOperatorsBijectiveAtPlacesStatement
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.IndicatorFunctionIdentity
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ContinuousIntegralCompactAutomorphicQuotientPara
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsBilinearEquivariantOrthogonalSummandLiftStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.GluedPlaceSourceConstantProofStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsTameFinitePlaceHermitianAllStatement
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LinearModelSplitPlaceCharacterEquivarianceStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RamifiedOperatorBijectiveFiniteTranslationCombinStatement
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatTensorIndicatorCharacterFactsStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualLatticeStabilizersFixWeilVacuumOnPlaceSeStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SetIntegralFundamentalDomainRightTranslateInvari
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SourceLiftAtGluedPlaceProof
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceBaseVacuumDatumExistsUniqueStatement
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceHermitianFramePropertiesStatement
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsSumFrame
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,7 +50,397 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.UnramifiedCharacterDetLatticeStabilizerEqOneStatement
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilDatumThetaJointlyContinuous
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilRepresentationRationalTranslateSubstitution
+import Formalism.LocalToGlobal.GlobalTheory.GL5.FamilyMassVolumeIdentityOfClassDecomp
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CaRepApply
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TensColPhiOneCharIndSmul
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.LatPair GlobalTheory.SplitWeil ValuativeRel IsLocalRing
+open GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter (compFin ExtUnramAt CharUnramAt)
+open scoped TensorProduct Pointwise
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.FinPl
+
+section Translate
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
+
+theorem tensCol_phiOne_charInd_smul (χ : AddChar 𝓀[k] ℂ) (P₁ : Pair k n') (Q : Pair k n) (g : GL n k)
+    (x : Matrix n (n' ⊕ Fin 1) k) :
+    tensCol (phiOne P₁ Q) (charInd χ Q) ((g⁻¹ : GL n k).val * x) =
+      tensCol (phiOne P₁ (g • Q)) (charInd χ (g • Q)) x := by
+  have hcol : (fun i => ((g⁻¹ : GL n k).val * x) i (Sum.inr 0)) = (g⁻¹ : GL n k) • (fun i => x i (Sum.inr 0)) := rfl
+  have hsub : ((g⁻¹ : GL n k).val * x).submatrix id Sum.inl = (g⁻¹ : GL n k).val * x.submatrix id Sum.inl := rfl
+  have hphi : ∀ z : Matrix n n' k, phiOne P₁ (g • Q) z = phiOne P₁ Q ((g⁻¹ : GL n k).val * z) := by
+    intro z
+    have h := phiOne_smul (P := P₁) (Q := Q) (x := z) (1 : GL n' k) g
+    rw [one_smul] at h
+    rw [h, Units.val_one, Matrix.mul_one]
+  have hchi : ∀ y : n → k, charInd χ (g • Q) y = charInd χ Q ((g⁻¹ : GL n k) • y) := by
+    intro y
+    unfold charInd vecInd
+    rw [Pair.smul_lat, mem_smul_iff]
+    split_ifs with hy
+    · have hv := Pair.hasVal_ev (P := g • Q) (x := y) (by rw [Pair.smul_lat, mem_smul_iff]; exact hy)
+      rw [Pair.smul_hasVal] at hv
+      rw [hv.ev_eq]
+    · simp
+  unfold tensCol
+  rw [hsub, hcol, hphi, hchi]
+
+end Translate
+
+end GlobalTheory.FinPl
+
+namespace GlobalTheory.FinPl
+
+end GlobalTheory.FinPl
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallPairPairingAtOneGluedPlace
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.LatPair GlobalTheory.SplitWeil ValuativeRel IsLocalRing
+open GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter (compFin ExtUnramAt CharUnramAt)
+open scoped TensorProduct Pointwise
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.FinPl
+
+theorem SmallPl.exists_card_withLat (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
+    [IsNonarchimedeanLocalField k] (n : Type) [Fintype n] [DecidableEq n] :
+    ∃ N : ℕ, 0 < N ∧ ∀ Q : Pair k n, (withLat Q.lat).card = N := by
+  by_cases h : Nonempty (Pair k n)
+  · obtain ⟨Q₀⟩ := h
+    refine ⟨(withLat Q₀.lat).card, Finset.card_pos.2 ⟨Q₀, mem_withLat.2 rfl⟩, fun Q => ?_⟩
+    obtain ⟨g, rfl⟩ := MulAction.exists_smul_eq (GL n k) Q₀ Q
+    refine Finset.card_nbij' (fun P => g⁻¹ • P) (fun P => g • P) ?_ ?_ ?_ ?_
+    · intro P hP
+      have hP' : P.lat = g • Q₀.lat := mem_withLat.1 hP
+      refine Finset.mem_coe.2 (mem_withLat.2 ?_)
+      rw [Pair.smul_lat, hP', inv_smul_smul]
+    · intro P hP
+      have hP' : P.lat = Q₀.lat := mem_withLat.1 hP
+      refine Finset.mem_coe.2 (mem_withLat.2 ?_)
+      rw [Pair.smul_lat, Pair.smul_lat, hP']
+    · intro P _
+      exact smul_inv_smul g P
+    · intro P _
+      exact inv_smul_smul g P
+  · exact ⟨1, one_pos, fun Q => (h ⟨Q⟩).elim⟩
+
+theorem SmallPl.liftA_contAut {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {V₀ A L S : HSp D} (o : OrthDec V₀ A L)
+    (hA : CoCpt A) {χV χW : (AE D)ˣ →* Circle} {om : Om V₀ S} (hW : IsWeilDatumO ψ V₀ S χV χW om) (vA : Vol A)
+    {φ : GA D A → ℂ} (hφ : IsContAut A φ) {Ξ : WO V₀ S → ℂ} (hΞ : IsThetaFunO ψ V₀ S Ξ) :
+    IsContAut S fun h => liftA o om vA φ Ξ h 0 := by
+  haveI : IsTopologicalGroup (GA D S) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
+  have hlift : (fun h => liftA o om vA φ Ξ h 0) = fun h =>
+      ∫ h₀ in vA.𝓕, φ h₀ * om (o.emb (h₀, 1), h) Ξ 0 ∂vA.μ := by
+    funext h
+    simp only [liftA]
+    congr 1
+    funext h₀
+    rw [show ((0 : WO A S), (0 : WO L S)) = 0 from rfl, map_zero]
+  rw [hlift]
+  have jc := GlobalTheory.Unf.jointCont_all D ψ V₀ S χV χW om hW Ξ hΞ
+  have hK₂c : Continuous (Function.uncurry fun (x : GA D A) (h : GA D S) => φ x * om (o.emb (x, 1), h) Ξ 0) := by
+    have hmap : Continuous fun z : GA D A × GA D S => ((o.emb (z.1, 1), z.2), (0 : WO V₀ S)) :=
+      ((o.continuous_emb.comp (continuous_fst.prodMk continuous_const)).prodMk continuous_snd).prodMk
+        continuous_const
+    exact (hφ.2.comp continuous_fst).mul (jc.comp hmap)
+  have hK₂a : ∀ γ ∈ GQ A, ∀ (x : GA D A) (h : GA D S),
+      φ (γ * x) * om (o.emb (γ * x, 1), h) Ξ 0 = φ x * om (o.emb (x, 1), h) Ξ 0 := by
+    intro γ hγ x h
+    have e : o.emb (γ * x, 1) = o.emb (γ, 1) * o.emb (x, 1) := by
+      rw [← map_mul, Prod.mk_mul_mk, mul_one]
+    have hq := GlobalTheory.Unf.om_rat_mul D ψ V₀ S _ _ om hW Ξ hΞ (o.emb (γ, 1))
+      (o.emb_mem_GQ hγ (one_mem _)) 1 (one_mem _) (o.emb (x, 1)) h 0
+    rw [one_mul] at hq
+    rw [hφ.1 γ hγ x, e, hq, Matrix.mul_zero, Matrix.zero_mul]
+  refine ⟨fun γ hγ h => ?_,
+    (GlobalTheory.CocompactParam.continuous_integral_param D A hA vA (GA D S) _ hK₂c hK₂a).2.1⟩
+  dsimp only
+  congr 1
+  funext x
+  have hq := GlobalTheory.Unf.om_rat_mul D ψ V₀ S _ _ om hW Ξ hΞ 1 (one_mem _) γ hγ (o.emb (x, 1)) h 0
+  rw [one_mul] at hq
+  rw [hq, Matrix.mul_zero, Matrix.zero_mul]
+
+theorem SmallPl.integral_sum_translates {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (hS : CoCpt S)
+    {χS χT : (AE D)ˣ →* Circle} {om : Om S T} (hW : IsWeilDatumO ψ S T χS χT om) (vS : Vol S) {Φ₂ : WO S T → ℂ}
+    (hθ : IsThetaFunO ψ S T Φ₂) {ι : Type} (s : Finset ι) (b : ι → GA D S) (hfix : ∀ i ∈ s, om (b i, 1) Φ₂ = Φ₂)
+    {G : GA D S → ℂ} (hG : IsContAut S G) (c : ℂ) (h' : GA D T) :
+    (∫ h in vS.𝓕, om (h, h') Φ₂ 0 * (c * ∑ i ∈ s, G (h * b i)) ∂vS.μ) =
+      c * s.card * ∫ h in vS.𝓕, om (h, h') Φ₂ 0 * G h ∂vS.μ := by
+  haveI : IsTopologicalGroup (GA D S) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
+  have hHc : Continuous fun h => om (h, h') Φ₂ 0 :=
+    (hW.om_cont Φ₂ hθ 0).comp (continuous_id.prodMk continuous_const)
+  have hHa : ∀ γ ∈ GQ S, ∀ h, om (γ * h, h') Φ₂ 0 = om (h, h') Φ₂ 0 := by
+    intro γ hγ h
+    have hq := GlobalTheory.Unf.om_rat_mul D ψ S T _ _ om hW Φ₂ hθ γ hγ 1 (one_mem _) h h' 0
+    rw [one_mul] at hq
+    rw [hq, Matrix.mul_zero, Matrix.zero_mul]
+  have hHb : ∀ i ∈ s, ∀ h, om (h * b i, h') Φ₂ 0 = om (h, h') Φ₂ 0 := by
+    intro i hi h
+    have : ((h * b i, h') : GA D S × GA D T) = (h, h') * (b i, 1) := by
+      rw [Prod.mk_mul_mk, mul_one]
+    rw [this, map_mul, Module.End.mul_apply, hfix i hi]
+  obtain ⟨K, hK⟩ : ∃ K : GA D S → ℂ, K = fun h => om (h, h') Φ₂ 0 * G h := ⟨_, rfl⟩
+  have hKc : Continuous K := hK ▸ hHc.mul hG.2
+  have hKa : ∀ γ ∈ GQ S, ∀ h, K (γ * h) = K h := fun γ hγ h => by
+    rw [hK]
+    dsimp only
+    rw [hHa γ hγ h, hG.1 γ hγ h]
+  have hint : ∀ i ∈ s, IntegrableOn (fun h => c * K (h * b i)) vS.𝓕 vS.μ := by
+    intro i _
+    refine (GlobalTheory.CocompactParam.continuous_integral_param D S hS vS Unit (fun h _ => c * K (h * b i)) ?_ ?_).1 ()
+    · exact (continuous_const.mul (hKc.comp (continuous_mul_const _))).comp continuous_fst
+    · intro γ hγ h _
+      rw [mul_assoc γ h, hKa γ hγ]
+  calc (∫ h in vS.𝓕, om (h, h') Φ₂ 0 * (c * ∑ i ∈ s, G (h * b i)) ∂vS.μ)
+      = ∫ h in vS.𝓕, ∑ i ∈ s, c * K (h * b i) ∂vS.μ := by
+        refine integral_congr_ae (ae_of_all _ fun h => ?_)
+        dsimp only
+        rw [Finset.mul_sum, Finset.mul_sum]
+        refine Finset.sum_congr rfl fun i hi => ?_
+        rw [hK]
+        dsimp only
+        rw [hHb i hi h]
+        ring
+    _ = ∑ i ∈ s, c * ∫ h in vS.𝓕, K h ∂vS.μ := by
+        rw [integral_finsetSum _ hint]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [integral_const_mul, GlobalTheory.ChainOnto.setIntegral_fd_mul_right D S vS.μ vS.𝓕 vS.haar vS.fund K hKa]
+    _ = _ := by
+        rw [hK, Finset.sum_const, nsmul_eq_mul]
+        ring
+
+theorem smallOne : ∀ D : D7, SmallOne D := by
+  intro D k _ _ _ _ p n n' _ _ _ _ q χ hχ
+  obtain ⟨r₀, e, hr₀, hsrc⟩ := GlobalTheory.T.gluedPlaceSourceConstant_proof D k p n n' q χ hχ
+  obtain ⟨N, hN0, hN⟩ := SmallPl.exists_card_withLat k n
+  refine ⟨r₀ * N, e, mul_pos hr₀ (Nat.cast_pos.2 hN0), ?_⟩
+  intro ψ V₀ A L S T o ζ hζ hA hS hT χV χW χS χT om₁ omT hW₁ hWT hV hW hχS hχT vA vS vT α α₀ β hsum P Q s L₁ L₂ L₂' L₃
+    f₁ Ξ Ξ' Φ₂ hΞ hΞ' hsd₂ hsd₃ hlat hvac φ₀ hφ₀ F hF
+  obtain ⟨φ, hφ, rfl⟩ := hφ₀
+  obtain ⟨χr, hχr⟩ : ∃ χr, χr = resChar χ hχ q := ⟨_, rfl⟩
+  rw [← hχr] at hΞ' hsrc ⊢
+  have hob := GlobalTheory.T.splitPlace_baseVacuum_datum_exists_unique D k p n (n' ⊕ Fin 1) ψ hW₁.std V₀ S α₀ β L₁ L₂ hΞ.1 hΞ.2.1 f₁ hΞ.2.2.1
+  have hsb := GlobalTheory.T.schwartzBruhat_tensor_indicator_character_facts k n n'
+
+  obtain ⟨Ξ'', hΞ'', -⟩ := hob.1 (tensCol (phiOne P (s • Q)) (charInd χr (s • Q)))
+    (hsb.1 _ _ (GlobalTheory.IndefiniteRowSideFullHecke.IndicatorFunctionIdentity.phiOne_mem _ _) (hsb.2.2 _ _))
+  have hram := (GlobalTheory.T.ramifiedOperator_bijective_finite_translation_combination D k p n' q χ hχ χr hχr s A α P).2.1 φ hφ
+  have hram1 := ((GlobalTheory.T.ramifiedOperator_bijective_finite_translation_combination D k p n' q χ hχ χr hχr 1 A α P).2.1 φ hφ).1
+  rw [map_one, Module.End.one_apply] at hram1
+
+  have hmove : liftA o om₁ vA (FFStar q χr φ P) Ξ'' = liftA o om₁ vA (sOp α P q χr s (φ P)) Ξ' := by
+    obtain ⟨lS, hlS, hθ⟩ := GlobalTheory.T.exists_bilinear_equivariant_orthogonalSummandLift D k p n n' ψ V₀ A L S o ζ hζ hA vA χV χW om₁ hW₁ α α₀ β hsum
+    obtain ⟨θ, hθv, hθe⟩ := hθ L₁ L₂ f₁ hΞ.1 hΞ.2.1 hΞ.2.2.1
+    obtain ⟨g, hg⟩ := MulAction.exists_smul_eq (GL n' k) P (s • P)
+    have hgs : g ∈ latStab P.lat := by
+      change g • P.lat = P.lat
+      rw [← Pair.smul_lat, hg, Pair.dia_lat]
+    have h1 := hθe g ⟨FFStar q χr φ P, hram1.2.2 P⟩ _ hΞ''.2.2.2.1
+    have b2 : (fun x => tensCol (phiOne P (s • Q)) (charInd χr (s • Q)) (x * (SrcGl.blk g).val)) =
+        tensCol (phiOne P Q) (charInd χr (s • Q)) := by
+      funext x
+      rw [SrcGl.tensCol_mul_blk]
+      congr 1
+      funext x₀
+      rw [← SrcGl.phiOne_smul_left, hg, phiOne_dia]
+    rw [b2, hθv _ _ _ hΞ', hθv _ _ _ hΞ'', GlobalTheory.T.unramifiedCharacter_det_latticeStabilizer_eq_one k n' P.lat inferInstance g hgs lS (hlS hW), Units.val_one,
+      inv_one, one_smul, SrcGl.caRep_apply] at h1
+    rw [hram.2, dia_apply, ← hg, hram1.1 g P]
+    exact h1.symm
+
+  obtain ⟨lS, lT, -, hlT, -, -, hlin⟩ := GlobalTheory.T.linearModel_splitPlace_characterEquivariance D k p q ψ V₀ S χV χW om₁ hW₁
+  choose gs hgs using fun Q' : Pair k n => MulAction.exists_smul_eq (GL n k) (s • Q) Q'
+  have hstab : ∀ Q' ∈ withLat Q.lat, gs Q' • Q.lat = Q.lat := fun Q' hQ' => by
+    rw [← Pair.dia_lat s Q, ← Pair.smul_lat, hgs, mem_withLat.1 hQ', Pair.dia_lat]
+  have hfix : ∀ Q' ∈ withLat Q.lat, omT (β.gl (gs Q'), 1) Φ₂ = Φ₂ := by
+    intro Q' hQ'
+    obtain ⟨-, -, -, hfr, -, -⟩ := GlobalTheory.T.splitPlaceHermitianFrame_properties D k p S n β
+    obtain ⟨Λ', -, hΛ', hK⟩ := hfr L₂' hsd₂
+    have hΛQ : Λ' = Q.lat := Submodule.ext fun x => (hΛ' x).trans (hlat x).symm
+    have hk1 : InK S L₂' (· = p.v) (β.gl (gs Q')) := (hK _).2 (hΛQ ▸ hstab Q' hQ')
+    have hk2 : InK T L₃ (· = p.v) 1 := ⟨one_mem _, fun y _ => by simp [Formalism.L2.Theta.mt]⟩
+    exact GlobalTheory.T.selfDualLatticeStabilizers_fix_weilVacuum_on_placeSet D ψ S T χS χT omT hWT L₂' L₃ hsd₂ hsd₃ (· = p.v)
+      (fun v hv => by subst hv; exact ⟨GlobalTheory.T.isTameFinitePlaceHermitian_all D _, hχS, hχT⟩) Φ₂ hvac _ _ hk1 hk2
+  have hOver : ∀ Q' ∈ withLat Q.lat, Over ψ α₀ β L₁ L₂ f₁ (tensCol (phiOne P Q') (charInd χr Q'))
+      (om₁ (1, β.gl (gs Q')) Ξ'') := by
+    intro Q' hQ'
+    have h0 := hlin n (n' ⊕ Fin 1) α₀ β L₁ L₂ f₁ _ Ξ'' hΞ'' 1 (gs Q')
+    rw [GlobalTheory.T.unramifiedCharacter_det_latticeStabilizer_eq_one k n Q.lat inferInstance (gs Q') (hstab Q' hQ') lT (hlT hV)] at h0
+    convert (preTransparency := .reducible) h0 using 1
+    · funext x
+      simp only [map_one, Units.val_one, one_mul, Matrix.mul_one]
+      rw [tensCol_phiOne_charInd_smul, hgs]
+    · rw [map_one]
+  have hfun := hsrc ψ V₀ A L S o ζ hζ hA vA χV χW om₁ hW₁ hV hW α α₀ β hsum P Q.lat L₁ L₂ f₁ Ξ
+    (fun Q' => om₁ (1, β.gl (gs Q')) Ξ'') hΞ hOver φ hφ
+  have hterm : ∀ (f : GA D A → ℂ) b h,
+      liftA o om₁ vA f (om₁ (1, b) Ξ'') h 0 = liftA o om₁ vA f Ξ'' (h * b) 0 := by
+    intro f b h
+    simp only [liftA]
+    congr 1
+    funext h₀
+    rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one]
+  have hG := SmallPl.liftA_contAut o hA hW₁ vA (hram1.2.2 P) (hob.2.1 _ _ hΞ'').1
+  simp only [smallPair]
+  rw [← integral_const_mul]
+  refine integral_congr_ae (ae_of_all _ fun h' => ?_)
+  dsimp only
+  have key := SmallPl.integral_sum_translates hS hWT vS hvac.1 (withLat Q.lat) (fun Q' => β.gl (gs Q')) hfix hG
+    ((r₀ : ℂ) * chrPow χW (p.idele q.unit) e) h'
+  rw [hfun, ← hmove]
+  simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, hterm]
+  rw [key, hN]
+  push_cast
+  ring
+
+end GlobalTheory.FinPl
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallPairPairingAtOneGluedPlaceStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions
+
+theorem _root_.GlobalTheory.T.smallPair_pairing_at_one_gluedPlace : ∀ D : D7, GlobalTheory.FinPl.SmallOne D := by
+  first | exact @GlobalTheory.FinPl.smallOne | exact GlobalTheory.FinPl.smallOne | (intros; apply GlobalTheory.FinPl.smallOne <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallPairPairingAllGluedPlacesProof
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.LatPair GlobalTheory.SplitWeil GlobalTheory.SeeSaw ValuativeRel IsLocalRing
+open GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter (compFin ExtUnramAt CharUnramAt)
+open GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData (lastKer lastPair)
+open scoped TensorProduct Pointwise
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.FinPl.SmallAllPf
+
+variable {D : D7}
+
+theorem vac_at_place {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT : Lat T} {P : Pl D → Prop}
+    {f : WO S T → ℂ} (h : Vac ψ S T LS LT P f) {v : Pl D} (hv : P v) : Vac ψ S T LS LT (· = v) f := by
+  have hle : latO S T (LS : Set _) (LT : Set _) (· = v) ≤ latO S T (LS : Set _) (LT : Set _) P := by
+    refine AddSubgroup.closure_mono ?_
+    rintro _ ⟨α, hα, hP, rest⟩
+    exact ⟨α, hα, fun w hw => hP w fun e => hw (e ▸ hv), rest⟩
+  exact ⟨h.1, fun u hu => h.2.1 u (hle hu), fun e he u hu hh => h.2.2 e he u (hle hu) hh⟩
+
+theorem main : ∀ D : D7, GlobalTheory.FinPl.SmallAll D := by
+  intro D k _ _ _ _ ι p I P hP n n' _ _ _ _ q χ hχ
+  have hSO := GlobalTheory.T.smallPair_pairing_at_one_gluedPlace D
+  have hOB := GlobalTheory.T.splitPlace_baseVacuum_datum_exists_unique D
+  have hAB := GlobalTheory.T.epsilonFourierProduct_bijective_gluedPlaces D
+  choose r e hr hval using fun i => hSO k (p i) n n' q (χ i) (hχ i)
+  refine ⟨r, e, hr, ?_⟩
+  intro ψ V₀ A L S T o ζ hζ hA hS hT χV χW χS χT om₁ omT hom₁ homT hunr vA vS vT a b s L₁ L₂ L₃ hL₁ hL₂ hL₃ hloc
+    Ξ Ξ' Φ₂ hΞ hΦ₂ hO φ hφ F hF
+  have hstd : IsStdChar D ψ (-1) := hom₁.std
+  have hinj : Function.Injective fun i => (p i).v := hP.inj
+  have hPi : ∀ i, P (p i).v := fun i => (hP.mem _).2 ⟨i, rfl⟩
+  set c : ι → ℂ := fun i => (r i : ℂ) * chrPow χW ((p i).idele q.unit) (e i) with hc
+  set Ψ : ι → Matrix n (n' ⊕ Fin 1) k → ℂ :=
+    fun i => tensCol (phiOne (a.P i) (b.Q i)) (charInd (resChar (χ i) (hχ i) q) (s i • b.Q i)) with hΨ
+
+  have keep : ∀ (l : List ι) (f f' : WO V₀ S → ℂ),
+      OverAll ψ a.α₀ b.β L₁ L₂ Ψ l f f' → ∀ i, i ∉ l → Vac ψ V₀ S L₁ L₂ (· = (p i).v) f →
+        Vac ψ V₀ S L₁ L₂ (· = (p i).v) f' := by
+    intro l
+    induction l with
+    | nil =>
+      intro f f' h i _ hv
+      have h' : f' = f := h
+      rw [h']
+      exact hv
+    | cons j l ih =>
+      intro f f' h i hi hv
+      obtain ⟨g, hg, hOj⟩ := h
+      have hgv := ih f g hg i (fun hm => hi (List.mem_cons_of_mem j hm)) hv
+      have hij : i ≠ j := fun e => hi (e ▸ List.mem_cons_self)
+      exact ((hOB k (p j) n (n' ⊕ Fin 1) ψ hstd V₀ S (a.α₀ j) (b.β j) L₁ L₂ hL₁ hL₂ g hOj.2.2.1).2.1 _ _
+        hOj).2 L₁ L₂ _ (fun e => hij (hinj e).symm) hgv
+  have val : ∀ l : List ι, l.Nodup → ∀ (Ξ₀ Ξ₁ : WO V₀ S → ℂ),
+      (∀ i, Vac ψ V₀ S L₁ L₂ (· = (p i).v) Ξ₀) → OverAll ψ a.α₀ b.β L₁ L₂ Ψ l Ξ₀ Ξ₁ →
+      ∀ φ, a.Ram φ → smallPair o om₁ omT vA vS vT φ Ξ₀ Φ₂ F =
+        (l.map c).prod * smallPair o om₁ omT vA vS vT (a.sAll q (fun i => resChar (χ i) (hχ i) q) s l φ) Ξ₁ Φ₂ F := by
+    intro l
+    induction l with
+    | nil =>
+      intro _ Ξ₀ Ξ₁ _ h φ _
+      have h' : Ξ₁ = Ξ₀ := h
+      subst h'
+      simp [PairDat.sAll]
+    | cons j l ih =>
+      intro hnd Ξ₀ Ξ₁ h1 h φ hφ
+      obtain ⟨g, hg, hOj⟩ := h
+      have hj : j ∉ l := (List.nodup_cons.1 hnd).1
+      have hgv := keep l Ξ₀ g hg j hj (h1 j)
+      rw [ih hnd.tail Ξ₀ g h1 hg φ hφ]
+      have hR : a.Ram (a.sAll q (fun i => resChar (χ i) (hχ i) q) s l φ) :=
+        (hAB k ι p q χ hχ s n' A V₀ a hinj l).1.mapsTo hφ
+      have hself := (hOB k (p j) n (n' ⊕ Fin 1) ψ hstd V₀ S (a.α₀ j) (b.β j) L₁ L₂ hL₁ hL₂ g hgv).2.2
+        (hP.unit j) _ _ (hloc j).2.1 (hloc j).2.2
+      obtain ⟨u1, u2, u3, u4⟩ := hunr _ (hPi j)
+      have key := hval j ψ V₀ A L S T o ζ hζ hA hS hT χV χW χS χT om₁ omT hom₁ homT u1 u2 u3 u4 vA vS vT
+        (a.α j) (a.α₀ j) (b.β j) (hloc j).1 (a.P j) (b.Q j) (s j) L₁ L₂ L₂ L₃ g g Ξ₁ Φ₂ hself hOj hL₂ hL₃
+        (hloc j).2.2 (vac_at_place hΦ₂ (hPi j)) _ (hR.2 j) F hF
+      have hcons : a.sAll q (fun i => resChar (χ i) (hχ i) q) s (j :: l) φ =
+          sOp (a.α j) (a.P j) q (resChar (χ j) (hχ j) q) (s j)
+            (a.sAll q (fun i => resChar (χ i) (hχ i) q) s l φ) := rfl
+      rw [key, hcons, List.map_cons, List.prod_cons, hc]
+      ring
+  exact val I hP.nodup Ξ Ξ' (fun i => vac_at_place hΞ (hPi i)) hO φ hφ
+
+end GlobalTheory.FinPl.SmallAllPf
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallPairPairingAllGluedPlacesProofStatement
+
+section
 
 @[expose] public section
 
@@ -44,3 +448,5 @@ open Formalism.BasicNotions
 
 theorem _root_.GlobalTheory.T.smallPairPairingAllGluedPlaces_proof : ∀ D : D7, GlobalTheory.FinPl.SmallAll D := by
   first | exact @GlobalTheory.FinPl.SmallAllPf.main | exact GlobalTheory.FinPl.SmallAllPf.main | (intros; apply GlobalTheory.FinPl.SmallAllPf.main <;> assumption)
+end
+end

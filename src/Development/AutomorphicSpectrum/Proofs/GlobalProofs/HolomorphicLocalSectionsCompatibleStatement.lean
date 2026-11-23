@@ -1,7 +1,8 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsHolPeriods
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.HolomorphicLocalSectionsCompatible
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AnalyticSectionIsAlgebraicStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SecondCountableTopologyOfIsProjOver
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,6 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,6 +41,144 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DetJacMatCoordsEqTransitionJacobianDet
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.HolomorphicGluingLocalFunctions
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Set
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.CxPts
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Gaga
+
+open ReciprocityTheory.L2DbarEstimates (V)
+open GlobalTheory.ChartGlue
+
+variable {X : Scheme.{0}} {s : X ⟶ Sp ℂ} {D : ℕ}
+
+theorem valAt'_eq_ev (U : X.Opens) (f : Γ(X, U)) (y : CxPts s (RingHom.id ℂ)) :
+    valAt' y.1 U f = ev s (RingHom.id ℂ) U f y := rfl
+
+theorem comp_eq_id (y : CxPts s (RingHom.id ℂ)) : y.1 ≫ s = 𝟙 _ := by
+  rw [y.2]
+  simp [spMap]
+
+theorem isHolTo_chart (c : AlgChart s (RingHom.id ℂ) D) (W : X.Opens)
+    (ψ : (Fin D → ℂ) ≃L[ℂ] V D) :
+    IsHolTo (ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) W))
+      (fun b => (c.e.symm (ψ b)).1) := by
+  intro U f
+  have hset : ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' (ptsIn s (RingHom.id ℂ) W ∩ ptsIn s (RingHom.id ℂ) U)) =
+      {b | b ∈ ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) W) ∧
+        ⊤ ≤ (Opens.map (c.e.symm (ψ b)).1.base).obj U} := by
+    ext b
+    constructor
+    · rintro ⟨h1, h2, h3⟩
+      exact ⟨⟨h1, h2⟩, h3⟩
+    · rintro ⟨⟨h1, h2⟩, h3⟩
+      exact ⟨h1, h2, h3⟩
+  refine ⟨?_, ?_⟩
+  · have ho := (c.e.isOpen_inter_preimage_symm
+      ((isOpen_ptsIn (p := s) (σ := RingHom.id ℂ) W).inter (isOpen_ptsIn U))).preimage ψ.continuous
+    rw [hset] at ho
+    exact ho
+  · have hd := (c.holo U f).comp
+      (ψ.differentiableOn : DifferentiableOn ℂ ψ {b | b ∈ ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) W) ∧
+        ⊤ ≤ (Opens.map (c.e.symm (ψ b)).1.base).obj U})
+      (fun b hb => ⟨hb.1.1, hb.2⟩)
+    refine hd.congr ?_
+    intro b _
+    exact valAt'_eq_ev U f _
+
+theorem exists_mem_holSec : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (D : ℕ), SmoothOfRelativeDimension D s → ∀ (R : AnRead s (RingHom.id ℂ) D), ∀ (L : LB X), L.IsLB → ∀ h : L.ι → (Sp ℂ ⟶ X) → ℂ, (∀ (i : L.ι) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X)), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s = 𝟙 _ ∧ ⊤ ≤ y b ⁻¹ᵁ L.U i) → DifferentiableOn ℂ (fun b => h i (y b)) B) → (∀ (i j : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ (L.U i ⊓ L.U j) → h i x = valAt' x (L.U i ⊓ L.U j) (L.g i j).val * h j x) → ∃ σ ∈ R.holSec L, ∀ (i : L.ι), ∀ y ∈ ptsIn s (RingHom.id ℂ) (L.U i), σ i y = h i y.1 := by
+  intro X s D _ R L _ h hhol hcoc
+  classical
+  obtain ⟨ψ⟩ : Nonempty ((Fin D → ℂ) ≃L[ℂ] V D) := ⟨(EuclideanSpace.equiv (Fin D) ℂ).symm⟩
+  refine ⟨fun i y => if y ∈ ptsIn s (RingHom.id ℂ) (L.U i) then h i y.1 else 0, ?_, ?_⟩
+  · refine ⟨⟨?_, ?_⟩, ?_⟩
+    · intro i j y hi hj
+      have hij : y ∈ ptsIn s (RingHom.id ℂ) (L.U i ⊓ L.U j) := mem_ptsIn_inf.2 ⟨hi, hj⟩
+      simp only [if_pos hi, if_pos hj]
+      rw [hcoc i j y.1 (comp_eq_id y) hij, valAt'_eq_ev]
+      rfl
+    · intro i y hy
+      simp only [if_neg hy]
+    · intro i k
+      have hB : IsOpen (ψ ⁻¹' ((R.chart k).e.target ∩
+          (R.chart k).e.symm ⁻¹' ptsIn s (RingHom.id ℂ) (L.U i))) :=
+        ((R.chart k).e.isOpen_inter_preimage_symm (isOpen_ptsIn _)).preimage ψ.continuous
+      have hd := hhol i D _ (fun b => ((R.chart k).e.symm (ψ b)).1) hB
+        (isHolTo_chart (R.chart k) (L.U i) ψ) (fun b hb => ⟨comp_eq_id _, hb.2⟩)
+      have hd2 := hd.comp ψ.symm.differentiableOn (fun v hv => by
+        show ψ (ψ.symm v) ∈ (R.chart k).e.target ∩
+          (R.chart k).e.symm ⁻¹' ptsIn s (RingHom.id ℂ) (L.U i)
+        rw [ψ.apply_symm_apply]
+        exact hv)
+      refine hd2.congr ?_
+      intro v hv
+      have hv2 : (R.chart k).e.symm v ∈ ptsIn s (RingHom.id ℂ) (L.U i) := hv.2
+      simp [Function.comp, hv2]
+  · intro i y hy
+    simp only [if_pos hy]
+
+end GlobalTheory.CompanionTheory.Gaga
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.HolomorphicGluingLocalFunctionsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Set
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.CxPts
+
+theorem _root_.GlobalTheory.T.holomorphic_gluing_local_functions : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (D : ℕ), SmoothOfRelativeDimension D s → ∀ (R : AnRead s (RingHom.id ℂ) D), ∀ (L : LB X), L.IsLB → ∀ h : L.ι → (Sp ℂ ⟶ X) → ℂ, (∀ (i : L.ι) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X)), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s = 𝟙 _ ∧ ⊤ ≤ y b ⁻¹ᵁ L.U i) → DifferentiableOn ℂ (fun b => h i (y b)) B) → (∀ (i j : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ (L.U i ⊓ L.U j) → h i x = valAt' x (L.U i ⊓ L.U j) (L.g i j).val * h j x) → ∃ σ ∈ R.holSec L, ∀ (i : L.ι), ∀ y ∈ ptsIn s (RingHom.id ℂ) (L.U i), σ i y = h i y.1 := by
+  first | exact @GlobalTheory.CompanionTheory.Gaga.exists_mem_holSec | exact GlobalTheory.CompanionTheory.Gaga.exists_mem_holSec | (intros; apply GlobalTheory.CompanionTheory.Gaga.exists_mem_holSec <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.HolomorphicLocalSectionsCompatible
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Set
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.CxPts
+
+namespace GlobalTheory.CompanionTheory.Gaga
+
+theorem gagaSections_pure : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (D : ℕ), IsProper s → SmoothOfRelativeDimension D s → ∀ (L : LB X), L.IsLB → ∀ h : L.ι → (Sp ℂ ⟶ X) → ℂ, (∀ (i : L.ι) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X)), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s = 𝟙 _ ∧ ⊤ ≤ y b ⁻¹ᵁ L.U i) → DifferentiableOn ℂ (fun b => h i (y b)) B) → (∀ (i j : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ (L.U i ⊓ L.U j) → h i x = valAt' x (L.U i ⊓ L.U j) (L.g i j).val * h j x) → ∃ σ : L.Sec, ∀ (i : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ L.U i → valAt' x (L.U i) (σ.f i) = h i x := by
+  intro X s D hp hs L hL h hh hg
+  obtain ⟨σ, hσ, e⟩ := GlobalTheory.T.holomorphic_gluing_local_functions X s D hs (AnRead.all s (RingHom.id ℂ) D) L hL h hh hg
+  obtain ⟨t, ht⟩ := GlobalTheory.T.analytic_section_is_algebraic X s D hs hp (AnRead.all s (RingHom.id ℂ) D) L hL σ hσ
+  refine ⟨t, fun i x hx hU => ?_⟩
+  have hx' : x ≫ s = spMap (RingHom.id ℂ) := by
+    rw [hx, spMap]; exact (by simp)
+  let y : CxPts s (RingHom.id ℂ) := ⟨x, hx'⟩
+  have hy : y ∈ ptsIn s (RingHom.id ℂ) (L.U i) := hU
+  have h1 := e i y hy
+  rw [← ht] at h1
+  exact h1
+
+end GlobalTheory.CompanionTheory.Gaga
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.HolomorphicLocalSectionsCompatibleStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +188,5 @@ open GlobalTheory GlobalTheory.CxPts
 
 theorem _root_.GlobalTheory.T.holomorphic_local_sections_compatible : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (D : ℕ), IsProper s → SmoothOfRelativeDimension D s → ∀ (L : LB X), L.IsLB → ∀ h : L.ι → (Sp ℂ ⟶ X) → ℂ, (∀ (i : L.ι) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X)), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s = 𝟙 _ ∧ ⊤ ≤ y b ⁻¹ᵁ L.U i) → DifferentiableOn ℂ (fun b => h i (y b)) B) → (∀ (i j : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ (L.U i ⊓ L.U j) → h i x = valAt' x (L.U i ⊓ L.U j) (L.g i j).val * h j x) → ∃ σ : L.Sec, ∀ (i : L.ι) (x : Sp ℂ ⟶ X), x ≫ s = 𝟙 _ → ⊤ ≤ x ⁻¹ᵁ L.U i → valAt' x (L.U i) (σ.f i) = h i x := by
   first | exact @GlobalTheory.CompanionTheory.Gaga.gagaSections_pure | exact GlobalTheory.CompanionTheory.Gaga.gagaSections_pure | (intros; apply GlobalTheory.CompanionTheory.Gaga.gagaSections_pure <;> assumption)
+end
+end

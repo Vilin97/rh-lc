@@ -3,9 +3,7 @@ module
 public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Trace.Basic
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBasisInFiniteDomainTraceMemStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlatTensorEmbedsTensorFractionFieldsStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntegralOfFiniteBaseChangeImageStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsUnitMapOfMemNonZeroDivisorsTensorStatement
+public import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,9 +16,7 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
-public import Mathlib.FieldTheory.IsAlgClosed.Spectrum
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -37,7 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,8 +47,123 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
+public import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsUnitMapOfMemNonZeroDivisorsTensorStatement
+public import Mathlib.FieldTheory.IsAlgClosed.Spectrum
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 public import Mathlib.Algebra.Algebra.Spectrum.Basic
 public import Mathlib.RingTheory.Discriminant
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlatTensorEmbedsTensorFractionFields
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory
+
+theorem flat_tensor_embeds_tensor_fractionFields
+    (T U C F K L : Type) [CommRing T] [IsDomain T] [CommRing U] [IsDomain U] [CommRing C]
+    [IsDomain C] [Field F] [Field K] [Field L] [Algebra T U] [Algebra T C] [Algebra T F]
+    [IsFractionRing T F] [Algebra C K] [IsFractionRing C K] [Algebra U L] [IsFractionRing U L]
+    [Algebra T K] [Algebra F K] [IsScalarTower T C K] [IsScalarTower T F K] [Algebra T L]
+    [Algebra F L] [IsScalarTower T U L] [IsScalarTower T F L] [Module.Flat T U] :
+    ∃ φ : U ⊗[T] C →+* L ⊗[F] K, Function.Injective φ ∧
+      ∀ u c, φ (u ⊗ₜ c) = algebraMap U L u ⊗ₜ algebraMap C K c := by
+  have hF : Module.Flat T F := IsLocalization.flat F (nonZeroDivisors T)
+  have hK : Module.Flat T K := Module.Flat.trans T F K
+  let f : U →ₐ[T] L := IsScalarTower.toAlgHom T U L
+  let g : C →ₐ[T] K := IsScalarTower.toAlgHom T C K
+  let e : L ⊗[F] K ≃ₐ[F] L ⊗[T] K :=
+    IsLocalization.algebraTensorEquiv (nonZeroDivisors T) F L K
+  refine ⟨(e.symm.toRingHom : L ⊗[T] K →+* L ⊗[F] K).comp
+    (Algebra.TensorProduct.map f g).toRingHom, ?_, ?_⟩
+  · have hf : Function.Injective f.toLinearMap := IsFractionRing.injective U L
+    have hg : Function.Injective g.toLinearMap := IsFractionRing.injective C K
+    have h1 : Function.Injective (LinearMap.lTensor U g.toLinearMap) :=
+      Module.Flat.lTensor_preserves_injective_linearMap _ hg
+    have h2 : Function.Injective (LinearMap.rTensor K f.toLinearMap) :=
+      Module.Flat.rTensor_preserves_injective_linearMap _ hf
+    have h3 : Function.Injective (TensorProduct.map f.toLinearMap g.toLinearMap) := by
+      rw [← LinearMap.rTensor_comp_lTensor]
+      exact h2.comp h1
+    intro x y hxy
+    apply h3
+    exact e.symm.injective hxy
+  · intro u c
+    show e.symm (f u ⊗ₜ g c) = _
+    rw [AlgEquiv.symm_apply_eq]
+    rfl
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlatTensorEmbedsTensorFractionFieldsStatement
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_injective_tensor_into_tensor_fractionFields : ∀ (T U C F K L : Type) [CommRing T] [IsDomain T] [CommRing U] [IsDomain U] [CommRing C] [IsDomain C] [Field F] [Field K] [Field L] [Algebra T U] [Algebra T C] [Algebra T F] [IsFractionRing T F] [Algebra C K] [IsFractionRing C K] [Algebra U L] [IsFractionRing U L] [Algebra T K] [Algebra F K] [IsScalarTower T C K] [IsScalarTower T F K] [Algebra T L] [Algebra F L] [IsScalarTower T U L] [IsScalarTower T F L] [Module.Flat T U], ∃ φ : U ⊗[T] C →+* L ⊗[F] K, Function.Injective φ ∧ ∀ u c, φ (u ⊗ₜ c) = algebraMap U L u ⊗ₜ algebraMap C K c := by
+  first | exact @GlobalTheory.flat_tensor_embeds_tensor_fractionFields | exact GlobalTheory.flat_tensor_embeds_tensor_fractionFields | (intros; apply GlobalTheory.flat_tensor_embeds_tensor_fractionFields <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntegralOfFiniteBaseChangeImage
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory
+
+theorem integral_of_finite_base_change_image : ∀ (T U C F K L : Type) [CommRing T] [IsDomain T] [CommRing U] [IsDomain U] [CommRing C] [IsDomain C] [Field F] [Field K] [Field L] [Algebra T U] [Algebra T C] [Algebra T F] [IsFractionRing T F] [Algebra C K] [IsFractionRing C K] [Algebra U L] [IsFractionRing U L] [Algebra T K] [Algebra F K] [IsScalarTower T C K] [IsScalarTower T F K] [Algebra T L] [Algebra F L] [IsScalarTower T U L] [IsScalarTower T F L] [Module.Finite T C] (φ : U ⊗[T] C →+* L ⊗[F] K), (∀ u c, φ (u ⊗ₜ c) = algebraMap U L u ⊗ₜ algebraMap C K c) → ∀ (ω : L ⊗[F] K) (p : Polynomial (U ⊗[T] C)), p.Monic → p.eval₂ φ ω = 0 → IsIntegral U ω := by
+  intro T U C F K L _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ φ hφ ω p hp h
+  letI : Algebra (U ⊗[T] C) (L ⊗[F] K) := φ.toAlgebra
+  have hmap : algebraMap (U ⊗[T] C) (L ⊗[F] K) = φ := rfl
+  haveI : IsScalarTower U (U ⊗[T] C) (L ⊗[F] K) := by
+    refine IsScalarTower.of_algebraMap_eq fun u => ?_
+    rw [hmap]
+    change algebraMap U (L ⊗[F] K) u = φ (u ⊗ₜ 1)
+    rw [hφ, map_one]
+    rfl
+  have hint : IsIntegral (U ⊗[T] C) ω := ⟨p, hp, h⟩
+  haveI : Algebra.IsIntegral U (U ⊗[T] C) := inferInstance
+  exact isIntegral_trans ω hint
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntegralOfFiniteBaseChangeImageStatement
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+theorem _root_.GlobalTheory.T.isIntegral_of_monic_eval_tmul_map_eq_zero : ∀ (T U C F K L : Type) [CommRing T] [IsDomain T] [CommRing U] [IsDomain U] [CommRing C] [IsDomain C] [Field F] [Field K] [Field L] [Algebra T U] [Algebra T C] [Algebra T F] [IsFractionRing T F] [Algebra C K] [IsFractionRing C K] [Algebra U L] [IsFractionRing U L] [Algebra T K] [Algebra F K] [IsScalarTower T C K] [IsScalarTower T F K] [Algebra T L] [Algebra F L] [IsScalarTower T U L] [IsScalarTower T F L] [Module.Finite T C] (φ : U ⊗[T] C →+* L ⊗[F] K), (∀ u c, φ (u ⊗ₜ c) = algebraMap U L u ⊗ₜ algebraMap C K c) → ∀ (ω : L ⊗[F] K) (p : Polynomial (U ⊗[T] C)), p.Monic → p.eval₂ φ ω = 0 → IsIntegral U ω := by
+  first | exact @GlobalTheory.integral_of_finite_base_change_image | exact GlobalTheory.integral_of_finite_base_change_image | (intros; apply GlobalTheory.integral_of_finite_base_change_image <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiscrMulMemOfIsIntegral
+
+section
 
 @[expose] public section
 
@@ -217,3 +328,5 @@ theorem discr_mul_mem_of_isIntegral : ∀ (T U C : Type) [CommRing T] [IsDomain 
   exact exists_conductor_of_fractionFields T U C (FractionRing T) (FractionRing C) (FractionRing U)
 
 end GlobalTheory.DiscConductor
+end
+end

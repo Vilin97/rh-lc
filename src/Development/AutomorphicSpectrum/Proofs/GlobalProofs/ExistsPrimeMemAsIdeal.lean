@@ -3,10 +3,8 @@ module
 public import ReciprocityTheory.Hypotheses.GalCoh
 public import Formalism.GaloisCohomology.StatementLoc
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DecompositionGroupMulEquivLocalGaloisCyclotomic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.FirstLemmaD
-public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
-public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohField
-public import GroundTheory.ProfiniteCohomology.LocalTateDuality.TensorHomDualRepRootsOfUnityIsoCartierPairing
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,7 +43,48 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohField
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.TensorHomDualRepRootsOfUnityIsoCartierPairing
+import Mathlib.Tactic.Linter.HaveILetI
 public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.Transport
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.FirstLemmaD
+
+section
+
+@[expose] public section
+
+namespace Bl.FirstLemmaD
+
+theorem goal1 :
+  ∀ {F : Type} [inst : Field.{0} F] [NumberField.{0} F]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} F)),
+  Exists.{1} fun (p : Nat) ↦
+    And (Nat.Prime p) (Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) (Nat.cast.{0} p)) := by
+  intro F _ _ v
+  have := v.isPrime
+  have hne : v.asIdeal.comap (algebraMap ℤ (NumberField.RingOfIntegers F)) ≠ ⊥ :=
+    fun h => v.ne_bot (Ideal.eq_bot_of_comap_eq_bot h)
+  have hpr : (v.asIdeal.comap (algebraMap ℤ (NumberField.RingOfIntegers F))).IsPrime :=
+    Ideal.comap_isPrime _ _
+  obtain ⟨x, hx, hxp⟩ := hpr.exists_mem_prime_of_ne_bot hne
+  refine ⟨x.natAbs, Int.prime_iff_natAbs_prime.mp hxp, ?_⟩
+  obtain ⟨c, hc⟩ : x ∣ (x.natAbs : ℤ) := Int.dvd_natAbs.mpr dvd_rfl
+  have hmem : ((x.natAbs : ℤ)) ∈ v.asIdeal.comap (algebraMap ℤ (NumberField.RingOfIntegers F)) := by
+    rw [hc]
+    exact Ideal.mul_mem_right c _ hx
+  rw [Ideal.mem_comap, map_natCast] at hmem
+  exact hmem
+
+end Bl.FirstLemmaD
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsPrimeMemAsIdeal
+
+section
 
 @[expose] public section
 
@@ -93,3 +131,5 @@ theorem localFiniteness : ReciprocityTheory.Gal.LocalFiniteness := by
   exact ReciprocityTheory.Neutral.Bridge.FinCd2.of_comp E h
 
 end GlobalTheory.CompanionTheory.Hypotheses₂
+end
+end

@@ -1,7 +1,9 @@
 module
 
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.TwKerLeComapOf
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedJacquetExactSmooth
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFiniteSupport
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SmoothPartStable
+public import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +43,136 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwKerEqMapOfSurjective
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep
+
+namespace GlobalTheory.CompanionTheory.PRep
+
+theorem twKer_eq_map_of_surjective {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V]
+    [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ G V) (σ : Representation ℂ G W)
+    (N : Subgroup G) (θ : N →* ℂˣ) (f : V →ₗ[ℂ] W) (hf : Function.Surjective f)
+    (hint : ∀ g v, f (ρ g v) = σ g (f v)) : twKer σ N θ = (twKer ρ N θ).map f := by
+  unfold GlobalTheory.PRep.twKer
+  rw [Submodule.map_span]
+  congr 1
+  ext w
+  constructor
+  · rintro ⟨n, w', rfl⟩
+    obtain ⟨v, rfl⟩ := hf w'
+    exact ⟨ρ n v - (θ n : ℂ) • v, ⟨n, v, rfl⟩, by rw [map_sub, map_smul, hint]⟩
+  · rintro ⟨_, ⟨n, v, rfl⟩, rfl⟩
+    exact ⟨n, f v, by rw [map_sub, map_smul, hint]⟩
+
+theorem twKer_map_closed : ∀ {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
+    [Module ℂ W] (ρ : Representation ℂ G V) (σ : Representation ℂ G W) (N : Subgroup G)
+    (θ : N →* ℂˣ) (f : V →ₗ[ℂ] W), Function.Surjective f → (∀ g v, f (ρ g v) = σ g (f v)) →
+    twKer σ N θ = (twKer ρ N θ).map f :=
+  fun ρ σ N θ f hf hint => GlobalTheory.CompanionTheory.PRep.twKer_eq_map_of_surjective ρ σ N θ f hf hint
+
+end GlobalTheory.CompanionTheory.PRep
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedJacquetExactSmooth
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep GlobalTheory.BZMir
+
+namespace GlobalTheory.CompanionTheory.PRep.TwExact
+
+theorem twMap_range_eq_ker : ∀ {G V₁ V₂ V₃ : Type} [Group G] [TopologicalSpace G]
+    [IsTopologicalGroup G] [AddCommGroup V₁] [Module ℂ V₁] [AddCommGroup V₂] [Module ℂ V₂]
+    [AddCommGroup V₃] [Module ℂ V₃] (ρ₁ : Representation ℂ G V₁) (ρ₂ : Representation ℂ G V₂)
+    (ρ₃ : Representation ℂ G V₃), IsSmooth ρ₁ → IsSmooth ρ₂ → IsSmooth ρ₃ →
+    ∀ (N : Subgroup G) (θ : N →* ℂˣ), IsOpen (θ.ker : Set N) →
+    (∀ s : Finset G, (↑s : Set G) ⊆ N → ∃ L : Subgroup G, L ≤ N ∧ (↑s : Set G) ⊆ L ∧
+      IsCompact (L : Set G)) →
+    ∀ (f : V₁ →ₗ[ℂ] V₂) (g : V₂ →ₗ[ℂ] V₃) (hf : ∀ x v, f (ρ₁ x v) = ρ₂ x (f v))
+      (hg : ∀ x v, g (ρ₂ x v) = ρ₃ x (g v)), LinearMap.range f = LinearMap.ker g →
+    LinearMap.range (twMap ρ₁ ρ₂ N θ f hf) = LinearMap.ker (twMap ρ₂ ρ₃ N θ g hg) := by
+  intro G V₁ V₂ V₃ _ _ _ _ _ _ _ _ _ ρ₁ ρ₂ ρ₃ h₁ h₂ h₃ N θ hθ hN f g hf hg hfg
+  apply le_antisymm
+  · intro y hy
+    rw [LinearMap.mem_range] at hy
+    obtain ⟨x, rfl⟩ := hy
+    obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective (GlobalTheory.PRep.twKer ρ₁ N θ) x
+    rw [LinearMap.mem_ker]
+    have hv : g (f v) = 0 := by
+      have h0 : f v ∈ LinearMap.ker g := hfg ▸ LinearMap.mem_range_self f v
+      exact LinearMap.mem_ker.mp h0
+    simp only [GlobalTheory.BZMir.twMap, Submodule.mapQ_apply, hv, Submodule.Quotient.mk_zero]
+  · intro x hx
+    obtain ⟨w, rfl⟩ := Submodule.Quotient.mk_surjective (GlobalTheory.PRep.twKer ρ₂ N θ) x
+    rw [LinearMap.mem_ker] at hx
+    simp only [GlobalTheory.BZMir.twMap, Submodule.mapQ_apply, Submodule.Quotient.mk_eq_zero] at hx
+    have hKinv : ∀ x : G, LinearMap.ker g ≤ (LinearMap.ker g).comap (ρ₂ x) := by
+      intro x u hu
+      rw [Submodule.mem_comap, LinearMap.mem_ker, hg, LinearMap.mem_ker.mp hu, map_zero]
+    let ρq : Representation ℂ G (V₂ ⧸ LinearMap.ker g) :=
+      { toFun := fun x => (LinearMap.ker g).mapQ (LinearMap.ker g) (ρ₂ x) (hKinv x)
+        map_one' := by
+          ext u
+          simp
+        map_mul' := by
+          intro x y
+          ext u
+          simp [Module.End.mul_apply] }
+    have hq : GlobalTheory.PRep.IsSmooth ρq := by
+      intro u
+      obtain ⟨w0, rfl⟩ := Submodule.Quotient.mk_surjective _ u
+      rw [isOpen_iff_forall_mem_open]
+      intro x0 hx0
+      refine ⟨(fun y => x0 * y) '' {y | ρ₂ y w0 = w0}, ?_, isOpenMap_mul_left x0 _ (h₂ w0),
+        ⟨1, by simp, by simp⟩⟩
+      rintro _ ⟨y, hy, rfl⟩
+      rw [Set.mem_ofPred_eq] at hy hx0 ⊢
+      have e1 : ρq y (Submodule.Quotient.mk w0) = Submodule.Quotient.mk (ρ₂ y w0) := rfl
+      rw [map_mul, Module.End.mul_apply, e1, hy, hx0]
+    let gb : (V₂ ⧸ LinearMap.ker g) →ₗ[ℂ] V₃ := (LinearMap.ker g).liftQ g le_rfl
+    have hgb_inj : Function.Injective gb := by
+      intro a b hab
+      obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ a
+      obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective _ b
+      have hab' : g a = g b := hab
+      rw [Submodule.Quotient.eq, LinearMap.mem_ker, map_sub, hab', sub_self]
+    have hgb_eq : ∀ (x : G) (u : V₂ ⧸ LinearMap.ker g), gb (ρq x u) = ρ₃ x (gb u) := by
+      intro x u
+      obtain ⟨w0, rfl⟩ := Submodule.Quotient.mk_surjective _ u
+      exact hg x w0
+    have hmem : (Submodule.Quotient.mk w : V₂ ⧸ LinearMap.ker g) ∈ GlobalTheory.PRep.twKer ρq N θ :=
+      GlobalTheory.CompanionTheory.PRep.JacExact.twKer_reflect ρq ρ₃ hq h₃ N θ hθ hN gb hgb_inj hgb_eq _ hx
+    rw [GlobalTheory.CompanionTheory.PRep.twKer_map_closed ρ₂ ρq N θ (LinearMap.ker g).mkQ
+      (Submodule.mkQ_surjective _) (fun x v => rfl)] at hmem
+    obtain ⟨w', hw', hw'eq⟩ := hmem
+    rw [Submodule.mkQ_apply, Submodule.Quotient.eq, ← hfg, LinearMap.mem_range] at hw'eq
+    obtain ⟨v, hv⟩ := hw'eq
+    rw [LinearMap.mem_range]
+    refine ⟨Submodule.Quotient.mk (-v), ?_⟩
+    simp only [GlobalTheory.BZMir.twMap, Submodule.mapQ_apply, map_neg, hv]
+    rw [Submodule.Quotient.eq]
+    have e2 : -(w' - w) - w = -w' := by abel
+    rw [e2]
+    exact Submodule.neg_mem _ hw'
+
+end GlobalTheory.CompanionTheory.PRep.TwExact
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedJacquetExactSmoothStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +180,5 @@ open GlobalTheory.PRep GlobalTheory.BZMir
 
 theorem _root_.GlobalTheory.T.twisted_jacquet_exact_smooth : ∀ {G V₁ V₂ V₃ : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V₁] [Module ℂ V₁] [AddCommGroup V₂] [Module ℂ V₂] [AddCommGroup V₃] [Module ℂ V₃] (ρ₁ : Representation ℂ G V₁) (ρ₂ : Representation ℂ G V₂) (ρ₃ : Representation ℂ G V₃), IsSmooth ρ₁ → IsSmooth ρ₂ → IsSmooth ρ₃ → ∀ (N : Subgroup G) (θ : N →* ℂˣ), IsOpen (θ.ker : Set N) → (∀ s : Finset G, (↑s : Set G) ⊆ N → ∃ L : Subgroup G, L ≤ N ∧ (↑s : Set G) ⊆ L ∧ IsCompact (L : Set G)) → ∀ (f : V₁ →ₗ[ℂ] V₂) (g : V₂ →ₗ[ℂ] V₃) (hf : ∀ x v, f (ρ₁ x v) = ρ₂ x (f v)) (hg : ∀ x v, g (ρ₂ x v) = ρ₃ x (g v)), LinearMap.range f = LinearMap.ker g → LinearMap.range (twMap ρ₁ ρ₂ N θ f hf) = LinearMap.ker (twMap ρ₂ ρ₃ N θ g hg) := by
   first | exact @GlobalTheory.CompanionTheory.PRep.TwExact.twMap_range_eq_ker | exact GlobalTheory.CompanionTheory.PRep.TwExact.twMap_range_eq_ker | (intros; apply GlobalTheory.CompanionTheory.PRep.TwExact.twMap_range_eq_ker <;> assumption)
+end
+end

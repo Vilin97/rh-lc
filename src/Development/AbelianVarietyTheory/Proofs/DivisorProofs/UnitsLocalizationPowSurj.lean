@@ -4,8 +4,6 @@ public import Mathlib.FieldTheory.IsSepClosed
 public import Mathlib.RingTheory.Etale.Basic
 public import Mathlib.RingTheory.Henselian
 public import Mathlib.RingTheory.Localization.AtPrime.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitPowEq
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationStrictHenselianEqConstMulUnitStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,7 +23,10 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +46,69 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationStrictHenselianEqConstMulUnit
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitPowEq
+
+section
+
+@[expose] public section
+
+open Polynomial IsLocalRing
+
+namespace GlobalTheory.UnitPowerExistence
+
+theorem exists_unit_pow_eq (O : Type) [CommRing O] [HenselianLocalRing O]
+    [IsSepClosed (IsLocalRing.ResidueField O)] (q : ℕ) (hq : IsUnit (q : O)) (hpos : 0 < q)
+    (w : Oˣ) : ∃ v : Oˣ, v ^ q = w := by
+  have hq0 : (q : ResidueField O) ≠ 0 := by
+    have h := hq.map (residue O)
+    rw [map_natCast] at h
+    exact h.ne_zero
+  have hw : residue O (w : O) ≠ 0 := (w.isUnit.map (residue O)).ne_zero
+  obtain ⟨a₀, ha₀⟩ := IsSepClosed.exists_root (X ^ q - C (residue O (w : O)))
+    (by rw [degree_X_pow_sub_C hpos]; exact_mod_cast hpos.ne') (separable_X_pow_sub_C _ hq0 hw)
+  obtain ⟨b, rfl⟩ := residue_surjective a₀
+  have hb : b ^ q - (w : O) ∈ maximalIdeal O := by
+    rw [← residue_eq_zero_iff, map_sub, map_pow]
+    simpa [IsRoot] using ha₀
+  have hbu : IsUnit b := by
+    by_contra hb'
+    have h2 : b ^ q ∈ maximalIdeal O := Ideal.pow_mem_of_mem _ ((mem_maximalIdeal b).2 hb') q hpos
+    have h3 : (w : O) ∈ maximalIdeal O := by simpa using sub_mem h2 hb
+    exact (mem_maximalIdeal _).1 h3 w.isUnit
+  obtain ⟨a, ha, -⟩ := HenselianLocalRing.is_henselian (X ^ q - C (w : O)) (monic_X_pow_sub_C _ hpos.ne') b
+    (by simpa using hb) (by
+      rw [derivative_sub, derivative_C, sub_zero, derivative_X_pow, eval_mul, eval_C, eval_pow, eval_X]
+      exact hq.mul (hbu.pow (q - 1)))
+  have hapow : a ^ q = w := by simpa [IsRoot, sub_eq_zero] using ha
+  have hau : IsUnit a := (isUnit_pow_iff hpos.ne').1 (hapow ▸ w.isUnit)
+  exact ⟨hau.unit, Units.ext (by simpa using hapow)⟩
+
+end GlobalTheory.UnitPowerExistence
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationStrictHenselianEqConstMulUnitStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.units_localization_strictHenselian_eq_const_mul_unit : ∀ (T O : Type) [CommRing T] [IsDomain T] [IsLocalRing T] [CommRing O] [Algebra T O] [Algebra (Polynomial T) O] [IsScalarTower T (Polynomial T) O] [HenselianLocalRing O] [IsSepClosed (ResidueField O)], (∀ f : Polynomial T, f.Monic → 0 < f.natDegree → ∃ x : T, f.eval x = 0) → (∃ (ι : Type) (_ : Preorder ι) (_ : IsDirected ι (· ≤ ·)) (_ : Nonempty ι) (Si : ι → Subalgebra (Polynomial T) O), Monotone Si ∧ (∀ s : O, ∃ i, s ∈ Si i) ∧ ∀ i, ∃ (A : Type) (_ : CommRing A) (_ : Algebra (Polynomial T) A) (_ : Algebra.Etale (Polynomial T) A) (q : Ideal A) (_ : q.IsPrime), Nonempty (Localization.AtPrime q ≃ₐ[(Polynomial T)] Si i)) → ∀ u : (Localization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T)))ˣ, ∃ (c d : T) (w : Oˣ), c ≠ 0 ∧ d ≠ 0 ∧ (u : Localization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T))) * algebraMap O (Localization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T))) (algebraMap T O d) = algebraMap O (Localization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T))) (algebraMap T O c) * algebraMap O (Localization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T))) (w : O) := by
+  first | (exact @GlobalTheory.VertUnits.units_eq_const_mul_unit) | (exact GlobalTheory.VertUnits.units_eq_const_mul_unit) | (intros; apply GlobalTheory.VertUnits.units_eq_const_mul_unit <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationPowSurj
+
+section
 
 @[expose] public section
 
@@ -102,3 +163,5 @@ theorem units_localization_pow_surj : ∀ (T O : Type) [CommRing T] [IsDomain T]
   group
 
 end GlobalTheory.LocAcycUnits
+end
+end

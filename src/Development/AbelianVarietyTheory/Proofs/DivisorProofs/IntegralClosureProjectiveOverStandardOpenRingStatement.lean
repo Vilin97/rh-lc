@@ -1,7 +1,10 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DlogRatioVolumeFormNeZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureProjectiveOverStandardOpenRing
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.IsRegularRingOfSmooth
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsRegularOfSupportDimQuotientAddLengthLe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoverChartSmoothNormal
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAffineOpenRingPolynomialEquivStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +23,12 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.IntegralClosure.GoingDown
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Polynomial
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,6 +36,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,9 +51,65 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureProjectiveOverStandardOpenRing
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
+
+namespace GlobalTheory
+
+
+set_option synthInstance.maxHeartbeats 200000 in
+theorem integralClosure_projective_rA : ∀ (k : Type) [Field k] [CharZero k] (F K : Type) [Field F] [Field K]
+    [Algebra k F] [Algebra k K] [Algebra F K] [IsScalarTower k F K] (d : ℕ) (x : Fin (d + 1) → F),
+    IsFinCover k K x → ∀ i, Module.Projective (rA k x {i}) (integralClosure (rA k x {i}) K) := by
+  intro k _ _ F K _ _ _ _ _ _ d x h i
+  obtain ⟨hfin, -, hsm⟩ := GlobalTheory.T.finite_cover_chart_smooth_normal k F K d x h {i} (Finset.singleton_nonempty i)
+  obtain ⟨e, -⟩ := GlobalTheory.T.standardAffineOpen_ring_polynomialEquiv k F d x h.pd i
+  haveI : IsRegularRing (rA k x {i}) := IsRegularRing.of_ringEquiv e.toRingEquiv
+  haveI : IsNoetherianRing (rA k x {i}) := inferInstance
+  haveI : IsDomain (rA k x {i}) := inferInstance
+  haveI : IsIntegrallyClosed (rA k x {i}) :=
+    haveI : UniqueFactorizationMonoid (MvPolynomial (Fin d) k) := inferInstance
+    haveI : UniqueFactorizationMonoid (rA k x {i}) :=
+      (MulEquiv.uniqueFactorizationMonoid e.toMulEquiv inferInstance)
+    inferInstance
+  haveI : IsRegularRing (rB k K x {i}) := GlobalTheory.isRegularRing_of_smooth k _
+  haveI hB : IsRegularRing (integralClosure (rA k x {i}) K) := ‹IsRegularRing (rB k K x {i})›
+  haveI : IsNoetherianRing (integralClosure (rA k x {i}) K) := inferInstance
+  haveI : IsDomain (integralClosure (rA k x {i}) K) := inferInstance
+  haveI : Algebra.IsIntegral (rA k x {i}) (integralClosure (rA k x {i}) K) := inferInstance
+  haveI : FaithfulSMul (rA k x {i}) (integralClosure (rA k x {i}) K) := by
+    rw [faithfulSMul_iff_algebraMap_injective]
+    intro a b hab
+    have := congrArg (fun y : integralClosure (rA k x {i}) K => (y : K)) hab
+    exact Subtype.ext ((algebraMap F K).injective this)
+  haveI : Algebra.HasGoingDown (rA k x {i}) (integralClosure (rA k x {i}) K) := inferInstance
+  haveI : Module.Flat (rA k x {i}) (integralClosure (rA k x {i}) K) := by
+    refine GlobalTheory.flat_of_isRegularRing_of_isRegularRing fun q hq => ?_
+    rw [Ideal.height_eq_height_add_of_liesOver_of_hasGoingDown (q.under (rA k x {i})) q]
+    · exact le_self_add
+    all_goals first | assumption | infer_instance
+  haveI : Module.FinitePresentation (rA k x {i}) (integralClosure (rA k x {i}) K) :=
+    Module.finitePresentation_of_finite _ _
+  exact Module.Flat.projective_of_finitePresentation
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureProjectiveOverStandardOpenRingStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.integralClosure_projective_over_standardOpenRing : ∀ (k : Type) [Field k] [CharZero k] (F K : Type) [Field F] [Field K] [Algebra k F] [Algebra k K] [Algebra F K] [IsScalarTower k F K] (d : ℕ) (x : Fin (d + 1) → F), IsFinCover k K x → ∀ i, Module.Projective (rA k x {i}) (integralClosure (rA k x {i}) K) := by
   first | (exact @GlobalTheory.integralClosure_projective_rA) | (exact GlobalTheory.integralClosure_projective_rA) | (intros; apply GlobalTheory.integralClosure_projective_rA  <;> assumption)
+end
+end

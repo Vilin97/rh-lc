@@ -2,9 +2,8 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.OrbitIntegrals.ZNClosed
 public import GroundTheory.AutomorphicForms.GLnLocal
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisExtra
-import Mathlib.Algebra.AffineMonoid.UniqueSums
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.Topology.Instances.Matrix
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,7 +17,6 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -46,8 +44,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisExtra
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.DYlb5.main :
+    ∀ {k : Type} [inst : Field k] [inst_1 : ValuativeRel k] [inst_2 : TopologicalSpace k] [IsNonarchimedeanLocalField k]
+      {n : ℕ} (f : Module.Dual k (Matrix (Fin n) (Fin n) k)), Continuous (⇑f : Matrix (Fin n) (Fin n) k → k) := by
+  intro k _ _ _ _ n f
+  haveI : IsTopologicalRing k := inferInstance
+  have key : ∀ M : Matrix (Fin n) (Fin n) k,
+      f M = ∑ i, ∑ j, M i j * f (Matrix.single i j 1) := by
+    intro M
+    conv_lhs => rw [Matrix.matrix_eq_sum_single M]
+
+    simp only [map_sum]
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    have : Matrix.single i j (M i j) = (M i j) • Matrix.single i j (1 : k) := by
+      simp [Matrix.smul_single]
+    rw [this, map_smul, smul_eq_mul]
+  have : (⇑f : Matrix (Fin n) (Fin n) k → k) =
+      fun M => ∑ i, ∑ j, M i j * f (Matrix.single i j 1) := funext key
+  rw [this]
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
+  exact (continuous_id.matrix_elem i j).mul continuous_const
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.OrbitIntegrals.CompactPowers.ExistsPowSmulMemOfIsCompact
+
+section
 
 @[expose] public section
 
@@ -310,3 +345,6 @@ theorem zNClosed : ZNClosed (k := k) := by
   exact h1.1
 
 end PositivityTheory.RgUd.T.Nil.Orb.Ozn
+end
+end
+end

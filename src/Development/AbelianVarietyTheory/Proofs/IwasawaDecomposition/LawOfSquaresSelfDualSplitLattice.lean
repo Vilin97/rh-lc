@@ -3,26 +3,25 @@ module
 public import Formalism.LocalToGlobal.ProjectiveLattices.ThClass
 public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsIndexIdeal
 public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.DeterminantCharacterIdentity
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DetSpanConjMulIntegralOfIntegralPairingStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCommonIndexIdealInfSupLatticesStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsSquareAbsNormConjInvariantMovedPrimesIdealStatement
-public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.NotIsOfFinOrderUnitQuot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +41,164 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCommonIndexIdealInfSupLatticesStatement
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.TwoWeightEqOneAddRoot
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.NotIsOfFinOrderUnitQuot
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DetSpanConjMulIntegralOfIntegralPairing
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.L2.Pj
+
+namespace GlobalTheory
+
+theorem detSpan_conj_mul_mem_range (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ)
+    (M M' : Submodule (𝓞 E) (Fin n → E))
+    (h : ∀ v ∈ M, ∀ w ∈ M', ∑ j, IsCMField.complexConj E (v j) * w j ∈ (algebraMap (𝓞 E) E).range) :
+    ∀ x ∈ GlobalTheory.BetaEx.detSpan M, ∀ y ∈ GlobalTheory.BetaEx.detSpan M',
+      IsCMField.complexConj E x * y ∈ (algebraMap (𝓞 E) E).range := by
+  have hc : ∀ a : 𝓞 E, IsCMField.complexConj E (a : E) ∈ (algebraMap (𝓞 E) E).range := fun a =>
+    ⟨IsCMField.ringOfIntegersComplexConj E a, IsCMField.coe_ringOfIntegersComplexConj E a⟩
+  intro x hx y hy
+  unfold GlobalTheory.BetaEx.detSpan at hx hy
+  induction hx using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨v, hv, rfl⟩ := (GlobalTheory.BetaEx.mem_detSet M x).1 hx
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      obtain ⟨w, hw, rfl⟩ := (GlobalTheory.BetaEx.mem_detSet M' y).1 hy
+      choose A hA using fun i k => h (v i) (hv i) (w k) (hw k)
+      refine ⟨(Matrix.of A).det, ?_⟩
+      have e1 : IsCMField.complexConj E v.det
+          = ((IsCMField.complexConj E : E →+* E).mapMatrix v).det := by
+        rw [← RingHom.map_det]; rfl
+      rw [RingHom.map_det, e1, ← Matrix.det_transpose w, ← Matrix.det_mul]
+      congr 1
+      ext i k
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply,
+        Matrix.transpose_apply, hA]
+      rfl
+    | zero => simpa using Subring.zero_mem _
+    | add a b _ _ ha hb => rw [mul_add]; exact Subring.add_mem _ ha hb
+    | smul a b _ hb =>
+      rw [Algebra.smul_def, mul_left_comm]
+      exact Subring.mul_mem _ ⟨a, rfl⟩ hb
+  | zero => simpa using Subring.zero_mem _
+  | add a b _ _ ha hb => rw [map_add (f := _), add_mul]; exact Subring.add_mem _ ha hb
+  | smul a b _ hb =>
+    rw [Algebra.smul_def, map_mul, mul_assoc]
+    exact Subring.mul_mem _ (hc a) hb
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DetSpanConjMulIntegralOfIntegralPairingStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.L2.Pj
+
+theorem _root_.GlobalTheory.T.detSpan_conj_mul_integral_of_integral_pairing : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (M M' : Submodule (𝓞 E) (Fin n → E)), (∀ v ∈ M, ∀ w ∈ M', ∑ j, IsCMField.complexConj E (v j) * w j ∈ (algebraMap (𝓞 E) E).range) → ∀ x ∈ GlobalTheory.BetaEx.detSpan M, ∀ y ∈ GlobalTheory.BetaEx.detSpan M', IsCMField.complexConj E x * y ∈ (algebraMap (𝓞 E) E).range := by
+  first | exact @GlobalTheory.detSpan_conj_mul_mem_range | exact GlobalTheory.detSpan_conj_mul_mem_range | (intros; apply GlobalTheory.detSpan_conj_mul_mem_range <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsSquareAbsNormConjInvariantMovedPrimesIdeal
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+namespace GlobalTheory.SquareNorm
+
+open NumberField IsDedekindDomain Formalism.L2.Pj
+
+theorem exists_eq_mul_map {R : Type} [CommRing R] [IsDedekindDomain R] (e : R ≃+* R) (he : ∀ x, e (e x) = x)
+    (𝔡 : Ideal R) : 𝔡 ≠ ⊥ → 𝔡.map (e : R →+* R) = 𝔡 →
+      (∀ P : Ideal R, P.IsPrime → 𝔡 ≤ P → P.map (e : R →+* R) ≠ P) →
+      ∃ 𝔞 : Ideal R, 𝔡 = 𝔞 * 𝔞.map (e : R →+* R) := by
+  have hee : ∀ I : Ideal R, (I.map (e : R →+* R)).map (e : R →+* R) = I := fun I => by
+    rw [Ideal.map_map]
+    have : (e : R →+* R).comp (e : R →+* R) = RingHom.id R := RingHom.ext he
+    rw [this, Ideal.map_id]
+  induction 𝔡 using WellFoundedGT.induction with
+  | ind 𝔡 ih =>
+  intro h0 hinv hmv
+  by_cases ht : 𝔡 = ⊤
+  · exact ⟨⊤, by rw [ht, Ideal.map_top, Ideal.top_mul]⟩
+  obtain ⟨P, hP, hle⟩ := Ideal.exists_le_maximal 𝔡 ht
+  have hQ : (P.map (e : R →+* R)).IsMaximal := Ideal.IsMaximal.map_bijective (e : R →+* R) e.bijective hP
+  have hne := hmv P hP.isPrime hle
+  have hle' : 𝔡 ≤ P.map (e : R →+* R) := by
+    have := Ideal.map_mono (f := (e : R →+* R)) hle
+    rwa [hinv] at this
+  have hcop : IsCoprime P (P.map (e : R →+* R)) :=
+    Ideal.isCoprime_iff_sup_eq.2 (hP.coprime_of_ne hQ hne.symm)
+  obtain ⟨𝔟, hb⟩ := hcop.mul_dvd (Ideal.dvd_iff_le.2 hle) (Ideal.dvd_iff_le.2 hle')
+  have hPQ : P * P.map (e : R →+* R) ≠ 0 := fun h => h0 (by rw [hb, h, zero_mul]; rfl)
+  have hb0 : 𝔟 ≠ ⊥ := fun h => h0 (by rw [hb, h, Ideal.mul_bot])
+  have hdb : 𝔡 ≤ 𝔟 := Ideal.le_of_dvd ⟨P * P.map (e : R →+* R), by rw [mul_comm]; exact hb⟩
+  have hlt : 𝔡 < 𝔟 := by
+    refine lt_of_le_of_ne hdb fun h => ?_
+    have h1 : P * P.map (e : R →+* R) * 𝔟 = 1 * 𝔟 := by rw [← hb, one_mul, h]
+    have h2 := mul_right_cancel₀ hb0 h1
+    have h3 : (1 : Ideal R) ≤ P := Ideal.le_of_dvd ⟨_, h2.symm⟩
+    rw [Ideal.one_eq_top] at h3
+    exact hP.ne_top (top_le_iff.1 h3)
+  have hbinv : 𝔟.map (e : R →+* R) = 𝔟 := by
+    apply mul_left_cancel₀ hPQ
+    rw [← hb]
+    conv_rhs => rw [← hinv, hb]
+    rw [Ideal.map_mul, Ideal.map_mul, hee, mul_comm P]
+  obtain ⟨𝔞, ha⟩ := ih 𝔟 hlt hb0 hbinv fun Q hQ' h => hmv Q hQ' (hdb.trans h)
+  refine ⟨P * 𝔞, ?_⟩
+  rw [hb, Ideal.map_mul]
+  conv_lhs => rw [ha]
+  ring
+
+theorem isSquare_absNorm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (𝔡 : Ideal (𝓞 E)), 𝔡 ≠ ⊥ → 𝔡.map (H.bar : 𝓞 E →+* 𝓞 E) = 𝔡 → (∀ P : Ideal (𝓞 E), P.IsPrime → 𝔡 ≤ P → P.map (H.bar : 𝓞 E →+* 𝓞 E) ≠ P) → IsSquare (Ideal.absNorm 𝔡) := by
+  intro E _ _ _ H 𝔡 h0 hinv hmv
+  have he : ∀ x, H.bar (H.bar x) = x := fun x => RingOfIntegers.ext (by
+    rw [H.bar_eq, H.bar_eq, IsCMField.complexConj_apply_apply])
+  obtain ⟨𝔞, ha⟩ := exists_eq_mul_map H.bar he 𝔡 h0 hinv hmv
+  have hN : Ideal.absNorm (𝔞.map (H.bar : 𝓞 E →+* 𝓞 E)) = Ideal.absNorm 𝔞 := by
+    rw [Ideal.absNorm_apply, Ideal.absNorm_apply, Submodule.cardQuot_apply, Submodule.cardQuot_apply]
+    exact (Nat.card_congr (Ideal.quotientEquiv 𝔞 _ H.bar rfl).toEquiv).symm
+  exact ⟨Ideal.absNorm 𝔞, by rw [ha, map_mul, hN]⟩
+
+end GlobalTheory.SquareNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsSquareAbsNormConjInvariantMovedPrimesIdealStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.L2.Pj
+
+theorem _root_.GlobalTheory.T.isSquare_absNorm_conjInvariant_movedPrimes_ideal : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (𝔡 : Ideal (𝓞 E)), 𝔡 ≠ ⊥ → 𝔡.map (H.bar : 𝓞 E →+* 𝓞 E) = 𝔡 → (∀ P : Ideal (𝓞 E), P.IsPrime → 𝔡 ≤ P → P.map (H.bar : 𝓞 E →+* 𝓞 E) ≠ P) → IsSquare (Ideal.absNorm 𝔡) := by
+  first | exact @GlobalTheory.SquareNorm.isSquare_absNorm | exact GlobalTheory.SquareNorm.isSquare_absNorm | (intros; apply GlobalTheory.SquareNorm.isSquare_absNorm <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LawOfSquaresSelfDualSplitLattice
+
+section
 
 @[expose] public section
 
@@ -202,3 +357,5 @@ theorem law_of_squares : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   ring
 
 end GlobalTheory.LawOfSquares
+end
+end

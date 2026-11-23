@@ -1,8 +1,10 @@
 module
 
 public import Formalism.ThetaLogCoordinates.JacobiPathWeights.LiftWord
-public import Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementB
-public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Ring.Int.Defs
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +45,40 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+
+-- Source module: Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators
+open Finset MvPolynomial
+
+namespace Formalism.InvariantFactorPaths.GelfandTsetlinBases
+
+def HStrip {n : ℕ} (ν μ : Fin n → ℤ) (b : ℕ) : Prop :=
+  (∀ m, μ m ≤ ν m) ∧ (∀ m m' : Fin n, m.val + 1 = m'.val → ν m' ≤ μ m) ∧ ∑ m, ν m - ∑ m, μ m = (b : ℤ)
+
+def IsPath (n : ℕ) (isVec : ℕ → Bool) (B : ℕ → ℕ) (μ : ℕ → Fin n → ℤ) (N : ℕ) : Prop :=
+  μ 0 = 0 ∧ (∀ i ≤ N, Antitone (μ i)) ∧
+    ∀ i < N, if isVec i then HStrip (μ (i + 1)) (μ i) (B i) else HStrip (μ i) (μ (i + 1)) (B i)
+
+def colHeight {n : ℕ} (μ : Fin n → ℤ) (c : ℤ) : ℕ := (univ.filter fun m => c ≤ μ m).card
+
+variable {ι : Type*}
+
+end Formalism.InvariantFactorPaths.GelfandTsetlinBases
+end
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementA
+
+section
 
 @[expose] public section
 
@@ -108,3 +144,6 @@ def PathProductLinearIndependent : Prop :=
         psiPath k isVec P.1 N (canIdx ν))
 
 end Formalism.InvariantFactorPaths.GelfandTsetlinBases
+end
+end
+end

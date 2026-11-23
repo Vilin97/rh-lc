@@ -1,14 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PullbackPreservesFormType
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BasSingleMulSelf
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsTorusActionRot
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosedFormsMulClosed
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DelDbarAdditiveComplexLinearOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DelOperatorAtDbarOperatorAtLeibnizOfCommute
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolAtlasIsFormDelDbarSmooth
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolAtlasIsFormPullbackHolomorphic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFormOneAddMulSmul
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsTypeIsRealConst
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,8 +38,80 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosedFormsMulClosed
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DelDbarAdditiveComplexLinearOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DelOperatorAtDbarOperatorAtLeibnizOfCommute
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolAtlasIsFormDelDbarSmooth
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolAtlasIsFormPullbackHolomorphic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFormOneAddMulSmul
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.BasSingleMulSelf
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MeasureTheory
+open ReciprocityTheory.L2DbarEstimates (V)
+open scoped ContDiff
+
+namespace GlobalTheory.CxForm
+
+def holCount {n : ℕ} (S : Finset (Fin (n + n))) : ℕ := (S.filter (·.val < n)).card
+
+def holGe (n p : ℕ) : Submodule ℂ (Alt n) :=
+  Submodule.span ℂ (bas n '' {S | p ≤ holCount S})
+
+theorem mem_holGe_iff {n p : ℕ} (β : Alt n) :
+    β ∈ holGe n p ↔ ∀ S, (bas n).repr β S ≠ 0 → p ≤ holCount S := by
+  rw [holGe, Module.Basis.mem_span_image]
+  constructor
+  · intro h S hS
+    exact h (Finsupp.mem_support_iff.2 hS)
+  · intro h S hS
+    exact h S (Finsupp.mem_support_iff.1 hS)
+
+end GlobalTheory.CxForm
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsTorusActionRot
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MeasureTheory
+open ReciprocityTheory.L2DbarEstimates (V)
+open scoped ContDiff
+
+namespace GlobalTheory.CxForm.HolAtlas
+
+variable {M : Type} [TopologicalSpace M] {n k : ℕ} (A : HolAtlas M n)
+
+def TypeGe (p : ℕ) (α : A.Fld) : Prop :=
+  ∀ x S, (bas n).repr (α x) S ≠ 0 → p ≤ (S.filter (·.val < n)).card
+
+end GlobalTheory.CxForm.HolAtlas
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.GaloisGeometry.DifferentiableAtDirD
+
+section
 
 @[expose] public section
 
@@ -423,3 +487,6 @@ theorem IsForm.pullback {f : M' → M} (hf : A.IsHolo A' f) {α : A.Fld} (hα : 
 end HolAtlas
 
 end GlobalTheory.CxForm
+end
+end
+end

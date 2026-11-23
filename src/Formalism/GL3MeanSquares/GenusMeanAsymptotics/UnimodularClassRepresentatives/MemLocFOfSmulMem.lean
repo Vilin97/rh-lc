@@ -10,7 +10,7 @@ import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentati
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.FirstFamilyOperatorEnd
 import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.MemSmulOfMemSmulLocF
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.NkCountLocF
-public import Lemmata.GeneralBFactLeftRest.Imports
+public import Mathlib.GroupTheory.Index
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -52,6 +52,38 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.GeneralBFactLeftRest.Imports
+
+section
+
+@[expose] public section
+
+open NumberField Module
+
+namespace Bl.general_b_fact_left_rest
+
+theorem goal1 {G T : Type*} [Group G] (N : Subgroup G) (f : G → T) (hs : Function.Surjective f)
+    (hf : ∀ a b, f a = f b ↔ a⁻¹ * b ∈ N) : N.index = Nat.card T := by
+  show Nat.card (G ⧸ N) = Nat.card T
+  refine Nat.card_congr (Equiv.ofBijective (Quotient.lift f ?_) ⟨?_, ?_⟩)
+  · intro a b h
+    exact (hf a b).2 (QuotientGroup.leftRel_apply.mp h)
+  · intro x y h
+    obtain ⟨a, rfl⟩ := QuotientGroup.mk_surjective x
+    obtain ⟨b, rfl⟩ := QuotientGroup.mk_surjective y
+    exact QuotientGroup.eq.mpr ((hf a b).1 h)
+  · intro t
+    obtain ⟨a, rfl⟩ := hs t
+    exact ⟨(a : G ⧸ N), rfl⟩
+
+end Bl.general_b_fact_left_rest
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.MemLocFOfSmulMem
+
+section
 
 @[expose] public section
 
@@ -294,3 +326,6 @@ theorem akCount_eq_relIndex (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     rfl
 
 end Formalism.HermitianLattices.Ext.L3.D2
+end
+end
+end

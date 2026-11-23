@@ -2,7 +2,6 @@ module
 
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.Valuation.ValuationSubring
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsRootOfUnityCloseOfPowReducesOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,6 +46,50 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Foundations.ExpUpper
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsRootOfUnityCloseOfPowReducesOne
+
+section
+
+@[expose] public section
+
+open scoped MatrixGroups TensorProduct
+open Matrix GlobalTheory.KZ
+
+namespace GlobalTheory
+
+open Polynomial
+
+theorem exists_root_of_unity_close_of_pow_close : ∀ {Ω K : Type} [Field Ω] [IsAlgClosed Ω] [CharZero Ω] [Field K]
+    [Algebra Ω K] (W : ValuationSubring K) (x : K) (N : ℕ), 0 < N → W.valuation (x ^ N - 1) < 1 →
+    ∃ ζ : Ω, ζ ^ N = 1 ∧ W.valuation (x - algebraMap Ω K ζ) < 1 := by
+  intro Ω K _ _ _ _ _ W x N hN hv
+  classical
+  set p : Polynomial Ω := X ^ N - C 1 with hp
+  have hm : p.Monic := monic_X_pow_sub_C 1 hN.ne'
+  have hs := (IsAlgClosed.splits p).eq_prod_roots_of_monic hm
+  have hx : x ^ N - 1 = (p.roots.map (fun a => x - algebraMap Ω K a)).prod := by
+    have := congrArg (Polynomial.aeval x) hs
+    simpa [p, map_multiset_prod, Multiset.map_map, Function.comp_def] using this
+  by_contra hcon
+  push_neg at hcon
+  refine (not_lt.mpr ?_) hv
+  rw [hx, map_multiset_prod, Multiset.map_map]
+  refine Multiset.one_le_prod_of_one_le ?_
+  intro y hy
+  obtain ⟨a, ha, rfl⟩ := Multiset.mem_map.mp hy
+  have ha' : a ^ N = 1 := by
+    have := (mem_roots hm.ne_zero).mp ha
+    simpa [p, sub_eq_zero] using this
+  exact hcon a ha'
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsRootOfUnityCloseOfPowReducesOneStatement
+
+section
+
 @[expose] public section
 
 open scoped MatrixGroups TensorProduct
@@ -51,3 +97,5 @@ open Matrix GlobalTheory.KZ
 
 theorem _root_.GlobalTheory.T.exists_rootOfUnity_close_of_pow_reduces_one : ∀ {Ω K : Type} [Field Ω] [IsAlgClosed Ω] [CharZero Ω] [Field K] [Algebra Ω K] (W : ValuationSubring K) (x : K) (N : ℕ), 0 < N → W.valuation (x ^ N - 1) < 1 → ∃ ζ : Ω, ζ ^ N = 1 ∧ W.valuation (x - algebraMap Ω K ζ) < 1 := by
   first | exact @GlobalTheory.exists_root_of_unity_close_of_pow_close | exact GlobalTheory.exists_root_of_unity_close_of_pow_close | (intros; apply GlobalTheory.exists_root_of_unity_close_of_pow_close <;> assumption)
+end
+end

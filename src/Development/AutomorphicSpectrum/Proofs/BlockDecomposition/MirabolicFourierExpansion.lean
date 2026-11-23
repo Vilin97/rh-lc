@@ -3,11 +3,7 @@ module
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.ExPhiPlusOnto
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PolyBall
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AddCharConductorAndHaarIntegersExist
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AnnSubsetOfMemNhds
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsMemTwKerPolyBall
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsRepsSumEqZero
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumTwOrbitEqZero
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwKerPolyBallLeOfValuationLe
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierTransformInversionLocalFieldPi
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +24,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,6 +45,164 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsMemTwKerPolyBall
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsRepsSumEqZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MemTwKerIffAverage
+import Mathlib.RingTheory.SimpleRing.Principal
+import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PolyBall
+import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.TwKerLeComapOf
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwKerPolyBallLeOfValuationLe
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AnnSubsetOfMemNhds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.SplitWeil GlobalTheory.CompanionTheory.MirFourier ValuativeRel
+open scoped Topology
+
+namespace GlobalTheory.CompanionTheory.MirFourier
+
+theorem ann_subset_of_mem_nhds {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
+    [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle) (hψ : ψ ≠ 1) (n : ℕ)
+    {S : Set (Multiplicative (Fin n → k))} (hS : S ∈ 𝓝 (1 : Multiplicative (Fin n → k))) :
+    ∃ t : kˣ, (ann ψ n t : Set (Multiplicative (Fin n → k))) ⊆ S := by
+  obtain ⟨y, hy⟩ : ∃ y, ψ y ≠ 1 := by
+    by_contra h
+    push Not at h
+    exact hψ (by ext a; simp [h a])
+  have hy0 : y ≠ 0 := by
+    rintro rfl
+    exact hy (AddChar.map_zero_eq_one ψ)
+  have hS' : {v : Fin n → k | Multiplicative.ofAdd v ∈ S} ∈ 𝓝 (0 : Fin n → k) := hS
+  obtain ⟨s, hs⟩ := FourierPi.exists_box_subset hS'
+  refine ⟨Units.mk0 y hy0 * s⁻¹, fun x hx => ?_⟩
+  have hbox : x.toAdd ∈ FourierPi.box (Fin n) s := by
+    intro i _
+    show valuation k (x.toAdd i) ≤ valuation k (s : k)
+    by_contra hlt
+    have hlt' : valuation k (s : k) < valuation k (x.toAdd i) := not_le.mp hlt
+    have hxi : x.toAdd i ≠ 0 := by
+      intro h0
+      rw [h0, map_zero] at hlt'
+      exact not_lt_zero hlt'
+    have hmem : Multiplicative.ofAdd (Pi.single i (y / x.toAdd i) : Fin n → k) ∈ polyBall n
+        (Units.mk0 y hy0 * s⁻¹) := by
+      intro j
+      by_cases hj : j = i
+      · subst hj
+        show valuation k ((Pi.single j (y / x.toAdd j) : Fin n → k) j) ≤
+          valuation k ((Units.mk0 y hy0 * s⁻¹ : kˣ) : k)
+        have hs0 : 0 < valuation k (s : k) :=
+          zero_lt_iff.mpr ((Valuation.ne_zero_iff _).mpr s.ne_zero)
+        rw [Pi.single_eq_same, map_div₀, Units.val_mul, map_mul, Units.val_mk0,
+          Units.val_inv_eq_inv_val, map_inv₀, div_eq_mul_inv]
+        exact mul_le_mul_right ((inv_le_inv₀ (hs0.trans hlt') hs0).mpr hlt'.le) _
+      · simp [Pi.single_eq_of_ne hj, cball]
+    have h1 := hx _ hmem
+    rw [toAdd_ofAdd, single_dotProduct, div_mul_cancel₀ _ hxi] at h1
+    exact hy h1
+  exact hs hbox
+
+end GlobalTheory.CompanionTheory.MirFourier
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumTwOrbitEqZero
+
+section
+
+@[expose] public section
+
+open Matrix GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.SplitWeil GlobalTheory.CompanionTheory.MirFourier ValuativeRel
+open scoped Topology
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.FiniteFourier
+
+open GlobalTheory.CompanionTheory.TwistedAverage
+
+theorem sum_twOrbit_eq_zero {G V : Type} [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G]
+    [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (hρ : IsSmooth ρ) (L : Subgroup G)
+    (hL : IsCompact (L : Set G)) (L₁ : Subgroup L) (hL₁ : IsOpen (L₁ : Set L)) (v : V)
+    (hv : ∀ x ∈ L₁, ρ (x : G) v = v) (θ : L →* ℂˣ) (hθ : ∀ x ∈ L₁, θ x = 1)
+    (hk : v ∈ twKer ρ L θ) [L₁.Normal] [Fintype (L ⧸ L₁)] :
+    ∑ q : L ⧸ L₁, twOrbit ρ L θ v q.out = 0 := by
+  classical
+  have : CompactSpace L := isCompact_iff_compactSpace.mp hL
+  have hle : L₁ ≤ θ.ker := fun x hx => hθ x hx
+  have hopen : IsOpen (θ.ker : Set L) := Subgroup.isOpen_mono hle hL₁
+  obtain ⟨M, hM, hsum⟩ := exists_sum_eq_zero hρ hL θ hopen hk
+  have : L₁.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
+  set C : Subgroup L := (M ⊓ L₁).normalCore with hC
+  have : C.Normal := Subgroup.normalCore_normal _
+  have : C.FiniteIndex := inferInstance
+  have : Fintype (L ⧸ C) := Fintype.ofFinite _
+  have hCM : C ≤ M ⊓ L₁ := Subgroup.normalCore_le _
+  have : Finite (L₁ ⧸ C.subgroupOf L₁) := inferInstance
+  have : Fintype (L₁ ⧸ C.subgroupOf L₁) := Fintype.ofFinite _
+  have h0 := hsum C (hCM.trans inf_le_left)
+  rw [sum_out_refine (hCM.trans inf_le_right) (twOrbit ρ L θ v)
+    (fun x k hk => twOrbit_mul_right ρ L θ v x k ⟨hv k hk, hθ k hk⟩)] at h0
+  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_eq_zero] at h0
+  rcases h0 with h0 | h0
+  · exact absurd h0 (Nat.cast_ne_zero.2 Fintype.card_ne_zero)
+  · exact h0
+
+theorem eq_zero_of_twKer :
+    ∀ {G V : Type} [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V), IsSmooth ρ → ∀ (L : Subgroup G), IsCompact (L : Set G) → ∀ (L₁ : Subgroup L), IsOpen (L₁ : Set L) → ∀ (v : V), (∀ x ∈ L₁, ρ (x : G) v = v) → ∀ {ι : Type} (R : Finset ι), R.Nonempty → ∀ (χ : ι → (L →* ℂˣ)), (∀ a ∈ R, ∀ x ∈ L₁, χ a x = 1) → (∀ a ∈ R, v ∈ twKer ρ L (χ a)) → (∀ x : L, x ∉ L₁ → ∑ a ∈ R, (((χ a x)⁻¹ : ℂˣ) : ℂ) = 0) → v = 0 := by
+  intro G V _ _ _ _ _ ρ hρ L hL L₁ hL₁ v hv ι R hR χ hχ hker hsum
+  classical
+  have : CompactSpace L := isCompact_iff_compactSpace.mp hL
+  have : Finite (L ⧸ L₁) := Subgroup.quotient_finite_of_isOpen _ hL₁
+  have : L₁.Normal := inferInstance
+  have : Fintype (L ⧸ L₁) := Fintype.ofFinite _
+  have key : ∀ a ∈ R, ∑ q : L ⧸ L₁, twOrbit ρ L (χ a) v q.out = 0 := fun a ha =>
+    sum_twOrbit_eq_zero ρ hρ L hL L₁ hL₁ v hv (χ a) (hχ a ha) (hker a ha)
+  have h0 : ∑ q : L ⧸ L₁, ∑ a ∈ R, twOrbit ρ L (χ a) v q.out = 0 := by
+    rw [Finset.sum_comm]
+    exact Finset.sum_eq_zero key
+  have hoff : ∀ q : L ⧸ L₁, q ≠ 1 → ∑ a ∈ R, twOrbit ρ L (χ a) v q.out = 0 := by
+    intro q hq
+    have hnot : q.out ∉ L₁ := by
+      intro hmem
+      apply hq
+      rw [← QuotientGroup.out_eq' q]
+      exact (QuotientGroup.eq_one_iff _).2 hmem
+    simp only [twOrbit]
+    rw [← Finset.sum_smul, hsum _ hnot, zero_smul]
+  have hone : ((1 : L ⧸ L₁).out : L) ∈ L₁ := by
+    rw [← QuotientGroup.eq_one_iff, QuotientGroup.out_eq']
+  have hmain : ∑ a ∈ R, twOrbit ρ L (χ a) v (1 : L ⧸ L₁).out = R.card • v := by
+    rw [Finset.card_eq_sum_ones, Finset.sum_smul]
+    refine Finset.sum_congr rfl fun a ha => ?_
+    simp only [twOrbit]
+    rw [hχ a ha _ hone, hv _ hone]
+    simp
+  rw [Finset.sum_eq_single (1 : L ⧸ L₁) (fun q _ hq => hoff q hq)
+    (fun h => absurd (Finset.mem_univ _) h), hmain] at h0
+  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_eq_zero] at h0
+  rcases h0 with h0 | h0
+  · exact absurd h0 (Nat.cast_ne_zero.2 hR.card_pos.ne')
+  · exact h0
+
+end GlobalTheory.CompanionTheory.FiniteFourier
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicFourierExpansion
+
+section
 
 @[expose] public section
 
@@ -139,4 +291,6 @@ theorem GlobalTheory.CompanionTheory.MirFourier.fourier : ∀ (k : Type) [Field 
     have h3 : ψ (a ⬝ᵥ (x : Multiplicative (Fin n → k)).toAdd) = 1 := h2
     rw [h3, map_one]
 
+end
+end
 end

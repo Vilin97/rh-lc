@@ -1,15 +1,20 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.BarCompSubsetClosure
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineCoverWithDualNumberDerivations
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.RingTheory.Kaehler.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -36,6 +41,175 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.TrivSqZeroExt.Ideal
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SndEqSum
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.SecondComponentSum
+
+theorem snd_eq_sum {k A : Type} [CommRing k] [CommRing A] [Algebra k A] {D : ℕ}
+    (f : Fin D → A) (B : Module.Basis (Fin D) A Ω[A⁄k])
+    (hB : ∀ i : Fin D, B i = KaehlerDifferential.D k A (f i))
+    {K : Type} [Field K] (θ : A →+* DualNumber K)
+    (hθ : ∀ a : k, TrivSqZeroExt.snd (θ (algebraMap k A a)) = (0 : K)) (s : A) :
+    TrivSqZeroExt.snd (θ s) = ∑ b : Fin D, TrivSqZeroExt.snd (θ (f b)) *
+      TrivSqZeroExt.fst (θ ((LinearMap.compDer (Module.Basis.coord B b)
+        (KaehlerDifferential.D k A)) s)) := by
+  classical
+
+  let φ : A →+* K := (TrivSqZeroExt.fstHom K K K).toRingHom.comp θ
+  let _ : Module A K := Module.compHom K φ
+  let _ : Module k K := Module.compHom K (φ.comp (algebraMap k A))
+  have : IsScalarTower k A K := ⟨fun c a x => by
+    change φ (c • a) * x = φ (algebraMap k A c) * (φ a * x)
+    rw [Algebra.smul_def, map_mul, mul_assoc]⟩
+  have hsmul : ∀ (a : A) (x : K), a • x = TrivSqZeroExt.fst (θ a) * x := fun _ _ => rfl
+  have hsndmul : ∀ a b : A, TrivSqZeroExt.snd (θ (a * b)) =
+      TrivSqZeroExt.fst (θ a) * TrivSqZeroExt.snd (θ b) +
+        TrivSqZeroExt.snd (θ a) * TrivSqZeroExt.fst (θ b) := by
+    intro a b
+    rw [map_mul, TrivSqZeroExt.snd_mul, smul_eq_mul, op_smul_eq_mul]
+  let ℓ : A →ₗ[k] K :=
+    { toFun := fun a => TrivSqZeroExt.snd (θ a)
+      map_add' := fun a b => by
+        simp only [map_add (f := _), TrivSqZeroExt.snd_add]
+      map_smul' := fun c a => by
+        change TrivSqZeroExt.snd (θ (c • a)) = φ (algebraMap k A c) * TrivSqZeroExt.snd (θ a)
+        rw [Algebra.smul_def, hsndmul, hθ, zero_mul, add_zero]
+        rfl }
+  let d : Derivation k A K := Derivation.mk' ℓ fun a b => by
+    change TrivSqZeroExt.snd (θ (a * b)) = TrivSqZeroExt.fst (θ a) * TrivSqZeroExt.snd (θ b) +
+      TrivSqZeroExt.fst (θ b) * TrivSqZeroExt.snd (θ a)
+    rw [hsndmul, mul_comm (TrivSqZeroExt.snd (θ a))]
+
+  have key := congrArg d.liftKaehlerDifferential (B.sum_repr (KaehlerDifferential.D k A s))
+
+  rw [Derivation.liftKaehlerDifferential_comp_D, map_sum] at key
+  change d s = _
+  rw [← key]
+  refine Finset.sum_congr rfl fun b _ => ?_
+  rw [LinearMap.map_smul, hB, Derivation.liftKaehlerDifferential_comp_D, hsmul, mul_comm]
+  rfl
+
+end GlobalTheory.SecondComponentSum
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineCoverWithDualNumberDerivations
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.CompHS GlobalTheory.TangentOrigin
+open GlobalTheory.FlagMod GlobalTheory.TopForm
+open GlobalTheory.FlagTan (dimFlag psiSet TIx HIx VIx IsTanFrame IsDef IsVert KSIso kap)
+open GlobalTheory.AllWt (exOf)
+open scoped Classical
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.CompHS
+
+theorem exists_basis_kaehler_D {k A : Type} [CommRing k] [CommRing A] [Algebra k A] {D : ℕ}
+    [Algebra.IsStandardSmoothOfRelativeDimension D k A] :
+    ∃ (f : Fin D → A) (B : Module.Basis (Fin D) A Ω[A⁄k]), ∀ i, B i = KaehlerDifferential.D k A (f i) := by
+  classical
+  obtain ⟨ι, σ, _, _, P, hP⟩ := ‹Algebra.IsStandardSmoothOfRelativeDimension D k A›.out
+  letI := Fintype.ofFinite ι
+  letI := Fintype.ofFinite σ
+  have hc : Fintype.card ((Set.range P.map)ᶜ : Set ι) = D := by
+    rw [Fintype.card_compl_set, Set.card_range_of_injective P.map_inj, ← hP]
+    simp [Algebra.Presentation.dimension]
+  let e := Fintype.equivFinOfCardEq hc
+  exact ⟨fun i => P.val (e.symm i), P.basisKaehler.reindex e, fun i => by simp⟩
+
+def derivHom {k A : Type} [CommRing k] [CommRing A] [Algebra k A] (δ : Derivation k A A) :
+    A →+* DualNumber A where
+  toFun s := TrivSqZeroExt.inl s + TrivSqZeroExt.inr (δ s)
+  map_one' := by ext <;> simp
+  map_mul' a b := by
+    ext
+    · simp
+    · simp [Derivation.leibniz, smul_eq_mul, mul_comm]
+  map_zero' := by ext <;> simp
+  map_add' a b := by ext <;> simp [add_comm, add_left_comm, add_assoc]
+
+theorem snd_eq_sum_of_basis {k A : Type} [CommRing k] [CommRing A] [Algebra k A] {D : ℕ}
+    (f : Fin D → A) (B : Module.Basis (Fin D) A Ω[A⁄k]) (hB : ∀ i, B i = KaehlerDifferential.D k A (f i))
+    {K : Type} [Field K] (θ : A →+* DualNumber K) (h : ∀ a, (θ (algebraMap k A a)).snd = 0) (s : A) :
+    (θ s).snd = ∑ b, (θ (f b)).snd *
+      (θ (((B.coord b).compDer (KaehlerDifferential.D k A)) s)).fst := by
+  first
+  | exact @_root_.GlobalTheory.SecondComponentSum.snd_eq_sum
+  | exact _root_.GlobalTheory.SecondComponentSum.snd_eq_sum
+  | (apply _root_.GlobalTheory.SecondComponentSum.snd_eq_sum <;> assumption)
+  | (intros; apply _root_.GlobalTheory.SecondComponentSum.snd_eq_sum <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.SecondComponentSum.snd_eq_sum <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.SecondComponentSum.snd_eq_sum ..)
+
+theorem snd_eq_zero_of_isAlgebraic {F K : Type} [Field F] [CharZero F] [Algebra.IsAlgebraic ℚ F] [Field K]
+    (φ : F →+* DualNumber K) (a : F) : (φ a).snd = 0 := by
+  letI : Algebra ℚ (DualNumber K) := (φ.comp (algebraMap ℚ F)).toAlgebra
+  have : Algebra.FormallyUnramified ℚ F := Algebra.FormallyUnramified.of_isSeparable ℚ F
+  have := Algebra.FormallyUnramified.ext' (R := ℚ) (A := F) (B := DualNumber K)
+    (TrivSqZeroExt.fstHom K K K).toRingHom ⟨2, TrivSqZeroExt.kerIdeal_sq K K⟩ φ.toRatAlgHom
+    ((algebraMap K (DualNumber K)).comp ((TrivSqZeroExt.fstHom K K K).toRingHom.comp φ)).toRatAlgHom
+    (fun a => by simp [TrivSqZeroExt.algebraMap_eq_inl])
+  have e := DFunLike.congr_fun this a
+  change φ a = _ at e
+  rw [e]
+  simp [TrivSqZeroExt.algebraMap_eq_inl]
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
+  {Xo : Moduli Dw l} {c : Coeff l} {Y : Model Xo c (RingHom.id c.F)} {X : GlobalTheory.FlagMod.FlagCover Y} {Z : Comp Xo c}
+
+theorem exists_derivFrame (M : Modif (str₀ X Z) (U₀ X Z) (GlobalTheory.FlagTan.dimFlag Dw)) (W : M.X.Opens) (p : M.X)
+    (hp : p ∈ W) : ∃ (W' : M.X.Opens) (_ : IsAffineOpen W')
+      (d : Fin (dimFlag Dw) → (Γ(M.X, W') →+* DualNumber Γ(M.X, W'))), p ∈ W' ∧ W' ≤ W ∧
+      (∀ b s, (d b s).fst = s) ∧
+      ∀ (K : Type) [Field K] (θ : Γ(M.X, W') →+* DualNumber K), ∃ m : Fin (dimFlag Dw) → K, ∀ s,
+        (θ s).snd = ∑ b, m b * (TrivSqZeroExt.fstHom K K K).toRingHom (θ (d b s).snd) := by
+  obtain ⟨V, hV, hx, hVW⟩ := Opens.isBasis_iff_nbhd.1 M.X.isBasis_affineOpens hp
+  have h := HasRingHomProperty.appLE (@SmoothOfRelativeDimension (dimFlag Dw)) M.str M.smooth
+    ⟨⊤, isAffineOpen_top _⟩ ⟨V, hV⟩ le_top
+  obtain ⟨s, hs, h⟩ := (RingHom.locally_iff_isLocalization
+    RingHom.isStandardSmoothOfRelativeDimension_respectsIso _).1 h
+  obtain ⟨t, hxt⟩ : ∃ t : (s : Set Γ(M.X, V)), p ∈ M.X.basicOpen (t : Γ(M.X, V)) :=
+    Opens.mem_iSup.1 (((IsAffineOpen.iSup_basicOpen_eq_self_iff hV).2 hs).ge hx)
+  have := IsAffineOpen.isLocalization_basicOpen hV (t : Γ(M.X, V))
+  have h₁ := RingHom.isStandardSmoothOfRelativeDimension_respectsIso.2 _
+    (Scheme.ΓSpecIso (CommRingCat.of c.F)).symm.commRingCatIsoToRingEquiv
+    (h t t.2 Γ(M.X, M.X.basicOpen (t : Γ(M.X, V))))
+  have h₂ : (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX M.str (M.X.basicOpen (t : Γ(M.X, V)))).IsStandardSmoothOfRelativeDimension
+      (dimFlag Dw) := by
+    rw [← resG_comp_algX M.str (M.X.basicOpen_le (t : Γ(M.X, V)))]
+    exact h₁
+  letI := (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX M.str (M.X.basicOpen (t : Γ(M.X, V)))).toAlgebra
+  haveI : Algebra.IsStandardSmoothOfRelativeDimension (dimFlag Dw) c.F Γ(M.X, M.X.basicOpen (t : Γ(M.X, V))) := h₂
+  obtain ⟨f, B, hB⟩ := exists_basis_kaehler_D (D := dimFlag Dw) (k := c.F) (A := Γ(M.X, M.X.basicOpen (t : Γ(M.X, V))))
+  refine ⟨_, IsAffineOpen.basicOpen hV _, fun b => derivHom ((B.coord b).compDer (KaehlerDifferential.D c.F _)),
+    hxt, (M.X.basicOpen_le _).trans (hVW.trans le_rfl), fun b s => by simp [derivHom], fun K _ θ =>
+    ⟨fun b => (θ (f b)).snd, fun s => ?_⟩⟩
+  rw [snd_eq_sum_of_basis f B hB θ (fun a => snd_eq_zero_of_isAlgebraic (θ.comp (algebraMap c.F _)) a) s]
+  simp [derivHom]
+
+end GlobalTheory.CompHS
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineCoverWithDualNumberDerivationsStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +225,5 @@ theorem _root_.GlobalTheory.T.exists_affine_cover_with_dual_number_derivations :
       ∀ (K : Type) [Field K] (θ : Γ(M.X, W') →+* DualNumber K), ∃ m : Fin (dimFlag Dw) → K, ∀ s,
         (θ s).snd = ∑ b, m b * (TrivSqZeroExt.fstHom K K K).toRingHom (θ (d b s).snd) := by
   first | exact @GlobalTheory.CompHS.exists_derivFrame | exact GlobalTheory.CompHS.exists_derivFrame | (intros; apply GlobalTheory.CompHS.exists_derivFrame <;> assumption)
+end
+end

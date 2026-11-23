@@ -10,16 +10,11 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistSectionsLo
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistUnitClassRootClassSpecStatement
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.CohomologySubsingletonPosOfStrictlyHenselian
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.ConnectedSpaceSpecLocalAndLaurent
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.DvdExponentOfPowEqLaurentMonomial
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsRootOfKummerClassEqZero
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.NonemptyPrimitiveRootOfStrictlyHenselian
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.TwistedSectionEqNsmulGeneratorOfConnected
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EtaleCohomologyLocallyAcyclic
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.RingTheory.LocalRing.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -35,7 +30,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,7 +41,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -56,9 +54,113 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsRootOfKummerClassEqZero
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.TwistedSectionEqNsmulGeneratorOfConnected
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LaurentPolynomialCohomologyVanishingStatement
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Tactic.Polynomial.Basic
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
 import Development.AutomorphicArithmetic.CupPullbacks.ConstCompSingle
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.DvdExponentOfPowEqLaurentMonomial
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.dvd_exponent_of_pow_eq_laurent_monomial :
+    ∀ (q : ℕ) [NeZero q] (O : Type) [CommRing O] [IsLocalRing O] (c : ℕ) (v : (LaurentPolynomial O)ˣ), (v : LaurentPolynomial O) ^ q = LaurentPolynomial.T (c : ℤ) → q ∣ c := by
+  intro q _ O _ _ c v hv
+  classical
+  let φ : LaurentPolynomial O →+* LaurentPolynomial (IsLocalRing.ResidueField O) :=
+    AddMonoidAlgebra.mapRingHom ℤ (IsLocalRing.residue O)
+  have hT : ∀ n : ℤ, φ (LaurentPolynomial.T n) = LaurentPolynomial.T n := by
+    intro n
+    show AddMonoidAlgebra.mapRingHom ℤ (IsLocalRing.residue O) (AddMonoidAlgebra.single n 1) =
+      AddMonoidAlgebra.single n 1
+    rw [AddMonoidAlgebra.mapRingHom_single, map_one]
+  have hw : (φ v) ^ q = LaurentPolynomial.T (c : ℤ) := by
+    rw [← map_pow, hv, hT]
+  obtain ⟨n, p, hp⟩ := LaurentPolynomial.exists_T_pow (φ v)
+  have hpq : p ^ q = Polynomial.X ^ (c + q * n) := by
+    apply Polynomial.toLaurent_injective
+    rw [map_pow, hp, mul_pow, hw, LaurentPolynomial.T_pow, ← LaurentPolynomial.T_add,
+      Polynomial.toLaurent_X_pow]
+    congr 1
+  have hdeg := congrArg Polynomial.natDegree hpq
+  rw [Polynomial.natDegree_pow, Polynomial.natDegree_X_pow] at hdeg
+  have h1 : q ∣ q * n + c := ⟨p.natDegree, by rw [add_comm]; exact hdeg.symm⟩
+  exact (Nat.dvd_add_right (dvd_mul_right q n)).mp h1
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.NonemptyPrimitiveRootOfStrictlyHenselian
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+theorem UpperTheory.nonempty_primitive_root_of_strictly_henselian :
+    ∀ (q : ℕ) [NeZero q] (O : Type) [CommRing O], SH O → IsUnit (q : O) → Nonempty (Prim q O) := by
+  intro q _ O _ hO hq
+  obtain ⟨hH, hsep⟩ := hO
+  have key : ∀ (p : Polynomial O) (x : O), IsLocalRing.residue O (p.eval x) =
+      (p.map (IsLocalRing.residue O)).eval (IsLocalRing.residue O x) := by
+    intro p x
+    rw [Polynomial.eval_map, Polynomial.eval₂_hom]
+  have hqk : ((q : ℕ) : IsLocalRing.ResidueField O) ≠ 0 := by
+    have := (IsLocalRing.residue_ne_zero_iff_isUnit (q : O)).2 hq
+    simpa using this
+  haveI : NeZero ((q : ℕ) : IsLocalRing.ResidueField O) := ⟨hqk⟩
+  have hdeg : (Polynomial.cyclotomic q (IsLocalRing.ResidueField O)).degree ≠ 0 := by
+    rw [Polynomial.degree_cyclotomic]
+    exact_mod_cast (Nat.totient_pos.2 (Nat.pos_of_ne_zero (NeZero.ne q))).ne'
+  obtain ⟨r, hr⟩ := IsSepClosed.exists_root _ hdeg
+    (Polynomial.separable_cyclotomic q (IsLocalRing.ResidueField O))
+  obtain ⟨a₀, rfl⟩ := IsLocalRing.residue_surjective r
+  have h1 : (Polynomial.cyclotomic q O).eval a₀ ∈ IsLocalRing.maximalIdeal O := by
+    rw [← IsLocalRing.residue_eq_zero_iff, key, Polynomial.map_cyclotomic]
+    exact hr
+  have h2 : IsUnit ((Polynomial.derivative (Polynomial.cyclotomic q O)).eval a₀) := by
+    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, key, ← Polynomial.derivative_map,
+      Polynomial.map_cyclotomic]
+    have h0 := (Polynomial.separable_cyclotomic q (IsLocalRing.ResidueField O)).aeval_derivative_ne_zero
+      (x := IsLocalRing.residue O a₀) (by simpa [Polynomial.coe_aeval_eq_eval] using hr)
+    simpa [Polynomial.coe_aeval_eq_eval] using h0
+  obtain ⟨a, ha, -⟩ := HenselianLocalRing.is_henselian (Polynomial.cyclotomic q O)
+    (Polynomial.cyclotomic.monic q O) a₀ h1 h2
+  refine ⟨⟨a, hq, ?_⟩⟩
+  rw [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map, Polynomial.map_cyclotomic]
+  exact ha
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EtaleCohomologyLocallyAcyclic
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+theorem UpperTheory.Cb.etale_cohomology_locally_acyclic :
+    GlobalTheory.EtC.C5 :=
+  GlobalTheory.T.etale_cohomology_locally_acyclic
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.BijectiveEtaleCohomologyLaurentPolynomialOfCoord
+
+section
 
 @[expose] public section
 
@@ -250,3 +352,5 @@ theorem UpperTheory.bijective_etaleCohomology_laurentPolynomial_of_coordinate_un
     haveI := hpos m j hm
     haveI := (hC5 (m + 1) (j + 1)).1 (by omega)
     exact ⟨fun a b _ => Subsingleton.elim a b, fun y => ⟨0, Subsingleton.elim _ _⟩⟩
+end
+end

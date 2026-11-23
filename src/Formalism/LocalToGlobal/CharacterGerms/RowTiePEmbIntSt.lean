@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LocalToGlobal.CharacterGerms.RowTieCuts
+public import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,6 +37,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Formalism.LocalToGlobal.CharacterGerms.RowTieCuts
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open scoped BigOperators
+open Classical
+
+namespace Formalism.L2.FormalSeriesBounds
+
+open Formalism.IncomingBounds Formalism.L2.Pj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
+
+def EmbIntSt : Prop :=
+  ∀ (T : CDVR) (C : Type) [Field C] (V : VF C) (ι : T.Fr →+* C), EmbOK T V ι →
+    ∀ t : T.V, V.Ge 0 (ι (algebraMap T.V T.Fr t))
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
+variable (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)]
+
+end Formalism.L2.FormalSeriesBounds
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.CharacterGerms.RowTiePEmbIntSt
+
+section
 
 @[expose] public section
 
@@ -79,3 +113,6 @@ theorem embIntSt_holds : EmbIntSt := by
     exact WithTop.coe_le_coe.2 (div_nonneg (by exact_mod_cast h1) (by exact_mod_cast h2))
 
 end Formalism.L2.FormalSeriesBounds
+end
+end
+end

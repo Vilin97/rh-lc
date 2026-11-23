@@ -2,19 +2,8 @@ module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.CocharacterLieDivisors.DivWCoreLacUseType
 public import Development.EtaleCohomology.DivisorCycles.FinBigCorner
-public import Development.EtaleCohomology.DivisorCycles.FinDegAll
-public import Development.EtaleCohomology.DivisorCycles.FinDenseAlg
-public import Development.EtaleCohomology.DivisorCycles.FinFinDense
-public import Development.EtaleCohomology.DivisorCycles.FinFinEmbed
-public import Development.EtaleCohomology.DivisorCycles.FinFinPoly
-public import Development.EtaleCohomology.DivisorCycles.FinFinSub
-public import Development.EtaleCohomology.DivisorCycles.FinKey
-public import Development.EtaleCohomology.DivisorCycles.FinMatUnits
-public import Development.EtaleCohomology.DivisorCycles.FinRep
-public import Development.EtaleCohomology.DivisorCycles.FinSemis
-public import Development.EtaleCohomology.DivisorCycles.FinSpecLie
-public import Development.EtaleCohomology.DivisorCycles.FinStruct
-public import Development.EtaleCohomology.DivisorCycles.Imports
+public import Development.EtaleCohomology.DivisorCycles.CycleCount
+public import Development.EtaleCohomology.DivisorCycles.DegPoly2
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -53,7 +42,183 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.Topology.Sheaves.Init
+public import Development.EtaleCohomology.DivisorCycles.FinDenseAlg
+public import Development.EtaleCohomology.DivisorCycles.FinFinDense
+public import Development.EtaleCohomology.DivisorCycles.FinFinEmbed
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.FieldTheory.IsAlgClosed.Spectrum
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.Algebra.Algebra.Spectrum.Basic
+public import Development.EtaleCohomology.DivisorCycles.FinFinSub
+public import Development.EtaleCohomology.DivisorCycles.FinKey
+public import Development.EtaleCohomology.DivisorCycles.MatUnitsOf
+public import Development.EtaleCohomology.DivisorCycles.FinRep
+public import Development.EtaleCohomology.DivisorCycles.SemisPf
+public import Development.EtaleCohomology.DivisorCycles.FinSpecLie
+public import Development.EtaleCohomology.DivisorCycles.FinStruct
+public import Development.EtaleCohomology.DivisorCycles.Imports
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.EntriesCont
+
+section
+
+@[expose] public section
+
+open Matrix PositivityTheory.AutomorphicGaloisHodgeTate.Div
+namespace LateralTheory.DivDb.DegAll₂
+open LateralTheory.DivDb
+
+theorem entries_cont {Γ K : Type} [TopologicalSpace Γ] [TopologicalSpace K] {N : ℕ}
+    {φ : Γ → Mat K N} (hφ : Continuous φ) :
+    Continuous (fun g => fun p : Fin N × Fin N => φ g p.1 p.2) :=
+  continuous_pi fun p => (hφ.matrix_elem p.1 p.2)
+
+theorem poly_cont {Γ K : Type} [TopologicalSpace Γ] [Field K] [TopologicalSpace K]
+    [IsTopologicalRing K] {N : ℕ} {φ : Γ → Mat K N} (hφ : Continuous φ) (f : MP K N) :
+    Continuous (fun g => MvPolynomial.aeval (fun p : Fin N × Fin N => φ g p.1 p.2) f) := by
+  refine ((MvPolynomial.continuous_eval f).comp (entries_cont hφ)).congr ?_
+  intro g
+  rw [MvPolynomial.aeval_eq_eval₂Hom, Algebra.algebraMap_self]
+  rfl
+
+end LateralTheory.DivDb.DegAll₂
+
+namespace LateralTheory.DivDb
+
+theorem DegAll_of (hP : DegPoly) : DegAll := by
+  intro Γ K _ _ _ _ _ _ N n ρ hρ S hS hSd g
+  obtain ⟨𝓕, h𝓕⟩ := hP K N n
+  rw [h𝓕 K]
+  intro f hf
+  have key := Continuous.ext_on hS (DegAll₂.poly_cont hρ f) continuous_const
+    (fun s hs => ((h𝓕 K _).1 (hSd s hs)) f hf)
+  exact congrFun key g
+
+end LateralTheory.DivDb
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FinDegAll
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.Fin.DegAll
+theorem etale_degree_polynomial_bound : LateralTheory.DivDb.DegPoly := by
+  apply LateralTheory.DivDb.DegPoly₂.DegPoly_of
+theorem etale_rep_image_degree_bound_all_holds_assembled : LateralTheory.DivDb.DegAll := by
+  apply LateralTheory.DivDb.DegAll_of <;> first | exact etale_degree_polynomial_bound
+theorem intersectionNumber_baseChange : LateralTheory.DivDb.DegAll := etale_rep_image_degree_bound_all_holds_assembled
+end LateralTheory.Fin.DegAll
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FinPolyPf
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial PositivityTheory.AutomorphicGaloisHodgeTate.Div
+namespace LateralTheory.DivDb.FinPolyPf
+
+variable {K : Type} [Field K] [IsAlgClosed K] {n : ℕ}
+
+omit [IsAlgClosed K] in
+theorem root_sub (x : Matrix (Fin n) (Fin n) K) (P : K[X]) (hP : P ≠ 0) (hx : aeval x P = 0) :
+    x.charpoly.roots ⊆ P.roots := by
+  intro a ha
+  rw [Polynomial.mem_roots (Matrix.charpoly_monic x).ne_zero] at ha
+  rw [Polynomial.mem_roots hP]
+  cases n with
+  | zero => simp [Matrix.charpoly, Matrix.det_fin_zero] at ha
+  | succ m =>
+    have hs : a ∈ spectrum K x := Matrix.mem_spectrum_of_isRoot_charpoly ha
+    have h2 := spectrum.subset_polynomial_aeval x P ⟨a, hs, rfl⟩
+    rw [hx, spectrum.zero_eq] at h2
+    simpa using h2
+
+theorem card_roots_eq (P : K[X]) : Multiset.card P.roots = P.natDegree :=
+  IsAlgClosed.card_roots_eq_natDegree
+
+theorem cp_card (x : Matrix (Fin n) (Fin n) K) : Multiset.card x.charpoly.roots = n := by
+  rw [card_roots_eq, Matrix.charpoly_natDegree_eq_dim, Fintype.card_fin]
+
+theorem eq_of_roots (x : Matrix (Fin n) (Fin n) K) (P : K[X]) (hm : P.Monic)
+    (h : x.charpoly.roots = P.roots) : x.charpoly = P := by
+  rw [← prod_multiset_X_sub_C_of_monic_of_roots_card_eq (Matrix.charpoly_monic x) (card_roots_eq _),
+    ← prod_multiset_X_sub_C_of_monic_of_roots_card_eq hm (card_roots_eq _), h]
+
+theorem FinPoly_of : FinPoly := by
+  intro K _ _ n x P hm hd hx
+  have hsub := root_sub x P hm.ne_zero hx
+  have hPc : Multiset.card P.roots = n := by rw [card_roots_eq, hd]
+  refine ⟨fun hsep => ?_, fun hpg hdet => ?_⟩
+  · apply eq_of_roots x P hm
+    have hle : x.charpoly.roots ≤ P.roots :=
+      (Multiset.le_iff_subset (Polynomial.nodup_roots hsep)).2 hsub
+    exact Multiset.eq_of_le_of_card_le hle (by rw [hPc, cp_card])
+  · apply eq_of_roots x P hm
+    by_contra hne
+    refine hpg.2 _ (fun a ha => hsub ha) (cp_card x) hne ?_
+    rw [← Matrix.det_eq_prod_roots_charpoly, hdet,
+      (IsAlgClosed.splits P).coeff_zero_eq_prod_roots_of_monic hm, hd, ← mul_assoc, ← pow_add,
+      Even.neg_one_pow ⟨n, rfl⟩, one_mul]
+
+end LateralTheory.DivDb.FinPolyPf
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FinFinPoly
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.Fin.FinPoly
+theorem charpoly_eq_of_annihilating_poly_etale_instance : LateralTheory.DivDb.FinPoly := by
+  apply LateralTheory.DivDb.FinPolyPf.FinPoly_of
+theorem intersectionNumber_baseChange : LateralTheory.DivDb.FinPoly := charpoly_eq_of_annihilating_poly_etale_instance
+end LateralTheory.Fin.FinPoly
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FinMatUnits
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.Fin.MatrixUnits₂
+theorem etale_matrix_units_system_of_key : LateralTheory.DivDb.MatrixUnits₂ := by
+  apply LateralTheory.DivDb.MatrixUnitConstruction.MatUnits_of
+theorem intersectionNumber_baseChange : LateralTheory.DivDb.MatrixUnits₂ := etale_matrix_units_system_of_key
+end LateralTheory.Fin.MatrixUnits₂
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FinSemis
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.Fin.Semis
+theorem etale_semisimplicity_instance : LateralTheory.DivDb.Semis := by
+  apply LateralTheory.DivDb.SemisPf.Semis_of
+theorem intersectionNumber_baseChange : LateralTheory.DivDb.Semis := etale_semisimplicity_instance
+end LateralTheory.Fin.Semis
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.GoalHolds
+
+section
 
 @[expose] public section
 
@@ -64,3 +229,5 @@ theorem goal_holds : DivWCoreLac :=
   goal_of LateralTheory.Fin.SpecLie.intersectionNumber_baseChange LateralTheory.Fin.DegAll.intersectionNumber_baseChange LateralTheory.Fin.Struct.intersectionNumber_baseChange LateralTheory.Fin.Key.intersectionNumber_baseChange LateralTheory.Fin.BigCorner.intersectionNumber_baseChange LateralTheory.Fin.Semis.intersectionNumber_baseChange LateralTheory.Fin.MatrixUnits₂.intersectionNumber_baseChange LateralTheory.Fin.Rep.intersectionNumber_baseChange LateralTheory.Fin.DenseAlg.intersectionNumber_baseChange LateralTheory.Fin.FinSub.intersectionNumber_baseChange LateralTheory.Fin.FinDense.intersectionNumber_baseChange LateralTheory.Fin.FinPoly.intersectionNumber_baseChange LateralTheory.Fin.FinEmbed.intersectionNumber_baseChange
 
 end LateralTheory.DivDb
+end
+end

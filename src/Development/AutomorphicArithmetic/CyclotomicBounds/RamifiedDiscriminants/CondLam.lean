@@ -1,11 +1,11 @@
 module
 
 public import Formalism.LocalRingCardinality.DataHost
-public import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.OrdLeTotientQS
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.ConjEMemHostFIff
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.OrdLeQS
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -41,6 +41,25 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.OrdLeTotientQS
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Ram.ord_le_totient_QS :
+    ∀ {φ : Formalism.HC.Frame} (H : Formalism.HC.HostAx φ), φ.ord ≤ H.QS.totient ∧ 2 * φ.ord ≤ H.QS := by
+  intro φ H
+  obtain ⟨h1, h2, -⟩ := UpperTheory.KR.two_ord_le_QS H
+  exact ⟨h1, h2⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.CondLam
+
+section
 
 @[expose] public section
 
@@ -79,3 +98,5 @@ theorem UpperTheory.Ram.cond_le_four_n_sq :
     calc 4 * (2 * (R.n : ℝ) / 2) ^ 2 * H.q * H.d = 4 * (2 * (R.n : ℝ) / 2) ^ 2 * ((H.q : ℝ) * H.d) := by ring
       _ ≤ (H.QS : ℝ) ^ 2 * ((H.q : ℝ) * H.d) ^ 2 := mul_le_mul hsq hqq hqd (by positivity)
       _ = ((H.QS : ℝ) * H.q * H.d) ^ 2 := by ring
+end
+end

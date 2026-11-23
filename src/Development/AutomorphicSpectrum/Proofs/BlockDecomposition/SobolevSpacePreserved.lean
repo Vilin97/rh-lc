@@ -5,17 +5,7 @@ public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ApproximateIdentityExistsStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ChartAndRightWordsSmooth
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ClosedDerivativeSystemSmoothStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.L2LimitEqPointwiseLimitHoldsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftConvolutionApproximationStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatrixExpCurveDerivativeStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationAeEqConvolutionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationDifferentiableStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationEvaluationContinuousStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationRightTranslateStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RegularRepresentationContinuousStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightTranslateDerivativeIntegralStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SobolevSequenceUniformCauchyStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniformLimitRightDerivativesStatement
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.FriedrichsKernels.Friedrichs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -51,9 +41,215 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HaarChartIntegralComparison
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RegularRepresentationContinuous
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Algebra.Group.Units
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatrixExpCurveDerivativeStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationAeEqConvolutionStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationDifferentiableStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationEvaluationContinuousStatement
+import Mathlib.Tactic.Linter.HaveILetI
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RegularRepresentationContinuousStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightTranslateDerivativeIntegralStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SobolevSequenceUniformCauchyStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniformLimitRightDerivativesStatement
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.L2LimitEqPointwiseLimitHolds
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.PresSobA
+
+theorem l2_limit_eq_pointwise_limit : ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V] (a : ℕ → Mat n → V) (b : Mat n → V) (x : Lp V 2 μ), (∀ k, MemLp (fun y : G n => a k y.val) 2 μ) → Tendsto (fun k => cls μ (a k)) atTop (𝓝 x) → (∀ z ∈ GLs n, Tendsto (fun k => a k z) atTop (𝓝 (b z))) → MemLp (fun y : G n => b y.val) 2 μ ∧ cls μ b = x := by
+  intro n _ _ μ _ V _ _ _ a b x hm hc hp
+  have hin : TendstoInMeasure μ (fun k => (cls μ (a k) : G n → V)) atTop (x : G n → V) :=
+    tendstoInMeasure_of_tendsto_Lp hc
+  obtain ⟨ns, hns, hae⟩ := hin.exists_seq_tendsto_ae
+  have hall : ∀ᵐ y ∂μ, ∀ k, (cls μ (a k) : G n → V) y = a k y.val :=
+    ae_all_iff.2 fun k => coe_cls μ (hm k)
+  have hbx : (fun y : G n => b y.val) =ᵐ[μ] x := by
+    filter_upwards [hae, hall] with y h1 h2
+    have hy : y.val ∈ GLs n := by
+      have hu : IsUnit y.val.det := (Matrix.isUnit_iff_isUnit_det _).1 y.isUnit
+      exact hu.ne_zero
+    have h3 : Tendsto (fun k => a (ns k) y.val) atTop (𝓝 (b y.val)) :=
+      (hp y.val hy).comp hns.tendsto_atTop
+    have h4 : Tendsto (fun k => a (ns k) y.val) atTop (𝓝 (x y)) := by
+      simpa only [h2] using h1
+    exact tendsto_nhds_unique h3 h4
+  exact cls_of_ae μ hbx
+
+end GlobalTheory.CompanionTheory.PresSobA
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.L2LimitEqPointwiseLimitHoldsStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+noncomputable section
+
+theorem _root_.GlobalTheory.T.l2_limit_eq_pointwise_limit_holds : ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V] (a : ℕ → Mat n → V) (b : Mat n → V) (x : Lp V 2 μ), (∀ k, MemLp (fun y : G n => a k y.val) 2 μ) → Tendsto (fun k => cls μ (a k)) atTop (𝓝 x) → (∀ z ∈ GLs n, Tendsto (fun k => a k z) atTop (𝓝 (b z))) → MemLp (fun y : G n => b y.val) 2 μ ∧ cls μ b = x := by
+  first | exact @GlobalTheory.CompanionTheory.PresSobA.l2_limit_eq_pointwise_limit | exact GlobalTheory.CompanionTheory.PresSobA.l2_limit_eq_pointwise_limit | (intros; apply GlobalTheory.CompanionTheory.PresSobA.l2_limit_eq_pointwise_limit <;> assumption)
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftConvolutionApproximation
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.PresSobA
+
+theorem norm_lConv_sub_le : ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V], Unimod → ∀ φ : Mat n → ℝ, IsTest φ → (∀ y, 0 ≤ φ y) → (∫ y : G n, φ y.val ∂μ = 1) → ∀ (x : Lp V 2 μ) (ε : ℝ), (∀ y : G n, φ y.val ≠ 0 → ‖lT μ V y x - x‖ ≤ ε) → ‖lConv μ V φ x - x‖ ≤ ε := by
+  intro n _ _ μ _ V _ _ _ hU φ hφ hpos h1 x ε hε
+  have hemb := GlobalTheory.CompanionTheory.SobGL.HaarDom.isOpenEmbedding_valG n
+  have hφc : Continuous fun y : G n => φ y.val := hφ.1.continuous.comp hemb.continuous
+  have hK : IsCompact ((Units.val : G n → Mat n) ⁻¹' tsupport φ) := by
+    refine (hemb.isInducing.isCompact_preimage_iff ?_).2 hφ.2.1
+    intro z hz
+    have hdet : z.det ≠ 0 := hφ.2.2 hz
+    obtain ⟨u, rfl⟩ := (Matrix.isUnit_iff_isUnit_det z).2 (isUnit_iff_ne_zero.2 hdet)
+    exact ⟨u, rfl⟩
+  have hcs : HasCompactSupport (fun y : G n => φ y.val) :=
+    HasCompactSupport.of_support_subset_isCompact hK (fun y hy => subset_tsupport φ hy)
+  have hL := (translations_strongly_continuous n μ V hU x).2
+  have hint1 : Integrable (fun y : G n => φ y.val) μ := hφc.integrable_of_hasCompactSupport hcs
+  have hf : Integrable (fun y : G n => φ y.val • lT μ V y x) μ :=
+    (hφc.smul hL).integrable_of_hasCompactSupport hcs.smul_right
+  have hg : Integrable (fun y : G n => φ y.val • x) μ := hint1.smul_const x
+  have e : lConv μ V φ x - x = ∫ y : G n, φ y.val • (lT μ V y x - x) ∂μ := by
+    simp_rw [smul_sub]
+    rw [integral_sub hf hg, integral_smul_const, h1, one_smul]
+    rfl
+  rw [e]
+  calc ‖∫ y : G n, φ y.val • (lT μ V y x - x) ∂μ‖ ≤ ∫ y : G n, φ y.val * ε ∂μ := by
+        refine norm_integral_le_of_norm_le (hint1.mul_const ε) (ae_of_all _ fun y => ?_)
+        by_cases h0 : φ y.val = 0
+        · simp [h0]
+        · rw [norm_smul, Real.norm_of_nonneg (hpos _)]
+          exact mul_le_mul_of_nonneg_left (hε y h0) (hpos _)
+    _ = ε := by rw [integral_mul_const, h1, one_mul]
+
+end GlobalTheory.CompanionTheory.PresSobA
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftConvolutionApproximationStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+noncomputable section
+
+theorem _root_.GlobalTheory.T.left_convolution_approximation : ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V], Unimod → ∀ φ : Mat n → ℝ, IsTest φ → (∀ y, 0 ≤ φ y) → (∫ y : G n, φ y.val ∂μ = 1) → ∀ (x : Lp V 2 μ) (ε : ℝ), (∀ y : G n, φ y.val ≠ 0 → ‖lT μ V y x - x‖ ≤ ε) → ‖lConv μ V φ x - x‖ ≤ ε := by
+  first | exact @GlobalTheory.CompanionTheory.PresSobA.norm_lConv_sub_le | exact GlobalTheory.CompanionTheory.PresSobA.norm_lConv_sub_le | (intros; apply GlobalTheory.CompanionTheory.PresSobA.norm_lConv_sub_le <;> assumption)
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationRightTranslate
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.PresSobA
+
+theorem Mol_rR_eq (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n))
+    [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V]
+    (hU : Unimod) (φ : Mat n → ℝ) (h : G n) (x : Lp V 2 μ) (z : Mat n) :
+    Mol μ φ (⇑(rR μ V h x)) z = Mol μ φ (⇑x) (z * h.val) := by
+  haveI := (hU n μ).1
+  have hm : MeasurePreserving (fun y : G n => y * h) μ μ := measurePreserving_mul_right μ h
+  have he : MeasurableEmbedding (fun y : G n => y * h) := (Homeomorph.mulRight h).measurableEmbedding
+  have h1 : Mol μ φ (⇑(rR μ V h x)) z = ∫ u : G n, φ (z * (u⁻¹ : G n).val) • x (u * h) ∂μ := by
+    unfold Mol
+    refine integral_congr_ae ?_
+    filter_upwards [rR_coe μ hU h x] with u hu
+    rw [hu]
+  rw [h1]
+  unfold Mol
+  rw [← hm.integral_comp he (fun u : G n => φ (z * h.val * (u⁻¹ : G n).val) • x u)]
+  refine integral_congr_ae (Eventually.of_forall fun u => ?_)
+  have : z * h.val * ((u * h)⁻¹ : G n).val = z * (u⁻¹ : G n).val := by
+    rw [_root_.mul_inv_rev, Units.val_mul, Matrix.mul_assoc, ← Matrix.mul_assoc h.val, ← Units.val_mul,
+      mul_inv_cancel, Units.val_one, Matrix.one_mul]
+  simp only [this]
+
+end GlobalTheory.CompanionTheory.PresSobA
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollificationRightTranslateStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.PresSobA
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+noncomputable section
+
+theorem _root_.GlobalTheory.T.mollification_right_translate : ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V], Unimod → ∀ (φ : Mat n → ℝ) (h : G n) (x : Lp V 2 μ) (z : Mat n), Mol μ φ (⇑(rR μ V h x)) z = Mol μ φ (⇑x) (z * h.val) := by
+  first | exact @GlobalTheory.CompanionTheory.PresSobA.Mol_rR_eq | exact GlobalTheory.CompanionTheory.PresSobA.Mol_rR_eq | (intros; apply GlobalTheory.CompanionTheory.PresSobA.Mol_rR_eq <;> assumption)
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SobolevSpacePreserved
+
+section
 
 @[expose] public section
 
@@ -200,3 +396,6 @@ theorem GlobalTheory.CompanionTheory.PresSobA.presSob : PresSob := by
   obtain ⟨f', hf', hcl⟩ := limit_sob (μ := μ) hS (fun k => Mol μ (φ k) (⇑(x []))) x (fun k => (hfam k).1 [])
     (fun k w => (cls_of_ae μ (hae k w)).1) hlim
   exact ⟨f', hf', hcl [], hcl⟩
+end
+end
+end

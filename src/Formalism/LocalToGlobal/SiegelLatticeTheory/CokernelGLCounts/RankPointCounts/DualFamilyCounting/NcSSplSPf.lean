@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSSplS
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,14 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-public import Mathlib.RingTheory.TensorProduct.Nontrivial
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,10 +39,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FundamentalEquivalence.LevelIntersectParabolic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.TensorProduct.Nontrivial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.Adjoin.PowerBasis
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSSplS
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub Formalism.L2.SG.LocVol
+open scoped TensorProduct
+
+namespace Formalism.L2.SG.Pf.NcS.LT
+
+def SplitStr : Prop :=
+  ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)), IsCMExt F E σ → ¬ IsField (Fv F v ⊗[F] E) →
+    ∃ π₁ π₂ : Fv F v ⊗[F] E →+* Fv F v,
+      (∀ s, π₁ (sigR (Fv F v) σ s) = π₂ s) ∧ (∀ s, π₂ (sigR (Fv F v) σ s) = π₁ s) ∧
+      (∀ c : Fv F v, π₁ (algebraMap (Fv F v) (Fv F v ⊗[F] E) c) = c ∧
+        π₂ (algebraMap (Fv F v) (Fv F v ⊗[F] E) c) = c) ∧
+      (∀ s t, π₁ s = π₁ t → π₂ s = π₂ t → s = t) ∧
+      (∀ p q : Fv F v, ∃ s, π₁ s = p ∧ π₂ s = q)
+
+end Formalism.L2.SG.Pf.NcS.LT
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSSplSPf
+
+section
 
 @[expose] public section
 
@@ -307,3 +341,6 @@ theorem splitStr : SplitStr := by
     (LtSplSPf.exists_moved_of_cm σ hCM) hCM.2.2.1 hnf
 
 end Formalism.L2.SG.Pf.NcS.LT
+end
+end
+end

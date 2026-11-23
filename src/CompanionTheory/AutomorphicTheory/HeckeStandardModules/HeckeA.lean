@@ -1,8 +1,9 @@
 module
 
 public import Formalism.SatakeDualWeyl.Statement
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EvalFg
-public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.HeckeActMem
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,10 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,10 +42,53 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Subalgebra
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.HeckeActMem
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EvalFg
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qn15.eval_fg :
+    ∀ {R : Type} [inst : CommRing R] [inst_1 : Algebra R ℂ] {σ : Type} {M₀ : Submodule R ℂ},
+    M₀.FG →
+      ∀ (P : MvPolynomial σ ℂ),
+        ∃ (M : Submodule R ℂ),
+          M.FG ∧ ∀ (v : σ → ℂ), (∀ (i : σ), v i ∈ M₀) → (MvPolynomial.eval v : MvPolynomial σ ℂ → ℂ) P ∈ M := by
+  intro R _ _ σ M₀ h₀ P
+  induction P using MvPolynomial.induction_on with
+  | C a =>
+    refine ⟨Submodule.span R {a}, Submodule.fg_span_singleton a, fun v _ => ?_⟩
+    rw [MvPolynomial.eval_C]
+    exact Submodule.mem_span_singleton_self a
+  | add p q hp hq =>
+    obtain ⟨M, hM, hp⟩ := hp
+    obtain ⟨N, hN, hq⟩ := hq
+    refine ⟨M ⊔ N, hM.sup hN, fun v hv => ?_⟩
+    rw [map_add (f := _)]
+    exact Submodule.add_mem_sup (hp v hv) (hq v hv)
+  | mul_X p i hp =>
+    obtain ⟨M, hM, hp⟩ := hp
+    refine ⟨M * M₀, hM.mul h₀, fun v hv => ?_⟩
+    rw [map_mul, MvPolynomial.eval_X]
+    exact Submodule.mul_mem_mul (hp v hv) (hv i)
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeA
+
+section
 
 @[expose] public section
 
@@ -157,3 +197,6 @@ theorem apply_fg [Module R W] [IsScalarTower R ℂ W] {σ κ : Type} [Fintype κ
 end FG
 
 end CompanionTheory.HeckeA
+end
+end
+end

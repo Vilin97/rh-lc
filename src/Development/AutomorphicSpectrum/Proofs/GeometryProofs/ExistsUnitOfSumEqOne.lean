@@ -3,7 +3,7 @@ module
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ProdUpdateDiv
 public import Mathlib.FieldTheory.IntermediateField.Basic
 public import Mathlib.RingTheory.AlgebraicIndependent.Defs
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetMulExpand
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,11 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +42,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.RingTheory.AlgebraicIndependent.Basic
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetMulExpand
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.DetMulExpand.det_mul_expand :
+    ∀ {F : Type} [inst : CommRing F] {k r : ℕ} (A : Matrix (Fin k) (Fin r) F) (B : Matrix (Fin r) (Fin k) F),
+      (A * B).det = ∑ f : Fin k → Fin r, (∏ a : Fin k, A a (f a)) * (B.submatrix f id).det := by
+  intro F _ k r A B
+  have h1 : (A * B) = (fun a => ∑ j, (A a j • B j : Fin k → F)) := by
+    ext a c
+    simp [Matrix.mul_apply, Finset.sum_apply]
+  have h2 : (A * B).det
+      = (Matrix.detRowAlternating (R := F) (n := Fin k)).toMultilinearMap
+          (fun a => ∑ j, (A a j • B j : Fin k → F)) := by
+    rw [← h1]
+    rfl
+
+  rw [h2, MultilinearMap.map_sum]
+  refine Finset.sum_congr rfl fun f _ => ?_
+  rw [MultilinearMap.map_smul_univ]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUnitOfSumEqOne
+
+section
 
 @[expose] public section
 
@@ -283,3 +314,6 @@ theorem genU_indep (Ω : Type) [Field Ω] {S : Type} (r : S → ℕ) :
     (IsFractionRing.injective _ _)
 
 end GlobalTheory.CompanionTheory.Ar.FlagBun.Sm.Cell
+end
+end
+end

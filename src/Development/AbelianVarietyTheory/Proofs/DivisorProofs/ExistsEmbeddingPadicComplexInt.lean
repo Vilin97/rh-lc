@@ -4,14 +4,16 @@ public import Formalism.LocalToGlobal.ProjectiveLattices.OneLtAbsNormReal
 public import Mathlib.Analysis.Normed.Field.Instances
 public import Mathlib.NumberTheory.Padics.Complex
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HodgeTateLatticePointFinrankTateModule
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsInjectiveOfIsIntegral
-public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.NonemptyPadicIntRingHomOfIsAdicComplete
+public import Mathlib.Basic.NNReal.Defs
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Valuation.Integers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,9 +25,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Valuation.Integral
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +47,72 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.NonemptyPadicIntRingHomOfIsAdicComplete
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsInjectiveOfIsIntegral
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.InjectiveOfIntegral
+
+theorem exists_injective_of_isIntegral {A B O C : Type} [CommRing A] [IsDomain A] [CommRing B]
+    [IsDomain B] [CommRing O] [Field C] [IsAlgClosed C] [Algebra O C] (v : Valuation C NNReal)
+    (hv : Valuation.Integers v O) [Algebra A B] [Algebra.IsIntegral A B]
+    (hAB : Function.Injective (algebraMap A B)) (j : A →+* O)
+    (hj : Function.Injective ((algebraMap O C).comp j)) :
+    ∃ j' : B →+* O, Function.Injective ((algebraMap O C).comp j') := by
+  classical
+  let _ : Algebra A C := ((algebraMap O C).comp j).toAlgebra
+  let _ : Algebra A O := j.toAlgebra
+  have : IsScalarTower A O C := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  have hAC : Function.Injective (algebraMap A C) := hj
+  have : Module.IsTorsionFree A B := Module.isTorsionFree_iff_algebraMap_injective.mpr hAB
+  have : Module.IsTorsionFree A C := Module.isTorsionFree_iff_algebraMap_injective.mpr hAC
+  have : Algebra.IsAlgebraic A B := Algebra.IsIntegral.isAlgebraic
+  let ψ : B →ₐ[A] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  have hker : RingHom.ker (ψ : B →+* C) = ⊥ := by
+    apply Ideal.eq_bot_of_comap_eq_bot (R := A)
+    ext a
+    rw [Ideal.mem_comap, RingHom.mem_ker, Ideal.mem_bot,
+      show (ψ : B →+* C) (algebraMap A B a) = algebraMap A C a from ψ.commutes a]
+    exact ⟨fun h => hAC (h.trans (map_zero _).symm), fun h => by rw [h, map_zero]⟩
+  have hψ : Function.Injective (ψ : B →+* C) := (RingHom.injective_iff_ker_eq_bot _).mpr hker
+  have hint : ∀ b : B, v (ψ b) ≤ 1 := by
+    intro b
+    have hb : IsIntegral A (ψ b) := (Algebra.IsIntegral.isIntegral b).map ψ
+    exact hv.mem_of_integral hb.tower_top
+  choose g hg using fun b => hv.exists_of_le_one (hint b)
+  let j' : B →+* O :=
+    { toFun := g
+      map_one' := hv.hom_inj (by simp only [hg, map_one])
+      map_mul' := fun x y => hv.hom_inj (by simp only [hg, map_mul])
+      map_zero' := hv.hom_inj (by simp only [hg, map_zero])
+      map_add' := fun x y => hv.hom_inj (by simp only [hg, map_add (f := _)]) }
+  refine ⟨j', ?_⟩
+  have e : (algebraMap O C).comp j' = (ψ : B →+* C) := RingHom.ext hg
+  rw [e]
+  exact hψ
+
+end GlobalTheory.InjectiveOfIntegral
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEmbeddingPadicComplexInt
+
+section
 
 @[expose] public section
 
@@ -94,3 +159,5 @@ theorem exists_embedding_padicComplexInt :
   exact ⟨p, hp, IsFractionRing.lift (K := T.Fr) hkO, kO, fun a => (IsFractionRing.lift_algebraMap hkO a).symm⟩
 
 end GlobalTheory.CompleteDvrEmbedding
+end
+end

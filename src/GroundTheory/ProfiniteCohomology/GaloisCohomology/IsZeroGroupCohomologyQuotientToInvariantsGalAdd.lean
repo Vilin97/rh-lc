@@ -2,8 +2,13 @@ module
 
 public import GroundTheory.ProfiniteCohomology.GaloisCohomology.UnitsInflationCochainsFHomApply
 public import GroundTheory.ProfiniteCohomology.GaloisModules.FixedField
-public import GroundTheory.ProfiniteCohomology.AdditiveHilbert
-public import GroundTheory.ProfiniteCohomology.Colimit
+public import Mathlib.FieldTheory.Galois.NormalBasis
+public import Mathlib.RepresentationTheory.Coinduced
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Basic
+public import Mathlib.RingTheory.WittVector.IsPoly
+public import Mathlib.Tactic.Basify
+public import Mathlib.Tactic.ReduceModChar
+public import Std.Tactic.BVDecide.Normalize.Prop
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,18 +21,15 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.RingTheory.Henselian
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,7 +50,117 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Order.Interval.Set.Instances
+public import Mathlib.NumberTheory.NumberField.Basic
+public import GroundTheory.ProfiniteCohomology.Colimit
+import Mathlib.FieldTheory.Galois.Profinite
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 public import Mathlib.FieldTheory.IsSepClosed
+
+-- Source module: GroundTheory.ProfiniteCohomology.AdditiveHilbert
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.ProfCoh
+
+open CategoryTheory CategoryTheory.Limits
+
+universe u
+
+section NormalBasis
+
+variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+
+theorem normalBasis_repr_apply_smul (σ τ : Gal(L/K)) (y : L) :
+    (IsGalois.normalBasis K L).repr (σ y) τ = (IsGalois.normalBasis K L).repr y (σ⁻¹ * τ) := by
+  have hb (ρ : Gal(L/K)) :
+      σ (IsGalois.normalBasis K L ρ) = IsGalois.normalBasis K L (σ * ρ) := by
+    rw [IsGalois.normalBasis_apply (σ * ρ), IsGalois.normalBasis_apply ρ, AlgEquiv.mul_apply]
+  have key : (Finsupp.lapply τ ∘ₗ (IsGalois.normalBasis K L).repr.toLinearMap ∘ₗ σ.toLinearMap :
+      L →ₗ[K] K) = Finsupp.lapply (σ⁻¹ * τ) ∘ₗ (IsGalois.normalBasis K L).repr.toLinearMap := by
+    refine (IsGalois.normalBasis K L).ext fun ρ => ?_
+    change (IsGalois.normalBasis K L).repr (σ (IsGalois.normalBasis K L ρ)) τ =
+      (IsGalois.normalBasis K L).repr (IsGalois.normalBasis K L ρ) (σ⁻¹ * τ)
+    classical
+    rw [hb, Module.Basis.repr_self, Module.Basis.repr_self]
+    simp only [Finsupp.single_apply, eq_inv_mul_iff_mul_eq]
+  exact LinearMap.congr_fun key y
+
+end NormalBasis
+
+section Coinduced
+
+variable (k : Type u) (K L : Type u) [CommRing k] [Field K] [Field L] [Algebra K L]
+  [Algebra k K] [Algebra k L] [IsScalarTower k K L] [FiniteDimensional K L] [IsGalois K L]
+
+noncomputable def galoisCoindIso :
+    Rep.ofDistribMulAction k Gal(L/K) L ≅
+      Rep.coind (⊥ : Subgroup Gal(L/K)).subtype (Rep.trivial k (⊥ : Subgroup Gal(L/K)) K) := by
+  have htop : (Representation.trivial k (⊥ : Subgroup Gal(L/K)) K).coindV
+      (⊥ : Subgroup Gal(L/K)).subtype = ⊤ := by
+    ext f
+    simp only [Representation.mem_coindV, Submodule.mem_top, iff_true]
+    rintro ⟨g, hg⟩ h
+    rw [Subgroup.mem_bot] at hg
+    subst hg
+    simp
+  let e : L ≃ₗ[k] _ :=
+    ((IsGalois.normalBasis K L).equivFun.restrictScalars k).trans
+      ((LinearEquiv.funCongrLeft k K (Equiv.inv Gal(L/K))).trans (LinearEquiv.ofTop _ htop).symm)
+  refine Rep.mkIso (Representation.Equiv.mk e fun σ => ?_)
+  refine LinearMap.ext fun y => Subtype.ext (funext fun h => ?_)
+  change (IsGalois.normalBasis K L).repr (σ y) h⁻¹ =
+    (IsGalois.normalBasis K L).repr y (h * σ)⁻¹
+  rw [normalBasis_repr_apply_smul, mul_inv_rev]
+
+end Coinduced
+
+section Vanishing
+
+open groupCohomology
+
+variable (k : Type u) (K L : Type u) [CommRing k] [Field K] [Field L] [Algebra K L]
+  [Algebra k K] [Algebra k L] [IsScalarTower k K L] [FiniteDimensional K L] [IsGalois K L]
+
+theorem isZero_groupCohomology_succ (n : ℕ) :
+    IsZero (groupCohomology (Rep.ofDistribMulAction k Gal(L/K) L) (n + 1)) :=
+  (isZero_groupCohomology_succ_of_subsingleton
+      (Rep.trivial k (⊥ : Subgroup Gal(L/K)) K) n).of_iso
+    ((groupCohomology.functor k Gal(L/K) (n + 1)).mapIso (galoisCoindIso k K L) ≪≫
+      groupCohomology.coindIso _ (n + 1))
+
+theorem isZero_groupCohomology {n : ℕ} (hn : n ≠ 0) :
+    IsZero (groupCohomology (Rep.ofDistribMulAction k Gal(L/K) L) n) := by
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn
+  exact isZero_groupCohomology_succ k K L m
+
+theorem isZero_groupCohomology_galois {n : ℕ} (hn : n ≠ 0) :
+    IsZero (groupCohomology (Rep.ofDistribMulAction K Gal(L/K) L) n) :=
+  isZero_groupCohomology K K L hn
+
+end Vanishing
+
+section Integral
+
+variable (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+
+end Integral
+
+end GroundTheory.ProfCoh
+end
+end
+
+-- Source module: GroundTheory.ProfiniteCohomology.GaloisCohomology.IsZeroGroupCohomologyQuotientToInvariantsGalAdd
+
+section
 
 @[expose] public section
 
@@ -202,3 +314,5 @@ variable (K) (Ksep : Type u) [Field Ksep] [Algebra K Ksep] [IsSepClosure K Ksep]
 end SeparableClosure
 
 end GroundTheory.ProfCoh
+end
+end

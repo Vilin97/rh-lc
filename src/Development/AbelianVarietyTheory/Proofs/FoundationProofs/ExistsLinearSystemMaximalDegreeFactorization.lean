@@ -2,15 +2,11 @@ module
 
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.DedekindDomain.Basic
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDegreeLtTwoCorrectionSimpleZeroStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLowDegreeCoordsModMulStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSquarefreePolyDistinctZerosOnCurveStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormDegreeBoundPolynomialCombinationStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DedekindFiniteTypeIdealCodimensionStatement
 import Mathlib.Algebra.AffineMonoid.UniqueSums
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -21,16 +17,17 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.FreeModule.Norm
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -39,6 +36,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,6 +50,140 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Norm.Defs
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLowDegreeCoordsModMul
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSquarefreePolyDistinctZerosOnCurve
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormDegreeBoundPolynomialCombination
+import Mathlib.Algebra.Order.Star.Int
+public import Mathlib.LinearAlgebra.FreeModule.Norm
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDegreeLtTwoCorrectionSimpleZero
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem exists_deg_lt_two_correction_simple :
+    ∀ (k A : Type) [Field k] [IsAlgClosed k] [CharZero k] [CommRing A] [IsDedekindDomain A]
+      [Algebra k A] [Algebra k[X] A] [IsScalarTower k k[X] A] [Module.Finite k[X] A]
+      [Module.Free k[X] A] (n : ℕ) (b : Module.Basis (Fin n) k[X] A) (P₀ : Ideal A) (w : A),
+      P₀.IsMaximal → ∃ p : Fin n → k[X], (∀ i, (p i).degree < (2 : ℕ)) ∧
+        w + ∑ i, p i • b i ∈ P₀ ∧ w + ∑ i, p i • b i ∉ P₀ ^ 2 := by
+  intro k A _ _ _ _ _ _ _ _ _ _ n b P₀ w hP
+  haveI : Algebra.FiniteType k A := Algebra.FiniteType.trans (S := k[X]) inferInstance inferInstance
+  obtain ⟨φ, hφ⟩ := ((GlobalTheory.T.dedekind_finiteType_ideal_codimension k A).2.1 P₀ hP).2
+  set α : k := φ (algebraMap k[X] A X) with hα
+  have hC : algebraMap k[X] A (C α) = algebraMap k A α := by
+    rw [IsScalarTower.algebraMap_apply k k[X] A]; rfl
+  have hlin : algebraMap k[X] A (X - C α) ∈ P₀ := by
+    rw [hφ, map_sub, map_sub, hC, φ.commutes, ← hα]
+    simp
+  have hne : algebraMap k[X] A (X - C α) ≠ 0 := by
+    intro h0
+    have h1 : (X - C α) • (1 : A) = 0 := by rw [Algebra.smul_def, h0, zero_mul]
+    have h3 : b.repr (1 : A) ≠ 0 := by
+      rw [Ne, LinearEquiv.map_eq_zero_iff]; exact one_ne_zero
+    obtain ⟨i, hi⟩ := DFunLike.ne_iff.mp h3
+    have h4 := congrArg (fun a => b.repr a i) h1
+    simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_zero, Finsupp.coe_zero,
+      Pi.zero_apply] at h4
+    exact mul_ne_zero (X_sub_C_ne_zero α) hi h4
+  have hbot : P₀ ≠ ⊥ := fun h => hne (by rw [h] at hlin; simpa using hlin)
+  have hlt := Ideal.pow_lt_self P₀ hbot hP.ne_top 2 le_rfl
+  obtain ⟨π, hπP, hπ2⟩ := SetLike.exists_of_lt hlt
+  set q : k[X] := (X - C α) ^ 2 with hq
+  have hmon : q.Monic := (monic_X_sub_C α).pow 2
+  have hqdeg : q.degree = (2 : ℕ) := by
+    rw [hq, degree_pow, degree_X_sub_C]; rfl
+  have hqmem : algebraMap k[X] A q ∈ P₀ ^ 2 := by
+    rw [hq, map_pow]; exact Ideal.pow_mem_pow hlin 2
+  let c : Fin n → k[X] := fun i => b.repr (π - w) i
+  let p : Fin n → k[X] := fun i => c i %ₘ q
+  let d : Fin n → k[X] := fun i => c i /ₘ q
+  have hs : ∑ i, c i • b i = π - w := b.sum_repr (π - w)
+  have h2 : ∑ i, c i • b i = ∑ i, p i • b i + algebraMap k[X] A q * ∑ i, d i • b i := by
+    rw [Finset.mul_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [← Algebra.smul_def, smul_smul, ← add_smul]
+    exact congrArg (· • b i) (modByMonic_add_div (c i) q).symm
+  have key : w + ∑ i, p i • b i = π - algebraMap k[X] A q * ∑ i, d i • b i := by
+    linear_combination hs - h2
+  have hM : algebraMap k[X] A q * ∑ i, d i • b i ∈ P₀ ^ 2 := Ideal.mul_mem_right _ _ hqmem
+  refine ⟨p, fun i => ?_, ?_, ?_⟩
+  · rw [← hqdeg]; exact degree_modByMonic_lt _ hmon
+  · rw [key]; exact P₀.sub_mem hπP (Ideal.pow_le_self two_ne_zero hM)
+  · intro h
+    apply hπ2
+    have : π = (w + ∑ i, p i • b i) + algebraMap k[X] A q * ∑ i, d i • b i := by
+      rw [key]; ring
+    rw [this]; exact (P₀ ^ 2).add_mem h hM
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDegreeLtTwoCorrectionSimpleZeroStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_degree_lt_two_correction_simple_zero : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CharZero k] [CommRing A] [IsDedekindDomain A] [Algebra k A] [Algebra k[X] A] [IsScalarTower k k[X] A] [Module.Finite k[X] A] [Module.Free k[X] A] (n : ℕ) (b : Module.Basis (Fin n) k[X] A) (P₀ : Ideal A) (w : A), P₀.IsMaximal → ∃ p : Fin n → k[X], (∀ i, (p i).degree < (2 : ℕ)) ∧ w + ∑ i, p i • b i ∈ P₀ ∧ w + ∑ i, p i • b i ∉ P₀ ^ 2 := by
+  first | exact @GlobalTheory.exists_deg_lt_two_correction_simple | exact GlobalTheory.exists_deg_lt_two_correction_simple | (intros; apply GlobalTheory.exists_deg_lt_two_correction_simple <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLowDegreeCoordsModMulStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_lowDegree_coords_mod_mul : ∀ (k A : Type) [Field k] [CommRing A] [IsDomain A] [Algebra k[X] A] (n : ℕ) (b : Module.Basis (Fin n) k[X] A) (g : A) (q : k[X]) (d : ℕ), g ≠ 0 → q ≠ 0 → (Algebra.norm k[X] g).natDegree + q.natDegree ≤ d + 1 →
+ ∀ w : A, ∃ p : Fin n → k[X], (∀ i, (p i).natDegree ≤ d) ∧ w - ∑ i, p i • b i ∈ Ideal.span {g * algebraMap k[X] A q} := by
+  first | exact @GlobalTheory.exists_lowDegree_coords_mod | exact GlobalTheory.exists_lowDegree_coords_mod | (intros; apply GlobalTheory.exists_lowDegree_coords_mod <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSquarefreePolyDistinctZerosOnCurveStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_squarefree_poly_distinct_zeros_on_curve : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CharZero k] [CommRing A] [IsDedekindDomain A] [Algebra k A] [Algebra k[X] A] [IsScalarTower k k[X] A] [Module.Finite k[X] A] [Module.Free k[X] A] (g : A) (s : ℕ), g ≠ 0 → ∃ (q : k[X]) (r : ℕ) (Q : Fin r → Ideal A), q.Monic ∧ q.natDegree = s ∧ (∀ i, (Q i).IsMaximal) ∧ Function.Injective Q ∧ (∀ i, g ∉ Q i) ∧ Ideal.span {algebraMap k[X] A q} = ∏ i, Q i := by
+  first | exact @GlobalTheory.SquarefreeFibre.main | exact GlobalTheory.SquarefreeFibre.main | (intros; apply GlobalTheory.SquarefreeFibre.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormDegreeBoundPolynomialCombinationStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.norm_degree_bound_polynomial_combination : ∀ (k A : Type) [Field k] [Infinite k] [CommRing A] [IsDomain A] [Algebra k[X] A] (n : ℕ) (b : Module.Basis (Fin n) k[X] A), ∃ (c : ℕ) (lam : Fin n → k),
+ (∀ (d : ℕ) (p : Fin n → k[X]), (∀ i, (p i).natDegree ≤ d) → (Algebra.norm k[X] (∑ i, p i • b i)).natDegree ≤ n * d + c) ∧
+ (∀ (d : ℕ) (p : Fin n → k[X]), (∀ i, (p i).degree < d) → (∑ i, (C (lam i) * X ^ d + p i) • b i) ≠ 0 ∧ (Algebra.norm k[X] (∑ i, (C (lam i) * X ^ d + p i) • b i)).natDegree = n * d + c) := by
+  first | exact @GlobalTheory.NormDegree.natDegree_norm_of_coord_degree | exact GlobalTheory.NormDegree.natDegree_norm_of_coord_degree | (intros; apply GlobalTheory.NormDegree.natDegree_norm_of_coord_degree <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLinearSystemMaximalDegreeFactorization
+
+section
 
 @[expose] public section
 
@@ -201,3 +333,6 @@ theorem GlobalTheory.linear_system_setup : ∀ (k A : Type) [Field k] [IsAlgClos
       hf₀deg]
     have := hdeg1 d (fun i => b.repr f i) hf.2
     rwa [b.sum_repr] at this
+end
+end
+end

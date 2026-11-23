@@ -3,10 +3,6 @@ module
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.InnerDRepSq
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.InvSqrtTwo
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.OrthonormalBasesMemUnitaryLieAlgebraStatement
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceHermitianOrthonormalBasisMulEqIteStatement
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceSkewHermitianMulHermitianOrthonormalBasisStatement
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.SignatureLieSetExpandOrthonormalBasesStatement
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.SkewHermitianOrthonormalBasisTraceOrthonormalStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +17,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -30,6 +27,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +44,228 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Tactic.ENatToNat
+import Std.Tactic.BVDecide.Normalize.Bool
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.SignatureLieSetExpandOrthonormalBasesStatement
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.SkewHermitianOrthonormalBasisTraceOrthonormalStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceHermitianOrthonormalBasisMulEqIte
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.SmoothGlob GlobalTheory.TypeSum GlobalTheory.TypeSum.CasBasis GlobalTheory.LowTypeDetermined
+
+noncomputable section
+
+namespace GlobalTheory.TypeSum.CasBasis.PB
+
+variable {n : ℕ}
+
+theorem tr_unit (a b c d : Fin n) :
+    trace (unitE a b * unitE c d) = if b = c ∧ d = a then 1 else 0 := by
+  by_cases hbc : b = c
+  · subst hbc
+    rw [unitE, unitE, Matrix.single_mul_single_same, one_mul]
+    by_cases hda : d = a
+    · subst hda; simp [Matrix.trace_single_eq_same]
+    · rw [Matrix.trace_single_eq_of_ne (h := Ne.symm hda)]; simp [hda]
+  · rw [unitE, unitE, Matrix.single_mul_single_of_ne _ _ _ _ hbc]; simp [hbc]
+
+theorem sq_inv : invSqrtTwo * invSqrtTwo = (1 / 2 : ℂ) := by
+  rw [invSqrtTwo, ← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+  push_cast; ring
+
+def B (X Y : Mx n) : ℝ := (trace (X * Y)).re
+
+theorem B_comm (X Y : Mx n) : B X Y = B Y X := by
+  simp only [B, Matrix.trace_mul_comm X Y]
+
+def f (p : Fin n × Fin n) : List (Mx n) :=
+  [invSqrtTwo • (unitE p.1 p.2 + unitE p.2 p.1), (invSqrtTwo * Complex.I) • (unitE p.1 p.2 - unitE p.2 p.1)]
+
+theorem pList_eq (ε : Fin n → Bool) : pList ε = (pairs ε false).flatMap f := rfl
+
+theorem mem_pairs' {ε : Fin n → Bool} {p : Fin n × Fin n} (h : p ∈ pairs ε false) : p.1 < p.2 := by
+  simp only [pairs, List.mem_filter, Bool.and_eq_true, decide_eq_true_eq] at h
+  exact h.2.1
+
+theorem nodup_pairs (ε : Fin n → Bool) : (pairs ε false).Nodup :=
+  (List.Nodup.product (List.nodup_finRange n) (List.nodup_finRange n)).filter _
+
+theorem norm_one {a b : Fin n} (hab : a < b) : ∀ X ∈ f (a, b), B X X = 1 := by
+  have h1 : a ≠ b := hab.ne
+  have h2 : b ≠ a := hab.ne'
+  intro X hX
+  simp only [f, List.mem_cons, List.not_mem_nil, or_false] at hX
+  rcases hX with rfl | rfl
+  · simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_add, add_mul, Matrix.trace_add, tr_unit,
+      h1, h2, and_self, and_false, false_and, if_true, if_false, sq_inv, smul_eq_mul]
+    norm_num
+  · simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_sub, sub_mul, Matrix.trace_sub, tr_unit,
+      h1, h2, and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+    have : invSqrtTwo * Complex.I * (invSqrtTwo * Complex.I) = -(1 / 2 : ℂ) := by
+      rw [show invSqrtTwo * Complex.I * (invSqrtTwo * Complex.I) = invSqrtTwo * invSqrtTwo * (Complex.I * Complex.I) by ring,
+        sq_inv, Complex.I_mul_I]; ring
+    rw [this]; norm_num
+
+theorem within {a b : Fin n} (hab : a < b) : (f (a, b)).Pairwise fun X Y => B X Y = 0 := by
+  have h1 : a ≠ b := hab.ne
+  have h2 : b ≠ a := hab.ne'
+  simp only [f, List.pairwise_cons, List.mem_cons, List.not_mem_nil, or_false, forall_eq,
+    List.Pairwise.nil, and_true, IsEmpty.forall_iff, implies_true]
+  simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_sub, add_mul, Matrix.trace_sub, Matrix.trace_add, tr_unit,
+    h1, h2, and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+  simp
+
+theorem across {a b c d : Fin n} (hab : a < b) (hcd : c < d) (hne : (a, b) ≠ (c, d)) :
+    ∀ X ∈ f (a, b), ∀ Y ∈ f (c, d), B X Y = 0 := by
+  have e1 : ¬ (b = c ∧ d = a) := by rintro ⟨rfl, rfl⟩; exact lt_asymm hab hcd
+  have e2 : ¬ (b = d ∧ c = a) := by rintro ⟨rfl, rfl⟩; exact hne rfl
+  have e3 : ¬ (a = c ∧ d = b) := by rintro ⟨rfl, rfl⟩; exact hne rfl
+  have e4 : ¬ (a = d ∧ c = b) := by rintro ⟨rfl, rfl⟩; exact lt_asymm hab hcd
+  intro X hX Y hY
+  simp only [f, List.mem_cons, List.not_mem_nil, or_false] at hX hY
+  rcases hX with rfl | rfl <;> rcases hY with rfl | rfl <;>
+  simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_sub, sub_mul, mul_add, add_mul, Matrix.trace_sub,
+    Matrix.trace_add, tr_unit, e1, e2, e3, e4, if_false, sub_zero, add_zero, smul_zero, Complex.zero_re]
+
+theorem pairwise_pList (ε : Fin n → Bool) : (pList ε).Pairwise fun X Y => B X Y = 0 := by
+  rw [pList_eq, List.pairwise_flatMap]
+  refine ⟨fun p hp => ?_, ?_⟩
+  · obtain ⟨a, b⟩ := p
+    exact within (mem_pairs' hp)
+  · refine (nodup_pairs ε).imp_of_mem fun {p q} hp hq hne => ?_
+    obtain ⟨a, b⟩ := p
+    obtain ⟨c, d⟩ := q
+    exact across (mem_pairs' hp) (mem_pairs' hq) hne
+
+theorem norm_pList (ε : Fin n → Bool) : ∀ X ∈ pList ε, B X X = 1 := by
+  intro X hX
+  rw [pList_eq, List.mem_flatMap] at hX
+  obtain ⟨⟨a, b⟩, hp, hX⟩ := hX
+  exact norm_one (mem_pairs' hp) X hX
+
+end GlobalTheory.TypeSum.CasBasis.PB
+
+namespace GlobalTheory.TypeSum.CasBasis
+
+theorem pB_orthonormal : ∀ (n : ℕ) (ε : Fin n → Bool) (a b : Fin (pList ε).length),
+    (trace (pB ε a * pB ε b)).re = if a = b then 1 else 0 := by
+  intro n ε a b
+  have hpw := List.pairwise_iff_get.1 (PB.pairwise_pList ε)
+  show PB.B (pB ε a) (pB ε b) = _
+  rcases lt_trichotomy a b with h | rfl | h
+  · rw [if_neg h.ne]; exact hpw a b h
+  · rw [if_pos rfl]; exact PB.norm_pList ε _ (List.get_mem _ _)
+  · rw [if_neg h.ne', PB.B_comm]; exact hpw b a h
+
+end GlobalTheory.TypeSum.CasBasis
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceHermitianOrthonormalBasisMulEqIteStatement
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.SmoothGlob GlobalTheory.TypeSum GlobalTheory.TypeSum.CasBasis GlobalTheory.LowTypeDetermined
+
+theorem _root_.GlobalTheory.T.re_trace_hermitianOrthonormalBasis_mul_eq_ite : ∀ (n : ℕ) (ε : Fin n → Bool) (a b : Fin (pList ε).length), (trace (pB ε a * pB ε b)).re = if a = b then 1 else 0 := by
+  first | exact @GlobalTheory.TypeSum.CasBasis.pB_orthonormal | exact GlobalTheory.TypeSum.CasBasis.pB_orthonormal | (intros; apply GlobalTheory.TypeSum.CasBasis.pB_orthonormal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceSkewHermitianMulHermitianOrthonormalBasis
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.SmoothGlob GlobalTheory.TypeSum GlobalTheory.TypeSum.CasBasis GlobalTheory.LowTypeDetermined
+
+namespace GlobalTheory.TypeSum.CasBasis
+
+theorem unitE_apply_eq_zero_of_sign {n : ℕ} {ε : Fin n → Bool} {i j a b : Fin n}
+    (h : (ε i = ε j) ≠ (ε a = ε b)) : unitE i j a b = 0 := by
+  rw [unitE, Matrix.single_apply, if_neg]
+  rintro ⟨rfl, rfl⟩
+  exact h rfl
+
+theorem kList_entry_zero {n : ℕ} {ε : Fin n → Bool} {X : Mx n} (hX : X ∈ kList ε) {a b : Fin n}
+    (hab : ε a ≠ ε b) : X a b = 0 := by
+  unfold kList at hX
+  rcases List.mem_append.1 hX with h | h
+  · obtain ⟨c, -, rfl⟩ := List.mem_map.1 h
+    have h1 : unitE c c a b = 0 :=
+      unitE_apply_eq_zero_of_sign (ε := ε) (by simp [hab])
+    simp only [Matrix.smul_apply, h1, smul_zero]
+  · obtain ⟨p, hp, hX⟩ := List.mem_flatMap.1 h
+    have hpe : ε p.1 = ε p.2 := by
+      have := (List.mem_filter.1 hp).2
+      simp at this
+      exact this.2
+    have h1 : unitE p.1 p.2 a b = 0 :=
+      unitE_apply_eq_zero_of_sign (ε := ε) (by simp [hab, hpe])
+    have h2 : unitE p.2 p.1 a b = 0 :=
+      unitE_apply_eq_zero_of_sign (ε := ε) (by simp [hab, hpe])
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hX
+    rcases hX with rfl | rfl <;>
+      simp only [Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, h1, h2, sub_zero, add_zero, smul_zero]
+
+theorem pList_entry_zero {n : ℕ} {ε : Fin n → Bool} {Y : Mx n} (hY : Y ∈ pList ε) {a b : Fin n}
+    (hab : ε a = ε b) : Y a b = 0 := by
+  unfold pList at hY
+  obtain ⟨p, hp, hY⟩ := List.mem_flatMap.1 hY
+  have hpe : ε p.1 ≠ ε p.2 := by
+    have := (List.mem_filter.1 hp).2
+    simp at this
+    exact this.2
+  have h1 : unitE p.1 p.2 a b = 0 :=
+    unitE_apply_eq_zero_of_sign (ε := ε) (by simp [hab, hpe])
+  have h2 : unitE p.2 p.1 a b = 0 :=
+    unitE_apply_eq_zero_of_sign (ε := ε) (by simp [hab, Ne.symm hpe])
+  simp only [List.mem_cons, List.not_mem_nil, or_false] at hY
+  rcases hY with rfl | rfl <;>
+    simp only [Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, h1, h2, sub_zero, add_zero, smul_zero]
+
+theorem re_trace_kB_mul_pB : ∀ (n : ℕ) (ε : Fin n → Bool) (i : Fin (kList ε).length) (b : Fin (pList ε).length),
+    (trace (kB ε i * pB ε b)).re = 0 := by
+  intro n ε i b
+  have hX : kB ε i ∈ kList ε := List.get_mem _ _
+  have hY : pB ε b ∈ pList ε := List.get_mem _ _
+  have : trace (kB ε i * pB ε b) = 0 := by
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply]
+    refine Finset.sum_eq_zero fun a _ => Finset.sum_eq_zero fun c _ => ?_
+    by_cases h : ε a = ε c
+    · rw [pList_entry_zero hY h.symm, mul_zero]
+    · rw [kList_entry_zero hX h, zero_mul]
+  rw [this, Complex.zero_re]
+
+end GlobalTheory.TypeSum.CasBasis
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.ReTraceSkewHermitianMulHermitianOrthonormalBasisStatement
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.SmoothGlob GlobalTheory.TypeSum GlobalTheory.TypeSum.CasBasis GlobalTheory.LowTypeDetermined
+
+theorem _root_.GlobalTheory.T.re_trace_skewHermitian_mul_hermitianOrthonormalBasis : ∀ (n : ℕ) (ε : Fin n → Bool) (i : Fin (kList ε).length) (b : Fin (pList ε).length), (trace (kB ε i * pB ε b)).re = 0 := by
+  first | exact @GlobalTheory.TypeSum.CasBasis.re_trace_kB_mul_pB | exact GlobalTheory.TypeSum.CasBasis.re_trace_kB_mul_pB | (intros; apply GlobalTheory.TypeSum.CasBasis.re_trace_kB_mul_pB <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.CasimirDifferenceOperatorEquivariant
+
+section
 
 @[expose] public section
 
@@ -218,4 +438,6 @@ theorem casOp_equivariant : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [Norm
 
 end GlobalTheory.TypeSum.CasEquiv
 
+end
+end
 end

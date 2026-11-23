@@ -44,15 +44,263 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdConst
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdLower
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdConst
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.ProdSubLtEqFactorial
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.RhoNSubNab
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.TraceMulSelfEqSumEigenvaluesSq
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.VolUFactProdMulLe
+import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.CategoryTheory.Countable
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdLowerA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdScale
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.JacobianLeExp
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.PolarBasic
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdPointwise
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdStep
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdStep
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsStatement
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdUpper
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.ProdSubLtEqFactorial
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.IntegrableOfContinuousCompact
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.SumNormAdjointSqEqHsOp
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.VolUFactProdMulLe
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdConst
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory Filter Topology
+open scoped InnerProductSpace
+
+namespace ReciprocityTheory.ChartRestriction.DS.G2
+
+open ReciprocityTheory.ChartRestriction.DS.S7
+
+variable {n : ℕ}
+
+theorem fdc_ncProd (ε : Fin n → Bool) (f : Fin n → Fin n → ℝ) :
+    ∏ a : Fin n, ∏ b ∈ univ.filter (fun b : Fin n => a < b ∧ ¬ ε a = ε b), f a b =
+      ∏ ab : PCoord ε, f ab.1.2 ab.1.1 := by
+  have e1 : ∏ a : Fin n, ∏ b ∈ univ.filter (fun b : Fin n => a < b ∧ ¬ ε a = ε b), f a b =
+      ∏ x ∈ univ.filter (fun x : Fin n × Fin n => x.1 < x.2 ∧ ¬ ε x.1 = ε x.2), f x.1 x.2 := by
+    rw [Finset.prod_filter, Fintype.prod_prod_type]
+    simp_rw [Finset.prod_filter]
+  rw [e1, ← Finset.prod_subtype (univ.filter (fun x : Fin n × Fin n => x.2 < x.1 ∧ ε x.1 ≠ ε x.2))
+    (fun x => by simp) (fun x : Fin n × Fin n => f x.2 x.1)]
+  apply Finset.prod_nbij' Prod.swap Prod.swap
+  · rintro ⟨a, b⟩ h
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Prod.swap_prod_mk] at h ⊢
+    exact ⟨h.1, fun e => h.2 e.symm⟩
+  · rintro ⟨a, b⟩ h
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Prod.swap_prod_mk] at h ⊢
+    exact ⟨h.1, fun e => h.2 e.symm⟩
+  · intro x _; rfl
+  · intro x _; rfl
+  · intro x _; rfl
+
+theorem fdc_vand_split (ε : Fin n → Bool) (μ : Fin n → ℝ) :
+    Vand μ = (∏ a : Fin n, ∏ b ∈ univ.filter (fun b : Fin n => a < b ∧ ε a = ε b), (μ a - μ b)) *
+      ∏ ab : PCoord ε, (μ ab.1.2 - μ ab.1.1) := by
+  rw [← fdc_ncProd ε (fun a b => μ a - μ b), ← Finset.prod_mul_distrib]
+  unfold Vand
+  refine Finset.prod_congr rfl fun a _ => ?_
+  rw [← Finset.prod_filter_mul_prod_filter_not (univ.filter (fun b : Fin n => a < b)) (fun b => ε a = ε b),
+    Finset.filter_filter, Finset.filter_filter]
+
+theorem pi_weight_at_zero_eq (ε : Fin n → Bool) :
+    PiW ε 0 = Real.pi ^ (pOf ε * qOf ε) / ∏ ab : PCoord ε, (((ab.1.1 : ℕ) : ℝ) - ((ab.1.2 : ℕ) : ℝ)) := by
+  unfold PiW wab
+  simp only [Pi.zero_apply, sub_zero, zero_add]
+  rw [Finset.prod_div_distrib, Finset.prod_const, Finset.card_univ, card_PCoord]
+
+theorem fdc_ncpos (ε : Fin n → Bool) :
+    0 < ∏ ab : PCoord ε, (((ab.1.1 : ℕ) : ℝ) - ((ab.1.2 : ℕ) : ℝ)) := by
+  refine Finset.prod_pos fun ab _ => sub_pos.2 ?_
+  exact_mod_cast ab.2.1
+
+theorem fdc_tend1 (α k m : ℝ) (hm : 0 < m) :
+    Tendsto (fun t : ℕ => (α + (t : ℝ) * m + k) / (α + (t : ℝ) * m)) atTop (𝓝 1) := by
+  have h : Tendsto (fun t : ℕ => α + (t : ℝ) * m) atTop atTop :=
+    tendsto_atTop_add_const_left _ α (tendsto_natCast_atTop_atTop.atTop_mul_const hm)
+  have h2 : Tendsto (fun t : ℕ => k / (α + (t : ℝ) * m)) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop h
+  have h3 := (tendsto_const_nhds (x := (1 : ℝ))).add h2
+  rw [add_zero] at h3
+  refine h3.congr' ?_
+  filter_upwards [h.eventually_gt_atTop 0] with t ht
+  field_simp
+
+theorem fdc_tend2 (α m : ℝ) (hm : 0 < m) :
+    Tendsto (fun t : ℕ => (t : ℝ) / (α + (t : ℝ) * m)) atTop (𝓝 (1 / m)) := by
+  have h : Tendsto (fun t : ℕ => α + (t : ℝ) * m) atTop atTop :=
+    tendsto_atTop_add_const_left _ α (tendsto_natCast_atTop_atTop.atTop_mul_const hm)
+  have h3 : Tendsto (fun t : ℕ => α / (t : ℝ)) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop tendsto_natCast_atTop_atTop
+  have h4 := (tendsto_const_nhds (x := (1 : ℝ))).div (h3.add_const m) (by rw [zero_add]; exact hm.ne')
+  rw [zero_add] at h4
+  refine h4.congr' ?_
+  filter_upwards [h.eventually_gt_atTop 0, eventually_gt_atTop 0] with t ht ht0
+  have : (0 : ℝ) < t := by exact_mod_cast ht0
+  show (1:ℝ) / (α / (t:ℝ) + m) = (t:ℝ) / (α + (t:ℝ) * m)
+  rw [div_add' _ _ _ this.ne', one_div_div, mul_comm m]
+
+theorem formal_degree_constant_eq {ε : Fin n → Bool} {lam : Fin n → ℝ} (hlam : IsHCParam lam) (d : ℕ → ℝ)
+    (T : ∀ t : ℕ, KType ε (lowK ε (lamT lam t)))
+    (h1 : ∀ t, d t / Vand (lamT lam t) = d 0 / Vand lam) (hd0 : 0 < d 0)
+    (hup : Filter.limsup (fun t : ℕ => ENNReal.ofReal ((t : ℝ) ^ (pOf ε * qOf ε) *
+      (Module.finrank ℂ (T t).V : ℝ) / d t)) Filter.atTop ≤ ENNReal.ofReal (cPQ ε * PiW ε 0))
+    (hlow : ENNReal.ofReal (cPQ ε * PiW ε 0) ≤ Filter.liminf (fun t : ℕ => ENNReal.ofReal ((t : ℝ) ^ (pOf ε * qOf ε) *
+      (Module.finrank ℂ (T t).V : ℝ) / d t)) Filter.atTop) :
+    d 0 = dimVlam lam := by
+  apply ReciprocityTheory.ChartRestriction.DS.formal_degree_constant_eq <;> assumption
+
+end ReciprocityTheory.ChartRestriction.DS.G2
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdLower
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory
+open scoped InnerProductSpace
+
+namespace ReciprocityTheory.ChartRestriction.DS.G2
+
+open ReciprocityTheory.ChartRestriction.DS.S7
+
+variable {n : ℕ}
+
+theorem formal_degree_liminf_lower_bound {ε : Fin n → Bool} {lam : Fin n → ℝ} (T : ∀ t : ℕ, KType ε (lowK ε (lamT lam t)))
+    (hlim : ∀ y : PCoord ε → ℂ, Filter.Tendsto (fun t : ℕ => ⟪(T t).w, fF ε (lamT lam t) (T t) (pmat ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) (T t).w⟫_ℂ) Filter.atTop
+      (nhds ((Real.exp (-(Qf (0 : Fin n → ℝ) y / 2)) : ℝ) : ℂ))) :
+    ENNReal.ofReal (PiW ε 0) ≤ Filter.liminf (fun t : ℕ => ENNReal.ofReal ((t : ℝ) ^ (pOf ε * qOf ε)) *
+      ∫⁻ z : PCoord ε → ℂ, ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t) (pmat z) (T t).w⟫_ℂ‖ ^ 2 * Jac z))
+      Filter.atTop := by
+  have hscale : ∀ t : ℕ, 1 ≤ t → ENNReal.ofReal ((t : ℝ) ^ (pOf ε * qOf ε)) *
+      ∫⁻ z : PCoord ε → ℂ, ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t) (pmat z) (T t).w⟫_ℂ‖ ^ 2 * Jac z) =
+      ∫⁻ y : PCoord ε → ℂ, ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t)
+        (pmat ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) (T t).w⟫_ℂ‖ ^ 2 * Jac ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) := by
+    intro t ht
+    have ht' : (0 : ℝ) < t := by exact_mod_cast ht
+    have hs : 0 < (Real.sqrt t)⁻¹ := inv_pos.2 (Real.sqrt_pos.2 ht')
+    rw [lintegral_pcoord_smul _ hs, ← mul_assoc, ← ENNReal.ofReal_mul (by positivity)]
+    have e : (t : ℝ) ^ (pOf ε * qOf ε) * ((Real.sqrt t)⁻¹) ^ (2 * (pOf ε * qOf ε)) = 1 := by
+      rw [inv_pow, pow_mul (Real.sqrt _) 2, Real.sq_sqrt ht'.le, mul_inv_cancel₀ (pow_ne_zero _ ht'.ne')]
+    rw [e, ENNReal.ofReal_one, one_mul]
+  rw [Filter.liminf_congr (Filter.eventually_atTop.2 ⟨1, hscale⟩)]
+  have hmeas : ∀ t : ℕ, Measurable (fun y : PCoord ε → ℂ => ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t)
+        (pmat ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) (T t).w⟫_ℂ‖ ^ 2 * Jac ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y))) := by
+    intro t
+    refine ENNReal.measurable_ofReal.comp (Continuous.measurable ?_)
+    exact ((continuous_norm.comp ((fdl_inner_continuous _ (T t) _ _).comp (continuous_const_smul _))).pow 2).mul
+      ((jac_continuous ε).comp (continuous_const_smul _))
+  refine le_trans ?_ (lintegral_liminf_le hmeas)
+  rw [← fdl_gauss ε]
+  refine lintegral_mono fun y => ?_
+  have h1 : Filter.Tendsto (fun t : ℕ => ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t)
+      (pmat ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) (T t).w⟫_ℂ‖ ^ 2)) Filter.atTop
+      (nhds (ENNReal.ofReal (Real.exp (-Qf (0 : Fin n → ℝ) y)))) := by
+    have h2 : Filter.Tendsto (fun t : ℕ => ENNReal.ofReal (‖⟪(T t).w, fF ε (lamT lam t) (T t)
+        (pmat ((((Real.sqrt t)⁻¹ : ℝ) : ℂ) • y)) (T t).w⟫_ℂ‖ ^ 2)) Filter.atTop
+        (nhds (ENNReal.ofReal (‖((Real.exp (-(Qf (0 : Fin n → ℝ) y / 2)) : ℝ) : ℂ)‖ ^ 2))) :=
+      ((ENNReal.continuous_ofReal.comp (continuous_norm.pow 2)).tendsto _).comp (hlim y)
+    have e : ‖((Real.exp (-(Qf (0 : Fin n → ℝ) y / 2)) : ℝ) : ℂ)‖ ^ 2 = Real.exp (-Qf (0 : Fin n → ℝ) y) := by
+      rw [Complex.norm_real, Real.norm_eq_abs, sq_abs, sq, ← Real.exp_add]
+      congr 1
+      ring
+    rw [e] at h2
+    exact h2
+  rw [← h1.liminf_eq]
+  exact Filter.liminf_le_liminf (Filter.Eventually.of_forall fun t => ENNReal.ofReal_le_ofReal
+    (le_mul_of_one_le_right (sq_nonneg _) (jac_ge_one _)))
+
+end ReciprocityTheory.ChartRestriction.DS.G2
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.FdStep
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory
+open scoped InnerProductSpace
+
+namespace ReciprocityTheory.ChartRestriction.DS.G2
+
+open ReciprocityTheory.ChartRestriction.DS.S7
+
+variable {n : ℕ}
+
+theorem fdS_strictAnti {lam : Fin n → ℝ} (hlam : StrictAnti lam) {c : Fin n → ℕ} (hc : Antitone c) :
+    StrictAnti (lam + fun i => (c i : ℝ)) := by
+  intro i j hij
+  have h1 := hlam hij
+  have h2 : (c j : ℝ) ≤ c i := by exact_mod_cast hc hij.le
+  simp only [Pi.add_apply]
+  linarith
+
+theorem fdS_hc {lam : Fin n → ℝ} (hlam : IsHCParam lam) {c : Fin n → ℕ} (hc : Antitone c) :
+    IsHCParam (lam + fun i => (c i : ℝ)) := by
+  apply ReciprocityTheory.ChartRestriction.DS.fdS_hc <;> assumption
+
+theorem fdS_gap {ε : Fin n → Bool} {h : ℝ} {lam : Fin n → ℝ} (hlam : StrictAnti lam)
+    (hgap : GapAtLeast ε lam h) {c : Fin n → ℕ} (hc : Antitone c) :
+    GapAtLeast ε (lam + fun i => (c i : ℝ)) h := by
+  apply ReciprocityTheory.ChartRestriction.DS.fdS_gap <;> assumption
+
+theorem fdS_stepQ {ε : Fin n → Bool} {h : ℝ} (dfun : (Fin n → ℝ) → ℝ)
+    (hstep : ∀ (μ : Fin n → ℝ) (s : Fin n), IsHCParam μ → GapAtLeast ε μ h → GapAtLeast ε (μ + Pi.single s 1) h →
+      StrictAnti (μ + Pi.single s 1) → dfun (μ + Pi.single s 1) = dfun μ * ratioV μ s)
+    {μ : Fin n → ℝ} (hμ : IsHCParam μ) (hg : GapAtLeast ε μ h) (s : Fin n)
+    (hg' : GapAtLeast ε (μ + Pi.single s 1) h) (hs : StrictAnti (μ + Pi.single s 1)) :
+    dfun (μ + Pi.single s 1) / Vand (μ + Pi.single s 1) = dfun μ / Vand μ := by
+  have hμs : StrictAnti μ := hμ.1
+  rw [hstep μ s hμ hg hg' hs, ratioV_eq_vand hμs s]
+  have h1 := vand_pos hμs
+  have h2 := vand_pos hs
+  field_simp
+
+theorem fdS_main {ε : Fin n → Bool} {h : ℝ} (dfun : (Fin n → ℝ) → ℝ)
+    (hstep : ∀ (μ : Fin n → ℝ) (s : Fin n), IsHCParam μ → GapAtLeast ε μ h → GapAtLeast ε (μ + Pi.single s 1) h →
+      StrictAnti (μ + Pi.single s 1) → dfun (μ + Pi.single s 1) = dfun μ * ratioV μ s)
+    {lam : Fin n → ℝ} (hlam : IsHCParam lam) (hgap : GapAtLeast ε lam h) :
+    ∀ (N : ℕ) (c : Fin n → ℕ), Antitone c → ∑ i, c i = N →
+      dfun (lam + fun i => (c i : ℝ)) / Vand (lam + fun i => (c i : ℝ)) = dfun lam / Vand lam := by
+  apply ReciprocityTheory.ChartRestriction.DS.fdS_main <;> assumption
+
+theorem fd_step {ε : Fin n → Bool} {h : ℝ} (dfun : (Fin n → ℝ) → ℝ)
+    (hstep : ∀ (μ : Fin n → ℝ) (s : Fin n), IsHCParam μ → GapAtLeast ε μ h →
+      GapAtLeast ε (μ + Pi.single s 1) h → StrictAnti (μ + Pi.single s 1) → dfun (μ + Pi.single s 1) = dfun μ * ratioV μ s)
+    {lam : Fin n → ℝ} (hlam : IsHCParam lam) (hgap : GapAtLeast ε lam h) (t : ℕ) :
+    dfun (lamT lam t) / Vand (lamT lam t) = dfun lam / Vand lam := by
+  apply ReciprocityTheory.ChartRestriction.DS.fd_step <;> assumption
+
+end ReciprocityTheory.ChartRestriction.DS.G2
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.FormalDegreeG2.ThmFD
+
+section
 
 @[expose] public section
 
@@ -152,3 +400,6 @@ theorem thmFD (hB3 : Lap.Base.TangentPairingStatement) {ε : Fin n → Bool} {la
   simpa only [hlam0] using this
 
 end ReciprocityTheory.ChartRestriction.DS.G2
+end
+end
+end

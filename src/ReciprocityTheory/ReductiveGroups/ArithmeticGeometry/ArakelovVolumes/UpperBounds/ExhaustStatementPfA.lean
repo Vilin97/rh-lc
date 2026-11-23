@@ -42,7 +42,30 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.L2DbarEstimates.LeviForms.DetMonoDetOneAdd
+public import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
+public import Lemmata.DetMonotoneStarMulSelf.OneLeReDetOneAdd
+
+-- Source module: ReciprocityTheory.L2DbarEstimates.LeviForms.DetMonoDetOneAdd
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.L2DbarEstimates.I
+
+open Matrix
+open scoped ComplexOrder MatrixOrder
+
+theorem maDet (n : ℕ) : DetMonoStatement n := by
+  first | exact Bl.DetMonotoneStarMulSelf.goal1 .. | (apply Bl.DetMonotoneStarMulSelf.goal1 <;> assumption) | (intros; apply Bl.DetMonotoneStarMulSelf.goal1 <;> assumption)
+
+end ReciprocityTheory.L2DbarEstimates.I
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.ExhaustStatementPfA
+
+section
 
 @[expose] public section
 
@@ -164,3 +187,5 @@ theorem isOpen_Dset (f p q : ℕ) : IsOpen (Dset f p q) :=
   isOpen_of (fun v : V (nD f p q) => v) cont_coord
 
 end ReciprocityTheory.ChartRestriction.G.AR.Up.ExhB
+end
+end

@@ -1,20 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Uniformization.SvalTwistOne
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.CoeffEqZeroOfSumSmulEqZeroOfSeparating
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsFiniteExtensionPrimitiveResidue
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsIsProdB
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsNeZeroIffSvalGenericPointNeZero
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsIntegralTensorLeftOfSmoothGrpObj
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SecEqZeroOfThickeningsOfSection
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SvalEqZeroOfFaithfullyFlatBase
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -27,8 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,8 +42,274 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ThickTransComp
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FiniteAlgebraLocalCompletion
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsIsProdB
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsNeZeroIffSvalGenericPointNeZero
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsIntegralTensorLeftOfSmoothGrpObj
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SecEqZeroOfThickeningsOfSection
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.ValCalc
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.CoeffEqZeroOfSumSmulEqZeroOfSeparating
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem coeff_eq_zero_of_sum_smul_eq_zero_of_separating {Y A M : Type*} [CommRing A]
+    [AddCommGroup M] [Module A M] (P : (Y → A) → Prop) (h1 : P 1)
+    (hmul : ∀ t t', P t → P t' → P (t * t')) (s : Finset Y)
+    (hsep : ∀ y ∈ s, ∀ z ∈ s, y ≠ z → ∃ t, P t ∧ IsUnit (t y - t z))
+    (a : Y → M) (h : ∀ t, P t → ∑ y ∈ s, t y • a y = 0) : ∀ y ∈ s, a y = 0 := by
+  classical
+  induction s using Finset.strongInduction generalizing a with
+  | H s ih =>
+    intro y₀ hy₀
+    by_cases hz : ∃ z ∈ s, z ≠ y₀
+    · obtain ⟨z, hzs, hzy⟩ := hz
+      obtain ⟨u, hu, hunit⟩ := hsep y₀ hy₀ z hzs (Ne.symm hzy)
+
+      set b : Y → M := fun y => (u y - u z) • a y with hb
+      have hbrel : ∀ t, P t → ∑ y ∈ s.erase z, t y • b y = 0 := by
+        intro t ht
+        rw [Finset.sum_erase s (by simp [hb])]
+        have e : ∀ y, t y • b y = (t * u) y • a y - u z • (t y • a y) := by
+          intro y
+          simp only [hb, Pi.mul_apply, smul_smul, ← sub_smul]
+          congr 1
+          ring
+        simp only [e, Finset.sum_sub_distrib, ← Finset.smul_sum, h t ht, h (t * u) (hmul t u ht hu),
+          smul_zero, sub_zero]
+      have hsub : s.erase z ⊂ s := Finset.erase_ssubset hzs
+      have key := ih (s.erase z) hsub
+        (fun y hy w hw hne => hsep y (Finset.mem_of_mem_erase hy) w (Finset.mem_of_mem_erase hw) hne)
+        b hbrel y₀ (Finset.mem_erase.mpr ⟨Ne.symm hzy, hy₀⟩)
+      exact (hunit.smul_eq_zero).mp key
+    · push Not at hz
+      have := h 1 h1
+      rw [Finset.sum_eq_single_of_mem y₀ hy₀ (fun z hz' hne => absurd (hz z hz') hne)] at this
+      simpa using this
+
+theorem laurent_coeff_eq_zero_of_vanish_torsion :
+    ∀ (Y : Type) [AddCommGroup Y] [Module.Free ℤ Y] [Module.Finite ℤ Y] (n : ℕ), n.Prime →
+    ∀ s : Finset Y, ∃ j₀ : ℕ, ∀ j ≥ j₀, ∀ (A : Type) [CommRing A] [IsLocalRing A] (ζ : A),
+    IsUnit (n : A) → ζ ^ (n ^ j) = 1 → IsPrimitiveRoot (IsLocalRing.residue A ζ) (n ^ j) →
+    ∀ (M : Type) [AddCommGroup M] [Module A M] (a : Y → M),
+    (∀ t : Multiplicative Y →* Aˣ, (∀ y, t y ^ (n ^ j) = 1) →
+      ∑ y ∈ s, (t (Multiplicative.ofAdd y) : A) • a y = 0) → ∀ y ∈ s, a y = 0 := by
+  intro Y _ _ _ n hn s
+  let b := Module.Free.chooseBasis ℤ Y
+
+  refine ⟨∑ p ∈ s ×ˢ s, ∑ i, (b.repr (p.1 - p.2) i).natAbs, ?_⟩
+  intro j hj A _ _ ζ _ hζ hprim M _ _ a ha
+  have hN : n ^ j ≠ 0 := pow_ne_zero _ hn.ne_zero
+  let u : Aˣ := Units.ofPowEqOne ζ (n ^ j) hζ hN
+  have hu : u ^ (n ^ j) = 1 := Units.pow_ofPowEqOne hζ hN
+
+  let χ : _ → Multiplicative Y →* Aˣ := fun i =>
+    (zpowersHom Aˣ u).comp (AddMonoidHom.toMultiplicative (b.coord i).toAddMonoidHom)
+  have hχ : ∀ i y, χ i (Multiplicative.ofAdd y) = u ^ (b.repr y i) := by
+    intro i y
+    simp [χ, zpowersHom]
+  have hχord : ∀ i y, χ i y ^ (n ^ j) = 1 := by
+    intro i y
+    rw [show y = Multiplicative.ofAdd (Multiplicative.toAdd y) from rfl, hχ, ← zpow_natCast,
+      ← zpow_mul, mul_comm, zpow_mul, zpow_natCast, hu, one_zpow]
+  let P : (Y → A) → Prop := fun f =>
+    ∃ t : Multiplicative Y →* Aˣ, (∀ y, t y ^ (n ^ j) = 1) ∧ f = fun y => (t (Multiplicative.ofAdd y) : A)
+  refine coeff_eq_zero_of_sum_smul_eq_zero_of_separating P ⟨1, fun _ => one_pow _, by funext; simp⟩
+    ?_ s ?_ a ?_
+  · rintro _ _ ⟨t, ht, rfl⟩ ⟨t', ht', rfl⟩
+    exact ⟨t * t', fun y => by rw [MonoidHom.mul_apply, mul_pow, ht, ht', one_mul],
+      by funext y; simp⟩
+  · intro y hy z hz hyz
+    have hw : b.repr (y - z) ≠ 0 := by
+      rw [Ne, LinearEquiv.map_eq_zero_iff]
+      exact sub_ne_zero.mpr hyz
+    obtain ⟨i, hi⟩ := Finsupp.ne_iff.mp hw
+    simp only [Finsupp.coe_zero, Pi.zero_apply] at hi
+    refine ⟨_, ⟨χ i, hχord i, rfl⟩, ?_⟩
+    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, hχ, hχ, map_sub]
+    let v : (IsLocalRing.ResidueField A)ˣ := Units.map (IsLocalRing.residue A).toMonoidHom u
+    have hv : IsPrimitiveRoot v (n ^ j) := IsPrimitiveRoot.coe_units_iff.mp (by simpa [v, u] using hprim)
+    have hres : ∀ k : ℤ, IsLocalRing.residue A ((u ^ k : Aˣ) : A) = ((v ^ k : _ˣ) : _) := by
+      intro k
+      rw [show v ^ k = Units.map (IsLocalRing.residue A).toMonoidHom (u ^ k) from (map_zpow _ u k).symm]
+      rfl
+    rw [hres, hres, sub_ne_zero, Ne, Units.val_inj, ← div_eq_one, div_eq_mul_inv, ← zpow_sub, ← Finsupp.sub_apply,
+      ← map_sub, hv.zpow_eq_one_iff_dvd]
+    intro hdvd
+    apply hi
+    apply Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd
+    have h1 : (b.repr (y - z) i).natAbs ≤ ∑ p ∈ s ×ˢ s, ∑ i, (b.repr (p.1 - p.2) i).natAbs := by
+      refine le_trans ?_ (Finset.single_le_sum (f := fun p : Y × Y => ∑ i, (b.repr (p.1 - p.2) i).natAbs)
+        (fun _ _ => Nat.zero_le _) (show (y, z) ∈ s ×ˢ s from Finset.mem_product.mpr ⟨hy, hz⟩))
+      exact Finset.single_le_sum (f := fun i => (b.repr (y - z) i).natAbs) (fun _ _ => Nat.zero_le _)
+        (Finset.mem_univ i)
+    have h2 : j < n ^ j := Nat.lt_pow_self hn.one_lt
+    simp only [Int.natAbs_natCast]
+    omega
+  · rintro _ ⟨t, ht, rfl⟩
+    exact ha t ht
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsFiniteExtensionPrimitiveResidue
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem isPrimitiveRoot_residue_of_isUnit {W : Type*} [CommRing W] [IsDomain W] [IsLocalRing W]
+    {ζ : W} {N : ℕ} (hζ : IsPrimitiveRoot ζ N) (hN : IsUnit (N : W)) :
+    IsPrimitiveRoot (IsLocalRing.residue W ζ) N := by
+  refine ⟨by rw [← map_pow, hζ.pow_eq_one, map_one], fun l hl => hζ.dvd_of_pow_eq_one l ?_⟩
+  by_contra hne
+  have h1 : (ζ ^ l) ^ N = 1 := by rw [← pow_mul, mul_comm, pow_mul, hζ.pow_eq_one, one_pow]
+  have h2 : ∑ i ∈ Finset.range N, (ζ ^ l) ^ i = 0 := by
+    have := geom_sum_mul (ζ ^ l) N
+    rw [h1, sub_self] at this
+    exact (mul_eq_zero.1 this).resolve_right (sub_ne_zero.2 hne)
+  have h3 := congrArg (IsLocalRing.residue W) h2
+
+  simp only [map_sum, map_pow, hl, one_pow, map_zero, Finset.sum_const, Finset.card_range,
+  nsmul_eq_mul, mul_one] at h3
+  have h4 := hN.map (IsLocalRing.residue W)
+  rw [map_natCast] at h4
+  exact h4.ne_zero (by simpa using h3)
+
+theorem exists_finite_extension_primitive_residue :
+    ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (IsLocalRing.maximalIdeal V) V] [CharZero V], (∃ n : ℕ, n.Prime ∧ IsUnit (n : V)) ∧ ∀ (n j : ℕ), n.Prime → IsUnit (n : V) → ∃ (W : Type) (_ : CommRing W) (_ : IsLocalRing W) (_ : Algebra V W) (φ : TF (R := V) (AlgebraicClosure (FractionRing V)) ⟶ Over.mk (Spec.map (CommRingCat.ofHom (algebraMap V W)))) (ζ : W), (Module.Finite V W ∧ Module.Free V W ∧ IsDomain W ∧ IsLocalHom (algebraMap V W) ∧ IsAdicComplete ((IsLocalRing.maximalIdeal V).map (algebraMap V W)) W) ∧ Function.Injective φ.left.appTop.hom ∧ IsUnit (n : W) ∧ ζ ^ (n ^ j) = 1 ∧ IsPrimitiveRoot (IsLocalRing.residue W ζ) (n ^ j) := by
+  intro V _ _ _ _ _
+  refine ⟨?_, fun n j hn hu => ?_⟩
+  · have h : IsUnit ((3 : V) + -2) := by norm_num
+    rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add h with h | h
+    · exact ⟨3, Nat.prime_three, by exact_mod_cast h⟩
+    · exact ⟨2, Nat.prime_two, by exact_mod_cast (IsUnit.neg_iff _).1 h⟩
+  · let F := AlgebraicClosure (FractionRing V)
+    have hpos : 0 < n ^ j := pow_pos hn.pos j
+    have : NeZero (n ^ j) := ⟨hpos.ne'⟩
+    have : NeZero ((n ^ j : ℕ) : F) := inferInstance
+    obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot F (n ^ j)
+    let W : Subalgebra V F := Algebra.adjoin V {z}
+    have hzW : z ∈ W := Algebra.subset_adjoin rfl
+    have hfin : Module.Finite V W :=
+      Algebra.finite_adjoin_simple_of_isIntegral
+        ⟨Polynomial.X ^ (n ^ j) - Polynomial.C 1, Polynomial.monic_X_pow_sub_C _ hpos.ne', by
+          simp [hz.pow_eq_one]⟩
+    have : FaithfulSMul V W := (faithfulSMul_iff_algebraMap_injective V W).2 fun x y h =>
+      IsFractionRing.injective V (FractionRing V) ((algebraMap (FractionRing V) F).injective
+        (congrArg Subtype.val h))
+    have hfree : Module.Free V W := Module.free_of_finite_type_torsion_free'
+    have hW : IsLocalRing W := ReciprocityTheory.ChartRestriction.G.T0.FiniteAlgebraLocalCompletion.isLocalRing_finite_domain (R := V) W
+    have hloc : IsLocalHom (algebraMap V W) := inferInstance
+    have hc := ReciprocityTheory.ChartRestriction.G.T0.FiniteAlgebraLocalCompletion.isAdicComplete_finite_algebra (R := V) W
+    have hζ : IsPrimitiveRoot (⟨z, hzW⟩ : W) (n ^ j) :=
+      IsPrimitiveRoot.of_map_of_injective (f := W.val) hz Subtype.val_injective
+    have hnW : IsUnit (n : W) := by simpa using hu.map (algebraMap V W)
+    refine ⟨W, inferInstance, inferInstance, inferInstance,
+      Over.homMk (Spec.map (CommRingCat.ofHom W.val.toRingHom)) ?_, ⟨z, hzW⟩,
+      ⟨hfin, hfree, inferInstance, hloc, hc⟩, ?_, hnW, hζ.pow_eq_one,
+      isPrimitiveRoot_residue_of_isUnit hζ (by exact_mod_cast hnW.pow j)⟩
+    · change Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
+      rw [← Spec.map_comp, ← Spec.map_comp]
+      rfl
+    · change Function.Injective (Spec.map (CommRingCat.ofHom W.val.toRingHom)).appTop.hom
+      have h := Scheme.ΓSpecIso_naturality (CommRingCat.ofHom W.val.toRingHom)
+      have hi : Function.Injective ((Spec.map (CommRingCat.ofHom W.val.toRingHom)).appTop ≫
+          (Scheme.ΓSpecIso _).hom).hom := by
+        rw [h, CommRingCat.hom_comp, RingHom.coe_comp]
+        exact Subtype.val_injective.comp (Scheme.ΓSpecIso _).commRingCatIsoToRingEquiv.injective
+      rw [CommRingCat.hom_comp, RingHom.coe_comp] at hi
+      exact hi.of_comp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SvalEqZeroOfFaithfullyFlatBase
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem levelff_stalkMap_injective {X Y : Scheme.{0}} (f : X ⟶ Y) [Flat f] (x : X) :
+    Function.Injective (f.stalkMap x).hom := by
+  have h := Flat.stalkMap f x
+  have hl : IsLocalHom (f.stalkMap x).hom := inferInstance
+  algebraize [(f.stalkMap x).hom]
+  have : IsLocalHom (algebraMap (Y.presheaf.stalk (f x)) (X.presheaf.stalk x)) := hl
+  have := Module.FaithfullyFlat.of_flat_of_isLocalHom (A := Y.presheaf.stalk (f x)) (B := X.presheaf.stalk x)
+  exact FaithfulSMul.algebraMap_injective (Y.presheaf.stalk (f x)) (X.presheaf.stalk x)
+
+theorem levelff_gs_comp {X Y Z : Scheme.{0}} (p : Z ⟶ Y) (r : Y ⟶ X) (z : Z) (U : X.Opens) (h : r (p z) ∈ U)
+    (a : Γ(X, U)) : gs (p ≫ r) z U a = (p.stalkMap z).hom (gs r (p z) U a) := by
+  rw [← gs_pull p r z U h, gs_eq p z (r ⁻¹ᵁ U) h, gs_eq r (p z) U h]
+  exact (Scheme.Hom.germ_stalkMap_apply p (r ⁻¹ᵁ U) z h _).symm
+
+theorem sval_eq_zero_of_faithfullyFlat_base : ∀ (R W : Type) [CommRing R] [CommRing W] [Algebra R W] [Module.FaithfullyFlat R W] (I : Ideal R) (e : ℕ) (Y : Over (Spec (CommRingCat.of R))) (X : Scheme.{0}) (L : LB X), L.IsLB → ∀ (K : Type) [Fintype K] (φ : K → (Y.left ⟶ X)) (ε : K → ℤ) (d : LB.Sec (LB.LinComb L φ ε)), (∀ (Z : Scheme.{0}) (r : Z ⟶ Y.left) (ω : Z ⟶ Spec (CommRingCat.of W)), ω ≫ Spec.map (CommRingCat.ofHom (algebraMap R W)) = r ≫ Y.hom → (∃ ρ : Z ⟶ Spec (CommRingCat.of (R ⧸ I ^ (e + 1))), ρ ≫ thick R I e = r ≫ Y.hom) → ∀ (z : Z) (J), Good L z J → sval d r z J = 0) → ∀ (Z : Scheme.{0}) (r : Z ⟶ Y.left), (∃ ρ : Z ⟶ Spec (CommRingCat.of (R ⧸ I ^ (e + 1))), ρ ≫ thick R I e = r ≫ Y.hom) → ∀ (z : Z) (J), Good L z J → sval d r z J = 0 := by
+  intro R W _ _ _ _ I e Y X L hL K _ φ ε d H Z r hρ z J hJ
+  let g : Spec (CommRingCat.of W) ⟶ Spec (CommRingCat.of R) := Spec.map (CommRingCat.ofHom (algebraMap R W))
+  have hg : Flat g ∧ Surjective g := by
+    refine (flat_and_surjective_SpecMap_iff _).2 ?_
+    exact RingHom.faithfullyFlat_algebraMap_iff.2 inferInstance
+  obtain ⟨_, _⟩ := hg
+  let p : pullback (r ≫ Y.hom) g ⟶ Z := pullback.fst _ _
+  have : Flat p := inferInstance
+  have : Surjective p := inferInstance
+  obtain ⟨z', rfl⟩ := p.surjective z
+  obtain ⟨ρ, hρ⟩ := hρ
+  choose J' hJ' using fun χ : pullback (r ≫ Y.hom) g ⟶ X => exists_chart hL (χ z')
+  have h0 := H _ (p ≫ r) (pullback.snd _ _) (by rw [Category.assoc]; exact pullback.condition.symm)
+    ⟨p ≫ ρ, by rw [Category.assoc, hρ, Category.assoc]⟩ z' J' hJ'
+  have hm : r (p z') ∈ LB.wchart L φ (fun k => J (r ≫ φ k)) := hJ.mem φ r
+  have h1 := sec_trans d (p ≫ r) z' (j := fun k => J (r ≫ φ k)) hm (Good.mem hJ' φ (p ≫ r))
+  have h2 : gs (p ≫ r) z' (LB.wchart L φ (fun k => J (r ≫ φ k))) (d.f (fun k => J (r ≫ φ k))) = 0 :=
+    h1.trans ((congrArg _ h0).trans (mul_zero _))
+  apply levelff_stalkMap_injective p z'
+  rw [map_zero]
+  exact (levelff_gs_comp p r z' _ hm _).symm.trans h2
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsTwistConvNeZero
+
+section
 
 @[expose] public section
 
@@ -205,3 +465,5 @@ theorem exists_twist_conv_ne_zero : ∀ (V : Type) [CommRing V] [IsDomain V] [Is
   exact e₄.trans key
 
 end GlobalTheory.UU
+end
+end

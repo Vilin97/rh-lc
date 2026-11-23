@@ -5,17 +5,22 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LatI
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsHeckeRepresentativesRightTranslateIdentityStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasSumInnerEulerProductQuotientInjectiveStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasSumLocalEulerFactorHeckeOperatorsStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuotientEquivRestrictedComponentFamiliesStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RightInvariantMulEqFinprodComponentsStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaPairingInvariant
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.Group.Subgroup.Map
+public import Mathlib.Basic.Finite.Defs
+public import Mathlib.GroupTheory.Coset.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -23,6 +28,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -32,6 +38,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +54,207 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Data.Finset.Dedup
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Basic.Complex.Basic
+import Mathlib.Order.CompletePartialOrder
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaPairingInvariant
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuotientEquivRestrictedComponentFamilies
+
+section
+
+@[expose] public section
+
+open scoped InnerProductSpace BigOperators
+
+namespace GlobalTheory
+
+theorem quotient_equiv_restrictedFamilies : ∀ (Γ : Type) [Group Γ] (K : Subgroup Γ) (ι : Type) (c : ι → Γ →* Γ), (∀ g, g ∈ K ↔ ∀ v, c v g ∈ K) → (∀ g, {v | c v g ∉ K}.Finite) → (∀ v g, c v (c v g) = c v g) → (∀ v w g, v ≠ w → c w (c v g) = 1) → ∃ e : Γ ⧸ K ≃ {f : ∀ v, Γ ⧸ K.comap (c v) // {w | f w ≠ (QuotientGroup.mk 1 : Γ ⧸ K.comap (c w))}.Finite}, ∀ (g : Γ) v, (e (QuotientGroup.mk g)).1 v = (QuotientGroup.mk g : Γ ⧸ K.comap (c v)) := by
+  intro Γ _ K ι c hK hfin hidem horth
+  classical
+  have hmk : ∀ v (g h : Γ), ((QuotientGroup.mk g : Γ ⧸ K.comap (c v)) = QuotientGroup.mk h) ↔
+      c v (g⁻¹ * h) ∈ K := by
+    intro v g h
+    rw [QuotientGroup.eq, Subgroup.mem_comap]
+  have hle : ∀ v, K ≤ K.comap (c v) := fun v g hg => (hK g).1 hg v
+  let F : Γ ⧸ K → ∀ v, Γ ⧸ K.comap (c v) := fun q v =>
+    Quotient.liftOn' q (fun g => (QuotientGroup.mk g : Γ ⧸ K.comap (c v))) (by
+      intro a b hab
+      rw [QuotientGroup.leftRel_apply] at hab
+      exact (QuotientGroup.eq).2 (hle v hab))
+  have hF : ∀ g v, F (QuotientGroup.mk g) v = QuotientGroup.mk g := fun g v => rfl
+  have hsupp : ∀ g, {w | F (QuotientGroup.mk g) w ≠ (QuotientGroup.mk 1 : Γ ⧸ K.comap (c w))} =
+      {v | c v g ∉ K} := by
+    intro g
+    ext w
+    simp only [Set.mem_setOf_eq, hF, ne_eq, hmk, mul_one, map_inv, inv_mem_iff]
+  let G : Γ ⧸ K → {f : ∀ v, Γ ⧸ K.comap (c v) //
+      {w | f w ≠ (QuotientGroup.mk 1 : Γ ⧸ K.comap (c w))}.Finite} := fun q =>
+    ⟨F q, by
+      refine QuotientGroup.induction_on q ?_
+      intro g
+      rw [hsupp]
+      exact hfin g⟩
+  have hinj : Function.Injective G := by
+    intro q₁ q₂ h12
+    refine QuotientGroup.induction_on q₁ (fun g => ?_) h12
+    refine QuotientGroup.induction_on q₂ (fun k => ?_)
+    intro h12
+    have h' : ∀ v, F (QuotientGroup.mk g) v = F (QuotientGroup.mk k) v :=
+      fun v => congrFun (congrArg Subtype.val h12) v
+    rw [QuotientGroup.eq, hK]
+    intro v
+    have := h' v
+    rw [hF, hF, hmk] at this
+    exact this
+  have hcw : ∀ w (g : Γ), (QuotientGroup.mk (c w g) : Γ ⧸ K.comap (c w)) = QuotientGroup.mk g := by
+    intro w g
+    rw [hmk, map_mul, map_inv, hidem, inv_mul_cancel]
+    exact K.one_mem
+  have hlist : ∀ (x : ι → Γ) (l : List ι), l.Nodup → ∀ w,
+      c w ((l.map (fun v => c v (x v))).prod) = if w ∈ l then c w (x w) else 1 := by
+    intro x l
+    induction l with
+    | nil => intro _ w; simp
+    | cons a t ih =>
+      intro hl w
+      rw [List.nodup_cons] at hl
+      rw [List.map_cons, List.prod_cons, map_mul, ih hl.2]
+      by_cases hw : w = a
+      · subst hw
+        simp [hidem, hl.1]
+      · rw [horth a w _ (Ne.symm hw), one_mul]
+        simp [hw]
+  have hsurj : Function.Surjective G := by
+    rintro ⟨f, hf⟩
+    let x : ι → Γ := fun v => (f v).out
+    refine ⟨QuotientGroup.mk ((hf.toFinset.toList.map (fun v => c v (x v))).prod), ?_⟩
+    apply Subtype.ext
+    funext w
+    show F (QuotientGroup.mk _) w = f w
+    rw [hF, ← hcw w, hlist x hf.toFinset.toList (Finset.nodup_toList _) w]
+    by_cases hw : w ∈ hf.toFinset.toList
+    · rw [if_pos hw, hcw]
+      exact Quotient.out_eq (f w)
+    · rw [if_neg hw]
+      rw [Finset.mem_toList, Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_not] at hw
+      exact hw.symm
+  exact ⟨Equiv.ofBijective G ⟨hinj, hsurj⟩, fun g v => rfl⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuotientEquivRestrictedComponentFamiliesStatement
+
+section
+
+@[expose] public section
+
+open scoped InnerProductSpace BigOperators
+
+theorem _root_.GlobalTheory.T.quotient_equiv_restrictedComponentFamilies : ∀ (Γ : Type) [Group Γ] (K : Subgroup Γ) (ι : Type) (c : ι → Γ →* Γ), (∀ g, g ∈ K ↔ ∀ v, c v g ∈ K) → (∀ g, {v | c v g ∉ K}.Finite) → (∀ v g, c v (c v g) = c v g) → (∀ v w g, v ≠ w → c w (c v g) = 1) → ∃ e : Γ ⧸ K ≃ {f : ∀ v, Γ ⧸ K.comap (c v) // {w | f w ≠ (QuotientGroup.mk 1 : Γ ⧸ K.comap (c w))}.Finite}, ∀ (g : Γ) v, (e (QuotientGroup.mk g)).1 v = (QuotientGroup.mk g : Γ ⧸ K.comap (c v)) := by
+  first | exact @GlobalTheory.quotient_equiv_restrictedFamilies | exact GlobalTheory.quotient_equiv_restrictedFamilies | (intros; apply GlobalTheory.quotient_equiv_restrictedFamilies <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RightInvariantMulEqFinprodComponents
+
+section
+
+@[expose] public section
+
+open scoped InnerProductSpace BigOperators
+
+namespace GlobalTheory
+
+theorem finprod_components_of_rightInvariant_mul :
+    ∀ (Γ : Type) [Group Γ] (K : Subgroup Γ) (ι : Type) (c : ι → Γ →* Γ) (a : Γ → ℂ),
+      (∀ g, g ∈ K ↔ ∀ v, c v g ∈ K) → (∀ g, {v | c v g ∉ K}.Finite) →
+      (∀ v g, c v (c v g) = c v g) → (∀ v w g, v ≠ w → c w (c v g) = 1) →
+      (∀ g k, k ∈ K → a (g * k) = a g) → a 1 = 1 →
+      (∀ v g h, c v g = 1 → c v h = h → a (g * h) = a g * a h) →
+      ∀ g, a g = ∏ᶠ v, a (c v g) := by
+  intro Γ _ K ι c a hK hfin hidem horth hinv ha1 hmul
+  classical
+
+  have haK : ∀ k, k ∈ K → a k = 1 := by
+    intro k hk
+    have := hinv 1 k hk
+    rw [one_mul] at this
+    rw [this, ha1]
+  have key : ∀ (s : Finset ι) (g : Γ), {v | c v g ∉ K} ⊆ (s : Set ι) →
+      a g = ∏ v ∈ s, a (c v g) := by
+    intro s
+    induction s using Finset.induction_on with
+    | empty =>
+      intro g hg
+      have hgK : g ∈ K := (hK g).2 (fun v => by
+        by_contra h
+        simpa using hg h)
+      simp [haK g hgK]
+    | @insert v s hv ih =>
+      intro g hg
+      set g' := g * (c v g)⁻¹ with hg'
+      have hcv : c v g' = 1 := by
+        rw [hg', map_mul, map_inv, hidem, mul_inv_cancel]
+      have hcw : ∀ w, w ≠ v → c w g' = c w g := by
+        intro w hw
+        rw [hg', map_mul, map_inv, horth v w g (Ne.symm hw), inv_one, mul_one]
+      have hsupp : {w | c w g' ∉ K} ⊆ (s : Set ι) := by
+        intro w hw
+        simp only [Set.mem_setOf_eq] at hw
+        by_cases hwv : w = v
+        · subst hwv
+          exact absurd (hcv ▸ K.one_mem) hw
+        · rw [hcw w hwv] at hw
+          have := hg hw
+          simp only [Finset.coe_insert, Set.mem_insert_iff, Finset.mem_coe] at this
+          exact this.resolve_left hwv
+      have ih' := ih g' hsupp
+      have hprod : ∏ w ∈ s, a (c w g') = ∏ w ∈ s, a (c w g) := by
+        apply Finset.prod_congr rfl
+        intro w hw
+        rw [hcw w (fun h => hv (h ▸ hw))]
+      have hsplit : g = g' * c v g := by
+        rw [hg', inv_mul_cancel_right]
+      have hag : a g = a g' * a (c v g) := by
+        conv_lhs => rw [hsplit]
+        exact hmul v g' (c v g) hcv (hidem v g)
+      rw [hag, ih', hprod, Finset.prod_insert hv, mul_comm]
+  intro g
+  have hsub : Function.mulSupport (fun v => a (c v g)) ⊆ ((hfin g).toFinset : Set ι) := by
+    intro w hw
+    simp only [Set.Finite.coe_toFinset, Set.mem_setOf_eq]
+    intro hwK
+    exact hw (haK _ hwK)
+  rw [finprod_eq_prod_of_mulSupport_subset _ hsub]
+  exact key _ g (by simp)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RightInvariantMulEqFinprodComponentsStatement
+
+section
+
+@[expose] public section
+
+open scoped InnerProductSpace BigOperators
+
+theorem _root_.GlobalTheory.T.rightInvariant_mul_eq_finprod_components : ∀ (Γ : Type) [Group Γ] (K : Subgroup Γ) (ι : Type) (c : ι → Γ →* Γ) (a : Γ → ℂ), (∀ g, g ∈ K ↔ ∀ v, c v g ∈ K) → (∀ g, {v | c v g ∉ K}.Finite) → (∀ v g, c v (c v g) = c v g) → (∀ v w g, v ≠ w → c w (c v g) = 1) → (∀ g k, k ∈ K → a (g * k) = a g) → a 1 = 1 → (∀ v g h, c v g = 1 → c v h = h → a (g * h) = a g * a h) → ∀ g, a g = ∏ᶠ v, a (c v g) := by
+  first | exact @GlobalTheory.finprod_components_of_rightInvariant_mul | exact GlobalTheory.finprod_components_of_rightInvariant_mul | (intros; apply GlobalTheory.finprod_components_of_rightInvariant_mul <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InjectiveOfInnerEq
+
+section
 
 @[expose] public section
 
@@ -178,4 +386,6 @@ theorem upInj_holds : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Typ
 
 end GlobalTheory.UpInj
 
+end
+end
 end

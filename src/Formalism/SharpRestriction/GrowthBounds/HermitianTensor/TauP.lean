@@ -8,8 +8,6 @@ public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.OneMemDu
 public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DerivativeRepresentation
 public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetYNeZero
 import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.NuOfLoZero
-public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PdAevalScale
-import Mathlib.Algebra.AffineMonoid.UniqueSums
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,10 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,8 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,10 +42,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PdAevalScale
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.flipOneThree.Pf
+
+open Formalism.MainNotions.G Formalism.MainNotions.flipOneThree Formalism.CountingSumsFrames Formalism.GradedWeylDivisibility MvPolynomial
+
+variable (A : Type) [CommRing A] (r : ℕ)
+
+theorem detY_eq : detY A r = (genY A r).det := rfl
+
+end Formalism.MainNotions.flipOneThree.Pf
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TauP
+
+section
 
 @[expose] public section
 
@@ -538,4 +563,6 @@ theorem tauP : TauP := by
 
 end Formalism.MainNotions.flipOneThree.Pf
 
+end
+end
 end

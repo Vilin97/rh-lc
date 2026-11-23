@@ -1,13 +1,13 @@
 module
 
 public import Formalism.LocalToGlobal.HermitianForms.TiedTwSymP
-public import Formalism.LocalToGlobal.HermitianColumns.TiedQCHost
-public import Formalism.LocalToGlobal.HermitianForms.BothSym
-public import Formalism.LocalToGlobal.HermitianForms.TiedTwJSym
+public import Formalism.LocalToGlobal.HermitianColumns.TiedQC
+public import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -39,6 +39,33 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.HermitianForms.BothSym
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwJSym
+
+-- Source module: Formalism.LocalToGlobal.HermitianColumns.TiedQCHost
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions
+
+namespace Formalism.L2.Herm
+
+abbrev TwistedCharacterData {D : D7} {C : Formalism.L2.Host.CharFrame D} {nch : NChoice D} (Tp : Formalism.L2.Host.TupTied D C nch) : Type 1 :=
+  TwChTied D (fun μ v => Tp.InQ' μ v)
+
+end Formalism.L2.Herm
+
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.HermitianForms.TiedTwSymAll
+
+section
 
 @[expose] public section
 
@@ -73,4 +100,6 @@ structure SymmetricTwistedColumnsAtPrimes {D : D7} {cf : Formalism.L2.Host.CharF
 
 end Formalism.L2.Forms
 
+end
+end
 end

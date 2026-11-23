@@ -2,14 +2,20 @@ module
 
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ExistsRosatiGen
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsFiniteExtAllModelsUniformised
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GeneratesOfNonzeroOnSpecialFibre
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TypingsAgree
+public import Formalism.LocalToGlobal.ProjectiveLattices.ChartDirectionsIntegral
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsFramedPointBaseChangeAlgHom
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GeneratesOfNonzeroOnSpecialFibre
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllUniformizationLawsHold
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.IsOpenOfRangeGenericSubset
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -21,7 +27,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,8 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,8 +47,146 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GeneratesOfNonzeroOnSpecialFibre
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.WchartLePreimage
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.RosatiAdj
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.GlobalFnsHolds
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.Linter.Style
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.RosVal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocalB
+public import Mathlib.NumberTheory.NumberField.CMField
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsFiniteExtAllModelsUniformised
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory NumberField IsLocalRing IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
+open ReciprocityTheory.ChartRestriction.G.DVR Formalism.MainNotions.ModuliIntegralCharts.H1 Formalism.BasicNotions Formalism.MainNotions
+
+namespace GlobalTheory.IntegralPull
+
+theorem exists_finite_ext_all_models_uniformised {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
+    {Dw : Datum H} {l : Level H} (Xo : Moduli Dw l) (c : Coeff l) (T : CDVR) (io : c.F →+* T.Fr)
+    (y : IntFr Xo c T io) (e : ℕ) (la : HeightOneSpectrum (𝓞 c.F)) (ho : OverLa la T.V io e) (hy : y.IsAlg) :
+    ∃ (T' : CDVR) (φ : T.V →+* T'.V) (φF : T.Fr →+* T'.Fr) (e₁ : ℕ) (z' : IntFr Xo c T' (φF.comp io)),
+      Function.Injective φ ∧ IsLocalHom φ ∧ φ.Finite ∧
+      φF.comp (algebraMap T.V T.Fr) = (algebraMap T'.V T'.Fr).comp φ ∧
+      0 < e₁ ∧ OverLa la T'.V (φF.comp io) (e * e₁) ∧ z'.IsAlg ∧
+      (letI := io.toAlgebra; letI := (φF.comp io).toAlgebra
+        FrMap ({ φF with commutes' := fun _ => rfl } : T.Fr →ₐ[c.F] T'.Fr) y.1 z'.1) ∧
+      ∀ I : IntData Xo c T' (φF.comp io) z'.1, ∃ P : PELUnif (maximalIdeal T'.V) I.G, P.TorsionIso := by
+  have : Finite (ResidueField T.V) := hy
+  obtain ⟨G, t, m1, m2, -⟩ := y.2.2
+  obtain ⟨W, _, _, _, hc, _, hf, hi, hr, hS⟩ := GlobalTheory.UnifAfterExt.exists_split_baseChange T.V G.G G.semi
+  have hz : CharZero W := charZero_of_injective_ringHom hi
+  let T' : Formalism.L2.Pj.CDVR := { V := W }
+  have : FaithfulSMul T.V W := (faithfulSMul_iff_algebraMap_injective _ _).2 hi
+  have hl : IsLocalHom (algebraMap T.V W) := inferInstance
+  have hj : Function.Injective ((algebraMap W (FractionRing W)).comp (algebraMap T.V W)) :=
+    (IsFractionRing.injective W _).comp hi
+  obtain ⟨φ, hφ⟩ : ∃ φ : T.Fr →+* T'.Fr, ∀ v, φ (algebraMap T.V T.Fr v) = algebraMap T'.V T'.Fr (algebraMap T.V W v) :=
+    ⟨IsFractionRing.lift hj, IsFractionRing.lift_algebraMap hj⟩
+  obtain ⟨r, hr0, hv⟩ := exists_index (V' := T'.V) (algebraMap T.V W) φ hφ
+  letI := io.toAlgebra
+  letI := (φ.comp io).toAlgebra
+  let ψ : T.Fr →ₐ[c.F] T'.Fr := { φ with commutes' := fun _ => rfl }
+  obtain ⟨z, hz⟩ := GlobalTheory.FramedBaseChange.exists_frMap GlobalTheory.firstFiveLaws.1 E H Dw l Xo c _ _ ψ y.1
+  obtain ⟨p, χ, y₀, hy₀⟩ := y.2.1
+  let y' : IntFr Xo c T' (φ.comp io) :=
+    ⟨z, ⟨p, ψ.comp χ, y₀, Formalism.L2.Pj.frMap_trans (Xo := Xo) (c := c) _ _ _ χ ψ y₀ y.1 z hy₀ hz⟩,
+      integral_baseChange T T' io (φ.comp io) _ hi ψ hφ y.1 z hz y.2.2⟩
+  refine ⟨T', algebraMap T.V W, φ, r, y', hi, hl, RingHom.finite_algebraMap.2 hf, RingHom.ext hφ, hr0, ?_, hr, hz,
+    fun I => exists_unif_of_split T T' _ φ hφ m1 m2 hz.1 I.m1 I.m2 hS⟩
+  rw [Nat.mul_comm]
+  exact ho.bc φ hr0 hv
+
+end GlobalTheory.IntegralPull
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.TypingsAgree
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory
+  CartesianMonoidalCategory MonObj IsLocalRing NumberField
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.TorsionFactsCompare
+
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+section Operators
+
+variable {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : Type} [Field F] [Algebra (FractionRing R) F]
+
+end Operators
+
+section Data
+
+variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
+  (D : DegData V (maximalIdeal V)) (F : Type) [Field F] [Algebra (FractionRing V) F]
+
+
+open QForm in
+theorem bOf_balance {ϖ : V} (hϖ : Irreducible ϖ) {Q : D.toPre.X → ℤ} {O : Type} [Ring O] [StarRing O]
+    [Module O D.toPre.X] (ιD : D.toPre.OAct O) (hQ : IsQ D.toPre ϖ Q) (a : O) (χ χ' : D.toPre.X) :
+    bOf D.toPre Q (a • χ) χ' = bOf D.toPre Q χ (star a • χ') := by
+  have hL := D.toPre.P.isLB
+  have := ιD.onB.hom a
+  have := ιD.onB.hom (star a)
+  obtain ⟨u, hu, hnorm⟩ := exists_ros GlobalTheory.globalFns_holds D.toPre.P.isAb D.toPre.P.isLB _ _ (ιD.onB.rosati a)
+  have hc := ιD.tau_bal a u hu hnorm χ χ'
+  obtain ⟨_, _, hsA, hA⟩ := tau_val hϖ D hQ (a • χ) χ'
+  obtain ⟨_, _, hsB, hB⟩ := tau_val hϖ D hQ χ (star a • χ')
+  have hu0 := genHasVal_pullGen_of (ϖ := ϖ) D.toPre.P.L _ _ u hu (lift (D.toPre.c χ) (D.toPre.c χ')).left
+    (D.toPre.pt2 χ χ') (by simp [DegPre.pt2, ← CartesianMonoidalCategory.comp_lift])
+  have h1 := genHasVal_mulGen hϖ D.toPre.P.L hL _ _ _ _ _ _ _ _ _ _ hA hu0
+  have := genHasVal_unique hϖ D.toPre.P.L hL _ _ _ _ _
+    (genHasVal_corr hϖ D.toPre.P.L hL D.toPre.P.A.hom _ _ _ _ _ _ _ _
+      (sumElim_sec hsA (fun k => by
+        obtain ⟨q, hq⟩ := rosatiφ_over D.toPre.P.A (ιD.onB.act a) (ιD.onB.act (star a)) k
+        show (_ ≫ rosatiφ D.toPre.P.A (ιD.onB.act a) (ιD.onB.act (star a)) k) ≫ _ = _
+        rw [hq]; exact over_sec _ _)) hsB _ _
+      (genHasVal_isGen D.toPre.P.L _ _ _ _ _ hB) hc h1) hB
+  linarith
+
+end Data
+
+section Unif
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
+  {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {t : SAB H (Sp V)}
+  (P : PELUnif (maximalIdeal V) t) (F : Type) [Field F] [Algebra (FractionRing V) F]
+
+end Unif
+
+end GlobalTheory.TorsionFactsCompare
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsIntIffOfNatural
+
+section
 
 @[expose] public section
 
@@ -105,3 +247,6 @@ theorem unifAll_holds : UnifAll Xo c := by
   exact ⟨T', φV, φ, r, z, t, ⟨hi, hl, hf, hc, hr, hv⟩, hm, hz, ht⟩
 
 end GlobalTheory.CompanionTheory.Ar.Ref
+end
+end
+end

@@ -7,13 +7,8 @@ public import Formalism.WachLatticeTwists.CharacterSplitJumps.CharacterJumpProof
 public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.TheoremNFiveDeltaClause
 public import Formalism.WachLatticeTwists.CupProductVanishing.CupProductProofs.CoboundaryTrivialActionZero
 public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.ClsRowVOfMem
-public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.InRowRealOf
-public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.RowChiReal
-public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveReal
-public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveRealAllLiftThird
-import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.ShapeRowProofs.BkInRow
-public import Formalism.WachLatticeTwists.SplitClassesAll.Statement
-public import Formalism.WachLatticeTwists.SplitLocalLifts.SplitLocalLiftProofs.LocLift
+public import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+public import Formalism.WachLatticeTwists.RealClassMaps.Statement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -31,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,6 +47,239 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.RowChiReal
+public import Formalism.CharacterColumnKernels.CharacterColumnKernelEqualityForm
+public import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatDefs
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveRealAllLiftThird
+import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.ShapeRowProofs.BkInRow
+public import Formalism.WachLatticeTwists.SplitClassesAll.Statement
+public import Formalism.WachLatticeTwists.SplitLocalLifts.Cocycles1MapOfEquivariant
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Formalism.WachLatticeTwists.CoprimeLiftBounds.Statement
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.InRowRealOf
+
+section
+
+@[expose] public section
+
+variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
+
+open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC
+open ReciprocityTheory.ChartRestriction.T2 (GK PadicCoeff FracTop IsCyc IsCycOn IsFGTop cupFG)
+
+noncomputable section
+
+namespace Formalism.RepresentationBoundsCohomology.FIN
+
+theorem ko_tors (O : Type) [CommRing O] [IsDomain O] (z : KO O) : ∃ c : O, c ≠ 0 ∧ c • z = 0 := by
+  obtain ⟨q, rfl⟩ := Submodule.Quotient.mk_surjective _ z
+  obtain ⟨⟨a, ⟨b, hb⟩⟩, hq⟩ := IsLocalization.surj (nonZeroDivisors O) q
+  refine ⟨b, nonZeroDivisors.ne_zero hb, ?_⟩
+  rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
+  refine Submodule.mem_one.2 ⟨a, ?_⟩
+  rw [Algebra.smul_def, mul_comm]
+  exact hq.symm
+
+theorem psiCont (p : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+    [TopologicalSpace O] [TopologicalSpace (FractionRing O)]
+    [IsTopologicalAddGroup (FractionRing O)] [ContinuousSMul O (FractionRing O)]
+    (A : Type) [Ring A] [Algebra O A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [ContinuousConstSMul O A] (Y : Submodule A A) (hO : PadicCoeff p O) (hA : IsFGTop O A)
+    (ψ : Y →ₗ[O] KO O) : Continuous ψ := by
+  have hfg : IsFGTop O Y := by
+    have := hA.fg
+    have := hA.t2
+    have := hA.csmul
+    refine ⟨?_, inferInstance, ?_⟩
+    · exact Module.Finite.of_injective (Y.subtype.restrictScalars O) Subtype.val_injective
+    · exact ⟨Continuous.subtype_mk (f := fun q : O × Y => q.1 • (q.2 : A))
+        (continuous_fst.smul (continuous_subtype_val.comp continuous_snd)) _⟩
+  obtain ⟨a, ha, hka⟩ : ∃ a : O, a ≠ 0 ∧ ∀ y : Y, a • ψ y = 0 := by
+    obtain ⟨s, hs⟩ := hfg.fg.fg_top
+    choose f hf0 hf using fun y : Y => ko_tors O (ψ y)
+    refine ⟨∏ y ∈ s, f y, Finset.prod_ne_zero_iff.2 (fun y _ => hf0 y), fun y => ?_⟩
+    have hy : y ∈ Submodule.span O (s : Set Y) := hs ▸ Submodule.mem_top
+    induction hy using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem f hx
+      rw [hc, mul_comm, mul_smul, hf, smul_zero]
+    | zero => simp
+    | add x y _ _ hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
+    | smul c x _ hx => rw [map_smul, smul_comm, hx, smul_zero]
+  have hopen := hfg.isOpen_mulSub hO ha
+  refine continuous_of_continuousAt_zero ψ.toAddMonoidHom ?_
+  intro U hU
+  have hU0 : (0 : KO O) ∈ U := by
+    have := mem_of_mem_nhds hU
+    simpa using this
+  rw [Filter.mem_map]
+  refine Filter.mem_of_superset (hopen.mem_nhds (zero_mem _)) ?_
+  rintro _ ⟨z, rfl⟩
+  show ψ (a • z) ∈ U
+  rw [map_smul, hka]
+  exact hU0
+
+theorem inRowReal_of (p : ℕ) {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+    [TopologicalSpace O] [TopologicalSpace (FractionRing O)]
+    [IsTopologicalAddGroup (FractionRing O)] [ContinuousSMul O (FractionRing O)]
+    {A T' G : Type} [Ring A] [Algebra O A] [CommRing T'] [Algebra T' A] [Group G] [TopologicalSpace A]
+    [IsTopologicalAddGroup A] [ContinuousConstSMul O A] [ContinuousMul A]
+    {VT VT' : Type}
+    [AddCommGroup VT] [Module O VT] [TopologicalSpace VT] [IsTopologicalAddGroup VT] [ContinuousSMul O VT]
+    [AddCommGroup VT'] [Module O VT'] [TopologicalSpace VT'] [IsTopologicalAddGroup VT'] [ContinuousSMul O VT']
+    (r : G →* A) (χ : G →* T'ˣ) (E : A) (Dw : Subgroup G) [TopologicalSpace Dw]
+    {T₁ T₂ : Type} [AddCommGroup T₁] [Module O T₁] [AddCommGroup T₂] [Module O T₂]
+    [TopologicalSpace T₁] [IsTopologicalAddGroup T₁] [ContinuousConstSMul O T₁]
+    (ρ₁ : Representation O G T₁) (inc : T₁ →ₗ[O] A) (π : T₁ →ₗ[O] T₂)
+    (D : LatData O Dw VT VT') (v : T₂ ≃ₗ[O] D.T') (hc : Continuous fun t => v (π t))
+    (he : ∀ g t, v (π (resRep ρ₁ Dw g t)) = D.ρTl' g (v (π t)))
+    (Fs : Submodule O (H1 D.ρTl')) (Hf₁ : Submodule O (H1 (resRep ρ₁ Dw)))
+    (hO : PadicCoeff p O) (hA : IsFGTop O A) (hinc : Continuous inc)
+    (hur : Continuous fun g : Dw => uElt r χ (g : G)) (hIm : Hf₁.map (gRow D _ π v hc he) ≤ Fs) :
+    InRowReal r χ E Dw ρ₁ inc π D v Fs (Hf₁.map (gRow D _ π v hc he)) := by
+  refine ⟨fun a => Continuous a, fun a ha => ?_, fun a ha => ?_, fun ψ f hf => ?_, fun a ha => hc.comp ha, ?_, hIm⟩
+  · refine Continuous.subtype_mk (f := fun q : Dw × Dw =>
+      inc (a q.1) * (uElt r χ (q.1 : G) * ((uElt r χ (q.2 : G) - 1) * E))) ?_ _
+    exact (hinc.comp (ha.comp continuous_fst)).mul ((hur.comp continuous_fst).mul
+      (((hur.comp continuous_snd).sub continuous_const).mul continuous_const))
+  · exact ((hinc.comp ha).mul (hur.mul continuous_const)).neg
+  · exact (psiCont p O A (Ymod r χ E) hO hA ψ).comp hf
+  · rintro _ ⟨y, _, rfl⟩
+    induction y using Submodule.Quotient.induction_on with
+    | _ c =>
+      have h : (fun g => v (π (c.1 g))) ∈ Z1 D.ρTl' :=
+        (cocycles1MapOfEquivariant (resRep ρ₁ Dw) D.ρTl' (v.toLinearMap ∘ₗ π) hc he c).2
+      refine ⟨c.1, c.2.2, c.2.1, ?_⟩
+      rw [clsRow_of_mem D v _ h]
+      rfl
+
+end Formalism.RepresentationBoundsCohomology.FIN
+end
+end
+end
+
+-- Source module: Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveReal
+
+section
+
+@[expose] public section
+
+variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
+
+open Finset Classical
+
+noncomputable section
+
+namespace Formalism.RepresentationBoundsCohomology.FIN
+
+open Formalism.NG
+
+theorem blk_ko {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {X' : Type} {d : Type}
+    [Fintype d] [DecidableEq d] {R' : Subalgebra O (X' → Matrix d d (FractionRing O))} {α : Type}
+    [DecidableEq α] (bl : d → α)
+    (ρk : ∀ k : α, R' →ₐ[O] Matrix {a // bl a = k} {a // bl a = k} O) (k : α)
+    (h : Fintype.card {a // bl a = k} = 1) : Nonempty (blockRestrictedRepresentationType bl ρk k ≃ₗ[O] KO O) := by
+  obtain ⟨hu⟩ := Fintype.card_eq_one_iff_nonempty_unique.1 h
+  exact ⟨(LinearEquiv.funUnique {a // bl a = k} O (KO O) : ({a // bl a = k} → KO O) ≃ₗ[O] KO O)⟩
+
+
+end Formalism.RepresentationBoundsCohomology.FIN
+end
+end
+end
+
+-- Source module: Formalism.WachLatticeTwists.SplitLocalLifts.SplitLocalLiftProofs.LocLift
+
+section
+
+@[expose] public section
+
+open Finset Classical
+
+noncomputable section
+
+namespace Formalism.RepresentationBoundsCohomology.JL
+
+open Formalism.NG Formalism.RepresentationBoundsCohomology.BR
+
+theorem liftCoc : StatLiftCoc := by
+  intro O D M₁ M₂ _ _ _ _ _ _ ρ₁ ρ₂ p hp hs Hf₁ Hf₂ ℓ e hL κ hκ
+  obtain ⟨x, hx, hxe⟩ := hL _ hκ
+  obtain ⟨K₀, rfl⟩ := Submodule.mkQ_surjective _ x
+  have h1 : (Submodule.Quotient.mk (cocycles1MapOfEquivariant ρ₁ ρ₂ p hp K₀ - ((ℓ : O) ^ e) • κ) : H1z ρ₂) = 0 := by
+    rw [Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul, sub_eq_zero]
+    exact hxe
+  rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap] at h1
+  obtain ⟨v, hv⟩ := h1
+  obtain ⟨w, rfl⟩ := hs v
+  let cb : coZ1s ρ₁ := ⟨fun g => ρ₁ g w - w, fun g h => by
+    simp only [map_mul, Module.End.mul_apply, map_sub]
+    abel⟩
+  refine ⟨K₀ - cb, ?_, fun g => ?_⟩
+  · have hcb : Submodule.mkQ _ cb = (0 : H1z ρ₁) := by
+      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_comap]
+      exact ⟨w, by funext g; rfl⟩
+    rw [map_sub, hcb, sub_zero]
+    exact hx
+  · have h2 : ρ₂ g (p w) - p w = p ((K₀ : D → M₁) g) - ((ℓ : O) ^ e) • (κ : D → M₂) g :=
+      congrFun hv g
+    show p ((K₀ : D → M₁) g - (ρ₁ g w - w)) = _
+    rw [map_sub, map_sub, hp, h2]
+    abel
+
+theorem colK : StatColK := by
+  intro O A T' G _ _ _ _ _ P _ _ _ _ L _ _ _ _ r χ Dl inc v₁ ev hev hs Hf₁ Hf₂ ℓ e' j κ κz hκ hκf hL
+  have key := fun a => liftCoc O Dl P L _ _ ev (ev_equiv r χ Dl inc v₁ ev hev) hs Hf₁ Hf₂ ℓ e' hL
+    (κz a) (hκf a)
+  choose Kz hKz1 hKz2 using key
+  refine ⟨fun a g => if h : g ∈ Dl then inc ((Kz a : Dl → P) ⟨g, h⟩) else 0, Kz, ?_, hKz1, ?_⟩
+  · intro a g
+    dsimp only
+    rw [dite_eq_left g.2]
+  · intro a g hg
+    dsimp only
+    rw [dite_eq_left hg, ← hev, hKz2 a ⟨g, hg⟩, hκ a ⟨g, hg⟩]
+
+theorem colk : StatColk := by
+  intro O A T' G _ _ _ _ _ P _ _ _ _ M _ _ _ r χ E δO Dl inc ev hE hM hev hs Hf₁ Hf₂ ℓ e' u uz huz hmem hL
+  obtain ⟨kz, hk1, hk2⟩ := liftCoc O Dl P _ _ _ ev (ev_equiv_triv r χ Dl ev hev) hs Hf₁ Hf₂ ℓ e' hL
+    uz hmem
+  refine ⟨fun g => if h : g ∈ Dl then inc ((kz : Dl → P) ⟨g, h⟩) else 0, kz, ?_, hk1, ?_, ?_⟩
+  · intro g
+    dsimp only
+    rw [dite_eq_left g.2]
+  · intro g
+    dsimp only
+    split_ifs with h
+    · exact hE _
+    · exact ⟨0, (zero_mul E).symm⟩
+  · intro g hg m
+    dsimp only
+    rw [dite_eq_left hg, hM, hk2 ⟨g, hg⟩, Submodule.coe_smul, huz ⟨g, hg⟩, smul_eq_mul, mul_assoc]
+
+theorem colFun : StatColFun := by
+  intro O A T' G _ _ _ _ _ P _ _ _ _ V _ _ r χ Dl inc Hf₁ Lf H K Kz hK hKz s
+  have h := H ((LinearMap.toSpanSingleton A V s).comp inc) Kz hKz
+  have e : (fun g : Dl => K g • s) =
+      fun g : Dl => ((LinearMap.toSpanSingleton A V s).comp inc) ((Kz : Dl → P) g) := by
+    funext g
+    rw [hK g]
+    rfl
+  rw [e]
+  exact h
+
+end Formalism.RepresentationBoundsCohomology.JL
+end
+end
+end
+
+-- Source module: Formalism.AdmissibleDesigns.RealDisplayAllKOf
+
+section
 
 @[expose] public section
 
@@ -239,3 +466,6 @@ theorem realDisplayAllK_of (ℓ : ℕ) [Fact ℓ.Prime] (O : Type) [CommRing O] 
     exact hv2
 
 end Formalism.MainNotions.N.K
+end
+end
+end

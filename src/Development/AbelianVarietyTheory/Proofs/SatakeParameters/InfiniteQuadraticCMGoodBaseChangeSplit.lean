@@ -7,13 +7,10 @@ public import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepres
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CuspidalGLLocalComponentsEventuallySatake
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCmQuadraticAdjoinSqrtNegNatStatement
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsNatUnramifiedOverRealOfCmSubfieldStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinrankMaximalRealEvenStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSplitPlaceBelowCMFieldOfSqrtNegPrimeStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NotIsUnramifiedAtOfSqEqNegPrimeStatement
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.CmInertiaRestrictionHolds
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,12 +19,9 @@ import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
-public import Mathlib.NumberTheory.LSeries.PrimesInAP
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,11 +41,127 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeDefiniteUnitary
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsSquareOneAddFourMul
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ValuationComplexConjOfNotSplit
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NotIsUnramifiedAtOfSqEqNegPrimeStatement
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.CmInertiaRestrictionHolds
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.ExistsInfiniteQcmSplitRam
 import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.InfinitePrimesNegIsSquare
 import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.SqrtFixedOfIsSquarePadic
 import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.SqrtNegMovedByInertia
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinrankMaximalRealEven
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace GlobalTheory.RealGal
+
+theorem QCM.even_finrank_maximalRealSubfield (E Ω : Type) [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω]
+    (Q : GlobalTheory.RealGal.QCM E Ω) : Even (Module.finrank ℚ (maximalRealSubfield Q.K)) := by
+  have h1 := (letI : Module.Free (maximalRealSubfield Q.K) Q.K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield Q.K) Q.K)
+  have h2 := Module.finrank_mul_finrank ℚ E Q.K
+  have h3 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
+  rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield Q.K) Q.K] at h1
+  rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h3
+  rw [Q.two] at h2
+  exact ⟨Module.finrank ℚ (maximalRealSubfield E), by omega⟩
+
+end GlobalTheory.RealGal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinrankMaximalRealEvenStatement
+
+section
+
+@[expose] public section
+
+open NumberField
+
+theorem _root_.GlobalTheory.T.finrank_maximal_real_even : ∀ (E Ω : Type) [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] (Q : GlobalTheory.RealGal.QCM E Ω), Even (Module.finrank ℚ (maximalRealSubfield Q.K)) := by
+  first | exact @GlobalTheory.RealGal.QCM.even_finrank_maximalRealSubfield | exact GlobalTheory.RealGal.QCM.even_finrank_maximalRealSubfield | (intros; apply GlobalTheory.RealGal.QCM.even_finrank_maximalRealSubfield <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSplitPlaceBelowCMFieldOfSqrtNegPrime
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+namespace GlobalTheory.SplitOfNegPrime
+
+theorem sqrt_neg_not_mem_maximalRealSubfield (L : Type) [Field L] [NumberField L] [IsCMField L]
+    (p : ℕ) (δ : L) (hp : 0 < p) (hδ : δ ^ 2 = -(p : L)) : δ ∉ maximalRealSubfield L := by
+  intro hmem
+  let x : maximalRealSubfield L := ⟨δ, hmem⟩
+  have hx : x ^ 2 = -(p : maximalRealSubfield L) := Subtype.ext (by simpa [x] using hδ)
+  obtain ⟨v⟩ : Nonempty (InfinitePlace (maximalRealSubfield L)) := inferInstance
+  have hv : v.IsReal := IsTotallyReal.isReal v
+  have h := congrArg (InfinitePlace.embedding_of_isReal hv) hx
+  rw [map_pow, map_neg, map_natCast] at h
+  have h1 : (0 : ℝ) < p := by exact_mod_cast hp
+  nlinarith [sq_nonneg (InfinitePlace.embedding_of_isReal hv x)]
+
+theorem isSplitAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (p q : ℕ) (δ : L), 0 < p → δ ^ 2 = -(p : L) → ((8 * q : ℕ) : ℤ) ∣ (p : ℤ) + 1 → ∀ w : HeightOneSpectrum (𝓞 L), (q : 𝓞 L) ∈ w.asIdeal → GlobalTheory.UnitaryBC.IsSplitAt w := by
+  intro L _ _ _ p q δ hp hδ hdvd w hw
+  set Lp := maximalRealSubfield L
+  set u := w.under (𝓞 Lp)
+  obtain ⟨k, hk⟩ := hdvd
+  set z : 𝓞 Lp := -(2 * (q : 𝓞 Lp) * (k : 𝓞 Lp)) with hz
+  have hq : (q : 𝓞 Lp) ∈ u.asIdeal := by
+    change _ ∈ Ideal.comap _ _
+    rw [Ideal.mem_comap, map_natCast]
+    exact hw
+  have hzu : z ∈ u.asIdeal := by
+    rw [hz]
+    exact u.asIdeal.neg_mem_iff.2 (Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ hq))
+  have hk' : ((p : ℤ) : 𝓞 Lp) + 1 = (((8 * q : ℕ) : ℤ) : 𝓞 Lp) * (k : 𝓞 Lp) := by
+    exact_mod_cast congrArg (Int.cast : ℤ → 𝓞 Lp) hk
+  have hsq : (1 + 4 * z : 𝓞 Lp) = -(p : 𝓞 Lp) := by
+    rw [hz]
+    push_cast at hk'
+    linear_combination hk'
+  have h1 := GlobalTheory.HenselSquare.isSquare_one_add_four_mul Lp u z hzu
+  rw [hsq] at h1
+  refine GlobalTheory.SplitOfSquare.isSplitAt_of_isSquare L (-(p : Lp)) δ (by rw [hδ]; push_cast; rfl)
+    (sqrt_neg_not_mem_maximalRealSubfield L p δ hp hδ) w ?_
+  simpa using h1
+
+end GlobalTheory.SplitOfNegPrime
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSplitPlaceBelowCMFieldOfSqrtNegPrimeStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem _root_.GlobalTheory.T.isSplitPlaceBelowCMField_of_sqrt_neg_prime : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (p q : ℕ) (δ : L), 0 < p → δ ^ 2 = -(p : L) → ((8 * q : ℕ) : ℤ) ∣ (p : ℤ) + 1 → ∀ w : HeightOneSpectrum (𝓞 L), (q : 𝓞 L) ∈ w.asIdeal → GlobalTheory.UnitaryBC.IsSplitAt w := by
+  first | exact @GlobalTheory.SplitOfNegPrime.isSplitAt | exact GlobalTheory.SplitOfNegPrime.isSplitAt | (intros; apply GlobalTheory.SplitOfNegPrime.isSplitAt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.InfiniteQuadraticCMGoodBaseChangeSplit
+
+section
 
 @[expose] public section
 
@@ -229,4 +339,6 @@ theorem GlobalTheory.GalCut.infinite_qcm_split_good : AutomorphicFormsFiniteGL �
   rw [hQK]
   exact IntermediateField.mem_adjoin_simple_self E (δ p)
 
+end
+end
 end

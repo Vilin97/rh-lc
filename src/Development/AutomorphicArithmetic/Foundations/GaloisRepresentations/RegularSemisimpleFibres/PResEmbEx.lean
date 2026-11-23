@@ -2,24 +2,31 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.ResEmbCompat
 public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.ExistsTeichmullerMapAlgebraicClosureFiniteFieldStatement
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ResAlgClosed
-public import Development.DiscreteGroups.GlobalIrreducibility.DzGalKappa
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.Valuation.LocalSubring
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,8 +46,146 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
+public import Formalism.ConjugateSelfDual.Statement
+public import Development.DiscreteGroups.GlobalIrreducibility.DzApprox
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsOfMemKOne
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsUniformizerValuation
+import ReciprocityTheory.GaloisValuations.GlobalB
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.MatchCut
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ResAlgClosed
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk69.res_algClosed :
+    ∀ {Ω : Type} [inst : Field Ω] [IsAlgClosed Ω]
+    (A : ValuationSubring Ω), IsAlgClosed (IsLocalRing.ResidueField ↥A) := by
+  intro Ω _ _ A
+  refine IsAlgClosed.of_exists_root _ fun p hp hirr => ?_
+  have hsurj : Function.Surjective (IsLocalRing.residue A) := IsLocalRing.residue_surjective
+  have hl : p ∈ Polynomial.lifts (IsLocalRing.residue A) :=
+    (Polynomial.mem_lifts _).2 (Polynomial.map_surjective _ hsurj p)
+  obtain ⟨q, hq, hdeg, hm⟩ := Polynomial.lifts_and_degree_eq_and_monic hl hp
+  have hd : q.degree ≠ 0 := by
+    rw [hdeg]
+    exact (Polynomial.degree_pos_of_irreducible hirr).ne'
+  have hinj : Function.Injective (algebraMap A Ω) := Subtype.val_injective
+  have hd' : (q.map (algebraMap A Ω)).degree ≠ 0 := by
+    rwa [hm.degree_map]
+  obtain ⟨x, hx⟩ := IsAlgClosed.exists_root _ hd'
+  have hx' : Polynomial.eval₂ (algebraMap A Ω) x q = 0 := by
+    rw [← Polynomial.eval_map]
+    exact hx
+  have hint : IsIntegral A x := ⟨q, hm, hx'⟩
+  obtain ⟨y, rfl⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hint
+  have hy : q.eval y = 0 := by
+    apply hinj
+    rw [Polynomial.eval₂_at_apply] at hx'
+    rw [hx', map_zero]
+  refine ⟨IsLocalRing.residue A y, ?_⟩
+  rw [← hq, Polynomial.eval_map, Polynomial.eval₂_at_apply, hy, map_zero]
+end
+end
+
+-- Source module: Development.DiscreteGroups.GlobalIrreducibility.DzGalKappa
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal ValuativeRel GlobalTheory.SplitWeil
+
+namespace DiscreteGroups.sglob.DzType
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+
+section Ring
+
+variable {Ω : Type} [Field Ω]
+
+def kappaToA {F : Type} [Field F] [NumberField F] [Algebra F Ω] (A : ValuationSubring Ω) : 𝓞 F →+* A :=
+  ((algebraMap F Ω).comp (algebraMap (𝓞 F) F)).codRestrict A fun x =>
+    mem_of_isIntegral_int A (NumberField.RingOfIntegers.isIntegral_coe x).algebraMap
+
+def kappaQ {F : Type} [Field F] [NumberField F] [Algebra F Ω] (A : ValuationSubring Ω) :
+    𝓞 F →+* IsLocalRing.ResidueField A :=
+  (IsLocalRing.residue A).comp (kappaToA A)
+
+theorem kappa_ker_A {F : Type} [Field F] [NumberField F] [Algebra F Ω] (A : ValuationSubring Ω)
+    (v : HeightOneSpectrum (𝓞 F)) (hv : IsPlaceOver A v) :
+    RingHom.ker (kappaQ A : 𝓞 F →+* IsLocalRing.ResidueField A) = v.asIdeal := by
+  ext y
+  rw [RingHom.mem_ker, kappaQ, RingHom.comp_apply, IsLocalRing.residue_eq_zero_iff,
+    ValuationSubring.valuation_lt_one_iff, ← hv y]
+  rfl
+
+end Ring
+
+section Compl
+
+variable {L : Type} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L))
+
+theorem kappa_val_le_iff (y : v.adicCompletion L) :
+    valuation (v.adicCompletion L) y ≤ 1 ↔ Valued.v y ≤ 1 :=
+  (DiscreteGroups.sglob.DzIso.val_le_iff y).trans Valued.toNormedField.norm_le_one_iff
+
+theorem kappa_val_lt_iff (y : v.adicCompletion L) :
+    valuation (v.adicCompletion L) y < 1 ↔ Valued.v y < 1 :=
+  (DiscreteGroups.sglob.DzIso.val_lt_iff y).trans Valued.toNormedField.norm_lt_one_iff
+
+theorem kappa_v_int (y : 𝓞 L) :
+    Valued.v (algebraMap L (v.adicCompletion L) (y : L)) = v.valuation L (y : L) :=
+  HeightOneSpectrum.valuedAdicCompletion_eq_valuation' (R := 𝓞 L) v (y : L)
+
+def kappaToO : 𝓞 L →+* 𝒪[v.adicCompletion L] :=
+  ((algebraMap L (v.adicCompletion L)).comp (algebraMap (𝓞 L) L)).codRestrict 𝒪[v.adicCompletion L] fun y =>
+    (Valuation.mem_integer_iff _ _).2 ((kappa_val_le_iff v _).2
+      ((kappa_v_int v y).trans_le (v.valuation_le_one y)))
+
+def kappaP : 𝓞 L →+* 𝓀[v.adicCompletion L] := (IsLocalRing.residue 𝒪[v.adicCompletion L]).comp (kappaToO v)
+
+theorem kappa_ker_O : RingHom.ker (kappaP v) = v.asIdeal := by
+  ext y
+  rw [RingHom.mem_ker, kappaP, RingHom.comp_apply, ← map_zero (IsLocalRing.residue 𝒪[v.adicCompletion L]),
+    residue_eq_iff_valuation_lt]
+  have e1 : ((kappaToO v y : 𝒪[v.adicCompletion L]) : v.adicCompletion L) -
+      ((0 : 𝒪[v.adicCompletion L]) : v.adicCompletion L) = algebraMap L (v.adicCompletion L) (y : L) := by
+    rw [ZeroMemClass.coe_zero, sub_zero]
+    rfl
+  rw [e1, kappa_val_lt_iff v, kappa_v_int v y]
+  exact HeightOneSpectrum.valuation_lt_one_iff_mem v y
+
+theorem kappa_surj_O : Function.Surjective (kappaP v) := by
+  intro z
+  obtain ⟨u, rfl⟩ := IsLocalRing.residue_surjective z
+  have hu : Valued.v (u : v.adicCompletion L) ≤ 1 :=
+    (kappa_val_le_iff v _).1 ((Valuation.mem_integer_iff _ _).1 u.2)
+  obtain ⟨x, hx⟩ := exists_int_approx_compl v (u : v.adicCompletion L) hu
+  refine ⟨x, ?_⟩
+  rw [kappaP, RingHom.comp_apply, residue_eq_iff_valuation_lt, Valuation.map_sub_swap]
+  exact (kappa_val_lt_iff v _).2 hx
+
+end Compl
+
+end DiscreteGroups.sglob.DzType
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PResEmbEx
+
+section
 
 @[expose] public section
 
@@ -133,3 +278,5 @@ theorem UpperTheory.Gal.InertialTypesAlt.resEmbEx :
   obtain ⟨θ, hθ⟩ := GlobalTheory.T.exists_teichmuller_map_algebraicClosure_finiteField 𝓀[v.adicCompletion E]
   refine ⟨⟨_, hres⟩, θ.comp (e'.symm : IsLocalRing.ResidueField A →* _), fun x y hx hy h => ?_⟩
   exact e'.symm.injective (hθ _ _ (by simpa using hx) (by simpa using hy) h)
+end
+end

@@ -3,25 +3,28 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.OrbitMeasurability.PerCont
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousAdelicGL2OfContinuousEntries
 import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
-public import GroundTheory.AutomorphicForms.GL2Classical.EigenformTranslates
-import GroundTheory.GlobalFields.TateThesis.AdeleScaling
+public import GroundTheory.AutomorphicForms.ReductionDirichlet
+public import GroundTheory.GlobalFields.IdeleGroups.Rational
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+public import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Dynamics.Ergodic.Action.Regular
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +44,62 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
+import Mathlib.Geometry.Manifold.StructureGroupoid
+import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+import Mathlib.NumberTheory.ModularForms.SlashActions
+import GroundTheory.GlobalFields.TateThesis.AdeleScaling
+import Mathlib.Dynamics.Ergodic.Action.Regular
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.AutomorphicForms.GL2Classical.EigenformTranslates
+
+section
+
+@[expose] public section
+
+open NumberField Matrix CongruenceSubgroup ModularForm Complex Filter
+open UpperHalfPlane hiding I I_re I_im
+open scoped MatrixGroups ModularForm Real InnerProductSpace Manifold NumberField.AdeleRing
+
+namespace GroundTheory.Automorphic
+
+noncomputable section
+
+namespace GL2Classical
+
+open AdelicGLn AutomorphicForm
+
+set_option linter.unusedSectionVars false
+
+variable {N : ℕ} [NeZero N] {k : ℤ}
+
+
+theorem posIdele_fst_rat (r : ℝ) (hr : 0 < r) :
+    ((Reduction.posIdele (K := ℚ) r hr : Global.IdeleGroup ℚ) : 𝔸[ℚ]).1 =
+      Global.RationalIdeles.realEquiv.symm r := by
+  apply Global.RationalIdeles.realEquiv.injective
+  rw [RingEquiv.apply_symm_apply, Global.RationalIdeles.realEquiv_apply]
+  have := Reduction.infiniteProj_posIdele (K := ℚ) r hr default
+  rw [← Global.IdeleGroup.coe_infiniteProj, this]
+  simp [Global.posRealToUnits, Global.posRealElem, Global.RationalIdeles.isReal_infinitePlace]
+  exact RingEquiv.apply_symm_apply (InfinitePlace.Completion.ringEquivRealOfIsReal _) r
+
+end GL2Classical
+
+end
+
+end GroundTheory.Automorphic
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.OrbitMeasurability.DetCentralSection
+
+section
 
 @[expose] public section
 
@@ -351,3 +408,6 @@ theorem ext : Ext := by
       exact hu.left γ _
 
 end UpperTheory.ConvolutionTheory.RankTwoDescent.Cp
+end
+end
+end

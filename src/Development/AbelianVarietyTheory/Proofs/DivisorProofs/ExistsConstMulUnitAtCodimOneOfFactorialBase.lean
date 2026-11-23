@@ -2,9 +2,9 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConstMulEqUnit
 public import Mathlib.AlgebraicGeometry.Geometrically.Integral
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFibreGenericPointDvrOfPrimeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimeEqSpanOfCoheightLeOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoheightOneNotMemOpenGenericPointStatement
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsLieBasis
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingStalkGeneric
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IsIsoStalkMapOfFlatOfSurjectiveOnStalks
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,7 +23,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,6 +46,218 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import Mathlib.Order.CompletePartialOrder
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.Properties
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFibreGenericPointDvrOfPrime
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+set_option backward.isDefEq.respectTransparency false
+
+namespace GlobalTheory.VerticalUnit
+
+theorem exists_fibre_generic_of_prime : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [UniqueFactorizationMonoid R] (X : Scheme.{0}) [IsIntegral X] (q : X ⟶ Sp R) [Smooth q] [GeometricallyIntegral q] (π : R), Prime π → ∃ ξ : X, (q ξ).asIdeal = Ideal.span {π} ∧ (∀ x : X, (q x).asIdeal = Ideal.span {π} → ξ ⤳ x) ∧ IsDiscreteValuationRing (X.presheaf.stalk ξ) ∧ Irreducible (X.presheaf.germ ⊤ ξ trivial (constFn q ⊤ π)) := by
+  intro R _ _ _ _ X _ q _ _ π hπp
+  have hP : (Ideal.span {π}).IsPrime := (Ideal.span_singleton_prime hπp.ne_zero).2 hπp
+  let v : Sp R := ⟨Ideal.span {π}, hP⟩
+  let V := Localization.AtPrime v.asIdeal
+  have hmax : IsLocalRing.maximalIdeal V = Ideal.span {algebraMap R V π} := by
+    rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_span, Set.image_singleton]
+  have hne : algebraMap R V π ≠ 0 :=
+    (map_ne_zero_iff _ (IsLocalization.injective V v.asIdeal.primeCompl_le_nonZeroDivisors)).2 hπp.ne_zero
+  have : IsNoetherianRing V := IsLocalization.isNoetherianRing v.asIdeal.primeCompl V inferInstance
+  have hnf : ¬ IsField V := by
+    rw [IsLocalRing.isField_iff_maximalIdeal_eq, hmax, Ideal.span_singleton_eq_bot]
+    exact hne
+  have hpr : Submodule.IsPrincipal (IsLocalRing.maximalIdeal V) := ⟨⟨_, hmax⟩⟩
+  have : IsDiscreteValuationRing V :=
+    ((IsDiscreteValuationRing.TFAE V hnf).out 1 5).mpr hpr
+  have hπ : Irreducible (algebraMap R V π) :=
+    (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 hmax
+  let l := spMap (algebraMap R V)
+  have : Flat l := Flat.SpecMap_iff.2 (RingHom.flat_algebraMap_iff.2 inferInstance)
+  have : IsPreimmersion l := IsPreimmersion.of_isLocalization v.asIdeal.primeCompl
+  have H := IsPullback.of_hasPullback q l
+  set ψ := pullback.fst q l
+  set f := pullback.snd q l
+  have hs := IsPullback.of_hasPullback f (Spec.map (CommRingCat.ofHom (IsLocalRing.residue V)))
+  have := DvrModel.isIntegral_of_geometricallyIntegral hs
+  have := isIso_stalkMap_of_flat_of_surjectiveOnStalks ψ
+  obtain ⟨h₁, h₂⟩ := DvrModel.isDiscreteValuationRing_stalk_generic hπ hs
+  have h₃ := DvrModel.notMem_basicOpen_iff_specializes hπ hs
+  have hlv : l (IsLocalRing.closedPoint V) = v :=
+    PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := v.asIdeal))
+  have h₄ := (DvrModel.notMem_basicOpen_iff f hπ _).1 ((h₃ _).2 specializes_rfl)
+  generalize (pullback.fst f (Spec.map (CommRingCat.ofHom (IsLocalRing.residue V)))) (genericPoint _) = ξ
+    at h₁ h₂ h₃ h₄
+  let E := (asIso (ψ.stalkMap ξ)).commRingCatIsoToRingEquiv
+  refine ⟨ψ ξ, ?_, fun x hx => ?_,
+    IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing E.symm, ?_⟩
+  · rw [← Scheme.Hom.comp_apply, H.w, Scheme.Hom.comp_apply, h₄, hlv]
+  · obtain ⟨y, rfl, hy⟩ := Scheme.exists_preimage_of_isPullback H x (IsLocalRing.closedPoint V)
+      ((PrimeSpectrum.ext hx).trans hlv.symm)
+    exact ((h₃ y).1 ((DvrModel.notMem_basicOpen_iff f hπ y).2 hy)).map ψ.continuous
+  · rw [← MulEquiv.irreducible_iff E.toMulEquiv]
+    convert h₂ using 1
+    exact (ψ.germ_stalkMap_apply ⊤ ξ trivial _).trans
+      (congrArg _ ((app_constFn H.w π).trans (constFn_top _ _)))
+
+end GlobalTheory.VerticalUnit
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFibreGenericPointDvrOfPrimeStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem _root_.GlobalTheory.T.exists_fibre_genericPoint_dvr_of_prime : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [UniqueFactorizationMonoid R] (X : Scheme.{0}) [IsIntegral X] (q : X ⟶ Sp R) [Smooth q] [GeometricallyIntegral q] (π : R), Prime π → ∃ ξ : X, (q ξ).asIdeal = Ideal.span {π} ∧ (∀ x : X, (q x).asIdeal = Ideal.span {π} → ξ ⤳ x) ∧ IsDiscreteValuationRing (X.presheaf.stalk ξ) ∧ Irreducible (X.presheaf.germ ⊤ ξ trivial (constFn q ⊤ π)) := by
+  first | exact @GlobalTheory.VerticalUnit.exists_fibre_generic_of_prime | exact GlobalTheory.VerticalUnit.exists_fibre_generic_of_prime | (intros; apply GlobalTheory.VerticalUnit.exists_fibre_generic_of_prime <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimeEqSpanOfCoheightLeOne
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory
+
+theorem exists_prime_eq_span_of_coheight_le_one (R : Type) [CommRing R] [IsDomain R]
+    [UniqueFactorizationMonoid R] (X : Scheme.{0}) (q : X ⟶ Sp R) (hq : GeneralizingMap q)
+    (x : X) (hx : Order.coheight x ≤ 1) (hne : (q x).asIdeal ≠ ⊥) :
+    ∃ π : R, Prime π ∧ (q x).asIdeal = Ideal.span {π} := by
+  obtain ⟨π, hπP, hπ⟩ := Ideal.IsPrime.exists_mem_prime_of_ne_bot (q x).isPrime hne
+  refine ⟨π, hπ, ?_⟩
+  by_contra hQP
+  have hQle : Ideal.span {π} ≤ (q x).asIdeal := (Ideal.span_singleton_le_iff_mem _).2 hπP
+  have hQprime : (Ideal.span {π}).IsPrime := (Ideal.span_singleton_prime hπ.ne_zero).2 hπ
+  let Q : PrimeSpectrum R := ⟨_, hQprime⟩
+  have hQsp : Q ⤳ q x := (PrimeSpectrum.le_iff_specializes Q (q x)).1 hQle
+  obtain ⟨x', hx'x, hqx'⟩ := hq hQsp
+  let B : PrimeSpectrum R := ⟨⊥, Ideal.isPrime_bot⟩
+  have hBQ : B ⤳ Q := (PrimeSpectrum.le_iff_specializes B Q).1 bot_le
+  obtain ⟨x'', hx''x', hqx''⟩ := hq (hqx' ▸ hBQ)
+  have h1 : x < x' := by
+    refine lt_of_le_not_ge hx'x ?_
+    intro h
+    have h' : q x ⤳ q x' := h.map q.continuous
+    rw [hqx'] at h'
+    exact hQP (le_antisymm ((PrimeSpectrum.le_iff_specializes (q x) Q).2 h') hQle)
+  have h2 : x' < x'' := by
+    refine lt_of_le_not_ge hx''x' ?_
+    intro h
+    have h' : q x' ⤳ q x'' := h.map q.continuous
+    rw [hqx', hqx''] at h'
+    have hle : Ideal.span {π} ≤ ⊥ := (PrimeSpectrum.le_iff_specializes Q B).2 h'
+    exact hπ.ne_zero (Ideal.span_singleton_eq_bot.1 (le_bot_iff.1 hle))
+  have c1 := Order.coheight_add_one_le h1
+  have c2 := Order.coheight_add_one_le h2
+  have : (2 : ℕ∞) ≤ Order.coheight x := by
+    calc (2 : ℕ∞) = 0 + 1 + 1 := by norm_num
+      _ ≤ Order.coheight x'' + 1 + 1 := by gcongr; exact bot_le
+      _ ≤ Order.coheight x' + 1 := by gcongr
+      _ ≤ Order.coheight x := c1
+  have := this.trans hx
+  norm_num at this
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimeEqSpanOfCoheightLeOneStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem _root_.GlobalTheory.T.exists_prime_eq_span_of_coheight_le_one' : ∀ (R : Type) [CommRing R] [IsDomain R] [UniqueFactorizationMonoid R] (X : Scheme.{0}) (q : X ⟶ Sp R), GeneralizingMap q → ∀ x : X, Order.coheight x ≤ 1 → (q x).asIdeal ≠ ⊥ → ∃ π : R, Prime π ∧ (q x).asIdeal = Ideal.span {π} := by
+  first | exact @GlobalTheory.exists_prime_eq_span_of_coheight_le_one | exact GlobalTheory.exists_prime_eq_span_of_coheight_le_one | (intros; apply GlobalTheory.exists_prime_eq_span_of_coheight_le_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoheightOneNotMemOpenGenericPoint
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory.VerticalUnit
+
+theorem finite_coheight_one_notMem (X : Scheme.{0}) [IsIntegral X] [AlgebraicGeometry.IsNoetherian X]
+    (S : Set X) (hS : IsOpen S) (hη : genericPoint X ∈ S) :
+    {x : X | Order.coheight x = 1 ∧ x ∉ S}.Finite := by
+  classical
+  obtain ⟨T, hT, hc, hi, hU⟩ := NoetherianSpace.exists_finite_set_isClosed_irreducible hS.isClosed_compl
+  refine (hT.image fun Z => if h : IsIrreducible Z then h.genericPoint else genericPoint X).subset ?_
+  rintro x ⟨h1, hxS⟩
+  obtain ⟨Z, hZ, hxZ⟩ := hU.le hxS
+  have hg := (hi Z hZ).isGenericPoint_genericPoint (hc Z hZ)
+  set z := (hi Z hZ).genericPoint
+  have hzS : z ∉ S := hU.ge (Set.subset_sUnion_of_mem hZ hg.mem)
+  have hxz : x ≤ z := hg.specializes hxZ
+  have hzη : z < genericPoint X := lt_of_le_not_ge (genericPoint_specializes z)
+    fun h => hzS ((show z ⤳ genericPoint X from h).mem_open hS hη)
+  refine ⟨Z, hZ, ?_⟩
+  simp only [dif_pos (hi Z hZ)]
+  by_contra hne
+  have hxlt : x < z := lt_of_le_not_ge hxz fun h =>
+    hne ((show x ⤳ z from h).antisymm (show z ⤳ x from hxz)).eq.symm
+  have a1 := Order.coheight_add_one_le hxlt
+  have a2 := Order.coheight_add_one_le hzη
+  rw [h1] at a1
+  have : (2 : ℕ∞) ≤ 1 := by
+    calc (2 : ℕ∞) = 0 + 1 + 1 := by norm_num
+      _ ≤ Order.coheight (genericPoint X) + 1 + 1 := by gcongr; exact zero_le
+      _ ≤ Order.coheight z + 1 := by gcongr
+      _ ≤ 1 := a1
+  exact absurd this (by decide)
+
+end GlobalTheory.VerticalUnit
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoheightOneNotMemOpenGenericPointStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem _root_.GlobalTheory.T.finite_coheight_one_notMem_open_genericPoint : ∀ (X : Scheme.{0}) [IsIntegral X] [AlgebraicGeometry.IsNoetherian X] (S : Set X), IsOpen S → genericPoint X ∈ S → {x : X | Order.coheight x = 1 ∧ x ∉ S}.Finite := by
+  first | exact @GlobalTheory.VerticalUnit.finite_coheight_one_notMem | exact GlobalTheory.VerticalUnit.finite_coheight_one_notMem | (intros; apply GlobalTheory.VerticalUnit.finite_coheight_one_notMem <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConstMulUnitAtCodimOneOfFactorialBase
+
+section
 
 @[expose] public section
 
@@ -158,3 +373,5 @@ theorem exists_const_mul_unitAt_coheight_one : ∀ (R K : Type) [CommRing R] [Is
       (hunitb x hxB)
 
 end GlobalTheory.VerticalUnit
+end
+end

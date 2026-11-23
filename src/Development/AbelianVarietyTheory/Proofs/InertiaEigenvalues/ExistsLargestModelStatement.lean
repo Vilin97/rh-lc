@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwistedModelAdmissibleCocycles
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLargestModel
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ModelObjAndAbcStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,6 +18,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -38,7 +40,234 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PhiGammaLatticeFamiliesShiftInclusionStatement
+import Mathlib.RingTheory.PowerSeries.Ideal
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ModelSup
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PhiGam GlobalTheory.AdmLoc GlobalTheory.Models
+open scoped LaurentSeries PowerSeries
+namespace GlobalTheory.Models.SupModel
+
+variable {k G : Type} [Field k] [Group G]
+
+theorem isHom_comp {A B C : Ob k G} {f : (Fin A.m → k) →ₗ[k] (Fin B.m → k)}
+    {g : (Fin B.m → k) →ₗ[k] (Fin C.m → k)} (hf : IsHom A B f) (hg : IsHom B C g) : IsHom A C (g ∘ₗ f) :=
+  fun s x => by simp only [LinearMap.comp_apply]; rw [hf, hg]
+
+theorem isHom_add {A B : Ob k G} {f g : (Fin A.m → k) →ₗ[k] (Fin B.m → k)}
+    (hf : IsHom A B f) (hg : IsHom A B g) : IsHom A B (f + g) :=
+  fun s x => by simp only [LinearMap.add_apply, map_add (f := _)]; rw [hf, hg]
+
+theorem exists_sum (A B : Ob k G) : ∃ (C : Ob k G) (i : (Fin A.m → k) →ₗ[k] (Fin C.m → k))
+    (j : (Fin B.m → k) →ₗ[k] (Fin C.m → k)), IsHom A C i ∧ IsHom B C j ∧ Function.Bijective (i.coprod j) := by
+  obtain ⟨C, e, he⟩ := exists_ob (A.ρ.prod B.ρ)
+  refine ⟨C, e.toLinearMap ∘ₗ LinearMap.inl k _ _, e.toLinearMap ∘ₗ LinearMap.inr k _ _, ?_, ?_, ?_⟩
+  · intro g x
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
+    rw [← he]; congr 1; simp [Representation.prod]
+  · intro g x
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
+    rw [← he]; congr 1; simp [Representation.prod]
+  · have : (e.toLinearMap ∘ₗ LinearMap.inl k _ _).coprod (e.toLinearMap ∘ₗ LinearMap.inr k _ _)
+        = e.toLinearMap := by
+      rw [← LinearMap.comp_coprod, LinearMap.coprod_inl_inr, LinearMap.comp_id]
+    rw [this]; exact e.bijective
+
+theorem exists_proj {A B C : Ob k G} {i : (Fin A.m → k) →ₗ[k] (Fin C.m → k)}
+    {j : (Fin B.m → k) →ₗ[k] (Fin C.m → k)} (hi : IsHom A C i) (hj : IsHom B C j)
+    (hb : Function.Bijective (i.coprod j)) :
+    ∃ (π : (Fin C.m → k) →ₗ[k] (Fin A.m → k)) (π' : (Fin C.m → k) →ₗ[k] (Fin B.m → k)),
+      IsHom C A π ∧ IsHom C B π' ∧ (∀ x, π (i x) = x) ∧ (∀ x, π (j x) = 0) ∧ (∀ x, π' (i x) = 0) ∧
+      (∀ x, π' (j x) = x) ∧ ∀ x, i (π x) + j (π' x) = x := by
+  let e := LinearEquiv.ofBijective _ hb
+  have h1 : ∀ x y, e.symm (i x + j y) = (x, y) := fun x y => by
+    rw [LinearEquiv.symm_apply_eq]; simp [e]
+  have h2 : ∀ x, i (e.symm x).1 + j (e.symm x).2 = x := fun x => by
+    exact e.apply_symm_apply x
+  have h3 : ∀ g x, e.symm (C.ρ g x) = (A.ρ g (e.symm x).1, B.ρ g (e.symm x).2) := fun g x => by
+    rw [← h1, hi, hj, ← map_add (f := _), h2]
+  refine ⟨LinearMap.fst k _ _ ∘ₗ e.symm.toLinearMap, LinearMap.snd k _ _ ∘ₗ e.symm.toLinearMap,
+    fun g x => ?_, fun g x => ?_, fun x => ?_, fun x => ?_, fun x => ?_, fun x => ?_, fun x => h2 x⟩
+  · simp [h3]
+  · simp [h3]
+  · have := h1 x 0; simp at this; simp [this]
+  · have := h1 0 x; simp at this; simp [this]
+  · have := h1 x 0; simp at this; simp [this]
+  · have := h1 0 x; simp at this; simp [this]
+
+variable {l n : ℕ} {R : RingPG k l}
+
+theorem map_comp_apply (F : DFun R n G) {A B C : Ob k G} {f : (Fin A.m → k) →ₗ[k] (Fin B.m → k)}
+    {g : (Fin B.m → k) →ₗ[k] (Fin C.m → k)} {h : (Fin A.m → k) →ₗ[k] (Fin C.m → k)}
+    (hA : F.Obj A) (hB : F.Obj B) (hC : F.Obj C) (hf : IsHom A B f) (hg : IsHom B C g)
+    (hh : ∀ x, g (f x) = h x) (i : ZMod n) (x : Vc k A.m) :
+    F.map B C g i (F.map A B f i x) = F.map A C h i x := by
+  have : h = g ∘ₗ f := LinearMap.ext fun x => (hh x).symm
+  rw [this, F.map_comp A B C f g hA hB hC hf hg]; rfl
+
+theorem map_zero' (F : DFun R n G) {A B : Ob k G} (hA : F.Obj A) (hB : F.Obj B) (i : ZMod n) (x : Vc k A.m) :
+    F.map A B 0 i x = 0 := by
+  have := F.map_smul A B 0 0 hA hB (fun g x => by simp) i x
+  simpa using this
+
+theorem model_sup : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l} (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : ModTh F Dt) (A : Ob k G) (N N' : Lats k n A.m), M.Model A N → M.Model A N' → M.Model A (fun i => N i ⊔ N' i) := by
+  intro k G _ _ l n _ _ _ R F r Dt M A N N' hN hN'
+  obtain ⟨B, Nb, A₁, j, p, hB, hj, hji, hp, hps, rfl⟩ := hN
+  obtain ⟨B', Nb', A₂, j', p', hB', hj', hji', hp', hps', rfl⟩ := hN'
+  obtain ⟨C, i, i', hi, hi', hb, hC⟩ := M.base_sum B Nb B' Nb' hB hB'
+  obtain ⟨π, π', hπ, hπ', e1, e2, e3, e4, -⟩ := exists_proj hi hi' hb
+  obtain ⟨S, a, a', ha, ha', hab⟩ := exists_sum A₁ A₂
+  obtain ⟨q, q', hq, hq', d1, d2, d3, d4, d5⟩ := exists_proj ha ha' hab
+  have oB := M.base_obj _ _ hB
+  have oB' := M.base_obj _ _ hB'
+  have oC := M.base_obj _ _ hC
+  have o1 := F.obj_sub _ _ _ hj hji oB
+  have o2 := F.obj_sub _ _ _ hj' hji' oB'
+  have oS := F.obj_sum _ _ _ _ _ ha ha' hab.2 o1 o2
+  have oA := F.obj_quot _ _ _ hp hps o1
+  have hJ : IsHom S C (i ∘ₗ j ∘ₗ q + i' ∘ₗ j' ∘ₗ q') :=
+    isHom_add (isHom_comp (isHom_comp hq hj) hi) (isHom_comp (isHom_comp hq' hj') hi')
+  have hP : IsHom S A (p ∘ₗ q + p' ∘ₗ q') := isHom_add (isHom_comp hq hp) (isHom_comp hq' hp')
+  refine ⟨C, _, S, _, _, hC, hJ, ?_, hP, ?_, ?_⟩
+  · rw [injective_iff_map_eq_zero]
+    intro x hx
+    have h1 := congrArg π hx
+    have h2 := congrArg π' hx
+    simp only [LinearMap.add_apply, LinearMap.comp_apply, map_add (f := _), e1, e2, e3, e4, map_zero, add_zero,
+      zero_add] at h1 h2
+    have h1' : q x = 0 := hji (by simpa using h1)
+    have h2' : q' x = 0 := hji' (by simpa using h2)
+    rw [← d5 x, h1', h2']; simp
+  · intro y
+    obtain ⟨x, rfl⟩ := hps y
+    exact ⟨a x, by simp [d1, d3]⟩
+  · funext t
+    apply le_antisymm
+    · apply sup_le
+      · rintro _ ⟨y, hy, rfl⟩
+        refine ⟨F.map A₁ S a t y, ?_, ?_⟩
+        · change F.map S C (i ∘ₗ j ∘ₗ q + i' ∘ₗ j' ∘ₗ q') t (F.map A₁ S a t y) ∈ F.push B C i Nb t ⊔ F.push B' C i' Nb' t
+          rw [map_comp_apply F (h := i ∘ₗ j) o1 oS oC ha hJ (fun x => by simp [d1, d3]),
+            ← map_comp_apply F o1 oB oC hj hi (fun _ => rfl)]
+          exact Submodule.mem_sup_left ⟨_, hy, rfl⟩
+        · exact map_comp_apply F o1 oS oA ha hP (fun x => by simp [d1, d3]) t y
+      · rintro _ ⟨y, hy, rfl⟩
+        refine ⟨F.map A₂ S a' t y, ?_, ?_⟩
+        · change F.map S C (i ∘ₗ j ∘ₗ q + i' ∘ₗ j' ∘ₗ q') t (F.map A₂ S a' t y) ∈ F.push B C i Nb t ⊔ F.push B' C i' Nb' t
+          rw [map_comp_apply F (h := i' ∘ₗ j') o2 oS oC ha' hJ (fun x => by simp [d2, d4]),
+            ← map_comp_apply F o2 oB' oC hj' hi' (fun _ => rfl)]
+          exact Submodule.mem_sup_right ⟨_, hy, rfl⟩
+        · exact map_comp_apply F o2 oS oA ha' hP (fun x => by simp [d2, d4]) t y
+    · rintro _ ⟨s, hs, rfl⟩
+      change F.map S C (i ∘ₗ j ∘ₗ q + i' ∘ₗ j' ∘ₗ q') t s ∈ F.push B C i Nb t ⊔ F.push B' C i' Nb' t at hs
+      obtain ⟨_, ⟨u, hu, rfl⟩, _, ⟨u', hu', rfl⟩, h⟩ := Submodule.mem_sup.1 hs
+      change F.map B C i t u + F.map B' C i' t u' = _ at h
+      have h1 := congrArg (F.map C B π t) h
+      have h2 := congrArg (F.map C B' π' t) h
+      rw [map_add (f := _), map_comp_apply F (h := LinearMap.id) oB oC oB hi hπ e1,
+        map_comp_apply F (h := 0) oB' oC oB hi' hπ e2, F.map_id B oB, map_zero' F oB' oB,
+        map_comp_apply F (h := j ∘ₗ q) oS oC oB hJ hπ (fun x => by simp [e1, e2]),
+        ← map_comp_apply F oS o1 oB hq hj (fun _ => rfl), add_zero, LinearMap.id_apply] at h1
+      rw [map_add (f := _), map_comp_apply F (h := LinearMap.id) oB' oC oB' hi' hπ' e4,
+        map_comp_apply F (h := 0) oB oC oB' hi hπ' e3, F.map_id B' oB', map_zero' F oB oB',
+        map_comp_apply F (h := j' ∘ₗ q') oS oC oB' hJ hπ' (fun x => by simp [e3, e4]),
+        ← map_comp_apply F oS o2 oB' hq' hj' (fun _ => rfl), zero_add, LinearMap.id_apply] at h2
+      change F.map S A _ t s ∈ _
+      rw [F.map_add S A _ _ oS oA (isHom_comp hq hp) (isHom_comp hq' hp'),
+        ← map_comp_apply F oS o1 oA hq hp (fun _ => rfl), ← map_comp_apply F oS o2 oA hq' hp' (fun _ => rfl)]
+      refine Submodule.add_mem_sup ⟨_, ?_, rfl⟩ ⟨_, ?_, rfl⟩
+      · change F.map A₁ B j t _ ∈ Nb t
+        rw [← h1]; exact hu
+      · change F.map A₂ B' j' t _ ∈ Nb' t
+        rw [← h2]; exact hu'
+
+end GlobalTheory.Models.SupModel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ModelSupStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PhiGam GlobalTheory.AdmLoc GlobalTheory.Models
+open scoped LaurentSeries PowerSeries
+
+theorem _root_.GlobalTheory.T.model_sup_alt : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l} (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : ModTh F Dt) (A : Ob k G) (N N' : Lats k n A.m), M.Model A N → M.Model A N' → M.Model A (fun i => N i ⊔ N' i) := by
+  first | exact @GlobalTheory.Models.SupModel.model_sup | exact GlobalTheory.Models.SupModel.model_sup | (intros; apply GlobalTheory.Models.SupModel.model_sup <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLargestModel
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PhiGam GlobalTheory.AdmLoc GlobalTheory.Models
+open scoped LaurentSeries PowerSeries
+namespace GlobalTheory.Models
+
+theorem exists_greatest_of_sup_closed {S V ι : Type} [CommRing S] [IsNoetherianRing S] [AddCommGroup V]
+    [Module S V] [Finite ι] (C : (ι → Submodule S V) → Prop) (P N₀ : ι → Submodule S V) (h₀ : C N₀)
+    (hP : ∀ i, (P i).FG) (hle : ∀ N, C N → ∀ i, N i ≤ P i)
+    (hsup : ∀ N N', C N → C N' → C (fun i => N i ⊔ N' i)) :
+    ∃ N, C N ∧ ∀ N', C N' → ∀ i, N' i ≤ N i := by
+  classical
+  have one : ∀ i, ∃ N, C N ∧ ∀ N', C N' → N' i ≤ N i := by
+    intro i
+    haveI : IsNoetherian S (P i) := isNoetherian_of_fg_of_noetherian _ (hP i)
+    obtain ⟨_, ⟨N, hN, rfl⟩, hmax⟩ := set_has_maximal_iff_noetherian.2 this
+      {Q : Submodule S (P i) | ∃ N, C N ∧ (N i).comap (P i).subtype = Q} ⟨_, N₀, h₀, rfl⟩
+    refine ⟨N, hN, fun N' hN' x hx => ?_⟩
+    have h1 := hmax _ ⟨_, hsup N N' hN hN', rfl⟩
+    have h2 : (N i).comap (P i).subtype = (N i ⊔ N' i).comap (P i).subtype :=
+      (Submodule.comap_mono le_sup_left).eq_of_not_lt h1
+    have h3 : (⟨x, hle N' hN' i hx⟩ : P i) ∈ (N i ⊔ N' i).comap (P i).subtype :=
+      Submodule.mem_sup_right hx
+    rw [← h2] at h3
+    exact h3
+  have all : ∀ s : Finset ι, ∃ N, C N ∧ ∀ N', C N' → ∀ i ∈ s, N' i ≤ N i := by
+    intro s
+    induction s using Finset.induction_on with
+    | empty => exact ⟨N₀, h₀, fun _ _ i hi => absurd hi (Finset.notMem_empty i)⟩
+    | insert a s _ ih =>
+      obtain ⟨N, hN, h⟩ := ih
+      obtain ⟨N₁, hN₁, h₁⟩ := one a
+      refine ⟨_, hsup N N₁ hN hN₁, fun N' hN' i hi => ?_⟩
+      rcases Finset.mem_insert.1 hi with rfl | hi
+      · exact le_sup_of_le_right (h₁ N' hN')
+      · exact le_sup_of_le_left (h N' hN' i hi)
+  haveI := Fintype.ofFinite ι
+  obtain ⟨N, hN, h⟩ := all Finset.univ
+  exact ⟨N, hN, fun N' hN' i => h N' hN' i (Finset.mem_univ i)⟩
+
+theorem exists_largest_model : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l} (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : ModTh F Dt) (A : Ob k G) (N₀ : Lats k n A.m), M.Model A N₀ → ∃ N, M.Model A N ∧ ∀ N', M.Model A N' → ∀ i, N' i ≤ N i := by
+  intro k G _ _ l n _ _ _ R F r Dt M A N₀ h₀
+  obtain ⟨-, hl₀, hab₀, -⟩ := GlobalTheory.T.obj_and_abc_of_model F M A N₀ h₀
+  refine exists_greatest_of_sup_closed (fun N => M.Model A N)
+    (fun i => sh (-(sg l Dt.h i : ℤ)) (N₀ i)) N₀ h₀ (fun i => ((hl₀ i).shift _).1) (fun N hN i => ?_)
+    (fun N N' => GlobalTheory.T.model_sup_alt F M A N N')
+  obtain ⟨-, hl, hab, -⟩ := GlobalTheory.T.obj_and_abc_of_model F M A N hN
+  have h := sh_le_sh (-(sg l Dt.h i : ℤ)) (GlobalTheory.T.phiGamma_lattice_families_shift_inclusion (F.D A) Dt.h Dt.w N N₀ hl hl₀ hab hab₀ i)
+  rwa [sh_sh_eq, neg_add_cancel, sh_zero_eq] at h
+
+end GlobalTheory.Models
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLargestModelStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +276,5 @@ open scoped LaurentSeries PowerSeries
 
 theorem _root_.GlobalTheory.T.exists_largest_model' : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l} (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : ModTh F Dt) (A : Ob k G) (N₀ : Lats k n A.m), M.Model A N₀ → ∃ N, M.Model A N ∧ ∀ N', M.Model A N' → ∀ i, N' i ≤ N i := by
   first | exact @GlobalTheory.Models.exists_largest_model | exact GlobalTheory.Models.exists_largest_model | (intros; apply GlobalTheory.Models.exists_largest_model <;> assumption)
+end
+end

@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsConstAlongSingleton
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianWittFrameUnipotentLeFlagUnipotent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CTSubmatrixMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,7 +36,106 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoeffOfMemColSpan
+
+section
+
+@[expose] public section
+
+open Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.SiegelSet GlobalTheory.StdPar
+open scoped TensorProduct
+
+namespace GlobalTheory.ColumnSpanCoefficients
+
+theorem exists_coeff_of_mem_colSpan {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    {n r s : ℕ} (hs : s ≤ r) (X : Matrix (Fin n) (Fin r) E) (I : Set (Fin r)) (P : Fin s → Prop)
+    (hI : ∀ i ∈ I, ∃ j : Fin s, Fin.castLE hs j = i ∧ P j) {y : Fin n → AF F ⊗[F] E} (hy : y ∈ colSpan F X I) :
+    ∃ a : Fin s → AF F ⊗[F] E, (∀ j, ¬ P j → a j = 0) ∧ adMat F (X.submatrix id (Fin.castLE hs)) *ᵥ a = y := by
+  classical
+  rw [colSpan] at hy
+  induction hy using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨i, hi, rfl⟩ := hx
+    obtain ⟨j, rfl, hj⟩ := hI i hi
+    refine ⟨Pi.single j 1, fun j' hj' => ?_, ?_⟩
+    · rw [Pi.single_apply, if_neg]
+      rintro rfl
+      exact hj' hj
+    · rw [Matrix.mulVec_single_one]
+      ext r
+      rfl
+  | zero => exact ⟨0, fun _ _ => rfl, Matrix.mulVec_zero _⟩
+  | add x z _ _ hx hz =>
+    obtain ⟨a, ha, rfl⟩ := hx
+    obtain ⟨b, hb, rfl⟩ := hz
+    exact ⟨a + b, fun j hj => by simp [ha j hj, hb j hj], Matrix.mulVec_add _ _ _⟩
+  | smul c x _ hx =>
+    obtain ⟨a, ha, rfl⟩ := hx
+    exact ⟨c • a, fun j hj => by simp [ha j hj], Matrix.mulVec_smul _ _ _⟩
+
+end GlobalTheory.ColumnSpanCoefficients
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianWittFrameUnipotentLeFlagUnipotent
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
+open scoped TensorProduct
+
+namespace GlobalTheory.TieStd
+
+theorem exists_coeff_of_mem_colSpan {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    {n r s : ℕ} (hs : s ≤ r) (X : Matrix (Fin n) (Fin r) E) (I : Set (Fin r)) (P : Fin s → Prop)
+    (hI : ∀ i ∈ I, ∃ j, Fin.castLE hs j = i ∧ P j) {y : Fin n → AF F ⊗[F] E}
+    (hy : y ∈ GlobalTheory.StdPar.colSpan F X I) :
+    ∃ a : Fin s → AF F ⊗[F] E, (∀ j, ¬ P j → a j = 0) ∧ adMat F (X.submatrix id (Fin.castLE hs)) *ᵥ a = y := by
+  first
+  | exact @_root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan
+  | exact _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan
+  | (apply _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> assumption)
+  | (intros; apply _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan ..)
+
+theorem unip_le_unipFlag : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (S : Finset (Fin r)) (s : ℕ) (hs : s ≤ r), (∀ i : Fin r, i.val < s ↔ ∃ k ∈ S, i ≤ k) → ∀ d : Fin s → ℕ, (∀ i, d i = (S.filter (· < Fin.castLE hs i)).card) → GlobalTheory.StdPar.unip σ J X S ≤ GlobalTheory.UAut.unipFlag σ J (X.submatrix id (Fin.castLE hs)) d := by
+  intro F E _ _ _ _ _ σ _ n J _ r X Y _ S s hs hS d hd g hg
+  refine Subgroup.subset_closure (?_ : g ∈ GlobalTheory.UAut.unipSet σ J (X.submatrix id (Fin.castLE hs)) d)
+  have hlt : ∀ i : Fin r, (∃ k ∈ S, i ≤ k) → ∃ j : Fin s, Fin.castLE hs j = i :=
+    fun i h => ⟨⟨i.val, (hS i).2 h⟩, rfl⟩
+  refine ⟨fun i => ?_, fun x hx => ?_⟩
+  · have h1 := (Subgroup.mem_iInf.1 hg.1 (Fin.castLE hs i)).2 _ (Submodule.subset_span ⟨Fin.castLE hs i, rfl, rfl⟩)
+    obtain ⟨a, ha, e⟩ := exists_coeff_of_mem_colSpan hs X {i' | ∃ k ∈ S, i' ≤ k ∧ k < Fin.castLE hs i} (fun j => d j < d i) (fun i' ⟨k, hk, h1, h2⟩ => by
+      obtain ⟨j, rfl⟩ := hlt i' ⟨k, hk, h1⟩
+      exact ⟨j, rfl, (depth_lt_iff S s hs d hd i j).2 ⟨k, hk, h1, h2⟩⟩) h1
+    refine ⟨a, fun j hj => ha j (not_lt.2 hj), ?_⟩
+    rw [sub_mulVec, one_mulVec, e]
+    rfl
+  · have hp : (fun i => inclR (F := F) (AF F) (x i)) ∈ GlobalTheory.StdPar.colPerp σ J X {i | ∃ k ∈ S, i ≤ k} := by
+      simp only [GlobalTheory.StdPar.colPerp, Submodule.mem_iInf, LinearMap.mem_ker]
+      intro i hi
+      obtain ⟨j, rfl⟩ := hlt i hi
+      refine (RingHom.map_mulVec (inclR (F := F) (AF F)) _ x (Fin.castLE hs j)).symm.trans ?_
+      rw [show ((Formalism.UG.cT (σ : E →+* E) X * J) *ᵥ x) (Fin.castLE hs j) =
+        ((Formalism.UG.cT (σ : E →+* E) (X.submatrix id (Fin.castLE hs)) * J) *ᵥ x) j from rfl, hx]
+      exact map_zero _
+    obtain ⟨a, -, e⟩ := exists_coeff_of_mem_colSpan hs X _ (fun _ => True)
+      (fun i' h => let ⟨j, hj⟩ := hlt i' h; ⟨j, hj, trivial⟩) (hg.2.2 _ hp)
+    exact ⟨a, by rw [sub_mulVec, one_mulVec, e]⟩
+
+end GlobalTheory.TieStd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianWittFrameUnipotentLeFlagUnipotentStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +144,5 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.hermitianWittFrame_unipotent_le_flag_unipotent : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (S : Finset (Fin r)) (s : ℕ) (hs : s ≤ r), (∀ i : Fin r, i.val < s ↔ ∃ k ∈ S, i ≤ k) → ∀ d : Fin s → ℕ, (∀ i, d i = (S.filter (· < Fin.castLE hs i)).card) → GlobalTheory.StdPar.unip σ J X S ≤ GlobalTheory.UAut.unipFlag σ J (X.submatrix id (Fin.castLE hs)) d := by
   first | exact @GlobalTheory.TieStd.unip_le_unipFlag | exact GlobalTheory.TieStd.unip_le_unipFlag | (intros; apply GlobalTheory.TieStd.unip_le_unipFlag <;> assumption)
+end
+end

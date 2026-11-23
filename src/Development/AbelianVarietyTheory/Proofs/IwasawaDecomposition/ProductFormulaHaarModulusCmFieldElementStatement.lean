@@ -1,7 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.T2SpaceNumberFieldInfiniteAdeles
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ProductFormulaHaarModulusCmFieldElement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.HermitianFormFiniteZerosOnLineCmExt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HaarModulusProductFormulaTotallyReal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +40,73 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HaarModulusTensorEqModulusNormStatement
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Topology.Connected.Separation
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HaarModulusProductFormulaTotallyRealStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.GaugeEx
+open scoped TensorProduct NNReal ENNReal
+
+theorem _root_.GlobalTheory.T.haarModulus_product_formula_totallyReal : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (e : F), e ≠ 0 → (Function.mulSupport fun v : HeightOneSpectrum (𝓞 F) => modu (Fv F v) (algebraMap F (Fv F v) e)).Finite ∧ modu (Ainf F) (algebraMap F (Ainf F) e) * ∏ᶠ v : HeightOneSpectrum (𝓞 F), modu (Fv F v) (algebraMap F (Fv F v) e) = 1 := by
+  first | exact @GlobalTheory.GaugeProdFormula.prod_modu_eq_one | exact GlobalTheory.GaugeProdFormula.prod_modu_eq_one | (intros; apply GlobalTheory.GaugeProdFormula.prod_modu_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ProductFormulaHaarModulusCmFieldElement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.GaugeEx
+open scoped TensorProduct NNReal ENNReal
+
+namespace GlobalTheory.GaugeEx
+
+theorem algebraMap_eq_inclR_mul_sigR {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E)
+    (R : Type) [CommRing R] [Algebra F R] (u : E) (k : F) (hk : algebraMap F E k = u * σ u) :
+    algebraMap R (R ⊗[F] E) (algebraMap F R k) = inclR R u * sigR R σ (inclR R u) := by
+  have h1 : sigR R σ (inclR R u) = inclR R (σ u) := by
+    simp [sigR, inclR]
+  rw [h1, ← map_mul, ← hk, ← IsScalarTower.algebraMap_apply]
+  exact ((Algebra.TensorProduct.includeRight : E →ₐ[F] R ⊗[F] E).commutes k).symm
+
+theorem prod_modu_inclR : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ u : E, u ≠ 0 → (Function.mulSupport fun v : HeightOneSpectrum (𝓞 F) => modu (Fv F v ⊗[F] E) (inclR (Fv F v) u)).Finite ∧ modu (Ainf F ⊗[F] E) (inclR (Ainf F) u) * ∏ᶠ v : HeightOneSpectrum (𝓞 F), modu (Fv F v ⊗[F] E) (inclR (Fv F v) u) = 1 := by
+  intro F E _ _ _ _ _ σ h u hu
+  haveI := h.1
+  obtain ⟨k, hk⟩ := GlobalTheory.HermLineZeros.exists_of_fixed h (u * σ u) (by
+    rw [map_mul, GlobalTheory.HermLineZeros.conj_invol h, mul_comm])
+  have hk0 : k ≠ 0 := by
+    rintro rfl
+    rw [map_zero] at hk
+    exact mul_ne_zero hu ((map_ne_zero σ).2 hu) hk.symm
+  have hv : ∀ v : HeightOneSpectrum (𝓞 F), modu (Fv F v ⊗[F] E) (inclR (Fv F v) u) =
+      modu (Fv F v) (algebraMap F (Fv F v) k) := fun v =>
+    (GlobalTheory.T.haarModulus_tensor_eq_modulus_norm F E σ h (Fv F v) _ _ (hu.isUnit.map _)
+      (algebraMap_eq_inclR_mul_sigR σ _ u k hk)).2
+  have hi : modu (Ainf F ⊗[F] E) (inclR (Ainf F) u) = modu (Ainf F) (algebraMap F (Ainf F) k) :=
+    (GlobalTheory.T.haarModulus_tensor_eq_modulus_norm F E σ h (Ainf F) _ _ (hu.isUnit.map _)
+      (algebraMap_eq_inclR_mul_sigR σ _ u k hk)).2
+  simp only [hv, hi]
+  exact GlobalTheory.T.haarModulus_product_formula_totallyReal F k hk0
+
+end GlobalTheory.GaugeEx
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ProductFormulaHaarModulusCmFieldElementStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +115,5 @@ open scoped TensorProduct NNReal ENNReal
 
 theorem _root_.GlobalTheory.T.product_formula_haarModulus_cmField_element : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ u : E, u ≠ 0 → (Function.mulSupport fun v : HeightOneSpectrum (𝓞 F) => modu (Fv F v ⊗[F] E) (inclR (Fv F v) u)).Finite ∧ modu (Ainf F ⊗[F] E) (inclR (Ainf F) u) * ∏ᶠ v : HeightOneSpectrum (𝓞 F), modu (Fv F v ⊗[F] E) (inclR (Fv F v) u) = 1 := by
   first | exact @GlobalTheory.GaugeEx.prod_modu_inclR | exact GlobalTheory.GaugeEx.prod_modu_inclR | (intros; apply GlobalTheory.GaugeEx.prod_modu_inclR <;> assumption)
+end
+end

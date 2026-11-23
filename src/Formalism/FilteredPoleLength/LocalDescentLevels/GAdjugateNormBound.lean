@@ -1,13 +1,11 @@
 module
 
-public import Formalism.FilteredPoleLength.ReducedBasisBounds.GFiniteOrderUnipotent
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-public import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -23,9 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,11 +40,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.Analysis.Complex.Exponential
+
+-- Source module: Formalism.FilteredPoleLength.ReducedBasisBounds.GFiniteOrderUnipotent
+
+section
+
+@[expose] public section
+
+open scoped BigOperators
+open Polynomial Finset
+
+namespace Formalism.LatticeBaseChangeAlt
+
+def GHadamard : Prop :=
+  ∀ (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ),
+    |M.det| ≤ ∏ j, Real.sqrt (∑ i, M i j ^ 2)
+
+end Formalism.LatticeBaseChangeAlt
+end
+end
+
+-- Source module: Formalism.FilteredPoleLength.LocalDescentLevels.GAdjugateNormBound
+
+section
 
 @[expose] public section
 
@@ -125,3 +149,5 @@ theorem gHadamard : GHadamard := by
   exact h1'
 
 end Formalism.LatticeBaseChangeAlt
+end
+end

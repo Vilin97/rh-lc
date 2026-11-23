@@ -2,8 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.MemPowSub
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.AlgebraMapNormTensorEqProdConjugatesStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.Hilbert90BaseChangeStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TensorExistsOfGaloisFixedStatement
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.RingTheory.Artinian.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,16 +19,18 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.GroupTheory.CosetCover
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,10 +51,202 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.MemPowSub
+import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.SqSubLeNormSub
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Mathlib.RingTheory.Trace.Basic
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.FieldTheory.Galois.Abelian
 public import Mathlib.RingTheory.Flat.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.Hilbert90BaseChange
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+namespace GlobalTheory.CNorm
+
+theorem exists_isUnit_of_forall_maximal {K A : Type} [Field K] [Infinite K] [CommRing A]
+    [Algebra K A] [IsArtinianRing A] (Θ : A →ₗ[K] A)
+    (h : ∀ 𝔪 : Ideal A, 𝔪.IsMaximal → ∃ c, Θ c ∉ 𝔪) : ∃ c, IsUnit (Θ c) := by
+  classical
+  have hfin := IsArtinianRing.setOf_isMaximal_finite A
+  let s : Finset (Subspace K A) :=
+    hfin.toFinset.image fun 𝔪 => (𝔪.restrictScalars K).comap Θ
+  have hs : ⊤ ∉ s := by
+    intro ht
+    obtain ⟨𝔪, hm, he⟩ := Finset.mem_image.1 ht
+    obtain ⟨c, hc⟩ := h 𝔪 (by simpa using hm)
+    have : c ∈ (𝔪.restrictScalars K).comap Θ := by rw [he]; trivial
+    exact hc this
+  have hne := Subspace.biUnion_ne_univ_of_top_notMem hs
+  obtain ⟨c, hc⟩ := (Set.ne_univ_iff_exists_notMem _).1 hne
+  refine ⟨c, ?_⟩
+  by_contra hu
+  obtain ⟨𝔪, hm, hle⟩ := exists_max_ideal_of_mem_nonunits (mem_nonunits_iff.2 hu)
+  apply hc
+  simp only [Set.mem_iUnion]
+  exact ⟨_, Finset.mem_image.2 ⟨𝔪, by simpa using hm, rfl⟩, hle⟩
+
+theorem hilbert90_baseChange : ∀ (F E K : Type) [Field F] [CharZero F] [Field E] [Algebra F E] [FiniteDimensional F E] [Field K] [Algebra F K] (τ : E ≃ₐ[F] E) (m : ℕ), orderOf τ = m → ∀ x : K ⊗[F] E, ∏ i ∈ Finset.range m, (Algebra.TensorProduct.map (AlgHom.id K K) (τ : E →ₐ[F] E))^[i] x = 1 → ∃ z : (K ⊗[F] E)ˣ, x * Algebra.TensorProduct.map (AlgHom.id K K) (τ : E →ₐ[F] E) z = z := by
+  intro F E K _ _ _ _ _ _ _ τ m hm x hx
+  classical
+  set T := Algebra.TensorProduct.map (AlgHom.id K K) (τ : E →ₐ[F] E) with hT
+  have hm0 : 0 < m := hm ▸ orderOf_pos τ
+  haveI : CharZero K := charZero_of_injective_algebraMap (algebraMap F K).injective
+  haveI : IsArtinianRing (K ⊗[F] E) := IsArtinianRing.of_finite K _
+  have hpow : ∀ (i : ℕ) (y : K ⊗[F] E), T^[i] y = (T ^ i) y := fun i y => by
+    rw [AlgHom.coe_pow]
+  have htm : ∀ (i : ℕ) (k : K) (c : E), (T ^ i) (k ⊗ₜ c) = k ⊗ₜ ((τ ^ i) c) := by
+    intro i k c
+    induction i with
+    | zero => simp
+    | succ i ih => rw [pow_succ', pow_succ', AlgHom.mul_apply, ih, AlgEquiv.mul_apply]; simp [hT]
+  have hTm : ∀ y, (T ^ m) y = y := by
+    intro y
+    induction y using TensorProduct.induction_on with
+    | zero => simp
+    | tmul k c => rw [htm, ← hm, pow_orderOf_eq_one]; rfl
+    | add a b ha hb => rw [map_add (f := _), ha, hb]
+  simp only [hpow] at hx
+  let a : ℕ → K ⊗[F] E := fun i => ∏ j ∈ Finset.range i, (T ^ j) x
+  have ha : ∀ i, x * T (a i) = a (i + 1) := by
+    intro i
+    simp only [a, map_prod, Finset.prod_range_succ', pow_zero, AlgHom.one_apply, pow_succ',
+      AlgHom.mul_apply]
+    ring
+  have ha0 : a 0 = 1 := by simp [a]
+  have ham : a m = 1 := hx
+  let Θ : K ⊗[F] E →ₗ[K] K ⊗[F] E :=
+    ∑ i ∈ Finset.range m, (LinearMap.mulLeft K (a i)).comp (T ^ i).toLinearMap
+  have hΘ : ∀ c, Θ c = ∑ i ∈ Finset.range m, a i * (T ^ i) c := by
+    intro c
+    simp [Θ, LinearMap.sum_apply]
+  have hfix : ∀ c, x * T (Θ c) = Θ c := by
+    intro c
+    have h1 : x * T (Θ c) = ∑ i ∈ Finset.range m, a (i + 1) * (T ^ (i + 1)) c := by
+
+      rw [hΘ, map_sum, Finset.mul_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_mul, ← mul_assoc, ha, pow_succ', AlgHom.mul_apply]
+    have h2 := Finset.sum_range_succ' (fun i => a i * (T ^ i) c) m
+    rw [Finset.sum_range_succ, ham, ha0, hTm, pow_zero, AlgHom.one_apply] at h2
+    rw [h1, hΘ]
+    exact (add_right_cancel h2).symm
+  obtain ⟨c, hc⟩ := exists_isUnit_of_forall_maximal Θ (fun 𝔪 h𝔪 => by
+    by_contra hcon
+    push_neg at hcon
+    letI : Field ((K ⊗[F] E) ⧸ 𝔪) := Ideal.Quotient.field 𝔪
+    let ι : E →+* (K ⊗[F] E) ⧸ 𝔪 :=
+      (Ideal.Quotient.mk 𝔪).comp Algebra.TensorProduct.includeRight.toRingHom
+    let φ : Fin m → (E →* (K ⊗[F] E) ⧸ 𝔪) := fun i =>
+      ι.toMonoidHom.comp ((τ ^ (i : ℕ) : E ≃ₐ[F] E) : E →* E)
+    have hφ : Function.Injective φ := by
+      intro i j hij
+      have : τ ^ (i : ℕ) = τ ^ (j : ℕ) := by
+        ext c
+        exact ι.injective (DFunLike.congr_fun hij c)
+      exact Fin.ext (pow_injOn_Iio_orderOf (by simp [hm]) (by simp [hm]) this)
+    have hli := (linearIndependent_monoidHom E ((K ⊗[F] E) ⧸ 𝔪)).comp φ hφ
+    have := Fintype.linearIndependent_iff.1 hli (fun i => Ideal.Quotient.mk 𝔪 (a i)) (by
+      ext c
+      have h := Ideal.Quotient.eq_zero_iff_mem.2 (hcon (1 ⊗ₜ c))
+
+      rw [hΘ, map_sum, Finset.sum_range] at h
+      simp only [htm, map_mul] at h
+      rw [Finset.sum_apply]
+      exact h) ⟨0, hm0⟩
+    simp only [ha0, map_one] at this
+    exact one_ne_zero this)
+  exact ⟨hc.unit, hfix c⟩
+
+end GlobalTheory.CNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.Hilbert90BaseChangeStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+theorem _root_.GlobalTheory.T.hilbert90_baseChange' : ∀ (F E K : Type) [Field F] [CharZero F] [Field E] [Algebra F E] [FiniteDimensional F E] [Field K] [Algebra F K] (τ : E ≃ₐ[F] E) (m : ℕ), orderOf τ = m → ∀ x : K ⊗[F] E, ∏ i ∈ Finset.range m, (Algebra.TensorProduct.map (AlgHom.id K K) (τ : E →ₐ[F] E))^[i] x = 1 → ∃ z : (K ⊗[F] E)ˣ, x * Algebra.TensorProduct.map (AlgHom.id K K) (τ : E →ₐ[F] E) z = z := by
+  first | exact @GlobalTheory.CNorm.hilbert90_baseChange | exact GlobalTheory.CNorm.hilbert90_baseChange | (intros; apply GlobalTheory.CNorm.hilbert90_baseChange <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TensorExistsOfGaloisFixed
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+namespace GlobalTheory.CNorm
+
+theorem tensor_exists_of_galois_fixed :
+    ∀ (F M E K : Type) [Field F] [CharZero F] [Field M] [Field E] [Algebra F M] [Algebra M E] [Algebra F E] [IsScalarTower F M E] [FiniteDimensional M E] [IsGalois M E] [CommRing K] [Algebra F K] (y : K ⊗[F] E), (∀ h : E ≃ₐ[M] E, Algebra.TensorProduct.map (AlgHom.id K K) ((h.restrictScalars F : E ≃ₐ[F] E) : E →ₐ[F] E) y = y) → ∃ z : K ⊗[F] M, Algebra.TensorProduct.map (AlgHom.id K K) (IsScalarTower.toAlgHom F M E) z = y := by
+  intro F M E K _ _ _ _ _ _ _ _ _ _ _ _ y hy
+  classical
+  have key : ∀ x : K ⊗[F] E, ∃ z : K ⊗[F] M,
+      Algebra.TensorProduct.map (AlgHom.id K K) (IsScalarTower.toAlgHom F M E) z =
+      ∑ h : E ≃ₐ[M] E, Algebra.TensorProduct.map (AlgHom.id K K)
+        ((h.restrictScalars F : E ≃ₐ[F] E) : E →ₐ[F] E) x := by
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero => exact ⟨0, by simp⟩
+    | tmul k e =>
+      refine ⟨k ⊗ₜ Algebra.trace M E e, ?_⟩
+      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
+      rw [← TensorProduct.tmul_sum]
+      congr 1
+      exact trace_eq_sum_automorphisms e
+    | add a b ha hb =>
+      obtain ⟨za, ha⟩ := ha
+      obtain ⟨zb, hb⟩ := hb
+      refine ⟨za + zb, ?_⟩
+      simp only [map_add (f := _), Finset.sum_add_distrib, ha, hb]
+  obtain ⟨z, hz⟩ := key y
+  simp only [hy, Finset.sum_const, Finset.card_univ] at hz
+  have hm : ((Fintype.card (E ≃ₐ[M] E) : ℕ) : F) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+  refine ⟨((Fintype.card (E ≃ₐ[M] E) : ℕ) : F)⁻¹ • z, ?_⟩
+  rw [LinearMapClass.map_smul_of_tower, hz, ← Nat.cast_smul_eq_nsmul F, smul_smul,
+    inv_mul_cancel₀ hm, one_smul]
+
+end GlobalTheory.CNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TensorExistsOfGaloisFixedStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_tensor_eq_of_fixed_by_algEquiv : ∀ (F M E K : Type) [Field F] [CharZero F] [Field M] [Field E] [Algebra F M] [Algebra M E] [Algebra F E] [IsScalarTower F M E] [FiniteDimensional M E] [IsGalois M E] [CommRing K] [Algebra F K] (y : K ⊗[F] E), (∀ h : E ≃ₐ[M] E, Algebra.TensorProduct.map (AlgHom.id K K) ((h.restrictScalars F : E ≃ₐ[F] E) : E →ₐ[F] E) y = y) → ∃ z : K ⊗[F] M, Algebra.TensorProduct.map (AlgHom.id K K) (IsScalarTower.toAlgHom F M E) z = y := by
+  first | exact @GlobalTheory.CNorm.tensor_exists_of_galois_fixed | exact GlobalTheory.CNorm.tensor_exists_of_galois_fixed | (intros; apply GlobalTheory.CNorm.tensor_exists_of_galois_fixed <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IsNormFromBaseChangeOfPowFinrankCyclic
+
+section
 
 @[expose] public section
 
@@ -239,3 +435,5 @@ theorem tnorm_of_tnorm_pow : ∀ (F M E K : Type) [Field F] [CharZero F] [Field 
   exact Function.Semiconj.iterate_right hcomm i z
 
 end GlobalTheory.CNorm
+end
+end

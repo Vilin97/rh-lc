@@ -4,7 +4,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.ClMvps
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.CmOfRegular
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.InjDim
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
+public import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,12 +24,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.KrullDimension.Regular
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,6 +50,63 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.IsLocalHom
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.RingTheory.Ideal.GoingUp
+import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.KrullDimension.Regular
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.InjDim
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.Alg UpperTheory.V.CA ReciprocityTheory.CA
+
+theorem UpperTheory.V.CA.inj_dim :
+    ∀ (A B : Type) [CommRing A] [IsDomain A] [CommRing B] [Algebra A B] [Algebra.IsIntegral A B] (d : ℕ), ringKrullDim A = d → ringKrullDim B = d → Function.Injective (algebraMap A B) := by
+  intro A B _ _ _ _ _ d hA hB
+  by_contra hni
+  obtain ⟨r, hr, hr0⟩ : ∃ r : A, algebraMap A B r = 0 ∧ r ≠ 0 := by
+    rw [injective_iff_map_eq_zero] at hni
+    push_neg at hni
+    exact hni
+  have hrz : r ∈ nonZeroDivisors A := mem_nonZeroDivisors_of_ne_zero hr0
+  let g : (A ⧸ Ideal.span {r}) →+* B := Ideal.Quotient.lift (Ideal.span {r}) (algebraMap A B) (by
+    intro a ha
+    obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp ha
+    rw [map_mul, hr, mul_zero])
+  letI : Algebra (A ⧸ Ideal.span {r}) B := g.toAlgebra
+  haveI : Algebra.IsIntegral (A ⧸ Ideal.span {r}) B := by
+    refine ⟨fun b => ?_⟩
+    obtain ⟨p, hp, hpb⟩ := Algebra.IsIntegral.isIntegral (R := A) b
+    refine ⟨p.map (Ideal.Quotient.mk _), hp.map _, ?_⟩
+    rw [Polynomial.eval₂_map, RingHom.algebraMap_toAlgebra, Ideal.Quotient.lift_comp_mk]
+    exact hpb
+  have h1 : ringKrullDim B ≤ ringKrullDim (A ⧸ Ideal.span {r}) :=
+    Order.krullDim_le_of_strictMono
+      (fun P => (⟨Ideal.comap (algebraMap (A ⧸ Ideal.span {r}) B) P.asIdeal, inferInstance⟩ :
+        PrimeSpectrum _))
+      (fun P Q h => Ideal.IsIntegral.comap_lt_comap h)
+  have h2 := ringKrullDim_quotient_succ_le_of_nonZeroDivisor hrz
+  rw [hA] at h2
+  rw [hB] at h1
+  have h3 : ((d : WithBot ℕ∞) + 1) ≤ d := le_trans (add_le_add_left h1 1) h2
+  norm_cast at h3
+  omega
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.InjOfFinite
+
+section
 
 @[expose] public section
 
@@ -155,3 +212,5 @@ theorem UpperTheory.V.CA.cl_nn :
     have h' : IsCL (ResidueField O) R := isCL_field O (ResidueField O) R h
     obtain ⟨d, φ, h1, h2, h3, h4⟩ := nn_field (ResidueField O) R h'
     exact ⟨d, φ.restrictScalars O, h1, h2, ⟨fun a ha => h3.1 a ha⟩, h4⟩
+end
+end

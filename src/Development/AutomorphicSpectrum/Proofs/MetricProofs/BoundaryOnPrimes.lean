@@ -4,7 +4,7 @@ public import Mathlib.Algebra.Algebra.Rat
 public import Mathlib.Algebra.MvPolynomial.Eval
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RingTheory.Ideal.Prime
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsAlgHomAdjoinInv
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,12 +23,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,10 +44,42 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjugateHermitianLineIsometries
-public import Mathlib.RingTheory.Localization.FractionRing
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChartA
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.RingTheory.Localization.FractionRing
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsAlgHomAdjoinInv
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.AnForm.R GlobalTheory.CompanionTheory.Ar.Cmp
+
+namespace GlobalTheory.CompanionTheory.Ar.Cmp.Kext
+
+theorem exists_algHom_adjoin_inv :
+    ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (σ : Type) (τ : σ → Ω) (F : MvPolynomial σ ℚ)
+      (S : Subalgebra ℚ Ω) (E : Type) [CommRing E] [Algebra ℚ E] (u : σ → E),
+      aeval τ F ≠ 0 → S = Algebra.adjoin ℚ (insert (aeval τ F)⁻¹ (Set.range τ)) →
+      (∀ G : MvPolynomial σ ℚ, aeval τ G = 0 → aeval u G = 0) → IsUnit (aeval u F) →
+      ∃ φ : S →ₐ[ℚ] E, ∀ (G : MvPolynomial σ ℚ) (s : S), (s : Ω) = aeval τ G →
+        φ s = aeval u G :=
+  _root_.UpperTheory.Reformulated.B.Yde9.main
+
+end GlobalTheory.CompanionTheory.Ar.Cmp.Kext
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.BoundaryOnPrimes
+
+section
 
 @[expose] public section
 
@@ -165,3 +192,5 @@ theorem boundary_on_primes : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (σ : T
   exact read_in_field τ F S Js e n z Z N hF hS hz hprime 𝔮 hker hFq _ π hπ
 
 end GlobalTheory.CompanionTheory.Ar.Cmp.SncRes.PrimeRead
+end
+end

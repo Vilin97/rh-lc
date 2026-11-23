@@ -1,8 +1,9 @@
 module
 
 public import Formalism.PadicSubsetSums.CentralIdempotents.WindowSums
-public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
-public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.ToolsB
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.RingTheory.Ideal.Span
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +42,164 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LagrangeIdealLifts.LiftLagrangeIdealInt
+public import Mathlib.RingTheory.Length
+import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+import Formalism.FrobeniusContraction.StatementTop
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.LenBound
+import Mathlib.Topology.Sheaves.Presheaf
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.EisensteinCokernelLengths.StatementLIFTV
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.ZetaNonvanishing.LIFTV
+
+def LagrangeIdealSg : Prop :=
+  ∀ (ℓ : ℕ) [Fact ℓ.Prime] (R : Type) [CommRing R] [IsDomain R] (sg : ℕ) (S₁ S₂ : Finset ℤ)
+    (c : ℤ → R), Disjoint S₁ S₂ →
+    (∀ a ∈ S₁, ∀ b ∈ S₁ ∪ S₂, a ≠ b →
+      Associated (c a - c b) ((ℓ : R) ^ (sg + padicValInt ℓ (a - b)))) →
+    Polynomial.C ((ℓ : R) ^ (S₁.sup fun a =>
+        (∑ b ∈ S₂, (sg + padicValInt ℓ (a - b))) + ∑ a' ∈ S₁.erase a, (sg + padicValInt ℓ (a - a')))) ∈
+      Ideal.span ({∏ a ∈ S₁, (Polynomial.X - Polynomial.C (c a)),
+        ∏ b ∈ S₂, (Polynomial.X - Polynomial.C (c b))} : Set (Polynomial R))
+
+end Formalism.ZetaNonvanishing.LIFTV
+end
+end
+end
+
+-- Source module: Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
+
+section
+
+@[expose] public section
+
+namespace Formalism.ZetaNonvanishing.LIFTV
+
+theorem lagrangeIdealSg_proof : LagrangeIdealSg := by
+  intro ℓ _ R _ _ sg S₁ S₂ c hd hc
+  exact Formalism.LIFT.lift_LagrangeIdeal R (ℓ : R) ℤ S₁ S₂ c (fun a b => sg + padicValInt ℓ (a - b)) hd hc
+
+end Formalism.ZetaNonvanishing.LIFTV
+end
+end
+
+-- Source module: Formalism.EisensteinCokernelLengths.CokernelLengthBoundOfLifts
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Classical
+
+namespace Formalism.ZetaNonvanishing.EisensteinCokernelLengthsFacts
+
+open Formalism.WachCohomologyFacts Formalism.WachCohomologyFacts.V2
+
+def LenBound2 : Prop :=
+  ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] (ℓ g g₀ e e' : ℕ)
+    (Z Bc I : Submodule O M) (s s₀ : Finset M),
+    s.card ≤ g → Submodule.span O (s : Set M) ⊔ Bc = Z → Bc ≤ I →
+    s₀.card ≤ g₀ → (s₀ : Set M) ⊆ Z →
+    (∀ p ∈ Z, (ℓ ^ e : ℕ) • p ∈ Submodule.span O (s₀ : Set M) ⊔ I) →
+    (∀ p ∈ Submodule.span O (s₀ : Set M), (ℓ ^ e' : ℕ) • p ∈ I) →
+    Module.length O (↥Z ⧸ I.comap Z.subtype) ≤
+      ((g : ℕ∞) * (e : ℕ∞) + (g₀ : ℕ∞) * (e' : ℕ∞)) * Module.length O (O ⧸ Ideal.span {(ℓ : O)})
+
+end Formalism.ZetaNonvanishing.EisensteinCokernelLengthsFacts
+end
+end
+end
+
+-- Source module: Formalism.EisensteinCokernelLengths.FactorialValuationBounds.ToolsB
+
+section
+
+@[expose] public section
+
+namespace Formalism.ZetaNonvanishing.EisensteinCokernelLengthsFacts.FactorialValuationBoundsFacts
+open Formalism.WachCohomologyFacts
+
+theorem key {O M : Type} [CommRing O] [AddCommGroup M] [Module O M] (Z Z₀ I : Submodule O M)
+    (hZ₀Z : Z₀ ≤ Z) :
+    Module.length O (↥Z ⧸ I.comap Z.subtype) =
+      Module.length O (↥Z₀ ⧸ I.comap Z₀.subtype) + Module.length O (↥Z ⧸ (Z₀ ⊔ I).comap Z.subtype) := by
+  set I' := I.comap Z.subtype
+  set J' := (Z₀ ⊔ I).comap Z.subtype
+  set I₀ := I.comap Z₀.subtype
+  have hIJ : I' ≤ J' := Submodule.comap_mono le_sup_right
+  let f : ↥Z₀ →ₗ[O] ↥Z ⧸ I' := I'.mkQ ∘ₗ Submodule.inclusion hZ₀Z
+  have hker : LinearMap.ker f = I₀ := by
+    ext x
+    simp only [f, LinearMap.mem_ker, LinearMap.coe_comp, Function.comp_apply, Submodule.mkQ_apply,
+      Submodule.Quotient.mk_eq_zero, I', I₀, Submodule.mem_comap, Submodule.subtype_apply,
+      Submodule.coe_inclusion]
+  let f' := I₀.liftQ f hker.ge
+  let g := I'.mapQ J' LinearMap.id hIJ
+  have hf' : Function.Injective f' := by
+    rw [← LinearMap.ker_eq_bot]; exact Submodule.ker_liftQ_eq_bot _ _ _ hker.le
+  have hg : Function.Surjective g := by
+    intro y
+    induction y using Submodule.Quotient.induction_on with
+    | H z => exact ⟨Submodule.Quotient.mk z, rfl⟩
+  have hex : Function.Exact f' g := by
+    intro y
+    induction y using Submodule.Quotient.induction_on with
+    | H z =>
+      simp only [g, Submodule.mapQ_apply, LinearMap.id_apply, Submodule.Quotient.mk_eq_zero, J',
+        Submodule.mem_comap, Submodule.subtype_apply, Submodule.mem_sup]
+      constructor
+      · rintro ⟨a, ha, b, hb, hab⟩
+        refine ⟨Submodule.Quotient.mk ⟨a, ha⟩, ?_⟩
+        simp only [f', Submodule.liftQ_apply, f, LinearMap.coe_comp, Function.comp_apply,
+          Submodule.mkQ_apply]
+        rw [Submodule.Quotient.eq]
+        simp only [I', Submodule.mem_comap, Submodule.subtype_apply, Submodule.coe_sub,
+          Submodule.coe_inclusion]
+        have : (a : M) - z = -b := by rw [← hab]; abel
+        rw [this]; exact I.neg_mem hb
+      · rintro ⟨w, hw⟩
+        induction w using Submodule.Quotient.induction_on with
+        | H a =>
+          simp only [f', Submodule.liftQ_apply, f, LinearMap.coe_comp, Function.comp_apply,
+            Submodule.mkQ_apply] at hw
+          rw [Submodule.Quotient.eq] at hw
+          simp only [I', Submodule.mem_comap, Submodule.subtype_apply, Submodule.coe_sub,
+            Submodule.coe_inclusion] at hw
+          refine ⟨a, a.2, (z : M) - a, ?_, by abel⟩
+          have := I.neg_mem hw; simpa using this
+  exact Module.length_eq_add_of_exact f' g hf' hg hex
+
+theorem lenBound2 : Formalism.ZetaNonvanishing.EisensteinCokernelLengthsFacts.LenBound2 := by
+  intro O M _ _ _ ℓ g g₀ e e' Z Bc I s s₀ hs hZ hBc hs₀ hs₀Z hke hke'
+  have hZ₀Z : Submodule.span O (s₀ : Set M) ≤ Z := Submodule.span_le.mpr hs₀Z
+  have h1 := quotientLengthBound_holds O M ℓ g e Z Bc (Submodule.span O (s₀ : Set M) ⊔ I) s hs hZ
+    (hBc.trans le_sup_right) hke
+  have h2 := quotientLengthBound_holds O M ℓ g₀ e' (Submodule.span O (s₀ : Set M)) ⊥ I s₀ hs₀ (by simp)
+    bot_le hke'
+  rw [key Z _ I hZ₀Z]
+  calc _ ≤ (g₀ : ℕ∞) * (e' : ℕ∞) * Module.length O (O ⧸ Ideal.span {(ℓ : O)}) +
+        (g : ℕ∞) * (e : ℕ∞) * Module.length O (O ⧸ Ideal.span {(ℓ : O)}) := add_le_add h2 h1
+    _ = _ := by ring
+
+end Formalism.ZetaNonvanishing.EisensteinCokernelLengthsFacts.FactorialValuationBoundsFacts
+end
+end
+
+-- Source module: Formalism.PadicSubsetSums.StableGradedCounts.ARCReuse
+
+section
 
 @[expose] public section
 
@@ -115,3 +271,5 @@ theorem aeval_mapQ {R V : Type} [CommRing R] [AddCommGroup V] [Module R V] (T : 
       map_smul]
 
 end Formalism.IrreducibleCountingLemmas.WindowSums
+end
+end

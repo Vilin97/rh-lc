@@ -5,10 +5,7 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayB
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.OpNormLeOneOfIso
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.FSFInt
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.FSFdeg
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.FSWeil
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.TrWSmulComp
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.UnitNorm.UnrealifyRealify
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.SchurDecayBounds.NormIdPair
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.UnitNorm.UnrealifyRealify
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -34,8 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,8 +43,232 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Formalism.FormalDegreeBessel.StatementWR
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselLine
+import Formalism.SharpRestriction.CuspSpanNormBounds.LeadMinorK
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.UnitNorm.UnrealifyRealify
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.SchurDecayBounds.NormIdCore
+import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.FSWeil
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix
+open scoped InnerProductSpace ENNReal
+
+noncomputable section
+
+namespace PI.WBL.FSW
+
+open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.ThB Formalism.BasicNotions PI.BesselLine PI.WBL
+
+section Weil
+
+variable {k r : ℕ}
+
+def psiMap (q : Mt k r × (Mt k r × Mt k r)) : Mt k r := fun i j => (sM q.2 * Matrix.of q.1) i j
+
+theorem continuous_psiMap : Continuous (psiMap (k := k) (r := r)) := by
+  have hc : Continuous fun q : Mt k r × (Mt k r × Mt k r) => (sM q.2 * Matrix.of q.1 : Mx k r) :=
+    ((PI.WUN.continuous_of.comp (continuous_fst.comp continuous_snd)).matrix_mul
+      (PI.WUN.continuous_of.comp (continuous_snd.comp continuous_snd))).matrix_mul
+      (PI.WUN.continuous_of.comp continuous_fst)
+  exact continuous_pi fun i => continuous_pi fun j => hc.matrix_elem i j
+
+theorem measurable_psiMap : Measurable (psiMap (k := k) (r := r)) := continuous_psiMap.measurable
+
+theorem continuous_mulT : Continuous fun q : Mt k r × Mt k r => (fun i j => (Matrix.of q.2 * Matrix.of q.1) i j : Mt k r) := by
+  have hc : Continuous fun q : Mt k r × Mt k r => (Matrix.of q.2 * Matrix.of q.1 : Mx k r) :=
+    (PI.WUN.continuous_of.comp continuous_snd).matrix_mul (PI.WUN.continuous_of.comp continuous_fst)
+  exact continuous_pi fun i => continuous_pi fun j => hc.matrix_elem i j
+
+theorem muS_ne_zero {μG μS ν : Measure (Mt k r)} (hG0 : μG ≠ 0) (hq : IsQuotMeas μG μS ν) : μS ≠ 0 := by
+  intro h0
+  subst h0
+  apply hG0
+  have h1 := hq (fun _ => 1) measurable_const
+  simpa using h1
+
+theorem sfinite_quot {μG μS ν : Measure (Mt k r)} [SigmaFinite μG] [SFinite μS] (hG0 : μG ≠ 0)
+    (hq : IsQuotMeas μG μS ν) : SFinite ν := by
+  have hS0 := muS_ne_zero hG0 hq
+  obtain ⟨f, hfpos, hfm, hfint⟩ := exists_pos_lintegral_lt_of_sigmaFinite μG (ε := 1) one_ne_zero
+  set F : Mt k r → ENNReal := fun x => (f x : ENNReal) with hFdef
+  have hFm : Measurable F := hfm.coe_nnreal_ennreal
+  have hmul : ∀ x : Mt k r, Measurable fun s : Mt k r => (fun i j => (Matrix.of s * Matrix.of x) i j : Mt k r) :=
+    fun x => (continuous_mulT.comp (Continuous.prodMk_right x)).measurable
+  set h : Mt k r → ENNReal := fun x => ∫⁻ s, F (fun i j => (Matrix.of s * Matrix.of x) i j) ∂μS with hdef
+  have hhm : Measurable h := (hFm.comp continuous_mulT.measurable).lintegral_prod_right'
+  have hint : ∫⁻ x, h x ∂ν < ⊤ := by
+    rw [hdef, ← hq F hFm]
+    exact hfint.trans ENNReal.one_lt_top
+  have hpos : ∀ x, h x ≠ 0 := by
+    intro x hx
+    have hx' := (lintegral_eq_zero_iff (hFm.comp (hmul x))).1 hx
+    have hfalse : ∀ᵐ s ∂μS, False := hx'.mono fun s hs => by
+      simp only [Function.comp_apply, Pi.zero_apply, hFdef, ENNReal.coe_eq_zero] at hs
+      exact (hfpos _).ne' hs
+    exact hS0 (by simpa using ae_iff.1 hfalse)
+  have hfin : IsFiniteMeasure (ν.withDensity h) := isFiniteMeasure_withDensity hint.ne
+  have heq : ν = (ν.withDensity h).withDensity h⁻¹ := by
+    rw [← withDensity_mul ν hhm hhm.inv]
+    conv_lhs => rw [← withDensity_one (μ := ν)]
+    refine withDensity_congr_ae ?_
+    filter_upwards [ae_lt_top hhm hint.ne] with x hx
+    simp only [Pi.mul_apply, Pi.inv_apply, Pi.one_apply]
+    exact (ENNReal.mul_inv_cancel (hpos x) hx.ne).symm
+  rw [heq]
+  infer_instance
+
+theorem quot_map {μG μW μN ν : Measure (Mt k r)} [SFinite μW] [SFinite μN] [SFinite ν]
+    (hq : IsQuotMeas μG (muSof μW μN) ν) : μG = (ν.prod (μW.prod μN)).map psiMap := by
+  ext A hA
+  have hf : Measurable (A.indicator (1 : Mt k r → ENNReal)) := measurable_one.indicator hA
+  rw [← lintegral_indicator_one hA, ← lintegral_indicator_one hA, hq _ hf,
+    lintegral_map hf measurable_psiMap,
+    lintegral_prod (fun w => A.indicator 1 (psiMap w)) (hf.comp measurable_psiMap).aemeasurable]
+  refine lintegral_congr fun x => ?_
+  have hf1 : Measurable fun s : Mt k r => A.indicator (1 : Mt k r → ENNReal)
+      (fun i j => (Matrix.of s * Matrix.of x) i j) :=
+    hf.comp (continuous_mulT.comp (Continuous.prodMk_right x)).measurable
+  have hg1 : Measurable fun p : Mt k r × Mt k r => (fun i j => (Matrix.of p.1 * Matrix.of p.2) i j : Mt k r) :=
+    (continuous_mulT.comp continuous_swap).measurable
+  rw [muSof, lintegral_map hf1 hg1]
+  rfl
+
+end Weil
+
+end PI.WBL.FSW
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.BesselUnitNorm.BesselNormSteps.BesselLine.TrWSmulComp
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix
+open scoped InnerProductSpace
+
+noncomputable section
+
+namespace PI.WBL.FSW
+
+open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.ThB Formalism.BasicNotions PI.BesselLine PI.WBL
+
+variable {k r : ℕ} {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp]
+
+theorem star_inner (x y : Wp) : star ⟪x, y⟫_ℂ = ⟪y, x⟫_ℂ := by
+  exact inner_conj_symm y x
+
+variable [FiniteDimensional ℂ Wp]
+
+end PI.WBL.FSW
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.SchurDecayBounds.NormIdPair
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix
+open scoped InnerProductSpace ENNReal
+
+noncomputable section
+
+namespace PI.WBL.NIS
+
+open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.ThB Formalism.BasicNotions PI.BesselLine PI.WBL PI.WBL.FSW
+
+variable {k r : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+  {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp]
+
+theorem hs_one {z : Fin (2 * r + k + 1) → ℂ} {c : ℂ} {π : Mx k r → (Wp →L[ℂ] Wp)}
+    {μW μN : Measure (Mt k r)} {σ : Mx k r → (H →L[ℂ] H)}
+    (hGr : Cv.GrpF k r z) (hSg : Cv.SigU σ) (hPi : Cv.PiU z π) (hPs : Cv.PsiF k r z c) (hM : Cv.MeasF z π μW μN)
+    {u v : H} (ξ : Wp) {x : Mx k r} (hx : x ∈ UH (Hpk k r))
+    (hint : Integrable (beF z c π σ (σ x u) v) (μW.prod μN)) :
+    Integrable (fun p => Fx z c π μW μN σ u v ξ (sM p * x)) (μW.prod μN) ∧
+      ((‖Aop z c π μW μN σ u v x ξ‖ ^ 2 : ℝ) : ℂ) = ∫ p, Fx z c π μW μN σ u v ξ (sM p * x) ∂(μW.prod μN) := by
+  set A : Wp →L[ℂ] Wp := Aop z c π μW μN σ u v x with hA
+  have hiso : ∀ b ∈ UWset k r z, ∀ y y' : Wp, ⟪π b y, π b y'⟫_ℂ = ⟪y, y'⟫_ℂ := by
+    intro b hb y y'
+    let T : Wp →ₗᵢ[ℂ] Wp := { toLinearMap := (π b : Wp →ₗ[ℂ] Wp), norm_map' := hPi.2.2 b hb }
+    exact T.inner_map_map y y'
+  have hadj : ∀ b ∈ UWset k r z, ∀ y y' : Wp, ⟪π b y, y'⟫_ℂ = ⟪y, π b⁻¹ y'⟫_ℂ := by
+    intro b hb y y'
+    have hbinv : b⁻¹ ∈ UWset k r z := hGr.2.2.1 b hb
+    have h1 : b * b⁻¹ = 1 := (hGr.2.1 b hb.1).1
+    have h2 : π b (π b⁻¹ y') = y' := by
+      have h3 := hPi.2.1 b hb b⁻¹ hbinv
+      rw [h1, hPi.1] at h3
+      have h4 := congrArg (fun T : Wp →L[ℂ] Wp => T y') h3
+      simpa using h4.symm
+    calc ⟪π b y, y'⟫_ℂ = ⟪π b y, π b (π b⁻¹ y')⟫_ℂ := by rw [h2]
+      _ = ⟪y, π b⁻¹ y'⟫_ℂ := hiso b hb y _
+  have hc : ∀ y y' : Wp, star ⟪y, y'⟫_ℂ = ⟪y', y⟫_ℂ := fun y y' => inner_conj_symm y' y
+  have key : ∀ p : Mt k r × Mt k r, Matrix.of p.1 ∈ UWset k r z → Matrix.of p.2 ∈ Nset k r →
+      Fx z c π μW μN σ u v ξ (sM p * x) = ⟪A ξ, beF z c π σ (σ x u) v p ξ⟫_ℂ := by
+    intro p h1 h2
+    have hmul : sM p ∈ UH (Hpk k r) := hGr.1 _ h1.1 _ h2.1
+    have hσ' : σ (sM p * x) u = σ (Matrix.of p.1 * Matrix.of p.2) (σ x u) := by
+      rw [hSg.2.1 _ hmul _ hx]; rfl
+    have heq : Aop z c π μW μN σ u v (sM p * x) =
+        (psi k r z c (Matrix.of p.2) • π (Matrix.of p.1)).comp A := by
+      show be z c π μW μN σ (σ (sM p * x) u) v = _
+      rw [hσ']
+      exact be_equiv_of_int hGr hSg hPi hPs hM hint h1 h2
+    rw [show Fx z c π μW μN σ u v ξ (sM p * x) =
+        ⟪v, σ (sM p * x) u⟫_ℂ * star ⟪ξ, Aop z c π μW μN σ u v (sM p * x) ξ⟫_ℂ from rfl]
+    rw [show beF z c π σ (σ x u) v p = (⟪v, σ (Matrix.of p.1 * Matrix.of p.2) (σ x u)⟫_ℂ *
+        star (psi k r z c (Matrix.of p.2))) • π (Matrix.of p.1)⁻¹ from rfl]
+    rw [heq, hσ', ContinuousLinearMap.comp_apply, ContinuousLinearMap.smul_apply,
+      ContinuousLinearMap.smul_apply, inner_smul_right, inner_smul_right, star_mul', hc,
+      ← hadj _ h1]
+    ring
+  have hae : (fun p => Fx z c π μW μN σ u v ξ (sM p * x)) =ᵐ[μW.prod μN]
+      fun p => ⟪A ξ, beF z c π σ (σ x u) v p ξ⟫_ℂ := by
+    filter_upwards [hM.1] with p hp
+    exact key p hp.1 hp.2
+  let L : (Wp →L[ℂ] Wp) →L[ℂ] ℂ := (innerSL ℂ (A ξ)).comp (ContinuousLinearMap.apply ℂ Wp ξ)
+  have hL : ∀ T : Wp →L[ℂ] Wp, L T = ⟪A ξ, T ξ⟫_ℂ := fun T => by simp [L]
+  have hLint : Integrable (fun p => L (beF z c π σ (σ x u) v p)) (μW.prod μN) := L.integrable_comp hint
+  have hint2 : Integrable (fun p => ⟪A ξ, beF z c π σ (σ x u) v p ξ⟫_ℂ) (μW.prod μN) := by
+    simpa only [hL] using hLint
+  refine ⟨hint2.congr hae.symm, ?_⟩
+  rw [integral_congr_ae hae]
+  have hI : ∫ p, ⟪A ξ, beF z c π σ (σ x u) v p ξ⟫_ℂ ∂(μW.prod μN) = ⟪A ξ, A ξ⟫_ℂ := by
+    simp_rw [← hL]
+    rw [L.integral_comp_comm hint, hL]
+    rfl
+  rw [hI, inner_self_eq_norm_sq_to_K]
+  norm_num
+
+end PI.WBL.NIS
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselDecayBounds.SchurDecayBounds.NormIdGen
+
+section
 
 @[expose] public section
 
@@ -235,3 +454,6 @@ theorem normId_gen {z : Fin (2 * r + k + 1) → ℂ} {c : ℂ} {π : Mx k r → 
   ring
 
 end PI.WBL.NIS
+end
+end
+end

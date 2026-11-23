@@ -5,10 +5,7 @@ public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsRat
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsHodgeFlagSpan
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsPivotMinorFlag
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.ObjectsTied
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.GenMat0FrEqMap
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PHodgeFlagSpan
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PPivotMinorFlag
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PRatioFieldSpan
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PGenLeadMinorNeZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,6 +26,9 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,6 +50,155 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import GroundTheory.HeightsAndTheta.Heights.Intersections.IsSmoothHermFubiniStudyO1
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PHodgeFlagSpan
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.GenMat0FrEqMap
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
+
+theorem genMat0Fr_eq_map (F : Type) [Field F] (Ψ : Type) (n j : ℕ) (τ : Ψ) :
+    genMat0Fr F Ψ n j τ = (algebraMap (MvPolynomial (Ψ × Fin n × Fin n) F) (GenFrac F Ψ n)).mapMatrix
+      (Matrix.of fun (p q : Fin n) => if (p : ℕ) < j ∧ j ≤ (q : ℕ) then 0 else
+        (X (τ, p, q) : MvPolynomial (Ψ × Fin n × Fin n) F)) := by
+  ext p q
+  simp only [genMat0Fr, genMatFr, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply]
+  split_ifs <;> simp
+
+theorem GenLeadMinor0NeZero.full : GenLeadMinor0NeZero.Statement := by
+  intro F _ Ψ n j τ a
+  rw [genMat0Fr_eq_map, ← leadMinor_map]
+  refine (map_ne_zero_iff _ (IsFractionRing.injective (MvPolynomial (Ψ × Fin n × Fin n) F) (GenFrac F Ψ n))).2 ?_
+  intro h0
+  have h1 := congrArg (MvPolynomial.eval (fun q : Ψ × Fin n × Fin n => if q.2.1 = q.2.2 then (1 : F) else 0)) h0
+  rw [leadMinor_map, map_zero] at h1
+  have hP : (MvPolynomial.eval (fun q : Ψ × Fin n × Fin n => if q.2.1 = q.2.2 then (1 : F) else 0)).mapMatrix
+      (Matrix.of fun (p q : Fin n) => if (p : ℕ) < j ∧ j ≤ (q : ℕ) then 0 else
+        (X (τ, p, q) : MvPolynomial (Ψ × Fin n × Fin n) F)) = 1 := by
+    ext p q
+    by_cases hc : (p : ℕ) < j ∧ j ≤ (q : ℕ)
+    · have hpq : p ≠ q := by
+        rintro rfl
+        obtain ⟨hc₁, hc₂⟩ := hc
+        omega
+      simp [hc, hpq]
+    · simp [hc, Matrix.one_apply]
+  rw [hP, leadMinor_one] at h1
+  exact one_ne_zero h1
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PPivotMinorFlag
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
+
+theorem PivotMinorFlag.full : PivotMinorFlag.Statement := by
+  intro R _ n M a b hab
+  exact ⟨⟨Finset.univ.image (pivotCols a b), card_image_pivotCols a b hab⟩, pivotMinor_eq_flagMinor M a b hab⟩
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PRatioFieldSpan
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+namespace RatioFieldSpan
+
+variable {F M : Type} [Field F] [Field M] [Algebra F M]
+
+theorem div_mem_adjoin {I : Type} (u : I → M) (v : M) {x : M}
+    (hx : x ∈ Submodule.span F (Set.range u)) :
+    x / v ∈ IntermediateField.adjoin F (Set.range fun i => u i / v) := by
+  induction hx using Submodule.span_induction with
+  | mem x h =>
+    obtain ⟨i, rfl⟩ := h
+    exact IntermediateField.subset_adjoin F _ ⟨i, rfl⟩
+  | zero => simp
+  | add x y _ _ hx hy =>
+    rw [add_div]
+    exact add_mem hx hy
+  | smul a x _ hx =>
+    rw [Algebra.smul_def, mul_div_assoc]
+    exact mul_mem (IntermediateField.algebraMap_mem _ a) hx
+
+theorem adjoin_le {I J : Type} (u : I → M) (w : J → M) (v v' : M)
+    (hw : ∀ j, w j ∈ Submodule.span F (Set.range u)) (hv' : v' ∈ Submodule.span F (Set.range u))
+    (hv : v ≠ 0) (hv'0 : v' ≠ 0) :
+    IntermediateField.adjoin F (Set.range fun j => w j / v') ≤
+      IntermediateField.adjoin F (Set.range fun i => u i / v) := by
+  rw [IntermediateField.adjoin_le_iff]
+  rintro _ ⟨j, rfl⟩
+  have h1 := div_mem_adjoin (F := F) u v (hw j)
+  have h2 := div_mem_adjoin (F := F) u v hv'
+  have key : w j / v' = (w j / v) / (v' / v) := by
+    field_simp
+  show w j / v' ∈ IntermediateField.adjoin F (Set.range fun i => u i / v)
+  rw [key]
+  exact div_mem h1 h2
+
+theorem full : RatioFieldSpan.Statement := by
+  intro F M _ _ _ I J u w v v' hspan hv hv' hv0 hv'0
+  apply le_antisymm
+  · apply adjoin_le w u v' v
+    · intro i
+      rw [← hspan]
+      exact Submodule.subset_span ⟨i, rfl⟩
+    · rw [← hspan]; exact hv
+    · exact hv'0
+    · exact hv0
+  · apply adjoin_le u w v v'
+    · intro j
+      rw [hspan]
+      exact Submodule.subset_span ⟨j, rfl⟩
+    · exact hv'
+    · exact hv0
+    · exact hv'0
+
+end RatioFieldSpan
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PHodgeFlagRatioFieldEq
+
+section
 
 @[expose] public section
 
@@ -107,3 +255,6 @@ theorem HodgeFlagRatioFieldEq.full : HodgeFlagRatioFieldEq.Statement :=
   HodgeFlagRatioFieldEq.proof RatioFieldSpan.full HodgeFlagSpan.full PivotMinorFlag.full GenLeadMinor0NeZero.full
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end

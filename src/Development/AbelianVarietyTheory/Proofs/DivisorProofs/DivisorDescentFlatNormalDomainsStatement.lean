@@ -3,7 +3,8 @@ module
 public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Ideal.Height
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DivisorDescentFlatNormalDomains
+public import Mathlib.Order.CompletePartialOrder
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.MemRangeOfForallHeightEqOneOfIsReflexive
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +23,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Ideal.AssociatedPrime.Localization
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -43,6 +45,336 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlatMapColonIdeal
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.RingTheory.Flat.TorsionFree
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemSubmonoidDvdMulOfForallHeightEqOne
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+theorem exists_mem_submonoid_dvd_mul_of_forall_height_eq_one :
+    ∀ (B : Type) [CommRing B] [IsDomain B] [IsNoetherianRing B] [IsIntegrallyClosed B]
+    (S : Submonoid B), (0 : B) ∉ S → ∀ x y : B, y ≠ 0 →
+    (∀ Q : Ideal B, Q.IsPrime → Q.height = 1 → y ∈ Q → Disjoint (S : Set B) (Q : Set B) →
+      ∃ t ∉ Q, y ∣ t * x) → ∃ u ∈ S, y ∣ u * x := by
+  intro B _ _ _ _ S _ x y hy h
+  by_contra! hS
+  set M := B ⧸ Ideal.span {y}
+  set N : Submodule B M := B ∙ (Ideal.Quotient.mk (Ideal.span {y}) x)
+  have hmem : ∀ r : B, r ∈ Module.annihilator B N ↔ y ∣ r * x := by
+    intro r
+    change r ∈ Submodule.annihilator N ↔ _
+    rw [Submodule.mem_annihilator_span_singleton, Algebra.smul_def, Ideal.Quotient.algebraMap_eq,
+      ← map_mul, Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton]
+  set I := Module.annihilator B N
+  have hdisj : Disjoint (S : Set B) (I : Set B) := by
+    rw [Set.disjoint_left]
+    intro u hu huI
+    exact hS u hu ((hmem u).mp huI)
+  obtain ⟨P, hP, hIP, hPS⟩ := Ideal.exists_le_prime_disjoint I S hdisj.symm
+  obtain ⟨P', hP'min, hP'P⟩ := Ideal.exists_minimalPrimes_le hIP
+  have hass : P' ∈ associatedPrimes B N :=
+    Module.associatedPrimes.minimalPrimes_annihilator_subset_associatedPrimes B N hP'min
+  have hass' : P' ∈ associatedPrimes B M :=
+    associatedPrimes.subset_of_injective Subtype.val_injective (f := N.subtype) hass
+  obtain ⟨hpr, h1, hyP⟩ := (mem_associatedPrimes_iff_height_eq_one hy).mp hass'
+  obtain ⟨t, htQ, ht⟩ := h P' hpr h1 hyP (hPS.symm.mono_right hP'P)
+  exact htQ (hP'min.1.2 ((hmem t).mpr ht))
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemSubmonoidDvdMulOfForallHeightEqOneStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.exists_mem_submonoid_dvd_mul_of_height_one : ∀ (B : Type) [CommRing B] [IsDomain B] [IsNoetherianRing B] [IsIntegrallyClosed B]
+    (S : Submonoid B), (0 : B) ∉ S → ∀ x y : B, y ≠ 0 →
+    (∀ Q : Ideal B, Q.IsPrime → Q.height = 1 → y ∈ Q → Disjoint (S : Set B) (Q : Set B) →
+      ∃ t ∉ Q, y ∣ t * x) → ∃ u ∈ S, y ∣ u * x := by
+  first | (exact @GlobalTheory.exists_mem_submonoid_dvd_mul_of_forall_height_eq_one) | (exact GlobalTheory.exists_mem_submonoid_dvd_mul_of_forall_height_eq_one) | (intros; apply GlobalTheory.exists_mem_submonoid_dvd_mul_of_forall_height_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocallyAssociatedAtHeightOnePrime
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+theorem exists_notMem_dvd_mul_of_algebraMap_dvd {B : Type} [CommRing B] (Q : Ideal B) [Q.IsPrime]
+    {a b : B}
+    (h : algebraMap B (Localization.AtPrime Q) a ∣ algebraMap B (Localization.AtPrime Q) b) :
+    ∃ t ∉ Q, a ∣ t * b := by
+  obtain ⟨y, hy⟩ := h
+  obtain ⟨⟨z, s⟩, hs⟩ := IsLocalization.surj Q.primeCompl y
+  have e : algebraMap B (Localization.AtPrime Q) (b * s) =
+      algebraMap B (Localization.AtPrime Q) (a * z) := by
+    rw [map_mul, map_mul, hy, mul_assoc, hs]
+  obtain ⟨c, hc⟩ := (IsLocalization.eq_iff_exists Q.primeCompl _).mp e
+  refine ⟨c * s, Q.primeCompl.mul_mem c.2 s.2, c * z, ?_⟩
+  linear_combination hc
+
+theorem exists_locally_associated_algebraMap_of_height_eq_one (A' B' : Type) [CommRing A']
+    [CommRing B'] [IsDomain B'] [IsNoetherianRing B'] [IsIntegrallyClosed B'] [Algebra A' B']
+    (𝔭 : Ideal A') (hQ : (𝔭.map (algebraMap A' B')).IsPrime)
+    (h1 : (𝔭.map (algebraMap A' B')).height = 1) (c : B') (hc : c ≠ 0) :
+    ∃ j : A', (∃ t ∉ 𝔭.map (algebraMap A' B'), c ∣ t * algebraMap A' B' j) ∧
+      (∃ t ∉ 𝔭.map (algebraMap A' B'), algebraMap A' B' j ∣ t * c) := by
+  have hdvr : IsDiscreteValuationRing (Localization.AtPrime (𝔭.map (algebraMap A' B'))) :=
+    isDiscreteValuationRing_of_height_eq_one _ h1 _
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible
+    (Localization.AtPrime (𝔭.map (algebraMap A' B')))
+  have hm : maximalIdeal (Localization.AtPrime (𝔭.map (algebraMap A' B'))) = Ideal.span {ϖ} :=
+    hϖ.maximalIdeal_eq
+  obtain ⟨p, hp𝔭, hp⟩ : ∃ p ∈ 𝔭, ¬ ϖ ^ 2 ∣
+      algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B'))) (algebraMap A' B' p) := by
+    by_contra! H
+    have hle : maximalIdeal (Localization.AtPrime (𝔭.map (algebraMap A' B'))) ≤
+        Ideal.span {ϖ ^ 2} := by
+      rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_map, Ideal.map_le_iff_le_comap]
+      intro q hq
+      rw [Ideal.mem_comap, Ideal.mem_span_singleton]
+      exact H q hq
+    have hmem : ϖ ∈ Ideal.span {ϖ ^ 2} := hle (hm ▸ Ideal.mem_span_singleton_self ϖ)
+    rw [Ideal.mem_span_singleton] at hmem
+    obtain ⟨r, hr⟩ := hmem
+    apply hϖ.not_isUnit
+    refine isUnit_iff_exists_inv.mpr ⟨r, ?_⟩
+    apply mul_left_cancel₀ hϖ.ne_zero
+    rw [mul_one]
+    linear_combination -hr
+  have hxm : algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B')))
+      (algebraMap A' B' p) ∈ maximalIdeal (Localization.AtPrime (𝔭.map (algebraMap A' B'))) := by
+    rw [← Localization.AtPrime.map_eq_maximalIdeal]
+    exact Ideal.mem_map_of_mem _ (Ideal.mem_map_of_mem _ hp𝔭)
+  have hx0 : algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B')))
+      (algebraMap A' B' p) ≠ 0 := fun h => hp (h ▸ dvd_zero _)
+  obtain ⟨n, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hx0 hϖ
+  have hn : n = 1 := by
+    rcases n with _ | _ | n
+    · exfalso
+      rw [pow_zero, mul_one] at hu
+      exact (mem_maximalIdeal _).mp hxm (hu ▸ u.isUnit)
+    · rfl
+    · exfalso
+      apply hp
+      rw [hu]
+      exact Dvd.dvd.mul_left (pow_dvd_pow ϖ (by omega)) _
+  subst hn
+  have hc0 : algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B'))) c ≠ 0 := by
+    intro h
+    apply hc
+    apply IsLocalization.injective (Localization.AtPrime (𝔭.map (algebraMap A' B')))
+      (𝔭.map (algebraMap A' B')).primeCompl_le_nonZeroDivisors
+    rw [h, map_zero]
+  obtain ⟨m, v, hv⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hc0 hϖ
+  have hass : Associated (algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B'))) c)
+      (algebraMap B' (Localization.AtPrime (𝔭.map (algebraMap A' B')))
+        (algebraMap A' B' (p ^ m))) := by
+    rw [map_pow, map_pow, hu, hv, pow_one, mul_pow]
+    exact (associated_unit_mul_left _ _ v.isUnit).trans
+      (associated_unit_mul_left _ _ (u.isUnit.pow m)).symm
+  exact ⟨p ^ m, exists_notMem_dvd_mul_of_algebraMap_dvd _ hass.dvd,
+    exists_notMem_dvd_mul_of_algebraMap_dvd _ hass.symm.dvd⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeightOnePrimeAssociate
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.height_one_prime_associate : ∀ (A' B' : Type) [CommRing A'] [CommRing B'] [IsDomain B'] [IsNoetherianRing B']
+    [IsIntegrallyClosed B'] [Algebra A' B'] (𝔭 : Ideal A'), (𝔭.map (algebraMap A' B')).IsPrime →
+    (𝔭.map (algebraMap A' B')).height = 1 → ∀ c : B', c ≠ 0 →
+    ∃ j : A', (∃ t ∉ 𝔭.map (algebraMap A' B'), c ∣ t * algebraMap A' B' j) ∧
+      (∃ t ∉ 𝔭.map (algebraMap A' B'), algebraMap A' B' j ∣ t * c) := by
+  first | (exact @GlobalTheory.exists_locally_associated_algebraMap_of_height_eq_one) | (exact GlobalTheory.exists_locally_associated_algebraMap_of_height_eq_one) | (intros; apply GlobalTheory.exists_locally_associated_algebraMap_of_height_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DivisorDescentFlatNormalDomains
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial
+
+namespace GlobalTheory.DivDescent
+
+theorem colonStep : ∀ (A' B' : Type) [CommRing A'] [IsNoetherianRing A'] [CommRing B'] [Algebra A' B']
+    [Module.Flat A' B'] (b c : B') (s : A'), b * c = algebraMap A' B' s →
+    (∀ x : A', (∀ j : A', c ∣ algebraMap A' B' j → ∃ a : A', x * j = s * a) →
+      b ∣ algebraMap A' B' x) →
+    b ∈ ((Ideal.span {b}).comap (algebraMap A' B')).map (algebraMap A' B') := by
+  intro A' B' _ _ _ _ _ b c s hbc h
+  have hφ : (algebraMap A' B').Flat := RingHom.flat_algebraMap_iff.mpr inferInstance
+  have hle : (Ideal.span {s}).colon (((Ideal.span {c}).comap (algebraMap A' B') : Ideal A') : Set A') ≤
+      (Ideal.span {b}).comap (algebraMap A' B') := by
+    intro x hx
+    rw [Submodule.mem_colon] at hx
+    rw [Ideal.mem_comap, Ideal.mem_span_singleton]
+    apply h x
+    intro j hj
+    have := hx j (by rw [SetLike.mem_coe, Ideal.mem_comap, Ideal.mem_span_singleton]; exact hj)
+    rw [smul_eq_mul, Ideal.mem_span_singleton] at this
+    obtain ⟨a, ha⟩ := this
+    exact ⟨a, by rw [ha]⟩
+  refine Ideal.map_mono hle ?_
+  rw [GlobalTheory.ideal_map_colon_eq_of_flat (algebraMap A' B') hφ, Submodule.mem_colon]
+  intro y hy
+  have hy' : y ∈ Ideal.span {c} := Ideal.map_comap_le hy
+  obtain ⟨z, rfl⟩ := Ideal.mem_span_singleton.1 hy'
+  rw [Ideal.map_span, Set.image_singleton, smul_eq_mul, Ideal.mem_span_singleton]
+  exact ⟨z, by rw [← hbc, mul_assoc]⟩
+
+theorem primeDescent : ∀ (A' B' : Type) [CommRing A'] [IsDomain A'] [IsNoetherianRing A'] [CommRing B']
+    [IsDomain B'] [IsNoetherianRing B'] [Algebra A' B'] [Module.Flat A' B'] (s : A'), s ≠ 0 →
+    (∀ 𝔭 : Ideal A', 𝔭.IsPrime → 𝔭.height = 1 → s ∈ 𝔭 → (𝔭.map (algebraMap A' B')).IsPrime) →
+    ∀ Q : Ideal B', Q.IsPrime → Q.height = 1 → algebraMap A' B' s ∈ Q →
+    (Q.comap (algebraMap A' B')).height = 1 ∧
+      (Q.comap (algebraMap A' B')).map (algebraMap A' B') = Q := by
+  intro A' B' _ _ _ _ _ _ _ _ s hs hpr Q hQ hQ1 hsQ
+  haveI : Algebra.HasGoingDown A' B' := Algebra.HasGoingDown.of_flat
+  haveI hPp : (Q.comap (algebraMap A' B')).IsPrime := Ideal.comap_isPrime _ Q
+  haveI : Q.LiesOver (Q.comap (algebraMap A' B')) := ⟨rfl⟩
+  have h := Ideal.height_eq_height_add_of_liesOver_of_hasGoingDown (Q.comap (algebraMap A' B')) Q
+  have hle1 : (Q.comap (algebraMap A' B')).height ≤ 1 := by rw [← hQ1, h]; exact le_self_add
+  have h1 : (Q.comap (algebraMap A' B')).height = 1 := by
+    refine le_antisymm hle1 ?_
+    rw [ENat.one_le_iff_ne_zero, Ne, Ideal.height_eq_zero_iff_eq_bot]
+    intro hb
+    have : s ∈ Q.comap (algebraMap A' B') := hsQ
+    rw [hb, Ideal.mem_bot] at this
+    exact hs this
+  refine ⟨h1, ?_⟩
+  haveI hP : ((Q.comap (algebraMap A' B')).map (algebraMap A' B')).IsPrime := hpr _ hPp h1 hsQ
+  have hle : (Q.comap (algebraMap A' B')).map (algebraMap A' B') ≤ Q := Ideal.map_comap_le
+  by_contra hne
+  have hlt := Ideal.height_strict_mono_of_isPrime (lt_of_le_of_ne hle hne)
+  rw [hQ1] at hlt
+  have h0 : ((Q.comap (algebraMap A' B')).map (algebraMap A' B')).height = 0 :=
+    ENat.lt_one_iff_eq_zero.mp hlt
+  rw [Ideal.height_eq_zero_iff_eq_bot] at h0
+  have hm : algebraMap A' B' s ∈ (Q.comap (algebraMap A' B')).map (algebraMap A' B') :=
+    Ideal.mem_map_of_mem _ hsQ
+  rw [h0, Ideal.mem_bot] at hm
+  have hreg := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := B')
+    (mem_nonZeroDivisors_of_ne_zero hs)
+  have h2 : s • (1 : B') = s • (0 : B') := by
+    rw [Algebra.smul_def, mul_one, smul_zero]; exact hm
+  exact one_ne_zero (hreg h2)
+
+theorem divisor_descent : ∀ (A' B' : Type) [CommRing A'] [IsDomain A'] [IsNoetherianRing A']
+    [IsIntegrallyClosed A'] [CommRing B'] [IsDomain B'] [IsNoetherianRing B'] [IsIntegrallyClosed B']
+    [Algebra A' B'] [Module.Flat A' B'] (s : A'), s ≠ 0 →
+    (∀ 𝔭 : Ideal A', 𝔭.IsPrime → 𝔭.height = 1 → s ∈ 𝔭 → (𝔭.map (algebraMap A' B')).IsPrime) →
+    ∀ b c : B', b * c = algebraMap A' B' s →
+    b ∈ ((Ideal.span {b}).comap (algebraMap A' B')).map (algebraMap A' B') := by
+  intro A' B' _ _ _ _ _ _ _ _ _ _ s hs hpr b c hbc
+  have hinj : ∀ a : A', a ≠ 0 → algebraMap A' B' a ≠ 0 := by
+    intro a ha h0
+    have hreg := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := B')
+      (mem_nonZeroDivisors_of_ne_zero ha)
+    have h1 : a • (1 : B') = a • (0 : B') := by
+      rw [Algebra.smul_def, mul_one, smul_zero]; exact h0
+    exact one_ne_zero (hreg h1)
+  have hb0 : b ≠ 0 := by rintro rfl; exact hinj s hs (by rw [← hbc, zero_mul])
+  have hc0 : c ≠ 0 := by rintro rfl; exact hinj s hs (by rw [← hbc, mul_zero])
+  have hloc : ∀ Q : Ideal B', Q.IsPrime → Q.height = 1 → b ∈ Q →
+      ∃ j : A', c ∣ algebraMap A' B' j ∧ ∃ t ∉ Q, algebraMap A' B' j ∣ t * c := by
+    intro Q hQ hQ1 hbQ
+    have hsQ : algebraMap A' B' s ∈ Q := by rw [← hbc]; exact Q.mul_mem_right c hbQ
+    obtain ⟨h𝔭1, h𝔭Q⟩ := primeDescent A' B' s hs hpr Q hQ hQ1 hsQ
+    obtain ⟨j₀, ⟨t₁, ht₁, hj₁⟩, ⟨t₂, ht₂, hj₂⟩⟩ :=
+      GlobalTheory.T.height_one_prime_associate A' B' (Q.comap (algebraMap A' B')) (by rw [h𝔭Q]; exact hQ) (by rw [h𝔭Q]; exact hQ1) c hc0
+    rw [h𝔭Q] at ht₁ ht₂
+    have hS0 : (0 : B') ∉ (Q.comap (algebraMap A' B')).primeCompl.map (algebraMap A' B') := by
+      intro h0
+      obtain ⟨u', hu', h⟩ := Submonoid.mem_map.1 h0
+      by_cases hu0 : u' = 0
+      · exact hu' (hu0 ▸ (Q.comap (algebraMap A' B')).zero_mem)
+      · exact hinj u' hu0 h
+    obtain ⟨u, huS, hu⟩ := GlobalTheory.T.exists_mem_submonoid_dvd_mul_of_height_one B' ((Q.comap (algebraMap A' B')).primeCompl.map (algebraMap A' B'))
+      hS0 (algebraMap A' B' j₀) c hc0 (by
+        intro Q' hQ' hQ'1 hcQ' hdisj
+        have hsQ' : algebraMap A' B' s ∈ Q' := by rw [← hbc]; exact Q'.mul_mem_left b hcQ'
+        obtain ⟨h𝔭'1, h𝔭'Q'⟩ := primeDescent A' B' s hs hpr Q' hQ' hQ'1 hsQ'
+        have hle : Q'.comap (algebraMap A' B') ≤ Q.comap (algebraMap A' B') := by
+          intro x hx
+          by_contra hx𝔭
+          exact Set.disjoint_left.1 hdisj (Submonoid.mem_map_of_mem (algebraMap A' B') hx𝔭) hx
+        have heq : Q'.comap (algebraMap A' B') = Q.comap (algebraMap A' B') := by
+          by_contra hne
+          have := Ideal.height_strict_mono_of_isPrime (lt_of_le_of_ne hle hne)
+          rw [h𝔭'1, h𝔭1] at this
+          exact lt_irrefl _ this
+        have hQQ : Q' = Q := by rw [← h𝔭'Q', heq, h𝔭Q]
+        subst hQQ
+        exact ⟨t₁, ht₁, hj₁⟩)
+    obtain ⟨u', hu', rfl⟩ := Submonoid.mem_map.1 huS
+    refine ⟨u' * j₀, by rw [map_mul]; exact hu, algebraMap A' B' u' * t₂, ?_, ?_⟩
+    · intro hm
+      rcases hQ.mem_or_mem hm with h | h
+      · exact hu' h
+      · exact ht₂ h
+    · rw [map_mul, mul_assoc]; exact mul_dvd_mul_left _ hj₂
+  apply colonStep A' B' b c s hbc
+  intro x hx
+  obtain ⟨u, hu, hdiv⟩ := GlobalTheory.T.exists_mem_submonoid_dvd_mul_of_height_one B' ⊥ (by simp) (algebraMap A' B' x) b hb0 (by
+    intro Q hQ hQ1 hbQ _
+    obtain ⟨j, hcj, t, htQ, z, hz⟩ := hloc Q hQ hQ1 hbQ
+    obtain ⟨a, ha⟩ := hx j hcj
+    refine ⟨t, htQ, ?_⟩
+    have hj0 : algebraMap A' B' j ≠ 0 := by
+      intro h0
+      rw [h0, zero_mul] at hz
+      rcases mul_eq_zero.1 hz with h | h
+      · exact htQ (h ▸ Q.zero_mem)
+      · exact hc0 h
+    have hx' : algebraMap A' B' x * algebraMap A' B' j = b * c * algebraMap A' B' a := by
+      rw [← map_mul, ha, map_mul, hbc]
+    refine ⟨algebraMap A' B' a * z, mul_left_cancel₀ hj0 ?_⟩
+    linear_combination t * hx' + b * algebraMap A' B' a * hz)
+  rw [Submonoid.mem_bot] at hu
+  subst hu
+  simpa using hdiv
+
+end GlobalTheory.DivDescent
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DivisorDescentFlatNormalDomainsStatement
+
+section
 
 @[expose] public section
 
@@ -55,3 +387,5 @@ theorem _root_.GlobalTheory.T.divisor_descent_flat_normal_domains : ∀ (A' B' :
     ∀ b c : B', b * c = algebraMap A' B' s →
     b ∈ ((Ideal.span {b}).comap (algebraMap A' B')).map (algebraMap A' B') := by
   first | (exact @GlobalTheory.DivDescent.divisor_descent) | (exact GlobalTheory.DivDescent.divisor_descent) | (intros; apply GlobalTheory.DivDescent.divisor_descent <;> assumption)
+end
+end

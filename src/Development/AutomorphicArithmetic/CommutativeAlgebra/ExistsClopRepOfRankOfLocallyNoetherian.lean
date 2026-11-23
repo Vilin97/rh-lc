@@ -4,10 +4,11 @@ public import Development.AutomorphicArithmetic.RepresentationRank.RepOfRank
 public import Mathlib.AlgebraicGeometry.Morphisms.Etale
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HilbertSchemeFiniteLocallyFreeRepresentablePropeStatement
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.ClopProjFiniteEtaleOfIsClosed
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsOpenImmersionOfClosedImmersionFlatEtale
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatMono
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
@@ -33,8 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +46,32 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.IsOpenImmersionOfClosedImmersionFlatEtale
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+theorem UpperTheory.isOpenImmersion_of_closedImmersion_flat_etale :
+    ∀ {V X T : Scheme.{0}} (v : V ⟶ X) (p : X ⟶ T), Etale p → IsClosedImmersion v → Flat (v ≫ p) → LocallyOfFinitePresentation (v ≫ p) → IsOpenImmersion v := by
+  intro V X T v p hp hv hf hl
+  have hv' : FormallyUnramified v := inferInstance
+  have hu : FormallyUnramified (v ≫ p) :=
+    MorphismProperty.comp_mem @FormallyUnramified v p hv' inferInstance
+  have he : Etale (v ≫ p) := Etale.of_formallyUnramified_of_flat (v ≫ p)
+  have hev : Etale v := Etale.of_comp v p
+  exact IsOpenImmersion.of_flat_of_mono v
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfRankOfLocallyNoetherian
+
+section
 
 @[expose] public section
 
@@ -165,3 +190,5 @@ theorem UpperTheory.exists_clopRepOfRank_of_locallyNoetherian :
     intro y' hy'
     obtain ⟨w', hw'⟩ := (key y').mp hy'
     exact Over.OverMorphism.ext (huniq y'.left ⟨Over.w y', w', hw'⟩)
+end
+end

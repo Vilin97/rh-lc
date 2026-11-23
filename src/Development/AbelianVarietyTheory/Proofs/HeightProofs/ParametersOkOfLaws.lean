@@ -5,8 +5,7 @@ public import Formalism.LocalToGlobal.ProjectiveLattices.DepthTie
 public import Development.AbelianVarietyTheory.Definitions.HeightFunctions.GrowthConstantBoundGcR
 public import Formalism.LocalToGlobal.ProjectiveLattices.ParCanon
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.FunctionFieldAlgClosedLevel
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HalfEXIffOriented
-public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.LevelDvdBadN
+public import Development.AbelianVarietyTheory.Definitions.Jets.ExistsSecTieFOfTies
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,94 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinSt
+import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.ExistsPowSmulMemBall
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.WchartLePreimage
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.LevelDvdBadN
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.PiTwistNegation
+
+section
+
+@[expose] public section
+
+noncomputable section
+namespace GlobalTheory.Survey.PiTwistNegation
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+variable {D : D7}
+
+theorem halfI_ne_top (T : Core D) (i : Fin 2) : halfI T i ≠ ⊤ := by
+  intro h
+  have hc : ((T.pb i).asIdeal.map (algebraMap (𝓞 D.host.K) (𝓞 D.host.E))).comap
+      (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) = ⊤ := by
+    rw [show (T.pb i).asIdeal.map (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) = ⊤ from h, Ideal.comap_top]
+  rw [Ideal.comap_map_eq_self_of_faithfullyFlat] at hc
+  exact (T.pb i).isPrime.ne_top hc
+
+theorem halfEX_iff_le (T : Core D) (h : LawsM T) (X : ErrX D) :
+    HalfEX T X ↔ ∀ i, T.Q.l.Mb ≤ Ideal.span {barE D (X.piG i)} := by
+  have hle : ∀ i, T.Q.l.Mb ≤ halfI T i := by
+    intro i
+    rw [Mb_eq T h]
+    fin_cases i
+    · exact Ideal.mul_le_left
+    · exact Ideal.mul_le_right
+  change (∀ i, barE D (X.piG i) ∈ halfI T i) ↔ _
+  refine forall_congr' fun i => ⟨fun hb => ?_, fun hM => ?_⟩
+  · rw [← (piOf_eq_bar_iff T h X i).2 hb, span_piOf T h]; exact hle i
+  · by_contra hb
+    have hp : piOf T X i = X.piG i := by
+      classical
+      unfold piOf; rw [if_neg hb]
+
+    have h1 : T.Q.l.Mb.map (T.Q.H.bar : 𝓞 D.host.E →+* 𝓞 D.host.E) ≤ Ideal.span {barE D (X.piG i)} := by
+      rw [← hp, ← bar_core T, span_bar_piOf T h]; exact Ideal.map_mono (hle i)
+    have ht : Ideal.span {barE D (X.piG i)} = ⊤ := by
+      rw [eq_top_iff, ← T.Q.l.coprime]; exact sup_le hM h1
+    have hu : IsUnit (X.piG i) := by
+      have := (Ideal.span_singleton_eq_top.1 ht).map (barE D)
+      rwa [barE_barE] at this
+    apply halfI_ne_top T i
+    rw [← span_piOf T h X i, hp, Ideal.span_singleton_eq_top]; exact hu
+
+end GlobalTheory.Survey.PiTwistNegation
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.HalfEXIffOriented
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+noncomputable section
+open AlgebraicGeometry CategoryTheory NumberField IsLocalRing IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.DVR.QForm Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.MainNotions.Gaps.EtaleWeightGaps
+open GlobalTheory.PtTie
+namespace GlobalTheory.PtTie
+
+theorem barE_piG_eq_piBarO {D : D7} (EX : ErrX D) (i : Fin 2) : barE D (EX.piG i) = piBarO EX i := by
+  apply IsFractionRing.injective (𝓞 D.host.E) D.host.E
+  exact barE_eq_conj D (EX.piG i)
+
+theorem halfEX_iff_oriented : ∀ (D : D7) (T : Top D), LawsP T → ∀ EX : ErrX D, HalfEX T.toCore EX ↔ Oriented T EX := by
+  intro D T h EX
+  rw [GlobalTheory.Survey.PiTwistNegation.halfEX_iff_le T.toCore h.toLawsCore.toLawsM EX]
+  exact forall_congr' fun i => by rw [barE_piG_eq_piBarO]
+
+end GlobalTheory.PtTie
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.ParametersOkOfLaws
+
+section
 
 @[expose] public section
 
@@ -74,3 +161,5 @@ theorem liftIndexParameterConditions_of_coreAndShortLaws : ∀ (D : D7) (J : Cor
   exact dvd_mul_right _ _
 
 end GlobalTheory.FinalJoin2
+end
+end

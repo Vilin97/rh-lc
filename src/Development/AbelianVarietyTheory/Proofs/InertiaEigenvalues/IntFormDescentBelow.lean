@@ -3,24 +3,20 @@ module
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IntFormsSubset
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BddGoodOfBddAll
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CuspidalSectionBoundedNonzeroMultipleStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBasisBoundedModuleValuationRingPiStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HolomorphicSectionsSpanRestrictionStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemCuspFormsAllEmbeddingsOfInclusionReadingStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NatCastPowMulValuationLeOneOfNotPowSuccDvdDifferStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelativeDifferentOrderBoundedAbsoluteRamificatioStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SupSetFinitelyGenerated
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceCombinationCoverFormIntegralOverPrimeStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValuationMulLeOneOfTraceApproxIdempotentIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralValuesAlgebraicPointsIffValueNonneg
-public import Formalism.LocalToGlobal.ProjectiveLattices.ModelAt
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -28,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,9 +45,185 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HolomorphicSectionsSpanRestrictionStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemCuspFormsAllEmbeddingsOfInclusionReadingStatement
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelativeDifferentOrderBoundedAbsoluteRamificatioStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SupSetFinitelyGenerated
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceCombinationCoverFormIntegralOverPrimeStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValuationMulLeOneOfTraceApproxIdempotentIntegral
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralValuesAlgebraicPointsIffValueNonneg
+public import Formalism.LocalToGlobal.ProjectiveLattices.ModelAt
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SpanSteps
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BddGood
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CompIntField
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBasisBoundedModuleValuationRingPi
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+
+namespace GlobalTheory
+
+theorem locBasis_of_bounded {F : Type} [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F))
+    (d : ℕ) (M : Set (Fin d → F)) (h0 : (0 : Fin d → F) ∈ M)
+    (hadd : ∀ x ∈ M, ∀ y ∈ M, x + y ∈ M)
+    (hsmul : ∀ a : F, p.valuation F a ≤ 1 → ∀ x ∈ M, a • x ∈ M)
+    (hstd : ∀ i, Pi.single i 1 ∈ M)
+    (hbd : ∃ D : F, D ≠ 0 ∧ ∀ x ∈ M, ∀ i, p.valuation F (D * x i) ≤ 1) :
+    ∃ (m : ℕ) (b : Fin m → Fin d → F), (∀ k, b k ∈ M) ∧
+      (∀ x ∈ M, ∃ a : Fin m → F, (∀ k, p.valuation F (a k) ≤ 1) ∧ x = ∑ k, a k • b k) ∧
+      LinearIndependent F b := by
+  obtain ⟨D, hD, hDM⟩ := hbd
+  set A : ValuationSubring F := p.valuationSubringAtPrime F with hA
+  haveI : IsDiscreteValuationRing A :=
+    IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 F) p.ne_bot _
+  have memA : ∀ a : F, a ∈ A ↔ p.valuation F a ≤ 1 := by
+    intro a
+    rw [hA, HeightOneSpectrum.valuationSubringAtPrime_eq_valuationSubring,
+      Valuation.mem_valuationSubring_iff]
+  let M' : Submodule A (Fin d → F) :=
+    { carrier := M
+      add_mem' := fun {x y} hx hy => hadd x hx y hy
+      zero_mem' := h0
+      smul_mem' := fun c x hx => by
+        have : c • x = (c : F) • x := rfl
+        rw [this]
+        exact hsmul _ ((memA _).1 c.2) x hx }
+  let e : Fin d → Fin d → F := fun i => D⁻¹ • Pi.single i 1
+  have heF : LinearIndependent F e := by
+    have h1 := (Pi.basisFun F (Fin d)).linearIndependent.units_smul
+      (fun _ => Units.mk0 D⁻¹ (inv_ne_zero hD))
+    convert h1 using 1
+    ext i j
+    simp [e, Pi.basisFun_apply]
+  have heA : LinearIndependent A e := (LinearIndependent.iff_fractionRing A F).2 heF
+  have hle : M' ≤ Submodule.span A (Set.range e) := by
+    intro x hx
+    have hx' : x = ∑ i, (D * x i) • e i := by
+      ext j
+      simp [e, Finset.sum_apply, Pi.single_apply]
+      rw [mul_comm D, mul_assoc, mul_inv_cancel₀ hD, mul_one]
+    rw [hx']
+    refine Submodule.sum_mem _ fun i _ => ?_
+    have hc : D * x i ∈ A := (memA _).2 (hDM x hx i)
+    have : (D * x i) • e i = (⟨D * x i, hc⟩ : A) • e i := rfl
+    rw [this]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+  obtain ⟨n, bas⟩ := Submodule.basisOfPidOfLE hle (Module.Basis.span heA)
+  refine ⟨n, fun k => (bas k : Fin d → F), fun k => (bas k).2, ?_, ?_⟩
+  · intro x hx
+    refine ⟨fun k => (bas.repr ⟨x, hx⟩ k : F), fun k => (memA _).1 (bas.repr ⟨x, hx⟩ k).2, ?_⟩
+    have h := congrArg (fun y : M' => (y : Fin d → F)) (bas.sum_repr ⟨x, hx⟩)
+    simp only [Submodule.coe_sum, Submodule.coe_smul] at h
+    exact h.symm
+  · have h1 : LinearIndependent A (M'.subtype ∘ bas) :=
+      bas.linearIndependent.map' M'.subtype (Submodule.ker_subtype M')
+    exact (LinearIndependent.iff_fractionRing A F).1 h1
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBasisBoundedModuleValuationRingPiStatement
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+
+theorem _root_.GlobalTheory.T.exists_basis_bounded_module_valuationRing_pi : ∀ {F : Type} [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F)) (d : ℕ) (M : Set (Fin d → F)), (0 : Fin d → F) ∈ M → (∀ x ∈ M, ∀ y ∈ M, x + y ∈ M) → (∀ a : F, p.valuation F a ≤ 1 → ∀ x ∈ M, a • x ∈ M) → (∀ i, Pi.single i 1 ∈ M) → (∃ D : F, D ≠ 0 ∧ ∀ x ∈ M, ∀ i, p.valuation F (D * x i) ≤ 1) → ∃ (m : ℕ) (b : Fin m → Fin d → F), (∀ k, b k ∈ M) ∧ (∀ x ∈ M, ∃ a : Fin m → F, (∀ k, p.valuation F (a k) ≤ 1) ∧ x = ∑ k, a k • b k) ∧ LinearIndependent F b := by
+  first | exact @GlobalTheory.locBasis_of_bounded | exact GlobalTheory.locBasis_of_bounded | (intros; apply GlobalTheory.locBasis_of_bounded <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NatCastPowMulValuationLeOneOfNotPowSuccDvdDiffer
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open Classical
+
+namespace GlobalTheory
+
+theorem natCast_pow_mul_valuation_le_one_of_not_pow_succ_dvd_differentIdeal :
+    ∀ (l c : ℕ) (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
+      (la : HeightOneSpectrum (𝓞 L)), ((l : ℕ) : 𝓞 L) ∈ la.asIdeal →
+      ¬ la.asIdeal ^ (c + 1) ∣ differentIdeal (𝓞 K) (𝓞 L) →
+      ∀ y : L, (∀ d ∈ differentIdeal (𝓞 K) (𝓞 L), la.valuation L (y * (d : L)) ≤ 1) →
+        la.valuation L ((l : L) ^ c * y) ≤ 1 := by
+  intro l c K L _ _ _ _ _ la hl hD y hy
+  obtain ⟨d₀, hd₀D, hd₀⟩ : ∃ d₀ ∈ differentIdeal (𝓞 K) (𝓞 L), d₀ ∉ la.asIdeal ^ (c + 1) := by
+    by_contra h
+    push_neg at h
+    exact hD (Ideal.dvd_iff_le.mpr h)
+  have h1 : la.intValuation ((l : 𝓞 L) ^ c) ≤ WithZero.exp (-(c : ℤ)) :=
+    (la.intValuation_le_pow_iff_mem _ c).mpr (Ideal.pow_mem_pow hl c)
+  have h2 : WithZero.exp (-(c : ℤ)) ≤ la.intValuation d₀ := by
+    rw [HeightOneSpectrum.exp_le_intValuation_iff_emultiplicity_le]
+    rw [← HeightOneSpectrum.intValuation_le_pow_iff_mem la,
+      HeightOneSpectrum.intValuation_le_exp_iff_le_emultiplicity, not_le] at hd₀
+    rw [← ENat.lt_natCast_add_one_iff]
+    exact_mod_cast hd₀
+  have hyd := hy d₀ hd₀D
+  have e1 : la.valuation L (d₀ : L) = la.intValuation d₀ := la.valuation_of_algebraMap (K := L) d₀
+  have e2 : la.valuation L ((l : L) ^ c) = la.intValuation ((l : 𝓞 L) ^ c) := by
+    rw [← la.valuation_of_algebraMap (K := L)]
+    simp
+  rw [Valuation.map_mul] at hyd ⊢
+  calc la.valuation L ((l : L) ^ c) * la.valuation L y
+      ≤ la.valuation L (d₀ : L) * la.valuation L y := by
+        gcongr
+        rw [e1, e2]
+        exact h1.trans h2
+    _ = la.valuation L y * la.valuation L (d₀ : L) := mul_comm _ _
+    _ ≤ 1 := hyd
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NatCastPowMulValuationLeOneOfNotPowSuccDvdDifferStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open Classical
+
+theorem _root_.GlobalTheory.T.valuation_prime_pow_mul_le_one_of_not_dvd_different : ∀ (l c : ℕ) (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] (la : HeightOneSpectrum (𝓞 L)), ((l : ℕ) : 𝓞 L) ∈ la.asIdeal → ¬ la.asIdeal ^ (c + 1) ∣ differentIdeal (𝓞 K) (𝓞 L) → ∀ y : L, (∀ d ∈ differentIdeal (𝓞 K) (𝓞 L), la.valuation L (y * (d : L)) ≤ 1) → la.valuation L ((l : L) ^ c * y) ≤ 1 := by
+  first | exact @GlobalTheory.natCast_pow_mul_valuation_le_one_of_not_pow_succ_dvd_differentIdeal | exact GlobalTheory.natCast_pow_mul_valuation_le_one_of_not_pow_succ_dvd_differentIdeal | (intros; apply GlobalTheory.natCast_pow_mul_valuation_le_one_of_not_pow_succ_dvd_differentIdeal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValuationMulLeOneOfTraceApproxIdempotentIntegralStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open Classical
+
+theorem _root_.GlobalTheory.T.valuation_mul_le_one_of_trace_approxIdempotent_integral : ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] (la : HeightOneSpectrum (𝓞 L)) (p : HeightOneSpectrum (𝓞 K)), la.asIdeal.under (𝓞 K) = p.asIdeal → ∀ y : L, (∃ N : ℕ, ∀ b : 𝓞 L, (∀ la' : HeightOneSpectrum (𝓞 L), la' ≠ la → la'.asIdeal.under (𝓞 K) = p.asIdeal → b ∈ la'.asIdeal ^ N) → p.valuation K (Algebra.trace K L ((b : L) * y)) ≤ 1) → ∀ d ∈ differentIdeal (𝓞 K) (𝓞 L), la.valuation L (y * (d : L)) ≤ 1 := by
+  first | exact @GlobalTheory.InvDiffLocal.valuation_mul_different_le_one | exact GlobalTheory.InvDiffLocal.valuation_mul_different_le_one | (intros; apply GlobalTheory.InvDiffLocal.valuation_mul_different_le_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntFormDescentBelow
+
+section
 
 @[expose] public section
 
@@ -223,3 +395,6 @@ theorem intForm_descent_below (l e : ℕ) (hl : l.Prime) : ∃ c₀ : ℕ, ∀ (
     rw [smul_smul, map_mul, map_pow, map_natCast]
 
 end GlobalTheory.XiIntSteps
+end
+end
+end

@@ -2,20 +2,19 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Foundations.NormSumPairRankZeroOfCurveCoordNorm
 public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LeafBounds.IntegralLeaf.LeafINTFree
-public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LeafBounds.ArchimedeanLeaf.LeafARCHFree
-public import Development.AbelianVarietyTheory.Definitions.Foundations.TupleConstantsNeZero
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUnitaryClassRepTrivialAtCm
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitaryRationalConjIntersectionCardDvdInvariant
-public import Formalism.PairingDivisors.PairingDivisorProofs.Height
+public import Formalism.PairingDivisors.StatementH
+public import Mathlib.Analysis.SpecialFunctions.Log.PosLog
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -42,9 +41,48 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.IndefiniteTreeX
+public import Formalism.PairingDivisors.StatementX
+public import Development.AbelianVarietyTheory.Definitions.Foundations.TupleConstantsNeZero
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUnitaryClassRepTrivialAtCm
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitaryRationalConjIntersectionCardDvdInvariant
+public import Formalism.PairingDivisors.PairingDivisorProofs.Height
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LeafBounds.ArchimedeanLeaf.LeafARCHFree
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField
+open IsDedekindDomain
+open Finset
+open Formalism.PairingDivisionLocalBalance (Pl wt HtLe meanInf)
+open Formalism.HN (muMaxDef htMap)
+open Formalism.DivisionValues
+open Formalism.L2.Indef
+open Formalism.L2.Indef.Tree
+
+namespace Formalism.L2.Indef.Tree.ArchimedeanLeafBounds.Cuts
+
+def ArchimedeanHeightBound {K : Type} [Field K] [NumberField K] {ι : Type} (zA zA' : ι → K) (B : ℝ) : Prop :=
+  ∀ ij, meanInf K (fun v => Real.posLog ‖v.embedding (zA ij)‖) ≤ B ∧
+    meanInf K (fun v => Real.posLog ‖v.embedding (zA' ij)‖) ≤ B
+
+end Formalism.L2.Indef.Tree.ArchimedeanLeafBounds.Cuts
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.ExistsSmallSpherical
+
+section
 
 @[expose] public section
 
@@ -158,3 +196,6 @@ theorem reps_and_stabilisers {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ t0 : ℂ}
     exact ⟨h0, ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (by positivity)).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)⟩
 
 end GlobalTheory.NormSum
+end
+end
+end

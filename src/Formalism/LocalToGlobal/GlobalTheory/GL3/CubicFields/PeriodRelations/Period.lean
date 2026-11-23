@@ -2,12 +2,16 @@ module
 
 public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.LeadingConstantNeZero
 public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.LineR
-public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.CoeIdealDifferentNeZero
-public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.NormSum
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.FractionalIdealDualFamily
+public import Mathlib.RingTheory.FractionalIdeal.Inverse
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Ring.IsFormallyReal
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -20,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +43,245 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.MapMulLeftDenSpanImageEqMapNum
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.NormNum.Parity
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.Statement
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.IsDiscriminantTwelfthRootOfIdealLattice
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.LiftMOneExt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+
+open NumberField Classical
+open scoped Pointwise
+
+theorem liftM_val_ext {M : IntermediateField ℚ ℂ} {x : ℂ} (h : x ∈ M) : ((liftM M x : M) : ℂ) = x := by
+  simp [liftM, h]
+
+theorem liftM_mul_ext {E : Type} [Field E] (M : IntermediateField ℚ ℂ) (σ : E →+* ℂ) (hσ : ∀ y, σ y ∈ M)
+    (a b : E) : liftM M (σ (a * b)) = liftM M (σ a) * liftM M (σ b) := by
+  apply Subtype.ext
+  rw [liftM_val_ext (hσ (a * b)), IntermediateField.coe_mul, liftM_val_ext (hσ a),
+    liftM_val_ext (hσ b), map_mul]
+
+theorem liftM_add_ext {E : Type} [Field E] (M : IntermediateField ℚ ℂ) (σ : E →+* ℂ) (hσ : ∀ y, σ y ∈ M)
+    (a b : E) : liftM M (σ (a + b)) = liftM M (σ a) + liftM M (σ b) := by
+  apply Subtype.ext
+  rw [liftM_val_ext (hσ (a + b)), IntermediateField.coe_add, liftM_val_ext (hσ a),
+    liftM_val_ext (hσ b), map_add]
+
+theorem liftM_one_ext {E : Type} [Field E] (M : IntermediateField ℚ ℂ) (σ : E →+* ℂ) :
+    liftM M (σ 1) = 1 := by
+  apply Subtype.ext
+  rw [map_one, liftM_val_ext (one_mem M), IntermediateField.coe_one]
+
+theorem liftM_int_ext {E : Type} [Field E] [NumberField E] (M : IntermediateField ℚ ℂ) [NumberField M]
+    (σ : E →+* ℂ) (hσ : ∀ y, σ y ∈ M) (e : 𝓞 E) :
+    liftM M (σ (algebraMap (𝓞 E) E e)) ∈ (algebraMap (𝓞 M) M).range := by
+  have h1 : IsIntegral ℤ (σ (algebraMap (𝓞 E) E e)) :=
+    (RingOfIntegers.isIntegral_coe e).map σ.toIntAlgHom
+  have hx : IsIntegral ℤ (liftM M (σ (algebraMap (𝓞 E) E e))) := by
+    rw [← isIntegral_algHom_iff (algebraMap M ℂ).toIntAlgHom (algebraMap M ℂ).injective]
+    change IsIntegral ℤ ((liftM M (σ (algebraMap (𝓞 E) E e)) : M) : ℂ)
+    rwa [liftM_val_ext (hσ _)]
+  exact ⟨⟨_, hx⟩, rfl⟩
+
+theorem mem_imI_iff {E : Type} [Field E] [NumberField E] (M : IntermediateField ℚ ℂ) [NumberField M]
+    (σ : E →+* ℂ) (hσ : ∀ y, σ y ∈ M) (J : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (hJ : J ≠ 0) (x : M) :
+    x ∈ imI M σ J ↔
+      ∀ b ∈ ((J⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Submodule (𝓞 E) E), x * liftM M (σ b) ∈ (algebraMap (𝓞 M) M).range := by
+  have hJJ : (1 : E) ∈ (J : Submodule (𝓞 E) E) * ((J⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) :
+      Submodule (𝓞 E) E) := by
+    rw [← FractionalIdeal.coe_mul, mul_inv_cancel₀ hJ, FractionalIdeal.coe_one]
+    exact Submodule.mem_one.2 ⟨1, map_one _⟩
+  have hint : ∀ z ∈ (J : Submodule (𝓞 E) E) * ((J⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) :
+      Submodule (𝓞 E) E), liftM M (σ z) ∈ (algebraMap (𝓞 M) M).range := by
+    intro z hz
+    rw [← FractionalIdeal.coe_mul, mul_inv_cancel₀ hJ, FractionalIdeal.coe_one] at hz
+    obtain ⟨y, rfl⟩ := Submodule.mem_one.1 hz
+    exact liftM_int_ext M σ hσ y
+  constructor
+  · intro hx
+    induction hx using Submodule.span_induction with
+    | mem y hy =>
+      obtain ⟨a, ha, rfl⟩ := hy
+      intro b hb
+      rw [← liftM_mul_ext M σ hσ]
+      exact hint _ (Submodule.mul_mem_mul ha hb)
+    | zero =>
+      intro b _
+      rw [zero_mul]
+      exact zero_mem _
+    | add y z _ _ hy hz =>
+      intro b hb
+      rw [add_mul]
+      exact add_mem (hy b hb) (hz b hb)
+    | smul r y _ hy =>
+      intro b hb
+      rw [smul_mul_assoc, Algebra.smul_def]
+      exact mul_mem (RingHom.mem_range_self _ r) (hy b hb)
+  · intro hx
+    have key : ∀ z ∈ (J : Submodule (𝓞 E) E) * ((J⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) :
+        Submodule (𝓞 E) E), x * liftM M (σ z) ∈ imI M σ J := by
+      intro z hz
+      induction hz using Submodule.mul_induction_on' with
+      | mem_mul_mem a ha b hb =>
+        obtain ⟨r, hr⟩ := hx b hb
+        rw [liftM_mul_ext M σ hσ, mul_comm (liftM M (σ a)), ← mul_assoc, ← hr, ← Algebra.smul_def]
+        exact Submodule.smul_mem _ r (Submodule.subset_span ⟨a, ha, rfl⟩)
+      | add y _ z _ hy hz =>
+        rw [liftM_add_ext M σ hσ, mul_add]
+        exact add_mem hy hz
+    have := key 1 hJJ
+    rwa [liftM_one_ext, mul_one] at this
+
+end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.DifferentIdeal.CoeIdealDifferentNeZero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+
+open NumberField Classical
+open scoped Pointwise
+
+theorem dual_eq_inv_mul_different (K E : Type) [Field K] [Field E] [NumberField K] [NumberField E] [Algebra K E]
+    (I : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) :
+    (FractionalIdeal.dual (𝓞 K) K I : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) =
+      (I * ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) : FractionalIdeal (nonZeroDivisors (𝓞 E)) E))⁻¹ := by
+  rw [coeIdeal_differentIdeal (𝓞 K) K E (𝓞 E), FractionalIdeal.dual_eq_mul_inv (𝓞 K) K I, mul_inv,
+    inv_inv, mul_comm]
+
+theorem coeIdeal_different_ne_zero (K E : Type) [Field K] [Field E] [NumberField K] [NumberField E] [Algebra K E] :
+    ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) ≠ 0 := by
+  rw [coeIdeal_differentIdeal (𝓞 K) K E (𝓞 E)]
+  exact inv_ne_zero (FractionalIdeal.dual_ne_zero (𝓞 K) K one_ne_zero)
+
+theorem lineR_eq (K E : Type) [Field K] [Field E] [NumberField K] [NumberField E] [Algebra K E]
+    (φ₀ : K →+* ℂ) (M : IntermediateField ℚ ℂ) [NumberField M] (ι : Type) [Fintype ι] [DecidableEq ι]
+    (emb : ι → E →+* ℂ) (hinj : Function.Injective emb)
+    (hres : ∀ i (y : K), emb i (algebraMap K E y) = φ₀ y)
+    (hcard : Fintype.card ι = Module.finrank K E) (hM : ∀ i y, emb i y ∈ M) (I : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (i : ι) :
+    lineR M emb I i = imI M (emb i) (I * ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) : FractionalIdeal (nonZeroDivisors (𝓞 E)) E)) := by
+  have h0 : liftM M 0 = 0 := by
+    rw [liftM, dite_eq_left (zero_mem M)]
+    rfl
+  by_cases hI : I = 0
+  · subst hI
+    rw [zero_mul]
+    have hm : mmR M emb (0 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) = ⊥ := by
+      rw [mmR, Submodule.span_eq_bot]
+      rintro v ⟨a, ha, rfl⟩
+      have ha0 : a = 0 := by simpa using ha
+      subst ha0
+      funext k
+      simp [h0]
+    have hR : imI M (emb i) (0 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) = ⊥ := by
+      rw [imI, Submodule.span_eq_bot]
+      rintro y ⟨a, ha, rfl⟩
+      have ha0 : a = 0 := by simpa using ha
+      subst ha0
+      simp [h0]
+    rw [hR, lineR, hm]
+    ext x
+    simp
+  · have hJ : I * ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) :
+        FractionalIdeal (nonZeroDivisors (𝓞 E)) E) ≠ 0 :=
+      mul_ne_zero hI (coeIdeal_different_ne_zero K E)
+    ext x
+    rw [lineR, Submodule.mem_comap, mem_mmR_iff K E φ₀ M ι emb hinj hres hcard hM I hI,
+      mem_imI_iff M (emb i) (hM i) _ hJ, ← dual_eq_inv_mul_different K E I]
+    refine forall₂_congr fun b _ => ?_
+    simp [Pi.single_apply]
+
+theorem index_lineR (K E : Type) [Field K] [Field E] [NumberField K] [NumberField E] [Algebra K E]
+    (φ₀ : K →+* ℂ) (M : IntermediateField ℚ ℂ) [NumberField M] (ι : Type) [Fintype ι] [DecidableEq ι]
+    (emb : ι → E →+* ℂ) (hinj : Function.Injective emb)
+    (hres : ∀ i (y : K), emb i (algebraMap K E y) = φ₀ y)
+    (hcard : Fintype.card ι = Module.finrank K E) (hM : ∀ i y, emb i y ∈ M) (I : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (hI : I ≠ 0) (i : ι) (s : M) (hs0 : s ≠ 0)
+    (hs : s ∈ lineR M emb I i) :
+    ((((Submodule.span (𝓞 M) {s}).toAddSubgroup.addSubgroupOf
+        (lineR M emb I i).toAddSubgroup).index : ℕ) : ℝ) ^ Module.finrank ℚ E *
+      ((FractionalIdeal.absNorm (I * ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) : FractionalIdeal (nonZeroDivisors (𝓞 E)) E)) : ℚ) : ℝ) ^
+        Module.finrank ℚ M =
+      |((Algebra.norm ℚ s : ℚ) : ℝ)| ^ Module.finrank ℚ E := by
+  have hJ : I * ((differentIdeal (𝓞 K) (𝓞 E) : Ideal (𝓞 E)) :
+      FractionalIdeal (nonZeroDivisors (𝓞 E)) E) ≠ 0 :=
+    mul_ne_zero hI (coeIdeal_different_ne_zero K E)
+  have heq := lineR_eq K E φ₀ M ι emb hinj hres hcard hM I i
+  rw [heq] at hs ⊢
+  exact index_imI M (emb i) (hM i) _ hJ s hs0 hs
+
+end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.NormSum
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+
+open NumberField Classical
+open scoped Pointwise
+open Formalism.BasicNotions (D7)
+open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity (IsLat jL Uniformization CMTransitive LinkPer KroneckerLimit DedekindFactor)
+open Formalism.MainNotions.TaylorLogMetric (lamConj lamOf embT meanLogOm DataIn tor0 IsCurveIdeal IsDiscriminantTwelfthRootOfIdealLattice per22 logOmVal)
+
+theorem br_sum_log_norm_sq (M : IntermediateField ℚ ℂ) [NumberField M] (s : M) (hs : s ≠ 0) :
+    ∑ ρ : M →ₐ[ℚ] ℂ, Real.log (‖ρ s‖ ^ 2) = 2 * Real.log |((Algebra.norm ℚ s : ℚ) : ℝ)| := by
+  have hρ : ∀ ρ : M →ₐ[ℚ] ℂ, ρ s ≠ 0 := fun ρ => (map_ne_zero ρ).2 hs
+  rw [← Real.log_prod (fun ρ _ => by have := hρ ρ; positivity)]
+  have hN := Algebra.norm_eq_prod_embeddings ℚ ℂ s
+  have h1 : ∏ ρ : M →ₐ[ℚ] ℂ, ‖ρ s‖ ^ 2 = |((Algebra.norm ℚ s : ℚ) : ℝ)| ^ 2 := by
+    rw [Finset.prod_pow, ← norm_prod]
+    convert congrArg (fun z : ℂ => ‖z‖ ^ 2) hN.symm using 2
+    simp
+  rw [h1, Real.log_pow]
+  push_cast; ring
+
+end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
+
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.Period
+
+section
 
 @[expose] public section
 
@@ -137,4 +378,6 @@ theorem br_meanLogOm_eq (D : D7) (Λ : AddSubgroup ℂ) (M : IntermediateField �
 
 end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5
 
+end
+end
 end

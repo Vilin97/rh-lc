@@ -3,16 +3,22 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4GeometricSide.InnerEq
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CapCommuteRtInfGL
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CommuteCapOfCommuteEop
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsSum
-public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.CompactUnitaryGroups.IsCompactUnitaryGroup
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Aesop.Main
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -20,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,7 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,9 +46,88 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.CompactUnitaryGroups.IsCompactUnitaryGroup
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsSum
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qg3.exists_sum.{u_1} :
+    ∀ {G : Type u_1} [inst : Group G]
+    [inst_1 : TopologicalSpace G] [IsTopologicalGroup G] [inst_3 : MeasurableSpace G] [BorelSpace G]
+    (μ : MeasureTheory.Measure G) [MeasureTheory.IsFiniteMeasureOnCompacts μ] (K : Subgroup G),
+    IsOpen (↑K : Set G) →
+      IsCompact (↑K : Set G) →
+        ∀ {S : Set G},
+          IsCompact S →
+            ∃ (T : Finset (G ⧸ K)) (r : G ⧸ K → G) (c : G ⧸ K → ℂ),
+              ∀ (F : G → ℂ),
+                (∀ (g k : G), k ∈ K → F (g * k) = F g) →
+                  (∀ g ∉ S, F g = (0 : ℂ)) → ∫ (g : G), F g ∂μ = ∑ x ∈ T, c x * F (r x) := by
+  intro G _ _ _ _ _ μ _ K hKo hKc S hS
+  classical
+  haveI : DiscreteTopology (G ⧸ K) := QuotientGroup.discreteTopology hKo
+  have hcont : Continuous (QuotientGroup.mk : G → G ⧸ K) := QuotientGroup.continuous_mk
+  have hfin : ((QuotientGroup.mk : G → G ⧸ K) '' S).Finite :=
+    (hS.image hcont).finite_of_discrete
+  let C : G ⧸ K → Set G := fun x => (QuotientGroup.mk : G → G ⧸ K) ⁻¹' {x}
+  have hmem : ∀ (x : G ⧸ K) (g : G), g ∈ C x ↔ (x.out)⁻¹ * g ∈ K := by
+    intro x g
+    rw [← QuotientGroup.eq, QuotientGroup.out_eq']
+    exact eq_comm
+  have hmeas : ∀ x, MeasurableSet (C x) := fun x =>
+    ((isOpen_discrete {x}).preimage hcont).measurableSet
+  have hcomp : ∀ x, IsCompact (C x) := by
+    intro x
+    have h : C x = (fun k => x.out * k) '' (K : Set G) := by
+      ext g
+      rw [hmem]
+      constructor
+      · intro h
+        exact ⟨_, h, by simp⟩
+      · rintro ⟨k, hk, rfl⟩
+        simpa using hk
+    rw [h]
+    exact hKc.image (continuous_const.mul continuous_id)
+  refine ⟨hfin.toFinset, fun x => x.out, fun x => (μ.real (C x) : ℂ), ?_⟩
+  intro F hF h0
+  have hout : ∀ g : G, F (QuotientGroup.mk g : G ⧸ K).out = F g := by
+    intro g
+    have h := hF (QuotientGroup.mk g : G ⧸ K).out _ ((hmem _ g).1 rfl)
+    rw [mul_inv_cancel_left] at h
+    exact h.symm
+  have hdec : ∀ g, F g = ∑ x ∈ hfin.toFinset, (C x).indicator (fun _ => F x.out) g := by
+    intro g
+    rw [Finset.sum_eq_single (QuotientGroup.mk g : G ⧸ K)]
+    · rw [Set.indicator_of_mem (show g ∈ C (QuotientGroup.mk g) from rfl), hout]
+    · intro x _ hx
+      have hg : g ∉ C x := fun h => hx (Eq.symm h)
+      rw [Set.indicator_of_notMem hg]
+    · intro hg
+      rw [Set.indicator_of_mem (show g ∈ C (QuotientGroup.mk g) from rfl), hout]
+      exact h0 g fun hgS => hg (hfin.mem_toFinset.2 ⟨g, hgS, rfl⟩)
+  rw [MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall hdec),
+    MeasureTheory.integral_finsetSum]
+  · refine Finset.sum_congr rfl fun x _ => ?_
+    rw [MeasureTheory.integral_indicator_const _ (hmeas x), Complex.real_smul]
+  · intro x _
+    rw [MeasureTheory.integrable_indicator_iff (hmeas x)]
+    exact MeasureTheory.integrableOn_const (hcomp x).measure_lt_top.ne
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4GeometricSide.RlComm
+
+section
 
 @[expose] public section
 
@@ -214,3 +298,6 @@ theorem rlComm : RlComm := by
     exact lift _ _ _ _ hA' (h3 i k) (hA _ fun g => commute_rt_fin _ g)
 
 end UpperTheory.V.Z.GSp4Splitting
+end
+end
+end

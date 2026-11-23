@@ -4,15 +4,14 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BasisApply
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.TwoWeightEqOneAddRoot
 public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ToMatrixTrFormBaseChange
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RepTraceEqMulTraceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeAlternatingFormBijectiveStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeFormComplexStructureBaseChStatement
-public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsEquivStdSymp
+public import Mathlib.LinearAlgebra.SymplecticGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,11 +23,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,10 +48,174 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.LinearAlgebra.BilinearForm.TensorProduct
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsEquivStdSymp
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsToricRankOne
 public import Mathlib.RingTheory.Flat.TorsionFree
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeAlternatingFormBijective
+
+section
+
+@[expose] public section
+
+open NumberField
+open scoped TensorProduct
+
+namespace GlobalTheory.UnitaryStd
+
+theorem form_basis_basis {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ)
+    (g : ℕ) (S : Matrix (Fin r) (Fin r) ℤ) (i j : Fin r) (a c : Fin g ⊕ Fin g) :
+    form ρ g S (basis ρ g (j, c)) (basis ρ g (i, a)) =
+      S j i * (Matrix.J (Fin g) ℤ) a c := by
+  rw [form_apply, Matrix.J]
+  simp only [basis_apply, dotProduct]
+  rcases a with k | k <;> rcases c with l | l <;>
+    simp [Pi.single_apply, Prod.ext_iff, Matrix.one_apply, Finset.sum_ite_eq, Finset.sum_ite_eq', eq_comm]
+  all_goals simp [ite_and, Finset.mul_sum, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.sum_ite_irrel, mul_ite]
+  all_goals (split_ifs <;> simp_all)
+
+theorem toMatrix_basis_dualBasis_form {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ)
+    (g : ℕ) (S : Matrix (Fin r) (Fin r) ℤ) :
+    LinearMap.toMatrix (basis ρ g) (basis ρ g).dualBasis (form ρ g S) =
+      Matrix.kroneckerMap (· * ·) S.transpose (Matrix.J (Fin g) ℤ) := by
+  ext ⟨i, a⟩ ⟨j, c⟩
+  rw [LinearMap.toMatrix_apply, Module.Basis.dualBasis_repr, form_basis_basis]
+  rfl
+
+theorem form_bijective_of_unimodular : ∀ {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ)
+    (g : ℕ) (S : Matrix (Fin r) (Fin r) ℤ), IsUnit S.det → Function.Bijective (GlobalTheory.UnitaryStd.form ρ g S) := by
+  intro E _ _ r ρ g S hS
+  set b := basis ρ g
+  set M := LinearMap.toMatrix b b.dualBasis (form ρ g S) with hMdef
+  have hM : IsUnit M.det := by
+    rw [hMdef, toMatrix_basis_dualBasis_form, Matrix.det_kronecker, Matrix.det_transpose]
+    exact (hS.pow _).mul ((Matrix.isUnit_det_J (Fin g) ℤ).pow _)
+  have h1 : M * M⁻¹ = 1 := Matrix.mul_nonsing_inv M hM
+  have h2 : M⁻¹ * M = 1 := Matrix.nonsing_inv_mul M hM
+  have hf : form ρ g S = Matrix.toLin b b.dualBasis M := by rw [hMdef, Matrix.toLin_toMatrix]
+  set Ψ := Matrix.toLin b.dualBasis b M⁻¹
+  have hl : ∀ x, Ψ (form ρ g S x) = x := fun x => by
+    rw [hf, ← LinearMap.comp_apply, ← Matrix.toLin_mul, h2, Matrix.toLin_one, LinearMap.id_apply]
+  have hr : ∀ f, form ρ g S (Ψ f) = f := fun f => by
+    rw [hf, ← LinearMap.comp_apply, ← Matrix.toLin_mul, h1, Matrix.toLin_one, LinearMap.id_apply]
+  exact ⟨Function.LeftInverse.injective hl, Function.RightInverse.surjective hr⟩
+
+end GlobalTheory.UnitaryStd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeAlternatingFormBijectiveStatement
+
+section
+
+@[expose] public section
+
+open NumberField
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.unitaryStandardLatticeAlternatingForm_bijective : ∀ {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ) (g : ℕ) (S : Matrix (Fin r) (Fin r) ℤ), IsUnit S.det → Function.Bijective (GlobalTheory.UnitaryStd.form ρ g S) := by
+  first | exact @GlobalTheory.UnitaryStd.form_bijective_of_unimodular | exact GlobalTheory.UnitaryStd.form_bijective_of_unimodular | (intros; apply GlobalTheory.UnitaryStd.form_bijective_of_unimodular <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeFormComplexStructureBaseCh
+
+section
+
+@[expose] public section
+
+open NumberField
+open scoped TensorProduct
+
+namespace GlobalTheory.UnitaryStd
+
+variable {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ) (g : ℕ)
+
+theorem form_cx_coord (S : Matrix (Fin r) (Fin r) ℤ) (y z : Lat ρ g) :
+    form ρ g S (cx ρ g y) z = ∑ i, ∑ j, S i j *
+      ∑ α : Fin g ⊕ Fin g, (basis ρ g).repr y (i, α) * (basis ρ g).repr z (j, α) := by
+  rw [form_apply]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  simp only [cx_apply, basis_repr, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, dotProduct,
+    Pi.neg_apply, neg_mul, Finset.sum_neg_distrib, sub_neg_eq_add]
+  ring
+
+theorem form_cx_basis (S : Matrix (Fin r) (Fin r) ℤ) (p q : Fin r × (Fin g ⊕ Fin g)) :
+    form ρ g S (cx ρ g (basis ρ g p)) (basis ρ g q) = if p.2 = q.2 then S p.1 q.1 else 0 := by
+  rw [form_cx_coord]
+  obtain ⟨i0, a⟩ := p
+  obtain ⟨j0, b⟩ := q
+  simp only [Module.Basis.repr_self, Finsupp.single_apply, Prod.mk.injEq]
+  simp [ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq', eq_comm]
+
+theorem form_cx_baseChange_pos (S : Matrix (Fin r) (Fin r) ℤ) (hS : (S.map (Int.cast : ℤ → ℝ)).PosDef)
+    (x : ℝ ⊗[ℤ] Lat ρ g) (hx : x ≠ 0) :
+    0 < (form ρ g S).baseChange ℝ ((cx ρ g).baseChange ℝ x) x := by
+  set b := Algebra.TensorProduct.basis ℝ (basis ρ g) with hb
+  set c := b.repr x with hc
+  have hx' : x = ∑ p, c p • b p := (b.sum_repr x).symm
+  have key : (form ρ g S).baseChange ℝ ((cx ρ g).baseChange ℝ x) x =
+      ∑ q, ∑ p, c p * c q * (((if p.2 = q.2 then S p.1 q.1 else 0 : ℤ)) : ℝ) := by
+    conv_lhs => rw [hx']
+
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hb,
+    Algebra.TensorProduct.basis_apply, LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul,
+    form_cx_basis, mul_one, zsmul_eq_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
+    ring
+  set v : (Fin g ⊕ Fin g) → Fin r → ℝ := fun α i => c (i, α) with hv
+  have key2 : (form ρ g S).baseChange ℝ ((cx ρ g).baseChange ℝ x) x =
+      ∑ α, v α ⬝ᵥ ((S.map (Int.cast : ℤ → ℝ)).mulVec (v α)) := by
+    rw [key, Finset.sum_comm]
+    simp only [Fintype.sum_prod_type, Int.cast_ite, Int.cast_zero, mul_ite, mul_zero,
+      Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, dotProduct, Matrix.mulVec,
+      Matrix.map_apply, Finset.mul_sum, hv]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun α _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    ring
+  rw [key2]
+  have hnn : ∀ α, 0 ≤ v α ⬝ᵥ ((S.map (Int.cast : ℤ → ℝ)).mulVec (v α)) := by
+    intro α
+    by_cases h0 : v α = 0
+    · simp [h0]
+    · simpa using (hS.dotProduct_mulVec_pos h0).le
+  have hne : c ≠ 0 := by
+    intro h; apply hx; rw [hx']; simp [h]
+  obtain ⟨⟨i, α⟩, hp⟩ : ∃ p, c p ≠ 0 := by
+    by_contra h; push_neg at h; exact hne (Finsupp.ext h)
+  have hα : v α ≠ 0 := fun h => hp (by simpa [hv] using congrFun h i)
+  have hpos : 0 < v α ⬝ᵥ ((S.map (Int.cast : ℤ → ℝ)).mulVec (v α)) := by
+    simpa using hS.dotProduct_mulVec_pos hα
+  exact lt_of_lt_of_le hpos (Finset.single_le_sum (fun β _ => hnn β) (Finset.mem_univ α))
+
+end GlobalTheory.UnitaryStd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryStandardLatticeFormComplexStructureBaseChStatement
+
+section
+
+@[expose] public section
+
+open NumberField
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.unitaryStandardLattice_form_complexStructure_baseChange_pos : ∀ {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ : 𝓞 E →+* Matrix (Fin r) (Fin r) ℤ) (g : ℕ) (S : Matrix (Fin r) (Fin r) ℤ), (S.map (Int.cast : ℤ → ℝ)).PosDef → ∀ x : ℝ ⊗[ℤ] GlobalTheory.UnitaryStd.Lat ρ g, x ≠ 0 → 0 < (GlobalTheory.UnitaryStd.form ρ g S).baseChange ℝ ((GlobalTheory.UnitaryStd.cx ρ g).baseChange ℝ x) x := by
+  first | exact @GlobalTheory.UnitaryStd.form_cx_baseChange_pos | exact GlobalTheory.UnitaryStd.form_cx_baseChange_pos | (intros; apply GlobalTheory.UnitaryStd.form_cx_baseChange_pos <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitaryDatumStandardLatticeTensorUnimodula
+
+section
 
 @[expose] public section
 
@@ -260,3 +422,6 @@ theorem exists_datum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
       map_add' := fun _ _ => rfl }, rfl, rfl, fun a x i => rfl, fun x y => rfl⟩
 
 end GlobalTheory.UnitaryStd
+end
+end
+end

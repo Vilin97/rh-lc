@@ -49,9 +49,161 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.AssDim
+public import Mathlib.RingTheory.Ideal.AssociatedPrime.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.QuotSMulTop
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Nakayama
 public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.ExistsIsRegularAppendOfModDepthGE
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Lemmata.GeneralBFactRest.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace Bl.general_b_fact_rest
+
+theorem goal1 :
+  ∀ {R : Type u_1} [inst : CommRing.{u_1} R] [inst_1 : IsLocalRing.{u_1} R] [IsNoetherianRing.{u_1} R] {M : Type u_2}
+  [inst_3 : AddCommGroup.{u_2} M] [inst_4 : Module.{u_1, u_2} R M] [Module.Finite.{u_1, u_2} R M] {p : Ideal.{u_1} R},
+  Membership.mem.{u_1, u_1} (associatedPrimes.{u_1, u_2} R M) p →
+    ∀ {x : R},
+      Membership.mem.{u_1, u_1} (IsLocalRing.maximalIdeal.{u_1} R) x →
+        IsSMulRegular.{u_1, u_2} M x →
+          Exists.{u_1 + 1} fun (q : Ideal.{u_1} R) ↦
+            And (Membership.mem.{u_1, u_1} (associatedPrimes.{u_1, u_2} R (QuotSMulTop.{u_2, u_1} x M)) q)
+              (And (LT.lt.{u_1} p q) (And (Membership.mem.{u_1, u_1} q x) (Not (Membership.mem.{u_1, u_1} p x)))) := by
+  intro R _ _ _ M _ _ _ p hp x hx hreg
+  open Pointwise in
+  · rw [AssociatedPrimes.mem_iff, isAssociatedPrime_iff] at hp
+    obtain ⟨hpp, m0, rfl⟩ := hp
+    have hm0 : m0 ≠ 0 := by
+      rintro rfl
+      apply hpp.ne_top
+      rw [Ideal.eq_top_iff_one, Submodule.mem_colon_singleton, smul_zero]
+      exact Submodule.zero_mem _
+    have hxp : x ∉ (⊥ : Submodule R M).colon {m0} := by
+      intro h
+      rw [Submodule.mem_colon_singleton, Submodule.mem_bot] at h
+      exact hm0 (hreg (h.trans (smul_zero x).symm))
+    set N : Submodule R M := Submodule.torsionBySet R M ((⊥ : Submodule R M).colon {m0} : Set R) with hN
+    have hNmem : ∀ n, n ∈ N ↔ ∀ r ∈ (⊥ : Submodule R M).colon {m0}, r • n = 0 := by
+      intro n
+      rw [hN, Submodule.mem_torsionBySet_iff]
+      exact ⟨fun h r hr => h ⟨r, hr⟩, fun h a => h a.1 a.2⟩
+    have hm0N : m0 ∈ N := by
+      rw [hNmem]
+      intro r hr
+      rw [Submodule.mem_colon_singleton, Submodule.mem_bot] at hr
+      exact hr
+    have hex : ∃ n ∈ N, n ∉ x • (⊤ : Submodule R M) := by
+      by_contra hcon
+      push Not at hcon
+      have hle : N ≤ Ideal.span {x} • N := by
+        intro n hn
+        obtain ⟨m', -, hm'⟩ := (Submodule.mem_smul_pointwise_iff_exists n x ⊤).1 (hcon n hn)
+        have hm'N : m' ∈ N := by
+          rw [hNmem] at hn ⊢
+          intro r hr
+          apply hreg
+          show x • (r • m') = x • 0
+          rw [smul_comm, hm', hn r hr, smul_zero]
+        rw [← hm']
+        exact Submodule.smul_mem_smul (Ideal.mem_span_singleton_self x) hm'N
+      have hbot := Submodule.eq_bot_of_le_smul_of_le_jacobson_bot (Ideal.span {x}) N
+        (IsNoetherian.noetherian N) hle
+        (((Ideal.span_singleton_le_iff_mem _).2 hx).trans (IsLocalRing.maximalIdeal_le_jacobson _))
+      apply hm0
+      rw [hbot] at hm0N
+      exact (Submodule.mem_bot R).1 hm0N
+    obtain ⟨n, hnN, hnx⟩ := hex
+    set z : QuotSMulTop x M := Submodule.Quotient.mk n with hz
+    have hz0 : z ≠ 0 := by
+      rw [hz, Ne, Submodule.Quotient.mk_eq_zero]
+      exact hnx
+    obtain ⟨q, hq, hqle⟩ := exists_le_isAssociatedPrime_of_isNoetherianRing R z hz0
+    have hxq : x ∈ q := by
+      apply hqle
+      rw [Submodule.mem_colon_singleton, Submodule.mem_bot, hz, ← Submodule.Quotient.mk_smul,
+        Submodule.Quotient.mk_eq_zero]
+      exact Submodule.smul_mem_pointwise_smul n x ⊤ trivial
+    have hpq : (⊥ : Submodule R M).colon {m0} ≤ q := by
+      intro r hr
+      apply hqle
+      rw [Submodule.mem_colon_singleton, Submodule.mem_bot, hz, ← Submodule.Quotient.mk_smul,
+        (hNmem n).1 hnN r hr, Submodule.Quotient.mk_zero]
+    exact ⟨q, hq, lt_of_le_of_ne hpq (fun h => hxp (h ▸ hxq)), hxq, hxp⟩
+
+end Bl.general_b_fact_rest
+end
+end
+
+-- Source module: ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.AssDim
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.CA
+
+open IsLocalRing RingTheory.Sequence Pointwise
+
+variable {R : Type*} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+
+theorem exists_assoc_step {M : Type*} [AddCommGroup M] [Module R M] [Module.Finite R M]
+    {p : Ideal R} (hp : p ∈ associatedPrimes R M) {x : R} (hx : x ∈ maximalIdeal R)
+    (reg : IsSMulRegular M x) :
+    ∃ q ∈ associatedPrimes R (QuotSMulTop x M), p < q ∧ x ∈ q ∧ x ∉ p := by
+  first | exact Bl.general_b_fact_rest.goal1 .. | (apply Bl.general_b_fact_rest.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_rest.goal1 <;> assumption)
+
+theorem length_le_of_isRegular_of_mem_associatedPrimes : ∀ (rs : List R)
+    {M : Type*} [AddCommGroup M] [Module R M] [Module.Finite R M],
+    (∀ r ∈ rs, r ∈ maximalIdeal R) → IsRegular M rs → ∀ {p : Ideal R},
+    p ∈ associatedPrimes R M → (rs.length : WithBot ℕ∞) ≤ ringKrullDim (R ⧸ p)
+  | [], M, _, _, _, _, _, p, hp => by
+    have : p.IsPrime := hp.isPrime
+    have : Nontrivial (R ⧸ p) := Ideal.Quotient.nontrivial_iff.mpr this.ne_top
+    simpa using ringKrullDim_nonneg_of_nontrivial
+  | x :: rs', M, _, _, _, hm, reg, p, hp => by
+    obtain ⟨hreg, hreg'⟩ := (isRegular_cons_iff M x rs').mp reg
+    have hx : x ∈ maximalIdeal R := hm x List.mem_cons_self
+    obtain ⟨q, hq, hpq, hxq, hxnp⟩ := exists_assoc_step hp hx hreg
+    have ih := length_le_of_isRegular_of_mem_associatedPrimes rs'
+      (fun r hr => hm r (List.mem_cons_of_mem _ hr)) hreg' hq
+    have hpp : p.IsPrime := hp.isPrime
+    have hxp : Ideal.Quotient.mk p x ≠ 0 := by
+      rw [ne_eq, Ideal.Quotient.eq_zero_iff_mem]
+      exact hxnp
+    have hdim : ringKrullDim (R ⧸ q) + 1 ≤ ringKrullDim (R ⧸ p) :=
+      ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hpq.le)
+        (Ideal.Quotient.factor_surjective hpq.le) (mem_nonZeroDivisors_of_ne_zero hxp)
+        (by simpa [Ideal.Quotient.eq_zero_iff_mem] using hxq)
+    calc ((x :: rs').length : WithBot ℕ∞) = (rs'.length : WithBot ℕ∞) + 1 := by simp
+      _ ≤ ringKrullDim (R ⧸ q) + 1 := by gcongr
+      _ ≤ ringKrullDim (R ⧸ p) := hdim
+
+variable {M : Type*} [AddCommGroup M] [Module R M] [Module.Finite R M]
+
+theorem ModDepthGE.le_ringKrullDim_quotient_of_mem_associatedPrimes {n : ℕ}
+    (h : ModDepthGE R M n) {p : Ideal R} (hp : p ∈ associatedPrimes R M) :
+    (n : WithBot ℕ∞) ≤ ringKrullDim (R ⧸ p) := by
+  obtain ⟨rs, hlen, hmem, hreg⟩ := h
+  subst hlen
+  exact length_le_of_isRegular_of_mem_associatedPrimes rs hmem hreg hp
+
+end ReciprocityTheory.CA
+end
+end
+
+-- Source module: ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.Unmixed
+
+section
 
 @[expose] public section
 
@@ -359,3 +511,5 @@ theorem IsCMMod.isRegular_of_supportDim_quotient_le_zero (h : IsCMMod R M) (xs :
     exact ⟨reg, ih hQ hxs' hlenQ hdQ⟩
 
 end ReciprocityTheory.CA
+end
+end

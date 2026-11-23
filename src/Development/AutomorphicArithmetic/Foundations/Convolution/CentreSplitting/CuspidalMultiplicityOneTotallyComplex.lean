@@ -3,8 +3,9 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.CuspidalMultiplicityOneTotallyComplex
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.ExCusp
 import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.FormsIrr
-public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.IsoIff
-public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.OrthOrIso
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocalRepresentationL2
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.ExSummand
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.IsoEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,11 +40,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.OrthOrIso
+import Mathlib.Tactic.TypeStar
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DifferentiableAtChart
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.CmBridge
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.IsoIff
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
+open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum
+open GlobalTheory.CuspRep (CuspSub GA Af Ad finGL locGL)
+open UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Dp UpperTheory.V
+
+theorem UpperTheory.ConvolutionTheory.Dp.isoIff :
+    UpperTheory.ConvolutionTheory.Dp.IsoIff := by
+  intro E _ _ _ n μ _ π π' V V' h h'
+  rw [isoEq E n π π']
+  constructor
+  · rintro rfl
+    rw [((exSummand E n μ π V).1 h).2, ((exSummand E n μ π V').1 h').2]
+  · rintro rfl
+    exact (exCusp E n μ V h.summand).unique h h'
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.CuspidalMultiplicityOneTotallyComplex
+
+section
 
 @[expose] public section
 
@@ -87,3 +117,5 @@ theorem UpperTheory.ConvolutionTheory.Dp.multiplicity_one_cuspidal_spectrum_norm
     | lie X =>
       simp only [← Cm.carrierEq_ρ, LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply]
       exact congrArg _ (Subtype.ext (hρ _ ψ _ rfl))
+end
+end

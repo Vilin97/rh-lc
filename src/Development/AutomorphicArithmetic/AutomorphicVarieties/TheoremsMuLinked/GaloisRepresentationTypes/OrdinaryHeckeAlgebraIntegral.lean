@@ -7,9 +7,10 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingMod
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DegreeCountCohomology.UnrLoc
 import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.DecompSigmaOrd
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.DOSmall
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.PresCnts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.ResidualRepOne
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.PsiInj
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.DualPair
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DegreeCountCohomology.ArPresAlt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.GwCntBare
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.LocCntBare
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,8 +45,94 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.UnrDev
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.ResidualRepOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.PsiInj
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.LocCntCongr
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix Filter NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa UpperTheory.V.HV UpperTheory.V.Th GlobalTheory.GalOfCusp
+
+theorem UpperTheory.V.Th.locCntCongr :
+    ∀ (l : ℕ) [Fact l.Prime] (D D' : Type) [Group D] [TopologicalSpace D] [Group D'] [TopologicalSpace D'] (α : D ≃ₜ* D') (ε : D →* ℤ_[l]ˣ) (ε' : D' →* ℤ_[l]ˣ) (d : ℕ), (∀ g, ε g = ε' (α g)) → LocCnt D' ε' d → LocCnt D ε d := by
+  intro l _ D D' _ _ _ _ α ε ε' d hε H k hk R M M' _ _ _ _ _ _ _ ρ ρ' b hLC hb
+  let β : D' →* D := α.symm.toMulEquiv.toMonoidHom
+  let σ : Representation R D' M := ρ.comp β
+  let σ' : Representation R D' M' := ρ'.comp β
+  have hσ : ∀ g, σ g = ρ (α.symm g) := fun _ => rfl
+  have hσ' : ∀ g, σ' g = ρ' (α.symm g) := fun _ => rfl
+  have h1 : LC σ := fun m => (hLC m).comp_continuous α.symm.continuous
+  have h2 : DualPair k ε' σ σ' b := by
+    refine ⟨hb.left, hb.right, fun g x y => ?_⟩
+    rw [hσ, hσ', hb.equiv]
+    simp only [hε, ContinuousMulEquiv.apply_symm_apply]
+  obtain ⟨hf, hc⟩ := H k hk R M M' σ σ' b h1 h2
+  let e : Zl ρ ≃ Zl σ :=
+    { toFun := fun z => ⟨fun g => z.1 (α.symm g), z.2.1.comp_continuous α.symm.continuous, fun g h => by
+        beta_reduce
+        rw [map_mul, z.2.2, hσ]⟩
+      invFun := fun z => ⟨fun g => z.1 (α g), z.2.1.comp_continuous α.continuous, fun g h => by
+        beta_reduce
+        rw [map_mul, z.2.2, hσ, ContinuousMulEquiv.symm_apply_apply]⟩
+      left_inv := fun z => Subtype.ext (funext fun g => by simp)
+      right_inv := fun z => Subtype.ext (funext fun g => by simp) }
+  have hi : ρ'.invariants = σ'.invariants := by
+    ext m
+    simp only [Representation.mem_invariants, hσ']
+    exact ⟨fun h g => h _, fun h g => by simpa using h (α g)⟩
+  exact ⟨Finite.of_equiv _ e.symm, by rw [Nat.card_congr e, hc, hi]⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.PresCnts
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix Filter NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa UpperTheory.V.HV UpperTheory.V.Th GlobalTheory.GalOfCusp
+
+theorem UpperTheory.V.Th.presCnts :
+    CohP → ∀ (l : ℕ) [Fact l.Prime] (Lc : Loc) (G : Glob l Lc) (q d : ℕ) (a : ArData G q d) (F Ω : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (_ : ArPres a F Ω), l ≠ 2 → (∀ u, UnrCount l (Lc.Gu u) (Lc.Ju u)) → Cnts a := by
+  intro hC l _ Lc G q d a F Ω _ _ _ _ _ _ P hl hU
+  have hmatch : ∀ (w : ArData.W Lc q) (g : a.D w),
+      G.ε (a.ι w g) = cycZ F Ω l ((Dec (P.A w)).subtype (P.α w g)) := by
+    intro w g
+    exact (congrArg G.ε (P.ι_eq w g)).trans (P.e_ε _)
+  refine Cnts.mk ?_ ?_ ?_ ?_
+  · have key := gwCntBare hC.gw hC.lt hC.gf hC.lf l F Ω P.S G.Γ P.e G.ε (ArData.W Lc q) P.pl P.A
+      a.D a.ι P.α d P.ip P.c hl P.above P.e_ε P.isOver P.ι_eq P.cc
+    have hcw : a.cw = fun i => P.e ((toGS Ω P.S) (P.c i)) := funext P.cw_eq
+    rw [hcw]
+    exact key
+  · intro v
+    have hv : (l : 𝓞 F) ∈ (P.pl (Sum.inl v) : HeightOneSpectrum (𝓞 F)).asIdeal := (P.pl_l _).2 ⟨v, rfl⟩
+    have h1 := (locCntBare hC.lf hC.lt hC.le l F Ω (P.A (Sum.inl v)) _ (P.isOver (Sum.inl v))).1 hv
+    rw [P.dv_eq v]
+    exact locCntCongr l (a.D (Sum.inl v)) _ (P.α (Sum.inl v)) _ _ _ (hmatch (Sum.inl v)) h1
+  · intro j
+    have hn : (l : 𝓞 F) ∉ (P.pl (Sum.inr (Sum.inr j)) : HeightOneSpectrum (𝓞 F)).asIdeal := by
+      intro hm
+      obtain ⟨v, hv⟩ := (P.pl_l _).1 hm
+      cases hv
+    have h0 := (locCntBare hC.lf hC.lt hC.le l F Ω (P.A (Sum.inr (Sum.inr j))) _
+      (P.isOver (Sum.inr (Sum.inr j)))).2 hn
+    exact locCntCongr l (a.D (Sum.inr (Sum.inr j))) _ (P.α (Sum.inr (Sum.inr j))) _ _ _
+      (hmatch (Sum.inr (Sum.inr j))) h0
+  · intro u
+    exact unrDev l _ _ (hU u)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.OrdinaryHeckeAlgebraIntegral
+
+section
 
 @[expose] public section
 
@@ -93,3 +180,5 @@ theorem UpperTheory.V.Th.b1O : ordinaryHeckeAlgebraIntegral := by
   have e2 : algebraMap ℤ_[l] c.O (V0.ε (toGS Ω V0.S' (resP L Ω g)) : ℤ_[l]) = 1 := e
   rw [e1, ← map_one (algebraMap ℤ_[l] c.O)] at e2
   exact (UpperTheory.V.abelian₂.dvr_finite l c.O).2.2.2.1 e2
+end
+end

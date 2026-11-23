@@ -1,18 +1,6 @@
 module
 
-public import Formalism.SharpRestriction.LevelLetterCocycles.LemCStep
-public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
-public import Formalism.SharpRestriction.LevelLetterCocycles.UpPositionOfModels
-public import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantUniformizer
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.ClassMapPf
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.DvdCondition
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPt
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U3downPfFildRConst
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U3upPfFilCAnti
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.UnivLinkPfA
-public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.WLocal
-import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
-import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
+public import Formalism.SharpRestriction.LevelLetterCocycles.DownSlotProposition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +17,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,6 +36,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.UpPositionOfModels
+public import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantUniformizer
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.ClassMapPf
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.DvdCondition
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPt
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U3downPfFildRConst
+import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U3upPfFilCAnti
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.UnivLinkPfA
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.WLocal
+import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
+import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
+import Mathlib.Tactic.Basify
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LemCStep
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln34
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Module Formalism.MainNotions.ElementDenominator Formalism.MainNotions.ElementDenominator.CongruenceModules TensorProduct
+
+section Local
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
+    [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
+    (W : LocWach PD LL O v n)
+
+def LemC (T : LocLat G Qp LL O) (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ : LetA O n)
+    (h' S : ℕ) (up : (K →ₐ[Qp] LL) → Bool) (b : (K →ₐ[Qp] LL) → ℕ) (c : ZMod n) : Prop :=
+  ∀ x (hx : x ∈ NcS W T (c - 1)), (∀ τ, Formalism.MainNotions.DeltaInvariantLattices.OverLetter W τ c → up τ = true →
+    x ∈ FilL W T Pt c τ (b τ)) → ∀ f, IsCoord W Pt π' Eπ h' S up b c f →
+    f ⊗ₜ mkL W T π' c x hx ∈ InvL W T Pt π' Eπ h' c ⊤
+
+end Local
+
+section Record
+
+end Record
+
+end Formalism.MainNotions.N.Ln34
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.DescentValuation
+
+section
 
 @[expose] public section
 
@@ -229,3 +275,6 @@ end Record
 theorem down_of_models : Formalism.MainNotions.N.Ln34.DownSlotOfModels := u3downPf_link Formalism.MainNotions.N.Ln34.w_pf
 
 end Formalism.MainNotions.N.Ln34.DescentValuation
+end
+end
+end

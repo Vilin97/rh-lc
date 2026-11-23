@@ -28,21 +28,7 @@ public import Development.EtaleCohomology.TateTwists.EtaleTateTwistMultiplicatio
 import Development.EtaleCohomology.TateTwists.EtaleTensorTripleProductFamilyOfGluing
 import Development.EtaleCohomology.TateTwists.EtaleTorsionCohomologyLocalizationBasic
 import Development.EtaleCohomology.TateTwists.EtaleTwistedResolutionExistsOfFlatSections
-import Development.EtaleCohomology.TateTwists.SubdivisionComposition
-import Development.EtaleCohomology.TateTwists.TAwAssoc0Of
-public import Development.EtaleCohomology.TateTwists.TPaCpushHtpyPf
-public import Development.EtaleCohomology.TateTwists.TPaCpushIdPf
-public import Development.EtaleCohomology.TateTwists.TPaPrecompPf
-public import Development.EtaleCohomology.TateTwists.TPaTensExPf
-public import Development.EtaleCohomology.TateTwists.TPaTensUnivPf
-public import Development.EtaleCohomology.TateTwists.TTwpairExPf
-import Development.EtaleCohomology.TateTwists.TtResSidePf
-public import Development.EtaleCohomology.TateTwists.TtTensExPfSh
-public import Development.EtaleCohomology.TateTwists.TtTensGePf
-public import Development.EtaleCohomology.TateTwists.TtTensPrePf
-public import Development.EtaleCohomology.TateTwists.TtTwistSidePf
-import Development.EtaleCohomology.TateTwists.TwpairTensUnivExdegPf
-public import Development.EtaleCohomology.TateTwists.TwpairZcFunPf
+import Development.EtaleCohomology.TateTwists.EtaleSimplexSubfaceComposition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -69,6 +55,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -81,8 +68,213 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.EtaleCohomology.TateTwists.TAwAssoc0Of
+public import Development.EtaleCohomology.TateTwists.TPairAssocPf
+import Mathlib.Tactic.Linter.Style
+public import Development.EtaleCohomology.TateTwists.TPaTensExPf
+public import Development.EtaleCohomology.TateTwists.TPaTensUnivPf
 public import Development.EtaleCohomology.TateTwists.EtaleTwistedCupAssocOfTwistedPairingExistsAssoc
+import Development.EtaleCohomology.TateTwists.TtResSidePf
+public import Development.EtaleCohomology.TateTwists.TtTensExPfSh
+public import Development.EtaleCohomology.TateTwists.TtTensPrePf
+public import Development.EtaleCohomology.TateTwists.TtTwistSidePf
+import Development.EtaleCohomology.TateTwists.TwpairTensUnivExdegPf
+public import Development.EtaleCohomology.TateTwists.TwpairZcFunPf
 public import Development.EtaleCohomology.TateTwists.TtTensExPf
+
+-- Source module: Development.EtaleCohomology.TateTwists.SubdivisionComposition
+
+section
+
+section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations.SubdivisionComposition
+
+lemma subint_comp (N j l j' l' : ℕ) (h : j + l ≤ N) (h' : j' + l' ≤ l) :
+    SimplexCategory.subinterval j' l' h' ≫ SimplexCategory.subinterval j l h =
+      SimplexCategory.subinterval (n := N) (j + j') l' (by omega) := by
+  ext i
+  change ((i : ℕ) + j' + j) = (i : ℕ) + (j + j')
+  omega
+
+lemma subint_id (N : ℕ) :
+    SimplexCategory.subinterval (n := N) 0 N (by omega) = 𝟙 _ := by
+  ext i
+  simp [SimplexCategory.subinterval]
+
+lemma along_comp {E : Spc} {U : Scheme.{0}} {N p r : ℕ} (x : Sx E N U)
+    (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) (b : SimplexCategory.mk r ⟶ SimplexCategory.mk p) :
+    (x.along a).along b = x.along (b ≫ a) := by
+  simp only [Sx.along, op_comp, Functor.map_comp, NatTrans.comp_app, types_comp_apply]
+
+end LateralTheory.EtaleFoundations.SubdivisionComposition
+
+open LateralTheory.EtaleFoundations.SubdivisionComposition in
+theorem LateralTheory.EtaleFoundations.simplicial_subinterval_of_subinterval_along_etale : LateralTheory.EtaleFoundations.EtaleSimplexSubfaceComposition := by
+  intro E U N x
+  have hsa : ∀ (j l : ℕ) (h : j + l ≤ N), x.sub j l h = x.along (SimplexCategory.subinterval j l h) :=
+    fun _ _ _ => rfl
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro j l j' l' h h'
+    change (x.along _).along _ = x.along _
+    rw [along_comp, subint_comp]
+  · rw [hsa, subint_id]
+    simp [Sx.along]
+  · intro j l h
+    refine ⟨?_, ?_, hsa j l h⟩
+    · intro V g
+      simp only [Sx.sub, Sx.res]
+      have hn := ConcreteCategory.congr_hom ((E.map (SimplexCategory.subinterval j l h).op).naturality g.op) x
+      simp only [ConcreteCategory.comp_apply] at hn
+      exact hn
+    · intro E' f
+      simp only [Sx.sub, Sx.map]
+      have hn := congrArg (fun t => t.app (op U)) (f.naturality (SimplexCategory.subinterval j l h).op)
+      simp only [NatTrans.comp_app] at hn
+      first
+        | (have hm := ConcreteCategory.congr_hom hn x
+           simp only [ConcreteCategory.comp_apply] at hm
+           first | exact hm | exact hm.symm)
+        | exact (congrFun hn x).symm
+        | (rw [← types_comp_apply, ← hn]; rfl)
+  · intro p r a b
+    exact along_comp x a b
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.TPaCpushHtpyPf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations
+
+theorem t_pa_cpush_htpy_of : t_pa_cpush_htpy := by
+  intro R _ E I J u u' H n x
+  obtain ⟨α, rfl⟩ := CohomologyClass.mk_surjective x
+  show CohomologyClass.mk (zcomp α (Cocycle.ofHom u) (add_zero n)) =
+    CohomologyClass.mk (zcomp α (Cocycle.ofHom u') (add_zero n))
+  rw [← sub_eq_zero, ← CohomologyClass.mk_sub, CohomologyClass.mk_eq_zero_iff,
+    mem_coboundaries_iff _ (n - 1) (by omega)]
+  refine ⟨α.1.comp (Cochain.ofHomotopy H) (show n + -1 = n - 1 by omega), ?_⟩
+  rw [δ_comp _ _ _ (n + 1) 0 n (by omega) rfl (by omega), δ_ofHomotopy, Cocycle.δ_eq_zero]
+  simp [zcomp, Cochain.comp_sub]
+
+end LateralTheory.EtaleFoundations
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.TPaCpushIdPf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations
+
+theorem t_pa_cpush_id_of : t_pa_cpush_id := by
+  intro R _ E I n x
+  obtain ⟨a, rfl⟩ := CohomologyClass.mk_surjective x
+  show CohomologyClass.mk (zcomp a (Cocycle.ofHom (𝟙 I)) (add_zero n)) = CohomologyClass.mk a
+  congr 1
+  apply Cocycle.ext
+  simp [zcomp]
+
+end LateralTheory.EtaleFoundations
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.TPaPrecompPf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations
+
+theorem pa_sec_res_map {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {V U : Scheme.{0}} (g : V ⟶ U)
+    (x : Sec F U) : Sec.res g (Sec.map φ x) = Sec.map φ (Sec.res g x) := by
+  have := congrArg (fun f => (ModuleCat.Hom.hom f) x) (φ.hom.naturality g.op)
+  simpa using this.symm
+
+theorem pa_sec_map_comp {R : Type} [CommRing R] {F G H : Shv R} (φ : F ⟶ G) (ψ : G ⟶ H) {U : Scheme.{0}}
+    (x : Sec F U) : Sec.map (φ ≫ ψ) x = Sec.map ψ (Sec.map φ x) := rfl
+
+theorem t_pa_precomp_of : t_pa_precomp := by
+  intro R _ I I' J K u μ
+  refine ⟨⟨fun U s t w h => (μ.mul U s t w h).comp ((u.f s).hom.app (op U)).hom, ?_, ?_⟩, ?_⟩
+  · intro V U g s t w h a b
+    simp only [LinearMap.comp_apply]
+    exact (μ.nat g s t w h _ b).trans (by rw [pa_sec_res_map])
+  · intro U s t w h a b
+    simp only [LinearMap.comp_apply]
+    rw [μ.leibniz]
+    congr 2
+    rw [← pa_sec_map_comp, u.comm]; rfl
+  · intro U s t w h a b
+    rfl
+
+end LateralTheory.EtaleFoundations
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.TTwpairExPf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations
+
+def EtaleTateTwistCupPairingExistsAndCupUnique : Prop :=
+  ∀ (q : ℕ) [NeZero q] (i j : ℤ), IsTwPair (twPair q i j) ∧ ∀ (k : ℤ), i + j = k →
+    ∀ μ ν : Pair (res _ (tw q i)) (res _ (tw q j)) (res _ (tw q k)), IsTwPair μ → IsTwPair ν →
+      ∀ (E : Spc) {n m w : ℤ} (h : n + m = w), μ.cup E h = ν.cup E h
+
+theorem t_twpair_ex_of (htw : EtaleTateTwistCupPairingExistsAndCupUnique) : t_twpair_ex := by
+  intro q _ i j
+  exact ⟨twPair q i j, (htw q i j).1⟩
+
+end LateralTheory.EtaleFoundations
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.TtTensGePf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.EtaleFoundations
+
+def tens_univ_ge : Prop :=
+  ∀ (R : Type) [CommRing R] {I J K : Cx R} (τ : Pair I J K), τ.IsTensor →
+    (I.IsStrictlyGE 0 → J.IsStrictlyGE 0 → K.IsStrictlyGE 0)
+
+theorem tt_tens_ge_of (h : tens_univ_ge) : tt_tens_ge := by
+  intro R _ I J K μ hI hJ hμ
+  exact h R μ hμ hI hJ
+
+end LateralTheory.EtaleFoundations
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.TwPairExists
+
+section
 
 @[expose] public section
 
@@ -138,3 +330,5 @@ theorem cupFlip : cc_cup_flip := by
 theorem ringComm' : LateralTheory.E.CupProductRingLaws.LeafRingComm := ringComm cupFlip
 theorem twPairExists : LateralTheory.E.CupProductRingLaws.LeafTwPairExists := fun q _ i j => ⟨_, ((holds_of LateralTheory.CohomologicalPurity.LeafAWCutTw.twSec).2 q i j).1⟩
 end LateralTheory.Fix.CupProductTensor
+end
+end

@@ -1,6 +1,6 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StFlagPivotIdentity
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagPivot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +39,31 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.Intersections.StFlagPivotIdentity
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
+
+def FlagPivotIdentity.Statement : Prop :=
+  ∀ (R : Type) [CommRing R] (n : ℕ) (M : Matrix (Fin n) (Fin n) R) (j : Fin (n - 1)) (S : PluckerBlocks n n j),
+    flagMinor M j S * ∏ a ∈ Finset.Iic j, leadMinor M a = leadMinor M j * flagMinor (pivotMatrix M) j S
+
+end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.Intersections.PFlagPivotIdentity
+
+section
 
 @[expose] public section
 
@@ -158,3 +183,6 @@ theorem proof : FlagPivotIdentity.Statement := by
 end FlagPivotIdentity
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
+end
+end
+end

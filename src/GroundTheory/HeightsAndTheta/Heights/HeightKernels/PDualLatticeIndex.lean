@@ -1,16 +1,10 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualLatticeIndex
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BoxBounds
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesGenIndexDet
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesGenIndexTrans
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesIdealLatticeFG
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesIsLattice
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesLatticeBasis
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,13 +16,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,10 +40,141 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Localization.Finiteness
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesGenIndexDet
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesGenIndexTrans
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsLines
+public import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesIsLattice
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesLatticeBasis
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BoxBounds
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.BoxBounds.box :
+    {K : Type} → [inst : Field K] → {i : ℕ} → K → Submodule (NumberField.RingOfIntegers K) (Fin i → K) :=
+    fun {K : Type} [Field K] {i : ℕ} (c : K) ↦ Submodule.pi Set.univ fun (x : Fin i) ↦ NumberField.RingOfIntegers K ∙ c
+
+theorem UpperTheory.Reformulated.B.BoxBounds.exists_box_le :
+    ∀ {K : Type} [inst : Field K] [NumberField K] {i : ℕ} (L : Submodule (NumberField.RingOfIntegers K) (Fin i → K)),
+      Submodule.span K (↑L : Set (Fin i → K)) = ⊤ →
+        ∃ (e : NumberField.RingOfIntegers K),
+          e ≠ (0 : NumberField.RingOfIntegers K) ∧
+            UpperTheory.Reformulated.B.BoxBounds.box
+                ((Algebra.algebraMap (NumberField.RingOfIntegers K) K : NumberField.RingOfIntegers K → K) e) ≤
+              L := by
+  intro K _ _ i L hL
+  classical
+  have h : ∀ j : Fin i, ∃ t : nonZeroDivisors (NumberField.RingOfIntegers K),
+      (t : NumberField.RingOfIntegers K) • (Pi.single j (1 : K) : Fin i → K) ∈ L := by
+    intro j
+    obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span
+      (nonZeroDivisors (NumberField.RingOfIntegers K)) K (↑L : Set (Fin i → K))
+      (Pi.single j (1 : K)) (hL ▸ Submodule.mem_top)
+    rw [Submodule.span_eq] at ht
+    exact ⟨t, ht⟩
+  choose t ht using h
+  refine ⟨∏ j, (t j : NumberField.RingOfIntegers K),
+    Finset.prod_ne_zero_iff.mpr fun j _ => nonZeroDivisors.coe_ne_zero (t j), ?_⟩
+  intro x hx
+  rw [← Finset.univ_sum_single x]
+  refine L.sum_mem fun j _ => ?_
+  obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.mp (Submodule.mem_pi.mp hx j (Set.mem_univ j))
+  obtain ⟨u, hu⟩ : (t j : NumberField.RingOfIntegers K) ∣ ∏ k, (t k : NumberField.RingOfIntegers K) :=
+    Finset.dvd_prod_of_mem _ (Finset.mem_univ j)
+  have hj : (Pi.single j (x j) : Fin i → K)
+      = (a * u) • (t j : NumberField.RingOfIntegers K) • (Pi.single j (1 : K) : Fin i → K) := by
+    rw [← ha, hu, smul_smul, ← Pi.single_smul, Algebra.algebraMap_eq_smul_one, smul_smul]
+    congr 2
+    ring
+  rw [hj]
+  exact L.smul_mem _ (ht j)
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightKernels.PLinesIdealLatticeFG
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open NumberField
+open scoped nonZeroDivisors
+
+namespace KLinesIdealLatticeFG
+
+theorem idealLattice_eq_iSup (K : Type) [Field K] [NumberField K] {n : ℕ}
+    (a : Fin n → FractionalIdeal (𝓞 K)⁰ K) :
+    idealLattice a = ⨆ x, Submodule.map (LinearMap.single (𝓞 K) (fun _ : Fin n => K) x)
+      (a x : Submodule (𝓞 K) K) :=
+  (Submodule.iSup_map_single).symm
+
+theorem fg (K : Type) [Field K] [NumberField K] {n : ℕ} (a : Fin n → FractionalIdeal (𝓞 K)⁰ K) :
+    (idealLattice a).FG := by
+  rw [idealLattice_eq_iSup]
+  exact Submodule.fg_iSup _ fun x =>
+    ((a x).fg_of_isNoetherianRing le_rfl).map _
+
+theorem single_mem_span (K : Type) [Field K] [NumberField K] {n : ℕ}
+    (a : Fin n → FractionalIdeal (𝓞 K)⁰ K) (x : Fin n) (hx : a x ≠ 0) :
+    (Pi.single x 1 : Fin n → K) ∈ Submodule.span K (idealLattice a : Set (Fin n → K)) := by
+  have hbot : (a x : Submodule (𝓞 K) K) ≠ ⊥ := by
+    rwa [Ne, FractionalIdeal.coeToSubmodule_eq_bot]
+  obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hbot
+  have hmem : (Pi.single x y : Fin n → K) ∈ idealLattice a := by
+    rw [idealLattice, Submodule.mem_pi]
+    intro i _
+    by_cases h : i = x
+    · subst h; simpa using hy
+    · simp [h]
+  have heq : (Pi.single x 1 : Fin n → K) = y⁻¹ • (Pi.single x y : Fin n → K) := by
+    ext i
+    by_cases h : i = x
+    · subst h; simp [hy0]
+    · simp [h]
+  rw [heq]
+  exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
+
+end KLinesIdealLatticeFG
+
+
+open KLinesIdealLatticeFG in
+theorem LinesIdealLatticeFG.proof : LinesIdealLatticeFG.Statement := by
+  intro K _ _ n a ha
+  refine ⟨fg K a, ?_⟩
+  refine eq_top_iff.mpr ?_
+  rw [← (Pi.basisFun K (Fin n)).span_eq, Submodule.span_le]
+  rintro _ ⟨x, rfl⟩
+  rw [Pi.basisFun_apply]
+  exact single_mem_span K a x (ha x)
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
+
+section
 
 @[expose] public section
 
@@ -403,3 +525,5 @@ theorem DualLatticeIndex.proof : DualLatticeIndex.Statement := by
 end
 
 end GroundTheory.Heights₂.Heights
+end
+end

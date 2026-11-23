@@ -3,16 +3,20 @@ module
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TrueColumnChoicesHeckeCharReferenceEqOne
 public import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinAfMemIntUIff
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NatCastNotMemOfPrimeNe
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.RingTheory.Ideal.Prime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -27,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,11 +44,43 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.RingTheory.Coprime.Basic
+public import Mathlib.RingTheory.Coprime.Lemmas
+import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+import Mathlib.Tactic.Linter.Style
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StableIffCarrierEq
 import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
 import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
 import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NatCastNotMemOfPrimeNe
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NatCastNotMemPrime
+
+theorem natCast_notMem_of_prime_ne {A : Type} [inst : CommRing A] (P : Ideal A)
+    [hP : Ideal.IsPrime P] {p l : ℕ} (hp : Nat.Prime p) (hl : Nat.Prime l) (hne : l ≠ p)
+    (hpP : (↑p : A) ∈ P) : (↑l : A) ∉ P := by
+  intro hlP
+  have hcop : Nat.Coprime l p := (Nat.coprime_primes hl hp).2 hne
+  have hc : IsCoprime (l : A) (p : A) := Nat.Coprime.cast hcop
+  obtain ⟨a, b, hab⟩ := hc
+  apply hP.ne_top
+  rw [Ideal.eq_top_iff_one, ← hab]
+  exact P.add_mem (P.mul_mem_left a hlP) (P.mul_mem_left b hpP)
+
+end GlobalTheory.NatCastNotMemPrime
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NatPrimeNotMem
+
+section
 
 @[expose] public section
 
@@ -131,3 +166,5 @@ theorem twistPlaces : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B
     exact off PP hPP _ (X.B.T_prime u) (hI.T_mem u)
 
 end GlobalTheory.Mem.TwistPlaces
+end
+end

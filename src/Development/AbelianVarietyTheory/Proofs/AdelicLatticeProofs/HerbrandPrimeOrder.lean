@@ -2,10 +2,6 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.MemPowSub
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexRangeKerIterateEndomorphismStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.NormDifferenceIndexIdentityStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowIndexTorsionFiniteKerRangeStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowIndexTorsionKerRangeMulStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowPrimeRangeEqIteratedDifferenceStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,6 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -45,6 +42,235 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowIndexTorsionKerRangeMulStatement
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowPrimeRangeEqIteratedDifference
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.NormDifferenceIndexIdentity
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+namespace GlobalTheory.CNorm
+
+theorem herb_relIndex_map_range {A : Type} [CommGroup A] (f : A →* A) (H : Subgroup A) :
+    (H.map f).relIndex f.range = (H ⊔ f.ker).index := by
+  rw [← Subgroup.comap_map_eq, Subgroup.index_comap]
+
+theorem herb_lattice {A : Type} [CommGroup A] (B C K : Subgroup A) (hCK : C ≤ K) :
+    (C ⊔ B).index * Nat.card ↥(B ⊓ K) =
+      (B ⊔ K).index * C.relIndex K * Nat.card ↥(C ⊓ B) := by
+  have h1 : (C ⊔ B).relIndex (B ⊔ K) * (B ⊔ K).index = (C ⊔ B).index :=
+    Subgroup.relIndex_mul_index (sup_le (hCK.trans le_sup_right) le_sup_left)
+  have h2 : (C ⊔ B).relIndex (B ⊔ K) = (C ⊔ B ⊓ K).relIndex K := by
+    have e : B ⊔ K = K ⊔ (C ⊔ B) := by
+      apply le_antisymm
+      · exact sup_le (le_sup_right.trans le_sup_right) le_sup_left
+      · exact sup_le le_sup_right (sup_le (hCK.trans le_sup_right) le_sup_left)
+    rw [e, Subgroup.relIndex_sup_right, ← sup_inf_assoc_of_le B hCK, Subgroup.inf_relIndex_right]
+  have h3 : C.relIndex (C ⊔ B ⊓ K) * (C ⊔ B ⊓ K).relIndex K = C.relIndex K :=
+    Subgroup.relIndex_mul_relIndex _ _ _ le_sup_left (sup_le hCK inf_le_right)
+  have h4 : C.relIndex (C ⊔ B ⊓ K) = C.relIndex (B ⊓ K) := Subgroup.relIndex_sup_left _ _
+  have h5 : Nat.card ↥(C ⊓ B) * C.relIndex (B ⊓ K) = Nat.card ↥(B ⊓ K) := by
+    have e : C ⊓ (B ⊓ K) = C ⊓ B := by
+      rw [inf_comm B K, ← inf_assoc, inf_eq_left.2 hCK]
+    rw [← Subgroup.inf_relIndex_right C, e, ← Subgroup.relIndex_bot_left,
+      ← Subgroup.relIndex_bot_left]
+    exact Subgroup.relIndex_mul_relIndex _ _ _ bot_le (e ▸ inf_le_right)
+  rw [← h1, h2, ← h3, h4, ← h5]
+  ring
+
+theorem herb_nrm_apply_sigma {A : Type} [CommGroup A] (σ : A →* A) (p : ℕ)
+    (h : ∀ a, σ^[p] a = a) (a : A) : nrm σ p (σ a) = nrm σ p a := by
+  have e1 := Finset.prod_range_succ (fun i => σ^[i] a) p
+  have e2 := Finset.prod_range_succ' (fun i => σ^[i] a) p
+  rw [e1] at e2
+  simp only [h, Function.iterate_zero, id, Function.iterate_succ_apply] at e2
+  rw [nrm_apply, nrm_apply]
+  exact (mul_right_cancel e2).symm
+
+theorem herb_nrm_of_fix {A : Type} [CommGroup A] (σ : A →* A) (p : ℕ) (b : A)
+    (hb : b ∈ fix σ) : nrm σ p b = b ^ p := by
+  rw [nrm_apply, Finset.prod_congr rfl (fun i _ => Function.iterate_fixed ((mem_fix σ b).1 hb) i)]
+  simp
+
+theorem herb_index_identity : ∀ (p : ℕ) (A : Type) [CommGroup A] (σ : A →* A), (∀ a, σ^[p] a = a) → (nrm σ p).range.relIndex (fix σ) * ((dif σ).range.map (dif σ)).relIndex (dif σ).range * pTor p (fix σ) = pIdx p (fix σ) * (dif σ).range.relIndex (nrm σ p).ker * Nat.card ↥((dif σ).range ⊓ fix σ) := by
+  intro p A _ σ h
+  have hker : (dif σ).ker = fix σ := by
+    ext a
+    rw [MonoidHom.mem_ker, dif_apply, mem_fix, div_eq_one]
+  have hCK : (dif σ).range ≤ (nrm σ p).ker := by
+    rintro _ ⟨a, rfl⟩
+    rw [MonoidHom.mem_ker, dif_apply, _root_.map_div, herb_nrm_apply_sigma σ p h, div_self']
+  have hNB : (nrm σ p).range ≤ fix σ := by
+    rintro _ ⟨a, rfl⟩
+    rw [mem_fix, ← herb_nrm_apply_sigma σ p h a]
+    conv_lhs => rw [herb_nrm_apply_sigma σ p h a]
+    rw [nrm_apply, nrm_apply, map_prod]
+    refine Finset.prod_congr rfl fun i _ => ?_
+    rw [← Function.iterate_succ_apply σ i a, Function.iterate_succ_apply']
+  have hpow : pows p (fix σ) = (fix σ).map (nrm σ p) := by
+    ext x
+    simp only [pows, Subgroup.mem_map, powMonoidHom_apply]
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      exact ⟨b, hb, herb_nrm_of_fix σ p b hb⟩
+    · rintro ⟨b, hb, rfl⟩
+      exact ⟨b, hb, (herb_nrm_of_fix σ p b hb).symm⟩
+  have htor : pTor p (fix σ) = Nat.card ↥(fix σ ⊓ (nrm σ p).ker) := by
+    unfold pTor
+    refine Nat.card_congr (Equiv.subtypeEquivRight fun x => ?_)
+    rw [Subgroup.mem_inf, MonoidHom.mem_ker]
+    refine and_congr_right fun hx => ?_
+    rw [herb_nrm_of_fix σ p x hx]
+  have hidx : pIdx p (fix σ) =
+      (fix σ ⊔ (nrm σ p).ker).index * (nrm σ p).range.relIndex (fix σ) := by
+    unfold pIdx
+    rw [hpow, ← herb_relIndex_map_range]
+    exact (Subgroup.relIndex_mul_relIndex _ _ _ (Subgroup.map_le_range _ _) hNB).symm
+  have hl := herb_lattice (fix σ) (dif σ).range (nrm σ p).ker hCK
+  rw [herb_relIndex_map_range, hker, htor, hidx, mul_assoc, hl]
+  ring
+
+end GlobalTheory.CNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.NormDifferenceIndexIdentityStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+theorem _root_.GlobalTheory.T.norm_difference_index_identity : ∀ (p : ℕ) (A : Type) [CommGroup A] (σ : A →* A), (∀ a, σ^[p] a = a) → (nrm σ p).range.relIndex (fix σ) * ((dif σ).range.map (dif σ)).relIndex (dif σ).range * pTor p (fix σ) = pIdx p (fix σ) * (dif σ).range.relIndex (nrm σ p).ker * Nat.card ↥((dif σ).range ⊓ fix σ) := by
+  first | exact @GlobalTheory.CNorm.herb_index_identity | exact GlobalTheory.CNorm.herb_index_identity | (intros; apply GlobalTheory.CNorm.herb_index_identity <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowIndexTorsionFiniteKerRange
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+namespace GlobalTheory.CNorm
+
+theorem pIdx_pTor_ker_range_ne_zero :
+    ∀ (p : ℕ) (A A' : Type) [CommGroup A] [CommGroup A'] (g : A →* A'),
+      pIdx p (⊤ : Subgroup A) ≠ 0 → pTor p (⊤ : Subgroup A) ≠ 0 → pTor p g.range ≠ 0 →
+      pIdx p g.ker ≠ 0 ∧ pTor p g.ker ≠ 0 ∧ pIdx p g.range ≠ 0 := by
+  intro p A A' _ _ g h1 h2 h3
+  unfold pIdx pTor pows at *
+  refine ⟨?_, ?_, ?_⟩
+  · set f : A →* A := powMonoidHom p with hf
+    have hP : ((⊤ : Subgroup A).map f).relIndex g.ker ≠ 0 :=
+      fun h0 => h1 (Subgroup.relIndex_eq_zero_of_le_right le_top h0)
+    have hBD : g.ker ≤ g.ker.comap f := by
+      intro x hx
+      exact g.ker.pow_mem hx p
+    have hD : g.ker.relIndex (g.ker.comap f) ≠ 0 := by
+      rw [Subgroup.relIndex_ker]
+      have : Nat.card ((g.ker.comap f).map g) = Nat.card {x : A' // x ∈ g.range ∧ x ^ p = 1} := by
+        refine Nat.card_congr (Equiv.subtypeEquivRight ?_)
+        intro x
+        constructor
+        · rintro ⟨a, ha, rfl⟩
+          refine ⟨⟨a, rfl⟩, ?_⟩
+          have : g (a ^ p) = 1 := ha
+          rwa [map_pow] at this
+        · rintro ⟨⟨a, rfl⟩, ha⟩
+          refine ⟨a, ?_, rfl⟩
+          change g (a ^ p) = 1
+          rwa [map_pow]
+      rw [this]
+      exact h3
+    have hQ : (g.ker.map f).relIndex ((g.ker.comap f).map f) ≠ 0 := by
+      intro h0
+      have hd := Subgroup.relIndex_map_map f g.ker (g.ker.comap f)
+      have hk : f.ker ≤ g.ker.comap f := by
+        intro x hx
+        have : f x = 1 := hx
+        change f x ∈ g.ker
+        rw [this]
+        exact one_mem _
+      rw [h0, sup_eq_left.2 hk] at hd
+      have hdv : (g.ker ⊔ f.ker).relIndex (g.ker.comap f) ∣ g.ker.relIndex (g.ker.comap f) :=
+        Subgroup.relIndex_dvd_of_le_left _ le_sup_left
+      rw [← hd] at hdv
+      exact hD (Nat.eq_zero_of_zero_dvd hdv)
+    have he : (g.ker.comap f).map f = ((⊤ : Subgroup A).map f) ⊓ g.ker := by
+      rw [Subgroup.map_comap_eq, ← MonoidHom.range_eq_map]
+    refine Subgroup.relIndex_ne_zero_trans hQ ?_
+    rw [he, Subgroup.inf_relIndex_right]
+    exact hP
+  · have hfin : Finite {x : A // x ∈ (⊤ : Subgroup A) ∧ x ^ p = 1} := Nat.finite_of_card_ne_zero h2
+    have : Finite {x : A // x ∈ g.ker ∧ x ^ p = 1} :=
+      Finite.of_injective
+        (fun x => (⟨x.1, Subgroup.mem_top _, x.2.2⟩ : {x : A // x ∈ (⊤ : Subgroup A) ∧ x ^ p = 1}))
+        (fun x y h => Subtype.ext (congrArg (fun z => z.1) h))
+    have : Nonempty {x : A // x ∈ g.ker ∧ x ^ p = 1} := ⟨⟨1, one_mem _, one_pow p⟩⟩
+    exact Nat.card_pos.ne'
+  · have he : g.range.map (powMonoidHom p) = ((⊤ : Subgroup A).map (powMonoidHom p)).map g := by
+      ext x
+      constructor
+      · rintro ⟨_, ⟨a, rfl⟩, rfl⟩
+        exact ⟨a ^ p, ⟨a, Subgroup.mem_top _, rfl⟩, by simp⟩
+      · rintro ⟨_, ⟨a, -, rfl⟩, rfl⟩
+        exact ⟨g a, ⟨a, rfl⟩, by simp⟩
+    rw [he]
+    intro h0
+    have hd := Subgroup.relIndex_map_map g ((⊤ : Subgroup A).map (powMonoidHom p)) ⊤
+    rw [← MonoidHom.range_eq_map g, h0, top_sup_eq] at hd
+    have hdv : ((⊤ : Subgroup A).map (powMonoidHom p) ⊔ g.ker).relIndex ⊤ ∣
+        ((⊤ : Subgroup A).map (powMonoidHom p)).relIndex ⊤ :=
+      Subgroup.relIndex_dvd_of_le_left _ le_sup_left
+    rw [← hd] at hdv
+    exact h1 (Nat.eq_zero_of_zero_dvd hdv)
+
+end GlobalTheory.CNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowIndexTorsionFiniteKerRangeStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+theorem _root_.GlobalTheory.T.powIndex_torsion_finite_ker_range : ∀ (p : ℕ) (A A' : Type) [CommGroup A] [CommGroup A'] (g : A →* A'), pIdx p (⊤ : Subgroup A) ≠ 0 → pTor p (⊤ : Subgroup A) ≠ 0 → pTor p g.range ≠ 0 → pIdx p g.ker ≠ 0 ∧ pTor p g.ker ≠ 0 ∧ pIdx p g.range ≠ 0 := by
+  first | exact @GlobalTheory.CNorm.pIdx_pTor_ker_range_ne_zero | exact GlobalTheory.CNorm.pIdx_pTor_ker_range_ne_zero | (intros; apply GlobalTheory.CNorm.pIdx_pTor_ker_range_ne_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.PowPrimeRangeEqIteratedDifferenceStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial GlobalTheory.QNorm GlobalTheory.CNorm
+open scoped WithZero TensorProduct
+
+theorem _root_.GlobalTheory.T.pow_prime_range_eq_iterated_difference : ∀ (p : ℕ) (M : Type) [CommGroup M] (τ : M →* M) (lam : Monoid.End M), p.Prime → (∀ a, lam a = τ a / a) → (∀ a, nrm τ p a = 1) → pows p (⊤ : Subgroup M) = MonoidHom.range (lam ^ (p - 1) : Monoid.End M) ∧ ∀ a : M, a ^ p = 1 ↔ (lam ^ (p - 1) : Monoid.End M) a = 1 := by
+  first | exact @GlobalTheory.CNorm.pows_eq_range_dif_pow | exact GlobalTheory.CNorm.pows_eq_range_dif_pow | (intros; apply GlobalTheory.CNorm.pows_eq_range_dif_pow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.HerbrandPrimeOrder
+
+section
 
 @[expose] public section
 
@@ -167,3 +393,5 @@ theorem herbrand_prime_order : ∀ (p : ℕ) (A : Type) [CommGroup A] (σ : A �
   rwa [Nat.sub_add_cancel hp.one_le] at this
 
 end GlobalTheory.CNorm
+end
+end

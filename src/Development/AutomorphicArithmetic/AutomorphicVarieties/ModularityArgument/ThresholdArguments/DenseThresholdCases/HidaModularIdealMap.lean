@@ -3,27 +3,31 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.WsLink
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.IsAlgClosureField
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.DvrFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.ClosedJ
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.Descend
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.LcOfKer
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.PhiTw
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwChOps
-import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwMapEx
-import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwMapUniq
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.Noetherian.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +44,160 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Presheaf
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.IsTwistTwD
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+public import Mathlib.RingTheory.Filtration
+import Mathlib.RingTheory.PicardGroup
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.Descend
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.LcOfKer
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.IsTwistTwD
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.PrFacts
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwMapEx
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwMapUniq
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.ClosedJ
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Ws.H5
+
+theorem UpperTheory.V.Ws.H5.closedJ :
+    ∀ (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] (J : Ideal R) (b : R), (∀ N : ℕ, b ∈ J ⊔ maximalIdeal R ^ (N + 1)) → b ∈ J := by
+  intro R _ _ _ J b hb
+  have hK := Ideal.iInf_pow_smul_eq_bot_of_isLocalRing (M := R ⧸ J) (maximalIdeal R)
+    (IsLocalRing.maximalIdeal.isMaximal R).ne_top
+  have hx : Ideal.Quotient.mk J b ∈ (⨅ i : ℕ, (maximalIdeal R) ^ i • ⊤ : Submodule R (R ⧸ J)) := by
+    rw [Submodule.mem_iInf]
+    intro i
+    rcases i with _ | N
+    · simp
+    · obtain ⟨j, hj, y, hy, rfl⟩ := Submodule.mem_sup.mp (hb N)
+      have he : Ideal.Quotient.mk J (j + y) = y • (Ideal.Quotient.mk J 1 : R ⧸ J) := by
+        rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hj, zero_add, Algebra.smul_def,
+          Ideal.Quotient.algebraMap_eq, map_one, mul_one]
+      rw [he]
+      exact Submodule.smul_mem_smul hy Submodule.mem_top
+  rw [hK, Submodule.mem_bot, Ideal.Quotient.eq_zero_iff_mem] at hx
+  exact hx
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.PhiTw
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws UpperTheory.V.Ws.H5 GlobalTheory.GalOfCusp
+
+theorem UpperTheory.V.Ws.H5.phiTw :
+    ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} {D : Raw Ω c} {T : Tower D} {c' : Coef l} {h : c.O ≤ c'.O} (K : Link T c' h) (X : Space (T.fr ∅) (inc h)) (B : W.UniversalOrdinaryDeterminantRing K.r) (β₀ : K.V.frame.G₀ →* c'.Oˣ), β₀.comp K.V.pr = K.β → ∀ (n : ℕ) (φ φ' : B.B →ₐ[c'.O] X.B), K.IsPhi X 0 B φ → K.IsPhi X n B φ' → TwMap B (φ : B.B →+* X.B) (φ' : B.B →+* X.B) (W.pushCh (algebraMap c'.O X.B) (β₀ ^ n)) := by
+  intro Ω _ _ _ l _ c D T c' h K X B β₀ hb n φ φ' hφ hφ'
+  have hβ₀ : ∀ x, β₀ (K.V.pr x) = K.β x := fun x => DFunLike.congr_fun hb x
+  rcases subsingleton_or_nontrivial X.B with hs | hs
+  · exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun _ _ _ => Subsingleton.elim _ _⟩
+  haveI : Nontrivial X.A := ⟨⟨0, 1, fun h0 => zero_ne_one (X.inj (by simpa using h0))⟩⟩
+  have hd : ∀ y, (X.cp y).natDegree = 4 := fun y => by
+    rw [← natDegree_map_eq_of_injective X.inj, X.cp_map, Matrix.charpoly_natDegree_eq_dim, Fintype.card_fin]
+  have hsurj : Function.Surjective K.V.pr := (prFacts K.V).1.surjective
+  have hp : ∀ x, ((W.pushCh (algebraMap c'.O X.B) (β₀ ^ n)) x : X.B) = (algebraMap c'.O X.B (β₀ x : c'.O)) ^ n := by
+    intro x
+    simp [W.pushCh]
+  constructor
+  · intro g i hi
+    obtain ⟨x, rfl⟩ := hsurj g
+    have e0 := hφ.1 x
+    have e1 := hφ'.1 x
+    simp only [W.GDet.lam, map_mul, map_pow, map_neg, map_one]
+    rw [← coeff_map, ← coeff_map, e0, e1, coeff_scaleRoots, coeff_scaleRoots, hd, Nat.sub_sub_self hi]
+    erw [hp, hβ₀]
+    simp only [pow_zero, mul_one, map_mul, map_pow]
+    ring
+  · intro v i g
+    obtain ⟨g, hg⟩ := g
+    have e0 := hφ.2 v i ⟨g, hg⟩
+    have e1 := hφ'.2 v i ⟨g, hg⟩
+    erw [e0, e1, hp]
+    have hv : β₀ (K.V.pr g) = K.β g := hβ₀ g
+    erw [hv]
+    simp only [pow_zero, mul_one, map_mul, map_pow]
+    ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.TwistedFourierKernels.TwChOps
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Ws.H5
+
+theorem UpperTheory.V.Ws.H5.twChOps :
+    ∀ {l : ℕ} [Fact l.Prime] (F : GFrame l) {R : Type} [CommRing R] [IsLocalRing R] (γ : F.G₀ →* Rˣ), TwCh F γ → (∀ m : ℕ, TwCh F (γ ^ m)) ∧ TwCh F γ⁻¹ ∧ ∀ (R' : Type) [CommRing R'] [IsLocalRing R'] (e : R →+* R'), IsLocalHom e → TwCh F (pushCh e γ) := by
+  intro l _ F R _ _ γ hγ
+  have hq : ∀ g, Ideal.Quotient.mk (maximalIdeal R) (γ g : R) = 1 := fun g => by
+    rw [← sub_eq_zero, ← map_one (Ideal.Quotient.mk _), ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
+    exact hγ.red g
+  refine ⟨fun m => ⟨hγ.toAnti.mono ?_, ?_, ?_⟩, ⟨hγ.toAnti.mono ?_, ?_, ?_⟩,
+    fun R' _ _ e he => ⟨hγ.toAnti.mono ?_, ?_, ?_⟩⟩
+  · intro g hg
+    rw [MonoidHom.mem_ker] at hg ⊢
+    simp [hg]
+  · intro N
+    have hc := (hγ.cont N).comp (fun x => x ^ m)
+    convert hc using 1
+    funext g
+    simp [Function.comp]
+  · intro g
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_one, sub_eq_zero]
+    simp [hq g]
+  · intro g hg
+    rw [MonoidHom.mem_ker] at hg ⊢
+    simp [hg]
+  · intro N
+    have hc := (hγ.cont N).comp Ring.inverse
+    convert hc using 1
+    funext g
+    have hu : Ideal.Quotient.mk (maximalIdeal R ^ N) (γ g : R) =
+        ((Units.map (Ideal.Quotient.mk (maximalIdeal R ^ N) : R →* R ⧸ maximalIdeal R ^ N) (γ g) : _)) := rfl
+    simp only [Function.comp_apply]
+    rw [hu, Ring.inverse_unit, Units.coe_map_inv]
+    rfl
+  · intro g
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_one, sub_eq_zero]
+    have h2 := congrArg (Ideal.Quotient.mk (maximalIdeal R)) (γ g).inv_mul
+    rw [map_mul, hq g, mul_one, map_one] at h2
+    simpa using h2
+  · intro g hg
+    rw [MonoidHom.mem_ker] at hg ⊢
+    simp [pushCh, hg]
+  · intro N
+    have hle : maximalIdeal R ^ N ≤ Ideal.comap e (maximalIdeal R' ^ N) := by
+      rw [← Ideal.map_le_iff_le_comap, Ideal.map_pow]
+      exact Ideal.pow_right_mono (Ideal.map_le_iff_le_comap.mpr (fun x hx => Ideal.mem_comap.mpr (map_nonunit e x hx))) N
+    have hc := (hγ.cont N).comp (Ideal.quotientMap _ e hle)
+    convert hc using 1
+    funext g
+    simp [pushCh, Ideal.quotientMap_mk]
+  · intro g
+    have h3 := map_nonunit e _ (hγ.red g)
+    simpa [pushCh] using h3
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.HidaModularIdealMap
+
+section
 
 @[expose] public section
 
@@ -91,4 +247,6 @@ theorem UpperTheory.V.Ws.hida_modular_ideal_map :
   · rw [hT.2 v i g, mul_assoc, mul_comm (_ : X.B) ((W.pushCh _ (β₀ ^ n)⁻¹ _ : X.Bˣ) : X.B)]
     erw [hu]
     rw [mul_one]
+end
+end
 end

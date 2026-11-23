@@ -1,15 +1,19 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LePreimageOfCompEq
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddSumIntegral
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -17,7 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,8 +40,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddSumIntegral
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.IntegralAddSum
+
+theorem add_sum_integral {A C K B : Type} [CommRing A] [CommRing C] [CommRing K] [CommRing B]
+    (φ : A →+* K) (gc : C →+* B) (gk : K →+* B) {x y : B}
+    (hx : ∃ (n : ℕ) (c : Fin n → C) (b : Fin n → K),
+      (∀ m : Fin n, RingHom.IsIntegralElem φ (b m)) ∧ x = ∑ m : Fin n, gc (c m) * gk (b m))
+    (hy : ∃ (n : ℕ) (c : Fin n → C) (b : Fin n → K),
+      (∀ m : Fin n, RingHom.IsIntegralElem φ (b m)) ∧ y = ∑ m : Fin n, gc (c m) * gk (b m)) :
+    ∃ (n : ℕ) (c : Fin n → C) (b : Fin n → K),
+      (∀ m : Fin n, RingHom.IsIntegralElem φ (b m)) ∧ x + y = ∑ m : Fin n, gc (c m) * gk (b m) := by
+  obtain ⟨n, c, b, hb, rfl⟩ := hx
+  obtain ⟨n', c', b', hb', rfl⟩ := hy
+  refine ⟨n + n', Fin.append c c', Fin.append b b', ?_, ?_⟩
+  · intro m
+    refine Fin.addCases (fun i => ?_) (fun i => ?_) m
+    · rw [Fin.append_left]; exact hb i
+    · rw [Fin.append_right]; exact hb' i
+  · rw [Fin.sum_univ_add]
+    simp only [Fin.append_left, Fin.append_right]
+
+end GlobalTheory.IntegralAddSum
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralElementAffineSectionGenerated
+
+section
 
 @[expose] public section
 
@@ -118,3 +158,5 @@ theorem eq_sum_of_isIntegral_genericChart : ∀ (R : Type) [CommRing R] [IsDomai
     exact sumForm_add _ _ _ hu hv
 
 end GlobalTheory.Mum
+end
+end

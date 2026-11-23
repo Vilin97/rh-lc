@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.EndValuedForm11Coeffs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransgressionTopCoeffComplexEqZeroOfCutoffZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +38,48 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransgressionTopCoeffComplexEqZeroOfCutoffZero
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.CxPts GlobalTheory.ChartGlue GlobalTheory.FlagBundle GlobalTheory.HermFrame GlobalTheory.GoodMetric GlobalTheory.GoodTop
+open ReciprocityTheory.L2DbarEstimates (V)
+open scoped ContDiff Matrix
+
+namespace GlobalTheory.GoodTop
+
+theorem mixTop_position_zero {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (K₁ K₀ : EndValuedForm11Coeffs n r) (j : Fin n) :
+    mixTop (intersection_update_fsHerm_neg_one K₁ 0 K₀ j) = 0 := by
+  unfold mixTop
+  refine mul_eq_zero_of_right _ (Finset.sum_eq_zero fun p _ => Finset.sum_eq_zero fun π _ =>
+    Finset.sum_eq_zero fun u _ => mul_eq_zero_of_right _ ?_)
+  refine Matrix.det_eq_zero_of_row_eq_zero j fun b => ?_
+  simp [intersection_update_fsHerm_neg_one]
+
+theorem cutForm_eq_zero {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] {ρ : V n → ℝ}
+    (G₀ G₁ : V n → Matrix r r ℂ) {v : V n} (hρ : ρ =ᶠ[𝓝 v] (fun _ => 0)) :
+    cutForm ρ G₀ G₁ v = 0 := by
+  have h : dbar (fun x => (ρ x : ℂ)) v = dbar (fun _ : V n => (0 : ℂ)) v :=
+    dbar_congr (hρ.mono fun x hx => by simp [hx])
+  funext a b
+  simp [cutForm, h]
+
+theorem corrC_eq_zero_of_eventuallyEq_zero {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] {ρ : V n → ℝ}
+    (G₀ G₁ : V n → Matrix r r ℂ) {v : V n} (hρ : ρ =ᶠ[𝓝 v] (fun _ => 0)) : corrC ρ G₀ G₁ v = 0 := by
+  unfold corrC
+  rw [cutForm_eq_zero G₀ G₁ hρ]
+  exact Finset.sum_eq_zero fun j _ => mixTop_position_zero _ _ j
+
+end GlobalTheory.GoodTop
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransgressionTopCoeffComplexEqZeroOfCutoffZeroStatement
+
+section
+
 @[expose] public section
 
 open MeasureTheory Filter Topology GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.CxPts GlobalTheory.ChartGlue GlobalTheory.FlagBundle GlobalTheory.HermFrame GlobalTheory.GoodMetric GlobalTheory.GoodTop
@@ -47,3 +88,5 @@ open scoped ContDiff Matrix
 
 theorem _root_.GlobalTheory.T.transgressionTopCoeffComplex_eq_zero_of_cutoff_zero : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] {ρ : V n → ℝ} (G₀ G₁ : V n → Matrix r r ℂ) {v : V n}, ρ =ᶠ[𝓝 v] (fun _ => 0) → corrC ρ G₀ G₁ v = 0 := by
   first | exact @GlobalTheory.GoodTop.corrC_eq_zero_of_eventuallyEq_zero | exact GlobalTheory.GoodTop.corrC_eq_zero_of_eventuallyEq_zero | (intros; apply GlobalTheory.GoodTop.corrC_eq_zero_of_eventuallyEq_zero <;> assumption)
+end
+end

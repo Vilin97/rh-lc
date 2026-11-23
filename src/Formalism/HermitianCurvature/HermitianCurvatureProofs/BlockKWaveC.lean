@@ -3,12 +3,7 @@ module
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsNormBoundThreeFamilies
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFCstmt
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SizeAtMinusW
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWave
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockOfChoices
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ComponentFamilySettingOfSettingBis
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutIntervalLong
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GNPsdC
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWave
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeNeZeroComplex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +41,55 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockOfChoices
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.ComponentFamilySettingOfSettingBis
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutIntervalLong
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GNPsdC
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWave
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWave
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P.PBL
+
+open Formalism.FourierDecayAlt Formalism.QuantumDeterminants NumberField
+open scoped ComplexConjugate ComplexOrder
+
+noncomputable section
+
+open Classical
+
+theorem prod_ofFn_map {K : ℕ} (f : Fin K → ℝ) (g : ℝ → ℝ) : ((List.ofFn f).map g).prod = ∏ b, g (f b) := by
+  rw [List.map_ofFn, List.prod_ofFn]; rfl
+
+section blockK
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Wp Wq : InfinitePlace E → Type}
+  [∀ x, NormedAddCommGroup (Wp x)] [∀ x, InnerProductSpace ℂ (Wp x)] [∀ x, NormedAddCommGroup (Wq x)]
+  [∀ x, InnerProductSpace ℂ (Wq x)] [∀ x, FiniteDimensional ℂ (Wp x)] [∀ x, FiniteDimensional ℂ (Wq x)]
+  {Cb Cc : ℝ} {S : C.HidaSetting E Wp Wq} {p : ∀ v, KB.Pl (D.parOf S v) (Wp (S.pl v)) (Wq (S.pl v))}
+  {f : ∀ v : Fin S.f, B.Mat S.G.k S.G.r → (Wq (S.pl v) →L[ℂ] Wp (S.pl v))} {χ : ℝ → ℝ} {A₀ : ℝ}
+
+theorem sW_eq (S : C.HidaSetting E Wp Wq) (j : ℕ) (l : ℂ) :
+    sW S j l = Complex.I * (((2 * Real.pi / ((S.g : ℝ) * lamS S j)) : ℝ) : ℂ) * l := rfl
+
+end blockK
+
+end
+
+end Formalism.FourierDecayAlt.P.PBL
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWaveC
+
+section
 
 @[expose] public section
 
@@ -232,3 +273,5 @@ end C2
 end
 
 end Formalism.FourierDecayAlt.P.PBL
+end
+end

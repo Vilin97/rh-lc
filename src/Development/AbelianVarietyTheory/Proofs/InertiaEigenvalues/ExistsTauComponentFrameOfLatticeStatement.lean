@@ -1,12 +1,25 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ExpStar
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsTauComponentFrameOfLattice
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSubBasis
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBasisOfFullLattice
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsDeRhamTensorCoordinatesOfBasis
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsDecompletionFrameOfLattice
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIntegralFactorOfIdempotentSubfield
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSymbolBasis
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteDimensionalKsOfGood
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteJumpsInfFiltration
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodCoefficientRingPadicIntegersFinExt
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyThetaOnBdRPlusPeriodData
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosurePadicInt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -25,6 +38,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,7 +51,385 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Foundations.HTBasis
+import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TmulMemFilV
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormCoeAutLeOneIff
+
+section
+
+@[expose] public section
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.MainNotions.LocalSituation GlobalTheory.Cyc
+open scoped TensorProduct
+
+namespace GlobalTheory.EigenCoord
+
+theorem exists_basis_mem_iff {O L V : Type} [CommRing O] [IsDomain O] [Field L] [Algebra O L]
+    [IsFractionRing O L] [AddCommGroup V] [Module L V] [Module O V] [IsScalarTower O L V]
+    (T : Submodule O V) (hfg : T.FG) (hfree : Module.Free O T)
+    (hspan : Submodule.span L (T : Set V) = ⊤) :
+    ∃ (ρ : ℕ) (t : Module.Basis (Fin ρ) L V),
+      ∀ v, v ∈ T ↔ ∀ i, ∃ o : O, algebraMap O L o = t.repr v i := by
+  haveI : Module.Finite O T := Module.Finite.iff_fg.mpr hfg
+  let c := Module.finBasis O T
+  have hli : LinearIndependent O (fun i => (c i : V)) :=
+    c.linearIndependent.map' T.subtype (Submodule.ker_subtype T)
+  have hli' : LinearIndependent L (fun i => (c i : V)) :=
+    (LinearIndependent.iff_fractionRing O L).mp hli
+  have hsum : ∀ x : T, (x : V) = ∑ i, algebraMap O L (c.repr x i) • (c i : V) := by
+    intro x
+    have h := congrArg T.subtype (c.sum_repr x)
+
+    rw [map_sum] at h
+    simp only [map_smul, Submodule.subtype_apply] at h
+    simp only [algebraMap_smul]
+    exact h.symm
+  have hsp : ⊤ ≤ Submodule.span L (Set.range fun i => (c i : V)) := by
+    rw [← hspan, Submodule.span_le]
+    intro x hx
+    rw [SetLike.mem_coe, show x = ((⟨x, hx⟩ : T) : V) from rfl, hsum]
+    exact Submodule.sum_mem _ fun i _ =>
+      Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+  let t := Module.Basis.mk hli' hsp
+  have ht : ∀ i, t i = (c i : V) := fun i => Module.Basis.mk_apply hli' hsp i
+  refine ⟨_, t, fun v => ⟨fun hv i => ⟨c.repr ⟨v, hv⟩ i, ?_⟩, fun h => ?_⟩⟩
+  · have h1 : v = ∑ j, algebraMap O L (c.repr ⟨v, hv⟩ j) • t j := by
+      simp only [ht]
+      exact hsum ⟨v, hv⟩
+    have h2 := congrFun (t.repr_sum_self (fun j => algebraMap O L (c.repr ⟨v, hv⟩ j))) i
+    rw [← h1] at h2
+    exact h2.symm
+  · choose o ho using h
+    rw [← t.sum_repr v]
+    refine T.sum_mem fun i _ => ?_
+    rw [← ho, algebraMap_smul, ht]
+    exact T.smul_mem _ (c i).2
+
+theorem norm_coe_aut_le_one_iff {l : ℕ} [Fact l.Prime] (ι : GQ l) (x : Om l) :
+    ‖((ι x : Om l) : PadicComplex l)‖ ≤ 1 ↔ ‖x‖ ≤ 1 := by
+  rw [PadicComplex.norm_extends, ← isIntegral_padicInt_iff_norm_le_one,
+    ← isIntegral_padicInt_iff_norm_le_one]
+  exact isIntegral_algHom_iff (ι.toAlgHom.restrictScalars ℤ_[l]) ι.injective
+
+theorem exists_matrix_of_basis {F L C V : Type} [NormedField F] [Field L] [NormedField C]
+    [Algebra F L] [Algebra F C] [AddCommGroup V] [Module L V] [Module F V] [IsScalarTower F L V]
+    (S : Set V) {d ρ : ℕ} (b : Module.Basis (Fin d) F V) (t : Module.Basis (Fin ρ) L V)
+    (φ : L →ₐ[F] C) (hb : ∀ v, v ∈ S ↔ ∀ i, ‖b.repr v i‖ ≤ 1)
+    (hmem : ∀ v, v ∈ S ↔ ∀ i, ‖φ (t.repr v i)‖ ≤ 1) :
+    ∃ Pr : Matrix (Fin ρ) (Fin d) C, (∀ i j, ‖Pr i j‖ ≤ 1) ∧
+      (∀ a : L, Pr * Matrix.of (fun i k : Fin d => algebraMap F C (b.repr (a • b k) i)) =
+        φ a • Pr) ∧
+      ∀ y : Fin d → F, (∀ i, ‖Pr.mulVec (fun a => algebraMap F C (y a)) i‖ ≤ 1) →
+        ∀ a, ‖y a‖ ≤ 1 := by
+  have key : ∀ (y : Fin d → F) (i : Fin ρ),
+      ∑ j, φ (t.repr (b j) i) * algebraMap F C (y j) = φ (t.repr (∑ j, y j • b j) i) := by
+    intro y i
+
+    rw [map_sum, Finsupp.finsetSum_apply, map_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [← algebraMap_smul L (y j), map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul,
+      AlgHom.commutes, mul_comm]
+  refine ⟨Matrix.of fun i j => φ (t.repr (b j) i), fun i j => ?_, fun a => ?_, fun y hy a => ?_⟩
+  · refine (hmem _).mp ((hb _).mpr fun k => ?_) i
+    rw [b.repr_self, Finsupp.single_apply]
+    split_ifs <;> simp
+  · ext i k
+    rw [Matrix.mul_apply]
+    simp only [Matrix.of_apply, Matrix.smul_apply]
+    rw [key, b.sum_repr, map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, smul_eq_mul]
+  · have hv : (∑ j, y j • b j) ∈ S := by
+      refine (hmem _).mpr fun i => ?_
+      rw [← key]
+      exact hy i
+    have := (hb _).mp hv a
+    rwa [congrFun (b.repr_sum_self y) a] at this
+
+theorem exists_matrix : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (d : ℕ) (b : Module.Basis (Fin d) ℚ_[l] T.V), (∀ v : T.V, v ∈ T.L.T ↔ ∀ i, ‖b.repr v i‖ ≤ 1) → ∀ ι : GQ l, ∃ (ρ : ℕ) (Pr : Matrix (Fin ρ) (Fin d) (PadicComplex l)), (∀ i j, ‖Pr i j‖ ≤ 1) ∧ (∀ a : ↥LL.1, Pr * Matrix.of (fun i k : Fin d => algebraMap ℚ_[l] (PadicComplex l) (b.repr (a • b k) i)) = ((ι (a : Om l) : Om l) : PadicComplex l) • Pr) ∧ ∀ y : Fin d → ℚ_[l], (∀ i, ‖Pr.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) i‖ ≤ 1) → ∀ a, ‖y a‖ ≤ 1 := by
+  intro l _ K LL T d b hb ι
+  haveI := LL.2
+  haveI : IsFractionRing (OL LL) LL.1 := isFractionRing_integralClosure_padicInt l LL.1
+  obtain ⟨ρ, t, ht⟩ := exists_basis_mem_iff (L := LL.1) T.L.T T.L.fg T.L.free T.L.span
+  let φ : LL.1 →ₐ[ℚ_[l]] PadicComplex l :=
+    (IsScalarTower.toAlgHom ℚ_[l] (Om l) (PadicComplex l)).comp (ι.toAlgHom.comp LL.1.val)
+  have hφ : ∀ x : LL.1, φ x = ((ι (x : Om l) : Om l) : PadicComplex l) := fun _ => rfl
+  have hmem : ∀ v, v ∈ T.L.T ↔ ∀ i, ‖φ (t.repr v i)‖ ≤ 1 := by
+    intro v
+    rw [ht]
+    refine forall_congr' fun i => ?_
+    rw [hφ, norm_coe_aut_le_one_iff, ← mem_integralClosure_padicInt_iff]
+    exact ⟨fun ⟨o, ho⟩ => ho ▸ o.2, fun h => ⟨⟨_, h⟩, rfl⟩⟩
+  exact ⟨ρ, exists_matrix_of_basis (T.L.T : Set T.V) b t φ hb hmem⟩
+
+end GlobalTheory.EigenCoord
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsTauComponentFrameOfLattice
+
+section
+
+@[expose] public section
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.MainNotions.LocalSituation GlobalTheory.Cyc
+open scoped TensorProduct
+
+noncomputable section
+
+namespace GlobalTheory.TauFrame
+
+theorem exists_sep_elem (F K : Type) [Field F] [Field K] [Algebra F K] [FiniteDimensional F K]
+    [Algebra.IsSeparable F K] :
+    ∃ (n : ℕ) (α β : Fin n → K),
+      (∀ κ : K, ∑ j, (κ * α j) ⊗ₜ[F] β j = ∑ j, α j ⊗ₜ[F] (κ * β j)) ∧ ∑ j, α j * β j = 1 := by
+  haveI := Algebra.FormallyUnramified.of_isSeparable F K
+  obtain ⟨n, α, β, h⟩ := TensorProduct.exists_sum_tmul_eq (Algebra.FormallyUnramified.elem F K)
+  refine ⟨n, α, β, fun κ => ?_, ?_⟩
+  · have := Algebra.FormallyUnramified.one_tmul_mul_elem (R := F) (S := K) κ
+    rw [h] at this
+    simp only [Finset.mul_sum, Algebra.TensorProduct.tmul_mul_tmul, one_mul] at this
+    exact this.symm
+  · have := Algebra.FormallyUnramified.lmul_elem (R := F) (S := K)
+    rw [h] at this
+    simpa using this
+
+theorem sep_idem {F K C R : Type} [Field F] [Field K] [Algebra F K] [CommRing C] [Ring R]
+    [Algebra F C] [Algebra C R] [Algebra F R] [IsScalarTower F C R] (B : K →ₐ[F] R) (j : K →ₐ[F] C)
+    {n : ℕ} (α β : Fin n → K)
+    (h1 : ∀ κ : K, ∑ i, (κ * α i) ⊗ₜ[F] β i = ∑ i, α i ⊗ₜ[F] (κ * β i)) (h2 : ∑ i, α i * β i = 1) :
+    (∑ i, j (β i) • B (α i)) * (∑ i, j (β i) • B (α i)) = ∑ i, j (β i) • B (α i) := by
+  set E := ∑ i, j (β i) • B (α i) with hE
+  let φ : K ⊗[F] K →ₗ[F] R := TensorProduct.lift (LinearMap.mk₂ F (fun a c => j c • B a)
+    (fun a a' c => by simp [smul_add]) (fun r a c => by rw [map_smul, smul_comm])
+    (fun a c c' => by simp [add_smul]) (fun r a c => by rw [map_smul, smul_assoc]))
+  have hφ : ∀ a c, φ (a ⊗ₜ c) = j c • B a := fun a c => rfl
+  have key : ∀ κ, B κ * E = j κ • E := by
+    intro κ
+    have := congrArg φ (h1 κ)
+
+    simp only [map_sum, hφ, map_mul] at this
+    rw [hE, Finset.mul_sum, Finset.smul_sum]
+    simp only [mul_smul_comm, smul_smul]
+    exact this
+  calc E * E = ∑ i, j (β i) • (B (α i) * E) := by
+        conv_lhs => rw [hE, Finset.sum_mul]
+        simp only [smul_mul_assoc, hE]
+    _ = j (∑ i, α i * β i) • E := by
+
+        simp only [key, smul_smul, map_sum, map_mul, Finset.sum_smul, mul_comm]
+    _ = E := by rw [h2, map_one, one_smul]
+
+def mulMat {F LL V : Type} (C : Type) [Field F] [Field LL] [Algebra F LL] [AddCommGroup V]
+    [Module LL V] [Module F V] [IsScalarTower F LL V] [CommRing C] [Algebra F C] {d : ℕ}
+    (b : Module.Basis (Fin d) F V) : LL →ₐ[F] Matrix (Fin d) (Fin d) C :=
+  ((Algebra.ofId F C).mapMatrix.comp (LinearMap.toMatrixAlgEquiv b).toAlgHom).comp
+    (Algebra.lsmul F F V)
+
+theorem mulMat_eq {F LL V : Type} (C : Type) [Field F] [Field LL] [Algebra F LL] [AddCommGroup V]
+    [Module LL V] [Module F V] [IsScalarTower F LL V] [CommRing C] [Algebra F C] {d : ℕ}
+    (b : Module.Basis (Fin d) F V) (a : LL) :
+    mulMat C b a = Matrix.of fun i k => algebraMap F C (b.repr (a • b k) i) := by
+  ext i k
+  simp [mulMat, LinearMap.toMatrixAlgEquiv_apply, Algebra.ofId_apply]
+
+theorem mulMat_comm {F LL V : Type} (C : Type) [Field F] [Field LL] [Algebra F LL] [AddCommGroup V]
+    [Module LL V] [Module F V] [IsScalarTower F LL V] [CommRing C] [Algebra F C] {d : ℕ}
+    (b : Module.Basis (Fin d) F V) (a : LL) (f : V →ₗ[LL] V) (N : Matrix (Fin d) (Fin d) C)
+    (hN : ∀ i k, N i k = algebraMap F C (b.repr (f (b k)) i)) :
+    mulMat C b a * N = N * mulMat C b a := by
+  have h : N = ((Algebra.ofId F C).mapMatrix.comp (LinearMap.toMatrixAlgEquiv b).toAlgHom)
+      (f.restrictScalars F) := by
+    ext i k
+    simp [hN, LinearMap.toMatrixAlgEquiv_apply, Algebra.ofId_apply]
+  rw [h, mulMat, AlgHom.comp_apply, ← map_mul, ← map_mul]
+  congr 1
+  ext v
+  simp
+
+variable {l : ℕ} [Fact l.Prime]
+
+theorem exists_undo (K LL : FinExt l) (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) :
+    ∃ ι : GQ l, ∀ x : ↥K.1, ι (τ x : Om l) = (x : Om l) := by
+  let φ := AlgEquiv.ofBijective (τ.liftNormal (Om l))
+    (Algebra.IsAlgebraic.algHom_bijective _)
+  refine ⟨φ.symm, fun x => ?_⟩
+  rw [AlgEquiv.symm_apply_eq]
+  exact (τ.liftNormal_commutes (Om l) x).symm
+
+theorem Ks_mono (K : FinExt l) {s m : ℕ} (hm : s ≤ m) : Ks K s ≤ Ks K m := by
+  refine sup_le_sup_left (IntermediateField.adjoin.mono _ _ _ fun x hx => ?_) _
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le hm
+  change x ^ (l ^ (s + n)) = 1
+  rw [pow_add, pow_mul, show x ^ l ^ s = 1 from hx, one_pow]
+
+theorem rat_mem_subC (F : IntermediateField ℚ_[l] (Om l)) (c : ℚ_[l]) :
+    algebraMap ℚ_[l] (PadicComplex l) c ∈ subC F :=
+  ⟨algebraMap ℚ_[l] (Om l) c, F.algebraMap_mem c,
+    (IsScalarTower.algebraMap_apply ℚ_[l] (Om l) (PadicComplex l) c).symm⟩
+
+theorem finite_jumps (P : LocPrime l) (K LL : FinExt l) (h7K : fontCore (P.PD K))
+    (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) {d : ℕ}
+    (b : Module.Basis (Fin d) ℚ_[l] T.V) : {u | IsJumpV (P.PD K) T.ρ τ u}.Finite := by
+  let AK : GRep ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL) := { V := T.V, ρ := T.ρ, cont := T.cont }
+  have hK : Module.Finite ↥LL.1 ↥(DdR (P.PD K) T.ρ) :=
+    (h7K _ _ (GlobalTheory.LocalIntegers.goodO_integers l LL) AK).2.1.1
+  have hanti : ∀ a, FilV (P.PD K) (LL := ↥LL.1) (V := T.V) (a + 1) ≤ FilV (P.PD K) a := by
+    obtain ⟨Φ, h1, -⟩ := GlobalTheory.exists_coord_tensor_dR (P.PD K) T.ρ b
+    intro a z hz
+    exact (h1 a z).2 fun i => (P.PD K).Fil_anti a ((h1 _ z).1 hz i)
+  have hE : Module.Finite ↥LL.1 ↥(DdRE (P.PD K) T.ρ τ) :=
+    Module.Finite.of_injective (Submodule.inclusion (inf_le_left : DdRE (P.PD K) T.ρ τ ≤ _))
+      (Submodule.inclusion_injective _)
+  exact GlobalTheory.finite_jumps_inf_filtration _ _ (DdRE (P.PD K) T.ρ τ) (fun a => FilV (P.PD K) a) hE hanti
+
+theorem conj_mem_subC (LL : FinExt l) (F : IntermediateField ℚ_[l] (Om l)) {d : ℕ}
+    (B : ↥LL.1 →ₐ[ℚ_[l]] Matrix (Fin d) (Fin d) (PadicComplex l))
+    (X Y : Matrix (Fin d) (Fin d) (PadicComplex l))
+    (h : ∀ (a : ↥(OL LL)) i j, (X * B a * Y) i j ∈ subC F) (a : ↥LL.1) (i j : Fin d) :
+    (X * B a * Y) i j ∈ subC F := by
+  haveI := LL.2
+  have ha : IsAlgebraic ℤ_[l] a :=
+    (IsFractionRing.isAlgebraic_iff ℤ_[l] ℚ_[l] ↥LL.1).2 (Algebra.IsAlgebraic.isAlgebraic a)
+  obtain ⟨c, hc, hint⟩ := ha.exists_integral_multiple
+  have hc' : (c : ℚ_[l]) ≠ 0 := fun h0 => hc (Subtype.ext h0)
+  have e : a = (c : ℚ_[l])⁻¹ • (c • a) := by
+    change a = (c : ℚ_[l])⁻¹ • ((c : ℚ_[l]) • a)
+    rw [inv_smul_smul₀ hc']
+  have h1 := h ⟨c • a, hint⟩ i j
+  rw [e, map_smul, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply, Algebra.smul_def]
+  exact mul_mem (rat_mem_subC F _) h1
+
+def toC (K : FinExt l) : ↥K.1 →ₐ[ℚ_[l]] PadicComplex l :=
+  (IsScalarTower.toAlgHom ℚ_[l] (Om l) (PadicComplex l)).comp K.1.val
+
+theorem toC_apply (K : FinExt l) (x : ↥K.1) : toC K x = ((x : Om l) : PadicComplex l) := rfl
+
+theorem frame_of_dec (P : LocPrime l) (AI : LocAinf l P) (Θ : ThetaL P AI) (K LL : FinExt l)
+    (m : ℕ) (hKm : K.1 ≤ Ks K m) (h7K : fontCore (P.PD K))
+    (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1)
+    (hDR : IsDR (P.PD K) T.ρ) {d : ℕ} (M : GQ l → Matrix (Fin d) (Fin d) (PadicComplex l))
+    (A : ↥(OL LL) → Matrix (Fin d) (Fin d) (PadicComplex l)) (hM : IsMat K LL T M A)
+    (Dm : Matrix (Fin d) (Fin d) (PadicComplex l))
+    (U0 : GQ l → Matrix (Fin d) (Fin d) (PadicComplex l)) (g : GQ l)
+    (hD : IsDec AI.actC P.χQ K m M Dm U0 g)
+    (hA : ∀ a i j, (Dm⁻¹ * A a * Dm) i j ∈ intC (Ks K m)) :
+    ∃ (r : ℕ) (Pm : Matrix (Fin r) (Fin d) (PadicComplex l))
+      (U : GQ l → Matrix (Fin r) (Fin r) (PadicComplex l)) (g : GQ l) (J : Finset ℤ),
+      (∀ u, u ∈ J → IsJumpV (P.PD K) T.ρ τ u) ∧ {u | IsJumpV (P.PD K) T.ρ τ u}.Finite ∧
+      Frame P.χQ K m U g ∧ HTBasis AI.actC P.χQ (Gj K m) U (J : Set ℤ) ∧
+      (∀ σ ∈ Gj K m, Pm * M σ = U σ * Pm.map (AI.actC σ)) ∧
+      ball l r ⊆ Pm.mulVec '' ball l d ∧
+      (∀ x ∈ ball l d, (l : PadicComplex l) • Pm.mulVec x ∈ ball l r) ∧
+      ∀ y : Fin d → ℚ_[l],
+        Pm.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) ∈ Pm.mulVec '' ball l d →
+        ∀ a, ‖y a‖ ≤ 1 := by
+  haveI := K.2
+  have ha : IsActC AI.actC := ⟨AI.actC_ext, AI.actC_norm⟩
+  obtain ⟨b, hbM, hbA, hbT⟩ := exists_ratBasis_of_isMat l K LL T d M A hM
+  obtain ⟨n, α, β, h1, h2⟩ := exists_sep_elem ℚ_[l] ↥K.1
+  have hfin := finite_jumps P K LL h7K T τ b
+  obtain ⟨B, hB⟩ : ∃ B : ↥LL.1 →ₐ[ℚ_[l]] Matrix (Fin d) (Fin d) (PadicComplex l),
+      B = mulMat (PadicComplex l) b := ⟨_, rfl⟩
+  have hBe : ∀ a, B a = Matrix.of fun i k =>
+      algebraMap ℚ_[l] (PadicComplex l) (b.repr (a • b k) i) := fun a => by rw [hB, mulMat_eq]
+  obtain ⟨E, hE⟩ : ∃ E : Matrix (Fin d) (Fin d) (PadicComplex l),
+      E = ∑ j, toC K (β j) • B (τ (α j)) := ⟨_, rfl⟩
+  have hEE : E * E = E := by
+    rw [hE]
+    exact sep_idem (B.comp τ) (toC K) α β h1 h2
+  have hG : Gj K m ≤ GK K := IntermediateField.fixingSubgroup_le hKm
+  have hβ : ∀ x : ↥K.1, toC K x ∈ subC (Ks K m) := fun x => ⟨x, hKm x.2, rfl⟩
+  have hEM : ∀ σ ∈ Gj K m, E * M σ = M σ * E := by
+    intro σ hσ
+    rw [hE, Finset.sum_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [Matrix.smul_mul, Matrix.mul_smul, hB,
+      mulMat_comm _ b _ (T.ρ ⟨σ, hG hσ⟩) (M σ) (hbM ⟨σ, hG hσ⟩)]
+  have hEσ : ∀ σ ∈ Gj K m, E.map (AI.actC σ) = E := by
+    intro σ hσ
+    ext i k
+    refine act_fix ha hσ ?_
+    rw [hE, Matrix.sum_apply]
+    refine sum_mem fun j _ => ?_
+    rw [Matrix.smul_apply, smul_eq_mul, hBe]
+    exact mul_mem (hβ _) (rat_mem_subC _ _)
+  have hEF : ∀ i k, (Dm⁻¹ * E * Dm) i k ∈ subC (Ks K m) := by
+    intro i k
+    rw [hE, Finset.mul_sum, Finset.sum_mul, Matrix.sum_apply]
+    refine sum_mem fun j _ => ?_
+    rw [Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul]
+    refine mul_mem (hβ _) (conj_mem_subC LL _ B _ _ (fun a i k => ?_) _ _ _)
+    have : B a = A a := by
+      rw [hBe]
+      ext i k
+      exact (hbA a i k).symm
+    rw [this]
+    exact (hA a i k).1
+  have hDD : Dm * Dm⁻¹ = 1 := Matrix.mul_nonsing_inv _ hD.1
+  obtain ⟨r, R, S, hR, hS, hRS, hRe, heSR⟩ := GlobalTheory.exists_integral_factor_of_idempotent_subfield
+    (PadicComplex l) (subC (Ks K m)) d (Dm⁻¹ * E * Dm) hEF (by
+      calc Dm⁻¹ * E * Dm * (Dm⁻¹ * E * Dm) = Dm⁻¹ * (E * (Dm * Dm⁻¹) * E) * Dm := by
+            simp only [Matrix.mul_assoc]
+        _ = _ := by rw [hDD, Matrix.mul_one, hEE])
+  have ht : IsUnit (P.ιB P.tB) := by
+    rw [← P.period_datum_t_eq K]
+    exact (P.PD K).t_unit.map _
+  obtain ⟨u, y, hy0, hyD, hli, hfix⟩ := GlobalTheory.DeRhamSymbolBasis.exists_symbol_basis l P AI Θ K LL T
+    hDR d b M hbM ht.unit ht.unit_spec
+  obtain ⟨c1, c2, c3, c4, c5, Q, hQ⟩ := frame_of_idem AI.actC P.χQ ha K m d r M U0 Dm E g hD hEM
+    hEσ hEF R S hR hS hRS hRe heSR (fun k i => Θ.θ (y k i)) u hli
+    (fun σ hσ k => hfix σ (hG hσ) k) (hfin.toFinset : Set ℤ) (by
+      intro k hk
+      by_contra hJ
+      apply hk
+      have := GlobalTheory.EmbeddingJump.proj_eq_zero l P AI Θ K LL T τ d b n α β h1 ht.unit ht.unit_spec
+        (u k) (y k) (hy0 k) (hyD k) (by simpa using hJ)
+      rw [hE]
+      simp only [hBe, toC_apply]
+      exact this)
+  refine ⟨r, R * Dm⁻¹, _, g, hfin.toFinset, fun u hu => by simpa using hu, hfin, c1, c2, c3, c4, c5,
+    ?_⟩
+  rintro z ⟨x, hx, hxz⟩
+  obtain ⟨ι, hι⟩ := exists_undo K LL τ
+  obtain ⟨ρ, Pr, p1, p2, p3⟩ := GlobalTheory.EigenCoord.exists_matrix l K LL T d b hbT ι
+  have hPE : Pr * E = Pr := by
+    rw [hE, Matrix.mul_sum]
+    have : ∀ j, Pr * (toC K (β j) • B (τ (α j))) = toC K (α j * β j) • Pr := by
+      intro j
+      rw [Matrix.mul_smul, hBe, p2, hι, smul_smul, map_mul, mul_comm, toC_apply K (α j)]
+    simp only [this]
+
+    rw [← Finset.sum_smul, ← map_sum, h2, map_one, one_smul]
+  apply p3
+  have : Pr.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (z a)) = Pr.mulVec x := by
+    have h3 : ∀ v, Pr.mulVec v = Pr.mulVec (Q.mulVec ((R * Dm⁻¹).mulVec v)) := fun v => by
+      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Matrix.mul_assoc, hQ, hPE]
+    rw [h3 x, h3, hxz]
+  rw [this]
+  exact norm_mulVec_le _ _ p1 hx
+
+theorem exists_tau_frame : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; ∀ (T : LocLat S.G S.Qp S.LL S.O) (M0 h0 : ℕ) (τ : S.K →ₐ[S.Qp] S.LL), HypW S E T M0 h0 → ∀ (d : ℕ) (M : GQ l → Matrix (Fin d) (Fin d) (PadicComplex l)) (A : ↥(OL LL) → Matrix (Fin d) (Fin d) (PadicComplex l)), IsMat K LL T M A → ∃ (r : ℕ) (Pm : Matrix (Fin r) (Fin d) (PadicComplex l)) (U : GQ l → Matrix (Fin r) (Fin r) (PadicComplex l)) (g : GQ l) (J : Finset ℤ), (∀ u, u ∈ J → IsJumpV S.PD T.ρ τ u) ∧ {u | IsJumpV S.PD T.ρ τ u}.Finite ∧ Frame (D.loc l).χQ K (mN l s (M0 + h0)) U g ∧ HTBasis (D.locA l).actC (D.loc l).χQ (Gj K (mN l s (M0 + h0))) U (J : Set ℤ) ∧ (∀ σ ∈ Gj K (mN l s (M0 + h0)), Pm * M σ = U σ * Pm.map ((D.locA l).actC σ)) ∧ ball l r ⊆ Pm.mulVec '' ball l d ∧ (∀ x ∈ ball l d, (l : PadicComplex l) • Pm.mulVec x ∈ ball l r) ∧ ∀ y : Fin d → ℚ_[l], Pm.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) ∈ Pm.mulVec '' ball l d → ∀ a, ‖y a‖ ≤ 1 := by
+  intro D HW F h7 l _ K s LL h S E T M0 h0 τ hW d M A hM
+  obtain ⟨Θ⟩ := GlobalTheory.ThetaTie.nonempty_thetaL D l
+  obtain ⟨Dm, U, g, hD, hA⟩ := GlobalTheory.Cyc.Decomp.exists_decompletion D HW F l K s LL h T M0 h0 hW d M A hM
+  have hKm : K.1 ≤ Ks K (mN l s (M0 + h0)) :=
+    h.2.2.1.trans (Ks_mono K (by unfold mN; omega))
+  exact frame_of_dec (D.loc l) (D.locA l) Θ K LL _ hKm (h7 l K) T τ
+    (GlobalTheory.Cyc.CrysDeRham.isDR_of_isCrysOn D HW h7 l K s LL h T hW.1) M A hM Dm U g hD hA
+
+end GlobalTheory.TauFrame
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsTauComponentFrameOfLatticeStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +437,5 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 
 theorem _root_.GlobalTheory.T.exists_tau_component_frame_of_lattice : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; ∀ (T : LocLat S.G S.Qp S.LL S.O) (M0 h0 : ℕ) (τ : S.K →ₐ[S.Qp] S.LL), HypW S E T M0 h0 → ∀ (d : ℕ) (M : GQ l → Matrix (Fin d) (Fin d) (PadicComplex l)) (A : ↥(OL LL) → Matrix (Fin d) (Fin d) (PadicComplex l)), IsMat K LL T M A → ∃ (r : ℕ) (Pm : Matrix (Fin r) (Fin d) (PadicComplex l)) (U : GQ l → Matrix (Fin r) (Fin r) (PadicComplex l)) (g : GQ l) (J : Finset ℤ), (∀ u, u ∈ J → IsJumpV S.PD T.ρ τ u) ∧ {u | IsJumpV S.PD T.ρ τ u}.Finite ∧ Frame (D.loc l).χQ K (mN l s (M0 + h0)) U g ∧ HTBasis (D.locA l).actC (D.loc l).χQ (Gj K (mN l s (M0 + h0))) U (J : Set ℤ) ∧ (∀ σ ∈ Gj K (mN l s (M0 + h0)), Pm * M σ = U σ * Pm.map ((D.locA l).actC σ)) ∧ ball l r ⊆ Pm.mulVec '' ball l d ∧ (∀ x ∈ ball l d, (l : PadicComplex l) • Pm.mulVec x ∈ ball l r) ∧ ∀ y : Fin d → ℚ_[l], Pm.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) ∈ Pm.mulVec '' ball l d → ∀ a, ‖y a‖ ≤ 1 := by
   first | exact @GlobalTheory.TauFrame.exists_tau_frame | exact GlobalTheory.TauFrame.exists_tau_frame | (intros; apply GlobalTheory.TauFrame.exists_tau_frame <;> assumption)
+end
+end

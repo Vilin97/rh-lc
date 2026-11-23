@@ -5,13 +5,11 @@ public import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatem
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.BdryIsAnalyticSubsetInteriorEmpty
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.CompChartEventuallyEq
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FixedMemberBase
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.UniformEnergyBoundOfSectionStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.UniformRestrictionStatementHoldsStatement
-public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PGreenMassZero
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.Objects
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.UniformEnergyBoundOfSection
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -28,8 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,8 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,8 +45,15 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.UniformRestrictionStatementHoldsStatement
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PGreenMassZero
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
 public import ReciprocityTheory.AnalyticForms.LeviForms.TailBound
 import ReciprocityTheory.AnalyticForms.LeviForms.TailBoundA
 import ReciprocityTheory.AnalyticForms.LeviForms.TailCut
@@ -63,6 +64,24 @@ import ReciprocityTheory.AnalyticForms.PotentialTheory.LogInt
 import ReciprocityTheory.AnalyticForms.PotentialTheory.MaMeasure
 public import ReciprocityTheory.AnalyticForms.PotentialTheory.Pullback
 import ReciprocityTheory.AnalyticForms.PotentialTheory.SNCAtlas
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.UniformEnergyBoundOfSectionStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.uniform_energy_bound_of_section : TailBoundStatement → ∀ {e : ℕ} {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X] (A : FinHolAtlas e X) (Θ : Fin e → LocPot X) (L : LocPot X) (s : X → X → ℂ) {n : ℕ} (m : Fin n → ℕ) (W : Fin n → Set X) (C₁ : ℝ), (∀ i, IsPotential A (Θ i)) → (∀ i, IsPosPot A (Θ i)) → IsPotential A L → IsSection A L s → IsSNC A L s m W → (∀ y, logNormSec L s y ≤ 0) → 0 ≤ C₁ → ∃ CE : ℝ, 0 ≤ CE ∧ ∀ (u : Fin e → X → ℝ) (T : Fin e → LocPot X), (∀ i, A.Smooth (u i)) → (∀ i, IsPsh A (Θ i + LocPot.ofFun (u i))) → (∀ i, ∀ y ∉ bdry s, -C₁ * Real.log (rW L s y) ≤ u i y ∧ u i y ≤ 0) → (∀ i x y, (T i).φ x y = (Θ i).φ x y + u i y) → GroundTheory.Heights₂.Heights.AnalyticLimit.TailLogBound A (bdry s)ᶜ (rW L s) T CE := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.tailLogBound_of_tailBound | exact GlobalTheory.CompanionTheory.Ar.Giv.tailLogBound_of_tailBound | (intros; apply GlobalTheory.CompanionTheory.Ar.Giv.tailLogBound_of_tailBound <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.MixedMeasureConvergenceSnc
+
+section
 
 @[expose] public section
 
@@ -509,3 +528,5 @@ theorem green_small_uniform : GroundTheory.Heights₂.Heights.AnalyticLimit.Unif
     ring
 
 end GlobalTheory.CompanionTheory.Ar.Giv
+end
+end

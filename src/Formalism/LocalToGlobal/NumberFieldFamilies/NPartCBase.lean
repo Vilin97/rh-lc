@@ -1,14 +1,13 @@
 module
 
-public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocI
-public import Formalism.LocalRingCardinality.DataRows
-public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocF
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -40,11 +39,56 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-import Formalism.AlgebraicWeights.IsAlgWeight
 import Formalism.ConjugateSelfDual.Statement
+import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocA
+import ReciprocityTheory.GaloisValuations.GlobalA
+public import Formalism.LocalRingCardinality.DataRows
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+import Formalism.AlgebraicWeights.IsAlgWeight
 public import Formalism.LocalRingCardinality.DataHost
 import ReciprocityTheory.Automorphisms.PlaceA
-import ReciprocityTheory.GaloisValuations.GlobalA
+
+-- Source module: Formalism.LocalRingCardinality.SpanPowerMembership.NDLocI
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.BasicNotions.Examples₂
+
+open NumberField IsDedekindDomain IsLocalRing Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc LB
+
+namespace TwB
+
+section Settings
+
+variable (F : Type) [Field F] [NumberField F]
+
+end Settings
+
+section OneLL
+
+variable {l : ℕ} [hl : Fact l.Prime] {F : Type} [Field F] (LL : FinExt l) (φ : F →+* PadicAlgCl l)
+  (hφ : ∀ x, φ x ∈ LL.1)
+
+def phiL : F →+* ↥LL.1 := φ.codRestrict LL.1.toSubfield hφ
+
+def embF : F →+* FractionRing ↥(OL LL) := (toFrac LL).comp (phiL LL φ hφ)
+
+end OneLL
+
+end TwB
+
+end Formalism.BasicNotions.Examples₂
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
+
+section
 
 @[expose] public section
 
@@ -135,3 +179,6 @@ theorem iVC_basis (j : ℕ) (w : what₂.places.Pl)
   exact ⟨(b.baseChange _).linearIndependent, (b.baseChange _).span_eq⟩
 
 end Formalism.L2.Fam.NPC.BaseC
+end
+end
+end

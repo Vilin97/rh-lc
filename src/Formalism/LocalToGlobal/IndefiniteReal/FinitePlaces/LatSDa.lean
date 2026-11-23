@@ -4,21 +4,12 @@ public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemElt
 public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
 public import Formalism.LocalToGlobal.IndefiniteReal.LocalNewformFunction
 public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LatticeVariant
-public import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatMod
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualB
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.VacExA
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.VacExApp
-public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
-public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FDMSubCompact
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -30,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,10 +40,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
+import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
+import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatMod
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualB
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.VacExA
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.VacExApp
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FDMSubCompact
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LatticeVariant
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.LatticeVariant.lsd_spanDen :
+    ∀ {D : Formalism.BasicNotions.D7} {n : ℕ}
+    (L : Submodule (NumberField.RingOfIntegers D.host.E) (Fin n → D.host.E)),
+    Submodule.span D.host.E (↑L : Set (Fin n → D.host.E)) = ⊤ →
+      ∀ (x : Fin n → D.host.E),
+        ∃ (d : NumberField.RingOfIntegers D.host.E),
+          d ≠ (0 : NumberField.RingOfIntegers D.host.E) ∧
+            (↑d : D.host.E) • x ∈
+              L := by
+  intro D n L hL x
+  have hx : x ∈ Submodule.span D.host.E (↑L : Set (Fin n → D.host.E)) := hL ▸ Submodule.mem_top
+  obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span
+    (nonZeroDivisors (NumberField.RingOfIntegers D.host.E)) D.host.E _ x hx
+  rw [Submodule.span_eq] at ht
+  exact ⟨t.1, nonZeroDivisors.ne_zero t.2, ht⟩
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSDa
+
+section
 
 @[expose] public section
 
@@ -520,3 +549,6 @@ theorem latO_isCompact (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
 end Lat
 
 end Formalism.IndefR.Fin
+end
+end
+end

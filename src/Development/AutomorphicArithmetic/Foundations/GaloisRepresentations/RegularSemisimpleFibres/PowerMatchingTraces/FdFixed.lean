@@ -4,39 +4,9 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinearGroup
 public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockEvaluation.Ci
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocIff
-public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.Outright
-public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.EigBasic
-public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TwistY
-public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.ExistsPowerSums
-public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.LocGalEx
-import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.OccursBasics
-public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.OccursIff
-public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TermEV
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CarryLift
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreDescOf
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreLift
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.FamParts
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.GoodEx
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftAll
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftStep
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.OneTerm
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.PickInf
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.PickS
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Places
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.SideSum
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.TyEx
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.UnitTrace
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.BaseTw
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.CmpIso
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.FibTrace
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.LevEx
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.MatchCutAlt
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.PowNe
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.TrBasic
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.TrEx
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerOrbitVolume.DetAdmA
-import GroundTheory.AutomorphicForms.LocallyProfinite
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.LocHeckeInert
+public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.GmOfBcfl
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.BcflUnit
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -71,8 +42,87 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.EigBasic
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TwistY
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.ExistsPowerSums
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.LocGalEx
+import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.OccursBasics
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.OccursIff
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TermEV
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CarryLift
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreDescOf
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreLift
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.FamParts
+import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.GoodEx
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftAll
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftStep
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.OneTerm
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.PickInf
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.PickS
+import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Places
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.SideSum
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.TyEx
+import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.UnitTrace
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.BaseTw
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.CmpIso
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.FibTrace
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.LevEx
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.MatchCutAlt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.PowIndep
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.TrBasic
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.TrEx
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerOrbitVolume.DetAdmA
+import GroundTheory.AutomorphicForms.LocallyProfinite
+import Mathlib.Algebra.Module.StablyFree.Basic
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.Outright
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.ConvolutionTheory.GM.gm : UpperTheory.ConvolutionTheory.GM.GM := UpperTheory.ConvolutionTheory.GM.gm_of_bcfl PositivityTheory.Rg.Tf.Loc.bcflUnit
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.PowNe
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace GroundTheory.Automorphic.AutomorphicForm
+open GroundTheory.Automorphic.CuspidalSpectrum GroundTheory.Global GroundTheory.Global.SemiLocal
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.L1 Formalism.BasicNotions GlobalTheory.PRep GlobalTheory.CuspRep GlobalTheory.SmGL GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets
+open Formalism.L2.Host UpperTheory.V.Published UpperTheory.CBC
+open scoped Classical
+open UpperTheory.Gal.InertialTypesAlt.G
+
+theorem UpperTheory.Gal.InertialTypesAlt.G.powNe :
+    UpperTheory.Gal.InertialTypesAlt.G.PowNe := by
+  intro Z hZ h0
+  by_contra h
+  rw [Filter.not_frequently] at h
+  obtain ⟨ζ, hζ⟩ := Multiset.exists_mem_of_ne_zero hZ
+  have h1 := UpperTheory.ConvolutionTheory.C.powIndep Unit (fun _ => 1) (fun _ => Z) (fun _ => h0)
+    (h.mono fun j hj => by simpa using hj) ζ
+  have h2 : ((Multiset.filter (· = ζ) Z).card : ℂ) = 0 := by simpa only [Finset.univ_unique, Finset.sum_singleton, one_mul] using h1
+  have h3 : (Multiset.filter (· = ζ) Z).card = 0 := by exact_mod_cast h2
+  have h4 : 0 < (Multiset.filter (· = ζ) Z).card :=
+    Multiset.card_pos_iff_exists_mem.2 ⟨ζ, Multiset.mem_filter.2 ⟨hζ, rfl⟩⟩
+  exact h4.ne' h3
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.PowerMatchingTraces.FdFixed
+
+section
 
 @[expose] public section
 
@@ -413,3 +463,5 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.core :
     rw [div_mul_eq_mul_div, div_mul_eq_mul_div, div_eq_iff hne0, h]; ring
   rw [this]
   exact hr
+end
+end

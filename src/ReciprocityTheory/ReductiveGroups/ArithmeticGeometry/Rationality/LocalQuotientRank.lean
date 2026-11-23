@@ -47,7 +47,79 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.FreeQuotPf
+public import Mathlib.LinearAlgebra.Dimension.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+import Lemmata.GeneralBFactThirdBisAlt.Imports
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.Dimension.Localization
+
+-- Source module: Lemmata.MiscLemmasJ.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.SecondBlockLemmaK
+
+theorem goal1 :
+  ∀ {R F X : Type} [inst : CommRing.{0} R] [IsDomain.{0} R] [inst_2 : Field.{0} F] [inst_3 : Algebra.{0, 0} R F]
+  [IsFractionRing.{0, 0} R F] [inst_5 : AddCommGroup.{0} X] [inst_6 : Module.{0, 0} F X] [inst_7 : Module.{0, 0} R X]
+  [IsScalarTower.{0, 0, 0} R F X] (S : Submodule.{0, 0} R X) {x : X},
+  Membership.mem.{0, 0} (Submodule.span.{0, 0} F (SetLike.coe.{0, 0} S)) x →
+    Exists.{1} fun (d : R) ↦ And (Ne.{1} d 0) (Membership.mem.{0, 0} S (HSMul.hSMul.{0, 0, 0} d x)) := by
+  apply Bl.general_b_fact_third_bis_other.goal1 <;> assumption
+
+end Bl.SecondBlockLemmaK
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.FreeQuotPf
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+
+open Module
+
+section
+variable {R F X : Type} [CommRing R] [IsDomain R] [Field F] [Algebra R F]
+    [IsFractionRing R F] [AddCommGroup X] [Module F X] [Module R X] [IsScalarTower R F X]
+
+theorem freeQuot_exists_smul_mem (S : Submodule R X) {x : X}
+    (hx : x ∈ Submodule.span F (S : Set X)) : ∃ d : R, d ≠ 0 ∧ d • x ∈ S := by
+  exact Bl.SecondBlockLemmaK.goal1 S hx
+
+theorem freeQuot_rank_span (S : Submodule R X) :
+    Module.rank R S = Module.rank F (Submodule.span F (S : Set X)) := by
+  set T := Submodule.span F (S : Set X)
+  have hST : S ≤ T.restrictScalars R := fun x hx => Submodule.subset_span hx
+  let S' : Submodule R (T.restrictScalars R) := S.comap (T.restrictScalars R).subtype
+  have h0 : Module.rank R ((T.restrictScalars R) ⧸ S') = 0 := by
+    rw [rank_eq_zero_iff]
+    intro q
+    obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective S' q
+    obtain ⟨d, hd, hd'⟩ := freeQuot_exists_smul_mem S (y.2 : (y : X) ∈ T)
+    refine ⟨d, hd, ?_⟩
+    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
+    exact hd'
+  have h1 := rank_quotient_add_rank_of_isDomain S'
+  rw [h0, zero_add, (Submodule.comapSubtypeEquivOfLe hST).rank_eq] at h1
+  rw [h1, IsLocalization.rank_eq (N := T) F (nonZeroDivisors R) le_rfl]
+  rfl
+
+end
+
+end ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.LocalQuotientRank
+
+section
 
 @[expose] public section
 
@@ -230,3 +302,5 @@ theorem detCT_ne_zero (M : Submodule (𝓞 K) V) (hM : M.FG)
 end
 
 end ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.LocalQuotientRank
+end
+end

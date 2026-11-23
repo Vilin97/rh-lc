@@ -1,7 +1,7 @@
 module
 
 public import Formalism.HermitianCurvature.OperatorsCommuteTranslations
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CovecEntries
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HermitianCovectors.HermBvecLeft
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,7 +41,23 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CovecEntries
+
+section
+
+@[expose] public section
+
+theorem covector_entries : Formalism.FourierDecayAlt.C3.XiYZhat := CovecW.covec_entries
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.XiYZhatIdentity
+
+section
+
 @[expose] public section
 
 theorem Formalism.FourierDecayAlt.P.xi_Y_zhat_identity : Formalism.FourierDecayAlt.C3.XiYZhat :=
   covector_entries
+end
+end

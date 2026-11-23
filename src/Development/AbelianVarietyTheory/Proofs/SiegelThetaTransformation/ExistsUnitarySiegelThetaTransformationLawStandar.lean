@@ -4,10 +4,7 @@ public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.
 public import Mathlib.LinearAlgebra.SymplecticGroup
 public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.PoissonSummationThetaSeriesRowTermCosetStatement
 public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.RationalSchwartzBruhatAlgebraIntegralLinearStatement
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatIntegralEqSumResidueRepresentativeStatement
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SummableNormSiegelThetaSeriesTerms
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocyclStatement
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TsumSchwartzBruhatLevelEqSumResidueCosetsStatement
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatIntegralEqSumResidueRepresentative
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,10 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,10 +43,49 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SummableNormSiegelThetaSeriesTerms
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocyclStatement
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TsumSchwartzBruhatLevelEqSumResidueCosets
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatIntegralEqSumResidueRepresentativeStatement
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW GlobalTheory.SW.FourierJ
+open scoped ComplexConjugate Real
+
+theorem _root_.GlobalTheory.T.schwartzBruhatIntegral_eq_sum_residueRepresentatives : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq κ] [DecidableEq ι] (R : ℕ) (φ : Matrix κ ι ℚ → ℂ), 0 < R → HasLevel R φ → haar φ = ((R : ℂ) ^ (Fintype.card κ * Fintype.card ι))⁻¹ * ∑ n : κ → ι → Fin (R * R), φ (rep R n) := by
+  first | exact @GlobalTheory.SW.FourierJ.haar_eq_sum_rep | exact GlobalTheory.SW.FourierJ.haar_eq_sum_rep | (intros; apply GlobalTheory.SW.FourierJ.haar_eq_sum_rep <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TsumSchwartzBruhatLevelEqSumResidueCosetsStatement
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW GlobalTheory.SW.FourierJ
+open scoped ComplexConjugate Real
+
+theorem _root_.GlobalTheory.T.tsum_schwartzBruhatLevel_eq_sum_residueCosets : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq κ] [DecidableEq ι] (R : ℕ) (φ F : Matrix κ ι ℚ → ℂ), 0 < R → HasLevel R φ → Summable (fun x => φ x * F x) → ∑' x, φ x * F x = ∑ n : κ → ι → Fin (R * R), φ (rep R n) * ∑' m : κ → ι → ℤ, F (rep R n + (R : ℚ) • zm m) := by
+  first | exact @GlobalTheory.SW.FourierJ.tsum_level_eq_sum_cosets | exact GlobalTheory.SW.FourierJ.tsum_level_eq_sum_cosets | (intros; apply GlobalTheory.SW.FourierJ.tsum_level_eq_sum_cosets <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsUnitarySiegelThetaTransformationLawStandar
+
+section
 
 @[expose] public section
 
@@ -414,3 +446,5 @@ theorem exists_trans_J : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [Decidable
 end
 
 end GlobalTheory.SW.FourierJ
+end
+end

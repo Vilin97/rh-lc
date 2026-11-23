@@ -2,17 +2,22 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsPtJ
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsChartIff
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsIsUnivChartOfIsLieBasis
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsLieBasis
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.DualLiftInjective
+public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsJetChartCoordinatesNilpotentStatement
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ReductionSurjectiveOfIsNilpotent
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -20,7 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -29,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,11 +45,267 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsChartOfMemRedKer
+public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.JetPointAddSqZeroEqProdMulTangentStatement
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ReductionSurjectiveOfIsNilpotent
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.ChartLaw
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.IntChartCut
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsJetPointsOfIsLieBasis
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.Chart
+open scoped CategoryTheory.MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp epsR IsTangent IsLieComb IsLieBasis)
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.JetPoint
+
+open GlobalTheory.SqZero
+
+variable {R : Type} [CommRing R]
+
+theorem jetTruncR_surjective (κ : Type) (m : ℕ) : Function.Surjective (jetTruncR R κ m) := by
+  intro y
+  obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective y
+  exact ⟨Ideal.Quotient.mk _ p, rfl⟩
+
+theorem jetAug_comp_jetTruncR (κ : Type) (m : ℕ) :
+    (jetAug R κ m).comp (jetTruncR R κ m) = jetAug R κ (m + 1) :=
+  jet_ext fun j => by
+    rw [jetAug_zR]
+    exact jetAug_zR (R := R) m j
+
+theorem ker_jetTruncR_isNilpotent (κ : Type) (m : ℕ) :
+    IsNilpotent (RingHom.ker (jetTruncR R κ m)) := by
+  have hle : RingHom.ker (jetTruncR R κ m) ≤ RingHom.ker (jetAug R κ (m + 1)) := by
+    intro a ha
+    have ha' : jetTruncR R κ m a = 0 := ha
+    change jetAug R κ (m + 1) a = 0
+    rw [← jetAug_comp_jetTruncR, AlgHom.comp_apply, ha', map_zero]
+  refine ⟨m + 1 + 1, ?_⟩
+  rw [Ideal.zero_eq_bot, ← le_bot_iff, ← ker_jetAug_pow (R := R) κ (m + 1)]
+  exact Ideal.pow_right_mono hle _
+
+theorem jetZeroR_comp_jetTruncR (κ : Type) (m : ℕ) :
+    (jetZeroR R κ m).comp (jetTruncR R κ m) = jetZeroR R κ (m + 1) :=
+  jet_ext fun _ => rfl
+
+theorem zR_zero_eq_zero {κ : Type} (j : κ) : zR (R := R) 0 j = 0 :=
+  Ideal.Quotient.eq_zero_iff_mem.2 (by
+    rw [zero_add, pow_one]
+    exact Ideal.subset_span ⟨j, rfl⟩)
+
+theorem zR_one_mul_self {κ : Type} (j : κ) : zR (R := R) 1 j * zR (R := R) 1 j = 0 :=
+  mul_eq_zero_of_sq (ker_jetAug_pow (R := R) κ 1) (zR_mem_ker 1 j) (zR_mem_ker 1 j)
+
+end GlobalTheory.JetPoint
+
+namespace GlobalTheory
+
+open SqZero JetPoint
+
+theorem exists_jetPoints_of_isLieBasis :
+    ∀ (R : Type) [CommRing R] (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G], Smooth G.hom → ∀ (d : ℕ) (v : Fin d → (epsR R ⟶ G)), IsLieBasis v → ∃ (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G), (∀ m, spMap (jetTruncR R (Fin d) m) ≫ x (m + 1) = x m) ∧ (∀ m, spMap (jetZeroR R (Fin d) m) ≫ x m = 1) ∧ (∀ j, spMap (dualLift (Pi.single j (1 : R))) ≫ x 1 = v j) := by
+  intro R _ G _ _ hG d v hv
+  have htan : ∀ i, IsTan (v i) := fun i => (isTan_iff _).2 (hv.1 i)
+  choose L hL using fun m => ptsMap_surjective_of_isNilpotent (G := G) hv (jetTruncR R (Fin d) m)
+    (jetTruncR_surjective _ m) (ker_jetTruncR_isNilpotent _ m)
+  let x₁ : sp (R₀ := R) (JetR R (Fin d) 1) ⟶ G :=
+    lieExp v (fun j => zR (R := R) 1 j) zR_one_mul_self
+  let y : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) (m + 1)) ⟶ G :=
+    fun m => Nat.rec (motive := fun m => sp (R₀ := R) (JetR R (Fin d) (m + 1)) ⟶ G) x₁
+      (fun k z => L (k + 1) z) m
+  let x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G :=
+    fun m => Nat.casesOn (motive := fun m => sp (R₀ := R) (JetR R (Fin d) m) ⟶ G) m 1 y
+  have h₁ : ∀ m, spMap (jetTruncR R (Fin d) m) ≫ x (m + 1) = x m := by
+    rintro (_ | m)
+    · change spMap _ ≫ lieExp v _ _ = 1
+      rw [comp_lieExp, lieExp]
+      exact Finset.prod_eq_one fun i _ => epsTo_zero_comp (htan i) _ (zR_zero_eq_zero i) _
+    · exact hL (m + 1) (y m)
+  refine ⟨x, h₁, fun m => ?_, fun j => ?_⟩
+  · induction m with
+    | zero => exact comp_one' _
+    | succ m ih => rw [← jetZeroR_comp_jetTruncR, ← spMap_comp, Category.assoc, h₁, ih]
+  · change spMap _ ≫ lieExp v _ _ = _
+    rw [comp_lieExp, lieExp, Finset.prod_eq_single j]
+    · have : ∀ (t : DualNumber R) (ht : t * t = 0), t = DualNumber.eps →
+          epsTo R t ht = AlgHom.id R _ := fun t ht e =>
+        DualNumber.algHom_ext (by rw [epsTo_eps, e]; rfl)
+      rw [this _ _ (by rw [dualLift_zR, Pi.single_eq_same]; rfl), spMap_id]
+      exact Category.id_comp _
+    · intro i _ hi
+      exact epsTo_zero_comp (htan i) _
+        (by rw [dualLift_zR, Pi.single_eq_of_ne hi, TrivSqZeroExt.inr_zero]) _
+    · simp
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.JetChartCoordinatesUniqueCommGroup
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.Chart
+open scoped CategoryTheory.MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp epsR IsTangent IsLieComb IsLieBasis)
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+open SqZero
+
+theorem jetCoord_eq_of_sub_mem {R : Type} [CommRing R] {G : Over (Spec (CommRingCat.of R))}
+    [GrpObj G] [IsCommMonObj G] (hG : Smooth G.hom) {d : ℕ} {v : Fin d → (epsR R ⟶ G)}
+    (hv : IsLieBasis v) {x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G}
+    (hx₁ : ∀ m, spMap (jetTruncR R (Fin d) m) ≫ x (m + 1) = x m)
+    (hx₂ : ∀ m, spMap (jetZeroR R (Fin d) m) ≫ x m = 1)
+    (hx₃ : ∀ j, spMap (dualLift (Pi.single j (1 : R))) ≫ x 1 = v j)
+    {A : Type} [CommRing A] [Algebra R A] (aug : A →ₐ[R] R) (J : Ideal A)
+    (hJ : J * RingHom.ker aug = ⊥) (hJ' : J ≤ RingHom.ker aug) {m : ℕ}
+    (ψ ψ' : JetR R (Fin d) m →ₐ[R] A) (hψ : aug.comp ψ = jetAug R (Fin d) m)
+    (hψ' : aug.comp ψ' = jetAug R (Fin d) m) (hδ : ∀ j, ψ' (zR m j) - ψ (zR m j) ∈ J)
+    (h : spMap ψ ≫ x m = spMap ψ' ≫ x m) : ψ = ψ' := by
+  have hJ2 : J ^ 2 = ⊥ := by
+    rw [← le_bot_iff, pow_two, ← hJ]
+    exact Ideal.mul_mono_right hJ'
+  let c : Fin d → J := fun j => ⟨_, hδ j⟩
+  have hc : ∀ j, (c j : A) * (c j : A) = 0 := fun j => mul_eq_zero_of_sq hJ2 (c j).2 (c j).2
+  have he : ∀ j, epsTo R (c j : A) (hc j) (TrivSqZeroExt.inr 1) = c j := fun j => epsTo_eps _ _
+  have key := GlobalTheory.T.jetPoint_add_sqZero_eq_prod_mul_tangent R G hG d v hv x hx₁ hx₂ hx₃ A aug J hJ hJ' m ψ ψ' hψ hψ'
+    (fun j => epsTo R (c j : A) (hc j)) (fun j => by rw [he]; exact (c j).2)
+    (fun j => by rw [he]; exact (add_sub_cancel _ _).symm)
+  rw [← h] at key
+  have h1 : lieExp v (fun j => (c j : A)) hc = 1 := mul_eq_right.1 key.symm
+  have h0 : c = 0 := by
+    apply (expHom_bijective hv hJ2).1
+    rw [map_zero]
+    exact congrArg Additive.ofMul (Subtype.ext h1)
+  refine jet_ext fun j => ?_
+  have : ψ' (zR m j) - ψ (zR m j) = 0 := congrArg Subtype.val (congrFun h0 j)
+  exact (sub_eq_zero.1 this).symm
+
+theorem jetCoord_unique (R : Type) [CommRing R] (G : Over (Spec (CommRingCat.of R))) [GrpObj G]
+    [IsCommMonObj G] (hG : Smooth G.hom) (d : ℕ) (v : Fin d → (epsR R ⟶ G)) (hv : IsLieBasis v)
+    (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G)
+    (hx₁ : ∀ m, spMap (jetTruncR R (Fin d) m) ≫ x (m + 1) = x m)
+    (hx₂ : ∀ m, spMap (jetZeroR R (Fin d) m) ≫ x m = 1)
+    (hx₃ : ∀ j, spMap (dualLift (Pi.single j (1 : R))) ≫ x 1 = v j)
+    (A : Type) [CommRing A] [Algebra R A] (aug : A →ₐ[R] R) (m : ℕ)
+    (hN : (RingHom.ker aug) ^ (m + 1) = ⊥) (ψ ψ' : JetR R (Fin d) m →ₐ[R] A)
+    (hψ : aug.comp ψ = jetAug R (Fin d) m) (hψ' : aug.comp ψ' = jetAug R (Fin d) m)
+    (h : spMap ψ ≫ x m = spMap ψ' ≫ x m) : ψ = ψ' := by
+  set N := RingHom.ker aug with hNdef
+  have main : ∀ k j, ψ' (zR m j) - ψ (zR m j) ∈ N ^ (k + 1) := by
+    intro k
+    induction k with
+    | zero =>
+      intro j
+      rw [zero_add, pow_one, hNdef, RingHom.mem_ker, map_sub, ← AlgHom.comp_apply,
+        ← AlgHom.comp_apply, hψ, hψ', sub_self]
+    | succ k ih =>
+      let q : A →ₐ[R] A ⧸ N ^ (k + 1 + 1) := Ideal.Quotient.mkₐ R _
+      have hq : Function.Surjective q := Ideal.Quotient.mkₐ_surjective R _
+      let aug' : (A ⧸ N ^ (k + 1 + 1)) →ₐ[R] R := Ideal.Quotient.liftₐ _ aug
+        (fun a ha => Ideal.pow_le_self (by omega) ha)
+      have haug : aug'.comp q = aug := AlgHom.ext fun _ => rfl
+      have hker : RingHom.ker aug' = N.map q := by
+        apply le_antisymm
+        · intro a ha
+          obtain ⟨b, rfl⟩ := hq a
+          exact Ideal.mem_map_of_mem _ ha
+        · exact Ideal.map_le_iff_le_comap.2 fun a ha => ha
+      have e := jetCoord_eq_of_sub_mem hG hv hx₁ hx₂ hx₃ aug' ((N ^ (k + 1)).map q)
+        (by rw [hker, ← Ideal.map_mul, ← pow_succ]; exact Ideal.map_quotient_self _)
+        (by rw [hker]; exact Ideal.map_mono (Ideal.pow_le_self (by omega)))
+        (q.comp ψ) (q.comp ψ') (by rw [← AlgHom.comp_assoc, haug, hψ])
+        (by rw [← AlgHom.comp_assoc, haug, hψ'])
+        (fun j => by
+          rw [AlgHom.comp_apply, AlgHom.comp_apply, ← map_sub]
+          exact Ideal.mem_map_of_mem _ (ih j))
+        (by rw [← spMap_comp, ← spMap_comp, Category.assoc, Category.assoc, h])
+      intro j
+      exact Ideal.Quotient.eq.1 (AlgHom.congr_fun e (zR m j)).symm
+  refine jet_ext fun j => ?_
+  have := main m j
+  rw [hN, Ideal.mem_bot] at this
+  exact (sub_eq_zero.1 this).symm
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.JetChartCoordinatesUniqueCommGroupStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.Chart
+open scoped CategoryTheory.MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp epsR IsTangent IsLieComb IsLieBasis)
+attribute [local instance] Over.cartesianMonoidalCategory
+theorem _root_.GlobalTheory.T.jetChart_coordinates_unique_commGroup : ∀ (R : Type) [CommRing R] (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G], Smooth G.hom → ∀ (d : ℕ) (v : Fin d → (epsR R ⟶ G)), IsLieBasis v → ∀ (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G), (∀ m, spMap (jetTruncR R (Fin d) m) ≫ x (m + 1) = x m) → (∀ m, spMap (jetZeroR R (Fin d) m) ≫ x m = 1) → (∀ j, spMap (dualLift (Pi.single j (1 : R))) ≫ x 1 = v j) → ∀ (A : Type) [CommRing A] [Algebra R A] (aug : A →ₐ[R] R) (m : ℕ), (RingHom.ker aug) ^ (m + 1) = ⊥ → ∀ ψ ψ' : JetR R (Fin d) m →ₐ[R] A, aug.comp ψ = jetAug R (Fin d) m → aug.comp ψ' = jetAug R (Fin d) m → spMap ψ ≫ x m = spMap ψ' ≫ x m → ψ = ψ' := by
+  first | exact @GlobalTheory.jetCoord_unique | exact GlobalTheory.jetCoord_unique | (intros; apply GlobalTheory.jetCoord_unique <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsIsUnivChartOfIsLieBasis
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.Chart
+open scoped CategoryTheory.MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp epsR IsTangent IsLieComb IsLieBasis)
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem exists_isUnivChart_of_isLieBasis :
+    ∀ (R : Type) [CommRing R] (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G],
+      Smooth G.hom → ∀ (d : ℕ) (v : Fin d → (epsR R ⟶ G)), IsLieBasis v →
+      ∃ (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G), IsUnivChart G d x ∧
+        (∀ j, spMap (dualLift (Pi.single j (1 : R))) ≫ x 1 = v j) := by
+  intro R _ G _ _ hG d v hv
+  obtain ⟨x, h₁, h₂, h₃⟩ := GlobalTheory.exists_jetPoints_of_isLieBasis R G hG d v hv
+  refine ⟨x, ⟨h₁, h₂, ?_⟩, h₃⟩
+  intro A _ _ aug m hm y hy
+  obtain ⟨ψ, hψ, hyψ⟩ := GlobalTheory.T.exists_jetChart_coordinates_nilpotent R G hG d v hv x h₁ h₂ h₃ A aug m hm y hy
+  refine ⟨ψ, ⟨hψ, hyψ⟩, ?_⟩
+  rintro ψ' ⟨hψ', hyψ'⟩
+  exact GlobalTheory.T.jetChart_coordinates_unique_commGroup R G hG d v hv x h₁ h₂ h₃ A aug m hm ψ' ψ hψ' hψ (hyψ'.symm.trans hyψ)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsIsChartGOfBasis
+
+section
 
 @[expose] public section
 
@@ -192,3 +451,6 @@ theorem exists_isChartG_of_basis : ∀ (E : Type) [Field E] [NumberField E] [IsC
       simp
 
 end GlobalTheory.ChartData
+end
+end
+end

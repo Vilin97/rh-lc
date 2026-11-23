@@ -1,16 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffPowerSeriesEvalTwoGroupsMemIdeal
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffSubstEqZeroOfDegree
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffSubstOfForallConstantCoeffZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualBasisCoordMemMaximalIdealOfForallApply
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvMemIdealSmulAddP
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowEqOfIntegers
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapAlgebraMapPowerSeriesEvalTwoGroups
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPowerSeriesFamilyToFractionsFormalGroupLawNat
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupDualTangentLinearKillsIntegral
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubstFormalGroupLawNatMultipleEqCoboundarySum
+public import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboundarySmul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,8 +40,140 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffSubstEqZeroOfDegree
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffSubstOfForallConstantCoeffZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualBasisCoordMemMaximalIdealOfForallApply
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowEqOfIntegers
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPowerSeriesFamilyToFractionsFormalGroupLawNat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupDualTangentLinearKillsIntegral
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubstFormalGroupLawNatMultipleEqCoboundarySum
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
 import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffPowerSeriesEvalTwoGroupsMemIdeal
+
+section
+
+@[expose] public section
+
+open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+namespace GlobalTheory.IdealAt2
+
+theorem coeff_powerSeriesEvalTwoGroups_mem_ideal : ∀ (R : Type) [CommRing R] (d : ℕ) (τ : Type) (I : Ideal R)
+    (t : MvPowerSeries (Fin d ⊕ Fin d) R) (u v : Fin d → MvPowerSeries τ R),
+    (∀ i, constantCoeff (u i) = 0) → (∀ i, constantCoeff (v i) = 0) →
+    (∀ α, coeff α t ∈ I) → ∀ α, coeff α (at2 t u v) ∈ I := by
+  intro R _ d τ I t u v hu hv ht α
+  have hs : HasSubst (Sum.elim u v) :=
+    hasSubst_of_constantCoeff_zero fun s => by cases s <;> simp [hu, hv]
+  rw [at2, coeff_subst hs]
+  refine finsum_induction (fun x => x ∈ I) I.zero_mem (fun x y hx hy => I.add_mem hx hy) ?_
+  intro e
+  rw [smul_eq_mul]
+  exact I.mul_mem_right _ (ht e)
+
+end GlobalTheory.IdealAt2
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvMemIdealSmulAddP
+
+section
+
+@[expose] public section
+
+open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+namespace GlobalTheory
+
+theorem Chart.ev_mem_ideal_smul_add_p (p : ℕ) (O : Type) [CommRing O] (G : PDivGroup p O) (d : ℕ)
+    (c : QLog.Chart G d) (n : ℕ) (I : Ideal O) (h : MvPowerSeries (Fin d) O) :
+    (∀ α, coeff α h ∈ I) → ∃ a ∈ I • (⊤ : Submodule O (G.A n)), ∃ b : G.A n,
+      c.ev n h = a + (p : G.A n) * b := by
+  intro hI
+  classical
+  obtain ⟨N, hN⟩ := (c.isEval n).2 1
+  let S : Finset (Fin d →₀ ℕ) := Finset.Iic (Finsupp.equivFunOnFinite.symm fun _ => N)
+  let h₁ : MvPowerSeries (Fin d) O := ∑ α ∈ S, monomial α (coeff α h)
+  have hmon : ∀ α, (monomial α (coeff α h) : MvPowerSeries (Fin d) O) =
+      coeff α h • monomial α (1 : O) := by
+    intro α
+    ext β
+    simp only [coeff_monomial, coeff_smul]
+    split_ifs <;> simp
+  have hcoeff : ∀ β ∈ S, coeff β h₁ = coeff β h := by
+    intro β hβ
+
+    simp only [h₁, map_sum, coeff_monomial]
+    rw [Finset.sum_eq_single_of_mem β hβ]
+    · simp
+    · intro b _ hb; simp [Ne.symm hb]
+  have h₂ : (p : G.A n) ^ 1 ∣ c.ev n (h - h₁) := by
+    apply hN
+    intro β hβ
+    have hmem : β ∈ S := by
+      simp only [S, Finset.mem_Iic]
+      intro i
+      show β i ≤ N
+      have : β i ≤ β.degree := by
+        by_cases h0 : β i = 0
+        · omega
+        rw [Finsupp.degree]
+        exact Finset.single_le_sum (f := fun j => β j) (fun _ _ => Nat.zero_le _)
+          (by simpa using h0)
+      omega
+    rw [map_sub, hcoeff β hmem, sub_self]
+  obtain ⟨b, hb⟩ := h₂
+  refine ⟨c.ev n h₁, ?_, b, ?_⟩
+
+  · simp only [h₁, map_sum]
+    refine Submodule.sum_mem _ fun α _ => ?_
+    rw [hmon, map_smul]
+    exact Submodule.smul_mem_smul (hI α) Submodule.mem_top
+  · rw [map_sub, pow_one] at hb
+    rw [← hb]; ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapAlgebraMapPowerSeriesEvalTwoGroups
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+namespace GlobalTheory.QLog
+
+theorem map_algebraMap_powerSeriesEvalTwoGroups : ∀ (R S : Type) [CommRing R] [CommRing S] [Algebra R S] (d : ℕ) (τ : Type)
+    (t : MvPowerSeries (Fin d ⊕ Fin d) R) (u v : Fin d → MvPowerSeries τ R),
+    (∀ i, constantCoeff (u i) = 0) → (∀ i, constantCoeff (v i) = 0) →
+    map (algebraMap R S) (at2 t u v) = at2 (map (algebraMap R S) t) (up S u) (up S v) := by
+  intro R S _ _ _ d τ t u v hu hv
+  have ha : HasSubst (Sum.elim u v) :=
+    hasSubst_of_constantCoeff_zero (fun i => by cases i <;> simp [hu, hv])
+  rw [at2, at2, map_subst ha]
+  congr 1
+  funext i
+  cases i <;> rfl
+
+end GlobalTheory.QLog
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentCoordsNonunit
+
+section
 
 @[expose] public section
 
@@ -248,3 +370,6 @@ theorem tangent_coords_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
   exact (hmem _).1 h6
 
 end GlobalTheory.TangentIndep
+end
+end
+end

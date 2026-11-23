@@ -4,10 +4,7 @@ public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatH
 public import Formalism.LocalToGlobal.IndefiniteReal.DatumF
 public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaFunctionHeisenbergInvariantStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilDatumTwistByHeckeCharactersTrivialBaseStatement
-public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.FixedOfMem
-public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IsScalarOneOfComm
-public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilDatumTwistByHeckeCharactersTrivialBase
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,10 +39,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.FixedOfMem
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IsScalarOneOfComm
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRep
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntAFSmulMemLatOF
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilDatumTwistByHeckeCharactersTrivialBaseStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct Matrix
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
+open Formalism.IndefR.DatumF
+
+
+theorem _root_.GlobalTheory.T.weil_datum_twist_by_hecke_characters_trivial_base : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
+    B.IsGood σ → ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E),
+      IsHermND σ JS → IsHermND σ JT → ∀ ξ₀ : E, ξ₀ ≠ 0 → σ ξ₀ = -ξ₀ →
+      ∀ (χS χT νS νT : (AF F ⊗[F] E)ˣ →* Circle) ω,
+        IsWeilDatumOF σ JS JT (fun w : InfinitePlace F => (B.emb w).1) ξ₀ B.ψ χS χT ω →
+        IsHeckeCharF νS → IsHeckeCharF νT → ResEtaF νS 0 → ResEtaF νT 0 →
+        ∃ ω', IsWeilDatumOF σ JS JT (fun w : InfinitePlace F => (B.emb w).1) ξ₀ B.ψ (χS * νS) (χT * νT) ω' := by
+  first | exact @GlobalTheory.WeilTwistF.exists_weilDatumOF_twist | exact GlobalTheory.WeilTwistF.exists_weilDatumOF_twist | (intros; apply GlobalTheory.WeilTwistF.exists_weilDatumOF_twist <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.Reductions.WeilPairs.WeilPairExistence.ExistsIsWeilDatumOF
+
+section
 
 @[expose] public section
 
@@ -96,3 +123,5 @@ theorem exists_isWeilDatumOF : ∀ (F E : Type) [Field F] [NumberField F] [Field
   exact ⟨om', hom'⟩
 
 end PositivityTheory.ThKW.S
+end
+end

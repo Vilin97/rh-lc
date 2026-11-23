@@ -4,11 +4,21 @@ public import Formalism.LocalToGlobal.InertKernelTheory.StatementInt
 public import Formalism.LocalToGlobal.TorsionIntegrality.CMGoodModels.Statement
 public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FrLocB
 public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntWAPlaces
-public import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfApproxBasis
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsFrONB
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntWeak
+public import Formalism.LocalToGlobal.InertKernelTheory.OneCopyTh1S
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.BlockFourfoldHOneEqHOne
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.CubicFields.PeriodRelations.LeadingConstantNeZero
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.PowerSeriesEmbedding
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.SqrtInUnramifiedCompletion
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.TransportFirstLevel
+import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.FamilyLogGammaSmallHolds
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.TestVectorMemSchwartzBruhat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -21,6 +31,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,10 +49,324 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Connected.Separation
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.GlobalOrthonormalBasisFour
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsMMIsom
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMIsom
+public import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfWeakApprox
+
+-- Source module: Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.ConjugationFixedClosure
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.KerInert
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker Classical
+open Formalism.L2.Th1.CM (MaximalUnramifiedExtension omegaK)
+
+namespace FrFix
+
+variable {p : ℕ} [Fact p.Prime]
+
+theorem not_sq (d : ℕ) (hj : jacobiSym (-(d : ℤ)) p = -1) : ¬ ∃ a : ZMod p, a ^ 2 = -(d : ZMod p) := by
+  have hleg : legendreSym p (-(d : ℤ)) = -1 := by rw [jacobiSym.legendreSym.to_jacobiSym]; exact hj
+  have hns : ¬ IsSquare (((-(d : ℤ)) : ℤ) : ZMod p) := (legendreSym.eq_neg_one_iff (p := p)).1 hleg
+  rintro ⟨a, ha⟩
+  apply hns
+  refine ⟨a, ?_⟩
+  push_cast
+  rw [← ha]
+  ring
+
+theorem fixed_mem_closure (σ : MaximalUnramifiedExtension p →+* MaximalUnramifiedExtension p) (hσ : Formalism.InvariantFactorPaths.G7.UnrOK (MaximalUnramifiedExtension p) p σ) (z : MaximalUnramifiedExtension p)
+    (hz : σ z = z) : (z : ℂ_[p]) ∈ closure (Set.range fun q : ℚ => (q : ℂ_[p])) := by
+  have hp : p.Prime := Fact.out
+  have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
+  have hp0 : (0 : ℝ) < p := by linarith
+  obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt ‖z‖ hp1
+  have hpk : ‖((p : MaximalUnramifiedExtension p) ^ k)‖ = ((p : ℝ) ^ k)⁻¹ := by rw [norm_pow, hσ.2.2.1, inv_pow]
+  have hpkpos : (0 : ℝ) < (p : ℝ) ^ k := by positivity
+  obtain ⟨w, hw⟩ : ∃ w : MaximalUnramifiedExtension p, w = (p : MaximalUnramifiedExtension p) ^ k * z := ⟨_, rfl⟩
+  have hw1 : ‖w‖ ≤ 1 := by
+    rw [hw, norm_mul, hpk, inv_mul_le_iff₀ hpkpos, mul_one]
+    exact hk.le
+  have hσw : σ w = w := by rw [hw, map_mul, map_pow, map_natCast, hz]
+  rw [Metric.mem_closure_iff]
+  intro ε hε
+  have hε' : 0 < ε * ((p : ℝ) ^ k)⁻¹ := by positivity
+  obtain ⟨j, hj⟩ := exists_pow_lt_of_lt_one hε' (inv_lt_one_of_one_lt₀ hp1)
+  obtain ⟨n, hn⟩ := Formalism.L2.Th1.D.fixedIsLimit (MaximalUnramifiedExtension p) p σ hσ w hw1 hσw j
+  refine ⟨((n : ℚ) / (p : ℚ) ^ k : ℚ), ⟨_, rfl⟩, ?_⟩
+  have hpk0 : ((p : MaximalUnramifiedExtension p) ^ k) ≠ 0 := pow_ne_zero _ (by exact_mod_cast hp.ne_zero)
+  have hq : ((((n : ℚ) / (p : ℚ) ^ k : ℚ)) : ℂ_[p]) = ((((n : ℚ) / (p : ℚ) ^ k : ℚ) : MaximalUnramifiedExtension p) : ℂ_[p]) :=
+    (map_ratCast (MaximalUnramifiedExtension p).subtype _).symm
+  have e : z - ((((n : ℚ) / (p : ℚ) ^ k : ℚ)) : MaximalUnramifiedExtension p) = ((p : MaximalUnramifiedExtension p) ^ k)⁻¹ * (w - n) := by
+    rw [hw]
+    push_cast
+    field_simp
+  rw [hq, ← Subtype.dist_eq, dist_eq_norm, e, norm_mul, norm_inv, hpk, inv_inv]
+  calc (p : ℝ) ^ k * ‖w - n‖ ≤ (p : ℝ) ^ k * ((p : ℝ) ^ j)⁻¹ := by gcongr
+    _ = (p : ℝ) ^ k * ((p : ℝ)⁻¹) ^ j := by rw [inv_pow]
+    _ < (p : ℝ) ^ k * (ε * ((p : ℝ) ^ k)⁻¹) := by gcongr
+    _ = ε := by field_simp
+
+end FrFix
+
+theorem conjugation_fixed_closure : FixConj := by
+  intro D p _ h5 hj lam ι hι σ hσ y hy
+  have hsq : Squarefree D.host.d := (Nat.prime_iff.mp D.host.hyp.2.1).squarefree
+  have h4 : D.host.d % 4 = 3 := Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.discriminant_mod_four D
+  obtain ⟨hwm, hws⟩ := Formalism.L2.Th1.D.sqrt_in_unramified_completion D.host.d hsq h4 p h5 (FrFix.not_sq D.host.d hj) ι
+  obtain ⟨w, hw⟩ : ∃ w : MaximalUnramifiedExtension p, (w : ℂ_[p]) = ι (omegaK D.host.d) := ⟨⟨_, hwm⟩, rfl⟩
+  have hσw : σ w = 1 - w := hws σ hσ w hw
+  have hLI := Formalism.L2.KerInert.lamCIota p lam ι hι
+  have hlc : ∀ z : D.host.E, lamC lam (D.host.φ₀ z) = ι (D.host.φ₀ z) :=
+    fun z => hLI.1 _ (Formalism.MainNotions.Ext.test_vector_mem_schwartz_bruhat D z)
+  have hsK : D.host.sqrtMinusD ∈ D.host.K := Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.br_sqrt_mem D
+  have hx2 : (D.host.φ₀ D.host.sqrtMinusD) ^ 2 = -(D.host.d : ℂ) := by
+    rw [← map_pow, Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.br_sqrtE_sq D, map_neg, map_natCast]
+  have hom : (2 * omegaK D.host.d - 1) ^ 2 = -(D.host.d : ℂ) := by
+    unfold omegaK
+    have hsq : ((Real.sqrt D.host.d : ℝ) : ℂ) ^ 2 = (D.host.d : ℂ) := by
+      rw [← Complex.ofReal_pow, Real.sq_sqrt (Nat.cast_nonneg _)]; push_cast; rfl
+    linear_combination (-1 : ℂ) * hsq + (((Real.sqrt D.host.d : ℝ) : ℂ) ^ 2) * Complex.I_sq
+
+  have c2 : ((2 : MaximalUnramifiedExtension p) : ℂ_[p]) = 2 := map_ofNat (MaximalUnramifiedExtension p).subtype 2
+  obtain ⟨rK, hrK, hσr⟩ : ∃ rK : MaximalUnramifiedExtension p, (rK : ℂ_[p]) = ι (D.host.φ₀ D.host.sqrtMinusD) ∧ σ rK = -rK := by
+    rcases sq_eq_sq_iff_eq_or_eq_neg.1 (hx2.trans hom.symm) with h | h
+    · refine ⟨2 * w - 1, ?_, ?_⟩
+      · rw [h, map_sub, map_mul, map_ofNat, map_one, ← hw]; push_cast; rw [c2]
+      · rw [map_sub, map_mul, map_ofNat, map_one, hσw]; ring
+    · refine ⟨1 - 2 * w, ?_, ?_⟩
+      · rw [h, map_neg, map_sub, map_mul, map_ofNat, map_one, ← hw]; push_cast; rw [c2]; ring
+      · rw [map_sub, map_mul, map_ofNat, map_one, hσw]; ring
+  have hd0 : (D.host.d : ℂ_[p]) ≠ 0 := by exact_mod_cast (D.host.hyp.2.1).ne_zero
+  have hr0 : rK ≠ 0 := by
+    intro h
+    have h' : ((rK : ℂ_[p])) ^ 2 = 0 := by rw [h]; simp
+    rw [hrK, ← map_pow, hx2, map_neg, map_natCast, neg_eq_zero] at h'
+    exact hd0 h'
+
+  have h2 : (2 : MaximalUnramifiedExtension p) ≠ 0 := two_ne_zero
+  obtain ⟨u, hu⟩ : ∃ u : MaximalUnramifiedExtension p, u = (y + σ y) / 2 := ⟨_, rfl⟩
+  obtain ⟨v, hv⟩ : ∃ v : MaximalUnramifiedExtension p, v = (y - σ y) / (2 * rK) := ⟨_, rfl⟩
+  have hσu : σ u = u := by rw [hu, map_div₀, map_add (f := _), hy, map_ofNat]; ring
+  have hσv : σ v = v := by
+    rw [hv, map_div₀, map_sub, map_mul, hy, hσr, map_ofNat]
+    field_simp
+    ring
+  have hyuv : y = u + v * rK := by
+    rw [hu, hv]
+    field_simp
+    ring
+  have cu := FrFix.fixed_mem_closure σ hσ u hσu
+  have cv := FrFix.fixed_mem_closure σ hσ v hσv
+  have hyc : (y : ℂ_[p]) = (u : ℂ_[p]) + (v : ℂ_[p]) * (rK : ℂ_[p]) := by rw [hyuv]; push_cast; rfl
+  refine ⟨?_, ?_⟩
+  · have hcont : Continuous fun ab : ℂ_[p] × ℂ_[p] => ab.1 + ab.2 * (rK : ℂ_[p]) := by fun_prop
+    have hmem : ((u : ℂ_[p]), (v : ℂ_[p])) ∈ closure ((Set.range fun q : ℚ => (q : ℂ_[p])) ×ˢ
+        (Set.range fun q : ℚ => (q : ℂ_[p]))) := by
+      rw [closure_prod_eq]; exact ⟨cu, cv⟩
+    have hmaps : Set.MapsTo (fun ab : ℂ_[p] × ℂ_[p] => ab.1 + ab.2 * (rK : ℂ_[p]))
+        ((Set.range fun q : ℚ => (q : ℂ_[p])) ×ˢ (Set.range fun q : ℚ => (q : ℂ_[p])))
+        (Set.range fun x : D.host.K => lamC lam (D.host.φ₀ (x : D.host.E))) := by
+      rintro ⟨_, _⟩ ⟨⟨a, rfl⟩, ⟨b, rfl⟩⟩
+      refine ⟨(a : D.host.K) + (b : D.host.K) * ⟨D.host.sqrtMinusD, hsK⟩, ?_⟩
+      have e : (((a : D.host.K) + (b : D.host.K) * ⟨D.host.sqrtMinusD, hsK⟩ : D.host.K) : D.host.E) =
+          (a : D.host.E) + (b : D.host.E) * D.host.sqrtMinusD := by
+        push_cast; rfl
+      simp only
+      rw [e, hlc, hrK, map_add (f := _), map_mul, map_ratCast, map_ratCast, map_add (f := _), map_mul, map_ratCast, map_ratCast]
+    have hh := map_mem_closure hcont hmem hmaps
+    rw [hyc]
+    exact hh
+  · intro σp hσp
+    have hσc : Continuous σp :=
+      AddMonoidHomClass.continuous_of_bound σp 1 (fun z => by rw [hσp.2 z, one_mul])
+    have hfixS : closure (Set.range fun q : ℚ => (q : ℂ_[p])) ⊆ {z | σp z = z} :=
+      closure_minimal (by rintro _ ⟨q, rfl⟩; exact map_ratCast σp q) (isClosed_eq hσc continuous_id)
+    have hu' : σp u = u := hfixS cu
+    have hv' : σp v = v := hfixS cv
+    have hr' : σp (rK : ℂ_[p]) = -(rK : ℂ_[p]) := by
+      have h := hσp.1 ⟨D.host.sqrtMinusD, hsK⟩
+      have hc : D.host.conj D.host.sqrtMinusD = -D.host.sqrtMinusD := Formalism.BasicNotions.Examples₂.conj_bE D.host
+      change σp (lamC lam (D.host.φ₀ D.host.sqrtMinusD)) =
+        lamC lam (D.host.φ₀ (D.host.conj D.host.sqrtMinusD)) at h
+      rw [hc, hlc, hlc, map_neg, map_neg, ← hrK] at h
+      exact h
+    rw [hyc, map_add (f := _), map_mul, hu', hv', hr', hyuv, map_add (f := _), map_mul, hσu, hσv, hσr]
+    push_cast
+    ring
+
+end Formalism.L2.KerInert
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMConj
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.KerInert
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric
+
+namespace MMConj
+
+theorem not_sq_padic (d p : ℕ) [Fact p.Prime] (hj : jacobiSym (-(d : ℤ)) p = -1) (y : ℚ_[p]) :
+    y ^ 2 ≠ -(d : ℚ_[p]) := by
+  intro hy
+  have hleg : legendreSym p (-(d : ℤ)) = -1 := by rw [jacobiSym.legendreSym.to_jacobiSym]; exact hj
+  have hns : ¬ IsSquare (((-(d : ℤ)) : ℤ) : ZMod p) := (legendreSym.eq_neg_one_iff (p := p)).1 hleg
+  have hnd : ¬ p ∣ d := by
+    intro hd
+    apply hns
+    have h0 : ((d : ℕ) : ZMod p) = 0 := (ZMod.natCast_eq_zero_iff d p).2 hd
+    refine ⟨0, ?_⟩
+    push_cast
+    rw [h0]
+    simp
+  have hdn : ‖(d : ℚ_[p])‖ = 1 := by
+    have h1 : ‖(d : ℚ_[p])‖ ≤ 1 := by exact_mod_cast Padic.norm_int_le_one (p := p) (d : ℤ)
+    have h2 : ¬ ‖(d : ℚ_[p])‖ < 1 := by rw [Padic.norm_natCast_lt_one_iff]; exact hnd
+    linarith [not_lt.1 h2]
+  have hy1 : ‖y‖ ≤ 1 := by
+    have h3 : ‖y‖ ^ 2 = 1 := by rw [← norm_pow, hy, norm_neg, hdn]
+    nlinarith [norm_nonneg y]
+  set z : ℤ_[p] := ⟨y, hy1⟩ with hz
+  have hz2 : z ^ 2 = -(d : ℤ_[p]) := by
+    apply Subtype.ext
+    simp only [hz, PadicInt.coe_neg, PadicInt.coe_natCast]
+    exact hy
+  apply hns
+  refine ⟨PadicInt.toZMod z, ?_⟩
+  have h4 := congrArg (PadicInt.toZMod (p := p)) hz2
+  rw [map_pow, map_neg, map_natCast] at h4
+  push_cast
+  rw [← h4]
+  ring
+
+theorem exists_aut_neg (d p : ℕ) [Fact p.Prime] (hj : jacobiSym (-(d : ℤ)) p = -1) (β : PadicAlgCl p)
+    (hβ : β ^ 2 = -(d : PadicAlgCl p)) : ∃ τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p, τ β = -β := by
+  have hirr : Irreducible (Polynomial.X ^ 2 - Polynomial.C (-(d : ℚ_[p]))) :=
+    X_pow_sub_C_irreducible_of_prime Nat.prime_two (fun b hb => not_sq_padic d p hj b hb)
+  have hmon : (Polynomial.X ^ 2 - Polynomial.C (-(d : ℚ_[p]))).Monic :=
+    Polynomial.monic_X_pow_sub_C _ two_ne_zero
+  have h1 := minpoly.eq_of_irreducible_of_monic (x := β) hirr (by simp [hβ]) hmon
+  have h2 := minpoly.eq_of_irreducible_of_monic (x := -β) hirr (by simp [hβ]) hmon
+  obtain ⟨τ, hτ⟩ := (Normal.minpoly_eq_iff_mem_orbit (F := ℚ_[p]) (E := PadicAlgCl p)).1 (h2.symm.trans h1)
+  exact ⟨τ, hτ⟩
+
+theorem aut_norm {p : ℕ} [Fact p.Prime] (τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) (x : PadicAlgCl p) :
+    ‖τ x‖ = ‖x‖ := by
+  rw [← PadicAlgCl.spectralNorm_eq, ← PadicAlgCl.spectralNorm_eq]
+  exact (spectralNorm_eq_of_equiv τ x).symm
+
+theorem aut_cont {p : ℕ} [Fact p.Prime] (τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) :
+    Continuous ((τ : PadicAlgCl p ≃+* PadicAlgCl p) : PadicAlgCl p →+* PadicAlgCl p) :=
+  (AddMonoidHomClass.isometry_of_norm ((τ : PadicAlgCl p ≃+* PadicAlgCl p) : PadicAlgCl p →+* PadicAlgCl p)
+    (fun x => aut_norm τ x)).continuous
+
+def extC {p : ℕ} [Fact p.Prime] (τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) : ℂ_[p] →+* ℂ_[p] :=
+  UniformSpace.Completion.mapRingHom ((τ : PadicAlgCl p ≃+* PadicAlgCl p) : PadicAlgCl p →+* PadicAlgCl p) (aut_cont τ)
+
+theorem extC_coe {p : ℕ} [Fact p.Prime] (τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) (x : PadicAlgCl p) :
+    extC τ (x : ℂ_[p]) = ((τ x : PadicAlgCl p) : ℂ_[p]) :=
+  UniformSpace.Completion.mapRingHom_coe _ _
+
+theorem extC_norm {p : ℕ} [Fact p.Prime] (τ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) (y : ℂ_[p]) :
+    ‖extC τ y‖ = ‖y‖ := by
+  refine UniformSpace.Completion.induction_on y ?_ ?_
+  · exact isClosed_eq (continuous_norm.comp UniformSpace.Completion.continuous_map) continuous_norm
+  · intro a
+    rw [extC_coe, PadicComplex.norm_extends, PadicComplex.norm_extends, aut_norm]
+
+theorem phi0_algebraic (D : D7) (x : D.host.E) : D.host.φ₀ x ∈ Qbar := by
+  rw [mem_algebraicClosure_iff]
+  exact (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) x).algHom D.host.φ₀.toRatAlgHom
+
+end MMConj
+
+
+open MMConj in
+theorem conjugation_extension_inert : ConjExt := by
+  intro D p _ _ hj lam
+  let L : D.host.E →+* ℂ_[p] := lam.comp (D.host.φ₀.codRestrict Qbar.toSubring (fun z => phi0_algebraic D z))
+  have hL : ∀ x, L x = lamC lam (D.host.φ₀ x) := by
+    intro x
+    simp only [lamC, dif_pos (phi0_algebraic D x)]
+    rfl
+  set b : D.host.E := D.host.sqd with hbdef
+  have hb2 : b ^ 2 = -(D.host.d : D.host.E) := Formalism.BasicNotions.Examples₂.bE_sq D.host
+  have hcb : D.host.conj b = -b := Formalism.BasicNotions.Examples₂.conj_bE D.host
+  obtain ⟨β, hβ⟩ : ∃ β : PadicAlgCl p, β ^ 2 = -(D.host.d : PadicAlgCl p) := IsAlgClosed.exists_pow_nat_eq _ two_pos
+  obtain ⟨τ, hτ⟩ := exists_aut_neg D.host.d p hj β hβ
+  refine ⟨extC τ, ?_, extC_norm τ⟩
+  have e1 : L b ^ 2 = -(D.host.d : ℂ_[p]) := by rw [← map_pow, hb2, map_neg, map_natCast]
+  have e2 : (β : ℂ_[p]) ^ 2 = -(D.host.d : ℂ_[p]) := by
+    rw [PadicComplex.coe_eq, ← map_pow, hβ, map_neg, map_natCast]
+  have hLb : L b = (β : ℂ_[p]) ∨ L b = -(β : ℂ_[p]) := sq_eq_sq_iff_eq_or_eq_neg.1 (e1.trans e2.symm)
+  have hσβ : extC τ (β : ℂ_[p]) = -(β : ℂ_[p]) := by
+    rw [extC_coe, hτ, PadicComplex.coe_eq, PadicComplex.coe_eq, map_neg]
+  have hσLb : extC τ (L b) = L (D.host.conj b) := by
+    rw [hcb, map_neg]
+    rcases hLb with h | h
+    · rw [h, hσβ]
+    · rw [h, map_neg, hσβ, neg_neg]
+  let f : D.host.E →ₐ[ℚ] ℂ_[p] := ((extC τ).comp L).toRatAlgHom
+  let g : D.host.E →ₐ[ℚ] ℂ_[p] := (L.comp (D.host.conj : D.host.E →+* D.host.E)).toRatAlgHom
+  have hfg : b ∈ AlgHom.equalizer f g := hσLb
+  have hK : (D.host.K).toSubalgebra ≤ AlgHom.equalizer f g := by
+    have hK' : D.host.K = IntermediateField.adjoin ℚ {b} := rfl
+    rw [hK', IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic (Algebra.IsAlgebraic.isAlgebraic b)]
+    exact Algebra.adjoin_le (Set.singleton_subset_iff.2 hfg)
+  intro x
+  rw [← hL, ← hL]
+  exact hK x.2
+
+end Formalism.L2.KerInert
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfApproxBasis
+
+section
+
+@[expose] public section
+
+namespace Formalism.L2.KerInert
+
+theorem isomONB_ofLB (hLB : LocBasisMM) : IsomONB :=
+  isomONB_of_facts conjugation_extension_inert hLB rational_coordinates conjugation_fixed_closure
+
+
+variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
+theorem integral_inert_of_approx_basis (hWA : WAPlaces) (hLB : LocBasisMM) : IntInert :=
+  integral_inert_of_weakApprox ⟨hWA, one_theta_orthonormal, isomONB_ofLB hLB⟩
+
+end Formalism.L2.KerInert
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.InertKernelTheory.KernelsIntegralInert
+
+section
 
 @[expose] public section
 
@@ -51,3 +377,5 @@ variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 theorem kernels_integral_inert : IntInert := integral_inert_of_approx_basis weak_approximation_places local_orthonormal_basis
 
 end Formalism.L2.KerInert
+end
+end

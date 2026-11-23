@@ -5,16 +5,15 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ChebotarevFamilies.IpEq
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ChebotarevFamilies.UnipPow
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.CoefficientExtensionPreservesConditionsAndDet
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.ConstMap
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.StableIff
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.ThickNonSS
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.TypeIDisc
+public import Mathlib.RingTheory.PowerSeries.Basic
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -26,11 +25,13 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,8 +52,122 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.FieldTheory.Finite.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.DiscStIff
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ThetaCoefficientMapEq
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.TypeIDisc
+import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.ConstMap
+
+section
+
+@[expose] public section
+
+open Matrix IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.Det.constMap :
+    ∀ {K K' : Type} [Field K] [Finite K] [Field K'] (j : PowerSeries K →+* PowerSeries K'), ∃ ι : K →+* K', ∀ a, j (PowerSeries.C a) = PowerSeries.C (ι a) := by
+  intro K K' _ _ _ j
+  classical
+  haveI := Fintype.ofFinite K
+  set p := ringChar K with hpdef
+  haveI : CharP K p := ringChar.charP K
+  obtain ⟨n, hp, hq⟩ := FiniteField.card K p
+  haveI : Fact p.Prime := ⟨hp⟩
+  set e : K →+* PowerSeries K' := j.comp PowerSeries.C
+  haveI : CharP (PowerSeries K') p := charP_of_injective_ringHom e.injective p
+  have key : ∀ f : PowerSeries K', f ^ (p ^ (n : ℕ)) = f → f = PowerSeries.C (PowerSeries.constantCoeff f) := by
+    intro f hf
+    set c := PowerSeries.constantCoeff f with hcdef
+    have hc : c ^ (p ^ (n : ℕ)) = c := by
+      have h2 := congrArg PowerSeries.constantCoeff hf
+      rw [map_pow] at h2
+      exact h2
+    have hd : (f - PowerSeries.C c) ^ (p ^ (n : ℕ)) = f - PowerSeries.C c := by
+      rw [sub_pow_char_pow, hf, ← map_pow, hc]
+    have hd0 : PowerSeries.constantCoeff (f - PowerSeries.C c) = 0 := by
+      rw [map_sub, PowerSeries.constantCoeff_C, hcdef, sub_self]
+    have hq1 : 1 ≤ p ^ (n : ℕ) - 1 := by
+      have h1 : 2 ≤ p := hp.two_le
+      have h3 : p ≤ p ^ (n : ℕ) := Nat.le_self_pow (PNat.ne_zero n) p
+      omega
+    have hprod : (f - PowerSeries.C c) * ((f - PowerSeries.C c) ^ (p ^ (n : ℕ) - 1) - 1) = 0 := by
+      rw [mul_sub, mul_one, ← pow_succ', Nat.sub_add_cancel (by omega), hd, sub_self]
+    rcases mul_eq_zero.mp hprod with h | h
+    · exact sub_eq_zero.mp h
+    · exfalso
+      have h4 := congrArg PowerSeries.constantCoeff h
+      rw [map_sub, map_pow, hd0, zero_pow (by omega), map_one, map_zero] at h4
+      exact zero_ne_one (sub_eq_zero.mp h4)
+  refine ⟨PowerSeries.constantCoeff.comp e, fun a => ?_⟩
+  have ha : j (PowerSeries.C a) ^ (p ^ (n : ℕ)) = j (PowerSeries.C a) := by
+    rw [← map_pow, ← map_pow, ← hq, FiniteField.pow_card]
+  exact key _ ha
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.StableIff
+
+section
+
+@[expose] public section
+
+open Matrix IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.Det.stableIff :
+    ∀ {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O] {n : ℕ} {r : Resid F O n} (B : UniversalOrdinaryDeterminantRing r) (q : PrimeSpectrum B.B), B.IsStable q ↔ DiscSt B.u.D q.asIdeal := by
+  intro l _ F O _ _ _ n r B q
+  have hk : RingHom.ker (B.toKap q) = q.asIdeal := by
+    rw [UniversalOrdinaryDeterminantRing.toKap, RingHom.ker_comp_of_injective _
+      (algebraMap q.asIdeal.ResidueField (B.kap q)).injective,
+      Ideal.ker_algebraMap_residueField]
+  rw [← hk, Det.discStIff]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DeterminantPadicFree.ThickNonSS
+
+section
+
+@[expose] public section
+
+open Matrix IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.Det.thickNonSS :
+    ∀ {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O] {n : ℕ} {r : Resid F O n} (B : UniversalOrdinaryDeterminantRing r) (q : PrimeSpectrum B.B), B.IsThick q → NonSS (augmentationIdealKernel B.u) (RingHom.id B.B) q.asIdeal := by
+  intro l _ F O _ _ _ n r B q h
+  have he : augmentationIdealKernel B.u = (B.GroupAlgebraKernelIdeal : Set (MonoidAlgebra B.B F.G₀)) := by
+    have : B.u.D.chBar (pairGens B.u) = B.GroupAlgebraKernelIdeal := by
+      unfold UniversalOrdinaryDeterminantRing.GroupAlgebraKernelIdeal UniversalOrdinaryDeterminantRing.E0gens GDet.chBar pairGens
+      rw [Set.union_assoc]
+    unfold augmentationIdealKernel
+    rw [this]
+    rfl
+  refine ⟨B.kap q, inferInstance, B.toKap q, ?_, ?_⟩
+  · ext x
+    unfold UniversalOrdinaryDeterminantRing.toKap
+    rw [RingHom.mem_ker, RingHom.comp_apply, map_eq_zero, Ideal.algebraMap_residueField_eq_zero]
+  · rw [RingHom.comp_id, he]
+    exact h.2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ChebotarevFamilies.PFromAutOf
+
+section
 
 @[expose] public section
 
@@ -179,3 +294,5 @@ theorem pFromAut_of (hN : Norm) (hC : Choice) (hP : ArPl) (h1 : FirstOrderDualAr
     exact hs.imp (Det.stableIff B _).1 fun t => hE ▸ Det.thickNonSS B _ t
 
 end UpperTheory.V.Pa
+end
+end

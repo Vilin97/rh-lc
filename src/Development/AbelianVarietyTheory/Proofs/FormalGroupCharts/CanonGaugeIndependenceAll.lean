@@ -5,9 +5,7 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscrim
 public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.AxisPderivComp
 public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.CanonGaugeSubIsBiadd
 public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FormalSecondPointDerivativeSecondCoordinate
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.GermExpAddAndEvConst
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.SecondOrderMonomial
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.WickVanishOfHalf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.WickOperatorVanishing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,9 +44,237 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.G2Assumption
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.GaugeTrans
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.GEWick
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.DofListSum
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.EvalZeroReplicateAppend
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.SumSplitsEvalTwoWord
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.CcTMulQ
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.Linter.Style
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.NabTrans
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.TruncatedExpSecondEqFull
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.GermExpAddAndEvConst
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open MvPowerSeries ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ ReciprocityTheory.ChartRestriction.G.TB
+
+namespace GlobalTheory
+
+theorem germ_expS_add : G2.ExpAddZeroConstant :=
+  fun _ _ _ _ _ f g hf hg => WickVanishing.gt_expS_add f g hf hg
+
+theorem germ_constantCoeff_ev : G2.ConstantCoeffSubstitution :=
+  fun _ _ _ _ _ a f ha => WickVanishing.gt_const_ev_eq a ha f
+
+theorem germ_expAdd_and_evConst : G2.ExpAddZeroConstant ∧ G2.ConstantCoeffSubstitution :=
+  ⟨germ_expS_add, germ_constantCoeff_ev⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.SecondOrderMonomial
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MvPowerSeries ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ ReciprocityTheory.ChartRestriction.G.TB
+
+namespace GlobalTheory.HalfIdentity
+
+variable {k : Type} [CommRing k] {d : ℕ}
+
+section
+
+variable (F : Fin d → PS k 2 d) {ι : Type} (u : ι → Fin d → k)
+
+theorem T_replicate (n : ℕ) (l : ι) (f : PS k 1 d) :
+    G2.T F u (List.replicate n l) f = (Dof F (u l))^[n] f := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [List.replicate_succ, G2.T_cons, ih, Function.iterate_succ_apply']
+
+theorem foldr_eq_T_word (L : List ι) (m : ι →₀ ℕ) (f : PS k 1 d) :
+    L.foldr (fun l g => (Dof F (u l))^[m l] g) f = G2.T F u (G2.word L m) f := by
+  induction L with
+  | nil => rfl
+  | cons l L ih => rw [List.foldr_cons, ih, G2.word_cons, G2.T_append, T_replicate]
+
+variable [Fintype ι]
+
+theorem dmonOf_eq_T_word (m : ι →₀ ℕ) (f : PS k 1 d) :
+    DmonOf F u m f = G2.T F u (G2.word (Finset.univ : Finset ι).toList m) f :=
+  foldr_eq_T_word F u _ m f
+
+theorem dpolyOf_monomial (m : ι →₀ ℕ) (a : k) (f : PS k 1 d) :
+    DpolyOf F u (MvPolynomial.monomial m a) f = C a * DmonOf F u m f := by
+  classical
+  rw [GE.dpolyOf_eq_sum_of_subset F u _ {m} MvPolynomial.support_monomial_subset,
+    Finset.sum_singleton, MvPolynomial.coeff_monomial, if_pos rfl]
+
+theorem secondOrder_add (c : ι → ι → k) (P Q : MvPolynomial ι k) :
+    secondOrder k c (P + Q) = secondOrder k c P + secondOrder k c Q := by
+  simp only [secondOrder, map_add (f := _), mul_add, Finset.sum_add_distrib]
+
+theorem secondOrder_monomial (c : ι → ι → k) (m : ι →₀ ℕ) (a : k) :
+    secondOrder k c (MvPolynomial.monomial m a) =
+      ∑ x, ∑ y, MvPolynomial.monomial (m - Finsupp.single y 1 - Finsupp.single x 1)
+        (a * (c x y * ((m y * (m - Finsupp.single y 1 : ι →₀ ℕ) x : ℕ) : k))) := by
+  unfold secondOrder
+  refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
+  rw [MvPolynomial.pderiv_monomial, MvPolynomial.pderiv_monomial, MvPolynomial.C_mul_monomial]
+  congr 1
+  push_cast
+  ring
+
+end
+
+theorem halfSt : GE.HalfSt := by
+  intro k _ _ d F ι _ u c q hc hq0 hq1 hq2 P A
+  classical
+  induction P using MvPolynomial.induction_on' with
+  | add P Q hP hQ =>
+    rw [secondOrder_add, GE.dpolyOf_add_P, GE.dpolyOf_add_P, map_add (f := _), map_add (f := _), hP, hQ, mul_add]
+  | monomial m a =>
+    have h2 : algebraMap ℚ k (1 / 2) * 2 = 1 := by
+      rw [show (2 : k) = algebraMap ℚ k 2 from (map_ofNat _ 2).symm, ← map_mul]
+      norm_num
+    have key := G2.sum_splits_evalTwo_word c hc (Finset.univ : Finset ι).toList (Finset.nodup_toList _) m
+      (fun w => constantCoeff (G2.T F u w A))
+    simp only [Finset.sum_map_toList] at key
+
+    rw [dpolyOf_monomial, dmonOf_eq_T_word, map_mul, constantCoeff_C,
+    G2.cc_T_mul_q c F u q hq0 hq1 hq2, secondOrder_monomial, GE.dpolyOf_sum_P, map_sum]
+    have hR : ∑ x, constantCoeff (DpolyOf F u
+        (∑ y, MvPolynomial.monomial (m - Finsupp.single y 1 - Finsupp.single x 1)
+          (a * (c x y * ((m y * (m - Finsupp.single y 1 : ι →₀ ℕ) x : ℕ) : k)))) A) =
+        a * ∑ x, ∑ y, c x y * ((m y * (m - Finsupp.single y 1 : ι →₀ ℕ) x : ℕ) : k) *
+          constantCoeff (G2.T F u (G2.word (Finset.univ : Finset ι).toList
+            (m - Finsupp.single y 1 - Finsupp.single x 1)) A) := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun x _ => ?_
+
+      rw [GE.dpolyOf_sum_P, map_sum, Finset.mul_sum]
+      refine Finset.sum_congr rfl fun y _ => ?_
+      rw [dpolyOf_monomial, dmonOf_eq_T_word, map_mul, constantCoeff_C, mul_assoc]
+    rw [hR, ← key]
+    linear_combination (-(a * ((G2.splits (G2.word (Finset.univ : Finset ι).toList m)).map
+      (fun p => constantCoeff (G2.T F u p.1 A) * G2.ev2 c p.2)).sum)) * h2
+
+end GlobalTheory.HalfIdentity
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.WickVanishOfHalf
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MvPowerSeries ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ ReciprocityTheory.ChartRestriction.G.TB
+
+namespace GlobalTheory
+
+theorem wickVanish_of_half : GE.HalfSt → G2.WickOperatorVanishing := by
+  intro hH k _ _ d F ι _ u c P q hc hq0 hq1 hq2 hP m G
+  obtain ⟨Y, hY⟩ := GE.exp_cut m q hq0 0
+  have hY' : FB.expS k (m • q) = 1 + q * Y := by
+    rw [hY]
+    simp
+  rw [hY', mul_add, mul_one, GE.dpolyOf_add_f, map_add (f := _),
+    show G * (q * Y) = (G * Y) * q by ring, hH k d F ι u c q hc hq0 hq1 hq2 P (G * Y), hP,
+    GE.dpolyOf_zero_P, map_zero, mul_zero, add_zero]
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.G2Assumption
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MvPowerSeries ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
+
+namespace ReciprocityTheory.ChartRestriction.G.TB.G2
+
+theorem galois_twist_preserves_siegel_bound (hA : ExpAddZeroConstant) (hE : ConstantCoeffSubstitution) (hG : CanonicalGaugeDiffBiadditive) (hQ : QuadraticFormDerivatives)
+    (hW : WickOperatorVanishing) : AdmissibilitySecond := by
+  intro R _ d O _ _ _ _ _ k _ _ _ B h h' hh hh' w0 m ι _ u P hP f
+  unfold FB.nabVal
+  set a : Fin 2 → Pt k 1 d := ![pt k d 0, comp1 (B.actK k w0) (pt k d 0)] with hadef
+  set q := ev (n := 1) a (h' - h) with hqdef
+  have hbi := hG R d O k B h h' hh hh'
+  obtain ⟨hq0, hq1, hq2⟩ := hQ R d O k B (h' - h) hbi w0
+  have hac : ∀ j i, constantCoeff (a j i) = 0 := by
+    intro j i
+    fin_cases j
+    · simp [hadef, pt]
+    · show constantCoeff (ev (n := 1) ![pt k d 0] (B.actK k w0 i)) = 0
+      rw [hE k d 1 1 ![pt k d 0] _ (fun j i => by fin_cases j; simp [pt])]
+      simp only [FB.actK]
+      rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_map,
+        MvPowerSeries.coeff_zero_eq_constantCoeff_apply, B.A.const, map_zero]
+  have hs : HasSubst (fun p : Fin 2 × Fin d => a p.1 p.2) :=
+    hasSubst_of_constantCoeff_zero fun p => hac p.1 p.2
+  have hL' : B.hL k h' w0 = B.hL k h w0 + q := by
+    simp only [FB.hL, hqdef, ev]
+    rw [subst_sub hs]
+    ring
+  have hh0 : constantCoeff h = 0 := by
+    have h1 := hE k d 2 1 ![0, pt k d 0] h (fun j i => by fin_cases j <;> simp [pt])
+    rw [hh.ax0] at h1
+    simpa using h1.symm
+  have hL0 : constantCoeff (B.hL k h w0) = 0 := by
+    simp only [FB.hL]
+    rw [hE k d 2 1 _ h hac, hh0]
+  have hexp : FB.expS k ((m : k) • B.hL k h' w0) =
+      FB.expS k ((m : k) • B.hL k h w0) * FB.expS k ((m : k) • q) := by
+    rw [hL', smul_add]
+    exact hA k 1 d _ _ (by rw [MvPowerSeries.smul_eq_C_mul, map_mul, hL0, mul_zero])
+      (by rw [MvPowerSeries.smul_eq_C_mul, map_mul, hq0, mul_zero])
+  rw [hexp, ← mul_assoc]
+  symm
+  exact hW k d (B.FK k) ι u
+    (fun l l' => dotProduct (u l) ((bilinPart k (h' - h)).mulVec ((dAct k B w0).mulVec (u l'))) +
+      dotProduct (u l') ((bilinPart k (h' - h)).mulVec ((dAct k B w0).mulVec (u l))))
+    P q (fun l l' => add_comm _ _) hq0 (fun l => hq1 (u l)) (fun l l' => hq2 (u l) (u l')) hP (m : k)
+    (f * FB.expS k ((m : k) • B.hL k h w0))
+
+end ReciprocityTheory.ChartRestriction.G.TB.G2
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.CanonGaugeIndependenceAll
+
+section
 
 @[expose] public section
 
@@ -66,3 +292,5 @@ theorem canonGauge_independence_all : AdmissibilitySecond ∧ GaugeExpSt ∧ Gau
     gaugeExp_holds, WickVanishing.gauge_second_columns_of_exp gaugeExp_holds, WickVanishing.connection_translation_of_poly ChartTrans.transPolySt⟩
 
 end GlobalTheory
+end
+end

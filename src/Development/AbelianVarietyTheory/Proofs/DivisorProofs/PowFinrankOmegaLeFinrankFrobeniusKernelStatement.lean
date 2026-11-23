@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ToSpanSingletonConstGenInjective
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankOmegaLeFinrankFrobeniusKernel
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ToBaseChangePtsBijective
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsFrobGBaseChange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +45,188 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboundarySmul
+import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRigidExtensionsEqHeightAndDimAddDualStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankSpanPowPDivGroupLevelLeStatement
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankLeFrobeniusKernelMulSpanPrimePowers
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+set_option autoImplicit false
+
+noncomputable section
+
+open Coalgebra Bialgebra
+
+namespace GlobalTheory.PDiv
+
+def IterFrobBase (K : Type) (p r : ℕ) : Type := K
+
+namespace IterFrobBase
+
+variable (K : Type) (p r : ℕ) [Field K]
+
+instance : Field (IterFrobBase K p r) := inferInstanceAs (Field K)
+
+variable [hp : Fact p.Prime] [CharP K p]
+
+instance : Algebra (IterFrobBase K p r) K :=
+  (SS.FrobField.powHom K p r hp.out (CharP.cast_eq_zero K p)).toAlgebra
+
+instance (H : Type) [CommRing H] [HopfAlgebra K H] : HopfAlgebra (IterFrobBase K p r) H :=
+  inferInstanceAs (HopfAlgebra K H)
+
+end IterFrobBase
+
+end GlobalTheory.PDiv
+
+namespace GlobalTheory.PDiv
+
+variable (p : ℕ) [hp : Fact p.Prime] (K H : Type) [Field K] [CharP K p] [CommRing H]
+  [HopfAlgebra K H] (r : ℕ)
+
+omit hp in
+theorem natCast_eq_zero_of_charP_algebra (A : Type) [CommRing A] [Algebra K A] : (p : A) = 0 := by
+  rw [← map_natCast (algebraMap K A), CharP.cast_eq_zero, map_zero]
+
+def iterFrobSemi : SemiBialgHom (algebraMap (IterFrobBase K p r) K) H H where
+  toRingHom := SS.FrobField.powHom H p r hp.out (natCast_eq_zero_of_charP_algebra p K H)
+  smul_map c a := by
+    change (c • a) ^ p ^ r = ((c : K) ^ p ^ r) • a ^ p ^ r
+    rw [smul_pow]
+  counit_map a := by
+    change counit (R := K) (a ^ p ^ r) = (counit (R := K) a) ^ p ^ r
+    rw [counit_pow]
+  comul_map a := by
+    have key : ∀ c : H ⊗[IterFrobBase K p r] H,
+        SS.FrobField.powHom (H ⊗[K] H) p r hp.out (natCast_eq_zero_of_charP_algebra p K _)
+          (@id (H ⊗[K] H) c) =
+        TensorProduct.map (σ₁₂ := algebraMap (IterFrobBase K p r) K)
+          ⟨⟨SS.FrobField.powHom H p r hp.out (natCast_eq_zero_of_charP_algebra p K H),
+            map_add _⟩, fun c a => by
+              change (c • a) ^ p ^ r = ((c : K) ^ p ^ r) • a ^ p ^ r
+              rw [smul_pow]⟩
+          ⟨⟨SS.FrobField.powHom H p r hp.out (natCast_eq_zero_of_charP_algebra p K H),
+            map_add _⟩, fun c a => by
+              change (c • a) ^ p ^ r = ((c : K) ^ p ^ r) • a ^ p ^ r
+              rw [smul_pow]⟩ c := by
+      intro c
+      induction c with
+      | add x y hx hy =>
+        rw [map_add (f := _), ← hx, ← hy]
+        exact map_add _ (@id (H ⊗[K] H) x) (@id (H ⊗[K] H) y)
+      | tmul x y =>
+        change (x ⊗ₜ[K] y) ^ p ^ r = (x ^ p ^ r) ⊗ₜ[K] (y ^ p ^ r)
+        exact Algebra.TensorProduct.tmul_pow x y _
+    change comul (R := K) (a ^ p ^ r) = _
+    rw [comul_pow]
+    exact key (comul a)
+
+def iterRelFrob : K ⊗[IterFrobBase K p r] H →ₐc[K] H := (iterFrobSemi p K H r).liftBC
+
+theorem iterRelFrob_tmul (c : K) (a : H) : iterRelFrob p K H r (c ⊗ₜ a) = c • a ^ p ^ r :=
+  SemiBialgHom.liftBC_tmul (iterFrobSemi p K H r) c a
+
+end GlobalTheory.PDiv
+
+namespace GlobalTheory.PDiv
+
+theorem finrank_le_frobKer_mul_span_pow (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p]
+    [CommRing H] [HopfAlgebra K H] [Module.Finite K H] (r : ℕ) :
+    Module.finrank K H ≤ Module.finrank K (H ⧸ frobKerIdeal (p ^ r) K H) *
+      Module.finrank K (Submodule.span K (Set.range fun a : H => a ^ p ^ r)) := by
+  set f := iterRelFrob p K H r
+  rw [finrank_eq_ker_mul_range K H _ f]
+  refine Nat.mul_le_mul ?_ ?_
+  · have hle : frobKerIdeal (p ^ r) K H ≤ kerIdeal f := by
+      refine Ideal.span_le.2 ?_
+      rintro _ ⟨a, ha, rfl⟩
+      have ha' : counit (R := IterFrobBase K p r) a = 0 := ha
+      have hb : (1 : K) ⊗ₜ[IterFrobBase K p r] a ∈
+          augIdeal K (K ⊗[IterFrobBase K p r] H) := by
+        change counit (R := K) ((1 : K) ⊗ₜ[IterFrobBase K p r] a) = 0
+        rw [TensorProduct.counit_tmul, ha', zero_smul]
+      have e : f ((1 : K) ⊗ₜ a) = a ^ p ^ r := by
+        rw [iterRelFrob_tmul, one_smul]
+      show a ^ p ^ r ∈ _
+      rw [← e]
+      exact Ideal.mem_map_of_mem _ hb
+    exact LinearMap.finrank_le_finrank_of_surjective
+      (f := (Ideal.Quotient.factorₐ K hle).toLinearMap)
+      (Ideal.Quotient.factor_surjective hle)
+  · refine Submodule.finrank_mono ?_
+    rintro _ ⟨x, rfl⟩
+    induction x with
+    | add x y hx hy =>
+      rw [map_add (f := _)]
+      exact Submodule.add_mem _ hx hy
+    | tmul c a =>
+      change f (c ⊗ₜ a) ∈ _
+      rw [iterRelFrob_tmul]
+      exact Submodule.smul_mem _ c (Submodule.subset_span ⟨a, rfl⟩)
+
+end GlobalTheory.PDiv
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankLeFrobeniusKernelMulSpanPrimePowersStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+theorem _root_.GlobalTheory.T.finrank_le_frobeniusKernel_mul_span_primePowers : ∀ (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p] [CommRing H] [HopfAlgebra K H] [Module.Finite K H] (r : ℕ), Module.finrank K H ≤ Module.finrank K (H ⧸ frobKerIdeal (p ^ r) K H) * Module.finrank K (Submodule.span K (Set.range fun a : H => a ^ p ^ r)) := by
+  first | exact @GlobalTheory.PDiv.finrank_le_frobKer_mul_span_pow | exact GlobalTheory.PDiv.finrank_le_frobKer_mul_span_pow | (intros; apply GlobalTheory.PDiv.finrank_le_frobKer_mul_span_pow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankOmegaLeFinrankFrobeniusKernel
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+namespace GlobalTheory.PDivGroup
+
+theorem pow_finrank_omega_le_finrank_frobKer : ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h : (p : K) = 0)
+    (G : PDivGroup p K), ∀ r : ℕ,
+    (p ^ r) ^ Module.finrank K G.omega ≤ Module.finrank K (G.A r ⧸ frobKerIdeal (p ^ r) K (G.A r)) := by
+  intro p _ K _ h G r
+  haveI : CharP K p := (CharP.charP_iff_prime_eq_zero (Fact.out : p.Prime)).2 h
+  have hN : Module.finrank K (G.A r) = p ^ (r * G.height) := by
+    have := G.rank_eq r (IsLocalRing.closedPoint K)
+    rwa [Module.rankAtStalk_eq_finrank_of_free] at this
+  have hdim := (GlobalTheory.T.finrank_rigidExtensions_eq_height_and_dim_add_dual p K h G).2.2.2
+  have hord := GlobalTheory.T.finrank_le_frobeniusKernel_mul_span_primePowers p K (G.A r) r
+  have hspan := GlobalTheory.T.finrank_span_pow_pDivGroup_level_le p K h G r
+  have hpos : 0 < (p ^ r) ^ Module.finrank K G.dual.omega :=
+    pow_pos (pow_pos (Fact.out : p.Prime).pos _) _
+  have key : (p ^ r) ^ Module.finrank K G.omega * (p ^ r) ^ Module.finrank K G.dual.omega ≤
+      Module.finrank K (G.A r ⧸ frobKerIdeal (p ^ r) K (G.A r)) * (p ^ r) ^ Module.finrank K G.dual.omega := by
+    rw [← pow_add, hdim, ← pow_mul, ← hN]
+    exact hord.trans (Nat.mul_le_mul_left _ hspan)
+  exact Nat.le_of_mul_le_mul_right key hpos
+
+end GlobalTheory.PDivGroup
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankOmegaLeFinrankFrobeniusKernelStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +234,5 @@ open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv G
 
 theorem _root_.GlobalTheory.T.pow_finrank_omega_le_finrank_frobeniusKernel : ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h : (p : K) = 0) (G : PDivGroup p K), ∀ r : ℕ, (p ^ r) ^ Module.finrank K G.omega ≤ Module.finrank K (G.A r ⧸ frobKerIdeal (p ^ r) K (G.A r)) := by
   first | exact @GlobalTheory.PDivGroup.pow_finrank_omega_le_finrank_frobKer | exact GlobalTheory.PDivGroup.pow_finrank_omega_le_finrank_frobKer | (intros; apply GlobalTheory.PDivGroup.pow_finrank_omega_le_finrank_frobKer <;> assumption)
+end
+end

@@ -12,25 +12,28 @@ import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HolomorphicDiscInAf
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LatticeTangentVectorsAffineOpen
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelPullbackEquivalence
 public import Development.WeilBound.CoreStatements.PluriharmonicCharts.ChartPeriods
-public import Development.WeilBound.CoreStatements.PluriharmonicCharts.ExistsIsDerivAt0Loc
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.TangentBijectionOfValues
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.TopLePreimageOfValAtNeZero
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.IsDerivAt0OfIsPullback
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +41,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,11 +53,70 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.VerticalDerivativeInCoordinates
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCRing
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.ExpRowsPf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.UnLocal
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.BdryChart
+
+-- Source module: Development.WeilBound.CoreStatements.PluriharmonicCharts.ExistsIsDerivAt0Loc
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj TensorProduct
+
+noncomputable section
+
+namespace PositivityTheory.Xgp.c_bm_exists_period
+
+open GlobalTheory GlobalTheory.FibreDeriv GlobalTheory.VerticalDeriv
+
+theorem exists_isDerivAt0_loc {g : ℕ} {Z : Scheme.{0}} {B : Set (Fin g → ℂ)} {e : (Fin g → ℂ) → (Sp ℂ ⟶ Z)}
+    (hol : IsHolTo B e) (hB : 0 ∈ B) (w : Fin g → ℂ) :
+    ∃ v : Sp (DualNumber ℂ) ⟶ Z, IsDerivAt0 e w v := by
+  obtain ⟨U, hU, hxU, -⟩ := exists_isAffineOpen_mem_and_subset (X := Z) (U := ⊤)
+    (x := e 0 (default : PrimeSpectrum ℂ)) trivial
+  have h0 : ⊤ ≤ e 0 ⁻¹ᵁ U := (top_le_preimage_iff_mem _ U).2 hxU
+  have hd := LocalLift.hol_differentiableAt hol hB h0
+  let J : Γ(Z, U) →+* DualNumber ℂ :=
+    { toFun := fun f => jet w (fun z => valAt' (e z) U f)
+      map_one' := by
+        have : (fun z => valAt' (e z) U 1) =ᶠ[nhds 0] fun _ => 1 := by
+          filter_upwards [LocalLift.hol_eventually_mem hol hB h0] with z hz
+          exact valAt'_one _ hz.2
+        rw [jet_congr w this, jet_const, map_one]
+      map_zero' := by
+        simp only [valAt'_zero]
+        rw [jet_const, map_zero]
+      map_add' := fun f f' => by
+        simp only [valAt'_add]
+        exact jet_add w (hd f) (hd f')
+      map_mul' := fun f f' => by
+        simp only [valAt'_mul]
+        exact jet_mul w (hd f) (hd f') }
+  obtain ⟨v, hv, hve⟩ := TangentOrigin.exists_evalPt_eq hU J
+  refine ⟨v, isDerivAt0_of_affine ?_ hU hv fun a => ⟨hd a, DFunLike.congr_fun hve a⟩⟩
+  refine TangentOrigin.ext_evalPt hU ((TangentOrigin.top_le_preimage_iff v U).1 hv) h0 (RingHom.ext fun f => ?_)
+  refine (TangentOrigin.evalPt_spMap_comp TangentOrigin.fstC v U hv _ f).trans ?_
+  rw [hve, ← TangentOrigin.valAt'_eq_evalPt]
+  exact fst_jet w (fun z => valAt' (e z) U f)
+
+end PositivityTheory.Xgp.c_bm_exists_period
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PluriharmonicCharts.IsDerivAt0Congr
+
+section
 
 @[expose] public section
 
@@ -303,3 +364,6 @@ theorem model_periods {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMa
     simp only [Category.assoc]
 
 end PositivityTheory.Xgp.c_bm_exists_period
+end
+end
+end

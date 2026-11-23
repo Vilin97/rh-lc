@@ -5,9 +5,7 @@ public import Mathlib.Algebra.Module.Projective
 public import Mathlib.RingTheory.Finiteness.Defs
 public import Mathlib.RingTheory.Ideal.Quotient.Defs
 public import Mathlib.RingTheory.LocalRing.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIdempotentsOfComaximalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoordsRangeIdempotentOfRetractStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuotientRetractPiQuotientOfSummandStatement
+public import Mathlib.RingTheory.Ideal.Span
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +25,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,7 +47,16 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.BitVec
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Module.BigOperators
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoordsRangeIdempotentOfRetractStatement
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.RingTheory.Finiteness.Cardinality
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.InfUniv
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
@@ -60,6 +68,200 @@ import Mathlib.Topology.Sheaves.Presheaf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIdempotentsOfComaximal
+
+section
+
+@[expose] public section
+
+universe u
+
+namespace GlobalTheory
+
+theorem eigenIdempotents_of_comaximal
+    {C : Type} [CommRing C] {A : Type} [CommRing A] {W : Type u} [AddCommGroup W] [Module C W]
+    (σ : A →+* Module.End C W) (a : ℕ) (χ : Fin a → A →+* C) :
+    (∀ i j, i ≠ j → Ideal.span (Set.range fun x => χ i x - χ j x) = ⊤) →
+    ∃ e : Fin a → Module.End C W,
+      (∀ i (T : Module.End C W), (∀ c, T * σ c = σ c * T) → T * e i = e i * T) ∧
+      (∀ i w, (∀ c, σ c w = χ i c • w) → e i w = w) ∧
+      (∀ i j w, j ≠ i → (∀ c, σ c w = χ j c • w) → e i w = 0) := by
+  classical
+  intro hcom
+  have hc : ∀ i j, ∃ c : A →₀ C, i ≠ j → (c.sum fun x r => r * (χ i x - χ j x)) = 1 := by
+    intro i j
+    by_cases h : i = j
+    · exact ⟨0, fun h' => absurd h h'⟩
+    · have h1 : (1 : C) ∈ Ideal.span (Set.range fun x => χ i x - χ j x) := by
+        rw [hcom i j h]; trivial
+      obtain ⟨c, hc⟩ := (Finsupp.mem_span_range_iff_exists_finsupp).1 h1
+      exact ⟨c, fun _ => by simpa [smul_eq_mul] using hc⟩
+  choose c hc using hc
+  let Z : Fin a → Fin a → Module.End C W := fun i j =>
+    (c i j).sum fun x r => r • (σ x - χ j x • (1 : Module.End C W))
+  have hZ : ∀ i j k (w : W), (∀ x, σ x w = χ k x • w) →
+      Z i j w = ((c i j).sum fun x r => r * (χ k x - χ j x)) • w := by
+    intro i j k w hw
+    simp only [Z, Finsupp.sum, LinearMap.sum_apply, Finset.sum_smul]
+    refine Finset.sum_congr rfl fun x _ => ?_
+    simp [hw, sub_smul, mul_smul, smul_sub]
+  have hZc : ∀ i j (T : Module.End C W), (∀ c, T * σ c = σ c * T) → Commute T (Z i j) := by
+    intro i j T hT
+    simp only [Z, Finsupp.sum]
+    refine Commute.sum_right _ _ _ fun x _ => ?_
+    exact ((show Commute T (σ x) from hT x).sub_right ((Commute.one_right T).smul_right _)).smul_right _
+  have hlist : ∀ (i : Fin a) (s : Fin a → C) (w : W) (L : List (Fin a)),
+      (∀ j ∈ L, Z i j w = s j • w) → (L.map (Z i)).prod w = (L.map s).prod • w := by
+    intro i s w L hL
+    induction L with
+    | nil => simp
+    | cons j L ih =>
+      have ih' := ih (fun k hk => hL k (List.mem_cons_of_mem _ hk))
+      simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, ih', map_smul,
+        hL j List.mem_cons_self, smul_smul]
+      rw [mul_comm]
+  refine ⟨fun i => (((List.finRange a).filter (· ≠ i)).map (Z i)).prod, ?_, ?_, ?_⟩
+  · intro i T hT
+    exact (Commute.list_prod_right _ _ fun y hy => by
+      obtain ⟨j, _, rfl⟩ := List.mem_map.1 hy
+      exact hZc i j T hT).eq
+  · intro i w hw
+    rw [hlist i (fun j => (c i j).sum fun x r => r * (χ i x - χ j x)) w _
+      (fun j _ => hZ i j i w hw)]
+    rw [List.prod_eq_one, one_smul]
+    intro y hy
+    obtain ⟨j, hj, rfl⟩ := List.mem_map.1 hy
+    have hji : j ≠ i := by simpa using (List.mem_filter.1 hj).2
+    exact hc i j (Ne.symm hji)
+  · intro i j w hji hw
+    rw [hlist i (fun k => (c i k).sum fun x r => r * (χ j x - χ k x)) w _
+      (fun k _ => hZ i k j w hw)]
+    rw [List.prod_eq_zero, zero_smul]
+    refine List.mem_map.2 ⟨j, ?_, ?_⟩
+    · exact List.mem_filter.2 ⟨List.mem_finRange j, by simpa using hji⟩
+    · simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIdempotentsOfComaximalStatement
+
+section
+
+@[expose] public section
+
+universe u
+
+theorem _root_.GlobalTheory.T.exists_eigen_idempotents_of_comaximal : ∀ {C : Type} [CommRing C] {A : Type} [CommRing A] {W : Type u} [AddCommGroup W] [Module C W]
+  (σ : A →+* Module.End C W) (a : ℕ) (χ : Fin a → A →+* C),
+  (∀ i j, i ≠ j → Ideal.span (Set.range fun x => χ i x - χ j x) = ⊤) →
+  ∃ e : Fin a → Module.End C W,
+    (∀ i (T : Module.End C W), (∀ c, T * σ c = σ c * T) → T * e i = e i * T) ∧
+    (∀ i w, (∀ c, σ c w = χ i c • w) → e i w = w) ∧
+    (∀ i j w, j ≠ i → (∀ c, σ c w = χ j c • w) → e i w = 0) := by
+  first | exact @GlobalTheory.eigenIdempotents_of_comaximal | exact GlobalTheory.eigenIdempotents_of_comaximal | (intros; apply GlobalTheory.eigenIdempotents_of_comaximal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuotientRetractPiQuotientOfSummand
+
+section
+
+@[expose] public section
+
+universe u
+
+namespace GlobalTheory
+
+theorem quotient_retract_pi_quotient :
+    ∀ {C : Type} [CommRing C] [IsLocalRing C] (I : Ideal C) {H : Type u} [AddCommGroup H] [Module C H]
+      [Module.Finite C H] [Module.Projective C H] (F : Submodule C H), I • ⊤ ≤ F →
+      (∃ E' M : Submodule C H, IsCompl E' M ∧ E' ⊔ I • ⊤ = F) →
+      ∃ (m : ℕ) (s : (H ⧸ F) →ₗ[C] (Fin m → C ⧸ I)) (r : (Fin m → C ⧸ I) →ₗ[C] (H ⧸ F)),
+        r ∘ₗ s = LinearMap.id := by
+  intro C _ _ I H _ _ _ _ F hIF hEx
+  obtain ⟨E', M, hc, hF⟩ := hEx
+  obtain ⟨n, π, hπ⟩ := Module.Finite.exists_fin' C H
+  obtain ⟨σ, hσ⟩ := Module.projective_lifting_property π LinearMap.id hπ
+  let P : H →ₗ[C] M := Submodule.linearProjOfIsCompl M E' hc.symm
+  let q : H →ₗ[C] H := M.subtype ∘ₗ P
+  have hPq : ∀ x, P (q x) = P x := fun x => Submodule.linearProjOfIsCompl_apply_left hc.symm (P x)
+  have hqq : ∀ x, q (q x) = q x := fun x => congrArg Subtype.val (hPq x)
+  have hqE : ∀ x ∈ E', q x = 0 := fun x hx => by
+    have h0 : P x = 0 := (Submodule.linearProjOfIsCompl_apply_eq_zero_iff hc.symm).2 hx
+    show ((P x : M) : H) = 0
+    rw [h0]; rfl
+  have hxq : ∀ x, x - q x ∈ F := by
+    intro x
+    rw [← hF]
+    apply Submodule.mem_sup_left
+    have h0 : P (x - q x) = 0 := by rw [map_sub, hPq, sub_self]
+    exact (Submodule.linearProjOfIsCompl_apply_eq_zero_iff hc.symm).1 h0
+  have hσπ : ∀ x, π (σ x) = x := fun x => LinearMap.congr_fun hσ x
+  let s0 : H →ₗ[C] (Fin n → C ⧸ I) :=
+    (LinearMap.pi fun k => (Submodule.mkQ I) ∘ₗ LinearMap.proj k) ∘ₗ σ ∘ₗ q
+  have hs0 : F ≤ LinearMap.ker s0 := by
+    rw [← hF]
+    refine sup_le (fun x hx => ?_) ?_
+    · rw [LinearMap.mem_ker]
+      show (LinearMap.pi fun k => (Submodule.mkQ I) ∘ₗ LinearMap.proj k) (σ (q x)) = 0
+      rw [hqE x hx, map_zero, map_zero]
+    · refine Submodule.smul_le.2 (fun c hcI y _ => ?_)
+      rw [LinearMap.mem_ker, map_smul]
+      funext k
+      show c • (Submodule.mkQ I (σ (q y) k)) = 0
+      rw [← map_smul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+      exact I.mul_mem_right _ hcI
+  let s : (H ⧸ F) →ₗ[C] (Fin n → C ⧸ I) := F.liftQ s0 hs0
+  let e : Fin n → (Fin n → C) := fun k j => if k = j then 1 else 0
+  have hk : ∀ k, I ≤ LinearMap.ker (LinearMap.toSpanSingleton C (H ⧸ F) (F.mkQ (q (π (e k))))) := by
+    intro k c hcI
+    rw [LinearMap.mem_ker, LinearMap.toSpanSingleton_apply, ← map_smul, Submodule.mkQ_apply,
+      Submodule.Quotient.mk_eq_zero]
+    exact hIF (Submodule.smul_mem_smul hcI Submodule.mem_top)
+  let g : Fin n → ((C ⧸ I) →ₗ[C] (H ⧸ F)) := fun k => I.liftQ _ (hk k)
+  let r : (Fin n → C ⧸ I) →ₗ[C] (H ⧸ F) := ∑ k, g k ∘ₗ LinearMap.proj k
+  refine ⟨n, s, r, ?_⟩
+  apply Submodule.linearMap_qext
+  ext x
+  have h1 : r (s (F.mkQ x)) = F.mkQ (q (π (σ (q x)))) := by
+
+    rw [LinearMap.pi_apply_eq_sum_univ π (σ (q x)), map_sum, map_sum]
+    simp only [r, s, g, LinearMap.sum_apply, LinearMap.comp_apply,
+      LinearMap.proj_apply, Submodule.liftQ_apply, Submodule.mkQ_apply, s0, LinearMap.pi_apply]
+    refine Finset.sum_congr rfl (fun k _ => ?_)
+    rw [LinearMap.toSpanSingleton_apply, map_smul, ← Submodule.Quotient.mk_smul]
+  rw [LinearMap.comp_apply, LinearMap.comp_apply, h1, hσπ, hqq]
+  show F.mkQ (q x) = F.mkQ x
+  rw [Submodule.mkQ_apply, Submodule.mkQ_apply, eq_comm, Submodule.Quotient.eq]
+  exact hxq x
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuotientRetractPiQuotientOfSummandStatement
+
+section
+
+@[expose] public section
+
+universe u
+
+theorem _root_.GlobalTheory.T.quotient_retract_pi_quotient_of_summand : ∀ {C : Type} [CommRing C] [IsLocalRing C] (I : Ideal C) {H : Type u} [AddCommGroup H] [Module C H]
+  [Module.Finite C H] [Module.Projective C H] (F : Submodule C H), I • ⊤ ≤ F →
+  (∃ E' M : Submodule C H, IsCompl E' M ∧ E' ⊔ I • ⊤ = F) →
+  ∃ (m : ℕ) (s : (H ⧸ F) →ₗ[C] (Fin m → C ⧸ I)) (r : (Fin m → C ⧸ I) →ₗ[C] (H ⧸ F)),
+    r ∘ₗ s = LinearMap.id := by
+  first | exact @GlobalTheory.quotient_retract_pi_quotient | exact GlobalTheory.quotient_retract_pi_quotient | (intros; apply GlobalTheory.quotient_retract_pi_quotient <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEigenCoordinatesIdempotentRangeQuotient
+
+section
 
 @[expose] public section
 
@@ -213,3 +415,5 @@ theorem exists_eigen_coordinates_range_quot : ∀ {C : Type} [CommRing C] [IsLoc
       intro h; exact hii (congrArg Sigma.fst h)
 
 end GlobalTheory
+end
+end

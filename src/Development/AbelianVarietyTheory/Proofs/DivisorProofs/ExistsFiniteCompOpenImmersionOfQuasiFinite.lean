@@ -4,16 +4,11 @@ public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
 public import Mathlib.AlgebraicGeometry.Normalization
 public import Mathlib.Combinatorics.Quiver.ReflQuiver
 public import Mathlib.Order.CompletePartialOrder
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayMapBijectiveOfRangeEqSubalgebraStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteCoequifiberedSubalgebraStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetAwayMapSubalgebraBijectiveStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormalizationBasicOpenCoverStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelSpecMapIsIsoOverBasicOpenStatement
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Mathlib.RingTheory.Localization.Away.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -37,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,6 +44,172 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.AlgebraicGeometry.Sites.SmallAffineZariski
+import Mathlib.Topology.Sheaves.Presheaf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteCoequifiberedSubalgebraStatement
+public import Mathlib.RingTheory.FiniteType
+import Mathlib.Data.Finset.Functor
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormalizationBasicOpenCoverStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelSpecMapIsIsoOverBasicOpenStatement
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayMapBijectiveOfRangeEqSubalgebra
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits Scheme.AffineZariskiSite
+
+namespace GlobalTheory
+
+theorem awayMap_bijective_of_range_eq_subalgebra :
+    ∀ (R A B : Type) [CommRing R] [CommRing A] [CommRing B] [Algebra R B] (C : Subalgebra R B) (φ : A →+* B), Function.Injective φ → ∀ (_ : ∀ x, x ∈ C ↔ ∃ y, φ y = x) (a : A) (b : B), φ a = b → (∀ hb : b ∈ C, Function.Bijective (Localization.awayMap C.val.toRingHom (⟨b, hb⟩ : C))) → Function.Bijective (Localization.awayMap φ a) := by
+  intro R A B _ _ _ _ C φ hφ hC a b hab hloc
+  subst hab
+  have hmem : ∀ y, φ y ∈ C := fun y => (hC _).2 ⟨y, rfl⟩
+  let f : A →+* C := φ.codRestrict C.toSubsemiring hmem
+  have hf : Function.Bijective f := by
+    refine ⟨fun x y h => hφ (congrArg Subtype.val h), fun c => ?_⟩
+    obtain ⟨y, hy⟩ := (hC c.1).1 c.2
+    exact ⟨y, Subtype.ext hy⟩
+  let e : A ≃+* C := RingEquiv.ofBijective f hf
+  have H : Submonoid.map e.toMonoidHom (Submonoid.powers a) = Submonoid.powers (f a) :=
+    Submonoid.map_powers e.toMonoidHom a
+  have h1 : Function.Bijective (Localization.awayMap f a) := by
+    have hb := (IsLocalization.ringEquivOfRingEquiv (Localization.Away a)
+      (Localization.Away (f a)) e H).bijective
+    have key : ∀ z, Localization.awayMap f a z =
+        IsLocalization.ringEquivOfRingEquiv (Localization.Away a) (Localization.Away (f a)) e H z := by
+      intro z
+      rw [IsLocalization.ringEquivOfRingEquiv_apply]
+      rfl
+    rw [show (Localization.awayMap f a : Localization.Away a → Localization.Away (f a)) = _ from funext key]
+    exact hb
+  have h2 : Localization.awayMap φ a =
+      (Localization.awayMap C.val.toRingHom (f a)).comp (Localization.awayMap f a) := by
+    simp only [Localization.awayMap, IsLocalization.Away.map]
+    rw [IsLocalization.map_comp_map]
+    rfl
+  rw [h2]
+  exact (hloc (hmem a)).comp h1
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayMapBijectiveOfRangeEqSubalgebraStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits Scheme.AffineZariskiSite
+
+theorem _root_.GlobalTheory.T.awayMap_bijective_of_injective_of_range_eq_subalgebra : ∀ (R A B : Type) [CommRing R] [CommRing A] [CommRing B] [Algebra R B] (C : Subalgebra R B) (φ : A →+* B), Function.Injective φ → ∀ (_ : ∀ x, x ∈ C ↔ ∃ y, φ y = x) (a : A) (b : B), φ a = b → (∀ hb : b ∈ C, Function.Bijective (Localization.awayMap C.val.toRingHom (⟨b, hb⟩ : C))) → Function.Bijective (Localization.awayMap φ a) := by
+  first | exact @GlobalTheory.awayMap_bijective_of_range_eq_subalgebra | exact GlobalTheory.awayMap_bijective_of_range_eq_subalgebra | (intros; apply GlobalTheory.awayMap_bijective_of_range_eq_subalgebra <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetAwayMapSubalgebraBijective
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+namespace GlobalTheory
+
+theorem exists_finset_awayMap_subalgebra_bijective :
+    ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra R B] (g : Finset B),
+      (∀ b ∈ g, Algebra.FiniteType R (Localization.Away b)) →
+      ∃ s : Finset B, (↑g : Set B) ⊆ ↑s ∧ ∀ C : Subalgebra R B, (↑s : Set B) ⊆ ↑C →
+        ∀ b ∈ g, ∀ hb : b ∈ C,
+          Function.Bijective (Localization.awayMap C.val.toRingHom (⟨b, hb⟩ : C)) := by
+  intro R B _ _ _ g hg
+  classical
+  have key : ∀ b ∈ g, ∃ t : Finset B, ∀ C : Subalgebra R B, (↑t : Set B) ⊆ ↑C → b ∈ C →
+      ∀ x : B, ∃ m : ℕ, b ^ m * x ∈ C := by
+    intro b hb
+    obtain ⟨t, ht⟩ := (hg b hb).out
+    refine ⟨t.image fun z => (IsLocalization.sec (Submonoid.powers b) z).1, fun C hC hbC x => ?_⟩
+    have main : ∀ z : Localization.Away b, ∃ (m : ℕ) (c : B), c ∈ C ∧
+        z * algebraMap B _ b ^ m = algebraMap B _ c := by
+      intro z
+      have hz : z ∈ Algebra.adjoin R (t : Set (Localization.Away b)) := ht ▸ Algebra.mem_top
+      induction hz using Algebra.adjoin_induction with
+      | mem z hz =>
+        obtain ⟨m, hm⟩ := (IsLocalization.sec (Submonoid.powers b) z).2.2
+        refine ⟨m, (IsLocalization.sec (Submonoid.powers b) z).1, hC ?_, ?_⟩
+        · simp only [Finset.coe_image]
+          exact ⟨z, hz, rfl⟩
+        · rw [← map_pow]
+          have := IsLocalization.sec_spec (Submonoid.powers b) z
+          rw [← hm] at this
+          exact this
+      | algebraMap r =>
+        exact ⟨0, algebraMap R B r, C.algebraMap_mem r, by
+          rw [pow_zero, mul_one, IsScalarTower.algebraMap_apply R B]⟩
+      | add x y _ _ hx hy =>
+        obtain ⟨m, c, hc, e⟩ := hx
+        obtain ⟨n, d, hd, e'⟩ := hy
+        refine ⟨m + n, c * b ^ n + d * b ^ m,
+          add_mem (mul_mem hc (pow_mem hbC _)) (mul_mem hd (pow_mem hbC _)), ?_⟩
+        rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← e, ← e']
+        ring
+      | mul x y _ _ hx hy =>
+        obtain ⟨m, c, hc, e⟩ := hx
+        obtain ⟨n, d, hd, e'⟩ := hy
+        refine ⟨m + n, c * d, mul_mem hc hd, ?_⟩
+        rw [map_mul, ← e, ← e']
+        ring
+    obtain ⟨m, c, hc, e⟩ := main (algebraMap B _ x)
+    rw [← map_pow, ← map_mul] at e
+    obtain ⟨⟨_, k, rfl⟩, hk⟩ := (IsLocalization.eq_iff_exists (Submonoid.powers b) _).1 e
+    refine ⟨k + m, ?_⟩
+    have : b ^ (k + m) * x = b ^ k * c := by
+      have hk' : b ^ k * (x * b ^ m) = b ^ k * c := hk
+      rw [← hk']; ring
+    rw [this]
+    exact mul_mem (pow_mem hbC _) hc
+  choose! t ht using key
+  refine ⟨g ∪ g.biUnion t, by simp, fun C hC b hb hbC => ⟨?_, ?_⟩⟩
+  · refine (Localization.awayMap_injective_iff).2 fun a ha => ⟨0, ?_⟩
+    have : a = 0 := Subtype.ext ha
+    simp [this]
+  · refine (Localization.awayMap_surjective_iff).2 fun x => ?_
+    obtain ⟨m, hm⟩ := ht b hb C (fun y hy => hC (by
+      simp only [Finset.coe_union, Finset.coe_biUnion, Set.mem_union, Set.mem_iUnion]
+      exact Or.inr ⟨b, hb, hy⟩)) hbC x
+    exact ⟨⟨_, hm⟩, m, rfl⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetAwayMapSubalgebraBijectiveStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+theorem _root_.GlobalTheory.T.exists_finset_awayMap_bijective_of_subalgebra_ge : ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra R B] (g : Finset B), (∀ b ∈ g, Algebra.FiniteType R (Localization.Away b)) → ∃ s : Finset B, (↑g : Set B) ⊆ ↑s ∧ ∀ C : Subalgebra R B, (↑s : Set B) ⊆ ↑C → ∀ b ∈ g, ∀ hb : b ∈ C, Function.Bijective (Localization.awayMap C.val.toRingHom (⟨b, hb⟩ : C)) := by
+  first | exact @GlobalTheory.exists_finset_awayMap_subalgebra_bijective | exact GlobalTheory.exists_finset_awayMap_subalgebra_bijective | (intros; apply GlobalTheory.exists_finset_awayMap_subalgebra_bijective <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteCompOpenImmersionOfQuasiFinite
+
+section
 
 @[expose] public section
 
@@ -257,3 +416,5 @@ theorem exists_finite_openImmersion : ∀ (U X : Scheme.{0}) (f : U ⟶ X), IsNo
   exact g.preimage_mono (le_iSup Wp ⟨k, ⟨b, hbG⟩⟩) h3
 
 end GlobalTheory.ZMTFin
+end
+end

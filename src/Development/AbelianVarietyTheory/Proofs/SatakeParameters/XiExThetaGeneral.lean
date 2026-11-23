@@ -4,19 +4,22 @@ public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NatCas
 public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.ConditionIffAdditiveMaps
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsTraceCompatibleTorusEmbeddingStandardTorus
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefInTranslate
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAddMonoidHomOfLinearRelations
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HomLatticeVolumeCompletionSplitPlaceStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelThetaRelationOfIndicatorRelationSplitStatement
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSp
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Group.Action.Pi
+public import Mathlib.Algebra.Module.Defs
+public import Mathlib.Algebra.Ring.Rat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -24,8 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,9 +47,83 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Module.Equiv.Defs
+public import Mathlib.Algebra.Module.Submodule.Ker
+public import Mathlib.Algebra.Module.Submodule.Range
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HomLatticeVolumeCompletionSplitPlaceStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelThetaRelationOfIndicatorRelationSplitStatement
+import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSp
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ImportsExtra
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NormBoundTheorem
+
+theorem main : ∀ (M ι T : Type) [inst : AddCommGroup T] [inst_1 : Module ℚ T] (Y : ι → M → ℚ) (t : ι → T), (∀ (s : Finset ι) (c : ι → ℚ), ∑ i ∈ s, c i • Y i = (0 : M → ℚ) → ∑ i ∈ s, c i • t i = (0 : T)) → ∃ (Ξ : (M → ℚ) →+ T), ∀ (i : ι), (Ξ : (M → ℚ) → T) (Y i) = t i := by
+  intro M ι T _ _ Y t h
+  classical
+  let L : (ι →₀ ℚ) →ₗ[ℚ] (M → ℚ) := Finsupp.linearCombination ℚ Y
+  let L' : (ι →₀ ℚ) →ₗ[ℚ] T := Finsupp.linearCombination ℚ t
+  have hker : LinearMap.ker L ≤ LinearMap.ker L' := by
+    intro x hx
+    rw [LinearMap.mem_ker] at hx ⊢
+    simp only [L, L', Finsupp.linearCombination_apply, Finsupp.sum] at hx ⊢
+    exact h x.support (fun i => x i) hx
+  let g0 : LinearMap.range L →ₗ[ℚ] T :=
+    ((LinearMap.ker L).liftQ L' hker).comp (L.quotKerEquivRange.symm : LinearMap.range L →ₗ[ℚ] _)
+  obtain ⟨g, hg⟩ := LinearMap.exists_extend g0
+  refine ⟨g.toAddMonoidHom, fun i => ?_⟩
+  have hmem : Y i ∈ LinearMap.range L := ⟨Finsupp.single i 1, by simp [L]⟩
+  have h1 : g (Y i) = g0 ⟨Y i, hmem⟩ := by
+    rw [← hg]; rfl
+  show g (Y i) = t i
+  rw [h1]
+  have h2 : (⟨Y i, hmem⟩ : LinearMap.range L) = ⟨L (Finsupp.single i 1), LinearMap.mem_range_self L _⟩ := by
+    ext1; simp [L]
+  rw [h2]
+  simp only [g0, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
+    LinearMap.quotKerEquivRange_symm_apply_image, Submodule.liftQ_apply]
+  simp [L']
+
+end GlobalTheory.NormBoundTheorem
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAddMonoidHomOfLinearRelations
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem exists_addMonoidHom_of_linear_relations : ∀ (M ι T : Type) [AddCommGroup T] [Module ℚ T] (Y : ι → M → ℚ) (t : ι → T), (∀ (s : Finset ι) (c : ι → ℚ), ∑ i ∈ s, c i • Y i = 0 → ∑ i ∈ s, c i • t i = 0) → ∃ Ξ : (M → ℚ) →+ T, ∀ i, Ξ (Y i) = t i := by
+  first
+  | exact @_root_.GlobalTheory.NormBoundTheorem.main
+  | exact _root_.GlobalTheory.NormBoundTheorem.main
+  | (apply _root_.GlobalTheory.NormBoundTheorem.main <;> assumption)
+  | (intros; apply _root_.GlobalTheory.NormBoundTheorem.main <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.NormBoundTheorem.main <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.NormBoundTheorem.main ..)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.XiExThetaGeneral
+
+section
 
 @[expose] public section
 
@@ -353,3 +428,6 @@ theorem xiEx_theta_general : letI := fun D : D7 => D.host.cmStar; ∀ (D : D7) (
   rw [h1, smul_inv_smul₀ (hkk La La')]
 
 end GlobalTheory.XiGen
+end
+end
+end

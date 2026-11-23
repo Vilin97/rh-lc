@@ -2,10 +2,7 @@ module
 
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.PartSplitOfOne
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.HformSingleLeft
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.PartBetween
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SpComp
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SpDen
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SplHformZero
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.HformSelfStar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,13 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,6 +27,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -49,9 +41,191 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SplHformZero
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.PartBetween
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PIW.AdelClassFin
+
+open NumberField
+
+theorem partBetween : PartBetween := by
+  intro E _ _ m N hN δ hδ
+  obtain ⟨k, n, hn⟩ := Submodule.fg_iff_exists_fin_generating_family.mp hN
+  have hne : Ideal.span {δ} ≠ ⊥ := by rwa [Ne, Ideal.span_singleton_eq_bot]
+  haveI : Finite ((𝓞 E) ⧸ Ideal.span {δ}) := by
+    first
+      | exact (Ideal.absNorm_ne_zero_iff _).mp (by rw [Ne, Ideal.absNorm_eq_zero_iff]; exact hne)
+      | exact Ideal.finiteQuotientOfFreeOfNeBot _ hne
+  have hδE : algebraMap (𝓞 E) E δ ≠ 0 := by
+    intro h
+    apply hδ
+    exact IsFractionRing.injective (𝓞 E) E (by rw [h, map_zero])
+  let g := Function.surjInv (Ideal.Quotient.mk_surjective (I := Ideal.span {δ}))
+  let T : Set (Fin m → E) := Set.range (fun c : Fin k → ((𝓞 E) ⧸ Ideal.span {δ}) =>
+    (algebraMap (𝓞 E) E δ)⁻¹ • ∑ i, (algebraMap (𝓞 E) E (g (c i))) • n i)
+  have hT : T.Finite := Set.finite_range _
+  have key : ∀ x : Fin m → E, δ • x ∈ N → ∃ t ∈ T, x - t ∈ N := by
+    intro x hx
+    rw [← hn] at hx
+    obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).mp hx
+    have hq : ∀ i, ∃ q : 𝓞 E, algebraMap (𝓞 E) E (a i) -
+        algebraMap (𝓞 E) E (g (Ideal.Quotient.mk (Ideal.span {δ}) (a i))) =
+        algebraMap (𝓞 E) E δ * algebraMap (𝓞 E) E q := by
+      intro i
+      have h := Function.surjInv_eq (Ideal.Quotient.mk_surjective (I := Ideal.span {δ}))
+        (Ideal.Quotient.mk (Ideal.span {δ}) (a i))
+      rw [Ideal.Quotient.eq, Ideal.mem_span_singleton] at h
+      obtain ⟨c, hc⟩ := h
+      refine ⟨-c, ?_⟩
+      rw [← map_sub, ← map_mul, mul_neg, ← hc, neg_sub]
+    choose q hq using hq
+    refine ⟨_, ⟨fun i => Ideal.Quotient.mk (Ideal.span {δ}) (a i), rfl⟩, ?_⟩
+    have hx2 : x = (algebraMap (𝓞 E) E δ)⁻¹ • ∑ i, a i • n i := by
+      rw [ha, ← algebraMap_smul E δ x, smul_smul, inv_mul_cancel₀ hδE, one_smul]
+    have e1 : ∀ i, a i • n i - (algebraMap (𝓞 E) E (g (Ideal.Quotient.mk (Ideal.span {δ}) (a i)))) • n i =
+        (algebraMap (𝓞 E) E δ) • (q i • n i) := by
+      intro i
+      rw [← algebraMap_smul E (a i), ← algebraMap_smul E (q i), smul_smul, ← sub_smul, hq i]
+    have hdiff : x - (algebraMap (𝓞 E) E δ)⁻¹ • ∑ i, (algebraMap (𝓞 E) E
+        (g (Ideal.Quotient.mk (Ideal.span {δ}) (a i)))) • n i = ∑ i, q i • n i := by
+      rw [hx2, ← smul_sub, ← Finset.sum_sub_distrib]
+      simp_rw [e1]
+      rw [← Finset.smul_sum, smul_smul, inv_mul_cancel₀ hδE, one_smul]
+    show x - (algebraMap (𝓞 E) E δ)⁻¹ • ∑ i, (algebraMap (𝓞 E) E
+        (g (Ideal.Quotient.mk (Ideal.span {δ}) (a i)))) • n i ∈ N
+    rw [hdiff, ← hn]
+    exact (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).mpr ⟨q, rfl⟩
+  apply Set.Finite.subset (hT.powerset.image (fun S => N ⊔ Submodule.span (𝓞 E) S))
+  intro M hM
+  obtain ⟨hNM, hMδ⟩ := hM
+  refine ⟨(M : Set (Fin m → E)) ∩ T, Set.inter_subset_right, ?_⟩
+  apply le_antisymm
+  · exact sup_le hNM (Submodule.span_le.mpr Set.inter_subset_left)
+  · intro x hx
+    obtain ⟨t, htT, hxt⟩ := key x (hMδ x hx)
+    have htM : t ∈ M := by
+      have h := M.sub_mem hx (hNM hxt)
+      rwa [sub_sub_cancel] at h
+    have e : x = (x - t) + t := by abel
+    rw [e]
+    exact Submodule.add_mem _ (Submodule.mem_sup_left hxt)
+      (Submodule.mem_sup_right (Submodule.subset_span ⟨htM, htT⟩))
+
+end PIW.AdelClassFin
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SpComp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PIW.AdelClassFin
+
+open scoped Matrix
+
+theorem spComp : SpComp := by
+  intro E _ k m P R hPR
+  have hsurj : Function.Surjective (Matrix.toLin' P) := fun v =>
+    ⟨R *ᵥ v, by rw [Matrix.toLin'_apply, Matrix.mulVec_mulVec, hPR, Matrix.one_mulVec]⟩
+  have hsum := LinearMap.finrank_range_add_finrank_ker (Matrix.toLin' P)
+  have hrank : Module.finrank E (LinearMap.range (Matrix.toLin' P)) = k := by
+    rw [LinearMap.range_eq_top.mpr hsurj, finrank_top, Module.finrank_fin_fun]
+  rw [hrank, Module.finrank_fin_fun] at hsum
+  have hker : Module.finrank E (LinearMap.ker (Matrix.toLin' P)) = m - k := by omega
+  refine ⟨by omega, ?_⟩
+  let b : Module.Basis (Fin (m - k)) E (LinearMap.ker (Matrix.toLin' P)) := Module.finBasisOfFinrankEq E _ hker
+  have hU : ∀ y : Fin (m - k) → E,
+      (Matrix.of fun i j => (b j : Fin m → E) i) *ᵥ y =
+        ((b.equivFun.symm y : LinearMap.ker (Matrix.toLin' P)) : Fin m → E) := by
+    intro y
+    ext i
+    rw [Module.Basis.equivFun_symm_apply]
+    simp [Matrix.mulVec, dotProduct, mul_comm]
+  refine ⟨Matrix.of fun i j => (b j : Fin m → E) i, ?_, ?_, ?_⟩
+  · ext i j
+    have h := congrFun (LinearMap.mem_ker.mp (b j).2) i
+    rw [Matrix.toLin'_apply] at h
+    exact h
+  · intro y y' h
+    simp only [hU] at h
+    exact b.equivFun.symm.injective (Subtype.ext h)
+  · intro w hw
+    refine ⟨b.equivFun ⟨w, LinearMap.mem_ker.mpr (by rw [Matrix.toLin'_apply]; exact hw)⟩, ?_⟩
+    rw [hU, LinearEquiv.symm_apply_apply]
+
+end PIW.AdelClassFin
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.SpDen
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PIW.AdelClassFin
+
+open NumberField
+
+theorem spDen : SpDen := by
+  intro E _ _ k X
+  have h : ∀ p : Fin k × Fin k, ∃ D : ℕ, 1 ≤ D ∧ (D : E) * X p.1 p.2 ∈ (algebraMap (𝓞 E) E).range := by
+    intro p
+    obtain ⟨y, hy, hint⟩ := IsAlgebraic.exists_integral_multiple (IsFractionRing.isAlgebraic_iff ℤ ℚ E |>.mpr (.of_finite ℚ (X p.1 p.2)))
+    refine ⟨y.natAbs, Int.natAbs_pos.2 hy, ?_⟩
+    have hmem : (y : E) * X p.1 p.2 ∈ (algebraMap (𝓞 E) E).range :=
+      ⟨⟨(y : E) * X p.1 p.2, by rw [mem_integralClosure_iff]; simpa [zsmul_eq_mul] using hint⟩, rfl⟩
+    have h2 : (y.natAbs : ℤ) = y ∨ (y.natAbs : ℤ) = -y := by
+      rcases Int.natAbs_eq y with h | h
+      · exact Or.inl h.symm
+      · right; linarith
+    rw [← Int.cast_natCast]
+    rcases h2 with h2 | h2 <;> rw [h2]
+    · exact hmem
+    · rw [Int.cast_neg, neg_mul]; exact neg_mem hmem
+  choose Dp hDp1 hDp using h
+  refine ⟨∏ p, Dp p, Finset.one_le_prod' fun p _ => hDp1 p, fun i j => ?_⟩
+  obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem Dp (Finset.mem_univ (i, j))
+  rw [hc, Nat.cast_mul, mul_comm (Dp (i, j) : E), mul_assoc]
+  exact Subring.mul_mem _ ⟨c, by simp⟩ (hDp (i, j))
+
+end PIW.AdelClassFin
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.BlkMulVecCat
+
+section
 
 @[expose] public section
 
@@ -305,3 +479,6 @@ theorem spOne : SpOne := by
       exact hu
 
 end PIW.AdelClassFin
+end
+end
+end

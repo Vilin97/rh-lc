@@ -4,13 +4,12 @@ public import Formalism.HermitianCurvature.ArchimedeanUniformConstantsCompactSup
 public import Mathlib.Topology.Separation.CompletelyRegular
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockEstimatesSumForm
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ComponentFamilySettingOfSetting
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConcreteBoundOfRecursion
+public import Formalism.HermitianCurvature.StatementC
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualCovolumeChangeOfVariables
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstNormRealNonneg
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelSizesJointMean
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelZeroEstimateProduct
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBJoint
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RealInputsBuiltClosedForm
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SecondPolynomialClauses
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPIntegralOfPlaces
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalConditionsAndQuotientSplitting
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,8 +46,161 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBJoint
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RealInputsBuiltClosedForm
+public import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPIntegralOfPlaces
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+import Mathlib.Tactic.Basify
 import Mathlib.Topology.Sheaves.Presheaf
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.ConcreteBoundOfRecursion
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+open Finset Formalism.FourierDecayAlt Formalism.FourierDecayAlt.C
+
+noncomputable section
+
+theorem real_inputs_by_parts : C.RealInputsConcreteOfParts := by
+  intro hEmb hEF hTD hLG hGram hWP hWave hPI hLift hBlock hE hCut E _ _ _ Wp Wq _ _ _ _ S jv H _ _ Vt C₄ hg1 hg2 hP hG hI hP1 hP23 hT hLE hPG Kr hK0 Th e
+  exact ⟨hGram E Wp Wq S hP hG Kr hK0 Th e, hWP E Wp Wq S hG Kr hK0 Th e, hWave E Wp Wq S hG hI hP1 Kr hK0 Th e,
+    hPI hEmb hEF hTD hLG E Wp Wq S hg1 hg2 hP hG hI Kr hK0 Th e, hLift E Wp Wq S hP23 Kr hK0 Th e,
+    hBlock E Wp Wq S C₄ hT Kr hK0 Th e, hE E Wp Wq S jv hG hLE Kr hK0 Th e,
+    hCut E Wp Wq S H Vt hPG Kr hK0 Th e⟩
+
+theorem real_inputs_concrete_holds : C.RealInputsConcrete :=
+  real_inputs_by_parts embedding_facts euclidean_frame trace_dual_alt
+    lattice_facts_general gram_positive_semidefinite words_pos_of_parts wave_estimate_of_integral
+    poisson_input_of_parts lift_estimate_of_base block_estimate_of_base level_zero_estimate_product
+    cutoff_of_parts
+
+end
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.SecondPolynomialClauses
+
+section
+
+@[expose] public section
+
+open Finset
+open scoped ComplexOrder
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.SecondPolynomialClauses
+
+open Formalism.FourierDecayAlt.PairingProductCorollary
+
+theorem third_polynomial_prime_combination : LeadingBlockSeveralPlacesBound := by
+  intro ι _ _ K abelian₂ t t' Ntt Nt Nt' S1 S2 ht hLam hNt hNt' hS1 hS2 hG hA hB
+  obtain ⟨m, hm⟩ : ∃ m : ι → ℝ, m = fun v => minFac (2 * abelian₂ v) (oAbs t t' v) K := ⟨_, rfl⟩
+  have hm0 : ∀ v, 0 ≤ m v := by
+    intro v; rw [hm]; dsimp only; unfold minFac; split_ifs with h
+    · exact pow_nonneg (div_nonneg (by linarith [hLam v]) (norm_nonneg _)) _
+    · exact zero_le_one
+  have key : ∀ v (s : ℝ), 0 ≤ s → s * oAbs t t' v ≤ 2 → 2 * abelian₂ v < oAbs t t' v →
+      (s * abelian₂ v) ^ (2 * K) ≤ m v ^ 2 := by
+    intro v s hs hso hlt
+    have ho : 0 < oAbs t t' v := lt_of_le_of_lt (by linarith [hLam v]) hlt
+    have hmv : m v = (2 * abelian₂ v / oAbs t t' v) ^ K := by rw [hm]; dsimp only; rw [minFac, if_pos hlt]
+    rw [hmv, ← pow_mul, mul_comm K 2]
+    apply pow_le_pow_left₀ (mul_nonneg hs (hLam v))
+    rw [le_div_iff₀ ho]; nlinarith [mul_le_mul_of_nonneg_right hso (hLam v)]
+  have h1 : ∀ v, oAbs t t' v ≤ 1 / ‖t v‖ + 1 / ‖t' v‖ := by
+    intro v; unfold oAbs
+    calc _ ≤ ‖1 / t v‖ + ‖1 / t' v‖ := norm_sub_le _ _
+      _ = _ := by rw [norm_div, norm_div, norm_one]
+  have hto : ∀ v, ‖t v‖ ≤ ‖t' v‖ → ‖t v‖ * oAbs t t' v ≤ 2 := by
+    intro v hle
+    have ha : 0 < ‖t v‖ := norm_pos_iff.mpr (ht v).1
+    have hb : 0 < ‖t' v‖ := norm_pos_iff.mpr (ht v).2
+    calc ‖t v‖ * oAbs t t' v ≤ ‖t v‖ * (1 / ‖t v‖ + 1 / ‖t' v‖) := mul_le_mul_of_nonneg_left (h1 v) ha.le
+      _ = 1 + ‖t v‖ / ‖t' v‖ := by rw [mul_add, mul_one_div_cancel ha.ne', mul_one_div]
+      _ ≤ 2 := by linarith [(div_le_one hb).mpr hle]
+  have hto' : ∀ v, ¬ ‖t v‖ ≤ ‖t' v‖ → ‖t' v‖ * oAbs t t' v ≤ 2 := by
+    intro v hle
+    have ha : 0 < ‖t v‖ := norm_pos_iff.mpr (ht v).1
+    have hb : 0 < ‖t' v‖ := norm_pos_iff.mpr (ht v).2
+    calc ‖t' v‖ * oAbs t t' v ≤ ‖t' v‖ * (1 / ‖t v‖ + 1 / ‖t' v‖) := mul_le_mul_of_nonneg_left (h1 v) hb.le
+      _ = ‖t' v‖ / ‖t v‖ + 1 := by rw [mul_add, mul_one_div_cancel hb.ne', mul_one_div]
+      _ ≤ 2 := by linarith [(div_le_one ha).mpr (le_of_lt (not_le.mp hle))]
+  have hPA : (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖),
+      (‖t v‖ * abelian₂ v) ^ (2 * K)) ≤
+      ∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖), m v ^ 2 :=
+    Finset.prod_le_prod₀ (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
+      (fun v hv => by
+        obtain ⟨hv1, hv2⟩ := (Finset.mem_filter.mp hv).2
+        exact key v _ (norm_nonneg _) (hto v hv2) hv1)
+  have hPB : (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖),
+      (‖t' v‖ * abelian₂ v) ^ (2 * K)) ≤
+      ∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖), m v ^ 2 :=
+    Finset.prod_le_prod₀ (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
+      (fun v hv => by
+        obtain ⟨hv1, hv2⟩ := (Finset.mem_filter.mp hv).2
+        exact key v _ (norm_nonneg _) (hto' v hv2) hv1)
+  have hdisj : Disjoint (univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖))
+      (univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖)) :=
+    Finset.disjoint_filter.mpr fun v _ hv1 hv2 => hv2.2 hv1.2
+  have hM : (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖), m v ^ 2) *
+      (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖), m v ^ 2) =
+      (∏ v, m v) ^ 2 := by
+    rw [← Finset.prod_union hdisj, ← Finset.prod_pow]
+    apply Finset.prod_subset (Finset.subset_univ _)
+    intro v _ hv
+    have hnot : ¬ 2 * abelian₂ v < oAbs t t' v := by
+      intro hlt
+      apply hv
+      by_cases hle : ‖t v‖ ≤ ‖t' v‖
+      · exact Finset.mem_union_left _ (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hlt, hle⟩)
+      · exact Finset.mem_union_right _ (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hlt, hle⟩)
+    rw [hm]; dsimp only; rw [minFac, if_neg hnot, one_pow]
+  have hM0 : 0 ≤ ∏ v, m v := Finset.prod_nonneg fun v _ => hm0 v
+  have hgoal : ∏ v, minFac (2 * abelian₂ v) (oAbs t t' v) K = ∏ v, m v := by rw [hm]
+  rw [hgoal]
+  have hsq : ‖Ntt‖ ^ 2 ≤ ((∏ v, m v) * ((S1 + S2) / 2)) ^ 2 := by
+    calc ‖Ntt‖ ^ 2 ≤ Nt * Nt' := hG
+      _ ≤ ((∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖),
+            (‖t v‖ * abelian₂ v) ^ (2 * K)) * S1) *
+          ((∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖),
+            (‖t' v‖ * abelian₂ v) ^ (2 * K)) * S2) :=
+          mul_le_mul hA hB hNt' (le_trans hNt hA)
+      _ ≤ ((∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖), m v ^ 2) * S1) *
+          ((∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖), m v ^ 2) * S2) :=
+          mul_le_mul (mul_le_mul_of_nonneg_right hPA hS1) (mul_le_mul_of_nonneg_right hPB hS2)
+            (mul_nonneg (Finset.prod_nonneg fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _) hS2)
+            (mul_nonneg (Finset.prod_nonneg fun v _ => sq_nonneg _) hS1)
+      _ = (∏ v, m v) ^ 2 * (S1 * S2) := by rw [← hM]; ring
+      _ ≤ (∏ v, m v) ^ 2 * ((S1 + S2) / 2) ^ 2 :=
+          mul_le_mul_of_nonneg_left (by nlinarith [sq_nonneg (S1 - S2)]) (sq_nonneg _)
+      _ = _ := by ring
+  exact (pow_le_pow_iff_left₀ (norm_nonneg _) (mul_nonneg hM0 (by linarith)) two_ne_zero).mp hsq
+
+end Formalism.FourierDecayAlt.P.SecondPolynomialClauses
+
+theorem Formalism.FourierDecayAlt.P.third_polynomial_prime_combine : Formalism.FourierDecayAlt.PairingProductCorollary.LeadingBlockSeveralPlacesBound := by
+  exact Formalism.FourierDecayAlt.P.SecondPolynomialClauses.third_polynomial_prime_combination
+
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.RealInputsClosedCompactSupportOf
+
+section
 
 @[expose] public section
 
@@ -176,3 +327,5 @@ namespace Formalism.FourierDecayAlt.P
 open Formalism.FourierDecayAlt
 
 end Formalism.FourierDecayAlt.P
+end
+end

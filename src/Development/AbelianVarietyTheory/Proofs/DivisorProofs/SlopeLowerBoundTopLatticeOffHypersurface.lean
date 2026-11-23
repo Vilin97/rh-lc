@@ -4,16 +4,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOn
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClaimSOfNumbers
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffLinearSubstColumnMemIntegralLatticeStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetIsMultiHomogeneous
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetRationalSectionsEqPowProductLinearFormsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRightInvOfSpan
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsShortColumnsDetNeZeroHilbertSamuelStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankDeepestFiltrationStepEqRationalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermFamComplexTensorNormColumnUnitSpheresLeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsMultiHomogeneousCofactor
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeDegreeGeHeightPolynomialVectorsDetStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonomialCountsDegreeAndWeightedSum
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MultiformHeightLowerBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowDvdOfSpecialisations
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetRationalSectionsEqPowProductLinearForms
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -52,9 +42,154 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRightInvOfSpan
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsShortColumnsDetNeZeroHilbertSamuel
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankDeepestFiltrationStepEqRationalStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermFamComplexTensorNormColumnUnitSpheresLeStatement
+public import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.SemistableReduction.AevalIsWeightedHomogeneous
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasBoundedPolesGlobalData
+import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOneLeLambdaZero
+import Development.AbelianVarietyTheory.Definitions.Divisors.JoinCastSucc
+import Development.AbelianVarietyTheory.Definitions.Divisors.LinearIndependentBasisCoords
+import Development.AbelianVarietyTheory.Definitions.Divisors.MemSubPtsCutBaseChangeIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.PointHeight
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeDegreeGeHeightPolynomialVectorsDetStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonomialCountsDegreeAndWeightedSum
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MultiformHeightLowerBound
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowDvdOfSpecialisations
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.TypeStar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetRationalSectionsEqPowProductLinearFormsStatement
+
+section
+
+@[expose] public section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+theorem _root_.GlobalTheory.T.det_rational_sections_eq_pow_product_linearForms : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A] [Module F A] [Module (𝓞 F) A] [IsScalarTower (𝓞 F) F A] (S : Sys F A), S.Hyp → ∀ (E A' : Type) [Field E] [Algebra F E] [AddCommGroup A'] [Module E A'] (s : Fin S.D → Fin S.N → F) (δ : ℕ) (Φ : S.Flat E A' (fun i k => algebraMap F E (s i k)) δ) (d : ℕ) (b : Module.Basis (Fin d) F (S.V S.T)) (c : Fin d → A →ₗ[F] F), S.IsCo b c → ∀ (col : Fin d → S.Col) (m : Fin δ → S.V 0) (ix : (Σ a : Fin (S.T - S.D), MonoDeg (Fin S.D) a) × Fin δ ↪ Fin d), S.Shape δ col m ix → S.deepRank s ≤ (Finset.univ.filter fun k => (col k).j = S.D).card → ∃ γ : E, ∀ l : Fin S.N → E, aeval (join (fun i k => algebraMap F E (s i k)) l) (S.det c col) = γ * (∏ p, ∑ k, l k * Φ.y p k) ^ S.expo := by
+  first | exact @GlobalTheory.HSShort.det_rational_eq_pow | exact GlobalTheory.HSShort.det_rational_eq_pow | (intros; apply GlobalTheory.HSShort.det_rational_eq_pow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsShortColumnsDetNeZeroHilbertSamuelStatement
+
+section
+
+@[expose] public section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+theorem _root_.GlobalTheory.T.exists_short_columns_det_ne_zero_hilbertSamuel : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A] [Module F A] [Module (𝓞 F) A] [IsScalarTower (𝓞 F) F A] (S : Sys F A), S.Hyp → ∀ (E A' : Type) [Field E] [Algebra F E] [AddCommGroup A'] [Module E A'] (s : Fin S.D → Fin S.N → F) (δ : ℕ) (Φ : S.Flat E A' (fun i k => algebraMap F E (s i k)) δ) (d : ℕ) (b : Module.Basis (Fin d) F (S.V S.T)) (c : Fin d → A →ₗ[F] F), S.IsCo b c → ∃ (col : Fin d → S.Col) (m : Fin δ → S.V 0) (ix : (Σ a : Fin (S.T - S.D), MonoDeg (Fin S.D) a) × Fin δ ↪ Fin d), S.Shape δ col m ix ∧ S.ShortCols col ∧ (Finset.univ.filter fun k => (col k).j = S.D).card = S.deepRank s ∧ S.det c col ≠ 0 := by
+  first | exact @GlobalTheory.HSShort.ChooseCols.exists_cols | exact GlobalTheory.HSShort.ChooseCols.exists_cols | (intros; apply GlobalTheory.HSShort.ChooseCols.exists_cols <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsMultiHomogeneousCofactor
+
+section
+
+@[expose] public section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+namespace GlobalTheory.CofactorHom
+
+theorem wcomp_mul_of_left {σ F : Type} [Field F] (w : σ → ℕ) (n : ℕ) {P : MvPolynomial σ F} {k : ℕ}
+    (hP : IsWeightedHomogeneous w P k) (Q : MvPolynomial σ F) :
+    weightedHomogeneousComponent w n (P * Q) =
+      if k ≤ n then P * weightedHomogeneousComponent w (n - k) Q else 0 := by
+  classical
+  let := weightedGradedAlgebra F w
+  have h := DirectSum.coe_decompose_mul_of_left_mem (weightedHomogeneousSubmodule F w) (a := P) (b := Q) n
+    ((mem_weightedHomogeneousSubmodule F w k P).2 hP)
+  have e : ∀ (m : ℕ) (R : MvPolynomial σ F),
+      ((DirectSum.decompose (weightedHomogeneousSubmodule F w) R m : weightedHomogeneousSubmodule F w m) :
+        MvPolynomial σ F) = weightedHomogeneousComponent w m R :=
+    fun m R => weightedDecomposition.decompose'_apply F w R m
+  rw [e, e] at h
+  exact h
+
+theorem weight_add_of_mul {σ F : Type} [Field F] (w : σ → ℕ) {P Q : MvPolynomial σ F} {k m : ℕ}
+    (hPQ : P * Q ≠ 0) (hP : IsWeightedHomogeneous w P k) (hm : IsWeightedHomogeneous w (P * Q) m)
+    (s : σ →₀ ℕ) (hs : s ∈ Q.support) : k + Finsupp.weight w s = m := by
+  classical
+  have hP0 : P ≠ 0 := left_ne_zero_of_mul hPQ
+  set j := Finsupp.weight w s
+  have hc : weightedHomogeneousComponent w j Q ≠ 0 := by
+    intro h0
+    have := congrArg (AddMonoidAlgebra.coeff · s) h0
+    apply (mem_support_iff.mp hs)
+    simpa only [coeff_weightedHomogeneousComponent, j, ite_true,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using this
+
+  have hne : weightedHomogeneousComponent w (k + j) (P * Q) ≠ 0 := by
+    simp only [wcomp_mul_of_left w (k + j) hP Q, Nat.le_add_right, ite_true,
+      Nat.add_sub_cancel_left]
+    exact mul_ne_zero hP0 hc
+  by_contra hkm
+  exact hne (hm.weightedHomogeneousComponent_ne (k + j) hkm)
+
+end GlobalTheory.CofactorHom
+
+
+open GlobalTheory.CofactorHom in
+theorem GlobalTheory.HSShort.isMultiHomogeneous_cofactor :
+    ∀ (F : Type) [Field F] (B N : ℕ) (a a₁ : Fin B → ℕ) (G G' : MvPolynomial (Fin B × Fin N) F),
+      G * G' ≠ 0 → IsMultiHomogeneous a (G * G') → IsMultiHomogeneous a₁ G →
+        ∃ a' : Fin B → ℕ, IsMultiHomogeneous a' G' ∧ ∀ i, a₁ i + a' i = a i := by
+  intro F _ B N a a₁ G G' h0 ha ha₁
+  rw [isMultiHomogeneous_iff_forall_weighted_lh0BlockWt] at ha ha₁
+  have key : ∀ b, ∀ s ∈ G'.support, a₁ b + ∑ j : Fin N, s (b, j) = a b := fun b s hs => by
+    rw [← weight_lh0BlockWt_apply]
+    exact weight_add_of_mul _ h0 (ha₁ b) (ha b) s hs
+  obtain ⟨s₀, hs₀⟩ : ∃ s, s ∈ G'.support := by
+    by_contra hno
+    push Not at hno
+    apply h0
+    rw [show G' = 0 from by
+      ext s; by_contra hc; exact hno s (mem_support_iff.mpr hc), mul_zero]
+  refine ⟨fun b => a b - a₁ b, fun s hs b => ?_, fun i => ?_⟩
+  · have := key b s hs
+    show _ = a b - a₁ b
+    omega
+  · have := key i s₀ hs₀
+    show a₁ i + (a i - a₁ i) = a i
+    omega
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MultiformHeightLowerBoundStatement
+
+section
+
+@[expose] public section
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.ChowHt GlobalTheory.Adelic GlobalTheory.HermTools GlobalTheory.HilbertSamuel GlobalTheory.HSChoice GlobalTheory.HSShort
+
+theorem _root_.GlobalTheory.T.multiformHeight_lowerBound : HtLow := by
+  first | exact @GlobalTheory.HtLowProof.htLow | exact GlobalTheory.HtLowProof.htLow | (intros; apply GlobalTheory.HtLowProof.htLow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SlopeLowerBoundTopLatticeOffHypersurface
+
+section
 
 @[expose] public section
 
@@ -299,3 +434,6 @@ theorem slopeBound : SlopeBound := by
   exact hres
 
 end GlobalTheory.HSShort.SlopeTop
+end
+end
+end

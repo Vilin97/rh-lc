@@ -3,13 +3,19 @@ module
 public import Development.AbelianVarietyTheory.Definitions.ShimuraVarieties.IsOpenOfMemIrreducibleComponentsOfFinite
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FamIdeal
 public import Mathlib.AlgebraicGeometry.Morphisms.Finite
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffNormFormOfFamilyMemRangeIntegrallyClosedStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormFormCoefficientIdealMapLocalizationAwayStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SectionsIsFractionRingStalkImageOfGenericPointStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormIdeal
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CharpolyDvdPowFinrankOfAevalEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -25,7 +31,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,7 +56,284 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.RingTheory.Localization.Away.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Localization.Ideal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SectionsIsFractionRingStalkImageOfGenericPointStatement
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffNormFormOfFamilyMemRangeIntegrallyClosed
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+noncomputable section
+
+namespace GlobalTheory.NormSheaf.IntegralCoeff
+
+open MvPolynomial
+open scoped TensorProduct
+
+theorem leftMulMatrix_sum_tmul (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] {m : ℕ}
+    (x : Fin m → L) :
+    Algebra.leftMulMatrix (Algebra.TensorProduct.basis (MvPolynomial (Fin m) K) (Module.finBasis K L))
+      (∑ i, (X i : MvPolynomial (Fin m) K) ⊗ₜ[K] x i) =
+    ∑ i, (X i : MvPolynomial (Fin m) K) •
+      (Algebra.leftMulMatrix (Module.finBasis K L) (x i)).map (C : K →+* MvPolynomial (Fin m) K) := by
+
+  rw [map_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  ext a c
+  simp [Algebra.leftMulMatrix_eq_repr_mul, Algebra.TensorProduct.basis_repr_tmul,
+    Algebra.TensorProduct.basis_apply]
+
+theorem isIntegral_det_of_aeval {R' F : Type} [CommRing R'] [Field F] [Algebra R' F] {n : Type} [Fintype n]
+    [DecidableEq n] (M : Matrix n n F) (g : Polynomial R') (hg : g.Monic)
+    (h : Polynomial.aeval M (g.map (algebraMap R' F)) = 0) : IsIntegral R' M.det := by
+  have hd := GlobalTheory.CharpolyDvd.matrix_charpoly_dvd_pow M _ h
+  rw [← Polynomial.map_pow] at hd
+  have hc := Polynomial.isIntegral_coeff_of_dvd (g ^ Fintype.card n) M.charpoly (hg.pow _) M.charpoly_monic hd 0
+  rw [Matrix.det_eq_sign_charpoly_coeff]
+  exact (isIntegral_one.neg.pow _).mul hc
+
+end GlobalTheory.NormSheaf.IntegralCoeff
+
+namespace GlobalTheory.NormSheaf.IntegralCoeff
+
+open MvPolynomial
+open scoped TensorProduct
+
+theorem isIntegral_normForm (A K L : Type) [CommRing A] [Field K] [Field L] [Algebra A K]
+    [Algebra K L] [FiniteDimensional K L] [Algebra A L] [IsScalarTower A K L] {m : ℕ}
+    (x : Fin m → L) (hx : ∀ i, IsIntegral A (x i)) :
+    @IsIntegral (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) _ _
+      MvPolynomial.algebraMvPolynomial (GlobalTheory.NormSheaf.normForm K L x) := by
+  classical
+  letI : Algebra (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) := MvPolynomial.algebraMvPolynomial
+  set R := MvPolynomial (Fin m) K
+  set R' := MvPolynomial (Fin m) A
+  let F := FractionRing R
+  haveI : IsScalarTower R' R F := inferInstance
+  let S := R ⊗[K] L
+  letI : Algebra R' S := ((algebraMap R S).comp (algebraMap R' R)).toAlgebra
+  let y : S := ∑ i, (X i : R) ⊗ₜ[K] x i
+  have hy : IsIntegral R' y := by
+    refine IsIntegral.sum _ fun i _ => ?_
+    have e : (X i : R) ⊗ₜ[K] x i = algebraMap R' S (X i) * (1 ⊗ₜ[K] x i) := by
+      have hX : algebraMap R' R (X i) = X i := MvPolynomial.map_X _ _
+      change _ = algebraMap R S (algebraMap R' R (X i)) * _
+      rw [hX]
+      change _ = ((X i : R) ⊗ₜ[K] (1 : L)) * (1 ⊗ₜ[K] x i)
+      rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
+    rw [e]
+    refine isIntegral_algebraMap.mul ?_
+    refine IsIntegral.map_of_comp_eq (algebraMap A R')
+      (Algebra.TensorProduct.includeRight : L →ₐ[K] S).toRingHom ?_ (hx i)
+    refine RingHom.ext fun a => ?_
+    change (algebraMap R' R (algebraMap A R' a)) ⊗ₜ[K] (1 : L) = (1 : R) ⊗ₜ[K] algebraMap A L a
+    have h1 : algebraMap R' R (algebraMap A R' a) = algebraMap K R (algebraMap A K a) := by
+      change MvPolynomial.map (algebraMap A K) (C a) = C (algebraMap A K a)
+      exact MvPolynomial.map_C _ _
+    rw [h1, IsScalarTower.algebraMap_apply A K L, Algebra.algebraMap_eq_smul_one (A := R) (algebraMap A K a),
+      Algebra.algebraMap_eq_smul_one (A := L) (algebraMap A K a), TensorProduct.smul_tmul]
+  obtain ⟨g, hgm, hgy⟩ := hy
+  let bS := Algebra.TensorProduct.basis R (Module.finBasis K L)
+  let φ : S →ₐ[R] Matrix (Fin (Module.finrank K L)) (Fin (Module.finrank K L)) F :=
+    (AlgHom.mapMatrix (Algebra.ofId R F)).comp (Algebra.leftMulMatrix bS)
+  have hM : φ y = (algebraMap R F).mapMatrix
+      (∑ i, (X i : R) • (Algebra.leftMulMatrix (Module.finBasis K L) (x i)).map (C : K →+* R)) := by
+    rw [← leftMulMatrix_sum_tmul K L x]
+    rfl
+  have h0 : Polynomial.aeval (φ y) (g.map (algebraMap R' F)) = 0 := by
+    rw [Polynomial.aeval_def, Polynomial.eval₂_map]
+    have hh : (algebraMap F (Matrix (Fin (Module.finrank K L)) (Fin (Module.finrank K L)) F)).comp (algebraMap R' F)
+        = φ.toRingHom.comp (algebraMap R' S) := by
+      refine RingHom.ext fun r => ?_
+      change algebraMap F _ (algebraMap R' F r) = φ (algebraMap R S (algebraMap R' R r))
+      rw [AlgHom.commutes, IsScalarTower.algebraMap_apply R' R F]
+      exact (IsScalarTower.algebraMap_apply R F _ _).symm
+    rw [hh]
+    have h2 := Polynomial.hom_eval₂ g (algebraMap R' S) φ.toRingHom y
+    rw [hgy, map_zero] at h2
+    exact h2.symm
+  have hdet := isIntegral_det_of_aeval _ g hgm h0
+  rw [hM, ← RingHom.map_det] at hdet
+  exact (isIntegral_algebraMap_iff ).mp hdet
+
+end GlobalTheory.NormSheaf.IntegralCoeff
+
+namespace GlobalTheory.NormSheaf.IntegralCoeff
+
+theorem coeff_normForm_mem_range : ∀ (A K L : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [Field K] [Field L]
+    [Algebra A K] [IsFractionRing A K] [Algebra K L] [FiniteDimensional K L] [Algebra A L] [IsScalarTower A K L] {m : ℕ}
+    (x : Fin m → L), (∀ i, IsIntegral A (x i)) →
+    ∀ s, (GlobalTheory.NormSheaf.normForm K L x).coeff s ∈ (algebraMap A K).range := by
+  intro A K L _ _ _ _ _ _ _ _ _ _ _ m x hx s
+  letI : Algebra (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) := MvPolynomial.algebraMvPolynomial
+  have key := isIntegral_normForm A K L x hx
+  have hc := MvPolynomial.isIntegral_iff_isIntegral_coeff.mp key s
+  obtain ⟨a, ha⟩ := IsIntegrallyClosed.isIntegral_iff.mp hc
+  exact ⟨a, ha⟩
+
+end GlobalTheory.NormSheaf.IntegralCoeff
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffNormFormOfFamilyMemRangeIntegrallyClosedStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+theorem _root_.GlobalTheory.T.coeff_normFormOfFamily_mem_range_integrallyClosed : ∀ (A K L : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [Field K] [Field L] [Algebra A K]
+    [IsFractionRing A K] [Algebra K L] [FiniteDimensional K L] [Algebra A L] [IsScalarTower A K L] {m : ℕ}
+    (x : Fin m → L), (∀ i, IsIntegral A (x i)) →
+    ∀ s, (GlobalTheory.NormSheaf.normForm K L x).coeff s ∈ (algebraMap A K).range := by
+  first | exact @GlobalTheory.NormSheaf.IntegralCoeff.coeff_normForm_mem_range | exact GlobalTheory.NormSheaf.IntegralCoeff.coeff_normForm_mem_range | (intros; apply GlobalTheory.NormSheaf.IntegralCoeff.coeff_normForm_mem_range <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormFormCoefficientIdealMapLocalizationAway
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+namespace GlobalTheory.NormSheaf
+
+theorem normForm_coeff_smul (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] {m : ℕ}
+    (y : Fin m → L) (c : K) (s : Fin m →₀ ℕ) :
+    (normForm K L (fun i => algebraMap K L c * y i)).coeff s =
+      c ^ Module.finrank K L * (normForm K L y).coeff s := by
+  have hM : ∀ i, (Algebra.leftMulMatrix (Module.finBasis K L) (algebraMap K L c * y i)).map
+      (MvPolynomial.C : K →+* MvPolynomial (Fin m) K) =
+      (MvPolynomial.C c : MvPolynomial (Fin m) K) • (Algebra.leftMulMatrix (Module.finBasis K L) (y i)).map
+        (MvPolynomial.C : K →+* MvPolynomial (Fin m) K) := by
+    intro i
+    rw [← Algebra.smul_def, map_smul]
+    ext a b
+    simp [Matrix.map_apply, Matrix.smul_apply, MvPolynomial.C_mul]
+  have : normForm K L (fun i => algebraMap K L c * y i) =
+      MvPolynomial.C (c ^ Module.finrank K L) * normForm K L y := by
+    unfold normForm
+    simp_rw [hM, smul_comm (MvPolynomial.X _ : MvPolynomial (Fin m) K) (MvPolynomial.C c), ← Finset.smul_sum,
+      Matrix.det_smul, Fintype.card_fin, map_pow]
+  rw [this, MvPolynomial.coeff_C_mul]
+
+end GlobalTheory.NormSheaf
+
+namespace GlobalTheory.NormSheaf
+
+theorem normIdeal_map_away : ∀ (A K L B A' B' : Type) [CommRing A] [CommRing B] [CommRing A'] [CommRing B'] [Field K] [Field L]
+    [Algebra K L] [FiniteDimensional K L] [Algebra A K] [Algebra B L] [Algebra A' K] [Algebra B' L]
+    [Algebra A A'] [Algebra B B'] [Algebra A B] (f : A) [IsLocalization.Away f A']
+    [IsLocalization.Away (algebraMap A B f) B'],
+    (algebraMap A' K).comp (algebraMap A A') = algebraMap A K →
+    (algebraMap B' L).comp (algebraMap B B') = algebraMap B L →
+    (algebraMap K L).comp (algebraMap A K) = (algebraMap B L).comp (algebraMap A B) →
+    Function.Injective (algebraMap A' K) →
+    (∀ {m : ℕ} (g : Fin m → B) s,
+      (GlobalTheory.NormSheaf.normForm K L (fun i => algebraMap B L (g i))).coeff s ∈ (algebraMap A K).range) →
+    ∀ J : Ideal B, (GlobalTheory.NormSheaf.normIdeal A K L B J).map (algebraMap A A') =
+      GlobalTheory.NormSheaf.normIdeal A' K L B' (J.map (algebraMap B B')) := by
+  intro A K L B A' B' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ f _ _ h1 h2 h3 hinj hcoef J
+  have e1 : ∀ x : A, algebraMap A' K (algebraMap A A' x) = algebraMap A K x := fun x => by
+    simpa using RingHom.congr_fun h1 x
+  have e2 : ∀ x : B, algebraMap B' L (algebraMap B B' x) = algebraMap B L x := fun x => by
+    simpa using RingHom.congr_fun h2 x
+  have e3 : ∀ x : A, algebraMap K L (algebraMap A K x) = algebraMap B L (algebraMap A B x) := fun x => by
+    simpa using RingHom.congr_fun h3 x
+  apply le_antisymm
+  · rw [Ideal.map_le_iff_le_comap]
+    unfold normIdeal
+    rw [Ideal.span_le]
+    rintro a ⟨m, g, hg, s, hs⟩
+    rw [SetLike.mem_coe, Ideal.mem_comap]
+    apply Ideal.subset_span
+    refine ⟨m, fun i => algebraMap B B' (g i), fun i => Ideal.mem_map_of_mem _ (hg i), s, ?_⟩
+    rw [e1, hs]
+    simp only [e2]
+  · unfold normIdeal
+    rw [Ideal.span_le]
+    rintro a' ⟨m, g', hg', s, hs⟩
+    set b := algebraMap A B f with hb
+    have hloc : ∀ i, ∃ (j : B) (n : ℕ), j ∈ J ∧ g' i * algebraMap B B' (b ^ n) = algebraMap B B' j := by
+      intro i
+      obtain ⟨⟨⟨j, hj⟩, ⟨_, n, rfl⟩⟩, h⟩ :=
+        (IsLocalization.mem_map_algebraMap_iff (Submonoid.powers b) B').1 (hg' i)
+      exact ⟨j, n, hj, h⟩
+    choose j n hj hn using hloc
+    set N := ∑ i, n i
+    have hN : ∀ i, g' i * algebraMap B B' (b ^ N) = algebraMap B B' (j i * b ^ (N - n i)) := by
+      intro i
+      have hle : n i ≤ N := Finset.single_le_sum (fun k _ => Nat.zero_le (n k)) (Finset.mem_univ i)
+      rw [← Nat.add_sub_cancel' hle, pow_add, map_mul, ← mul_assoc, hn i, Nat.add_sub_cancel_left, map_mul]
+    have hjJ : ∀ i, j i * b ^ (N - n i) ∈ J := fun i => J.mul_mem_right _ (hj i)
+    set c := algebraMap A K f
+    have himg : ∀ i, algebraMap B L (j i * b ^ (N - n i)) =
+        algebraMap K L (c ^ N) * algebraMap B' L (g' i) := by
+      intro i
+      rw [← e2, ← hN i, map_mul, e2, map_pow, map_pow, hb, ← e3, mul_comm]
+    obtain ⟨a, ha⟩ := hcoef (fun i => j i * b ^ (N - n i)) s
+    have hcoef' : algebraMap A K a = (c ^ N) ^ Module.finrank K L * algebraMap A' K a' := by
+      rw [ha, hs]
+      simp only [himg]
+      exact normForm_coeff_smul K L _ _ s
+    have hmem : a ∈ normIdeal A K L B J := Ideal.subset_span ⟨m, _, hjJ, s, ha⟩
+    have key : algebraMap A A' a = algebraMap A A' (f ^ (N * Module.finrank K L)) * a' := by
+      apply hinj
+      rw [map_mul, e1, e1, hcoef', map_pow, pow_mul]
+    have hu : IsUnit (algebraMap A A' (f ^ (N * Module.finrank K L))) := by
+      rw [map_pow]; exact (IsLocalization.Away.algebraMap_isUnit f).pow _
+    rw [SetLike.mem_coe, ← Ideal.unit_mul_mem_iff_mem _ hu, ← key]
+    exact Ideal.mem_map_of_mem _ hmem
+
+end GlobalTheory.NormSheaf
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormFormCoefficientIdealMapLocalizationAwayStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits
+
+theorem _root_.GlobalTheory.T.normFormCoefficientIdeal_map_localizationAway : ∀ (A K L B A' B' : Type) [CommRing A] [CommRing B] [CommRing A'] [CommRing B'] [Field K] [Field L]
+    [Algebra K L] [FiniteDimensional K L] [Algebra A K] [Algebra B L] [Algebra A' K] [Algebra B' L]
+    [Algebra A A'] [Algebra B B'] [Algebra A B] (f : A) [IsLocalization.Away f A']
+    [IsLocalization.Away (algebraMap A B f) B'],
+    (algebraMap A' K).comp (algebraMap A A') = algebraMap A K →
+    (algebraMap B' L).comp (algebraMap B B') = algebraMap B L →
+    (algebraMap K L).comp (algebraMap A K) = (algebraMap B L).comp (algebraMap A B) →
+    Function.Injective (algebraMap A' K) →
+    (∀ {m : ℕ} (g : Fin m → B) s,
+      (GlobalTheory.NormSheaf.normForm K L (fun i => algebraMap B L (g i))).coeff s ∈ (algebraMap A K).range) →
+    ∀ J : Ideal B, (GlobalTheory.NormSheaf.normIdeal A K L B J).map (algebraMap A A') =
+      GlobalTheory.NormSheaf.normIdeal A' K L B' (J.map (algebraMap B B')) := by
+  first | exact @GlobalTheory.NormSheaf.normIdeal_map_away | exact GlobalTheory.NormSheaf.normIdeal_map_away | (intros; apply GlobalTheory.NormSheaf.normIdeal_map_away <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormCoeffIdealFamilyMapBasicOpen
+
+section
 
 @[expose] public section
 
@@ -149,3 +436,5 @@ theorem famIdeal_map_basicOpen : ∀ (Y Z : Scheme.{0}) (π : Y ⟶ Z) [IsFinite
     exact iff_of_true (Ideal.zero_mem _) (Ideal.zero_mem _)
 
 end GlobalTheory.NormSheafDescent
+end
+end

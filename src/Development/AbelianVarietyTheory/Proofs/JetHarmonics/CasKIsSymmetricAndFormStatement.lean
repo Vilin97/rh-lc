@@ -2,7 +2,6 @@ module
 
 public import Formalism.RealPlaceAnalysis.StatementKT
 public import Mathlib.Analysis.InnerProductSpace.Symmetric
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CasKIsSymmetricAndForm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +42,58 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPr
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CasKIsSymmetricAndForm
+
+section
+
+@[expose] public section
+
+open Finset BranchingSupport Formalism.REAL Formalism.QuantumDeterminants
+open scoped InnerProductSpace
+
+namespace GlobalTheory
+
+theorem inner_casK_eq_sum {M : Type} [NormedAddCommGroup M] [InnerProductSpace ℂ M] {n : ℕ}
+    {ε : Fin n → Bool} {E : Fin n → Fin n → Module.End ℂ M} (h : KUnit ε E) (x y : M) :
+    ⟪x, CasK ε E y⟫_ℂ = ∑ a, ∑ b, if ε a = ε b then ⟪E a b x, E a b y⟫_ℂ else 0 := by
+  unfold CasK
+  rw [Finset.sum_comm]
+  simp only [LinearMap.sum_apply, inner_sum]
+  refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+  by_cases hab : ε a = ε b
+  · rw [if_pos hab.symm, if_pos hab, Module.End.mul_apply, h a b hab]
+  · rw [if_neg (fun e => hab e.symm), if_neg hab]
+    simp
+
+theorem casK_isSymmetric_and_form :
+    ∀ (M : Type) [NormedAddCommGroup M] [InnerProductSpace ℂ M] (n : ℕ) (ε : Fin n → Bool)
+      (E : Fin n → Fin n → Module.End ℂ M), KUnit ε E →
+      LinearMap.IsSymmetric (CasK ε E) ∧
+        ∀ x, (⟪x, CasK ε E x⟫_ℂ).re = ∑ a, ∑ b, if ε a = ε b then ‖E a b x‖ ^ 2 else 0 := by
+  intro M _ _ n ε E h
+  refine ⟨fun x y => ?_, fun x => ?_⟩
+  · rw [← inner_conj_symm, inner_casK_eq_sum h, inner_casK_eq_sum h]
+
+    simp only [map_sum]
+    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+    split_ifs
+    · rw [inner_conj_symm]
+    · simp
+  · rw [inner_casK_eq_sum h]
+    simp only [Complex.re_sum]
+    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+    split_ifs
+    · exact inner_self_eq_norm_sq (𝕜 := ℂ) _
+    · simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CasKIsSymmetricAndFormStatement
+
+section
+
 @[expose] public section
 
 open Finset BranchingSupport Formalism.REAL Formalism.QuantumDeterminants
@@ -50,3 +101,5 @@ open scoped InnerProductSpace
 
 theorem _root_.GlobalTheory.T.casK_isSymmetric_and_inner_re_eq : ∀ (M : Type) [NormedAddCommGroup M] [InnerProductSpace ℂ M] (n : ℕ) (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ M), KUnit ε E → LinearMap.IsSymmetric (CasK ε E) ∧ ∀ x, (⟪x, CasK ε E x⟫_ℂ).re = ∑ a, ∑ b, if ε a = ε b then ‖E a b x‖ ^ 2 else 0 := by
   first | exact @GlobalTheory.casK_isSymmetric_and_form | exact GlobalTheory.casK_isSymmetric_and_form | (intros; apply GlobalTheory.casK_isSymmetric_and_form <;> assumption)
+end
+end

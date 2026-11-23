@@ -20,27 +20,11 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Exis
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IdealCycleSupportFinite
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Imports
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBis
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsMore
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTer
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LtNatCastOfAddOneLe
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivisorIdealCycle
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleCut
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleLineBase
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundlePullbackVanish
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSymmetricSpanHsymm
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVNumCut
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVertCutEff
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RatDiv
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RelevantMinimalOfDivCycleNeZero
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.WithBotLtNatCastOfAddOneLe
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.WithBotLtOfAddOneLe
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PContractRelDimLe
-public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivPushForward
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.DivisorIdealBotUniformiser
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SpanTwoIsPrimeRelevant
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealCorresp
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealMultiHomog
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialQuotDim
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -80,6 +64,251 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTer
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LtNatCastOfAddOneLe
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivisorIdealCycle
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumSymm
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleLineBase
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundlePullbackVanish
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSymmetricSpanHsymm
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialCycleEval
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealSurj
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialMultAt
+import Mathlib.Tactic.Linter.Style
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVertCutEff
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Statements
+import Mathlib.Tactic.Basify
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RelevantMinimalOfDivCycleNeZero
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.WithBotLtNatCastOfAddOneLe
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.WithBotLtOfAddOneLe
+import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PContractRelDimLe
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivPushForward
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsMore
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial
+
+universe u
+
+theorem NoCommonComponentCase.proof (h₁ : LeftExpansion.Statement.{u}) (h₂ : RightExpansion.Statement.{u})
+    (h₃ : LocalCoefficient.Statement.{u}) (h₄ : IntNumVanish.Statement.{u}) :
+    NoCommonComponentCase.Statement.{u} := by
+  intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP b f g hD c s hs hsP hH hno L
+  unfold cutIdentity
+  rw [h₁ O ϖ hϖ K ι P d hP b f g hD.1 c s hs hsP hno L,
+    h₂ O ϖ hϖ K ι P d hP b f g hD c s hs hsP hH hno L]
+  unfold cycEval
+  refine finsum_congr fun U => ?_
+  beta_reduce
+  by_cases hU : U.IsPrime ∧ IsMultiHomogIdeal U ∧ IsRelevant U ∧ (C ϖ : MRing ι O) ∈ U ∧
+      ¬ ((d + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι O ⧸ U)
+  ·
+    obtain ⟨hUp, hUm, -, hϖU, hdim⟩ := hU
+    have hv : vNum U L = 0 := by
+      refine h₄ _ K ι d (specialIdeal U) (SpecialIdealCorresp.proof O ϖ hϖ K ι ⊥ U hUp hϖU).1
+        (SpecialIdealMultiHomog.proof O K ι U hUm) (Or.inr ?_) L
+      rw [SpecialQuotDim.proof O ϖ hϖ K ι U hϖU]
+      exact lt_of_not_ge hdim
+    rw [hv, mul_zero, mul_zero]
+  ·
+    have e := h₃ O ϖ hϖ K ι P d hP b f g hD c s hs hsP hH hno U fun hp hm hr hϖU => by
+      by_contra h
+      exact hU ⟨hp, hm, hr, hϖU, h⟩
+    unfold cycEval at e
+    rw [e]
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleCut
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
+
+noncomputable section
+
+namespace FlagBundleCutProof
+
+theorem intNumL_cons_eq_snoc {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
+    [∀ k, Fintype (ι k)] {F : Type} [Field F] (P : Ideal (MRing ι F)) (x : K → ℤ)
+    (L : List (K → ℤ)) :
+    intNumL F P (x :: L) = intNum F P (Fin.snoc (α := fun _ => K → ℤ) L.get x) := by
+  have hget : (x :: L).get = Fin.cons (α := fun _ => K → ℤ) x L.get := by
+    funext j
+    refine Fin.cases ?_ (fun j => ?_) j <;> rfl
+  have h := FieldNumbers.IntNumSymm.proof F K ι P (L.length + 1)
+    (Fin.cons (α := fun _ => K → ℤ) x L.get) (finRotate _)
+  rw [intNumL, hget, Fin.snoc_eq_cons_rotate, ← h]
+  rfl
+
+theorem cycEval_single {K : Type} {ι : K → Type} {F : Type} [Field F]
+    (n : Ideal (MRing ι F) → ℤ) (Z : Ideal (MRing ι F)) :
+    cycEval n (fun W => by classical exact if W = Z then 1 else 0) = n Z := by
+  classical
+  unfold cycEval
+  rw [finsum_eq_single _ Z (fun W hW => by simp [hW])]
+  simp
+
+end FlagBundleCutProof
+
+
+open FlagBundleCutProof in
+theorem FlagBundleCut.proof (hDim : FlagBundleDim.Statement)
+    (hForms : FlagBundleSectionForms.Statement) (hDiv : FlagBundleSectionDiv.Statement)
+    (hCut : FieldNumbers.CutRational.Statement.{0}) : FlagBundleCut.Statement := by
+  intro F _ Ω _ _ K _ _ ι _ y e hV hdim N E _ _ B w b hB M a φ hφ Φ _ _ t ht i hi L hL
+  obtain ⟨bf, bg, f, g, hf, hg, hdeg, hfP, hgP, hval⟩ :=
+    hForms F Ω K ι y e hV hdim N E B w b hB M a φ hφ Φ t ht i
+  have hdiv := hDiv F Ω K ι y e hV hdim N E B w b hB M a φ hφ Φ t ht i hi bf bg f g hf hg hdeg hgP hval
+  obtain ⟨hP, hrel⟩ :=
+    hDim F Ω K ι y e hV hdim N E B w b hB M a φ hφ Φ t ht ((i : ℕ) + 1) (by omega) i.2
+  have hrel' : FieldNumbers.relDim (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) =
+      ((L.length + 1 : ℕ) : WithBot (WithTop ℤ)) := by
+    rw [hrel]
+    congr 2
+    omega
+  have h := hCut F (Option K) (bundleIdx ι M) _ hP L.length hrel' bf bg f g hf hg hfP hgP L.get
+  rw [intNumL_cons_eq_snoc, ← hdeg, h, funext hdiv, intNumL]
+  classical
+  convert cycEval_single (fun W => intNum F W L.get) (projIdeal F y w φ (truncCoord t i))
+
+end
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVNumCut
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial
+
+universe u
+
+theorem VNumCut.proof (h : CutByForm.Statement.{u}) : VNumCut.Statement.{u} := by
+  intro O _ _ _ ϖ hϖ K _ _ ι _ G n hGp hGh hϖG hdim s c hs hsG bs
+  set π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
+    MvPolynomial.map (IsLocalRing.residue O) with hπ
+  have hsp : ∀ V : Ideal (MRing ι O), specialIdeal V = V.map π := fun V => rfl
+  have hsurj : Function.Surjective π :=
+    MvPolynomial.map_surjective _ IsLocalRing.residue_surjective
+  have hker : RingHom.ker π = Ideal.span {C ϖ} := ker_map_residue_eq_span hϖ
+
+  have hGbp : (specialIdeal G).IsPrime :=
+    (SpecialIdealCorresp.proof O ϖ hϖ K ι G G hGp hϖG).1
+  have hGbh : IsMultiHomogIdeal (specialIdeal G) := SpecialIdealMultiHomog.proof O K ι G hGh
+  have hdimb : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal G) <
+      ((n + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    rw [SpecialQuotDim.proof O ϖ hϖ K ι G hϖG]; exact hdim
+  have hsb : IsMultiHomog (π s) c := isWeightedHomogeneous_map_of _ _ hs
+  have hsbG : π s ∉ specialIdeal G := by
+    intro hm
+    apply hsG
+    have hcm : (G.map π).comap π = G := by
+      rw [Ideal.comap_map_of_surjective' π hsurj, hker, sup_eq_left, Ideal.span_le,
+        Set.singleton_subset_iff]
+      exact hϖG
+    rw [← hcm]
+    exact hm
+
+  have hcut := h (IsLocalRing.ResidueField O) K ι n (specialIdeal G) hGbp hGbh hdimb (π s) c hsb
+    hsbG bs
+
+  have hJ : G ⊔ Ideal.span {s} ⊔ Ideal.span {C ϖ} = G ⊔ Ideal.span {s} := by
+    rw [sup_eq_left, Ideal.span_le, Set.singleton_subset_iff]
+    exact Ideal.mem_sup_left hϖG
+  have hdiv : divCycle G s = divCycle (G ⊔ Ideal.span {s}) (C ϖ) := by
+    rw [divCycle_eq_idealCycle, divCycle_eq_idealCycle, hJ]
+  have hmapJ : specialIdeal (G ⊔ Ideal.span {s}) = specialIdeal G ⊔ Ideal.span {π s} := by
+    rw [hsp, hsp, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
+  have htr := SpecialCycleEval.proof SpecialIdealCorresp.proof SpecialIdealSurj.proof
+    SpecialMultAt.proof O ϖ hϖ K ι (G ⊔ Ideal.span {s})
+    (fun V => intNum (IsLocalRing.ResidueField O) V bs)
+  rw [hmapJ, ← divCycle_eq_idealCycle] at htr
+  show intNum (IsLocalRing.ResidueField O) (specialIdeal G) _ =
+    cycEval (fun U => intNum (IsLocalRing.ResidueField O) (specialIdeal U) bs) (divCycle G s)
+  rw [hcut, hdiv, htr]
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RatDiv
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial
+
+universe u
+
+theorem CommonFactorRemoval.proof (hmul : DivCycleMul.Statement.{u}) : CommonFactorRemoval.Statement.{u} := by
+  intro O _ _ _ ϖ _ K _ _ ι _ P d hP b f g q s hf hg hq _ hH c L
+
+  have hrat : ∀ W : Ideal (MRing ι O), W.IsPrime → f ∉ W → g ∉ W → q ∉ W →
+      ratDiv W (f * q) (g * q) = ratDiv W f g := by
+    intro W hW hfW hgW hqW
+    funext G
+    simp only [ratDiv, hmul O K ι W f q hW hfW hqW, hmul O K ι W g q hW hgW hqW, Pi.add_apply]
+    ring
+  refine ⟨?_, ?_⟩
+  · unfold cutIdentityLeftSide
+    rw [hrat P hP.multiProj.isPrime hf hg hq]
+  · unfold cutIdentityRightSide cycEval
+    congr 1
+    funext W
+    by_cases hW : divCycle P s W = 0
+    · simp [hW]
+    · dsimp only
+      split_ifs with hϖ
+      · rfl
+      · obtain ⟨h1, h2, h3⟩ := hH W hW hϖ
+        rw [hrat W (isPrime_of_divCycle_ne_zero hW) h1 h2 h3]
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBundles
+
+section
 
 @[expose] public section
 
@@ -191,3 +420,5 @@ theorem CommonFactorInduction.of_open (hrees : ReesAlgebraDim.Statement.{u})
     DivCycleMul.full
 
 end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end

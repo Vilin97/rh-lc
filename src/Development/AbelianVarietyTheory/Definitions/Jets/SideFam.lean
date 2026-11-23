@@ -1,19 +1,17 @@
 module
 
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.DSExist
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Zuckerman
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Poulsen
-public import Formalism.PeriodIntegrals.DSInfCharCap
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.SubmatrixMemUJsetIff
+public import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,6 +39,95 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Poulsen
+public import Formalism.PeriodIntegrals.DSInfCharCap
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+
+-- Source module: Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.DSExist
+
+section
+
+@[expose] public section
+
+open Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+noncomputable section
+
+namespace BranchingSupport
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData
+
+def DSExist : Prop :=
+  ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ), Formalism.QuantumDeterminants.IsHCParam mu →
+    (∃ P, PI.UpqRep.IsCayleyU k r ε P) → ∃ R : Rep k r, R.IsDS ε mu
+
+end BranchingSupport
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Zuckerman
+
+section
+
+@[expose] public section
+
+open Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+noncomputable section
+
+namespace BranchingSupport
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData
+
+def Zuckerman : Prop :=
+  ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ) (R : Rep k r), R.IsDS ε mu →
+    (∀ a c, a < c → 2 ≤ mu a - mu c) →
+    (∀ (l : ℕ) (RI : Sub (2 * r + k + 1) l → Rep k r), (∀ I, (RI I).IsDS ε (addSet mu I.1)) →
+      ∃ io pr, TensRaw (cmp l) R RI io pr) ∧
+    (∀ RI : Fin (2 * r + k + 1) → Rep k r, (∀ s, (RI s).IsDS ε (mu - Pi.single s 1)) →
+      ∃ io pr, TensRaw dualM R RI io pr)
+
+end BranchingSupport
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.SubmatrixMemUJsetIff
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.S Matrix
+
+namespace GlobalTheory.FormalDegree
+
+def HarishChandra : Prop :=
+  ∀ (n : ℕ) (ε : Fin n → Bool), ∃ c : ℝ, 0 < c ∧
+    ∀ (π : Equiv.Perm (Fin n)) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam →
+      ∀ (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+        (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)),
+        IsDS (ε ∘ π) lam (fun g => σ (g.submatrix π.symm π.symm)) →
+        IsFdeg (Formalism.REAL.muG ε) σ (c * Formalism.QuantumDeterminants.fdegHC lam)
+
+theorem HarishChandra.chamber (h : HarishChandra) (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
+    ∀ (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam →
+      ∀ (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+        (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), IsDS ε lam σ →
+        IsFdeg (Formalism.REAL.muG ε) σ (c * Formalism.QuantumDeterminants.fdegHC lam) := by
+  obtain ⟨c, hc, h1⟩ := h n ε
+  exact ⟨c, hc, fun lam hl H _ _ σ hσ => h1 1 lam hl H σ (by simpa [Equiv.Perm.one_def] using hσ)⟩
+
+end GlobalTheory.FormalDegree
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.Jets.SideFam
+
+section
 
 @[expose] public section
 
@@ -82,3 +169,6 @@ def Setup {k r : ℕ} [CompleteSpace Wp] (lam : Fin (2 * r + k + 1) → ℝ) (u 
   Num k r lam u b bv ga h q0 ∧ IsFam lam q0 R ∧ SideG k r z π u μW μN μG νq ∧ SideFam z π μW μN μG q0 R l dg
 
 end BranchingSupport
+end
+end
+end

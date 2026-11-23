@@ -15,14 +15,10 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.UnlGap
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.DualOfWeights
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.ExistsRec
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LevFixed
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LocFixed
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TGlobFixed
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TJumpsAbove
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TLocCompC
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TSatFrobT
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TSatLoc
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TWDAway
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LevDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.EqOneOfDvd
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.FixedDvd
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.MemMaximalCompactAndCongruentOfMemPrincipalCongr
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -53,8 +49,145 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LocFixed
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.LocIsotypic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.GlobFixed
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TJumpsAbove
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TLocCompC
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TSatFrobT
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TSatLoc
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TWDAway
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LevFixedSs
+
+section
+
+@[expose] public section
+
+
+
+
+section
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N Polynomial
+open GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.LocGL GlobalTheory.GalOfCusp
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+theorem UpperTheory.V.Lev.fixed_semisimple_of_flag_fixed_dvd_fixed_unramified :
+    UpperTheory.V.Lev.FlagPol → _root_.UpperTheory.V.Lev.FixedDvdAlt → _root_.UpperTheory.V.Lev.FixedUnrAlt → _root_.UpperTheory.V.Lev.FixedSsAlt := by
+  intro hP hD hU F Ω _ _ _ _ _ l _ ι n M hM m r hr w A h O _ _ _ Bw hj κ hF hst rc hrc σ hc hor
+  obtain ⟨μ, hμ, hI, hG⟩ := hP F Ω l ι n M hM m r hr w A h O Bw hj κ hF hst
+  have hpol : ∀ s, (rc (GlobalTheory.GalOfCusp.algNorm σ)).charPol s = ∏ i, (X - C (μ i s : ℂ)) := fun s => by
+    rw [← hc ⟨μ, hμ⟩ s]
+    exact hμ s
+  by_cases hw : (M : 𝓞 F) ∈ w.asIdeal
+  · refine hD F Ω n M hM w hw A h rc hrc σ fun s hs => ?_
+    rw [hpol]
+    simp [hI _ s hs]
+  · have hin : ∀ i (s : ↥(Ine (F := F) A)), μ i (ineIncl h s) = 1 := fun i s =>
+      hI i s (UpperTheory.inertia_fixes_roots_of_unity_prime_to_residue_char F Ω w A h M hw s s.2)
+    obtain ⟨hiw, hsp⟩ := hU F Ω n w A h rc hrc σ μ hpol hin
+    have hS : GlobalTheory.SmGL.IsSpherical σ.ρ := by
+      rcases hor with ⟨k, rfl⟩ | hk | hs
+      · exfalso
+        have hlw : ((l : ℕ) : 𝓞 F) ∈ w.asIdeal := hj.mem_placesOver h
+        exact hw (by rw [Nat.cast_mul]; exact Ideal.mul_mem_right _ _ hlw)
+      · refine hsp fun i j => ?_
+        by_contra hne
+        push_neg at hne
+        rcases hG i j hne with e | e
+        · exact hk i j e
+        · exact hk j i e
+      · exact hs hiw
+    obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 hS
+    exact ⟨v, hv0, fun u hu => by simpa using hv ⟨u, (UpperTheory.mem_maximalCompact_and_congruent_of_mem_principalCongruence F w n M u hu).1⟩⟩
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LevFixed
+
+section
+
+@[expose] public section
+
+
+
+
+section
+theorem UpperTheory.V.Lev.fixedSs_of_prints (P : _root_.UpperTheory.V.Af.Hypotheses') : _root_.UpperTheory.V.Lev.FixedSsAlt :=
+  _root_.UpperTheory.V.Lev.fixed_semisimple_of_flag_fixed_dvd_fixed_unramified UpperTheory.V.Lev.flagPol (_root_.UpperTheory.V.Z.Win.T2.fixedDvd' P) (_root_.UpperTheory.V.Z.Win.T2.fixedUnr_alt P)
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TGlobFixed
+
+section
+
+@[expose] public section
+
+
+
+
+section
+open NumberField IsDedekindDomain GlobalTheory.CuspRep Filter Topology Matrix
+namespace UpperTheory.V.Af.GlobalFixedVectors
+variable {F : Type} [Field F] [NumberField F] {n M : ℕ}
+end UpperTheory.V.Af.GlobalFixedVectors
+open UpperTheory.V.Af UpperTheory.V.Af.GlobalFixedVectors in
+theorem UpperTheory.V.Af.globFixed_alt :
+    _root_.UpperTheory.V.Af.Hypotheses' → UpperTheory.V.Af.GlobFixed := by
+  classical
+  intro _ F _ _ n M _ V _ _ ρ hρ h
+  have key : ∀ S : Finset (HeightOneSpectrum (𝓞 F)), HasFixed ρ (KAway n M S) → HasFixed ρ (KAway n M ∅) := by
+    intro S
+    induction S using Finset.induction_on with
+    | empty => exact id
+    | insert w S hw ih =>
+      rintro ⟨v, hv0, hv⟩
+      obtain ⟨σ, ⟨-, hσ⟩, hfix⟩ := h w
+      let W : Submodule ℂ V := ⨅ k : KAway n M (insert w S), LinearMap.ker (ρ k - 1)
+      have hWm : ∀ x, x ∈ W ↔ ∀ k ∈ KAway n M (insert w S), ρ k x = x := fun x => by
+        simp [W, Submodule.mem_iInf, sub_eq_zero]
+      obtain ⟨x, hxW, hx0, hx⟩ := sub_fixed σ.ρ σ.irred (ρ.comp (locGL F n w)) hσ W (fun g x hx => (hWm _).2 fun k hk => by
+        have e : k * locGL F n w g = locGL F n w g * k := gl_ext fun u => by
+          by_cases hu : u = w
+          · subst hu; simp [(mem_KAway.1 hk).2 u (Finset.mem_insert_self _ _)]
+          · simp [pLoc_locGL_of_ne hu]
+        change ρ k (ρ (locGL F n w g) x) = ρ (locGL F n w g) x
+        rw [← Module.End.mul_apply, ← map_mul, e, map_mul, Module.End.mul_apply, (hWm x).1 hx k hk])
+        (fun e => hv0 (by simpa [e] using (hWm v).2 hv)) _ hfix
+      refine ih ⟨x, hx0, fun k hk => ?_⟩
+      have h1 := loc_mem w (mem_KAway.1 hk).1
+      have h2 : k * (locGL F n w (GeneralLinearGroup.map (pLoc F w) k))⁻¹ ∈ KAway n M (insert w S) := by
+        refine mem_KAway.2 ⟨mul_mem (mem_KAway.1 hk).1 (inv_mem h1), fun u hu => ?_⟩
+        by_cases huw : u = w
+        · subst huw; simp [pLoc_locGL]
+        · simp [pLoc_locGL_of_ne huw, (mem_KAway.1 hk).2 u ((Finset.mem_insert.1 hu).resolve_left huw)]
+      have h3 : ρ (locGL F n w (GeneralLinearGroup.map (pLoc F w) k)) x = x := hx _ h1
+      have h4 := (hWm x).1 hxW _ h2
+      rwa [← h3, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel_right, h3] at h4
+  obtain ⟨w⟩ : Nonempty (HeightOneSpectrum (𝓞 F)) := by
+    obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 F)
+    exact ⟨⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField F)⟩⟩
+  obtain ⟨σ, ⟨hV, -⟩, -⟩ := h w
+  obtain ⟨v, hv⟩ := exists_ne (0 : V)
+  obtain ⟨S, hS⟩ := exists_KAway_subset (M := M) ((hρ v).mem_nhds (by simp))
+  obtain ⟨x, hx0, hx⟩ := key S ⟨v, hv, fun k hk => hS hk⟩
+  exact ⟨x, hx0, fun k hk => hx k (mem_KAway.2 ⟨hk, by simp⟩)⟩
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.KeepLevel
+
+section
 
 @[expose] public section
 
@@ -152,5 +285,7 @@ theorem levelKA_alt (P : _root_.UpperTheory.V.Af.Hypotheses') : LevelKA := by
   have h := _root_.UpperTheory.V.Keep.levelCore_alt P K n hn m M hM l hl Ω ι r π (LevelF.of_level hL) hU hW hreg ⟨_, hpol⟩ ha
   exact ⟨⟨h.1, hd, h.2.1⟩, h.2.2⟩
 end UpperTheory.V.Keep
+end
+end
 end
 end

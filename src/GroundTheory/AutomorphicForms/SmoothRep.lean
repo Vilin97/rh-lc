@@ -1,10 +1,7 @@
 module
 
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StabilizerOf
-public import Mathlib.RepresentationTheory.Coinvariants
-public import Mathlib.Topology.Algebra.Group.Defs
-public import Mathlib.Topology.Connected.TotallyDisconnected
-public import GroundTheory.AutomorphicForms.LocallyProfinite
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RepresentationTheory.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,10 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,6 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,10 +41,53 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RepresentationTheory.Coinvariants
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.Connected.TotallyDisconnected
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StabilizerOf
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.StabilizerOf.stabilizerOf.{u_1, u_2} :
+    {G : Type u_1} →
+      [inst : Group G] →
+        {V : Type u_2} → [inst_1 : AddCommGroup V] → [inst_2 : _root_.Module ℂ V] → Representation ℂ G V → V → Subgroup G :=
+  fun {G} _ {_V} _ _ ρ v =>
+    { carrier := {g : G | ρ g v = v}
+      one_mem' := by
+        show ρ 1 v = v
+        rw [map_one]
+        rfl
+      mul_mem' := by
+        intro a b ha hb
+        have ha' : ρ a v = v := ha
+        have hb' : ρ b v = v := hb
+        show ρ (a * b) v = v
+        rw [map_mul, Module.End.mul_apply, hb', ha']
+      inv_mem' := by
+        intro a ha
+        have ha' : ρ a v = v := ha
+        show ρ a⁻¹ v = v
+        calc ρ a⁻¹ v = ρ a⁻¹ (ρ a v) := by rw [ha']
+          _ = ρ (a⁻¹ * a) v := by rw [map_mul, Module.End.mul_apply]
+          _ = v := by rw [inv_mul_cancel, map_one]; rfl }
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.SmoothRep
+
+section
 
 @[expose] public section
 
@@ -438,3 +476,6 @@ end Exactness
 end LocallyProfinite
 
 end GroundTheory.Automorphic
+end
+end
+end

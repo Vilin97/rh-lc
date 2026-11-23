@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayHomCompAlgebraMap
 public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HigherDegreeClassDiesOnFinerEtaleNeighbourhood
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClassVanishesAwayNonZeroDivisorStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyProdRingProjectionsBijective
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +42,319 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyVanishingAlgebraicOverRatFuncStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleMaximalQuotientAlgebraicStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDvdMulPowEtaleNbhdZeroLocusStatement
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.Order.CompletePartialOrder
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsReducedAlgebraOfSmoothOfIsNoetherianRing
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNbhdAwayOfAddMulEqOneStatement
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReductionToSiegelDomain
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace GlobalTheory.EtC.ArtCoh
+
+theorem ht_subsingleton_of_ringEquiv (q : ℕ) {R S : Type} [CommRing R] [CommRing S] (e : R ≃+* S) (n i : ℤ)
+    [h : Subsingleton (Ht q (sp R) n i)] : Subsingleton (Ht q (sp S) n i) := by
+  have hid : spMap (e : R →+* S) ≫ spMap (e.symm : S →+* R) = 𝟙 (sp S) := by
+    rw [← Functor.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    have : (e : R →+* S).comp (e.symm : S →+* R) = RingHom.id S := by ext x; simp
+    rw [this]
+    simp
+  constructor
+  intro x y
+  have hx : pull _ (spMap (e : R →+* S)) _ _ (pull _ (spMap (e.symm : S →+* R)) _ _ x) = x := by
+    rw [← pull_comp, hid, pull_id]
+  have hy : pull _ (spMap (e : R →+* S)) _ _ (pull _ (spMap (e.symm : S →+* R)) _ _ y) = y := by
+    rw [← pull_comp, hid, pull_id]
+  rw [← hx, ← hy, Subsingleton.elim (pull _ (spMap (e.symm : S →+* R)) _ _ x)
+    (pull _ (spMap (e.symm : S →+* R)) _ _ y)]
+
+theorem ht_subsingleton_prod (q : ℕ) (A B : Type) [CommRing A] [CommRing B] (n i : ℤ)
+    [Subsingleton (Ht q (sp A) n i)] [Subsingleton (Ht q (sp B) n i)] : Subsingleton (Ht q (sp (A × B)) n i) := by
+  constructor
+  intro x y
+  exact (GlobalTheory.EtC.ProdCoh.ht_prod_bijective q A B n i).1 (Prod.ext (Subsingleton.elim _ _) (Subsingleton.elim _ _))
+
+theorem ht_subsingleton_of_subsingleton (q : ℕ) (Z : Type) [CommRing Z] [Subsingleton Z] (n i : ℤ) :
+    Subsingleton (Ht q (sp Z) n i) := by
+  have hfs : RingHom.fst Z Z = RingHom.snd Z Z := by ext x; exact Subsingleton.elim _ _
+  constructor
+  intro a b
+  obtain ⟨x, hx⟩ := (GlobalTheory.EtC.ProdCoh.ht_prod_bijective q Z Z n i).2 (a, b)
+  have h1 := congrArg Prod.fst hx
+  have h2 := congrArg Prod.snd hx
+  simp only at h1 h2
+  rw [hfs] at h1
+  rw [← h1, ← h2]
+
+theorem ht_subsingleton_pi (q : ℕ) (n i : ℤ) (ι : Type) [Finite ι] : ∀ (R : ι → Type) [∀ j, CommRing (R j)],
+    (∀ j, Subsingleton (Ht q (sp (R j)) n i)) → Subsingleton (Ht q (sp (∀ j, R j)) n i) := by
+  induction ι using Finite.induction_empty_option with
+  | of_equiv e ih =>
+    intro R _ hR
+    have := ih (fun a => R (e a)) (fun a => hR (e a))
+    exact ht_subsingleton_of_ringEquiv q (RingEquiv.piCongrLeft R e) n i
+  | h_empty =>
+    intro R _ _
+    exact ht_subsingleton_of_subsingleton q _ n i
+  | h_option ih =>
+    intro R _ hR
+    have h1 := hR none
+    have h2 := ih (fun a => R (some a)) (fun a => hR (some a))
+    have := ht_subsingleton_prod q (R none) (∀ a, R (some a)) n i
+    exact ht_subsingleton_of_ringEquiv q (RingEquiv.piOptionEquivProd (R := R)).symm n i
+
+theorem ht_subsingleton_artinian : ∀ (q : ℕ) (K : Type) [CommRing K] [IsArtinianRing K] [IsReduced K] (n i : ℤ),
+    (∀ M : MaximalSpectrum K, Subsingleton (Ht q (sp (K ⧸ M.asIdeal)) n i)) → Subsingleton (Ht q (sp K) n i) := by
+  intro q K _ _ _ n i h
+  have := ht_subsingleton_pi q n i (MaximalSpectrum K) (fun M => K ⧸ M.asIdeal) h
+  exact ht_subsingleton_of_ringEquiv q (IsArtinianRing.equivPi K).toRingEquiv.symm n i
+
+end GlobalTheory.EtC.ArtCoh
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CohomologyVanishesArtinian
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+theorem _root_.GlobalTheory.T.cohomology_vanishes_artinian : ∀ (q : ℕ) (K : Type) [CommRing K] [IsArtinianRing K] [IsReduced K] (n i : ℤ), (∀ M : MaximalSpectrum K, Subsingleton (Ht q (sp (K ⧸ M.asIdeal)) n i)) → Subsingleton (Ht q (sp K) n i) := by
+  first | (exact @GlobalTheory.EtC.ArtCoh.ht_subsingleton_artinian) | (exact GlobalTheory.EtC.ArtCoh.ht_subsingleton_artinian) | (intros; apply GlobalTheory.EtC.ArtCoh.ht_subsingleton_artinian <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FractionRingAwayEtaleDedekindArtinianReduced
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem mem_minimalPrimes_of_disjoint_nonZeroDivisors {R : Type} [CommRing R] [IsReduced R]
+    [IsNoetherianRing R] (p : Ideal R) [p.IsPrime] (hp : Disjoint (p : Set R) (nonZeroDivisors R)) :
+    p ∈ minimalPrimes R := by
+  classical
+  have hfin : (minimalPrimes R).Finite := minimalPrimes.finite_of_isNoetherianRing R
+  have hsub : (p : Set R) ⊆ ⋃ q ∈ hfin.toFinset, (q : Set R) := by
+    intro x hx
+    have hx' : x ∉ nonZeroDivisors R := Set.disjoint_left.mp hp hx
+    rw [mem_nonZeroDivisors_iff_right] at hx'
+    push Not at hx'
+    obtain ⟨y, hxy, hy⟩ := hx'
+    have hrad : (⊥ : Ideal R).radical = ⊥ := by
+      exact nilradical_eq_zero R
+    have : x ∈ ⋃ q ∈ (⊥ : Ideal R).minimalPrimes, (q : Set R) := by
+      rw [Ideal.iUnion_minimalPrimes]
+      refine ⟨y, ?_, ?_⟩
+      · rw [hrad]; simpa using hy
+      · rw [hrad]; simpa [mul_comm] using hxy
+    simpa [Set.Finite.mem_toFinset] using this
+  have hprime : ∀ q ∈ hfin.toFinset, q.IsPrime := fun q hq =>
+    ((Set.Finite.mem_toFinset hfin).1 hq).isPrime
+  obtain ⟨q, hq, hpq⟩ := (Ideal.subset_union_prime (⊥ : Ideal R) ⊥ fun q hq _ _ => hprime q hq).1 hsub
+  have hqm : q ∈ minimalPrimes R := (Set.Finite.mem_toFinset hfin).1 hq
+  have : q ≤ p := hqm.2 ⟨inferInstance, bot_le⟩ hpq
+  exact (le_antisymm hpq this) ▸ hqm
+
+theorem total_fractions_isArtinian_isReduced (R : Type) [CommRing R] [IsReduced R]
+    [IsNoetherianRing R] : IsArtinianRing (FractionRing R) ∧ IsReduced (FractionRing R) := by
+  have hN : IsNoetherianRing (FractionRing R) :=
+    IsLocalization.isNoetherianRing (nonZeroDivisors R) _ inferInstance
+  have hRed : IsReduced (FractionRing R) := inferInstance
+  refine ⟨?_, hRed⟩
+  rw [isArtinianRing_iff_isNoetherianRing_krullDimLE_zero]
+  refine ⟨hN, Ring.krullDimLE_zero_iff.mpr fun P hP => ?_⟩
+  obtain ⟨M, hM, hPM⟩ := Ideal.exists_le_maximal P hP.ne_top
+  have key : ∀ (Q : Ideal (FractionRing R)), Q.IsPrime →
+      Q.comap (algebraMap R (FractionRing R)) ∈ minimalPrimes R := by
+    intro Q hQ
+    have h := (IsLocalization.isPrime_iff_isPrime_disjoint (nonZeroDivisors R) (FractionRing R) Q).1 hQ
+    have := h.1
+    exact mem_minimalPrimes_of_disjoint_nonZeroDivisors _ h.2.symm
+  have h1 := key P hP
+  have h2 := key M hM.isPrime
+  have hle : M.comap (algebraMap R (FractionRing R)) ≤ P.comap (algebraMap R (FractionRing R)) :=
+    h2.2 ⟨h1.1.1, bot_le⟩ (Ideal.comap_mono hPM)
+  have : P = M := by
+    rw [← IsLocalization.map_under (nonZeroDivisors R) (FractionRing R) P,
+      ← IsLocalization.map_under (nonZeroDivisors R) (FractionRing R) M]
+    exact congrArg _ (le_antisymm (Ideal.comap_mono hPM) hle)
+  exact this ▸ hM
+
+theorem fractionRing_away_etale_isArtinian_isReduced : ∀ (B : Type) [CommRing B] [IsDedekindDomain B] (f : B) (A' : Type) [CommRing A'] [Algebra B A'] [Algebra.Etale B A'], IsArtinianRing (FractionRing (Localization.Away (algebraMap B A' f))) ∧ IsReduced (FractionRing (Localization.Away (algebraMap B A' f))) := by
+  intro B _ _ f A' _ _ _
+  have : IsNoetherianRing A' := Algebra.FiniteType.isNoetherianRing B A'
+  have : IsReduced A' := GlobalTheory.isReduced_algebra_of_smooth_of_isNoetherianRing B A'
+  have : IsNoetherianRing (Localization.Away (algebraMap B A' f)) :=
+    IsLocalization.isNoetherianRing (Submonoid.powers (algebraMap B A' f)) _ inferInstance
+  have : IsReduced (Localization.Away (algebraMap B A' f)) := inferInstance
+  exact total_fractions_isArtinian_isReduced _
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FractionRingAwayEtaleDedekindArtinianReducedStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.fractionRing_away_etale_dedekind_artinian_reduced : ∀ (B : Type) [CommRing B] [IsDedekindDomain B] (f : B) (A' : Type) [CommRing A'] [Algebra B A'] [Algebra.Etale B A'], IsArtinianRing (FractionRing (Localization.Away (algebraMap B A' f))) ∧ IsReduced (FractionRing (Localization.Away (algebraMap B A' f))) := by
+  first | (exact @GlobalTheory.fractionRing_away_etale_isArtinian_isReduced) | (exact GlobalTheory.fractionRing_away_etale_isArtinian_isReduced) | (intros; apply GlobalTheory.fractionRing_away_etale_isArtinian_isReduced <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HigherDegreeClassDiesOnFinerEtaleNeighbourhood
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GlobalTheory.AffineCurveNbhd
+
+noncomputable section
+namespace GlobalTheory.KillFiner
+
+theorem pull_spMap_comp (q : ℕ) {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (ρ : R →+* S) (ψ : S →+* T)
+    (n i : ℤ) (z : Ht q (sp R) n i) :
+    pull _ (spMap (ψ.comp ρ)) _ _ z = pull _ (spMap ψ) _ _ (pull _ (spMap ρ) _ _ z) := by
+  have e : spMap (ψ.comp ρ) = spMap ψ ≫ spMap ρ := by
+    show sch.map (Spec.map (CommRingCat.ofHom (ψ.comp ρ))) = sch.map (Spec.map (CommRingCat.ofHom ψ)) ≫ sch.map (Spec.map (CommRingCat.ofHom ρ))
+    rw [CommRingCat.ofHom_comp, Spec.map_comp, Functor.map_comp]
+  rw [e, pull_comp]
+
+theorem main : ∀ (q : ℕ) [NeZero q] (k B : Type) [Field k] [IsAlgClosed k] [CommRing B] [IsDedekindDomain B] [Algebra k B] [Algebra.FiniteType k B], IsUnit (q : k) → ∀ f : B, f ≠ 0 → ¬ IsUnit f → ∀ (A' : Type) [CommRing A'] [Algebra B A'] [Algebra.Etale B A'], IsNbhd B A' f → ∀ (m i : ℤ), 2 ≤ m → ∀ z : Ht q (sp (Localization.Away (algebraMap B A' f))) m i, ∃ (A'' : Type) (_ : CommRing A'') (_ : Algebra B A'') (_ : Algebra.Etale B A'') (φ : A' →ₐ[B] A''), IsNbhd B A'' f ∧ pull _ (spMap (awayHom φ f)) _ _ z = 0 := by
+  intro q _ k B _ _ _ _ _ _ hq f hf hfu A' _ _ _ hN
+  set f' : A' := algebraMap B A' f with hf'
+  intro m i hm z
+  set R := Localization.Away f'
+  have hBf : ¬ IsField B := fun hB => hfu (by
+    letI := hB.toField; exact isUnit_iff_ne_zero.mpr hf)
+  have hqR : IsUnit (q : R) := by
+    have := ((hq.map (algebraMap k B)).map (algebraMap B A')).map (algebraMap A' R)
+    simpa only [map_natCast] using this
+
+  have hFR : Subsingleton (Ht q (sp (FractionRing R)) m i) := by
+    obtain ⟨hArt, hRed⟩ := GlobalTheory.T.fractionRing_away_etale_dedekind_artinian_reduced B f A'
+    refine GlobalTheory.T.cohomology_vanishes_artinian q _ m i (fun M => ?_)
+    obtain ⟨alg, halg⟩ := GlobalTheory.T.etale_maximal_quotient_algebraic k B hBf f hf A' M
+    have hqM : IsUnit (q : FractionRing R ⧸ M.asIdeal) := by
+      have := (hqR.map (algebraMap R (FractionRing R))).map (Ideal.Quotient.mk M.asIdeal)
+      rwa [map_natCast, map_natCast] at this
+    haveI := M.isMaximal
+    letI : Field (FractionRing R ⧸ M.asIdeal) := Ideal.Quotient.field _
+    exact GlobalTheory.T.etale_cohomology_vanishing_algebraic_over_ratFunc q k (FractionRing R ⧸ M.asIdeal) hqM m i hm
+
+  obtain ⟨g, hg, hz⟩ := GlobalTheory.T.class_vanishes_away_nonZeroDivisor q R hqR m i z (Subsingleton.elim _ _)
+
+  have hf'reg : IsSMulRegular A' f' := by
+    have h := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := A') (mem_nonZeroDivisors_of_ne_zero hf)
+    intro x y hxy
+    apply h
+    simpa [Algebra.smul_def, hf'] using hxy
+  have hpow : ∀ (N : ℕ) (y : A'), f' ^ N * y = 0 → y = 0 := by
+    intro N y hy
+    induction N generalizing y with
+    | zero => simpa using hy
+    | succ N ih =>
+      apply ih
+      apply hf'reg
+      simp only [smul_eq_mul, mul_zero]
+      rw [← hy]; ring
+
+  obtain ⟨⟨a, s⟩, hs⟩ := IsLocalization.surj (Submonoid.powers f') g
+  simp only at hs
+  have ha : a ∈ nonZeroDivisors A' := by
+    suffices key : ∀ y : A', y * a = 0 → y = 0 from
+      mem_nonZeroDivisors_iff.mpr ⟨fun y hy => key y (by rw [mul_comm]; exact hy), key⟩
+    intro y hy
+    have h1 : algebraMap A' R y * g = 0 := by
+      have hsu : IsUnit (algebraMap A' R (s : A')) := IsLocalization.map_units R s
+      apply hsu.mul_left_injective
+      simp only [zero_mul]
+      rw [mul_assoc, hs, ← map_mul, hy, map_zero]
+    have h2 : algebraMap A' R y = 0 := (mem_nonZeroDivisors_iff.mp hg).2 _ h1
+    rw [IsLocalization.map_eq_zero_iff (Submonoid.powers f')] at h2
+    obtain ⟨⟨c, N, rfl⟩, hc⟩ := h2
+    exact hpow N y hc
+
+  let J : Ideal A' :=
+    { carrier := {x | ∃ N : ℕ, a ∣ x * f' ^ N}
+      add_mem' := by
+        rintro x y ⟨N₁, h₁⟩ ⟨N₂, h₂⟩
+        refine ⟨N₁ + N₂, ?_⟩
+        have e : (x + y) * f' ^ (N₁ + N₂) = (x * f' ^ N₁) * f' ^ N₂ + (y * f' ^ N₂) * f' ^ N₁ := by ring
+        rw [e]
+        exact dvd_add (h₁.mul_right _) (h₂.mul_right _)
+      zero_mem' := ⟨0, by simp⟩
+      smul_mem' := by
+        rintro c x ⟨N, h⟩
+        refine ⟨N, ?_⟩
+        rw [smul_eq_mul, mul_assoc]
+        exact h.mul_left c }
+  have hJ : J ⊔ Ideal.span {f'} = ⊤ := by
+    by_contra hne
+    obtain ⟨M, hM, hle⟩ := Ideal.exists_le_maximal _ hne
+    have hfM : f' ∈ M := hle (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
+    obtain ⟨t, htM, N, hN⟩ := GlobalTheory.T.exists_dvd_mul_pow_etale_nbhd_zeroLocus B A' f hf hN a ha M hM hfM
+    exact htM (hle (Ideal.mem_sup_left ⟨N, hN⟩))
+  have h1 : (1 : A') ∈ J ⊔ Ideal.span {f'} := by rw [hJ]; trivial
+  obtain ⟨h, ⟨N, hhN⟩, y, hy, hhy⟩ := Submodule.mem_sup.mp h1
+  obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hy
+
+  refine ⟨Localization.Away h, inferInstance, inferInstance, inferInstance,
+    IsScalarTower.toAlgHom B A' (Localization.Away h), GlobalTheory.T.isNbhd_away_of_add_algebraMap_mul_eq_one B A' f h c hN (by rw [← hhy]; ring), ?_⟩
+  set φ := IsScalarTower.toAlgHom B A' (Localization.Away h)
+  set S := Localization.Away (algebraMap B (Localization.Away h) f)
+  have hcomp : ∀ x : A', awayHom φ f (algebraMap A' R x) = algebraMap _ S (φ x) := fun x =>
+    RingHom.congr_fun (awayHom_comp_algebraMap φ f) x
+  have hfS : IsUnit (algebraMap _ S (φ f')) := by
+    rw [hf', AlgHom.commutes]; exact IsLocalization.Away.algebraMap_isUnit _
+  have hhS : IsUnit (algebraMap _ S (φ h)) :=
+    (IsLocalization.Away.algebraMap_isUnit h).map (algebraMap _ S)
+  have haS : IsUnit (algebraMap _ S (φ a)) := by
+    apply isUnit_of_dvd_unit (y := algebraMap _ S (φ (h * f' ^ N)))
+    · exact map_dvd _ (map_dvd _ hhN)
+    · rw [map_mul, map_pow, map_mul, map_pow]; exact hhS.mul (hfS.pow N)
+  have hgS : IsUnit (awayHom φ f g) := by
+    have e : awayHom φ f g * awayHom φ f (algebraMap A' R s) = algebraMap _ S (φ a) := by
+      rw [← map_mul, hs, hcomp]
+    rw [← e] at haS
+    exact isUnit_of_mul_isUnit_left haS
+  have hfac : (IsLocalization.Away.lift g hgS).comp (algebraMap R (Localization.Away g)) = awayHom φ f :=
+    IsLocalization.Away.lift_comp g hgS
+  rw [← hfac, pull_spMap_comp, hz, map_zero]
+end GlobalTheory.KillFiner
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HigherDegreeClassDiesOnFinerEtaleNeighbourhoodStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +362,5 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GlobalThe
 
 theorem _root_.GlobalTheory.T.higherDegree_class_dies_on_finer_etaleNeighbourhood : ∀ (q : ℕ) [NeZero q] (k B : Type) [Field k] [IsAlgClosed k] [CommRing B] [IsDedekindDomain B] [Algebra k B] [Algebra.FiniteType k B], IsUnit (q : k) → ∀ f : B, f ≠ 0 → ¬ IsUnit f → ∀ (A' : Type) [CommRing A'] [Algebra B A'] [Algebra.Etale B A'], IsNbhd B A' f → ∀ (m i : ℤ), 2 ≤ m → ∀ z : Ht q (sp (Localization.Away (algebraMap B A' f))) m i, ∃ (A'' : Type) (_ : CommRing A'') (_ : Algebra B A'') (_ : Algebra.Etale B A'') (φ : A' →ₐ[B] A''), IsNbhd B A'' f ∧ pull _ (spMap (awayHom φ f)) _ _ z = 0 := by
   first | (exact @GlobalTheory.KillFiner.main) | (exact GlobalTheory.KillFiner.main) | (intros; apply GlobalTheory.KillFiner.main <;> assumption)
+end
+end

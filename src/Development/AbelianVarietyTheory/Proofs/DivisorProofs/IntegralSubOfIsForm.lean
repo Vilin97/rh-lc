@@ -2,8 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsTypeIsRealConst
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlueMeasUnivNeTopOfCompactStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopDegreeDensityPullbackEqNormSqDetMulStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GluedChartDensityMeasureAddOfCompatibleOn
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopDegreeDensityPullbackEqNormSqDetMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,7 +39,26 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GluedChartDensityMeasureAddOfCompatibleOn
 import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopDegreeDensityPullbackEqNormSqDetMulStatement
+
+section
+
+@[expose] public section
+
+open ReciprocityTheory.L2DbarEstimates (V)
+open scoped ComplexConjugate
+
+theorem _root_.GlobalTheory.T.topDegreeDensity_pullback_eq_normSq_det_mul : ∀ {n : ℕ} (L : V n →L[ℂ] V n) (ω : GlobalTheory.CxForm.Alt n), GlobalTheory.CxForm.dens (GlobalTheory.CxForm.pull L ω) = ((‖L.det‖ ^ 2 : ℝ) : ℂ) * GlobalTheory.CxForm.dens ω := by
+  first | exact @GlobalTheory.CxForm.dens_pull | exact GlobalTheory.CxForm.dens_pull | (intros; apply GlobalTheory.CxForm.dens_pull <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralSubOfIsForm
+
+section
 
 @[expose] public section
 
@@ -203,3 +221,6 @@ theorem integral_sub_of_isForm : ∀ {M : Type} [TopologicalSpace M] [CompactSpa
   fun A α β hα hβ => A.integral_sub α β hα hβ
 
 end GlobalTheory.CxForm.HolAtlas
+end
+end
+end

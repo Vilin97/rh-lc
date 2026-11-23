@@ -17,19 +17,17 @@ import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarP
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScMuExists
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScPiBuild
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScPiFrame
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScPsiExists
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScRefExists
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScXuExists
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeHW
-public import Formalism.SharpRestriction.CuspSpanNormBounds.HCFiniteKMultiplicityGapped
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.EmbeddingTraceSumAlt.NormUnitsOfCalculation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,7 +35,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,7 +42,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -59,7 +55,48 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScRefExists
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScXuExists
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeHW
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.HCReprodM
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ScPsiExists
+
+section
+
+@[expose] public section
+
+theorem sc_psi_exists : PI.ScPsiExists.Target :=
+  PI.ScPsiExists.UnitaryGroupMassFormula.norm_units_of_calculation
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.HCFiniteKMultiplicityGapped
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.BridgeDS3
+
+open Formalism.MainNotions Formalism.MainNotions.S
+
+theorem discrete_series_exists_gapped [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.DiscreteSeriesExistsG] : DiscreteSeriesWeylDimension.DiscreteSeriesExistsG := Fact.out
+
+
+end Formalism.MainNotions.BridgeDS3
+
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedVolumeStatements.CoefWeightedLocHolds
+
+section
 
 @[expose] public section
 
@@ -463,3 +500,5 @@ theorem BesselNVGap_holds : BesselNVGap := Formalism.L2.SG.BesselDiscreteSeries.
 theorem WlocExists_holds : WlocExists := scWlocExists Formalism.L2.SG.HCReprodM.hcReprodDSm
 
 end Formalism.L2.SG.Closed
+end
+end

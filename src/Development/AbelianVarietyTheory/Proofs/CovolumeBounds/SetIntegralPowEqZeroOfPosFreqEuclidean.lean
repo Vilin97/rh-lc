@@ -2,7 +2,9 @@ module
 
 public import Mathlib.Analysis.Normed.Module.Basic
 public import Mathlib.Topology.Algebra.Module.Multilinear.Basic
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.SummablePiProd
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.ExistsEventuallyNormRiemannThetaTermLe
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,10 +43,39 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+import Mathlib.Tactic.TypeStar
 public import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Analysis.Fourier.Notation
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CovolumeBounds.SummablePiProd
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.SummablePiProd
+
+universe u_1 u_2
+
+theorem summable_pi_prod {ι : Type u_1} [inst : Fintype ι] {J : ι → Type u_2}
+    {u : (i : ι) → J i → ℝ} (h0 : ∀ (i : ι) (j : J i), (0 : ℝ) ≤ u i j)
+    (hs : ∀ (i : ι), Summable (u i)) :
+    Summable fun (t : (i : ι) → J i) ↦ ∏ i : ι, u i (t i) := by
+  apply GlobalTheory.summable_pi_prod_of_nonneg <;> assumption
+
+end GlobalTheory.SummablePiProd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CovolumeBounds.SetIntegralPowEqZeroOfPosFreqEuclidean
+
+section
 
 @[expose] public section
 
@@ -128,3 +159,5 @@ section Orthant
 end Orthant
 
 end GlobalTheory
+end
+end

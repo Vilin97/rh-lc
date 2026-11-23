@@ -9,14 +9,13 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlatInteg
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasInfExpOfOrder
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormSatakeLeOfUnitarySphericalGL
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.OppositePathLocalTotalTensorMemCoefficientField
-public import Development.AutomorphicArithmetic.DivisorFrames.AbsHcExponentLeAndAbsCenterLeOfSizeRows
-public import Development.AutomorphicArithmetic.DivisorFrames.IsIntegralLocalGridTensorOfLevelChar
-public import Development.AutomorphicArithmetic.LocalEmbeddings.FlipInt
-public import Development.AutomorphicArithmetic.LocalEmbeddings.FlipVal
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LevelPlusSubgroup
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksLemmas
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsGivenStageEqOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -29,8 +28,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,7 +47,187 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.DivisorFrames.IsIntegralLocalGridTensorOfLevelChar
+public import Development.AutomorphicArithmetic.LocalEmbeddings.FlipInt
+public import Formalism.MirabolicMackeyTheory.StatementT
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+public import Development.AutomorphicArithmetic.DivisorFrames.ExistsPowLocKMulInfEqOneOfLevelLeTwo
+public import Development.AutomorphicArithmetic.DivisorFrames.IsIntegralCmTypeUnitaryPartMulAbsNormPow
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.DivisorFrames.AbsHcExponentLeAndAbsCenterLeOfSizeRows
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.L2.DIV
+open IsDedekindDomain NumberField GlobalTheory.ChiGrid GlobalTheory.FunObj GlobalTheory.SplitFlip GlobalTheory.SplitWeil
+attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField GlobalTheory.FunObj.borelKw
+  GlobalTheory.FunObj.borelSpaceKw
+
+theorem UpperTheory.abs_hc_exponent_le_and_abs_center_le_of_sizeRows :
+    ∀ (D : D7) (large₂ : SizeData₂ D), GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.SizeRows large₂ → HostHyp D → (∀ τ l, |(((D.hc τ).e l : ℚ) : ℝ)| ≤ 4 * large₂.sc.b) ∧ ∀ τ i, 1 ≤ i → i ≤ D.R.m → |((cen D 1 τ i : ℤ) : ℝ)| ≤ 2 * large₂.sc.b := by
+  intro D large₂ hS hH
+  obtain ⟨-, -, -, -, -, -, -, -, -, -, -, hb, he, -⟩ := hS
+  have hbpos : 0 < large₂.sc.b := by
+    have := large₂.Sc_pos
+    have : (0 : ℝ) ≤ (↑D.R.m + 1) * ↑(gap D 1) := by positivity
+    linarith
+  refine ⟨fun τ l => ?_, fun τ i hi him => ?_⟩
+  · obtain ⟨hb0, he0⟩ := he τ l
+    have hg := ((hH.gap τ l).1)
+    have ht : (0 : ℚ) ≤ ((D.R.t : ℚ) + 3) / 2 := by positivity
+    have hepos : (0 : ℚ) ≤ (D.hc τ).e l := by linarith
+    have hepos' : (0 : ℝ) ≤ (((D.hc τ).e l : ℚ) : ℝ) := by exact_mod_cast hepos
+    rw [abs_of_nonneg hepos']
+    exact he0
+  · set G := GlobalTheory.SignedHC.GridData.ofHCParam (D.hc τ) (sLen D) (gap D 1) 0 with hG
+    have hcen : cen D 1 τ i = ⌊G.mid i⌋ := rfl
+    have hmid : G.mid i = G.a i + (G.ga : ℚ) / 2 := G.mid_eq hi
+    have ha : G.a i = (G.v 2 : ℚ) + 1 / 2 + ((G.m : ℚ) + 1 - i) * G.ga := rfl
+    have hm : G.m = D.R.m := rfl
+    have hga : G.ga = gap D 1 := rfl
+    have hv : 0 ≤ G.v 2 ∧ ((G.v 2 : ℚ) : ℝ) ≤ large₂.Sc := by
+      by_cases hk : 0 < D.R.k - 1
+      · have hv2 : G.v 2 = ⌊(D.hc τ).v ⟨0, hk⟩⌋ := by
+          simp [hG, GlobalTheory.SignedHC.GridData.ofHCParam, GlobalTheory.SignedHC.GridData.extend, hk]
+        obtain ⟨h0, h1⟩ := large₂.cloud_v τ ⟨0, hk⟩
+        have h0' : (0 : ℚ) ≤ (D.hc τ).v ⟨0, hk⟩ := by exact_mod_cast h0
+        refine ⟨?_, ?_⟩
+        · rw [hv2]
+          exact Int.floor_nonneg.mpr h0'
+        · rw [hv2]
+          have hfl : ((⌊(D.hc τ).v ⟨0, hk⟩⌋ : ℤ) : ℚ) ≤ (D.hc τ).v ⟨0, hk⟩ := Int.floor_le _
+          have hfl' : ((((⌊(D.hc τ).v ⟨0, hk⟩⌋ : ℤ) : ℚ)) : ℝ) ≤ (((D.hc τ).v ⟨0, hk⟩ : ℚ) : ℝ) := by
+            exact_mod_cast hfl
+          linarith
+      · have hv2 : G.v 2 = 0 := by
+          simp [hG, GlobalTheory.SignedHC.GridData.ofHCParam, GlobalTheory.SignedHC.GridData.extend, hk]
+        rw [hv2]
+        refine ⟨le_rfl, ?_⟩
+        simpa using large₂.Sc_pos.le
+    obtain ⟨hv0, hv1⟩ := hv
+    have hi' : (1 : ℚ) ≤ i := by exact_mod_cast hi
+    have him' : (i : ℚ) ≤ D.R.m := by exact_mod_cast him
+    have hga0 : (0 : ℚ) ≤ G.ga := by positivity
+    have hv0' : (0 : ℚ) ≤ G.v 2 := by exact_mod_cast hv0
+    have hmid0 : 0 ≤ G.mid i := by
+      rw [hmid, ha, hm]
+      have : (0 : ℚ) ≤ ((D.R.m : ℚ) + 1 - i) * G.ga := mul_nonneg (by linarith) hga0
+      linarith
+    have hmid1 : ((G.mid i : ℚ) : ℝ) ≤ large₂.sc.b := by
+      have e1 : ((G.mid i : ℚ) : ℝ) = ((G.v 2 : ℚ) : ℝ) + 1 / 2 + (((D.R.m : ℝ) + 1 - i) * (gap D 1 : ℝ)) + (gap D 1 : ℝ) / 2 := by
+        rw [hmid, ha, hm, hga]
+        push_cast
+        ring
+      have hgr : (0 : ℝ) ≤ (gap D 1 : ℝ) := by positivity
+      have hir : (1 : ℝ) ≤ i := by exact_mod_cast hi
+      have : ((D.R.m : ℝ) + 1 - i) * (gap D 1 : ℝ) + (gap D 1 : ℝ) / 2 ≤ ((D.R.m : ℝ) + 1) * (gap D 1 : ℝ) := by
+        nlinarith
+      linarith
+    have hf0 : 0 ≤ cen D 1 τ i := by
+      rw [hcen]
+      exact Int.floor_nonneg.mpr hmid0
+    have hf1 : ((cen D 1 τ i : ℤ) : ℝ) ≤ large₂.sc.b := by
+      rw [hcen]
+      have hfl : ((⌊G.mid i⌋ : ℤ) : ℚ) ≤ G.mid i := Int.floor_le _
+      have hfl' : ((((⌊G.mid i⌋ : ℤ) : ℚ)) : ℝ) ≤ ((G.mid i : ℚ) : ℝ) := by exact_mod_cast hfl
+      have : (((⌊G.mid i⌋ : ℤ)) : ℝ) = ((((⌊G.mid i⌋ : ℤ) : ℚ)) : ℝ) := by push_cast; rfl
+      linarith
+    have hf0' : (0 : ℝ) ≤ ((cen D 1 τ i : ℤ) : ℝ) := by exact_mod_cast hf0
+    rw [abs_of_nonneg hf0']
+    linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.LocalEmbeddings.FlipVal
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open Formalism.DivisionValues (vw)
+
+namespace UpperTheory.FlipVal
+
+theorem vw_ge {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)) {y : K} (hy : y ≠ 0) {q : ℕ} (hq : q ≠ 0)
+    (n : ℕ) (h : IsIntegral ℤ ((q : K) ^ n * y)) : -((n : ℤ) * vw w (q : K)) ≤ vw w y := by
+  have hq' : (q : K) ≠ 0 := by exact_mod_cast hq
+  have h0 : 0 ≤ vw w ((q : K) ^ n * y) := by
+    obtain ⟨a, ha⟩ : ∃ a : 𝓞 K, algebraMap (𝓞 K) K a = (q : K) ^ n * y := ⟨⟨_, h⟩, rfl⟩
+    rw [← ha, vw, ← FractionalIdeal.coeIdeal_span_singleton]
+    exact FractionalIdeal.count_coe_nonneg K w _
+  rw [vw, ← FractionalIdeal.spanSingleton_mul_spanSingleton, ← FractionalIdeal.spanSingleton_pow,
+    FractionalIdeal.count_mul K w (pow_ne_zero _ (FractionalIdeal.spanSingleton_ne_zero_iff.2 hq'))
+      (FractionalIdeal.spanSingleton_ne_zero_iff.2 hy), FractionalIdeal.count_pow] at h0
+  unfold vw
+  linarith
+
+theorem vw_nat_nonneg {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)) (q : ℕ) : 0 ≤ vw w (q : K) := by
+  rw [← map_natCast (algebraMap (𝓞 K) K), vw, ← FractionalIdeal.coeIdeal_span_singleton]
+  exact FractionalIdeal.count_coe_nonneg K w _
+
+theorem vw_absNorm {K E : Type} [Field K] [NumberField K] [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 K))
+    (P : HeightOneSpectrum (𝓞 E)) (h : ((Formalism.EigenvalueLevelCeiling.plc P : ℕ) : 𝓞 K) ∉ w.asIdeal) :
+    vw w ((Ideal.absNorm P.asIdeal : ℕ) : K) = 0 := by
+  have hfin : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
+  have hmax := P.isMaximal
+  letI := Ideal.Quotient.field P.asIdeal
+  letI := Fintype.ofFinite (𝓞 E ⧸ P.asIdeal)
+  obtain ⟨n, -, hn⟩ := FiniteField.card (𝓞 E ⧸ P.asIdeal) (ringChar (𝓞 E ⧸ P.asIdeal))
+  have h1 : Ideal.absNorm P.asIdeal = Formalism.EigenvalueLevelCeiling.plc P ^ (n : ℕ) := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply, Nat.card_eq_fintype_card, hn]; rfl
+  have h2 : ((Ideal.absNorm P.asIdeal : ℕ) : 𝓞 K) ∉ w.asIdeal := by
+    rw [h1, Nat.cast_pow]; exact fun h' => h (w.isPrime.mem_of_pow_mem _ h')
+  have h3 : ((Ideal.absNorm P.asIdeal : ℕ) : 𝓞 K) ≠ 0 := fun h' => h2 (h' ▸ zero_mem _)
+  rw [← map_natCast (algebraMap (𝓞 K) K), vw, ← FractionalIdeal.coeIdeal_span_singleton,
+    FractionalIdeal.count_coe K w (by simpa using h3)]
+  by_contra h4
+  refine h2 ((Ideal.dvd_span_singleton).1 ?_)
+  exact (Associates.count_ne_zero_iff_dvd (by simpa using h3) w.irreducible).1 (by exact_mod_cast h4)
+
+theorem val_int {E : Type} [Field E] [NumberField E] (χ : Formalism.L2.Host.HChar E) (S : Finset (HeightOneSpectrum (𝓞 E)))
+    (hS : ∀ v, v ∉ S → χ.UnrAt v) (hl : ∀ v, χ.LevelLe v 2) {I : Type} [Fintype I] (φ : I → E →+* ℂ)
+    (hφ : Function.Injective (Sum.elim φ fun i => ComplexEmbedding.conjugate (φ i))) (n : I → ℤ) (hn : χ.HasInf φ n)
+    (M : ℕ) (hM : ∀ i, (n i).natAbs ≤ M) (P : HeightOneSpectrum (𝓞 E)) :
+    IsIntegral ℤ (((Ideal.absNorm P.asIdeal : ℕ) : ℂ) ^ M * (χ.val P : ℂ)) ∧
+      IsIntegral ℤ (((Ideal.absNorm P.asIdeal : ℕ) : ℂ) ^ M * (χ.val P : ℂ)⁻¹) := by
+  obtain ⟨h, z, h0, hP, hQ, H⟩ := UpperTheory.exists_pow_locK_mul_inf_eq_one_of_levelLe_two E χ S hS hl P (Formalism.L2.Host.unif P)
+  have hu : P.valuation E (Formalism.L2.Host.unif P : E) = WithZero.exp (-1 : ℤ) :=
+    (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' P _).symm.trans (Formalism.L2.Host.unif_spec P)
+  rw [hu, ← WithZero.exp_nsmul, show h • (-1 : ℤ) = -(h : ℤ) by simp] at hP
+  have H' : (χ.val P : ℂ) ^ h * ∏ i, (φ i (z : E) / ((‖φ i (z : E)‖ : ℝ) : ℂ)) ^ n i = 1 := by
+    rw [← hn z]; exact congrArg Units.val H
+  constructor
+  · refine IsIntegral.of_pow h0 ?_
+    have := UpperTheory.isIntegral_cmType_unitaryPart_mul_absNorm_pow E I φ hφ (fun i => -n i) M (fun i => by simpa using hM i) P h z hP hQ
+    simp only [zpow_neg, Finset.prod_inv_distrib] at this
+    rwa [← eq_inv_of_mul_eq_one_left H', mul_comm, mul_comm h, pow_mul, ← mul_pow] at this
+  · refine IsIntegral.of_pow h0 ?_
+    have := UpperTheory.isIntegral_cmType_unitaryPart_mul_absNorm_pow E I φ hφ n M hM P h z hP hQ
+    rwa [eq_inv_of_mul_eq_one_right H', mul_comm, mul_comm h, pow_mul, ← inv_pow, ← mul_pow] at this
+
+end UpperTheory.FlipVal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlipsLossBoundedAtExceptionalPlaces
+
+section
 
 @[expose] public section
 
@@ -253,3 +430,5 @@ theorem _root_.GlobalTheory.T.flips_loss_bounded_at_exceptional_places : ∃ CF0
   · have h0 : vw la ((resCard (Kw w) : ℕ) : D.what₂.LL) = 0 := by
       rw [hq]; exact UpperTheory.FlipVal.vw_absNorm la w (hla.resolve_left hW)
     rw [h0]; simp
+end
+end

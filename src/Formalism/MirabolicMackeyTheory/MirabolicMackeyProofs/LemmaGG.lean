@@ -3,12 +3,9 @@ module
 public import Formalism.MirabolicMackeyTheory.StatementL
 public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
 public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
-public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.OrthogonalityOfMackey
-public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -29,8 +26,6 @@ import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,8 +45,73 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.OrthogonalityOfMackey
+
+section
+
+@[expose] public section
+
+open Module NumberField IsDedekindDomain
+
+namespace Formalism.EigenvalueLevelCeiling
+
+theorem orthogonality_of_mackey : OrthOfMackey := by
+  unfold OrthOfMackey
+  intro K _ _ _ Z _ _ P _ _ ρ U _ ψ hM h hh z hz
+  obtain ⟨_, hmul, hex⟩ := hM
+  obtain ⟨u0, hu0, hc, hne⟩ := hex h hh
+  set S := ∑ u : U, ((ψ ((u : P)⁻¹) : 𝓞 K) : K) • ρ (u : P) (ρ h z) with hS
+  have hz' : ∀ u ∈ U, ρ u z = ((ψ u : 𝓞 K) : K) • z := by
+    intro u hu
+    unfold eig at hz
+    have h1 := (Submodule.mem_iInf _).mp hz ⟨u, hu⟩
+    rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply,
+      sub_eq_zero] at h1
+    exact h1
+  have hA : ∑ u : U, ((ψ ((u : P)⁻¹) : 𝓞 K) : K) • ρ (u : P) (ρ u0 (ρ h z)) =
+      ((ψ u0 : 𝓞 K) : K) • S := by
+    rw [hS, Finset.smul_sum]
+    refine Fintype.sum_equiv (Equiv.mulRight (⟨u0, hu0⟩ : U)) _ _ (fun u => ?_)
+    simp only [Equiv.coe_mulRight, Subgroup.coe_mul, map_mul, Module.End.mul_apply, smul_smul]
+    congr 1
+    have key : ψ ((u : P)⁻¹) = ψ u0 * ψ (((u : P) * u0)⁻¹) := by
+      rw [← hmul u0 hu0 _ (U.inv_mem (U.mul_mem u.2 hu0))]
+      congr 1
+      group
+    rw [key]
+    norm_cast
+  have hB : ∑ u : U, ((ψ ((u : P)⁻¹) : 𝓞 K) : K) • ρ (u : P) (ρ u0 (ρ h z)) =
+      ((ψ (h⁻¹ * u0 * h) : 𝓞 K) : K) • S := by
+    have e1 : ρ u0 (ρ h z) = ((ψ (h⁻¹ * u0 * h) : 𝓞 K) : K) • ρ h z := by
+      have e2 : ρ u0 (ρ h z) = ρ h (ρ (h⁻¹ * u0 * h) z) := by
+        rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
+        congr 2
+        group
+      rw [e2, hz' _ hc, map_smul]
+    rw [hS, Finset.smul_sum]
+    refine Finset.sum_congr rfl (fun u _ => ?_)
+    rw [e1, map_smul, smul_smul, smul_smul, mul_comm]
+  have h3 : (((ψ u0 : 𝓞 K) : K) - ((ψ (h⁻¹ * u0 * h) : 𝓞 K) : K)) • S = 0 := by
+    rw [sub_smul, ← hA, ← hB, sub_self]
+  rcases smul_eq_zero.mp h3 with h0 | h0
+  · exact absurd (by exact_mod_cast (sub_eq_zero.mp h0).symm) hne
+  · exact h0
+
+end Formalism.EigenvalueLevelCeiling
+end
+end
+
+-- Source module: Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.LemmaGG
+
+section
 
 @[expose] public section
 
@@ -419,3 +479,5 @@ theorem lemmaGG_of (hSc : IdxScaleIn) : LemmaGG := by
 theorem good_index_GG : LemmaGG := lemmaGG_of index_scale_inclusion
 
 end Formalism.EigenvalueLevelCeiling
+end
+end

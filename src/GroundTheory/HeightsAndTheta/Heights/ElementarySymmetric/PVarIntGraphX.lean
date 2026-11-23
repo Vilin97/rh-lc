@@ -1,23 +1,13 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StVarIntGraphCompact
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StChartMassCompact
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongPolyLimit
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongWeightLimit
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLocalMultComap
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StVarIntGraphInt
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PIntegralIndep
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLelongPolyLimit
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PVarIntGraph
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GraphIdeal
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -26,10 +16,10 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -38,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,9 +40,119 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StChartMassCompact
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongPolyLimit
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongWeightLimit
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLocalMultComap
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StVarIntGraphInt
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCriticalImageNull
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PFiniteMapOpen
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PIntegralIndependent
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PPosPartIndependent
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PPosPartLocal
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PPosPartSplit
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSheetOnlyNull
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PVarIntGraph
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.Topology.UniformSpace.Uniformizable
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StVarIntGraphCompact
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.Targets
+
+open MvPolynomial
+open GroundTheory.Heights₂.Heights (varInt SmoothNear euclPot contDiff_euclPot)
+open GroundTheory.Heights₂.Heights.ComplexSets (zeroSet)
+open scoped ContDiff
+
+def VarIntGraphCompact.Statement : Prop :=
+  ∀ (n e : ℕ) (J : Ideal (MvPolynomial (Fin n) ℂ)) (p : MvPolynomial (Fin n) ℂ) (F : (Fin (n + 1) → ℂ) → ℝ)
+    (Φ : Fin e → (Fin (n + 1) → ℂ) → ℝ),
+    J.IsPrime → SmoothNear (zeroSet (graphIdeal J p)) F → HasCompactSupport F →
+    (∀ k, SmoothNear (zeroSet (graphIdeal J p)) (Φ k)) →
+      varInt (graphIdeal J p) e F Φ = varInt J e (fun x => F (graphPt p x)) (fun k x => Φ k (graphPt p x))
+
+end GroundTheory.Heights₂.Heights.Targets
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PIntegralIndep
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+theorem IntegralIndep.closed : IntegralIndep.Statement :=
+  IntegralIndep.proof
+    (PosPartIndep.proof
+      (SheetOnlyNull.proof IndefiniteRowSideFullHecke.ComplexSets.FiniteMapOpen.proof
+        IndefiniteRowSideFullHecke.ComplexSets.CriticalImageNull.proof)
+      PosPartLocal.proof PosPartSplit.proof)
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLelongPolyLimit
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.Targets
+
+open MvPolynomial Filter Topology Matrix
+open scoped ContDiff
+open GroundTheory.Heights₂.Heights (varInt SmoothNear localMult linEval linForm linForm_single)
+open GroundTheory.Heights₂.Heights.ComplexSets (zeroSet)
+
+theorem smoothNear_comp_init {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} (p : MvPolynomial (Fin n) ℂ)
+    {g : (Fin n → ℂ) → ℝ} (hg : SmoothNear (zeroSet J) g) :
+    SmoothNear (zeroSet (graphIdeal J p)) (fun x => g (Fin.init x)) := by
+  obtain ⟨U, hU, hJU, hgU⟩ := hg
+  have hinit : ContDiff ℝ ∞ (fun x : Fin (n + 1) → ℂ => Fin.init x) :=
+    contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℂ) (Fin.castSucc i)
+  exact ⟨(fun x => Fin.init x) ⁻¹' U, hU.preimage hinit.continuous,
+    fun x hx => hJU (init_mem_zeroSet p hx), hgU.comp hinit.contDiffOn fun _ hx => hx⟩
+
+theorem linEval_single_last {n : ℕ} (x : Fin (n + 1) → ℂ) :
+    linEval (Pi.single (Fin.last n) 1) x = x (Fin.last n) := by
+  simp [linEval, Pi.single_apply]
+
+end GroundTheory.Heights₂.Heights.Targets
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PVarIntGraphX
+
+section
 
 @[expose] public section
 
@@ -155,3 +254,6 @@ theorem LelongPolyLimit.of_mult_weight (hMult : LocalMultComap.Statement) (hWeig
   LelongPolyLimit.proof_of_compact VarIntGraphCompact.closed hMult hWeight
 
 end GroundTheory.Heights₂.Heights.Targets
+end
+end
+end

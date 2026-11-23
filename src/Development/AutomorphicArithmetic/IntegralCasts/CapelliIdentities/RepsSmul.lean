@@ -2,15 +2,19 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.TruncatedCuspIrreducibility.AdelDefs
 import Development.AbelianVarietyTheory.Definitions.Foundations.MeasurePreservingRmulQuotMeas
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AeFundamentalDomain
+public import Mathlib.MeasureTheory.Group.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -25,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,6 +43,41 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.MeasureTheory.Group.Measure
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AeFundamentalDomain
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.ae_fundamental_domain :
+    ∀ {G Q : Type} [Group G] [MeasurableSpace G] [MeasurableMul G] [MeasurableSpace Q]
+        (Γ : Subgroup G) [Countable Γ] (μ : MeasureTheory.Measure G) [μ.IsMulLeftInvariant] (D : Set G) (π : G → Q),
+        Measurable π → (∀ (γ : Γ) (g : G), π ((γ : G) * g) = π g) → (∀ g : G, ∃ γ : Γ, (γ : G) * g ∈ D) →
+        ∀ p : Q → Prop, (∀ᵐ q ∂(MeasureTheory.Measure.map π (μ.restrict D)), p q) → ∀ᵐ y ∂μ, p (π y) := by
+  intro G Q _ _ _ _ Γ _ μ _ D π hπ hinv hcov p hp
+  rw [MeasureTheory.ae_iff] at hp ⊢
+  obtain ⟨N, hsub, hNm, hN0⟩ := MeasureTheory.exists_measurable_superset_of_null hp
+  rw [MeasureTheory.Measure.map_apply hπ hNm,
+    MeasureTheory.Measure.restrict_apply (hπ hNm)] at hN0
+  have hcover : {y | ¬ p (π y)} ⊆
+      ⋃ γ : Γ, (fun g : G => (γ : G) * g) ⁻¹' (π ⁻¹' N ∩ D) := by
+    intro y hy
+    obtain ⟨γ, hγ⟩ := hcov y
+    refine Set.mem_iUnion.2 ⟨γ, ?_, hγ⟩
+    show π ((γ : G) * y) ∈ N
+    rw [hinv]
+    exact hsub hy
+  refine MeasureTheory.measure_mono_null hcover (MeasureTheory.measure_iUnion_null fun γ => ?_)
+  rw [MeasureTheory.measure_preimage_mul]
+  exact hN0
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RepsSmul
+
+section
 
 @[expose] public section
 
@@ -91,3 +131,5 @@ theorem UpperTheory.Reformulated.B.Glb3.sec_add :
       · rw [Fin.append_right]; exact hψ' j
     · simp only [Fin.sum_univ_add, Fin.append_left, Fin.append_right, Pi.add_apply, Pi.smul_apply,
         smul_eq_mul, hs m₁ m₂ x hx, hs' m₁ m₂ x hx, Finset.mul_sum, mul_assoc]
+end
+end

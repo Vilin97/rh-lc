@@ -1,15 +1,10 @@
 module
 
-public import Formalism.MirabolicMackeyTheory.ErrSumGoodExact
-public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.LocalConditionsComposeGeneral
-public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PrimeLogOverP
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PrimeLogOverPSqTail
+public import Formalism.MirabolicMackeyTheory.StatementC
+public import Formalism.MirabolicMackeyTheory.StatementT
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -26,9 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,8 +40,114 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.Chebyshev
+import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PrimeLogOverP
+public import Formalism.PeriodIntegrals.PrimeSums
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PrimeLogarithmTail.SumLogDivSqLeDiv
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.MirabolicMackeyTheory.ErrSumGoodExact
+
+section
+
+@[expose] public section
+
+open Module NumberField IsDedekindDomain
+
+noncomputable section
+
+namespace Formalism.EigenvalueLevelCeiling
+
+open Formalism.DivisionValues
+
+def ErrSumGoodExact : Prop :=
+  ∀ (PI : Finset ℕ), (∀ p ∈ PI, p.Prime) →
+  ∀ (Y X2 A1 A2 kw T Cth Cadd : ℝ) (th add : ℕ → ℝ), 1 < Y → 0 < X2 → 0 ≤ A1 → 0 ≤ A2 → 0 ≤ kw →
+    0 ≤ T → (∀ p, 0 ≤ th p) → (∀ p, 0 ≤ add p) → DepthSums T Cth Cadd th add →
+      ∑ p ∈ PI, Real.log (p : ℝ) * errGood Y X2 A1 A2 kw T th add p ≤
+        2 * (A1 * Real.log Y + kw * Cth + Cadd + 2.04 * A2 / X2 + Real.log 4 * Y)
+
+def OnSumExact : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (S : Finset (HeightOneSpectrum (𝓞 K)))
+    (Bad : Finset ℕ) (eb : ℕ → ℝ), (∀ p, 0 ≤ eb p) →
+  ∀ (Y X2 A1 A2 kw T Cth Cadd : ℝ) (th add : ℕ → ℝ), 1 < Y → 0 < X2 → 0 ≤ A1 → 0 ≤ A2 → 0 ≤ kw →
+    0 ≤ T → (∀ p, 0 ≤ th p) → (∀ p, 0 ≤ add p) → DepthSums T Cth Cadd th add →
+  ∀ (errl : HeightOneSpectrum (𝓞 K) → ℝ),
+    (∀ w ∈ S, errl w ≤ if plc w ∈ Bad then eb (plc w) else errGood Y X2 A1 A2 kw T th add (plc w)) →
+      ∑ w ∈ S, lw w * ((ramw w : ℝ) * errl w) ≤
+        2 * (A1 * Real.log Y + kw * Cth + Cadd + 2.04 * A2 / X2 + Real.log 4 * Y) +
+          ∑ p ∈ Bad, Real.log (p : ℝ) * eb p
+
+def AbsorbOnExact : Prop :=
+  ∀ (C Cb L xe f m b k ws Se Y X2 bad : ℝ), 1 ≤ C → 0 ≤ Cb → 1 ≤ L → L ≤ xe → 1 ≤ f → 1 ≤ m → 0 < b →
+    1 ≤ k → Real.log k ≤ L → 0 ≤ ws → ws ≤ 2 * f * b → 0 ≤ Se → k * Se * L ≤ m * b → 1 < Y →
+    Real.log Y ≤ 2 * L → Y ≤ m * b → k ≤ X2 → bad ≤ Cb * (f * m * b * L) →
+      2 * (C * (Real.log k * m * ws + f * k * Se) * Real.log Y + C * k * ws * (C / k) + C * (m * b) +
+          2.04 * (C * k * ws) / X2 + Real.log 4 * Y) + bad + 12 * (f * m * b) ≤
+        (4 * C ^ 2 + 25 * C + Cb + 12) * xe * (f * m * b * L)
+
+def LeadExact : Prop :=
+  ∀ (C L f m b k ws Se Y X2 : ℝ), 1 ≤ C → 1 ≤ f → 1 ≤ m → 0 < b → 1 ≤ k → 0 ≤ ws → ws ≤ 2 * f * b →
+    0 ≤ Se → k * Se * L ≤ m * b → 1 < Y → Real.log Y ≤ 2 * L → Y ≤ m * b → k ≤ X2 →
+      2 * (C * (Real.log k * m * ws + f * k * Se) * Real.log Y + C * k * ws * (C / k) + C * (m * b) +
+          2.04 * (C * k * ws) / X2 + Real.log 4 * Y) ≤
+        4 * C * L * Real.log k * m * ws + (4 * C ^ 2 + 17 * C) * (f * m * b)
+
+end Formalism.EigenvalueLevelCeiling
+end
+end
+end
+
+-- Source module: Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.LocalConditionsComposeGeneral
+
+section
+
+@[expose] public section
+
+open Module NumberField IsDedekindDomain
+
+namespace Formalism.EigenvalueLevelCeiling
+
+open Formalism.DivisionValues
+
+theorem chebyshev_theta_log_four : ThetaLog4 := by
+  classical
+  intro Y hY Q hQ
+  refine le_trans ?_ (Chebyshev.theta_le_log4_mul_x hY)
+  unfold Chebyshev.theta
+  refine Finset.sum_le_sum_of_subset_of_nonneg ?_ ?_
+  · intro p hp
+    obtain ⟨h1, h2⟩ := hQ p hp
+    exact Finset.mem_filter.mpr ⟨Finset.mem_Ioc.mpr ⟨h1.pos, Nat.le_floor h2⟩, h1⟩
+  · intro p _ _
+    exact Real.log_natCast_nonneg p
+
+end Formalism.EigenvalueLevelCeiling
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PrimeLogOverPSqTail
+
+section
+
+@[expose] public section
+
+theorem prime_log_over_sq_tail : PI.PrimeLogOverPSqTail :=
+  fun X hX Q hQ => PI.TailWork.sum_log_div_sq_le_div X hX Q hQ
+end
+end
+
+-- Source module: Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.AbsorbLocalConditionsOfExact
+
+section
 
 @[expose] public section
 
@@ -239,3 +337,5 @@ theorem absorb_local_conditions_exact : AbsorbOnExact := by
   linarith
 
 end Formalism.EigenvalueLevelCeiling
+end
+end

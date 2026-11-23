@@ -3,7 +3,8 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.LineBundleGlobalSectionsDimCongrPicardClass
 import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.MemNonzeroLocusIffPowFn
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsAmpleTensorAmplePowProjective
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.AmplePlusNefIntegralStep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AsymptoticRiemannRochAmpleCoherentStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowLeGlobalSectionsDimLineBundlePow
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +43,250 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHasNonzeroSecPowOfAmpleSubAmple
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAmpleTensorNefOfNonzeroSectionPowInductionStatement
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.EventuallySubsingletonCohTwistZOfIsProjOver
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsLinearMapMultilinearMapBaseChange
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsFiniteLengthOfIsArtinianRingAnnihilator
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.NefIntersectionNonnegInduction
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.TopIntersectionGrowthBoundStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleLineBundleTopSelfIntersectionPos
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+namespace GlobalTheory.AmplePos
+
+theorem pos_of_bound {h : ℕ → ℕ} {d C m₀ : ℕ} {a : ℤ} {c : ℝ} (hc : 0 < c)
+    (hf : ∃ᶠ m : ℕ in atTop, c * (m : ℝ) ^ d ≤ h m)
+    (hb : ∀ m : ℕ, m₀ ≤ m → |(d.factorial : ℤ) * (h m : ℤ) - a * (m : ℤ) ^ d| ≤
+      C * ((d : ℤ) * ((m : ℤ) + 1) ^ (d - 1))) : 0 < a := by
+  by_contra ha
+  rw [not_lt] at ha
+  obtain ⟨m, hm1, hm2⟩ := (hf.and_eventually (eventually_ge_atTop
+    (max m₀ (max 1 (⌈(C : ℝ) * d * 2 ^ (d - 1) / ((d.factorial : ℝ) * c)⌉₊ + 1))))).exists
+  have hmm₀ : m₀ ≤ m := le_trans (le_max_left _ _) hm2
+  have hm1' : 1 ≤ m := le_trans (le_trans (le_max_left _ _) (le_max_right _ _)) hm2
+  have hmK' : ⌈(C : ℝ) * d * 2 ^ (d - 1) / ((d.factorial : ℝ) * c)⌉₊ + 1 ≤ m :=
+    le_trans (le_trans (le_max_right _ _) (le_max_right _ _)) hm2
+  have hmK : (C : ℝ) * d * 2 ^ (d - 1) / ((d.factorial : ℝ) * c) < m := by
+    have h1 := Nat.le_ceil ((C : ℝ) * d * 2 ^ (d - 1) / ((d.factorial : ℝ) * c))
+    have h2 : ((⌈(C : ℝ) * d * 2 ^ (d - 1) / ((d.factorial : ℝ) * c)⌉₊ + 1 : ℕ) : ℝ) ≤ m := by
+      exact_mod_cast hmK'
+    push_cast at h2
+    linarith
+  have hint : (d.factorial : ℤ) * (h m : ℤ) ≤ C * ((d : ℤ) * ((m : ℤ) + 1) ^ (d - 1)) := by
+    have h3 := (abs_le.mp (hb m hmm₀)).2
+    have h4 : a * (m : ℤ) ^ d ≤ 0 := mul_nonpos_of_nonpos_of_nonneg ha (by positivity)
+    linarith
+  have hreal : (d.factorial : ℝ) * (h m : ℝ) ≤ (C : ℝ) * ((d : ℝ) * ((m : ℝ) + 1) ^ (d - 1)) := by
+    have h5 := (Int.cast_le (R := ℝ)).mpr hint
+    push_cast at h5
+    exact h5
+  have hF : (0 : ℝ) < d.factorial := by exact_mod_cast d.factorial_pos
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast hm1'
+  rcases Nat.eq_zero_or_pos d with hd | hd
+  · subst hd
+    simp only [Nat.factorial_zero, Nat.cast_one, one_mul, Nat.cast_zero, zero_mul, mul_zero,
+      pow_zero, mul_one] at hreal hm1
+    linarith
+  · obtain ⟨e, rfl⟩ : ∃ e, d = e + 1 := ⟨d - 1, by omega⟩
+    simp only [Nat.add_sub_cancel] at hreal hmK
+    have hm1r : (1 : ℝ) ≤ m := by exact_mod_cast hm1'
+    have h5 : ((m : ℝ) + 1) ^ e ≤ 2 ^ e * (m : ℝ) ^ e := by
+      rw [← mul_pow]
+      exact pow_le_pow_left₀ (by positivity) (by linarith) e
+    have hFc : 0 < (((e + 1).factorial : ℕ) : ℝ) * c := mul_pos hF hc
+    rw [div_lt_iff₀ hFc] at hmK
+    have h6 : (((e + 1).factorial : ℕ) : ℝ) * (c * (m : ℝ) ^ (e + 1)) ≤
+        (((e + 1).factorial : ℕ) : ℝ) * (h m : ℝ) :=
+      mul_le_mul_of_nonneg_left hm1 hF.le
+    have hCpos : (0 : ℝ) ≤ C := by positivity
+    have h7 : (C : ℝ) * (((e + 1 : ℕ) : ℝ) * ((m : ℝ) + 1) ^ e) ≤
+        (C : ℝ) * (((e + 1 : ℕ) : ℝ) * (2 ^ e * (m : ℝ) ^ e)) := by
+      apply mul_le_mul_of_nonneg_left _ hCpos
+      exact mul_le_mul_of_nonneg_left h5 (by positivity)
+    have hme : (0 : ℝ) < (m : ℝ) ^ e := by positivity
+    have h8 := mul_lt_mul_of_pos_right hmK hme
+    have h9 : (m : ℝ) ^ (e + 1) = m * m ^ e := by ring
+    rw [h9] at h6
+    nlinarith [h6, hreal, h7, h8]
+
+theorem topSelf_pos : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [IsIntegral X]
+    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X = (d : ℕ) →
+    ∀ A : LB X, IsAmpleLB A → 0 < topSelfIntersection k A d := by
+  intro k _ _ X _ _ hp d hd A hA
+  obtain ⟨D, hD, c, hc, hf⟩ := (IsAmpleLB.isBig k X hp A hA).growth
+  have hDd : D = d := by
+    rw [hD] at hd
+    exact_mod_cast hd
+  subst hDd
+  have hsupp : suppDim (structureModule X) ≤ (D : ℕ) := by
+    unfold GlobalTheory.QCoh.suppDim
+    rw [← hD]
+    exact topologicalKrullDim_subspace_le _ _
+  obtain ⟨C, m₀, hb⟩ := GlobalTheory.T.asymptotic_riemannRoch_ample_coherent k X hp D (structureModule X) hsupp A hA
+  rw [topSelf_def]
+  exact pos_of_bound hc hf hb
+
+end GlobalTheory.AmplePos
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleLineBundleTopSelfIntersectionPosStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+theorem _root_.GlobalTheory.T.ample_lineBundle_top_selfIntersection_pos : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [IsIntegral X] [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X = (d : ℕ) → ∀ A : LB X, IsAmpleLB A → 0 < topSelfIntersection k A d := by
+  first | exact @GlobalTheory.AmplePos.topSelf_pos | exact GlobalTheory.AmplePos.topSelf_pos | (intros; apply GlobalTheory.AmplePos.topSelf_pos <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHasNonzeroSecPowOfAmpleSubAmpleStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+theorem _root_.GlobalTheory.T.exists_hasNonzeroSec_pow_of_ample_sub_ample' : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [IsIntegral X] [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X ≤ (d + 1 : ℕ) → ∀ (L B M : LB X) (hL : IsAmpleLB L) (hB : IsAmpleLB B) (hM : M.IsLB), cls L hL.isLB = cls M hM + cls B hB.isLB → ((d : ℤ) + 1) * interNum k (GlobalTheory.structureModule X) (Fin.cons B (fun _ : Fin d => L) : Fin (d + 1) → LB X) < topSelfIntersection k L (d + 1) → ∃ r, 1 ≤ r ∧ HasNonzeroSec (lbPow M r) := by
+  first | exact @GlobalTheory.exists_hasNonzeroSec_pow_of_ample_sub_ample | exact GlobalTheory.exists_hasNonzeroSec_pow_of_ample_sub_ample | (intros; apply GlobalTheory.exists_hasNonzeroSec_pow_of_ample_sub_ample <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LineBundleIntersectionNumberAmpleConsNefNonneg
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+namespace GlobalTheory
+
+theorem interNum_cons_ample_nef_nonneg :
+    ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X ≤ (d + 1 : ℕ) → (∀ (E : X.Modules) [IsFiniteQC E], suppDim E ≤ (d : ℕ) → ∀ P : Fin d → LB X, (∀ i, IsNef k (P i)) → 0 ≤ interNum k E P) → ∀ A : LB X, IsAmpleLB A → (∀ P : Fin d → LB X, (∀ i, IsNef k (P i)) → 0 ≤ interNum k (GlobalTheory.structureModule X) (Fin.cons A P : Fin (d + 1) → LB X)) := by
+  intro k _ _ X _ hp d hd H A hA P hP
+  have hf := algebraMap_eq_strHom k X
+  have := isNoetherian_of_isProjOver hp
+  have hPb : ∀ i, (P i).IsLB := fun i => (hP i).isLB
+  have hsd : suppDim (GlobalTheory.structureModule X) ≤ (d + 1 : ℕ) := by
+    rw [suppDim_structureModule]; exact hd
+  have hfin := finiteCohTwists_of_isProjOver hf (GlobalTheory.structureModule X) hp
+  have hv := diffVanish_chiPic_of_isProjOver hf (GlobalTheory.structureModule X) hp hsd
+  obtain ⟨a, ha, s, hs, -⟩ := hA.exists_mono_cutHom (GlobalTheory.structureModule X)
+  have hLa := isLB_lbPow hA.isLB a
+  have h0 := H _ (suppDim_cut_le _ hLa s hsd) P hP
+  rw [← interNum_cons_eq_interNum_cut hLa s hPb hfin] at h0
+  have h := hv.interNum_update_of_cls_eq_zsmul (by simp) (isLB_cons hA.isLB hPb) (0 : Fin (d + 1))
+    hLa hA.isLB (a : ℤ) (cls_lbZPow hA.isLB a _)
+  simp only [Fin.update_cons_zero] at h
+  rw [h] at h0
+  exact nonneg_of_mul_nonneg_right h0 (by exact_mod_cast ha)
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LineBundleIntersectionNumberAmpleConsNefNonnegStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+theorem _root_.GlobalTheory.T.lineBundleIntersectionNumber_ample_cons_nef_nonneg : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X ≤ (d + 1 : ℕ) → (∀ (E : X.Modules) [IsFiniteQC E], suppDim E ≤ (d : ℕ) → ∀ P : Fin d → LB X, (∀ i, IsNef k (P i)) → 0 ≤ interNum k E P) → ∀ A : LB X, IsAmpleLB A → (∀ P : Fin d → LB X, (∀ i, IsNef k (P i)) → 0 ≤ interNum k (GlobalTheory.structureModule X) (Fin.cons A P : Fin (d + 1) → LB X)) := by
+  first | exact @GlobalTheory.interNum_cons_ample_nef_nonneg | exact GlobalTheory.interNum_cons_ample_nef_nonneg | (intros; apply GlobalTheory.interNum_cons_ample_nef_nonneg <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.NefIntersectionNonnegInductionStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+theorem _root_.GlobalTheory.T.nef_intersection_nonneg_induction : ∀ (k : Type) [Field k] [Infinite k] (d : ℕ), (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k (X := Y)) → topologicalKrullDim Y ≤ (d : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) → ∀ (X : Scheme.{0}) [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → (∀ (E : X.Modules) [IsFiniteQC E], suppDim E ≤ (d : ℕ) → ∀ P : Fin d → LB X, (∀ i, IsNef k (P i)) → 0 ≤ interNum k E P) := by
+  first | exact @GlobalTheory.KleimanDim.interNum_nonneg_of_ample_tens_nef | exact GlobalTheory.KleimanDim.interNum_nonneg_of_ample_tens_nef | (intros; apply GlobalTheory.KleimanDim.interNum_nonneg_of_ample_tens_nef <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.AmplePlusNefIntegralStep
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
+
+theorem isAmpleLB_tens_lbPow_descent_step : ∀ (k : Type) [Field k] [Infinite k] (d : ℕ), (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k (X := Y)) → topologicalKrullDim Y ≤ (d : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) → ∀ (X : Scheme.{0}) [IsIntegral X] [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → topologicalKrullDim X = (d + 1 : ℕ) → ∀ (A N M : LB X) (hA : IsAmpleLB A) (hN : IsNef k N) (hM : M.IsLB) (q c : ℕ), 1 ≤ q → cls M hM = cls N hN.isLB + c • cls A hA.isLB → 2 * ((d : ℤ) + 1) * interNum k (GlobalTheory.structureModule X) (Fin.cons A (fun _ : Fin d => M) : Fin (d + 1) → LB X) < q → ∀ b : ℕ, q ≤ b → b + 1 ≤ c * q → IsAmpleLB (tens (lbPow N q) (lbPow A (b + 1))) → IsAmpleLB (tens (lbPow N q) (lbPow A b)) := by
+  intro k _ _ d hlow X _ _ hproj hdim A N M hA hN hM q c hq hMcls hbound b hqb hbc hL
+  obtain ⟨b', rfl⟩ : ∃ b', b = b' + 1 := ⟨b - 1, by omega⟩
+  have hdim' : topologicalKrullDim X ≤ ((d + 1 : ℕ) : WithBot ℕ∞) := hdim.le
+  have hKl := GlobalTheory.T.nef_intersection_nonneg_induction k d hlow X hproj
+  have hmix := GlobalTheory.T.lineBundleIntersectionNumber_ample_cons_nef_nonneg k X hproj d hdim' hKl A hA
+  have hpos := GlobalTheory.T.ample_lineBundle_top_selfIntersection_pos k X hproj (d + 1) hdim A hA
+  have hNl := isLB_lbPow hN.isLB q
+  have hAl : ∀ n : ℕ, (lbPow A n).IsLB := fun n => isLB_lbPow hA.isLB n
+  have hLcls : cls _ hL.isLB = q • cls N hN.isLB + (b' + 1 + 1) • cls A hA.isLB := by
+    rw [cls_tens hNl (hAl _), cls_lbPow hN.isLB, cls_lbPow hA.isLB]
+  have hnum := GlobalTheory.T.top_intersection_growth_bound k X hproj d hdim' A N _ M hA hN hL hM hmix hpos q (b' + 1 + 1) c hq
+    (by omega) hbc hLcls hMcls hbound
+  have hB : IsAmpleLB (lbPow A 2) := (isAmpleLB_pow_iff hA.isLB (by norm_num)).2 hA
+  have hM'nef : IsNef k (tens (lbPow N q) (lbPow A b')) :=
+    (hN.pow hA q).tens ((hA.isNef (k := k)).pow hA b') hA
+  have hsplit : cls _ hL.isLB = cls _ hM'nef.isLB + cls _ hB.isLB := by
+    rw [hLcls, cls_tens hNl (hAl _), cls_lbPow hN.isLB, cls_lbPow hA.isLB, cls_lbPow hA.isLB]
+    simp only [add_smul, one_smul, two_smul]
+    abel
+  have hsec := GlobalTheory.T.exists_hasNonzeroSec_pow_of_ample_sub_ample' k X hproj d hdim' _ _ _ hL hB hM'nef.isLB hsplit hnum
+  have hamp := GlobalTheory.T.isAmple_tensor_nef_of_nonzeroSectionPow_induction k d hlow X hproj hdim' A _ hA hM'nef hsec
+  have hT : (tens (lbPow N q) (lbPow A (b' + 1))).IsLB := isLB_tens hNl (hAl _)
+  refine hamp.of_lbIso hT ((cls_eq_iff hT hamp.isLB).1 ?_)
+  rw [cls_tens hNl (hAl _), cls_tens hA.isLB hM'nef.isLB, cls_tens hNl (hAl _), cls_lbPow hN.isLB,
+    cls_lbPow hA.isLB, cls_lbPow hA.isLB]
+  simp only [add_smul, one_smul]
+  abel
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NefNumerics.NefRiemannRoch.AmplePlusNefDimensionStep
+
+section
 
 @[expose] public section
 
@@ -96,3 +341,5 @@ theorem isAmpleLB_tens_of_nef_descent : ∀ (k : Type) [Field k] [Infinite k] (d
   exact (isAmpleLB_pow_iff hTLB hq1).1 hpow
 
 end GlobalTheory
+end
+end

@@ -1,7 +1,8 @@
 module
 
 public import Development.EtaleCohomology.DivisorCycles.CycleCountPf
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalEig
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Data.Matrix.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,13 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,6 +42,47 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalEig
+
+section
+
+@[expose] public section
+
+@[reducible] noncomputable def UpperTheory.Reformulated.B.Qp10.Mat :
+    Type → ℕ → Type :=
+    fun (C : Type) (N : ℕ) ↦ Matrix (Fin N) (Fin N) C
+
+theorem UpperTheory.Reformulated.B.Qp10.aeval_eig :
+    ∀ {C : Type} [inst : Field C] {N : ℕ} (y : UpperTheory.Reformulated.B.Qp10.Mat C N) (μ : C) (v : Fin N → C),
+      Matrix.mulVec y v = μ • v →
+        ∀ (Q : Polynomial C),
+          Matrix.mulVec ((Polynomial.aeval y : Polynomial C → UpperTheory.Reformulated.B.Qp10.Mat C N) Q) v = Polynomial.eval μ Q • v := by
+  intro C _ N y μ v h Q
+  have hpow : ∀ n : ℕ, Matrix.mulVec (y ^ n) v = μ ^ n • v := by
+    intro n
+    induction n with
+    | zero => rw [pow_zero, pow_zero, Matrix.one_mulVec, one_smul]
+    | succ n ih =>
+      rw [pow_succ, ← Matrix.mulVec_mulVec, h, Matrix.mulVec_smul, ih, smul_smul, pow_succ']
+  induction Q using Polynomial.induction_on' with
+  | add p q hp hq =>
+    rw [map_add (f := _), Matrix.add_mulVec, hp, hq, Polynomial.eval_add, add_smul]
+  | monomial n a =>
+    rw [Polynomial.aeval_monomial, Polynomial.eval_monomial, ← Algebra.smul_def,
+      Matrix.smul_mulVec, hpow, smul_smul]
+end
+end
+
+-- Source module: Development.EtaleCohomology.DivisorCycles.FixScalOf
+
+section
 
 @[expose] public section
 
@@ -151,3 +187,5 @@ theorem FixScal_of : LateralTheory.DivDb.CycleCountPf.FixScal := by
   exact hMp
 
 end LateralTheory.DivDb.ScalarFixedPointsUnderAeval
+end
+end

@@ -2,10 +2,8 @@ module
 
 public import Development.AutomorphicSpectrum.Statements.GeometryStatements.IsPolLatticePlane
 public import Development.AutomorphicSpectrum.Statements.GeometryStatements.HTChartExists
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsLast
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHtBc
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLieBc
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLieIso
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,15 +17,12 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,8 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,7 +42,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHtBc
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLieBc
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLieIso
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsLast
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.DYhb1.main :
+    ∀ (A M : Type) [inst : CommRing A] [inst_1 : AddCommGroup M] [inst_2 : _root_.Module A M] [Module.Finite A M]
+      [Module.Projective A M],
+      ∃ (n : ℕ) (e : Fin n → M) (f : Fin n → Module.Dual A M), ∀ (m : M), ∑ i : Fin n, (f i : M → A) m • e i = m := by
+  intro A M _ _ _ _ _
+  obtain ⟨n, p, hp⟩ := Module.Finite.exists_fin' A M
+  obtain ⟨s, hs⟩ := Module.projective_lifting_property p LinearMap.id hp
+  refine ⟨n, fun i => p (fun j => if i = j then 1 else 0),
+    fun i => (LinearMap.proj i).comp s, fun m => ?_⟩
+  have h1 : p (s m) = m := by
+    have := LinearMap.congr_fun hs m
+    simpa using this
+  have h2 := LinearMap.pi_apply_eq_sum_univ p (s m)
+  rw [h1] at h2
+  exact h2.symm
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.HtatRed
+
+section
 
 @[expose] public section
 
@@ -347,3 +378,6 @@ theorem reducesTo_of_isHTChartOf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
     rw [h2, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, map_intCast]
 
 end PositivityTheory.HtPt.Htat.ChartRed
+end
+end
+end

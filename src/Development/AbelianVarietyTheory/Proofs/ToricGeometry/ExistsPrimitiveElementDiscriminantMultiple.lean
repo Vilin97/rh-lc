@@ -4,7 +4,8 @@ public import Mathlib.Basic.Complex.Basic
 public import Mathlib.FieldTheory.Separable
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 public import Mathlib.RingTheory.KrullDimension.Basic
-public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.Imports
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,22 +18,13 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.FieldTheory.PurelyInseparable.Exponent
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Mathlib.RingTheory.KrullDimension.Field
-public import Mathlib.RingTheory.KrullDimension.Polynomial
-public import Mathlib.RingTheory.NoetherNormalization
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -41,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,16 +45,79 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.FieldTheory.PurelyInseparable.Exponent
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.NoetherNormalization
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.TypeStar
 public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
 public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 public import Mathlib.FieldTheory.PrimitiveElement
 public import Mathlib.RingTheory.Localization.Finiteness
 import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ToricGeometry.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace GlobalTheory.CommonDenominatorForFinset
+
+theorem exists_common_denominator {R : Type u_1} {A : Type u_2} [CommRing R] [IsDomain R]
+    [CommRing A] [Algebra R A] [Module.Finite R A] (a : A)
+    (h : ∀ b : A, ∃ s : R, s ≠ 0 ∧ ∃ r : Polynomial R,
+      algebraMap R A s * b = Polynomial.aeval a r) :
+    ∃ s : R, s ≠ 0 ∧ ∀ b : A, ∃ r : Polynomial R,
+      algebraMap R A s * b = Polynomial.aeval a r := by
+  classical
+  obtain ⟨S, hS⟩ := Module.Finite.fg_top (R := R) (M := A)
+  choose f hf0 r hr using h
+  refine ⟨∏ b ∈ S, f b, Finset.prod_ne_zero_iff.mpr fun b _ => hf0 b, ?_⟩
+
+  let N : Submodule R A :=
+    { carrier := {b | ∃ p : Polynomial R, algebraMap R A (∏ b ∈ S, f b) * b = Polynomial.aeval a p}
+      add_mem' := by
+        rintro x y ⟨p, hp⟩ ⟨q, hq⟩
+        exact ⟨p + q, by rw [mul_add, hp, hq, map_add (f := _)]⟩
+      zero_mem' := ⟨0, by simp⟩
+      smul_mem' := by
+        rintro c x ⟨p, hp⟩
+        refine ⟨Polynomial.C c * p, ?_⟩
+        rw [map_mul, Polynomial.aeval_C, ← hp, Algebra.smul_def]
+        ring }
+
+  have hgen : (S : Set A) ⊆ N := by
+    intro b hb
+    obtain ⟨t, ht⟩ := Finset.dvd_prod_of_mem f hb
+    refine ⟨Polynomial.C t * r b, ?_⟩
+    rw [map_mul, Polynomial.aeval_C, ← hr b, ht, map_mul]
+    ring
+  have htop : (⊤ : Submodule R A) ≤ N := by
+    rw [← hS, Submodule.span_le]
+    exact hgen
+  intro b
+  exact htop Submodule.mem_top
+
+end GlobalTheory.CommonDenominatorForFinset
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ToricGeometry.ExistsPrimitiveElementDiscriminantMultiple
+
+section
 
 @[expose] public section
 
@@ -169,3 +223,5 @@ theorem GlobalTheory.noetherNormalization_primitive :
   rw [ReciprocityTheory.CA.ringKrullDim_eq_of_isIntegral_of_injective hinj',
     MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field]
   simp
+end
+end

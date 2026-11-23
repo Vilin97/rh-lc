@@ -2,7 +2,14 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerPreservesSchwartzSpace
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationBijectiveSchwartzStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUSplittingTrRep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlanePairRestrictionFirst
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinEqOfEqOn
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorInverseLocalStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationPreservesAdmissible
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchroedingerPreservesAdelicSchwartz
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardTraceAddCharIsStandardCharOfAdmissibleCM
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,6 +43,216 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationPreservesAdmissibleStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationPreservesSchwartz
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchroedingerPreservesAdelicSchwartzStatement
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationIntertwines
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix ENNReal
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.DblEval GlobalTheory.WeilTr
+
+noncomputable section
+
+namespace GlobalTheory.DblTr
+
+theorem hasDbl_transp : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d, IsEv B M M₁ 1 1 ∅ e → Set.BijOn e (schA F (Fin n × Fin d) : Set _) (schA F (Fin n × Fin d) : Set _) →
+    ∀ T : Fn F n d ≃ₗ[ℂ] Fn F n d, (∀ Φ ∈ schA F (Fin n × Fin d), T Φ = e Φ) →
+    ∀ d' d₁' : Darboux (symp (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d),
+      (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x) → (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d₁'.e xᵀ = M₁.co.e x) →
+      HasDbl (cA σ) (adeleClass F) B.ψ (-1) (incM F W.J) (incM F X.J) d' d₁' T := by
+  intro hP F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e he hbij T hTe d' d₁' hd' hd₁'
+  have hψ : ∀ t, ‖B.ψ t‖ = 1 := GlobalTheory.StdCharWeilDatum.norm_psi hpair.base.std
+  have hL : IsLocOp e := isLocOp_of_isEv hpair.good hM₁ he
+  obtain ⟨e', hL', hinv⟩ := GlobalTheory.T.local_operator_inverse_local e hL hbij
+  have hTe' : ∀ Φ ∈ schA F (Fin n × Fin d), T.symm Φ = e' Φ := by
+    intro Φ hΦ
+    obtain ⟨Ψ, hΨ, rfl⟩ := hbij.surjOn hΦ
+    rw [← hTe Ψ hΨ, LinearEquiv.symm_apply_apply, hTe Ψ hΨ, hinv Ψ hΨ]
+  have hmem : ∀ Φ, Φ ∈ schA F (Fin n × Fin d) ↔ T Φ ∈ schA F (Fin n × Fin d) := by
+    intro Φ
+    constructor
+    · intro h
+      rw [hTe Φ h]
+      exact hbij.mapsTo h
+    · intro h
+      obtain ⟨Ψ, hΨ, hΨe⟩ := hbij.surjOn h
+      have h1 : T Ψ = T Φ := (hTe Ψ hΨ).trans hΨe
+      rw [← T.injective h1]
+      exact hΨ
+  have hn : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
+    rw [incM, Matrix.map_one _ (map_zero _) (map_one _)]
+  have hd1 : (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ = 1 := by
+    rw [incM, Matrix.map_one _ (map_zero _) (map_one _), Matrix.transpose_one]
+  have Heisenberg₂ : ∀ w, ∀ Φ ∈ schA F (Fin n × Fin d), T (d'.rho B.ψ w Φ) = d₁'.rho B.ψ w (T Φ) := by
+    intro w Φ hΦ
+    have e1 : ∀ Ψ, d'.rho B.ψ w Ψ = M.co.rho B.ψ wᵀ Ψ := fun Ψ => by
+      simp only [Darboux.rho]
+      rw [← hd' wᵀ, Matrix.transpose_transpose]
+    have e2 : ∀ Ψ, d₁'.rho B.ψ w Ψ = M₁.co.rho B.ψ wᵀ Ψ := fun Ψ => by
+      simp only [Darboux.rho]
+      rw [← hd₁' wᵀ, Matrix.transpose_transpose]
+    have hρ : M.co.rho B.ψ wᵀ Φ ∈ schA F (Fin n × Fin d) :=
+      GlobalTheory.SchrKeepsSchA.schr_mem_schA F B.ψ hpair.base.std _ _ Φ hΦ
+    have h := he.Heisenberg₂ wᵀ Φ hΦ
+    rw [hn, hd1, Matrix.one_mul, Matrix.mul_one] at h
+    rw [e1, e2, hTe _ hρ, hTe Φ hΦ, h]
+  have hunit : ∀ μ : @Measure (Fin n × Fin d → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ Φ ∈ schA F (Fin n × Fin d), ∫⁻ x, ‖T Φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
+    intro μ hμ
+    obtain ⟨C, hC⟩ := GlobalTheory.ModelTrUnit.exists_const hP F E σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e he hbij μ hμ
+    exact ⟨C, fun Φ hΦ => by rw [hTe Φ hΦ]; exact hC Φ hΦ⟩
+  exact hasDbl_of_loc (cA σ) (-1) (incM F W.J) (incM F X.J) B.ψ hψ d' d₁' T e e' hL hL' hTe hTe' hmem Heisenberg₂ hunit
+
+end GlobalTheory.DblTr
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationIntertwinesStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.WeilTr MeasureTheory
+open scoped Matrix ENNReal
+
+theorem _root_.GlobalTheory.T.model_evaluation_intertwines : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d, IsEv B M M₁ 1 1 ∅ e → Set.BijOn e (schA F (Fin n × Fin d) : Set _) (schA F (Fin n × Fin d) : Set _) →
+    ∀ T : Fn F n d ≃ₗ[ℂ] Fn F n d, (∀ Φ ∈ schA F (Fin n × Fin d), T Φ = e Φ) →
+    ∀ d' d₁' : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J)) (Fin n × Fin d),
+      (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x) → (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d₁'.e xᵀ = M₁.co.e x) →
+      HasDbl (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (adeleClass F) B.ψ (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) d' d₁' T := by
+  first | exact @GlobalTheory.DblTr.hasDbl_transp | exact GlobalTheory.DblTr.hasDbl_transp | (intros; apply GlobalTheory.DblTr.hasDbl_transp <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelEvaluationPreservesSchwartzStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.WeilTr MeasureTheory
+open scoped Matrix ENNReal
+
+theorem _root_.GlobalTheory.T.model_evaluation_preserves_schwartz : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d, IsEv B M M₁ 1 1 ∅ e → Set.BijOn e (schA F (Fin n × Fin d) : Set _) (schA F (Fin n × Fin d) : Set _) →
+    ∀ T : Fn F n d ≃ₗ[ℂ] Fn F n d, (∀ Φ ∈ schA F (Fin n × Fin d), T Φ = e Φ) →
+      HasDbl (cA σ) (adeleClass F) B.ψ (-1) (incM F X.J) (incM F W.J) M.co M₁.co T := by
+  first | exact @GlobalTheory.DblInt.main | exact GlobalTheory.DblInt.main | (intros; apply GlobalTheory.DblInt.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerPreservesSchwartzSpace
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.WeilTr MeasureTheory
+open scoped Matrix ENNReal
+
+namespace GlobalTheory.ModelTr
+
+theorem extEquiv {V : Type} [AddCommGroup V] [Module ℂ V] (S : Submodule ℂ V) (e : V →ₗ[ℂ] V) (h : Set.BijOn e S S) :
+    ∃ T : V ≃ₗ[ℂ] V, (∀ x ∈ S, T x = e x) ∧ ∀ x, x ∈ S ↔ T x ∈ S := by
+  obtain ⟨Q, hQ⟩ := Submodule.exists_isCompl S
+  let f : V →ₗ[ℂ] V := LinearMap.ofIsCompl hQ (e ∘ₗ S.subtype) Q.subtype
+  have dec : ∀ x : V, ∃ s ∈ S, ∃ q ∈ Q, x = s + q := fun x => by
+    have : x ∈ S ⊔ Q := by rw [hQ.sup_eq_top]; exact Submodule.mem_top
+    obtain ⟨s, hs, q, hq, rfl⟩ := Submodule.mem_sup.1 this
+    exact ⟨s, hs, q, hq, rfl⟩
+  have hf : ∀ s ∈ S, ∀ q ∈ Q, f (s + q) = e s + q := fun s hs q hq => by
+    rw [map_add (f := _), LinearMap.ofIsCompl_apply_left hQ (⟨s, hs⟩ : S), LinearMap.ofIsCompl_apply_right hQ (⟨q, hq⟩ : Q)]
+    rfl
+  have hdisj : ∀ y ∈ S, y ∈ Q → y = 0 := fun y h1 h2 => by
+    have := hQ.inf_eq_bot
+    exact (Submodule.mem_bot ℂ).1 (this ▸ Submodule.mem_inf.2 ⟨h1, h2⟩)
+  have hmem : ∀ x, x ∈ S ↔ f x ∈ S := by
+    intro x
+    obtain ⟨s, hs, q, hq, rfl⟩ := dec x
+    rw [hf s hs q hq]
+    constructor
+    · intro hx
+      have hq0 : q = 0 := hdisj q (by simpa using S.sub_mem hx hs) hq
+      subst hq0
+      simpa using h.mapsTo hs
+    · intro hx
+      have hq0 : q = 0 := hdisj q (by simpa using S.sub_mem hx (h.mapsTo hs)) hq
+      subst hq0
+      simpa using hs
+  have hinj : Function.Injective f := by
+    rw [← LinearMap.ker_eq_bot, Submodule.eq_bot_iff]
+    intro x hx
+    rw [LinearMap.mem_ker] at hx
+    have hxS : x ∈ S := (hmem x).2 (hx ▸ S.zero_mem)
+    obtain ⟨s, hs, q, hq, rfl⟩ := dec x
+    have hq0 : q = 0 := hdisj q (by simpa using S.sub_mem hxS hs) hq
+    subst hq0
+    rw [add_zero] at hx ⊢
+    have h0 := hf s hs 0 Q.zero_mem
+    rw [add_zero, add_zero] at h0
+    rw [h0] at hx
+    exact h.injOn hs S.zero_mem (by rw [hx, map_zero])
+  have hsurj : Function.Surjective f := by
+    intro y
+    obtain ⟨s', hs', q, hq, rfl⟩ := dec y
+    obtain ⟨s, hs, rfl⟩ := h.surjOn hs'
+    exact ⟨s + q, hf s hs q hq⟩
+  refine ⟨LinearEquiv.ofBijective f ⟨hinj, hsurj⟩, fun x hx => ?_, hmem⟩
+  show f x = e x
+  have := hf x hx 0 Q.zero_mem
+  rwa [add_zero, add_zero] at this
+
+theorem adm_congr {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {l l' : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ}
+    (h : ∀ Φ ∈ schA F κ, l Φ = l' Φ) : l ∈ (adeleClass F).adm κ ↔ l' ∈ (adeleClass F).adm κ := by
+  have key : ∀ {l l' : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ}, (∀ Φ ∈ schA F κ, l Φ = l' Φ) →
+      l ∈ (adeleClass F).adm κ → l' ∈ (adeleClass F).adm κ := by
+    intro l l' h hl g hg
+    obtain ⟨T, hT⟩ := hl g hg
+    exact ⟨T, fun f => (h _ (Submodule.subset_span ⟨f, g, hg, rfl⟩)).symm.trans (hT f)⟩
+  exact ⟨key h, key fun Φ hΦ => (h Φ hΦ).symm⟩
+
+theorem exists_isWeil_trans : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d, IsEv B M M₁ 1 1 ∅ e → Set.BijOn e (schA F (Fin n × Fin d) : Set _) (schA F (Fin n × Fin d) : Set _) → ∃ om₁ : Rep σ X W, M₁.IsWeil B.ψ χX χW om₁ ∧ ∀ x, ∀ Φ ∈ schA F (Fin n × Fin d), e (om x Φ) = om₁ x (e Φ) := by
+  intro hP F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e hev hbij
+  obtain ⟨T, hTe, hTs⟩ := extEquiv (schA F (Fin n × Fin d)) e hbij
+  have h1 : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
+  have h1' : incM F (1 : Matrix (Fin d) (Fin d) E) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
+  have hgood : IsGoodInt (adeleClass F) B.ψ M.co M₁.co T := by
+    refine ⟨hTs, fun w Φ hΦ => ?_, fun l => ?_, fun μ hμ => ?_⟩
+    · have hm : M.co.rho B.ψ w Φ ∈ schA F (Fin n × Fin d) :=
+        GlobalTheory.T.schroedinger_preserves_adelic_schwartz F B.ψ hpair.base.std _ (M.co.e w) Φ hΦ
+      have := hev.Heisenberg₂ w Φ hΦ
+      rw [h1, h1', Matrix.one_mul, Matrix.transpose_one, Matrix.mul_one] at this
+      rw [hTe _ hm, hTe _ hΦ, this]
+    · refine (GlobalTheory.T.model_evaluation_bijective_schwartz hP F E σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e hev hbij l).trans (adm_congr ?_)
+      intro Φ hΦ
+      simp [hTe Φ hΦ]
+    · obtain ⟨c, hc⟩ := GlobalTheory.T.model_evaluation_preserves_admissible hP F E σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e hev hbij μ hμ
+      exact ⟨c, fun Φ hΦ => by rw [hTe Φ hΦ]; exact hc Φ hΦ⟩
+  refine ⟨trRep T om, isUWeilPair_trRep hgood
+    (GlobalTheory.T.model_evaluation_preserves_schwartz hP F E σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e hev hbij T hTe)
+    (GlobalTheory.T.model_evaluation_intertwines hP F E σ B n d X W M χX χW om r s r' s' hpair M₁ hM₁ e hev hbij T hTe) hpair.weil, fun x Φ hΦ => ?_⟩
+  have hpres : om x Φ ∈ schA F (Fin n × Fin d) := hpair.weil.isUSplitting.pres x Φ hΦ
+  rw [trRep_apply, ← hTe Φ hΦ, LinearEquiv.symm_apply_apply, hTe _ hpres]
+
+end GlobalTheory.ModelTr
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerPreservesSchwartzSpaceStatement
+
+section
 
 @[expose] public section
 
@@ -44,3 +261,5 @@ open scoped Matrix
 
 theorem _root_.GlobalTheory.T.eigen_intertwiner_preserves_schwartz_space : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d, IsEv B M M₁ 1 1 ∅ e → Set.BijOn e (schA F (Fin n × Fin d) : Set _) (schA F (Fin n × Fin d) : Set _) → ∃ om₁ : Rep σ X W, M₁.IsWeil B.ψ χX χW om₁ ∧ ∀ x, ∀ Φ ∈ schA F (Fin n × Fin d), e (om x Φ) = om₁ x (e Φ) := by
   first | exact @GlobalTheory.ModelTr.exists_isWeil_trans | exact GlobalTheory.ModelTr.exists_isWeil_trans | (intros; apply GlobalTheory.ModelTr.exists_isWeil_trans <;> assumption)
+end
+end

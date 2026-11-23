@@ -3,18 +3,6 @@ module
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorRapid
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EigenvalueAdjointFactsStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelActionFormulaStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelAdjointSmoothStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowLeftInvariantStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowMatrixStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowSupportStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftTranslateCommutesStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftTranslateSobolevStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PhiResolventIdentityStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RapidFactorizationStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveIntegralIdentityStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveRepresentationStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveUniquenessStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,8 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,8 +38,223 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowLeftInvariantStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowMatrixStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowSupportStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftTranslateSobolevStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PhiResolventIdentityStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RapidFactorizationStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveIntegralIdentityStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveRepresentationStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveUniquenessStatement
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelAdjointSmooth
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped ContDiff InnerProductSpace
+
+namespace GlobalTheory.CompanionTheory.KerFc
+
+def innerSmulRightR {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (e : V) :
+    V →L[ℝ] (V →L[ℂ] V) :=
+  LinearMap.mkContinuous
+    { toFun := fun x => (innerSL ℂ x).smulRight e
+      map_add' := fun x y => by
+        ext w
+        simp [inner_add_left, add_smul]
+      map_smul' := fun r x => by
+        ext w
+        change ⟪r • x, w⟫_ℂ • e = r • (⟪x, w⟫_ℂ • e)
+        rw [← Complex.coe_smul r x, inner_smul_left, Complex.conj_ofReal, mul_smul, Complex.coe_smul] }
+    ‖e‖
+    (fun x => by
+      refine (ContinuousLinearMap.opNorm_le_bound _ (by positivity) fun w => ?_)
+      have h1 : ‖⟪x, w⟫_ℂ‖ ≤ ‖x‖ * ‖w‖ := norm_inner_le_norm x w
+      simp only [LinearMap.coe_mk, AddHom.coe_mk, ContinuousLinearMap.smulRight_apply, innerSL_apply_apply, norm_smul]
+      calc ‖⟪x, w⟫_ℂ‖ * ‖e‖ ≤ (‖x‖ * ‖w‖) * ‖e‖ := by gcongr
+        _ = ‖e‖ * ‖x‖ * ‖w‖ := by ring)
+
+theorem innerSmulRightR_apply {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (e x : V) :
+    innerSmulRightR e x = (innerSL ℂ x).smulRight e := rfl
+
+theorem adjoint_eq_sum {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    [FiniteDimensional ℂ V] [CompleteSpace V] (B : V →L[ℂ] V) :
+    ContinuousLinearMap.adjoint B =
+      ∑ i, innerSmulRightR (stdOrthonormalBasis ℂ V i) (B (stdOrthonormalBasis ℂ V i)) := by
+  ext w
+  rw [ContinuousLinearMap.sum_apply]
+  simp only [innerSmulRightR_apply, ContinuousLinearMap.smulRight_apply, innerSL_apply_apply]
+  rw [← (stdOrthonormalBasis ℂ V).sum_repr' (ContinuousLinearMap.adjoint B w)]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [ContinuousLinearMap.adjoint_inner_right]
+
+theorem adjSmooth : AdjSmooth := by
+  intro W V _ _ _ _ _ _ A s hA
+  have hEq : (fun y => ContinuousLinearMap.adjoint (A y)) = fun y =>
+      ∑ i, innerSmulRightR (stdOrthonormalBasis ℂ V i) (A y (stdOrthonormalBasis ℂ V i)) := by
+    funext y
+    exact adjoint_eq_sum (A y)
+  rw [hEq]
+  refine ContDiffOn.sum fun i _ => ?_
+  exact (innerSmulRightR (stdOrthonormalBasis ℂ V i)).contDiff.comp_contDiffOn (hA _)
+
+end GlobalTheory.CompanionTheory.KerFc
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelAdjointSmoothStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.kernel_adjoint_smooth : GlobalTheory.CompanionTheory.KerFc.AdjSmooth := by
+  first | exact @GlobalTheory.CompanionTheory.KerFc.adjSmooth | exact GlobalTheory.CompanionTheory.KerFc.adjSmooth | (intros; apply GlobalTheory.CompanionTheory.KerFc.adjSmooth <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowExists
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+
+namespace GlobalTheory.CompanionTheory.KerFc
+
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+theorem rowExists_of_factor (hFac : FactorRapid) (hEv : EvAdj) : RowExists := by
+  intro n _ _ μ _ E _ Ω T F c hS h hh v
+  have hS' := hS
+  obtain ⟨hLg, hUn, hRC, hSG, hAE, -, -, hCS, hSO, -, -, -, -, -, hOm, -⟩ := hS'
+  obtain ⟨h₁, h₂, r₁, r₂, r₂s, rfl⟩ := hFac h hh
+  obtain ⟨κ, hκ, hrow⟩ := hEv n μ E Ω T F c hS h₁ r₁ v
+  obtain ⟨C₁, hC₁⟩ := hSO n μ E Ω T F hLg hUn hRC hSG hAE hCS hOm (star h₂) r₂s
+  obtain ⟨C₂, hC₂⟩ := hSO n μ E Ω T F hLg hUn hRC hSG hAE hCS hOm h₂ r₂
+  obtain ⟨f, hfS, hfE, hfc, -⟩ := hC₁ κ hκ
+  refine ⟨f, hfS, hfE, ?_⟩
+  intro φ f' hφS hφE hf'S hf'E hf'
+  obtain ⟨φ₂, hφ₂S, hφ₂E, hφ₂c, -⟩ := hC₂ (cls μ φ) (subset_closure ⟨φ, hφS, hφE, rfl⟩)
+  have hmul : cls μ f' = F.Φ h₁ (cls μ φ₂) := by
+    rw [hf', F.map_mul, hφ₂c]
+    rfl
+  rw [hfc, F.map_star, ContinuousLinearMap.adjoint_inner_left, ← hφ₂c]
+  exact hrow φ₂ f' hφ₂S hφ₂E hf'S hf'E hmul
+
+end GlobalTheory.CompanionTheory.KerFc
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRowExistsStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.kernel_row_exists : GlobalTheory.CompanionTheory.KerFc.FactorRapid → GlobalTheory.CompanionTheory.KerFc.EvAdj → GlobalTheory.CompanionTheory.KerFc.RowExists := by
+  first | exact @GlobalTheory.CompanionTheory.KerFc.rowExists_of_factor | exact GlobalTheory.CompanionTheory.KerFc.rowExists_of_factor | (intros; apply GlobalTheory.CompanionTheory.KerFc.rowExists_of_factor <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftTranslateCommutes
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory Matrix Finset Filter Topology
+open scoped ContDiff ComplexConjugate InnerProductSpace ZeroAtInfty
+
+namespace GlobalTheory.CompanionTheory.KerFc
+
+open PositivityTheory.RgTw (Mat G)
+open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+def lTrL {n : ℕ} [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type)
+    [NormedAddCommGroup V] [InnerProductSpace ℂ V] (x : G n) : Lp V 2 μ →L[ℂ] Lp V 2 μ :=
+  (Lp.compMeasurePreservingₗᵢ ℂ (fun y : G n => x * y) (measurePreserving_mul_left μ x)).toContinuousLinearMap
+
+theorem memLp_lTr {n : ℕ} [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] {V : Type}
+    [NormedAddCommGroup V] [InnerProductSpace ℂ V] (x : G n) {f : Mat n → V}
+    (hf : MemLp (fun y : G n => f y.val) 2 μ) : MemLp (fun y : G n => lTr x f y.val) 2 μ :=
+  hf.comp_measurePreserving (measurePreserving_mul_left μ x)
+
+theorem lTrL_cls {n : ℕ} [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] {V : Type}
+    [NormedAddCommGroup V] [InnerProductSpace ℂ V] (x : G n) {f : Mat n → V}
+    (hf : MemLp (fun y : G n => f y.val) 2 μ) : lTrL μ V x (cls μ f) = cls μ (lTr x f) := by
+  unfold cls
+  rw [dite_eq_left hf, dite_eq_left (memLp_lTr μ x hf)]
+  exact Lp.toLp_compMeasurePreserving hf (measurePreserving_mul_left μ x)
+
+theorem ltComm_of_ltSob : LtSob → LtComm := by
+  intro hL n _ _ μ _ E _ Ω T F c hS h x f f' hf hf' hff'
+  obtain ⟨hLg, hU, hR, -, -, -, -, hCS, -, -, hM, -, -, -, hO, -⟩ := hS
+  obtain ⟨-, -, -, -, hCl, hOps, -⟩ := hCS
+  have hcomm : lTrL μ E.V x * F.Φ h = F.Φ h * lTrL μ E.V x := by
+    refine F.comm _ (fun m => ?_) h
+    obtain ⟨f₀, hf₀, hc⟩ := hM m.1 m.2
+    have hL₀ := hL n μ E.V hLg hU hR x f₀ hf₀
+    have hmem : cls μ (lTr x f₀) ∈ Msob μ E.V := Submodule.subset_span ⟨_, hL₀.1, rfl⟩
+    have hm₀ : cls μ f₀ ∈ Msob μ E.V := hc ▸ m.2
+    have hm : m = ⟨cls μ f₀, hm₀⟩ := Subtype.ext hc.symm
+    have hO₀ : Sob μ (Om f₀) := (hOps n μ E.V hLg hU hR f₀ hf₀).1
+    have hf₀m : MemLp (fun y : G n => f₀ y.val) 2 μ := hf₀.2 []
+    have hO₀m : MemLp (fun y : G n => Om f₀ y.val) 2 μ := hO₀.2 []
+    refine ⟨⟨_, hmem⟩, ?_, ?_⟩
+    · change cls μ (lTr x f₀) = lTrL μ E.V x m.1
+      rw [← hc, lTrL_cls μ x hf₀m]
+    · rw [hO _ hmem hL₀.1, hm, hO _ hm₀ hf₀, lTrL_cls μ x hO₀m]
+      exact (hCl n μ E.V hU).2.2.1 _ _ hL₀.2
+  have hfm : MemLp (fun y : G n => f y.val) 2 μ := hf.2 []
+  have hfm' : MemLp (fun y : G n => f' y.val) 2 μ := hf'.2 []
+  rw [← lTrL_cls μ x hfm', hff', ← lTrL_cls μ x hfm]
+  exact DFunLike.congr_fun hcomm (cls μ f)
+
+end GlobalTheory.CompanionTheory.KerFc
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftTranslateCommutesStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.left_translate_commutes : GlobalTheory.CompanionTheory.KerFc.LtSob → GlobalTheory.CompanionTheory.KerFc.LtComm := by
+  first | exact @GlobalTheory.CompanionTheory.KerFc.ltComm_of_ltSob | exact GlobalTheory.CompanionTheory.KerFc.ltComm_of_ltSob | (intros; apply GlobalTheory.CompanionTheory.KerFc.ltComm_of_ltSob <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KernelRegularity
+
+section
 
 @[expose] public section
 
@@ -163,3 +364,6 @@ theorem kerCore : KerCore :=
     GlobalTheory.T.wave_integral_identity GlobalTheory.T.kernel_row_support
 
 end GlobalTheory.CompanionTheory.KerFc
+end
+end
+end

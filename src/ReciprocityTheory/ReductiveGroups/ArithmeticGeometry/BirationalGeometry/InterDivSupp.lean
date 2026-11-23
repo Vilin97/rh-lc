@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
-public import Lemmata.GeneralBFactTerForm.Imports
+public import Mathlib.Data.ENat.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,16 +16,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-public import Mathlib.RingTheory.GradedAlgebra.Radical
-public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,16 +40,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.ENat.Monoid
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.GradedAlgebra.Radical
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppA
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.RingTheory.Ideal.Height
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.SimpleRing.Principal
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.WithBotEqOfAddOne
+
+-- Source module: Lemmata.GeneralBFactTerForm.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_ter_form
+
+theorem goal1 :
+  ∀ {x : WithBot.{0} ENat} {m : Nat},
+  Eq.{1} (HAdd.hAdd.{0, 0, 0} x 1) (Nat.cast.{0} (HAdd.hAdd.{0, 0, 0} m 1)) → Eq.{1} x (Nat.cast.{0} m) := by
+  intro x m h
+  induction x using WithBot.recBotCoe with
+  | bot =>
+    exfalso
+    have e : ((m + 1 : ℕ) : WithBot ENat) = (((m : ENat) + 1 : ENat) : WithBot ENat) := by
+      push_cast
+      rfl
+    have hb : (⊥ : WithBot ENat) + 1 = ⊥ := WithBot.bot_add _
+    rw [e, hb] at h
+    exact WithBot.bot_ne_coe h
+  | coe y =>
+    have h2 : ((y + 1 : ENat) : WithBot ENat) = (((m : ENat) + 1 : ENat) : WithBot ENat) := by
+      rw [WithBot.coe_add, WithBot.coe_one]
+      rw [h]
+      push_cast
+      rfl
+    have h3 : y + 1 = (m : ENat) + 1 := WithBot.coe_injective h2
+    have h4 : y = (m : ENat) := by
+      have := (ENat.add_left_injective_of_ne_top (n := 1) ENat.one_ne_top) h3
+      exact this
+    rw [h4]
+    rfl
+
+end Bl.general_b_fact_ter_form
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+
+section
 
 @[expose] public section
 
@@ -230,3 +274,6 @@ theorem divSuppArith : DivSuppArithStatement := by
     fun hv => ⟨⟨hWp, hWmh, hWrel⟩, charOf_prime hWp hv, hdim⟩⟩
 
 end ReciprocityTheory.ChartRestriction.G.Geo
+end
+end
+end

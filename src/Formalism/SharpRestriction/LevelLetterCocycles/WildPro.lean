@@ -2,7 +2,7 @@ module
 
 public import Mathlib.FieldTheory.KrullTopology
 public import Mathlib.RingTheory.Valuation.ValuationSubring
-public import Lemmata.GeneralBFactRightVersion.Imports
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
@@ -33,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,7 +45,48 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.FieldTheory.Minpoly.Basic
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Linter.Style
 public import Mathlib.Algebra.BigOperators.Field
+
+-- Source module: Lemmata.GeneralBFactRightVersion.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_right_version
+
+theorem goal1 :
+  ∀ {E Ω : Type} [inst : Field.{0} E] [inst_1 : Field.{0} Ω] [inst_2 : Algebra.{0, 0} E Ω] (σ : AlgEquiv.{0, 0, 0} E Ω Ω)
+  (y : Ω),
+  IsIntegral.{0, 0} E y →
+    Exists.{1} fun (n : Nat) ↦ And (Ne.{1} n 0) (Eq.{1} (DFunLike.coe.{1, 1, 1} (HPow.hPow.{0, 0, 0} σ n) y) y) := by
+  intro E Ω _ _ _ σ y hy
+  have hmem : ∀ k : ℕ, (σ ^ k) y ∈ (minpoly E y).rootSet Ω := by
+    intro k
+    rw [Polynomial.mem_rootSet]
+    refine ⟨minpoly.ne_zero hy, ?_⟩
+    have h := Polynomial.aeval_algHom_apply ((σ ^ k : Ω ≃ₐ[E] Ω) : Ω →ₐ[E] Ω) y (minpoly E y)
+    rw [minpoly.aeval, map_zero] at h
+    simpa using h
+  obtain ⟨a, b, hab, he⟩ := Set.Finite.exists_lt_map_eq_of_forall_mem
+    (f := fun k : ℕ => (σ ^ k) y) hmem (Polynomial.rootSet_finite _ _)
+  refine ⟨b - a, by omega, ?_⟩
+  have hb : b = a + (b - a) := by omega
+  rw [hb, pow_add, AlgEquiv.mul_apply] at he
+  exact ((σ ^ a).injective he).symm
+
+end Bl.general_b_fact_right_version
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.WildPro
+
+section
 
 @[expose] public section
 
@@ -216,4 +255,6 @@ theorem wildProP (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω] : Formalism.M
 
 end Formalism.MainNotions.N.KillingConditions.WildPf
 
+end
+end
 end

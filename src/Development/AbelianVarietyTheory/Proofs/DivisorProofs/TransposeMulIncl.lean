@@ -2,16 +2,18 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlkEquivInl
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteModuleGradedQuantumDet
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CapelliDetBlockLeviCongrModUpperBlockIdeal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -19,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,9 +40,119 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.LocallyCompactUnipFlag
+import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyNormFinLeOne
+import Development.AbelianVarietyTheory.Definitions.Foundations.NormEulerPolySubOneLe
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockMatrixMulVecBasis
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiffsZeroOfLev
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteModuleGradedQuantumDet
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ThK.DescB
+open GlobalTheory.SiegelSet GlobalTheory.UAut GlobalTheory.LeviHC
+
+noncomputable section
+
+namespace GlobalTheory.LeviHC.MidBlock
+
+section Alg
+
+variable {A A' : Type} [Ring A] [Algebra ℂ A] [Ring A'] [Algebra ℂ A']
+
+theorem qdet_map (φ : A →ₐ[ℂ] A') {n : ℕ} (E : Fin n → Fin n → A) (u : ℂ) :
+    φ (Formalism.REAL.qdet E u) = Formalism.REAL.qdet (fun a b => φ (E a b)) u := by
+  unfold Formalism.REAL.qdet Formalism.REAL.qminor Formalism.REAL.Tm
+
+  simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
+  refine Finset.sum_congr rfl fun σ _ => ?_
+  congr 3
+  funext k
+  simp only [Function.comp_apply, map_add, apply_ite φ, AlgHom.commutes, map_zero]
+
+theorem qdet_mem (S : Subalgebra ℂ A) {n : ℕ} {E : Fin n → Fin n → A} (h : ∀ a b, E a b ∈ S) (u : ℂ) :
+    Formalism.REAL.qdet E u ∈ S := by
+  unfold Formalism.REAL.qdet Formalism.REAL.qminor
+  refine Subalgebra.sum_mem _ fun σ _ =>
+    Subalgebra.mul_mem _ (Subalgebra.intCast_mem _ _) (Subalgebra.list_prod_mem _ ?_)
+  intro x hx
+  obtain ⟨k, rfl⟩ := List.mem_ofFn.1 hx
+  unfold Formalism.REAL.Tm
+  refine Subalgebra.add_mem _ ?_ (h _ _)
+  split_ifs
+  · exact Subalgebra.algebraMap_mem _ _
+  · exact Subalgebra.zero_mem _
+
+theorem comm_qdet {n : ℕ} {E : Fin n → Fin n → A} {z : A} (h : ∀ a b, Commute z (E a b)) (u : ℂ) :
+    Commute z (Formalism.REAL.qdet E u) := by
+  unfold Formalism.REAL.qdet Formalism.REAL.qminor
+  refine Commute.sum_right _ _ _ fun σ _ => Commute.mul_right (Int.cast_commute _ _).symm ?_
+  refine Commute.list_prod_right _ _ fun y hy => ?_
+  obtain ⟨k, rfl⟩ := List.mem_ofFn.1 hy
+  unfold Formalism.REAL.Tm
+  exact Commute.add_right (GlobalTheory.CapHC.ite_algebraMap_comm _ _ _).symm (h _ _)
+
+theorem glComm {n : ℕ} {X : Fin n → Fin n → A} (hX : Formalism.REAL.GlRel X) {a b c d : Fin n} (hbc : b ≠ c)
+    (hda : d ≠ a) : Commute (X a b) (X c d) := by
+  have h := hX a b c d
+  rw [if_neg hbc, if_neg hda, sub_zero] at h
+  exact sub_eq_zero.1 h
+
+end Alg
+
+section Stab
+
+variable {M : Type} [AddCommGroup M] [Module ℂ M]
+
+def stab (N : Submodule ℂ M) : Subalgebra ℂ (Module.End ℂ M) where
+  carrier := {f | ∀ x ∈ N, f x ∈ N}
+  mul_mem' := fun ha hb x hx => ha _ (hb x hx)
+  add_mem' := fun ha hb x hx => N.add_mem (ha x hx) (hb x hx)
+  algebraMap_mem' := fun c x hx => by simpa [Module.algebraMap_end_apply] using N.smul_mem c hx
+
+theorem mem_stab {N : Submodule ℂ M} {f : Module.End ℂ M} : f ∈ stab N ↔ ∀ x ∈ N, f x ∈ N := Iff.rfl
+
+theorem upperSpan_maps {N K : Submodule ℂ M} {r m : ℕ} (Y : Fin (r + m) → Fin (r + m) → stab N)
+    (hY : ∀ p q, ∀ x ∈ N, (Y (Fin.castAdd m p) (Fin.natAdd r q) : Module.End ℂ M) x ∈ K)
+    {y : stab N} (hy : y ∈ GlobalTheory.CapHC.upperSpan Y) : ∀ x ∈ N, (y : Module.End ℂ M) x ∈ K := by
+  induction hy using Submodule.span_induction with
+  | mem y hy =>
+    obtain ⟨p, q, w, rfl⟩ := hy
+    intro x hx
+    exact hY p q _ (mem_stab.1 w.2 x hx)
+  | zero => intro x _; simp
+  | add a b _ _ ha hb => intro x hx; simpa using K.add_mem (ha x hx) (hb x hx)
+  | smul c a _ ha => intro x hx; simpa using K.smul_mem c (ha x hx)
+
+end Stab
+
+section Main
+
+end Main
+
+end GlobalTheory.LeviHC.MidBlock
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransposeMulIncl
+
+section
 
 @[expose] public section
 
@@ -356,4 +466,6 @@ theorem growth_slice (g : GA E a) (ψ : Sm E a)
 
 end GlobalTheory.GLSlice
 
+end
+end
 end

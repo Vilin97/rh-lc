@@ -14,13 +14,13 @@ public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.Holom
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TopComp
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.CanonicalPsiNeZeroOfPathBasis
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.ContinuousMatrixLowerRightBlock
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.DerivProdRangeSubMulProdNeZero
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.StepD
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.SingToDiffAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -33,7 +33,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
@@ -45,7 +44,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -58,9 +56,174 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.IteratedFDerivMulConstOf
+import Mathlib.Tactic.Linter.Style
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.ContinuousOnIteratedFDerivTranslate
+import Mathlib.Order.CompletePartialOrder
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.DerivProdRangeSubMulProdNeZero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix
+
+namespace PositivityTheory.Rg.Sw.HSt
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LVs
+
+variable {n : ℕ}
+
+theorem embOn_single_pf (s : Finset (Fin n)) (a b : s) :
+    embOn s (Matrix.single a b (1 : ℂ)) = Matrix.single (a : Fin n) (b : Fin n) 1 := by
+  ext i j
+  by_cases hi : i = (a : Fin n) <;> by_cases hj : j = (b : Fin n)
+  · subst hi hj
+    simp [embOn, Matrix.single_apply]
+  · simp only [embOn, Matrix.single_apply, hj, and_false, if_false]
+    split_ifs with h h' <;> simp_all [Subtype.ext_iff]
+  · simp only [embOn, Matrix.single_apply, hi, false_and, if_false]
+    split_ifs with h h' <;> simp_all [Subtype.ext_iff]
+  · simp only [embOn, Matrix.single_apply, hi, false_and, if_false]
+    split_ifs with h h' <;> simp_all [Subtype.ext_iff]
+
+theorem deriv_prod_range_sub_mul_prod_ne_zero (n m : ℕ) (hmn : m < n) :
+    deriv (fun z : ℂ => (∏ i ∈ Finset.range (n - m), ((i : ℂ) - z)) *
+      (∏ i ∈ Finset.range (n - (n - m)), ((i : ℂ) - m - z))) 0 ≠ 0 := by
+  obtain ⟨k, hk⟩ : ∃ k, n - m = k + 1 := ⟨n - m - 1, by omega⟩
+  have hm : n - (n - m) = m := by omega
+  rw [hm, hk]
+  set C : ℂ → ℂ := fun z => ∏ i ∈ Finset.range k, (((i + 1 : ℕ) : ℂ) - z) with hCdef
+  set B : ℂ → ℂ := fun z => ∏ i ∈ Finset.range m, ((i : ℂ) - m - z) with hBdef
+  have hfun : (fun z : ℂ => (∏ i ∈ Finset.range (k + 1), ((i : ℂ) - z)) *
+      ∏ i ∈ Finset.range m, ((i : ℂ) - m - z)) = fun z => (C z * (0 - z)) * B z := by
+    funext z
+    rw [Finset.prod_range_succ']
+    simp [C, B]
+  have hC : DifferentiableAt ℂ C 0 := DifferentiableAt.fun_finsetProd (fun i _ => by fun_prop)
+  have hB : DifferentiableAt ℂ B 0 := DifferentiableAt.fun_finsetProd (fun i _ => by fun_prop)
+  have key : HasDerivAt (fun z => (C z * (0 - z)) * B z) ((C 0 * (-1)) * B 0) 0 := by
+    have h := (hC.hasDerivAt.mul ((hasDerivAt_id (0 : ℂ)).const_sub 0)).mul hB.hasDerivAt
+    convert h using 1 <;> first | rfl | simp
+  rw [hfun, key.deriv]
+  have hC0 : C 0 ≠ 0 := by
+    simp only [C, sub_zero]
+    exact Finset.prod_ne_zero_iff.mpr (fun i _ => by exact_mod_cast Nat.succ_ne_zero i)
+  have hB0 : B 0 ≠ 0 := by
+    simp only [B, sub_zero]
+    refine Finset.prod_ne_zero_iff.mpr (fun i hi => ?_)
+    have hi' : i < m := Finset.mem_range.mp hi
+    rw [sub_ne_zero]
+    exact_mod_cast hi'.ne
+  simp [hC0, hB0]
+
+end PositivityTheory.Rg.Sw.HSt
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.StepD
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory Matrix
+open scoped ContDiff
+
+namespace PositivityTheory.Rg.Sw.HSt.Cx3
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LVs PositivityTheory.Rg.Sw.HSt
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+variable {n : ℕ}
+
+theorem stepD (j : ℕ) (p q : ℤ) {Kg : Type} [TopologicalSpace Kg] [CompactSpace Kg] [MeasurableSpace Kg]
+    [BorelSpace Kg] (μ : Measure Kg) [IsFiniteMeasure μ] [IsFiniteMeasureOnCompacts μ]
+    (ι : Kg → M2 n) (hι : Continuous ι) (hιG : ∀ k, InG (ι k)) (ρ : Kg → ℂ) (hρ : Continuous ρ)
+    (hC : ∀ g, InG g → ∫ k, hF j p q (ι k * g) * ρ k ∂μ = 0) :
+    ∀ (N : ℕ) (W : Fin N → M2 n) (g : M2 n), InG g →
+      ∫ k, iteratedFDeriv ℂ N (hF j p q) (ι k * g) (fun i => ι k * g * W i) * ρ k ∂μ = 0 := by
+  intro N W g hg
+  set Ω : Set (M2 n) := {x | ∀ k, ι k * x ∈ Dom n} with hΩ
+  have hΩo : IsOpen Ω := isOpen_domK Kg ι hι
+  have hGΩ : GSet n ⊆ Ω := fun x hx k => gset_sub_dom (inG_mul (hιG k) hx)
+  have hF0 : ContDiffOn ℂ ∞ (hF (n := n) j p q) (Dom n) := contDiffOn_hF j p q
+  have hsm : ∀ k, ContDiffOn ℂ ∞ (fun x => hF j p q (ι k * x) * ρ k) Ω := fun k =>
+    (hF0.comp (contDiff_mulLeft (ι k)).contDiffOn (fun x (hx : x ∈ Ω) => hx k)).mul contDiffOn_const
+  have hH := holInt n Kg μ Ω (fun k x => hF j p q (ι k * x) * ρ k) hΩo
+    (fun N => continuousOn_iteratedFDeriv_translate (hF j p q) (Dom n) isOpen_dom hF0 Kg ι hι ρ hρ N) hsm
+  have hz := holZero n Ω (fun x => ∫ k, hF j p q (ι k * x) * ρ k ∂μ) hΩo hGΩ hH.1
+    (fun g hg => hC g hg) N g hg
+  have key := hH.2 N g (fun i => g * W i) (hGΩ hg)
+  rw [hz] at key
+  simp only [_root_.zero_apply] at key
+  rw [key]
+  refine integral_congr_ae (Filter.Eventually.of_forall fun k => ?_)
+  have hk : ι k * g ∈ Dom n := hGΩ hg k
+  show iteratedFDeriv ℂ N (hF j p q) (ι k * g) (fun i => ι k * g * W i) * ρ k =
+    iteratedFDeriv ℂ N (fun x => hF j p q (ι k * x) * ρ k) g (fun i => g * W i)
+  rw [iteratedFDeriv_mul_const_of (fun x => hF j p q (ι k * x)) Ω hΩo
+    (hF0.comp (contDiff_mulLeft (ι k)).contDiffOn (fun x (hx : x ∈ Ω) => hx k)) (ρ k) g (hGΩ hg) N,
+    iteratedFDeriv_left_mul (hF j p q) (Dom n) isOpen_dom hF0 (ι k) g hk N]
+  simp only [mul_assoc]
+
+theorem stepC (hFd : FdProps) (hDj : DjFd) (hSph : SphU) (hFz : FzHol) (m j : ℕ) (hj1 : 1 ≤ j) (hjn : j ≤ n)
+    (ha1 : deriv (fun z : ℂ => (∏ i ∈ Finset.range j, ((i : ℂ) - z)) *
+      (∏ i ∈ Finset.range (n - j), ((i : ℂ) - m - z))) 0 ≠ 0)
+    {Kg : Type} [TopologicalSpace Kg] [CompactSpace Kg] [MeasurableSpace Kg]
+    [BorelSpace Kg] (μ : Measure Kg) [IsFiniteMeasure μ] [IsFiniteMeasureOnCompacts μ]
+    (ι : Kg → M2 n) (hι : Continuous ι) (hιG : ∀ k, InG (ι k)) (ρ : Kg → ℂ) (hρ : Continuous ρ)
+    (hB : ∀ g, InG g → detD (fun T : Matrix (blkA (n := n) j) (blkA j) ℂ => detD (fun S : Matrix (blkB (n := n) j) (blkB j) ℂ =>
+      ∫ k, Fd m (ι k * (g * mX 1 (embOn (blkA j) T) (embOn (blkB j) S) 1)) * ρ k ∂μ)) = 0) :
+    ∀ g, InG g → ∫ k, hF j (m : ℤ) 0 (ι k * g) * ρ k ∂μ = 0 := by
+  intro g hg
+  have hGZ : GSet n ⊆ DomZ n := (hFz n m 0).2.1
+  have hkg : ∀ k, ι k * g ∈ DomZ n := fun k => hGZ (inG_mul (hιG k) hg)
+  have hFdc : ContDiffOn ℂ ⊤ (Fd (n := n) m) (DomZ n) := (hFd n m).1
+  have hS := hSph n (Fd m) (DomZ n) (hFz n m 0).1 hFdc μ ι hι ρ hρ (LQ (blkA j)) (LR (blkB j))
+    (fun M x T => by rw [LQ_apply, LQ_apply, mul_assoc]) (fun M x S => by rw [LR_apply, LR_apply, mul_assoc]) g hkg
+  have e1 : (fun T : Matrix (blkA (n := n) j) (blkA j) ℂ => detD (fun S : Matrix (blkB (n := n) j) (blkB j) ℂ =>
+      ∫ k, Fd m (ι k * (g * mX 1 (embOn (blkA j) T) (embOn (blkB j) S) 1)) * ρ k ∂μ)) =
+      fun T => detD (fun S => ∫ k, Fd m (ι k * (g + LQ (blkA j) g T + LR (blkB j) g S)) * ρ k ∂μ) := by
+    funext T; congr 1; funext S
+    rw [mul_mX, LQ_apply, LR_apply]
+  have e2 : ∀ k, detD (fun T : Matrix (blkA (n := n) j) (blkA j) ℂ => detD (fun S : Matrix (blkB (n := n) j) (blkB j) ℂ =>
+      Fd m (ι k * g + LQ (blkA j) (ι k * g) T + LR (blkB j) (ι k * g) S))) * ρ k =
+      deriv (fun z : ℂ => (∏ i ∈ Finset.range j, ((i : ℂ) - z)) *
+        (∏ i ∈ Finset.range (n - j), ((i : ℂ) - m - z))) 0 * (hF j (m : ℤ) 0 (ι k * g) * ρ k) := by
+    intro k
+    have r : (fun T : Matrix (blkA (n := n) j) (blkA j) ℂ => detD (fun S : Matrix (blkB (n := n) j) (blkB j) ℂ =>
+        Fd m (ι k * g + LQ (blkA j) (ι k * g) T + LR (blkB j) (ι k * g) S))) =
+        fun T => detD (fun S => Fd m ((ι k * g) * mX 1 (embOn (blkA j) T) (embOn (blkB j) S) 1)) := by
+      funext T; congr 1; funext S
+      rw [mul_mX, LQ_apply, LR_apply]
+    rw [r, hDj n m j (ι k * g) hj1 hjn (hkg k)]
+    ring
+  have h := hB g hg
+  rw [e1, hS, integral_congr_ae (Filter.Eventually.of_forall e2), integral_const_mul] at h
+  exact (mul_eq_zero.1 h).resolve_left ha1
+
+end PositivityTheory.Rg.Sw.HSt.Cx3
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.CayleyCosetSums.VacuumNonvanishingOfFacts
+
+section
 
 @[expose] public section
 
@@ -336,3 +499,6 @@ theorem vacuum_nonvanishing_of_facts (hFd : FdProps) (hDj : DjFd) (hKS : KSplit)
   exact hpos.ne' (by exact_mod_cast stepG)
 
 end PositivityTheory.Rg.Sw.HSt
+end
+end
+end

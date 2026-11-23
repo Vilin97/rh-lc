@@ -2,7 +2,12 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ZerosDisc
 public import Mathlib.Data.FunLike.Fintype
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitFormulaDirichletZerosRightHalf
+public import Development.AbelianVarietyTheory.Definitions.Foundations.RayPrimes
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.DirichletLZerosEqPrimitiveCharacterZerosStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsDirichletLFunctionZeroGapNearOneStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitFormulaClosedStatement
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ZeroCount
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FinsumMemLeOfSubset
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +45,410 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Std.Tactic.BVDecide.Normalize.Prop
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DirichletLZerosInWindowFiniteAndPosOrder
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LogDerivSeriesOfExplicit
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SumIndicatorLeZsumR
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ZeroCountHolds
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.Mem.An
+
+theorem zeroCount_holds : GlobalTheory.Mem.An.ZeroCount := by
+  obtain ⟨C, -, H⟩ := GlobalTheory.ZeroWindow.count_zeros_window
+  refine ⟨C, fun q _ χ hχ t => ?_⟩
+  have h := (H q χ hχ t).2
+  simpa only [zsumR, zerosIn, zmult, mul_one] using h
+
+end GlobalTheory.Mem.An
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DirichletLZeroSymmetry
+
+section
+
+@[expose] public section
+
+open Filter Topology Complex GlobalTheory.Mem.An
+
+namespace GlobalTheory.Mem.An
+
+section
+variable {q : ℕ}
+
+theorem zsym_gammaFactor_ne_zero (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 0 < s.re) :
+    χ.gammaFactor s ≠ 0 := by
+  rcases χ.even_or_odd with h | h <;> rw [h.gammaFactor_def]
+  · exact Gammaℝ_ne_zero_of_re_pos hs
+  · exact Gammaℝ_ne_zero_of_re_pos (by simp; linarith)
+
+theorem zsym_differentiable_gammaFactor_inv (χ : DirichletCharacter ℂ q) :
+    Differentiable ℂ (fun s => (χ.gammaFactor s)⁻¹) := by
+  rcases χ.even_or_odd with h | h <;> simp only [h.gammaFactor_def]
+  · exact differentiable_Gammaℝ_inv
+  · exact differentiable_Gammaℝ_inv.comp (differentiable_id.add_const 1)
+
+variable [NeZero q]
+
+theorem zsym_rootNumber_ne_zero {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) :
+    χ.rootNumber ≠ 0 := by
+  intro h
+  have h1 := hχ.completedLFunction_one_sub (-1)
+  rw [h, mul_zero, zero_mul] at h1
+  have h2 := χ.LFunction_eq_completed_div_gammaFactor (1 - -1) (Or.inl (by norm_num))
+  rw [h1, zero_div] at h2
+  exact χ.LFunction_ne_zero_of_one_le_re (Or.inr (by norm_num)) (by norm_num) h2
+
+noncomputable def zsymFactor (χ : DirichletCharacter ℂ q) (s : ℂ) : ℂ :=
+  (q : ℂ) ^ ((1 - s) - 1 / 2) * χ.rootNumber * (χ.gammaFactor s)⁻¹ / (χ⁻¹.gammaFactor (1 - s))⁻¹
+
+theorem zsym_eq {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) {s : ℂ} (h0 : 0 < s.re)
+    (h1 : s.re < 1) : χ.LFunction s = zsymFactor χ s * χ⁻¹.LFunction (1 - s) := by
+  have hs0 : s ≠ 0 := by rintro rfl; simp at h0
+  have hs1 : 1 - s ≠ 0 := by
+    intro h; rw [sub_eq_zero] at h; subst h; simp at h1
+  have h2 := hχ.completedLFunction_one_sub (1 - s)
+  rw [sub_sub_cancel] at h2
+  have g1 := zsym_gammaFactor_ne_zero χ h0
+  have g2 := zsym_gammaFactor_ne_zero χ⁻¹ (s := 1 - s) (by simp; linarith)
+  rw [χ.LFunction_eq_completed_div_gammaFactor s (Or.inl hs0),
+    χ⁻¹.LFunction_eq_completed_div_gammaFactor (1 - s) (Or.inl hs1), h2, zsymFactor]
+  field_simp
+
+theorem zsymFactor_ne_zero {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) {s : ℂ}
+    (h0 : 0 < s.re) (h1 : s.re < 1) : zsymFactor χ s ≠ 0 := by
+  have g1 := zsym_gammaFactor_ne_zero χ h0
+  have g2 := zsym_gammaFactor_ne_zero χ⁻¹ (s := 1 - s) (by simp; linarith)
+  have g3 := zsym_rootNumber_ne_zero hχ
+  have g4 : (q : ℂ) ^ ((1 - s) - 1 / 2) ≠ 0 := by
+    simp [cpow_eq_zero_iff, NeZero.ne q]
+  unfold zsymFactor
+  exact div_ne_zero (mul_ne_zero (mul_ne_zero g4 g3) (inv_ne_zero g1)) (inv_ne_zero g2)
+
+theorem zsymFactor_analyticAt (χ : DirichletCharacter ℂ q) {s : ℂ}
+    (h1 : s.re < 1) : AnalyticAt ℂ (zsymFactor χ) s := by
+  have g2 := zsym_gammaFactor_ne_zero χ⁻¹ (s := 1 - s) (by simp; linarith)
+  have d1 : Differentiable ℂ (fun s : ℂ => (q : ℂ) ^ ((1 - s) - 1 / 2)) := by
+    have : NeZero (q : ℂ) := ⟨by exact_mod_cast NeZero.ne q⟩
+    fun_prop
+  have d2 : Differentiable ℂ (fun s : ℂ => (χ⁻¹.gammaFactor (1 - s))⁻¹) :=
+    (zsym_differentiable_gammaFactor_inv χ⁻¹).comp (differentiable_id.const_sub 1)
+  have d3 := (d1.mul_const χ.rootNumber).mul (zsym_differentiable_gammaFactor_inv χ)
+  exact (d3.analyticAt s).div (d2.analyticAt s) (inv_ne_zero g2)
+
+theorem zsym_analyticAt_LFunction (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : s ≠ 1) :
+    AnalyticAt ℂ χ.LFunction s := by
+  refine DifferentiableOn.analyticAt (s := {1}ᶜ) (fun z hz => ?_)
+    (isOpen_compl_singleton.mem_nhds hs)
+  exact (χ.differentiableAt_LFunction z (Or.inl hz)).differentiableWithinAt
+
+end
+
+theorem zeros_symm_one_sub : ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q), χ.IsPrimitive →
+    ∀ ρ : ℂ, 0 < ρ.re → ρ.re < 1 →
+      ((DirichletCharacter.LFunction χ ρ = 0 ↔ DirichletCharacter.LFunction χ⁻¹ (1 - ρ) = 0) ∧
+        zmult χ ρ = zmult χ⁻¹ (1 - ρ)) := by
+  intro q _ χ hχ ρ h0 h1
+  have hne := zsymFactor_ne_zero hχ h0 h1
+  refine ⟨by rw [zsym_eq hχ h0 h1]; simp [hne], ?_⟩
+  have hev : χ.LFunction =ᶠ[𝓝 ρ] zsymFactor χ * (χ⁻¹.LFunction ∘ fun s => 1 - s) := by
+    have a : ∀ᶠ s : ℂ in 𝓝 ρ, 0 < s.re := (isOpen_lt continuous_const continuous_re).mem_nhds h0
+    have b : ∀ᶠ s : ℂ in 𝓝 ρ, s.re < 1 := (isOpen_lt continuous_re continuous_const).mem_nhds h1
+    filter_upwards [a, b] with s a b
+    exact zsym_eq hχ a b
+  have hρ : 1 - ρ ≠ 1 := by
+    intro h; rw [sub_eq_self] at h; subst h; simp at h0
+  have hL := zsym_analyticAt_LFunction χ⁻¹ hρ
+  have hg : AnalyticAt ℂ (fun s : ℂ => 1 - s) ρ := by fun_prop
+  have hf := zsymFactor_analyticAt χ h1
+  unfold zmult analyticOrderNatAt
+  congr 1
+  rw [analyticOrderAt_congr hev, analyticOrderAt_mul hf (AnalyticAt.comp hL hg),
+    hf.analyticOrderAt_eq_zero.2 hne, zero_add,
+    analyticOrderAt_comp_of_deriv_ne_zero hg (by simp)]
+
+end GlobalTheory.Mem.An
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitFormulaDirichletZerosRightHalf
+
+section
+
+@[expose] public section
+
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology GlobalTheory.Lin
+open scoped Classical
+
+namespace GlobalTheory.ExplicitFormulaRight
+
+open GlobalTheory.Mem.An
+
+theorem zfin {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (t T : ℝ) :
+    (zerosIn χ t T).Finite := (ZeroWindow.finite_and_one_le_zmult q χ t T).1
+
+theorem zsumR_eq {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (t T : ℝ) (f : ℂ → ℝ) :
+    zsumR χ t T f = ∑ ρ ∈ (zfin χ t T).toFinset, (zmult χ ρ : ℝ) * f ρ :=
+  finsum_mem_eq_finite_toFinset_sum _ _
+
+theorem recip_bound : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q),
+    χ.IsPrimitive → ∀ T : ℝ, 2 ≤ T →
+      zsumR χ 0 1 (fun ρ => 1 / ‖ρ‖) ≤ C * ((q : ℝ) ^ 2 * Real.log (3 * q) ^ 2) ∧
+      zsumR χ 0 T (fun ρ => 1 / ‖ρ‖) ≤
+        C * ((q : ℝ) ^ 2 * Real.log (3 * q) ^ 2) + C * Real.log (q * T) ^ 2 := by
+  obtain ⟨C₁, H₁⟩ := zsumR_recip_le zeroCount_holds
+  obtain ⟨c, hc, H₂⟩ := GlobalTheory.T.exists_dirichletLFunction_zero_gap_near_one
+  refine ⟨|C₁| / c + |C₁| + 1, by positivity, fun q _ χ hχ T hT => ?_⟩
+  obtain ⟨h1, h2⟩ := H₁ q χ hχ T hT
+  have hq : (1 : ℝ) ≤ q := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
+  have hl : 0 < Real.log (3 * q) := Real.log_pos (by linarith)
+  have hK : 0 < (q : ℝ) ^ 2 * Real.log (3 * q) := by positivity
+  have hA : zsumR χ 0 1 (fun ρ => 1 / ‖ρ‖) ≤
+      (|C₁| / c + |C₁| + 1) * ((q : ℝ) ^ 2 * Real.log (3 * q) ^ 2) := by
+    have a1 : zsumR χ 0 1 (fun ρ => 1 / ‖ρ‖) ≤
+        ((q : ℝ) ^ 2 * Real.log (3 * q) / c) * zsumR χ 0 1 (fun _ => 1) := by
+      rw [zsumR_eq, zsumR_eq, Finset.mul_sum]
+      refine Finset.sum_le_sum fun ρ hρ => ?_
+      obtain ⟨r0, r1, ri, rz⟩ := (zfin χ 0 1).mem_toFinset.mp hρ
+      have hz := ((zeros_symm_one_sub q χ hχ ρ r0 r1).1).mp rz
+      have hne : (1 - ρ) ≠ 1 := by
+        intro h
+        have := congrArg Complex.re h
+        simp at this
+        linarith
+      have hb := H₂ q χ⁻¹ (1 - ρ) (Or.inr hne) hz (by simpa using ri)
+      have hre : c / ((q : ℝ) ^ 2 * Real.log (3 * q)) ≤ ‖ρ‖ := by
+        have := Complex.re_le_norm ρ
+        simp only [Complex.sub_re, Complex.one_re] at hb
+        linarith
+      have : 1 / ‖ρ‖ ≤ (q : ℝ) ^ 2 * Real.log (3 * q) / c := by
+        have := one_div_le_one_div_of_le (div_pos hc hK) hre
+        rwa [one_div_div] at this
+      calc (zmult χ ρ : ℝ) * (1 / ‖ρ‖) ≤ (zmult χ ρ : ℝ) * ((q : ℝ) ^ 2 * Real.log (3 * q) / c) :=
+            mul_le_mul_of_nonneg_left this (by positivity)
+        _ = _ := by ring
+    have a2 : zsumR χ 0 1 (fun _ => 1) ≤ |C₁| * Real.log (3 * q) :=
+      h2.trans (mul_le_mul_of_nonneg_right (le_abs_self _) hl.le)
+    calc _ ≤ ((q : ℝ) ^ 2 * Real.log (3 * q) / c) * (|C₁| * Real.log (3 * q)) :=
+          a1.trans (mul_le_mul_of_nonneg_left a2 (by positivity))
+      _ = (|C₁| / c) * ((q : ℝ) ^ 2 * Real.log (3 * q) ^ 2) := by ring
+      _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith [abs_nonneg C₁]) (by positivity)
+  refine ⟨hA, ?_⟩
+  have hB : zsumR χ 0 T (fun ρ => 1 / ‖ρ‖) ≤ zsumR χ 0 1 (fun ρ => 1 / ‖ρ‖) +
+      zsumR χ 0 T (fun ρ => if 1 < |ρ.im| then 1 / ‖ρ‖ else 0) := by
+    rw [zsumR_eq, zsumR_eq, zsumR_eq]
+    have e : (zfin χ 0 1).toFinset = (zfin χ 0 T).toFinset.filter (fun ρ => ¬ 1 < |ρ.im|) := by
+      ext ρ
+      simp only [Set.Finite.mem_toFinset, Finset.mem_filter, zerosIn, Set.mem_setOf_eq, sub_zero,
+        not_lt]
+      constructor
+      · rintro ⟨a, b, c, d⟩
+        exact ⟨⟨a, b, by linarith, d⟩, c⟩
+      · rintro ⟨⟨a, b, _, d⟩, c⟩
+        exact ⟨a, b, c, d⟩
+    rw [e, Finset.sum_filter, ← Finset.sum_add_distrib]
+    refine Finset.sum_le_sum fun ρ _ => ?_
+    by_cases h : 1 < |ρ.im| <;> simp [h]
+  have hC : C₁ * Real.log (q * T) ^ 2 ≤ (|C₁| / c + |C₁| + 1) * Real.log (q * T) ^ 2 := by
+    refine mul_le_mul_of_nonneg_right ?_ (by positivity)
+    have : 0 ≤ |C₁| / c := by positivity
+    linarith [le_abs_self C₁]
+  linarith
+
+theorem box_subset {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (T : ℝ) :
+    zerosBox χ (1 / 2) T ⊆ zerosIn χ 0 T := by
+  rintro ρ ⟨a, b, c, d⟩
+  exact ⟨by linarith, b, by simpa using c, d⟩
+
+theorem left_zeros {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (u T : ℝ) (hu : 1 ≤ u) :
+    ‖zsum χ 0 T (fun ρ => (u : ℂ) ^ ρ / ρ) -
+      ∑ᶠ ρ ∈ zerosBox χ (1 / 2) T, (ord χ ρ : ℂ) * ((u : ℂ) ^ ρ / ρ)‖ ≤
+      Real.sqrt u * zsumR χ 0 T (fun ρ => 1 / ‖ρ‖) := by
+  have hf := (zfin χ 0 T).subset (box_subset χ T)
+  have e : hf.toFinset = (zfin χ 0 T).toFinset.filter (fun ρ => 1 / 2 ≤ ρ.re) := by
+    ext ρ
+    simp only [Set.Finite.mem_toFinset, Finset.mem_filter]
+    constructor
+    · intro h
+      exact ⟨box_subset χ T h, h.1⟩
+    · rintro ⟨⟨_, b, c, d⟩, a⟩
+      exact ⟨a, b, by simpa using c, d⟩
+  rw [zsumR_eq, zsum, finsum_mem_eq_finite_toFinset_sum _ (zfin χ 0 T),
+    finsum_mem_eq_finite_toFinset_sum _ hf, e, Finset.sum_filter, ← Finset.sum_sub_distrib,
+    Finset.mul_sum]
+  refine norm_sum_le_of_le _ fun ρ _ => ?_
+  have hu0 : 0 < u := by linarith
+  by_cases h : 1 / 2 ≤ ρ.re
+  · rw [if_pos h]
+    have : (ord χ ρ : ℂ) = zmult χ ρ := rfl
+    rw [this, sub_self, norm_zero]
+    positivity
+  · rw [if_neg h, sub_zero, norm_mul, norm_div, Complex.norm_cpow_eq_rpow_re_of_pos hu0,
+      Complex.norm_natCast, Real.sqrt_eq_rpow]
+    have h1 : u ^ ρ.re ≤ u ^ (1 / 2 : ℝ) := Real.rpow_le_rpow_of_exponent_le hu (not_le.mp h).le
+    calc (zmult χ ρ : ℝ) * (u ^ ρ.re / ‖ρ‖) = u ^ ρ.re * ((zmult χ ρ : ℝ) * (1 / ‖ρ‖)) := by ring
+      _ ≤ _ := mul_le_mul_of_nonneg_right h1 (by positivity)
+
+theorem logs {N q u T : ℝ} (hN : 1 ≤ N) (hq : N ≤ q) (hT : 2 ≤ T) (hu : T ≤ u) {L : ℝ}
+    (hL : L = Real.log (q * u * T)) :
+    1 ≤ L ∧ Real.log (N * u * T) ^ 2 ≤ L ^ 2 ∧ Real.log (N * u) ≤ L ^ 2 ∧
+      Real.log (3 * N) ^ 2 ≤ L ^ 2 ∧ Real.log (N * T) ^ 2 ≤ L ^ 2 ∧
+      (Nat.log 2 ⌊u⌋₊ : ℝ) * Real.log q ≤ 2 * L ^ 2 := by
+  have hq1 : 1 ≤ q := hN.trans hq
+  have hu2 : 2 ≤ u := hT.trans hu
+  have huT : 4 ≤ u * T := by nlinarith
+  have hlog : ∀ x : ℝ, 0 < x → x ≤ q * u * T → Real.log x ≤ L := fun x hx h =>
+    hL ▸ Real.log_le_log hx h
+  have key : ∀ a b : ℝ, 0 ≤ a → a ≤ q → 0 ≤ b → b ≤ u * T → a * b ≤ q * u * T := by
+    intro a b ha haq hb hbu
+    rw [mul_assoc]
+    exact mul_le_mul haq hbu hb (by linarith)
+  have h2 := Real.log_two_gt_d9
+  have hL1 : 1 ≤ L := by
+    have := hlog 4 (by norm_num) (by simpa using key 1 4 (by norm_num) hq1 (by norm_num) huT)
+    have h2' : Real.log 4 = 2 * Real.log 2 := by
+      rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; norm_num
+    linarith
+  have sq_le : ∀ x : ℝ, 1 ≤ x → x ≤ q * u * T → Real.log x ^ 2 ≤ L ^ 2 := fun x hx hc =>
+    pow_le_pow_left₀ (Real.log_nonneg hx) (hlog x (by linarith) hc) 2
+  have huu : u ≤ u * T := by nlinarith
+  have hTT : T ≤ u * T := by nlinarith
+  refine ⟨hL1, sq_le _ ?_ ?_, ?_, sq_le _ (by linarith) ?_, sq_le _ (by nlinarith) ?_, ?_⟩
+  · rw [mul_assoc]; nlinarith
+  · rw [mul_assoc]; exact key _ _ (by linarith) hq (by linarith) le_rfl
+  · have := hlog (N * u) (by positivity) (key _ _ (by linarith) hq (by linarith) huu)
+    nlinarith
+  · rw [mul_comm]; exact key _ _ (by linarith) hq (by linarith) (by linarith)
+  · exact key _ _ (by linarith) hq (by linarith) hTT
+  · have a1 : Real.log q ≤ L :=
+      hlog q (by linarith) (by simpa using key q 1 (by linarith) le_rfl (by norm_num) (by linarith))
+    have a2 : Real.log u ≤ L :=
+      hlog u (by linarith) (by simpa using key 1 u (by linarith) hq1 (by linarith) huu)
+    have hfl : ⌊u⌋₊ ≠ 0 := by
+      have : 1 ≤ ⌊u⌋₊ := Nat.le_floor (by push_cast; linarith)
+      omega
+    have a3 : (Nat.log 2 ⌊u⌋₊ : ℝ) * Real.log 2 ≤ Real.log u := by
+      rw [← Real.log_pow]
+      refine Real.log_le_log (by positivity) (le_trans ?_ (Nat.floor_le (by linarith)))
+      exact_mod_cast Nat.pow_log_le_self 2 hfl
+    have a4 : (Nat.log 2 ⌊u⌋₊ : ℝ) ≤ 2 * L := by
+      have : (0 : ℝ) ≤ Nat.log 2 ⌊u⌋₊ := by positivity
+      nlinarith
+    calc _ ≤ (2 * L) * L := mul_le_mul a4 a1 (Real.log_nonneg hq1) (by linarith)
+      _ = _ := by ring
+
+theorem combine {A B S s x K E P D Z₁ Z t₁ t₂ l₃ l₄ N q : ℝ} (hA : 0 ≤ A) (hB : 0 ≤ B)
+    (hs : 1 ≤ s) (hx : 0 ≤ x) (hK : 0 ≤ K) (hN : 1 ≤ N) (hq : N ≤ q)
+    (hS : S ≤ P + E + D) (hP : P ≤ 2 * K) (hE : E ≤ A * (t₁ + t₂ + Z₁)) (hD : D ≤ s * Z)
+    (h1 : t₁ ≤ x * K) (h2 : t₂ ≤ K) (hl₃ : l₃ ≤ K) (hl₄ : l₄ ≤ K)
+    (hZ₁ : Z₁ ≤ B * (N ^ 2 * l₃)) (hZ : Z ≤ B * (N ^ 2 * l₃) + B * l₄) :
+    S ≤ (2 + A * (2 + B) + 2 * B) * (x + s * q ^ 3) * K := by
+  have hq1 : 1 ≤ q := hN.trans hq
+  have hq3 : 1 ≤ q ^ 3 := one_le_pow₀ hq1
+  have hN2 : N ^ 2 ≤ q ^ 3 :=
+    (pow_le_pow_left₀ (by linarith) hq 2).trans (pow_le_pow_right₀ hq1 (by norm_num))
+  obtain ⟨M, hM⟩ : ∃ M, M = (x + s * q ^ 3) * K := ⟨_, rfl⟩
+  have m0 : 0 ≤ x * K := by positivity
+  have k1 : K ≤ q ^ 3 * K := le_mul_of_one_le_left hK hq3
+  have k2 : q ^ 3 * K ≤ s * (q ^ 3 * K) := le_mul_of_one_le_left (by positivity) hs
+  have m1 : s * (q ^ 3 * K) ≤ M := by rw [hM]; linarith
+  have m2 : x * K ≤ M := by rw [hM]; linarith
+  have n1 : N ^ 2 * l₃ ≤ q ^ 3 * K :=
+    (mul_le_mul_of_nonneg_left hl₃ (by positivity)).trans (mul_le_mul_of_nonneg_right hN2 hK)
+  have z1 : Z₁ ≤ B * M := hZ₁.trans (mul_le_mul_of_nonneg_left (by linarith) hB)
+  have z2 : Z ≤ 2 * B * (q ^ 3 * K) := by
+    have b1 := mul_le_mul_of_nonneg_left n1 hB
+    have b2 := mul_le_mul_of_nonneg_left (hl₄.trans k1) hB
+    linarith
+  have z3 : D ≤ 2 * B * M := by
+    calc D ≤ s * (2 * B * (q ^ 3 * K)) := hD.trans (mul_le_mul_of_nonneg_left z2 (by linarith))
+      _ = 2 * B * (s * (q ^ 3 * K)) := by ring
+      _ ≤ _ := mul_le_mul_of_nonneg_left m1 (by positivity)
+  have z4 : E ≤ A * (M + M + B * M) := hE.trans (mul_le_mul_of_nonneg_left (by linarith) hA)
+  rw [mul_assoc, ← hM]
+  linarith
+
+theorem explicit_formula_right : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (u T : ℝ), 2 ≤ T → T ≤ u → (zerosBox χ (1 / 2) T).Finite ∧ ‖(∑ n ∈ Finset.Icc 1 ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod q)) - (if χ = 1 then (u : ℂ) else 0) + ∑ᶠ ρ ∈ zerosBox χ (1 / 2) T, (ord χ ρ : ℂ) * ((u : ℂ) ^ ρ / ρ)‖ ≤ C * (u / T + Real.sqrt u * (q : ℝ) ^ 3) * Real.log (q * u * T) ^ 2 := by
+  obtain ⟨A, HA⟩ := GlobalTheory.T.norm_psi0_add_zsum_le
+  obtain ⟨B, hB, HB⟩ := recip_bound
+  refine ⟨2 + |A| * (2 + B) + 2 * B, by positivity, fun q _ χ u T hT hu => ?_⟩
+  refine ⟨(zfin χ 0 T).subset (box_subset χ T), ?_⟩
+  haveI : NeZero χ.conductor := ⟨χ.conductor_ne_zero⟩
+  have hprim := χ.primitiveCharacter_isPrimitive
+  have hN : (1 : ℝ) ≤ χ.conductor := by
+    exact_mod_cast Nat.one_le_iff_ne_zero.mpr χ.conductor_ne_zero
+  have hq : (χ.conductor : ℝ) ≤ q := by
+    exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero (NeZero.ne q)) χ.conductor_dvd_level
+  have hone : χ.primitiveCharacter = 1 ↔ χ = 1 := by
+    constructor
+    · intro h
+      rw [← χ.changeLevel_primitiveCharacter, h, map_one]
+    · rintro rfl
+      exact primitiveCharacter_one
+  have hcmp : ∀ ρ : ℂ, 1 / 2 ≤ ρ.re → ρ.re < 1 →
+      (LFunction χ ρ = 0 ↔ LFunction χ.primitiveCharacter ρ = 0) ∧
+        ord χ ρ = ord χ.primitiveCharacter ρ := fun ρ a b =>
+    GlobalTheory.T.dirichletL_zeros_eq_primitiveCharacter_zeros q χ ρ (by linarith) (Or.inr (by rintro rfl; simp at b))
+  have hbox : zerosBox χ (1 / 2) T = zerosBox χ.primitiveCharacter (1 / 2) T := by
+    ext ρ
+    constructor
+    · rintro ⟨a, b, c, d⟩
+      exact ⟨a, b, c, (hcmp ρ a b).1.mp d⟩
+    · rintro ⟨a, b, c, d⟩
+      exact ⟨a, b, c, (hcmp ρ a b).1.mpr d⟩
+  have hsum : ∑ᶠ ρ ∈ zerosBox χ (1 / 2) T, (ord χ ρ : ℂ) * ((u : ℂ) ^ ρ / ρ) =
+      ∑ᶠ ρ ∈ zerosBox χ.primitiveCharacter (1 / 2) T,
+        (ord χ.primitiveCharacter ρ : ℂ) * ((u : ℂ) ^ ρ / ρ) :=
+    finsum_mem_congr hbox fun ρ hρ => by rw [(hcmp ρ hρ.1 hρ.2.1).2]
+  have hE := HA χ.conductor χ.primitiveCharacter hprim u T hT hu
+  obtain ⟨hZ₁, hZ⟩ := HB χ.conductor χ.primitiveCharacter hprim T hT
+  have hD := left_zeros χ.primitiveCharacter u T (by linarith)
+  have hP := GlobalTheory.MangoldtSeries.norm_sub_primitive_le χ ⌊u⌋₊
+  obtain ⟨l0, l1, l2, l3, l4, l5⟩ := logs hN hq hT hu rfl
+  have hpsi : Formalism.MainNotions.GlobalTheoryTheory.psi0 χ.primitiveCharacter u =
+      (∑ n ∈ Finset.Icc 1 ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ.primitiveCharacter (n : ZMod χ.conductor)) -
+        (if χ = 1 then (u : ℂ) else 0) := by
+    unfold Formalism.MainNotions.GlobalTheoryTheory.psi0
+    congr 1
+    by_cases h : χ = 1
+    · rw [if_pos h, if_pos (hone.mpr h)]
+    · rw [if_neg h, if_neg (mt hone.mp h)]
+  have hu0 : 0 < u := by linarith
+  have hT0 : 0 < T := by linarith
+  have hZ0 : 0 ≤ zsumR χ.primitiveCharacter 0 1 (fun ρ => 1 / ‖ρ‖) := by
+    rw [zsumR_eq]
+    exact Finset.sum_nonneg fun ρ _ => by positivity
+  have hl0 : 0 ≤ Real.log (χ.conductor * u) := Real.log_nonneg (by nlinarith)
+  have hE' := hE.trans (mul_le_mul_of_nonneg_right (le_abs_self A) (by positivity))
+  refine combine (abs_nonneg A) hB.le (Real.one_le_sqrt.mpr (by linarith)) (by positivity)
+    (by positivity) hN hq ?_ (hP.trans l5) hE' hD ?_ l2 l3 l4 hZ₁ hZ
+  · rw [hsum, hpsi]
+    refine le_trans (le_of_eq ?_) ((norm_sub_le _ _).trans (add_le_add_left (norm_add_le _ _) _))
+    congr 1
+    ring
+  · rw [mul_div_right_comm]
+    exact mul_le_mul_of_nonneg_left l1 (by positivity)
+
+end GlobalTheory.ExplicitFormulaRight
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitFormulaDirichletZerosRightHalfStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +457,5 @@ open scoped Classical
 
 theorem _root_.GlobalTheory.T.explicit_formula_dirichlet_zeros_right_half : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (u T : ℝ), 2 ≤ T → T ≤ u → (zerosBox χ (1 / 2) T).Finite ∧ ‖(∑ n ∈ Finset.Icc 1 ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod q)) - (if χ = 1 then (u : ℂ) else 0) + ∑ᶠ ρ ∈ zerosBox χ (1 / 2) T, (ord χ ρ : ℂ) * ((u : ℂ) ^ ρ / ρ)‖ ≤ C * (u / T + Real.sqrt u * (q : ℝ) ^ 3) * Real.log (q * u * T) ^ 2 := by
   first | exact @GlobalTheory.ExplicitFormulaRight.explicit_formula_right | exact GlobalTheory.ExplicitFormulaRight.explicit_formula_right | (intros; apply GlobalTheory.ExplicitFormulaRight.explicit_formula_right <;> assumption)
+end
+end

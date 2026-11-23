@@ -1,7 +1,9 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProdPrimesDvd
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Prime.Defs
+public import Mathlib.Algebra.Ring.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,10 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +42,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Associated
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProdPrimesDvd
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi3.finset_prod_dvd_of_prime_of_dvd_imp_eq :
+    ∀ {M ι : Type} [inst : CommRing M] (f : ι → M) (y : M)
+    (s : Finset ι),
+    (∀ a ∈ s, Prime (f a)) → (∀ a ∈ s, ∀ b ∈ s, f a ∣ f b → a = b) → (∀ a ∈ s, f a ∣ y) → ∏ a ∈ s, f a ∣ y := by
+  intro M ι inst f y s
+  classical
+  induction s using Finset.induction_on with
+  | empty => intro _ _ _; simp
+  | insert a s ha ih =>
+    intro hp hd hy
+    have hpa : Prime (f a) := hp a (Finset.mem_insert_self a s)
+    obtain ⟨c, hc⟩ := ih (fun b hb => hp b (Finset.mem_insert_of_mem hb))
+      (fun b hb d hd' => hd b (Finset.mem_insert_of_mem hb) d (Finset.mem_insert_of_mem hd'))
+      (fun b hb => hy b (Finset.mem_insert_of_mem hb))
+    have h1 : f a ∣ (∏ b ∈ s, f b) * c := hc ▸ hy a (Finset.mem_insert_self a s)
+    rcases hpa.dvd_or_dvd h1 with h2 | h2
+    · obtain ⟨b, hb, hab⟩ := hpa.exists_mem_finset_dvd h2
+      have h3 : a = b := hd a (Finset.mem_insert_self a s) b (Finset.mem_insert_of_mem hb) hab
+      exact absurd (h3 ▸ hb) ha
+    · rw [Finset.prod_insert ha, hc, mul_comm (f a)]
+      exact mul_dvd_mul_left _ h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDdSpec
+
+section
 
 @[expose] public section
 
@@ -139,3 +176,5 @@ theorem UpperTheory.V.AlgebraTools.hkDdSpec :
   have h : ∃ y, De R n * y = alt x := ⟨y, hy.symm⟩
   rw [dd, dite_eq_left h]
   exact h.choose_spec
+end
+end

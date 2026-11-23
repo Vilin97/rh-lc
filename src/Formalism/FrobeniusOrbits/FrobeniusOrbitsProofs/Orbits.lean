@@ -1,8 +1,6 @@
 module
 
-public import Formalism.FrobeniusOrbits.HostOrbitsPlaces
-public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Galois
-import Mathlib.Algebra.AffineMonoid.UniqueSums
+public import Formalism.FrobeniusOrbits.Statement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,18 +13,12 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,8 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,11 +38,68 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Galois
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.FrobeniusOrbits.HostOrbitsPlaces
+
+section
+
+@[expose] public section
+
+open NumberField IntermediateField
+
+noncomputable section
+
+namespace Formalism.FrobeniusOrbits
+
+open Formalism.TwoAdicCyclotomicDecomposition
+
+def HostOrbits : Prop :=
+  ∀ e : ℕ, ∀ φ : GG e, (φ.1 = c0 ∨ φ.1 = ((1 : ℤˣ), (-1 : ℤˣ))) →
+    (∀ τ ∈ Psi e, ∀ i : ℕ, φ ^ i * τ ∈ Psi e ↔ Even i) ∧
+    (φ.1 = c0 → φ.2 ≠ 1 → Even (orderOf φ.2) ∧ orderOf φ = orderOf φ.2)
+
+def placeOf {e : ℕ} (g : GG e) : GG e := if g.1.2 = 1 then g else cc e * g
+
+def HostOrbitsPlaces : Prop :=
+  ∀ e : ℕ, ∀ φ : GG e, (φ.1 = c0 ∨ φ.1 = ((1 : ℤˣ), (-1 : ℤˣ))) → ∀ τ ∈ Psi e, ∀ i : ℕ,
+    (placeOf (φ ^ i * τ)).2 = φ.2 ^ i * τ.2 ∧
+    (φ.1 = c0 → (placeOf (φ ^ i * τ)).1 = τ.1) ∧
+    (φ.1 = ((1 : ℤˣ), (-1 : ℤˣ)) →
+      (placeOf (φ ^ i * τ)).1 = (if Even i then 1 else (sg e).1) * τ.1)
+
+def HostOrbitCount : Prop :=
+  ∀ e : ℕ, ∀ φ : GG e, φ.1 = c0 → ∀ τ ∈ Psi e,
+    (Set.range fun i : ℕ => placeOf (φ ^ i * τ)).ncard = orderOf φ.2
+
+def HostFiniteOrder : Prop :=
+  ∀ (e q d : ℕ), HypOdd q d →
+  ∀ (L : Type) [Field L] [NumberField L] (ζ a b : L), IsLayer (e + 2) q d ζ a b →
+  ∀ (k g : ℕ), g.Prime → ∀ M : Matrix (Fin k) (Fin k) (hostE ζ a b), M ^ g = 1 → M ≠ 1 →
+    g - 1 ≤ 2 ^ (e + 2) * k
+
+end Formalism.FrobeniusOrbits
+end
+end
+end
+
+-- Source module: Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Orbits
+
+section
 
 @[expose] public section
 
@@ -188,3 +235,6 @@ theorem hostFiniteOrder : HostFiniteOrder := by
   rwa [Galois.finrank_cmField hqd h] at this
 
 end Formalism.FrobeniusOrbits
+end
+end
+end

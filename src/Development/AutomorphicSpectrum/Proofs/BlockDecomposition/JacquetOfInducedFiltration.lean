@@ -5,16 +5,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Bernstei
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CellLeviTensorDecompositionStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DoubleCosetBlockMatrixStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsPermBlockMatrixStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsStrictBlockOrderStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiltrationTransportEquivStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InductionReindexEquivStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSmoothCompContinuousStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleDeterminantTwistStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleEquivStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleLeviTransportStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviBlockHomeomorphStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviIntersectionConjugateStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PermutationBlockCountsStatement
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.LeviEmbMemNormalizerLower
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,6 +45,150 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.AutomorphicForms.FiniteBruhat
+public import GroundTheory.AutomorphicForms.GeometricLemmaJacquetCell
+public import GroundTheory.AutomorphicForms.GeometricLemmaNormal
+import GroundTheory.AutomorphicForms.GeometricLemmaOrbit
+import GroundTheory.AutomorphicForms.Iwasawa
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiltrationTransportEquivStatement
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsSubquotientDetRepParInd
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InductionReindexEquiv
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SmoothPartStable
+public import GroundTheory.AutomorphicForms.SmoothRep
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.LeviEmbMemNormalizerLower
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleDeterminantTwistStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleEquivStatement
+public import GroundTheory.AutomorphicForms.InductionParabolic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleLeviTransport
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviBlockHomeomorphStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviIntersectionConjugateStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PermutationBlockCountsStatement
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsStrictBlockOrder
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+namespace GlobalTheory.CompanionTheory.Twist
+
+theorem exists_nat_labelling_blk : ∀ {α : Type} [Fintype α] [LinearOrder α] {N : ℕ} (m : α → Type) [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)] (e : (Σ i, m i) ≃ Fin N), ∃ β : Fin N → ℕ, ∀ x y, β x < β y ↔ blk e x < blk e y := by
+  intro α _ _ N m _ _ e
+  let o := (Fintype.orderIsoFinOfCardEq α rfl).symm
+  refine ⟨fun x => (o (blk e x)).val, fun x y => ?_⟩
+  exact Fin.lt_def.symm.trans (OrderIso.lt_iff_lt o)
+
+end GlobalTheory.CompanionTheory.Twist
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsStrictBlockOrderStatement
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+theorem _root_.GlobalTheory.T.exists_strict_block_order : ∀ {α : Type} [Fintype α] [LinearOrder α] {N : ℕ} (m : α → Type) [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)] (e : (Σ i, m i) ≃ Fin N), ∃ β : Fin N → ℕ, ∀ x y, β x < β y ↔ blk e x < blk e y := by
+  first | exact @GlobalTheory.CompanionTheory.Twist.exists_nat_labelling_blk | exact GlobalTheory.CompanionTheory.Twist.exists_nat_labelling_blk | (intros; apply GlobalTheory.CompanionTheory.Twist.exists_nat_labelling_blk <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InductionReindexEquivStatement
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+theorem _root_.GlobalTheory.T.induction_reindex_equiv : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {α β' n : Type} [Fintype α] [LinearOrder α] [Fintype β'] [LinearOrder β'] [Fintype n] [DecidableEq n] {m : α → Type} [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)] {m' : β' → Type} [∀ j, Fintype (m' j)] [∀ j, DecidableEq (m' j)] (e : (Σ i, m i) ≃ n) (e' : (Σ j, m' j) ≃ n) {N : ℕ} (ι : n ≃ Fin N) {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Levi k m) W), Nonempty ((jac e' (parInd e ρ)).Equiv (jac (e'.trans ι) (parInd (e.trans ι) ρ))) := by
+  first | exact @GlobalTheory.CompanionTheory.ParIndReindex.jac_parInd_reindex | exact GlobalTheory.CompanionTheory.ParIndReindex.jac_parInd_reindex | (intros; apply GlobalTheory.CompanionTheory.ParIndReindex.jac_parInd_reindex <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSmoothCompContinuous
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+namespace GlobalTheory.CompanionTheory.SmoothBridge
+
+theorem isSmooth_comp {G H : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Group H] [TopologicalSpace H] [IsTopologicalGroup H] (ψ : H →* G) (hψ : Continuous ψ) {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ G W) (hρ : GlobalTheory.PRep.IsSmooth ρ) : GroundTheory.Automorphic.IsSmooth (ρ.comp ψ) := by
+  intro v
+  have h := (hρ v).preimage hψ
+  exact h
+
+end GlobalTheory.CompanionTheory.SmoothBridge
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSmoothCompContinuousStatement
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+theorem _root_.GlobalTheory.T.isSmooth_comp_continuous : ∀ {G H : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Group H] [TopologicalSpace H] [IsTopologicalGroup H] (ψ : H →* G), Continuous ψ → ∀ {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ G W), GlobalTheory.PRep.IsSmooth ρ → GroundTheory.Automorphic.IsSmooth (ρ.comp ψ) := by
+  first | exact @GlobalTheory.CompanionTheory.SmoothBridge.isSmooth_comp | exact GlobalTheory.CompanionTheory.SmoothBridge.isSmooth_comp | (intros; apply GlobalTheory.CompanionTheory.SmoothBridge.isSmooth_comp <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetModuleLeviTransportStatement
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+open GlobalTheory.SmGL
+open GroundTheory.Automorphic.Parabolic (levi parabolicInd jacquetRep JacquetModule sqrtModular leviIncl cellLeviSub normInducing unipotentRadical)
+open GroundTheory.Automorphic.Iwasawa (blockUpper)
+open GroundTheory.Automorphic (permGL indRep)
+open DoubleCoset (doubleCoset)
+
+theorem _root_.GlobalTheory.T.parabolicInd_equiv_levi_transport : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {α : Type} [Fintype α] [LinearOrder α] {N : ℕ} {m : α → Type} [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)] (e : (Σ i, m i) ≃ Fin N) (β : Fin N → ℕ), (∀ x y, β x < β y ↔ blk e x < blk e y) → ∀ (φ : Levi k m ≃* levi k N β), (∀ g, ((φ g : levi k N β) : GL (Fin N) k) = leviEmb k e g) → ∀ {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Levi k m) W), Nonempty ((parInd e ρ).Equiv (parabolicInd k N β (ρ.comp φ.symm.toMonoidHom))) := by
+  first | exact @GlobalTheory.CompanionTheory.ParIndBridge.parInd_equiv_parabolicInd | exact GlobalTheory.CompanionTheory.ParIndBridge.parInd_equiv_parabolicInd | (intros; apply GlobalTheory.CompanionTheory.ParIndBridge.parInd_equiv_parabolicInd <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetOfInducedFiltration
+
+section
 
 @[expose] public section
 
@@ -147,3 +281,5 @@ theorem jacquetOfInducedFiltration : ∀ (k : Type) [Field k] [ValuativeRel k] [
   exact ⟨q1.trans (q2.trans q3)⟩
 
 end GlobalTheory.CompanionTheory.GeoAssembly
+end
+end

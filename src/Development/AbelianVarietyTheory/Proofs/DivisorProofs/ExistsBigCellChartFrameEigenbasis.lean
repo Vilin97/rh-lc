@@ -1,11 +1,6 @@
 module
 
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCellOfIsFrameMat
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCellOfLeadingMinors
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPermutationLeadingMinors
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameVectorIsCombinationEigenbasisFlagSpacePointStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitDetFrameEigenbasisBlockAtPointStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentCombinationPreservedByBaseChange
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBaseFrame
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +23,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +35,304 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCellOfLeadingMinors
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.RingTheory.LocalRing.Defs
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Ideal.BigOperators
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameVectorIsCombinationEigenbasisFlagSpacePointStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NonemptyValExtOfOverLa
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsAffineEigenframeNearImage
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentCombinationPreservedByBaseChange
+import Mathlib.Tactic.Linter.Style
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CellOpenLe
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCellOfIsFrameMat
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.CompHS
+open GlobalTheory.FlagMod (ev frX frVec)
+open GlobalTheory.FlagTan (psiSet HIx VIx TIx IsDef IsVert KSIso)
+open ReciprocityTheory.ChartRestriction.G.PullbackSections (tv)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+
+namespace GlobalTheory.LogPole
+
+attribute [local instance] Over.cartesianMonoidalCategory Over.braidedCategory
+
+section Comb
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X0 : Scheme.{0}}
+
+
+open MonObj in
+theorem isCombAtG_perm (t : SAB H X0) {S : Type} [CommRing S] (x0 : Sp S ⟶ X0) {m : ℕ} (p : Equiv.Perm (Fin m))
+    (v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)) (cf : Fin m → S) (w : Sp (DualNumber S) ⟶ t.G.left)
+    (h : IsCombAtG t x0 v cf w) : IsCombAtG t x0 (fun j => v (p j)) (fun j => cf (p j)) w := by
+  obtain ⟨u, hu, hp⟩ := h
+  refine ⟨fun j => u (p j), fun j => hu (p j), ?_⟩
+  rw [← hp]
+  letI : CommMonoid (tEpsG x0 ⟶ t.G) := Hom.commMonoid
+  exact congrArg Over.Hom.left ((List.prod_ofFn (f := fun j => u (p j))).trans
+    ((Equiv.prod_comp p u).trans (List.prod_ofFn (f := u)).symm))
+
+end Comb
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
+  {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
+
+def permE {n : ℕ} (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (p : ∀ τ : E →+* ℂ, Equiv.Perm (Fin (Dw.mult τ))) :
+    (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n :=
+  (Equiv.sigmaCongrRight p).trans e
+
+theorem permE_apply {n : ℕ} (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n)
+    (p : ∀ τ : E →+* ℂ, Equiv.Perm (Fin (Dw.mult τ))) (σ : E →+* ℂ) (j : Fin (Dw.mult σ)) :
+    permE e p ⟨σ, j⟩ = e ⟨σ, p σ j⟩ := rfl
+
+def IsFrameMat (TF : TorFlag Xo c) (Z : Comp Xo c) (U : TF.Y.X.affineOpens) {n : ℕ}
+    (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left))
+    (W : (Y₀ TF.X Z).Opens) (k : TF.X.F.J)
+    (C : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) Γ(Y₀ TF.X Z, W)) : Prop :=
+  ∀ (S : Type) [CommRing S] (z : Sp S ⟶ Y₀ TF.X Z) (hz : ⊤ ≤ z ⁻¹ᵁ W) (hU : ⊤ ≤ (z ≫ toBase TF Z) ⁻¹ᵁ U.1)
+    (hk : ⊤ ≤ (z ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k) (hx : (z ≫ inc₀ TF.X Z) ≫ TF.X.π = z ≫ toBase TF Z)
+    (σ : E →+* ℂ) (i : Fin (Dw.mult σ)),
+    IsCombAtG TF.Y.t (z ≫ toBase TF Z)
+      (fun j => spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩))
+      (fun j => ev z W hz (C σ i j)) (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left
+
+variable {TF : TorFlag Xo c} {Z : Comp Xo c} {U : TF.Y.X.affineOpens} {n : ℕ}
+  {e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n} {v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)}
+
+theorem isEigBasis_permE (p : ∀ τ : E →+* ℂ, Equiv.Perm (Fin (Dw.mult τ))) (h : IsEigBasis TF U e v) :
+    IsEigBasis TF U (permE e p) v :=
+  ⟨h.1, h.2.1, fun a τ i => h.2.2 a τ (p τ i)⟩
+
+theorem isFrameMat_mono {W W₀ : (Y₀ TF.X Z).Opens} (hW : W ≤ W₀) {k : TF.X.F.J}
+    {C : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) Γ(Y₀ TF.X Z, W₀)}
+    (h : IsFrameMat TF Z U e v W₀ k C) :
+    IsFrameMat TF Z U e v W k (fun σ => (C σ).map (resG (Y₀ TF.X Z) hW)) := by
+  intro S _ z hz hU hk hx σ i
+  have hz₀ : ⊤ ≤ z ⁻¹ᵁ W₀ := FlagMod.le_preimage_mono hW hz
+  have h1 := h S z hz₀ hU hk hx σ i
+  have e1 : (fun j => ev z W₀ hz₀ (C σ i j)) = fun j => ev z W hz (((C σ).map (resG (Y₀ TF.X Z) hW)) i j) :=
+    funext fun j => (FlagMod.ev_res z hW hz hz₀ _).symm
+  rw [e1] at h1
+  exact h1
+
+theorem isFrameMat_permE (p : ∀ τ : E →+* ℂ, Equiv.Perm (Fin (Dw.mult τ))) {W : (Y₀ TF.X Z).Opens} {k : TF.X.F.J}
+    {C : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) Γ(Y₀ TF.X Z, W)}
+    (h : IsFrameMat TF Z U e v W k C) :
+    IsFrameMat TF Z U (permE e p) v W k (fun σ => (C σ).submatrix id (p σ)) := by
+  intro S _ z hz hU hk hx σ i
+  simp only [permE_apply, Matrix.submatrix_apply, id]
+  exact isCombAtG_perm TF.Y.t (z ≫ toBase TF Z) (p σ)
+    (fun j => spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩)) (fun j => ev z W hz (C σ i j))
+    (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left (h S z hz hU hk hx σ i)
+
+theorem isCell_of_isFrameMat {W : (Y₀ TF.X Z).Opens} {k : TF.X.F.J}
+    {L N : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) Γ(Y₀ TF.X Z, W)} (hW : IsAffineOpen W)
+    (hWU : W ≤ toBase TF Z ⁻¹ᵁ U.1) (hWk : W ≤ inc₀ TF.X Z ⁻¹ᵁ TF.X.F.U k) (hL : ∀ σ i j, i < j → L σ i j = 0)
+    (hLd : ∀ σ i, IsUnit (L σ i i)) (hN : ∀ σ i j, j < i → N σ i j = 0) (hNd : ∀ σ i, N σ i i = 1)
+    (h : IsFrameMat TF Z U e v W k fun σ => L σ * N σ) : IsCell TF Z U e v W k L N :=
+  ⟨hW, hWU, hWk, hL, hLd, hN, hNd, h⟩
+
+end GlobalTheory.LogPole
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPermutationLeadingMinors
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open Matrix
+
+theorem exists_isUnit_of_isUnit_sum_localRing {R : Type} [CommRing R] [IsLocalRing R]
+    {ι : Type} (s : Finset ι) (f : ι → R) (h : IsUnit (∑ i ∈ s, f i)) :
+    ∃ i ∈ s, IsUnit (f i) := by
+  by_contra hne
+  push_neg at hne
+  apply (IsLocalRing.mem_maximalIdeal _).mp _ h
+  exact Ideal.sum_mem _ fun i hi => (IsLocalRing.mem_maximalIdeal _).mpr (hne i hi)
+
+theorem exists_perm_isUnit_leading_minors_localRing :
+    ∀ {R : Type} [CommRing R] [IsLocalRing R] {m : ℕ} (M : Matrix (Fin m) (Fin m) R),
+      IsUnit M.det → ∃ w : Equiv.Perm (Fin m), ∀ (k : ℕ) (hk : k ≤ m),
+        IsUnit ((M.submatrix id w).submatrix (Fin.castLE hk) (Fin.castLE hk)).det := by
+  intro R _ _ m
+  induction m with
+  | zero =>
+    intro M _
+    refine ⟨1, fun k hk => ?_⟩
+    obtain rfl : k = 0 := Nat.le_zero.mp hk
+    simp
+  | succ n ih =>
+    intro M hM
+    rw [Matrix.det_succ_row M (Fin.last n)] at hM
+    obtain ⟨j, -, hj⟩ := exists_isUnit_of_isUnit_sum_localRing _ _ hM
+    have hN := isUnit_of_mul_isUnit_right hj
+    rw [Fin.succAbove_last] at hN
+    obtain ⟨v, hv⟩ := ih _ hN
+    let f : Fin (n + 1) → Fin (n + 1) := fun i =>
+      if h : i = Fin.last n then j else j.succAbove (v (i.castPred h))
+    have hf : Function.Injective f := by
+      intro a b hab
+      simp only [f] at hab
+      by_cases ha : a = Fin.last n <;> by_cases hb : b = Fin.last n
+      · rw [ha, hb]
+      · simp only [ha, hb, dite_true, dite_false] at hab
+        exact absurd hab.symm (Fin.succAbove_ne _ _)
+      · simp only [ha, hb, dite_true, dite_false] at hab
+        exact absurd hab (Fin.succAbove_ne _ _)
+      · simp only [ha, hb, dite_false] at hab
+        have := v.injective (Fin.succAbove_right_injective hab)
+        exact Fin.castPred_inj.mp this
+    let w : Equiv.Perm (Fin (n + 1)) :=
+      Equiv.ofBijective f (Finite.injective_iff_bijective.mp hf)
+    refine ⟨w, fun k hk => ?_⟩
+    rcases Nat.lt_or_ge k (n + 1) with hlt | hge
+    · have hk' : k ≤ n := Nat.lt_succ_iff.mp hlt
+      have heq : (M.submatrix id w).submatrix (Fin.castLE hk) (Fin.castLE hk) =
+          ((M.submatrix Fin.castSucc j.succAbove).submatrix id v).submatrix
+            (Fin.castLE hk') (Fin.castLE hk') := by
+        ext a b
+        have hb : Fin.castLE hk b ≠ Fin.last n := by
+          intro h
+          have := congrArg Fin.val h
+          simp at this
+          omega
+        simp only [submatrix_apply, id, w, Equiv.ofBijective_apply, f, hb, dite_false]
+        congr 2
+        all_goals (ext; simp)
+      rw [heq]
+      exact hv k hk'
+    · obtain rfl : k = n + 1 := le_antisymm hk hge
+      have : Fin.castLE hk = id := Fin.castLE_rfl _
+      rw [this, Matrix.submatrix_id_id, Matrix.det_permute']
+      refine IsUnit.mul ?_ ?_
+      · rcases Int.units_eq_one_or (Equiv.Perm.sign w) with h | h <;> simp [h]
+      · rw [Matrix.det_succ_row M (Fin.last n)]
+        exact hM
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitDetFrameEigenbasisBlockAtPoint
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.CompHS
+open GlobalTheory.FlagMod (ev frX frVec)
+open GlobalTheory.FlagTan (psiSet HIx VIx TIx IsDef IsVert KSIso)
+open ReciprocityTheory.ChartRestriction.G.PullbackSections (tv)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory.LogPole
+
+namespace GlobalTheory.LogPole
+
+attribute [local instance] Over.cartesianMonoidalCategory Over.braidedCategory
+
+
+open MonObj in
+theorem isUnit_det_of_isCombAtG_vecAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (Z : Comp Xo c) (U : TF.Y.X.affineOpens) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)), IsEigBasis TF U e v → ∀ (k : TF.X.F.J) (S : Type) [CommRing S] (z : Sp S ⟶ Y₀ TF.X Z) (hU : ⊤ ≤ (z ≫ toBase TF Z) ⁻¹ᵁ U.1) (hk : ⊤ ≤ (z ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k) (hx : (z ≫ inc₀ TF.X Z) ≫ TF.X.π = z ≫ toBase TF Z) (σ : E →+* ℂ) (C : Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) S), (∀ i : Fin (Dw.mult σ), IsCombAtG TF.Y.t (z ≫ toBase TF Z) (fun j => spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩)) (C i) (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left) → IsUnit C.det := by
+  intro E _ _ _ H Dw l Xo c TF Z U n e v hv k S _ z hU hk hx σ C hC
+  open scoped CategoryTheory.MonObj in
+
+   exact by
+    have hxU : spMap (ev (z ≫ toBase TF Z) U.1 hU) ≫ LogKS.chart U = z ≫ toBase TF Z :=
+      FlagMod.spMap_ev (z ≫ toBase TF Z) U.2 hU
+    have htan : ∀ j, IsTanAtG TF.Y.t (z ≫ toBase TF Z)
+        (spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩)) := fun j => by
+      have := GlobalTheory.FactorDepth.isTanAtG_map TF.Y.t (ev (z ≫ toBase TF Z) U.1 hU) (hv.1 (e ⟨σ, j⟩))
+      rwa [hxU] at this
+    choose B hB using fun j => GlobalTheory.FlagEmb.EigSpread.exists_lf (htan j)
+    have hsum : ∀ i, ∑ j, C i j • B j = TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i := fun i => by
+      have h := hC i
+      simp only [← hB] at h
+      exact (GlobalTheory.FlagEmb.EigSpread.comb_lf B (C i) _).1 h
+    obtain ⟨Wm, hW⟩ := TF.X.F.uAt_split k (z ≫ inc₀ TF.X Z) hk σ
+    let ρ := (Matrix.mulVecLin Wm).comp
+      (FlagMod.vec (TF.X.F.M k).toMChart (z ≫ toBase TF Z) (TF.X.F.inM hk hx)).symm.toLinearMap
+    have hρ : ∀ i, ρ (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i) = Pi.single i 1 := fun i => by
+      funext l
+      have h := congrFun (congrFun hW l) i
+      rw [Matrix.mul_apply] at h
+      simp only [ρ, FlagMod.Frames.vecAt, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply,
+        Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct]
+      rw [h, Matrix.one_apply, Pi.single_apply]
+    let B' : Fin (Dw.mult σ) → ReciprocityTheory.ChartRestriction.G.PullbackSections.TanM (z ≫ toBase TF Z) TF.Y.t.G := fun j => B j
+    have hsum' : ∀ i, ∑ j, C i j • B' j = TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i := hsum
+    let D : Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) S := Matrix.of fun j l => ρ (B' j) l
+    have hCD : C * D = 1 := by
+      ext i l
+      have h : ρ (∑ j, C i j • B' j) = ρ (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i) := congrArg ρ (hsum' i)
+
+      rw [hρ, map_sum] at h
+      have h2 := congrFun h l
+      simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h2
+      have h3 : (if i = l then (1 : S) else 0) = (Pi.single i (1 : S) : Fin (Dw.mult σ) → S) l := by
+        rw [Pi.single_apply]
+        exact if_congr eq_comm rfl rfl
+      rw [Matrix.mul_apply, Matrix.one_apply, h3]
+      exact h2
+    exact IsUnit.of_mul_eq_one D.det (by rw [← Matrix.det_mul, hCD, Matrix.det_one])
+
+end GlobalTheory.LogPole
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitDetFrameEigenbasisBlockAtPointStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.CompHS
+open GlobalTheory.FlagMod (ev frX frVec)
+open GlobalTheory.FlagTan (psiSet HIx VIx TIx IsDef IsVert KSIso)
+open ReciprocityTheory.ChartRestriction.G.PullbackSections (tv)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory.LogPole
+
+theorem _root_.GlobalTheory.T.isUnit_det_frame_eigenbasis_block_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (Z : Comp Xo c) (U : TF.Y.X.affineOpens) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)), IsEigBasis TF U e v → ∀ (k : TF.X.F.J) (S : Type) [CommRing S] (z : Sp S ⟶ Y₀ TF.X Z) (hU : ⊤ ≤ (z ≫ toBase TF Z) ⁻¹ᵁ U.1) (hk : ⊤ ≤ (z ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k) (hx : (z ≫ inc₀ TF.X Z) ≫ TF.X.π = z ≫ toBase TF Z) (σ : E →+* ℂ) (C : Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) S), (∀ i : Fin (Dw.mult σ), IsCombAtG TF.Y.t (z ≫ toBase TF Z) (fun j => spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩)) (C i) (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left) → IsUnit C.det := by
+  first | exact @GlobalTheory.LogPole.isUnit_det_of_isCombAtG_vecAt | exact GlobalTheory.LogPole.isUnit_det_of_isCombAtG_vecAt | (intros; apply GlobalTheory.LogPole.isUnit_det_of_isCombAtG_vecAt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBigCellChartFrameEigenbasis
+
+section
 
 @[expose] public section
 
@@ -178,3 +469,6 @@ theorem GlobalTheory.LogPole.exists_isCell_near : ∀ (E : Type) [Field E] [Numb
     funext fun σ => (Matrix.submatrix_map _ _ _ _).symm.trans (hLN σ)
   rw [e1] at h1
   exact h1
+end
+end
+end

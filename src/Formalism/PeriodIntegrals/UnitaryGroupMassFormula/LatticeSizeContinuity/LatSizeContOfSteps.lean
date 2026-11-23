@@ -1,6 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.LatSizeCont
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +39,37 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.PeriodIntegrals.LatSizeCont
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.LatSizeCont
+
+open MeasureTheory NumberField IsDedekindDomain
+open scoped TensorProduct ENNReal Matrix
+
+namespace Size
+
+variable (I : Formalism.MainNotions.S.AutInst)
+
+def latSet (x : I.GA) : Set (Fin I.n → I.E) :=
+  {u | (I.fmat x.2⁻¹) *ᵥ (fun i => Formalism.UG.inclE (F := I.F) (Formalism.MainNotions.S.Af I.F) (u i)) ∈ I.Lf}
+
+end Size
+
+end PI.LatSizeCont
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeSizeContinuity.LatSizeContOfSteps
+
+section
+
 @[expose] public section
 
 noncomputable section
@@ -63,3 +94,6 @@ def NormProd : Prop :=
   ∀ (I : Formalism.MainNotions.S.AutInst) (m : I.E), ∏ v : InfinitePlace I.F, ‖I.φ v m‖ ^ 2 = |((Algebra.norm ℚ m : ℚ) : ℝ)|
 
 end PI.UnitaryGroupMassFormula.LSC
+end
+end
+end

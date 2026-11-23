@@ -59,9 +59,42 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBPull
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.RepsXSt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TWFinal
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TwistBCPf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.PeriodicValuation
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.VRatioGtStatement
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TWMain
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.VRatioGt
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRescalePsiW0
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TWFinal
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+namespace ReciprocityTheory.ChartRestriction.G.DVR.TWM
+
+open ReciprocityTheory.ChartRestriction.G.Out
+
+theorem vRatioGt : VRatioGtStatement :=
+  fun _ _ _ _ _ hϖ _ _ hQ _ _ _ _ hv _ hk p m hm α G₀ hG₀ t ht => v_ratio_gt hϖ hv hQ hk p m hm α G₀ hG₀ t ht
+
+theorem tw_of_laws (hL : Laws) (hT : TwistBaseChangeStatement) : TWStatement :=
+  tw_of hL.globalFns (twistBCSpan_of hT) vRatioGt
+
+end ReciprocityTheory.ChartRestriction.G.DVR.TWM
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PsiEqTauOfBundlePrimitiveForEndomorphism
+
+section
 
 @[expose] public section
 
@@ -384,4 +417,6 @@ theorem psi_eq_tau_of_bundle_primitive_for_endomorphism : ∀ (R : Type) [CommRi
   exact H
 
 end GlobalTheory.PsiSign
+end
+end
 end

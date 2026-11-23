@@ -7,11 +7,8 @@ public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTerTe
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsSnapper
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ChartRingOverOneBlockBase
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsMore
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PChartSecMul
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistSplit
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistVanishAll
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ZpowMemSubringOfInvMem
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsBisExtra
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PBundlePair
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,7 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -51,8 +47,113 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PChartSecMul
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistSplit
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsTwistSplit
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.Statements
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ZpowMemSubringOfInvMem
+import Mathlib.RingTheory.RegularLocalRing.Defs
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsMore
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
+
+theorem ModelCechTwist.proof (hMul : ChartSecMul.Statement) (hBase : BaseRealises.Statement)
+    (hLoc : CellLocEval.Statement) (hRef : ModelCechRefine.Statement) : ModelCechTwist.Statement := by
+  intro F _ K _ _ ι _ _ Ω _ _ y k₀ N e hM β Q hQ p b m c i
+
+  have hbun : ∀ (L : Kleiman.LineBundle F (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm)) (δ : K → ℤ),
+      BundleRealises y k₀ L δ → ∀ J, (L.sub J : Set Ω) = chartSecOver F y k₀ e δ J := by
+    intro L δ hL J
+    ext t
+    rw [SetLike.mem_coe, mem_sub_iff_gam]
+    refine exists_congr fun n => ?_
+    rw [Kleiman.SubSystem.gam, hL]
+  have hO : ∀ (a : ℤ) J,
+      ((Kleiman.twistSys F (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm) a).sub J : Set Ω) =
+        chartSecOver F y k₀ e (a • IndefiniteRowSideFullHecke.Kleiman2.baseDeg k₀) J := fun a =>
+    hbun (Kleiman.twistBundle F _ a) _ (hBase F K ι Ω y k₀ N e _ rfl hM a)
+
+  have hmul : ∀ (R R' : Kleiman.SubSystem F (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm) Ω) (δ δ' : K → ℤ),
+      (∀ J, (R.sub J : Set Ω) = chartSecOver F y k₀ e δ J) →
+      (∀ J, (R'.sub J : Set Ω) = chartSecOver F y k₀ e δ' J) →
+      ∀ J, ((R.twist R').sub J : Set Ω) = chartSecOver F y k₀ e (δ' + δ) J := by
+    intro R R' δ δ' hR hR' J
+    rw [twist_sub_eq_mul, Submodule.mul_eq_span_mul_set, hR' J, hR J]
+    exact hMul F K ι Ω y k₀ N e hM δ' δ J
+  have hpow : ∀ (R : Kleiman.SubSystem F (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm) Ω) (δ : K → ℤ),
+      (∀ J, (R.sub J : Set Ω) = chartSecOver F y k₀ e δ J) →
+      ∀ (n : ℕ) J, ((R.pow n).sub J : Set Ω) = chartSecOver F y k₀ e (n • δ) J := by
+    intro R δ hR n
+    induction n with
+    | zero =>
+      intro J
+      have h0 := hO 0 J
+      rw [zero_smul] at h0
+      rw [zero_smul]
+      exact h0
+    | succ n ih =>
+      intro J
+      rw [succ_nsmul']
+      exact hmul _ _ _ _ ih hR J
+  have hT := hmul _ _ _ _ (hpow _ _ (hmul _ _ _ _ (hpow _ _ (hbun Q β hQ) p) (hO m)) b) (hO c)
+  have hγ : c • IndefiniteRowSideFullHecke.Kleiman2.baseDeg k₀ + b • (m • IndefiniteRowSideFullHecke.Kleiman2.baseDeg k₀ + p • β) =
+      b • IndefiniteRowSideFullHecke.Kleiman2.stepL k₀ β p m + c • IndefiniteRowSideFullHecke.Kleiman2.baseDeg k₀ := by
+    simp only [IndefiniteRowSideFullHecke.Kleiman2.stepL]
+    module
+  rw [hγ] at hT
+  obtain ⟨e₁⟩ := hRef F K ι Ω y k₀ N e hM _ _ hT i
+  obtain ⟨e₂⟩ := hLoc F K ι Ω y _ i
+  exact ⟨e₁.trans e₂⟩
+
+end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistVanishAll
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+noncomputable section
+
+universe u w
+
+theorem TwistVanishAll.proof (hE : Extension.Statement.{u, w, w}) (hV : SerreVanish.Statement.{u, w})
+    (hT : TwistSplit.Statement.{u, w}) : TwistVanishAll.Statement.{u, w} := by
+  intro S _ _ Ω _ _ N x G B r η hη hspan
+  obtain ⟨M₀, -, hM₀⟩ := hE S Ω N x Ω G.toSubFamily G.fg
+  obtain ⟨M, _, _, _, _, 𝓜, hfin, hsplit⟩ :=
+    hT S Ω N x M₀ G.toSubSystem B.toSubSystem r η hM₀ hη hspan
+  obtain ⟨c₀, hc₀⟩ := hV (MvPolynomial (Fin (r + 1)) S) N M 𝓜 hfin
+  refine ⟨c₀, fun i b c hi hc => ?_⟩
+  obtain ⟨ι, π, hπ⟩ := hsplit b c i
+  have := hc₀ i hi c hc
+  exact ⟨fun z z' => by rw [← hπ z, ← hπ z', Subsingleton.elim (ι z) (ι z')]⟩
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.LineBundleTwistVanish
+
+section
 
 @[expose] public section
 
@@ -105,3 +206,5 @@ theorem RayVanish.proof_of_ties (hLoc : CellLocEval.Statement) (hRef : ModelCech
   RayVanish.proof (ModelCechTwist.proof (ChartSecMul.proof BundleOfDeg.full) BaseRealises.proof hLoc hRef)
 
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
+end
+end

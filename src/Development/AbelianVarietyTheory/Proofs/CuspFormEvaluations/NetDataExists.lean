@@ -5,12 +5,8 @@ public import Formalism.LocalToGlobal.ProjectiveLattices.HasDataCondition
 public import Formalism.LocalToGlobal.ProjectiveLattices.XcLat
 public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.NormEuclideanEmbeddingEqNetNorm
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SupBoundPageRows
-public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.EqZeroOfPnorm
-public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.LawsFieldsSeparately
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetDataFromHalfConjugateEmbeddingsStatement
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetMaxAtGoodEmb
-public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ReadingLinearIndependentAndInjective
-import Formalism.LocalToGlobal.ProjectiveLattices.FreeBridge
+public import Formalism.LocalToGlobal.ProjectiveLattices.PetersonNormSubspace
+public import Formalism.LocalToGlobal.ProjectiveLattices.L2DefiniteCuspForms
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +41,183 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SupBoundPageRows
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.LawsFieldsSeparately
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetMaxAtGoodEmb
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ReadingLinearIndependentAndInjective
+import Formalism.LocalToGlobal.ProjectiveLattices.FreeBridge
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.JetSurvey.EqZeroOfPnorm
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.NetNormExamples
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H}
+  {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ}
+
+theorem pnorm_nonneg (X : Data E r) (la : Wt X.Ψ r) (P : Frame X.Ψ r → ℂ) (x : Frame X.Ψ r) :
+    0 ≤ X.pnorm la P x :=
+  mul_nonneg (norm_nonneg _) (pnorm_fac_nonneg X la x)
+
+theorem pnorm_le_supN (U : Unf Xo c σ r) (la) {P : FDSec U.X} (hP : P ∈ holSub U.X la) (p : FPt U.X) :
+    (U.X p.1).pnorm (la p.1) (P p.1) p.2 ≤ supN U.X la P := by
+  unfold supN
+  rw [← ENNReal.ofReal_le_iff_le_toReal (supE_ne_top _ _ hP)]
+  exact le_iSup (fun p : FPt U.X => ENNReal.ofReal ((U.X p.1).pnorm (la p.1) (P p.1) p.2)) p
+
+theorem eq_zero_of_pnorm (X : Data E r) (la : Wt X.Ψ r) (P : Frame X.Ψ r → ℂ) {x : Frame X.Ψ r} (hx : x ∈ X.dom)
+    (h0 : X.pnorm la P x = 0) : P x = 0 := by
+  have hne : ∀ τ i, dmin X.Gm x τ i ≠ 0 := fun τ i e => by
+    have := (hx τ).2 i
+    rw [e] at this; simp at this
+  unfold Data.pnorm at h0
+  refine norm_eq_zero.mp ((mul_eq_zero.mp h0).resolve_right (ne_of_gt ?_))
+  exact Finset.prod_pos fun τ _ => Finset.prod_pos fun i _ =>
+    Real.rpow_pos_of_pos (norm_pos_iff.mpr (div_ne_zero (hne _ _) (hne _ _))) _
+
+end GlobalTheory.NetNormExamples
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetDataFromHalfConjugateEmbeddings
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Gaps.NetNorms
+open scoped ComplexConjugate
+
+namespace GlobalTheory
+
+theorem linearIndependent_conj_coords {ι κ : Type*} [Fintype ι] (v : ι → κ → ℂ)
+    (h : LinearIndependent ℂ v) : LinearIndependent ℂ (fun i y => conj (v i y)) := by
+  rw [Fintype.linearIndependent_iff] at h ⊢
+  intro c hc i
+  have h1 : ∑ i, conj (c i) • v i = 0 := by
+    funext y
+    have := congrArg conj (congrFun hc y)
+
+    simpa [Finset.sum_apply, map_sum] using this
+  simpa using h (fun i => conj (c i)) h1 i
+
+theorem exists_netData_of_readings_on_half :
+    ∀ (D : D7) (B : WeightFamilies.Prov D) (j : ℕ) (ka : WeightFamilies.Wt D j) (good : (B.KO →+* ℂ) → Prop), (∀ σ, good σ ↔ ¬ good (ComplexEmbedding.conjugate σ)) → (∀ σ F, B.supN j ka (ComplexEmbedding.conjugate σ) F = B.supN j ka σ F) → ∀ (n : (B.KO →+* ℂ) → ℕ) (ev : ∀ σ, Fin (n σ) → (B.Cusp j ka →ₛₗ[σ] ℂ)) (C : ℝ), (∀ σ, good σ → (∀ F, ∃ y, B.supN j ka σ F / 4 ≤ ‖ev σ y F‖) ∧ (∀ y F, ‖ev σ y F‖ ≤ B.supN j ka σ F) ∧ Real.log (16 * (n σ : ℝ)) ≤ C ∧ ∀ (m : ℕ) (F : Fin m → B.Cusp j ka), LinearIndependent B.KO F → LinearIndependent ℂ (fun i => fun y => ev σ y (F i))) → ∃ Nt : NetData B j ka, NetMax Nt ∧ NetLeSup Nt ∧ NetSize Nt C ∧ ∀ σ, NetInj Nt σ := by
+  classical
+  intro D B j ka good hgood hsup n ev C H
+  have cc : ∀ σ : B.KO →+* ℂ, ComplexEmbedding.conjugate (ComplexEmbedding.conjugate σ) = σ := by
+    intro σ
+    ext a
+    simp
+  let g : (B.KO →+* ℂ) → (B.KO →+* ℂ) := fun σ => if good σ then σ else ComplexEmbedding.conjugate σ
+  have hgc : ∀ σ, ¬ good σ → good (ComplexEmbedding.conjugate σ) := by
+    intro σ h
+    by_contra h'
+    exact h ((hgood σ).2 h')
+  have g1 : ∀ σ, good σ → g σ = σ := fun σ h => if_pos h
+  have g2 : ∀ σ, ¬ good σ → g σ = ComplexEmbedding.conjugate σ := fun σ h => if_neg h
+  have gg : ∀ σ, good (g σ) := by
+    intro σ
+    by_cases h : good σ
+    · rw [g1 σ h]; exact h
+    · rw [g2 σ h]; exact hgc σ h
+  have gc : ∀ σ, g σ = g (ComplexEmbedding.conjugate σ) := by
+    intro σ
+    by_cases h : good σ
+    · rw [g1 σ h, g2 _ ((hgood σ).1 h), cc]
+    · rw [g2 σ h, g1 _ (hgc σ h)]
+  have gs : ∀ σ F, B.supN j ka (g σ) F = B.supN j ka σ F := by
+    intro σ F
+    by_cases h : good σ
+    · rw [g1 σ h]
+    · rw [g2 σ h, hsup]
+  have hcast : ∀ (a b : B.KO →+* ℂ) (h : a = b) (y : Fin (n a)) (F : B.Cusp j ka),
+      ev b (finCongr (congrArg n h) y) F = ev a y F := by
+    intro a b h y F
+    subst h
+    rfl
+  let ev' : ∀ σ, Fin (n (g σ)) → (B.Cusp j ka →ₛₗ[σ] ℂ) := fun σ y =>
+    { toFun := fun F => if good σ then ev (g σ) y F else conj (ev (g σ) y F)
+      map_add' := by
+        intro F G
+        split_ifs <;> simp
+      map_smul' := by
+        intro a F
+        by_cases h : good σ
+        · have e : g σ a = σ a := by rw [g1 σ h]
+          simp only [if_pos h, map_smulₛₗ, e]
+        · have e : g σ a = conj (σ a) := by rw [g2 σ h]; rfl
+          simp [if_neg h, map_smulₛₗ, e] }
+  have e1 : ∀ σ y F, good σ → ev' σ y F = ev (g σ) y F := fun σ y F h => if_pos h
+  have e2 : ∀ σ y F, ¬ good σ → ev' σ y F = conj (ev (g σ) y F) := fun σ y F h => if_neg h
+  have en : ∀ σ y F, ‖ev' σ y F‖ = ‖ev (g σ) y F‖ := by
+    intro σ y F
+    by_cases h : good σ
+    · rw [e1 σ y F h]
+    · rw [e2 σ y F h, Complex.norm_conj]
+  refine ⟨{ NN := fun σ => Fin (n (g σ))
+            ev := ev'
+            cj := fun σ => finCongr (congrArg n (gc σ))
+            ev_conj := ?_ }, ?_, ?_, ?_, ?_⟩
+  · intro σ y F
+    by_cases h : good σ
+    · rw [e2 _ _ _ ((hgood σ).1 h), e1 _ _ _ h, hcast _ _ (gc σ)]
+    · rw [e1 _ _ _ (hgc σ h), e2 _ _ _ h, hcast _ _ (gc σ), Complex.conj_conj]
+  · intro σ F
+    obtain ⟨y, hy⟩ := (H _ (gg σ)).1 F
+    refine ⟨y, ?_⟩
+    show _ ≤ ‖ev' σ y F‖
+    rw [en, ← gs]
+    exact hy
+  · intro σ y F
+    show ‖ev' σ y F‖ ≤ _
+    rw [en, ← gs]
+    exact (H _ (gg σ)).2.1 y F
+  · intro σ
+    show Real.log (16 * (Fintype.card (Fin (n (g σ))) : ℝ)) ≤ C
+    rw [Fintype.card_fin]
+    exact (H _ (gg σ)).2.2.1
+  · intro σ m F hF
+    have hI := (H _ (gg σ)).2.2.2 m F hF
+    show LinearIndependent ℂ (fun i => fun y : Fin (n (g σ)) => ev' σ y (F i))
+    by_cases h : good σ
+    · simp only [e1 σ _ _ h]
+      exact hI
+    · simp only [e2 σ _ _ h]
+      exact linearIndependent_conj_coords _ hI
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetDataFromHalfConjugateEmbeddingsStatement
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Gaps.NetNorms
+
+theorem _root_.GlobalTheory.T.exists_netData_from_half_conjugate_embeddings : ∀ (D : D7) (B : WeightFamilies.Prov D) (j : ℕ) (ka : WeightFamilies.Wt D j) (good : (B.KO →+* ℂ) → Prop), (∀ σ, good σ ↔ ¬ good (ComplexEmbedding.conjugate σ)) → (∀ σ F, B.supN j ka (ComplexEmbedding.conjugate σ) F = B.supN j ka σ F) → ∀ (n : (B.KO →+* ℂ) → ℕ) (ev : ∀ σ, Fin (n σ) → (B.Cusp j ka →ₛₗ[σ] ℂ)) (C : ℝ), (∀ σ, good σ → (∀ F, ∃ y, B.supN j ka σ F / 4 ≤ ‖ev σ y F‖) ∧ (∀ y F, ‖ev σ y F‖ ≤ B.supN j ka σ F) ∧ Real.log (16 * (n σ : ℝ)) ≤ C ∧ ∀ (m : ℕ) (F : Fin m → B.Cusp j ka), LinearIndependent B.KO F → LinearIndependent ℂ (fun i => fun y => ev σ y (F i))) → ∃ Nt : NetData B j ka, NetMax Nt ∧ NetLeSup Nt ∧ NetSize Nt C ∧ ∀ σ, NetInj Nt σ := by
+  first | exact @GlobalTheory.exists_netData_of_readings_on_half | exact GlobalTheory.exists_netData_of_readings_on_half | (intros; apply GlobalTheory.exists_netData_of_readings_on_half <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NetDataExists
+
+section
 
 @[expose] public section
 
@@ -242,3 +414,5 @@ theorem netData_exists : ∀ (D : D7) (T : Top D) (h : LawsP T), GamAt T.toCore 
       (fun σ => by rw [good_conj_iff]; exact not_not.symm) (supN_conj h j w) n ev _ H
 
 end GlobalTheory.RunIn.NetAtRecord
+end
+end

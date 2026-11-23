@@ -4,13 +4,10 @@ public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.Henselian
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbsIntClosedLocalizationAndQuotient
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineRingHomPairOfSpecializes
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralDomainExtensionWithMonicRootsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRootSubMemOfEvalMem
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingHomExtendOfIsIntegralIsAlgClosedStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -27,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,6 +45,214 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDefiniteDatumGoodObj
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRootSubMemOfEvalMem
+public import Mathlib.RingTheory.Ideal.GoingUp
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineRingHomPairOfSpecializes
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel
+open scoped CategoryTheory.Obj TensorProduct
+
+namespace GlobalTheory
+
+theorem asIdeal_spMap_field {B k : Type} [CommRing B] [Field k] (φ : B →+* k) (u : Sp k) :
+    ((spMap φ).base u).asIdeal = RingHom.ker φ := by
+  have hu : u.asIdeal = ⊥ := @Ideal.eq_bot_of_prime _ _ _ u.isPrime
+  rw [RingHom.ker_eq_comap_bot, ← hu]
+  rw [spMap, Spec.map_base]
+  rfl
+
+theorem exists_ringHom_pair_of_specializes {X : Scheme.{0}} {k k' : Type} [Field k] [Field k'] (x : Sp k ⟶ X)
+    (x' : Sp k' ⟶ X) (u : Sp k) (u' : Sp k') (h : x'.base u' ⤳ x.base u) :
+    ∃ (B : Type) (_ : CommRing B) (g : B →+* k) (g' : B →+* k') (ρ : Sp B ⟶ X),
+      RingHom.ker g' ≤ RingHom.ker g ∧ spMap g ≫ ρ = x ∧ spMap g' ≫ ρ = x' := by
+  obtain ⟨V, hV, hxV, -⟩ := (TopologicalSpace.Opens.isBasis_iff_nbhd.mp X.isBasis_affineOpens)
+    (show x.base u ∈ (⊤ : X.Opens) from trivial)
+  have hV' : IsAffineOpen V := hV
+  have hx'V : x'.base u' ∈ V := h.mem_open V.isOpen hxV
+  have hsub : Set.range x.base ⊆ Set.range hV'.fromSpec := by
+    rw [hV'.range_fromSpec]
+    rintro _ ⟨v, rfl⟩
+    rwa [Subsingleton.elim v u]
+  have hsub' : Set.range x'.base ⊆ Set.range hV'.fromSpec := by
+    rw [hV'.range_fromSpec]
+    rintro _ ⟨v, rfl⟩
+    rwa [Subsingleton.elim v u']
+  let xV := IsOpenImmersion.lift hV'.fromSpec x hsub
+  let x'V := IsOpenImmersion.lift hV'.fromSpec x' hsub'
+  have hfx : xV ≫ hV'.fromSpec = x := IsOpenImmersion.lift_fac _ _ _
+  have hfx' : x'V ≫ hV'.fromSpec = x' := IsOpenImmersion.lift_fac _ _ _
+  have e1 : spMap (Spec.preimage xV).hom = xV := Spec.map_preimage xV
+  have e2 : spMap (Spec.preimage x'V).hom = x'V := Spec.map_preimage x'V
+  refine ⟨Γ(X, V), inferInstance, (Spec.preimage xV).hom, (Spec.preimage x'V).hom, hV'.fromSpec, ?_, ?_, ?_⟩
+  · rw [← asIdeal_spMap_field _ u, ← asIdeal_spMap_field _ u']
+    refine (PrimeSpectrum.le_iff_specializes ((spMap (Spec.preimage x'V).hom).base u')
+      ((spMap (Spec.preimage xV).hom).base u)).mpr ?_
+    rw [e1, e2]
+    have h2 : hV'.fromSpec (x'V u') ⤳ hV'.fromSpec (xV u) := by
+      rw [← hfx, ← hfx'] at h
+      simpa only [Scheme.Hom.comp_apply] using h
+    exact (hV'.fromSpec.isOpenEmbedding.isInducing.specializes_iff).mp h2
+  · rw [e1]; exact hfx
+  · rw [e2]; exact hfx'
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralDomainExtensionWithMonicRoots
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem exists_integral_domain_extension_monic_roots :
+    ∀ (D : Type) [CommRing D] [IsDomain D], ∃ (C : Type) (_ : CommRing C) (_ : Algebra D C),
+      IsDomain C ∧ Algebra.IsIntegral D C ∧ Function.Injective (algebraMap D C) ∧
+      (∀ f : C[X], f.Monic → 0 < f.natDegree → ∃ y : C, f.eval y = 0) ∧
+      ∀ (K : Type) [Field K] [IsAlgClosed K] (h : D →+* K), Function.Injective h →
+        ∃ e : C →+* K, Function.Injective e ∧ e.comp (algebraMap D C) = h := by
+  intro D _ _
+  have hDL : Function.Injective (algebraMap D (AlgebraicClosure (FractionRing D))) := by
+    rw [IsScalarTower.algebraMap_eq D (FractionRing D) (AlgebraicClosure (FractionRing D))]
+    exact (algebraMap (FractionRing D) (AlgebraicClosure (FractionRing D))).injective.comp
+      (IsFractionRing.injective D (FractionRing D))
+  have hCL : Function.Injective (algebraMap (integralClosure D (AlgebraicClosure (FractionRing D)))
+      (AlgebraicClosure (FractionRing D))) := Subtype.val_injective
+  refine ⟨integralClosure D (AlgebraicClosure (FractionRing D)), inferInstance, inferInstance,
+    inferInstance, inferInstance, ?_, ?_, ?_⟩
+  · intro a b hab
+    apply hDL
+    simpa using congrArg Subtype.val hab
+  · intro f hf hdeg
+    have hdeg' : (f.map (algebraMap (integralClosure D (AlgebraicClosure (FractionRing D)))
+        (AlgebraicClosure (FractionRing D)))).degree ≠ 0 := by
+      rw [degree_map_eq_of_injective hCL, degree_eq_natDegree hf.ne_zero]
+      exact_mod_cast hdeg.ne'
+    obtain ⟨y, hy⟩ := IsAlgClosed.exists_root _ hdeg'
+    have hy' : f.eval₂ (algebraMap (integralClosure D (AlgebraicClosure (FractionRing D)))
+        (AlgebraicClosure (FractionRing D))) y = 0 := by rwa [IsRoot, eval_map] at hy
+    have hyC : IsIntegral (integralClosure D (AlgebraicClosure (FractionRing D))) y :=
+      ⟨f, hf, hy'⟩
+    have hyD : IsIntegral D y := isIntegral_trans y hyC
+    refine ⟨⟨y, hyD⟩, ?_⟩
+    apply hCL
+    rw [← eval₂_at_apply, map_zero]
+    exact hy'
+  · intro K _ _ h hinj
+    letI : Algebra (FractionRing D) K := (IsFractionRing.lift hinj : FractionRing D →+* K).toAlgebra
+    let φ : AlgebraicClosure (FractionRing D) →ₐ[FractionRing D] K := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+    refine ⟨φ.toRingHom.comp (integralClosure D (AlgebraicClosure (FractionRing D))).val.toRingHom,
+      φ.toRingHom.injective.comp Subtype.val_injective, ?_⟩
+    ext a
+    show φ (algebraMap D (AlgebraicClosure (FractionRing D)) a) = h a
+    rw [IsScalarTower.algebraMap_apply D (FractionRing D) (AlgebraicClosure (FractionRing D)),
+      AlgHom.commutes]
+    exact IsFractionRing.lift_algebraMap hinj a
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralDomainExtensionWithMonicRootsStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_integral_domain_extension_with_monic_roots : ∀ (D : Type) [CommRing D] [IsDomain D], ∃ (C : Type) (_ : CommRing C) (_ : Algebra D C), IsDomain C ∧ Algebra.IsIntegral D C ∧ Function.Injective (algebraMap D C) ∧ (∀ f : C[X], f.Monic → 0 < f.natDegree → ∃ y : C, f.eval y = 0) ∧ ∀ (K : Type) [Field K] [IsAlgClosed K] (h : D →+* K), Function.Injective h → ∃ e : C →+* K, Function.Injective e ∧ e.comp (algebraMap D C) = h := by
+  first | exact @GlobalTheory.exists_integral_domain_extension_monic_roots | exact GlobalTheory.exists_integral_domain_extension_monic_roots | (intros; apply GlobalTheory.exists_integral_domain_extension_monic_roots <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingHomExtendOfIsIntegralIsAlgClosed
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem ringHom_extend_of_isIntegral_isAlgClosed (A C K : Type) [CommRing A] [CommRing C]
+    [Algebra A C] [Algebra.IsIntegral A C] [Field K] [IsAlgClosed K] (h : A →+* K)
+    (hk : RingHom.ker (algebraMap A C) ≤ RingHom.ker h) :
+    ∃ ψ : C →+* K, ψ.comp (algebraMap A C) = h := by
+  classical
+  haveI hp : (RingHom.ker h).IsPrime := RingHom.ker_isPrime h
+  obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (RingHom.ker h) (⊥ : Ideal C)
+    (by simpa [← RingHom.ker_eq_comap_bot] using hk)
+  haveI : Q.LiesOver (RingHom.ker h) := (Ideal.liesOver_iff _ _).mpr hQc.symm
+  letI : Algebra (A ⧸ RingHom.ker h) K := (RingHom.kerLift h).toAlgebra
+  haveI : FaithfulSMul (A ⧸ RingHom.ker h) K :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (RingHom.kerLift_injective h)
+  haveI : FaithfulSMul (A ⧸ RingHom.ker h) (C ⧸ Q) := inferInstance
+  haveI : Nontrivial (A ⧸ RingHom.ker h) := Ideal.Quotient.nontrivial_iff.mpr hp.ne_top
+  haveI : Algebra.IsIntegral (A ⧸ RingHom.ker h) (C ⧸ Q) :=
+    Ideal.Quotient.algebra_isIntegral_of_liesOver (A := A) (p := RingHom.ker h) (P := Q)
+  haveI : Algebra.IsAlgebraic (A ⧸ RingHom.ker h) (C ⧸ Q) := Algebra.IsIntegral.isAlgebraic
+  haveI : Module.IsTorsionFree (A ⧸ RingHom.ker h) (C ⧸ Q) :=
+    Module.isTorsionFree_iff_algebraMap_injective.2 (FaithfulSMul.algebraMap_injective _ _)
+  haveI : Module.IsTorsionFree (A ⧸ RingHom.ker h) K :=
+    Module.isTorsionFree_iff_algebraMap_injective.2 (RingHom.kerLift_injective h)
+  let φ : (C ⧸ Q) →ₐ[A ⧸ RingHom.ker h] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  refine ⟨φ.toRingHom.comp (Ideal.Quotient.mk Q), ?_⟩
+  ext a
+  have e1 : (Ideal.Quotient.mk Q) (algebraMap A C a) =
+      algebraMap (A ⧸ RingHom.ker h) (C ⧸ Q) (Ideal.Quotient.mk _ a) := rfl
+  simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
+  rw [e1, φ.commutes]
+  rfl
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingHomExtendOfIsIntegralIsAlgClosedStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_ringHom_extend_of_isIntegral_of_isAlgClosed : ∀ (A C K : Type) [CommRing A] [CommRing C] [Algebra A C] [Algebra.IsIntegral A C] [Field K] [IsAlgClosed K] (h : A →+* K), RingHom.ker (algebraMap A C) ≤ RingHom.ker h → ∃ ψ : C →+* K, ψ.comp (algebraMap A C) = h := by
+  first | exact @GlobalTheory.ringHom_extend_of_isIntegral_isAlgClosed | exact GlobalTheory.ringHom_extend_of_isIntegral_isAlgClosed | (intros; apply GlobalTheory.ringHom_extend_of_isIntegral_isAlgClosed <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GeomPointsFactorHenselianOfSpecializes
+
+section
 
 @[expose] public section
 
@@ -107,3 +309,5 @@ theorem geomPoints_factor_henselian_of_specializes :
   · rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hf', hx']
 
 end GlobalTheory
+end
+end

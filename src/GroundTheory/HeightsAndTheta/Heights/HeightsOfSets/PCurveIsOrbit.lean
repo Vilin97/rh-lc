@@ -1,8 +1,6 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveIsOrbit
-public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
-public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.MemMCoordIdealIffOfIsWeightedHomogeneous
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightObjects
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,12 +18,7 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +38,41 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.MemMCoordIdealIffOfIsWeightedHomogeneous
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.TypeStar
 public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseChart
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveIsOrbit
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open ReciprocityTheory.ChartRestriction.G
+
+def CurveIsOrbit.Statement : Prop :=
+  ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (W : Ideal (MvPolynomial (Coord n) ℤ)),
+    Geo.IsArithVar (ι := blockIdx n) W 1 →
+      ∃ x : Cone n (AlgebraicClosure ℚ), BlockNonzero x ∧ W = orbitIdeal x
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveIsOrbit
+
+section
 
 @[expose] public section
 
@@ -132,3 +157,5 @@ end CurveIsOrbit
 end
 
 end GroundTheory.Heights₂.Heights
+end
+end

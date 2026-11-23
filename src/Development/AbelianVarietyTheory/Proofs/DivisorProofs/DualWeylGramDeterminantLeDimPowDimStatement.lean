@@ -1,15 +1,22 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdelicOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylGramDeterminantLeDimPowDim
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.ExistsOrthonormalOfLinearIndependent
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -36,6 +43,146 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdelicOne
+import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRankZero
+import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsUnitaryMulTriangular
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryMinorLeOneAndHadamardColumns
+
+section
+
+@[expose] public section
+
+open scoped Matrix
+
+namespace GlobalTheory.UnitaryMinor
+
+theorem sum_norm_sq_col {n : ℕ} (u : Matrix.unitaryGroup (Fin n) ℂ) (j : Fin n) :
+    ∑ i, ‖u.1 i j‖ ^ 2 = 1 := by
+  have h := congrFun (congrFun (Matrix.mem_unitaryGroup_iff'.1 u.2) j) j
+  simp only [Matrix.mul_apply, Matrix.star_apply, Matrix.one_apply_eq] at h
+  have h2 : ((∑ i, ‖u.1 i j‖ ^ 2 : ℝ) : ℂ) = 1 := by
+    rw [← h]
+    push_cast
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Complex.star_def, Complex.conj_mul']
+  exact_mod_cast h2
+
+theorem norm_det_submatrix_le_one (n s : ℕ) (u : Matrix.unitaryGroup (Fin n) ℂ)
+    (I J : Fin s → Fin n) : ‖(u.1.submatrix I J).det‖ ≤ 1 := by
+  by_cases hI : Function.Injective I
+  · have h : ‖(u.1.submatrix I J).det‖ ^ 2 ≤ 1 := by
+      refine (GlobalTheory.Hadamard.norm_det_sq_le_prod_col (u.1.submatrix I J)).trans ?_
+      refine Finset.prod_le_one₀ (fun j _ => Finset.sum_nonneg fun _ _ => by positivity)
+        fun j _ => ?_
+      rw [← sum_norm_sq_col u (J j)]
+      simp only [Matrix.submatrix_apply]
+      rw [← Finset.sum_image (s := Finset.univ) (g := I) (f := fun i => ‖u.1 i (J j)‖ ^ 2)
+        (fun a _ b _ h => hI h)]
+      exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+        fun _ _ _ => by positivity
+    exact (sq_le_one_iff₀ (norm_nonneg _)).1 h
+  · obtain ⟨a, b, hab, hne⟩ := Function.not_injective_iff.1 hI
+    rw [Matrix.det_zero_of_row_eq hne (by funext k; simp [hab])]
+    simp
+
+theorem unitary_minor_and_hadamard :
+    (∀ (n s : ℕ) (u : Matrix.unitaryGroup (Fin n) ℂ) (I J : Fin s → Fin n),
+      ‖(u.1.submatrix I J).det‖ ≤ 1) ∧
+    ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℂ),
+      ‖M.det‖ ^ 2 ≤ ∏ j, ∑ i, ‖M i j‖ ^ 2 :=
+  ⟨norm_det_submatrix_le_one, fun _ _ _ M => GlobalTheory.Hadamard.norm_det_sq_le_prod_col M⟩
+
+end GlobalTheory.UnitaryMinor
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryMinorLeOneAndHadamardColumnsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj GlobalTheory.DualWeyl GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.DefPt MvPolynomial
+open scoped Matrix
+
+theorem _root_.GlobalTheory.T.unitary_minor_le_one_and_hadamard_columns : (∀ (n s : ℕ) (u : Matrix.unitaryGroup (Fin n) ℂ) (I J : Fin s → Fin n), ‖(u.1.submatrix I J).det‖ ≤ 1) ∧ ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℂ), ‖M.det‖ ^ 2 ≤ ∏ j, ∑ i, ‖M i j‖ ^ 2 := by
+  first | exact @GlobalTheory.UnitaryMinor.unitary_minor_and_hadamard | exact GlobalTheory.UnitaryMinor.unitary_minor_and_hadamard | (intros; apply GlobalTheory.UnitaryMinor.unitary_minor_and_hadamard <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylGramDeterminantLeDimPowDim
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj GlobalTheory.DualWeyl GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.DefPt MvPolynomial
+open scoped Matrix
+
+namespace GlobalTheory.OnMatGram
+
+theorem norm_evalAt_intVec_le {n : ℕ} (la : Fin n → ℕ) (j : Idx la) (g : UN n) :
+    ‖evalAt g.1 (map (Int.castRingHom ℂ) (intVec la j))‖ ≤ 1 := by
+  obtain ⟨-, -, K, sz, hsz, I, -, -, hb⟩ := (Formalism.GradedWeylDivisibility.sSBasis ℤ n n la).choose_spec.2 j
+  have hv : intVec la j = Formalism.GradedWeylDivisibility.bideterminant ℤ sz hsz I := hb
+  rw [hv, Formalism.GradedWeylDivisibility.ldlat_map_bidet]
+  unfold Formalism.GradedWeylDivisibility.bideterminant
+  rw [map_prod, norm_prod]
+  refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun k _ => ?_
+  unfold Formalism.GradedWeylDivisibility.initMinor
+  rw [Formalism.GradedWeylDivisibility.algHom_det_of]
+  have h : (Matrix.of fun p q : Fin (sz k) => evalAt g.1 (X (I k p, Fin.castLE (hsz k) q) : Pol n ℂ)) =
+      g.1.submatrix (I k) (Fin.castLE (hsz k)) := by
+    ext p q
+    simp
+  rw [h]
+  exact GlobalTheory.T.unitary_minor_le_one_and_hadamard_columns.1 n (sz k) g (I k) (Fin.castLE (hsz k))
+
+theorem normSq_basis_le {n : ℕ} (la : Fin n → ℕ) (j : Idx la) :
+    normSq la (basis la ℂ j).1 ≤ dim la := by
+  refine normSq_le_dim fun g => ?_
+  rw [coe_basis]
+  exact norm_evalAt_intVec_le la j g
+
+theorem sum_norm_sq_onMat {n : ℕ} (la : Fin n → ℕ) (j : Idx la) :
+    ∑ i, ‖onMat la i j‖ ^ 2 = normSq la (basis la ℂ j).1 := by
+  rw [← norm_toSpace_sq, ← (onBasis la).repr.norm_map, EuclideanSpace.norm_sq_eq]
+  rfl
+
+theorem det_onMat_ne_zero {n : ℕ} (la : Fin n → ℕ) : (onMat la).det ≠ 0 := by
+  let c : Module.Basis (Idx la) ℂ (Space la) := (basis la ℂ).map (toSpace la)
+  have hc : onMat la = (onBasis la).toBasis.toMatrix c := by
+    ext i j
+    simp [onMat, c, Module.Basis.toMatrix_apply]
+  rw [hc]
+  exact (Matrix.isUnit_det_of_left_inverse (Module.Basis.toMatrix_mul_toMatrix_flip c _)).ne_zero
+
+end GlobalTheory.OnMatGram
+
+namespace GlobalTheory.OnMatGram
+
+theorem norm_det_onMat_sq_le : ∀ (n : ℕ) (la : Fin n → ℕ), Antitone la → (onMat la).det ≠ 0 ∧ ‖(onMat la).det‖ ^ 2 ≤ (dim la : ℝ) ^ dim la := by
+  intro n la _
+  refine ⟨det_onMat_ne_zero la, ?_⟩
+  refine (GlobalTheory.T.unitary_minor_le_one_and_hadamard_columns.2 (Idx la) (onMat la)).trans ?_
+  calc ∏ j, ∑ i, ‖onMat la i j‖ ^ 2 ≤ ∏ _j : Idx la, (dim la : ℝ) :=
+        Finset.prod_le_prod₀ (fun j _ => Finset.sum_nonneg fun _ _ => by positivity)
+          fun j _ => (sum_norm_sq_onMat la j).trans_le (normSq_basis_le la j)
+    _ = (dim la : ℝ) ^ dim la := by rw [Finset.prod_const, Finset.card_univ, ← dim_eq_card]
+
+end GlobalTheory.OnMatGram
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylGramDeterminantLeDimPowDimStatement
+
+section
 
 @[expose] public section
 
@@ -44,3 +191,5 @@ open scoped Matrix
 
 theorem _root_.GlobalTheory.T.dualWeyl_gramDeterminant_le_dim_pow_dim : ∀ (n : ℕ) (la : Fin n → ℕ), Antitone la → (onMat la).det ≠ 0 ∧ ‖(onMat la).det‖ ^ 2 ≤ (dim la : ℝ) ^ dim la := by
   first | exact @GlobalTheory.OnMatGram.norm_det_onMat_sq_le | exact GlobalTheory.OnMatGram.norm_det_onMat_sq_le | (intros; apply GlobalTheory.OnMatGram.norm_det_onMat_sq_le <;> assumption)
+end
+end

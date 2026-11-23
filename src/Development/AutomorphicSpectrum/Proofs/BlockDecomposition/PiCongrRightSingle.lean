@@ -1,10 +1,8 @@
 module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.HodgeSurjectivity.FormLaws
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsBaseChangeEquiv
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExteriorPowerSplit
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KaehlerPushoutSplit
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorEquivBaseChangeTensor
+public import Mathlib.LinearAlgebra.ExteriorPower.Basic
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsAlgHomOfIsBaseChange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,9 +41,165 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExteriorPowerSplit
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Kaehler.TensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.LinearAlgebra.DFinsupp
+public import Mathlib.RingTheory.IsTensorProduct
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsBaseChangeEquiv
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory.CompanionTheory.ExteriorBase
+
+theorem exists_baseChange_equiv (A R M : Type) [CommRing A] [CommRing R] [Algebra A R]
+    [AddCommGroup M] [Module A M] (a : ℕ) :
+    ∃ e : R ⊗[A] (⋀[A]^a M) ≃ₗ[R] ⋀[R]^a (R ⊗[A] M), ∀ (r : R) (m : Fin a → M),
+      e (r ⊗ₜ exteriorPower.ιMulti A a m) =
+        r • exteriorPower.ιMulti R a (fun k => (1 : R) ⊗ₜ[A] m k) := by
+  have h := GlobalTheory.TopForm.isBaseChange_exteriorPower (TensorProduct.isBaseChange A M R) a
+  refine ⟨h.equiv, fun r m => ?_⟩
+  rw [h.equiv_tmul, GlobalTheory.exteriorPowerMapOver_ιMulti]
+  rfl
+
+end GlobalTheory.CompanionTheory.ExteriorBase
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KaehlerPushoutSplit
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory.CompanionTheory.KaehlerPushout
+
+open KaehlerDifferential
+
+theorem exists_retraction (K A B R : Type) [CommRing K] [CommRing A] [CommRing B] [CommRing R]
+    [Algebra K A] [Algebra K B] [Algebra K R] [Algebra A R] [Algebra B R]
+    [IsScalarTower K A R] [IsScalarTower K B R] [Algebra.IsPushout K B A R] :
+    ∃ r : Ω[R⁄K] →ₗ[R] R ⊗[A] Ω[A⁄K],
+      (∀ x, r (KaehlerDifferential.mapBaseChange K A R x) = x) ∧
+      (∀ y, r (KaehlerDifferential.mapBaseChange K B R y) = 0) := by
+  let e := KaehlerDifferential.tensorKaehlerEquiv K B A R
+  refine ⟨e.symm.toLinearMap ∘ₗ KaehlerDifferential.map K B R R, ?_, ?_⟩
+  · intro x
+    have key : KaehlerDifferential.map K B R R (KaehlerDifferential.mapBaseChange K A R x) = e x := by
+      induction x with
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
+      | tmul s w =>
+        have hw : w ∈ Submodule.span A (Set.range (KaehlerDifferential.D K A)) := by
+          rw [KaehlerDifferential.span_range_derivation]; trivial
+        induction hw using Submodule.span_induction generalizing s with
+        | mem w hw =>
+          obtain ⟨a, rfl⟩ := hw
+          simp [e, KaehlerDifferential.mapBaseChange_tmul, KaehlerDifferential.map_D]
+        | zero => simp
+        | add u v _ _ hu hv => simp only [tmul_add, map_add (f := _), hu, hv]
+        | smul a u _ hu =>
+          rw [← TensorProduct.smul_tmul]
+          exact hu _
+    simp [key]
+  · intro y
+    induction y with
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
+    | tmul s w =>
+      have hw : w ∈ Submodule.span B (Set.range (KaehlerDifferential.D K B)) := by
+        rw [KaehlerDifferential.span_range_derivation]; trivial
+      induction hw using Submodule.span_induction generalizing s with
+      | mem w hw =>
+        obtain ⟨b, rfl⟩ := hw
+        simp [KaehlerDifferential.mapBaseChange_tmul, KaehlerDifferential.map_D]
+      | zero => simp
+      | add u v _ _ hu hv => simp only [tmul_add, map_add (f := _), hu, hv, add_zero]
+      | smul b u _ hu =>
+        rw [← TensorProduct.smul_tmul]
+        exact hu _
+
+theorem range_sup_range (K A B R : Type) [CommRing K] [CommRing A] [CommRing B] [CommRing R]
+    [Algebra K A] [Algebra K B] [Algebra K R] [Algebra A R] [Algebra B R]
+    [IsScalarTower K A R] [IsScalarTower K B R] [h : Algebra.IsPushout K A B R] :
+    LinearMap.range (KaehlerDifferential.mapBaseChange K A R) ⊔
+      LinearMap.range (KaehlerDifferential.mapBaseChange K B R) = ⊤ := by
+  set S := LinearMap.range (KaehlerDifferential.mapBaseChange K A R) ⊔
+      LinearMap.range (KaehlerDifferential.mapBaseChange K B R) with hS
+  have hA : ∀ a : A, KaehlerDifferential.D K R (algebraMap A R a) ∈ S := fun a =>
+    Submodule.mem_sup_left ⟨1 ⊗ₜ KaehlerDifferential.D K A a, by
+      simp [KaehlerDifferential.mapBaseChange_tmul, KaehlerDifferential.map_D]⟩
+  have hB : ∀ b : B, KaehlerDifferential.D K R (algebraMap B R b) ∈ S := fun b =>
+    Submodule.mem_sup_right ⟨1 ⊗ₜ KaehlerDifferential.D K B b, by
+      simp [KaehlerDifferential.mapBaseChange_tmul, KaehlerDifferential.map_D]⟩
+  have hD : ∀ r : R, KaehlerDifferential.D K R r ∈ S := by
+    intro r
+    induction r using h.out.inductionOn with
+    | tmul b => exact hB b
+    | smul a y hy =>
+      rw [Algebra.smul_def, Derivation.leibniz]
+      exact S.add_mem (S.smul_mem _ hy) (S.smul_mem _ (hA a))
+    | add x y hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
+  rw [eq_top_iff, ← KaehlerDifferential.span_range_derivation, Submodule.span_le]
+  rintro _ ⟨r, rfl⟩
+  exact hD r
+
+theorem kaehler_pushout_split : ∀ (K A B R : Type) [CommRing K] [CommRing A] [CommRing B] [CommRing R] [Algebra K A] [Algebra K B] [Algebra K R] [Algebra A R] [Algebra B R] [IsScalarTower K A R] [IsScalarTower K B R] [Algebra.IsPushout K A B R], ∃ (r : Ω[R⁄K] →ₗ[R] R ⊗[A] Ω[A⁄K]) (π : Ω[R⁄K] →ₗ[R] R ⊗[B] Ω[B⁄K]), (∀ x, r (KaehlerDifferential.mapBaseChange K A R x) = x) ∧ (∀ y, r (KaehlerDifferential.mapBaseChange K B R y) = 0) ∧ (∀ x, π (KaehlerDifferential.mapBaseChange K A R x) = 0) ∧ (∀ y, π (KaehlerDifferential.mapBaseChange K B R y) = y) ∧ LinearMap.range (KaehlerDifferential.mapBaseChange K A R) ⊔ LinearMap.range (KaehlerDifferential.mapBaseChange K B R) = ⊤ := by
+  intro K A B R _ _ _ _ _ _ _ _ _ _ _ h
+  haveI hs : Algebra.IsPushout K B A R := h.symm
+  obtain ⟨r, hr₁, hr₂⟩ := exists_retraction K A B R
+  obtain ⟨π, hπ₁, hπ₂⟩ := exists_retraction K B A R
+  exact ⟨r, π, hr₁, hr₂, hπ₂, hπ₁, range_sup_range K A B R⟩
+
+end GlobalTheory.CompanionTheory.KaehlerPushout
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorEquivBaseChangeTensor
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory.CompanionTheory.TensorPushout
+
+theorem tensor_equiv_baseChange_tensor :
+    ∀ (K A B R X Y : Type) [CommRing K] [CommRing A] [CommRing B] [CommRing R] [Algebra K A]
+      [Algebra K B] [Algebra K R] [Algebra A R] [Algebra B R] [IsScalarTower K A R]
+      [IsScalarTower K B R] [Algebra.IsPushout K A B R] [AddCommGroup X] [Module K X] [Module A X]
+      [IsScalarTower K A X] [AddCommGroup Y] [Module K Y] [Module B Y] [IsScalarTower K B Y],
+      ∃ t : X ⊗[K] Y ≃ₗ[K] (R ⊗[A] X) ⊗[R] (R ⊗[B] Y),
+        ∀ x y, t (x ⊗ₜ y) = ((1 : R) ⊗ₜ[A] x) ⊗ₜ[R] ((1 : R) ⊗ₜ[B] y) := by
+  intro K A B R X Y
+  intros
+  refine ⟨((TensorProduct.AlgebraTensorModule.cancelBaseChange K A A X Y).symm.restrictScalars K).trans <|
+    (((Algebra.IsPushout.cancelBaseChange K A B R Y).symm.lTensor X).restrictScalars K).trans <|
+    ((TensorProduct.comm A X (R ⊗[B] Y)).restrictScalars K).trans <|
+    ((TensorProduct.AlgebraTensorModule.cancelBaseChange A R R (R ⊗[B] Y) X).symm.restrictScalars K).trans <|
+    ((TensorProduct.comm R (R ⊗[B] Y) (R ⊗[A] X)).restrictScalars K), fun x y => ?_⟩
+  simp only [LinearEquiv.trans_apply, LinearEquiv.restrictScalars_apply,
+    TensorProduct.AlgebraTensorModule.cancelBaseChange_symm_tmul, LinearEquiv.lTensor_tmul,
+    Algebra.IsPushout.cancelBaseChange_symm_tmul, map_one, TensorProduct.comm_tmul]
+
+end GlobalTheory.CompanionTheory.TensorPushout
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PiCongrRightSingle
+
+section
 
 @[expose] public section
 
@@ -117,3 +270,5 @@ theorem omKun : CrystallineSemistableComparison.Onto.OmKun := by
   simp [Algebra.TensorProduct.tmul_mul_tmul]
 
 end GlobalTheory.CompanionTheory.OmKun
+end
+end

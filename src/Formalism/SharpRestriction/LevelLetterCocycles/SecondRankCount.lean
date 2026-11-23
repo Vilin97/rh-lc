@@ -1,7 +1,6 @@
 module
 
-public import Formalism.SharpRestriction.LevelLetterCocycles.SecondPropositionRingInput
-public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.DownSlotProposition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +37,33 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.SecondPropositionRingInput
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln34
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Module Formalism.MainNotions.ElementDenominator Formalism.MainNotions.ElementDenominator.CongruenceModules TensorProduct
+
+def SecondPropositionHypothesis : Prop :=
+  ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F) (CA CB CK : ℝ),
+    Adm1 D HW F Cm CA CB CK → u2R D HW
+
+end Formalism.MainNotions.N.Ln34
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.SecondRankCount
+
+section
 
 @[expose] public section
 
@@ -83,4 +109,6 @@ theorem second_proposition_of_models (hL : SecondPropositionOfRank) (hQ : ModelQ
 
 end Formalism.MainNotions.N.Ln34
 
+end
+end
 end

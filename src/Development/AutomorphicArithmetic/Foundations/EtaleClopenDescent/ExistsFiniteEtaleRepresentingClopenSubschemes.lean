@@ -2,14 +2,17 @@ module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Etale
 public import Mathlib.Combinatorics.Quiver.ReflQuiver
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ClopRepFiniteEtaleOfConstantRank
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfClopRepOfRank
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfRankOfLocallyNoetherian
-import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepPullback
+public import Development.AutomorphicArithmetic.RepresentationRank.RepOfRank
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ClopRepUnique
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfIsSplitOfRank
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepPullback
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.IsAffineHomOfFlatQuotientOfAffineKernel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.AlgebraicGeometry.Morphisms.LocalFlatDescent
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -25,7 +28,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -46,7 +48,69 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsIsoIffBijectiveOverAlgClosed
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfClopRepOfRank
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepOfRankOfLocallyNoetherian
+import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsClopRepPullback
+import Mathlib.Order.CompletePartialOrder
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsTjCorrDiagModel
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.IsFiniteOfIsPullbackFpqc
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+theorem UpperTheory.isFinite_of_isPullback_fpqc :
+    ∀ {X Y X' Y' : Scheme.{0}} (a : X' ⟶ X) (q : X' ⟶ Y') (p : X ⟶ Y) (t : Y' ⟶ Y), IsPullback a q p t → Surjective t → Flat t → QuasiCompact t → IsFinite q → IsFinite p := by
+  intro X Y X' Y' a q p t h h₁ h₂ h₃ hq
+  have := GlobalTheory.isAffineHom_descendsAlong_fpqc.{0}
+  have ht : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{0}) t :=
+    ⟨⟨h₁, h₂⟩, h₃⟩
+  have hA : IsAffineHom p :=
+    MorphismProperty.of_isPullback_of_descendsAlong (P := @IsAffineHom) h.flip ht inferInstance
+  have hU : UniversallyClosed p :=
+    MorphismProperty.of_isPullback_of_descendsAlong (P := @UniversallyClosed) h.flip ht inferInstance
+  have hL : LocallyOfFiniteType p :=
+    MorphismProperty.of_isPullback_of_descendsAlong (P := @LocallyOfFiniteType) h.flip ht inferInstance
+  exact (IsFinite.iff_isIntegralHom_and_locallyOfFiniteType _).2
+    ⟨IsIntegralHom.iff_universallyClosed_and_isAffineHom.mpr ⟨hU, hA⟩, hL⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ClopRepFiniteEtaleOfConstantRank
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+theorem UpperTheory.clopRep_finite_etale_of_constant_rank :
+    ∀ {S : Scheme.{0}} (G Y : Over S) (U : (Y ⊗ G).left.Opens) (n : ℕ), IsFinite G.hom → Etale G.hom → (∀ s, G.hom.finrank s = n) → UpperTheory.RepresentationRank.Rep G Y U → IsFinite Y.hom ∧ Etale Y.hom := by
+  intro S G Y U n hf he hn hR
+  obtain ⟨S', t, h1, h2, h3, hs⟩ := GlobalTheory.FinEt.exists_isSplitOfRank_pullback G.hom hn
+  obtain ⟨Y'', U'', hR'', hf'', he''⟩ := UpperTheory.exists_clopRep_of_isSplitOfRank ((Over.pullback t).obj G) n hs
+  obtain ⟨U', hR'⟩ := UpperTheory.exists_clopRep_pullback t G Y U hR
+  obtain ⟨e⟩ := UpperTheory.clopRep_unique _ _ _ _ _ hR' hR''
+  have hcomp : pullback.snd Y.hom t = e.hom.left ≫ Y''.hom := (Over.w e.hom).symm
+  have hiso : IsIso e.hom.left := inferInstanceAs (IsIso ((Over.forget S').map e.hom))
+  have hqf : IsFinite (pullback.snd Y.hom t) := by
+    rw [hcomp]; infer_instance
+  have hqe : Etale (pullback.snd Y.hom t) := by
+    rw [hcomp]; infer_instance
+  have hpb := IsPullback.of_hasPullback Y.hom t
+  refine ⟨UpperTheory.isFinite_of_isPullback_fpqc _ _ _ _ hpb h3 inferInstance inferInstance hqf, ?_⟩
+  exact MorphismProperty.of_isPullback_of_descendsAlong (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact) hpb.flip ⟨⟨h3, inferInstance⟩, inferInstance⟩ hqe
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.ExistsFiniteEtaleRepresentingClopenSubschemes
+
+section
 
 @[expose] public section
 
@@ -100,3 +164,5 @@ theorem UpperTheory.Cb.exists_finite_etale_representing_clopen_subschemes :
   obtain ⟨Y', U', hr⟩ := UpperTheory.exists_clopRep_of_clopRepOfRank G hf he Y U h
   obtain ⟨h1, h2⟩ := UpperTheory.RepresentationRank.finite_etale_of_rep G Y' U' hf he hr
   exact ⟨Y', U', h1, h2, hr.1, hr.2⟩
+end
+end

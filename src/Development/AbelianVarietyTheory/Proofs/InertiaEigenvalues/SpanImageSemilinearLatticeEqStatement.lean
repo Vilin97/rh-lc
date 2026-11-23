@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.NumberTheory.NumberField.Basic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpanImageSemilinearLatticeEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,9 +41,49 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpanImageSemilinearLatticeEq
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace GlobalTheory
+
+theorem span_image_span_eq_of_integral (K : Type) [Field K] [NumberField K] (O : Type) [CommRing O] [IsDomain O]
+    (e : K →+* FractionRing O) (V V' : Type) [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+    [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module (FractionRing O) V'] [Module O V']
+    [IsScalarTower O (FractionRing O) V'] (iV : V →ₛₗ[e] V')
+    (he : ∀ a : 𝓞 K, e (a : K) ∈ (algebraMap O (FractionRing O)).range) (S : Set V) :
+    Submodule.span O (iV '' (Submodule.span (𝓞 K) S : Set V)) = Submodule.span O (iV '' S) := by
+  apply le_antisymm
+  · rw [Submodule.span_le]
+    rintro _ ⟨v, hv, rfl⟩
+    induction hv using Submodule.span_induction with
+    | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
+    | zero => simp
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
+    | smul a x _ hx =>
+      obtain ⟨z, hz⟩ := he a
+      have h1 : a • x = ((a : K)) • x := (algebraMap_smul K a x).symm
+      rw [h1, LinearMap.map_smulₛₗ, ← hz, algebraMap_smul]
+      exact Submodule.smul_mem _ z hx
+  · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpanImageSemilinearLatticeEqStatement
+
+section
+
 @[expose] public section
 
 open NumberField
 
 theorem _root_.GlobalTheory.T.span_image_semilinear_lattice_eq : ∀ (K : Type) [Field K] [NumberField K] (O : Type) [CommRing O] [IsDomain O] (e : K →+* FractionRing O) (V V' : Type) [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module (FractionRing O) V'] [Module O V'] [IsScalarTower O (FractionRing O) V'] (iV : V →ₛₗ[e] V'), (∀ a : 𝓞 K, e (a : K) ∈ (algebraMap O (FractionRing O)).range) → ∀ S : Set V, Submodule.span O (iV '' (Submodule.span (𝓞 K) S : Set V)) = Submodule.span O (iV '' S) := by
   first | exact @GlobalTheory.span_image_span_eq_of_integral | exact GlobalTheory.span_image_span_eq_of_integral | (intros; apply GlobalTheory.span_image_span_eq_of_integral <;> assumption)
+end
+end

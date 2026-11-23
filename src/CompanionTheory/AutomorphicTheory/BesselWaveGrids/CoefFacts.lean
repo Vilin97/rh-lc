@@ -1,15 +1,16 @@
 module
 
 public import CompanionTheory.AutomorphicTheory.SchurLimitBounds.ZuckermanDuality.Assemble
-public import CompanionTheory.AutomorphicTheory.BesselSmoothness.BesselSmoothOf
-public import Formalism.HermitianCurvature.StatementJF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelFormSesquilinearFiniteClass
+public import Mathlib.Data.Nat.Notation
+public import Mathlib.Tactic.ToAdditive
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+public import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -42,6 +43,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.FormalDegreeBessel.StatementWR
+import Formalism.HermitianCurvature.StatementI
+import Formalism.RealPlaceAnalysis.StatementA
+public import Formalism.HermitianCurvature.StatementJF
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelFormSesquilinearFiniteClass
+import Mathlib.Algebra.Order.Star.Real
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselSmoothness.BesselSmoothOf
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Matrix
+open scoped ContDiff
+
+noncomputable section
+
+namespace CompanionTheory.JfS
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+def NN (k r : ℕ) : ℕ := 2 * (2 * r + k + 1) * (2 * r * (2 * r + k + 1) + 1)
+
+section flat
+
+variable {V E : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [NormedAddCommGroup E] [NormedSpace ℂ E] {n : ℕ}
+
+end flat
+
+end CompanionTheory.JfS
+end
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.CoefFacts
+
+section
 
 @[expose] public section
 
@@ -163,3 +202,6 @@ theorem thr_JF {C A : ℝ} (k r m : ℕ) (hm : m ≤ CompanionTheory.JfS.NN k r)
   nlinarith
 
 end CompanionTheory.WaveGrid.Coef
+end
+end
+end

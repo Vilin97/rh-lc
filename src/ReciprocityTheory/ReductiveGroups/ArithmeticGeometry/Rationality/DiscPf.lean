@@ -1,6 +1,6 @@
 module
 
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.DiscSt
+public import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,11 +39,132 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.SemistableReduction.CauchyInequalityOnTorus
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
+import Mathlib.Topology.Connected.Separation
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
+public import ReciprocityTheory.SemistableReduction.ExistsTorusPointOneLeNormSum
+public import Mathlib.Analysis.Normed.Group.Continuity
+public import Mathlib.Analysis.Normed.Group.Ultra
 public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.DiscSt
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+
+def DiscStatement : Prop :=
+  ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CompleteSpace K] (K₀ : Subfield K),
+    ReciprocityTheory.MultiplicativeHeights.ResidueFieldInfiniteOn (K₀ : Set K) →
+    ∀ S : Set K, (∀ t ∈ S, 0 < ‖t‖ ∧ ‖t‖ < 1) →
+    (∀ r : ℝ, 0 < r → r < 1 → ∀ ε > (0 : ℝ), ∃ t ∈ S, |‖t‖ - r| < ε) →
+    ∀ (c : ℤ → K) (b : ℕ), (∀ n, n < -(b : ℤ) → c n = 0) →
+      (∀ t ∈ S,
+        Filter.Tendsto (fun n => ‖c n * t ^ n‖) Filter.cofinite (nhds 0) ∧
+        ∀ τ ∈ K₀, ‖τ‖ = 1 → ‖∑' n, c n * (t * τ) ^ n‖ ≤ 1) →
+      ∀ n, ‖c n‖ ≤ 1 ∧ (n < 0 → c n = 0)
+
+end ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.CauchyInequalityOnTorus
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.MultiplicativeHeights
+
+theorem cauchy_inequality_on_torus : CauchyTorusStatement := by
+  intro K _ _ _ K₀ hK₀ n c hc hτ χ
+  by_contra hχ
+  push_neg at hχ
+  have hev : ∀ᶠ ψ in Filter.cofinite, ‖c ψ‖ < 1 / 2 := hc.eventually (gt_mem_nhds (by norm_num))
+  have hFfin : {ψ | ¬ ‖c ψ‖ < 1 / 2}.Finite := Filter.eventually_cofinite.1 hev
+  set F := hFfin.toFinset with hFdef
+  have hχF : χ ∈ F := by
+    rw [Set.Finite.mem_toFinset]
+    show ¬ ‖c χ‖ < 1 / 2
+    linarith
+  obtain ⟨χm, hχmF, hmax⟩ := F.exists_max_image (fun ψ => ‖c ψ‖) ⟨χ, hχF⟩
+  have hgt : 1 < ‖c χm‖ := lt_of_lt_of_le hχ (hmax χ hχF)
+  have hglob : ∀ ψ, ‖c ψ‖ ≤ ‖c χm‖ := by
+    intro ψ
+    by_cases hψ : ψ ∈ F
+    · exact hmax ψ hψ
+    · have h2 : ‖c ψ‖ < 1 / 2 := by
+        rw [Set.Finite.mem_toFinset] at hψ
+        simpa using hψ
+      linarith
+  set lam := c χm with hlam
+  have hlam0 : lam ≠ 0 := by
+    intro h
+    rw [h, norm_zero] at hgt
+    linarith
+  set a : (Fin n → ℤ) → K := fun ψ => c ψ / lam with hadef
+  have ha : ∀ ψ, ‖a ψ‖ ≤ 1 := by
+    intro ψ
+    simp only [hadef, norm_div]
+    exact (div_le_one (norm_pos_iff.2 hlam0)).2 (hglob ψ)
+  have ha0 : ‖a χm‖ = 1 := by
+    simp only [hadef, norm_div]
+    exact div_self (norm_ne_zero_iff.2 hlam0)
+  obtain ⟨τ, hτu, hτ1⟩ := exists_torus_point_one_le_norm_sum K₀ hK₀ F a ha χm hχmF ha0
+  have hprodnorm : ∀ ψ : Fin n → ℤ, ‖∏ i, τ i ^ ψ i‖ = 1 := by
+    intro ψ
+    rw [norm_prod]
+    exact Finset.prod_eq_one fun i _ => by rw [norm_zpow, (hτu i).2, one_zpow]
+  have hSF : ∑ ψ ∈ F, c ψ * ∏ i, τ i ^ ψ i = lam * ∑ ψ ∈ F, a ψ * ∏ i, τ i ^ ψ i := by
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun ψ _ => ?_
+    simp only [hadef]
+    field_simp
+  have hSFn : ‖lam‖ ≤ ‖∑ ψ ∈ F, c ψ * ∏ i, τ i ^ ψ i‖ := by
+    rw [hSF, norm_mul]
+    calc ‖lam‖ = ‖lam‖ * 1 := (mul_one _).symm
+      _ ≤ ‖lam‖ * ‖∑ ψ ∈ F, a ψ * ∏ i, τ i ^ ψ i‖ := mul_le_mul_of_nonneg_left hτ1 (norm_nonneg _)
+  have hsum : Summable (fun ψ => c ψ * ∏ i, τ i ^ ψ i) := by
+    apply NonarchimedeanAddGroup.summable_of_tendsto_cofinite_zero
+    rw [tendsto_zero_iff_norm_tendsto_zero]
+    simpa [norm_mul, hprodnorm] using hc
+  have hsplit := hsum.sum_add_tsum_compl (s := F)
+  have htail : ‖∑' ψ : ↑((F : Set (Fin n → ℤ))ᶜ), c ψ * ∏ i, τ i ^ (ψ : Fin n → ℤ) i‖ ≤ 1 / 2 := by
+    refine IsUltrametricDist.norm_tsum_le_of_forall_le_of_nonneg (by norm_num) fun ψ => ?_
+    rw [norm_mul, hprodnorm, mul_one]
+    have hψ : (ψ : Fin n → ℤ) ∉ F := fun h => ψ.2 (Finset.mem_coe.2 h)
+    rw [Set.Finite.mem_toFinset] at hψ
+    simp only [Set.mem_setOf_eq, not_not] at hψ
+    exact le_of_lt hψ
+  have hne : ‖∑ ψ ∈ F, c ψ * ∏ i, τ i ^ ψ i‖ ≠
+      ‖∑' ψ : ↑((F : Set (Fin n → ℤ))ᶜ), c ψ * ∏ i, τ i ^ (ψ : Fin n → ℤ) i‖ := by
+    intro h
+    linarith
+  have htot := IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hne
+  rw [hsplit] at htot
+  have h1 := hτ τ hτu
+  unfold torusSum at h1
+  rw [htot] at h1
+  have h3 := le_max_left ‖∑ ψ ∈ F, c ψ * ∏ i, τ i ^ ψ i‖
+    ‖∑' ψ : ↑((F : Set (Fin n → ℤ))ᶜ), c ψ * ∏ i, τ i ^ (ψ : Fin n → ℤ) i‖
+  linarith
+
+end ReciprocityTheory.MultiplicativeHeights
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.DiscPf
+
+section
 
 @[expose] public section
 
@@ -129,3 +249,5 @@ theorem disc_holds : DiscStatement := by
     linarith
 
 end ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+end
+end

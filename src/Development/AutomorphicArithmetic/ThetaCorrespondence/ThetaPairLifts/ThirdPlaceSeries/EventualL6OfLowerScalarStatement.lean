@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.PtOf
 public import Development.AbelianVarietyTheory.Definitions.Divisors.BaseRankDimension
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.EventualL6OfLowerScalar
+public import Development.AbelianVarietyTheory.Definitions.Divisors.RowSideOfCompatibleThetaPair
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,6 +35,64 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Divisors.BaseRankDimension
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ValidForConstructedPointClassesEventuallyWorking
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.EvWCOnPtOfGuardedStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventualL6OfLowerBound
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Fc GlobalTheory.Fc.Ind GlobalTheory.BigTop
+
+namespace GlobalTheory.Fc.Ind
+
+def lowScalarPt (C CH : ℝ) : PtP := fun _ _ _ p => (p.S true).L6 (p.N C CH)
+
+end GlobalTheory.Fc.Ind
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.EventualL6OfLowerScalar
+
+section
+
+@[expose] public section
+
+
+
+section
+noncomputable section
+open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Fc GlobalTheory.Fc.Ind GlobalTheory.BigTop
+namespace GlobalTheory.Fc.Ind
+theorem eventual_L6_of_lower_scalar_alt : _root_.GlobalTheory.BigTop.LambdaLowerBound₂ → ∀ (𝒜 : FamClass) (σ : RawSel _root_.GlobalTheory.Fc.Ind.PointSummands 𝒜),
+    (∀ (eps : ℝ) (Fm : FamP eps), 𝒜 Fm → GlobalTheory.EX.DQ.Duty7 Fm) → EvW _root_.GlobalTheory.Fc.Ind.RowPointSummands 𝒜 σ → EvWC (fun _ => True) _root_.GlobalTheory.Fc.Ind.summandL6Bound 𝒜 σ := by
+  intro h 𝒜 σ hd hr
+  have hG : EvW (_root_.GlobalTheory.Fc.Ind.conditionOnPoint fun _ _ _ _ => True) 𝒜 σ :=
+    Formalism.MainNotions.Pk.Closed.of_class fun Fm _ _ _ => ⟨0, fun _ _ _ _ => trivial⟩
+  have key := _root_.GlobalTheory.T.eventually_onPt_of_pDiv_ties_and_onPt (fun _ => True) (fun _ _ _ _ => True) lowScalarPt ?_ 𝒜 σ hd hr hG
+  · exact key
+  · obtain ⟨a, ha, h⟩ := h
+    refine ⟨a, ha, fun e he hle => ?_⟩
+    obtain ⟨K, hK⟩ := h e he hle
+    refine ⟨K, fun Fm CH hc hL _ => ⟨0, le_rfl, ?_⟩⟩
+    obtain ⟨x0, hx0⟩ := hK Fm CH hc hL
+    exact ⟨x0, fun x hx hle i p hp _ C _ => hx0 x hx hle i p hp C⟩
+end GlobalTheory.Fc.Ind
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.EventualL6OfLowerScalarStatement
+
+section
 
 @[expose] public section
 
@@ -45,4 +103,6 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 
 theorem _root_.GlobalTheory.T.eventually_L6_bound_of_lamLow : _root_.GlobalTheory.BigTop.LambdaLowerBound₂ → ∀ (𝒜 : FamClass) (σ : RawSel _root_.GlobalTheory.Fc.Ind.PointSummands 𝒜), (∀ (eps : ℝ) (Fm : FamP eps), 𝒜 Fm → GlobalTheory.EX.DQ.Duty7 Fm) → EvW _root_.GlobalTheory.Fc.Ind.RowPointSummands 𝒜 σ → EvWC (fun _ => True) _root_.GlobalTheory.Fc.Ind.summandL6Bound 𝒜 σ := by
   first | exact @_root_.GlobalTheory.Fc.Ind.eventual_L6_of_lower_scalar_alt | exact _root_.GlobalTheory.Fc.Ind.eventual_L6_of_lower_scalar_alt | (intros; apply _root_.GlobalTheory.Fc.Ind.eventual_L6_of_lower_scalar_alt <;> assumption)
+end
+end
 end

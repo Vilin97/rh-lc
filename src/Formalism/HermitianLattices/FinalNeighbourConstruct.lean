@@ -2,14 +2,14 @@ module
 
 public import Formalism.HermitianLattices.GenusCovolBound
 import Formalism.HermitianLattices.HermitianLatticesProofs.AutFinite
-import Formalism.HermitianLattices.HermitianLatticesProofs.ClassSetFinite
+import Formalism.HermitianLattices.StatementLat
+import Formalism.HermitianLattices.HermitianLatticesProofs.ClassSetAssembly
 import Formalism.HermitianLattices.HermitianLatticesProofs.FinIntermediate
-import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
-import Formalism.HermitianLattices.HermitianLatticesProofs.GenusCovol
-public import Formalism.HermitianLattices.HermitianLatticesProofs.IsomAct
+import Formalism.HermitianLattices.HermitianLatticesProofs.GenusCovolBound
+import Formalism.HermitianLattices.HermitianLatticesProofs.GenusScale
 import Formalism.HermitianLattices.HermitianLatticesProofs.IsomOfTrace
-public import Formalism.HermitianLattices.HermitianLatticesProofs.ShortVectors
-public import Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
+import Formalism.HermitianLattices.HermitianLatticesProofs.ShortVectors
+import Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -49,6 +49,30 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
+import Formalism.HermitianLattices.HermitianLatticesProofs.GenusCovol
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IsomAct
+public import Formalism.HermitianLattices.HermitianLatticesProofs.ShortVectors
+public import Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
+
+-- Source module: Formalism.HermitianLattices.HermitianLatticesProofs.ClassSetFinite
+
+section
+
+section
+
+namespace Formalism.HermitianLatticesTheory
+
+theorem classSetFinite : ClassSetFinite :=
+  classSetFinite_of traceReal genusCovolBound shortVectors genusScale finIntermediate isomOfTrace
+
+end Formalism.HermitianLatticesTheory
+end
+end
+
+-- Source module: Formalism.HermitianLattices.FinalNeighbourConstruct
+
+section
 
 @[expose] public section
 
@@ -65,3 +89,5 @@ theorem final_genusCovol : GenusCovol := Formalism.HermitianLatticesTheory.genus
 theorem final_classSetFinite : ClassSetFinite := Formalism.HermitianLatticesTheory.classSetFinite
 
 end Formalism.HermitianLatticesTheory
+end
+end

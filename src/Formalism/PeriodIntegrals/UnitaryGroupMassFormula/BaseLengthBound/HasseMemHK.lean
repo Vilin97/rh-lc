@@ -3,9 +3,7 @@ module
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.TaylorSpanGeneratorsAlt
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HassePresH
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.FkFilt
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.LenPiU
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.TaylorSpanGenerators
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.TaylorSpanLeBound
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.MonoCount
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,8 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,8 +39,163 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.ReductionUniformizerSmulMem
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.LenPiU
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions NumberField IsDedekindDomain Module Formalism.MainNotions.Gaps.EtaleWeightGaps
+
+namespace PoleLengthBounds
+
+theorem lenPiU_holds : LenPiU := by
+  intro R E V _ _ _ _ _ ι _ A B U hU
+  classical
+  set A' : Submodule R (ι → E) := Submodule.pi Set.univ fun _ => A with hA'
+  set B' : Submodule R (ι → E) := Submodule.pi Set.univ fun _ => B with hB'
+  let e : ↥A' ≃ₗ[R] ↥(A'.map U) := Submodule.equivMapOfInjective U hU A'
+  have he : ∀ x : ↥A', ((e x : ↥(A'.map U)) : V) = U x := fun _ => rfl
+  have hmap : (B'.comap A'.subtype).map (e : ↥A' →ₗ[R] ↥(A'.map U)) = (B'.map U).comap (A'.map U).subtype := by
+    ext y
+    rw [Submodule.mem_map_equiv, Submodule.mem_comap, Submodule.mem_comap, Submodule.subtype_apply,
+      Submodule.subtype_apply]
+    obtain ⟨x, rfl⟩ := e.surjective y
+    rw [LinearEquiv.symm_apply_apply, he]
+    exact ⟨fun h => ⟨x, h, rfl⟩, fun ⟨z, hz, h⟩ => hU h ▸ hz⟩
+  rw [← (Submodule.Quotient.equiv _ _ e hmap).length_eq]
+
+  let f : ↥A' →ₗ[R] (ι → ↥A ⧸ B.comap A.subtype) :=
+    LinearMap.pi fun i => (B.comap A.subtype).mkQ ∘ₗ
+      LinearMap.codRestrict A ((LinearMap.proj i : (ι → E) →ₗ[R] E) ∘ₗ A'.subtype)
+        (fun x => x.2 i (Set.mem_univ i))
+  have hf : Function.Surjective f := by
+    intro g
+    choose a ha using fun i => Submodule.Quotient.mk_surjective _ (g i)
+    refine ⟨⟨fun i => a i, fun i _ => (a i).2⟩, ?_⟩
+    funext i
+    exact ha i
+  have hker : LinearMap.ker f = B'.comap A'.subtype := by
+    ext x
+    simp only [LinearMap.mem_ker, Submodule.mem_comap, Submodule.subtype_apply]
+    constructor
+    · intro h i _
+      have h' : (B.comap A.subtype).mkQ
+          (LinearMap.codRestrict A ((LinearMap.proj i : (ι → E) →ₗ[R] E) ∘ₗ A'.subtype)
+            (fun x => x.2 i (Set.mem_univ i)) x) = 0 := congrFun h i
+      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h'
+      exact h'
+    · intro h
+      funext i
+      show (B.comap A.subtype).mkQ
+          (LinearMap.codRestrict A ((LinearMap.proj i : (ι → E) →ₗ[R] E) ∘ₗ A'.subtype)
+            (fun x => x.2 i (Set.mem_univ i)) x) = 0
+      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+      exact h i (Set.mem_univ i)
+  rw [← hker, (f.quotKerEquivOfSurjective hf).length_eq, Module.length_pi, ENat.card_eq_coe_fintype_card]
+
+end PoleLengthBounds
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.TaylorSpanGenerators
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions NumberField IsDedekindDomain Module Formalism.MainNotions.Gaps.EtaleWeightGaps
+
+namespace PoleLengthBounds
+
+variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ} {X : PJ D B P j}
+
+theorem prod_sec_pow_mul_mem {la : HeightOneSpectrum (𝓞 B.KO)} {N : ℕ} {wL : WeightFamilies.Wt D j}
+    (w : Fin N → B.Cusp j wL) (u : WeightFamilies.Wt D j) (α : Fin (WeightFamilies.dimY D j) → ℕ) (s : Finset (Fin (WeightFamilies.dimY D j)))
+    {n : ℕ} {v : Rp X la N} (hv : v ∈ Vw X la N (addL u wL n)) :
+    (∏ i ∈ s, sec X la w i.succ ^ α i) * v ∈ Vw X la N (addL u wL (n + ∑ i ∈ s, α i)) := by
+  classical
+  refine Finset.induction_on s ?_ ?_
+  · simpa using hv
+  · intro a s ha ih
+    rw [Finset.prod_insert ha, Finset.sum_insert ha, mul_assoc]
+    have := sec_pow_mul_mem X la w a.succ u _ (α a) ih
+    rwa [show n + ∑ i ∈ s, α i + α a = n + (α a + ∑ i ∈ s, α i) by ring] at this
+
+theorem taylorSpanGenerators : TaylorSpanGenerators := by
+  intro D B P j X ka wL wF G la T k hk α hα i
+  have hs : ∑ i, α i = k := Finset.Nat.mem_antidiagonalTuple.1 hα
+  have hkT : ∑ i, α i ≤ T := by
+    have : a0 D j T ≤ T := Nat.sub_le _ _
+    omega
+  have h0 : emb X la G.N (X.inc wF (G.th' i)) ∈ Vw X la G.N (addL wF wL 0) := by
+    rw [addL_zero]; exact emb_mem_Vw X la G.N wF _
+  have h1 := sec_pow_mul_mem X la G.w 0 wF 0 (T - ∑ i, α i) h0
+  have h2 := prod_sec_pow_mul_mem G.w wF α Finset.univ h1
+  rw [show 0 + (T - ∑ i, α i) + ∑ i, α i = T by omega] at h2
+  have hf : secPow X la G.w α * sec X la G.w 0 ^ (T - ∑ i, α i) * emb X la G.N (X.inc wF (G.th' i)) ∈
+      Vw X la G.N (addL wF wL T) := by
+    rw [mul_assoc]; exact h2
+  refine ⟨toHK X la G.w wF T ⟨_, hf⟩,
+    toHK0 X la G.w wF ⟨emb X la G.N (X.inc wF (G.th' i)), emb_mem_Vw X la G.N wF (G.th' i)⟩, ?_, ?_, rfl⟩
+  · exact Submodule.subset_span ⟨⟨_, hf⟩, ⟨α, i, by omega, rfl⟩, rfl⟩
+  · apply Subtype.ext
+    have e1 : ((ym G la α : ↥(Frac0 X la G.w)) : Lw X la G.w) = frac X la G.w (∑ i, α i) (secPow X la G.w α) :=
+      coe_prod_sfr X la G.w α
+    rw [Submodule.coe_smul, Subalgebra.smul_def, smul_eq_mul, e1, coe_toHK, coe_toHK0, ← frac_zero, frac_mul,
+      add_zero]
+    have e2 := frac_pow_mul X la G.w (∑ i, α i) (T - ∑ i, α i)
+      (secPow X la G.w α * emb X la G.N (X.inc wF (G.th' i)))
+    rw [show ∑ i, α i + (T - ∑ i, α i) = T by omega] at e2
+    rw [← e2]
+    congr 1
+    show _ = _
+    ring
+
+end PoleLengthBounds
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.TaylorSpanLeBound
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions NumberField IsDedekindDomain Module Formalism.MainNotions.Gaps.EtaleWeightGaps
+
+namespace PoleLengthBounds
+
+theorem taylorSpanLeBound : TaylorSpanLeBound := by
+  intro D B P j X ka wL wF G la Q S CRm T c hOk hw hth
+  let G' : GlobalFamilyData X (addL wF wL T) wL wF :=
+    { N := G.N, w := G.w, del := G.del, th' := G.th', rz := G.rz, alz := G.alz, th0 := G.th0,
+      zc := fun _ => 0, rq := 0, th := Fin.elim0, iet := G.iet, et := G.et, mx := G.mx }
+  let Q' : LocalPointData G' la := ⟨Q.y, Q.g0, Q.c⟩
+  exact reduced_generators_le (G := G') Q' S hOk.2.1 hOk.2.2.1 hw hth
+
+end PoleLengthBounds
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.HasseMemHK
+
+section
 
 @[expose] public section
 
@@ -334,3 +485,6 @@ theorem grBound_of (hTR : TaylorRep) (hTH : TaylorHasse) (hHS : HasseSmul) (hHV 
     exact le_rfl
 
 end PoleLengthBounds
+end
+end
+end

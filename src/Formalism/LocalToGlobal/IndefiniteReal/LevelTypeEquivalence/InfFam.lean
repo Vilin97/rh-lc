@@ -2,15 +2,20 @@ module
 
 public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
 public import Formalism.LocalToGlobal.UnitaryNorms.RealPl
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfEmbUnique
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -18,8 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,9 +42,66 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfEmbUnique
+
+section
+
+@[expose] public section
+
+@[reducible] noncomputable def UpperTheory.Reformulated.B.Qf27.Ainf :
+    (F : Type) → [Field F] → Type :=
+    fun (F : Type) [Field F] ↦ NumberField.InfiniteAdeleRing F
+
+noncomputable def UpperTheory.Reformulated.B.Qf27.IsInfEmb :
+    {F E : Type} →
+      [inst : Field F] →
+        [inst_1 : Field E] → [inst_2 : Algebra F E] → (E →+* ℂ) → (TensorProduct F (UpperTheory.Reformulated.B.Qf27.Ainf F) E →+* ℂ) → Prop :=
+    fun {F E : Type} [Field F] [Field E] [Algebra F E] (τ : E →+* ℂ)
+        (θ : TensorProduct F (UpperTheory.Reformulated.B.Qf27.Ainf F) E →+* ℂ) ↦
+      (∀ (x : E),
+          (θ : TensorProduct F (UpperTheory.Reformulated.B.Qf27.Ainf F) E → ℂ) ((1 : UpperTheory.Reformulated.B.Qf27.Ainf F) ⊗ₜ[F] x) = (τ : E → ℂ) x) ∧
+        Continuous fun (a : UpperTheory.Reformulated.B.Qf27.Ainf F) ↦
+          (θ : TensorProduct F (UpperTheory.Reformulated.B.Qf27.Ainf F) E → ℂ) (a ⊗ₜ[F] (1 : E))
+
+theorem UpperTheory.Reformulated.B.Qf27.infEmb_unique :
+    ∀ {F E : Type} [inst : Field F] [NumberField F] [inst_2 : Field E] [inst_3 : Algebra F E] {τ : E →+* ℂ}
+      {θ θ' : TensorProduct F (UpperTheory.Reformulated.B.Qf27.Ainf F) E →+* ℂ},
+      UpperTheory.Reformulated.B.Qf27.IsInfEmb τ θ → UpperTheory.Reformulated.B.Qf27.IsInfEmb τ θ' → θ = θ' := by
+  intro F E _ _ _ _ τ θ θ' h h'
+  obtain ⟨h1, h2⟩ := h
+  obtain ⟨h1', h2'⟩ := h'
+  have hd : DenseRange (algebraMap F (UpperTheory.Reformulated.B.Qf27.Ainf F)) :=
+    NumberField.InfiniteAdeleRing.denseRange_algebraMap F
+  have key : ∀ c : F, (algebraMap F (UpperTheory.Reformulated.B.Qf27.Ainf F) c) ⊗ₜ[F] (1 : E)
+      = (1 : UpperTheory.Reformulated.B.Qf27.Ainf F) ⊗ₜ[F] (algebraMap F E c) := by
+    intro c
+    rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
+  have hA : (fun a : UpperTheory.Reformulated.B.Qf27.Ainf F ↦ θ (a ⊗ₜ[F] (1 : E)))
+      = fun a : UpperTheory.Reformulated.B.Qf27.Ainf F ↦ θ' (a ⊗ₜ[F] (1 : E)) := by
+    refine hd.equalizer h2 h2' ?_
+    funext c
+    simp only [Function.comp_apply]
+    rw [key, h1, h1']
+  refine RingHom.ext fun z ↦ ?_
+  induction z using TensorProduct.induction_on with
+  | zero => rw [map_zero, map_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  | tmul a x =>
+    have e : a ⊗ₜ[F] x = (a ⊗ₜ[F] (1 : E)) * ((1 : UpperTheory.Reformulated.B.Qf27.Ainf F) ⊗ₜ[F] x) := by
+      rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
+    rw [e, map_mul, map_mul, h1, h1', congrFun hA a]
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
+
+section
 
 @[expose] public section
 
@@ -329,4 +389,6 @@ theorem continuous_splitEquiv_symm : Continuous (splitEquiv D).symm := by
 
 end Formalism.IndefR.Eqv
 
+end
+end
 end

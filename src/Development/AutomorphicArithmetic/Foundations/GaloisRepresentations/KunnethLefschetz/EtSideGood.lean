@@ -6,46 +6,9 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbsolutelyIn
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChernClassKummerClassAdditiveStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupChernKummerPullbackNaturalityStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupProductGradedCommRingAxiomsHoldStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupVanishesOnTwoMemberCoverStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyBijectiveOfSupportBijectiveStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyCoefficientLongExactSequenceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyCoefficientRingInvarianceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyFieldEqGaloisCohomologyStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyNegativeVanishingDegreeZeroStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyTwistedFilteredColimitContinuityStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyVanishingAlgebraicOverRatFunc
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelwiseEquivalenceIsEquivalenceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MayerVietorisEquivalenceOfCoverStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NeZeroOfDvd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PositiveDegreeClassesDieOnEtaleCoverStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiIsoHypercohomologyBijectiveStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothSurjectiveCechDescentCohomologyStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistLocalToGlobalStrictlyHenselianStatement
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.AffineProperBaseChange
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.E4
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.EtaleAxioms.A0Alt
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.N81
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PurTop
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomologyExcisionAxiomHolds
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomologyFunctorialityAxiomsHold
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.DiagonalEtaleThreeOfFirst
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.DiagonalPullbacks.DiagEt3Of
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtMain
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.InFormalGroupPoints
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.AdicTopHolds
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.TrInHolds
-public import Development.EtaleCohomology.EtaleSheaves.EtaleEvenCohomologyGradedCommRingOfCupRingAxioms
-public import Development.EtaleCohomology.EtaleSheaves.LeafChernPf
-import Development.EtaleCohomology.EtaleSheaves.LeafCover2Of
-public import Development.EtaleCohomology.EtaleSheaves.LeafGeomPfLoc
-public import Development.EtaleCohomology.EtaleSheaves.LeafLinePf
-public import Development.EtaleCohomology.EtaleSheaves.LeafMapWPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafNatPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafNewtonPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafWhitneyPf
-public import Development.EtaleCohomology.EtaleSheaves.UnimodularBlockEqToHomValEqOne
-public import Development.EtaleCohomology.KummerTheory.GoalHolds
-public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.Geo
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChosenInjectiveResolutionEtaleSheafPropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupProductEqZeroOfVanishingOnCoverStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -57,6 +20,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -83,7 +47,227 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyBijectiveOfSupportBijectiveStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyCoefficientLongExactSequenceStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyCoefficientRingInvarianceStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyFieldEqGaloisCohomologyStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyNegativeVanishingDegreeZeroStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyTwistedFilteredColimitContinuityStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyVanishingAlgebraicOverRatFunc
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelwiseEquivalenceIsEquivalenceStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MayerVietorisEquivalenceOfCoverStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NeZeroOfDvd
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PositiveDegreeClassesDieOnEtaleCoverStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiIsoHypercohomologyBijectiveStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothSurjectiveCechDescentCohomologyStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistLocalToGlobalStrictlyHenselianStatement
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.AffineProperBaseChange
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.E4
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.EtaleAxioms.A0Alt
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.N81
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PurTop
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomologyExcisionAxiomHolds
+import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomologyFunctorialityAxiomsHold
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.DiagonalEtaleThreeOfFirst
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.DiagonalPullbacks.DiagEt3Of
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtMain
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HomotopyInvarianceEtale
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LaurentPolynomialCohomologyVanishing
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelwiseEquivalenceIsEquivalenceStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectiveBundleFormulaVectorBundleAnySpace
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothAffineCurveEtaleCohomologicalDimensionLeOn
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistLocalToGlobalStrictlyHenselianStatement
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SpecAbsolutelyIntegrallyClosedCohomology
+public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EtaleCohomologyIndEtaleBaseChange
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.HodgeSurjectivity.HodgeTateSurjectivePositiveDim
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.AdicTopOf
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.EtProps
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.PRingL
+public import Development.EtaleCohomology.EtaleTrace.LRingPf
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PDualSum
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PGeomPb
+public import Development.EtaleCohomology.EtaleTrace.H0LimitCoherence
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PProjBC
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PSumBC
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PSumCl
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PSumHl
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PiBCHolds
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PullbackComp
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TranscendenceTraces.IsolateSpecHolds
+public import Development.EtaleCohomology.EtaleSheaves.EtaleEvenCohomologyGradedCommRingOfCupRingAxioms
+public import Development.EtaleCohomology.EtaleSheaves.LeafChernPf
+import Development.EtaleCohomology.EtaleSheaves.LeafCover2Of
+public import Development.EtaleCohomology.EtaleSheaves.LeafGeomPfLoc
+public import Development.EtaleCohomology.EtaleSheaves.LeafLinePf
+public import Development.EtaleCohomology.EtaleSheaves.LeafMapWPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafNatPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafNewtonPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafWhitneyPf
+public import Development.EtaleCohomology.EtaleSheaves.UnimodularBlockEqToHomValEqOne
+public import Development.EtaleCohomology.KummerTheory.GoalHolds
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.Geo
 public import Development.EtaleCohomology.EtaleSheaves.HalfDegreeVanishing.SecondBlockUnimodularLocusInclusionMono
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupVanishesOnTwoMemberCover
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace GlobalTheory.EtC
+
+theorem a6supp : DivisorSupportCondition := by
+  intro q _ U V E f g hc n m i j a b ha hb
+  exact GlobalTheory.T.cupProduct_eq_zero_of_vanishing_on_cover (ZMod q) (twPair q i j) ((GlobalTheory.T.chosenInjectiveResolution_etaleSheaf_properties (ZMod q) (tw q i)).2.1)
+    ((GlobalTheory.T.chosenInjectiveResolution_etaleSheaf_properties (ZMod q) (tw q j)).2.1) f g hc rfl a b ha hb
+
+end GlobalTheory.EtC
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CupVanishesOnTwoMemberCoverStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+theorem _root_.GlobalTheory.T.cup_vanishes_on_two_member_cover : GlobalTheory.EtC.DivisorSupportCondition := by
+  first | (exact @GlobalTheory.EtC.a6supp) | (exact GlobalTheory.EtC.a6supp) | (intros; apply GlobalTheory.EtC.a6supp  <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.InFormalGroupPoints
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.Gal.KunnethLefschetz
+open GlobalTheory.EtC
+
+theorem upTo {P : Prop} (h : A1 → A2 → A3 → A4 → A5 → A7 → A8 → A9 → A10 → A11 → B1 → B2 → B3 → B4 → B5 → B7 → C1 → C2 → C3 → C4 →
+    C5 → D1 → P) : P :=
+  h GlobalTheory.T.quasiIso_hypercohomology_bijective GlobalTheory.T.etC_a2 GlobalTheory.T.levelwiseEquivalence_isEquivalence GlobalTheory.T.mayerVietoris_equivalence_of_cover GlobalTheory.T.positiveDegreeClasses_die_on_etaleCover GlobalTheory.T.etaleCohomology_coefficient_longExactSequence GlobalTheory.T.etaleCohomology_coefficientRing_invariance GlobalTheory.T.etaleCohomology_negative_vanishing_degree_zero
+    GlobalTheory.T.etaleCohomology_bijective_of_support_bijective RedCoef.a11 GlobalTheory.T.etaleCohomology_twisted_filtered_colimit_continuity UpperTheory.etaleCohomology_functorialityAxioms_hold GlobalTheory.T.etC_b3 UpperTheory.etaleCohomology_excisionAxiom_holds GlobalTheory.T.absolutelyIntegrallyClosed_domain_tateTwistAcyclic GlobalTheory.T.etaleCohomology_field_eq_galoisCohomology
+    GlobalTheory.EtC.gaugeSplitting_holds GlobalTheory.EtC.etC_c2 UpperTheory.Cb.etale_cohomology_ind_etale_base_change HomotopyInv.homotopy_invariance_etale GlobalTheory.EtC.laurentPolynomial_cohomology_strictlyHenselian_vanishing projectiveBundleFormula_vectorBundle_any_space
+
+theorem duality_diagonalClass_of_affineProperBaseChange (e1 : E1) : E2 :=
+  UpperTheory.Et.E2.main ⟨GlobalTheory.T.quasiIso_hypercohomology_bijective, GlobalTheory.T.etC_a2, GlobalTheory.T.levelwiseEquivalence_isEquivalence, GlobalTheory.T.mayerVietoris_equivalence_of_cover, GlobalTheory.T.positiveDegreeClasses_die_on_etaleCover, GlobalTheory.T.etaleCohomology_coefficient_longExactSequence, GlobalTheory.T.etaleCohomology_coefficientRing_invariance,
+    GlobalTheory.T.etaleCohomology_negative_vanishing_degree_zero, GlobalTheory.T.etaleCohomology_bijective_of_support_bijective, GlobalTheory.T.etaleCohomology_twisted_filtered_colimit_continuity, UpperTheory.etaleCohomology_functorialityAxioms_hold, GlobalTheory.T.etC_b3, UpperTheory.etaleCohomology_excisionAxiom_holds, GlobalTheory.T.absolutelyIntegrallyClosed_domain_tateTwistAcyclic, e1⟩
+
+end UpperTheory.Gal.KunnethLefschetz
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PCupEx
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.EtaleTrace CrystallineSemistableComparison ReciprocityTheory.ChartRestriction.G.Geo.Tor UpperTheory.Gal.KunnethLefschetz
+open scoped TensorProduct DirectSum
+
+theorem UpperTheory.Gal.KunnethLefschetz.cupEx_holds :
+    UpperTheory.Gal.KunnethLefschetz.CupEx := by
+  intro hB l _ K M i j x y
+  exact ⟨LateralTheory.EtaleTrace.LRingPf.cupL l M.spc (Nat.cast_add i j).symm hB x y,
+    fun k => LateralTheory.EtaleTrace.LRingPf.cupL_apply l M.spc (Nat.cast_add i j).symm hB x y k⟩
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.PIntFun
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.EtaleTrace CrystallineSemistableComparison ReciprocityTheory.ChartRestriction.G.Geo.Tor UpperTheory.Gal.KunnethLefschetz
+open scoped TensorProduct DirectSum
+
+theorem UpperTheory.Gal.KunnethLefschetz.intFun_holds :
+    UpperTheory.Gal.KunnethLefschetz.IntFun := by
+  intro hB l _ K M hR i j r g h hspan
+  refine eq_top_iff.mpr (le_trans (le_of_eq hspan.symm) ?_)
+  apply Submodule.span_le.mpr
+  rintro f ⟨s, y, hy⟩
+  obtain ⟨b, y0, hb, rfl⟩ := LateralTheory.EtaleTrace.H0LimitCoherence.tensor_form l y
+  have hb' : ((b : ℚ_[l])) ≠ 0 := fun e => hb (PadicInt.coe_eq_zero.mp e)
+  have hone : (1 : ℚ_[l]) ⊗ₜ[ℤ_[l]] y0 = (b : ℚ_[l]) • (((b : ℚ_[l]))⁻¹ ⊗ₜ[ℤ_[l]] y0) := by
+    rw [TensorProduct.smul_tmul', smul_eq_mul, mul_inv_cancel₀ hb']
+  have hmem : ((b : ℚ_[l]) • f) ∈
+      {f | ∃ s y, ∀ (x : M.T i), ∃ z, M.CupT x y z ∧ M.toV (i + j) z = f (M.toV i x) • g s} := by
+    refine ⟨s, y0, fun x => ⟨LateralTheory.EtaleTrace.LRingPf.cupL l M.spc h hB x y0, ?_, ?_⟩⟩
+    · intro k
+      exact LateralTheory.EtaleTrace.LRingPf.cupL_apply l M.spc h hB x y0 k
+    · have hc := hR.isCup (GlobalTheory.Et.geom (PadicAlgCl l) M.q) (i : ℤ) (j : ℤ) ((i + j : ℕ) : ℤ) h x y0
+        (LateralTheory.EtaleTrace.LRingPf.cupL l M.spc h hB x y0)
+        (fun k => LateralTheory.EtaleTrace.LRingPf.cupL_apply l M.spc h hB x y0 k)
+      have hx := hy (1 ⊗ₜ[ℤ_[l]] x)
+      change (1 : ℚ_[l]) ⊗ₜ[ℤ_[l]] (LateralTheory.EtaleTrace.LRingPf.cupL l M.spc h hB x y0) = _
+      rw [← hc, hone, LinearMap.map_smul, hx, smul_smul]
+      rfl
+  have hsub := Submodule.subset_span (R := ℚ_[l]) hmem
+  have hsm := Submodule.smul_mem _ ((b : ℚ_[l]))⁻¹ hsub
+  rw [smul_smul, inv_mul_cancel₀ hb', one_smul] at hsm
+  exact hsm
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.ProjectiveBaseChange.AdicTopHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CrystallineSemistableComparison
+
+namespace UpperTheory.Gal.KunnethLefschetz
+
+theorem adicTop_holds : AdicTop :=
+  adicTop_of ringL_holds projBC_holds sumCl_holds sumBC_holds geomPb_holds sumHl_holds piBC_holds dualSum_holds perm_holds
+    intFun_holds cupEx_holds
+
+theorem etSide_sm (hI : In) (hQ : QDual) (hS : InSum) (hC : ModelComponents) (hG : GeometricGenericComponents) (l : ℕ) [Fact l.Prime]
+    (K : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] K] : EtSide (Model.Sm (l := l) (K := K)) :=
+  adicTop_holds hI hQ hS l K _ (fun _ h => h.1) (hC l K).1 fun M h d hd => hG l K M h.1 d hd
+
+theorem etFin_of (hI : In) (hQ : QDual) (hS : InSum) (hC : ModelComponents) (hG : GeometricGenericComponents) : CrystallineSemistableComparison.Onto.EtFin :=
+  fun l _ K _ M hM n => (etSide_sm hI hQ hS hC hG l K).fin M hM n
+
+end UpperTheory.Gal.KunnethLefschetz
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.TrInHolds
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.Gal.KunnethLefschetz
+open GlobalTheory.EtC
+
+theorem trIn_holds : TrIn :=
+  ⟨TranscendenceTraces.wtNormal_holds, TranscendenceTraces.nmlLoc_holds, TranscendenceTraces.nwtDeg_holds, TranscendenceTraces.trDegQ_holds GlobalTheory.T.etaleCohomology_coefficientRing_invariance⟩
+
+end UpperTheory.Gal.KunnethLefschetz
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtSideGood
+
+section
 
 @[expose] public section
 
@@ -142,3 +326,5 @@ theorem etFin : CrystallineSemistableComparison.Onto.EtFin := etFin_of H.inputs 
 end Core
 
 end UpperTheory.Gal.KunnethLefschetz
+end
+end

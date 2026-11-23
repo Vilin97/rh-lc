@@ -3,13 +3,9 @@ module
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WBMemLatS
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosurePadicInt
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdicSumExists
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LatSFiniteSpan
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TchNeMulOfPowEq
-import GroundTheory.PAdicHodge.BdRLattice
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,12 +19,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,11 +40,206 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LocalPrimeGaloisActionPeriodT
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TripleAtt
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 import ReciprocityTheory.NeutralLocalFields.Reciprocity
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvalMod
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.AinfMapSurjective
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
+import GroundTheory.PAdicHodge.BdRLattice
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LatSFiniteSpan
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
+open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge GlobalTheory.CompanionTheory.LTPer
+open scoped Classical
+
+namespace GlobalTheory.CompanionTheory.LTPer
+
+theorem latS_finite_span {l : ℕ} [Fact l.Prime] (K' : IntermediateField ℚ_[l] (Om l)) [FiniteDimensional ℚ_[l] K'] :
+    ∃ T : Finset (Formalism.Per6.BdRp l), (∀ t ∈ T, t ∈ latS K') ∧
+      ∀ s ∈ latS K', ∃ a : Formalism.Per6.BdRp l → Wl l, s = ∑ t ∈ T, t * wB l (a t) := by
+  have hfin : Module.Finite ℤ_[l] (integralClosure ℤ_[l] K') :=
+    IsIntegralClosure.finite ℤ_[l] ℚ_[l] K' (integralClosure ℤ_[l] K')
+  have htow : IsScalarTower ℤ_[l] K' (Om l) := IsScalarTower.of_algebraMap_eq (fun c => by
+    rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] (Om l), IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] K']
+    rfl)
+  obtain ⟨b₀, hb₀⟩ := hfin.fg_top
+  let ι : ↥(integralClosure ℤ_[l] K') → Formalism.Per6.BdRp l := fun b => rB l ((b : K') : Om l)
+  let _ : Algebra (Wl l) (Formalism.Per6.BdRp l) := (wB l).toAlgebra
+  have hsm : ∀ (a : Wl l) (x : Formalism.Per6.BdRp l), a • x = wB l a * x := fun a x => Algebra.smul_def a x
+  let T : Finset (Formalism.Per6.BdRp l) := b₀.image ι
+  let N : Submodule (Wl l) (Formalism.Per6.BdRp l) := Submodule.span (Wl l) (T : Set (Formalism.Per6.BdRp l))
+  have hZ : ∀ c : ℤ_[l], rB l (algebraMap ℤ_[l] (Om l) c) =
+      wB l (GroundTheory.PAdicHodge.IsPerfectoidField.padicIntToWitt (K := ℂ_[l]) l c) := by
+    intro c
+    have h := GroundTheory.PAdicHodge.IsPerfectoidField.algebraMap_padic_coe (K := ℂ_[l]) l c
+    have h2 := (GroundTheory.PAdicHodge.algClToBdR l).commutes (c : ℚ_[l])
+    exact h2.trans h
+  have hιmul : ∀ x y, ι (x * y) = ι x * ι y := fun x y => by simp [ι]
+  have hO : ∀ z, ι z ∈ N := by
+    intro z
+    have hz : z ∈ Submodule.span ℤ_[l] (b₀ : Set ↥(integralClosure ℤ_[l] K')) := hb₀ ▸ Submodule.mem_top
+    induction hz using Submodule.span_induction with
+    | mem x hx => exact Submodule.subset_span (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hx))
+    | zero => simp [ι]
+    | add x y _ _ hx hy =>
+      have e : ι (x + y) = ι x + ι y := by simp [ι]
+      rw [e]; exact N.add_mem hx hy
+    | smul c x _ hx =>
+      have e : ι (c • x) = (GroundTheory.PAdicHodge.IsPerfectoidField.padicIntToWitt (K := ℂ_[l]) l c) • ι x := by
+        rw [hsm, ← hZ]
+        have e2 : (((c • x : ↥(integralClosure ℤ_[l] K')) : K') : Om l) =
+            algebraMap ℤ_[l] (Om l) c * ((x : K') : Om l) := by
+          have : ((c • x : ↥(integralClosure ℤ_[l] K')) : K') = c • (x : K') := rfl
+          rw [this, Algebra.smul_def, IntermediateField.coe_mul]
+          exact congrArg (· * ((x : K') : Om l)) (IsScalarTower.algebraMap_apply ℤ_[l] K' (Om l) c).symm
+        simp only [ι, e2, map_mul]
+      rw [e]; exact N.smul_mem _ hx
+  have hmul : N * N ≤ N := by
+    rw [Submodule.span_mul_span, Submodule.span_le]
+    rintro _ ⟨x, hx, y, hy, rfl⟩
+    obtain ⟨b, _, rfl⟩ := Finset.mem_image.1 (Finset.mem_coe.1 hx)
+    obtain ⟨b', _, rfl⟩ := Finset.mem_image.1 (Finset.mem_coe.1 hy)
+    change ι b * ι b' ∈ N
+    rw [← hιmul]
+    exact hO _
+  have h1 : (1 : Formalism.Per6.BdRp l) ∈ N := by
+    have := hO 1
+    simpa [ι] using this
+  have hint : ∀ b : ↥(integralClosure ℤ_[l] K'), IsIntegral ℤ_[l] ((b : K') : Om l) := fun b =>
+    (isIntegral_algebraMap_iff (A := K') (B := Om l) ).2 b.2
+  have hS : ∀ x ∈ latS K', x ∈ N := by
+    intro x hx
+    unfold latS at hx
+    induction hx using Subring.closure_induction with
+    | mem x hx =>
+      rcases hx with ⟨a, rfl⟩ | ⟨y, ⟨hyK, hyI⟩, rfl⟩
+      · have := N.smul_mem a h1
+        rwa [hsm, mul_one] at this
+      · have hz : IsIntegral ℤ_[l] (⟨y, hyK⟩ : K') :=
+          (isIntegral_algebraMap_iff (A := K') (B := Om l) ).1 hyI
+        exact hO ⟨⟨y, hyK⟩, hz⟩
+    | zero => exact N.zero_mem
+    | one => exact h1
+    | add _ _ _ _ hx hy => exact N.add_mem hx hy
+    | neg _ _ hx => exact N.neg_mem hx
+    | mul _ _ _ _ hx hy => exact hmul (Submodule.mul_mem_mul hx hy)
+  refine ⟨T, ?_, ?_⟩
+  · intro t ht
+    obtain ⟨b, _, rfl⟩ := Finset.mem_image.1 ht
+    exact rB_mem_latS K' (b : K').2 (hint b)
+  · intro x hx
+    obtain ⟨f, _, hf⟩ := Submodule.mem_span_finset.1 (hS x hx)
+    exact ⟨f, by rw [← hf]; exact Finset.sum_congr rfl (fun t _ => by rw [hsm, mul_comm])⟩
+
+end GlobalTheory.CompanionTheory.LTPer
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TchNeMulOfPowEq
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
+open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge GlobalTheory.CompanionTheory.LTPer
+open scoped Classical
+
+namespace GlobalTheory.CompanionTheory.LTPer
+
+theorem exists_monic_eval₂_of_span {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (S : Subring B)
+    (T : Finset B) (hW : ∀ a, f a ∈ S) (hT : ∀ t ∈ T, t ∈ S)
+    (hS : ∀ s ∈ S, ∃ a : B → A, s = ∑ t ∈ T, t * f (a t)) (e : B) (he : e ∈ S) :
+    ∃ P : Polynomial A, P.Monic ∧ P.eval₂ f e = 0 := by
+  letI : Algebra A B := f.toAlgebra
+  let C : Subalgebra A B := { S with algebraMap_mem' := hW }
+  have hfg : (Subalgebra.toSubmodule C).FG := by
+    refine ⟨T, le_antisymm ?_ ?_⟩
+    · exact Submodule.span_le.2 fun t ht => hT t ht
+    · intro s hs
+      obtain ⟨a, rfl⟩ := hS s hs
+      refine Submodule.sum_mem _ fun t ht => ?_
+      have : t * f (a t) = a t • t := by
+        rw [Algebra.smul_def, mul_comm]; rfl
+      rw [this]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span ht)
+  exact IsIntegral.of_mem_of_fg C hfg e he
+
+theorem pow_natDegree_eq_zero_of_eval₂ {A B R : Type*} [CommRing A] [CommRing B] [CommRing R]
+    (f : A →+* B) (hf : Function.Injective f) (c : A →+* R) (P : Polynomial A) (hP : P.Monic)
+    (e : B) (he : P.eval₂ f e = 0) (n v : A) (hn : c n = 0) (hv : f n * e = f v) :
+    c v ^ P.natDegree = 0 := by
+  have h1 : (P.scaleRoots n).eval₂ f (f v) = 0 := by
+    rw [← hv, Polynomial.scaleRoots_eval₂_mul, he, mul_zero]
+  have h2 : (P.scaleRoots n).eval v = 0 := by
+    apply hf
+    rw [← Polynomial.eval₂_at_apply, h1, map_zero]
+  have h3 : (P.scaleRoots n).eval₂ c (c v) = 0 := by
+    rw [Polynomial.eval₂_at_apply, h2, map_zero]
+  rw [Polynomial.eval₂_eq_sum_range, Polynomial.natDegree_scaleRoots,
+    Finset.sum_eq_single P.natDegree] at h3
+  · rw [Polynomial.coeff_scaleRoots, Nat.sub_self, pow_zero, mul_one, Polynomial.coeff_natDegree,
+      hP.leadingCoeff, map_one, one_mul] at h3
+    exact h3
+  · intro i hi hne
+    have hlt : i < P.natDegree := lt_of_le_of_ne (Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)) hne
+    rw [Polynomial.coeff_scaleRoots, map_mul, map_pow, hn, zero_pow (Nat.sub_ne_zero_of_lt hlt)]
+    simp
+  · intro h
+    exact absurd (Finset.mem_range.2 (Nat.lt_succ_self _)) h
+
+theorem tch_ne_mul_of_pow_eq {l : ℕ} [Fact l.Prime] (S : Subring (Formalism.Per6.BdRp l)) (T : Finset (Formalism.Per6.BdRp l)) :
+    (∀ a, wB l a ∈ S) → (∀ t ∈ T, t ∈ S) →
+    (∀ s ∈ S, ∃ a : Formalism.Per6.BdRp l → Wl l, s = ∑ t ∈ T, t * wB l (a t)) →
+    ∀ (ϖ y : Formalism.Per6.BdRp l) (N : ℕ), y ∈ S → ϖ ^ N = (l : Formalism.Per6.BdRp l) * y →
+    ∀ u : Tl l, u ≠ 0 → ∀ s ∈ S, tch l u ≠ ϖ * s := by
+  intro hW hT hS ϖ y N hy hN u hu s hs h
+  haveI := GroundTheory.PAdicHodge.IsPerfectoidField.isDomain_preTilt (K := ℂ_[l]) l
+  obtain ⟨P, hP, hev⟩ := exists_monic_eval₂_of_span (wB l) S T hW hT hS (y * s ^ N)
+    (S.mul_mem hy (S.pow_mem hs N))
+  have hinj : Function.Injective (wB l) := PositivityTheory.LocInh.wittTo_injective
+  have hv : wB l (l : Wl l) * (y * s ^ N) = wB l (WittVector.teichmuller l (u ^ N)) := by
+    have h1 : wB l (WittVector.teichmuller l (u ^ N)) = tch l u ^ N := by
+      rw [map_pow, map_pow]; rfl
+    rw [h1, h, mul_pow, hN, map_natCast, mul_assoc]
+  have hc : (WittVector.constantCoeff : Wl l →+* Tl l) (l : Wl l) = 0 := by
+    rw [map_natCast]
+    exact CharP.cast_eq_zero _ _
+  have h0 := pow_natDegree_eq_zero_of_eval₂ (wB l) hinj WittVector.constantCoeff P hP _ hev
+    (l : Wl l) _ hc hv
+  have h2 : (WittVector.constantCoeff : Wl l →+* Tl l) (WittVector.teichmuller l (u ^ N)) = u ^ N :=
+    WittVector.teichmuller_coeff_zero l _
+  rw [h2] at h0
+  exact hu (eq_zero_of_pow_eq_zero (eq_zero_of_pow_eq_zero h0))
+
+end GlobalTheory.CompanionTheory.LTPer
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MemFBOfNear
+
+section
 
 @[expose] public section
 
@@ -282,3 +469,6 @@ theorem lattice_main : ∀ {l : ℕ} [Fact l.Prime] (K' : IntermediateField ℚ_
     rwa [e2] at e
 
 end GlobalTheory.CompanionTheory.LTPer
+end
+end
+end

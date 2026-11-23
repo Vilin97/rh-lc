@@ -1,13 +1,9 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.FrobeniusSplitPrimeDatum
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScCong
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScDisc
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScQuad
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScStrip
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScTeich
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScTheta
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SoCls
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.SlopeTestRemainingChoices
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.ContinuousResP
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScNorm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,8 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +37,245 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.IsUnitOrIsUnitOfAddOne
+import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ContinuousCoboundaries2
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.RatTorsionFree
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.ClassFieldRamification.IneAbs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.ClassFieldRamification.UnramIff
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Algebra.Order.Star.Rat
+public import Mathlib.Algebra.Polynomial.SpecificDegree
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScStrip
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScTeich
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.HthPlace
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SoCls
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScCong
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Pr UpperTheory.V.Fr UpperTheory.V
+
+theorem UpperTheory.V.Fr.sc_cong :
+    ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) (u : c.Oˣ) (a : (Qbar l)ˣ), ‖a.val - u.val.1‖ < 1 → Sd.Cong (a ^ 2) 1 → Units.map (residue c.O).toMonoidHom u ^ 2 = 1 := by
+  intro l _ c u a ha hcong
+  have hu := (sc_norm l c u.val).1
+  unfold Sd.Cong at hcong
+  rw [Units.val_pow_eq_pow_val, Units.val_one] at hcong
+  set x : PadicAlgCl l := ((u.val : c.O) : PadicAlgCl l) with hx
+  set y : PadicAlgCl l := a.val with hy
+  have hy1 : ‖y‖ ≤ 1 := by
+    have h := IsUltrametricDist.norm_add_le_max (y - x) x
+    rw [sub_add_cancel] at h
+    exact h.trans (max_le ha.le hu)
+  have hxy : ‖x + y‖ ≤ 1 := (IsUltrametricDist.norm_add_le_max x y).trans (max_le hu hy1)
+  have hmem : (u.val ^ 2 - 1 : c.O) ∈ maximalIdeal c.O := by
+    rw [(sc_norm l c _).2]
+    have e : ((u.val ^ 2 - 1 : c.O) : PadicAlgCl l) = (x - y) * (x + y) + (y ^ 2 - 1) := by
+      rw [hx]
+      push_cast
+      ring
+    rw [e]
+    refine lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ?_ hcong)
+    rw [norm_mul]
+    have : ‖x - y‖ < 1 := by rw [← norm_neg, neg_sub]; exact ha
+    nlinarith [norm_nonneg (x - y), norm_nonneg (x + y)]
+  ext
+  simp only [Units.val_pow_eq_pow_val, Units.coe_map, Units.val_one]
+  rw [← sub_eq_zero]
+  have h0 := (residue_eq_zero_iff _).2 hmem
+  rw [map_sub, map_pow, map_one] at h0
+  exact h0
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScDisc
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Pr UpperTheory.V.Fr UpperTheory.V
+
+theorem UpperTheory.V.Fr.sc_disc :
+    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime] (K : Type) [Field K] [NumberField K] [Algebra K Ω], Module.finrank ℚ K = 2 → (∀ B : ValuationSubring Ω, B.valuation (l : Ω) < 1 → Ine (F := ℚ) B ≤ galOf ℚ K Ω) → ¬ (l : ℤ) ∣ discr K := by
+  intro Ω _ _ _ l _ K _ _ _ h2 hB
+  haveI : Algebra.IsQuadraticExtension ℚ K := ⟨h2⟩
+  haveI : IsGalois ℚ K := {}
+  have hl : l.Prime := Fact.out
+  rw [← (UpperTheory.V.CF.unramIff).2.1 K l hl, (UpperTheory.V.CF.unramIff).1 K l hl]
+  intro w hw
+  obtain ⟨A, hA⟩ := ReciprocityTheory.Gal.exists_isPlaceOver (F := K) Ω w
+  have hv : A.valuation (l : Ω) < 1 := by
+    have h := (hA (l : 𝓞 K)).2 hw
+    simpa only [map_natCast] using h
+  have hI := hB A hv
+  rw [← UpperTheory.V.CF.ineAbs ℚ K Ω A w hA, Subgroup.eq_bot_iff_forall]
+  rintro _ ⟨σ, hσ, rfl⟩
+  have hσ' : ∀ x : K, σ (algebraMap K Ω x) = algebraMap K Ω x := hI hσ
+  ext x
+  apply (algebraMap K Ω).injective
+  show algebraMap K Ω (σ.restrictNormal K x) = algebraMap K Ω x
+  rw [AlgEquiv.restrictNormal_commutes]
+  exact hσ' x
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScQuad
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Pr UpperTheory.V.Fr UpperTheory.V
+
+theorem UpperTheory.V.Fr.sc_quad :
+    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (η : G ℚ Ω →* ℤˣ) (D : ℕ) (δ : Ω), 0 < D → δ ^ 2 = -(D : Ω) → (∀ s : G ℚ Ω, s δ = (η s : ℤ) • δ) → ∃ (K : Type) (_ : Field K) (_ : NumberField K) (_ : Algebra K Ω), Module.finrank ℚ K = 2 ∧ IsTotallyComplex K ∧ galOf ℚ K Ω = η.ker := by
+  intro Ω _ _ _ η D δ hD hδ hη
+  have hDq : (0 : ℚ) < D := by exact_mod_cast hD
+  have hDr : (0 : ℝ) < D := by exact_mod_cast hD
+  have hδ0 : δ ≠ 0 := by
+    rintro rfl
+    have h0 : ((D : ℕ) : Ω) = 0 := by
+      have := hδ.symm
+      simpa using this
+    exact hD.ne' (by exact_mod_cast h0)
+  set p : Polynomial ℚ := Polynomial.X ^ 2 + Polynomial.C (D : ℚ) with hp
+  have hmon : p.Monic := Polynomial.monic_X_pow_add_C _ two_ne_zero
+  have hdeg : p.natDegree = 2 := Polynomial.natDegree_X_pow_add_C
+  have hroot : Polynomial.aeval δ p = 0 := by
+    simp [hp, hδ]
+  have hirr : Irreducible p := by
+    refine Polynomial.irreducible_of_degree_le_three_of_not_isRoot (by rw [hdeg]; decide) ?_
+    intro x hx
+    simp only [hp, Polynomial.IsRoot, Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_X,
+      Polynomial.eval_C] at hx
+    nlinarith [sq_nonneg x]
+  have hmin : p = minpoly ℚ δ := minpoly.eq_of_irreducible_of_monic hirr hroot hmon
+  have hint : IsIntegral ℚ δ := ⟨p, hmon, by rw [← Polynomial.aeval_def]; exact hroot⟩
+  haveI : FiniteDimensional ℚ (IntermediateField.adjoin ℚ ({δ} : Set Ω)) :=
+    IntermediateField.adjoin.finiteDimensional hint
+  haveI : NumberField (IntermediateField.adjoin ℚ ({δ} : Set Ω)) := by constructor
+  refine ⟨IntermediateField.adjoin ℚ ({δ} : Set Ω), inferInstance, inferInstance, inferInstance, ?_, ?_, ?_⟩
+  · rw [IntermediateField.adjoin.finrank hint, ← hmin, hdeg]
+  · refine ⟨fun v => ?_⟩
+    rw [NumberField.InfinitePlace.isComplex_iff]
+    intro hr
+    rw [NumberField.ComplexEmbedding.isReal_iff] at hr
+    set φ := v.embedding
+    let d : IntermediateField.adjoin ℚ ({δ} : Set Ω) := ⟨δ, IntermediateField.mem_adjoin_simple_self ℚ δ⟩
+    have hd : d ^ 2 = -(D : IntermediateField.adjoin ℚ ({δ} : Set Ω)) := Subtype.ext (by simpa [d] using hδ)
+    have hz : (φ d) ^ 2 = -(D : ℂ) := by
+      have := congrArg φ hd
+      simpa using this
+    have hc : (starRingEnd ℂ) (φ d) = φ d := by
+      have := RingHom.congr_fun hr d
+      simpa using this
+    have him : (φ d).im = 0 := Complex.conj_eq_iff_im.mp hc
+    have hre := congrArg Complex.re hz
+    simp [pow_two, him] at hre
+    nlinarith [mul_self_nonneg (φ d).re]
+  · ext σ
+    rw [mem_galOf, MonoidHom.mem_ker]
+    constructor
+    · intro h
+      have h1 : σ δ = δ := h ⟨δ, IntermediateField.mem_adjoin_simple_self ℚ δ⟩
+      rw [hη σ] at h1
+      rcases Int.units_eq_one_or (η σ) with h2 | h2
+      · exact h2
+      · exfalso
+        rw [h2] at h1
+        simp only [Units.val_neg, Units.val_one, neg_smul, one_smul] at h1
+        have : (2 : Ω) * δ = 0 := by linear_combination -h1
+        rcases mul_eq_zero.mp this with h3 | h3
+        · exact two_ne_zero h3
+        · exact hδ0 h3
+    · intro h x
+      have hσδ : σ δ = δ := by rw [hη σ, h]; simp
+      have hext : ((σ : Ω →ₐ[ℚ] Ω).comp (IntermediateField.val _) :
+          IntermediateField.adjoin ℚ ({δ} : Set Ω) →ₐ[ℚ] Ω) = IntermediateField.val _ :=
+        IntermediateField.algHom_ext_of_eq_adjoin ℚ rfl (by
+          intro y hy
+          rw [Set.mem_singleton_iff] at hy
+          subst hy
+          exact hσδ)
+      exact AlgHom.congr_fun hext x
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScTheta
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Pr UpperTheory.V.Fr UpperTheory.V
+
+theorem UpperTheory.V.Fr.sc_theta :
+    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime] (w : ℕ), w.Prime → w ≡ 1 [MOD l] → ∃ θ : G ℚ Ω →* (Qbar l)ˣ, θ.ker = Hth Ω l w ∧ θ ≠ 1 ∧ θ ^ l = 1 ∧ Af.KillsMu w θ := by
+  intro Ω _ _ _ l _ w hw hwl
+  obtain ⟨-, hc, hidx, -, -⟩ := hth Ω l w hw hwl
+  haveI hN : (Hth Ω l w).Normal := ⟨fun n hn g => by
+    have h0 := Subgroup.commutator_mem_commutator (Subgroup.mem_top g) (Subgroup.mem_top n)
+    rw [commutatorElement_def] at h0
+    have h1 := hc h0
+    have h2 : g * n * g⁻¹ = g * n * g⁻¹ * n⁻¹ * n := by group
+    rw [h2]
+    exact (Hth Ω l w).mul_mem h1 hn⟩
+  have hcardQ : Nat.card (G ℚ Ω ⧸ Hth Ω l w) = l := hidx
+  haveI : NeZero l := ⟨(Fact.out : l.Prime).ne_zero⟩
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (Qbar l) l
+  have hcardR : Nat.card (rootsOfUnity l (Qbar l)) = l := hζ.card_rootsOfUnity
+  let e := mulEquivOfPrimeCardEq hcardQ hcardR
+  let θ : G ℚ Ω →* (Qbar l)ˣ :=
+    (rootsOfUnity l (Qbar l)).subtype.comp (e.toMonoidHom.comp (QuotientGroup.mk' (Hth Ω l w)))
+  have hθ : ∀ s, θ s = ((e (QuotientGroup.mk' (Hth Ω l w) s) : rootsOfUnity l (Qbar l)) : (Qbar l)ˣ) :=
+    fun s => rfl
+  have hker : θ.ker = Hth Ω l w := by
+    ext s
+    rw [MonoidHom.mem_ker, hθ]
+    constructor
+    · intro h
+      have h' : e (QuotientGroup.mk' (Hth Ω l w) s) = 1 := Subtype.ext h
+      rw [MulEquiv.map_eq_one_iff, QuotientGroup.mk'_apply, QuotientGroup.eq_one_iff] at h'
+      exact h'
+    · intro h
+      have h' : QuotientGroup.mk' (Hth Ω l w) s = 1 := (QuotientGroup.eq_one_iff s).mpr h
+      rw [h', map_one]
+      rfl
+  refine ⟨θ, hker, ?_, ?_, ?_⟩
+  · intro h1
+    have htop : Hth Ω l w = ⊤ := by rw [← hker, h1, MonoidHom.ker_one]
+    rw [htop, Subgroup.index_top] at hidx
+    exact (Fact.out : l.Prime).one_lt.ne hidx
+  · ext s
+    rw [MonoidHom.pow_apply, MonoidHom.one_apply, hθ]
+    exact congrArg Units.val ((mem_rootsOfUnity _ _).mp (e (QuotientGroup.mk' (Hth Ω l w) s)).2)
+  · unfold Af.KillsMu
+    intro s hs
+    rw [← MonoidHom.mem_ker, hker]
+    unfold Hth
+    refine ⟨⟨1, fun z hz => ?_⟩, ⟨1, fun z hz => ?_⟩⟩
+    · rw [one_pow, pow_one]
+      exact hs z hz
+    · rw [one_pow, pow_one]
+      have e1 := congrArg (s⁻¹ : G ℚ Ω) (hs z hz)
+      rw [← e1]
+      simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SeedCl
+
+section
 
 @[expose] public section
 
@@ -167,3 +400,5 @@ theorem UpperTheory.V.Fr.seed_cl :
     rw [← hη'ker]
     exact h1
   · exact sc_disc Ω l K hK2 (fun B' hB' => hKη ▸ hG.η_l B' hB')
+end
+end

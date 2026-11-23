@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgebraMapEqOfFaithfullyFlatIncludeLeftEqI
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+public import Mathlib.RingTheory.TensorProduct.IncludeLeftSubRight
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +44,39 @@ import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
 import Mathlib.Algebra.Homology.HomologicalComplex
 import Mathlib.Algebra.Homology.HomotopyCategory.HomComplex
+import Mathlib.AlgebraicTopology.SimplexCategory.Defs
 import Mathlib.Topology.Sheaves.Presheaf
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgebraMapEqOfFaithfullyFlatIncludeLeftEqI
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex Simplicial TensorProduct GlobalTheory.EtC
+
+namespace GlobalTheory.EtC
+
+theorem exists_algebraMap_eq_of_includeLeft_eq_includeRight :
+    ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] [Module.FaithfullyFlat A B] (b : B),
+      (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B) b =
+        (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B) b →
+      ∃ a : A, algebraMap A B a = b := by
+  intro A B _ _ _ _ b hb
+  have h := Algebra.IsEffective.of_faithfullyFlat A B
+  have h0 : Algebra.TensorProduct.includeLeftSubRight A B b = 0 := by
+    rw [Algebra.TensorProduct.includeLeftSubRight_apply, sub_eq_zero]
+    simpa using hb
+  obtain ⟨a, ha⟩ := (h b).mp h0
+  exact ⟨a, by simpa using ha⟩
+
+end GlobalTheory.EtC
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgebraMapEqOfFaithfullyFlatIncludeLeftEqIStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +84,5 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 
 theorem _root_.GlobalTheory.T.exists_algebraMap_eq_of_faithfullyFlat_includeLeft_eq_includeRight : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] [Module.FaithfullyFlat A B] (b : B), (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B) b = (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B) b → ∃ a : A, algebraMap A B a = b := by
   first | (exact @GlobalTheory.EtC.exists_algebraMap_eq_of_includeLeft_eq_includeRight) | (exact GlobalTheory.EtC.exists_algebraMap_eq_of_includeLeft_eq_includeRight) | (intros; apply GlobalTheory.EtC.exists_algebraMap_eq_of_includeLeft_eq_includeRight  <;> assumption)
+end
+end

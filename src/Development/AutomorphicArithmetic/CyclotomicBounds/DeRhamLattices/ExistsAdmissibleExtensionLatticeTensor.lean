@@ -5,9 +5,6 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMe
 public import Formalism.SharpRestriction.LevelLetterCocycles.TableLineDegreeTwo
 public import Mathlib.RingTheory.Coalgebra.IsFrobenius
 public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ActExtLApply
-public import Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.ExistsAdmissibleLatticeMatrixOfPeriodData
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TmulSurjectiveRankOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,9 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,7 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,6 +43,122 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CentralIdemCoeff
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.GlobalCore
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ConstOneMem
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LiftQMk
+public import Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.ExistsAdmissibleLatticeMatrixOfPeriodData
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ActExtLApply
+
+section
+
+@[expose] public section
+
+
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.Pass GlobalTheory.Cut GlobalTheory.UseLoc Module TensorProduct GlobalTheory.UseLoc.Cases
+
+noncomputable section
+namespace GlobalTheory.UseLoc.Cases.AdmW
+
+open GlobalTheory.AdmLoc
+
+section Ext
+variable {G : Type} [Group G] [TopologicalSpace G] {LL : Type} [Field LL] {O : Type} [CommRing O] [Algebra O LL]
+  {V : Type} [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower O LL V] {ρ : Representation LL G V}
+  (L : Lattice (O := O) ρ) (X : Type) [AddCommGroup X] [Module O X] (χ₁ : G →* Oˣ) (z : G → ↥L.T ⊗[O] X)
+
+def actExtL (g : G) : ((↥L.T ⊗[O] X) × O) →ₗ[O] ((↥L.T ⊗[O] X) × O) :=
+  LinearMap.prod ((actT L g).rTensor X ∘ₗ LinearMap.fst O _ O +
+      (LinearMap.id : O →ₗ[O] O).smulRight (((χ₁ g : Oˣ) : O) • z g) ∘ₗ LinearMap.snd O _ O)
+    ((((χ₁ g : Oˣ) : O) • (LinearMap.id : O →ₗ[O] O)) ∘ₗ LinearMap.snd O _ O)
+
+theorem actExtL_apply (g : G) (p : (↥L.T ⊗[O] X) × O) : actExtL L X χ₁ z g p = tableLineDegreeTwo.actExt L X χ₁ z g p := by
+  simp [actExtL, tableLineDegreeTwo.actExt, mul_comm]
+
+variable {L X χ₁ z}
+
+variable (L X χ₁ z)
+
+theorem actExtL_ker (lam : O) (a : ℕ) (hX : ∀ x : X, lam ^ a • x = 0) (g : G) :
+    tableLineDegreeTwo.kerExt L X lam a ≤ (tableLineDegreeTwo.kerExt L X lam a).comap (actExtL L X χ₁ z g) := by
+  have hT : ∀ m : ↥L.T ⊗[O] X, lam ^ a • m = 0 := by
+    intro m
+    induction m using TensorProduct.induction_on with
+    | zero => simp
+    | tmul t x => rw [TensorProduct.smul_tmul', TensorProduct.smul_tmul, hX, TensorProduct.tmul_zero]
+    | add u v hu hv => rw [smul_add, hu, hv, add_zero]
+  rintro ⟨m, y⟩ ⟨hm, hy⟩
+  simp only [Submodule.mem_bot] at hm
+  subst hm
+  obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hy
+  rw [Submodule.mem_comap, actExtL_apply]
+  refine ⟨?_, ?_⟩
+  · show _ ∈ (⊥ : Submodule O (↥L.T ⊗[O] X))
+    rw [Submodule.mem_bot]
+    simp only [tableLineDegreeTwo.actExt, map_zero, zero_add]
+    rw [mul_smul, hT, smul_zero]
+  · show _ ∈ Ideal.span {lam ^ a}
+    simp only [tableLineDegreeTwo.actExt]
+    exact Ideal.mul_mem_left _ _ (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _))
+
+theorem kerExt_kill (lam : O) (a : ℕ) (hX : ∀ x : X, lam ^ a • x = 0)
+    (m : ((↥L.T ⊗[O] X) × O) ⧸ tableLineDegreeTwo.kerExt L X lam a) : lam ^ a • m = 0 := by
+  have hT : ∀ m : ↥L.T ⊗[O] X, lam ^ a • m = 0 := by
+    intro m
+    induction m using TensorProduct.induction_on with
+    | zero => simp
+    | tmul t x => rw [TensorProduct.smul_tmul', TensorProduct.smul_tmul, hX, TensorProduct.tmul_zero]
+    | add u v hu hv => rw [smul_add, hu, hv, add_zero]
+  obtain ⟨p, rfl⟩ := Submodule.Quotient.mk_surjective _ m
+  rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
+  refine ⟨?_, ?_⟩
+  · show _ ∈ (⊥ : Submodule O (↥L.T ⊗[O] X))
+    rw [Submodule.mem_bot]
+    exact hT p.1
+  · show _ ∈ Ideal.span {lam ^ a}
+    exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
+
+end Ext
+end GlobalTheory.UseLoc.Cases.AdmW
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TmulSurjectiveRankOne
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qj4.tmul_surjective_rank_one :
+    ∀ {O T X : Type} [inst : CommRing O]
+    [inst_1 : AddCommGroup T] [inst_2 : _root_.Module O T] [inst_3 : AddCommGroup X] [inst_4 : _root_.Module O X]
+    (x₀ : X), (∀ (x : X), ∃ (c : O), x = c • x₀) → ∀ (m : TensorProduct O T X), ∃ (t : T), t ⊗ₜ[O] x₀ = m := by
+  intro O T X _ _ _ _ _ x₀ h m
+  induction m using TensorProduct.induction_on with
+  | zero => exact ⟨0, TensorProduct.zero_tmul T x₀⟩
+  | tmul t x =>
+    obtain ⟨c, rfl⟩ := h x
+    exact ⟨c • t, TensorProduct.smul_tmul c t x₀⟩
+  | add a b ha hb =>
+    obtain ⟨s, rfl⟩ := ha
+    obtain ⟨t, rfl⟩ := hb
+    exact ⟨s + t, TensorProduct.add_tmul s t x₀⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.ExistsAdmissibleExtensionLatticeTensor
+
+section
 
 @[expose] public section
 
@@ -170,3 +281,5 @@ theorem _root_.UpperTheory.KN.exists_admissible_extension_latticeTensor :
     rw [Submodule.mem_comap, map_sub, GlobalTheory.UseLoc.Cases.AdmW.actExtL_apply,
       GlobalTheory.UseLoc.Cases.AdmW.actExtL_apply, ← hq0a] at h
     exact (Submodule.Quotient.eq _).mpr h
+end
+end

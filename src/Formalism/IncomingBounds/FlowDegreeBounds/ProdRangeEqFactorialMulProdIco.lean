@@ -1,6 +1,6 @@
 module
 
-public import Formalism.IncomingBounds.LemmaMNumerics
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,9 +40,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
 public import Mathlib.Data.Nat.Digits.Defs
 public import Mathlib.Data.Nat.Digits.Lemmas
 public import Mathlib.Data.Nat.Multiplicity
+
+-- Source module: Formalism.IncomingBounds.LemmaMNumerics
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+namespace Formalism.IncomingBounds
+
+def FactValBounds : Prop :=
+  ∀ l : ℕ, l.Prime → ∀ N : ℕ, 1 ≤ N →
+    (N : ℝ) / ((l : ℝ) - 1) - (Real.logb l N + 1) ≤ (padicValNat l N.factorial : ℝ) ∧
+      (padicValNat l N.factorial : ℝ) ≤ ((N : ℝ) - 1) / ((l : ℝ) - 1)
+
+end Formalism.IncomingBounds
+end
+end
+end
+
+-- Source module: Formalism.IncomingBounds.FlowDegreeBounds.ProdRangeEqFactorialMulProdIco
+
+section
 
 @[expose] public section
 
@@ -87,3 +112,6 @@ theorem padicValFactorialBounds : FactValBounds := by
 
 
 end Formalism.IncomingBounds
+end
+end
+end

@@ -2,11 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.IsHermHyperbolic
 public import Mathlib.NumberTheory.NumberField.Basic
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsNsmulMulVecMem
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicUnimodularity.ExistsNatSmulMem
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,7 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +42,75 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.Hat1
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsNsmulMulVecMem
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.IntegralMultipleClearDenominators
+
+open NumberField
+
+theorem exists_nat_mul_integral {E : Type} [Field E] [NumberField E] (c : E) :
+    ∃ K : ℕ, 0 < K ∧ IsIntegral ℤ ((K : E) * c) := by
+  have h : IsAlgebraic ℤ c :=
+    (IsFractionRing.isAlgebraic_iff ℤ ℚ E).2 (Algebra.IsAlgebraic.isAlgebraic c)
+  obtain ⟨y, hy, hint⟩ := h.exists_integral_multiple
+  refine ⟨y.natAbs, Int.natAbs_pos.2 hy, ?_⟩
+  rw [zsmul_eq_mul] at hint
+  rcases Int.natAbs_eq y with h1 | h1
+  · have : ((y.natAbs : ℕ) : E) = (y : E) := by
+      conv_rhs => rw [h1]
+      exact (Int.cast_natCast _).symm
+    rw [this]; exact hint
+  · have : ((y.natAbs : ℕ) : E) = -(y : E) := by
+      conv_rhs => rw [h1]
+      rw [Int.cast_neg, neg_neg]
+      exact (Int.cast_natCast _).symm
+    rw [this, neg_mul]; exact hint.neg
+
+theorem exists_nsmul_mem {E : Type} [Field E] [NumberField E] {n : ℕ}
+    (L : Submodule (RingOfIntegers E) (Fin n → E))
+    (hL : Submodule.span E (↑L : Set (Fin n → E)) = ⊤) (w : Fin n → E) :
+    ∃ N : ℕ, 0 < N ∧ N • w ∈ L := by
+  apply PI.WAU.exists_nat_smul_mem <;> assumption
+
+theorem exists_nsmul_mulVec_mem {E : Type} [Field E] [NumberField E] {n : ℕ}
+    (L : Submodule (RingOfIntegers E) (Fin n → E)) (hfg : L.FG)
+    (hL : Submodule.span E (↑L : Set (Fin n → E)) = ⊤) (M : Matrix (Fin n) (Fin n) E) :
+    ∃ N : ℕ, 0 < N ∧ ∀ v ∈ L, N • Matrix.mulVec M v ∈ L := by
+  obtain ⟨s, hs⟩ := hfg
+  choose f hf0 hf using exists_nsmul_mem L hL
+  refine ⟨∏ x ∈ s, f (M.mulVec x), Finset.prod_pos fun x _ => hf0 _, ?_⟩
+  intro v hv
+  rw [← hs] at hv
+  induction hv using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨k, hk⟩ := Finset.dvd_prod_of_mem (fun x => f (M.mulVec x)) (Finset.mem_coe.1 hx)
+    rw [hk, mul_comm, mul_smul]
+    exact nsmul_mem (hf _) k
+  | zero => simp
+  | add x y _ _ hx hy =>
+    rw [Matrix.mulVec_add, smul_add]
+    exact L.add_mem hx hy
+  | smul c x _ hx =>
+    rw [Matrix.mulVec_smul, smul_comm]
+    exact L.smul_mem c hx
+
+end GlobalTheory.IntegralMultipleClearDenominators
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsTraceZeroAdjustmentOfHermitianLattice
+
+section
 
 @[expose] public section
 
@@ -135,3 +200,5 @@ theorem exists_tv_adjust : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     ring
 
 end GlobalTheory.TvAdjust
+end
+end

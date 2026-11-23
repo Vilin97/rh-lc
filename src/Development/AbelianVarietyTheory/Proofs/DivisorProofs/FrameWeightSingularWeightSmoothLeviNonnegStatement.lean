@@ -1,11 +1,12 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExtendByZeroOnSubsetApplyCoe
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameWeightSingularWeightSmoothLeviNonneg
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.L2ExtensionLogCanonical
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+public import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -41,6 +42,217 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.ContDiffAtSectionFrameQuotient
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.LintegralBallRpowLtTop
+import Development.AbelianVarietyTheory.Definitions.Divisors.EtaleEmpty
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleLeviNonnegOfChartPlurisubharmonicStatement
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FamilyLeCoords
+import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FlatLoc
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.L2ExtensionLogCanonical
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.JacobianDetIsFrameOnCanonicalWeightStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothEtaleOfSmoothInChartsStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContDiffAtPsiOfNotMemZeroSet
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y GlobalTheory.OTY GlobalTheory.Published.L2Extension
+open scoped ENNReal ContDiff
+
+namespace GlobalTheory.OTY
+
+theorem contDiffAt_psi_of_notMem_zeroSet : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (L : La) (s : Fin n → ι → Y → ℂ), (∀ k, A.IsSec L (s k)) → ∀ y, y ∉ A.zeroSet s → ∀ i, y ∈ (A.chart i).source → ContDiffAt ℝ ∞ (psi A L s ∘ (A.chart i).symm) (A.chart i y) := by
+  intro n Y _ _ _ _ _ ι La _ A L s hs y hy i hi
+  have hv : A.chart i y ∈ (A.chart i).target := (A.chart i).map_source hi
+  have hU : (A.chart i).target ∈ 𝓝 (A.chart i y) := (A.chart i).open_target.mem_nhds hv
+  have hsk : ∀ k, ContDiffAt ℝ ∞ (s k i ∘ (A.chart i).symm) (A.chart i y) := fun k =>
+    hyq_contDiffAt_of_holo (A.chart i).open_target (by simpa using (hs k).1 i) hv
+  have hph : ContDiffAt ℝ ∞ (A.ph L i ∘ (A.chart i).symm) (A.chart i y) :=
+    (A.smooth_ph L i).contDiffAt hU
+  have h1 : ContDiffAt ℝ ∞ (fun v => ∑ k, ‖(s k i ∘ (A.chart i).symm) v‖ ^ 2 *
+      Real.exp (-(A.ph L i ∘ (A.chart i).symm) v)) (A.chart i y) :=
+    ContDiffAt.sum fun k _ => ((hsk k).norm_sq ℂ).mul hph.neg.exp
+  have h2 : ContDiffAt ℝ ∞ (A.sqn L s ∘ (A.chart i).symm) (A.chart i y) := by
+    refine h1.congr_of_eventuallyEq ?_
+    filter_upwards [hU] with v hv'
+    simp only [Function.comp, WeightedAtlas.sqn]
+    exact Finset.sum_congr rfl fun k _ =>
+      WeightedAtlas.nsq_eq_chart A (hs k) ((A.chart i).map_target hv')
+  have hpos : 0 < A.sqn L s y := by
+    obtain ⟨k, hk⟩ : ∃ k, s k (A.pick y) y ≠ 0 := by
+      by_contra h
+      exact hy fun k => by_contra fun hk => h ⟨k, hk⟩
+    unfold WeightedAtlas.sqn WeightedAtlas.nsq
+    refine Finset.sum_pos' (fun _ _ => by positivity) ⟨k, Finset.mem_univ _, ?_⟩
+    have := norm_pos_iff.2 hk
+    positivity
+  have h3 : (A.sqn L s ∘ (A.chart i).symm) (A.chart i y) ≠ 0 := by
+    simp only [Function.comp, (A.chart i).left_inv hi]
+    exact hpos.ne'
+  exact contDiffAt_const.mul (h2.log h3)
+
+end GlobalTheory.OTY
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContDiffAtPsiOfNotMemZeroSetStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y GlobalTheory.OTY GlobalTheory.Published.L2Extension
+open scoped ENNReal ContDiff
+
+theorem _root_.GlobalTheory.T.contDiffAt_psi_chart_of_not_mem_zeroSet : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (L : La) (s : Fin n → ι → Y → ℂ), (∀ k, A.IsSec L (s k)) → ∀ y, y ∉ A.zeroSet s → ∀ i, y ∈ (A.chart i).source → ContDiffAt ℝ ∞ (psi A L s ∘ (A.chart i).symm) (A.chart i y) := by
+  first | exact @GlobalTheory.OTY.contDiffAt_psi_of_notMem_zeroSet | exact GlobalTheory.OTY.contDiffAt_psi_of_notMem_zeroSet | (intros; apply GlobalTheory.OTY.contDiffAt_psi_of_notMem_zeroSet <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameWeightLevi
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y GlobalTheory.OTY GlobalTheory.Published.L2Extension
+open scoped ENNReal ContDiff
+
+namespace GlobalTheory
+
+open ReciprocityTheory.L2DbarEstimates.Y.WeightedAtlas
+
+theorem frameWeight_levi : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (E : La) (U : Set Y) (β J : ι → Y → ℂ), IsOpen U → A.IsFrameOn (A.kap + E) U β → A.IsFrameOn A.kap U J → ∀ x ∈ U, ∀ i, x ∈ (A.chart i).source → ContDiffAt ℝ ∞ ((fun y => -Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y)) ∘ (A.chart i).symm) (A.chart i x) ∧ ∀ f : Y → ℝ, ContDiffAt ℝ ∞ (f ∘ (A.chart i).symm) (A.chart i x) → ∀ ξ : Fin n → ℂ, A.leviAt i (fun y => (-Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y)) + f y) x ξ = A.leviAt i (fun y => A.ph E i y + f y) x ξ := by
+  intro n Y _ _ _ _ _ ι La _ A E U β J hU hβ hJ x hx i hi
+  have hne : ∀ (la : La) (s : ι → Y → ℂ), A.IsFrameOn la U s → ∀ y ∈ U,
+      y ∈ (A.chart i).source → s i y ≠ 0 := by
+    intro la s hs y hyU hyi
+    rw [hs.1.2 i (A.pick y) y hyU hyi (A.mem_pick y)]
+    exact mul_ne_zero (A.g_ne _ _ _ y hyi (A.mem_pick y)) (hs.2 y hyU)
+  have hloc : (fun y => (-Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y))) =ᶠ[𝓝 x]
+      fun y => A.ph E i y + Real.log (‖J i y * (β i y)⁻¹‖ ^ 2) := by
+    filter_upwards [(A.chart i).open_source.mem_nhds hi, hU.mem_nhds hx] with y hyi hyU
+    have hp := A.mem_pick y
+    have hb := hne _ β hβ y hyU hyi
+    have hj := hne _ J hJ y hyU hyi
+    have e1 := hyq_nsq_chart A (A.kap + E) β i y hyi (hβ.1.2 i _ y hyU hyi hp)
+    have e2 := hyq_nsq_chart A A.kap J i y hyi (hJ.1.2 i _ y hyU hyi hp)
+    have hb2 : 0 < ‖β i y‖ ^ 2 := by positivity
+    have hj2 : 0 < ‖J i y‖ ^ 2 := by positivity
+    rw [e1, e2, A.ph_add A.kap E i y hyi, norm_mul, norm_inv, mul_pow, inv_pow,
+      Real.log_mul hb2.ne' (Real.exp_pos _).ne', Real.log_mul hj2.ne' (Real.exp_pos _).ne',
+      Real.log_mul hj2.ne' (inv_pos.mpr hb2).ne', Real.log_inv, Real.log_exp, Real.log_exp]
+    ring
+  have hWo : IsOpen ((A.chart i).target ∩ (A.chart i).symm ⁻¹' U) :=
+    (A.chart i).isOpen_inter_preimage_symm hU
+  have hxW : A.chart i x ∈ (A.chart i).target ∩ (A.chart i).symm ⁻¹' U :=
+    ⟨(A.chart i).map_source hi, by simp [(A.chart i).left_inv hi, hx]⟩
+  have hc : (A.chart i).symm (A.chart i x) = x := (A.chart i).left_inv hi
+  have hT := (A.chart i).open_target.mem_nhds ((A.chart i).map_source hi)
+  have hholo : ∀ (la : La) (s : ι → Y → ℂ), A.IsFrameOn la U s →
+      ∀ᶠ v in 𝓝 (A.chart i x), DifferentiableAt ℂ (s i ∘ (A.chart i).symm) v := by
+    intro la s hs
+    filter_upwards [hWo.mem_nhds hxW] with v hv
+    exact (hs.1.1 i v hv).differentiableAt (hWo.mem_nhds hv)
+  have hevW : ∀ᶠ v in 𝓝 (A.chart i x), v ∈ (A.chart i).target ∩ (A.chart i).symm ⁻¹' U :=
+    hWo.mem_nhds hxW
+  have hqd : ∀ᶠ v in 𝓝 (A.chart i x), DifferentiableAt ℂ
+      ((fun y => J i y * (β i y)⁻¹) ∘ (A.chart i).symm) v := by
+    filter_upwards [hholo _ β hβ, hholo _ J hJ, hevW] with v h1 h2 h3
+    have hb := hne _ β hβ _ h3.2 ((A.chart i).map_target h3.1)
+    exact h2.mul (h1.inv hb)
+  have hq : ContDiffAt ℝ ∞ ((fun y => J i y * (β i y)⁻¹) ∘ (A.chart i).symm) (A.chart i x) :=
+    hyq_contDiffAt_of_ev hqd
+  have hqne : ((fun y => J i y * (β i y)⁻¹) ∘ (A.chart i).symm) (A.chart i x) ≠ 0 := by
+    simp only [Function.comp, hc]
+    exact mul_ne_zero (hne _ J hJ x hx hi) (inv_ne_zero (hne _ β hβ x hx hi))
+  have hlog : ContDiffAt ℝ ∞ ((fun y => Real.log (‖J i y * (β i y)⁻¹‖ ^ 2)) ∘ (A.chart i).symm)
+      (A.chart i x) :=
+    (hq.norm_sq ℝ).log (by positivity)
+  have hphE : ContDiffAt ℝ ∞ (A.ph E i ∘ (A.chart i).symm) (A.chart i x) :=
+    (A.smooth_ph E i).contDiffAt hT
+  have ht : Filter.Tendsto (A.chart i).symm (𝓝 (A.chart i x)) (𝓝 x) := by
+    have := ((A.chart i).continuousAt_symm ((A.chart i).map_source hi)).tendsto
+    rwa [hc] at this
+  refine ⟨?_, fun f hf ξ => ?_⟩
+  · refine (hphE.add hlog).congr_of_eventuallyEq ?_
+    filter_upwards [ht.eventually hloc] with v hv
+    simp only [Function.comp] at hv ⊢
+    rw [hv]
+  · have hloc' : (fun y => (-Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y)) + f y)
+        =ᶠ[𝓝 x] fun y => (A.ph E i y + f y) + Real.log (‖J i y * (β i y)⁻¹‖ ^ 2) := by
+      filter_upwards [hloc] with y hy
+      rw [hy]; ring
+    have hf2 : ContDiffAt ℝ 2 ((fun y => A.ph E i y + f y) ∘ (A.chart i).symm) (A.chart i x) :=
+      (hphE.add hf).of_le (WithTop.coe_le_coe.mpr le_top)
+    have hg2 : ContDiffAt ℝ 2 ((fun y => Real.log (‖J i y * (β i y)⁻¹‖ ^ 2)) ∘ (A.chart i).symm)
+        (A.chart i x) := hlog.of_le (WithTop.coe_le_coe.mpr le_top)
+    rw [leviAt_congr A i _ _ x hi hloc' ξ,
+      leviAt_add A i (fun y => A.ph E i y + f y)
+        (fun y => Real.log (‖J i y * (β i y)⁻¹‖ ^ 2)) x hf2 hg2 ξ,
+      leviAt_log_normSq A i (fun y => J i y * (β i y)⁻¹) x hi hqd
+        (mul_ne_zero (hne _ J hJ x hx hi) (inv_ne_zero (hne _ β hβ x hx hi))) ξ, add_zero]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameWeightLeviStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y GlobalTheory.OTY GlobalTheory.Published.L2Extension
+open scoped ENNReal ContDiff
+
+theorem _root_.GlobalTheory.T.leviAt_log_nsq_ratio_eq_leviAt_ph : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (E : La) (U : Set Y) (β J : ι → Y → ℂ), IsOpen U → A.IsFrameOn (A.kap + E) U β → A.IsFrameOn A.kap U J → ∀ x ∈ U, ∀ i, x ∈ (A.chart i).source → ContDiffAt ℝ ∞ ((fun y => -Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y)) ∘ (A.chart i).symm) (A.chart i x) ∧ ∀ f : Y → ℝ, ContDiffAt ℝ ∞ (f ∘ (A.chart i).symm) (A.chart i x) → ∀ ξ : Fin n → ℂ, A.leviAt i (fun y => (-Real.log (A.nsq (A.kap + E) β y) + Real.log (A.nsq A.kap J y)) + f y) x ξ = A.leviAt i (fun y => A.ph E i y + f y) x ξ := by
+  first | exact @GlobalTheory.frameWeight_levi | exact GlobalTheory.frameWeight_levi | (intros; apply GlobalTheory.frameWeight_levi <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameWeightSingularWeightSmoothLeviNonneg
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y GlobalTheory.OTY GlobalTheory.Published.L2Extension
+open scoped ENNReal ContDiff
+
+theorem GlobalTheory.OTY.TwEst.wt_psi_smooth_leviNonneg : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (E L : La) (s : Fin n → ι → Y → ℂ), (∀ k, A.IsSec L (s k)) → ∀ δ : ℝ, (∀ α ∈ Set.Icc (1 : ℝ) (1 + δ), ∀ i y, y ∈ (A.chart i).source → y ∉ A.zeroSet s → ∀ ξ : Fin n → ℂ, 0 ≤ A.leviAt i (fun x => A.ph E i x + α * psi A L s x) y ξ) → ∀ (U : Set Y) (z : Y → V n) (β : ι → Y → ℂ), Etale A U z → A.IsFrameOn (A.kap + E) U β → (∀ y ∈ U, y ∉ A.zeroSet s) → SmoothR n (fun y : U => z y) (fun y : U => GlobalTheory.OTY.TwEst.wt A E β z y) ∧ SmoothR n (fun y : U => z y) (fun y : U => psi A L s y) ∧ ∀ α ∈ Set.Icc (1 : ℝ) (1 + δ), LeviNonneg n (fun y : U => z y) (fun y : U => GlobalTheory.OTY.TwEst.wt A E β z y + α * psi A L s y) := by
+  intro n Y _ _ _ _ _ ι La _ A E L s hs δ hlevi U z β hz hβ hU
+  have hJ := GlobalTheory.T.jacobianDet_isFrameOn_canonicalWeight n Y ι La A U z hz
+  have hW := GlobalTheory.T.leviAt_log_nsq_ratio_eq_leviAt_ph n Y ι La A E U β (jdet A z) hz.isOpen hβ hJ
+  have hP : ∀ x ∈ U, ∀ i, x ∈ (A.chart i).source →
+      ContDiffAt ℝ ∞ (psi A L s ∘ (A.chart i).symm) (A.chart i x) :=
+    fun x hx i hi => GlobalTheory.T.contDiffAt_psi_chart_of_not_mem_zeroSet n Y ι La A L s hs x (hU x hx) i hi
+  have hS := (GlobalTheory.T.smooth_and_smoothR_of_contDiffAt_in_charts n Y ι La A U z hz).2
+  refine ⟨hS (GlobalTheory.OTY.TwEst.wt A E β z)
+      (fun x hx => ⟨A.pick x, A.mem_pick x, (hW x hx _ (A.mem_pick x)).1⟩),
+    hS (psi A L s) (fun x hx => ⟨A.pick x, A.mem_pick x, hP x hx _ (A.mem_pick x)⟩), ?_⟩
+  intro α hα
+  refine GlobalTheory.T.etale_leviNonneg_of_chart_plurisubharmonic n Y ι La A U z hz (fun y => GlobalTheory.OTY.TwEst.wt A E β z y + α * psi A L s y)
+    (fun x hx => ⟨A.pick x, A.mem_pick x, ?_, fun ξ => ?_⟩)
+  · exact (hW x hx _ (A.mem_pick x)).1.add (contDiffAt_const.mul (hP x hx _ (A.mem_pick x)))
+  · have hc : ContDiffAt ℝ ∞ ((fun y => α * psi A L s y) ∘ (A.chart (A.pick x)).symm)
+        (A.chart (A.pick x) x) :=
+      contDiffAt_const.mul (hP x hx _ (A.mem_pick x))
+    exact le_of_le_of_eq (hlevi α hα (A.pick x) x (A.mem_pick x) (hU x hx) ξ)
+      ((hW x hx _ (A.mem_pick x)).2 _ hc ξ).symm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameWeightSingularWeightSmoothLeviNonnegStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +261,5 @@ open scoped ENNReal ContDiff
 
 theorem _root_.GlobalTheory.T.frameWeight_singularWeight_smooth_leviNonneg : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] (ι La : Type) [AddCommGroup La] (A : WeightedAtlas n Y ι La), ∀ (E L : La) (s : Fin n → ι → Y → ℂ), (∀ k, A.IsSec L (s k)) → ∀ δ : ℝ, (∀ α ∈ Set.Icc (1 : ℝ) (1 + δ), ∀ i y, y ∈ (A.chart i).source → y ∉ A.zeroSet s → ∀ ξ : Fin n → ℂ, 0 ≤ A.leviAt i (fun x => A.ph E i x + α * psi A L s x) y ξ) → ∀ (U : Set Y) (z : Y → V n) (β : ι → Y → ℂ), Etale A U z → A.IsFrameOn (A.kap + E) U β → (∀ y ∈ U, y ∉ A.zeroSet s) → SmoothR n (fun y : U => z y) (fun y : U => GlobalTheory.OTY.TwEst.wt A E β z y) ∧ SmoothR n (fun y : U => z y) (fun y : U => psi A L s y) ∧ ∀ α ∈ Set.Icc (1 : ℝ) (1 + δ), LeviNonneg n (fun y : U => z y) (fun y : U => GlobalTheory.OTY.TwEst.wt A E β z y + α * psi A L s y) := by
   first | exact @GlobalTheory.OTY.TwEst.wt_psi_smooth_leviNonneg | exact GlobalTheory.OTY.TwEst.wt_psi_smooth_leviNonneg | (intros; apply GlobalTheory.OTY.TwEst.wt_psi_smooth_leviNonneg <;> assumption)
+end
+end

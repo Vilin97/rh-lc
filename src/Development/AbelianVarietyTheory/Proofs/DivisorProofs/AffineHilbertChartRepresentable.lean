@@ -4,14 +4,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqOfSecAlgTo
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AffineHilbertTensorToSubschemeSectionsSurjectiveStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BasisQuotientTensorBaseChangeStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsChartOfQuotient
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHomAffineHilbertBaseSectionRingHomStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafEqOfKerTensorToSubschemeSectionsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealsEqOfSpanIndependent
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFiniteFlatRankClosedSubschemeOfQuotientBasisStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAffineHilbertTensorPullbackEqMapStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAffineHilbertTensorToSubschemeSectionsRestricStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingMapFromAffineOpens
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorBasisCriterion
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,6 +44,202 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafEqOfKerTensorToSubschemeSections
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealsEqOfSpanIndependent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AffineHilbertRepresentingUniversalSubscheme
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAffineHilbertTensorPullbackEqMapStatement
+import Mathlib.Tactic.ENatToNat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingMapFromAffineOpens
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorBasisCriterion
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHomAffineHilbertBaseSectionRingHom
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+namespace GlobalTheory.HilbAff
+
+theorem secAlg_toSpecΓ_top (Z : Scheme.{0}) :
+    secAlg Γ(Z, ⊤) Z.toSpecΓ ⊤ = RingHom.id _ := by
+  ext a
+  have e : Z.toSpecΓ.appLE ⊤ ⊤ (by simp) = Z.toSpecΓ.appTop := (Scheme.Hom.app_eq_appLE _).symm
+  simp only [secAlg, RingHom.comp_apply, e, Scheme.toSpecΓ_appTop]
+  simp
+
+theorem exists_hom_secAlg_top (Z : Scheme.{0}) (C : Type) [CommRing C] (Φ : C →+* Γ(Z, ⊤)) :
+    ∃ h : Z ⟶ Spec (CommRingCat.of C), GlobalTheory.HilbAff.secAlg C h ⊤ = Φ := by
+  refine ⟨Z.toSpecΓ ≫ Spec.map (CommRingCat.ofHom Φ), ?_⟩
+  rw [secAlg_comp, secAlg_toSpecΓ_top]
+  rfl
+
+end GlobalTheory.HilbAff
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHomAffineHilbertBaseSectionRingHomStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_hom_affineHilbertBaseSectionRingHom : ∀ (Z : Scheme.{0}) (C : Type) [CommRing C] (Φ : C →+* Γ(Z, ⊤)), ∃ h : Z ⟶ Spec (CommRingCat.of C), GlobalTheory.HilbAff.secAlg C h ⊤ = Φ := by
+  first | (exact @GlobalTheory.HilbAff.exists_hom_secAlg_top) | (exact GlobalTheory.HilbAff.exists_hom_secAlg_top) | (intros; apply GlobalTheory.HilbAff.exists_hom_secAlg_top  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafEqOfKerTensorToSubschemeSectionsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.idealSheaf_eq_of_ker_tensorToSubschemeSections : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (I₁ I₂ : (pullback (GlobalTheory.HilbAff.str A B) g).IdealSheafData), (∀ U : T.affineOpens, RingHom.ker (GlobalTheory.HilbAff.kappa A B g I₁ U) = RingHom.ker (GlobalTheory.HilbAff.kappa A B g I₂ U)) → I₁ = I₂ := by
+  first | (exact @GlobalTheory.HilbAff.IdealDet.eq_of_ker_kappa_eq) | (exact GlobalTheory.HilbAff.IdealDet.eq_of_ker_kappa_eq) | (intros; apply GlobalTheory.HilbAff.IdealDet.eq_of_ker_kappa_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFiniteFlatRankClosedSubschemeOfQuotientBasis
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+namespace GlobalTheory.HilbAff
+
+theorem good_xI : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebra A B] [CommRing C] [Algebra A C] (J : Ideal (C ⊗[A] B)) {r : ℕ} (v : Fin r → B), LinearIndependent C (fun k => Ideal.Quotient.mk J ((1 : C) ⊗ₜ[A] v k)) → Submodule.span C (Set.range (fun k => Ideal.Quotient.mk J ((1 : C) ⊗ₜ[A] v k))) = ⊤ → GlobalTheory.HilbAff.Good A B r (Spec.map (CommRingCat.ofHom (algebraMap A C))) (GlobalTheory.HilbAff.xI A B C J) := by
+  intro A B C _ _ _ _ _ J r v hli hsp
+  let bas : Module.Basis (Fin r) C ((C ⊗[A] B) ⧸ J) := Module.Basis.mk hli hsp.ge
+  haveI : Module.Free C ((C ⊗[A] B) ⧸ J) := Module.Free.of_basis bas
+  haveI : Module.Finite C ((C ⊗[A] B) ⧸ J) := Module.Finite.of_basis bas
+  have hsurj : Function.Surjective ((Ideal.Quotient.mk J).comp
+      (Algebra.TensorProduct.comm A B C).toRingHom) :=
+    (Ideal.Quotient.mk_surjective).comp (Algebra.TensorProduct.comm A B C).surjective
+  haveI : IsClosedImmersion (Spec.map (CommRingCat.ofHom ((Ideal.Quotient.mk J).comp
+      (Algebra.TensorProduct.comm A B C).toRingHom))) :=
+    IsClosedImmersion.spec_of_surjective _ hsurj
+  have hsnd : (Spec.map (CommRingCat.ofHom ((Ideal.Quotient.mk J).comp
+      (Algebra.TensorProduct.comm A B C).toRingHom)) ≫ (pullbackSpecIso A B C).inv) ≫
+      pullback.snd _ _ = Spec.map (CommRingCat.ofHom (algebraMap C ((C ⊗[A] B) ⧸ J))) := by
+    rw [Category.assoc, pullbackSpecIso_inv_snd, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    congr 2
+  refine good_ker A B r _ _ ?_ ?_ ?_
+  · rw [hsnd]
+    exact (IsFinite.SpecMap_iff _).mpr (RingHom.finite_algebraMap.mpr inferInstance)
+  · rw [hsnd]
+    exact Flat.SpecMap_iff.mpr (RingHom.flat_algebraMap_iff.mpr inferInstance)
+  · intro y
+    rw [hsnd]
+    refine (Scheme.Hom.finrank_SpecMap_algebraMap C ((C ⊗[A] B) ⧸ J) y).trans ?_
+    haveI : Nontrivial C := by
+      let p : PrimeSpectrum C := y
+      refine ⟨⟨0, 1, fun h => p.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 ?_)⟩⟩
+      rw [← h]; exact p.asIdeal.zero_mem
+    rw [Module.rankAtStalk_eq_finrank_of_free, Module.finrank_eq_card_basis bas, Fintype.card_fin]
+    rfl
+
+end GlobalTheory.HilbAff
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFiniteFlatRankClosedSubschemeOfQuotientBasisStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.isFiniteFlatRankClosedSubscheme_of_quotient_basis : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebra A B] [CommRing C] [Algebra A C] (J : Ideal (C ⊗[A] B)) {r : ℕ} (v : Fin r → B), LinearIndependent C (fun k => Ideal.Quotient.mk J ((1 : C) ⊗ₜ[A] v k)) → Submodule.span C (Set.range (fun k => Ideal.Quotient.mk J ((1 : C) ⊗ₜ[A] v k))) = ⊤ → GlobalTheory.HilbAff.Good A B r (Spec.map (CommRingCat.ofHom (algebraMap A C))) (GlobalTheory.HilbAff.xI A B C J) := by
+  first | (exact @GlobalTheory.HilbAff.good_xI) | (exact GlobalTheory.HilbAff.good_xI) | (intros; apply GlobalTheory.HilbAff.good_xI  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAffineHilbertTensorToSubschemeSectionsRestricStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open scoped TensorProduct
+
+
+theorem _root_.GlobalTheory.T.ker_affineHilbertTensorToSubschemeSections_restrict :
+    ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] {T : Scheme.{0}}
+      (g : T ⟶ Spec (CommRingCat.of A))
+      (I : (pullback (GlobalTheory.HilbAff.str A B) g).IdealSheafData)
+      (U V : T.affineOpens) (h : (U : T.Opens) ≤ V),
+      letI := (GlobalTheory.HilbAff.secAlg A g U).toAlgebra
+      letI := (GlobalTheory.HilbAff.secAlg A g V).toAlgebra
+      ∃ ρ : Γ(T, V) →ₐ[A] Γ(T, U), ρ.toRingHom = (T.presheaf.map (homOfLE h).op).hom ∧
+        (RingHom.ker (GlobalTheory.HilbAff.kappa A B g I V)).map
+          (Algebra.TensorProduct.map ρ (AlgHom.id A B)) ≤
+        RingHom.ker (GlobalTheory.HilbAff.kappa A B g I U) := by
+  intro A B _ _ _ T g I U V h
+  let := (GlobalTheory.HilbAff.secAlg A g U).toAlgebra
+  let := (GlobalTheory.HilbAff.secAlg A g V).toAlgebra
+  let ρ : Γ(T, V) →ₐ[A] Γ(T, U) :=
+    { toRingHom := (T.presheaf.map (homOfLE h).op).hom
+      commutes' := fun a => by
+        exact congrArg (fun f => f.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom a))
+          (Scheme.Hom.appLE_map g (U := ⊤) (by simp) (homOfLE h).op) }
+  refine ⟨ρ, rfl, ?_⟩
+  have kappa_tmul (W : T.Opens) (c : Γ(T, W)) (b : B) :
+      letI := (GlobalTheory.HilbAff.secAlg A g W).toAlgebra
+      GlobalTheory.HilbAff.kappa A B g I W (c ⊗ₜ[A] b) =
+        ((I.subschemeι ≫ pullback.snd _ g).app W).hom c *
+          ((I.subschemeι ≫ pullback.fst _ g).appLE ⊤
+            ((I.subschemeι ≫ pullback.snd _ g) ⁻¹ᵁ W) (by simp)).hom
+              ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
+    let := (GlobalTheory.HilbAff.secAlg A g W).toAlgebra
+    let : Algebra A Γ(I.subscheme, (I.subschemeι ≫ pullback.snd _ g) ⁻¹ᵁ W) :=
+      (((I.subschemeι ≫ pullback.snd _ g).app W).hom.comp
+        (GlobalTheory.HilbAff.secAlg A g W)).toAlgebra
+    exact Algebra.TensorProduct.lift_tmul _ _ _ _ _
+  have hκ (t : Γ(T, V) ⊗[A] B) :
+      GlobalTheory.HilbAff.kappa A B g I U (Algebra.TensorProduct.map ρ (AlgHom.id A B) t) =
+        (I.subscheme.presheaf.map (homOfLE (Scheme.Hom.preimage_mono
+          (I.subschemeι ≫ pullback.snd _ g) h)).op).hom (GlobalTheory.HilbAff.kappa A B g I V t) := by
+    induction t using TensorProduct.inductionOn with
+    | tmul c b =>
+      rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, kappa_tmul, kappa_tmul, map_mul]
+      have hc : ρ c = (T.presheaf.map (homOfLE h).op).hom c := rfl
+      rw [hc]
+      congr 1
+      · rw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply, Scheme.Hom.naturality]
+        rfl
+      · have e := Scheme.Hom.appLE_map (I.subschemeι ≫ pullback.fst _ g) (U := ⊤)
+            (V := (I.subschemeι ≫ pullback.snd _ g) ⁻¹ᵁ V) (by simp)
+            (homOfLE (Scheme.Hom.preimage_mono (I.subschemeι ≫ pullback.snd _ g) h)).op
+        exact (congrArg (fun f => f.hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b)) e).symm
+    | add x y hx hy => simp only [map_add, hx, hy]
+  rw [Ideal.map_le_iff_le_comap]
+  intro t ht
+  rw [RingHom.mem_ker] at ht
+  rw [Ideal.mem_comap, RingHom.mem_ker]
+  erw [hκ t, ht, map_zero]
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AffineHilbertChartRepresentable
+
+section
 
 @[expose] public section
 
@@ -175,3 +362,5 @@ theorem chart_represents (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (N
   rw [basic_iff_kappa] at hy
   exact exists_unique_lift A B e σ C J hli hsp huniv hgood Z g I hI hy
 end GlobalTheory.HilbAff
+end
+end

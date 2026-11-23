@@ -1,17 +1,15 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsBasisAdaptedMem
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.GramDetInequalitiesClosedFormsStatement
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.RelIndexIntegralSpanSupermultiplicativeStatement
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.RelIndexSpanNeZero
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Tactic.Continuity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,7 +21,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +44,135 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.LatDen
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.ArakelovInstances.IsStrictDom
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.GramDetInequalitiesClosedFormsStatement
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.RelIndexIntegralSpanSupermultiplicativeStatement
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.RelIndexSpanNeZero
+import Mathlib.Analysis.Matrix.PosDef
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsBasisAdaptedTwoSubspaces
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem exists_relCompl_submodule {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    {U W : Submodule K V} (h : U ≤ W) : ∃ C : Submodule K V, Disjoint U C ∧ U ⊔ C = W := by
+  obtain ⟨C, hC⟩ := U.exists_isCompl
+  refine ⟨C ⊓ W, hC.disjoint.mono_right inf_le_left, ?_⟩
+  rw [← sup_inf_assoc_of_le C h, hC.sup_eq_top, top_inf_eq]
+
+theorem exists_fin_independent_span_eq {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    [FiniteDimensional K V] (S : Submodule K V) :
+    ∃ (n : ℕ) (v : Fin n → V), LinearIndependent K v ∧ Submodule.span K (Set.range v) = S := by
+  let b := Module.finBasis K S
+  refine ⟨_, S.subtype ∘ b, b.linearIndependent.map' S.subtype (Submodule.ker_subtype S), ?_⟩
+  rw [Set.range_comp, ← Submodule.map_span, b.span_eq, Submodule.map_subtype_top]
+
+theorem exists_basis_adapted_two_subspaces (K V : Type) [Field K] [AddCommGroup V] [Module K V]
+    [FiniteDimensional K V] (W₁ W₂ : Submodule K V) :
+    ∃ (a b c : ℕ) (w : Fin a ⊕ Fin b ⊕ Fin c → V), LinearIndependent K w ∧
+      Submodule.span K (Set.range (w ∘ Sum.inl)) = W₁ ⊓ W₂ ∧
+      Submodule.span K (Set.range (w ∘ Sum.map id Sum.inl)) = W₁ ∧
+      Submodule.span K (Set.range (w ∘ Sum.map id Sum.inr)) = W₂ ∧
+      Submodule.span K (Set.range w) = W₁ ⊔ W₂ := by
+  obtain ⟨C₁, hd₁, hs₁⟩ := exists_relCompl_submodule (inf_le_left : W₁ ⊓ W₂ ≤ W₁)
+  obtain ⟨C₂, hd₂, hs₂⟩ := exists_relCompl_submodule (inf_le_right : W₁ ⊓ W₂ ≤ W₂)
+  obtain ⟨a, u, hu, hus⟩ := exists_fin_independent_span_eq (W₁ ⊓ W₂)
+  obtain ⟨b, v₁, hv₁, hvs₁⟩ := exists_fin_independent_span_eq C₁
+  obtain ⟨c, v₂, hv₂, hvs₂⟩ := exists_fin_independent_span_eq C₂
+  have hC₁ : C₁ ≤ W₁ := hs₁ ▸ le_sup_right
+  have hC₂ : C₂ ≤ W₂ := hs₂ ▸ le_sup_right
+  have h12 : Disjoint C₁ C₂ := by
+    rw [Submodule.disjoint_def]
+    intro x hx₁ hx₂
+    exact (Submodule.disjoint_def.1 hd₁) x ⟨hC₁ hx₁, hC₂ hx₂⟩ hx₁
+  have hU : Disjoint (W₁ ⊓ W₂) (C₁ ⊔ C₂) := by
+    rw [Submodule.disjoint_def]
+    intro x hx hx'
+    obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx'
+    have hz1 : z ∈ W₁ := by
+      have := W₁.sub_mem hx.1 (hC₁ hy)
+      simpa using this
+    have hz0 : z = 0 := (Submodule.disjoint_def.1 hd₂) z ⟨hz1, hC₂ hz⟩ hz
+    subst hz0
+    rw [add_zero] at hx ⊢
+    exact (Submodule.disjoint_def.1 hd₁) y hx hy
+  have hv : LinearIndependent K (Sum.elim v₁ v₂) :=
+    hv₁.sum_type hv₂ (by rw [hvs₁, hvs₂]; exact h12)
+  have hvs : Submodule.span K (Set.range (Sum.elim v₁ v₂)) = C₁ ⊔ C₂ := by
+    rw [Set.Sum.elim_range, Submodule.span_union, hvs₁, hvs₂]
+  refine ⟨a, b, c, Sum.elim u (Sum.elim v₁ v₂),
+    hu.sum_type hv (by rw [hus, hvs]; exact hU), ?_, ?_, ?_, ?_⟩
+  · rw [Sum.elim_comp_inl, hus]
+  · have : Sum.elim u (Sum.elim v₁ v₂) ∘ Sum.map id Sum.inl = Sum.elim u v₁ := by
+      funext x; cases x <;> rfl
+    rw [this, Set.Sum.elim_range, Submodule.span_union, hus, hvs₁, hs₁]
+  · have : Sum.elim u (Sum.elim v₁ v₂) ∘ Sum.map id Sum.inr = Sum.elim u v₂ := by
+      funext x; cases x <;> rfl
+    rw [this, Set.Sum.elim_range, Submodule.span_union, hus, hvs₂, hs₂]
+  · rw [Set.Sum.elim_range, Submodule.span_union, hus, hvs, sup_sup_distrib_left, hs₁, hs₂]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsBasisAdaptedMem
+
+section
+
+@[expose] public section
+
+open NumberField ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up MeasureTheory Topology
+open scoped ComplexOrder ENNReal Matrix
+
+namespace GlobalTheory.LatBasisAdapted
+
+theorem span_range_smul_comp {K V ι κ : Type*} [Field K] [AddCommGroup V] [Module K V]
+    (c : ι → K) (hc : ∀ i, c i ≠ 0) (w : ι → V) (f : κ → ι) :
+    Submodule.span K (Set.range ((fun i => c i • w i) ∘ f)) =
+      Submodule.span K (Set.range (w ∘ f)) := by
+  apply le_antisymm
+  · rw [Submodule.span_le]
+    rintro _ ⟨k, rfl⟩
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
+  · rw [Submodule.span_le]
+    rintro _ ⟨k, rfl⟩
+    have h : (w ∘ f) k = (c (f k))⁻¹ • ((fun i => c i • w i) ∘ f) k := by
+      simp [smul_smul, inv_mul_cancel₀ (hc (f k))]
+    rw [h]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem exists_basis_adapted_mem : (∀ (r : ℕ) (X : Data E r) (W₁ W₂ : Submodule E (Fin r → E)), ∃ (a b c : ℕ) (w : Fin a ⊕ Fin b ⊕ Fin c → Fin r → E), LinearIndependent E w ∧ (∀ k, w k ∈ X.Λ) ∧ Submodule.span E (Set.range (w ∘ Sum.inl)) = W₁ ⊓ W₂ ∧ Submodule.span E (Set.range (w ∘ Sum.map id Sum.inl)) = W₁ ∧ Submodule.span E (Set.range (w ∘ Sum.map id Sum.inr)) = W₂ ∧ Submodule.span E (Set.range w) = W₁ ⊔ W₂) := by
+  intro r X W₁ W₂
+  obtain ⟨a, b, c, w, hw, h0, h1, h2, h3⟩ :=
+    GlobalTheory.exists_basis_adapted_two_subspaces E (Fin r → E) W₁ W₂
+  choose n hn hm using fun k => (GlobalTheory.LatDen.latDen r X).1 (w k)
+  have hc : ∀ k, (n k : E) ≠ 0 := fun k => Nat.cast_ne_zero.2 (hn k).ne'
+  refine ⟨a, b, c, fun k => (n k : E) • w k, ?_, hm, ?_, ?_, ?_, ?_⟩
+  · exact hw.units_smul (fun k => Units.mk0 _ (hc k))
+  · rw [span_range_smul_comp _ hc, h0]
+  · rw [span_range_smul_comp _ hc, h1]
+  · rw [span_range_smul_comp _ hc, h2]
+  · exact (span_range_smul_comp _ hc w id).trans h3
+
+end GlobalTheory.LatBasisAdapted
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.GramDetReNonneg
+
+section
 
 @[expose] public section
 
@@ -110,3 +237,5 @@ theorem height_submodular : (∀ (r : ℕ) (X : Data E r) (d : Frame X.Ψ r → 
   · exact (GlobalTheory.T.relIndex_integralSpan_supermultiplicative) r X (Fin a) (Fin b) (Fin c) w hli hmem
 
 end GlobalTheory.HeightSubmodular
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Foundations.OfInfProjInfMulOfFinProjFin
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RationalPointsEqEmbedding
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,33 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsAux
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StabUpTo
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RationalPointsEqEmbedding
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.CompanionTheory.CFin
+open Formalism.UG (cT)
+open GlobalTheory.Orb (archMat)
+open scoped TensorProduct NNReal ENNReal
+
+namespace GlobalTheory.CompanionTheory.CFin
+
+theorem exists_ratEmb_eq_of_mem_ratPts : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (g : GAd σ J), g ∈ ratPts σ J → ∃ η : GRat σ J, g = ratEmb σ J η := by
+  intro F E _ _ _ _ _ σ n J g hg
+  rw [← range_ratEmb σ J] at hg
+  obtain ⟨η, rfl⟩ := hg
+  exact ⟨η, rfl⟩
+
+end GlobalTheory.CompanionTheory.CFin
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RationalPointsEqEmbeddingStatement
+
+section
+
 @[expose] public section
 
 open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.CompanionTheory.CFin
@@ -51,3 +77,5 @@ open scoped TensorProduct NNReal ENNReal
 
 theorem _root_.GlobalTheory.T.rational_points_eq_embedding : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (g : GAd σ J), g ∈ ratPts σ J → ∃ η : GRat σ J, g = ratEmb σ J η := by
   first | exact @GlobalTheory.CompanionTheory.CFin.exists_ratEmb_eq_of_mem_ratPts | exact GlobalTheory.CompanionTheory.CFin.exists_ratEmb_eq_of_mem_ratPts | (intros; apply GlobalTheory.CompanionTheory.CFin.exists_ratEmb_eq_of_mem_ratPts <;> assumption)
+end
+end

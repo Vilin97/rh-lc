@@ -3,8 +3,11 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.SmulNeZeroLat
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TorsionBoundsChains.FaceDSingle
 public import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Mink3
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Stabfin
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cardsep
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Torsfree
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +26,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -31,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +48,58 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Stabfin
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Mink3
+
+section
+
+@[expose] public section
+
+open Matrix
+open scoped ComplexOrder
+
+theorem UpperTheory.V.KT.mink3 :
+    ∀ (R : Type) [Ring R] [Module.Free ℤ R] [Module.Finite ℤ R] (H : Subgroup Rˣ), Finite H →
+    Nat.card H ≤ 3 ^ Module.finrank ℤ R := by
+  intro R _ _ _ H hH
+  let f : H → R := fun h => ((h : Rˣ) : R)
+  have hinj : Function.Injective f := by
+    intro a b hab
+    exact Subtype.ext (Units.ext hab)
+  have hsep : ∀ a ∈ Set.range f, ∀ b ∈ Set.range f, ∀ x : R, a - b = (3 : ℕ) • x → a = b := by
+    rintro _ ⟨h1, rfl⟩ _ ⟨h2, rfl⟩ x hx
+    have ha : f h1 = f h2 + 3 * x := by
+      rw [sub_eq_iff_eq_add'] at hx
+      rw [hx, nsmul_eq_mul, Nat.cast_ofNat]
+    let u : H := h2⁻¹ * h1
+    have hu : f u = 1 + 3 * (f h2⁻¹ * x) := by
+      have e : f u = f h2⁻¹ * f h1 := by
+        simp [f, u]
+      have e2 : f h2⁻¹ * f h2 = 1 := by
+        simp [f]
+      rw [e, ha, mul_add, e2]
+      congr 1
+      noncomm_ring
+    have hpow : f u ^ orderOf u = 1 := by
+      have : u ^ orderOf u = 1 := pow_orderOf_eq_one u
+      simp only [f]
+      rw [← Units.val_pow_eq_pow_val, ← Subgroup.coe_pow, this]
+      rfl
+    have h1u := UpperTheory.V.KT.torsfree R (f u) _ (orderOf u) (orderOf_pos u) hu hpow
+    have hu1 : u = 1 := hinj (by rw [h1u]; simp [f])
+    have : h2 = h1 := inv_mul_eq_one.mp hu1
+    rw [this]
+  obtain ⟨_, hcard⟩ := UpperTheory.V.KT.cardsep R 3 (by norm_num) (Set.range f) hsep
+  rw [Set.ncard_range_of_injective hinj] at hcard
+  exact hcard
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.ImportsAlt
+
+section
 
 @[expose] public section
 
@@ -70,3 +125,5 @@ theorem UpperTheory.V.KT.stab :
     (MulAction.stabilizer (Gm L N) t) hfin
   rw [hrk] at h
   exact ⟨hfin, h⟩
+end
+end

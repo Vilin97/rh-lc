@@ -42,12 +42,207 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Separation.CompletelyRegular
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.ChartWR
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.ChartWRA
+public import Mathlib.Analysis.Matrix.Normed
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Mathlib.Analysis.Calculus.FDeriv.Add
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.Calculus.FDeriv.Comp
+public import Mathlib.Analysis.Calculus.FDeriv.Linear
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ApproximatesLinearOn
+public import Mathlib.MeasureTheory.Function.Jacobian
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.LintegralGaussTri
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.QRHaar
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.QrMapMeasurableSetImage
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.VolUSetMeasurable
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.VolUMeasurableSetTriPos
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.ChartWRB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory Set
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+namespace ChartWRAux
+
+variable {N : ℕ}
+
+def skML : (UCo N × TriCo N) →ₗ[ℝ] Matrix (Fin N) (Fin N) ℂ where
+  toFun p := skMat p.1
+  map_add' p q := by
+    ext a b
+    simp only [skMat, Prod.fst_add, Pi.add_apply, Matrix.add_apply]
+    split_ifs <;> (try simp [star_add]) <;> (try ring)
+  map_smul' c p := by
+    ext a b
+    simp only [skMat, Prod.smul_fst, Pi.smul_apply, RingHom.id_apply, Matrix.smul_apply]
+    split_ifs <;> (try simp [Complex.real_smul]) <;> (try ring)
+
+def upML : (UCo N × TriCo N) →ₗ[ℝ] Matrix (Fin N) (Fin N) ℂ where
+  toFun p := upMat p.2
+  map_add' p q := by
+    ext a b
+    simp only [upMat, Prod.snd_add, Pi.add_apply, Matrix.add_apply]
+    split_ifs <;> (try simp) <;> (try ring)
+  map_smul' c p := by
+    ext a b
+    simp only [upMat, Prod.smul_snd, Pi.smul_apply, RingHom.id_apply, Matrix.smul_apply]
+    split_ifs <;> (try simp [Complex.real_smul]) <;> (try ring)
+
+section Deriv
+
+attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra
+
+theorem chartWR_strict :
+    HasStrictFDerivAt (chartWR (N := N))
+      ((lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ)) : (UCo N × TriCo N) →L[ℝ] (Fin N → Fin N → ℂ)) 0 := by
+  let skL : (UCo N × TriCo N) →L[ℝ] Matrix (Fin N) (Fin N) ℂ := LinearMap.toContinuousLinearMap skML
+  let upL : (UCo N × TriCo N) →L[ℝ] Matrix (Fin N) (Fin N) ℂ := LinearMap.toContinuousLinearMap upML
+  let ofL : Matrix (Fin N) (Fin N) ℂ →L[ℝ] (Fin N → Fin N → ℂ) :=
+    LinearMap.toContinuousLinearMap (Matrix.ofLinearEquiv ℝ).symm.toLinearMap
+  have hsk0 : skL 0 = 0 := map_zero _
+  have hup0 : upL 0 = 0 := map_zero _
+  have h1 : HasStrictFDerivAt (fun p : UCo N × TriCo N => NormedSpace.exp (skL p))
+      ((1 : Matrix (Fin N) (Fin N) ℂ →L[ℝ] Matrix (Fin N) (Fin N) ℂ).comp skL) 0 := by
+    have he := hasStrictFDerivAt_exp_zero (𝕂 := ℝ) (𝔸 := Matrix (Fin N) (Fin N) ℂ)
+    rw [← hsk0] at he
+    exact he.comp 0 skL.hasStrictFDerivAt
+  have h2 : HasStrictFDerivAt (fun p : UCo N × TriCo N => 1 + upL p) upL 0 :=
+    upL.hasStrictFDerivAt.const_add 1
+  have h3 := h1.mul' h2
+  have h4 := ofL.hasStrictFDerivAt.comp 0 h3
+  have hF : (fun x => ofL (((fun p => NormedSpace.exp (skL p)) * fun p => 1 + upL p) x)) = chartWR := by
+    funext p; rfl
+  have hD : ofL.comp (NormedSpace.exp (skL 0) • upL + MulOpposite.op (1 + upL 0) •
+      (1 : Matrix (Fin N) (Fin N) ℂ →L[ℝ] Matrix (Fin N) (Fin N) ℂ).comp skL) =
+      ((lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ)) : (UCo N × TriCo N) →L[ℝ] (Fin N → Fin N → ℂ)) := by
+    refine ContinuousLinearMap.ext fun p => ?_
+    rw [hsk0, hup0, NormedSpace.exp_zero]
+    simp
+    exact (add_comm _ _).trans rfl
+  rw [hF] at h4
+  exact h4.congr_fderiv hD
+
+end Deriv
+
+end ChartWRAux
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.ChartWR
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory Set Filter Topology
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+open ReciprocityTheory.ChartRestriction.DS.S7
+
+variable {N : ℕ}
+
+open ChartWRAux in
+theorem chartWR_vol (η : ℝ) (hη : 0 < η) :
+    ∃ δ > 0, ∀ (B : Set (UCo N)) (E : Set (TriCo N)), MeasurableSet B → MeasurableSet E →
+      (∀ x ∈ B, ‖x‖ < δ) → (∀ t ∈ E, ‖t‖ < δ) →
+      volume (chartWR '' (B ×ˢ E)) ≤ ENNReal.ofReal (1 + η) * (volume B * volume E) ∧
+        ENNReal.ofReal (1 - η) * (volume B * volume E) ≤ volume (chartWR '' (B ×ˢ E)) := by
+  have : (volume : Measure (Fin N → Fin N → ℂ)).IsAddHaarMeasure := Measure.pi.isAddHaarMeasure _
+  let L : (UCo N × TriCo N) →L[ℝ] (Fin N → Fin N → ℂ) := (lamE : (UCo N × TriCo N) ≃L[ℝ] _)
+  let g : (Fin N → Fin N → ℂ) → (Fin N → Fin N → ℂ) := fun z => chartWR (lamE.symm z)
+  have hg : HasStrictFDerivAt g (ContinuousLinearMap.id ℝ (Fin N → Fin N → ℂ)) 0 := by
+    have hc : HasStrictFDerivAt (chartWR (N := N)) L (lamE.symm 0) := by
+      rw [map_zero]; exact chartWR_strict
+    have h := hc.comp (0 : Fin N → Fin N → ℂ)
+      ((lamE.symm : (Fin N → Fin N → ℂ) ≃L[ℝ] (UCo N × TriCo N)) :
+        (Fin N → Fin N → ℂ) →L[ℝ] (UCo N × TriCo N)).hasStrictFDerivAt
+    rwa [ContinuousLinearEquiv.coe_comp_coe_symm] at h
+  have hdet : ENNReal.ofReal |(ContinuousLinearMap.id ℝ (Fin N → Fin N → ℂ)).det| = 1 := by
+    simp [ContinuousLinearMap.det, ContinuousLinearMap.coe_id]
+  have ev1 := addHaar_image_le_mul_of_det_lt (μ := (volume : Measure (Fin N → Fin N → ℂ)))
+    (ContinuousLinearMap.id ℝ (Fin N → Fin N → ℂ)) (m := (1 + η).toNNReal) (by
+      rw [hdet]; exact_mod_cast (show (1 : ℝ) < (1 + η).toNNReal by
+        rw [Real.coe_toNNReal _ (by linarith)]; linarith))
+  have ev2 : ∀ᶠ δ in 𝓝[>] (0 : NNReal), ∀ (s : Set (Fin N → Fin N → ℂ)) (f : (Fin N → Fin N → ℂ) → (Fin N → Fin N → ℂ)),
+      ApproximatesLinearOn f (ContinuousLinearMap.id ℝ (Fin N → Fin N → ℂ)) s δ →
+        ENNReal.ofReal (1 - η) * volume s ≤ volume (f '' s) := by
+    rcases lt_or_ge η 1 with h1 | h1
+    · have := mul_le_addHaar_image_of_lt_det (μ := (volume : Measure (Fin N → Fin N → ℂ)))
+        (ContinuousLinearMap.id ℝ (Fin N → Fin N → ℂ)) (m := (1 - η).toNNReal) (by
+          rw [hdet]; exact_mod_cast (show ((1 - η).toNNReal : ℝ) < 1 by
+            rw [Real.coe_toNNReal _ (by linarith)]; linarith))
+      exact this
+    · refine Filter.Eventually.of_forall fun δ s f _ => ?_
+      rw [ENNReal.ofReal_of_nonpos (by linarith), zero_mul]; exact bot_le
+  obtain ⟨c, ⟨hc1, hc2⟩, hcpos⟩ := ((ev1.and ev2).and self_mem_nhdsWithin).exists
+  obtain ⟨s, hs, hap⟩ := hg.approximates_deriv_on_nhds (Or.inr hcpos)
+  obtain ⟨r, hr, hrs⟩ := Metric.mem_nhds_iff.1 hs
+  have hL0 : 0 ≤ ‖L‖ := norm_nonneg _
+  refine ⟨r / (‖L‖ + 1), by positivity, fun B E hB hE hBδ hEδ => ?_⟩
+  have hLr : ‖L‖ * (r / (‖L‖ + 1)) < r := by
+    rw [mul_div_assoc', div_lt_iff₀ (by positivity)]; nlinarith
+  have hball : (lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ)) '' (B ×ˢ E) ⊆ s := by
+    rintro _ ⟨p, hp, rfl⟩
+    apply hrs
+    rw [Metric.mem_ball, dist_zero_right]
+    have hp' : ‖p‖ < r / (‖L‖ + 1) := by
+      rw [Prod.norm_def]; exact max_lt (hBδ _ hp.1) (hEδ _ hp.2)
+    calc ‖lamE p‖ = ‖L p‖ := rfl
+      _ ≤ ‖L‖ * ‖p‖ := L.le_opNorm p
+      _ ≤ ‖L‖ * (r / (‖L‖ + 1)) := mul_le_mul_of_nonneg_left hp'.le hL0
+      _ < r := hLr
+  have hap' := hap.mono_set hball
+  have himg : chartWR '' (B ×ˢ E) = g '' ((lamE : (UCo N × TriCo N) ≃L[ℝ] _) '' (B ×ˢ E)) := by
+    rw [Set.image_image]
+    refine Set.image_congr fun p _ => ?_
+    simp [g]
+  have hmp : MeasurePreserving (lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ)) volume volume := by
+    have e : (⇑(lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ))) = lam := funext lamE_apply
+    rw [e]; exact mp_lam
+  have hme : MeasurableEmbedding (lamE : (UCo N × TriCo N) ≃L[ℝ] (Fin N → Fin N → ℂ)) :=
+    lamE.toHomeomorph.measurableEmbedding
+  have hvol : volume ((lamE : (UCo N × TriCo N) ≃L[ℝ] _) '' (B ×ˢ E)) = volume B * volume E := by
+    calc volume ((lamE : (UCo N × TriCo N) ≃L[ℝ] _) '' (B ×ˢ E))
+        = (Measure.map lamE volume) ((lamE : (UCo N × TriCo N) ≃L[ℝ] _) '' (B ×ˢ E)) := by
+          rw [hmp.map_eq]
+      _ = volume (lamE ⁻¹' ((lamE : (UCo N × TriCo N) ≃L[ℝ] _) '' (B ×ˢ E))) := hme.map_apply _ _
+      _ = volume (B ×ˢ E) := by rw [Set.preimage_image_eq _ lamE.injective]
+      _ = volume B * volume E := Measure.prod_prod _ _
+  rw [himg]
+  refine ⟨?_, ?_⟩
+  · have := hc1 _ g hap'
+    rw [hvol] at this
+    exact this
+  · have := hc2 _ g hap'
+    rw [hvol] at this
+    exact this
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.VolUDensity
+
+section
 
 @[expose] public section
 
@@ -184,3 +379,6 @@ theorem volU_density (μ : Measure (UNgrp N)) [μ.IsHaarMeasure] [IsProbabilityM
     exact ENNReal.ofReal_le_ofReal r2
 
 end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end

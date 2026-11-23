@@ -3,14 +3,11 @@ module
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StComplementArchCocompact
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StArchCovolumeBound
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementExtension
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsZsmulMem
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordEmbedBasis
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHermAtPlace
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Objects
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -26,9 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,8 +42,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordEmbedBasis
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHermAtPlace
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsZsmulMem
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ExistsZsmulMem.exists_zsmul_mem.{u_1, u_2} :
+    ∀ {E : Type u_1} [inst : Field E] [NumberField E] {W : Type u_2} [inst_2 : AddCommGroup W]
+    [inst_3 : _root_.Module E W] {La : AddSubgroup W},
+    GroundTheory.Heights₂.Heights.FiniteCovolume.IsLattice (E := E) La →
+      ∀ (x : W),
+        ∃ (d : ℤ),
+          d ≠ (0 : ℤ) ∧
+            d • x ∈ La := by
+  intro E _ _ W _ _ La h x
+  refine Submodule.span_induction (p := fun x _ => ∃ d : ℤ, d ≠ 0 ∧ d • x ∈ La)
+    (fun y hy => ⟨1, one_ne_zero, by simpa using hy⟩) ⟨1, one_ne_zero, by simp⟩ ?_ ?_
+    (h.span_eq_top ▸ Submodule.mem_top : x ∈ Submodule.span E (La : Set W))
+  · rintro y z - - ⟨d, hd, hy⟩ ⟨e, he, hz⟩
+    refine ⟨d * e, mul_ne_zero hd he, ?_⟩
+    rw [smul_add, mul_smul d e z, mul_comm d e, mul_smul e d y]
+    exact add_mem (La.zsmul_mem hy e) (La.zsmul_mem hz d)
+  · rintro a y - ⟨d, hd, hy⟩
+    obtain ⟨m, hm, hi⟩ := ((IsFractionRing.isAlgebraic_iff ℤ ℚ E).2
+      (Algebra.IsAlgebraic.isAlgebraic a)).exists_integral_multiple
+    refine ⟨m * d, mul_ne_zero hm hd, ?_⟩
+    rw [mul_smul, smul_comm d a y, ← smul_assoc]
+    exact h.smul_mem ⟨m • a, hi⟩ _ hy
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementArchCocompact
+
+section
 
 @[expose] public section
 
@@ -172,3 +207,5 @@ theorem ComplementArchCocompact.proof (h : HermitianForm F E W) (v : Basis ι E 
 end
 
 end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end

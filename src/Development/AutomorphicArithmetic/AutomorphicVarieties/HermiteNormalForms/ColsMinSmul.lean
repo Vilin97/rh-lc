@@ -8,8 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNorm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Exbasis
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Hnf
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Imports
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Nearvx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Spanpsd
+public import Mathlib.Data.Set.Card
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,6 +48,90 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.Data.Nat.Choose.Sum
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.FiniteSubfamilySpansDual
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Nearvec
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Spanpsd
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cardsub
+
+section
+
+@[expose] public section
+
+open Matrix
+open scoped ComplexOrder
+
+theorem UpperTheory.V.KT.cardsub :
+    ∀ (α : Type) (S : Set α) (k : ℕ), S.Finite →
+    {M : Finset α | (↑M : Set α) ⊆ S ∧ M.card ≤ k}.Finite ∧
+      {M : Finset α | (↑M : Set α) ⊆ S ∧ M.card ≤ k}.ncard ≤ (S.ncard + 1) ^ k := by
+  intro α S k hS
+  classical
+  set T := hS.toFinset with hT
+  let F : Finset (Finset α) := (Finset.range (k + 1)).biUnion fun j => T.powersetCard j
+  have hsub : {M : Finset α | (↑M : Set α) ⊆ S ∧ M.card ≤ k} ⊆ (↑F : Set (Finset α)) := by
+    rintro M ⟨hM, hk⟩
+    rw [Finset.mem_coe, Finset.mem_biUnion]
+    refine ⟨M.card, Finset.mem_range.2 (by omega), Finset.mem_powersetCard.2 ⟨?_, rfl⟩⟩
+    intro x hx
+    simpa [T] using hM hx
+  have hfin := F.finite_toSet.subset hsub
+  refine ⟨hfin, ?_⟩
+  calc _ ≤ (↑F : Set (Finset α)).ncard := Set.ncard_le_ncard hsub F.finite_toSet
+    _ = F.card := Set.ncard_coe_finset F
+    _ ≤ ∑ j ∈ Finset.range (k + 1), (T.powersetCard j).card := Finset.card_biUnion_le
+    _ = ∑ j ∈ Finset.range (k + 1), T.card.choose j := by simp [Finset.card_powersetCard]
+    _ ≤ ∑ j ∈ Finset.range (k + 1), T.card ^ j * 1 ^ (k - j) * k.choose j := by
+      apply Finset.sum_le_sum
+      intro j hj
+      have h1 : T.card.choose j ≤ T.card ^ j := Nat.choose_le_pow _ _
+      have h2 : 1 ≤ k.choose j := Nat.choose_pos (by simp at hj; omega)
+      rw [one_pow, mul_one]
+      calc T.card.choose j ≤ T.card ^ j := h1
+        _ = T.card ^ j * 1 := (mul_one _).symm
+        _ ≤ T.card ^ j * k.choose j := Nat.mul_le_mul_left _ h2
+    _ = (T.card + 1) ^ k := (add_pow _ _ _).symm
+    _ = (S.ncard + 1) ^ k := by rw [Set.ncard_eq_toFinset_card S hS]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Nearvx
+
+section
+
+@[expose] public section
+
+open NumberField Matrix UpperTheory.V UpperTheory.V.KT
+open scoped ComplexOrder
+
+theorem UpperTheory.V.KT.nearvx :
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (A : Matrix (Fin N) (Fin N) (𝓞 L)), A.det ≠ 0 →
+    (nearVx A).Finite ∧ (nearVx A).ncard ≤ ((2 * RR L N + 1) ^ dd L N + 1) ^ (dd L N * N) := by
+  intro L _ _ _ N A hA
+  choose f hf1 hf2 hf3 using vxdet L N
+  obtain ⟨hfin, hcard⟩ := nearvec L N A hA
+  obtain ⟨h1, h2⟩ := cardsub (Lat L N) (nearVec A) (dd L N * N) hfin
+  have hinj : Function.Injective f := fun v w e =>
+    Subtype.ext (hf3 w v.1 (fun y hy => hf2 v y (e ▸ hy)))
+  have hmap : ∀ v ∈ nearVx A, f v ∈
+      {M : Finset (Lat L N) | (↑M : Set (Lat L N)) ⊆ nearVec A ∧ M.card ≤ dd L N * N} := by
+    intro v hv
+    refine ⟨fun y hy => ⟨v.1, ?_, hv, hf2 v y hy⟩, hf1 v⟩
+    have := v.2.1
+    rwa [poly_qc] at this
+  refine ⟨Set.Finite.of_injOn hmap hinj.injOn h1, ?_⟩
+  refine (Set.ncard_le_ncard_of_injOn f hmap hinj.injOn h1).trans (h2.trans ?_)
+  exact Nat.pow_le_pow_left (Nat.succ_le_succ hcard) _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.ColsMinSmul
+
+section
 
 @[expose] public section
 
@@ -119,3 +201,5 @@ theorem UpperTheory.V.KT.orb :
   refine (Finset.sum_le_card_nsmul _ _ _ fun A _ => hb A).trans ?_
   rw [smul_eq_mul, Finset.card_univ, Fintype.card_coe]
   exact Nat.mul_le_mul_right _ ((Finset.card_filter_le _ _).trans hS)
+end
+end

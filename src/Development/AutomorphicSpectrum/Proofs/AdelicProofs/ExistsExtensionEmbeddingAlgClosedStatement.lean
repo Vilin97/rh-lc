@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.NumberTheory.NumberField.Basic
-public import Development.AutomorphicSpectrum.Proofs.AdelicProofs.ExistsExtensionEmbeddingAlgClosed
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +19,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +45,43 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.AdelicProofs.ExistsExtensionEmbeddingAlgClosed
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
+
+namespace GlobalTheory.CompanionTheory.Ar.Fl
+
+theorem exists_comp_eq_of_numberField (k k' A : Type) [Field k] [NumberField k] [Field k']
+    [NumberField k'] [Field A] [CharZero A] [IsAlgClosed A] (f : k →+* k') (j : k →+* A) :
+    ∃ j' : k' →+* A, j'.comp f = j := by
+  let _ : Algebra k k' := f.toAlgebra
+  let _ : Algebra k A := j.toAlgebra
+  have : IsScalarTower ℚ k k' := IsScalarTower.of_algebraMap_eq fun q => by
+    rw [RingHom.algebraMap_toAlgebra, eq_ratCast (algebraMap ℚ k') q, eq_ratCast (algebraMap ℚ k) q,
+      map_ratCast]
+  have : Module.Finite k k' := Module.Finite.of_restrictScalars_finite ℚ k k'
+  have : Algebra.IsAlgebraic k k' := Algebra.IsAlgebraic.of_finite k k'
+  refine ⟨(IsAlgClosed.lift : k' →ₐ[k] A).toRingHom, ?_⟩
+  ext x
+  exact (IsAlgClosed.lift : k' →ₐ[k] A).commutes x
+
+end GlobalTheory.CompanionTheory.Ar.Fl
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AdelicProofs.ExistsExtensionEmbeddingAlgClosedStatement
+
+section
+
 @[expose] public section
 
 open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
 
 theorem _root_.GlobalTheory.T.exists_extension_embedding_alg_closed : ∀ (k k' A : Type) [Field k] [NumberField k] [Field k'] [NumberField k'] [Field A] [CharZero A] [IsAlgClosed A] (f : k →+* k') (j : k →+* A), ∃ j' : k' →+* A, j'.comp f = j := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Fl.exists_comp_eq_of_numberField | exact GlobalTheory.CompanionTheory.Ar.Fl.exists_comp_eq_of_numberField | (intros; apply GlobalTheory.CompanionTheory.Ar.Fl.exists_comp_eq_of_numberField <;> assumption)
+end
+end

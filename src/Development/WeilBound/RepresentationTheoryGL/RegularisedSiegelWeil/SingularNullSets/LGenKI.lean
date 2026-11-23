@@ -1,11 +1,6 @@
 module
 
-public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKG
-public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.BlockMatrixMulUpperUnipotent
-import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKD
-public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKF
-public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKH
-import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.MulVecInt
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.WeakApproximationFinitePlace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +23,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,9 +36,301 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKE
+import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKD
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.MulVecInt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.BlockMatrixMulUpperUnipotent
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKF
+import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.MulVecInt
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.IntegralBlockMatrixIff
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Matrix NNReal ENNReal ComplexConjugate TensorProduct Topology
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.Pj Formalism.IndefR.Datum MeasureTheory Filter
+open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doubling GlobalTheory.Cont GlobalTheory.MixModel
+open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
+open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory.GramSchwartzFunctions.BC PositivityTheory.PfSWUS
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open IsDedekindDomain NumberField
+open GlobalTheory.RegSch (ikS projS Lvl)
+
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 400000
+
+namespace PositivityTheory.Rg.Rsw.L.LGenK
+
+variable {D : D7}
+
+def IntM {D : D7} {m p : ℕ} (v : Pl D) (M : Mx D m p) : Prop := ∀ i j, cv D v (M i j) ∈ intLoc D.host.F D.host.E v
+
+namespace IntM
+
+variable {v : Pl D} {m p q : ℕ}
+
+theorem add {M N : Mx D m p} (hM : IntM v M) (hN : IntM v N) : IntM v (M + N) := fun i j => by
+  rw [Matrix.add_apply, map_add (f := _)]; exact add_mem (hM i j) (hN i j)
+
+theorem neg {M : Mx D m p} (hM : IntM v M) : IntM v (-M) := fun i j => by
+  rw [Matrix.neg_apply, map_neg]; exact neg_mem (hM i j)
+
+theorem zero : IntM v (0 : Mx D m p) := fun i j => by
+  rw [Matrix.zero_apply, map_zero]; exact zero_mem _
+
+theorem one : IntM v (1 : Mx D m m) := fun i j => by
+  rw [Matrix.one_apply]
+  split_ifs
+  · rw [map_one]; exact one_mem _
+  · rw [map_zero]; exact zero_mem _
+
+theorem mul {M : Mx D m p} {N : Mx D p q} (hM : IntM v M) (hN : IntM v N) : IntM v (M * N) := fun i j => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
+  exact sum_mem fun k _ => by rw [map_mul]; exact mul_mem (hM i k) (hN k j)
+
+theorem inv {M : Mx D m m} (hM : IntM v M) (hu : IsUnit M.det)
+    (hdet : ∃ z ∈ intLoc D.host.F D.host.E v, cv D v M.det * z = 1) : IntM v M⁻¹ := by
+  obtain ⟨z, hz, hdz⟩ := hdet
+  obtain ⟨u, hu'⟩ := hu
+  have hinv : cv D v (Ring.inverse M.det) = z := by
+    rw [← hu', Ring.inverse_unit]
+    have h1 : cv D v ((u⁻¹ : (AE D)ˣ) : AE D) * cv D v (u : AE D) = 1 := by
+      rw [← map_mul, Units.inv_mul, map_one]
+    rw [hu'] at h1
+    calc cv D v ((u⁻¹ : (AE D)ˣ) : AE D) = cv D v ((u⁻¹ : (AE D)ˣ) : AE D) * (cv D v M.det * z) := by
+          rw [hdz, mul_one]
+      _ = z := by rw [← mul_assoc, h1, one_mul]
+
+  let N : Matrix (Fin m) (Fin m) (intLoc D.host.F D.host.E v) := fun i j => ⟨cv D v (M i j), hM i j⟩
+  have hN : N.map (intLoc D.host.F D.host.E v).subtype = M.map (cv D v) := rfl
+  have hadj : ∀ i j, cv D v (M.adjugate i j) ∈ intLoc D.host.F D.host.E v := by
+    intro i j
+    have e1 : cv D v (M.adjugate i j) = (M.map (cv D v)).adjugate i j :=
+      congrFun (congrFun (RingHom.map_adjugate (cv D v) M) i) j
+    have e2 : (intLoc D.host.F D.host.E v).subtype (N.adjugate i j) =
+        (N.map (intLoc D.host.F D.host.E v).subtype).adjugate i j :=
+      congrFun (congrFun (RingHom.map_adjugate (intLoc D.host.F D.host.E v).subtype N) i) j
+    rw [e1, ← hN, ← e2]
+    exact (N.adjugate i j).2
+  intro i j
+  rw [Matrix.inv_def, Matrix.smul_apply, smul_eq_mul, map_mul, hinv]
+  exact mul_mem hz (hadj i j)
+
+end IntM
+
+theorem integral_block_matrix_iff {v : Pl D} {n : ℕ} {a b c d : Mx D n n} :
+    IntM v (blk4 a b c d) ↔ IntM v a ∧ IntM v b ∧ IntM v c ∧ IntM v d := by
+  have key : ∀ x y, blk4 a b c d (finSumFinEquiv x) (finSumFinEquiv y) = Matrix.fromBlocks a b c d x y := by
+    intro x y; simp only [blk4, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+  constructor
+  · intro h
+    refine ⟨fun i j => ?_, fun i j => ?_, fun i j => ?_, fun i j => ?_⟩
+    · have := h (finSumFinEquiv (Sum.inl i)) (finSumFinEquiv (Sum.inl j))
+      rwa [key, Matrix.fromBlocks_apply₁₁] at this
+    · have := h (finSumFinEquiv (Sum.inl i)) (finSumFinEquiv (Sum.inr j))
+      rwa [key, Matrix.fromBlocks_apply₁₂] at this
+    · have := h (finSumFinEquiv (Sum.inr i)) (finSumFinEquiv (Sum.inl j))
+      rwa [key, Matrix.fromBlocks_apply₂₁] at this
+    · have := h (finSumFinEquiv (Sum.inr i)) (finSumFinEquiv (Sum.inr j))
+      rwa [key, Matrix.fromBlocks_apply₂₂] at this
+  · rintro ⟨ha, hb, hc, hd⟩ i j
+    obtain ⟨i', rfl⟩ := finSumFinEquiv.surjective i
+    obtain ⟨j', rfl⟩ := finSumFinEquiv.surjective j
+    show cv D v (blk4 a b c d _ _) ∈ _
+    rw [key]
+    rcases i' with i' | i' <;> rcases j' with j' | j'
+    · rw [Matrix.fromBlocks_apply₁₁]; exact ha i' j'
+    · rw [Matrix.fromBlocks_apply₁₂]; exact hb i' j'
+    · rw [Matrix.fromBlocks_apply₂₁]; exact hc i' j'
+    · rw [Matrix.fromBlocks_apply₂₂]; exact hd i' j'
+
+end PositivityTheory.Rg.Rsw.L.LGenK
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKG
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Matrix NNReal ENNReal ComplexConjugate TensorProduct Topology
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.Pj Formalism.IndefR.Datum MeasureTheory Filter
+open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doubling GlobalTheory.Cont GlobalTheory.MixModel
+open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
+open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory.GramSchwartzFunctions.BC PositivityTheory.PfSWUS
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open IsDedekindDomain NumberField
+open GlobalTheory.RegSch (ikS projS Lvl)
+
+
+
+
+namespace PositivityTheory.Rg.Rsw.L.LGenK
+
+open Matrix
+
+variable {D : D7} {n : ℕ}
+
+theorem map_one' {T : Type} [CommRing T] (f : AE D →+* T) : (1 : Mx D n n).map f = 1 :=
+  Matrix.map_one _ (map_zero f) (map_one f)
+
+theorem map_zero' {T : Type} [CommRing T] (f : AE D →+* T) {m p : ℕ} : (0 : Mx D m p).map f = 0 :=
+  Matrix.map_zero _ (map_zero f)
+
+theorem unit_n (Y : Mx D n n) (hY : cj (cA D) Y = Y) :
+    cj (cA D) (blk4 1 Y 0 1) * Jm D n * blk4 1 Y 0 1 = Jm D n := by
+  rw [conj_block_matrix, cj_one, cj_zero, hY, submatrix_fromBlocks_mul, submatrix_fromBlocks_mul]
+  simp
+
+def nOf (Y : Mx D n n) (hY : cj (cA D) Y = Y) : G D n := (exists_G _ (unit_n Y hY)).choose
+
+theorem mat_nOf (Y : Mx D n n) (hY : cj (cA D) Y = Y) : mat (nOf Y hY) = blk4 1 Y 0 1 :=
+  (exists_G _ (unit_n Y hY)).choose_spec
+
+theorem isN_nOf (Y : Mx D n n) (hY : cj (cA D) Y = Y) : IsN (nOf Y hY) := ⟨Y, mat_nOf Y hY⟩
+
+theorem cj_Jm : cj (cA D) (Jm D n) = blk4 0 (-1) 1 0 := by
+  rw [conj_block_matrix, cj_one, cj_zero, cj_neg, cj_one]
+
+theorem unit_w : cj (cA D) (Jm D n) * Jm D n * Jm D n = Jm D n := by
+  rw [cj_Jm, submatrix_fromBlocks_mul, submatrix_fromBlocks_mul]; simp
+
+def wE (D : D7) (n : ℕ) : G D n := (exists_G _ (unit_w (D := D) (n := n))).choose
+
+theorem mat_wE : mat (wE D n) = Jm D n := (exists_G _ (unit_w (D := D) (n := n))).choose_spec
+
+theorem isW_wE : IsW (wE D n) := mat_wE
+
+theorem mat_wE_inv : mat (wE D n)⁻¹ = blk4 0 (-1) 1 0 :=
+  mat_inv_eq (by rw [mat_wE, submatrix_fromBlocks_mul]; simp [block_matrix_one])
+
+theorem mat_conj (Y : Mx D n n) (hY : cj (cA D) Y = Y) :
+    mat (wE D n * nOf Y hY * (wE D n)⁻¹) = blk4 1 0 (-Y) 1 := by
+  rw [mat_mul, mat_mul, mat_wE, mat_nOf, mat_wE_inv, submatrix_fromBlocks_mul, submatrix_fromBlocks_mul]; simp
+
+theorem nOf_mem {S : Finset (Pl D)} (Y : Mx D n n) (hY : cj (cA D) Y = Y) (hinf : Y.map (infPart D) = 0)
+    (hS : ∀ v ∈ S, Y.map (cv D v) = 0) (hint : ∀ v ∉ S, IntM v Y) : nOf Y hY ∈ KOff D n S := by
+  have hinv : mat (nOf Y hY)⁻¹ = blk4 1 (-Y) 0 1 := mat_inv_eq (by rw [mat_nOf, submatrix_fromBlocks_mul]; simp [block_matrix_one])
+  apply mem_KOff
+  · rw [mat_nOf, block_matrix_map, hinf, map_one', map_zero', block_matrix_one]
+  · intro v hv; rw [mat_nOf, block_matrix_map, hS v hv, map_one', map_zero', block_matrix_one]
+  · intro v hv i j
+    rw [hinv, mat_nOf]
+    exact ⟨integral_block_matrix_iff.2 ⟨IntM.one, hint v hv, IntM.zero, IntM.one⟩ i j,
+      integral_block_matrix_iff.2 ⟨IntM.one, (hint v hv).neg, IntM.zero, IntM.one⟩ i j⟩
+
+theorem conj_mem {S : Finset (Pl D)} (Y : Mx D n n) (hY : cj (cA D) Y = Y) (hinf : Y.map (infPart D) = 0)
+    (hS : ∀ v ∈ S, Y.map (cv D v) = 0) (hint : ∀ v ∉ S, IntM v Y) :
+    wE D n * nOf Y hY * (wE D n)⁻¹ ∈ KOff D n S := by
+  have hinv : mat (wE D n * nOf Y hY * (wE D n)⁻¹)⁻¹ = blk4 1 0 Y 1 :=
+    mat_inv_eq (by rw [mat_conj, submatrix_fromBlocks_mul]; simp [block_matrix_one])
+  have hneg : ∀ {T : Type} [CommRing T] (f : AE D →+* T), (-Y).map f = -(Y.map f) := fun f => Matrix.map_neg _ (map_neg f) _
+  apply mem_KOff
+  · rw [mat_conj, block_matrix_map, hneg, hinf, neg_zero, map_one', map_zero', block_matrix_one]
+  · intro v hv; rw [mat_conj, block_matrix_map, hneg, hS v hv, neg_zero, map_one', map_zero', block_matrix_one]
+  · intro v hv i j
+    rw [hinv, mat_conj]
+    exact ⟨integral_block_matrix_iff.2 ⟨IntM.one, IntM.zero, (hint v hv).neg, IntM.one⟩ i j,
+      integral_block_matrix_iff.2 ⟨IntM.one, IntM.zero, hint v hv, IntM.one⟩ i j⟩
+
+end PositivityTheory.Rg.Rsw.L.LGenK
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKH
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Matrix NNReal ENNReal ComplexConjugate TensorProduct Topology
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.Pj Formalism.IndefR.Datum MeasureTheory Filter
+open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doubling GlobalTheory.Cont GlobalTheory.MixModel
+open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
+open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory.GramSchwartzFunctions.BC PositivityTheory.PfSWUS
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open IsDedekindDomain NumberField
+open GlobalTheory.RegSch (ikS projS Lvl)
+
+
+
+
+namespace PositivityTheory.Rg.Rsw.L.LGenK
+
+open Matrix
+
+variable {D : D7} {n : ℕ}
+
+theorem cA_invol (x : AE D) : cA D (cA D x) = x := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | tmul a e => change a ⊗ₜ[D.host.F] D.sp.cm.sig (D.sp.cm.sig e) = _; rw [sig_invol]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+
+theorem map_neg' {T : Type} [CommRing T] (f : AE D →+* T) (Y : Mx D n n) : (-Y).map f = -(Y.map f) := by
+  exact Matrix.map_neg f (map_neg f) Y
+
+theorem map_add' {T : Type} [CommRing T] (f : AE D →+* T) (Y Z : Mx D n n) : (Y + Z).map f = Y.map f + Z.map f := by
+  exact Matrix.map_add f (map_add f) Y Z
+
+theorem isM_of (g : G D n) (A u : Mx D n n) (h : mat g = blk4 A 0 0 u) : IsM g := by
+  have hunit := mat_unit g
+  rw [h] at hunit
+  change cj (cA D) (blk4 A 0 0 u) * blk4 0 1 (-1) 0 * blk4 A 0 0 u = blk4 0 1 (-1) 0 at hunit
+  have hcol := unit_col (cA D) A 0 0 u (unit_fromBlocks (cA D) A 0 0 u hunit)
+  have hAu : cj (cA D) A * u = 1 := by
+    have h21 := hcol.2.1
+    rwa [mul_zero, sub_zero] at h21
+  have hu1 : u * cj (cA D) A = 1 := (Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _)).1 hAu
+  have hcjmul : ∀ M N : Matrix (Fin n) (Fin n) (AE D),
+      cj (cA D) (M * N) = cj (cA D) N * cj (cA D) M := by
+    intro M N
+    show ((M * N).map (cA D))ᵀ = (N.map (cA D))ᵀ * (M.map (cA D))ᵀ
+    rw [Matrix.map_mul, Matrix.transpose_mul]
+  have hcj1 : cj (cA D) (1 : Matrix (Fin n) (Fin n) (AE D)) = 1 := by
+    show ((1 : Matrix (Fin n) (Fin n) (AE D)).map (cA D))ᵀ = 1
+    rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.transpose_one]
+  have hA : A * cj (cA D) u = 1 := by
+    have h3 := congrArg (cj (cA D)) hu1
+    rwa [hcjmul, cj_cj (cA D) cA_invol, hcj1] at h3
+  have hA' : cj (cA D) u * A = 1 := (Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _)).1 hA
+  refine ⟨⟨A, cj (cA D) u, hA, hA'⟩, ?_⟩
+  rw [h]
+  congr 1
+  exact (cj_cj (cA D) cA_invol u).symm
+
+theorem blocks_at {T : Type} [CommRing T] (f : AE D →+* T) {k : G D n} (h : (mat k).map f = 1) :
+    (bA (mat k)).map f = 1 ∧ (bB (mat k)).map f = 0 ∧ (bC (mat k)).map f = 0 ∧ (bD (mat k)).map f = 1 := by
+  have h2 : blk4 (bA ((mat k).map f)) (bB ((mat k).map f)) (bC ((mat k).map f)) (bD ((mat k).map f)) =
+      blk4 1 0 0 1 := by
+    rw [block_matrix_of_blocks, block_matrix_one, h]
+  exact blockMatrixTwoByTwoFin_injective h2
+
+end PositivityTheory.Rg.Rsw.L.LGenK
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LGenKI
+
+section
 
 @[expose] public section
 
@@ -153,3 +441,6 @@ theorem factor {S : Finset (Pl D)} (hS2 : ∀ v ∉ S, (2 : 𝓞 D.host.F) ∉ v
   · exact mul_mem (mul_mem (mul_mem (inv_mem m1) hk) mX) (inv_mem m3)
 
 end PositivityTheory.Rg.Rsw.L.LGenK
+end
+end
+end

@@ -3,14 +3,15 @@ module
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AvgVanish
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapMulVecOfMemTD
 import Development.AbelianVarietyTheory.Definitions.Divisors.LineOppositeParabolicUnitaryLeviSectionEq
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HaarMeasureAdditiveAutomorphismScale
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableRangeOneDetUnitElementary
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmoothIntegralLinear
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,13 +23,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,8 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,8 +43,306 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.RankEqCardIffExistsFrameMatrixFirstColumnBlock
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmoothIntegralLinear
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FullRk
+
+section
+
+section
+
+noncomputable section
+
+open GlobalTheory.SplitFlip
+open scoped Matrix
+
+namespace GlobalTheory.FullRankCoinv
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+def lact {n d : ℕ} (ν : kˣ →* ℂˣ) (g : GL (Fin n) k) (Ψ : Matrix (Fin n) (Fin d) k → ℂ) :
+    Matrix (Fin n) (Fin d) k → ℂ :=
+  fun Y => (ν (gdet g) : ℂ) * apow (gdet g) ((d : ℂ) / 2) * Ψ ((g.1)ᵀ * Y)
+
+
+variable (k) in
+def fullRk (n d : ℕ) : Submodule ℂ (Matrix (Fin n) (Fin d) k → ℂ) where
+  carrier := {Ψ | Ψ ∈ GlobalTheory.WeilM.SB (Matrix (Fin n) (Fin d) k) ∧ ∀ Y : Matrix (Fin n) (Fin d) k, Y.rank ≠ n → Ψ Y = 0}
+  zero_mem' := ⟨Submodule.zero_mem _, fun _ _ => rfl⟩
+  add_mem' := fun ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun Y hY => by simp [ha.2 Y hY, hb.2 Y hY]⟩
+  smul_mem' := fun c _ ha => ⟨Submodule.smul_mem _ c ha.1, fun Y hY => by simp [ha.2 Y hY]⟩
+
+def augRk (n d : ℕ) (ν : kˣ →* ℂˣ) : Submodule ℂ (Matrix (Fin n) (Fin d) k → ℂ) :=
+  Submodule.span ℂ {z | ∃ g : GL (Fin n) k, ∃ Ψ ∈ fullRk k n d, z = lact ν g Ψ - Ψ}
+
+
+variable (k) in
+def Y0 (n d : ℕ) : Matrix (Fin n) (Fin d) k := Matrix.of fun i j => if (j : ℕ) = d - n + i then 1 else 0
+
+
+variable (k) in
+def indSp (n d : ℕ) (ν : kˣ →* ℂˣ) : Submodule ℂ (GL (Fin d) k → ℂ) where
+  carrier := {f | (∃ U ∈ nhds (1 : GL (Fin d) k), ∀ h, ∀ u ∈ U, f (h * u) = f h) ∧
+    ∀ (b h : GL (Fin d) k) (D : GL (Fin n) k), Y0 k n d * b.1 = D.1 * Y0 k n d →
+      f (b * h) = (((ν (gdet D))⁻¹ : ℂˣ) : ℂ) * apow (gdet D) (-(d : ℂ) / 2) * f h}
+  zero_mem' := ⟨⟨Set.univ, Filter.univ_mem, fun _ _ _ => rfl⟩, fun _ _ _ _ => by simp⟩
+  add_mem' := by
+    rintro f g ⟨⟨U, hU, hf⟩, hf'⟩ ⟨⟨V, hV, hg⟩, hg'⟩
+    refine ⟨⟨U ∩ V, Filter.inter_mem hU hV, fun h u hu => ?_⟩, fun b h D hD => ?_⟩
+    · simp [hf h u hu.1, hg h u hu.2]
+    · simp [hf' b h D hD, hg' b h D hD, mul_add]
+  smul_mem' := by
+    rintro c f ⟨⟨U, hU, hf⟩, hf'⟩
+    refine ⟨⟨U, hU, fun h u hu => ?_⟩, fun b h D hD => ?_⟩
+    · simp [hf h u hu]
+    · simp [hf' b h D hD]; ring
+
+end GlobalTheory.FullRankCoinv
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HaarMeasureAdditiveAutomorphismScale
+
+section
+
+@[expose] public section
+
+open scoped Matrix
+open GlobalTheory.WeilM GlobalTheory.FullRankCoinv MeasureTheory
+
+namespace GlobalTheory.HaarScaleMatrix
+
+
+open scoped Matrix in
+open MeasureTheory in
+theorem _root_.GlobalTheory.HaarScaleMatrix.secondCountable_of_localField (k : Type) [Field k] [ValuativeRel k]
+    [TopologicalSpace k] [IsNonarchimedeanLocalField k] : SecondCountableTopology k :=
+  _root_.GlobalTheory.SplitWeil.Model.secondCountable_and_t2_local_field.1
+
+end GlobalTheory.HaarScaleMatrix
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableRangeOneDetUnitElementary
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.HaarLin
+
+namespace GlobalTheory.HaarLin.Gauss
+
+open Matrix
+
+variable {R : Type} [CommRing R]
+
+theorem transvection_mem {κ : Type} [Fintype κ] [DecidableEq κ] {i j : κ} (h : i ≠ j) (c : R) :
+    transvection i j c ∈ TD R κ :=
+  Submonoid.subset_closure (Or.inl ⟨i, j, c, h, rfl⟩)
+
+theorem diagonal_mem {κ : Type} [Fintype κ] [DecidableEq κ] (d : κ → Rˣ) :
+    (diagonal fun i => (d i : R)) ∈ TD R κ :=
+  Submonoid.subset_closure (Or.inr ⟨d, rfl⟩)
+
+theorem exists_inv {κ : Type} [Fintype κ] [DecidableEq κ] {A : Matrix κ κ R} (hA : A ∈ TD R κ) :
+    ∃ B ∈ TD R κ, B * A = 1 ∧ A * B = 1 := by
+  induction hA using Submonoid.closure_induction with
+  | mem N hN =>
+    rcases hN with ⟨i, j, c, hij, rfl⟩ | ⟨d, rfl⟩
+    · refine ⟨transvection i j (-c), transvection_mem hij _, ?_, ?_⟩ <;>
+        simp [transvection_mul_transvection_same _ _ hij]
+    · refine ⟨_, diagonal_mem (fun i => (d i)⁻¹), ?_, ?_⟩ <;>
+        simp [diagonal_mul_diagonal]
+  | one => exact ⟨1, one_mem _, by simp, by simp⟩
+  | mul A B _ _ IA IB =>
+    obtain ⟨A', hA', h1, h2⟩ := IA
+    obtain ⟨B', hB', h3, h4⟩ := IB
+    refine ⟨B' * A', mul_mem hB' hA', ?_, ?_⟩
+    · rw [mul_assoc, ← mul_assoc A', h1, one_mul, h3]
+    · rw [mul_assoc, ← mul_assoc B, h4, one_mul, h2]
+
+theorem of_left {κ : Type} [Fintype κ] [DecidableEq κ] {E M : Matrix κ κ R} (hE : E ∈ TD R κ)
+    (hM : IsUnit M.det) (h : IsUnit (E * M).det → E * M ∈ TD R κ) : M ∈ TD R κ := by
+  obtain ⟨B, hB, h1, h2⟩ := exists_inv hE
+  have hd : IsUnit E.det := IsUnit.of_mul_eq_one B.det (by rw [← det_mul, h2, det_one])
+  have := mul_mem hB (h (by rw [det_mul]; exact hd.mul hM))
+  rwa [← mul_assoc, h1, one_mul] at this
+
+theorem of_right {κ : Type} [Fintype κ] [DecidableEq κ] {E M : Matrix κ κ R} (hE : E ∈ TD R κ)
+    (hM : IsUnit M.det) (h : IsUnit (M * E).det → M * E ∈ TD R κ) : M ∈ TD R κ := by
+  obtain ⟨B, hB, h1, h2⟩ := exists_inv hE
+  have hd : IsUnit E.det := IsUnit.of_mul_eq_one B.det (by rw [← det_mul, h2, det_one])
+  have := mul_mem (h (by rw [det_mul]; exact hM.mul hd)) hB
+  rwa [mul_assoc, h2, mul_one] at this
+
+theorem rowOp {κ : Type} [Fintype κ] [DecidableEq κ] (p : κ) (w : κ → R) (s : Finset κ) (hs : p ∉ s) :
+    ∃ E ∈ TD R κ, ∀ M : Matrix κ κ R, (∀ b, (E * M) p b = M p b + ∑ k ∈ s, w k * M k b) ∧
+      ∀ a b, a ≠ p → (E * M) a b = M a b := by
+  induction s using Finset.induction_on with
+  | empty => exact ⟨1, one_mem _, by simp⟩
+  | insert k s hk IH =>
+    have hkp : p ≠ k := fun h => hs (by simp [h])
+    obtain ⟨E, hE, H⟩ := IH (fun h => hs (by simp [h]))
+    refine ⟨transvection p k (w k) * E, mul_mem (transvection_mem hkp _) hE, fun M => ⟨fun b => ?_, fun a b ha => ?_⟩⟩
+    · rw [mul_assoc, transvection_mul_apply_same, (H M).1, (H M).2 _ _ hkp.symm, Finset.sum_insert hk]
+      ring
+    · rw [mul_assoc, transvection_mul_apply_of_ne _ _ _ _ ha, (H M).2 _ _ ha]
+
+theorem colOpLeft {κ : Type} [Fintype κ] [DecidableEq κ] (p : κ) (w : κ → R) (s : Finset κ) (hs : p ∉ s) :
+    ∃ E ∈ TD R κ, ∀ (M : Matrix κ κ R) a b, (E * M) a b = M a b + if a ∈ s then w a * M p b else 0 := by
+  induction s using Finset.induction_on with
+  | empty => exact ⟨1, one_mem _, by simp⟩
+  | insert k s hk IH =>
+    have hkp : p ≠ k := fun h => hs (by simp [h])
+    have hps : p ∉ s := fun h => hs (by simp [h])
+    obtain ⟨E, hE, H⟩ := IH hps
+    refine ⟨transvection k p (w k) * E, mul_mem (transvection_mem hkp.symm _) hE, fun M a b => ?_⟩
+    by_cases ha : a = k
+    · subst ha
+      rw [mul_assoc, transvection_mul_apply_same, H, H]
+      simp [hk, hps]
+    · rw [mul_assoc, transvection_mul_apply_of_ne _ _ _ _ ha, H]
+      simp [ha]
+
+theorem colOpRight {κ : Type} [Fintype κ] [DecidableEq κ] (p : κ) (w : κ → R) (s : Finset κ) (hs : p ∉ s) :
+    ∃ E ∈ TD R κ, ∀ (M : Matrix κ κ R) a b, (M * E) a b = M a b + if b ∈ s then w b * M a p else 0 := by
+  induction s using Finset.induction_on with
+  | empty => exact ⟨1, one_mem _, by simp⟩
+  | insert k s hk IH =>
+    have hkp : p ≠ k := fun h => hs (by simp [h])
+    have hps : p ∉ s := fun h => hs (by simp [h])
+    obtain ⟨E, hE, H⟩ := IH hps
+    refine ⟨E * transvection p k (w k), mul_mem hE (transvection_mem hkp _), fun M a b => ?_⟩
+    by_cases hb : b = k
+    · subst hb
+      rw [← mul_assoc, mul_transvection_apply_same, H, H]
+      simp [hk, hps]
+    · rw [← mul_assoc, mul_transvection_apply_of_ne _ _ _ _ hb, H]
+      simp [hb]
+
+theorem reindex_mem {κ κ' : Type} [Fintype κ] [DecidableEq κ] [Fintype κ'] [DecidableEq κ'] (e : κ ≃ κ')
+    {A : Matrix κ κ R} (hA : A ∈ TD R κ) : A.submatrix e.symm e.symm ∈ TD R κ' := by
+  induction hA using Submonoid.closure_induction with
+  | mem N hN =>
+    rcases hN with ⟨i, j, c, hij, rfl⟩ | ⟨d, rfl⟩
+    · have : (transvection i j c).submatrix e.symm e.symm = transvection (e i) (e j) c := by
+        ext a b
+        simp [transvection, Matrix.one_apply, Matrix.single_apply, Equiv.eq_symm_apply]
+      rw [this]
+      exact transvection_mem (e.injective.ne hij) c
+    · rw [submatrix_diagonal_equiv]
+      exact diagonal_mem (fun i => d (e.symm i))
+  | one => rw [submatrix_one_equiv]; exact one_mem _
+  | mul A B _ _ IA IB =>
+    rw [← submatrix_mul_equiv A B e.symm e.symm e.symm]
+    exact mul_mem IA IB
+
+theorem fromBlocks_mem {κ : Type} [Fintype κ] [DecidableEq κ]
+    {A : Matrix κ κ R} (hA : A ∈ TD R κ) : fromBlocks A 0 0 (1 : Matrix Unit Unit R) ∈ TD R (κ ⊕ Unit) := by
+  induction hA using Submonoid.closure_induction with
+  | mem N hN =>
+    rcases hN with ⟨i, j, c, hij, rfl⟩ | ⟨d, rfl⟩
+    · have : transvection (Sum.inl i) (Sum.inl j) c = fromBlocks (transvection i j c) 0 0 (1 : Matrix Unit Unit R) :=
+        TransvectionStruct.toMatrix_sumInl Unit (⟨i, j, hij, c⟩ : TransvectionStruct κ R)
+      rw [← this]
+      exact transvection_mem (Sum.inl_injective.ne hij) c
+    · rw [← diagonal_one, fromBlocks_diagonal]
+      convert diagonal_mem (R := R) (Sum.elim d (fun _ : Unit => 1)) using 2
+      ext x
+      cases x <;> rfl
+  | one => rw [fromBlocks_one]; exact one_mem _
+  | mul A B _ _ IA IB =>
+    have := mul_mem IA IB
+    rw [fromBlocks_multiply] at this
+    simpa using this
+
+theorem step {κ : Type} [Fintype κ] [DecidableEq κ] (hR : HasStableRangeOne R)
+    (IH : ∀ N : Matrix κ κ R, IsUnit N.det → N ∈ TD R κ)
+    (M : Matrix (κ ⊕ Unit) (κ ⊕ Unit) R) (hM : IsUnit M.det) : M ∈ TD R (κ ⊕ Unit) := by
+  set l : κ ⊕ Unit := Sum.inr () with hl
+  set s : Finset (κ ⊕ Unit) := Finset.univ.erase l with hs
+  have hls : l ∉ s := Finset.notMem_erase _ _
+  have hin : ∀ i : κ, Sum.inl i ∈ s := fun i => by simp [hs, hl]
+  have h1 : (M⁻¹ * M) l l = 1 := by rw [nonsing_inv_mul M hM, one_apply_eq]
+  rw [Matrix.mul_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ l)] at h1
+  obtain ⟨t, ht⟩ := hR (M l l) (∑ k ∈ s, M⁻¹ l k * M k l) ⟨M⁻¹ l l, 1, by rw [one_mul]; exact h1⟩
+  obtain ⟨E₁, hE₁, H₁⟩ := rowOp l (fun k => t * M⁻¹ l k) s hls
+  refine of_left hE₁ hM fun hM₁ => ?_
+  have hu : IsUnit ((E₁ * M) l l) := by
+    rw [(H₁ M).1]
+    simpa [Finset.mul_sum, mul_assoc] using ht
+  generalize E₁ * M = M₁ at hM₁ hu
+  obtain ⟨u, hu⟩ := hu
+  obtain ⟨E₂, hE₂, H₂⟩ := colOpLeft l (fun a => - M₁ a l * ↑u⁻¹) s hls
+  refine of_left hE₂ hM₁ fun hM₂ => ?_
+  have hu₂ : (E₂ * M₁) l l = u := by rw [H₂, if_neg hls, add_zero, hu]
+  have hc₂ : ∀ i : κ, (E₂ * M₁) (Sum.inl i) l = 0 := fun i => by
+    rw [H₂, if_pos (hin i), ← hu, mul_assoc, Units.inv_mul]; ring
+  generalize E₂ * M₁ = M₂ at hM₂ hu₂ hc₂
+  obtain ⟨E₃, hE₃, H₃⟩ := colOpRight l (fun b => - M₂ l b * ↑u⁻¹) s hls
+  refine of_right hE₃ hM₂ fun hM₃ => ?_
+  have hu₃ : (M₂ * E₃) l l = u := by rw [H₃, if_neg hls, add_zero, hu₂]
+  have hc₃ : ∀ i : κ, (M₂ * E₃) (Sum.inl i) l = 0 := fun i => by
+    rw [H₃, if_neg hls, add_zero, hc₂]
+  have hr₃ : ∀ i : κ, (M₂ * E₃) l (Sum.inl i) = 0 := fun i => by
+    rw [H₃, if_pos (hin i), hu₂, mul_assoc, Units.inv_mul]; ring
+  generalize M₂ * E₃ = M₃ at hM₃ hu₃ hc₃ hr₃
+  have hform : M₃ = (diagonal fun i => ((Sum.elim (fun _ => 1) (fun _ => u) : κ ⊕ Unit → Rˣ) i : R)) *
+      fromBlocks M₃.toBlocks₁₁ 0 0 (1 : Matrix Unit Unit R) := by
+    ext a b
+    rw [diagonal_mul]
+    rcases a with a | ⟨⟩ <;> rcases b with b | ⟨⟩
+    · simp [toBlocks₁₁]
+    · simpa using hc₃ a
+    · simpa using hr₃ b
+    · simpa using hu₃
+  have hN : IsUnit M₃.toBlocks₁₁.det := by
+    rw [hform, det_mul, det_fromBlocks_zero₂₁, det_one, mul_one] at hM₃
+    exact isUnit_of_mul_isUnit_right hM₃
+  rw [hform]
+  exact mul_mem (diagonal_mem _) (fromBlocks_mem (IH _ hN))
+
+theorem mem_TD_of_isUnit_det : ∀ (R : Type) [CommRing R], HasStableRangeOne R → ∀ (κ : Type) [Fintype κ] [DecidableEq κ]
+    (M : Matrix κ κ R), IsUnit M.det → M ∈ TD R κ := by
+  intro R _ hR κ _ _
+  have key : ∀ n : ℕ, ∀ N : Matrix (Fin n) (Fin n) R, IsUnit N.det → N ∈ TD R (Fin n) := by
+    intro n
+    induction n with
+    | zero => intro N _; rw [Subsingleton.elim N 1]; exact one_mem _
+    | succ n IH =>
+      intro N hN
+      let e : Fin n ⊕ Unit ≃ Fin (n + 1) := (Equiv.sumCongr (Equiv.refl _) finOneEquiv.symm).trans finSumFinEquiv
+      have := reindex_mem e (step hR IH (N.submatrix e e) (by rwa [det_submatrix_equiv_self]))
+      simpa using this
+  intro M hM
+  let e := (Fintype.equivFin κ).symm
+  have := reindex_mem e (key _ (M.submatrix e e) (by rwa [det_submatrix_equiv_self]))
+  simpa using this
+
+end GlobalTheory.HaarLin.Gauss
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralLinearChangeModulus
+
+section
 
 @[expose] public section
 
@@ -141,4 +432,6 @@ theorem smInt_mulVec (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] 
 
 end GlobalTheory.CompanionTheory.BZPhiPG.Scale
 
+end
+end
 end

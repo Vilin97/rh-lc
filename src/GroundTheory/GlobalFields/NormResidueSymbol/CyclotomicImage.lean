@@ -3,15 +3,10 @@ module
 public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicCompositum
 public import GroundTheory.GlobalFields.CyclotomicCharacters.Degree
 public import GroundTheory.GlobalFields.IdeleGroups.IdeleNorms
-public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicBase
-public import GroundTheory.GlobalFields.NormResidueSymbol.Rational
-public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
-import GroundTheory.GlobalFields.NormResidueSymbol.RationalDiagonal
+public import GroundTheory.GlobalFields.NormResidueSymbol.RangeIdeleNormLeKerIdeleSymbol
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Positive.Field
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -28,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,6 +43,77 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+public import GroundTheory.GlobalFields.NormResidueSymbol.Rational
+public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
+import GroundTheory.GlobalFields.NormResidueSymbol.RationalDiagonal
+import Mathlib.Algebra.Order.Positive.Field
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Tactic.Basify
+
+-- Source module: GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicBase
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Global
+
+open IsDedekindDomain NumberField IdeleGroup IntermediateField
+
+noncomputable section
+
+namespace CyclotomicSymbol
+
+section Roots
+
+variable {K : Type*} [Field K] [NumberField K] {L : Type*} [Field L] [NumberField L] [Algebra K L]
+  [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)]
+
+end Roots
+
+section Sub
+
+variable {K : Type*} [Field K] [NumberField K] (L M : Type*) [Field L] [NumberField L] [Field M]
+  [NumberField M] [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+  [IsGalois K L] [IsGalois K M] [IsMulCommutative (L ≃ₐ[K] L)] [IsMulCommutative (M ≃ₐ[K] M)]
+
+end Sub
+
+section ClassSymbol
+
+variable {K : Type*} [Field K] [NumberField K] (L : Type*) [Field L] [NumberField L] [Algebra K L]
+  [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)]
+
+def ideleClassSymbol (h : (diagonal K).range ≤ (ideleSymbol K L).ker) :
+    IdeleClassGroup K →* (L ≃ₐ[K] L) :=
+  QuotientGroup.lift _ (ideleSymbol K L) h
+
+variable {L}
+
+@[simp]
+theorem ideleClassSymbol_mk (h : (diagonal K).range ≤ (ideleSymbol K L).ker) (x : IdeleGroup K) :
+    ideleClassSymbol L h (IdeleClassGroup.mk K x) = ideleSymbol K L x :=
+  rfl
+
+theorem continuous_ideleClassSymbol (h : (diagonal K).range ≤ (ideleSymbol K L).ker) :
+    Continuous (ideleClassSymbol L h) :=
+  (QuotientGroup.isQuotientMap_mk _).continuous_iff.2 (continuous_ideleSymbol L)
+
+end ClassSymbol
+
+universe u
+
+end CyclotomicSymbol
+
+end
+
+end GroundTheory.Global
+end
+end
+
+-- Source module: GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicImage
+
+section
 
 @[expose] public section
 
@@ -311,3 +376,5 @@ end CyclotomicSymbol
 end
 
 end GroundTheory.Global
+end
+end

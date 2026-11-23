@@ -1,14 +1,12 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.LeibnizOrders.ProdGPn
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistProductDistributes
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEquivProdIrrTw
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -41,7 +39,41 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivMultiProdOne
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SubsingletonOfGiso
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistProductDistributes
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.BZMir GlobalTheory.BZMir.Leib GlobalTheory.RgGu.Leib GlobalTheory.CompanionTheory.LeibOrd
+open scoped TensorProduct
+
+namespace GlobalTheory.CompanionTheory.LeibOrd
+
+theorem giso_tw_prod (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+    (r t : ℕ) (A : GRep k r) (B : GRep k t) (s : ℝ) : GIso ((A.prod B).tw s) ((A.tw s).prod (B.tw s)) :=
+  ⟨(GlobalTheory.LocGL.multiProdTwistEquiv (two (stdSum rfl)) (twoRep A.ρ B.ρ)
+      (GlobalTheory.LocGL.isSmoothChar_absPow (k := k) (s : ℂ))).trans
+    (GlobalTheory.LocGL.multiProdEquiv _ fun x => match x with
+      | false => Representation.Equiv.refl _
+      | true => Representation.Equiv.refl _)⟩
+
+end GlobalTheory.CompanionTheory.LeibOrd
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistProductDistributesStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +82,5 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.twist_product_distributes : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (r t : ℕ) (A : GRep k r) (B : GRep k t) (s : ℝ), GIso ((A.prod B).tw s) ((A.tw s).prod (B.tw s)) := by
   first | exact @GlobalTheory.CompanionTheory.LeibOrd.giso_tw_prod | exact GlobalTheory.CompanionTheory.LeibOrd.giso_tw_prod | (intros; apply GlobalTheory.CompanionTheory.LeibOrd.giso_tw_prod <;> assumption)
+end
+end

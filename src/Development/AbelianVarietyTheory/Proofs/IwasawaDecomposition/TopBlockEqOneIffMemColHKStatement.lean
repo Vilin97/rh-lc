@@ -2,7 +2,6 @@ module
 
 public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
 public import Formalism.LocalToGlobal.Divisibility.DefGroup
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TopBlockEqOneIffMemColHK
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,6 +43,49 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TopBlockEqOneIffMemColHK
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+namespace GlobalTheory
+
+theorem topBlock_eq_one_iff_mem_colHK : ∀ {κ : Type} [CommRing κ] {n r t : ℕ}, n = r + t → ∀ (hr : r ≤ n) (g : GL (Fin n) κ),
+    g ∈ Formalism.L2.Col.blockUT n κ r [t] → (Formalism.L2.DIV.upperLeftBlock hr g = 1 ↔ g ∈ Formalism.L2.Col.HK n κ r [t]) := by
+  intro κ _ n r t _ hr g hg
+  have hb : g ∈ Formalism.L2.DIV.blockTri (Formalism.L2.DIV.blk2 (n := n) r) := by
+    refine Formalism.L2.DIV.mem_blockTri.2 fun i j hij => ?_
+    have hji : j.val < r ∧ ¬ i.val < r := by
+      unfold Formalism.L2.DIV.blk2 at hij
+      by_cases hj : j.val < r <;> by_cases hi : i.val < r <;> simp [hj, hi] at hij ⊢
+    refine hg (show Formalism.L2.Col.coarse r [t] j.val < Formalism.L2.Col.coarse r [t] i.val from ?_)
+    rw [Formalism.L2.Col.coarse_of_lt hji.1, Formalism.L2.Col.coarse_of_le (Nat.not_lt.mp hji.2)]
+    exact Nat.succ_pos _
+  rw [Formalism.L2.Col.mem_HK, Units.ext_iff, Formalism.L2.DIV.upper_block_val_submatrix hr hb, Units.val_one]
+  constructor
+  · intro h
+    refine ⟨hg, fun i j hi hj => ?_⟩
+    have h1 := congrFun (congrFun h ⟨i.val, hi⟩) ⟨j.val, hj⟩
+    simp only [Matrix.submatrix_apply, Matrix.one_apply, Fin.mk.injEq] at h1
+    rw [Matrix.one_apply]
+    simp only [Fin.ext_iff]
+    exact h1
+  · rintro ⟨-, h⟩
+    ext i j
+    rw [Matrix.submatrix_apply, h _ _ i.2 j.2]
+    simp [Matrix.one_apply]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TopBlockEqOneIffMemColHKStatement
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain
@@ -49,3 +93,5 @@ open NumberField IsDedekindDomain
 theorem _root_.GlobalTheory.T.upperLeftBlock_eq_one_iff_mem_HK : ∀ {κ : Type} [CommRing κ] {n r t : ℕ}, n = r + t → ∀ (hr : r ≤ n) (g : GL (Fin n) κ),
     g ∈ Formalism.L2.Col.blockUT n κ r [t] → (Formalism.L2.DIV.upperLeftBlock hr g = 1 ↔ g ∈ Formalism.L2.Col.HK n κ r [t]) := by
   first | exact @GlobalTheory.topBlock_eq_one_iff_mem_colHK | exact GlobalTheory.topBlock_eq_one_iff_mem_colHK | (intros; apply GlobalTheory.topBlock_eq_one_iff_mem_colHK <;> assumption)
+end
+end

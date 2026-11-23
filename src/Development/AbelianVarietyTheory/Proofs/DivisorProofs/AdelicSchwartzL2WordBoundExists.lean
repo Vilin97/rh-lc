@@ -1,22 +1,17 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdeleJoinZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousMultilinearMapNormLeSumBasisValuesStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMixedSpaceDualVectorTraceFormStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralSqLeSumLintegralEnormSqOfPointwiseStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedFDerivApplyEqFoldrDirectionalFderivStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormPowLeConstMulOneAddSumAbsBasisCoordPowStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SliceMultiplicationDerivativeWordIteratedFDerivStatement
-import Formalism.LocalRingCardinality.DataHost
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Normed.Module.Multilinear.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -29,9 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,14 +44,212 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMixedSpaceDualVectorTraceFormStatement
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Calculus.FDeriv.CompCLM
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormPowLeConstMulOneAddSumAbsBasisCoordPowStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SliceMultiplicationDerivativeWordIteratedFDerivStatement
+import Formalism.LocalRingCardinality.DataHost
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 import Formalism.LocalRingCardinality.DataTheta
 import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
 public import Mathlib.Algebra.Order.Chebyshev
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousMultilinearMapNormLeSumBasisValues
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+theorem GlobalTheory.continuousMultilinear_norm_le_basis_sum : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (ι : Type) [Fintype ι] (b : Module.Basis ι ℝ E) (j : ℕ),
+    ∃ K : ℝ, 0 ≤ K ∧ ∀ M : ContinuousMultilinearMap ℝ (fun _ : Fin j => E) ℂ,
+      ‖M‖ ≤ K * ∑ cs : Fin j → ι, ‖M (fun r => b (cs r))‖ := by
+  intro E _ _ ι _ b j
+  haveI : FiniteDimensional ℝ E := Module.Finite.of_basis b
+  set C := ‖(b.equivFunL : E →L[ℝ] (ι → ℝ))‖ with hC
+  have hC0 : 0 ≤ C := norm_nonneg _
+  have hcoord : ∀ (x : E) (c : ι), ‖b.repr x c‖ ≤ C * ‖x‖ := by
+    intro x c
+    have h1 : b.repr x c = (b.equivFunL : E →L[ℝ] (ι → ℝ)) x c := rfl
+    rw [h1]
+    exact (norm_le_pi_norm _ c).trans ((b.equivFunL : E →L[ℝ] (ι → ℝ)).le_opNorm x)
+  refine ⟨C ^ j, pow_nonneg hC0 _, fun M => ?_⟩
+  apply ContinuousMultilinearMap.opNorm_le_bound
+  · exact mul_nonneg (pow_nonneg hC0 _) (Finset.sum_nonneg fun _ _ => norm_nonneg _)
+  intro v
+  have hv : v = fun r => ∑ c, b.repr (v r) c • b c := funext fun r => (b.sum_repr (v r)).symm
+  have key : M v = ∑ cs : Fin j → ι, (∏ r, b.repr (v r) (cs r)) • M (fun r => b (cs r)) := by
+    conv_lhs => rw [hv]
+
+    rw [M.map_sum]
+    refine Finset.sum_congr rfl fun cs _ => ?_
+    exact M.map_smul_univ (fun r => b.repr (v r) (cs r)) (fun r => b (cs r))
+  rw [key]
+  calc ‖∑ cs : Fin j → ι, (∏ r, b.repr (v r) (cs r)) • M (fun r => b (cs r))‖
+      ≤ ∑ cs : Fin j → ι, ‖(∏ r, b.repr (v r) (cs r)) • M (fun r => b (cs r))‖ := norm_sum_le _ _
+    _ ≤ ∑ cs : Fin j → ι, (C ^ j * ∏ r, ‖v r‖) * ‖M (fun r => b (cs r))‖ := by
+      refine Finset.sum_le_sum fun cs _ => ?_
+      rw [norm_smul]
+      refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
+      rw [norm_prod, ← Fin.prod_const, ← Finset.prod_mul_distrib]
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun r _ => hcoord (v r) (cs r)
+    _ = C ^ j * (∑ cs : Fin j → ι, ‖M (fun r => b (cs r))‖) * ∏ r, ‖v r‖ := by
+      rw [Finset.mul_sum, Finset.sum_mul]
+      refine Finset.sum_congr rfl fun cs _ => ?_
+      ring
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousMultilinearMapNormLeSumBasisValuesStatement
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+
+theorem _root_.GlobalTheory.T.continuousMultilinearMap_norm_le_sum_basis_values : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (ι : Type) [Fintype ι] (b : Module.Basis ι ℝ E) (j : ℕ),
+    ∃ K : ℝ, 0 ≤ K ∧ ∀ M : ContinuousMultilinearMap ℝ (fun _ : Fin j => E) ℂ,
+      ‖M‖ ≤ K * ∑ cs : Fin j → ι, ‖M (fun r => b (cs r))‖ := by
+  first | exact @GlobalTheory.continuousMultilinear_norm_le_basis_sum | exact GlobalTheory.continuousMultilinear_norm_le_basis_sum | (intros; apply GlobalTheory.continuousMultilinear_norm_le_basis_sum <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralSqLeSumLintegralEnormSqOfPointwise
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+namespace GlobalTheory
+
+theorem sq_le_sum_enorm_sq_lintegral_bound
+    (E : Type) [TopologicalSpace E] [MeasurableSpace E] [OpensMeasurableSpace E] (μ : MeasureTheory.Measure E)
+    (ι : Type) [Fintype ι] (f : E → ℝ) (g : ι → E → ℂ) (C : ℝ) (hg : ∀ a, Continuous (g a))
+    (hfg : ∀ x, f x ^ 2 ≤ C * ∑ a, ‖g a x‖ ^ 2) :
+    ENNReal.ofReal (∫ x, f x ^ 2 ∂μ) ≤ ENNReal.ofReal C * ∑ a, ∫⁻ x, ‖g a x‖ₑ ^ 2 ∂μ := by
+  by_cases hi : MeasureTheory.Integrable (fun x => f x ^ 2) μ
+  · rw [MeasureTheory.ofReal_integral_eq_lintegral_ofReal hi
+      (MeasureTheory.ae_of_all _ (fun x => sq_nonneg (f x)))]
+    have hm : ∀ a, Measurable (fun x => ‖g a x‖ₑ ^ 2) := fun a =>
+      ((hg a).measurable.enorm).pow_const 2
+    calc ∫⁻ x, ENNReal.ofReal (f x ^ 2) ∂μ
+        ≤ ∫⁻ x, ENNReal.ofReal C * ∑ a, ‖g a x‖ₑ ^ 2 ∂μ := by
+          refine MeasureTheory.lintegral_mono (fun x => ?_)
+          calc ENNReal.ofReal (f x ^ 2) ≤ ENNReal.ofReal (C * ∑ a, ‖g a x‖ ^ 2) :=
+                ENNReal.ofReal_le_ofReal (hfg x)
+            _ = ENNReal.ofReal C * ENNReal.ofReal (∑ a, ‖g a x‖ ^ 2) :=
+                ENNReal.ofReal_mul' (Finset.sum_nonneg (fun a _ => sq_nonneg _))
+            _ = ENNReal.ofReal C * ∑ a, ‖g a x‖ₑ ^ 2 := by
+                rw [ENNReal.ofReal_sum_of_nonneg (fun a _ => sq_nonneg _)]
+                congr 1
+                refine Finset.sum_congr rfl (fun a _ => ?_)
+                rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm_eq_enorm]
+      _ = ENNReal.ofReal C * ∑ a, ∫⁻ x, ‖g a x‖ₑ ^ 2 ∂μ := by
+          rw [MeasureTheory.lintegral_const_mul _ (Finset.measurable_sum _ (fun a _ => hm a))]
+          congr 1
+          exact MeasureTheory.lintegral_finsetSum Finset.univ (fun a _ => hm a)
+  · rw [MeasureTheory.integral_undef hi, ENNReal.ofReal_zero]
+    exact zero_le
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralSqLeSumLintegralEnormSqOfPointwiseStatement
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+
+theorem _root_.GlobalTheory.T.integral_sq_le_sum_lintegral_enorm_sq_of_pointwise : ∀ (E : Type) [TopologicalSpace E] [MeasurableSpace E] [OpensMeasurableSpace E] (μ : MeasureTheory.Measure E)
+    (ι : Type) [Fintype ι] (f : E → ℝ) (g : ι → E → ℂ) (C : ℝ), (∀ a, Continuous (g a)) →
+    (∀ x, f x ^ 2 ≤ C * ∑ a, ‖g a x‖ ^ 2) →
+    ENNReal.ofReal (∫ x, f x ^ 2 ∂μ) ≤ ENNReal.ofReal C * ∑ a, ∫⁻ x, ‖g a x‖ₑ ^ 2 ∂μ := by
+  first | exact @GlobalTheory.sq_le_sum_enorm_sq_lintegral_bound | exact GlobalTheory.sq_le_sum_enorm_sq_lintegral_bound | (intros; apply GlobalTheory.sq_le_sum_enorm_sq_lintegral_bound <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedFDerivApplyEqFoldrDirectionalFderiv
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+namespace GlobalTheory
+
+theorem iteratedFDeriv_apply_eq_foldr_fderiv :
+    ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (g : E → ℂ), ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) g →
+    ∀ (j : ℕ) (m : Fin j → E) (x : E),
+      iteratedFDeriv ℝ j g x m = (List.ofFn m).foldr (fun v g' => fun z => fderiv ℝ g' z v) g x := by
+  intro E _ _ g hg j
+  induction j with
+  | zero =>
+    intro m x
+    simp [iteratedFDeriv_zero_apply]
+  | succ n ih =>
+    intro m x
+    rw [iteratedFDeriv_succ_apply_left, List.ofFn_succ, List.foldr_cons]
+    have hfun : (List.ofFn (fun i : Fin n => m i.succ)).foldr (fun v g' => fun z => fderiv ℝ g' z v) g
+        = fun z => iteratedFDeriv ℝ n g z (Fin.tail m) := by
+      funext z
+      exact (ih (Fin.tail m) z).symm
+    simp only [hfun]
+    have hd : DifferentiableAt ℝ (iteratedFDeriv ℝ n g) x :=
+      (hg.differentiable_iteratedFDeriv (by first | exact_mod_cast ENat.coe_lt_top n | simp | exact WithTop.coe_lt_coe.2 (ENat.coe_lt_top n))) x
+    rw [fderiv_continuousMultilinear_apply_const_apply hd]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedFDerivApplyEqFoldrDirectionalFderivStatement
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped Classical
+
+
+theorem _root_.GlobalTheory.T.iteratedFDeriv_apply_eq_foldr_directional_fderiv : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (g : E → ℂ), ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) g →
+    ∀ (j : ℕ) (m : Fin j → E) (x : E),
+      iteratedFDeriv ℝ j g x m = (List.ofFn m).foldr (fun v g' => fun z => fderiv ℝ g' z v) g x := by
+  first | exact @GlobalTheory.iteratedFDeriv_apply_eq_foldr_fderiv | exact GlobalTheory.iteratedFDeriv_apply_eq_foldr_fderiv | (intros; apply GlobalTheory.iteratedFDeriv_apply_eq_foldr_fderiv <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzL2WordBoundExists
+
+section
 
 @[expose] public section
 
@@ -152,3 +343,5 @@ theorem adelic_schwartz_slice_l2_word_bound : ∀ (F : Type) [Field F] [NumberFi
     _ = _ := by ring
 
 end GlobalTheory.WeilL2Words
+end
+end

@@ -1,13 +1,14 @@
 module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.ExpRules
-public import Formalism.SharpRestriction.LevelLetterCocycles.WachQuotientCyclicDecomposition
-public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -26,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,8 +40,42 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
+import Mathlib.Tactic.Linter.Style
 import Formalism.SharpRestriction.LevelLetterCocycles.LengthCokerLe
 import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.WachQuotientCyclicDecomposition
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.RamifiedCoefficientChains.S9.Cut
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
+    [CommRing O] [Algebra O LL]
+
+def lowSum (T : LocLat G Qp LL O) (τ : K →ₐ[Qp] LL) (h η : ℕ) : ℤ :=
+  ∑ u ∈ Finset.Icc (-(η : ℤ)) η, multV PD T.ρ τ u * ((h : ℤ) + u)
+
+end Formalism.MainNotions.RamifiedCoefficientChains.S9.Cut
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.DualLemmaOfDeterminant
+
+section
 
 @[expose] public section
 
@@ -100,3 +134,6 @@ def AdaptBas : Prop :=
         AdaptData W T₂ i (b i + S) η m e' m' u
 
 end Formalism.MainNotions.RamifiedCoefficientChains.S9.ShB
+end
+end
+end

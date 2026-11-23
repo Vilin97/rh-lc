@@ -10,7 +10,10 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IrreducibleC
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LieBracketMultiplication
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LieListProducts
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ProductIntervalFrames
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialDecompositionSpectralOfBranching
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapelliTwoByTwo
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.LemmaDDeterminantIdentity
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.QuadraticFormTwoTwo.RadialDecompositionOfParts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -49,6 +52,51 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RightTypeAction
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnTPres
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.RadialDecompositionOfParts
+
+section
+
+@[expose] public section
+
+theorem radial_decomposition_of_parts : Formalism.FourierDecayAlt.Q.RadialDecompositionOfParts := Formalism.FourierDecayAlt.Q.LieAlgebraWeightVectors.radial_decomposition_of_parts'
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.QRadialDecompositionOfPieces
+
+section
+
+@[expose] public section
+
+theorem Formalism.FourierDecayAlt.P.q_radial_decomposition_of_pieces : Formalism.FourierDecayAlt.Q.RadialDecompositionOfParts :=
+  radial_decomposition_of_parts
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialDecompositionSpectralOfBranching
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.Q
+
+theorem radialDecompositionSpectral_of_branching : Branching → RadialDecompositionSpectral := fun hB =>
+  q_radial_decomposition_of_pieces second_contraction_adapted contractions_covariant capelli_two_by_two
+    right_type_action hB qnTPres
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+
+section
 
 @[expose] public section
 
@@ -77,3 +125,5 @@ theorem branching_proof : Branching := qr_branching_of branching_compact
 theorem spectral_two_by_two : RadialDecompositionSpectral := radialDecompositionSpectral_of_branching branching_proof
 
 end Formalism.FourierDecayAlt.P
+end
+end

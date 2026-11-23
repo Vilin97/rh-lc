@@ -4,12 +4,10 @@ public import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
 public import Mathlib.Order.CompletePartialOrder
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.H1PlEqZeroOfLeISupOfLocalZero
 public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.OffDiagonalContinuationInductive
-public import Development.EtaleCohomology.EtaleTrace.LCoprodInjPf
-public import Development.EtaleCohomology.WeilConjectures.EmptyVan2
+public import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -33,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,8 +43,95 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
 import GroundTheory.FunctionField.PlaceDefs
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.LCoprodInjPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC
+
+namespace LateralTheory.EtaleTrace
+
+theorem chains_zero (R : Type) [CommRing R] (E : Scheme.{0}) (hZ : IsZero ((free R).obj (yoneda.obj E))) (p : ℤ) :
+    IsZero (((chains R).obj (sch.obj E)).X p) := by
+  rcases le_or_gt p 0 with h | h
+  · obtain ⟨m, rfl⟩ : ∃ m : ℕ, p = -(m : ℤ) := ⟨p.natAbs, by omega⟩
+    exact hZ.of_iso (chainsXIso R (sch.obj E) m)
+  · apply HomologicalComplex.isZero_extend_X
+    intro i hi
+    have : (ComplexShape.embeddingDownNat).f i = -(i : ℤ) := rfl
+    omega
+
+theorem H_sub (R : Type) [CommRing R] (E : Scheme.{0}) (hZ : IsZero ((free R).obj (yoneda.obj E))) (F : Shv R) (n : ℤ) :
+    Subsingleton (H R (sch.obj E) F n) := by
+  have : Subsingleton (CochainComplex.HomComplex.Cochain ((chains R).obj (sch.obj E)) (res R F) n) :=
+    ⟨fun a b => CochainComplex.HomComplex.Cochain.ext _ _ (fun p q _ => (chains_zero R E hZ p).eq_of_src _ _)⟩
+  refine ⟨fun x y => ?_⟩
+  obtain ⟨a, rfl⟩ := CochainComplex.HomComplex.CohomologyClass.mk_surjective x
+  obtain ⟨b, rfl⟩ := CochainComplex.HomComplex.CohomologyClass.mk_surjective y
+  have hab : a = b := Subtype.ext (@Subsingleton.elim _ this _ _)
+  rw [hab]
+
+end LateralTheory.EtaleTrace
+
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.WeilConjectures.EmptyVan2
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex.HomComplex
+
+namespace LateralTheory.EWeil.EmptyVan₂
+
+instance isEmpty_bot : IsEmpty (⊥_ Scheme.{0}) := by
+  infer_instance
+
+theorem sec_subsingleton {R : Type} [CommRing R] (G : Shv R) {U : Scheme.{0}} (f : U ⟶ ⊥_ Scheme.{0}) :
+    Subsingleton (G.obj.obj (op U)) := by
+  have : IsEmpty U := ⟨fun x => isEmptyElim (f.base x)⟩
+  exact (ModuleCat.isZero_iff_subsingleton).1
+    (IsTerminal.isZero (Sheaf.isTerminalOfBotCover G U (Scheme.bot_mem_grothendieckTopology U)))
+
+theorem free_hom_subsingleton {R : Type} [CommRing R] (G : Shv R) :
+    Subsingleton ((free R).obj (yoneda.obj (⊥_ Scheme.{0})) ⟶ G) := by
+  constructor
+  intro f g
+  apply ((sheafificationAdjunction Scheme.etaleTopology.{0} _).homEquiv _ _).injective
+  ext U x
+  by_cases h : Nonempty (U.unop ⟶ ⊥_ Scheme.{0})
+  · obtain ⟨φ⟩ := h
+    exact @Subsingleton.elim _ (sec_subsingleton G φ) _ _
+  · have : IsEmpty (U.unop ⟶ ⊥_ Scheme.{0}) := not_nonempty_iff.1 h
+    have hx : x = 0 := Finsupp.ext fun a => isEmptyElim (a.down : U.unop ⟶ ⊥_ Scheme.{0})
+    subst hx
+    simp only [map_zero]
+
+theorem isZero_free {R : Type} [CommRing R] : IsZero ((free R).obj (yoneda.obj (⊥_ Scheme.{0}))) := by
+  rw [IsZero.iff_id_eq_zero]
+  have := free_hom_subsingleton (R := R) ((free R).obj (yoneda.obj (⊥_ Scheme.{0})))
+  exact Subsingleton.elim _ _
+
+end LateralTheory.EWeil.EmptyVan₂
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsH1MuGlueOfCompatible
+
+section
 
 @[expose] public section
 
@@ -140,3 +224,5 @@ theorem UpperTheory.exists_h1Mu_glue_of_compatible :
     · rw [pl_le q _ _ le_sup_right, hz2]
     · rw [pl_le q _ _ ((hAW j).trans le_sup_left), ← pl_le q (hAW j) (le_sup_left : W ≤ W ⊔ B), hz1]
       exact hy j
+end
+end

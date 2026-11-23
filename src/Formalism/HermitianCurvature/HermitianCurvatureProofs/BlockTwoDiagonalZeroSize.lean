@@ -4,13 +4,14 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.KloostDensOf
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DirectionsInParabolic
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopCellsOfParts
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnitaryInvariantGaussian
+public import Formalism.HermitianCurvature.StatementG
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.Analysis.Calculus.ContDiff.Convolution
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,9 +23,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,10 +45,38 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.ContDiff.Convolution
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.UnitaryInvariantGaussian
+
+section
+
+@[expose] public section
+
+open Formalism.FourierDecayAlt.G Matrix MeasureTheory Filter Topology
+
+namespace Formalism.FourierDecayAlt.P.G8
+
+theorem psi_add (β x y : ℂ) : psi β (x + y) = psi β x * psi β y := by
+  simp only [psi, mul_add, Complex.add_re, Complex.ofReal_add, Complex.exp_add]
+
+end Formalism.FourierDecayAlt.P.G8
+
+namespace Formalism.FourierDecayAlt.P
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockTwoDiagonalZeroSize
+
+section
 
 @[expose] public section
 
@@ -498,3 +526,6 @@ theorem freeze_last_entry : FreezeLast := by
   exact Frz.phiTop_freeze β c σ d hd hΨ
 
 end Formalism.FourierDecayAlt.P.PBJ
+end
+end
+end

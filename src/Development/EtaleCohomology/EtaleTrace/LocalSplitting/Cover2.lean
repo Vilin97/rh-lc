@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
 import Development.EtaleCohomology.EtaleTrace.LDblPf
-public import Development.EtaleCohomology.EtaleTrace.LTwoEpiPf
+public import Mathlib.Algebra.Category.ModuleCat.Adjunctions
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +22,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -30,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +42,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
+import Mathlib.Topology.Sheaves.Presheaf
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.LTwoEpiPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.EtaleTrace
+
+theorem ltwo_fm (R : Type) [CommRing R] {X Y : Type} (g : X ⟶ Y) (x : X) :
+    ((ModuleCat.free (ULift.{1} R)).map (uliftFunctor.{1}.map g)).hom
+      (ModuleCat.freeMk (X := uliftFunctor.{1}.obj X) (ULift.up x)) =
+      ModuleCat.freeMk (X := uliftFunctor.{1}.obj Y) (ULift.up (g x)) :=
+  Finsupp.mapDomain_single
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.LocalSplitting.Cover2
+
+section
 
 @[expose] public section
 
@@ -125,3 +155,6 @@ theorem cover2 (R : Type) [CommRing R] {X : Scheme.{0}} (O1 O2 : X.Opens) (hcov 
   ⟨inferInstance, inferInstance, epi R O1 O2 hcov⟩
 
 end LateralTheory.EtaleTrace.LSplitPf.Sch
+end
+end
+end

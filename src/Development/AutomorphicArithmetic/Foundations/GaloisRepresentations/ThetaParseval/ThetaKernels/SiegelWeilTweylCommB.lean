@@ -5,9 +5,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicWeilRe
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledUnitaryCharacterTrivialOfSiegelStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdelicSchwartzNeZeroAtOriginStatement
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylBase
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylComm
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylCommA
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.SchrodingerCommutation.DetWeylBlockNeZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,9 +19,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.CoassocSimps
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +41,121 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdelicSchwartzNeZeroAtOriginStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.SchrodingerCommutation.DetWeylBlockNeZero
+import Mathlib.Tactic.ReduceModChar
+import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.SchrodingerCommutation.DetWeylBlockNeZero
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylComm
+
+section
+
+@[expose] public section
+
+
+
+section
+set_option linter.unusedSectionVars false
+noncomputable section
+open scoped TensorProduct NNReal Matrix
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK.Dbl PositivityTheory.Rg.Sw
+namespace PositivityTheory.SiegelWeilFormula.tweyl
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
+variable (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ)
+theorem actB_conj_k (x : d.G) (g : UA σ d.A.J) (v : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :
+    actB (cA σ) x⁻¹ (mat g * actB (cA σ) x (mat g⁻¹ * v)) = v := by
+  unfold actB
+  have hx : (x.1.1)ᵀ * ((x⁻¹ : d.G).1.1)ᵀ = 1 := by
+    rw [← Matrix.transpose_mul, ← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel]
+    simp
+  calc _ = (mat g * mat g⁻¹) * v * ((x.1.1)ᵀ * ((x⁻¹ : d.G).1.1)ᵀ) := by
+        simp only [Matrix.mul_assoc]
+    _ = v := by rw [_root_.PositivityTheory.SiegelWeilFormula.tweyl.mat_mul_inv_k, hx, Matrix.one_mul, Matrix.mul_one]
+theorem comm_schr_k (g : UA σ d.A.J) (x : d.G) : ∀ w, ∀ φ ∈ schA F d.κ,
+    (d.om x⁻¹ * d.S g * d.om x * d.S g⁻¹) (schr d.B.ψ w φ) =
+      schr d.B.ψ w ((d.om x⁻¹ * d.S g * d.om x * d.S g⁻¹) φ) := by
+  intro w φ hφ
+  obtain ⟨v, rfl⟩ := d.dd.e.surjective w
+  have e1 : ∀ u, schr d.B.ψ (d.dd.e u) = d.dd.rho d.B.ψ u := fun u => rfl
+  simp only [Module.End.mul_apply, e1]
+  have h1 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).impl g⁻¹ v φ hφ
+  have hp1 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).pres g⁻¹ φ hφ
+  have h2 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hO_k d).impl x (mat g⁻¹ * v) _ hp1
+  have hp2 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hO_k d).pres x _ hp1
+  have h3 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).impl g (actB (cA σ) x (mat g⁻¹ * v)) _ hp2
+  have hp3 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).pres g _ hp2
+  have h4 := (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hO_k d).impl x⁻¹ (mat g * actB (cA σ) x (mat g⁻¹ * v)) _ hp3
+  beta_reduce at h1 h3
+  rw [h1, h2, h3, h4, _root_.PositivityTheory.SiegelWeilFormula.tweyl.actB_conj_k]
+theorem exists_scalar_k (g : UA σ d.A.J) (x : d.G) :
+    ∃ c : ℂ, ∀ φ ∈ schA F d.κ, (d.S g * d.om x * d.S g⁻¹) φ = c • d.om x φ := by
+  obtain ⟨c, hc⟩ := GlobalTheory.WeilSchUnique.scalar_of_commute d.B.ψ (_root_.PositivityTheory.SiegelWeilFormula.tweyl.std_k d) (d.om x⁻¹ * d.S g * d.om x * d.S g⁻¹)
+    (fun l hl => by
+      simp only [Module.End.mul_eq_comp, ← LinearMap.comp_assoc]
+      exact (_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).adm _ _ ((_root_.PositivityTheory.SiegelWeilFormula.tweyl.hO_k d).adm _ _ ((_root_.PositivityTheory.SiegelWeilFormula.tweyl.hS_k d).adm _ _ ((_root_.PositivityTheory.SiegelWeilFormula.tweyl.hO_k d).adm _ _ hl))))
+    (_root_.PositivityTheory.SiegelWeilFormula.tweyl.comm_schr_k d g x)
+  refine ⟨c, fun φ hφ => ?_⟩
+  have h := congrArg (d.om x) (hc φ hφ)
+  rw [map_smul] at h
+  rw [← h]
+  simp only [Module.End.mul_apply]
+  rw [← Module.End.mul_apply (d.om x) (d.om x⁻¹), ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
+end PositivityTheory.SiegelWeilFormula.tweyl
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylCommA
+
+section
+
+@[expose] public section
+
+
+
+section
+noncomputable section
+open scoped TensorProduct NNReal Matrix
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK.Dbl PositivityTheory.Rg.Sw
+namespace PositivityTheory.SiegelWeilFormula.tweyl
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
+variable (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ)
+theorem detY_k : d.Y.J.det ≠ 0 := by
+  obtain ⟨⟨ε, hε⟩, -⟩ := d.ok.frame
+  intro h0
+  have hd : (dbl d.Y.J).det = 0 := by
+    rw [dbl, Matrix.det_fromBlocks_zero₁₂, h0, zero_mul]
+  have h := congrArg Matrix.det hε
+  rw [Matrix.det_mul, Matrix.det_mul, hd, mul_zero, zero_mul] at h
+  exact det_weyl_block_ne_zero ε h.symm
+theorem signY_k : ∃ ε : ℤˣ, ∀ i j, σ (d.Y.J j i) = ((ε : ℤ) : E) * d.Y.J i j := by
+  rcases d.ok.sign with ⟨-, h⟩ | ⟨-, h⟩
+  · exact ⟨-1, fun i j => by rw [h]; simp⟩
+  · exact ⟨1, fun i j => by rw [h]; simp⟩
+theorem exists_l_ne_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TBij_k) : ∃ φ ∈ schA F d.κ, d.l φ ≠ 0 := by
+  obtain ⟨φz, hφz, hφz0⟩ := GlobalTheory.T.exists_adelicSchwartz_ne_zero_at_origin F d.κ
+  have hne : d.T φz ≠ 0 := fun h => hφz0 (by rw [(hT F E σ d).2.2 φz hφz h]; rfl)
+  obtain ⟨X, hX⟩ : ∃ X, d.T φz X ≠ 0 := by
+    by_contra h
+    push Not at h
+    exact hne (funext h)
+  exact ⟨_, GlobalTheory.HeisSchA.schr_mem_schA d.B.ψ (_root_.PositivityTheory.SiegelWeilFormula.tweyl.std_k d) _ φz hφz, hX⟩
+end PositivityTheory.SiegelWeilFormula.tweyl
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.SiegelWeilTweylCommB
+
+section
 
 @[expose] public section
 
@@ -140,5 +250,7 @@ theorem tthetaComm_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TBij_k) : �
     (σ : E →ₐ[F] E) (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ), ∀ Φ ∈ d.sch, ∀ x g, d.om x (d.S g Φ) = d.S g (d.om x Φ) :=
   fun _ _ _ _ _ _ _ _ d Φ hΦ x g => _root_.PositivityTheory.SiegelWeilFormula.tweyl.comm_k d hT g Φ hΦ x
 end PositivityTheory.SiegelWeilFormula.tweyl
+end
+end
 end
 end

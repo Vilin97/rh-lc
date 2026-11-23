@@ -1,15 +1,19 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsVariableChangeEqLatticeCurve
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProductDerivWeierstrassPHalfPeriodsDiscriminant
+public import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -17,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,11 +38,207 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFoundations.ComplexMultiplicationJPremises
 import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.SemiChar
+import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.WeierstrassCurvePointOfLatticeAddOfGeneric
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.WeierstrassPAddOfNeOfDerivNeZero
+import Development.AbelianVarietyTheory.Definitions.Divisors.DatumOfIsIntegersLattice
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CubicThreeRoots
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CMModel
+
+theorem cubic_three_roots (g h e₁ e₂ e₃ : ℂ) (h₁ : 4 * e₁ ^ 3 - g * e₁ - h = 0)
+    (h₂ : 4 * e₂ ^ 3 - g * e₂ - h = 0) (h₃ : 4 * e₃ ^ 3 - g * e₃ - h = 0)
+    (h₁₂ : e₁ ≠ e₂) (h₁₃ : e₁ ≠ e₃) (h₂₃ : e₂ ≠ e₃) :
+    (∀ x, 4 * x ^ 3 - g * x - h = 4 * (x - e₁) * (x - e₂) * (x - e₃)) ∧
+      16 * ((3 * e₁ ^ 2 - g / 4) * (3 * e₂ ^ 2 - g / 4) * (3 * e₃ ^ 2 - g / 4))
+        = -(g ^ 3 - 27 * h ^ 2) := by
+  have a : g = 4 * (e₁ ^ 2 + e₁ * e₂ + e₂ ^ 2) := by
+    apply mul_left_cancel₀ (sub_ne_zero.mpr h₁₂)
+    linear_combination h₂ - h₁
+  have b : g = 4 * (e₁ ^ 2 + e₁ * e₃ + e₃ ^ 2) := by
+    apply mul_left_cancel₀ (sub_ne_zero.mpr h₁₃)
+    linear_combination h₃ - h₁
+  have c : e₃ = -e₁ - e₂ := by
+    apply mul_left_cancel₀ (sub_ne_zero.mpr h₂₃)
+    linear_combination (b - a) / 4
+  have d : h = 4 * e₁ ^ 3 - g * e₁ := by linear_combination -h₁
+  subst c
+  rw [d, a]
+  exact ⟨fun x => by ring, by ring⟩
+
+end GlobalTheory.CMModel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CubicThreeRootsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+theorem _root_.GlobalTheory.T.cubic_factor_and_discriminant_of_three_distinct_roots : ∀ (g h e₁ e₂ e₃ : ℂ), 4 * e₁ ^ 3 - g * e₁ - h = 0 → 4 * e₂ ^ 3 - g * e₂ - h = 0 → 4 * e₃ ^ 3 - g * e₃ - h = 0 → e₁ ≠ e₂ → e₁ ≠ e₃ → e₂ ≠ e₃ → (∀ x, 4 * x ^ 3 - g * x - h = 4 * (x - e₁) * (x - e₂) * (x - e₃)) ∧ 16 * ((3 * e₁ ^ 2 - g / 4) * (3 * e₂ ^ 2 - g / 4) * (3 * e₃ ^ 2 - g / 4)) = -(g ^ 3 - 27 * h ^ 2) := by
+  first | exact @GlobalTheory.CMModel.cubic_three_roots | exact GlobalTheory.CMModel.cubic_three_roots | (intros; apply GlobalTheory.CMModel.cubic_three_roots <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DerivWeierstrassPAddHalfPeriod
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+namespace GlobalTheory
+
+theorem derivWeierstrassP_add_half_period :
+    ∀ (L : PeriodPair) (a t : ℂ), a ∉ L.lattice → 2 * a ∈ L.lattice → t ∉ L.lattice → t + a ∉ L.lattice → L.derivWeierstrassP (t + a) * (L.weierstrassP t - L.weierstrassP a) ^ 2 = -(3 * L.weierstrassP a ^ 2 - L.g₂ / 4) * L.derivWeierstrassP t := by
+  intro L a t ha h2 ht hta
+  have hd : L.derivWeierstrassP a = 0 :=
+    (GlobalTheory.derivWeierstrassP_eq_zero_iff L ha).2 (by rw [← two_mul]; exact h2)
+  have hne : L.weierstrassP t ≠ L.weierstrassP a := by
+    intro h
+    rcases (GlobalTheory.weierstrassP_eq_iff L ht ha).1 h with h' | h'
+    · apply hta
+      have := L.lattice.add_mem h' h2
+      rwa [show t - a + 2 * a = t + a by ring] at this
+    · exact hta h'
+  obtain ⟨h1, h3⟩ := GlobalTheory.weierstrassP_add L ht ha hne
+  have e1 := L.derivWeierstrassP_sq t ht
+  have e2 := L.derivWeierstrassP_sq a ha
+  rw [h3, h1]
+  rw [hd] at e2 ⊢
+  have hd0 : L.weierstrassP t - L.weierstrassP a ≠ 0 := sub_ne_zero.2 hne
+  generalize L.weierstrassP t = x at *
+  generalize L.weierstrassP a = e at *
+  generalize L.derivWeierstrassP t = y at *
+  generalize L.g₂ = g at *
+  generalize L.g₃ = k at *
+  have hq : ((y - 0) / (x - e)) ^ 2 = (4 * (x ^ 2 + x * e + e ^ 2) - g) / (x - e) := by
+    rw [div_pow, div_eq_div_iff (pow_ne_zero 2 hd0) hd0]
+    linear_combination (x - e) * (e1 - e2)
+  rw [hq]
+  field_simp
+  ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DerivWeierstrassPAddHalfPeriodStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+theorem _root_.GlobalTheory.T.derivWeierstrassP_add_half_period' : ∀ (L : PeriodPair) (a t : ℂ), a ∉ L.lattice → 2 * a ∈ L.lattice → t ∉ L.lattice → t + a ∉ L.lattice → L.derivWeierstrassP (t + a) * (L.weierstrassP t - L.weierstrassP a) ^ 2 = -(3 * L.weierstrassP a ^ 2 - L.g₂ / 4) * L.derivWeierstrassP t := by
+  first | exact @GlobalTheory.derivWeierstrassP_add_half_period | exact GlobalTheory.derivWeierstrassP_add_half_period | (intros; apply GlobalTheory.derivWeierstrassP_add_half_period <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProductDerivWeierstrassPHalfPeriodsDiscriminant
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+namespace GlobalTheory.CMModel
+
+theorem prod_derivWeierstrassP_translates_eq_Δ : ∀ (L : PeriodPair) (a b t : ℂ),
+    a ∉ L.lattice → b ∉ L.lattice → a + b ∉ L.lattice → 2 * a ∈ L.lattice →
+    2 * b ∈ L.lattice → 2 * t ∉ L.lattice →
+    L.derivWeierstrassP t * L.derivWeierstrassP (t + a) * L.derivWeierstrassP (t + b) *
+      L.derivWeierstrassP (t + (a + b)) = (latticeCurve L).Δ := by
+  intro L a b t ha hb hc h2a h2b h2t
+  have h2c : 2 * (a + b) ∈ L.lattice := by
+    rw [mul_add]; exact L.lattice.add_mem h2a h2b
+  have hshift : ∀ u : ℂ, 2 * u ∈ L.lattice → t + u ∉ L.lattice := by
+    intro u hu htu
+    apply h2t
+    have := L.lattice.sub_mem (L.lattice.add_mem htu htu) hu
+    convert this using 1; ring
+  have ht : t ∉ L.lattice := by simpa using hshift 0 (by simp)
+  have hroot : ∀ u : ℂ, u ∉ L.lattice → 2 * u ∈ L.lattice →
+      4 * L.weierstrassP u ^ 3 - L.g₂ * L.weierstrassP u - L.g₃ = 0 := by
+    intro u hu h2u
+    rw [← L.derivWeierstrassP_sq u hu,
+      (derivWeierstrassP_eq_zero_iff L hu).2 (by rwa [← two_mul])]
+    ring
+  have hne : ∀ u v : ℂ, u ∉ L.lattice → v ∉ L.lattice → 2 * v ∈ L.lattice →
+      u + v ∉ L.lattice → L.weierstrassP u ≠ L.weierstrassP v := by
+    intro u v hu hv h2v huv h
+    rcases (weierstrassP_eq_iff L hu hv).1 h with h' | h'
+    · apply huv
+      have := L.lattice.add_mem h' h2v
+      convert this using 1; ring
+    · exact huv h'
+  have h12 := hne a b ha hb h2b hc
+  have h13 := hne a (a + b) ha hc h2c (by
+    intro h; apply hb
+    have := L.lattice.sub_mem h h2a
+    convert this using 1; ring)
+  have h23 := hne b (a + b) hb hc h2c (by
+    intro h; apply ha
+    have := L.lattice.sub_mem h h2b
+    convert this using 1; ring)
+  obtain ⟨hfac, hdisc⟩ := GlobalTheory.T.cubic_factor_and_discriminant_of_three_distinct_roots L.g₂ L.g₃ _ _ _ (hroot a ha h2a) (hroot b hb h2b)
+    (hroot _ hc h2c) h12 h13 h23
+  have e1 := GlobalTheory.T.derivWeierstrassP_add_half_period' L a t ha h2a ht (hshift a h2a)
+  have e2 := GlobalTheory.T.derivWeierstrassP_add_half_period' L b t hb h2b ht (hshift b h2b)
+  have e3 := GlobalTheory.T.derivWeierstrassP_add_half_period' L (a + b) t hc h2c ht (hshift _ h2c)
+  have hsq := L.derivWeierstrassP_sq t ht
+  rw [hfac] at hsq
+  have hd : L.derivWeierstrassP t ≠ 0 := fun h =>
+    h2t (by rw [two_mul]; exact (derivWeierstrassP_eq_zero_iff L ht).1 h)
+  rw [latticeCurve_Δ]
+  generalize L.derivWeierstrassP t = d at *
+  generalize L.derivWeierstrassP (t + a) = d₁ at *
+  generalize L.derivWeierstrassP (t + b) = d₂ at *
+  generalize L.derivWeierstrassP (t + (a + b)) = d₃ at *
+  generalize L.weierstrassP t = x at *
+  generalize L.weierstrassP a = e₁ at *
+  generalize L.weierstrassP b = e₂ at *
+  generalize L.weierstrassP (a + b) = e₃ at *
+  apply mul_left_cancel₀ (pow_ne_zero 3 hd)
+  calc d ^ 3 * (d * d₁ * d₂ * d₃) = (d ^ 2) ^ 2 * (d₁ * d₂ * d₃) := by ring
+    _ = 16 * ((d₁ * (x - e₁) ^ 2) * (d₂ * (x - e₂) ^ 2) * (d₃ * (x - e₃) ^ 2)) := by
+        rw [hsq]; ring
+    _ = -(16 * ((3 * e₁ ^ 2 - L.g₂ / 4) * (3 * e₂ ^ 2 - L.g₂ / 4) *
+          (3 * e₃ ^ 2 - L.g₂ / 4))) * d ^ 3 := by
+        rw [e1, e2, e3]; ring
+    _ = d ^ 3 * (L.g₂ ^ 3 - 27 * L.g₃ ^ 2) := by rw [hdisc]; ring
+
+end GlobalTheory.CMModel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProductDerivWeierstrassPHalfPeriodsDiscriminantStatement
+
+section
 
 @[expose] public section
 
@@ -46,3 +247,5 @@ open scoped IntermediateField BigOperators Topology
 
 theorem _root_.GlobalTheory.T.product_derivWeierstrassP_half_periods_discriminant : ∀ (L : PeriodPair) (a b t : ℂ), a ∉ L.lattice → b ∉ L.lattice → a + b ∉ L.lattice → 2 * a ∈ L.lattice → 2 * b ∈ L.lattice → 2 * t ∉ L.lattice → L.derivWeierstrassP t * L.derivWeierstrassP (t + a) * L.derivWeierstrassP (t + b) * L.derivWeierstrassP (t + (a + b)) = (latticeCurve L).Δ := by
   first | exact @GlobalTheory.CMModel.prod_derivWeierstrassP_translates_eq_Δ | exact GlobalTheory.CMModel.prod_derivWeierstrassP_translates_eq_Δ | (intros; apply GlobalTheory.CMModel.prod_derivWeierstrassP_translates_eq_Δ <;> assumption)
+end
+end

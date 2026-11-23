@@ -1,8 +1,7 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSublatticeDegreeSteps
-public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.DetGramLeProdNormSq
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,11 +17,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,9 +41,59 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+import Mathlib.Algebra.Order.Archimedean.Real.Hom
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.DetGramLeProdNormSq
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+namespace HadamardGramBound
+
+theorem det_gram_le_prod_norm_sq {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    {n : ℕ} (w : Fin n → V) (hw : LinearIndependent ℝ w) :
+    (Matrix.gram ℝ w).det ≤ ∏ i, ‖w i‖ ^ 2 := by
+  set K := Submodule.span ℝ (Set.range w)
+  have hK : Module.finrank ℝ K = Fintype.card (Fin n) := finrank_span_eq_card hw
+  have : FiniteDimensional ℝ K := FiniteDimensional.span_of_finite ℝ (Set.finite_range w)
+  let w' : Fin n → K := fun i => ⟨w i, Submodule.subset_span ⟨i, rfl⟩⟩
+  have hg : Matrix.gram ℝ w = Matrix.gram ℝ w' := by
+    ext i j
+    simp [Matrix.gram_apply, w']
+  let gb := InnerProductSpace.gramSchmidtOrthonormalBasis hK w'
+  have hdet : gb.toBasis.det w' = ∏ i, inner ℝ (gb i) (w' i) :=
+    InnerProductSpace.gramSchmidtOrthonormalBasis_det hK w'
+  rw [hg, Matrix.gram_eq_conjTranspose_mul gb, Matrix.det_mul, Matrix.det_conjTranspose]
+  have hM : (Matrix.of fun i j => gb.repr (w' j) i) = gb.toBasis.toMatrix w' := by
+    ext i j
+    simp [Module.Basis.toMatrix_apply]
+  rw [hM, ← Module.Basis.det_apply, hdet, star_trivial, ← sq, ← Finset.prod_pow]
+  refine Finset.prod_le_prod₀ (fun i _ => sq_nonneg _) (fun i _ => ?_)
+  have h1 := abs_real_inner_le_norm (gb i) (w' i)
+  rw [gb.orthonormal.1 i, one_mul] at h1
+  have h2 : ‖w' i‖ = ‖w i‖ := rfl
+  rw [← h2, ← sq_abs]
+  exact pow_le_pow_left₀ (abs_nonneg _) h1 2
+
+end HadamardGramBound
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGramContraction
+
+section
 
 @[expose] public section
 
@@ -113,3 +162,5 @@ theorem GramContraction.proof : GramContraction.Statement := by
   simpa [y] using mul_le_of_le_one_left hW hP
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel
+end
+end

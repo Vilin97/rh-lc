@@ -1,19 +1,14 @@
 module
 
 public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsOpenUnitSubgroupKer
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HeckeCharLocalComponentExistsUniqueUnitary
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -28,6 +23,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,8 +36,74 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TripleAtt
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsOpenUnitSubgroupKer
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
+open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal
+open scoped Classical
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace GlobalTheory.CompanionTheory.HeckeSmooth
+
+theorem exists_open_unit_subgroup_ker : ∀ {E : Type} [Field E] [NumberField E] (χ : HChar E)
+    (w : HeightOneSpectrum (𝓞 E)),
+    ∃ U : Subgroup (w.adicCompletion E)ˣ, IsOpen (U : Set (w.adicCompletion E)ˣ) ∧
+      (∀ x ∈ U, IsUnitAt w x) ∧ ∀ x ∈ U, χ.1 (localIdele E w x) = 1 := by
+  intro E _ _ χ w
+  have hker : IsOpen ((χ.loc w).ker : Set (w.adicCompletion E)ˣ) := GlobalTheory.HeckeComp.smooth_loc χ w
+  let V : Subgroup (w.adicCompletion E)ˣ :=
+    { carrier := {x | Valued.v (x : w.adicCompletion E) = 1}
+      mul_mem' := fun {a b} ha hb => by
+        simp only [Set.mem_ofPred_eq, Units.val_mul, map_mul] at ha hb ⊢
+        rw [ha, hb, one_mul]
+      one_mem' := by simp
+      inv_mem' := fun {a} ha => by
+        simp only [Set.mem_ofPred_eq, Units.val_inv_eq_inv_val, map_inv₀] at ha ⊢
+        rw [ha, inv_one] }
+  have hV : IsOpen (V : Set (w.adicCompletion E)ˣ) := by
+    rw [isOpen_iff_mem_nhds]
+    intro x hx
+    have hx1 : Valued.v (x : w.adicCompletion E) = 1 := hx
+    have hx0 : Valued.v (x : w.adicCompletion E) ≠ 0 := by rw [hx1]; exact one_ne_zero
+    have h2 : (fun y : (w.adicCompletion E)ˣ => (y : w.adicCompletion E)) ⁻¹'
+        {y | Valued.v y = Valued.v (x : w.adicCompletion E)} ∈ nhds x :=
+      Units.continuous_val.continuousAt (Valued.locally_const hx0)
+    refine Filter.mem_of_superset h2 ?_
+    intro y hy
+    have hy' : Valued.v (y : w.adicCompletion E) = Valued.v (x : w.adicCompletion E) := hy
+    show Valued.v (y : w.adicCompletion E) = 1
+    rw [hy', hx1]
+  refine ⟨(χ.loc w).ker ⊓ V, ?_, ?_, ?_⟩
+  · rw [Subgroup.coe_inf]
+    exact hker.inter hV
+  · intro x hx
+    exact (Subgroup.mem_inf.mp hx).2
+  · intro x hx
+    exact MonoidHom.mem_ker.mp (Subgroup.mem_inf.mp hx).1
+
+end GlobalTheory.CompanionTheory.HeckeSmooth
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsOpenUnitSubgroupKerStatement
+
+section
 
 @[expose] public section
 
@@ -54,3 +116,6 @@ theorem _root_.GlobalTheory.T.exists_open_subgroup_heckeChar_eq_one : ∀ {E : T
     ∃ U : Subgroup (w.adicCompletion E)ˣ, IsOpen (U : Set (w.adicCompletion E)ˣ) ∧ (∀ x ∈ U, IsUnitAt w x) ∧
       ∀ x ∈ U, χ.1 (localIdele E w x) = 1 := by
   first | exact @GlobalTheory.CompanionTheory.HeckeSmooth.exists_open_unit_subgroup_ker | exact GlobalTheory.CompanionTheory.HeckeSmooth.exists_open_unit_subgroup_ker | (intros; apply GlobalTheory.CompanionTheory.HeckeSmooth.exists_open_unit_subgroup_ker <;> assumption)
+end
+end
+end

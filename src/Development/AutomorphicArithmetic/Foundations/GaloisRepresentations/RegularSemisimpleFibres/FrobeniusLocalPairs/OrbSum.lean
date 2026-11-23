@@ -2,10 +2,6 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.LiftFactorization
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularTwistedOrbitLocalFiniteness
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.AvgInt
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.OneCoset
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.SumCoset
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.VolIdx
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -47,7 +43,256 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.QuotFubiniHolds
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.SumCoset
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.VolIdx
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.AvgInt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory
+open scoped Classical ENNReal
+
+namespace UpperTheory.Gal.InertialTypesAlt.L
+
+theorem avgInt : AvgInt := by
+  intro G _ _ _ _ _ _ _ _ μ hμ K hKo hKc hK1 U hUo F hF q
+  haveI : CompactSpace K := isCompact_iff_compactSpace.mp hKc
+  set u : K → ℂ := fun y => F (q * (y : G)) with hu
+  set S : Subgroup K := GlobalTheory.BCT.rStab u with hS
+  have hUS : U.subgroupOf K ≤ S := by
+    intro k hk
+    have hk' : (k : G) ∈ U := Subgroup.mem_subgroupOf.mp hk
+    show ∀ x : K, u (x * k) = u x
+    intro x
+    simp only [hu, Subgroup.coe_mul, ← mul_assoc]
+    exact hF _ hk' _
+  have hSo : IsOpen (S : Set K) := Subgroup.isOpen_mono hUS (Subgroup.subgroupOf_isOpen K U hUo)
+  haveI : Finite (K ⧸ S) := Subgroup.quotient_finite_of_isOpen S hSo
+  letI : Fintype (K ⧸ S) := Fintype.ofFinite _
+  have hconst : ∀ y : K, u y = u (Quotient.out (QuotientGroup.mk y : K ⧸ S)) := by
+    intro y
+    have hmem : (Quotient.out (QuotientGroup.mk y : K ⧸ S))⁻¹ * y ∈ S := by
+      rw [← QuotientGroup.eq, QuotientGroup.out_eq']
+    have h := hmem (Quotient.out (QuotientGroup.mk y : K ⧸ S))
+    rw [mul_inv_cancel_left] at h
+    exact h
+  set S' : Set G := ((↑) : K → G) '' (S : Set K) with hS'
+  have hS'o : IsOpen S' := hKo.isOpenMap_subtype_val _ hSo
+  set A : K ⧸ S → Set G := fun c => (fun y => ((Quotient.out c : K) : G)⁻¹ * y) ⁻¹' S' with hA
+  have hmemA : ∀ c y, y ∈ A c ↔ ∃ h : y ∈ K, (QuotientGroup.mk (⟨y, h⟩ : K) : K ⧸ S) = c := by
+    intro c y
+    simp only [hA, hS', Set.mem_preimage, Set.mem_image, SetLike.mem_coe]
+    constructor
+    · rintro ⟨s, hs, hsy⟩
+      have hy : y = ((Quotient.out c : K) : G) * (s : G) := by
+        rw [hsy]
+        group
+      have hyK : y ∈ K := by
+        rw [hy]
+        exact K.mul_mem (Quotient.out c).2 s.2
+      refine ⟨hyK, ?_⟩
+      have he : (⟨y, hyK⟩ : K) = Quotient.out c * s := Subtype.ext hy
+      rw [he]
+      conv_rhs => rw [← QuotientGroup.out_eq' c]
+      rw [QuotientGroup.eq]
+      simpa [mul_assoc] using hs
+    · rintro ⟨hyK, hc⟩
+      have hmem : (Quotient.out c)⁻¹ * (⟨y, hyK⟩ : K) ∈ S := by
+        rw [← QuotientGroup.eq, QuotientGroup.out_eq', hc]
+      exact ⟨_, hmem, by simp⟩
+  have hAm : ∀ c, MeasurableSet (A c) := fun c => (measurable_const_mul _) hS'o.measurableSet
+  have hAK : ∀ c, A c ⊆ K := fun c y hy => ((hmemA c y).mp hy).1
+  have hAμ : ∀ c, μ (A c) = μ S' := fun c => measure_preimage_mul μ _ S'
+  have hunion : (⋃ c, A c) = (K : Set G) := by
+    apply Set.Subset.antisymm (Set.iUnion_subset hAK)
+    intro y hy
+    exact Set.mem_iUnion.mpr ⟨_, (hmemA _ y).mpr ⟨hy, rfl⟩⟩
+  have hdisj : Pairwise (Function.onFun Disjoint A) := by
+    intro c c' hcc'
+    refine Set.disjoint_left.mpr fun y h1 h2 => hcc' ?_
+    obtain ⟨h, rfl⟩ := (hmemA c y).mp h1
+    obtain ⟨h', rfl⟩ := (hmemA c' y).mp h2
+    rfl
+  have hsum : (Fintype.card (K ⧸ S) : ℝ≥0∞) * μ S' = 1 := by
+    rw [← hK1, ← hunion, measure_iUnion hdisj hAm, tsum_fintype]
+    simp only [hAμ, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  have hcard : (Fintype.card (K ⧸ S) : ℕ) = S.index := by
+    rw [Subgroup.index_eq_card, Nat.card_eq_fintype_card]
+  have hreal : ∀ c, μ.real (A c) = ((S.index : ℝ))⁻¹ := by
+    intro c
+    have hne : (Fintype.card (K ⧸ S) : ℝ≥0∞) ≠ 0 := by
+      simp
+    have h1 : μ S' = ((Fintype.card (K ⧸ S) : ℝ≥0∞))⁻¹ := by
+      rw [← ENNReal.eq_div_iff hne (by simp), ENNReal.div_eq_inv_mul, mul_one] at hsum
+      exact hsum
+    rw [Measure.real, hAμ, h1, ENNReal.toReal_inv, ENNReal.toReal_natCast, hcard]
+  haveI : IsFiniteMeasure (μ.restrict (K : Set G)) :=
+    ⟨by rw [Measure.restrict_apply_univ, hK1]; exact ENNReal.one_lt_top⟩
+  have hint : ∫ y in (K : Set G), F (q * y) ∂μ =
+      ∫ y in (K : Set G), ∑ c, (A c).indicator (fun _ => u (Quotient.out c)) y ∂μ := by
+    refine setIntegral_congr_fun hKo.measurableSet fun y hy => ?_
+    rw [Finset.sum_eq_single (QuotientGroup.mk (⟨y, hy⟩ : K) : K ⧸ S)]
+    · rw [Set.indicator_of_mem ((hmemA _ y).mpr ⟨hy, rfl⟩)]
+      exact hconst ⟨y, hy⟩
+    · intro c _ hc
+      refine Set.indicator_of_notMem (fun h => hc ?_) _
+      obtain ⟨h', rfl⟩ := (hmemA c y).mp h
+      rfl
+    · intro h
+      exact absurd (Finset.mem_univ _) h
+  rw [hint, integral_finsetSum _ fun c _ => (integrable_const _).indicator (hAm c)]
+  unfold GlobalTheory.BCT.avg
+  rw [finsum_eq_sum_of_fintype, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun c _ => ?_
+  rw [integral_indicator_const _ (hAm c), measureReal_restrict_apply (hAm c),
+    Set.inter_eq_left.mpr (hAK c), hreal c, Complex.real_smul]
+  push_cast
+  rfl
+
+end UpperTheory.Gal.InertialTypesAlt.L
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.OneCoset
+
+section
+
+@[expose] public section
+
+open MeasureTheory PositivityTheory.Rg.Tf.Loc UpperTheory.V.Z.Tf.Orb
+open scoped ENNReal
+
+theorem UpperTheory.Gal.InertialTypesAlt.L.oneCoset :
+    UpperTheory.Gal.InertialTypesAlt.L.OneCoset := by
+  classical
+  intro G _ _ _ _ _ _ _ _ μ hμ K hKo hKc hK1 T hTc hTcomm ν hν F hF hFT q
+  haveI := hμ
+  haveI := hν
+  obtain ⟨hsf, hinv, hright⟩ := haarComm_holds G T hTc hTcomm ν hν
+  haveI := hsf
+  haveI := hinv
+  haveI := hright
+  obtain ⟨ρ, hρ, -⟩ := normEx_holds G ⟨K, hKo, hKc⟩ T hTc ν hν hright
+  set D : Set G := {g | ∃ t ∈ T, ∃ y ∈ K, g = t * q * y} with hD
+  set Hs : Set T := {t : T | q⁻¹ * (t : G) * q ∈ K} with hHs
+  set qK : Set G := {g | q⁻¹ * g ∈ K} with hqK
+
+  have hqKo : IsOpen qK := hKo.preimage (continuous_const.mul continuous_id)
+  have hDo : IsOpen D := by
+    have : D = ⋃ t : T, (fun g : G => ((t : G) * q)⁻¹ * g) ⁻¹' (K : Set G) := by
+      ext g
+      simp only [hD, Set.mem_setOf_eq, Set.mem_iUnion, Set.mem_preimage, SetLike.mem_coe]
+      constructor
+      · rintro ⟨t, ht, y, hy, rfl⟩
+        refine ⟨⟨t, ht⟩, ?_⟩
+        simpa [mul_assoc] using hy
+      · rintro ⟨t, ht⟩
+        exact ⟨t, t.2, _, ht, by group⟩
+    rw [this]
+    exact isOpen_iUnion fun t => hKo.preimage (continuous_const.mul continuous_id)
+  have hHo : IsOpen Hs :=
+    hKo.preimage (((continuous_const.mul continuous_subtype_val).mul continuous_const))
+  have hHc : IsCompact Hs := by
+    have hS : IsCompact ((fun x : G => q * x * q⁻¹) '' (K : Set G)) :=
+      hKc.image (by fun_prop)
+    have hpc := hTc.isClosedEmbedding_subtypeVal.isCompact_preimage hS
+    have e : Hs = Subtype.val ⁻¹' ((fun x : G => q * x * q⁻¹) '' (K : Set G)) := by
+      ext t
+      simp only [hHs, Set.mem_setOf_eq, Set.mem_preimage, Set.mem_image, SetLike.mem_coe]
+      constructor
+      · intro h
+        exact ⟨_, h, by group⟩
+      · rintro ⟨x, hx, hxt⟩
+        have : q⁻¹ * (t : G) * q = x := by rw [← hxt]; group
+        rwa [this]
+    rw [e]
+    exact hpc
+  have h1H : (1 : T) ∈ Hs := by
+    simpa [hHs] using K.one_mem
+  set v : ℝ≥0∞ := ν Hs with hv
+  have hv0 : v ≠ 0 := hHo.measure_ne_zero ν ⟨1, h1H⟩
+  have hvt : v ≠ ∞ := hHc.measure_lt_top.ne
+  have hqKD : qK ⊆ D := fun g hg => ⟨1, T.one_mem, q⁻¹ * g, hg, by group⟩
+  have hDT : ∀ h ∈ T, ∀ g, h * g ∈ D ↔ g ∈ D := by
+    intro h hh g
+    constructor
+    · rintro ⟨t, ht, y, hy, e⟩
+      refine ⟨h⁻¹ * t, T.mul_mem (T.inv_mem hh) ht, y, hy, ?_⟩
+      calc g = h⁻¹ * (h * g) := by group
+        _ = _ := by rw [e]; group
+    · rintro ⟨t, ht, y, hy, rfl⟩
+      exact ⟨h * t, T.mul_mem hh ht, y, hy, by group⟩
+  set ρ' : G → ℝ≥0∞ := D.piecewise (qK.indicator fun _ => v⁻¹) ρ with hρ'def
+  have hρ' : IsQuotNormaliser T ν ρ' := by
+    refine ⟨Measurable.piecewise hDo.measurableSet
+      (measurable_const.indicator hqKo.measurableSet) hρ.1, fun g => ?_⟩
+    by_cases hg : g ∈ D
+    · obtain ⟨t₀, ht₀, y, hy, rfl⟩ := hg
+      set A : Set T := (fun h : T => h * (⟨t₀, ht₀⟩ : T)) ⁻¹' Hs with hA
+      have hAm : MeasurableSet A := (hHo.preimage (continuous_mul_const _)).measurableSet
+      have hpt : ∀ h : T, ρ' ((h : G) * (t₀ * q * y)) = A.indicator (fun _ => v⁻¹) h := by
+        intro h
+        have hmem : (h : G) * (t₀ * q * y) ∈ D :=
+          (hDT _ h.2 _).2 ⟨t₀, ht₀, y, hy, rfl⟩
+        rw [hρ'def, Set.piecewise_eq_of_mem _ _ _ hmem]
+        have hiff : (h : G) * (t₀ * q * y) ∈ qK ↔ h ∈ A := by
+          have e : q⁻¹ * ((h : G) * (t₀ * q * y)) = (q⁻¹ * ((h : G) * t₀) * q) * y := by group
+          simp only [hqK, hA, hHs, Set.mem_setOf_eq, Set.mem_preimage, e, Subgroup.coe_mul]
+          exact Subgroup.mul_mem_cancel_right K hy
+        by_cases hh : h ∈ A
+        · rw [Set.indicator_of_mem (hiff.2 hh), Set.indicator_of_mem hh]
+        · rw [Set.indicator_of_notMem (fun c => hh (hiff.1 c)), Set.indicator_of_notMem hh]
+      simp_rw [hpt]
+      rw [lintegral_indicator_const hAm, hA, measure_preimage_mul_right, ← hv]
+      exact ENNReal.inv_mul_cancel hv0 hvt
+    · have hpt : ∀ h : T, ρ' ((h : G) * g) = ρ ((h : G) * g) := by
+        intro h
+        rw [hρ'def, Set.piecewise_eq_of_notMem _ _ _ (fun c => hg ((hDT _ h.2 _).1 c))]
+      simp_rw [hpt]
+      exact hρ.2 g
+  have hFm : Measurable (D.indicator F) := hF.measurable.indicator hDo.measurableSet
+  have hFinv : ∀ h ∈ T, ∀ g, D.indicator F (h * g) = D.indicator F g := by
+    intro h hh g
+    by_cases hg : g ∈ D
+    · rw [Set.indicator_of_mem hg, Set.indicator_of_mem ((hDT h hh g).2 hg), hFT h hh]
+    · rw [Set.indicator_of_notMem hg, Set.indicator_of_notMem (fun c => hg ((hDT h hh g).1 c))]
+  rw [quotIndep_holds G μ hμ T ν hsf hinv _ hFm hFinv ρ' hρ']
+  have hpt : ∀ g, D.indicator F g * ((ρ' g).toReal : ℂ) =
+      qK.indicator (fun g => ((v.toReal : ℝ) : ℂ)⁻¹ * F g) g := by
+    intro g
+    by_cases hg : g ∈ D
+    · rw [Set.indicator_of_mem hg, hρ'def, Set.piecewise_eq_of_mem _ _ _ hg]
+      by_cases hq : g ∈ qK
+      · rw [Set.indicator_of_mem hq, Set.indicator_of_mem hq, ENNReal.toReal_inv]
+        push_cast
+        ring
+      · rw [Set.indicator_of_notMem hq, Set.indicator_of_notMem hq]
+        simp
+    · rw [Set.indicator_of_notMem hg, Set.indicator_of_notMem (fun c => hg (hqKD c)), zero_mul]
+  simp_rw [hpt]
+  rw [integral_indicator hqKo.measurableSet, integral_const_mul]
+  have hpre : (fun y : G => q * y) ⁻¹' qK = (K : Set G) := by
+    ext y
+    simp [hqK]
+  have := (measurePreserving_mul_left μ q).setIntegral_preimage_emb
+    (measurableEmbedding_mulLeft q) F qK
+  rw [hpre] at this
+  rw [this]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.OrbSum
+
+section
 
 @[expose] public section
 
@@ -166,3 +411,6 @@ theorem orbSum : OrbSum := by
   field_simp
 
 end UpperTheory.Gal.InertialTypesAlt.L
+end
+end
+end

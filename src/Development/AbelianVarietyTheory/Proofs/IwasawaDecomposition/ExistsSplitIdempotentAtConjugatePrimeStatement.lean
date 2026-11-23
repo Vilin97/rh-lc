@@ -2,7 +2,7 @@ module
 
 public import Formalism.LocalToGlobal.Columns.MtHeckeLoc
 public import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSplitIdempotentAtConjugatePrime
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinPartConjMem
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -48,6 +48,36 @@ import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteWeightData
 import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.LocalToGlobal.IndefiniteReal.RecTie
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSplitIdempotentAtConjugatePrime
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
+open scoped TensorProduct InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3 GlobalTheory.Mem.Col2
+open GlobalTheory.Mem.R3.LiftBrg
+
+namespace GlobalTheory.SplitEtaIdem
+
+theorem exists_isIdemAt_conjP : ∀ {D : D7} (Pb : Formalism.L2.DIV.Pl D.host.E) (Ut : Formalism.L2.Col.MhlUnif Pb),
+    ∃ e : Formalism.L2.Theta.AE D, Formalism.L2.NTheta.IsIdemAt e (Formalism.L2.Col.conjPrime₂ Pb) := by
+  intro D Pb Ut
+  apply GlobalTheory.MovedIdem.exists_isIdemAt
+  rw [Formalism.L2.Col.conjIdeal_asIdeal, Formalism.L2.Col.conjPrime_conjPrime]
+  intro h
+  exact Ut.hπP (h ▸ Ut.hπ)
+
+end GlobalTheory.SplitEtaIdem
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSplitIdempotentAtConjugatePrimeStatement
+
+section
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
@@ -58,3 +88,5 @@ open GlobalTheory.Mem.R3.LiftBrg
 
 theorem _root_.GlobalTheory.T.exists_splitIdempotent_at_conjugatePrime : ∀ {D : D7} (Pb : Formalism.L2.DIV.Pl D.host.E) (Ut : Formalism.L2.Col.MhlUnif Pb), ∃ e : Formalism.L2.Theta.AE D, Formalism.L2.NTheta.IsIdemAt e (Formalism.L2.Col.conjPrime₂ Pb) := by
   first | exact @GlobalTheory.SplitEtaIdem.exists_isIdemAt_conjP | exact GlobalTheory.SplitEtaIdem.exists_isIdemAt_conjP | (intros; apply GlobalTheory.SplitEtaIdem.exists_isIdemAt_conjP <;> assumption)
+end
+end

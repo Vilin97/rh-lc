@@ -3,12 +3,11 @@ module
 public import Development.AutomorphicArithmetic.CharacterBoxes.Supply
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ValidForConstructedPointClassesEventuallyWorking
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsFamPOfKits
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsStdLarge
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FixAndWinOfNumAt
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNumAt
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.PairRowIffQdRows
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,10 +36,132 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.AuxiliaryPrimeMemAvoidedPrimes
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNumAt
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsStdLarge
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+noncomputable section
+
+namespace GlobalTheory.EX
+
+def stdConst (CT2 C8 p m l : ℝ) : FC where
+  Ct := 401
+  Cc := 2
+  CT2 := CT2
+  CGam := m
+  Csz := m
+  Cr := 1
+  CTu := 25
+  Cdg := 1
+  C5 := 1
+  full := True
+  GK := ⟨m, l, l, l, l, l, l, l, l, l, l, 5, 4, 1, l⟩
+  cX := ⟨1, ⟨12, 3, m⟩⟩
+  P :=
+    { CkLow := l, Ck6 := l, CfL := l, cLL := l⁻¹, CnW := 10, Crho := l, CDelG := l, CLw := 11 * 405, Cj0 := 405,
+      Cw := l, cw := 9 / 10, CDel := l, CCount := l, Ch0r := l, Ch0k := l, Ch0N := l, Cgap := l, CetaF := 6,
+      CY := l, CYL := 9, Cpde := C8, CccK := 1, CF := m }
+  T := { CP := p, eP := 12, Cp := 1, Cb := l, cTO := 377, ChT := l, CbN := l }
+
+theorem stdConst_cPre (CT2 C8 p m l c : ℝ) (h : c ∈ (stdConst CT2 C8 p m l).cPre) : c = p := by
+  simpa [FC.cPre, stdConst] using h
+
+theorem stdConst_cMid (CT2 C8 p m l c : ℝ)
+    (h : c ∈ (stdConst CT2 C8 p m l).cMid (stdConst CT2 C8 p m l).P.CF) : c = m := by
+  simpa [FC.cMid, stdConst] using h
+
+theorem stdConst_cLast (CT2 C8 p m l c : ℝ) (h : c ∈ (stdConst CT2 C8 p m l).cLast) : c = l := by
+  simpa [FC.cLast, stdConst] using h
+
+theorem exists_std_large (K K0 : TransportedAlt) (CT2 C8 : ℝ) (h8 : 1 ≤ C8) :
+    ∃ C : FC, Std C ∧ C.CT2 = CT2 ∧ C.P.Cpde = C8 ∧ C.Large K C.P.CF ∧ C.Large K0 C.P.CF ∧ C.GK.Nonneg := by
+  obtain ⟨p, hp1, hpK, hpK0⟩ : ∃ p : ℝ, 1000 ≤ p ∧ K.pre ≤ p ∧ K0.pre ≤ p :=
+    ⟨max 1000 (max K.pre K0.pre), le_max_left _ _, (le_max_left _ _).trans (le_max_right _ _),
+      (le_max_right _ _).trans (le_max_right _ _)⟩
+  obtain ⟨m, hm1, hmK, hmK0⟩ : ∃ m : ℝ, 1 ≤ m ∧ K.mid (stdConst CT2 C8 p 0 0).cOut ≤ m ∧
+      K0.mid (stdConst CT2 C8 p 0 0).cOut ≤ m :=
+    ⟨max 1 (max _ _), le_max_left _ _, (le_max_left _ _).trans (le_max_right _ _),
+      (le_max_right _ _).trans (le_max_right _ _)⟩
+  obtain ⟨l, hl1, hlK, hlK0⟩ : ∃ l : ℝ, 1 ≤ l ∧
+      K.last ((stdConst CT2 C8 p m 0).cOut ++ (stdConst CT2 C8 p m 0).cMid m) ≤ l ∧
+      K0.last ((stdConst CT2 C8 p m 0).cOut ++ (stdConst CT2 C8 p m 0).cMid m) ≤ l :=
+    ⟨max 1 (max _ _), le_max_left _ _, (le_max_left _ _).trans (le_max_right _ _),
+      (le_max_right _ _).trans (le_max_right _ _)⟩
+  have hm0 : 0 ≤ m := by linarith
+  have hl0 : 0 ≤ l := by linarith
+  refine ⟨stdConst CT2 C8 p m l, ⟨?_, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, h8, hp1, ?_, ?_⟩,
+    rfl, rfl, ⟨?_, trivial, ?_, ?_⟩, ⟨?_, trivial, ?_, ?_⟩, ?_⟩
+  · exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, le_rfl, rfl⟩
+  · intro c hc; rw [stdConst_cMid _ _ _ _ _ _ hc]; exact hm1
+  · intro c hc; rw [stdConst_cLast _ _ _ _ _ _ hc]; exact hl1
+  · intro c hc; rw [stdConst_cPre _ _ _ _ _ _ hc]; exact hpK
+  · intro c hc; rw [stdConst_cMid _ _ _ _ _ _ hc]; exact hmK
+  · intro c hc; rw [stdConst_cLast _ _ _ _ _ _ hc]; exact hlK
+  · intro c hc; rw [stdConst_cPre _ _ _ _ _ _ hc]; exact hpK0
+  · intro c hc; rw [stdConst_cMid _ _ _ _ _ _ hc]; exact hmK0
+  · intro c hc; rw [stdConst_cLast _ _ _ _ _ _ hc]; exact hlK0
+  · exact ⟨hm0, hl0, hl0, hl0, hl0, hl0, hl0, hl0, hl0, hl0, hl0, by norm_num [stdConst], by norm_num [stdConst],
+      by norm_num [stdConst], hl0⟩
+
+end GlobalTheory.EX
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FixAndWinOfNumAt
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.EX.DC
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.GlobalTheoryTheory GlobalTheory.EX NumberField
+
+theorem fix_and_win_of_numAt (eps : ℝ) (C : FC) (Fm : FamP eps) (hS : Std C) (hO : Fm.cOut = C.cOut)
+    (hN : ∀ x (i : Fm.Ix x), Nonempty (NumAt C (Fm.L x i))) : DC.PageFix Fm ∧ DC.PageWin Fm := by
+  obtain ⟨⟨-, -, -, -, -, -, -, -, -, sCt⟩, sCc, -, -, scw, sCYL, -, sCp, seP, scTO, -, sCe, -⟩ := hS
+  simp only [FamP.cOut, FC.cOut, List.cons.injEq] at hO
+  obtain ⟨oCt, oCc, -, -, -, ocw, oCYL, -, -, -, oCp, oeP, ocTO, -, oCe, -⟩ := hO
+  refine ⟨⟨oCp.trans sCp, oeP.trans seP, ?_, ?_, oCe.trans sCe, oCc.trans sCc, ocw.trans scw, oCYL.trans sCYL,
+    fun x hx i => ?_⟩, fun x hx i => ?_⟩
+  · rw [ocTO, oeP, scTO, seP]; norm_num
+  · rw [ocTO, oCt, scTO, sCt]; norm_num
+  · obtain ⟨N⟩ := hN x i
+    refine ⟨N.ccK_top, N.cloud1, N.g_le, N.pde_lt.1, N.pde_lt.2, N.logFiveDepth_eq, ?_, ?_⟩
+    · have h := N.Lw_eq
+      rw [Fm.L_x x i hx, Fm.L_eps x i, ← oCt] at h
+      exact h
+    · have h := (Fm.parT x hx i).TO_eq
+      rw [Fm.parT_cTO, Fm.L_x x i hx] at h
+      exact h
+  · obtain ⟨N⟩ := hN x i
+    have h := N.win
+    rw [Fm.L_x x i hx, Fm.L_eps x i] at h
+    exact h
+
+end GlobalTheory.EX.DC
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CharacterBoxes.DesignS
+
+section
 
 @[expose] public section
 
@@ -132,4 +252,6 @@ theorem designS : ∀ (Q : Par → PtProp) (cT : ℝ → ℝ → ℝ) (la : ℝ)
 
 end UpperTheory.Top
 
+end
+end
 end

@@ -4,12 +4,10 @@ public import GroundTheory.AutomorphicForms.HermitianLocalForms
 public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Topology
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
-public import GroundTheory.AutomorphicForms.HermitianBinaryValues
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -24,11 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,9 +42,80 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
+import GroundTheory.GlobalFields.HerbrandQuotients.RationalForm
+import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.AutomorphicForms.HermitianBinaryValues
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GroundTheory.Automorphic
+
+open NumberField IsDedekindDomain GroundTheory.Global Filter
+
+section Algebra
+
+variable {K : Type*} [Field K]
+
+end Algebra
+
+section Archimedean
+
+open NumberField.InfinitePlace.Completion
+
+variable {K : Type*} [Field K] {v : InfinitePlace K}
+
+theorem continuous_ringEquivRealOfIsReal (hv : v.IsReal) :
+    Continuous (ringEquivRealOfIsReal hv) := by
+  have : (ringEquivRealOfIsReal hv : v.Completion → ℝ) = extensionEmbeddingOfIsReal hv := by
+    ext x
+    simp
+  rw [this]
+  exact (isometry_extensionEmbeddingOfIsReal hv).continuous
+
+end Archimedean
+
+section Main
+
+open NumberField.InfinitePlace.Completion
+
+universe u
+
+variable {K : Type u} [Field K] [NumberField K]
+
+section AtL
+
+open scoped NumberField.LiesOver
+open GroundTheory.Global.SemiLocal GroundTheory.Global.AdeleBaseChange
+
+variable {γ t : K} [Fact (∀ r : K, r ^ 2 ≠ -γ + t * r)]
+
+end AtL
+
+end Main
+
+end GroundTheory.Automorphic
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Theta.RealPlace
+
+section
 
 @[expose] public section
 
@@ -288,3 +353,5 @@ section Example
 end Example
 
 end GroundTheory.Heights₂.Theta
+end
+end

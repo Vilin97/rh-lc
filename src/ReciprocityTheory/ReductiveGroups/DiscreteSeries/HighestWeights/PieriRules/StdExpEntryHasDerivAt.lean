@@ -46,10 +46,56 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.CountNotTwoOfFinrankLeOne
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.InnerLowerSelf
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.StTest
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Std.Tactic.BVDecide.Normalize.Prop
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.TensHW
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.WeylSum
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Weight
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.StTest
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Finset
+
+namespace ReciprocityTheory.ChartRestriction.DS.HW
+
+open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS.S7
+
+theorem pieriSt_kRel_stdM {n : ℕ} (ε : Fin n → Bool) : Formalism.REAL.KRel ε (stdM n) := by
+  intro a b c d _ _
+  simp only [stdM]
+  by_cases h1 : b = c <;> by_cases h2 : d = a
+  · subst h1 h2; simp [Matrix.single_mul_single_same]
+  · subst h1; simp [Matrix.single_mul_single_same, Matrix.single_mul_single_of_ne, h2]
+  · subst h2; simp [Matrix.single_mul_single_same, Matrix.single_mul_single_of_ne, h1]
+  · simp [Matrix.single_mul_single_of_ne, h1, h2]
+
+theorem pieriSt_stdM_diag {n : ℕ} (a : Fin n) :
+    stdM n a a = Matrix.diagonal fun i => ((stdWt n i a : ℝ) : ℂ) := by
+  ext i j
+  by_cases hij : i = j
+  · subst hij
+    by_cases hai : a = i
+    · subst hai; simp [stdM, stdWt]
+    · simp [stdM, stdWt, hai, Pi.single_apply]
+  · simp [stdM, Matrix.single_apply, hij]
+    intro h1 h2; exact hij (h1.symm.trans h2)
+
+end ReciprocityTheory.ChartRestriction.DS.HW
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.PieriRules.StdExpEntryHasDerivAt
+
+section
 
 @[expose] public section
 
@@ -136,3 +182,6 @@ theorem pieriStd_of (hc : CompRedStatement) (hr : KRepRelStatement) : PieriStdSt
   pieriStd_of_props (pieriCount_of hc hr) tensHW weylSumStd kTypeIntDom
 
 end ReciprocityTheory.ChartRestriction.DS.HW
+end
+end
+end

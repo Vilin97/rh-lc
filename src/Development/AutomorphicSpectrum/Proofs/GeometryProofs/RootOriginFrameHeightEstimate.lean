@@ -4,30 +4,28 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsFrameVec
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LabelSigBijective
 public import Mathlib.Algebra.AffineMonoid.Basic
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.GlueApplyOfNotInFibre
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DiscriminantValuationDifferentStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsElementSamePrimeCountStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FiniteResidueAbsoluteValueStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsExcisionNbhdAway
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieLatticeEvalAtLocalRingStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.NonarchValuationOfPrimeStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginFrameArchimedeanStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginFrameNonarchimedeanStatement
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +45,140 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.PadicValNatAbsNormEqZero
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FiniteResidueAbsoluteValueStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsExcisionNbhdAway
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieLatticeEvalAtLocalRingStatement
+public import Mathlib.Basic.Real.Basic
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.NonarchValuationOfPrime
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginFrameArchimedeanStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginFrameNonarchimedeanStatement
+import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+import Mathlib.Tactic.Basify
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.DefiniteFormStabilizerFiniteAwayFromP
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.ArakelovInstances.IsStrictDom
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DiscriminantValuationDifferent
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+namespace GlobalTheory.CompanionTheory.Different
+
+theorem padicValInt_discr_mul_count_eq :
+    ∀ (E : Type) [Field E] [NumberField E] [IsGalois ℚ E] (p : ℕ) [Fact p.Prime] (P : Ideal (𝓞 E)),
+      P.IsPrime → (p : 𝓞 E) ∈ P →
+      ((padicValInt p (discr E) : ℕ)) * (normalizedFactors (Ideal.span {(p : 𝓞 E)})).count P =
+        (normalizedFactors (differentIdeal ℤ (𝓞 E))).count P * Module.finrank ℚ E := by
+  intro E _ _ _ p hp P hP hpP
+  have hd : (discr E).natAbs ≠ 0 := Int.natAbs_ne_zero.2 (discr_ne_zero E)
+  have hdecomp : (discr E).natAbs =
+      p ^ padicValNat p (discr E).natAbs * ((discr E).natAbs / p ^ (discr E).natAbs.factorization p) := by
+    conv_lhs => rw [← Nat.ordProj_mul_ordCompl_eq_self (discr E).natAbs p]
+    rw [Nat.factorization_def _ hp.out, Nat.padicValNat_def]
+  have hnd : ¬ p ∣ (discr E).natAbs / p ^ (discr E).natAbs.factorization p :=
+    Nat.not_dvd_ordCompl hp.out hd
+  have h := ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.diffExp E p _ _ hp.out hnd hdecomp P hP hpP
+  rw [h]
+  rw [padicValInt, Nat.padicValNat_def]
+
+end GlobalTheory.CompanionTheory.Different
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DiscriminantValuationDifferentStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+theorem _root_.GlobalTheory.T.discriminant_valuation_different : ∀ (E : Type) [Field E] [NumberField E] [IsGalois ℚ E] (p : ℕ) [Fact p.Prime] (P : Ideal (𝓞 E)), P.IsPrime → (p : 𝓞 E) ∈ P → ((padicValInt p (discr E) : ℕ)) * (normalizedFactors (Ideal.span {(p : 𝓞 E)})).count P = (normalizedFactors (differentIdeal ℤ (𝓞 E))).count P * Module.finrank ℚ E := by
+  first | exact @GlobalTheory.CompanionTheory.Different.padicValInt_discr_mul_count_eq | exact GlobalTheory.CompanionTheory.Different.padicValInt_discr_mul_count_eq | (intros; apply GlobalTheory.CompanionTheory.Different.padicValInt_discr_mul_count_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsElementSamePrimeCount
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+namespace GlobalTheory.CompanionTheory.Ggeo
+
+theorem exists_mem_count_normalizedFactors_span_eq :
+    ∀ (R : Type) [CommRing R] [IsDedekindDomain R] (I P : Ideal R), I ≠ ⊥ → P.IsPrime → P ≠ ⊥ →
+      ∃ x ∈ I, x ≠ 0 ∧
+        (normalizedFactors (Ideal.span {x})).count P = (normalizedFactors I).count P := by
+  intro R _ _ I P hI hP hP0
+  have hlt : I * P < I := by
+    refine lt_of_le_of_ne Ideal.mul_le_left fun h => hP.ne_top ?_
+    have h' : I * P = I * ⊤ := by rw [h, Ideal.mul_top]
+    exact mul_left_cancel₀ hI h'
+  obtain ⟨x, hxI, hxIP⟩ := SetLike.exists_of_lt hlt
+  have hx0 : x ≠ 0 := by
+    rintro rfl
+    exact hxIP (Submodule.zero_mem _)
+  refine ⟨x, hxI, hx0, ?_⟩
+  obtain ⟨J, hJ⟩ : I ∣ Ideal.span {x} :=
+    Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hxI)
+  have hJ0 : J ≠ ⊥ := by
+    rintro rfl
+    rw [Ideal.mul_bot, Ideal.span_singleton_eq_bot] at hJ
+    exact hx0 hJ
+  have hPJ : (normalizedFactors J).count P = 0 := by
+    rw [Multiset.count_eq_zero]
+    intro hmem
+    obtain ⟨K, rfl⟩ := dvd_of_mem_normalizedFactors hmem
+    apply hxIP
+    have hle : Ideal.span {x} ≤ I * P := by
+      rw [hJ, ← mul_assoc]
+      exact Ideal.mul_le_left
+    exact hle (Ideal.mem_span_singleton_self x)
+  rw [hJ, normalizedFactors_mul hI hJ0, Multiset.count_add, hPJ, add_zero]
+
+end GlobalTheory.CompanionTheory.Ggeo
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsElementSamePrimeCountStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+theorem _root_.GlobalTheory.T.exists_element_same_prime_count : ∀ (R : Type) [CommRing R] [IsDedekindDomain R] (I P : Ideal R), I ≠ ⊥ → P.IsPrime → P ≠ ⊥ → ∃ x ∈ I, x ≠ 0 ∧ (normalizedFactors (Ideal.span {x})).count P = (normalizedFactors I).count P := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.exists_mem_count_normalizedFactors_span_eq | exact GlobalTheory.CompanionTheory.Ggeo.exists_mem_count_normalizedFactors_span_eq | (intros; apply GlobalTheory.CompanionTheory.Ggeo.exists_mem_count_normalizedFactors_span_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.NonarchValuationOfPrimeStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+theorem _root_.GlobalTheory.T.nonarch_valuation_of_prime : ∀ (R : Type) [CommRing R] [IsDedekindDomain R] (μ : R →*₀ ℝ) (a : R), a ≠ 0 → (∀ x, 0 ≤ μ x) → (∀ x, μ x ≤ 1) → (∀ x y, μ (x + y) ≤ max (μ x) (μ y)) → μ a < 1 → μ a ≠ 0 → ∃ (P : Ideal R) (c : ℝ), P.IsPrime ∧ P ≠ ⊥ ∧ a ∈ P ∧ 0 < c ∧ ∀ x : R, x ≠ 0 → μ x = c ^ (normalizedFactors (Ideal.span {x})).count P := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.map_eq_pow_count_of_ultrametric | exact GlobalTheory.CompanionTheory.Ggeo.map_eq_pow_count_of_ultrametric | (intros; apply GlobalTheory.CompanionTheory.Ggeo.map_eq_pow_count_of_ultrametric <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginFrameHeightEstimate
+
+section
 
 @[expose] public section
 
@@ -281,3 +410,6 @@ theorem fib_V_htDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [I
       exact fibAt_mono _ _ _ (fun hh => (hVq hh).le) hw
 
 end GlobalTheory.CompanionTheory.Ar.Rec.FinRd.Roots.OnW
+end
+end
+end

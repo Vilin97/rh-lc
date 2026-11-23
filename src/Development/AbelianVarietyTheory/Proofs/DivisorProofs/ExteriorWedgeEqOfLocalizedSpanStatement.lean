@@ -1,7 +1,8 @@
 module
 
 public import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorWedgeEqOfLocalizedSpan
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,8 +42,84 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Dual.Lemmas
 import Development.AbelianVarietyTheory.Definitions.Divisors.CupPair
 import Development.AbelianVarietyTheory.Definitions.Divisors.OneFormMapEqKaehlerDifferentialMap
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlternatingMapLinearCombination
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.AlternatingLinearCombination
+
+theorem alternating_map_linear_combination {L M N : Type} [Field L] [AddCommGroup M] [Module L M]
+    [AddCommGroup N] [Module L N] {n : ℕ} (f : M [⋀^Fin n]→ₗ[L] N) (g : Fin n → M)
+    (a : Fin n → Fin n → L) :
+    (f fun i => ∑ l : Fin n, a i l • g l) = Matrix.det (Matrix.of a) • f g := by
+  classical
+  rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff L]
+  intro φ
+  let ψ : (Fin n → L) →ₗ[L] M := Fintype.linearCombination L g
+  let F : (Fin n → L) [⋀^Fin n]→ₗ[L] L := (φ.compAlternatingMap f).compLinearMap ψ
+  have h := F.eq_smul_basis_det (Pi.basisFun L (Fin n))
+  have h1 : F a = φ (f fun i => ∑ l : Fin n, a i l • g l) := by
+    simp [F, ψ, Fintype.linearCombination_apply]
+  have h2 : F (Pi.basisFun L (Fin n)) = φ (f g) := by
+    have : (fun i => ψ (Pi.basisFun L (Fin n) i)) = g := by
+      funext i
+      simp [ψ]
+    change φ (f fun i => ψ (Pi.basisFun L (Fin n) i)) = _
+    rw [this]
+  have h3 : F a = φ (f g) * Matrix.det (Matrix.of a) := by
+    rw [h, AlternatingMap.smul_apply, h2, Pi.basisFun_det_apply, smul_eq_mul]
+  rw [map_sub, map_smul, ← h1, h3, smul_eq_mul, mul_comm, sub_self]
+
+end GlobalTheory.AlternatingLinearCombination
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorWedgeEqOfLocalizedSpan
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
+
+namespace GlobalTheory.WedgeDen
+
+theorem alternatingMap_sum_smul_eq_det_smul' {L M N : Type} [Field L] [AddCommGroup M] [Module L M]
+    [AddCommGroup N] [Module L N] {n : ℕ} (f : M [⋀^Fin n]→ₗ[L] N) (g : Fin n → M)
+    (a : Fin n → Fin n → L) :
+    f (fun i => ∑ l, a i l • g l) = (Matrix.of a).det • f g := by
+  first
+  | exact @_root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination
+  | exact _root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination
+  | (apply _root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination <;> assumption)
+  | (intros; apply _root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.AlternatingLinearCombination.alternating_map_linear_combination ..)
+
+theorem exists_smul_ιMulti_eq_smul_ιMulti : ∀ (R L M : Type) [CommRing R] [Field L] [Algebra R L] [AddCommGroup M] [Module L M] (S : Submonoid R) (n : ℕ) (g w : Fin n → M), (∀ i, ∃ r ∈ S, ∃ c : Fin n → R, algebraMap R L r • w i = ∑ l, algebraMap R L (c l) • g l) → ∃ r ∈ S, ∃ c : R, algebraMap R L r • ExteriorAlgebra.ιMulti L n w = algebraMap R L c • ExteriorAlgebra.ιMulti L n g := by
+  intro R L M _ _ _ _ _ S n g w h
+  classical
+  choose r hr c hc using h
+  refine ⟨∏ i, r i, prod_mem fun i _ => hr i, (Matrix.of c).det, ?_⟩
+  rw [map_prod, ← AlternatingMap.map_smul_univ]
+  simp_rw [hc]
+  rw [alternatingMap_sum_smul_eq_det_smul', RingHom.map_det]
+  rfl
+
+end GlobalTheory.WedgeDen
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorWedgeEqOfLocalizedSpanStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +127,5 @@ open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.exterior_wedge_eq_of_localized_span : ∀ (R L M : Type) [CommRing R] [Field L] [Algebra R L] [AddCommGroup M] [Module L M] (S : Submonoid R) (n : ℕ) (g w : Fin n → M), (∀ i, ∃ r ∈ S, ∃ c : Fin n → R, algebraMap R L r • w i = ∑ l, algebraMap R L (c l) • g l) → ∃ r ∈ S, ∃ c : R, algebraMap R L r • ExteriorAlgebra.ιMulti L n w = algebraMap R L c • ExteriorAlgebra.ιMulti L n g := by
   first | (exact @GlobalTheory.WedgeDen.exists_smul_ιMulti_eq_smul_ιMulti) | (exact GlobalTheory.WedgeDen.exists_smul_ιMulti_eq_smul_ιMulti) | (intros; apply GlobalTheory.WedgeDen.exists_smul_ιMulti_eq_smul_ιMulti  <;> assumption)
+end
+end

@@ -2,38 +2,26 @@ module
 
 public import Formalism.FlagUnipotentLattices.IdealCountLeW
 public import Formalism.LocalToGlobal.Columns.HeckeSp
-public import Formalism.FlagUnipotentLattices.IdealCountLeWAsm
-import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
-public import Formalism.LocalToGlobal.Columns.HeckeSpCount
-public import Lemmata.GeneralBFactRightMore.Imports
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ColonCountWeighted
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,9 +41,86 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
 public import Formalism.LocalToGlobal.Divisibility.Tuples
+
+-- Source module: Formalism.FlagUnipotentLattices.IdealCountLeWAsm
+
+section
+
+@[expose] public section
+
+namespace Formalism.HermitianLatticeCounting.Final.S6
+
+theorem dualIndex : Formalism.HermitianLatticeCounting.S6.DualIndex := Formalism.HermitianLatticeCounting.P.dual_lattice_index
+
+end Formalism.HermitianLatticeCounting.Final.S6
+end
+end
+
+-- Source module: Lemmata.GeneralBFactRightMore.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_right_more
+
+theorem goal1 :
+  ∀ {E : Type} [inst : Field.{0} E] [NumberField.{0} E] [StarRing.{0} E]
+  (P : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} E)),
+  Exists.{1} fun (a : NumberField.RingOfIntegers.{0} E) ↦
+    And (Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} P) a)
+      (Exists.{1} fun (c : NumberField.RingOfIntegers.{0} E) ↦
+        And (Not (Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} P) c))
+          (∀ (p : NumberField.RingOfIntegers.{0} E),
+            Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} P) p →
+              Exists.{1} fun (t : NumberField.RingOfIntegers.{0} E) ↦
+                Eq.{1} (HMul.hMul.{0, 0, 0} c p) (HMul.hMul.{0, 0, 0} a t)))  := by
+  intro E _ _ _ P
+  have h0 : P.asIdeal ≠ ⊥ := P.ne_bot
+  have h1 : P.asIdeal ≠ ⊤ := P.isPrime.ne_top
+  have hlt : P.asIdeal ^ 2 < P.asIdeal := Ideal.pow_lt_self _ h0 h1 2 le_rfl
+  obtain ⟨a, haP, ha2⟩ := SetLike.exists_of_lt hlt
+  have hdvd : P.asIdeal ∣ Ideal.span {a} :=
+    Ideal.dvd_iff_le.mpr ((Ideal.span_singleton_le_iff_mem _).mpr haP)
+  obtain ⟨J, hJ⟩ := hdvd
+  have hJP : ¬ J ≤ P.asIdeal := by
+    intro hle
+    apply ha2
+    have h2 : Ideal.span {a} ≤ P.asIdeal ^ 2 := by
+      rw [hJ, pow_two]; exact Ideal.mul_mono_right hle
+    exact (Ideal.span_singleton_le_iff_mem _).mp h2
+  obtain ⟨c, hcJ, hcP⟩ := SetLike.not_le_iff_exists.mp hJP
+  refine ⟨a, haP, c, hcP, fun p hp => ?_⟩
+  have hm : c * p ∈ Ideal.span {a} := by
+    rw [hJ, mul_comm c p]; exact Ideal.mul_mem_mul hp hcJ
+  obtain ⟨t, ht⟩ := Ideal.mem_span_singleton'.mp hm
+  exact ⟨t, by rw [← ht, mul_comm]⟩
+
+end Bl.general_b_fact_right_more
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.Columns.WmpNatCardQuotEqPowFinrank
+
+section
 
 @[expose] public section
 
@@ -305,3 +370,6 @@ variable {X : Fields} {Pr : Primes X} {R : Formalism.BasicNotions.Ranks} (W : Wt
 end Final
 
 end Formalism.L2.Col
+end
+end
+end

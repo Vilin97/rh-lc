@@ -1,7 +1,6 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.IsDiscriminantTwelfthRootOfIdealLattice
-public import Formalism.LocalToGlobal.GlobalTheory.GL3.DlAppendSingle
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,44 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.DlAppendSingle
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker Classical
+
+section Pd
+
+variable {σ : Type*} {p : ℕ} [Fact p.Prime]
+
+end Pd
+
+section Der
+
+variable {D : D7} {N N' : ℕ} {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p])
+
+variable {lam}
+
+theorem isPadicIntegral_add {x y : ℂ_[p]} (hx : IsIntP x) (hy : IsIntP y) : IsIntP (x + y) :=
+  (IsUltrametricDist.norm_add_le_max x y).trans (max_le hx hy)
+
+end Der
+
+end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GlobalTheory.GL3.ThirdClauseIntegralCombination
+
+section
 
 @[expose] public section
 
@@ -119,3 +156,6 @@ variable {D : D7} (T : Tor D) {N N' : ℕ} {p : ℕ} [Fact p.Prime] (lam : Qbar 
 end Clauses
 
 end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC
+end
+end
+end

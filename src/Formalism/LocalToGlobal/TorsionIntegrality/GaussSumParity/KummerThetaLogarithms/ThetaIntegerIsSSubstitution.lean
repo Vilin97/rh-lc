@@ -8,8 +8,8 @@ import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.CoeffSubstLgFOfDegreeOne
 public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EChain
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.LogarithmEquivalence
-public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.KernelFromKOneK
-public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThetaLogIsSubst
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementGK
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EGaussK
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +28,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,8 +47,104 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementJ
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.ThetaLogCoordinates.UniformThetaSubstitution.KernelFromKOneK
+
+section
+
+@[expose] public section
+
+namespace Formalism.InvariantFactorPaths.G7.Top
+
+open Formalism.InvariantFactorPaths.G7
+
+theorem kernel_from_k_one_k : KernelBoundsGeneric := kernel_bounds_generic
+
+end Formalism.InvariantFactorPaths.G7.Top
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.UniformThetaSubstitution.EdgeNoTrunc
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators
+open Finset
+
+namespace Formalism.InvariantFactorPaths.G7
+
+def ThetaLogIsSubst : Prop :=
+  ∀ (K : Type) [Field K] (ν r0 r1 : ℕ) [NeZero ν] (om oms : Fin ν → ZMod (2 * ν) → K) (ϖ : K)
+    (μ : PowerSeries K) (Tht : MvPowerSeries (Bool × EV ν r0 r1) K),
+    PowerSeries.constantCoeff μ = 0 →
+    thetaLog om oms ϖ μ Tht = MvPowerSeries.subst (fun x => MvPowerSeries.subst
+        (fun y => MvPowerSeries.C ϖ⁻¹ * (MvPowerSeries.X y : MvPowerSeries (ZV ν r0 r1) K))
+        (MvPowerSeries.C ϖ * sSub om oms μ x)) Tht
+
+end Formalism.InvariantFactorPaths.G7
+end
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThetaLogIsSubst
+
+section
+
+@[expose] public section
+
+namespace Formalism.InvariantFactorPaths.G7.Top
+
+open Formalism.InvariantFactorPaths.G7
+
+theorem thetaLogIsSubst : ThetaLogIsSubst := by
+  intro K _ ν r0 r1 _ om oms ϖ μ Tht hμ
+
+  have hz0 : ∀ x : Bool × EV ν r0 r1, MvPowerSeries.constantCoeff (zLin om oms x) = 0 := by
+    intro x
+    unfold zLin
+
+    rw [map_sum]
+    apply Finset.sum_eq_zero
+    intro s _
+    split_ifs <;> simp
+  have hz : ∀ x : Bool × EV ν r0 r1, PowerSeries.HasSubst (zLin om oms x) := fun x =>
+    PowerSeries.HasSubst.of_constantCoeff_zero (hz0 x)
+
+  have hs : ∀ x : Bool × EV ν r0 r1, MvPowerSeries.constantCoeff (sSub om oms μ x) = 0 := by
+    intro x
+    unfold sSub
+    rw [PowerSeries.constantCoeff_subst (hz x)]
+    apply finsum_eq_zero_of_forall_eq_zero
+    intro d
+    rcases d with _ | d
+    · simp [hμ]
+    · simp [map_pow, hz0 x]
+  have ha : MvPowerSeries.HasSubst (fun x : Bool × EV ν r0 r1 => MvPowerSeries.C ϖ * sSub om oms μ x) :=
+    MvPowerSeries.hasSubst_of_constantCoeff_zero (fun x => by simp [hs x])
+  have hb : MvPowerSeries.HasSubst (fun y : ZV ν r0 r1 =>
+      MvPowerSeries.C ϖ⁻¹ * (MvPowerSeries.X y : MvPowerSeries (ZV ν r0 r1) K)) :=
+    MvPowerSeries.hasSubst_of_constantCoeff_zero (fun y => by simp)
+  exact MvPowerSeries.subst_comp_subst_apply ha hb Tht
+
+end Formalism.InvariantFactorPaths.G7.Top
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.ThetaIntegerIsSSubstitution
+
+section
 
 @[expose] public section
 
@@ -235,3 +329,6 @@ theorem kernel_of_f : KernelOfF := by
     TT colN hts hp I n
 
 end Formalism.L2.Th1.D
+end
+end
+end

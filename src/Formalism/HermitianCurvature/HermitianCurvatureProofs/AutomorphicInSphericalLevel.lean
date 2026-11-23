@@ -2,32 +2,27 @@ module
 
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SupportPhiZeroSubset
 import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsSmoothExt
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FlagStabilizerFixesFrame
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DensityLemma.PFibreBoundX
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PolynomialProperness.ZhatNormLinearBound
+public import Formalism.HermitianCurvature.StatementB
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.Geometry.Manifold.PartitionOfUnity
+import Mathlib.Geometry.Manifold.Sheaf.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -36,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,7 +44,77 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+public import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FlagStabilizerFixesFrame
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DensityLemma.PFibreBoundX
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PolynomialProperness.ZhatNormLinearBound
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsSmoothExt
+
+section
+
+@[expose] public section
+
+open Matrix Set Filter Topology
+open scoped Manifold ContDiff
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.SmoothExtensionClosedSet
+
+open Formalism.QuantumDeterminants Formalism.FourierDecayAlt
+
+theorem isClosed_GVt (k r : ℕ) : IsClosed {x : Mt k r | Matrix.of x ∈ B.GV k r} := by
+  have h0 : Continuous (fun x : Mt k r => (Matrix.of x : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)) :=
+    continuous_id
+  have hc : Continuous (fun x : Mt k r => (Matrix.of x)ᴴ * Hpk k r * Matrix.of x) :=
+    ((h0.matrix_conjTranspose).matrix_mul continuous_const).matrix_mul h0
+  exact isClosed_eq hc continuous_const
+
+theorem exists_smoothExt {k r : ℕ} {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    (F : B.Mat k r → E) (hF : B.CkOn (⊤ : ℕ∞) (B.GV k r) F) :
+    ∃ Ft : Mt k r → E, ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) Ft ∧
+      ∀ x : Mt k r, Matrix.of x ∈ B.GV k r → Ft x = F (Matrix.of x) := by
+  set s : Set (Mt k r) := {x : Mt k r | Matrix.of x ∈ B.GV k r} with hs
+  have hloc : ∀ i : s, ∃ (U : Set (Mt k r)) (f' : Mt k r → E), IsOpen U ∧ (i : Mt k r) ∈ U ∧
+      ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) f' U ∧ ∀ x ∈ U, Matrix.of x ∈ B.GV k r → F (Matrix.of x) = f' x := by
+    intro i
+    obtain ⟨U, f', hU, hiU, hf', hfe⟩ := hF (Matrix.of (i : Mt k r)) i.2
+    exact ⟨U, f', hU, hiU, hf', fun x hx hxG => hfe (Matrix.of x) hx hxG⟩
+  choose U f' hU hiU hf' hfe using hloc
+  have hcov : s ⊆ ⋃ i : s, U i := fun x hx => mem_iUnion.2 ⟨⟨x, hx⟩, hiU ⟨x, hx⟩⟩
+  obtain ⟨ρ, hρ⟩ := SmoothPartitionOfUnity.exists_isSubordinate 𝓘(ℝ, Mt k r) (isClosed_GVt k r) U hU hcov
+  refine ⟨fun x => ∑ᶠ i, ρ i x • f' i x, ?_, ?_⟩
+  · have h := ρ.contMDiff_finsum_smul (n := (⊤ : ℕ∞)) (g := f') fun i x hx => by
+      have hxU : x ∈ U i := hρ i hx
+      exact ((hf' i).contDiffAt ((hU i).mem_nhds hxU)).contMDiffAt
+    exact contMDiff_iff_contDiff.1 h
+  · intro x hx
+    have hsum : ∑ᶠ i, ρ i x = 1 := ρ.sum_eq_one hx
+    have heq : ∀ i, ρ i x • f' i x = ρ i x • F (Matrix.of x) := by
+      intro i
+      by_cases h0 : ρ i x = 0
+      · simp [h0]
+      · have hxU : x ∈ U i := hρ i (subset_tsupport _ h0)
+        rw [hfe i x hxU hx]
+    simp only [heq]
+    rw [← finsum_smul, hsum, one_smul]
+
+end Formalism.FourierDecayAlt.P.SmoothExtensionClosedSet
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.AutomorphicInSphericalLevel
+
+section
 
 @[expose] public section
 
@@ -415,3 +479,5 @@ namespace Formalism.FourierDecayAlt.P
 theorem fibre_integral_smooth : PBI.FibIntSmooth := SmoothExtensionClosedSet.fibIntSmooth
 
 end Formalism.FourierDecayAlt.P
+end
+end

@@ -4,19 +4,19 @@ public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeil
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.NatCastPowCpow
 public import GroundTheory.GlobalFields.TateThesis.DedekindZetaContinuation
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.FactorDifferentiable
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.FinMod
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.NormESpZpow
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.SummablePrimesRpow
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.ZetaEGrouped
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.ZetaOrd
+public import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -24,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,9 +44,148 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.WhitGenLowOf
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.SummablePrimesRpow
+import Mathlib.Topology.UniformSpace.Uniformizable
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.ZetaOrd
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.FinMod
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.Lord
+
+theorem hasProd_compl_finset {ι : Type*} [DecidableEq ι] (f g : ι → ℂ) (a : ℂ) (T S : Finset ι) (hST : S ⊆ T)
+    (hg : HasProd g a) (hg0 : ∀ v ∈ T, g v ≠ 0) (hfg : ∀ v, v ∉ T → f v = g v) :
+    HasProd (fun v : {v // v ∉ S} => f v) (a * (∏ v ∈ T, (g v)⁻¹) * ∏ v ∈ T \ S, f v) := by
+  let F : ι → ℂ := Set.mulIndicator {v | v ∉ S} f
+  let k : ι → ℂ := fun v => if v ∈ T then (g v)⁻¹ * F v else 1
+  have hkT : HasProd k (∏ v ∈ T, k v) :=
+    hasProd_prod_of_ne_finset_one (fun v hv => if_neg hv)
+  have hgk : ∀ v, g v * k v = F v := by
+    intro v
+    by_cases hv : v ∈ T
+    · show g v * (if v ∈ T then (g v)⁻¹ * F v else 1) = F v
+      rw [if_pos hv, ← mul_assoc, mul_inv_cancel₀ (hg0 v hv), one_mul]
+    · have hvS : v ∉ S := fun h => hv (hST h)
+      show g v * (if v ∈ T then (g v)⁻¹ * F v else 1) = Set.mulIndicator {v | v ∉ S} f v
+      rw [if_neg hv, mul_one, Set.mulIndicator_of_mem (show v ∈ {v | v ∉ S} from hvS), hfg v hv]
+  have hFT : ∏ v ∈ T, F v = ∏ v ∈ T \ S, f v := by
+    rw [Finset.sdiff_eq_filter, Finset.prod_filter]
+    refine Finset.prod_congr rfl (fun v _ => ?_)
+    by_cases hvS : v ∈ S
+    · rw [if_neg (not_not.2 hvS)]
+      exact Set.mulIndicator_of_notMem (show v ∉ {v | v ∉ S} from not_not.2 hvS) f
+    · rw [if_pos hvS]
+      exact Set.mulIndicator_of_mem (show v ∈ {v | v ∉ S} from hvS) f
+  have hkprod : ∏ v ∈ T, k v = (∏ v ∈ T, (g v)⁻¹) * ∏ v ∈ T \ S, f v := by
+    rw [← hFT, ← Finset.prod_mul_distrib]
+    exact Finset.prod_congr rfl (fun v hv => if_pos hv)
+  have hF : HasProd F (a * (∏ v ∈ T, (g v)⁻¹) * ∏ v ∈ T \ S, f v) := by
+    have h := hg.mul hkT
+    rw [hkprod, ← mul_assoc] at h
+    convert h using 1
+    funext v
+    exact (hgk v).symm
+  exact (hasProd_subtype_iff_mulIndicator (s := {v | v ∉ S})).2 hF
+
+end PositivityTheory.Lord
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.NormESpZpow
+
+section
+
+@[expose] public section
+
+open NumberField InfinitePlace IsDedekindDomain HeckeCharacterZeroLocus.SiegelWeilU
+
+namespace PositivityTheory.Lord
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+
+theorem cm_places {σ : E →ₐ[F] E} (h : IsCMExt F E σ) :
+    nrRealPlaces F = Module.finrank ℚ F ∧ nrComplexPlaces F = 0 ∧ nrRealPlaces E = 0 ∧
+      nrComplexPlaces E = Module.finrank ℚ F := by
+  obtain ⟨hF, hE, h2, -⟩ := h
+  have hcF : nrComplexPlaces F = 0 := IsTotallyReal.nrComplexPlaces_eq_zero F
+  have hrE : nrRealPlaces E = 0 := IsTotallyComplex.nrRealPlaces_eq_zero E
+  have kF := card_add_two_mul_card_eq_rank F
+  have kE := card_add_two_mul_card_eq_rank E
+  have ht := Module.finrank_mul_finrank ℚ F E
+  rw [h2] at ht
+  refine ⟨by omega, hcF, hrE, by omega⟩
+
+theorem eSp_zpow (v : HeightOneSpectrum (𝓞 F)) (j : ℤ) :
+    PositivityTheory.SiegelWeilFormula.Gen.eSp E v ^ j = if Even j then 1 else PositivityTheory.SiegelWeilFormula.Gen.eSp E v := by
+  unfold PositivityTheory.SiegelWeilFormula.Gen.eSp
+  split_ifs with h1 h2 h2
+  · exact h2.neg_one_zpow
+  · exact (Int.not_even_iff_odd.1 h2).neg_one_zpow
+  · exact one_zpow j
+  · exact one_zpow j
+
+end PositivityTheory.Lord
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.ZetaEGrouped
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+namespace PositivityTheory.Lord
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+
+theorem zetaE_grouped {s : ℂ} (hs : 1 < s.re) :
+    HasProd (fun v : HeightOneSpectrum (𝓞 F) => ∏ P ∈ fib F E v, (1 - (Ideal.absNorm P.asIdeal : ℂ) ^ (-s)))
+      (GroundTheory.Global.continuedDedekindZeta E s)⁻¹ := by
+  classical
+  have hex : ∀ P : HeightOneSpectrum (𝓞 E), ∃ v : HeightOneSpectrum (𝓞 F), P ∈ fib F E v := by
+    intro P
+    refine ⟨⟨P.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)), inferInstance, ?_⟩, ?_⟩
+    · intro h
+      exact P.ne_bot (Ideal.eq_bot_of_comap_eq_bot h)
+    · rw [mem_fib]
+      exact ⟨rfl⟩
+  have huniq : ∀ (P : HeightOneSpectrum (𝓞 E)) (v w : HeightOneSpectrum (𝓞 F)),
+      P ∈ fib F E v → P ∈ fib F E w → v = w := by
+    intro P v w hv hw
+    rw [mem_fib] at hv hw
+    apply HeightOneSpectrum.ext
+    rw [hv.over, hw.over]
+  choose π hπ using hex
+  let e : (Σ v : HeightOneSpectrum (𝓞 F), {P // P ∈ fib F E v}) ≃ HeightOneSpectrum (𝓞 E) :=
+    { toFun := fun x => x.2.1
+      invFun := fun P => ⟨π P, ⟨P, hπ P⟩⟩
+      left_inv := by
+        rintro ⟨v, P, hP⟩
+        exact Sigma.subtype_ext (huniq P _ _ (hπ P) hP) rfl
+      right_inv := fun P => rfl }
+  obtain ⟨h, -⟩ := zeta_euler E hs
+  have h' := (e.hasProd_iff).2 h
+  exact h'.sigma (fun v => Finset.hasProd (fib F E v) _)
+
+end PositivityTheory.Lord
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.ZetaEulerProducts.ZetaInvPoOfOneLt
+
+section
 
 @[expose] public section
 
@@ -248,3 +386,5 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.Gen.lOrd : LOrd := by
   · exact lOrd_odd σ h S j hj
 
 end PositivityTheory.Lord
+end
+end

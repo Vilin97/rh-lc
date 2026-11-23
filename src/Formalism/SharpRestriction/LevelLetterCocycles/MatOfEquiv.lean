@@ -4,17 +4,21 @@ public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangeMapMemLat
 public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseCoefJump
 public import Formalism.SharpRestriction.LevelLetterCocycles.WachCoordinates
 public import Formalism.AdmissibleDesigns.InvariantsEqBotIff
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CoefExt
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseCoefCrys
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoefficientBaseChange.CoordBaseChange
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoefficientBaseChange.FinrankIInfKerEquiv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -42,6 +46,22 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Module.StablyFree.Basic
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CoefExt
+
+section
+
+@[expose] public section
+
+theorem coefficient_crystal_generation : Formalism.MainNotions.N.GlobalTheory.CoefCrysGen :=
+  PI.CoefExt.coefCrysGen_of PI.CoefExt.invBaseChange
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.MatOfEquiv
+
+section
 
 @[expose] public section
 
@@ -190,3 +210,6 @@ theorem bcAt_of (hc : Continuous (algebraMap LL LL')) (hO' : Function.Injective 
 end Assemble
 
 end Formalism.MainNotions.UnusedSlot80.BCW
+end
+end
+end

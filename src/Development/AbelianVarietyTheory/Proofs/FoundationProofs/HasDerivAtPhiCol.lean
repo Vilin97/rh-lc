@@ -6,12 +6,13 @@ public import Mathlib.Analysis.InnerProductSpace.Basic
 public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Topology.Instances.Matrix
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasDerivAtDetOfOne
+import Lemmata.MovedPointExistence.ExistsMoved
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -27,8 +28,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,12 +52,40 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Matrix.Normed
+import Mathlib.RingTheory.SimpleRing.Principal
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.InstSecondCountable
 import Formalism.LocalRingCardinality.DataTheta
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 public import Mathlib.Analysis.Calculus.Deriv.Comp
 public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Topology.Algebra.Module.FiniteDimension
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasDerivAtDetOfOne
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.DetDerivativeAtOne
+
+open Equiv Finset
+
+theorem hasDerivAt_det_of_one {n : Type} [Fintype n] [DecidableEq n]
+    (A : ℝ → Matrix n n ℂ) (A' : Matrix n n ℂ) (h0 : A (0 : ℝ) = (1 : Matrix n n ℂ))
+    (hd : ∀ (i j : n), HasDerivAt (fun (t : ℝ) ↦ A t i j) (A' i j) (0 : ℝ)) :
+    HasDerivAt (fun (t : ℝ) ↦ Matrix.det (A t)) (Matrix.trace A') (0 : ℝ) := by
+  apply Bl.MovedPointExistence.goal1 <;> assumption
+
+end GlobalTheory.DetDerivativeAtOne
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasDerivAtPhiCol
+
+section
 
 @[expose] public section
 
@@ -92,3 +122,5 @@ end Gen
 variable {p q : ℕ}
 
 end GlobalTheory.HolDS.DerPt
+end
+end

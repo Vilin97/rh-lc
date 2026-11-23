@@ -1,16 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.PairRowIffQdRows
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoicePolynomialLeBaseSizeStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoiceWindowRankConditionsStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoiceWindowRankLePolyBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitRanksBasicBoundsLargeScaleStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowAndImp
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowDelTOGapStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowPpDimToLeRpowStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowRankPolysLeTOStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTOLowerStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTOPPLeBStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoicePolynomialLeBaseSize
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,8 +17,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,7 +37,156 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoiceWindowRankConditionsStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoiceWindowRankLePolyBoundStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitRanksBasicBoundsLargeScaleStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowAndImp
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowRankPolysLeTOStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTOLowerStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTOPPLeBStatement
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitChoicePolynomialLeBaseSizeStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.explicitChoice_polynomial_le_baseSize : SzRow (fun C D L => (((TOv L.sc : ℕ) : ℝ) * ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ^ 2 * Real.log L.sc.b * L.sc.x ^ C.T.Cb ≤ L.sc.b) ∧ (((TOv L.sc : ℕ) : ℝ) * ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ^ 2 * Real.log L.sc.b ≤ L.sc.b ^ (1 / 2 : ℝ)) ∧ (C.T.CbN * (D.R.r : ℝ) * D.R.m * D.R.k * (C.T.CP * zBase L ^ C.T.eP) ^ 2 * ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ^ 3 ≤ L.sc.b)) := by
+  first | exact @GlobalTheory.EX.szRow_poly_le_b | exact GlobalTheory.EX.szRow_poly_le_b | (intros; apply GlobalTheory.EX.szRow_poly_le_b <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowDelTOGap
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+namespace GlobalTheory.EX
+
+theorem szRow_Del_TO_gap : SzRow (fun C D L => ((((TOv L.sc : ℕ) : ℝ)) ^ 2 ≤ ((D.s.Del : ℚ) : ℝ)) ∧ ((((TOv L.sc : ℕ) : ℝ) + (D.R.f * D.R.r.choose 2 : ℕ) + 2) * (((TOv L.sc : ℕ) : ℝ) + (D.R.f * D.R.r.choose 2 : ℕ) + 2 + 2 * (D.R.N D.R.m : ℝ)) ≤ ((D.s.Del : ℚ) : ℝ))) := by
+  intro eps he he' C _
+  obtain ⟨x0, hx0⟩ := GlobalTheory.T.explicitRanks_basic_bounds_large_scale eps he he'
+  refine ⟨805, fun cD hcD => ⟨0, fun ch _ => ⟨max x0 35, fun D L hs hx hV => ?_⟩⟩⟩
+  obtain ⟨-, -, -, -, -, -, -, -, -, hDY, -, -, -, -, hN, -⟩ :=
+    hx0 L.sc D.R hs (le_trans (le_max_left _ _) hx) hV.ranks
+  have hx35 : (35 : ℝ) ≤ L.sc.x := le_trans (le_max_right _ _) hx
+  have hx1 : (1 : ℝ) ≤ L.sc.x := by linarith
+  have hxp : (0 : ℝ) < L.sc.x := by linarith
+  set y : ℝ := L.sc.x ^ (402 : ℝ) with hy
+  have hy1 : (1 : ℝ) ≤ y := Real.one_le_rpow hx1 (by norm_num)
+  have h377 : L.sc.x ^ (377 : ℝ) ≤ y := Real.rpow_le_rpow_of_exponent_le hx1 (by norm_num)
+  have h12 : L.sc.x ^ (12 : ℝ) ≤ y := Real.rpow_le_rpow_of_exponent_le hx1 (by norm_num)
+  have hT : ((TOv L.sc : ℕ) : ℝ) ≤ y + 1 := by
+    have := Nat.ceil_lt_add_one (Real.rpow_nonneg hxp.le (377 : ℝ))
+    unfold TOv
+    linarith
+  have hDel : 35 * y ^ 2 ≤ ((D.s.Del : ℚ) : ℝ) := by
+    rw [hV.Del_eq]
+    have h1 : L.sc.x ^ cD ≤ ((Delv L.sc cD : ℕ) : ℝ) := Nat.le_ceil _
+    have h2 : L.sc.x ^ (805 : ℝ) ≤ L.sc.x ^ cD := Real.rpow_le_rpow_of_exponent_le hx1 hcD
+    have h3 : L.sc.x ^ (805 : ℝ) = L.sc.x * y ^ 2 := by
+      rw [hy, show (805 : ℝ) = 1 + (402 + 402) by norm_num, Real.rpow_add hxp, Real.rpow_add hxp,
+        Real.rpow_one, sq]
+    have h4 : 35 * y ^ 2 ≤ L.sc.x * y ^ 2 := mul_le_mul_of_nonneg_right hx35 (sq_nonneg _)
+    rw [Rat.cast_natCast]
+    exact h4.trans (h3.symm.le.trans (h2.trans h1))
+  have hT0 : (0 : ℝ) ≤ ((TOv L.sc : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hD0 : (0 : ℝ) ≤ ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hN0 : (0 : ℝ) ≤ (D.R.N D.R.m : ℝ) := Nat.cast_nonneg _
+  refine ⟨?_, ?_⟩
+  · have : ((TOv L.sc : ℕ) : ℝ) ^ 2 ≤ (2 * y) ^ 2 := pow_le_pow_left₀ hT0 (by linarith) 2
+    nlinarith
+  · refine le_trans ?_ hDel
+    calc _ ≤ (5 * y) * (7 * y) :=
+          mul_le_mul (by linarith) (by linarith) (by positivity) (by positivity)
+      _ = 35 * y ^ 2 := by ring
+
+end GlobalTheory.EX
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowDelTOGapStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_TOv_sq_le_del_and_gap_mul_le_del : SzRow (fun C D L => ((((TOv L.sc : ℕ) : ℝ)) ^ 2 ≤ ((D.s.Del : ℚ) : ℝ)) ∧ ((((TOv L.sc : ℕ) : ℝ) + (D.R.f * D.R.r.choose 2 : ℕ) + 2) * (((TOv L.sc : ℕ) : ℝ) + (D.R.f * D.R.r.choose 2 : ℕ) + 2 + 2 * (D.R.N D.R.m : ℝ)) ≤ ((D.s.Del : ℚ) : ℝ))) := by
+  first | exact @GlobalTheory.EX.szRow_Del_TO_gap | exact GlobalTheory.EX.szRow_Del_TO_gap | (intros; apply GlobalTheory.EX.szRow_Del_TO_gap <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowPpDimToLeRpow
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+namespace GlobalTheory.EX
+
+theorem szRow_pp_dim_to_le_rpow :
+    SzRow (fun C D L => ((C.T.CP * zBase L ^ C.T.eP) ≤ L.sc.x ^ L.Ct) ∧
+      (((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ≤ L.sc.x ^ L.Ct) ∧ (((TOv L.sc : ℕ) : ℝ) ≤ L.sc.x ^ L.Ct)) := by
+  intro eps h0 h1 C hC
+  obtain ⟨xr, hxr⟩ := GlobalTheory.T.explicitRanks_basic_bounds_large_scale eps h0 h1
+  refine ⟨0, fun cD _ => ⟨0, fun ch _ => ⟨max xr (max C.T.CP 2), fun D L he hx hV => ?_⟩⟩⟩
+  have hx1 : xr ≤ L.sc.x := le_trans (le_max_left _ _) hx
+  have hx2 : C.T.CP ≤ L.sc.x := le_trans ((le_max_left _ _).trans (le_max_right _ _)) hx
+  have hx3 : (2 : ℝ) ≤ L.sc.x := le_trans ((le_max_right _ _).trans (le_max_right _ _)) hx
+  have hone : (1 : ℝ) ≤ L.sc.x := by linarith
+  have hpos : (0 : ℝ) < L.sc.x := by linarith
+  obtain ⟨-, -, -, -, -, -, -, hZ0, hZ, hD, -⟩ := hxr L.sc D.R he hx1 hV.ranks
+  have hCt : L.Ct = 401 := hV.Ct_eq.trans hC.1.2.2.2.2.2.2.2.2.2
+  have heP : C.T.eP = 12 := hC.2.2.2.2.2.2.2.2.1
+  beta_reduce
+  rw [hCt, heP]
+  refine ⟨?_, hD.trans (Real.rpow_le_rpow_of_exponent_le hone (by norm_num)), ?_⟩
+  · have hz0 : 0 ≤ zBase L := le_trans (Real.rpow_nonneg hpos.le _) hZ0
+    have hz : zBase L ^ (12 : ℝ) ≤ L.sc.x ^ ((687 : ℝ) / 100 * 12) := by
+      rw [Real.rpow_mul hpos.le]
+      exact Real.rpow_le_rpow hz0 hZ (by norm_num)
+    calc C.T.CP * zBase L ^ (12 : ℝ) ≤ L.sc.x * L.sc.x ^ ((687 : ℝ) / 100 * 12) :=
+          mul_le_mul hx2 hz (Real.rpow_nonneg hz0 _) hpos.le
+      _ = L.sc.x ^ (1 + (687 : ℝ) / 100 * 12) := by rw [Real.rpow_add hpos, Real.rpow_one]
+      _ ≤ L.sc.x ^ (401 : ℝ) := Real.rpow_le_rpow_of_exponent_le hone (by norm_num)
+  · have h377 : (1 : ℝ) ≤ L.sc.x ^ (377 : ℝ) := Real.one_le_rpow hone (by norm_num)
+    have hc : ((TOv L.sc : ℕ) : ℝ) < L.sc.x ^ (377 : ℝ) + 1 := Nat.ceil_lt_add_one (by linarith)
+    calc ((TOv L.sc : ℕ) : ℝ) ≤ L.sc.x * L.sc.x ^ (377 : ℝ) := by nlinarith
+      _ = L.sc.x ^ (1 + 377 : ℝ) := by rw [Real.rpow_add hpos, Real.rpow_one]
+      _ ≤ L.sc.x ^ (401 : ℝ) := Real.rpow_le_rpow_of_exponent_le hone (by norm_num)
+
+end GlobalTheory.EX
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowPpDimToLeRpowStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_PP_and_dim_and_TOv_le_x_rpow_Ct : SzRow (fun C D L => ((C.T.CP * zBase L ^ C.T.eP) ≤ L.sc.x ^ L.Ct) ∧ (((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ≤ L.sc.x ^ L.Ct) ∧ (((TOv L.sc : ℕ) : ℝ) ≤ L.sc.x ^ L.Ct)) := by
+  first | exact @GlobalTheory.EX.szRow_pp_dim_to_le_rpow | exact GlobalTheory.EX.szRow_pp_dim_to_le_rpow | (intros; apply GlobalTheory.EX.szRow_pp_dim_to_le_rpow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNodeGapBlockLength
+
+section
 
 @[expose] public section
 
@@ -222,3 +360,5 @@ theorem szRow_blockLengthParams : SzRow (fun C D L => ∀ P : ParameterChoice' D
     s_hi := b7 }, rfl, rfl⟩
 
 end GlobalTheory.EX
+end
+end

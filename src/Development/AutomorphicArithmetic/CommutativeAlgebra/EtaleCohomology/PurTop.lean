@@ -5,49 +5,15 @@ public import Development.AutomorphicArithmetic.CommutativeAlgebra.ProductLevelw
 public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EtaleExcisionHocolimOfLocalProperties
 public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.HocolimAugmentationInjectiveOfPurityInputs
 public import Development.EtaleCohomology.CohomologicalPurity.FinLeafAW
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafBd
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafChart
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafCl
-import Development.EtaleCohomology.CohomologicalPurity.FinLeafExc
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafHens
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafIndExc
-public import Development.EtaleCohomology.CohomologicalPurity.FinLeafSemi
-import Development.EtaleCohomology.CohomologicalPurity.FinLeafThom
-public import Development.EtaleCohomology.CohomologicalPurity.Imports
-public import Development.EtaleCohomology.CohomologicalPurity.LeafAbvPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafActNatPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafAugSurjPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafChPushPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafChainsSumPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafChiSqProof
-public import Development.EtaleCohomology.CohomologicalPurity.LeafEqvOfExcPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafExcAffPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafHKSplitPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafHKSumPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafHensHPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafHomLocPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLevelPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocBasePf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocExcPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocFstPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocHenPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocIsoPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafLocPrdPfX
-public import Development.EtaleCohomology.CohomologicalPurity.LeafMLevPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPbSumPfR
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPfQuot
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdHocPfX
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdRingPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPurNatPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPurProjPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPurRedPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPushPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafQisLocalPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafQuotPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafRefinePf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafRelLevPfX
-public import Development.EtaleCohomology.CohomologicalPurity.LeafUnivSumPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafZPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafBdCut
+public import Development.EtaleCohomology.CohomologicalPurity.FreePMapMk
+public import Development.EtaleCohomology.CohomologicalPurity.LeafDeltaPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafExactPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafGoodPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafImgHomPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafImgPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafMonoPf
+public import Development.EtaleCohomology.CohomologicalPurity.PresSheafify
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -86,10 +52,228 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.EtaleCohomology.CohomologicalPurity.FinLeafChart
+public import Development.EtaleCohomology.CohomologicalPurity.FinLeafCl
+import Development.EtaleCohomology.CohomologicalPurity.FinLeafExc
+public import Development.EtaleCohomology.CohomologicalPurity.FinLeafHens
+public import Development.EtaleCohomology.CohomologicalPurity.FinLeafIndExc
+public import Development.EtaleCohomology.CohomologicalPurity.FinLeafSemi
+import Development.EtaleCohomology.CohomologicalPurity.FinLeafThom
+public import Development.EtaleCohomology.CohomologicalPurity.LeafTubeCut
+public import Development.EtaleCohomology.CohomologicalPurity.LeafActNatPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafAugSurjPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafChPushPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafChainsSumPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafExcOfEqvPfSq
+import Mathlib.CategoryTheory.Limits.Types.Pushouts
+import Mathlib.CategoryTheory.Presentable.Type
+public import Development.EtaleCohomology.CohomologicalPurity.LeafEqvOfExcPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafExcAffPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHKSplitPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHKSumPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHomLocPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLevelPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLocBasePf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLocExcPf
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLocHenPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLocIsoPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafLocPrdPfX
+public import Development.EtaleCohomology.CohomologicalPurity.LeafMLevPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPbSumPfR
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPfQuot
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdHocPfX
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdRingPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPurNatPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPurProjPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPurRedPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPushPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafQisLocalPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafQuotPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafRefinePf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafRelLevPfX
+public import Development.EtaleCohomology.CohomologicalPurity.LeafUnivSumPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafZPf
 public import Development.EtaleCohomology.CohomologicalPurity.LeafFstHocPf
 public import Development.EtaleCohomology.CohomologicalPurity.LeafGysinPf
 public import Development.EtaleCohomology.CohomologicalPurity.LeafHsSumPfR
 public import Development.EtaleCohomology.CohomologicalPurity.LeafRelHocPfX
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.FinLeafBd
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.Fin.LeafBd
+theorem etale_boundary_monomorphism_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafMono := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafMono_of
+theorem etale_relative_boundary_pushout_property_holds : LateralTheory.CohomologicalPurity.Bd.LeafPush := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafPush_of
+theorem etale_boundary_good_pair_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafGood := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafGood_of
+theorem etale_boundary_connecting_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafDelta := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafDelta_of
+theorem etale_boundary_exact_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafExact := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafExact_of
+theorem etale_boundary_generator_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafGen := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafGen_of
+theorem etale_boundary_image_hom_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafImgHom := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafImgHom_of <;> first | exact etale_boundary_generator_of_thom_isomorphism
+theorem etale_boundary_image_of_thom_isomorphism : LateralTheory.CohomologicalPurity.Bd.LeafImg := by
+  apply LateralTheory.CohomologicalPurity.Bd.LeafImg_of <;> first | exact etale_boundary_image_hom_of_thom_isomorphism
+theorem etale_boundary_map_of_thom_isomorphism : LateralTheory.CohomologicalPurity.LeafBd := by
+  apply LateralTheory.CohomologicalPurity.Bd.goal_of <;> first | exact etale_boundary_monomorphism_of_thom_isomorphism | exact etale_relative_boundary_pushout_property_holds | exact etale_boundary_good_pair_of_thom_isomorphism | exact etale_boundary_connecting_of_thom_isomorphism | exact etale_boundary_exact_of_thom_isomorphism | exact etale_boundary_generator_of_thom_isomorphism | exact etale_boundary_image_hom_of_thom_isomorphism | exact etale_boundary_image_of_thom_isomorphism
+theorem intersectionNumber_baseChange : LateralTheory.CohomologicalPurity.LeafBd := etale_boundary_map_of_thom_isomorphism
+end LateralTheory.Fin.LeafBd
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.Imports
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.CohomologicalPurity
+
+theorem goal_of (hG : LeafGysin) (hS : LeafSemi) : Goal :=
+  fun H => ⟨hG H, hS H.2.2.2.2.2.2.1 (hG H)⟩
+
+end LateralTheory.CohomologicalPurity
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafAbvPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.CohomologicalPurity.TubeCut
+
+instance sch_preservesLimits : PreservesLimitsOfSize.{0, 0} sch := by
+  unfold sch
+  infer_instance
+
+theorem sch_isPullback {P X Y Z : Scheme.{0}} {fst : P ⟶ X} {snd : P ⟶ Y} {f : X ⟶ Z} {g : Y ⟶ Z}
+    (h : IsPullback fst snd f g) : IsPullback (sch.map fst) (sch.map snd) (sch.map f) (sch.map g) :=
+  h.map sch
+
+theorem isPullback_resLE {Y X : Scheme.{0}} (w : Y ⟶ X) (U : X.Opens) :
+    IsPullback (w ⁻¹ᵁ U).ι (w.resLE U (w ⁻¹ᵁ U) le_rfl) w U.ι := by
+  rw [Scheme.Hom.resLE_eq_morphismRestrict]
+  exact (isPullback_morphismRestrict w U).flip
+
+theorem LeafAbv_of : LeafAbv := by
+  intro Y X w U' U h
+  subst h
+  have hP := sch_isPullback (isPullback_resLE w U)
+  refine ⟨Arrow.isoMk hP.isoPullback (Iso.refl _) ?_, rfl, ?_⟩
+  · simp [opn, abv]
+  · apply Arrow.hom_ext
+    · rw [Arrow.comp_left]
+      exact hP.isoPullback_hom_snd
+    · rw [Arrow.comp_right]
+      exact Category.id_comp _
+
+end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafChiSqProof
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.CohomologicalPurity.TubeCut
+
+theorem dblPO (A : Arrow Spc) : IsPushout A.hom A.hom (dbl.inl A) (dbl.inr A) :=
+  IsPushout.of_hasPushout A.hom A.hom
+
+theorem mmPO {P' P : Arrow Spc} (φ : P' ⟶ P) : IsPushout P'.hom (P'.hom ≫ φ.right) (ii φ) (jj φ) :=
+  IsPushout.of_hasPushout P'.hom (P'.hom ≫ φ.right)
+
+theorem LeafChiSq_of : LeafChiSq := by
+  intro P' P φ
+  have s2 : IsPushout ((P'.hom ≫ φ.right) ≫ jj φ) P'.hom (dbl.inr (QQ φ)) (ii φ ≫ dbl.inl (QQ φ)) :=
+    IsPushout.paste_horiz (mmPO φ).flip (dblPO (QQ φ)).flip
+  have c : IsPushout P'.hom (P'.hom ≫ (chi φ).right) (dbl.inl P' ≫ dbl.map (chi φ)) (dbl.inr (QQ φ)) := by
+    have e1 : P'.hom ≫ (chi φ).right = (P'.hom ≫ φ.right) ≫ jj φ := ij_cond φ
+    have e2 : dbl.inl P' ≫ dbl.map (chi φ) = ii φ ≫ dbl.inl (QQ φ) := dinl_map (chi φ)
+    rw [e1, e2]; exact s2.flip
+  exact IsPushout.of_top c (dbl.inr_map (chi φ)) (dblPO P')
+end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafHensHPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex.HomComplex
+
+namespace LateralTheory.CohomologicalPurity.TubeCut
+
+theorem LeafHensH_of : LeafHensH := by
+  intro hH q _ C _ K hK hq i
+  exact hH.2.2.2.2.2.2.2.2.2.2.2 q C K hq i
+
+end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafLocFstPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.CohomologicalPurity.TubeCut
+
+instance schPresPb : PreservesLimitsOfShape WalkingCospan sch :=
+  inferInstanceAs (PreservesLimitsOfShape WalkingCospan (yoneda ⋙ disc))
+
+theorem LeafLocFst_of (hZ : LeafZ) : LeafLocFst := by
+  set_option synthInstance.maxHeartbeats 200000 in
+  intro hE H d P V q hq i
+  have := P.cl
+  obtain ⟨⟨z, hpb⟩, -⟩ := hZ P.X P.Z P.ι V (H.obj Γ(P.X, V.1) (P.ι.ker.ideal V)) (eta H P V)
+  have hpb' := hpb.map sch
+  have := H.hens Γ(P.X, V.1) (P.ι.ker.ideal V)
+  have hu : IsUnit (q : H.obj Γ(P.X, V.1) (P.ι.ker.ideal V)) := by
+    simpa using hq.map ((eta H P V).comp (P.X.presheaf.map (homOfLE le_top).op).hom)
+  have e : pullback.fst (sch.map (hensTo H P V)) (sch.map P.ι) = hpb'.isoPullback.inv ≫
+      sch.map (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk ((P.ι.ker.ideal V).map (eta H P V))))) :=
+    hpb'.isoPullback_inv_fst.symm
+  rw [e]
+  exact eqv_comp (eqv_iso _ _) (hE q _ _ hu i)
+
+end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PurTop
+
+section
 
 @[expose] public section
 
@@ -160,3 +344,5 @@ theorem UpperTheory.Et.purAll : LateralTheory.CohomologicalPurity.LeafTube ∧ L
   exact ⟨h_EPur_LeafTube, h_EPur_LeafGysin, h_cohomological_purity⟩
 
 theorem UpperTheory.Et.purGysin : LateralTheory.CohomologicalPurity.LeafGysin := UpperTheory.Et.purAll.2.1
+end
+end

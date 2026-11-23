@@ -1,13 +1,12 @@
 module
 
 public import Formalism.LocalToGlobal.HermitianForms.TiedTwGen
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsIdealDenominator
-public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ExistsPrimeToLe
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ExtWRec
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -19,8 +18,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,7 +38,40 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ExistsPrimeToLe
+import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ExtWRec
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CmpCMemMIff
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsIdealDenominator
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ExistsIdealDenominator.exists_denI :
+    ∀ {D : Formalism.BasicNotions.D7} (u : D.what₂.Word) (i : ℕ) (x : ((D.fm u).lat i).V),
+    ∃ (d : NumberField.RingOfIntegers D.what₂.LL),
+      d ≠ (0 : NumberField.RingOfIntegers D.what₂.LL) ∧
+        d • x ∈
+          ((D.fm u).lat
+              i).L := by
+  intro D u i x
+  have hx : x ∈ Submodule.span D.what₂.LL (((D.fm u).lat i).L : Set ((D.fm u).lat i).V) := by
+    rw [((D.fm u).lat_good i).2.2]
+    exact Submodule.mem_top
+  obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span
+    (nonZeroDivisors (NumberField.RingOfIntegers D.what₂.LL)) D.what₂.LL _ x hx
+  rw [Submodule.span_eq] at ht
+  exact ⟨t.1, nonZeroDivisors.ne_zero t.2, ht⟩
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.ChartComparison.OneChartLev
+
+section
 
 @[expose] public section
 
@@ -215,4 +244,6 @@ variable {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
 end Formalism.MainNotions.G.CmpJ
 
+end
+end
 end

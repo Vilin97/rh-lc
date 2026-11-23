@@ -5,44 +5,14 @@ public import Development.AutomorphicArithmetic.AdelicQuotients.AdeleBaseChangeL
 public import Development.AutomorphicArithmetic.AdelicQuotients.AdeleGaloisActionBaseChangeCompat
 public import Development.AutomorphicArithmetic.AdelicQuotients.AdeleGaloisActionContinuous
 public import Development.AutomorphicArithmetic.AdelicQuotients.AdelicBoundOfCentralizerLocalization
-public import Development.AutomorphicArithmetic.AdelicQuotients.AdelicGLSplitEquiv
-public import Development.AutomorphicArithmetic.AdelicQuotients.AdicCompletionIntegersBaseChangeIff
-public import Development.AutomorphicArithmetic.AdelicQuotients.BaseChangeTrivialExtension
-public import Development.AutomorphicArithmetic.AdelicQuotients.CentralSectionBaseChange
-public import Development.AutomorphicArithmetic.AdelicQuotients.CentralSectionLocalScalar
-public import Development.AutomorphicArithmetic.AdelicQuotients.CentralizerCommutativeOfSeparableCharpoly
-public import Development.AutomorphicArithmetic.AdelicQuotients.CharpolySeparableUnitSmul
-public import Development.AutomorphicArithmetic.AdelicQuotients.EulerProductOfQuotientPushforwardSupport
-public import Development.AutomorphicArithmetic.AdelicQuotients.EulerProductSupportFinite
-public import Development.AutomorphicArithmetic.AdelicQuotients.ExistsHaarMeasureAdelicGL
-public import Development.AutomorphicArithmetic.AdelicQuotients.GeometricSideAbsolutelyConvergentOfEulerFubini
-public import Development.AutomorphicArithmetic.AdelicQuotients.GlobalOrbitalComparisonOfSplit
-public import Development.AutomorphicArithmetic.AdelicQuotients.HaarConstOfHaarExists
-public import Development.AutomorphicArithmetic.AdelicQuotients.HaarQuotientSubgroup
-public import Development.AutomorphicArithmetic.AdelicQuotients.HaarUnimodularCriterion
-public import Development.AutomorphicArithmetic.AdelicQuotients.InfinitePartFiniteOfAdelicBound
-public import Development.AutomorphicArithmetic.AdelicQuotients.LocalUnimodularOfExistsHaarMeasure
-public import Development.AutomorphicArithmetic.AdelicQuotients.MaximalCompactNormOfUnitCriterion
-public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalIntegralFubini
-public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalSideBaseFieldOfAbsoluteConvergence
-public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalSideExtensionOfAbsoluteConvergence
-public import Development.AutomorphicArithmetic.AdelicQuotients.QuotientHaarMeasurePushforward
-public import Development.AutomorphicArithmetic.AdelicQuotients.QuotientMeasureSplit
-public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductCentralizerAdelicGL
-public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductExtensionOfBaseRegroup
-public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductFiniteAdelicGL
-public import Development.AutomorphicArithmetic.AdelicQuotients.SeparableLocalOfSeparableScalar
-public import Development.AutomorphicArithmetic.AdelicQuotients.SplitCentralizerOfSplitEquiv
-public import Development.AutomorphicArithmetic.AdelicQuotients.TorusCommutativeOfCentralizerCommutative
-public import Development.AutomorphicArithmetic.AdelicQuotients.TwistedNormCentralOfBaseChangeCompat
-public import Development.AutomorphicArithmetic.AdelicQuotients.TwistedNormLocalOfCompat
-import GroundTheory.AutomorphicForms.MeasuresModulus
-import GroundTheory.GlobalFields.Adele.Topology
-import GroundTheory.GlobalFields.LocalAtPlace
+public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.SplitEquiv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -55,9 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -65,7 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -78,9 +45,215 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AdelicQuotients.AdicCompletionIntegersBaseChangeIff
+public import Development.AutomorphicArithmetic.AdelicQuotients.BaseChangeTrivialExtension
+public import Development.AutomorphicArithmetic.AdelicQuotients.CentralSectionBaseChange
+public import Development.AutomorphicArithmetic.AdelicQuotients.CentralSectionLocalScalar
+public import Development.AutomorphicArithmetic.AdelicQuotients.CentralizerCommutativeOfSeparableCharpoly
+public import Development.AutomorphicArithmetic.AdelicQuotients.CharpolySeparableUnitSmul
+public import Development.AutomorphicArithmetic.AdelicQuotients.EulerProductOfQuotientPushforwardSupport
+public import Development.AutomorphicArithmetic.AdelicQuotients.EulerProductSupportFinite
+public import Development.AutomorphicArithmetic.AdelicQuotients.ExistsHaarMeasureAdelicGL
+public import Development.AutomorphicArithmetic.AdelicQuotients.GeometricSideAbsolutelyConvergentOfEulerFubini
+public import Development.AutomorphicArithmetic.AdelicQuotients.GlobalOrbitalComparisonOfSplit
+public import Development.AutomorphicArithmetic.AdelicQuotients.HaarConstOfHaarExists
+public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.SelmerRankBoundLaurent
+public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.NormEx
+public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.QuotEq
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.AdelicQuotients.HaarUnimodularCriterion
+public import Development.AutomorphicArithmetic.AdelicQuotients.InfinitePartFiniteOfAdelicBound
+public import Development.AutomorphicArithmetic.AdelicQuotients.LocalUnimodularOfExistsHaarMeasure
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalIntegralFubini
+public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalSideBaseFieldOfAbsoluteConvergence
+public import Development.AutomorphicArithmetic.AdelicQuotients.OrbitalSideExtensionOfAbsoluteConvergence
+public import Development.AutomorphicArithmetic.AdelicQuotients.QuotientHaarMeasurePushforward
+public import Development.AutomorphicArithmetic.AdelicQuotients.QuotientMeasureSplit
+public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductCentralizerAdelicGL
+public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductExtensionOfBaseRegroup
+public import Development.AutomorphicArithmetic.AdelicQuotients.RestrictedProductFiniteAdelicGL
+public import Development.AutomorphicArithmetic.AdelicQuotients.SplitCentralizerOfSplitEquiv
+public import Development.AutomorphicArithmetic.AdelicQuotients.TorusCommutativeOfCentralizerCommutative
+public import Development.AutomorphicArithmetic.AdelicQuotients.TwistedNormCentralOfBaseChangeCompat
+public import Development.AutomorphicArithmetic.AdelicQuotients.TwistedNormLocalOfCompat
+import GroundTheory.AutomorphicForms.MeasuresModulus
+import GroundTheory.GlobalFields.Adele.Topology
+import GroundTheory.GlobalFields.LocalAtPlace
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.AdelicGLSplitEquiv
+
+section
+
+@[expose] public section
+
+open UpperTheory.ConvolutionTheory.G UpperTheory.ConvolutionTheory.T4
+
+theorem UpperTheory.adelicGL_split_equiv :
+    SplitEquiv := by
+  intro G₁ R G _ _ _ _ _ _ _ i d c hi hd hc hs hcomm hk
+  have hd1 : ∀ x, d (i x) = 1 := fun x => (hk _).2 ⟨x, rfl⟩
+  have h : ∀ g, ∃ x, i x = g * (c (d g))⁻¹ := fun g => by
+    have h1 : d (g * (c (d g))⁻¹) = 1 := by
+      rw [map_mul, map_inv, hs, mul_inv_cancel]
+    exact (hk _).1 h1
+  choose f hf using h
+  have hfc : Continuous f := by
+    refine hi.continuous_iff.2 ?_
+    have h2 : (i ∘ f) = fun g => g * (c (d g))⁻¹ := funext hf
+    rw [h2]
+    exact continuous_id.mul (hc.comp hd).inv
+  let E : G₁ × R ≃* G :=
+    { toFun := fun x => i x.1 * c x.2
+      invFun := fun g => (f g, d g)
+      left_inv := by
+        rintro ⟨x, r⟩
+        have hdr : d (i x * c r) = r := by rw [map_mul, hd1, hs, one_mul]
+        refine Prod.ext (hi.injective ?_) hdr
+        show i (f (i x * c r)) = i x
+        rw [hf, hdr, mul_inv_cancel_right]
+      right_inv := by
+        intro g
+        show i (f g) * c (d g) = g
+        rw [hf, inv_mul_cancel_right]
+      map_mul' := by
+        rintro ⟨x, r⟩ ⟨y, s⟩
+        show i (x * y) * c (r * s) = i x * c r * (i y * c s)
+        rw [map_mul, map_mul, mul_assoc (i x) (c r), ← mul_assoc (c r), hcomm r (i y)]
+        simp only [mul_assoc] }
+  exact ⟨{ E with
+    continuous_toFun := (hi.continuous.comp continuous_fst).mul (hc.comp continuous_snd)
+    continuous_invFun := hfc.prodMk hd }, fun x => rfl⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.HaarQuotientSubgroup
+
+section
+
+@[expose] public section
+
+open PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory.G UpperTheory.ConvolutionTheory.T4
+open MeasureTheory
+
+theorem UpperTheory.haar_quotient_subgroup :
+    QSub := by
+  intro G _ _ _ _ _ _ _ _ T _ _ _ _ _ _ _ _ H hH μ j ν hp Φ hΦ hi
+  haveI : LocallyCompactSpace H := hH.isClosedEmbedding_subtypeVal.locallyCompactSpace
+  haveI : SecondCountableTopology H := TopologicalSpace.Subtype.secondCountableTopology (H : Set G)
+  obtain ⟨ρ₀, -, hρ₀, -⟩ := normEx H T μ j ν hp
+  have hemb : MeasurableEmbedding (Subtype.val : H → G) := MeasurableEmbedding.subtype_coe hH.measurableSet
+  have hinj : Function.Injective (Subtype.val : H → G) := Subtype.val_injective
+  have hex : ∃ ρ, IsNormAlong (fun x : H => (x : G)) (fun t => (j t : G)) ν ρ := by
+    refine ⟨Function.extend Subtype.val (fun x : H => (ρ₀ x : ENNReal)) 0,
+      hemb.measurable_extend hρ₀.1 measurable_const, fun x => ?_⟩
+    have e : ∀ t, Function.extend Subtype.val (fun x : H => (ρ₀ x : ENNReal)) 0 ((j t : G) * (x : G))
+        = (ρ₀ (j t * x) : ENNReal) := fun t => by
+      rw [← Subgroup.coe_mul]
+      exact hinj.extend_apply _ _ _
+    simp only [e]
+    exact hρ₀.2 x
+  unfold quotInt
+  rw [dite_eq_left hex]
+  have hn : IsNrm j ν (fun x : H => hex.choose (x : G)) :=
+    ⟨hex.choose_spec.1.comp measurable_subtype_coe, fun x => by
+      simpa only [Subgroup.coe_mul] using hex.choose_spec.2 x⟩
+  exact ((quotEq H T μ j ν hp Φ hΦ hi _ hn).2.2).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.MaximalCompactNormOfUnitCriterion
+
+section
+
+@[expose] public section
+
+open PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory.G UpperTheory.ConvolutionTheory.T4
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.SemiLocal
+
+theorem UpperTheory.maximalCompactNorm_of_unit_criterion :
+    K1 → Triv → UnitIff → Compat → SelmerRankBoundLaurent := by
+  intro hK hT hU hC F _ _ n hn γ hγ
+  have hincl : PositivityTheory.Rg.Tf.Loc.incl γ = γ := by
+    ext i j
+    rfl
+  have hnorm : PositivityTheory.Rg.Tf.Loc.normGL (1 : F ≃ₐ[F] F) γ = PositivityTheory.Rg.Tf.Loc.incl γ := by
+    rw [hincl, PositivityTheory.Rg.Tf.Loc.normGL, Module.finrank_self]
+    simp [PositivityTheory.Rg.Tf.Loc.twNorm]
+  have h1 : ∀ τ : F ≃ₐ[F] F, τ ∈ Subgroup.zpowers (1 : F ≃ₐ[F] F) := fun τ => by
+    have : τ = 1 := AlgEquiv.ext fun x => τ.commutes x
+    rw [this]
+    exact one_mem _
+  obtain ⟨-, -, -, c4, -, -, -, c8⟩ := hC F F 1 n
+  filter_upwards [hK F F 1 h1 n hn γ γ hγ hnorm] with v hv x
+  have hdiag : mapGL n (atFin v) (AdelicGLn.diagonal F n γ) =
+      mapGL n (incFin F v) (finAt v (AdelicGLn.diagonal F n γ)) := by
+    have h := c4 v (AdelicGLn.diagonal F n γ)
+    rw [c8, hincl] at h
+    exact h
+  have hgal : ∀ y : GL (Fin n) (CompletionsOver F v), mapGL n (galFin (1 : F ≃ₐ[F] F) v) y = y := fun y => by
+    rw [((hT F).2.2 v).1]
+    ext i j
+    rfl
+  have key := hv (mapGL n (incFin F v) x)
+  rw [hdiag, hgal, ← map_inv, ← map_mul, ← map_mul, hU F F n v] at key
+  rw [key]
+  constructor
+  · rintro ⟨t, ht, y, hy, e⟩
+    refine ⟨t, ht, t⁻¹ * x, ?_, by group⟩
+    rw [← hU F F n v, map_mul, map_inv, e, inv_mul_cancel_left]
+    exact hy
+  · rintro ⟨t, ht, y, hy, rfl⟩
+    exact ⟨t, ht, mapGL n (incFin F v) y, (hU F F n v y).2 hy, map_mul _ _ _⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.SeparableLocalOfSeparableScalar
+
+section
+
+@[expose] public section
+
+open PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory.G UpperTheory.ConvolutionTheory.T4
+
+open NumberField GroundTheory.Automorphic GroundTheory.Automorphic.Reduction in
+theorem UpperTheory.separableLocal_of_separableScalar :
+    SepSc → CentLoc → SepLoc := by
+  intro hS hC F _ _ n γ hγ
+  have hsep : (γ : Matrix (Fin n) (Fin n) F).charpoly.Separable := hγ
+  have hI : ((pI F n (AdelicGLn.diagonal F n γ)).val : Matrix (Fin n) (Fin n) (InfiniteAdeleRing F)) =
+      (γ : Matrix (Fin n) (Fin n) F).map (algebraMap F (InfiniteAdeleRing F)) := by
+    ext a b
+    rfl
+  have hIs : (pI F n (AdelicGLn.diagonal F n γ)).val.charpoly.Separable := by
+    rw [hI, Matrix.charpoly_map]
+    exact hsep.map
+  refine ⟨hIs, fun s => ?_, fun v => ?_⟩
+  · obtain ⟨⟨r, hr⟩, -⟩ := hC F n ⟨Real.exp s, Real.exp_pos s⟩
+    have h := hr (pI F n (AdelicGLn.diagonal F n γ))
+    have h' : (pI F n (zA F n s) * pI F n (AdelicGLn.diagonal F n γ)).val =
+        (r : InfiniteAdeleRing F) • (pI F n (AdelicGLn.diagonal F n γ)).val := h
+    rw [h']
+    exact hS _ n r _ hIs
+  · have hv : ((finAt v (AdelicGLn.diagonal F n γ)).val : Matrix (Fin n) (Fin n) (v.adicCompletion F)) =
+        (γ : Matrix (Fin n) (Fin n) F).map (algebraMap F (v.adicCompletion F)) := by
+      ext a b
+      rfl
+    rw [hv, Matrix.charpoly_map]
+    exact hsep.map
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.StableTwistedTraceFormulaComparison
+
+section
 
 @[expose] public section
 
@@ -221,3 +394,5 @@ theorem UpperTheory.ConvolutionTheory.G.stable_twisted_trace_formula_comparison 
   have sideF : SideF := UpperTheory.orbitalSideBaseField_of_absoluteConvergence sideAbs rpf rpCen uniLoc uniOf tComm sepLoc centLoc infF
   have sideE : SideE := UpperTheory.orbitalSideExtension_of_absoluteConvergence sideAbs rpf rpe rpCen uniLoc uniOf tComm sepLoc centLoc compat galCont locEmb unitIff locNorm boundE n3 n5 p2
   exact main glob haarConst haarEx rpf rpe rpCen sideF sideE k1 k1F h1 zNorm locNorm sepLoc centLoc
+end
+end

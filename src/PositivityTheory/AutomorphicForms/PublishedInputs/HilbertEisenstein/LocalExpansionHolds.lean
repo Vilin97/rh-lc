@@ -45,17 +45,172 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.ArchimedeanIntegralHolds
-public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.CharacterPositiveHolds
+import Mathlib.Tactic.Linter.Style
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
+import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ConstSmall
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
 public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.CharacterProductHolds
 public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.CoefficientDivisorHolds
-public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.InverseSubstitutionHolds
+public import GroundTheory.LocalFields.LocalFourier
+import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+import GroundTheory.LocalFields.LocalZetaShell
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Algebra.Group.Units
+import Mathlib.Topology.Algebra.Nonarchimedean.TotallyDisconnected
+import Mathlib.Topology.Compactness.Paracompact
+import Mathlib.Topology.Separation.Connected
+import Mathlib.Topology.Sheaves.Init
 public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.LocalIntegralOfSubstitution
 import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.QuasiCharConductorLoc
 import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.UnitaryTransvectionZeroSecondMemClosure
 import Std.Tactic.BVDecide.Normalize.Prop
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
-import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ConstSmall
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.CharacterPositiveHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.N Polynomial
+open GlobalTheory.CuspRep GlobalTheory.HeckeGal GlobalTheory.GalOfCusp UpperTheory.V.Af UpperTheory.V.Base
+open scoped Matrix
+open MeasureTheory GroundTheory.Global GroundTheory.Global.IdeleGroup UpperTheory.V.Sd UpperTheory.V.Published GroundTheory.LocalField
+
+namespace UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein.CharacterPositivity
+
+variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
+
+theorem pow_eq_one_of_fin {ω : HChar F} (h : IsOfFinOrder ω) :
+    ∃ n : ℕ, 0 < n ∧ ∀ x, (ω.1 x) ^ n = 1 := by
+  obtain ⟨n, hn, hpow⟩ := isOfFinOrder_iff_pow_eq_one.1 h
+  refine ⟨n, hn, fun x => ?_⟩
+  have h1 : (ω ^ n).1 x = 1 := by rw [hpow]; rfl
+  rw [← MonoidHom.pow_apply, ← Subgroup.coe_pow, h1]
+
+theorem omega_inf_pos (ω : HChar F) (h : IsOfFinOrder ω) (z : (InfiniteAdeleRing F)ˣ)
+    (hz : ∀ w : InfinitePlace F, 0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal
+      (IsTotallyReal.isReal w) ((z : InfiniteAdeleRing F) w)) :
+    ω.1 (ofInfinite z) = 1 := by
+  obtain ⟨n, hn, hpow⟩ := pow_eq_one_of_fin h
+  rw [ofInfinite_eq_prod, map_prod]
+  refine Finset.prod_eq_one fun w _ => ?_
+  have hw := IsTotallyReal.isReal w
+  set u := infiniteComponent w z
+  set x : ℝˣ := Units.map (InfinitePlace.Completion.ringEquivRealOfIsReal hw : w.Completion →+* ℝ).toMonoidHom u
+  have hu : realUnitsHom hw x = u := realUnitsHom_surjective hw u
+  have hx : 0 < (x : ℝ) := by
+    show 0 < InfinitePlace.Completion.ringEquivRealOfIsReal hw ((z : InfiniteAdeleRing F) w)
+    rw [InfinitePlace.Completion.ringEquivRealOfIsReal_apply]
+    exact hz w
+  have hr : 0 < (x : ℝ) ^ (n⁻¹ : ℝ) := Real.rpow_pos_of_pos hx _
+  have hy : Units.mk0 _ hr.ne' ^ n = x := Units.ext (by
+    rw [Units.val_pow_eq_pow_val, Units.val_mk0, Real.rpow_inv_natCast_pow hx.le hn.ne'])
+  rw [← hu, ← hy]
+  simp only [map_pow]
+  exact hpow _
+
+end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein.CharacterPositivity
+
+namespace UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein
+
+open L4 CharacterPositivity
+
+theorem character_positive_holds : OmegaPos := by
+  intro F _ _ _ ω c H ξ hξ
+  have hdiag : ω.1 (diagonal F ξ) = 1 := ω.2.2 ξ
+  have hsplit := ofFinite_mul_ofInfinite (diagonal F ξ)
+  have hfin : toFinite F (diagonal F ξ) = xiF ξ := Units.ext rfl
+  rw [← hsplit, map_mul, hfin, omega_inf_pos ω H.fin _ ?_, mul_one] at hdiag
+  · unfold ωF
+    rw [hdiag, Units.val_one]
+  · intro w
+    have h1 : ((toInfinite F (diagonal F ξ) : (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F) w =
+        algebraMap F w.Completion (ξ : F) := rfl
+    rw [h1]
+    have h2 := hξ w
+    unfold reAt at h2
+    rw [← InfinitePlace.embedding_of_isReal_apply (IsTotallyReal.isReal w), Complex.ofReal_re] at h2
+    convert h2 using 1
+    simpa [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+      InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal w)
+        (WithAbs.toAbs w.1 (ξ : F))
+
+end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.SecondCountableTopologyUnits
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory GroundTheory.LocalField
+
+namespace UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein.MultiplicativeHaarInverse
+
+variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  [MeasurableSpace K] [BorelSpace K]
+
+instance secondCountableTopology_units : SecondCountableTopology Kˣ :=
+  Units.isEmbedding_val₀.secondCountableTopology
+
+instance sigmaCompactSpace_units : SigmaCompactSpace Kˣ := inferInstance
+
+instance regular_multHaar : (multHaar K).Regular :=
+  Measure.Regular.of_sigmaCompactSpace_of_isLocallyFiniteMeasure _
+
+instance isInvInvariant_multHaar : (multHaar K).IsInvInvariant :=
+  Measure.IsHaarMeasure.isInvInvariant_of_regular (multHaar K)
+
+theorem inv_subst (f : Kˣ → ℂ) (t : Kˣ) :
+    (Integrable f (multHaar K) ↔ Integrable (fun x => f (t * x⁻¹)) (multHaar K)) ∧
+    ∫ a, f a ∂multHaar K = ∫ x, f (t * x⁻¹) ∂multHaar K := by
+  have h1 : (fun x => f (t * x⁻¹)) = fun x => f (t / x) := by
+    funext x
+    rw [div_eq_mul_inv]
+  rw [h1]
+  exact ⟨(integrable_comp_div_left f t).symm, (integral_div_left_eq_self f (multHaar K) t).symm⟩
+
+end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein.MultiplicativeHaarInverse
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.InverseSubstitutionHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory GroundTheory.LocalField
+
+namespace UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein
+
+theorem inverse_substitution_holds : InvSubst := by
+  intro F _ _ v f t
+  exact MultiplicativeHaarInverse.inv_subst f t
+
+end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.LocalExpansionHolds
+
+section
 
 @[expose] public section
 
@@ -327,3 +482,6 @@ theorem local_expansion_holds : SFin → SKern → SLocal :=
     character_positive_holds
 
 end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein
+end
+end
+end

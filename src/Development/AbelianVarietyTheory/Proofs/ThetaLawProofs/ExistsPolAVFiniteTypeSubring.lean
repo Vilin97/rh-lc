@@ -6,11 +6,8 @@ public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.Pol
 public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverCompOfIsClosedImmersion
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PolPull
 public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsFiniteTypeSubringAdjoin
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsFinsetKTrivOfSubring
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsProjectiveAbelianModel
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRefinementOfIsLimit
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.RelAmpleSubring
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.RigidifiedSymDescendToSubring
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.MemNonzeroLocusIffPowFn
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsBasicOpenKTrivOfFibre
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,9 +45,125 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AmplePt
+import Development.AbelianVarietyTheory.Definitions.KeyFormula.KaRuleK
+import Development.AbelianVarietyTheory.Definitions.KeyFormula.KeyRuleOneOfKeyFormula
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsProjectiveAbelianModel
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRefinementOfIsLimit
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelAmpleNearFibreFlatProjectiveStatement
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverMorphismRestrictOfRelAmple
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.RelAmpleOfAmpleGeometricFibresAbelianScheme
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.RigidifiedSymDescendToSubring
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.TangentLinearity.ConstPullback
 import Development.AbelianVarietyTheory.Definitions.KeyFormula.DegProd
-import Development.AbelianVarietyTheory.Definitions.KeyFormula.KeyRuleOneOfKeyFormula
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsFinsetKTrivOfSubring
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj MeasureTheory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory.AbLaw
+open GlobalTheory.KeyPow GlobalTheory.KeyKa
+
+namespace GlobalTheory
+
+
+open scoped CategoryTheory.Obj in
+theorem exists_finset_kTriv_of_subring :
+    ∀ (S : Type) [CommRing S] [IsLocalRing S] (R₀ : Subring S) [IsNoetherianRing R₀] (P : Out.PolAV (Sp S)) (A₀ : Over (Sp R₀)) [GrpObj A₀] (φ : P.A.left ⟶ A₀.left) (L₀ : LB A₀.left), IsAbelianScheme A₀ → L₀.IsLB → Out.RelAmple A₀ L₀ → IsGrpPullback P.A A₀ (spMap R₀.subtype) φ → LBIso P.L (L₀.pull φ) → ∃ F : Finset S, ∀ (R₁ : Subring S) (h : R₀ ≤ R₁), (F : Set S) ⊆ R₁ → ∀ (A₁ : Over (Sp R₁)) [GrpObj A₁] (π : A₁.left ⟶ A₀.left), IsGrpPullback A₁ A₀ (spMap (Subring.inclusion h)) π → Out.KTriv A₁ (L₀.pull π) := by
+  intro S _ _ R₀ _ P A₀ _ φ L₀ hA hL hamp hφ e
+  let r : S →+* IsLocalRing.ResidueField S := IsLocalRing.residue S
+  letI : GrpObj ((Over.pullback (spMap r)).obj P.A) := Functor.grpObjObj
+  have h₁ := isGrpPullback_pullback P.A (spMap r)
+  have hc : spMap r ≫ spMap R₀.subtype = spMap (r.comp R₀.subtype) := by
+    simp only [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
+  have h₂ := h₁.comp hφ
+  rw [hc] at h₂
+  have he : LBIso (L₀.pull (pullback.fst P.A.hom (spMap r) ≫ φ))
+      (P.L.pull (pullback.fst P.A.hom (spMap r))) :=
+    LBIso.symm (LBIso.chartPull (chartPullPull P.L _)
+      (chartPullSame L₀ (fun _ : PUnit => pullback.fst P.A.hom (spMap r) ≫ φ) (fun _ => φ) (fun _ => 1) _
+        fun _ => rfl) e)
+  have hK := (amplePt _ _ _ _ _ _ h₁ _ _ P.isLB (pull_isLB hL _) he P.ample P.ktriv).2
+  obtain ⟨f, hf, H⟩ := GlobalTheory.KTrivSpread.exists_kTriv_of_isUnit R₀ A₀ L₀ _ (r.comp R₀.subtype) _ _ hA hL hamp h₂ hK
+  have hu : IsUnit (f : S) := (IsLocalRing.residue_ne_zero_iff_isUnit _).1 hf
+  obtain ⟨g, hg⟩ := hu.exists_right_inv
+  refine ⟨{g}, fun R₁ h hF A₁ _ π hπ => H R₁ (Subring.inclusion h) A₁ π ?_ hπ⟩
+  have hg₁ : g ∈ R₁ := hF (by simp)
+  exact IsUnit.of_mul_eq_one (⟨g, hg₁⟩ : R₁) (Subtype.ext hg)
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.RelAmpleSubring
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj MeasureTheory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory.AbLaw
+open GlobalTheory.KeyPow GlobalTheory.KeyKa
+
+namespace GlobalTheory.AmpleSubring
+
+theorem relAmple_subring : ∀ (S : Type) [CommRing S] [IsLocalRing S] (R₀ : Subring S) [IsNoetherianRing R₀] (P : Out.PolAV (Sp S)) (A₀ : Over (Sp R₀)) [GrpObj A₀] (φ : P.A.left ⟶ A₀.left) (L₀ : LB A₀.left), IsAbelianScheme A₀ → IsProjOver A₀.hom → L₀.IsLB → IsGrpPullback P.A A₀ (spMap R₀.subtype) φ → LBIso P.L (L₀.pull φ) → ∃ F : Finset S, ∀ (R₁ : Subring S) (h : R₀ ≤ R₁), (F : Set S) ⊆ R₁ → ∀ (A₁ : Over (Sp R₁)) [GrpObj A₁] (π : A₁.left ⟶ A₀.left), IsGrpPullback A₁ A₀ (spMap (Subring.inclusion h)) π → Out.RelAmple A₁ (L₀.pull π) := by
+  intro S _ _ R₀ _ P A₀ _ φ L₀ hA₀ hproj hL₀ hφ e
+  have := hA₀.proper
+  have := hA₀.smooth
+  let x : R₀ →+* IsLocalRing.ResidueField S := (IsLocalRing.residue S).comp R₀.subtype
+  let p : Ideal R₀ := RingHom.ker x
+  have : p.IsPrime := RingHom.ker_isPrime x
+  let g := algebraMap R₀ p.ResidueField
+  let i : p.ResidueField →+* IsLocalRing.ResidueField S :=
+    Ideal.ResidueField.lift p x le_rfl fun a ha => IsUnit.mk0 _ ha
+  have hi : i.comp g = x := RingHom.ext fun a => Ideal.ResidueField.lift_algebraMap p x le_rfl
+    (fun a ha => IsUnit.mk0 _ ha) a
+  have hu : spMap (IsLocalRing.residue S) ≫ spMap R₀.subtype = spMap i ≫ spMap g := by
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hi]
+  have h₂ := IsPullback.of_hasPullback A₀.hom (spMap i ≫ spMap g)
+  obtain ⟨r, hr, hA⟩ := GlobalTheory.T.relAmple_near_fibre_flat_projective R₀ A₀ L₀ inferInstance
+    ((ProjSpace.isProjBy_iff_isProjOver _).2 hproj) hL₀ _ g (FibreAmple.residueField_fraction p)
+    (FibreAmple.relAmple_of_fieldExtension hL₀ i (IsPullback.of_hasPullback A₀.hom (spMap g)) h₂
+      (LB.isLB_pull hL₀ _) (GlobalTheory.lbIso_refl (LB.isLB_pull hL₀ _))
+      (FibreAmple.relAmple_of_factor hL₀ hφ.1 h₂ _ hu P.isLB e P.ample))
+  have hx : x r ≠ 0 := fun h => hr (Ideal.algebraMap_residueField_eq_zero.2 h)
+  obtain ⟨v, hv⟩ : IsUnit (r : S) := (IsLocalRing.residue_ne_zero_iff_isUnit _).1 hx
+  refine ⟨{v⁻¹.val}, fun R₁ h hF A₁ _ π hπ => ?_⟩
+  have hu₁ : IsUnit (Subring.inclusion h r) :=
+    IsUnit.of_mul_eq_one (⟨v⁻¹.val, hF (by simp)⟩ : R₁) (Subtype.ext (by
+      change (r : S) * v⁻¹.val = 1
+      rw [← hv, Units.mul_inv]))
+  let D : (Spec (CommRingCat.of R₀)).Opens := PrimeSpectrum.basicOpen r
+  have hrange : Set.range (spMap (Subring.inclusion h)) ⊆ Set.range D.ι := by
+    rintro _ ⟨z, rfl⟩
+    exact ⟨⟨_, fun hm => z.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ hm hu₁)⟩, rfl⟩
+  exact FibreAmple.relAmple_of_factor hL₀ (IsPullback.of_hasPullback A₀.hom D.ι) hπ.1
+    (IsOpenImmersion.lift D.ι _ hrange) (IsOpenImmersion.lift_fac _ _ _) (LB.isLB_pull hL₀ _)
+    (GlobalTheory.lbIso_refl (LB.isLB_pull hL₀ _)) hA
+
+end GlobalTheory.AmpleSubring
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsPolAVFiniteTypeSubring
+
+section
 
 @[expose] public section
 
@@ -167,3 +279,6 @@ theorem exists_polAV_finiteType_subring :
       ktriv := hk₃ }, φ₃, hR₃, rfl, H₃, hiso₃⟩
 
 end GlobalTheory.KeyTf
+end
+end
+end

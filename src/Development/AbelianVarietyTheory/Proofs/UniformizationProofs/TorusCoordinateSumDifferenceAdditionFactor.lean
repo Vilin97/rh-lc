@@ -3,16 +3,16 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Uniformization.PsiScal
 public import Development.AbelianVarietyTheory.Definitions.Uniformization.ExistsUniqueSamePt
 public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ExistsRatioPoints
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AdditionFactorThroughCubicalEvenIso
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.CubCoordMulMulInv
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.TorusCoordAdd
+public import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -43,6 +43,87 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Group.TypeTags.Basic
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CubeVal
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.TorusCoordAdd
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AdditionFactorThroughCubicalEvenIso
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem addition_factor_through_cubical_even_iso : ∀ (H U : Type) [CommGroup H] [CommGroup U] (W sL sM : H → U) (cL cM : H → H → H → U) (rL rM : U), rM = W 1 * rL → (∀ x, sM x * W x = W x⁻¹ * sL x) → (∀ x y u, cM x y u * W (x * y) * W (x * u) * W (y * u) * W 1 = W (x * y * u) * W x * W y * W u * cL x y u) → ∀ x y, W x ^ 2 * W y ^ 2 * (cL x y y⁻¹ * (sL y)⁻¹ * rL ^ 2) = cM x y y⁻¹ * (sM y)⁻¹ * rM ^ 2 * (W (x * y) * W (x * y⁻¹)) := by
+  intro H U _ _ W sL sM cL cM rL rM hr hs hc x y
+  have h1 := hc x y y⁻¹
+  rw [mul_inv_cancel, mul_inv_cancel_right] at h1
+  have h2 : sM y = W y⁻¹ * sL y * (W y)⁻¹ := eq_mul_inv_of_mul_eq (hs y)
+  have h3 : cM x y y⁻¹ = W x * W x * W y * W y⁻¹ * cL x y y⁻¹ *
+      (W (x * y) * W (x * y⁻¹) * W 1 * W 1)⁻¹ := by
+    apply eq_mul_inv_of_mul_eq
+    rw [← h1]
+    simp only [_root_.mul_assoc]
+  rw [h2, h3, hr]
+  apply Additive.ofMul.injective
+  simp only [ofMul_mul, ofMul_inv, ofMul_pow]
+  abel
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.CubCoordMulMulInv
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem cub_coord_mul_mul_inv : ∀ (A U X : Type) [CommGroup A] [CommGroup U] [AddCommGroup X] (θ : A → A → A → U), IsCub θ → ∀ (H : Type) [CommGroup H] (q : H →* A) (c : X → A), (∀ a b, c (a + b) = c a * c b) → ∀ t : X → H → U, (∀ a b x, t (a + b) x * θ (c a) (c b) (q x) = t a x * t b x) → (∀ a x y, t a (x * y) * θ (c a) (q x) (q y) = t a x * t a y) → ∀ a b x y, t a (x * y) * t b (x * y⁻¹) * (θ (c a) (q x) (q y) * θ (c b) (q x) (q y)⁻¹ * θ (c (a - b)) (c b) (q y)) = t (a + b) x * t (a - b) y * (θ (c a) (c b) (q x) * θ (c b) (q y) (q y)⁻¹) := by
+  intro A U X _ _ _ θ h H _ q c _ t h₁ h₂ a b x y
+  have e₀ : t b 1 = 1 := by
+    have e := h₂ b 1 1
+    rw [_root_.mul_one, map_one, h.face₃, _root_.mul_one] at e
+    exact (mul_eq_left.mp e.symm)
+  have e₁ := h₂ a x y
+  have e₂ := h₂ b x y⁻¹
+  have e₃ := h₂ b y y⁻¹
+  have e₄ := h₁ a b x
+  have e₅ := h₁ (a - b) b y
+  rw [map_inv] at e₂ e₃
+  rw [_root_.mul_inv_cancel, e₀, _root_.one_mul] at e₃
+  rw [sub_add_cancel] at e₅
+  apply Additive.ofMul.injective
+  have E := fun {p q : U} (e : p = q) => congrArg Additive.ofMul e
+  have a₁ := E e₁; have a₂ := E e₂; have a₃ := E e₃; have a₄ := E e₄; have a₅ := E e₅
+  simp only [ofMul_mul] at a₁ a₂ a₃ a₄ a₅ ⊢
+  linear_combination (norm := abel) a₁ + a₂ - a₃ - a₄ + a₅
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.TorusCoordinateSumDifferenceAdditionFactor
+
+section
 
 @[expose] public section
 
@@ -240,3 +321,5 @@ theorem GlobalTheory.addition_formula_expanded_at_level : GlobalFnsSt → (AllPr
   subst hT
   exact H (Over.mk (xe ≫ (thickObj V (IsLocalRing.maximalIdeal V) e G).hom)) (Over.homMk xe rfl)
     (Over.homMk ye hxy.symm) x y (Over.OverMorphism.ext hx.symm) (Over.OverMorphism.ext hy.symm)
+end
+end

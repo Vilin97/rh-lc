@@ -1,7 +1,11 @@
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemUnitComponentMulMem
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenIsIrreducibleComponentOfRationalPointSmootStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -10,6 +14,7 @@ import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -20,7 +25,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,6 +48,179 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SectionComponentsPreimageOfIsPullbackStatement
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemRightTranslateMemIdentityComponent
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory
+
+theorem exists_mem_and_rightTranslate_mem_of_mem_identityComponent :
+    ∀ (k : Type) [Field k] (G : Over (Spec (CommRingCat.of k))) [GrpObj G], Smooth G.hom → ∀ (U : G.left.Opens) (y : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ G), (η[G]).left (IsLocalRing.closedPoint k) ∈ U → y.left (IsLocalRing.closedPoint k) ∈ connectedComponent ((η[G]).left (IsLocalRing.closedPoint k)) → ∃ z : G.left, z ∈ U ∧ (𝟙 G * (toUnit G ≫ y) : G ⟶ G).left z ∈ U := by
+  intro k _ G _ hs U y hU hy
+  set e : G.left := (η[G]).left (IsLocalRing.closedPoint k) with he
+  have hirr : IsIrreducible (connectedComponent e) := by
+    have h := (GlobalTheory.T.isOpen_isIrreducible_componentOfRationalPoint_smooth k G.left G.hom (η[G]).left hs (Over.w (η[G]))).2
+    have hsub : ∀ a : Spec (CommRingCat.of k), a = IsLocalRing.closedPoint k := fun a =>
+      Subsingleton.elim (α := PrimeSpectrum k) _ _
+    convert h using 1
+    ext x
+    have h1 : (G.hom ⁻¹' {G.hom x} : Set G.left) = Set.univ := by
+      ext w
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_univ, iff_true]
+      exact (hsub _).trans (hsub _).symm
+    simp only [Set.mem_ofPred_eq]
+    rw [h1, connectedComponentIn_univ, hsub (G.hom x)]
+  let T : G ⟶ G := 𝟙 G * (toUnit G ≫ y)
+  have hT : (y ≫ ι[G]) ≫ T = η[G] := by
+    have h1 : (y ≫ ι[G]) ≫ T = (y ≫ ι[G]) * y := by
+      simp only [T]
+      rw [MonObj.comp_mul, Category.comp_id, ← Category.assoc, comp_toUnit, toUnit_unit,
+        Category.id_comp]
+    rw [h1]
+    have h2 : (y ≫ ι[G]) = y⁻¹ := rfl
+    rw [h2, inv_mul_cancel, Hom.one_def, toUnit_unit, Category.id_comp]
+  have hιe : (ι[G]).left e = e := by
+    have : η[G] ≫ ι[G] = η[G] := by simp
+    have h2 := congrArg (fun f => f.left (IsLocalRing.closedPoint k)) this
+    exact h2
+  have hyi : (ι[G]).left (y.left (IsLocalRing.closedPoint k)) ∈ connectedComponent e := by
+    have hc := (ι[G]).left.continuous.image_connectedComponent_subset e
+    rw [hιe] at hc
+    exact hc ⟨_, hy, rfl⟩
+  have hTy : T.left ((ι[G]).left (y.left (IsLocalRing.closedPoint k))) = e := by
+    have h2 := congrArg (fun f => f.left (IsLocalRing.closedPoint k)) hT
+    exact h2
+  obtain ⟨z, -, hz1, hz2⟩ := hirr.isPreirreducible (U : Set G.left) (T.left ⁻¹' (U : Set G.left))
+    U.isOpen (U.isOpen.preimage T.left.continuous) ⟨e, mem_connectedComponent, hU⟩
+    ⟨_, hyi, by rw [Set.mem_preimage, hTy]; exact hU⟩
+  exact ⟨z, hz1, hz2⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemRightTranslateMemIdentityComponentStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+theorem _root_.GlobalTheory.T.exists_mem_rightTranslate_mem_identityComponent : ∀ (k : Type) [Field k] (G : Over (Spec (CommRingCat.of k))) [GrpObj G], Smooth G.hom → ∀ (U : G.left.Opens) (y : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ G), (η[G]).left (IsLocalRing.closedPoint k) ∈ U → y.left (IsLocalRing.closedPoint k) ∈ connectedComponent ((η[G]).left (IsLocalRing.closedPoint k)) → ∃ z : G.left, z ∈ U ∧ (𝟙 G * (toUnit G ≫ y) : G ⟶ G).left z ∈ U := by
+  first | exact @GlobalTheory.exists_mem_and_rightTranslate_mem_of_mem_identityComponent | exact GlobalTheory.exists_mem_and_rightTranslate_mem_of_mem_identityComponent | (intros; apply GlobalTheory.exists_mem_and_rightTranslate_mem_of_mem_identityComponent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemUnitComponentMulMem
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory
+
+theorem overPullback_unit_comp_fst {S S' : Scheme.{0}} (p : S' ⟶ S) (G : Over S) [GrpObj G] :
+    (η[(Over.pullback p).obj G]).left ≫ pullback.fst G.hom p = p ≫ (η[G]).left := by
+  have hmap : ((Over.pullback p).map η[G]).left ≫ pullback.fst G.hom p =
+      pullback.fst (𝟙_ (Over S)).hom p ≫ (η[G]).left := by
+    simp
+  have hε : (Functor.LaxMonoidal.ε (Over.pullback p)).left ≫ pullback.fst (𝟙_ (Over S)).hom p = p := by
+    have h1 : pullback.fst (𝟙_ (Over S)).hom p = pullback.snd (𝟙_ (Over S)).hom p ≫ p := by
+      rw [← pullback.condition]; rfl
+    have h2 : (Functor.LaxMonoidal.ε (Over.pullback p)).left ≫ pullback.snd (𝟙_ (Over S)).hom p = 𝟙 _ :=
+      Over.w (Functor.LaxMonoidal.ε (Over.pullback p))
+    rw [h1, ← Category.assoc, h2, Category.id_comp]
+  show (Functor.LaxMonoidal.ε (Over.pullback p) ≫ (Over.pullback p).map η[G]).left ≫ pullback.fst G.hom p = _
+  rw [Over.comp_left, Category.assoc, hmap, ← Category.assoc, hε]
+
+theorem mem_unitComponent_mul_mem :
+    ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G], Smooth G.hom → ∀ (U : G.left.Opens) (y : G.left),
+      (η[G]).left (G.hom y) ∈ U →
+      y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} →
+      y ∈ {y : G.left | ∃ w : (G ⊗ G).left, (fst G G).left w ∈ U ∧ (μ[G]).left w ∈ U ∧ (snd G G).left w = y} := by
+  intro S G _ hsm U y hU hy
+  let K := ↑(G.left.residueField y)
+  let ω : Spec (CommRingCat.of K) ⟶ G.left := G.left.fromSpecResidueField y
+  have hω : ∀ t, ω t = y := fun t => Scheme.fromSpecResidueField_apply y t
+  let p : Spec (CommRingCat.of K) ⟶ S := ω ≫ G.hom
+  let P := Over.pullback p
+  let G' : Over (Spec (CommRingCat.of K)) := P.obj G
+  let q : G'.left ⟶ G.left := pullback.fst G.hom p
+  have hsm' : Smooth G'.hom := by
+    show Smooth (pullback.snd G.hom p); infer_instance
+  let y' : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ G' :=
+    Over.homMk (pullback.lift ω (𝟙 _) (by simp [p])) (pullback.lift_snd _ _ _)
+  have hy'q : y'.left ≫ q = ω := pullback.lift_fst _ _ _
+  have heq : (η[G']).left ≫ q = p ≫ (η[G]).left := overPullback_unit_comp_fst p G
+  have hZ := GlobalTheory.T.preimage_section_connectedComponentIn_of_isPullback G.left S G'.left (Spec (CommRingCat.of K)) G.hom G'.hom p q (η[G]).left (η[G']).left hsm
+    (IsPullback.of_hasPullback G.hom p) (Over.w η[G]) (Over.w η[G']) heq
+  let pt : Spec (CommRingCat.of K) := IsLocalRing.closedPoint K
+  have hy'Z : y'.left pt ∈ connectedComponent ((η[G']).left pt) := by
+    have h1 : y'.left pt ∈ q ⁻¹' {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} := by
+      rw [Set.mem_preimage, ← Scheme.Hom.comp_apply, hy'q, hω]; exact hy
+    rw [hZ] at h1
+    have h2 : G'.hom ⁻¹' {G'.hom (y'.left pt)} = Set.univ := by
+      ext t; simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_univ, iff_true]
+      exact Subsingleton.elim _ _
+    have h3 : G'.hom (y'.left pt) = pt := Subsingleton.elim _ _
+    have h1' : y'.left pt ∈ connectedComponentIn (G'.hom ⁻¹' {G'.hom (y'.left pt)}) ((η[G']).left (G'.hom (y'.left pt))) := h1
+    rwa [h2, h3, connectedComponentIn_univ] at h1'
+  have hU' : (η[G']).left pt ∈ q ⁻¹ᵁ U := by
+    rw [Scheme.Hom.mem_preimage, ← Scheme.Hom.comp_apply, heq, Scheme.Hom.comp_apply]
+    have : p pt = G.hom y := by
+      show G.hom (ω pt) = _
+      rw [hω]
+    rw [this]; exact hU
+  obtain ⟨z, hz1, hz2⟩ := GlobalTheory.T.exists_mem_rightTranslate_mem_identityComponent K G' hsm' (q ⁻¹ᵁ U) y' hU' hy'Z
+  let L : G' ⟶ P.obj (G ⊗ G) := lift (𝟙 G') (toUnit G' ≫ y') ≫ Functor.LaxMonoidal.μ P G G
+  have hmap : ∀ {A B : Over S} (f : A ⟶ B), (P.map f).left ≫ pullback.fst B.hom p = pullback.fst A.hom p ≫ f.left := by
+    intro A B f; simp [P]
+  have key : ∀ (M : G' ⟶ P.obj (G ⊗ G)) {B : Over S} (f : G ⊗ G ⟶ B),
+      f.left (pullback.fst (G ⊗ G).hom p (M.left z)) = pullback.fst B.hom p ((M ≫ P.map f).left z) := by
+    intro M B f
+    rw [Over.comp_left, Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply _ (pullback.fst B.hom p), hmap,
+      Scheme.Hom.comp_apply]
+  refine ⟨pullback.fst (G ⊗ G).hom p (L.left z), ?_, ?_, ?_⟩
+  · rw [key L]
+    have : L ≫ P.map (fst G G) = 𝟙 G' := by
+      show (lift (𝟙 G') (toUnit G' ≫ y') ≫ Functor.LaxMonoidal.μ P G G) ≫ _ = _
+      rw [Category.assoc, Functor.Monoidal.μ_fst, lift_fst]
+    rw [this, Over.id_left]; exact (Scheme.Hom.mem_preimage _).1 hz1
+  · rw [key L]
+    have : L ≫ P.map μ[G] = 𝟙 G' * (toUnit G' ≫ y') := by
+      show (lift (𝟙 G') (toUnit G' ≫ y') ≫ Functor.LaxMonoidal.μ P G G) ≫ _ = _
+      rw [Category.assoc]; rfl
+    rw [this]; exact (Scheme.Hom.mem_preimage _).1 hz2
+  · rw [key L]
+    have : L ≫ P.map (snd G G) = toUnit G' ≫ y' := by
+      show (lift (𝟙 G') (toUnit G' ≫ y') ≫ Functor.LaxMonoidal.μ P G G) ≫ _ = _
+      rw [Category.assoc, Functor.Monoidal.μ_snd, lift_snd]
+    rw [this]
+    rw [Over.comp_left, ← Scheme.Hom.comp_apply, Category.assoc]
+    show ((toUnit G').left ≫ y'.left ≫ q) z = y
+    rw [hy'q]; exact hω _
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemUnitComponentMulMemStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +229,5 @@ open scoped CategoryTheory.Obj
 
 theorem _root_.GlobalTheory.T.mem_mul_preimage_of_mem_unitComponent : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G], Smooth G.hom → ∀ (U : G.left.Opens) (y : G.left), (η[G]).left (G.hom y) ∈ U → y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} → y ∈ {y : G.left | ∃ w : (G ⊗ G).left, (fst G G).left w ∈ U ∧ (μ[G]).left w ∈ U ∧ (snd G G).left w = y} := by
   first | exact @GlobalTheory.mem_unitComponent_mul_mem | exact GlobalTheory.mem_unitComponent_mul_mem | (intros; apply GlobalTheory.mem_unitComponent_mul_mem <;> assumption)
+end
+end

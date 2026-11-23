@@ -2,11 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.DifferentiableOddTheta
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleFiniteProductStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleProductLimitStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MultipliableTpFactor
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -27,6 +26,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,7 +39,158 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Presheaf
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Normed.Group.Tannery
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleFiniteCoeffTendstoAndBounded
+
+section
+
+@[expose] public section
+
+open Complex
+open scoped Real
+
+noncomputable section
+
+namespace GlobalTheory.JacobiTriple
+
+theorem finCoeff_tendsto_and_bounded :
+    ∀ t : ℂ, ‖t‖ < 1 → (∀ j : ℤ, Filter.Tendsto (fun n : ℕ => GlobalTheory.JacobiTriple.finCoeff t n j)
+      Filter.atTop (nhds (GlobalTheory.JacobiTriple.qPochInf t)⁻¹)) ∧
+      ∃ C : ℝ, ∀ (n : ℕ) (j : ℤ), ‖GlobalTheory.JacobiTriple.finCoeff t n j‖ ≤ C := by
+  intro t ht
+  obtain ⟨hlim, hP0, hne⟩ := qPoch_tendsto t ht
+  refine ⟨fun j => ?_, ?_⟩
+  · have ha : Filter.Tendsto (fun n : ℕ => ((n : ℤ) + j).toNat) Filter.atTop Filter.atTop := by
+      refine Filter.tendsto_atTop_mono (f := fun n : ℕ => n - j.natAbs) (fun n => by omega) ?_
+      exact Filter.tendsto_sub_atTop_nat _
+    have hb : Filter.Tendsto (fun n : ℕ => 2 * n - ((n : ℤ) + j).toNat) Filter.atTop
+        Filter.atTop := by
+      refine Filter.tendsto_atTop_mono (f := fun n : ℕ => n - j.natAbs) (fun n => by omega) ?_
+      exact Filter.tendsto_sub_atTop_nat _
+    have h2 : Filter.Tendsto (fun n : ℕ => 2 * n) Filter.atTop Filter.atTop :=
+      Filter.tendsto_atTop_mono (fun n => by show n ≤ 2 * n; omega) Filter.tendsto_id
+    have hmain : Filter.Tendsto (fun n : ℕ => qPoch t (2 * n) /
+        (qPoch t ((n : ℤ) + j).toNat * qPoch t (2 * n - ((n : ℤ) + j).toNat))) Filter.atTop
+        (nhds (qPochInf t / (qPochInf t * qPochInf t))) :=
+      (hlim.comp h2).div ((hlim.comp ha).mul (hlim.comp hb)) (mul_ne_zero hP0 hP0)
+    have hval : qPochInf t / (qPochInf t * qPochInf t) = (qPochInf t)⁻¹ := by
+      field_simp
+    rw [hval] at hmain
+    refine hmain.congr' ?_
+    filter_upwards [Filter.eventually_ge_atTop j.natAbs] with n hn
+    simp [finCoeff, qBinom, hn]
+  · obtain ⟨B1, hB1⟩ := isBounded_iff_forall_norm_le.mp (Metric.isBounded_range_of_tendsto _ hlim)
+    obtain ⟨B2, hB2⟩ := isBounded_iff_forall_norm_le.mp
+      (Metric.isBounded_range_of_tendsto _ (hlim.inv₀ hP0))
+    set B := max B1 B2
+    have b1 : ∀ m, ‖qPoch t m‖ ≤ B := fun m => (hB1 _ ⟨m, rfl⟩).trans (le_max_left _ _)
+    have b2 : ∀ m, ‖(qPoch t m)⁻¹‖ ≤ B := fun m => (hB2 _ ⟨m, rfl⟩).trans (le_max_right _ _)
+    have hB0 : 0 ≤ B := (norm_nonneg _).trans (b1 0)
+    refine ⟨max (B ^ 3) 0, fun n j => ?_⟩
+    unfold finCoeff
+    split_ifs
+    · unfold qBinom
+      rw [div_eq_mul_inv, mul_inv, norm_mul, norm_mul]
+      refine le_max_of_le_left ?_
+      calc ‖qPoch t (2 * n)‖ * (‖(qPoch t ((n : ℤ) + j).toNat)⁻¹‖ *
+            ‖(qPoch t (2 * n - ((n : ℤ) + j).toNat))⁻¹‖) ≤ B * (B * B) := by
+            gcongr
+            · exact b1 _
+            · exact b2 _
+            · exact b2 _
+        _ = B ^ 3 := by ring
+    · simp
+
+end GlobalTheory.JacobiTriple
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleFiniteCoeffTendstoAndBoundedStatement
+
+section
+
+@[expose] public section
+
+open Complex
+open scoped Real
+
+theorem _root_.GlobalTheory.T.jacobiTripleFiniteCoeff_tendsto_and_bounded : ∀ t : ℂ, ‖t‖ < 1 → (∀ j : ℤ, Filter.Tendsto (fun n : ℕ => GlobalTheory.JacobiTriple.finCoeff t n j) Filter.atTop (nhds (GlobalTheory.JacobiTriple.qPochInf t)⁻¹)) ∧ ∃ C : ℝ, ∀ (n : ℕ) (j : ℤ), ‖GlobalTheory.JacobiTriple.finCoeff t n j‖ ≤ C := by
+  first | exact @GlobalTheory.JacobiTriple.finCoeff_tendsto_and_bounded | exact GlobalTheory.JacobiTriple.finCoeff_tendsto_and_bounded | (intros; apply GlobalTheory.JacobiTriple.finCoeff_tendsto_and_bounded <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleProductLimit
+
+section
+
+@[expose] public section
+
+open Complex
+open scoped Real
+
+namespace GlobalTheory.JacobiTriple
+
+theorem tendsto_finCoeff_sum_jacobiTheta₂ : ∀ (τ : ℂ) (z : ℂ), 0 < τ.im →
+    Filter.Tendsto (fun n : ℕ => ∑ j ∈ Finset.Icc (-(n : ℤ)) n,
+      GlobalTheory.JacobiTriple.finCoeff (cexp (π * I * τ) ^ 2) n j * jacobiTheta₂_term j z τ)
+      Filter.atTop (nhds (jacobiTheta₂ z τ * (GlobalTheory.JacobiTriple.qPochInf (cexp (π * I * τ) ^ 2))⁻¹)) := by
+  intro τ z hτ
+  set t := cexp (π * I * τ) ^ 2 with ht
+  have hs : ‖cexp (π * I * τ)‖ < 1 := norm_exp_pi_I_lt_one τ hτ
+  have ht1 : ‖t‖ < 1 := by
+    rw [ht, norm_pow]
+    nlinarith [norm_nonneg (cexp (π * I * τ))]
+  obtain ⟨hlim, C, hC⟩ := GlobalTheory.T.jacobiTripleFiniteCoeff_tendsto_and_bounded t ht1
+  have hsum : Summable (fun j : ℤ => C * ‖jacobiTheta₂_term j z τ‖) :=
+    ((summable_jacobiTheta₂_term_iff z τ).2 hτ).norm.mul_left C
+  have hT := tendsto_tsum_of_dominated_convergence (𝓕 := Filter.atTop)
+    (f := fun (n : ℕ) (j : ℤ) => finCoeff t n j * jacobiTheta₂_term j z τ)
+    (g := fun j => jacobiTheta₂_term j z τ * (qPochInf t)⁻¹) hsum
+    (fun j => by
+      have := (hlim j).mul_const (jacobiTheta₂_term j z τ)
+      simpa [mul_comm] using this)
+    (Filter.Eventually.of_forall fun n j => by
+      rw [norm_mul]
+      exact mul_le_mul_of_nonneg_right (hC n j) (norm_nonneg _))
+  rw [tsum_mul_right] at hT
+  refine hT.congr (fun n => ?_)
+  apply tsum_eq_sum
+  intro j hj
+  have : ¬ j.natAbs ≤ n := by
+    intro h
+    apply hj
+    rw [Finset.mem_Icc]
+    omega
+  simp [finCoeff, this]
+
+end GlobalTheory.JacobiTriple
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleProductLimitStatement
+
+section
+
+@[expose] public section
+
+open Complex
+open scoped Real
+
+theorem _root_.GlobalTheory.T.jacobi_triple_product_limit : ∀ (τ : ℂ) (z : ℂ), 0 < τ.im → Filter.Tendsto (fun n : ℕ => ∑ j ∈ Finset.Icc (-(n : ℤ)) n, GlobalTheory.JacobiTriple.finCoeff (cexp (π * I * τ) ^ 2) n j * jacobiTheta₂_term j z τ) Filter.atTop (nhds (jacobiTheta₂ z τ * (GlobalTheory.JacobiTriple.qPochInf (cexp (π * I * τ) ^ 2))⁻¹)) := by
+  first | exact @GlobalTheory.JacobiTriple.tendsto_finCoeff_sum_jacobiTheta₂ | exact GlobalTheory.JacobiTriple.tendsto_finCoeff_sum_jacobiTheta₂ | (intros; apply GlobalTheory.JacobiTriple.tendsto_finCoeff_sum_jacobiTheta₂ <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.JacobiTripleProductTwoVariableTheta
+
+section
 
 @[expose] public section
 
@@ -78,3 +229,6 @@ theorem tripleProduct : GlobalTheory.ThetaWeberRoad.TripleProduct := by
   rwa [mul_left_comm, mul_inv_cancel₀ hP0, mul_one] at this
 
 end GlobalTheory.JacobiTriple
+end
+end
+end

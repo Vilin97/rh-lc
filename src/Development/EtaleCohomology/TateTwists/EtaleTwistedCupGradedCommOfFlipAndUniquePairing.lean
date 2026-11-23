@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
-public import Development.EtaleCohomology.TateTwists.EtaleTwistedCupProductGradedCommutative
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +41,23 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleTwistedCupProductGradedCommutative
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+def LateralTheory.EtaleFoundations.EtaleTwistedCupProductGradedCommutative : Prop :=
+  ∀ (q : ℕ) [NeZero q] (E : Spc) {n m i j : ℤ} (a : Ht q E n i) (b : Ht q E m j), cup q a b = (n * m).negOnePow • (cup q b a).cast (by ring) (by ring)
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleTwistedCupGradedCommOfFlipAndUniquePairing
+
+section
+
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
@@ -79,3 +96,5 @@ theorem LateralTheory.EtaleFoundations.etale_twisted_cup_graded_comm_of_flip_and
   have e1 : cup q a b = (n * m).negOnePow • ν.cup E (add_comm m n) b a :=
     hflip (ZMod q) (twPair q i j) ν hν E rfl (add_comm m n) a b
   rw [e1, LateralTheory.EtaleFoundations.cc_cup_eq_of_twPair htw q E a b (i + j) (add_comm j i) ν hνtw (n + m) (add_comm m n)]
+end
+end

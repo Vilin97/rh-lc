@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.NadelVanishing.TopIsolated
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.NadelVanishing.TopNadel
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.NadelVanishingPairsOfPrincipalisation
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.PrincipalisationClosed
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +42,25 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.NadelVanishing.TopNadel
+
+section
+
+@[expose] public section
+
+namespace NadelVanishingSeparation.NSI
+
+theorem nadelVanishingPair : GlobalTheory.Published.NadelVanishingPair :=
+  GlobalTheory.Discrepancy.nadelVanishingPair_of_principalisation PositivityTheory.ResPlug.WeightsCompactStabilizer.principalisation_closed
+
+end NadelVanishingSeparation.NSI
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.NadelVanishing.TopNSI
+
+section
+
 @[expose] public section
 
 namespace NadelVanishingSeparation.NSI
@@ -49,3 +69,5 @@ theorem nadelVanishingAndNonKltDivisor : GlobalTheory.Published.NadelVanishingAn
   ⟨nadelVanishingPair, isolatedNonKltDivisor⟩
 
 end NadelVanishingSeparation.NSI
+end
+end

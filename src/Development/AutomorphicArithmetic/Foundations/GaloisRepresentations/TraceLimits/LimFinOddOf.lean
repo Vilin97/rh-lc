@@ -4,27 +4,19 @@ public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.LimWU4
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsAlgebraicWeightOfAutomorphicDefiniteUnitar
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLimitRep
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.KerOfLinApprox
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LinApproxOfPolyApproxTrc
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ApartOfNotMem
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AutomorphicLevelAwayNonsplit
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BlowUpFibreSemilocal
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClosedAtL
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsSatUOfUnderEq
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUniqueSplitPlaceComponentDefiniteUnitary
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FrobOpsIdx
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LimWUOfSeeds
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SphericalOperatorsExist
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TraceLimits.ExistsTraceLimit
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TraceLimits.SlopeTestRemainingChoices
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PolyApproxZeroPadic
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqZeroOfTraceMulEqZeroSemisimpleRepStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -32,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,6 +43,200 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPsCharOne
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.HasLevel
+public import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.ClosedAtLConclusionOfMem
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AutomorphicLevelAwayNonsplit
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BlowUpFibreSemilocal
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClosedAtL
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsSatUOfUnderEq
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUniqueSplitPlaceComponentDefiniteUnitary
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FrobOpsIdx
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CuspFormLimitTwoPlaces
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SphericalOperatorsExist
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TraceLimits.ExistsTraceLimit
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TraceLimits.SlopeTestRemainingChoices
+import Mathlib.FieldTheory.Galois.Profinite
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.KerOfLinApprox
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.N GlobalTheory.Cong GlobalTheory.PsChar
+
+namespace GlobalTheory.Cong
+
+theorem ker_of_linApprox : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] (a : ℕ) (r : Γ →* GL (Fin a) (PadicAlgCl l))
+    (C : Set (Γ →* GL (Fin a) (PadicAlgCl l))), IsSSRep r → LinApprox r C → ∀ s : Γ, (∀ ρ ∈ C, ρ s = 1) → r s = 1 := by
+  intro l _ Γ _ a r C hss hC s hs
+  have htr : ∀ g, trc r (s * g) = trc r g := by
+    intro g
+    refine eq_of_forall_dist_le fun ε hε => ?_
+    obtain ⟨t, c, ht, hb⟩ := hC (ε / 2) (by positivity)
+    have hsum : ∑ ρ ∈ t, c ρ * trc ρ (s * g) = ∑ ρ ∈ t, c ρ * trc ρ g := by
+      refine Finset.sum_congr rfl fun ρ hρ => ?_
+      simp [trc, map_mul, hs ρ (ht hρ)]
+    rw [dist_eq_norm]
+    calc ‖trc r (s * g) - trc r g‖
+        = ‖(trc r (s * g) - ∑ ρ ∈ t, c ρ * trc ρ (s * g)) - (trc r g - ∑ ρ ∈ t, c ρ * trc ρ g)‖ := by
+          rw [hsum]; congr 1; ring
+      _ ≤ ‖trc r (s * g) - ∑ ρ ∈ t, c ρ * trc ρ (s * g)‖ + ‖trc r g - ∑ ρ ∈ t, c ρ * trc ρ g‖ := norm_sub_le _ _
+      _ ≤ ε / 2 + ε / 2 := add_le_add (hb _) (hb _)
+      _ = ε := by ring
+  set R : Γ → Matrix (Fin a) (Fin a) (PadicAlgCl l) := fun g => ((r g : GL (Fin a) (PadicAlgCl l)) : Matrix (Fin a) (Fin a) (PadicAlgCl l)) with hR
+  have hM : R s - 1 ∈ Submodule.span (PadicAlgCl l) (Set.range R) := by
+    refine Submodule.sub_mem _ (Submodule.subset_span ⟨s, rfl⟩) ?_
+    have : R 1 = 1 := by simp [hR]
+    rw [← this]; exact Submodule.subset_span ⟨1, rfl⟩
+  have h0 := GlobalTheory.T.eq_zero_of_trace_mul_eq_zero_semisimple_rep (PadicAlgCl l) Γ a r hss (R s - 1) hM (fun g => by
+    have := htr g
+    simp only [trc, map_mul, Units.val_mul] at this
+    rw [sub_mul, one_mul, Matrix.trace_sub]
+    simpa [hR] using sub_eq_zero.2 this)
+  ext i j
+  have := congrFun (congrFun (sub_eq_zero.1 h0) i) j
+  simpa [hR] using this
+
+end GlobalTheory.Cong
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LinApproxOfPolyApproxTrc
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.N GlobalTheory.Cong GlobalTheory.PsChar
+
+namespace GlobalTheory.Cong
+
+theorem linApprox_of_polyApprox_trc : ∀ (k Γ : Type) [NormedField k] [IsUltrametricDist k] [Group Γ] (a : ℕ)
+    (r : Γ →* GL (Fin a) k) (C : Set (Γ →* GL (Fin a) k)), PolyApprox (trc r) (trc '' C) → LinApprox r C := by
+  intro k Γ _ _ _ a r C h ε hε
+  classical
+  obtain ⟨s, c, hs, hP⟩ := h ε hε
+  let f : (Γ → k) → (Γ →* GL (Fin a) k) := Function.invFunOn trc C
+  have hf : ∀ η ∈ s, f η ∈ C ∧ trc (f η) = η := fun η hη =>
+    ⟨Function.invFunOn_mem (hs hη), Function.invFunOn_eq (hs hη)⟩
+  have hinj : Set.InjOn f (s : Set (Γ → k)) := fun x hx y hy hxy => by
+    rw [← (hf x hx).2, ← (hf y hy).2, hxy]
+  refine ⟨s.image f, fun ρ => c (trc ρ), ?_, fun g => ?_⟩
+  · intro ρ hρ
+    obtain ⟨η, hη, rfl⟩ := Finset.mem_image.mp (Finset.mem_coe.mp hρ)
+    exact (hf η hη).1
+  · have := hP (MvPolynomial.X g)
+    simp only [MvPolynomial.aeval_X] at this
+    rw [Finset.sum_image hinj]
+    have e : ∑ x ∈ s, c (trc (f x)) * trc (f x) g = ∑ η ∈ s, c η * η g :=
+      Finset.sum_congr rfl fun η hη => by rw [(hf η hη).2]
+    rw [e]
+    exact this
+
+end GlobalTheory.Cong
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ApartOfNotMem
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.Published GlobalTheory.AboveL
+
+namespace GlobalTheory.Cong.OffTLimit
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {l : ℕ} [Fact l.Prime] {a : ℕ}
+
+theorem apart_of_not_mem {w₀ w : HeightOneSpectrum (𝓞 E)} (h₀ : ((l : ℕ) : 𝓞 E) ∈ w₀.asIdeal)
+    (hw : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) : Apart w w₀ := by
+  intro h
+  apply hw
+  have h1 : ((l : ℕ) : 𝓞 (maximalRealSubfield E)) ∈ (w₀.under (𝓞 (maximalRealSubfield E))).asIdeal := by
+    rw [HeightOneSpectrum.under_asIdeal, Ideal.under_def, Ideal.mem_comap, map_natCast]; exact h₀
+  rw [← h, HeightOneSpectrum.under_asIdeal, Ideal.under_def, Ideal.mem_comap, map_natCast] at h1
+  exact h1
+
+theorem z_eq_of_equiv {ι : Qbar l ≃+* ℂ} {Kw : Levels E a} {J : Type} (O : LocOps l ι Kw J) (j : J)
+    {σ σ' : SmIrr (GL (Fin a) ((O.pl j).adicCompletion E))} (e : σ.ρ.Equiv σ'.ρ)
+    (hne : PRep.fixed σ.ρ (Kw (O.pl j)) ≠ ⊥) : O.z j σ = O.z j σ' := by
+  obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 hne
+  have he : ∀ g u, e.toLinearEquiv (σ.ρ g u) = σ'.ρ g (e.toLinearEquiv u) := fun g u =>
+    LinearMap.congr_fun (e.isIntertwining' g) u
+  have hv' : e.toLinearEquiv v ∈ PRep.fixed σ'.ρ (Kw (O.pl j)) := by
+    change ∀ h : Kw (O.pl j), σ'.ρ (h : GL (Fin a) ((O.pl j).adicCompletion E)) (e.toLinearEquiv v) =
+      ((1 : Kw (O.pl j) →* ℂˣ) h : ℂ) • e.toLinearEquiv v
+    intro h
+    have := hv h
+    simp only [MonoidHom.one_apply, Units.val_one, one_smul] at this ⊢
+    rw [← he, this]
+  have hop : e.toLinearEquiv (opOf σ.ρ (O.f j) v) = opOf σ'.ρ (O.f j) (e.toLinearEquiv v) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [opOf, Finsupp.sum, map_sum, map_smul, he]
+  have h2 := O.act j σ' _ hv'
+  rw [← hop, O.act j σ v hv, map_smul] at h2
+  have hne' : e.toLinearEquiv v ≠ 0 := by simpa using hv0
+  exact smul_left_injective ℂ hne' h2
+
+end GlobalTheory.Cong.OffTLimit
+
+namespace GlobalTheory.Cong
+
+end GlobalTheory.Cong
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LimWUOfSeeds
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.Published GlobalTheory.AboveL GlobalTheory.CongL
+
+namespace GlobalTheory.CongL
+
+theorem overPl_unique {E : Type} [Field E] [NumberField E] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (τ : E →+* ℂ)
+    {w u : HeightOneSpectrum (𝓞 E)} (hw : OverPl ι τ w) (hu : OverPl ι τ u) : u = w := by
+  by_contra hne
+  have hI : u.asIdeal ≠ w.asIdeal := fun h => hne (HeightOneSpectrum.ext h)
+  have htop : u.asIdeal ⊔ w.asIdeal = ⊤ := Ideal.IsMaximal.coprime_of_ne u.isMaximal w.isMaximal hI
+  have h1 : (1 : 𝓞 E) ∈ u.asIdeal ⊔ w.asIdeal := htop ▸ Submodule.mem_top
+  obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.mp h1
+  have hx' := hu x hx
+  have hy' := hw y hy
+  have hsum : ι.symm (τ ((x : E))) + ι.symm (τ ((y : E))) = 1 := by
+    rw [← map_add (f := _), ← map_add (f := _)]
+    have : ((x : E) + (y : E)) = 1 := by exact_mod_cast congrArg (fun z : 𝓞 E => (z : E)) hxy
+    rw [this, map_one, map_one]
+  have hle := IsUltrametricDist.norm_add_le_max (ι.symm (τ ((x : E)))) (ι.symm (τ ((y : E))))
+  rw [hsum, norm_one] at hle
+  exact absurd hle (not_le.mpr (max_lt hx' hy'))
+
+end GlobalTheory.CongL
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TraceLimits.LimFinOddOf
+
+section
 
 @[expose] public section
 
@@ -249,3 +433,5 @@ theorem limWU4_of : ∀ (Rk : ℕ → Prop) (Ty : UnitaryAutomorphicTypeClass) (
 theorem limFinOdd_of (h : SeedFinOdd) (h' : CongFinOdd) : LimFinOdd := limWU4_of _ _ _ _ h h'
 
 end UpperTheory.Gal.Lim
+end
+end

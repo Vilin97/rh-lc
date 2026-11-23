@@ -5,16 +5,21 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormSatak
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SymmetricFunctionAbsoluteValues
 import GroundTheory.AutomorphicForms.MacdonaldRecursion
 public import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundAdic
-public import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundReps
+public import GroundTheory.AutomorphicForms.SphericalMinuscule
+public import GroundTheory.AutomorphicForms.AffineBruhat
+public import GroundTheory.AutomorphicForms.MacdonaldHecke
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,8 +46,142 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
 import Mathlib.Tactic.ReduceModChar
 public import GroundTheory.GlobalFields.LocalFieldAtPlace
+
+-- Source module: GroundTheory.IdeleRoots.TorusPowers.SatakeBoundGroup
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.BlockD
+
+namespace SatakeBound
+
+open GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GLnLocal Iwasawa Finset Matrix
+open scoped ValuativeRel
+
+attribute [local instance] GroundTheory.Automorphic.Spherical.fintypeResidue
+
+variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+theorem exists_perm_mem_iff {N : ℕ} {A B : Finset (Fin N)} (h : A.card = B.card) :
+    ∃ σ : Equiv.Perm (Fin N), ∀ x, σ x ∈ B ↔ x ∈ A := by
+  classical
+  have e1 : {x // x ∈ A} ≃ {x // x ∈ B} := Fintype.equivOfCardEq (by simp [h])
+  have e2 : {x // x ∉ A} ≃ {x // x ∉ B} :=
+    Fintype.equivOfCardEq (by rw [Fintype.card_subtype_compl, Fintype.card_subtype_compl]; simp [h])
+  refine ⟨(Equiv.sumCompl (· ∈ A)).symm.trans ((Equiv.sumCongr e1 e2).trans (Equiv.sumCompl (· ∈ B))),
+    fun x => ?_⟩
+  by_cases hx : x ∈ A
+  · rw [Equiv.trans_apply, Equiv.trans_apply, Equiv.sumCompl_symm_apply_of_pos hx, Equiv.sumCongr_apply,
+      Sum.map_inl, Equiv.sumCompl_apply_inl]
+    exact ⟨fun _ => hx, fun _ => (e1 ⟨x, hx⟩).2⟩
+  · rw [Equiv.trans_apply, Equiv.trans_apply, Equiv.sumCompl_symm_apply_of_neg hx, Equiv.sumCongr_apply,
+      Sum.map_inr, Equiv.sumCompl_apply_inr]
+    exact ⟨fun h' => absurd h' (e2 ⟨x, hx⟩).2, fun h' => absurd h' hx⟩
+
+theorem lamS_comp_of_mem_iff {N : ℕ} {A B : Finset (Fin N)} {σ : Equiv.Perm (Fin N)}
+    (hσ : ∀ x, σ x ∈ B ↔ x ∈ A) : lamS B ∘ σ = lamS A := by
+  funext x
+  simp only [Function.comp_apply, lamS, hσ]
+
+section Values
+
+variable {n : ℕ} {ω : GL (Fin n) F → ℂ}
+  (hR : ∀ g, ∀ k ∈ integralGL F n, ω (g * k) = ω g)
+  (hL : ∀ g, ∀ k ∈ integralGL F n, ω (k * g) = ω g)
+include hR hL
+
+end Values
+
+section ValuesCons
+
+variable {N : ℕ} {ω : GL (Fin (N + 1)) F → ℂ}
+  (hR : ∀ g, ∀ k ∈ integralGL F (N + 1), ω (g * k) = ω g)
+  (hL : ∀ g, ∀ k ∈ integralGL F (N + 1), ω (k * g) = ω g)
+include hR hL
+
+end ValuesCons
+
+variable {n : ℕ} [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
+
+
+end SatakeBound
+
+end GroundTheory.BlockD
+end
+end
+end
+
+-- Source module: GroundTheory.IdeleRoots.TorusPowers.SatakeBoundReps
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.BlockD
+
+namespace SatakeBound
+
+section Group
+
+variable {G : Type} [Group G] {K : Subgroup G} {α : G} {R : Finset G}
+
+end Group
+
+open GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GLnLocal Iwasawa Finset Matrix
+open scoped ValuativeRel
+
+attribute [local instance] GroundTheory.Automorphic.Spherical.fintypeResidue
+
+variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+  {n : ℕ}
+
+omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
+theorem one_apply_mem_integer (i j : Fin n) : (1 : Matrix (Fin n) (Fin n) F) i j ∈ 𝒪[F] := by
+  rw [Matrix.one_apply]
+  split_ifs
+  · exact (𝒪[F]).one_mem
+  · exact (𝒪[F]).zero_mem
+
+theorem unipC_mem_integralGL (S : Finset (Fin n)) (c : Pairs S → 𝓀[F]) : unipC S c ∈ integralGL F n := by
+  rw [mem_integralGL_iff]
+  refine ⟨fun i j => ?_, fun i j => ?_⟩
+  · change (1 + cMat S c) i j ∈ 𝒪[F]
+    rw [Matrix.add_apply]
+    exact (𝒪[F]).add_mem (one_apply_mem_integer i j) (cMat_mem c i j)
+  · change (1 - cMat S c) i j ∈ 𝒪[F]
+    rw [Matrix.sub_apply]
+    exact (𝒪[F]).sub_mem (one_apply_mem_integer i j) (cMat_mem c i j)
+
+theorem exists_torusPow_lamS_eq {A B : Finset (Fin n)} (h : A.card = B.card) :
+    ∃ P ∈ integralGL F n, torusPow F n (lamS A) = P⁻¹ * torusPow F n (lamS B) * P := by
+  obtain ⟨σ, hσ⟩ := exists_perm_mem_iff h
+  refine ⟨permGL F σ, GLnLocal.permGL_mem_integralGL F n σ, ?_⟩
+  rw [permGL_conj_torusPow, lamS_comp_of_mem_iff hσ]
+
+end SatakeBound
+
+end GroundTheory.BlockD
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaBound.SatakeEigenvalues
+
+section
 
 @[expose] public section
 
@@ -164,4 +303,6 @@ theorem satake_eigenvalue_formula : lift_levelP_alt₂ := by
 
 end PositivityTheory.JacquetShalikaLocal
 
+end
+end
 end

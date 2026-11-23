@@ -4,29 +4,10 @@ public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.FibreFram
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PushInvertibleModelOfIso
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArcPropertyLocalisationBaseChangeOfModelStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBaseChangeRigidifiedSectionOfScalarMultiplStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGeneratingFrameUnitChangeToChartStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLineSectionsExternalTensorPowerFibreStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitThetaKeyRuleOpenModelChartStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatFibrePowerAndExternalTensorSectionNonzeroCloStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralOfArcsAndGoodReductionPointsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPreimmersionFlatValuationSubringBaseRingStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitThetaKeyScalarGoodReductionChartStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitFibresLocalisedModelBaseChangeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationSubringDedekindOpenImmersionStatement
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsSecPullNonzeroOnFibres
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsKeyInputAtChartPoint
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNormalAtOfUnif
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExtendOfIntegralAtDvr
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NotPoleOfBounded
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsSabCancel
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.GenericPartDenseProOpen
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ValuationRingOfUnitBall
-import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRescale
-import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.IsLieBasisIffIsUnitDet
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGeneratingFrameUnitChangeToChart
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -38,7 +19,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Algebraic.Cardinality
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -59,7 +39,207 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLineSectionsExternalTensorPowerFibreStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitThetaKeyRuleOpenModelChartStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalisedModelUniformisationBaseChange
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.DegProd
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.MemNonzeroLocusProdSec
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsNatDiagIffIsDiag
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsChartOfIsLocalRing
+import Mathlib.RingTheory.LaurentSeries
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralOfArcsAndGoodReductionPointsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPreimmersionFlatValuationSubringBaseRingStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitThetaKeyScalarGoodReductionChartStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitFibresLocalisedModelBaseChangeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationSubringDedekindOpenImmersionStatement
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsSecPullNonzeroOnFibres
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsKeyInputAtChartPoint
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNormalAtOfUnif
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsChartOfIsLocalRing
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsIntegralOfForallMemDiscreteValuationSubring
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Tactic.Linter.Style
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FnAlgClosedOfFixedPoints
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NotPoleOfBounded
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsSabCancel
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.GenericPartDenseProOpen
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ValuationRingOfUnitBall
+import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRescale
+import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.IsLieBasisIffIsUnitDet
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.RingTheory.Algebraic.Cardinality
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AbProj
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGeneratingFrameUnitChangeToChartStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.IndefiniteRowSideFullHecke.FibreFramesOnModels
+open GlobalTheory.KeyUnitModels
+open GlobalTheory.LocM (KeyAt)
+open GlobalTheory.FlagMod (GChart ev tau tau_le le_preimage_comp)
+open scoped LaurentSeries
+
+theorem _root_.GlobalTheory.T.exists_generatingFrame_unit_change_to_chart : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (M : GChart Y) (V K : Type) [CommRing V] [IsLocalRing V] [Field K] [CharZero K] [Algebra V K] (yt : Sp V ⟶ Y.X) (hz : ⊤ ≤ yt ⁻¹ᵁ M.U) (t : SAB H (Sp V)) (_ : SABMap t Y.t yt) (n : ℕ) (w : Fin n → (epsR V ⟶ t.G)), IsLieBasis w → ∀ (θ : t.PP.L.Sec) (x : KeyIn K), IsFibreOf x t.G t.PP.L t.PP.rig θ w (algebraMap V K) → Generates (X := t.G) θ → ∃ (x' : KeyIn K) (a d : Vˣ), KeyAt M (spMap (algebraMap V K) ≫ yt) (le_preimage_comp _ hz) x' ∧ ∀ κ : KeyRule, IsKeyRule κ → algebraMap V K a ^ 8 * (κ K x' : K) = algebraMap V K d ^ 4 * (κ K x : K) := by
+  first | exact @GlobalTheory.KeyFramePoint.exists_keyAt_units | exact GlobalTheory.KeyFramePoint.exists_keyAt_units | (intros; apply GlobalTheory.KeyFramePoint.exists_keyAt_units <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatFibrePowerAndExternalTensorSectionNonzeroClo
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.IndefiniteRowSideFullHecke.FibreFramesOnModels
+open GlobalTheory.KeyUnitModels
+
+namespace GlobalTheory.BoxNonzeroClosed
+
+theorem flat_powObj {S : Scheme.{0}} (G : Over S) [Flat G.hom] : ∀ n : ℕ, Flat (Out.powObj G n).hom
+  | 0 => inferInstanceAs (Flat (𝟙 S))
+  | n + 1 => by
+    have := flat_powObj G n
+    exact inferInstanceAs (Flat (pullback.fst G.hom (Out.powObj G n).hom ≫ G.hom))
+
+theorem flat_pow {S : Scheme.{0}} (G : Over S) [Flat G.hom] (N : ℕ) : Flat (pow G N).hom := by
+  have := flat_powObj G N
+  let e : pow G N ≅ Out.powObj G N :=
+    (productIsProduct (fun _ : Fin N => G)).conePointUniqueUpToIso (Out.powIsLimit G N)
+  have : IsIso e.hom.left := inferInstanceAs (IsIso ((Over.forget S).map e.hom))
+  rw [← Over.w e.hom]
+  infer_instance
+
+theorem main : ∀ (V : Type) [CommRing V] [IsLocalRing V] (G : Over (Sp V)) [Flat G.hom] (L : LB G.left) (θ : L.Sec),
+    NonzeroClosed (X := G) θ → ∀ N : ℕ, Flat (pow G N).hom ∧ NonzeroClosed (X := pow G N) (boxSec G θ N) := by
+  rintro V _ _ G _ L θ ⟨g, hg, hθ⟩ N
+  refine ⟨flat_pow G N, ?_⟩
+  obtain ⟨y, hy, hy'⟩ := GlobalTheory.BoxSection.exists_point (fun k => Pi.π (fun _ : Fin N => G) k)
+    (productIsProduct (fun _ : Fin N => G)) _ (fun _ => g) (fun _ => hg)
+  exact ⟨y, hy, GlobalTheory.BoxSection.mem_nonzeroLocus_prodSec L (pr G N) (fun _ => θ) y
+    fun i => (hy' i).symm ▸ hθ⟩
+
+end GlobalTheory.BoxNonzeroClosed
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatFibrePowerAndExternalTensorSectionNonzeroCloStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.IndefiniteRowSideFullHecke.FibreFramesOnModels
+open GlobalTheory.KeyUnitModels
+open GlobalTheory.LocM (KeyAt)
+open GlobalTheory.FlagMod (GChart ev tau tau_le le_preimage_comp)
+open scoped LaurentSeries
+
+theorem _root_.GlobalTheory.T.flat_fibrePower_and_externalTensorSection_nonzero_closedFibre : ∀ (V : Type) [CommRing V] [IsLocalRing V] (G : Over (Sp V)) [Flat G.hom] (L : LB G.left) (θ : L.Sec), NonzeroClosed (X := G) θ → ∀ N : ℕ, Flat (pow G N).hom ∧ NonzeroClosed (X := pow G N) (boxSec G θ N) := by
+  first | exact @GlobalTheory.BoxNonzeroClosed.main | exact GlobalTheory.BoxNonzeroClosed.main | (intros; apply GlobalTheory.BoxNonzeroClosed.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExtendOfIntegralAtDvr
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.ModuliIntegralCharts GlobalTheory.ShFam GlobalTheory.LocM
+open GlobalTheory.FlagMod (GChart ev tau tau_le le_preimage_comp)
+open scoped LaurentSeries
+
+namespace GlobalTheory.GenExt
+open GlobalTheory.FlagMod
+
+theorem generic_le {X : Scheme.{0}} {G W : X.Opens} (hG : IsAffineOpen G) [IsDomain Γ(X, G)]
+    (hW : W ≤ G) (hne : ∃ x, x ∈ W) :
+    ⊤ ≤ (spMap (algebraMap Γ(X, G) (FractionRing Γ(X, G))) ≫ tau hG) ⁻¹ᵁ W := by
+  intro y _
+  obtain ⟨x, hx⟩ := hne
+  obtain ⟨q, hq⟩ := hG.range_fromSpec.ge (hW hx)
+  have hq' : q ∈ (tau hG ⁻¹ᵁ W : (Sp Γ(X, G)).Opens) := by
+    show hG.fromSpec q ∈ W
+    rw [hq]; exact hx
+  have hsp : (spMap (algebraMap Γ(X, G) (FractionRing Γ(X, G)))) y ⤳ q := by
+    refine (PrimeSpectrum.le_iff_specializes (R := Γ(X, G)) ((spMap (algebraMap Γ(X, G) (FractionRing Γ(X, G)))) y) q).1 ?_
+    show Ideal.comap _ y.asIdeal ≤ q.asIdeal
+    rw [@Ideal.eq_bot_of_prime _ _ y.asIdeal y.2]
+    exact Ideal.comap_bot_le_of_injective _ (IsFractionRing.injective Γ(X, G) (FractionRing Γ(X, G)))
+  exact hsp.mem_open (tau hG ⁻¹ᵁ W).isOpen hq'
+
+theorem extend_of_integral_at_dvr : ∀ (X : Scheme.{0}) (G W₀ : X.Opens) (hle : W₀ ≤ G), IsAffineOpen G → IsDomain Γ(X, G) → IsNoetherianRing Γ(X, G) → IsIntegrallyClosed Γ(X, G) → Countable Γ(X, G) → (∃ x, x ∈ W₀) → Function.Injective (resG X hle) ∧ ∀ f₀ : Γ(X, W₀), (∀ (R K : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K] (z : Sp R ⟶ X), Countable R → ⊤ ≤ z ⁻¹ᵁ G → ∀ h : ⊤ ≤ (spMap (algebraMap R K) ≫ z) ⁻¹ᵁ W₀, ev (spMap (algebraMap R K) ≫ z) W₀ h f₀ ∈ (algebraMap R K).range) → ∃ f : Γ(X, G), resG X hle f = f₀ := by
+  intro X G W₀ hle hG hD hN hI hC hne
+  let K := FractionRing Γ(X, G)
+  let η : Sp K ⟶ X := spMap (algebraMap Γ(X, G) K) ≫ tau hG
+  have hηG : ⊤ ≤ η ⁻¹ᵁ G := le_preimage_comp _ (tau_le hG le_rfl)
+  have key : ∀ (W : X.Opens) (hW : W ≤ G) (h : ⊤ ≤ η ⁻¹ᵁ W) (a : Γ(X, G)),
+      ev η W h (resG X hW a) = algebraMap Γ(X, G) K a := by
+    intro W hW h a
+    rw [ev_res η hW h hηG, ev_spMap_tau hG]
+  have hW₀ : ⊤ ≤ η ⁻¹ᵁ W₀ := generic_le hG hle hne
+  refine ⟨fun a b e => IsFractionRing.injective Γ(X, G) K (by rw [← key W₀ hle hW₀, ← key W₀ hle hW₀, e]), ?_⟩
+  intro f₀ hf
+  have hKc : Countable K := by
+    have hs : Function.Surjective (fun p : Γ(X, G) × nonZeroDivisors Γ(X, G) => IsLocalization.mk' K p.1 p.2) :=
+      fun x => by
+        obtain ⟨p, e⟩ := IsLocalization.mk'_surjective (nonZeroDivisors Γ(X, G)) x
+        exact ⟨p, e⟩
+    exact hs.countable
+  have hint : _root_.IsIntegral Γ(X, G) (ev η W₀ hW₀ f₀) := by
+    apply GlobalTheory.isIntegral_of_forall_mem_discreteValuationSubring Γ(X, G) K
+    intro V hV hBV
+    let ι : Γ(X, G) →+* V := (algebraMap Γ(X, G) K).codRestrict V.toSubring hBV
+    have hz : ⊤ ≤ (spMap ι ≫ tau hG) ⁻¹ᵁ G := le_preimage_comp _ (tau_le hG le_rfl)
+    have hc : (algebraMap V K).comp ι = algebraMap Γ(X, G) K := RingHom.ext fun _ => rfl
+    have he : spMap (algebraMap V K) ≫ spMap ι ≫ tau hG = η := by
+      rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hc]
+    have h' : ⊤ ≤ (spMap (algebraMap V K) ≫ spMap ι ≫ tau hG) ⁻¹ᵁ W₀ := by rw [he]; exact hW₀
+    obtain ⟨v, hv⟩ := hf V K (spMap ι ≫ tau hG) inferInstance hz h'
+    rw [ev_congr he W₀ h' hW₀] at hv
+    rw [← hv]
+    exact v.2
+  obtain ⟨f, hf'⟩ := (IsIntegrallyClosed.isIntegral_iff (K := K)).1 hint
+  refine ⟨f, ext_ev_loc fun p hp => ?_⟩
+  obtain ⟨s, hsle, hps⟩ := hG.exists_basicOpen_le ⟨p, hp⟩ (hle hp)
+  have hN : ⊤ ≤ η ⁻¹ᵁ X.basicOpen s := generic_le hG (X.basicOpen_le s) ⟨p, hps⟩
+  have inj : Function.Injective (ev η (X.basicOpen s) hN) := by
+    haveI := hG.isLocalization_basicOpen s
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro x hx
+    obtain ⟨⟨a, m⟩, e⟩ := IsLocalization.surj (Submonoid.powers s) x
+    have h1 : algebraMap Γ(X, G) K a = 0 := by
+      rw [← key _ (X.basicOpen_le s) hN a]
+      change ev η _ hN (algebraMap Γ(X, G) Γ(X, X.basicOpen s) a) = 0
+      rw [← e, map_mul, hx, zero_mul]
+    have ha : a = 0 := IsFractionRing.injective Γ(X, G) K (by rw [h1, map_zero])
+    have hu : IsUnit (algebraMap Γ(X, G) Γ(X, X.basicOpen s) m) := IsLocalization.map_units _ m
+    rw [ha, map_zero] at e
+    exact hu.mul_left_eq_zero.1 e
+  have hres : resG X hsle (resG X hle f) = resG X hsle f₀ := by
+    apply inj
+    rw [ev_res η hsle hN hW₀, ev_res η hsle hN hW₀, key W₀ hle hW₀, hf']
+  refine ⟨X.basicOpen s, hps, fun S _ z hz hzN => ?_⟩
+  rw [← ev_res z hsle hzN hz, ← ev_res z hsle hzN hz (f₀), hres]
+
+end GlobalTheory.GenExt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaKeyScalarIsUnitOnIntegralModels
+
+section
 
 @[expose] public section
 
@@ -282,3 +462,6 @@ theorem keyUnitOnModels : KeyUnitOnModels := by
   exact unitAt_valuation Y h₁ h₂ h₄.2.2.1 h₅ h₆ h₇ hκ V C
 
 end GlobalTheory.KeyUnitModels
+end
+end
+end

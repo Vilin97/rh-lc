@@ -1,8 +1,6 @@
 module
 
-public import Formalism.GaussJetBounds.StatementD
-public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-public import Mathlib.Topology.MetricSpace.Ultra.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,9 +39,39 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Topology.MetricSpace.Ultra.Basic
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.TypeStar
 public import Mathlib.Analysis.Normed.Group.Ultra
+
+-- Source module: Formalism.GaussJetBounds.StatementD
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+universe u
+
+namespace Formalism.DworkPowerSeriesWeights
+
+def JCount : Prop :=
+  ∀ l a : ℕ, 2 ≤ l → 1 ≤ a →
+    (((Finset.Icc (-(a : ℤ)) a).filter (fun j => Odd j ∧ l ^ j.natAbs ≤ a)).card : ℝ) ≤
+      2 * Real.logb l a + 1
+
+end Formalism.DworkPowerSeriesWeights
+end
+end
+end
+
+-- Source module: Formalism.GaussJetBounds.GaussJetProofs.NormDetLeOneOfEntries
+
+section
 
 @[expose] public section
 
@@ -111,3 +138,6 @@ lemma norm_inv_entry_le_one {n : Type*} [Fintype n] [DecidableEq n] (M : Matrix 
 end BasisSec
 
 end Formalism.DworkPowerSeriesWeights
+end
+end
+end

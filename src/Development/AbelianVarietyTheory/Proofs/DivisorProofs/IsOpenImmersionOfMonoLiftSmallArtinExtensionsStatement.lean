@@ -2,7 +2,9 @@ module
 
 public import Mathlib.AlgebraicGeometry.Noetherian
 public import Mathlib.Combinatorics.Quiver.ReflQuiver
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenImmersionOfMonoLiftSmallArtinExtensions
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsStalkRetractionOfSmallLiftingStatement
+public import Mathlib.RingTheory.RingHom.Flat
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IdealEqBotOfFlatQuotientOfMapMaximalIdeal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,13 +44,249 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.AlgebraicGeometry.ResidueField
+import Mathlib.CategoryTheory.Limits.Shapes.Countable
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.NonemptyMumfordTorusQuotientTower
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatMono
 import Development.AbelianVarietyTheory.Definitions.Divisors.SameIdIff
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
 import Development.AbelianVarietyTheory.PublishedTheorems.AbelianLaws.PrincipalPolarisationOneSection
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsAdditiveOfUniversal
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatOfLocalRetractionsModMaximalIdealPow
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+section
+
+variable {A B : Type*} [CommRing A] [CommRing B] [IsLocalRing A] [IsLocalRing B]
+
+theorem isLocalHom_mk_maximalIdeal_pow_succ (n : ℕ) :
+    IsLocalHom (Ideal.Quotient.mk (maximalIdeal A ^ (n + 1))) := by
+  refine ⟨fun a ha => ?_⟩
+  by_contra hu
+  obtain ⟨c, hc⟩ := ha.exists_right_inv
+  obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective c
+  rw [← map_mul, ← map_one (Ideal.Quotient.mk (maximalIdeal A ^ (n + 1))),
+    Ideal.Quotient.eq] at hc
+  have h1 : a * c - 1 ∈ maximalIdeal A := Ideal.pow_le_self n.succ_ne_zero hc
+  have h2 : a * c ∈ maximalIdeal A := Ideal.mul_mem_right _ _ hu
+  have h3 : (1 : A) ∈ maximalIdeal A := by simpa using sub_mem h2 h1
+  exact (maximalIdeal.isMaximal A).ne_top ((Ideal.eq_top_iff_one _).mpr h3)
+
+theorem quotientMap_pow_bijective_of_retraction (φ : A →+* B) [IsLocalHom φ] (n : ℕ)
+    (hle : maximalIdeal A ^ (n + 1) ≤ (maximalIdeal B ^ (n + 1)).comap φ)
+    (ψ : B →+* A ⧸ maximalIdeal A ^ (n + 1)) (hψ : ψ.comp φ = Ideal.Quotient.mk _)
+    (huniq : ∀ g₁ g₂ : B →+* B ⧸ maximalIdeal B ^ (n + 1), IsLocalHom g₁ → IsLocalHom g₂ →
+      g₁.comp φ = g₂.comp φ → g₁ = g₂) :
+    Function.Bijective (Ideal.quotientMap (maximalIdeal B ^ (n + 1)) φ hle) := by
+  haveI hA := isLocalHom_mk_maximalIdeal_pow_succ (A := A) n
+  haveI hB := isLocalHom_mk_maximalIdeal_pow_succ (A := B) n
+  have hψφ : ∀ a, ψ (φ a) = Ideal.Quotient.mk _ a := fun a => RingHom.congr_fun hψ a
+  have hsurj : Function.Surjective ψ := fun x => by
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    exact ⟨φ a, hψφ a⟩
+  haveI : Nontrivial (A ⧸ maximalIdeal A ^ (n + 1)) :=
+    Ideal.Quotient.nontrivial_iff.mpr fun h =>
+      (maximalIdeal.isMaximal A).ne_top (top_le_iff.mp (h ▸ Ideal.pow_le_self n.succ_ne_zero))
+  haveI hψl : IsLocalHom ψ := IsLocalHom.of_surjective ψ hsurj
+  haveI hφl : IsLocalHom (Ideal.quotientMap (maximalIdeal B ^ (n + 1)) φ hle) := by
+    refine ⟨fun x hx => ?_⟩
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    rw [Ideal.quotientMap_mk] at hx
+    exact (IsUnit.of_map φ _ (IsUnit.of_map (Ideal.Quotient.mk _) _ hx)).map _
+  have key := huniq (Ideal.Quotient.mk _)
+    ((Ideal.quotientMap (maximalIdeal B ^ (n + 1)) φ hle).comp ψ) hB inferInstance (by
+      ext a
+      simp [hψφ])
+  refine ⟨(injective_iff_map_eq_zero _).mpr fun x hx => ?_, fun y => ?_⟩
+  · obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    rw [Ideal.quotientMap_mk, Ideal.Quotient.eq_zero_iff_mem] at hx
+    have h1 : maximalIdeal B ≤ ((maximalIdeal A).map
+        (Ideal.Quotient.mk (maximalIdeal A ^ (n + 1)))).comap ψ := by
+      intro b hb
+      obtain ⟨c, hc⟩ := Ideal.Quotient.mk_surjective (ψ b)
+      rw [Ideal.mem_comap, ← hc]
+      refine Ideal.mem_map_of_mem _ fun hu => hb ?_
+      exact IsUnit.of_map ψ _ (hc ▸ hu.map _)
+    have h2 := pow_le_comap_pow_of_le h1 (n + 1) hx
+    rwa [Ideal.mem_comap, ← Ideal.map_pow, Ideal.map_quotient_self, hψφ, Ideal.mem_bot] at h2
+  · obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+    exact ⟨ψ b, (RingHom.congr_fun key b).symm⟩
+
+end
+
+theorem flat_of_retractions_mod_pow {A B : Type} [CommRing A] [CommRing B] [IsLocalRing A]
+    [IsLocalRing B] [IsNoetherianRing A] [IsNoetherianRing B] (φ : A →+* B) [IsLocalHom φ]
+    (hex : ∀ n : ℕ, ∃ ψ : B →+* A ⧸ maximalIdeal A ^ (n + 1), ψ.comp φ = Ideal.Quotient.mk _)
+    (huniq : ∀ n : ℕ, ∀ g₁ g₂ : B →+* B ⧸ maximalIdeal B ^ (n + 1), IsLocalHom g₁ →
+      IsLocalHom g₂ → g₁.comp φ = g₂.comp φ → g₁ = g₂) : φ.Flat := by
+  have hle : maximalIdeal A ≤ (maximalIdeal B).comap φ := fun a ha => map_nonunit φ a ha
+  have hbij : ∀ n : ℕ, Function.Bijective
+      (Ideal.quotientMap (maximalIdeal B ^ n) φ (pow_le_comap_pow_of_le hle n)) := by
+    intro n
+    cases n with
+    | zero =>
+      haveI : Subsingleton (A ⧸ maximalIdeal A ^ 0) := Ideal.Quotient.subsingleton_iff.mpr (by simp)
+      haveI : Subsingleton (B ⧸ maximalIdeal B ^ 0) := Ideal.Quotient.subsingleton_iff.mpr (by simp)
+      exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun _ => ⟨0, Subsingleton.elim _ _⟩⟩
+    | succ n =>
+      obtain ⟨ψ, hψ⟩ := hex n
+      exact quotientMap_pow_bijective_of_retraction φ n _ ψ hψ (huniq n)
+  refine ringHom_flat_of_flat_quotientMap_pow φ ?_ (maximalIdeal_le_jacobson _)
+    (pow_le_comap_pow_of_le hle) fun n => RingHom.Flat.of_bijective (hbij n)
+  refine le_antisymm (Ideal.map_le_of_le_comap hle)
+    (Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian _)
+      (maximalIdeal_le_jacobson _) fun y hy => ?_)
+  obtain ⟨x, hx⟩ := (hbij 2).2 (Ideal.Quotient.mk _ y)
+  obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective x
+  rw [Ideal.quotientMap_mk, Ideal.Quotient.eq] at hx
+  have hxm : x ∈ maximalIdeal A := by
+    have : φ x ∈ maximalIdeal B := by
+      simpa using add_mem (Ideal.pow_le_self two_ne_zero hx) hy
+    exact fun hu => this (hu.map φ)
+  rw [show y = φ x - (φ x - y) by ring]
+  refine sub_mem (Submodule.mem_sup_left (Ideal.mem_map_of_mem _ hxm)) (Submodule.mem_sup_right ?_)
+  rwa [smul_eq_mul, ← pow_two]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatOfLocalRetractionsModMaximalIdealPowStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.flat_of_local_retractions_mod_maximalIdeal_pow : ∀ {A B : Type} [CommRing A] [CommRing B] [IsLocalRing A] [IsLocalRing B] [IsNoetherianRing A] [IsNoetherianRing B] (φ : A →+* B) [IsLocalHom φ], (∀ n : ℕ, ∃ ψ : B →+* A ⧸ maximalIdeal A ^ (n + 1), ψ.comp φ = Ideal.Quotient.mk _) → (∀ n : ℕ, ∀ g₁ g₂ : B →+* B ⧸ maximalIdeal B ^ (n + 1), IsLocalHom g₁ → IsLocalHom g₂ → g₁.comp φ = g₂.comp φ → g₁ = g₂) → φ.Flat := by
+  first | exact @GlobalTheory.flat_of_retractions_mod_pow | exact GlobalTheory.flat_of_retractions_mod_pow | (intros; apply GlobalTheory.flat_of_retractions_mod_pow <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueFieldMapSurjectiveOfMono
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing
+
+namespace GlobalTheory
+
+theorem surjective_of_epi_of_field_to_field {K L : Type} [Field K] [Field L]
+    (φ : CommRingCat.of K ⟶ CommRingCat.of L) [Epi φ] : Function.Surjective φ.hom := by
+  letI : Algebra K L := φ.hom.toAlgebra
+  have h : ∀ a : L, (a ⊗ₜ[K] (1 : L)) = (1 : L) ⊗ₜ[K] a := by
+    intro a
+    have e : CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom (R := K) (A := L) (B := L))
+        = CommRingCat.ofHom (Algebra.TensorProduct.includeRight (R := K) (A := L) (B := L)).toRingHom := by
+      rw [← cancel_epi φ]
+      ext c
+      exact congr($(Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap (R := K) (A := L) (B := L)) c)
+    exact congr(($e).hom a)
+  obtain ⟨g, hg⟩ := LinearMap.exists_leftInverse_of_injective (Algebra.linearMap K L)
+    (LinearMap.ker_eq_bot.2 (algebraMap K L).injective)
+  have g1 : g 1 = 1 := by simpa using congr($hg 1)
+  intro a
+  refine ⟨g a, ?_⟩
+  have := congr(TensorProduct.rid K L (LinearMap.lTensor L g $(h a)))
+  simp only [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, g1, one_smul] at this
+  exact (Algebra.algebraMap_eq_smul_one (A := L) (g a)).trans this.symm
+
+theorem residueFieldMap_surjective_of_mono {X Y : Scheme.{0}} (f : X ⟶ Y) [Mono f] (x : X) :
+    Function.Surjective (f.residueFieldMap x).hom := by
+  have h1 : Mono (Spec.map (f.residueFieldMap x) ≫ Y.fromSpecResidueField (f x)) := by
+    rw [Scheme.Hom.SpecMap_residueFieldMap_fromSpecResidueField]
+    infer_instance
+  have h2 : Mono (Spec.map (f.residueFieldMap x)) := mono_of_mono _ (Y.fromSpecResidueField (f x))
+  have h3 : Mono (f.residueFieldMap x).op :=
+    Scheme.Spec.mono_of_mono_map (f := (f.residueFieldMap x).op) h2
+  have h4 : Epi (f.residueFieldMap x) := (CategoryTheory.op_mono_iff _).1 h3
+  exact surjective_of_epi_of_field_to_field (K := Y.residueField (f x)) (L := X.residueField x) (f.residueFieldMap x)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueFieldMapSurjectiveOfMonoStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing
+
+theorem _root_.GlobalTheory.T.residueFieldMap_surjective_of_mono' : ∀ {X Y : Scheme.{0}} (f : X ⟶ Y) [Mono f] (x : X), Function.Surjective (f.residueFieldMap x).hom := by
+  first | exact @GlobalTheory.residueFieldMap_surjective_of_mono | exact GlobalTheory.residueFieldMap_surjective_of_mono | (intros; apply GlobalTheory.residueFieldMap_surjective_of_mono <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenImmersionOfMonoLiftSmallArtinExtensions
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.AbDual GlobalTheory.DualCon
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+open IsLocalRing
+
+namespace GlobalTheory.ArtinOpen
+
+theorem stalk_hom_ext_of_mono {X Y : Scheme.{0}} (f : X ⟶ Y) [Mono f] (x : X) (R : CommRingCat.{0})
+    [IsLocalRing R] (g₁ g₂ : X.presheaf.stalk x ⟶ R) [IsLocalHom g₁.hom] [IsLocalHom g₂.hom]
+    (h : f.stalkMap x ≫ g₁ = f.stalkMap x ≫ g₂) : g₁ = g₂ := by
+  have e : Spec.map g₁ ≫ X.fromSpecStalk x = Spec.map g₂ ≫ X.fromSpecStalk x := by
+    rw [← cancel_mono f, Category.assoc, Category.assoc, ← Scheme.SpecMap_stalkMap_fromSpecStalk,
+      ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp, h]
+  have e2 := (SpecToEquivOfLocalRing X R).symm.injective (a₁ := ⟨x, g₁, inferInstance⟩)
+    (a₂ := ⟨x, g₂, inferInstance⟩)
+    (by rw [SpecToEquivOfLocalRing_symm_apply, SpecToEquivOfLocalRing_symm_apply]; exact e)
+  obtain ⟨_, e3⟩ := SpecToEquivOfLocalRing_eq_iff.mp e2
+  simpa using e3
+
+theorem isOpenImmersion_of_lift : ∀ {X Y : Scheme.{0}} (f : X ⟶ Y) [IsLocallyNoetherian Y] [LocallyOfFiniteType f] [Mono f], (∀ (B : Type) [CommRing B] [IsLocalRing B] [IsArtinianRing B] (I : Ideal B), I ≤ IsLocalRing.maximalIdeal B → IsLocalRing.maximalIdeal B * I = ⊥ → ∀ (a : Spec (CommRingCat.of (B ⧸ I)) ⟶ X) (b : Spec (CommRingCat.of B) ⟶ Y), a ≫ f = Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫ b → ∃ l : Spec (CommRingCat.of B) ⟶ X, Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫ l = a ∧ l ≫ f = b) → IsOpenImmersion f := by
+  intro X Y f _ _ _ hlift
+  haveI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
+  have : Flat f := by
+    refine (Flat.iff_flat_stalkMap f).2 fun x => ?_
+    have hres := GlobalTheory.T.residueFieldMap_surjective_of_mono' f x
+    refine GlobalTheory.T.flat_of_local_retractions_mod_maximalIdeal_pow (f.stalkMap x).hom (fun n => GlobalTheory.T.exists_stalk_retraction_of_small_lifting f hlift x hres n) ?_
+    intro n g₁ g₂ h₁ h₂ h
+    have := stalk_hom_ext_of_mono f x
+      (CommRingCat.of (X.presheaf.stalk x ⧸ maximalIdeal (X.presheaf.stalk x) ^ (n + 1)))
+      (CommRingCat.ofHom g₁) (CommRingCat.ofHom g₂) (by ext a; exact congr($h a))
+    exact congrArg CommRingCat.Hom.hom this
+  exact IsOpenImmersion.of_flat_of_mono f
+
+end GlobalTheory.ArtinOpen
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenImmersionOfMonoLiftSmallArtinExtensionsStatement
+
+section
 
 @[expose] public section
 
@@ -59,3 +298,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.isOpenImmersion_of_mono_lift_smallArtinExtensions : ∀ {X Y : Scheme.{0}} (f : X ⟶ Y) [IsLocallyNoetherian Y] [LocallyOfFiniteType f] [Mono f], (∀ (B : Type) [CommRing B] [IsLocalRing B] [IsArtinianRing B] (I : Ideal B), I ≤ IsLocalRing.maximalIdeal B → IsLocalRing.maximalIdeal B * I = ⊥ → ∀ (a : Spec (CommRingCat.of (B ⧸ I)) ⟶ X) (b : Spec (CommRingCat.of B) ⟶ Y), a ≫ f = Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫ b → ∃ l : Spec (CommRingCat.of B) ⟶ X, Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫ l = a ∧ l ≫ f = b) → IsOpenImmersion f := by
   first | exact @GlobalTheory.ArtinOpen.isOpenImmersion_of_lift | exact GlobalTheory.ArtinOpen.isOpenImmersion_of_lift | (intros; apply GlobalTheory.ArtinOpen.isOpenImmersion_of_lift <;> assumption)
+end
+end

@@ -1,8 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Jets.Imports
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqLoweringStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqRaisingStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqLowering
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +41,200 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqLoweringStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.inv_sq_le_wignerCoeffSqLowering : ∀ (n : ℕ) (L : Fin (n+1) → ℤ) (M : Fin n → ℤ) (l : Fin (n+1)) (D : ℝ), StrictAnti L → (∀ j : Fin n, L j.succ < M j ∧ M j ≤ L j.castSucc) → (∀ j, M j ≠ L l) → 1 ≤ D → ((L 0 : ℝ) - L l ≤ D) → ((L l : ℝ) - L (Fin.last n) ≤ D) → (D ^ 2)⁻¹ ≤ GlobalTheory.WigSh.wM L M l := by
+  first | exact @GlobalTheory.WigSh.inv_sq_le_wM | exact GlobalTheory.WigSh.inv_sq_le_wM | (intros; apply GlobalTheory.WigSh.inv_sq_le_wM <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.Jets.FactorNonneg
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace GlobalTheory.WigSh.Model
+
+def Box {n : ℕ} (L : Fin (n + 1) → ℤ) (M : Fin n → ℤ) : Prop :=
+  ∀ j : Fin n, L j.succ < M j ∧ M j ≤ L j.castSucc
+
+theorem Box.strictAnti {n : ℕ} {L : Fin (n + 1) → ℤ} {M : Fin n → ℤ} (h : Box L M) :
+    StrictAnti L := by
+  rw [Fin.strictAnti_iff_succ_lt]
+  intro j
+  exact lt_of_lt_of_le (h j).1 (h j).2
+
+theorem prod_erase_eq {n : ℕ} (f : Fin (n + 1) → ℝ) (l : Fin (n + 1)) :
+    ∏ j ∈ univ.erase l, f j = ∏ j : Fin n, f (l.succAbove j) := by
+  rw [← Finset.compl_singleton, ← Fin.image_succAbove_univ,
+    Finset.prod_image (fun a _ b _ hab => Fin.succAbove_right_injective hab)]
+
+theorem factor_nonneg {n : ℕ} {L : Fin (n + 1) → ℤ} {M : Fin n → ℤ} (h : Box L M)
+    (l : Fin (n + 1)) (j : Fin n) (e : ℤ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    0 ≤ ((M j : ℝ) - e - L l) / ((L (l.succAbove j) : ℝ) - L l) := by
+  have hA := h.strictAnti
+  have he0' : (0 : ℝ) ≤ e := by exact_mod_cast he0
+  have he1' : (e : ℝ) ≤ 1 := by exact_mod_cast he1
+  rcases lt_or_ge (Fin.castSucc j) l with hj | hj
+  · rw [Fin.succAbove_of_castSucc_lt l j hj]
+    have h1 : L l ≤ L j.succ := hA.antitone (Fin.castSucc_lt_iff_succ_le.mp hj)
+    have h2 : L l < L j.castSucc := hA hj
+    have h3 := (h j).1
+    have h4 : (L l : ℝ) + 1 ≤ M j := by exact_mod_cast (by omega : L l + 1 ≤ M j)
+    have h5 : (L l : ℝ) < L j.castSucc := by exact_mod_cast h2
+    apply div_nonneg <;> linarith
+  · rw [Fin.succAbove_of_le_castSucc l j hj]
+    have h1 : L j.castSucc ≤ L l := hA.antitone hj
+    have h2 : L j.succ < L l := hA (lt_of_le_of_lt hj Fin.castSucc_lt_succ)
+    have h4 : (M j : ℝ) ≤ L l := by exact_mod_cast le_trans (h j).2 h1
+    have h5 : (L j.succ : ℝ) < L l := by exact_mod_cast h2
+    apply div_nonneg_of_nonpos <;> linarith
+
+theorem placeWeight_nonneg {n : ℕ} {L : Fin (n + 1) → ℤ} {M : Fin n → ℤ} (h : Box L M)
+    (l : Fin (n + 1)) : 0 ≤ wP L M l := by
+  unfold GlobalTheory.WigSh.wP
+  rw [prod_erase_eq, ← Finset.prod_div_distrib]
+  refine Finset.prod_nonneg fun j _ => ?_
+  simpa using factor_nonneg h l j 1 zero_le_one le_rfl
+
+end GlobalTheory.WigSh.Model
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqRaising
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace GlobalTheory.WigSh
+
+theorem prod_other_neighbour_raise {n : ℕ} (d : Fin (n + 1) → ℝ) (l : Fin (n + 1))
+    (hd : ∀ i, 0 < d i) (hl : d l = 1) :
+    (∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc)) * (d 0 * d (Fin.last n))
+      = ∏ j : Fin n, d (l.succAbove j) := by
+  have hP : ∏ i, d i = ∏ j : Fin n, d (l.succAbove j) := by
+    rw [Fin.prod_univ_succAbove d l, hl, one_mul]
+  have h1 := Fin.prod_univ_succ d
+  have h2 := Fin.prod_univ_castSucc d
+  have h3 : (∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc))
+      * ∏ j : Fin n, d (l.succAbove j) = (∏ j : Fin n, d j.succ) * ∏ j : Fin n, d j.castSucc := by
+    rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
+    refine Finset.prod_congr rfl fun j _ => ?_
+    unfold Fin.succAbove
+    split_ifs
+    · rfl
+    · exact mul_comm _ _
+  have hpos : 0 < ∏ j : Fin n, d (l.succAbove j) := Finset.prod_pos fun j _ => hd _
+  apply mul_right_cancel₀ hpos.ne'
+  calc _ = ((∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc))
+      * ∏ j : Fin n, d (l.succAbove j)) * (d 0 * d (Fin.last n)) := by ring
+    _ = (d 0 * ∏ j : Fin n, d j.succ) * ((∏ j : Fin n, d j.castSucc) * d (Fin.last n)) := by
+      rw [h3]; ring
+    _ = _ := by rw [← h1, ← h2, hP]
+
+theorem inv_sq_le_wP (n : ℕ) (L : Fin (n+1) → ℤ) (M : Fin n → ℤ) (l : Fin (n+1)) (D : ℝ)
+    (hL : StrictAnti L) (hM : ∀ j : Fin n, L j.succ < M j ∧ M j ≤ L j.castSucc)
+    (hne : ∀ j, M j ≠ L l + 1) (hD : 1 ≤ D) (h0 : (L 0 : ℝ) - L l ≤ D)
+    (hn : (L l : ℝ) - L (Fin.last n) ≤ D) : (D ^ 2)⁻¹ ≤ wP L M l := by
+  set e : Fin (n + 1) → ℤ := fun i => max |L i - L l| 1 with he
+  set d : Fin (n + 1) → ℝ := fun i => (e i : ℝ) with hd
+  have hdpos : ∀ i, 0 < d i := fun i => by
+    have : 0 < e i := lt_of_lt_of_le one_pos (le_max_right _ _)
+    simp only [hd]; exact_mod_cast this
+  have hdl : d l = 1 := by simp [hd, he]
+  have key := prod_other_neighbour_raise d l hdpos hdl
+  have hd0 : d 0 ≤ D := by
+    have a : L l ≤ L 0 := hL.antitone (Fin.zero_le _)
+    have a' : (L l : ℝ) ≤ L 0 := by exact_mod_cast a
+    simp only [hd, he]
+    push_cast
+    exact max_le (by rw [abs_of_nonneg (by linarith)]; exact h0) hD
+  have hdn : d (Fin.last n) ≤ D := by
+    have a : L (Fin.last n) ≤ L l := hL.antitone (Fin.le_last _)
+    have a' : (L (Fin.last n) : ℝ) ≤ L l := by exact_mod_cast a
+    simp only [hd, he]
+    push_cast
+    exact max_le (by rw [abs_of_nonpos (by linarith)]; linarith) hD
+  have hden : ∏ j : Fin n, |(L (l.succAbove j) : ℝ) - L l| = ∏ j : Fin n, d (l.succAbove j) := by
+    refine Finset.prod_congr rfl fun j _ => ?_
+    have a : L (l.succAbove j) ≠ L l := fun h => Fin.succAbove_ne l j (hL.injective h)
+    have b : 1 ≤ |L (l.succAbove j) - L l| := Int.one_le_abs (sub_ne_zero.2 a)
+    simp only [hd, he, max_eq_left b]
+    push_cast
+    rfl
+  have hnum : (∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc))
+      ≤ ∏ j : Fin n, |(M j : ℝ) - 1 - L l| := by
+    refine Finset.prod_le_prod₀ (fun j _ => (hdpos _).le) fun j _ => ?_
+    obtain ⟨h1, h2⟩ := hM j
+    have h3 := hne j
+    have : e (if j.castSucc < l then j.succ else j.castSucc) ≤ |M j - 1 - L l| := by
+      split_ifs with hl
+      · have a2 : L l ≤ L j.succ := hL.antitone (Fin.castSucc_lt_iff_succ_le.1 hl)
+        simp only [he]
+        rw [abs_of_nonneg (by omega), abs_of_nonneg (by omega)]
+        omega
+      · have a2 : L j.castSucc ≤ L l := hL.antitone (not_lt.1 hl)
+        simp only [he]
+        rw [abs_of_nonpos (by omega), abs_of_nonpos (by omega)]
+        omega
+    simp only [hd]
+    exact_mod_cast this
+  rw [← abs_of_nonneg (Model.placeWeight_nonneg hM l)]
+  unfold wP
+  rw [Model.prod_erase_eq, abs_div, Finset.abs_prod, Finset.abs_prod, hden, ← key]
+  have hQ : 0 < ∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc) :=
+    Finset.prod_pos fun j _ => hdpos _
+  have hm : d 0 * d (Fin.last n) ≤ D ^ 2 := by
+    rw [sq]; exact mul_le_mul hd0 hdn (hdpos _).le (by linarith)
+  have hmpos : 0 < d 0 * d (Fin.last n) := mul_pos (hdpos _) (hdpos _)
+  calc (D ^ 2)⁻¹ ≤ (d 0 * d (Fin.last n))⁻¹ := inv_anti₀ hmpos hm
+    _ = (∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc)) /
+        ((∏ j : Fin n, d (if j.castSucc < l then j.succ else j.castSucc))
+          * (d 0 * d (Fin.last n))) := by
+      rw [div_mul_eq_div_div, div_self hQ.ne', one_div]
+    _ ≤ _ := div_le_div_of_nonneg_right hnum (mul_pos hQ hmpos).le
+
+end GlobalTheory.WigSh
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvSqLeWignerCoeffSqRaisingStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.inv_sq_le_wignerCoeffSqRaising : ∀ (n : ℕ) (L : Fin (n+1) → ℤ) (M : Fin n → ℤ) (l : Fin (n+1)) (D : ℝ), StrictAnti L → (∀ j : Fin n, L j.succ < M j ∧ M j ≤ L j.castSucc) → (∀ j, M j ≠ L l + 1) → 1 ≤ D → ((L 0 : ℝ) - L l ≤ D) → ((L l : ℝ) - L (Fin.last n) ≤ D) → (D ^ 2)⁻¹ ≤ GlobalTheory.WigSh.wP L M l := by
+  first | exact @GlobalTheory.WigSh.inv_sq_le_wP | exact GlobalTheory.WigSh.inv_sq_le_wP | (intros; apply GlobalTheory.WigSh.inv_sq_le_wP <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ChainLowerBound
+
+section
 
 @[expose] public section
 
@@ -157,3 +350,5 @@ theorem chain_lower_bound : ∀ (n : ℕ) (L : Fin (n+1) → ℤ) (M : Fin n →
       linarith
 
 end GlobalTheory.WigSh
+end
+end

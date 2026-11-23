@@ -3,11 +3,6 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DerivationEqZeroOfIsAlgebraicOverPadicIntegersStatement
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDerivationExtendPadicLaurentToClosureStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsEqPrimePowMulNotDvdCompletedLaurentStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMulLinearIndependentAlgebraicOverPadicInteStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMulMemSpanAlgebraicOverPadicIntegersStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsQDerivationCompletionZpStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PrimeNatCastCompletedLaurentRingOfPrimeStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,13 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,9 +41,198 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.TypeStar
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMulMemSpanAlgebraicOverPadicIntegersStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsQDerivationCompletionZpStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdicCompletionValuationRingCompleteValuationDoma
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsEqPrimePowMulNotDvdCompletedLaurent
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5
+
+namespace GlobalTheory.K5.Basic
+
+theorem exists_not_prime_pow_dvd_completedLaurent (p : ℕ) [Fact p.Prime] (x : O0 p) (hx : x ≠ 0) :
+    ∃ a : ℕ, ¬ (p : O0 p) ^ a ∣ x := by
+  obtain ⟨s, rfl⟩ := AdicCompletion.mk_surjective (pI p) (Lau p) x
+  obtain ⟨a, ha⟩ := exists_not_dvd p s hx
+  refine ⟨a, ?_⟩
+  rintro ⟨z, hz⟩
+  apply ha a le_rfl
+  have h1 := congrArg (AdicCompletion.evalₐ (pI p) a) hz
+  rw [AdicCompletion.evalₐ_mk, map_mul, map_pow, map_natCast,
+    ← map_natCast (Ideal.Quotient.mk (pI p ^ a)), ← map_pow] at h1
+  have h2 : Ideal.Quotient.mk (pI p ^ a) ((p : Lau p) ^ a) = 0 := by
+    rw [Ideal.Quotient.eq_zero_iff_mem, mem_pI_pow]
+  rw [h2, zero_mul, Ideal.Quotient.eq_zero_iff_mem, mem_pI_pow] at h1
+  exact h1
+
+theorem exists_eq_prime_pow_mul_not_dvd_completedLaurent : ∀ (p : ℕ) [Fact p.Prime], ∀ x : O0 p, x ≠ 0 →
+    ∃ (k : ℕ) (y : O0 p), x = (p : O0 p) ^ k * y ∧ ¬ (p : O0 p) ∣ y := by
+  intro p _ x hx
+  obtain ⟨a, ha⟩ := exists_not_prime_pow_dvd_completedLaurent p x hx
+  have hfin : FiniteMultiplicity (p : O0 p) x :=
+    ⟨a, fun h => ha ((pow_dvd_pow _ (Nat.le_succ a)).trans h)⟩
+  obtain ⟨y, hy, hnd⟩ := hfin.exists_eq_pow_mul_and_not_dvd
+  exact ⟨_, y, hy, hnd⟩
+
+end GlobalTheory.K5.Basic
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsEqPrimePowMulNotDvdCompletedLaurentStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5
+
+theorem _root_.GlobalTheory.T.exists_eq_prime_pow_mul_not_dvd_O0 : ∀ (p : ℕ) [Fact p.Prime], ∀ x : O0 p, x ≠ 0 → ∃ (k : ℕ) (y : O0 p), x = (p : O0 p) ^ k * y ∧ ¬ (p : O0 p) ∣ y := by
+  first | exact @GlobalTheory.K5.Basic.exists_eq_prime_pow_mul_not_dvd_completedLaurent | exact GlobalTheory.K5.Basic.exists_eq_prime_pow_mul_not_dvd_completedLaurent | (intros; apply GlobalTheory.K5.Basic.exists_eq_prime_pow_mul_not_dvd_completedLaurent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMulLinearIndependentAlgebraicOverPadicInte
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5
+
+namespace GlobalTheory.K5.ReprInd
+
+theorem aux {R Ω : Type*} [CommRing R] [IsDomain R] [AddCommGroup Ω] [Module R Ω] (P : Ω → Prop) :
+    ∀ (m : ℕ) (a : Fin m → Ω) (f : Fin m → R), (∀ i, P (a i)) →
+      ∃ (n : ℕ) (a' : Fin n → Ω) (f' : Fin n → R) (g : R), (∀ i, P (a' i)) ∧
+        LinearIndependent R a' ∧ g ≠ 0 ∧ g • (∑ i, f i • a i) = ∑ i, f' i • a' i := by
+  intro m
+  induction m with
+  | zero =>
+    intro a f _
+    refine ⟨0, a, f, 1, by simp, linearIndependent_empty_type, one_ne_zero, by simp⟩
+  | succ m ih =>
+    intro a f hP
+    by_cases hli : LinearIndependent R a
+    · exact ⟨m + 1, a, f, 1, hP, hli, one_ne_zero, one_smul _ _⟩
+    · obtain ⟨c, hc, k, hk⟩ := Fintype.not_linearIndependent_iff.mp hli
+      obtain ⟨n, a', f', g, hP', hli', hg, heq⟩ := ih (fun j => a (k.succAbove j))
+        (fun j => c k * f (k.succAbove j) - f k * c (k.succAbove j)) (fun j => hP _)
+      refine ⟨n, a', f', g * c k, hP', hli', mul_ne_zero hg hk, ?_⟩
+      have key : c k • (∑ i, f i • a i) =
+          ∑ j : Fin m, (c k * f (k.succAbove j) - f k * c (k.succAbove j)) • a (k.succAbove j) := by
+        have h1 : c k • (∑ i, f i • a i) = c k • (∑ i, f i • a i) - f k • (∑ i, c i • a i) := by
+          rw [hc, smul_zero, sub_zero]
+        rw [h1, Finset.smul_sum, Finset.smul_sum, ← Finset.sum_sub_distrib,
+          Fin.sum_univ_succAbove _ k]
+        simp only [smul_smul, ← sub_smul]
+        rw [mul_comm (f k) (c k), sub_self, zero_smul, zero_add]
+      rw [mul_smul, key, heq]
+
+theorem main {R Ω : Type*} [CommRing R] [IsDomain R] [Field Ω] [Algebra R Ω] (P : Ω → Prop) :
+    ∀ y ∈ Submodule.span R {x : Ω | P x},
+    ∃ (n : ℕ) (a : Fin n → Ω) (f : Fin n → R) (g : R), (∀ i, P (a i)) ∧
+      LinearIndependent R a ∧ g ≠ 0 ∧
+      algebraMap R Ω g * y = ∑ i, algebraMap R Ω (f i) * a i := by
+  intro y hy
+  obtain ⟨m, f, a, rfl⟩ := Submodule.mem_span_set'.mp hy
+  obtain ⟨n, a', f', g, hP', hli', hg, heq⟩ := aux P m (fun i => (a i : Ω)) f (fun i => (a i).2)
+  refine ⟨n, a', f', g, hP', hli', hg, ?_⟩
+  simpa only [Algebra.smul_def] using heq
+
+end GlobalTheory.K5.ReprInd
+
+theorem GlobalTheory.K5.algSpan_reprInd : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
+    ∀ y ∈ Submodule.span (O0 p) {x : Ω | IsAlgZp (p := p) x},
+    ∃ (n : ℕ) (a : Fin n → Ω) (f : Fin n → O0 p) (g : O0 p), (∀ i, IsAlgZp (p := p) (a i)) ∧
+      LinearIndependent (O0 p) a ∧ g ≠ 0 ∧
+      algebraMap (O0 p) Ω g * y = ∑ i, algebraMap (O0 p) Ω (f i) * a i := by
+  intro p _ Ω _ _ _
+  exact GlobalTheory.K5.ReprInd.main (fun x => IsAlgZp (p := p) x)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMulLinearIndependentAlgebraicOverPadicInteStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5
+
+theorem _root_.GlobalTheory.T.exists_mul_linearIndependent_algebraicOverPadicIntegers : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
+    ∀ y ∈ Submodule.span (O0 p) {x : Ω | IsAlgZp (p := p) x},
+    ∃ (n : ℕ) (a : Fin n → Ω) (f : Fin n → O0 p) (g : O0 p), (∀ i, IsAlgZp (p := p) (a i)) ∧
+      LinearIndependent (O0 p) a ∧ g ≠ 0 ∧
+      algebraMap (O0 p) Ω g * y = ∑ i, algebraMap (O0 p) Ω (f i) * a i := by
+  exact @GlobalTheory.K5.algSpan_reprInd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.PrimeNatCastCompletedLaurentRingOfPrime
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.K5
+
+variable (p : ℕ) [Fact p.Prime]
+
+theorem natCast_dvd_iff_evalₐ_one (x : O0 p) :
+    (p : O0 p) ∣ x ↔ AdicCompletion.evalₐ (pI p) 1 x = 0 := by
+  rw [GlobalTheory.ValCompletion.evalₐ_eq_zero_iff rfl, pow_one, map_natCast]
+
+theorem prime_natCast_completedLaurentRing : Prime (p : O0 p) := by
+  haveI : (pI p ^ 1).IsPrime := by
+    rw [pow_one]; exact (Ideal.span_singleton_prime (Basic.prime_lau p).ne_zero).2 (Basic.prime_lau p)
+  refine ⟨?_, Basic.not_isUnit_p p, ?_⟩
+  · exact_mod_cast (Nat.Prime.ne_zero Fact.out : p ≠ 0)
+  · intro a b h
+    rw [natCast_dvd_iff_evalₐ_one, map_mul] at h
+    rw [natCast_dvd_iff_evalₐ_one, natCast_dvd_iff_evalₐ_one]
+    exact mul_eq_zero.1 h
+
+theorem prime_natCast_completedLaurentRing_of_prime : ∀ (p : ℕ) [Fact p.Prime], Prime (p : O0 p) := fun p _ => prime_natCast_completedLaurentRing p
+
+end GlobalTheory.K5
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.PrimeNatCastCompletedLaurentRingOfPrimeStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5
+
+theorem _root_.GlobalTheory.T.prime_natCast_completed_laurent_ring : ∀ (p : ℕ) [Fact p.Prime], Prime (p : O0 p) := by
+  first | exact @GlobalTheory.K5.prime_natCast_completedLaurentRing_of_prime | exact GlobalTheory.K5.prime_natCast_completedLaurentRing_of_prime | (intros; apply GlobalTheory.K5.prime_natCast_completedLaurentRing_of_prime <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.QNotPthPowInClosureAlgebraicPadicInt
+
+section
 
 @[expose] public section
 
@@ -171,3 +348,5 @@ theorem q_not_pow : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra
   linear_combination -this
 
 end GlobalTheory.K5.NotPow
+end
+end

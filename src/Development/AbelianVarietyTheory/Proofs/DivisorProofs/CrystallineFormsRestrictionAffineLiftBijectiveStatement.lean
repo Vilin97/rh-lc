@@ -1,10 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DivPowerCompatTwoFormDerivativeCompOneForm
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineFormsRestrictionAffineLiftBijective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoproductThickeningQuotientFreeThickeningStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FourTermComplexQuasiIsoAtFormalProperties
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HomSpecPointsLevelsStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothSectionsMonoReductionAffineInf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.AlgebraicGeometry.Sites.Fpqc
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -19,6 +24,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,6 +45,282 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PullbackBijectiveDegreesOneTwo
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FourTermComplexQuasiIsoAtFormalProperties
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FourTermComplexRestrictionBijectiveCollapseStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoproductThickeningAffineLiftPoincare
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+namespace GlobalTheory.PDForm.CopPoincare
+
+theorem isNilpotent_of_isNilDP {B : Type} [CommRing B] {J : Ideal B} {δ : DividedPowers J} (h : IsNilDP δ) :
+    IsNilpotent J := by
+  obtain ⟨N, hN⟩ := (isDPNilpotent_iff_exists_isLevel δ).1 h
+  have key : ∀ (m : ℕ), ∀ x ∈ J ^ m, ∀ l : List (ℕ × B), (∀ p ∈ l, p.2 ∈ J) → N ≤ m + (l.map Prod.fst).sum →
+      x * (l.map fun p ↦ δ.dpow p.1 p.2).prod = 0 := by
+    intro m
+    induction m with
+    | zero =>
+      intro x _ l hl hs
+      rw [(isLev_iff_prod δ N).1 hN l hl (by simpa using hs), mul_zero]
+    | succ m ih =>
+      intro x hx l hl hs
+      rw [pow_succ] at hx
+      refine Submodule.mul_induction_on hx (fun a ha b hb ↦ ?_) (fun a b ha hb ↦ by rw [add_mul, ha, hb, add_zero])
+      have := ih a ha ((1, b) :: l) (by
+        intro p hp
+        rcases List.mem_cons.1 hp with rfl | hp
+        · exact hb
+        · exact hl p hp) (by simp only [List.map_cons, List.sum_cons]; omega)
+      simpa [δ.dpow_one hb, mul_assoc] using this
+  refine ⟨N, ?_⟩
+  rw [Ideal.zero_eq_bot, eq_bot_iff]
+  intro x hx
+  simpa using key N x hx [] (by simp) (by simp)
+
+theorem exists_cop_qAt : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T : Thick D.κ D.t), IsLev T.δ (n + 1) → ⊤ ≤ (T.x ≫ D.i) ⁻¹ᵁ U.unop.1 → ∃ (G : Thick D.κ D.t) (l : T ⟶ G) (r : Λ.L.obj U ⟶ G), IsCop (n + 1) l r ∧ (KK D.κ D.t).QAt l := by
+  intro D Λ n U T hT hU
+  obtain ⟨F, G, u, q, r, hu, hF, hq, hJ, hc⟩ := GlobalTheory.T.exists_coproductThickening_quotient_freeThickening D Λ n U T hT hU
+  obtain ⟨h1, -, -, -⟩ := GlobalTheory.T.hom_spec_points_levels D Λ
+  refine ⟨G, u ≫ q, r, hc, ?_⟩
+  haveI := D.sec_smooth U.unop
+  have hker : RingHom.ker (q.φ : F.B →+* G.B) ≤ F.J := fun b hb ↦ hJ b (by
+    rw [show q.φ b = 0 from hb]; exact G.J.zero_mem)
+  have hnil : IsNilpotent (RingHom.ker (q.φ : F.B →+* G.B)) := by
+    obtain ⟨N, hN⟩ := isNilpotent_of_isNilDP F.nil
+    refine ⟨N, ?_⟩
+    rw [Ideal.zero_eq_bot, eq_bot_iff, ← Ideal.zero_eq_bot, ← hN]
+    exact Ideal.pow_right_mono hker N
+  let y : Sec D.s U.unop.1 →ₐ[D.R] G.B := r.φ.comp (Λ.e U : Sec D.s U.unop.1 →ₐ[D.R] (Λ.L.obj U).B)
+  let y' : Sec D.s U.unop.1 →ₐ[D.R] F.B := Algebra.FormallySmooth.liftOfSurjective y q.φ hq hnil
+  have hy' : ∀ a, q.φ (y' a) = y a := fun a ↦ Algebra.FormallySmooth.liftOfSurjective_apply y q.φ hq hnil a
+  have hbij : Function.Bijective q.φ₀ := by
+    refine ⟨(injective_iff_map_eq_zero _).2 fun b hb ↦ ?_, fun c ↦ ?_⟩
+    · obtain ⟨b, rfl⟩ := F.surj b
+      rw [q.comm, G.ker] at hb
+      exact (F.ker b).2 (hJ b hb)
+    · obtain ⟨c, rfl⟩ := G.surj c
+      obtain ⟨b, rfl⟩ := hq c
+      exact ⟨F.π b, q.comm b⟩
+  haveI : IsIso (spMap q.φ₀) :=
+    (inferInstance : IsIso (Spec.map (RingEquiv.ofBijective q.φ₀ hbij).toCommRingCatIso.hom))
+  have hy := (h1 U G y).2 ⟨r, fun _ ↦ rfl⟩
+  have hpt : spMap (F.π.comp (y' : Sec D.s U.unop.1 →+* F.B)) ≫ affPt D.s U.unop = F.x ≫ D.i := by
+    rw [← cancel_epi (spMap q.φ₀), ← Category.assoc, ← Cris.spMap_comp, ← Category.assoc, q.pt, ← hy]
+    congr 2
+    ext a
+    exact (q.comm _).trans (congrArg G.π (hy' a))
+  obtain ⟨b', hb'⟩ := (h1 U F y').1 hpt
+  obtain ⟨s, ⟨hs1, hs2⟩, -⟩ := hc.2 F hF u b'
+  have hbq : b' ≫ q = r := by
+    have hφ : (b' ≫ q).φ = r.φ := AlgHom.ext fun b ↦ by
+      obtain ⟨a, rfl⟩ := (Λ.e U).surjective b
+      change q.φ (b'.φ ((Λ.e U) a)) = r.φ ((Λ.e U) a)
+      rw [hb', hy']; rfl
+    have extHom : ∀ {f g : Thick.Hom (Λ.L.obj U) G}, f.φ = g.φ → f = g := by
+      intro f g h
+      rcases f with ⟨φ, φ₀, comm, dp, pt⟩
+      rcases g with ⟨ψ, ψ₀, comm', dp', pt'⟩
+      obtain rfl : φ = ψ := h
+      obtain rfl : φ₀ = ψ₀ := RingHom.ext fun c ↦ by
+        obtain ⟨b, rfl⟩ := (Λ.L.obj U).surj c
+        rw [comm, comm']
+      rfl
+    exact extHom hφ
+  have hsq : s ≫ q = 𝟙 G := by
+    obtain ⟨c, -, huniq⟩ := hc.2 G hc.1 (u ≫ q) r
+    refine (huniq _ ⟨?_, ?_⟩).trans (huniq _ ⟨Category.comp_id _, Category.comp_id _⟩).symm
+    · rw [← Category.assoc, hs1]
+    · rw [← Category.assoc, hs2, hbq]
+  exact (GlobalTheory.CxCoh.QAtFormal.qAt_formal _ (KK D.κ D.t)).2.2 T G F (u ≫ q) s q hsq (by rw [hs1]; exact hu)
+
+end GlobalTheory.PDForm.CopPoincare
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoproductThickeningAffineLiftPoincareStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+theorem _root_.GlobalTheory.T.exists_coproduct_thickening_affine_lift_poincare : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T : Thick D.κ D.t), IsLev T.δ (n + 1) → ⊤ ≤ (T.x ≫ D.i) ⁻¹ᵁ U.unop.1 → ∃ (G : Thick D.κ D.t) (l : T ⟶ G) (r : Λ.L.obj U ⟶ G), IsCop (n + 1) l r ∧ (KK D.κ D.t).QAt l := by
+  first | exact @GlobalTheory.PDForm.CopPoincare.exists_cop_qAt | exact GlobalTheory.PDForm.CopPoincare.exists_cop_qAt | (intros; apply GlobalTheory.PDForm.CopPoincare.exists_cop_qAt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FourTermComplexQuasiIsoAtFormalPropertiesStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory GlobalTheory.CxCoh
+
+theorem _root_.GlobalTheory.T.fourTermComplex_quasiIsoAt_formal_properties : ∀ (C : Type 1) [Category.{0} C] (K : Cx C), (∀ (T T' : C) (a : T ⟶ T') [IsIso a], K.QAt a) ∧ (∀ (T T' T'' : C) (a : T ⟶ T') (b : T' ⟶ T''), K.QAt a → K.QAt b → K.QAt (a ≫ b)) ∧ ∀ (T T' T'' : C) (a : T ⟶ T') (b : T' ⟶ T'') (c : T'' ⟶ T'), b ≫ c = 𝟙 T' → K.QAt (a ≫ b) → K.QAt a := by
+  first | exact @GlobalTheory.CxCoh.QAtFormal.qAt_formal | exact GlobalTheory.CxCoh.QAtFormal.qAt_formal | (intros; apply GlobalTheory.CxCoh.QAtFormal.qAt_formal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineFormsRestrictionAffineLiftBijective
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+  GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+namespace GlobalTheory.PDForm.LevLift
+
+variable (D : Data) (Λ : Lift D) (n : ℕ)
+
+abbrev CC : Type 1 := (LevE D.κ D.t D.i (n + 1)).FullSubcategory
+
+variable {D n}
+
+theorem hom_ext' {T T' : CC D n} {f g : T ⟶ T'} (h : f.hom.hom.1 = g.hom.hom.1) : f = g :=
+  ObjectProperty.hom_ext _ (ObjectProperty.hom_ext _ (Subtype.ext h))
+
+def opn (T : CC D n) : AffOp D.X := Opposite.op ⟨T.obj.obj.U, T.obj.property⟩
+
+
+variable (D n) in
+def qq : CC D n ⥤ AffOp D.X where
+  obj T := opn T
+  map f := (homOfLE (show (⟨_, _⟩ : D.X.affineOpens) ≤ ⟨_, _⟩ from f.hom.hom.2)).op
+  map_id _ := rfl
+  map_comp _ _ := rfl
+
+theorem mem_of_hom {T T' : Thick D.κ D.t} (f : T ⟶ T') {U : D.X.Opens} (h : ⊤ ≤ (T.x ≫ D.i) ⁻¹ᵁ U) :
+    ⊤ ≤ (T'.x ≫ D.i) ⁻¹ᵁ U := by
+  rw [← f.pt, Category.assoc, Scheme.Hom.comp_preimage, top_le_iff.1 h, Scheme.Hom.preimage_top]
+
+theorem cop_ex (T : CC D n) : ∃ (G : Thick D.κ D.t) (l : T.obj.obj.T ⟶ G) (r : Λ.L.obj ((qq D n).obj T) ⟶ G),
+    IsCop (n + 1) l r ∧ (KK D.κ D.t).QAt l :=
+  GlobalTheory.T.exists_coproduct_thickening_affine_lift_poincare D Λ n ((qq D n).obj T) T.obj.obj.T T.property T.obj.obj.mem
+
+def GG (T : CC D n) : Thick D.κ D.t := (cop_ex Λ T).choose
+
+def ll (T : CC D n) : T.obj.obj.T ⟶ GG Λ T := (cop_ex Λ T).choose_spec.choose
+
+def rr (T : CC D n) : Λ.L.obj ((qq D n).obj T) ⟶ GG Λ T := (cop_ex Λ T).choose_spec.choose_spec.choose
+
+theorem isCop (T : CC D n) : IsCop (n + 1) (ll Λ T) (rr Λ T) :=
+  (cop_ex Λ T).choose_spec.choose_spec.choose_spec.1
+
+theorem qat_ll (T : CC D n) : (KK D.κ D.t).QAt (ll Λ T) :=
+  (cop_ex Λ T).choose_spec.choose_spec.choose_spec.2
+
+def SObj (T : CC D n) : CC D n :=
+  ⟨⟨⟨GG Λ T, T.obj.obj.U, T.obj.obj.hU, mem_of_hom (ll Λ T) T.obj.obj.mem⟩, T.obj.property⟩, (isCop Λ T).1⟩
+
+theorem smap_ex {T T' : CC D n} (f : T ⟶ T') : ∃! c : GG Λ T ⟶ GG Λ T',
+    ll Λ T ≫ c = f.hom.hom.1 ≫ ll Λ T' ∧ rr Λ T ≫ c = Λ.L.map ((qq D n).map f) ≫ rr Λ T' :=
+  (isCop Λ T).2 (GG Λ T') (isCop Λ T').1 _ _
+
+def smap {T T' : CC D n} (f : T ⟶ T') : GG Λ T ⟶ GG Λ T' := (smap_ex Λ f).exists.choose
+
+theorem smap_spec {T T' : CC D n} (f : T ⟶ T') :
+    ll Λ T ≫ smap Λ f = f.hom.hom.1 ≫ ll Λ T' ∧ rr Λ T ≫ smap Λ f = Λ.L.map ((qq D n).map f) ≫ rr Λ T' :=
+  (smap_ex Λ f).exists.choose_spec
+
+theorem smap_uniq {T T' : CC D n} (f : T ⟶ T') (c : GG Λ T ⟶ GG Λ T')
+    (h1 : ll Λ T ≫ c = f.hom.hom.1 ≫ ll Λ T') (h2 : rr Λ T ≫ c = Λ.L.map ((qq D n).map f) ≫ rr Λ T') :
+    c = smap Λ f :=
+  (smap_ex Λ f).unique ⟨h1, h2⟩ (smap_spec Λ f)
+
+def SS : CC D n ⥤ CC D n where
+  obj := SObj Λ
+  map f := ObjectProperty.homMk (ObjectProperty.homMk ⟨smap Λ f, f.hom.hom.2⟩)
+  map_id T := hom_ext' (smap_uniq Λ (𝟙 T) (𝟙 _) (by simp; rfl)
+    (by rw [CategoryTheory.Functor.map_id, CategoryTheory.Functor.map_id]; simp)).symm
+  map_comp {T T' T''} f g := hom_ext' (smap_uniq Λ (f ≫ g) (smap Λ f ≫ smap Λ g)
+    (by rw [← Category.assoc, (smap_spec Λ f).1, Category.assoc, (smap_spec Λ g).1, ← Category.assoc]; rfl)
+    (by rw [← Category.assoc, (smap_spec Λ f).2, Category.assoc, (smap_spec Λ g).2, ← Category.assoc,
+      ← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp])).symm
+
+def uu : 𝟭 (CC D n) ⟶ SS Λ where
+  app T := ObjectProperty.homMk (ObjectProperty.homMk ⟨ll Λ T, le_rfl⟩)
+  naturality {T T'} f := hom_ext' (smap_spec Λ f).1.symm
+
+variable (h : ∀ U, LevE D.κ D.t D.i (n + 1) (Λ.toE.obj U))
+
+abbrev ell : AffOp D.X ⥤ CC D n := (LevE D.κ D.t D.i (n + 1)).lift Λ.toE h
+
+def ww : qq D n ⋙ ell Λ h ⟶ SS Λ where
+  app T := ObjectProperty.homMk (ObjectProperty.homMk ⟨rr Λ T, le_rfl⟩)
+  naturality {T T'} f := hom_ext' (smap_spec Λ f).2.symm
+
+def eps : 𝟭 (AffOp D.X) ⟶ ell Λ h ⋙ qq D n where
+  app U := 𝟙 U
+  naturality _ _ _ := rfl
+
+abbrev KL : Cx (CC D n) := (((KK D.κ D.t).res (pE D.κ D.t D.i)).res (LevE D.κ D.t D.i (n + 1)).ι)
+
+theorem qat_iff {T T' : CC D n} (φ : T ⟶ T') : (KL (D := D) (n := n)).QAt φ ↔ (KK D.κ D.t).QAt φ.hom.hom.1 :=
+  Iff.rfl
+
+theorem qat_rr (U : AffOp D.X) : (KK D.κ D.t).QAt (rr Λ ((ell Λ h).obj U)) := by
+  set T := (ell Λ h).obj U
+  have hc := isCop Λ T
+  obtain ⟨σ, ⟨h1, h2⟩, -⟩ := hc.2 (GG Λ T) hc.1 (rr Λ T) (ll Λ T)
+  have hσ : σ ≫ σ = 𝟙 _ := by
+    obtain ⟨c, -, hu⟩ := hc.2 (GG Λ T) hc.1 (ll Λ T) (rr Λ T)
+    exact (hu (σ ≫ σ) ⟨(Category.assoc _ _ _).symm.trans ((congrArg (· ≫ σ) h1).trans h2),
+      (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ σ) h2).trans h1)⟩).trans
+      (hu (𝟙 _) ⟨Category.comp_id _, Category.comp_id _⟩).symm
+  have hi : IsIso σ := ⟨σ, hσ, hσ⟩
+  obtain ⟨hiso, hcomp, -⟩ := GlobalTheory.T.fourTermComplex_quasiIsoAt_formal_properties (Thick D.κ D.t) (KK D.κ D.t)
+  exact h1 ▸ hcomp _ _ _ _ _ (qat_ll Λ T) (hiso _ _ σ)
+
+theorem qat_map_id (U : AffOp D.X) {B : Thick D.κ D.t} (f : Λ.L.obj U ⟶ B) (hf : (KK D.κ D.t).QAt f) :
+    (KK D.κ D.t).QAt (Λ.L.map (𝟙 U) ≫ f) := by
+  rw [CategoryTheory.Functor.map_id, Category.id_comp]
+  exact hf
+
+theorem resMap_bij : (KL (D := D) (n := n)).resMap (ell Λ h) |>.Bij := by
+  refine GlobalTheory.T.fourTermComplex_restriction_bijective_collapse (CC D n) (AffOp D.X) KL (ell Λ h) (qq D n) (SS Λ) (uu Λ) (ww Λ h) (eps Λ h)
+    (fun T ↦ qat_ll Λ T) (fun U ↦ ?_)
+  rw [qat_iff]
+  exact qat_map_id Λ U _ (qat_rr Λ h U)
+
+end GlobalTheory.PDForm.LevLift
+
+theorem GlobalTheory.PDForm.levLift_resMap_bij : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (h : ∀ U, LevE D.κ D.t D.i (n + 1) (Λ.toE.obj U)),
+    ((((KK D.κ D.t).res (pE D.κ D.t D.i)).res (LevE D.κ D.t D.i (n + 1)).ι).resMap
+      ((LevE D.κ D.t D.i (n + 1)).lift Λ.toE h)).Bij :=
+  fun _ Λ _ h ↦ GlobalTheory.PDForm.LevLift.resMap_bij Λ h
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineFormsRestrictionAffineLiftBijectiveStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +328,5 @@ open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers Reciproc
 
 theorem _root_.GlobalTheory.T.crystallineForms_restriction_affineLift_bijective : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (h : ∀ U, LevE D.κ D.t D.i (n + 1) (Λ.toE.obj U)), ((((KK D.κ D.t).res (pE D.κ D.t D.i)).res (LevE D.κ D.t D.i (n + 1)).ι).resMap ((LevE D.κ D.t D.i (n + 1)).lift Λ.toE h)).Bij := by
   first | exact @GlobalTheory.PDForm.levLift_resMap_bij | exact GlobalTheory.PDForm.levLift_resMap_bij | (intros; apply GlobalTheory.PDForm.levLift_resMap_bij <;> assumption)
+end
+end

@@ -1,22 +1,15 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.LemmaKOfSteps
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.CardAbove
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.Formula
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.IneOpen
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.NonemptyH0GlobalEquivGaloisImage
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.ShaLenEqShaInv
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.NumFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.PrimeLe
-public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.EmultiplicityPowSubOneOdd
+public import Formalism.GaloisCohomology.Statement
+import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-public import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -27,7 +20,9 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
+public import Mathlib.NumberTheory.RamificationInertia.Basic
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Ideal.Int
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
@@ -38,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,6 +46,157 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.LevelInertiaLeLevelDec
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.Formula
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.IneOpen
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.NonemptyH0GlobalEquivGaloisImage
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.ShaLenEqShaInv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.LemmaK
+import Mathlib.Algebra.Order.Star.Real
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.TorsBoundPow
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.EmultiplicityPowSubOneOdd
+public import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.CardAbove
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain ReciprocityTheory.Gal Formalism.ConjugateSelfDual Formalism.GaloisCohomology UpperTheory.V.LDataCardLeFinrank
+
+theorem UpperTheory.V.LDataCardLeFinrank.cardAbove :
+    ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (D : LData F Ω l), D.S.card ≤ Module.finrank ℚ F := by
+  intro F Ω _ _ _ _ _ l hl D
+  classical
+  have hn : l.Prime := hl.out
+  have hp0 : (Ideal.span {(l : ℤ)} : Ideal ℤ) ≠ ⊥ := by
+    rw [Ne, Ideal.span_singleton_eq_bot]
+    exact_mod_cast hn.ne_zero
+  have hmax : (Ideal.span {(l : ℤ)} : Ideal ℤ).IsMaximal := inferInstance
+  refine le_trans (Finset.card_le_card_of_injOn
+    (t := IsDedekindDomain.primesOverFinset (Ideal.span {(l : ℤ)}) (𝓞 F))
+    (fun p => p.asIdeal) ?_ ?_) (Ideal.card_primesOverFinset_le_finrank (𝓞 F) ℚ F hp0)
+  · intro p hp
+    rw [D.hS] at hp
+    have hp' : ((l : ℕ) : 𝓞 F) ∈ p.asIdeal := hp
+    rw [Finset.mem_coe, IsDedekindDomain.mem_primesOverFinset_iff hp0]
+    have := p.isPrime
+    refine ⟨p.isPrime, ⟨hmax.eq_of_le (Ideal.IsPrime.ne_top inferInstance) ?_⟩⟩
+    rw [Ideal.span_singleton_le_iff_mem, Ideal.mem_comap, map_natCast]
+    exact hp'
+  · intro p _ p' _ h
+    exact HeightOneSpectrum.ext h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.NumFin
+
+section
+
+@[expose] public section
+
+open NumberField UpperTheory.V UpperTheory.V.K
+
+theorem UpperTheory.V.K.numFin :
+    ∀ C : ℝ, ∃ CK : ℝ, 0 < CK ∧ ∀ e n D : ℕ, 1 ≤ e → 1 ≤ n → 1 ≤ D → 4 * (n : ℝ) * Real.log (2 * (D : ℝ)) * ((2 * (e : ℝ)) * (2 * (e : ℝ) + 3)) * Real.log ((n : ℝ) + 1) + kBound C e n D ≤ kBound CK e n D := by
+  intro C
+  refine ⟨max C 0 + 9, by positivity, ?_⟩
+  intro e n D he hn hD
+  simp only [UpperTheory.V.kBound]
+  have he' : (1:ℝ) ≤ e := by exact_mod_cast he
+  have hn' : (1:ℝ) ≤ n := by exact_mod_cast hn
+  have hD' : (1:ℝ) ≤ D := by exact_mod_cast hD
+  have hL : 0 ≤ Real.log (2 * (D:ℝ)) := Real.log_nonneg (by linarith)
+  have hlog : Real.log ((n:ℝ) + 1) ≤ n := by
+    have := Real.log_le_sub_one_of_pos (show (0:ℝ) < n + 1 by positivity)
+    linarith
+  have hx2 : (2:ℝ) ≤ 2 * e * n := by nlinarith
+  have hx1 : (1:ℝ) ≤ 2 * e * n := by linarith
+  have hC : (2 * (e:ℝ) * n) ^ C ≤ (2 * (e:ℝ) * n) ^ (max C 0) :=
+    Real.rpow_le_rpow_of_exponent_le hx1 (le_max_left _ _)
+  have hC1 : 1 ≤ (2 * (e:ℝ) * n) ^ (max C 0) := Real.one_le_rpow hx1 (le_max_right _ _)
+  have h9 : (2 * (e:ℝ) * n) ^ (max C 0 + 9)
+      = (2 * (e:ℝ) * n) ^ (max C 0) * (2 * (e:ℝ) * n) ^ (9:ℕ) := by
+    rw [Real.rpow_add (by linarith), show (9:ℝ) = ((9:ℕ):ℝ) by norm_num, Real.rpow_natCast]
+  rw [h9]
+  have hQ1 : 4 * (n:ℝ) * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * Real.log ((n:ℝ) + 1)
+      ≤ 4 * (n:ℝ) * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * n :=
+    mul_le_mul_of_nonneg_left hlog (by positivity)
+  have hQ2 : 4 * (n:ℝ) * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * n
+      ≤ 4 * (n:ℝ) * ((2 * (e:ℝ)) * (5 * (e:ℝ))) * n := by
+    have h5 : 2 * (e:ℝ) + 3 ≤ 5 * e := by linarith
+    have : (2 * (e:ℝ)) * (2 * (e:ℝ) + 3) ≤ (2 * (e:ℝ)) * (5 * (e:ℝ)) :=
+      mul_le_mul_of_nonneg_left h5 (by positivity)
+    have := mul_le_mul_of_nonneg_left this (show (0:ℝ) ≤ 4 * n by positivity)
+    nlinarith
+  set x := 2 * (e:ℝ) * n with hx
+  set L := Real.log (2 * (D:ℝ)) with hLdef
+  set p := x ^ (max C 0) with hp
+  have hQ3 : 4 * (n:ℝ) * ((2 * (e:ℝ)) * (5 * (e:ℝ))) * n = 10 * x ^ 2 := by
+    rw [hx]; ring
+  have hx7 : (2:ℝ) ^ 7 ≤ x ^ 7 := by gcongr
+  have hx9 : 10 * x ^ 2 ≤ x ^ 9 - 1 := by
+    have e9 : x ^ 9 = x ^ 2 * x ^ 7 := by ring
+    have hsq : 4 ≤ x ^ 2 := by nlinarith
+    rw [e9]
+    nlinarith
+  have hA : 4 * (n:ℝ) * L * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * Real.log ((n:ℝ) + 1)
+      ≤ (x ^ 9 - 1) * (p * L) := by
+    have e1 : 4 * (n:ℝ) * L * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * Real.log ((n:ℝ) + 1)
+        = (4 * (n:ℝ) * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * Real.log ((n:ℝ) + 1)) * L := by ring
+    rw [e1]
+    have hQ : 4 * (n:ℝ) * ((2 * (e:ℝ)) * (2 * (e:ℝ) + 3)) * Real.log ((n:ℝ) + 1) ≤ x ^ 9 - 1 := by
+      linarith
+    have hpL : L ≤ p * L := by nlinarith
+    have hx90 : 0 ≤ x ^ 9 - 1 := by nlinarith
+    calc _ ≤ (x ^ 9 - 1) * L := mul_le_mul_of_nonneg_right hQ hL
+      _ ≤ (x ^ 9 - 1) * (p * L) := mul_le_mul_of_nonneg_left hpL hx90
+  have hexp1 : Real.exp (x ^ C * L) ≤ Real.exp (p * L) :=
+    Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_right hC hL)
+  have key : Real.exp (p * L) + (x ^ 9 - 1) * (p * L) ≤ Real.exp (p * x ^ 9 * L) := by
+    have e2 : p * x ^ 9 * L = p * L + (x ^ 9 - 1) * (p * L) := by ring
+    rw [e2, Real.exp_add]
+    have hpL0 : 0 ≤ p * L := mul_nonneg (by linarith) hL
+    have h1 : 1 ≤ Real.exp (p * L) := Real.one_le_exp hpL0
+    have h2 := Real.add_one_le_exp ((x ^ 9 - 1) * (p * L))
+    have h3 : 0 ≤ (x ^ 9 - 1) * (p * L) := mul_nonneg (by nlinarith) hpL0
+    nlinarith
+  linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GeneratorCountTuples.PrimeLe
+
+section
+
+@[expose] public section
+
+open NumberField UpperTheory.V UpperTheory.V.K
+
+theorem UpperTheory.V.K.primeLe :
+    ∀ (l : ℕ) [Fact l.Prime] (L : Type) [Field L] [NumberField L], HasMuQ l L → l ≤ Module.finrank ℚ L + 1 := by
+  intro l hl L _ _ hL
+  obtain ⟨ζ, hζ⟩ := hL
+  have hp := hl.out
+  by_cases h2 : l = 2
+  · subst h2
+    have := Module.finrank_pos (R := ℚ) (M := L)
+    omega
+  · rw [if_neg h2] at hζ
+    have hdeg := minpoly.natDegree_le (A := ℚ) ζ
+    rw [← Polynomial.cyclotomic_eq_minpoly_rat hζ hp.pos, Polynomial.natDegree_cyclotomic,
+      Nat.totient_prime hp] at hdeg
+    omega
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SFinal
+
+section
 
 @[expose] public section
 
@@ -211,3 +356,5 @@ theorem UpperTheory.V.ZK.sFinal :
       n * (4 * (2 * e * (2 * e + 3)) * Real.log (2 * ((discr L).natAbs : ℝ))) * Real.log ((n : ℝ) + 1) :=
     mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hcoef (by positivity)) hX0
   linarith [e1, e2, e3, e4, hnum, hslog]
+end
+end

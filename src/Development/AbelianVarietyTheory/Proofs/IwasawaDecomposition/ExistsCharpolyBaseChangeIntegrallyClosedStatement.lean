@@ -2,7 +2,11 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AlgebraMapNormCoeff
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCharpolyBaseChangeIntegrallyClosed
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CharpolyDvdPowFinrankOfAevalEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +46,61 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AlgebraMapNormCoeff
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CharpolyDvdPowFinrankOfAevalEqZeroStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Polynomial GlobalTheory.NormalDescent
+
+theorem _root_.GlobalTheory.T.charpoly_dvd_pow_finrank_of_aeval_eq_zero : ∀ {K V : Type} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    (f : Module.End K V) (G : K[X]), aeval f G = 0 → f.charpoly ∣ G ^ Module.finrank K V := by
+  first | exact @GlobalTheory.CharpolyDvd.main | exact GlobalTheory.CharpolyDvd.main | (intros; apply GlobalTheory.CharpolyDvd.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCharpolyBaseChangeIntegrallyClosed
+
+section
+
+@[expose] public section
+
+open CategoryTheory Polynomial GlobalTheory.NormalDescent TensorProduct
+
+namespace GlobalTheory.NormalDescent
+
+theorem exists_map_eq_charK : ∀ {A B K : Type} [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [CommRing B] [Field K]
+    [Algebra A K] [IsFractionRing A K] (φ : A →+* B) (hφ : φ.Finite) (b : B),
+    ∃ P : A[X], P.map (algebraMap A K) = charK φ hφ K b := by
+  intro A B K _ _ _ _ _ _ _ φ hφ b
+  letI := φ.toAlgebra
+  haveI : Module.Finite A B := hφ
+  obtain ⟨g, hgm, hg⟩ := (Algebra.IsIntegral.isIntegral (R := A) b)
+  have hT : aeval (Algebra.lmul K (K ⊗[A] B) (1 ⊗ₜ b)) (g.map (algebraMap A K)) = 0 := by
+    rw [Polynomial.aeval_algHom_apply, Polynomial.aeval_map_algebraMap]
+    have : (1 : K) ⊗ₜ[A] b = Algebra.TensorProduct.includeRight b := rfl
+    rw [this, Polynomial.aeval_algHom_apply, show aeval b g = 0 from hg, map_zero, map_zero]
+  have hd := GlobalTheory.T.charpoly_dvd_pow_finrank_of_aeval_eq_zero _ _ hT
+  rw [← Polynomial.map_pow] at hd
+  obtain ⟨P, hP⟩ := IsIntegrallyClosed.eq_map_mul_C_of_dvd K (hgm.pow _) hd
+  refine ⟨P, ?_⟩
+  have hm : (charK φ hφ K b).Monic := charK_monic φ hφ K b
+  have : (Algebra.lmul K (K ⊗[A] B) (1 ⊗ₜ b)).charpoly = charK φ hφ K b := rfl
+  rw [this, hm.leadingCoeff, C_1, mul_one] at hP
+  exact hP
+
+end GlobalTheory.NormalDescent
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCharpolyBaseChangeIntegrallyClosedStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +110,5 @@ theorem _root_.GlobalTheory.T.exists_charpoly_baseChange_integrallyClosed : ∀ 
     [Algebra A K] [IsFractionRing A K] (φ : A →+* B) (hφ : φ.Finite) (b : B),
     ∃ P : A[X], P.map (algebraMap A K) = charK φ hφ K b := by
   first | exact @GlobalTheory.NormalDescent.exists_map_eq_charK | exact GlobalTheory.NormalDescent.exists_map_eq_charK | (intros; apply GlobalTheory.NormalDescent.exists_map_eq_charK <;> assumption)
+end
+end

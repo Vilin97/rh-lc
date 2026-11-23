@@ -1,8 +1,7 @@
 module
 
 public import Development.EtaleCohomology.EtaleSheaves.ChowGraphCut
-public import Development.EtaleCohomology.EtaleSheaves.CorePf
-public import Development.EtaleCohomology.EtaleSheaves.IsClosedImmersionOfCover
+public import Mathlib.Topology.Sets.Opens
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +20,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -30,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,7 +40,88 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.EtaleCohomology.EtaleSheaves.ChowGraphCut
+import Development.EtaleCohomology.EtaleSheaves.ChowLCut
+import Development.EtaleCohomology.EtaleSheaves.LineHigh
+import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.Tactic.Linter.Style
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.CorePf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry LateralTheory.E.t_E2Cut LateralTheory.E.ChowLCut LateralTheory.E.ChowGraphCut
+
+namespace LateralTheory.E.CorePf
+
+theorem inf_nonempty {X : Type} [TopologicalSpace X] [PreirreducibleSpace X] {n : ℕ}
+    (U : Fin n → TopologicalSpace.Opens X) (hU : ∀ j, (U j : Set X).Nonempty) :
+    ∀ s : Finset (Fin n), s.Nonempty → ((s.inf U : TopologicalSpace.Opens X) : Set X).Nonempty := by
+  intro s hs
+  induction hs using Finset.Nonempty.cons_induction with
+  | singleton a => simpa using hU a
+  | cons a s ha hs ih =>
+    rw [Finset.inf_cons, TopologicalSpace.Opens.coe_inf]
+    exact nonempty_preirreducible_inter (U a).2 (s.inf U).2 (hU a) ih
+
+end LateralTheory.E.CorePf
+
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.IsClosedImmersionOfCover
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry
+
+namespace LateralTheory.E.CorePf2
+
+theorem isClosedImmersion_of_cover {X Y : Scheme.{0}} (f : X ⟶ Y) {ι : Type} (O : ι → Y.Opens)
+    (hcl : IsClosed (Set.range f)) (hcov : Set.range f ⊆ ⋃ i, (O i : Set Y))
+    (hloc : ∀ i, IsClosedImmersion (f ∣_ O i)) : IsClosedImmersion f := by
+  let O' : Option ι → Y.Opens := fun o => o.elim ⟨(Set.range f)ᶜ, hcl.isOpen_compl⟩ O
+  refine IsZariskiLocalAtTarget.of_iSup_eq_top O' ?_ ?_
+  · rw [eq_top_iff]
+    intro y _
+    rw [TopologicalSpace.Opens.mem_iSup]
+    by_cases hy : y ∈ Set.range f
+    · obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcov hy)
+      exact ⟨some i, hi⟩
+    · exact ⟨none, hy⟩
+  · intro o
+    cases o with
+    | none =>
+      have : IsEmpty (f ⁻¹ᵁ O' none).toScheme := ⟨fun x => x.2 ⟨x.1, rfl⟩⟩
+      infer_instance
+    | some i => exact hloc i
+
+theorem range_closed {S X₁ P : Scheme.{0}} (p₁ : X₁ ⟶ S) [IsProper p₁] (q : P ⟶ S) {V : Scheme.{0}}
+    (γ : V ⟶ pullback p₁ q) : IsClosed (Set.range (γ.imageι ≫ pullback.snd p₁ q)) := by
+  rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp]
+  exact (pullback.snd p₁ q).isClosedMap _ γ.imageι.isClosedEmbedding.isClosed_range
+
+end LateralTheory.E.CorePf2
+
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.ImageInPf
+
+section
 
 @[expose] public section
 
@@ -255,3 +333,6 @@ theorem Core_of : LateralTheory.E.ChowGraphCut.Core := by
   · rw [Scheme.Hom.toImage_imageι_assoc, hγ1]
 
 end LateralTheory.E.ImageInPf
+end
+end
+end

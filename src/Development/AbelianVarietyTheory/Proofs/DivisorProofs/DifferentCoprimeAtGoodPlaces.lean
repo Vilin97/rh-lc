@@ -39,8 +39,43 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocCharEqValZpow
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+import Development.AbelianVarietyTheory.Definitions.Foundations.NormEulerPolySubOneLe
+import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.DualLatticeDifferentIndex
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocCharEqValZpow
+
+section
+
+section
+
+noncomputable section
+
+namespace GlobalTheory.UnrEuler
+
+open NumberField IsDedekindDomain GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
+open scoped nonZeroDivisors
+open Formalism.L2.Host (aboveF)
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+
+
+
+
+end GlobalTheory.UnrEuler
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DifferentCoprimeAtGoodPlaces
+
+section
 
 @[expose] public section
 
@@ -145,3 +180,6 @@ theorem not_le_differentIdeal_of_psiUnr {F : Type} [Field F] [NumberField F] {ψ
   exact h2 (by exact_mod_cast h1.symm)
 
 end GlobalTheory.DiffCoprimeP
+end
+end
+end

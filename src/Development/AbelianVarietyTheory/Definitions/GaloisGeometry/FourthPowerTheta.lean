@@ -10,26 +10,6 @@ public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationPr
 import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.QuasiPeriodConstUnique
 public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.AgreeOnAdjoin
 public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.EigenCompatOf
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.EigenFinal
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.EigenFrameEOf
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.GramFrameCompositionMvExpFact
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.HasSubstBlock
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.Inertia
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.JetsLin
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.LocNormFreeProof
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.MatrixFormDiagBlocksBlockEmbed
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.MulRing
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.LocalComponentGL
-public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.NormLtOne
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.StdDataCmProof
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.SubstSingleVar
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
-public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharactersFactTer
-import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.Hurwitz
-import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.HurwitzB
-public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.IntegralOperatorTwoOrthogonal
-public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.NormLeOneOfQuad
-public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.ThmBGaussOrthOf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -47,12 +27,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -72,9 +47,170 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.EigenFrameEOf
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.GramFrameCompositionMvExpFact
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.HasSubstBlock
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.Inertia
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.JetsLin
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementC
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.StdDataCmProof
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.CurveIntegerMultiplicationSeries
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.AnalyticTransOfAdd
+import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.Taylor0ConstMul
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.KJoint
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.MatrixFormDiagBlocksBlockEmbed
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.MulRing
+import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.LocalComponentGL
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.NormLtOne
+import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.StdDataCmProof
+import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.CayleyGaussianIntegrals.SubstSingleVar
+import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharactersFactTer
+import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.Hurwitz
+import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.HurwitzB
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.IntegralOperatorTwoOrthogonal
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.NormLeOneOfQuad
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OrthogonalGaussModels.ThmBGaussOrthOf
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.EigenFinal
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+open NumberField
+
+namespace Formalism.L2.Th1.GD
+
+open Formalism.L2.Th1.H (cmL CmOK matH stdH stdLat blk4 pow4 imgLat relIdx IsIsom IsSelfDual Th alphaQ kernel4)
+open Formalism.L2.Th1.Top (IsLatH phC)
+open Formalism.L2.Th1.E (IntCurve curveL)
+open Formalism.L2.Th1.A (logSer expSer)
+open Formalism.L2.Th1.G (betaPair)
+open Formalism.L2.Th1.CM (MaximalUnramifiedExtension)
+open Formalism.DworkPowerSeriesWeights (JetsIntegral jetPair jetPairPoly minorProd)
+
+namespace EigenLocalizationShapes
+
+theorem pair (hE : EigenFrameE) (hI : IotaOK) {a₀ : ℕ} {b₀ c₀ : ℤ} {dK : ℕ} (ha : 0 < a₀) (hdK : 0 < dK) (lam : ℂ)
+    (hlam : lam ≠ 0) (hcm : CmOK a₀ b₀ c₀ dK) {n : Type} [Fintype n] [DecidableEq n] (h : Matrix n n ℂ)
+    (Λ : AddSubgroup (n → ℂ)) (θ : (n → ℂ) → ℂ) (p : ℕ) [Fact p.Prime] (hpd : p ∣ dK) (ι : ℂ ≃+* ℂ_[p])
+    (hN : LocNorm a₀ b₀ dK ha hdK lam hlam h Λ θ p ι)
+    {J : Type} [Fintype J] (v : J → n → ℂ) {H : Type} [Fintype H] [DecidableEq H] {N0 N1 : ℕ}
+    (A : J → ((Bool × H) × Fin N0 × Fin N1) → ℂ_[p]) (u : H → ℂ_[p])
+    (E : Type) [Field E] [NumberField E] [IsGalois ℚ E] (cE s : E ≃+* E) (δ : E)
+    (emb : Bool × H → (E →+* ℂ_[p])) (act : 𝓞 E → (n → ℂ) →ₗ[ℂ] (n → ℂ))
+    (hF : IsEigenFrame ι (cmL a₀ b₀ dK ha hdK lam hlam) (ι (Complex.I * ((Real.sqrt dK : ℝ) : ℂ))) h Λ E cE s δ emb act
+      v A u) :
+    p = dK ∧ ‖ι (Complex.I * ((Real.sqrt dK : ℝ) : ℂ))‖ = ‖(dK : ℂ_[p])‖ ^ (1 / 2 : ℝ) ∧
+    ∃ q : ((Bool × H) × Fin N0 × Fin N1) → ((Bool × H) × Fin N0 × Fin N1) → ℂ_[p],
+      IsPairFrame (ι : ℂ →+* ℂ_[p]) (cmL a₀ b₀ dK ha hdK lam hlam) h Λ v A u
+        (ι (Complex.I * ((Real.sqrt dK : ℝ) : ℂ))) q := by
+  have hp : p = dK := (Nat.prime_dvd_prime_iff_eq Fact.out hcm.2.2.2).1 hpd
+  have h4 : dK % 4 = 3 := by
+    have := hcm.2.2.1
+    omega
+  obtain ⟨g₁, ε, hIsom, hidx, -, -, -⟩ := hN
+  obtain ⟨f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16⟩ := hF
+  exact ⟨hp, (hI dK h4 p ι).1,
+    hE a₀ b₀ c₀ dK ha hdK lam hlam hcm n h Λ g₁ hIsom p ι hidx J v f13 hp E cE s δ f1 f2 f3 f4 f5 f6 H emb f7 f8 f9 f10
+      act f11 f12 N0 N1 A u f14 f15 f16⟩
+
+end EigenLocalizationShapes
+
+theorem ShapeEigenLoc_of (hE : EigenFrameE) (hI : IotaOK) (h : ShapeLoc) : ShapeEigenLoc := by
+  intro a₀ b₀ c₀ dK ha hdK lam hlam hcm n _ _ hm Λ hsd hst θ hθ p _ hpd ι hW hN κx _ r t N hr hN0 hpN ht J _ v H _ _ N0 N1
+    A u E _ _ _ cE s δ emb act hF
+  obtain ⟨-, hth, q, hq⟩ := EigenLocalizationShapes.pair hE hI ha hdK lam hlam hcm hm Λ θ p hpd ι hN v A u E cE s δ emb act hF
+  exact h a₀ b₀ c₀ dK ha hdK lam hlam hcm n hm Λ hsd hst θ hθ p hpd ι hW hN κx r t N hr hN0 hpN ht J v H N0 N1 A u _ q
+    (le_of_eq hth) hq
+
+end Formalism.L2.Th1.GD
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.GramFrameComposition.LocNormFreeProof
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+namespace Formalism.L2.Th1.GD
+
+open Formalism.L2.Th1.H (cmL CmOK matH stdH stdLat blk4 pow4 imgLat relIdx IsIsom IsSelfDual Th alphaQ kernel4 TransInt
+  opU taylorMv)
+open Formalism.L2.Th1.Top (IsLatH phC)
+open Formalism.L2.Th1.E (IntCurve curveL)
+open Formalism.L2.Th1.A (logSer expSer)
+open Formalism.G (unitBall)
+
+theorem TransIntC_proof : TransIntC := by
+  intro p _ L ι hp hW ω₀ hω hω2 s N hN hpN hs
+  have h := (Formalism.L2.Th1.E.th0Analytic p L ι hp hW ω₀ hω hω2).2 s N hN hpN hs
+  rw [Formalism.L2.Th1.Top.KJ.phC_eq]
+  exact h.1
+
+theorem thetaU_one {K : Type} [Field K] (ι : ℂ →+* K) (lg : PowerSeries K) {n : Type} [Fintype n] [DecidableEq n]
+    (f : (n → ℂ) → ℂ) :
+    Formalism.L2.Th1.H.thetaU ι lg (1 : Matrix n n K) f =
+      MvPowerSeries.subst (fun i => Formalism.InvariantFactorPaths.G7.at1 i lg) (MvPowerSeries.map ι (taylorMv f)) := by
+  unfold Formalism.L2.Th1.H.thetaU
+  congr 1
+  funext i
+  simp [Matrix.one_apply]
+
+theorem TensStd_of (hZ : ShapeToZ) (hT : TransIntC) : TensStd := by
+  intro a₀ b₀ c₀ dK ha hdK lam hlam hok n _ _ h Λ hsd hst θ hθ p _ hp ι hW g₁ ε hiso hnd hrel hε htens t N hN hpN ht
+  have hω : (cmL a₀ b₀ dK ha hdK lam hlam).ω₁ = lam * a₀ := by
+    first
+      | rfl
+      | simp [cmL, Formalism.L2.Th1.F.scalePair, Formalism.L2.Th1.F.cmPair]
+      | (simp [cmL, Formalism.L2.Th1.F.scalePair, Formalism.L2.Th1.F.cmPair]; ring)
+  have hmem : lam * (a₀ : ℂ) ∈ (cmL a₀ b₀ dK ha hdK lam hlam).lattice :=
+    hω ▸ PeriodPair.ω₁_mem_lattice _
+  have hnot : lam * (a₀ : ℂ) / 2 ∉ (cmL a₀ b₀ dK ha hdK lam hlam).lattice :=
+    hω ▸ PeriodPair.ω₁_div_two_notMem_lattice _
+  have hi1 : relIdx (stdLat (cmL a₀ b₀ dK ha hdK lam hlam) (Fin 4 × n))
+      (imgLat (g₁ : (Fin 4 × n → ℂ) →ₗ[ℂ] (Fin 4 × n → ℂ)) (pow4 Λ)) ≠ 0 := by
+    intro h0
+    exact hnd (h0 ▸ dvd_zero p)
+  have hstd := Formalism.L2.Th1.H.CmData.stdData_cm a₀ b₀ c₀ dK ha hdK lam hlam hok.1 hok.2.1 hok.2.2.1 h Λ g₁
+    hiso hsd hst hi1 hrel
+  have hTI := hT p (cmL a₀ b₀ dK ha hdK lam hlam) ι hp hW (lam * a₀) hmem hnot
+  have hcc : PowerSeries.constantCoeff (phC p (cmL a₀ b₀ dK ha hdK lam hlam) ι) = 0 := by
+    rw [Formalism.L2.Th1.Top.KJ.phC_eq]
+    exact Formalism.L2.Th1.E.Tor.cc_phL p _ ι
+  have hK := Formalism.L2.Th1.H.quadraticSemicharacters_fact p (cmL a₀ b₀ dK ha hdK lam hlam) ι (lam * a₀) _ _ _
+    (Formalism.L2.Th1.C.WeierstrassCurveSeries.logPair _) hcc hTI n h Λ _ _ g₁ hstd hnd ε hε θ hθ htens t N hN hpN ht
+    ℂ_[p] (RingHom.id _) (fun w w' => ι (g₁.symm (Pi.single w' 1) w)) 1 (by
+      intro a i w
+      simp [Matrix.one_apply])
+  rw [thetaU_one] at hK
+  exact hZ ℂ_[p] _ _ _ (Formalism.L2.Th1.C.WeierstrassCurveSeries.logPair _) hcc n _ _ hK
+
+end Formalism.L2.Th1.GD
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.GaloisGeometry.FourthPowerTheta
+
+section
 
 @[expose] public section
 
@@ -363,3 +499,6 @@ theorem shape (hE : EmbSep) : ShapeEigenLoc :=
 end Jets
 
 end GlobalTheory.ThLoc.LocJets
+end
+end
+end

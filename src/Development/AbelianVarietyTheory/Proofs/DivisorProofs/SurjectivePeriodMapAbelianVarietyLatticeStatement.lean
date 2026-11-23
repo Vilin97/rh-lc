@@ -1,7 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRatioCover
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SurjectivePeriodMapAbelianVarietyLattice
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AppellHumbertFrameLogDerivativeQuasiPeriodicStatement
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.DifferentiableOnOfTendstoLocallyUniformlyOn
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCechDeRhamClassOfQuasiPeriodicFunctionsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRegularSectionOfRegularDifferencesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegOfPeriodicOfIsRegSubStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularFderivConstantVectorUniformisedStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularOnOpenUniformisedOfLocallyStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularOnOpenUniformisedSubalgebraRestrictStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisationPreimageValueRulesStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,6 +27,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -40,6 +49,239 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.AppellHumbertNormalFormOfLinearExponent
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsRatioCover
+import Development.AbelianVarietyTheory.Definitions.Divisors.OneFormMapEqKaehlerDifferentialMap
+import Development.AbelianVarietyTheory.Definitions.Divisors.Pullback1MemHodgeFiltration
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.SpanXLeKerAevalZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHermitianPullback
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCechClassOfQuasiPeriodicHolomorphicCover
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+open Filter Topology
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.CechPer.OfCover
+
+theorem fderiv_congr_on {g : ℕ} {S : Set (Fin g → ℂ)} (hS : IsOpen S) {f f' : (Fin g → ℂ) → ℂ}
+    (e : ∀ z ∈ S, f z = f' z) {z : Fin g → ℂ} (hz : z ∈ S) : fderiv ℂ f z = fderiv ℂ f' z :=
+  Filter.EventuallyEq.fderiv_eq (Filter.eventually_of_mem (hS.mem_nhds hz) e)
+
+theorem exists_isPer : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ (K : Type) (W : K → A.left.Opens) (h : K → (Fin g → ℂ) → ℂ) (q : u.Λ → ℂ), ⨆ i, W i = ⊤ → (∀ i, DifferentiableOn ℂ (h i) (pre u.ex (W i))) → (∀ i j, IsReg u.ex (W i ⊓ W j) (h i - h j)) → (∀ i (l : u.Λ), ∀ z ∈ pre u.ex (W i), h i (z + l) = h i z + q l) → ∃ x, IsPer u.ex u.Λ x q := by
+  intro A _ g L u hA K W h q hW hd hr hq
+  obtain ⟨bo, bd, bp, bv, bi, bm, bs, -, -, -, -, bt⟩ := GlobalTheory.T.uniformisation_preimage_value_rules A g L u
+  have ra := GlobalTheory.T.isRegularOnOpenUniformised_subalgebra_restrict A g L u
+  have der := GlobalTheory.T.isRegular_fderiv_constant_vector_uniformised A g L u hA
+  have glue := GlobalTheory.T.isRegularOnOpenUniformised_of_locally A g L u hA
+
+  have dsub : ∀ (U : A.left.Opens) (k k' : (Fin g → ℂ) → ℂ) (w : Fin g → ℂ), DifferentiableOn ℂ k (pre u.ex U) →
+      DifferentiableOn ℂ k' (pre u.ex U) → IsReg u.ex U (k - k') →
+      IsReg u.ex U ((fun z => fderiv ℂ k z w) - fun z => fderiv ℂ k' z w) := by
+    rintro U k k' w hk hk' ⟨b, hb⟩
+    refine (ra U).2.2.1 _ _ (der U b w) fun z hz => ?_
+    have e := fderiv_congr_on (bo U) hb hz
+    rw [← e, fderiv_sub (hk.differentiableAt ((bo U).mem_nhds hz)) (hk'.differentiableAt ((bo U).mem_nhds hz))]
+    rfl
+  have hreg : ∀ (w : Fin g → ℂ) i, IsReg u.ex (W i) fun z => fderiv ℂ (h i) z w := by
+    intro w
+    refine GlobalTheory.T.isReg_of_periodic_of_isReg_sub' A g L u hA K W (fun i z => fderiv ℂ (h i) z w) hW (fun i => ?_) (fun i l z hz => ?_) fun i j => ?_
+    · have := (GlobalTheory.SCV.analyticOnNhd_of_differentiableOn (bo (W i)) (hd i)).fderiv.differentiableOn
+      exact this.clm_apply (differentiableOn_const w)
+    · have e := fderiv_congr_on (bo (W i)) (f := fun z => h i (z + l)) (f' := fun z => h i z + q l) (hq i l) hz
+      rw [fderiv_comp_add_right, fderiv_add_const] at e
+      change fderiv ℂ (h i) (z + l) w = fderiv ℂ (h i) z w
+      rw [e]
+    · exact dsub _ _ _ w ((hd i).mono (bm _ _ inf_le_left)) ((hd j).mono (bm _ _ inf_le_right)) (hr i j)
+  choose k hk using GlobalTheory.T.exists_regular_section_of_regular_differences A g L u hA K W h hW hr
+  have cov : ∀ z, ∃ i, z ∈ pre u.ex (W i) := fun z => (bs K W z).1 (hW ▸ bt z)
+  have kd : ∀ (U : A.left.affineOpens) i, DifferentiableOn ℂ (k U) (pre u.ex (U.1 ⊓ W i)) := fun U i => by
+    have := ((ra _).2.2.2.2.1 _ (hk U i)).add ((hd i).mono (bm _ _ inf_le_right))
+    simpa using this
+  have mem : ∀ (U : A.left.Opens) z i, z ∈ pre u.ex U → z ∈ pre u.ex (W i) → z ∈ pre u.ex (U ⊓ W i) :=
+    fun U z i h1 h2 => by rw [bi]; exact ⟨h1, h2⟩
+  refine GlobalTheory.T.exists_cechDeRham_class_of_quasiPeriodic_functions A g L u hA k q (fun U z hz => ?_) (fun U V hVU => ?_) (fun U a => ?_) fun U l z hz => ?_
+  · obtain ⟨i, hi⟩ := cov z
+    exact ((kd U i).differentiableAt ((bo _).mem_nhds (mem _ _ _ hz hi))).differentiableWithinAt
+  · refine glue _ _ fun z hz => ?_
+    obtain ⟨i, hi⟩ := cov z
+    refine ⟨V.1 ⊓ W i, inf_le_left, mem _ _ _ hz hi, ?_⟩
+    have := ((ra _).2.1 _ _ (hk V i) ((ra _).2.2.2.1 _ (inf_le_inf_right (W i) (show V.1 ≤ U.1 from hVU)) _ (hk U i))).2.1
+    simpa using this
+  · refine glue _ _ fun z hz => ?_
+    obtain ⟨i, hi⟩ := cov z
+    refine ⟨U.1 ⊓ W i, inf_le_left, mem _ _ _ hz hi, ?_⟩
+    have h1 := dsub _ _ _ (Pi.single a 1) (kd U i) ((hd i).mono (bm _ _ inf_le_right)) (hk U i)
+    have h2 := (ra _).2.2.2.1 _ (inf_le_right : U.1 ⊓ W i ≤ W i) _ (hreg (Pi.single a 1) i)
+    have := ((ra _).2.1 _ _ h1 h2).1
+    simpa using this
+  · obtain ⟨i, hi⟩ := cov z
+    obtain ⟨b, hb⟩ := hk U i
+    have h1 := hb z (mem _ _ _ hz hi)
+    have h2 := hb (z + l) ((bp _ l z).2 (mem _ _ _ hz hi))
+    rw [bv, Pi.sub_apply, hq i l z hi] at h2
+    rw [Pi.sub_apply] at h1
+    linear_combination h2 - h1
+
+end GlobalTheory.CechPer.OfCover
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCechClassOfQuasiPeriodicHolomorphicCoverStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.exists_cechClass_of_quasiPeriodic_holomorphic_cover : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ (K : Type) (W : K → A.left.Opens) (h : K → (Fin g → ℂ) → ℂ) (q : u.Λ → ℂ), ⨆ i, W i = ⊤ → (∀ i, DifferentiableOn ℂ (h i) (pre u.ex (W i))) → (∀ i j, IsReg u.ex (W i ⊓ W j) (h i - h j)) → (∀ i (l : u.Λ), ∀ z ∈ pre u.ex (W i), h i (z + l) = h i z + q l) → ∃ x, IsPer u.ex u.Λ x q := by
+  first | exact @GlobalTheory.CechPer.OfCover.exists_isPer | exact GlobalTheory.CechPer.OfCover.exists_isPer | (intros; apply GlobalTheory.CechPer.OfCover.exists_isPer <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearSubPiHermitianOfLatticeAddHom
+
+section
+
+@[expose] public section
+
+open Complex Matrix
+
+namespace GlobalTheory
+
+theorem exists_linear_sub_pi_mul_form_of_addMonoidHom :
+    ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) (H : Matrix (Fin g) (Fin g) ℂ), DiscreteTopology Λ → Submodule.span ℝ (Λ : Set (Fin g → ℂ)) = ⊤ → (∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ H.mulVec (star z)).re) → ∀ p : Λ →+ ℂ, ∃ (f : (Fin g → ℂ) →L[ℂ] ℂ) (v : Fin g → ℂ), ∀ l : Λ, p l = f l - Real.pi * (v ⬝ᵥ H.mulVec (star (l : Fin g → ℂ))) := by
+  intro g Λ H _ hΛ hH p
+  obtain ⟨F, hF⟩ := AppellHumbert.exists_real_extension Λ hΛ p
+  have hinj : Function.Injective H.vecMulLinear := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro v hv
+    by_contra h0
+    have := hH v h0
+    rw [dotProduct_mulVec] at this
+    rw [vecMulLinear_apply] at hv
+    simp [hv] at this
+  have hsurj := LinearMap.injective_iff_surjective.1 hinj
+  have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
+  let s : Fin g → ℂ := fun b => (F (Pi.single b 1) - I * F (Pi.single b I)) / 2
+  let c : Fin g → ℂ := fun b => (F (Pi.single b 1) + I * F (Pi.single b I)) / 2
+  have hsplit : ∀ u, F u = s ⬝ᵥ u + c ⬝ᵥ star u := by
+    intro u
+    conv_lhs => rw [AppellHumbert.eq_sum_re_im u]
+
+    simp only [map_sum, map_add (f := _), map_smul, dotProduct, ← Finset.sum_add_distrib,
+    Pi.star_apply, real_smul, s, c]
+    refine Finset.sum_congr rfl fun b _ => ?_
+    have h1 : u b = (u b).re + (u b).im * I := (re_add_im _).symm
+    have h2 : star (u b) = (u b).re - (u b).im * I := by
+      apply Complex.ext <;> simp
+    rw [h2]
+    generalize (u b).re = x at *
+    generalize (u b).im = y at *
+    rw [h1]
+    linear_combination (y * F (Pi.single b I)) * I_mul_I
+  obtain ⟨v, hv⟩ := hsurj (-(Real.pi : ℂ)⁻¹ • c)
+  rw [vecMulLinear_apply] at hv
+  refine ⟨LinearMap.toContinuousLinearMap (dotProductBilin ℂ ℂ s), v, fun l => ?_⟩
+  rw [← hF, hsplit, dotProduct_mulVec, hv, smul_dotProduct]
+  simp only [LinearMap.coe_toContinuousLinearMap', dotProductBilin_apply_apply, smul_eq_mul]
+  field_simp
+  ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearSubPiHermitianOfLatticeAddHomStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.exists_linear_sub_pi_hermitian_of_lattice_addHom : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) (H : Matrix (Fin g) (Fin g) ℂ), DiscreteTopology Λ → Submodule.span ℝ (Λ : Set (Fin g → ℂ)) = ⊤ → (∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ H.mulVec (star z)).re) → ∀ p : Λ →+ ℂ, ∃ (f : (Fin g → ℂ) →L[ℂ] ℂ) (v : Fin g → ℂ), ∀ l : Λ, p l = f l - Real.pi * (v ⬝ᵥ H.mulVec (star (l : Fin g → ℂ))) := by
+  first | exact @GlobalTheory.exists_linear_sub_pi_mul_form_of_addMonoidHom | exact GlobalTheory.exists_linear_sub_pi_mul_form_of_addMonoidHom | (intros; apply GlobalTheory.exists_linear_sub_pi_mul_form_of_addMonoidHom <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SurjectivePeriodMapAbelianVarietyLattice
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.PerSurj
+
+theorem isPer_transport {A : Over (Sp ℂ)} {g : ℕ} (ex₀ : (Fin g → ℂ) → (𝟙_ (Over (Sp ℂ)) ⟶ A))
+    (Λ₀ : Submodule ℤ (Fin g → ℂ))
+    (h₀ : ∀ p : Λ₀ →+ ℂ, ∃ x, IsPer ex₀ Λ₀ x p) :
+    ∀ (ex : (Fin g → ℂ) → (𝟙_ (Over (Sp ℂ)) ⟶ A)) (Λ : Submodule ℤ (Fin g → ℂ)),
+      ex = ex₀ → Λ = Λ₀ → ∀ p : Λ →+ ℂ, ∃ x, IsPer ex Λ x p := by
+  intro ex Λ hex hΛ
+  subst hex hΛ
+  exact h₀
+
+theorem surj_of_isAH (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (M : LB A.left) (u : HolUnif A M g)
+    (hA : IsAbelianScheme A) (hM : M.IsLB) (H : Matrix (Fin g) (Fin g) ℂ) (χ : u.Λ → ℂ) (hAH : u.IsAH H χ) :
+    ∀ p : u.Λ →+ ℂ, ∃ x, IsPer u.ex u.Λ x p := by
+  intro p
+  obtain ⟨f, v, hfv⟩ := GlobalTheory.T.exists_linear_sub_pi_hermitian_of_lattice_addHom g u.Λ H u.discrete u.full hAH.2.1 p
+  obtain ⟨hd, hr, hq⟩ := GlobalTheory.T.appell_humbert_frame_log_derivative_quasi_periodic A g M u hA hM H χ hAH v
+  refine GlobalTheory.T.exists_cechClass_of_quasiPeriodic_holomorphic_cover A g M u hA M.ι M.U
+    (fun i z => f z + fderiv ℂ (u.fr i) z v / u.fr i z) p hM.cover ?_ ?_ ?_
+  · intro i
+    exact f.differentiable.differentiableOn.add (hd i)
+  · intro i j
+    have : ((fun z => f z + fderiv ℂ (u.fr i) z v / u.fr i z) - fun z => f z + fderiv ℂ (u.fr j) z v / u.fr j z) =
+        ((fun z => fderiv ℂ (u.fr i) z v / u.fr i z) - fun z => fderiv ℂ (u.fr j) z v / u.fr j z) := by
+      funext z; simp only [Pi.sub_apply]; ring
+    rw [this]; exact hr i j
+  · intro i l z hz
+    rw [hq i l z hz, map_add (f := _), hfv l]
+    ring
+
+theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ p : u.Λ →+ ℂ, ∃ x, IsPer u.ex u.Λ x p := by
+  intro A _ g L u hA
+  obtain ⟨M, u', H, χ, hM, hex, hΛ, hAH⟩ := GlobalTheory.AHExists.exists_isAH A g hA L u
+  exact isPer_transport u'.ex u'.Λ (surj_of_isAH A g M u' hA hM H χ hAH) u.ex u.Λ hex.symm hΛ.symm
+
+end GlobalTheory.PerSurj
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SurjectivePeriodMapAbelianVarietyLatticeStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +291,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.surjective_periodMap_abelianVariety_lattice : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ p : u.Λ →+ ℂ, ∃ x, IsPer u.ex u.Λ x p := by
   first | exact @GlobalTheory.PerSurj.main | exact GlobalTheory.PerSurj.main | (intros; apply GlobalTheory.PerSurj.main <;> assumption)
+end
+end

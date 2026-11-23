@@ -2,11 +2,19 @@ module
 
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanExists
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.AlphaDiscriminantHolds
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GluingProductHolds
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanInvariantsHolds
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanSplittingExists
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.LocalGluingHolds
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.PushforwardOrthComplement
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GlueProdOfIso
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanInvariantsHolds
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.SplitAtOf
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsIsomLocFOfVdZero
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsSqAbsNormOfInert
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.IsHermSemilocalLocRing
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.IsUnimodularAtIffVd
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.VdEqZeroOfNotLe
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.ExistsNearOfSmul
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.AlgebraMapIntCastSmul
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsFracOfFixed
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.GmapLocEqOfFrame
+import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,7 +33,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,6 +44,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +58,195 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.MemSpanSSelf
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.ImportsAlt
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.SumFilterSmul
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.UniPart
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.UniformizerValuationHolds
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanSplittingExists
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.LocalGluingHolds
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanInvariantsHolds
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanSplittingExists
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.LocalGluingHolds
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.PushforwardOrthComplement
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanSpanHolds
+
+section
+
+@[expose] public section
+
+open NumberField Module
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.G3
+
+open Formalism.HermitianLattices.Ext.L3 Formalism.HermitianLattices.Ext.L3.U0 Formalism.HermitianLattices.Ext.L3.WA
+
+theorem local_span_holds : LocSpan := by
+  intro K F V _ _ _ _ _ _ _ _ _ _ hK hF P hP n b v
+  have hPp := hP.isPrime
+  constructor
+  · intro hv
+    obtain ⟨s, hs, hsv⟩ := Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp hv
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 K)).mp hsv
+    have hs0 := algebraMap_ne_zero_of_mem_hcompl hPp hs
+    refine ⟨fun i => algebraMap (𝓞 K) K (c i) / algebraMap (𝓞 K) K s,
+      fun i => div_mem_locRing hPp (c i) hs, ?_⟩
+    have e : v = (algebraMap (𝓞 K) K s)⁻¹ • (algebraMap (𝓞 K) K s • v) := by
+      rw [smul_smul, inv_mul_cancel₀ hs0, one_smul]
+    rw [e, algebraMap_smul, ← hc, Finset.smul_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [← algebraMap_smul K (c i) (b i), smul_smul]
+    simp only [div_eq_inv_mul]
+  · rintro ⟨d, hd, rfl⟩
+    refine Submodule.sum_mem _ fun i _ => smul_mem_loc hPp (hd i) ?_
+    exact Formalism.HermitianLatticesTheory.locBasic_le_locS _ _ (Submodule.subset_span ⟨i, rfl⟩)
+
+theorem jordan_span_holds :
+    ∀ (K F V : Type) [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F]
+      [Algebra F K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+      [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+      (L : Submodule (𝓞 K) V), Submodule.IsFullLattice K L → ∀ 𝔭 : Ideal (𝓞 F),
+      𝔭.IsMaximal → ∀ (n : ℕ) (b : Fin n → V),
+      locF 𝔭 (Submodule.span (𝓞 K) (Set.range b)) = locF 𝔭 L →
+        Submodule.span K (Set.range b) = ⊤ := by
+  intro K F V _ _ _ _ _ _ _ _ _ _ _ L hL 𝔭 h𝔭 n b hb
+  letI : Submodule.IsFullLattice K L := hL
+  rw [eq_top_iff, ← Submodule.IsFullLattice.span_eq_top (A := K) (M := L), Submodule.span_le]
+  intro x hx
+  have hx' : x ∈ locF 𝔭 (Submodule.span (𝓞 K) (Set.range b)) := by
+    rw [hb]
+    exact LocF.le_locF 𝔭 L hx
+  obtain ⟨t, ht, htx⟩ := (LocF.mem_locF_iff h𝔭.isPrime _ x).mp hx'
+  have ht0 : algebraMap (𝓞 K) K (algebraMap (𝓞 F) (𝓞 K) t) ≠ 0 := by
+    intro h0
+    apply ht
+    have h1 : algebraMap (𝓞 F) (𝓞 K) t = 0 :=
+      FaithfulSMul.algebraMap_injective (𝓞 K) K (by rw [h0, map_zero])
+    have h2 : t = 0 := FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K) (by rw [h1, map_zero])
+    rw [h2]
+    exact 𝔭.zero_mem
+  have hmem := Submodule.span_le_restrictScalars (𝓞 K) K (Set.range b) htx
+  have e : x = (algebraMap (𝓞 K) K (algebraMap (𝓞 F) (𝓞 K) t))⁻¹ •
+      (algebraMap (𝓞 F) (𝓞 K) t • x) := by
+    rw [← algebraMap_smul K (algebraMap (𝓞 F) (𝓞 K) t) x, smul_smul, inv_mul_cancel₀ ht0, one_smul]
+  rw [e]
+  exact Submodule.smul_mem _ _ hmem
+
+end Formalism.L2.SG.Pf.G3
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.RebasingHolds
+
+section
+
+@[expose] public section
+
+open Module
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.TemperedBoundGL3
+
+open Formalism.HermitianLattices.Ext.L3 Formalism.HermitianLattices.Ext.L3.U0 Formalism.HermitianLattices.Ext.L3.WA
+
+theorem rebasing_holds : G3.Rebase := by
+  intro K V _ _ _ _ _ S π h hS hπ hs hd
+  exact rebaseAt_of hS hπ
+    (fun J _ _ b e i₀ ho hu x hx hX => G3.uni_part hS hπ hs hd ho hu x hx hX)
+    (fun J _ _ e i₀ x hx T hT hlt b ho hu => G3.absorb hS hπ hs x hx T hT hlt b ho hu)
+
+end Formalism.L2.SG.Pf.TemperedBoundGL3
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.JordanIsometryHolds
+
+section
+
+@[expose] public section
+
+open NumberField Module
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.G3
+
+open Formalism.HermitianLattices.Ext.L3 Formalism.HermitianLattices.Ext.L3.U0 Formalism.HermitianLattices.Ext.L3.WA
+
+theorem jordanIsom_of (hE : ExactVec) (hR : Rebase) (hL : LocSpan) (hU : UnifVal)
+    (hJ : JordSpan) : Formalism.L2.SG.Pf.Cnt.JordanIsom := by
+  intro K F V _ _ _ _ _ _ _ _ _ _ _ hK hF h hs hd L L' hLl hLl' 𝔭 h𝔭 b a b' a' hb hb' hv
+  obtain ⟨P, hP, rfl⟩ := exists_maximal_over hK hF h𝔭
+  obtain ⟨π, hπ, hval⟩ := hU K F hK hF P hP
+  have hda := LocF.aniso_of_totPosDef hd
+  obtain ⟨-, hbL, hbo, hbn, hba⟩ := hb
+  obtain ⟨-, hbL', hbo', hbn', hba'⟩ := hb'
+  have span_of_jordan (c : Fin (finrank K (⊤ : Submodule K V)) → V)
+      (d : Fin (finrank K (⊤ : Submodule K V)) → 𝓞 F)
+      (ho : ∀ i j, i ≠ j → h (c i) (c j) = 0)
+      (hn : ∀ i, h (c i) (c i) = algebraMap F K ((d i : 𝓞 F) : F))
+      (hd : ∀ i, d i ≠ 0) : Submodule.span K (Set.range c) = ⊤ := by
+    have hi : LinearIndependent K c := LinearMap.linearIndependent_of_isOrthoᵢ ho (fun i => by
+      rw [hn i]
+      apply (map_ne_zero (algebraMap F K)).2
+      intro hz
+      apply hd i
+      exact FaithfulSMul.algebraMap_injective (𝓞 F) F (by simpa using hz))
+    apply hi.span_eq_top_of_card_eq_finrank'
+    simp
+  have hsp := span_of_jordan b a hbo hbn hba
+  have hsp' := span_of_jordan b' a' hbo' hbn' hba'
+  have hS := isHermSemilocal_locRing hK hP
+  obtain ⟨g, hg, -, hgm⟩ := core_of_split hs hda
+    (splitAt_of (hE K F V hK hF h hs hd P hP π hπ) (hR K V (locRing P) π h hS hπ hs hda))
+    _ (Fin _) le_rfl b b' (fun i => vF _ (a i)) 1 hbo hbo'
+    (fun i => by rw [hbn i]; exact hval _ (hba i))
+    (fun i => by rw [hbn' i, hv i]; exact hval _ (hba' i)) (one_mem _)
+    (fun v => by
+      rw [hsp, hsp']
+      exact ⟨fun _ => Submodule.mem_top, fun _ => Submodule.mem_top⟩)
+  refine ⟨g, hg, gmap_eq_of_iff fun v => ?_⟩
+  rw [← hbL, ← hbL', locF_eq_loc hK hF hP, locF_eq_loc hK hF hP, hL K F V hK hF P hP,
+    hL K F V hK hF P hP]
+  exact hgm v
+
+end Formalism.L2.SG.Pf.G3
+
+namespace Formalism.L2.SG.Pf.Cnt
+
+theorem jordan_isometry_holds : JordanIsom :=
+  Formalism.L2.SG.Pf.G3.jordanIsom_of Formalism.L2.SG.Pf.TemperedBoundGL3.exact_vector_holds Formalism.L2.SG.Pf.TemperedBoundGL3.rebasing_holds
+    Formalism.L2.SG.Pf.G3.local_span_holds Formalism.L2.SG.Pf.TemperedBoundGL3.uniformizer_valuation_holds Formalism.L2.SG.Pf.G3.jordan_span_holds
+
+end Formalism.L2.SG.Pf.Cnt
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GluingProductHolds
+
+section
+
+@[expose] public section
+
+namespace Formalism.L2.SG.Pf.Cnt
+
+theorem gluing_product_holds : GlueProd :=
+  glueProd_of jordan_splitting_exists jordan_invariants_holds jordan_isometry_holds local_gluing_holds
+
+end Formalism.L2.SG.Pf.Cnt
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GluingMassHolds
+
+section
 
 @[expose] public section
 
@@ -55,3 +256,5 @@ theorem gluing_mass_holds : GlueMass :=
   glueMass_of' jordan_splitting_exists jordan_invariants_holds alpha_discriminant_holds local_gluing_holds gluing_product_holds
 
 end Formalism.L2.SG.Pf.Cnt
+end
+end

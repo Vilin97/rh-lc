@@ -2,7 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbelianHodgeDeRham
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimitiveHodgeToPdivisibleOmegaSurjective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineSmoothLiftOfRelations
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteSpanNatCastOfIsNilpotent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OmegaLevelBijectiveOfPowEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +42,195 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DUnitMemRangeOfMemKerIdeal
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteSpanNatCastOfIsNilpotent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiePairingCanonicalRigidifiedExtensionTangent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeLieSequenceExactAbelianSchemeStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLieCorrOfPowEqZero
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.PDivGroup
+
+theorem exists_lieCorr_of_pow_eq_zero : ∀ (p : ℕ) [Fact p.Prime]  (R : Type) [CommRing R] (N : ℕ), (p : R) ^ N = 0 → ∀ (A : Over (Sp R)) [GrpObj A] (G : PDivGroup p R) (t : G.TorsionTower A) (x : G.Lie), ∃ v : epsR R ⟶ A, t.LieCorr x v := by
+  intro p _ R _ N hN A _ G t x
+  have hb := omegaLevel_bijective_of_pow_eq_zero p R N hN G N le_rfl
+  let e := LinearEquiv.ofBijective (G.omegaLevel N) hb
+  let D : G.A N →ₗ[R] R := x ∘ₗ e.symm.toLinearMap ∘ₗ AugCot.d (Bialgebra.counitAlgHom R (G.A N))
+  have hD : ∀ a b : G.A N, D (a * b) = Coalgebra.counit (R := R) a * D b + Coalgebra.counit (R := R) b * D a := by
+    intro a b
+    simp only [D, LinearMap.comp_apply, AugCot.d_mul, map_add (f := _), map_smul, smul_eq_mul]
+    rfl
+  have hD1 : D 1 = 0 := by simp [D]
+  let ψ₀ : G.A N →ₐ[R] DualNumber R :=
+    AlgHom.ofLinearMap
+      (Algebra.linearMap R (DualNumber R) ∘ₗ Coalgebra.counit + TrivSqZeroExt.inrHom R R ∘ₗ D)
+      (by simp [hD1])
+      (fun a b ↦ by
+        ext
+        · simp [TrivSqZeroExt.algebraMap_eq_inl]
+        · simp [TrivSqZeroExt.algebraMap_eq_inl, hD, mul_comm])
+  have hfst : ∀ a, (ψ₀ a).fst = Coalgebra.counit (R := R) a := fun a ↦ by
+    simp [ψ₀, TrivSqZeroExt.algebraMap_eq_inl]
+  have hsnd : ∀ a, (ψ₀ a).snd = D a := fun a ↦ by
+    simp [ψ₀, TrivSqZeroExt.algebraMap_eq_inl]
+  let v : epsR R ⟶ A := spOver ψ₀ ≫ t.y N
+  have hv : IsTangent v := by
+    have h := (t.eq_one_iff N ((TrivSqZeroExt.fstHom R R R).comp ψ₀)).2 hfst
+    rw [← spOver_comp, Category.assoc] at h
+    refine (congrArg Over.Hom.left h).trans ?_
+    rw [Hom.one_def, Over.comp_left, Over.toUnit_left]
+    exact (congrArg (· ≫ η[A].left) (Cris.spMap_id R)).trans (Category.id_comp _)
+  haveI : IsAdicComplete (Ideal.span {(p : R)}) R :=
+    isAdicComplete_span_natCast_of_isNilpotent p R ⟨N, hN⟩
+  obtain ⟨x', hx', -⟩ := t.existsUnique_lieCorr hv
+  refine ⟨v, ?_⟩
+  suffices hx : x' = x by rw [← hx]; exact hx'
+  refine LinearMap.ext fun w ↦ ?_
+  have k := (t.lieCorr_iff hv x').1 hx' N w
+  obtain ⟨a, ha⟩ := AugCot.d_surjective _ (w.1 N)
+  have ep : t.tanPt hv N = (epsTo R (ModPow p R N)).comp ψ₀ :=
+    t.inj N _ _ _ (by rw [t.tanPt_y hv N, ← spOver_comp, Category.assoc])
+  have ew : e.symm (w.1 N) = w := e.symm_apply_eq.2 rfl
+  rw [← ha, TorsionTower.tanDer_d, ep, AlgHom.comp_apply, snd_epsTo, hsnd] at k
+  have k2 : D a = x w := by
+    simp only [D, LinearMap.comp_apply]
+    change x (e.symm (AugCot.d (Bialgebra.counitAlgHom R (G.A N)) a)) = x w
+    rw [ha, ew]
+  rw [k2, Ideal.Quotient.algebraMap_eq, Ideal.Quotient.eq, hN, Ideal.mem_span_singleton,
+    zero_dvd_iff, sub_eq_zero] at k
+  exact k
+
+end GlobalTheory.PDivGroup
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfForallApplyHodgePrimitiveEqZero
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.PDivGroup
+
+theorem eq_zero_of_forall_apply_psi_eq_zero :
+    ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] (N : ℕ), (p : R) ^ N = 0 →
+    ∀ (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A → LieExact A →
+    ∀ (G : PDivGroup p R) (t : TorsionTower G A) (ψ : PrimitiveSubmodule A →ₗ[R] G.omega),
+    (∀ c : PrimitiveSubmodule A, PtExt.IsCan t c.1 (G.rigOfOmega (ψ c))) →
+    ∀ x : G.Lie, (∀ c, x (ψ c) = 0) → x = 0 := by
+  intro p _ R _ N hN A _ hA hL G t ψ hψ x hx
+  have : IsAdicComplete (Ideal.span {(p : R)}) R :=
+    GlobalTheory.isAdicComplete_span_natCast_of_isNilpotent p R ⟨N, hN⟩
+  obtain ⟨v, hv⟩ := exists_lieCorr_of_pow_eq_zero p R N hN A G t x
+  obtain ⟨h, hh⟩ := hL.2 v hv.1
+
+  have hFil : h ∈ Fil A := by
+    rw [mem_Fil]
+    intro f hf
+    have hF : (⟨_, hf⟩ : primDR A) ∈ PrimitiveSubmodule A := by
+      change Form.cl _ f ∈ F1 (A.hom ≫ 𝟙 _)
+      rw [hodgeFiltration_eq_range]
+      exact LinearMap.mem_range_self _ f
+    rw [hh.2 f hf, ← lie_psi_cl_eq_tanVal p R N hN A hA G t ψ hψ f hf hF x v hv]
+    exact hx _
+
+  have hv1 : v = 1 := (hL.1 h).unique hh (isLieImage_one_iff.mpr hFil)
+  subst hv1
+  exact hv.unique_left TorsionTower.lieCorr_zero
+
+end GlobalTheory.PDivGroup
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfForallApplyHodgePrimitiveEqZeroStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.eq_zero_of_forall_apply_hodgePrimitive_eq_zero :
+    ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] (N : ℕ), (p : R) ^ N = 0 →
+    ∀ (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A → LieExact A →
+    ∀ (G : PDivGroup p R) (t : PDivGroup.TorsionTower G A)
+      (ψ : PrimitiveSubmodule A →ₗ[R] G.omega),
+    (∀ c : PrimitiveSubmodule A, PtExt.IsCan t c.1 (G.rigOfOmega (ψ c))) →
+    ∀ x : G.Lie, (∀ c, x (ψ c) = 0) → x = 0 :=
+  @GlobalTheory.PDivGroup.eq_zero_of_forall_apply_psi_eq_zero
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimitiveHodgeToPdivisibleOmegaSurjective
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.PtExt
+
+theorem surjective_of_isCan_field :
+    GlobalTheory.Published.AbelianHodgeDeRham →
+    ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K], (p : K) = 0 →
+    ∀ (A : Over (Sp K)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
+    SmoothOfRelativeDimension g A.hom →
+    ∀ (G : PDivGroup p K) (t : PDivGroup.TorsionTower G A)
+      (ψ : PrimitiveSubmodule A →ₗ[K] G.omega),
+      (∀ c : PrimitiveSubmodule A, PtExt.IsCan t c.1 (G.rigOfOmega (ψ c))) →
+      Function.Surjective ψ := by
+  intro hH p _ K _ hp A _ g hA hg G t ψ hψ
+  have hL : LieExact A :=
+    GlobalTheory.T.hodgeLieSequence_exact_abelianScheme
+      GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations hH K A g hA hg
+  have hx := GlobalTheory.T.eq_zero_of_forall_apply_hodgePrimitive_eq_zero p K 1 (by rw [pow_one]; exact hp) A hA hL G t ψ hψ
+  rw [← LinearMap.dualMap_injective_iff, injective_iff_map_eq_zero]
+  intro x hx0
+  exact hx x fun c ↦ by simpa using LinearMap.congr_fun hx0 c
+
+end GlobalTheory.PtExt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimitiveHodgeToPdivisibleOmegaSurjectiveStatement
+
+section
 
 @[expose] public section
 
@@ -58,3 +250,5 @@ theorem _root_.GlobalTheory.T.primitive_hodge_to_pdivisible_omega_surjective :
         (∀ c : PrimitiveSubmodule A, GlobalTheory.PtExt.IsCan t c.1 (G.rigOfOmega (ψ c))) →
         Function.Surjective ψ :=
   @GlobalTheory.PtExt.surjective_of_isCan_field
+end
+end

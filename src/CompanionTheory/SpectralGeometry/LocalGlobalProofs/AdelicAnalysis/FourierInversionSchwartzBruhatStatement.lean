@@ -1,7 +1,7 @@
 module
 
 public import CompanionTheory.SpectralGeometry.CountingDefinitions.AdelicEulerProducts.CountData
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.FourierInversionSchwartzBruhat
+public import CompanionTheory.AutomorphicTheory.ThetaDilations.IsOpenCoset
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,48 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: CompanionTheory.AutomorphicTheory.ThetaDilations.WeilImplicationNonarchQuadratic
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology GlobalTheory.CompanionTheory.SW.Core
+open scoped ENNReal NNReal MatrixGroups
+
+namespace CompanionTheory.PlacePermOperatorBicommutantSpan.Tgt
+
+open CompanionTheory.PlacePermOperatorBicommutantSpan
+
+theorem c_fou_sb : ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [MeasurableSpace V] (χ : V → V → ℂ) (μ : Measure V), NADual V χ μ → ∀ φ : V → ℂ, SB φ → SB (fou χ μ φ) ∧ ∀ x, fou χ μ (fou χ μ φ) x = φ (-x) :=
+  fun _ _ _ _ _ _ h _ hφ => fou_sb h hφ
+
+end CompanionTheory.PlacePermOperatorBicommutantSpan.Tgt
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.FourierInversionSchwartzBruhat
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology GlobalTheory.CompanionTheory.SW.Core
+open scoped ENNReal NNReal MatrixGroups
+
+namespace GlobalTheory.CompanionTheory.SW.FouSB
+
+theorem fou_sb : ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [MeasurableSpace V] (χ : V → V → ℂ) (μ : Measure V), NADual V χ μ → ∀ φ : V → ℂ, SB φ → SB (fou χ μ φ) ∧ ∀ x, fou χ μ (fou χ μ φ) x = φ (-x) :=
+  CompanionTheory.PlacePermOperatorBicommutantSpan.Tgt.c_fou_sb
+
+end GlobalTheory.CompanionTheory.SW.FouSB
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.FourierInversionSchwartzBruhatStatement
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory Matrix Topology GlobalTheory.CompanionTheory.SW.Core
@@ -49,3 +91,5 @@ open scoped ENNReal NNReal MatrixGroups
 
 theorem _root_.GlobalTheory.T.fourier_inversion_schwartz_bruhat : ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [MeasurableSpace V] (χ : V → V → ℂ) (μ : Measure V), NADual V χ μ → ∀ φ : V → ℂ, SB φ → SB (fou χ μ φ) ∧ ∀ x, fou χ μ (fou χ μ φ) x = φ (-x) := by
   first | exact @GlobalTheory.CompanionTheory.SW.FouSB.fou_sb | exact GlobalTheory.CompanionTheory.SW.FouSB.fou_sb | (intros; apply GlobalTheory.CompanionTheory.SW.FouSB.fou_sb <;> assumption)
+end
+end

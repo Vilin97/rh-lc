@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CardRingHomRealEqNrRealPlaces
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +42,44 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.SqSubLeNormSub
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CardRingHomRealEqNrRealPlaces
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+namespace GlobalTheory.QNorm
+
+theorem card_ringHom_real_eq_nrRealPlaces :
+    ∀ (F : Type) [Field F] [NumberField F], Nat.card (F →+* ℝ) = InfinitePlace.nrRealPlaces F := by
+  intro F _ _
+  let e : (F →+* ℝ) ≃ {φ : F →+* ℂ // ComplexEmbedding.IsReal φ} :=
+    { toFun := fun ψ => ⟨Complex.ofRealHom.comp ψ, by
+        rw [ComplexEmbedding.isReal_iff]
+        ext x
+        simp [ComplexEmbedding.conjugate_coe_eq]⟩
+      invFun := fun φ => φ.2.embedding
+      left_inv := fun ψ => by
+        ext x
+        simp [ComplexEmbedding.IsReal.embedding]
+      right_inv := fun φ => by
+        apply Subtype.ext
+        ext x
+        simp }
+  classical
+  rw [Nat.card_congr (e.trans InfinitePlace.mkReal), Nat.card_eq_fintype_card]
+
+end GlobalTheory.QNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.CardRingHomRealEqNrRealPlacesStatement
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain GlobalTheory.QNorm
@@ -50,3 +87,5 @@ open scoped WithZero
 
 theorem _root_.GlobalTheory.T.card_ringHom_real_eq_nrRealPlaces' : ∀ (F : Type) [Field F] [NumberField F], Nat.card (F →+* ℝ) = InfinitePlace.nrRealPlaces F := by
   first | exact @GlobalTheory.QNorm.card_ringHom_real_eq_nrRealPlaces | exact GlobalTheory.QNorm.card_ringHom_real_eq_nrRealPlaces | (intros; apply GlobalTheory.QNorm.card_ringHom_real_eq_nrRealPlaces <;> assumption)
+end
+end

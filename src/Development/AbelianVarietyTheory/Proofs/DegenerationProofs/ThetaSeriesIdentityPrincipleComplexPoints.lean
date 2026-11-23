@@ -6,15 +6,10 @@ public import Development.AbelianVarietyTheory.Statements.TorsionEndomorphisms.E
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.ThetaUnifAV
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
 public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.AevalArcTxEqZero
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsArcFOver
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsCountableModel
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsRingHomComplexOfCountableOfRelations
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsThetaPointComplexDegenerationSmallStatement
-import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.FamiliesValuesCorrespond
-import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.HomTransport
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ThetaConstantTermRepresentativeDependenceStatement
-import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.TorsionPairingValuesOfFamiliesValues
-import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.TorusTorsionPointsCorrespondValues
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsGtExtOfTorsion
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsNumOf
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.HomTransportStatement
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.DetCondIffOfFieldExtension
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,8 +30,6 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -57,8 +50,172 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsCountableModel
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsRingHomComplexCompEqOfCountable
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Degenerations.SepticCharacterInjective
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.QuadTie
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsThetaPointComplexDegenerationSmallStatement
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.FamiliesValuesCorrespond
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.HomTransport
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ThetaConstantTermRepresentativeDependenceStatement
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.TorsionPairingValuesOfFamiliesValues
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.TorusTorsionPointsCorrespondValues
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsArcFOver
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField
+open scoped CategoryTheory.Obj BigOperators
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory GlobalTheory.Ex
+
+noncomputable section
+namespace GlobalTheory.ArcExt
+open GlobalTheory.TorusExt
+
+theorem exists_arcF_over : Laws → BrGtSt → BrWpSt → AllD fun D => ∀ (R : Type) [CommRing R] [IsDomain R] (F F' : Type) [Field F] [IsAlgClosed F] [CharZero F] [Field F'] [IsAlgClosed F'] [Algebra (FractionRing R) F] [Algebra (FractionRing R) F'] (f : F →+* F'), (∀ x, f (algebraMap (FractionRing R) F x) = algebraMap (FractionRing R) F' x) → ∀ A : ArcF D R F, ∃ A' : ArcF D R F', A'.D₀ = A.D₀ ∧ A.Over f A' := by
+  intro hL hGt hWp E _ _ _ H D R _ _ F F' _ _ _ _ _ _ _ f hf₀ A
+  have hf : f.comp (algebraMap (FractionRing R) F) = algebraMap (FractionRing R) F' := RingHom.ext hf₀
+  obtain ⟨J', hg, hJ₀⟩ := exists_gauge f A.D₀.P.isLB A.ν.good
+  obtain ⟨N', ν', e₁, hth⟩ := GlobalTheory.GaugeValues.exists_numOf hL R A.D₀ A.even A.bimult F' J' hg A.ν.th A.ν.th_gen
+  have hJ : ∀ ψ, ν'.J (spMap f ≫ ψ) = A.ν.J ψ := e₁ ▸ hJ₀
+  have G := (hGt R A.D₀ A.even A.bimult F A.N A.ν).2.2.2.2
+  have G' := (hGt R A.D₀ A.even A.bimult F' N' ν').2.2.2.2
+  let I := numHom f hf A.ν ν' hJ hth
+  have hw : ∀ k, 1 ≤ k → ∀ (p p' : QkPt A.D₀ F k) (z : F), WeilQkIs A.D₀ F k p p' z →
+      WeilQkIs A.D₀ F' k (qkExt A.bimult f hf p) (qkExt A.bimult f hf p') (f z) := fun k hk p p' z h => by
+    obtain ⟨q, hq, -⟩ := (G k).1 p
+    obtain ⟨q', hq', -⟩ := (G k).1 p'
+    obtain ⟨r, hr, -⟩ := (G' k).1 (qkExt A.bimult f hf p)
+    obtain ⟨r', hr', -⟩ := (G' k).1 (qkExt A.bimult f hf p')
+    have a := numHom_qPt f hf A.bimult A.ν ν' hJ hth hq hr
+    have a' := numHom_qPt f hf A.bimult A.ν ν' hJ hth hq' hr'
+    rw [hWp R A.D₀ A.even A.bimult F' N' ν' k hk _ _ _ _ _ hr hr',
+      (GlobalTheory.T.hom_transport_alt F F' f A.N N' I).2.2.2.1 k q q' r r' a.1 a.2 a'.1 a'.2,
+      (hWp R A.D₀ A.even A.bimult F A.N A.ν k hk _ _ _ _ _ hq hq').1 h]
+    rfl
+  choose q' hq' using fun (n : ℕ) (a : D.La) => ((G' n).1 (qkExt A.bimult f hf (A.I.ev n a))).exists
+  refine ⟨{ D₀ := A.D₀, oa := A.oa, even := A.even, bimult := A.bimult, w0 := A.w0, ρ := f A.ρ
+            ρ_sq := by rw [← map_pow, A.ρ_sq, map_neg]; simp
+            det := fun σ => ?_
+            I := tateExt f hf A.bimult hL A.I hw, N := N', ν := ν', q := q', hq := hq', closed := inferInstance },
+    rfl, I, rfl, fun _ _ => rfl, fun a y => ?_, fun n a _ => ?_⟩
+  · obtain ⟨τ, rfl⟩ := DetExtend.exists_factor f σ
+    obtain ⟨n, h₁, h₂⟩ := A.det τ
+    have := A.D₀.P.isAb.smooth
+    refine ⟨n, ?_, h₂.trans (by
+      by_cases h : τ H.rt = A.ρ
+      · rw [if_pos h, if_pos (show f.comp τ H.rt = f A.ρ from congrArg f h)]
+      · rw [if_neg h, if_neg (show ¬ f.comp τ H.rt = f A.ρ from fun e => h (f.injective e))])⟩
+    have e : spMap ((algebraMap (FractionRing R) F').comp (algebraMap R _)) =
+        spMap f ≫ spMap ((algebraMap (FractionRing R) F).comp (algebraMap R _)) := by
+      rw [spMap, spMap, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← RingHom.comp_assoc, hf]
+    rw [e]
+    exact (DetExtend.lieMult_extend f _ _ τ n).2 h₁
+  · refine ν'.eX.injective ((eX_numHom f hf A.ν ν' hJ hth _).trans ?_)
+    show A.ν.eX (A.ν.eX.symm _) = ν'.eX (ν'.eX.symm (a • ν'.eX (I.e y)))
+    rw [AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, eX_numHom]
+  · have h := numHom_qPt f hf A.bimult A.ν ν' hJ hth (A.hq n a) (hq' n a)
+    exact ⟨q' n a, h.1, h.2, ⟨0, by simp, by simp⟩⟩
+
+end GlobalTheory.ArcExt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsRingHomComplexOfCountableOfRelations
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField
+open scoped CategoryTheory.Obj BigOperators
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory GlobalTheory.Ex
+
+namespace GlobalTheory
+
+theorem isAlgebraic_int_eval₂Hom_of_isAlgebraic {σ : Type} (y : σ → ℂ)
+    (hy : ∀ i, IsAlgebraic ℚ (y i)) (c : MvPolynomial σ ℤ) :
+    IsAlgebraic ℤ (MvPolynomial.eval₂Hom (Int.castRingHom ℂ) y c) := by
+  rw [IsFractionRing.isAlgebraic_iff ℤ ℚ ℂ]
+  induction c using MvPolynomial.induction_on with
+  | C a =>
+    rw [MvPolynomial.eval₂Hom_C]
+    simpa using isAlgebraic_algebraMap (R := ℚ) (A := ℂ) (a : ℚ)
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
+  | mul_X p i hp => rw [map_mul, MvPolynomial.eval₂Hom_X']; exact hp.mul (hy i)
+
+theorem exists_ringHom_complex_of_countable_of_relations :
+    ∀ (F : Type) [Field F] [CharZero F] [Countable F] (x : Fin 2 → F) (y : Fin 2 → ℂ), (∀ i, IsAlgebraic ℚ (y i)) → (∀ c : MvPolynomial (Fin 2) ℤ, MvPolynomial.eval₂Hom (Int.castRingHom ℂ) y c = 0 → MvPolynomial.eval₂Hom (Int.castRingHom F) x c = 0) → ∃ f : F →+* ℂ, ∀ i, f (x i) = y i := by
+  intro F _ _ _ x y hy hrel
+  set ey := MvPolynomial.eval₂Hom (Int.castRingHom ℂ) y with hey
+  set ex := MvPolynomial.eval₂Hom (Int.castRingHom F) x with hex
+  let R := MvPolynomial (Fin 2) ℤ ⧸ RingHom.ker ey
+  have hprime : (RingHom.ker ey).IsPrime := RingHom.ker_isPrime ey
+  have : IsDomain R := Ideal.Quotient.isDomain _
+  let em : R →+* ℂ := RingHom.kerLift ey
+  have hem : Function.Injective em := RingHom.kerLift_injective ey
+  let β : R →+* F := Ideal.Quotient.lift _ ex fun c hc => hrel c hc
+  have halg : ∀ r : R, IsAlgebraic ℤ r := by
+    intro r
+    obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective r
+    refine (isAlgebraic_algHom_iff em.toIntAlgHom hem).1 ?_
+    exact isAlgebraic_int_eval₂Hom_of_isAlgebraic y hy c
+  have hβ : Function.Injective β := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro r hr
+    by_contra h0
+    refine Ideal.comap_ne_bot_of_algebraic_mem (R := ℤ) (I := RingHom.ker β) h0 hr (halg r) ?_
+    rw [eq_bot_iff]
+    intro n hn
+    rw [Ideal.mem_comap, RingHom.mem_ker] at hn
+    simpa using hn
+  have hc : Countable R := hβ.countable
+  let : Algebra R F := β.toAlgebra
+  let : Algebra R ℂ := em.toAlgebra
+  have : FaithfulSMul R F := (faithfulSMul_iff_algebraMap_injective R F).2 hβ
+  have : FaithfulSMul R ℂ := (faithfulSMul_iff_algebraMap_injective R ℂ).2 hem
+  obtain ⟨j⟩ := nonempty_algHom_complex_of_countable R F
+  refine ⟨j.toRingHom, fun i => ?_⟩
+  have h := j.commutes (Ideal.Quotient.mk _ (MvPolynomial.X i))
+  have h1 : algebraMap R F (Ideal.Quotient.mk _ (MvPolynomial.X i)) = x i :=
+    MvPolynomial.eval₂Hom_X' (Int.castRingHom F) x i
+  have h2 : algebraMap R ℂ (Ideal.Quotient.mk _ (MvPolynomial.X i)) = y i :=
+    MvPolynomial.eval₂Hom_X' (Int.castRingHom ℂ) y i
+  rw [h1, h2] at h
+  exact h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ThetaSeriesIdentityPrincipleComplexPoints
+
+section
 
 @[expose] public section
 
@@ -273,3 +430,5 @@ theorem aeval_arcTx_eq_zero_of_vanishC : HV → Laws6 → GlobalTheory.LN.UDvrSt
   exact hVan o hoρ (by rw [hoζ]; exact hζ₂') _ hθ
 
 end GlobalTheory.ArcIdentity
+end
+end

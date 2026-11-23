@@ -4,23 +4,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticG
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.DvrFacts
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.AGraded
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ASmooth
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.AVal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ConjTorus
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ExistsLiftOfDerivationOnIdeal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.FgMapMk
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.MPrime
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.Nval
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtActInternal
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtExt
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtLift
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtScale
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.QuotientSaturatedSquareTorsionFree
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.SgnMulSelf
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ShaCoc
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.TorusConjugateCornerEntryEq
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.TwoIrr
-import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.WcompMulHomog
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.WeightAlgebraGeneratedDegreeTwo
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,10 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,6 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -60,8 +41,117 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ConjTorus
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ExistsLiftOfDerivationOnIdeal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.FgMapMk
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.MPrime
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.OrbitVanishingLocal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.DirichletPrimeToLPartMulLPowerPart
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.NormO
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.MapRepApply
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtActInternal
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtExt
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtLift
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.PtScale
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.QuotientSaturatedSquareTorsionFree
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.SgnMulSelf
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.ShaCoc
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.TorusConjugateCornerEntryEq
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.TwoIrr
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.WcompMulHomog
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.WeightAlgebraGeneratedDegreeTwo
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.AVal
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement
+
+theorem UpperTheory.V.GradeZeroInterpolatingElement.aElt :
+    ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c), D.Good → ∀ M : Model D, ∀ g, ∃ a ∈ M.gr 0, M.x0 a = 0 ∧ ∀ ξ : M.SS →ₐ[c.O] PadicAlgCl l, ξ (M.toSS a) = D.aVal g (M.rep ξ) := by
+  intro Ω _ _ _ l _ c D _ M g
+  choose f hf hπ using fun i : Fin 4 => M.hom g i i
+  have hf0 : ∀ i, f i ∈ M.aPart 0 := by
+    intro i
+    have h := hf i
+    rw [(wt_eq_zero i i).mpr rfl] at h
+    exact h
+  let fA : Fin 4 → M.A := fun i => ⟨f i, M.aPart_le (hf0 i)⟩
+  have hx0 : ∀ i, M.x0 (fA i) = D.r0 g i i := fun i => M.at0 g i i (f i) (hπ i)
+  have hss : ∀ i, M.toSS (fA i) = M.ent g i i := fun i => Subtype.ext (hπ i)
+  refine ⟨∑ i, fA i - algebraMap c.O M.A (Matrix.trace (D.r0 g)), ?_, ?_, ?_⟩
+  · apply Submodule.sub_mem
+    · exact Submodule.sum_mem _ fun i _ => hf0 i
+    · rw [Algebra.algebraMap_eq_smul_one]
+      apply Submodule.smul_mem
+      show (1 : M.R) ∈ M.aPart 0
+      exact SetLike.GradedOne.one_mem
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, AlgHom.commutes]
+    simp only [hx0, Algebra.algebraMap_self, RingHom.id_apply, Matrix.trace, Matrix.diag]
+    exact sub_self _
+  · intro ξ
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_sum, map_sum, AlgHom.commutes, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hss, Raw.aVal, Matrix.trace, Matrix.diag, map_sum]
+    rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.Nval
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement
+
+theorem UpperTheory.V.GradeZeroInterpolatingElement.nval :
+    ∀ {l : ℕ} [Fact l.Prime] (c : Coef l), IsNVal c.O (PadicAlgCl l) fun x => -Real.log ‖x‖ * ((eO l c.O).toNat : ℝ) / Real.log l := by
+  intro l _ c
+  have hl : (1 : ℝ) < l := by exact_mod_cast (Fact.out : l.Prime).one_lt
+  have hL : 0 < Real.log l := Real.log_pos hl
+  have he : (0 : ℝ) ≤ ((eO l c.O).toNat : ℝ) := Nat.cast_nonneg _
+  have anti : ∀ a b : PadicAlgCl l, a ≠ 0 → ‖a‖ ≤ ‖b‖ →
+      -Real.log ‖b‖ * ((eO l c.O).toNat : ℝ) / Real.log l ≤
+        -Real.log ‖a‖ * ((eO l c.O).toNat : ℝ) / Real.log l := by
+    intro a b ha hab
+    have hlog : Real.log ‖a‖ ≤ Real.log ‖b‖ := Real.log_le_log (norm_pos_iff.mpr ha) hab
+    apply div_le_div_of_nonneg_right _ hL.le
+    exact mul_le_mul_of_nonneg_right (by linarith) he
+  refine ⟨?_, ?_, ?_⟩
+  · intro x y hx hy
+    rw [norm_mul, Real.log_mul (norm_ne_zero_iff.mpr hx) (norm_ne_zero_iff.mpr hy)]
+    ring
+  · intro x y hx hy hxy
+    have h := IsUltrametricDist.norm_add_le_max x y
+    rcases le_total ‖x‖ ‖y‖ with h1 | h1
+    · rw [max_eq_right h1] at h
+      exact (min_le_right _ _).trans (anti _ _ hxy h)
+    · rw [max_eq_left h1] at h
+      exact (min_le_left _ _).trans (anti _ _ hxy h)
+  · intro a ha
+    have h := normO l c.O a ha
+    have h2 := congrArg Real.log h
+    rw [Real.log_pow, Real.log_pow, Real.log_inv] at h2
+    show -Real.log ‖(a : PadicAlgCl l)‖ * ((eO l c.O).toNat : ℝ) / Real.log l = _
+    field_simp
+    linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.GaloisRepIneqOfAllIrreducibleNonvanishing
+
+section
 
 @[expose] public section
 
@@ -233,3 +323,5 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.galoisRep_ineq_of_allIrreduc
       ENat.toNat_pos e0 (ne_top_of_le_ne_top (ENat.coe_ne_top _) e1)
     exact real_ratio_bound _ _ _ _ _ (Nat.cast_pos.2 he) (Real.log_pos (by exact_mod_cast hl.out.one_lt))
       (Nat.cast_le.2 (ENat.toNat_le_toNat (mPrime D hD M hM' hF) hfin)) hs
+end
+end

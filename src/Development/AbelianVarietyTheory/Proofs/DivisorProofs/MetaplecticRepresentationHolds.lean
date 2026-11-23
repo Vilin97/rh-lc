@@ -3,16 +3,13 @@ module
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.MetaplecticRepresentation
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSiegelUpperHalfSpaceNegMulInvSymplecticStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MetaplecticCoverWeilRepresentationStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrthogonalSymplecticFixesSiegelPointIStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerProductEuclideanModelsAgreeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzL2EuclideanIdentificationStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymplecticHolPartDetNeZeroAndIsSymmStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VacuumMatrixCoefficientSqStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -25,6 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +42,224 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RealMetaplecticRepresentation
+public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RealMetaplecticRepresentation
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymplecticHolPartDetNeZeroAndIsSymmStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VacuumMatrixCoefficientSqStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrthogonalSymplecticFixesSiegelPointI
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+namespace GlobalTheory
+
+theorem holPart_eq_and_gaussian_of_orthogonal_symplectic (l : Type) [Fintype l] [DecidableEq l]
+    (s : Matrix (l ⊕ l) (l ⊕ l) ℝ) (P Q : Matrix l l ℂ)
+    (hP : ∀ a b, P a b = (s (.inl a) (.inl b) : ℂ) - I * (s (.inl a) (.inr b) : ℂ))
+    (hQ : ∀ a b, Q a b = (s (.inr a) (.inl b) : ℂ) - I * (s (.inr a) (.inr b) : ℂ))
+    (hs : s ∈ Matrix.symplecticGroup l ℝ) (ho : sᵀ * s = 1) (hd : P.det ≠ 0) :
+    GlobalTheory.Published.Metaplectic.holPart s = P ∧ ∀ x : l → ℝ,
+      cexp (π * I * ((fun i => (x i : ℂ)) ⬝ᵥ (-(Q * P⁻¹)) *ᵥ fun i => (x i : ℂ))) =
+        cexp (-π * ((x ⬝ᵥ x : ℝ) : ℂ)) := by
+  have hJ : s * J l ℝ = J l ℝ * s := by
+    have h2 : s * J l ℝ * sᵀ = J l ℝ := SymplecticGroup.mem_iff.mp hs
+    calc s * J l ℝ = s * J l ℝ * (sᵀ * s) := by rw [ho, Matrix.mul_one]
+      _ = (s * J l ℝ * sᵀ) * s := by simp only [Matrix.mul_assoc]
+      _ = J l ℝ * s := by rw [h2]
+  have e1 : ∀ a b, s (.inl a) (.inr b) = - s (.inr a) (.inl b) := by
+    intro a b
+    have := congrFun (congrFun hJ (.inl a)) (.inl b)
+    simpa [J, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply] using this
+  have e2 : ∀ a b, s (.inr a) (.inr b) = s (.inl a) (.inl b) := by
+    intro a b
+    have := congrFun (congrFun hJ (.inl a)) (.inr b)
+    simp [J, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply] at this
+    linarith
+  have hh : GlobalTheory.Published.Metaplectic.holPart s = P := by
+    ext a b
+    simp only [GlobalTheory.Published.Metaplectic.holPart, hP, e2, e1]
+    push_cast; ring
+  have hQP : Q = (-I) • P := by
+    ext a b
+    simp only [hP, hQ, e2, e1, Matrix.smul_apply, smul_eq_mul]
+    push_cast
+    ring_nf; rw [I_sq]; ring
+  have hinv : -(Q * P⁻¹) = I • (1 : Matrix l l ℂ) := by
+    rw [hQP, Matrix.smul_mul, mul_nonsing_inv P (isUnit_iff_ne_zero.mpr hd), neg_smul, neg_neg]
+  refine ⟨hh, fun x => ?_⟩
+  rw [hinv, Matrix.smul_mulVec, Matrix.one_mulVec, dotProduct_smul, smul_eq_mul]
+  congr 1
+  simp only [dotProduct]
+  push_cast
+  ring_nf; rw [I_sq]; ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrthogonalSymplecticFixesSiegelPointIStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+theorem _root_.GlobalTheory.T.orthogonal_symplectic_fixes_siegel_point_i : ∀ (l : Type) [Fintype l] [DecidableEq l] (s : Matrix (l ⊕ l) (l ⊕ l) ℝ) (P Q : Matrix l l ℂ), (∀ a b, P a b = (s (.inl a) (.inl b) : ℂ) - I * (s (.inl a) (.inr b) : ℂ)) → (∀ a b, Q a b = (s (.inr a) (.inl b) : ℂ) - I * (s (.inr a) (.inr b) : ℂ)) → s ∈ Matrix.symplecticGroup l ℝ → sᵀ * s = 1 → P.det ≠ 0 → GlobalTheory.Published.Metaplectic.holPart s = P ∧ ∀ x : l → ℝ, cexp (π * I * ((fun i => (x i : ℂ)) ⬝ᵥ (-(Q * P⁻¹)) *ᵥ fun i => (x i : ℂ))) = cexp (-π * ((x ⬝ᵥ x : ℝ) : ℂ)) := by
+  first | exact @GlobalTheory.holPart_eq_and_gaussian_of_orthogonal_symplectic | exact GlobalTheory.holPart_eq_and_gaussian_of_orthogonal_symplectic | (intros; apply GlobalTheory.holPart_eq_and_gaussian_of_orthogonal_symplectic <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerProductEuclideanModelsAgree
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+theorem GlobalTheory.Proof.schrodinger_models_agree : ∀ (l : Type) [Fintype l] [DecidableEq l] (w : (l → ℝ) × (l → ℝ)) (φ : 𝓢(l → ℝ, ℂ)) (f f₁ : Sch l), (∀ x : EuclideanSpace ℝ l, f x = φ x.ofLp) → (∀ x : EuclideanSpace ℝ l, f₁ x = GlobalTheory.Published.Metaplectic.rho w φ x.ofLp) → f₁.toLp 2 = rho (Sum.elim w.1 w.2) (f.toLp 2) := by
+  intro l _ _ w φ f f₁ hf hf₁
+  obtain ⟨p, q⟩ := w
+  have h : ⇑f₁ = rhoFun (Sum.elim p q) ⇑f := by
+    funext x
+    rw [hf₁, GlobalTheory.Published.Metaplectic.rho_apply, rhoFun, hf]
+    simp only [phase, pPart, qPart, Sum.elim_inl, Sum.elim_inr, PiLp.inner_apply, WithLp.ofLp_add]
+    congr 1
+    · congr 1
+      push_cast
+      simp only [dotProduct, RCLike.inner_apply, conj_trivial, Finset.sum_div]
+      push_cast
+      ring_nf
+      rw [Finset.sum_congr rfl fun i _ => mul_comm ((q i : ℝ) : ℂ) ((p i : ℝ) : ℂ)]
+      ring
+  refine Lp.ext ((f₁.coeFn_toLp 2 volume).trans ?_)
+  rw [h]
+  exact ((coeFn_rho _ _).trans (rhoFun_congr _ (f.coeFn_toLp 2 volume))).symm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerProductEuclideanModelsAgreeStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+theorem _root_.GlobalTheory.T.schrodinger_product_euclidean_models_agree : ∀ (l : Type) [Fintype l] [DecidableEq l] (w : (l → ℝ) × (l → ℝ)) (φ : 𝓢(l → ℝ, ℂ)) (f f₁ : Sch l), (∀ x : EuclideanSpace ℝ l, f x = φ x.ofLp) → (∀ x : EuclideanSpace ℝ l, f₁ x = GlobalTheory.Published.Metaplectic.rho w φ x.ofLp) → f₁.toLp 2 = rho (Sum.elim w.1 w.2) (f.toLp 2) := by
+  first | exact @GlobalTheory.Proof.schrodinger_models_agree | exact GlobalTheory.Proof.schrodinger_models_agree | (intros; apply GlobalTheory.Proof.schrodinger_models_agree <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzL2EuclideanIdentification
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+noncomputable section
+
+namespace GlobalTheory.EuclidTransport
+
+variable (l : Type) [Fintype l]
+
+theorem volume_preserving_ofLp' : MeasurePreserving (@WithLp.ofLp 2 (l → ℝ)) volume volume :=
+  PiLp.volume_preserving_ofLp l
+
+theorem volume_preserving_toLp' : MeasurePreserving (@WithLp.toLp 2 (l → ℝ)) volume volume :=
+  PiLp.volume_preserving_toLp l
+
+def schwartzTransport : 𝓢(l → ℝ, ℂ) ≃L[ℂ] Sch l :=
+  ContinuousLinearEquiv.equivOfInverse
+    (SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (EuclideanSpace.equiv l ℝ))
+    (SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (EuclideanSpace.equiv l ℝ).symm)
+    (fun φ => by ext x; rfl) (fun φ => by ext x; rfl)
+
+variable {l}
+
+theorem schwartzTransport_apply (φ : 𝓢(l → ℝ, ℂ)) (x : EuclideanSpace ℝ l) :
+    schwartzTransport l φ x = φ x.ofLp := rfl
+
+variable (l)
+
+def l2TransportIsometry : Lp ℂ 2 (volume : Measure (l → ℝ)) →ₗᵢ[ℂ] L2 l :=
+  Lp.compMeasurePreservingₗᵢ ℂ (@WithLp.ofLp 2 (l → ℝ)) (volume_preserving_ofLp' l)
+
+theorem l2TransportIso_apply (f : Lp ℂ 2 (volume : Measure (l → ℝ))) :
+    l2TransportIsometry l f = Lp.compMeasurePreserving _ (volume_preserving_ofLp' l) f := rfl
+
+theorem l2TransportIso_surjective : Function.Surjective (l2TransportIsometry l) := by
+  intro h
+  refine ⟨Lp.compMeasurePreserving (@WithLp.toLp 2 (l → ℝ)) (volume_preserving_toLp' l) h, ?_⟩
+  rw [l2TransportIso_apply]
+  ext1
+  refine (Lp.coeFn_compMeasurePreserving _ (volume_preserving_ofLp' l)).trans ?_
+  refine ((volume_preserving_ofLp' l).quasiMeasurePreserving.ae_eq_comp
+    (Lp.coeFn_compMeasurePreserving h (volume_preserving_toLp' l))).trans ?_
+  exact Filter.Eventually.of_forall fun x => rfl
+
+def l2Transport : Lp ℂ 2 (volume : Measure (l → ℝ)) ≃ₗᵢ[ℂ] L2 l :=
+  LinearIsometryEquiv.ofSurjective (l2TransportIsometry l) (l2TransportIso_surjective l)
+
+variable {l}
+
+theorem l2Transport_apply (f : Lp ℂ 2 (volume : Measure (l → ℝ))) :
+    l2Transport l f = Lp.compMeasurePreserving _ (volume_preserving_ofLp' l) f := rfl
+
+theorem l2Transport_toLp (φ : 𝓢(l → ℝ, ℂ)) : l2Transport l (φ.toLp 2) = (schwartzTransport l φ).toLp 2 := by
+  rw [l2Transport_apply]
+  have h4 : ((φ.toLp 2 : Lp ℂ 2 (volume : Measure (l → ℝ))) : (l → ℝ) → ℂ) =ᵐ[volume] (φ : (l → ℝ) → ℂ) :=
+    φ.coeFn_toLp 2 volume
+  have h5 : (((schwartzTransport l φ).toLp 2 : L2 l) : EuclideanSpace ℝ l → ℂ) =ᵐ[volume]
+      (schwartzTransport l φ : EuclideanSpace ℝ l → ℂ) :=
+    (schwartzTransport l φ).coeFn_toLp 2 volume
+  refine Lp.ext (Filter.EventuallyEq.trans ?_ h5.symm)
+  refine (Lp.coeFn_compMeasurePreserving _ (volume_preserving_ofLp' l)).trans ?_
+  refine ((volume_preserving_ofLp' l).quasiMeasurePreserving.ae_eq_comp h4).trans ?_
+  exact Filter.Eventually.of_forall fun x => (schwartzTransport_apply φ x).symm
+
+theorem exists_schwartz_L2_transport (l : Type) [Fintype l] [DecidableEq l] :
+    ∃ (e : 𝓢(l → ℝ, ℂ) ≃L[ℂ] Sch l) (u : Lp ℂ 2 (volume : Measure (l → ℝ)) ≃ₗᵢ[ℂ] L2 l),
+      (∀ φ (x : EuclideanSpace ℝ l), e φ x = φ x.ofLp) ∧ ∀ φ : 𝓢(l → ℝ, ℂ), u (φ.toLp 2) = (e φ).toLp 2 :=
+  ⟨schwartzTransport l, l2Transport l, schwartzTransport_apply, l2Transport_toLp⟩
+
+end GlobalTheory.EuclidTransport
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzL2EuclideanIdentificationStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Complex GlobalTheory.RealWeil
+open scoped Real SchwartzMap ComplexConjugate
+
+theorem _root_.GlobalTheory.T.schwartz_L2_euclidean_identification : ∀ (l : Type) [Fintype l] [DecidableEq l], ∃ (e : 𝓢(l → ℝ, ℂ) ≃L[ℂ] Sch l) (u : Lp ℂ 2 (volume : Measure (l → ℝ)) ≃ₗᵢ[ℂ] L2 l), (∀ φ (x : EuclideanSpace ℝ l), e φ x = φ x.ofLp) ∧ ∀ φ : 𝓢(l → ℝ, ℂ), u (φ.toLp 2) = (e φ).toLp 2 := by
+  first | exact @GlobalTheory.EuclidTransport.exists_schwartz_L2_transport | exact GlobalTheory.EuclidTransport.exists_schwartz_L2_transport | (intros; apply GlobalTheory.EuclidTransport.exists_schwartz_L2_transport <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MetaplecticRepresentationHolds
+
+section
 
 @[expose] public section
 
@@ -145,3 +360,5 @@ theorem metaplecticRepresentation_holds : GlobalTheory.Published.MetaplecticRepr
     rw [hq x]
 
 end GlobalTheory
+end
+end

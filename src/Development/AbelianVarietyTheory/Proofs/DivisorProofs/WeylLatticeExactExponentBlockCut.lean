@@ -2,25 +2,6 @@ module
 
 public import Formalism.PieriBlockIdeals.StatementE
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NablaSchur
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjointActionEndomorphismWeightBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BetaIntegralDenominatorBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylHighestWeightRestrictionBlockDiagonalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylLatticeSubstIncreasingMapStableStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylLeviProjectionDenominatorsOfHypothesesStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylModuleStructureGlProofStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylRestrictionLatticeTensorOfSubstitutionStStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylRestrictionRowOperatorsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylSchurEndomorphismStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylWeightSpreadBoundProofStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridInvarianceOfRankOneTwoStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorGridDenominatorBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorGridScalarOfProjectorScalarStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorValueHighestWeightVectorStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RankOneProjectorWeightZeroInvarianceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RankTwoConsecutiveProjectorInvarianceStatement
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightMemWZero
-public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -31,12 +12,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -60,6 +43,172 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylHighestWeightRestrictionBlockDiagonalStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylLatticeSubstIncreasingMapStableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylLeviProjectionDenominatorsOfHypothesesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylModuleStructureGlProofStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylRestrictionLatticeTensorOfSubstitutionStStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylRestrictionRowOperatorsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylSchurEndomorphismStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylWeightSpreadBoundProofStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridInvarianceOfRankOneTwoStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorGridDenominatorBoundStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorGridScalarOfProjectorScalarStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectorValueHighestWeightVectorStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RankOneProjectorWeightZeroInvarianceStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RankTwoConsecutiveProjectorInvarianceStatement
+import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightMemWZero
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjointActionEndomorphismWeightBound
+
+section
+
+@[expose] public section
+
+open GlobalTheory.LeviCut
+
+namespace GlobalTheory.LeviCut
+
+theorem adj_sub_of_adjBdd {A : Type} [Ring A] [Algebra ℚ A] (x y : A) : adj (x - y) = adj x - adj y := by
+  ext T
+  simp only [adj, LinearMap.sub_apply, LinearMap.mulLeft_apply, LinearMap.mulRight_apply]
+  noncomm_ring
+
+theorem adj_zero_of_adjBdd {A : Type} [Ring A] [Algebra ℚ A] : adj (0 : A) = 0 := by
+  ext T
+  simp [adj]
+
+theorem adj_commutator_of_adjBdd {A : Type} [Ring A] [Algebra ℚ A] (x y : A) :
+    adj x * adj y - adj y * adj x = adj (x * y - y * x) := by
+  ext T
+  simp only [adj, LinearMap.sub_apply, Module.End.mul_apply, LinearMap.mulLeft_apply, LinearMap.mulRight_apply,
+    map_sub]
+  noncomm_ring
+
+theorem adjBdd_holds : AdjBdd := by
+  intro V _ _ N K e hrel hbdd hspan
+  constructor
+  · intro a b c d ha hb hc hd
+    rw [adj_commutator_of_adjBdd, hrel a b c d ha hb hc hd, adj_sub_of_adjBdd]
+    split_ifs <;> simp [adj_zero_of_adjBdd]
+  · intro a ha b hb n T hT hn
+    have hw : ∀ x ∈ {x : V | ∃ μ : ℕ → ℤ, IsWt N e μ x}, T x = (0 : Module.End ℚ V) x := by
+      rintro x ⟨μ, hμ⟩
+      simp only [LinearMap.zero_apply]
+      by_cases hx : x = 0
+      · simp [hx]
+      have h1 : μ b - μ a ≤ K := by
+        by_contra hlt
+        push_neg at hlt
+        apply hx
+        apply hbdd b hb a ha (μ b - μ a) x _ hlt
+        rw [hμ b hb, hμ a ha]
+        push_cast
+        rw [sub_smul]
+      apply hbdd a ha b hb (μ a - μ b + n) (T x) _ (by push_cast at hn h1 ⊢; omega)
+      have eq := LinearMap.congr_fun hT x
+      simp only [adj, LinearMap.sub_apply, LinearMap.mulLeft_apply, LinearMap.mulRight_apply,
+        Module.End.mul_apply, LinearMap.smul_apply, hμ a ha, hμ b hb, map_smul] at eq
+      push_cast
+      rw [add_smul, sub_smul, ← eq]
+      abel
+    exact LinearMap.ext_on hspan hw
+
+end GlobalTheory.LeviCut
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjointActionEndomorphismWeightBoundStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.LeviCut
+
+theorem _root_.GlobalTheory.T.adjoint_action_endomorphism_weight_bound : GlobalTheory.LeviCut.AdjBdd := by
+  first | exact @GlobalTheory.LeviCut.adjBdd_holds | exact GlobalTheory.LeviCut.adjBdd_holds | (intros; apply GlobalTheory.LeviCut.adjBdd_holds <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BetaIntegralDenominatorBound
+
+section
+
+@[expose] public section
+
+open GlobalTheory.LeviCut
+
+namespace GlobalTheory.BetaDenProof
+
+theorem dvd_lam_of_le {l w t : ℕ} (hl : l.Prime) (ht : 1 ≤ t) (htw : t ≤ w) :
+    t ∣ (∏ s ∈ Finset.Icc 1 w, ordCompl[l] s) * l ^ Nat.log l w := by
+  have ht0 : t ≠ 0 := by omega
+  conv_lhs => rw [← Nat.ordProj_mul_ordCompl_eq_self t l]
+  rw [mul_comm (ordProj[l] t)]
+  apply Nat.mul_dvd_mul
+  · exact Finset.dvd_prod_of_mem _ (Finset.mem_Icc.mpr ⟨ht, htw⟩)
+  · apply Nat.pow_dvd_pow
+    apply Nat.le_log_of_pow_le hl.one_lt
+    exact (Nat.ordProj_le l ht0).trans htw
+
+theorem beta_dvd {Λ w : ℕ} (h : ∀ t, 1 ≤ t → t ≤ w → t ∣ Λ) :
+    ∀ k j : ℕ, j + k + 1 ≤ w → (j + k + 1).factorial ∣ Λ * (j.factorial * k.factorial) := by
+  intro k
+  induction k with
+  | zero =>
+    intro j hj
+    simp only [Nat.add_zero, Nat.factorial_zero, mul_one, Nat.factorial_succ]
+    exact Nat.mul_dvd_mul (h (j + 1) (by omega) (by omega)) dvd_rfl
+  | succ k ih =>
+    intro j hj
+    have h1 := ih j (by omega)
+    have h2 := ih (j + 1) (by omega)
+    have e : Λ * (j.factorial * (k + 1).factorial) + Λ * ((j + 1).factorial * k.factorial)
+        = (j + k + 2) * (Λ * (j.factorial * k.factorial)) := by
+      rw [Nat.factorial_succ k, Nat.factorial_succ j]; ring
+    have hA : (j + (k + 1) + 1).factorial ∣ (j + k + 2) * (Λ * (j.factorial * k.factorial)) := by
+      have : (j + (k + 1) + 1).factorial = (j + k + 2) * (j + k + 1).factorial := by
+        rw [show j + (k + 1) + 1 = (j + k + 1) + 1 by omega, Nat.factorial_succ]
+      rw [this]; exact Nat.mul_dvd_mul dvd_rfl h1
+    have hB : (j + (k + 1) + 1).factorial ∣ Λ * ((j + 1).factorial * k.factorial) := by
+      rw [show j + (k + 1) + 1 = j + 1 + k + 1 by omega]; exact h2
+    rw [← e] at hA
+    exact (Nat.dvd_add_left hB).mp hA
+
+end GlobalTheory.BetaDenProof
+
+theorem GlobalTheory.LeviCut.betaDen : GlobalTheory.LeviCut.BetaDen := by
+  intro l w hl
+  refine ⟨∏ s ∈ Finset.Icc 1 w, ordCompl[l] s, ?_, ?_⟩
+  · intro hd
+    obtain ⟨s, hs, hds⟩ := (Prime.dvd_finsetProd_iff hl.prime _).mp hd
+    have : s ≠ 0 := by have := (Finset.mem_Icc.mp hs).1; omega
+    exact Nat.not_dvd_ordCompl hl this hds
+  · intro j k hjk
+    exact GlobalTheory.BetaDenProof.beta_dvd (fun t ht htw => GlobalTheory.BetaDenProof.dvd_lam_of_le hl ht htw) k j hjk
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BetaIntegralDenominatorBoundStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.LeviCut
+
+theorem _root_.GlobalTheory.T.beta_integral_denominator_bound : GlobalTheory.LeviCut.BetaDen := by
+  first | exact @GlobalTheory.LeviCut.betaDen | exact GlobalTheory.LeviCut.betaDen | (intros; apply GlobalTheory.LeviCut.betaDen <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeylLatticeExactExponentBlockCut
+
+section
 
 @[expose] public section
 
@@ -199,3 +348,6 @@ theorem exCut : Formalism.CohomologicalDescent.E.ExCut :=
     (GlobalTheory.T.dualWeylLeviProjectionDenominators_of_hypotheses (GlobalTheory.T.dualWeylRestrictionLatticeTensor_of_substitutionStable GlobalTheory.T.dualWeylLattice_subst_increasing_map_stable) GlobalTheory.T.dualWeyl_highest_weight_restriction_blockDiagonal GlobalTheory.T.dualWeyl_restriction_rowOperators) GlobalTheory.T.beta_integral_denominator_bound
 
 end GlobalTheory.LeviCut
+end
+end
+end

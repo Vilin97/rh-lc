@@ -12,14 +12,200 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CompactDatum
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CuspCorrespondenceBoundStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AdaptedFamilyExistsOnEigenspaceStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LabelledDegreeCommensurableBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LabelledDegreeEqLogIndexStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogIndexOfOrthogonalFamilyStatement
-public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsAction
-public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemOfEig
-import Mathlib.Algebra.Order.Star.Int
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsAdapted
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemEig
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.LinearIndependentImg
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogIndexOfOrthogonalFamily
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsUniqueLeftBasisCoordsAdicCompletion
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeCptAwayFromPrimesStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueAct
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianHomLieExtends
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValuesOfFrame
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemOfEig
+import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Tactic.Monotonicity.Lemmas
+
+-- Source module: Development.WeilBound.CoreStatements.PlurisubharmonicCones.LabelDegreeLogIndex
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GroundTheory.Heights₂.Heights
+
+theorem LevelTowerAlt.label_degree_log_index : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Fintype Ψ] (V : Type) [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (r k : ℕ) (v : Fin r → V) (s : Ψ ⊕ Ψ) (q : Fin k → A.Λ), 2 * Fintype.card Ψ = Module.finrank ℚ E → IsOFamily A.ρ A.I v → (∀ c, (q c : V) ∈ A.eig s) → A.IsAdapted s v q → A.labDeg s (A.eig s) v q = logIdx (A.tor s) (fun a => eigComp A.ρ (A.σ s) (v a)) / Module.finrank ℚ L + A.Bq.normDegree (A.img s) := by
+  intro E L Ψ _ _ _ _ _ V _ _ _ _ A r k v s q hΨ hv hq had
+  obtain ⟨-, -, h3, h4⟩ := LevelTowerAlt.tor_facts A hΨ hv s
+  obtain ⟨h5, h6⟩ := LevelTowerAlt.sub_eig A had.2
+  have h7 := LevelTowerAlt.relIndex_ne_zero had.1 h5 h6 h5
+  obtain ⟨e1, e2⟩ := LevelTowerAlt.index_split A had.1 h3 h4 hq
+  rw [LinPt.fam, e1] at h7
+  have h8 := (LevelTowerAlt.rank_img A (LevelTowerAlt.linearIndependent_img A had.1 h4 hq) hq (right_ne_zero_of_mul h7)).2
+  rw [LinPt.labDeg, HermitianBundle.normDegree, h8, logIdx, logIdx, LinPt.fam, e1, e2, Nat.cast_mul,
+    Real.log_mul (Nat.cast_ne_zero.2 (left_ne_zero_of_mul h7)) (Nat.cast_ne_zero.2 (right_ne_zero_of_mul h7))]
+  ring
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LabelledDegreeEqLogIndex
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GroundTheory.Heights₂.Heights
+
+theorem _root_.GlobalTheory.CompanionTheory.Relay.labelled_degree_eq_log_index : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Fintype Ψ] (V : Type) [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (r k : ℕ) (v : Fin r → V) (s : Ψ ⊕ Ψ) (q : Fin k → A.Λ), 2 * Fintype.card Ψ = Module.finrank ℚ E → IsOFamily A.ρ A.I v → (∀ c, (q c : V) ∈ A.eig s) → A.IsAdapted s v q → A.labDeg s (A.eig s) v q = logIdx (A.tor s) (fun a => eigComp A.ρ (A.σ s) (v a)) / Module.finrank ℚ L + A.Bq.normDegree (A.img s) := by
+  first | exact @LevelTowerAlt.label_degree_log_index | exact LevelTowerAlt.label_degree_log_index
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LabelledDegreeEqLogIndexStatement
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GroundTheory.Heights₂.Heights
+
+theorem _root_.GlobalTheory.T.labelled_degree_eq_log_index : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Fintype Ψ] (V : Type) [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (r k : ℕ) (v : Fin r → V) (s : Ψ ⊕ Ψ) (q : Fin k → A.Λ), 2 * Fintype.card Ψ = Module.finrank ℚ E → IsOFamily A.ρ A.I v → (∀ c, (q c : V) ∈ A.eig s) → A.IsAdapted s v q → A.labDeg s (A.eig s) v q = logIdx (A.tor s) (fun a => eigComp A.ρ (A.σ s) (v a)) / Module.finrank ℚ L + A.Bq.normDegree (A.img s) := by
+  first | exact @GlobalTheory.CompanionTheory.Relay.labelled_degree_eq_log_index | exact GlobalTheory.CompanionTheory.Relay.labelled_degree_eq_log_index | (intros; apply GlobalTheory.CompanionTheory.Relay.labelled_degree_eq_log_index <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LogIndexOfOrthogonalFamilyStatement
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GroundTheory.Heights₂.Heights
+
+theorem _root_.GlobalTheory.T.log_index_of_orthogonal_family : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Fintype Ψ] (V : Type) [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (r : ℕ) (v : Fin r → V), 2 * Fintype.card Ψ = Module.finrank ℚ E → IsOFamily A.ρ A.I v → ∀ s, logIdx (A.tor s) (fun a => eigComp A.ρ (A.σ s) (v a)) / Module.finrank ℚ L = -(r * Real.log (|(discr E : ℝ)| ^ (1 / (Module.finrank ℚ E : ℝ)))) + Real.log (((oSpan A.ρ v).relIndex A.I : ℕ) : ℝ) / Module.finrank ℚ E := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Cusp.torusPartDegree | exact GlobalTheory.CompanionTheory.Ar.Cusp.torusPartDegree | (intros; apply GlobalTheory.CompanionTheory.Ar.Cusp.torusPartDegree <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsAction
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix Filter Topology
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+open GroundTheory.Heights₂.Heights.LowerBoundFree GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp
+
+namespace LevelTowerAlt
+
+section Geo
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Tor.Level H}
+  {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMap (𝓞 c.F) c.F)} {S : Finset ℕ} {Ω : Type} [Field Ω]
+  {K : Type} [Fintype K] {J : K → Type} [∀ k, Fintype (J k)] {y : (Σ k, J k) → Ω} (𝔐 : HodgeCpt Y S y)
+  {L : Type} [Field L] [NumberField L] {z : Sp (𝓞 L) ⟶ 𝔐.X}
+  {P : AbPart 𝔐.t (spMap (algebraMap (𝓞 L) L) ≫ z)} {V : Type} [AddCommGroup V] [Module L V] [Module (𝓞 L) V]
+  [IsScalarTower (𝓞 L) L V] {MV : LieModel P.tK.G (𝟙 (Sp L)) V} {A : LinPt E L (CMType H) V}
+
+theorem finrank_eig' (h : 𝔐.IsLinPtOf z P MV A) (s : CMType H ⊕ CMType H) :
+    Module.finrank L (eigSp A.ρ (A.σ s)) = labelRk D s := by
+  obtain ⟨U, hU, b, -, hb⟩ := 𝔐.vb s ⟨centre (spMap (algebraMap (𝓞 L) L) ≫ z), 𝔐.all _⟩ trivial
+  have h1 := hb _ trivial hU
+  have h2 : (𝔐.dR s).IsFrameAt b ⟨centre (spMap (algebraMap (𝓞 L) L) ≫ z), 𝔐.all _⟩ :=
+    ⟨h1.1, (Lat.patch_of_not _ _ _ fun p hp => PtHt.FrameVal.not_inFibre _ _ p (𝔐.S_prime p hp)).symm.trans h1.2⟩
+  have hlat := (GlobalTheory.T.hodge_cpt_away_from_primes E H D l Xo c (𝓞 c.F) (algebraMap _ _) Y S Ω K J y 𝔐
+    (FaithfulSMul.algebraMap_injective _ _) ⟨centre (spMap (algebraMap (𝓞 L) L) ≫ z), 𝔐.all _⟩
+    (fun p hp => PtHt.FrameVal.not_inFibre _ _ p hp)).2.2
+  obtain ⟨sL, -, hi, hs⟩ :=
+    PtHt.FrameVal.values_core 𝔐 _ P.tK P.m MV A.ρ A.σ A.σ_bij.1 h.1 h.2.1 hlat s b h2
+  rw [← hs, finrank_span_eq_card hi, Fintype.card_fin]
+
+omit [∀ k, Fintype (J k)] in
+theorem exists_action (h : 𝔐.IsLinPtOf z P MV A) :
+    ∃ (t' : SAB H (Sp (𝓞 L))) (_ : SABMap P.tB t' (spMap (algebraMap (𝓞 L) L)))
+      (MB : LieModel t'.G (𝟙 _) A.Bq.carrier) (ρM : 𝓞 E →+* Module.End (𝓞 L) A.Bq.carrier),
+      IsFibre (HodgeIP t'.G t'.PP.L) (𝟙 _) A.Bq MB ∧ MB.IsActOf t'.act.act ρM ∧
+        ∀ (a : 𝓞 E) (x : A.Λ), A.f ⟨A.ρ a x, A.stable a x x.2⟩ = ρM a (A.f x) := by
+  obtain ⟨hact, -, -, -, -, t', m', MB, hfib, hl⟩ := h
+  obtain ⟨ρM, hρ, -⟩ := lieModel_exists_unique_act _ t'.G (𝓞 L) (𝟙 _) _ MB (𝓞 E) t'.act.act t'.act.hom t'.act.one
+    t'.act.mul t'.act.add
+  refine ⟨t', m', MB, ρM, hfib, hρ, fun a x => ?_⟩
+  have := t'.semi.separated
+  have hinj : Function.Injective (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) := by
+    intro u v huv
+    have hL := IsFractionRing.injective (𝓞 L) L
+    refine TrivSqZeroExt.ext (hL ?_) (hL ?_)
+    · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst huv
+    · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.snd huv
+  refine MB.inj (Over.OverMorphism.ext (LieHomOk.ext_of_spMap_injective (dualMap (algebraMap (𝓞 L) L))
+    hinj t'.G.hom _ _
+    ((Over.w (MB.pt _)).trans (Over.w (MB.pt _)).symm) ?_))
+  have h1 : (MV.pt (A.ρ a x) ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = _ := hl ⟨A.ρ a x, A.stable a x x.2⟩
+  have h2 : (MV.pt x ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = _ := hl x
+  have h3 : MV.pt (A.ρ a x) ≫ P.τ.q ≫ P.e.hom = (MV.pt x ≫ P.τ.q ≫ P.e.hom) ≫ P.tB.act.act a := by
+    rw [hact a x, Category.assoc, P.act a]
+    simp only [Category.assoc]
+  rw [← h1, h3, hρ a (A.f x)]
+  generalize MV.pt x ≫ P.τ.q ≫ P.e.hom = w at h2
+  have h4 : (P.tB.act.act a).left ≫ m'.φ = m'.φ ≫ (t'.act.act a).left := m'.act a
+  change (w.left ≫ (P.tB.act.act a).left) ≫ m'.φ =
+    spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left ≫ (t'.act.act a).left
+  rw [Category.assoc, h4]
+  exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ (t'.act.act a).left) h2).trans (Category.assoc _ _ _))
+
+end Geo
+
+end LevelTowerAlt
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PlurisubharmonicCones.HeightComparisonGlobalModel
+
+section
 
 @[expose] public section
 
@@ -256,3 +442,5 @@ theorem height_comparison_global_model : (Top.Given → Fl.FlatDegree → FlatSa
   linarith
 
 end LevelTowerAlt
+end
+end

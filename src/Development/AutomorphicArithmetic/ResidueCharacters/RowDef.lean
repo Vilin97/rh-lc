@@ -1,11 +1,11 @@
 module
 
-public import Formalism.SharpRestriction.LevelLetterCocycles.SmallTwists.RowSmall
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BoundAtTwoThreeFamily
+public import Formalism.LocalRingCardinality.DataParams₂
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -37,6 +37,37 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BoundAtTwoThreeFamily
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.SmallTwists.RowSmall
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.RowSmall
+
+open Formalism.BasicNotions NumberField
+
+variable {D : D7}
+
+def sl (D : D7) (l : ℕ) : ℕ := max 1 (D.host.condN.factorization l)
+
+def hB (L : SizeData₂ D) : ℝ := L.sc.b + L.Sc + L.etaSz + D.R.t + 2
+
+def abelian₂ (L : SizeData₂ D) (l : ℕ) : ℝ := (sl D l : ℝ) + Real.logb l (2 * hB L) + 1
+
+end Formalism.MainNotions.N.RowSmall
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.RowDef
+
+section
 
 @[expose] public section
 
@@ -55,4 +86,6 @@ def RowAt {D : D7} (L : SizeData₂ D) (ρ : FamilyRepresentationConstants.RhoFa
 
 end UpperTheory.N
 
+end
+end
 end

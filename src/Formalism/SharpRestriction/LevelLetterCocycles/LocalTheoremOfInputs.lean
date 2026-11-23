@@ -8,10 +8,7 @@ public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
 public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangeEveryTheory
 public import Formalism.SharpRestriction.LevelLetterCocycles.BoundedNumeratorPowerSummability
 import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfComplMax
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfUTieRec
-public import Formalism.SharpRestriction.LevelLetterCocycles.LocalCorollaryOfDeRham
-public import Formalism.SharpRestriction.LevelLetterCocycles.Realised2Pf
+public import Formalism.SharpRestriction.LevelLetterCocycles.TeichOnto
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -48,7 +45,276 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfUTieRec
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoremOfUnramifiedLifting
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArcParametersShiftInvariant
+public import Formalism.SharpRestriction.LevelLetterCocycles.WachCoordinates
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Formalism.SharpRestriction.LevelLetterCocycles.Realised2Pf
 public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingEveryOrdering
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfComplMax
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03.Pf
+
+open IsLocalRing
+
+namespace ComplMaxPf
+
+variable {R : Type} [CommRing R]
+
+theorem isAdicComplete_of_pow {I J : Ideal R} (e : ℕ) (he : 1 ≤ e) (h1 : ∀ k, J ^ (e * k) ≤ I ^ k)
+    (h2 : ∀ k, I ^ k ≤ J ^ k) (hI : IsAdicComplete I R) : IsAdicComplete J R := by
+  have m1 : ∀ k, (J ^ (e * k) • ⊤ : Submodule R R) ≤ I ^ k • ⊤ := fun k => Submodule.smul_mono_left (h1 k)
+  have m2 : ∀ k, (I ^ k • ⊤ : Submodule R R) ≤ J ^ k • ⊤ := fun k => Submodule.smul_mono_left (h2 k)
+  refine { haus' := fun x hx => hI.haus' x fun k => SModEq.mono (m1 k) (hx (e * k)),
+           prec' := fun f hf => ?_ }
+  obtain ⟨L, hL⟩ := hI.prec' (fun k => f (e * k)) fun {m n} hmn =>
+    SModEq.mono (m1 m) (hf (Nat.mul_le_mul_left e hmn))
+  refine ⟨L, fun n => ?_⟩
+  have hn : n ≤ e * n := Nat.le_mul_of_pos_left n he
+  exact (hf hn).trans (SModEq.mono (m2 n) (hL n))
+
+end ComplMaxPf
+
+theorem complMax_holds : ComplMax := by
+  intro O _ _ _ p hpm hp0 hc
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
+  obtain ⟨e, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hp0 hϖ
+  have he : 1 ≤ e := by
+    rcases Nat.eq_zero_or_pos e with rfl | h
+    · exfalso
+      rw [pow_zero, mul_one] at hu
+      rw [hu] at hpm
+      exact (IsLocalRing.mem_maximalIdeal _).1 hpm u.isUnit
+    · exact h
+  have hIk : ∀ k, Ideal.span {(p : O)} ^ k = maximalIdeal O ^ (e * k) := fun k => by
+    rw [hϖ.maximalIdeal_eq, Ideal.span_singleton_pow, Ideal.span_singleton_pow, hu, mul_pow, ← pow_mul,
+      Ideal.span_singleton_mul_left_unit (u.isUnit.pow k)]
+  refine ComplMaxPf.isAdicComplete_of_pow e he (fun k => (hIk k).ge) (fun k => ?_) hc
+  rw [hIk k]
+  exact Ideal.pow_le_pow_right (Nat.le_mul_of_pos_left k he)
+
+end Formalism.MainNotions.N.Ln03.Pf
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.ThmELiftAtBc
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.WachCoordinates.Br
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Module
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR}
+    {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
+    {LL' O' : Type} [Field LL'] [Algebra Qp LL'] [TopologicalSpace LL'] [CommRing O'] [Algebra O' LL']
+    {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n]
+
+theorem comp_inj {E : Type} [Field E] [Algebra Qp E] (ι : LL →ₐ[Qp] LL') :
+    Function.Injective (fun τ : E →ₐ[Qp] LL => ι.comp τ) := by
+  intro τ τ' h
+  apply AlgHom.ext
+  intro x
+  exact ι.toRingHom.injective (congrArg (fun f : E →ₐ[Qp] LL' => f x) h)
+
+theorem comp_bij {E : Type} [Field E] [Algebra Qp E] [FiniteDimensional Qp E] (ι : LL →ₐ[Qp] LL')
+    (hcard : Nat.card (E →ₐ[Qp] LL) = finrank Qp E) :
+    Function.Bijective (fun τ : E →ₐ[Qp] LL => ι.comp τ) :=
+  (comp_inj ι).bijective_of_nat_card_le (hcard ▸ card_algHom_le_finrank Qp E LL')
+
+variable [Fintype (K →ₐ[Qp] LL)] [Fintype (K →ₐ[Qp] LL')]
+
+theorem thmELiftAt_bc (ι : LL →ₐ[Qp] LL') (v' : AddValuation LL' (WithTop ℚ))
+    (emb : ZMod n → (K₀ →ₐ[Qp] LL)) (hfin : FiniteDimensional Qp LL') (hv' : v' (PD.p : LL') = 1)
+    (hO' : ∃ hO : IsDomain O', @IsDiscreteValuationRing O' _ hO ∧ IsFractionRing O' LL')
+    (hBC : BCAt PD (LL := LL) (O := O) (O' := O') ι)
+    (H : ThmELiftAt PD (O := O') n (fun i => ι.comp (emb i)) v') :
+    ThmELiftAt PD (O := O) n emb v := by
+  intro hL h5 T₁ T₂ F hG hc₁ hc₂ hon j Gp S η h ty cuts arcLen Mb₁ hb₁ Mb₂ hb₂ hK hJ hg hS hC hT hb1 hb2
+    hW
+  obtain ⟨T₁', T₂', F', hc₁', hc₂', hon', hj, -, hlift, -⟩ := hBC T₁ T₂ F hc₁ hc₂ hon
+  apply hlift
+  have := PD.finK
+  have := PD.finK₀
+  obtain ⟨l1, l2, l3, l4, l5, l6⟩ := hL
+  have hbK := comp_bij (E := K) ι (by rw [Nat.card_eq_fintype_card]; exact hG.1.2)
+  have hbK₀ := comp_bij (E := K₀) ι (by
+    rw [← Nat.card_congr (Equiv.ofBijective emb l4), Nat.card_zmod, l3])
+  have hL' : Letters PD LL' v' (fun i => ι.comp (emb i)) :=
+    ⟨l1, hfin, l3, hbK₀.comp l4, fun i => by
+      change (ι.comp (emb (i + 1))).comp PD.σ = ι.comp (emb i)
+      rw [AlgHom.comp_assoc, l5], hv'⟩
+  have hG' : GoodCoeffs (K := K) (Qp := Qp) (LL := LL') (O := O') (V := T₁'.V) := by
+    refine ⟨⟨hfin, ?_⟩, hc₁'.2.1, hO'⟩
+    rw [← hG.1.2]
+    exact (Fintype.card_of_bijective hbK).symm
+  have tr₁ : ∀ (i : ZMod n) (X : Set ℤ), JumpsAtE PD T₁ emb i X →
+      JumpsAtE PD T₁' (fun i => ι.comp (emb i)) i X := by
+    intro i X hX τ' hτ' a ha
+    obtain ⟨τ, rfl⟩ := hbK.2 τ'
+    exact hX τ (comp_inj ι (by simpa [AlgHom.comp_assoc] using hτ')) a ((hj τ a).1.1 ha)
+  have tr₂ : ∀ (i : ZMod n) (X : Set ℤ), JumpsAtE PD T₂ emb i X →
+      JumpsAtE PD T₂' (fun i => ι.comp (emb i)) i X := by
+    intro i X hX τ' hτ' a ha
+    obtain ⟨τ, rfl⟩ := hbK.2 τ'
+    exact hX τ (comp_inj ι (by simpa [AlgHom.comp_assoc] using hτ')) a ((hj τ a).2.1 ha)
+  refine H hL' h5 T₁' T₂' F' hG' hc₁' hc₂' hon' j Gp S η h ty cuts arcLen Mb₁ hb₁ Mb₂ hb₂
+    (fun i => tr₁ i _ (hK i)) ?_ hg hS hC hT (fun i => tr₁ i _ (hb1 i)) (fun i => tr₂ i _ (hb2 i)) hW
+  intro τ' a ha
+  obtain ⟨τ, rfl⟩ := hbK.2 τ'
+  exact hJ τ a ((hj τ a).1.1 ha)
+
+end Formalism.MainNotions.WachCoordinates.Br
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LocalCorollaryOfDeRham
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.WachCoordinates Formalism.MainNotions.WachCoordinates.Br Module
+
+variable {l : ℕ} [Fact l.Prime]
+
+theorem fd_mu (m : ℕ) :
+    FiniteDimensional ℚ_[l] ↥(IntermediateField.adjoin ℚ_[l] {x : Om l | x ^ (l ^ m) = 1}) := by
+  classical
+  have hl : 0 < l ^ m := pow_pos (Fact.out : l.Prime).pos m
+  have hfin : Set.Finite {x : Om l | x ^ (l ^ m) = 1} := by
+    have : {x : Om l | x ^ (l ^ m) = 1} ⊆
+        ((Polynomial.nthRoots (l ^ m) (1 : Om l)).toFinset : Set (Om l)) := by
+      intro x hx
+      simp only [Finset.mem_coe, Multiset.mem_toFinset]
+      exact (Polynomial.mem_nthRoots hl).2 hx
+    exact (Finset.finite_toSet _).subset this
+  have := hfin.to_subtype
+  exact IntermediateField.finiteDimensional_adjoin fun x _ =>
+    (Algebra.IsAlgebraic.isAlgebraic x).isIntegral
+
+def richLL (K LL : FinExt l) (m : ℕ) : FinExt l :=
+  ⟨(bigLL K LL).1 ⊔ IntermediateField.adjoin ℚ_[l] {x : Om l | x ^ (l ^ m) = 1}, by
+    have := (bigLL K LL).2
+    have := fd_mu (l := l) m
+    exact IntermediateField.finiteDimensional_sup _ _⟩
+
+theorem le_richLL (K LL : FinExt l) (m : ℕ) : LL.1 ≤ (richLL K LL m).1 := (le_bigLL K LL).trans le_sup_left
+
+theorem caseA_richLL (K LL : FinExt l) (m : ℕ) (hK : K.1 ≤ MaximalUnramifiedExtension l) (h2 : l ≠ 2) :
+    CaseA K (richLL K LL m) :=
+  ⟨hK, h2, le_rfl, fun h => absurd h h2, (le_inf le_rfl hK).trans le_sup_left, fun τ x =>
+    (le_sup_left : (bigLL K LL).1 ≤ (richLL K LL m).1)
+      ((le_sup_right : _ ≤ (bigLL K LL).1) (τ.fieldRange_le_normalClosure ⟨x, rfl⟩))⟩
+
+theorem exists_prim_Om (m : ℕ) : ∃ x : Om l, IsPrimitiveRoot x (l ^ m) := by
+  have hpos : 0 < l ^ m := pow_pos (Fact.out : l.Prime).pos m
+  have : NeZero ((l ^ m : ℕ) : Om l) := ⟨by exact_mod_cast hpos.ne'⟩
+  obtain ⟨x, hx⟩ := IsAlgClosed.exists_root (Polynomial.cyclotomic (l ^ m) (Om l))
+    (Polynomial.degree_cyclotomic_pos (l ^ m) (Om l) hpos).ne'
+  exact ⟨x, (Polynomial.isRoot_cyclotomic_iff).mp hx⟩
+
+theorem prim_richLL (K LL : FinExt l) (m : ℕ) :
+    ∃ ζ : ↥(richLL K LL m).1, IsPrimitiveRoot ζ (l ^ m) := by
+  obtain ⟨x, hx⟩ := exists_prim_Om (l := l) m
+  have hmem : x ∈ (richLL K LL m).1 :=
+    (le_sup_right : _ ≤ (richLL K LL m).1) (IntermediateField.subset_adjoin _ _ hx.pow_eq_one)
+  exact ⟨⟨x, hmem⟩, IsPrimitiveRoot.coe_submonoidClass_iff.mp hx⟩
+
+theorem lift_of_caseA_rich (Th : LocTheory) (N : ℕ → ℕ)
+    (Wf : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l), CaseA K LL →
+      LocWach ((Th l).PD K) ↥LL.1 ↥(OL LL) ((Th l).v LL) (finrank ℚ_[l] ↥(K0 K)))
+    (hLift : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (h : CaseA K LL)
+      [NeZero (finrank ℚ_[l] ↥(K0 K))], 5 ≤ l →
+      (∃ ζ : ↥LL.1, IsPrimitiveRoot ζ (l ^ N (finrank ℚ_[l] ↥(K0 K)))) →
+      haveI : FiniteDimensional ℚ_[l] ↥K.1 := K.2
+      letI : Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) := Fintype.ofFinite _
+      ThmELiftAt ((Th l).PD K) (O := ↥(OL LL)) (finrank ℚ_[l] ↥(K0 K)) (Wf l K LL h).emb
+        ((Th l).v LL))
+    (hBC : admBC Th) :
+    ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (n : ℕ) [NeZero n]
+      (emb : ZMod n → (↥(K0 K) →ₐ[ℚ_[l]] ↥LL.1)),
+      haveI : FiniteDimensional ℚ_[l] ↥K.1 := K.2
+      letI : Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) := Fintype.ofFinite _
+      ThmELiftAt ((Th l).PD K) (O := ↥(OL LL)) n emb ((Th l).v LL) := by
+  intro l _ K LL n _ emb
+  have : FiniteDimensional ℚ_[l] ↥K.1 := K.2
+  let _ : Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) := Fintype.ofFinite _
+  intro hL h5
+  have hn := hL.2.2.1
+  subst hn
+  have h5' : 5 ≤ l := by rwa [(Th l).PD_p K] at h5
+  have hK : K.1 ≤ MaximalUnramifiedExtension l := by
+    intro x hx
+    obtain ⟨y, hy⟩ := hL.1.2 ⟨x, hx⟩
+    have : (y : Om l) = x := congrArg Subtype.val hy
+    rw [← this]
+    exact y.2.2
+  set m := N (finrank ℚ_[l] ↥(K0 K))
+  have hA := caseA_richLL K LL m hK (by omega)
+  let _ : Fintype (↥K.1 →ₐ[ℚ_[l]] ↥(richLL K LL m).1) := Fintype.ofFinite _
+  have H' : ThmELiftAt ((Th l).PD K) (O := ↥(OL (richLL K LL m))) (finrank ℚ_[l] ↥(K0 K))
+      (fun i => (IntermediateField.inclusion (le_richLL K LL m)).comp (emb i))
+      ((Th l).v (richLL K LL m)) := by
+    intro hL'
+    obtain ⟨a, ha⟩ := exists_rot (PD := (Th l).PD K)
+      (emb := fun i => (IntermediateField.inclusion (le_richLL K LL m)).comp (emb i))
+      (Wf l K (richLL K LL m) hA).emb_bij.2
+      hL'.2.2.2.2.1 (Wf l K (richLL K LL m) hA).emb_σ
+    have := thmELiftAt_rot (Wf l K (richLL K LL m) hA).emb a
+      (hLift l K (richLL K LL m) hA h5' (prim_richLL K LL m))
+    rw [← ha] at this
+    exact this hL'
+  exact thmELiftAt_bc (IntermediateField.inclusion (le_richLL K LL m)) ((Th l).v (richLL K LL m))
+    emb (richLL K LL m).2 (by rw [(Th l).PD_p K]; exact (Th l).v_l _)
+    ⟨inferInstance, Formalism.BasicNotions.Examples₂.LB.OL_dvr _, Formalism.BasicNotions.Examples₂.LB.OL_frac _⟩
+    (hBC l K LL (richLL K LL m) (le_richLL K LL m)) H' hL h5
+
+theorem local_theorem_of_cyclotomic_lift (Th : LocTheory) (N : ℕ → ℕ)
+    (Wf : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l), CaseA K LL →
+      LocWach ((Th l).PD K) ↥LL.1 ↥(OL LL) ((Th l).v LL) (finrank ℚ_[l] ↥(K0 K)))
+    (hLift : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (h : CaseA K LL)
+      [NeZero (finrank ℚ_[l] ↥(K0 K))], 5 ≤ l →
+      (∃ ζ : ↥LL.1, IsPrimitiveRoot ζ (l ^ N (finrank ℚ_[l] ↥(K0 K)))) →
+      haveI : FiniteDimensional ℚ_[l] ↥K.1 := K.2
+      letI : Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) := Fintype.ofFinite _
+      ThmELiftAt ((Th l).PD K) (O := ↥(OL LL)) (finrank ℚ_[l] ↥(K0 K)) (Wf l K LL h).emb
+        ((Th l).v LL))
+    (hBC : admBC Th) : LiftingTheoremLocalTheory Th 800 :=
+  ⟨lift_of_caseA_rich Th N Wf hLift hBC, thmEBound_holds⟩
+
+end Formalism.MainNotions.N.Ln03
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoremOfInputs
+
+section
 
 @[expose] public section
 
@@ -177,3 +443,6 @@ theorem corollary_local_exists_constant : ∃ C₀ : ℝ, ∀ (D : D7) (HW : HWO
   exact hA' τ hτ a ((h14 l K LL).1 T₁ T₂ F h1 h2 hF τ a ha)
 
 end Formalism.MainNotions.N.Ln03
+end
+end
+end

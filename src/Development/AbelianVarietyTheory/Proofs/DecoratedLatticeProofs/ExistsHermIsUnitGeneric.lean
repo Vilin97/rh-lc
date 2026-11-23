@@ -4,28 +4,31 @@ public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.
 import Development.AbelianVarietyTheory.Counterexamples.HeightSurvey.StarPurelyImaginaryEqNeg
 public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.ExistsBaseRingOfConjugationFixedTensor
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.SmulEqZeroOfInf
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsHermitianDetNeZeroTwoStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsOrthogonalIdempotentsOfSumMulEqOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MatrixFieldStableRangeOneDetNeZeroStatement
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.EmbeddingXiZeroNeZero
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,10 +50,221 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsOrthogonalIdempotentsOfSumMulEqOneStatement
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.TotallySplit
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.EmbeddingXiZeroNeZero
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Development.AbelianVarietyTheory.Definitions.Foundations.AestronglyMeasurableQuotMeasureIffLift
 import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyEqOfIsPreconnected
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsIwasawaOfIsCompact
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsHermitianDetNeZeroTwo
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open MvPolynomial Matrix
+
+noncomputable def hermGenericMatrix {κ : Type} [Field κ] (n : ℕ) (e : κ) :
+    Matrix (Fin n) (Fin n) (MvPolynomial (Fin n × Fin n) κ) :=
+  Matrix.of fun i j => X (i, j) + X (j, i) + C e * (X (i, j) - X (j, i))
+
+theorem hermGenericMatrix_map_eval {κ : Type} [Field κ] (n : ℕ) (e : κ)
+    (u : Fin n × Fin n → κ) :
+    (hermGenericMatrix n e).map (MvPolynomial.eval u) =
+      Matrix.of fun i j => u (i, j) + u (j, i) + e * (u (i, j) - u (j, i)) := by
+  ext i j
+  simp [hermGenericMatrix]
+
+theorem hermGenericMatrix_onto {κ : Type} [Field κ] [CharZero κ] (n : ℕ) (e : κ) (he : e ≠ 0)
+    (y : Matrix (Fin n) (Fin n) κ) :
+    ∃ u : Fin n × Fin n → κ, (hermGenericMatrix n e).map (MvPolynomial.eval u) = y := by
+  refine ⟨fun p => (y p.1 p.2 + y p.2 p.1) / 4 + (y p.1 p.2 - y p.2 p.1) / (4 * e), ?_⟩
+  rw [hermGenericMatrix_map_eval]
+  ext i j
+  simp only [Matrix.of_apply]
+  field_simp
+  ring
+
+theorem eval_det_affine_matrix {κ ι : Type} [Field κ] {n : ℕ} (c d : Matrix (Fin n) (Fin n) κ)
+    (G : Matrix (Fin n) (Fin n) (MvPolynomial ι κ)) (u : ι → κ) :
+    MvPolynomial.eval u (c.map C * G + d.map C).det =
+      (c * G.map (MvPolynomial.eval u) + d).det := by
+  rw [RingHom.map_det, map_add (f := _), map_mul]
+  congr 1
+  ext i j
+  simp [Matrix.mul_apply]
+
+theorem exists_hermitian_det_ne_zero_two :
+    ∀ (E κ : Type) [Field E] [CharZero E] [Field κ] (σ : E →+* E) (φ : E →+* κ) (δ : E), δ ≠ 0 → σ δ = -δ → ∀ (n : ℕ) (c d y c' d' y' : Matrix (Fin n) (Fin n) κ), (c * y + d).det ≠ 0 → (c' * y' + d').det ≠ 0 → ∃ x : Matrix (Fin n) (Fin n) E, x.map σ = x.transpose ∧ (c * x.map φ + d).det ≠ 0 ∧ (c' * x.transpose.map φ + d').det ≠ 0 := by
+  intro E κ _ _ _ σ φ δ hδ hσ n c d y c' d' y' h h'
+  haveI : CharZero κ := (RingHom.charZero_iff φ.injective).mp inferInstance
+  have he : φ δ ≠ 0 := (map_ne_zero φ).mpr hδ
+  set G := hermGenericMatrix n (φ δ) with hG
+  have h1 : (c.map C * G + d.map C).det ≠ 0 := by
+    obtain ⟨u, hu⟩ := hermGenericMatrix_onto n (φ δ) he y
+    intro h0
+    have := eval_det_affine_matrix c d G u
+    rw [h0, map_zero, hG, hu] at this
+    exact h this.symm
+  have h2 : (c'.map C * Gᵀ + d'.map C).det ≠ 0 := by
+    obtain ⟨u, hu⟩ := hermGenericMatrix_onto n (φ δ) he y'ᵀ
+    intro h0
+    have := eval_det_affine_matrix c' d' Gᵀ u
+    rw [h0, map_zero, Matrix.transpose_map, hG, hu, Matrix.transpose_transpose] at this
+    exact h' this.symm
+  have h12 := mul_ne_zero h1 h2
+  have key : ∃ m : Fin n × Fin n → ℕ, MvPolynomial.eval (fun p => (m p : κ))
+      ((c.map C * G + d.map C).det * (c'.map C * Gᵀ + d'.map C).det) ≠ 0 := by
+    by_contra hcon
+    push_neg at hcon
+    apply h12
+    apply MvPolynomial.funext_set (fun _ => Set.range (Nat.cast : ℕ → κ))
+      (fun _ => Set.infinite_range_of_injective Nat.cast_injective)
+    intro x hx
+    have hx' : ∀ p, ∃ m : ℕ, (m : κ) = x p := fun p => hx p (Set.mem_univ p)
+    choose m hm using hx'
+    have : x = fun p => (m p : κ) := funext fun p => (hm p).symm
+    rw [this, map_zero]
+    exact hcon m
+  obtain ⟨m, hm⟩ := key
+  rw [map_mul, eval_det_affine_matrix, eval_det_affine_matrix, Matrix.transpose_map, hG,
+    hermGenericMatrix_map_eval] at hm
+  let x : Matrix (Fin n) (Fin n) E := Matrix.of fun i j =>
+    (m (i, j) : E) + (m (j, i) : E) + δ * ((m (i, j) : E) - (m (j, i) : E))
+  have hx : x.map φ = Matrix.of fun i j =>
+      (m (i, j) : κ) + (m (j, i) : κ) + φ δ * ((m (i, j) : κ) - (m (j, i) : κ)) := by
+    ext i j
+    simp [x]
+  refine ⟨x, ?_, ?_, ?_⟩
+  · ext i j
+    simp only [x, Matrix.map_apply, Matrix.of_apply, Matrix.transpose_apply, map_add (f := _), map_mul,
+      map_sub, map_natCast, hσ]
+    ring
+  · rw [hx]; exact left_ne_zero_of_mul hm
+  · rw [Matrix.transpose_map, hx]; exact right_ne_zero_of_mul hm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsHermitianDetNeZeroTwoStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.exists_hermitian_two_det_ne_zero : ∀ (E κ : Type) [Field E] [CharZero E] [Field κ] (σ : E →+* E) (φ : E →+* κ) (δ : E), δ ≠ 0 → σ δ = -δ → ∀ (n : ℕ) (c d y c' d' y' : Matrix (Fin n) (Fin n) κ), (c * y + d).det ≠ 0 → (c' * y' + d').det ≠ 0 → ∃ x : Matrix (Fin n) (Fin n) E, x.map σ = x.transpose ∧ (c * x.map φ + d).det ≠ 0 ∧ (c' * x.transpose.map φ + d').det ≠ 0 := by
+  first | exact @GlobalTheory.exists_hermitian_det_ne_zero_two | exact GlobalTheory.exists_hermitian_det_ne_zero_two | (intros; apply GlobalTheory.exists_hermitian_det_ne_zero_two <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MatrixFieldStableRangeOneDetNeZero
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory
+
+theorem matrix_stableRange_one (κ : Type) [Field κ] (n : ℕ) (c d p q : Matrix (Fin n) (Fin n) κ)
+    (h : c * p + d * q = 1) : ∃ y : Matrix (Fin n) (Fin n) κ, (c * y + d).det ≠ 0 := by
+  classical
+  set C := Matrix.toLin' c with hC
+  set D := Matrix.toLin' d with hD
+  obtain ⟨Wc, hW⟩ := Submodule.exists_isCompl (LinearMap.range D)
+  let π := Submodule.linearProjOfIsCompl Wc (LinearMap.range D) hW.symm
+  have hdec : ∀ w : Fin n → κ, C (p *ᵥ w) + D (q *ᵥ w) = w := by
+    intro w
+    simp only [hC, hD, Matrix.toLin'_apply, Matrix.mulVec_mulVec, ← Matrix.add_mulVec, h,
+      Matrix.one_mulVec]
+  have hπD : ∀ v, π (D v) = 0 := by
+    intro v
+    exact Submodule.linearProjOfIsCompl_apply_right hW.symm ⟨D v, LinearMap.mem_range_self _ _⟩
+  have hsurj : Function.Surjective (π ∘ₗ C) := by
+    intro w
+    refine ⟨p *ᵥ (w : Fin n → κ), ?_⟩
+    have h2 : π (w : Fin n → κ) = w := Submodule.linearProjOfIsCompl_apply_left _ w
+    have := congrArg π (hdec w)
+    rw [map_add (f := _), hπD, add_zero, h2] at this
+    simpa using this
+  obtain ⟨g, hg⟩ := LinearMap.exists_rightInverse_of_surjective (π ∘ₗ C)
+    (LinearMap.range_eq_top.mpr hsurj)
+  have hdim : Module.finrank κ (LinearMap.ker D) = Module.finrank κ Wc := by
+    have h1 := LinearMap.finrank_range_add_finrank_ker D
+    have h2 := Submodule.finrank_add_eq_of_isCompl hW
+    simp only [Module.finrank_fin_fun] at h1 h2
+    omega
+  let e := LinearEquiv.ofFinrankEq _ _ hdim
+  obtain ⟨K', hK⟩ := Submodule.exists_isCompl (LinearMap.ker D)
+  let projK := Submodule.linearProjOfIsCompl (LinearMap.ker D) K' hK
+  let Y : (Fin n → κ) →ₗ[κ] (Fin n → κ) := g ∘ₗ (e : LinearMap.ker D →ₗ[κ] Wc) ∘ₗ projK
+  refine ⟨LinearMap.toMatrix' Y, ?_⟩
+  intro hdet
+  obtain ⟨v, hv0, hv⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hdet
+  have hM : (c * LinearMap.toMatrix' Y + d) *ᵥ v = C (Y v) + D v := by
+    rw [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, LinearMap.toMatrix'_mulVec]
+    rfl
+  rw [hM] at hv
+  have hp : π (C (Y v)) = e (projK v) := by
+    have := LinearMap.congr_fun hg (e (projK v))
+    simpa [Y] using this
+  have h3 : e (projK v) = 0 := by
+    have := congrArg π hv
+    rwa [map_add, hπD, add_zero, hp, map_zero] at this
+  have hk : projK v = 0 := (LinearEquiv.map_eq_zero_iff e).mp h3
+  have hY : Y v = 0 := by
+    change g (e.toLinearMap (projK v)) = 0
+    rw [hk, map_zero]
+    exact map_zero g
+  have hDv : D v = 0 := by rw [hY, map_zero, zero_add] at hv; exact hv
+  have hvK : v ∈ LinearMap.ker D := hDv
+  have h4 := Submodule.linearProjOfIsCompl_apply_left hK ⟨v, hvK⟩
+  have : (⟨v, hvK⟩ : LinearMap.ker D) = 0 := by rw [← h4]; exact hk
+  exact hv0 (congrArg Subtype.val this)
+
+theorem matrix_stableRange_one' : ∀ (κ : Type) [Field κ] (n : ℕ) (c d p q : Matrix (Fin n) (Fin n) κ),
+    c * p + d * q = 1 → ∃ y : Matrix (Fin n) (Fin n) κ, (c * y + d).det ≠ 0 :=
+  fun κ _ n c d p q h => matrix_stableRange_one κ n c d p q h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MatrixFieldStableRangeOneDetNeZeroStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.matrix_field_stableRange_one_det_ne_zero : ∀ (κ : Type) [Field κ] (n : ℕ) (c d p q : Matrix (Fin n) (Fin n) κ), c * p + d * q = 1 → ∃ y : Matrix (Fin n) (Fin n) κ, (c * y + d).det ≠ 0 := by
+  first | exact @GlobalTheory.matrix_stableRange_one' | exact GlobalTheory.matrix_stableRange_one' | (intros; apply GlobalTheory.matrix_stableRange_one' <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsHermIsUnitGeneric
+
+section
 
 @[expose] public section
 
@@ -213,4 +427,6 @@ theorem exists_herm_isUnit (D : D7) (n : ℕ) (c d p q : Mx D n n) (h : c * p + 
 
 end GlobalTheory.HermTransversal
 
+end
+end
 end

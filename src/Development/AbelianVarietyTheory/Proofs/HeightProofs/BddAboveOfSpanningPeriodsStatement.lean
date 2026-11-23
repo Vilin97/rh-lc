@@ -2,14 +2,14 @@ module
 
 public import Mathlib.Analysis.Normed.Module.Basic
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-public import Development.AbelianVarietyTheory.Proofs.HeightProofs.BddAboveOfSpanningPeriods
-public import Formalism.LocalRingCardinality.DataHost
+public import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,6 +22,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,12 +45,74 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalRingCardinality.DataHost
 import Development.AbelianVarietyTheory.Proofs.HeightProofs.IsTopologicalRingAE
 import Formalism.LocalRingCardinality.DataTheta
 import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.BddAboveOfSpanningPeriods
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem bddAbove_of_spanning_periods (R : Type) [NormedAddCommGroup R] [NormedSpace ℝ R]
+    [FiniteDimensional ℝ R] (g : R → ℝ) (hg : Continuous g) (S : Set R)
+    (hS : Submodule.span ℝ S = ⊤)
+    (hper : ∀ s ∈ S, ∃ N : ℕ, 0 < N ∧ ∀ x, g (x + (N : ℝ) • s) = g x) :
+    ∃ C : ℝ, ∀ x, g x ≤ C := by
+  classical
+  let P : AddSubgroup R :=
+    { carrier := {p | ∀ x, g (x + p) = g x}
+      zero_mem' := fun x => by simp
+      add_mem' := fun {a b} ha hb x => by
+        rw [← add_assoc, hb, ha]
+      neg_mem' := fun {a} ha x => by
+        have := ha (x + -a)
+        rw [← this]; simp }
+  have hP : Submodule.span ℝ (P : Set R) = ⊤ := by
+    rw [eq_top_iff, ← hS, Submodule.span_le]
+    intro s hs
+    obtain ⟨N, hN, h⟩ := hper s hs
+    have h1 : (N : ℝ) • s ∈ Submodule.span ℝ (P : Set R) := Submodule.subset_span h
+    have h2 := Submodule.smul_mem _ ((N : ℝ)⁻¹) h1
+    have hN' : (N : ℝ) ≠ 0 := by exact_mod_cast hN.ne'
+    rwa [smul_smul, inv_mul_cancel₀ hN', one_smul] at h2
+  obtain ⟨t, htP, hspan, hli⟩ := exists_linearIndependent ℝ (P : Set R)
+  have hfin : Finite t := hli.finite
+  letI : Fintype t := Fintype.ofFinite t
+  let b : Module.Basis t ℝ R := Module.Basis.mk hli (by
+    rw [Subtype.range_coe, hspan, hP])
+  have hb : Submodule.span ℤ (Set.range b) ≤ AddSubgroup.toIntSubmodule P := by
+    rw [Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    have : b i = (i : R) := by simp [b]
+    rw [this]
+    exact htP i.2
+  have hK : IsCompact (Metric.closedBall (0 : R) (∑ i, ‖b i‖)) := isCompact_closedBall _ _
+  obtain ⟨C, hC⟩ := hK.bddAbove_image hg.continuousOn
+  refine ⟨C, fun x => ?_⟩
+  have hfl : ((ZSpan.floor b x : R)) ∈ P := hb (ZSpan.floor b x).2
+  have hx : g x = g (ZSpan.fract b x) := by
+    have := hfl (ZSpan.fract b x)
+    rw [← this, ZSpan.fract_apply]; simp
+  rw [hx]
+  apply hC
+  exact ⟨_, by simpa using ZSpan.norm_fract_le b x, rfl⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.BddAboveOfSpanningPeriodsStatement
+
+section
 
 @[expose] public section
 
@@ -56,3 +122,5 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_le_of_continuous_of_spanning_periods : ∀ (R : Type) [NormedAddCommGroup R] [NormedSpace ℝ R] [FiniteDimensional ℝ R] (g : R → ℝ), Continuous g → ∀ S : Set R, Submodule.span ℝ S = ⊤ → (∀ s ∈ S, ∃ N : ℕ, 0 < N ∧ ∀ x, g (x + (N : ℝ) • s) = g x) → ∃ C : ℝ, ∀ x, g x ≤ C := by
   first | exact @GlobalTheory.bddAbove_of_spanning_periods | exact GlobalTheory.bddAbove_of_spanning_periods | (intros; apply GlobalTheory.bddAbove_of_spanning_periods <;> assumption)
+end
+end

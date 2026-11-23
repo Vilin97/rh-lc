@@ -1,7 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.TCoefMInMMul
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OptionEquivLeftPderivNoneCoeff
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +21,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +45,48 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OptionEquivLeftPderivNoneCoeff
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace GlobalTheory
+
+theorem optionEquivLeft_pderiv_none_gen {τ : Type} [DecidableEq τ]
+    (p : MvPolynomial (Option τ) ℂ) :
+    optionEquivLeft ℂ τ (pderiv none p) = Polynomial.derivative (optionEquivLeft ℂ τ p) := by
+  induction p using MvPolynomial.induction_on with
+  | C a => simp [optionEquivLeft_C]
+  | add p q hp hq => simp [hp, hq]
+  | mul_X p i hp =>
+    rcases i with _ | j
+    · simp [Derivation.leibniz, hp, optionEquivLeft_X_none, mul_comm]
+    · simp [Derivation.leibniz, hp, optionEquivLeft_X_some, pderiv_X, mul_comm]
+
+theorem optionEquivLeft_pderiv_none_coeff :
+    ∀ {τ : Type} [DecidableEq τ] (k : ℕ) (s : MvPolynomial (Option τ) ℂ),
+      (MvPolynomial.optionEquivLeft ℂ τ (MvPolynomial.pderiv none s)).coeff k =
+        ((k : ℂ) + 1) • (MvPolynomial.optionEquivLeft ℂ τ (s)).coeff (k + 1) := by
+  intro τ _ k s
+  rw [optionEquivLeft_pderiv_none_gen, Polynomial.coeff_derivative, MvPolynomial.smul_eq_C_mul,
+    mul_comm]
+  congr 1
+  simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffPartialDerivMuEqSuccMul
+
+section
 
 @[expose] public section
 
@@ -55,3 +101,5 @@ theorem t_coefM_pderiv : T_coefM_pderiv := by
   exact GlobalTheory.optionEquivLeft_pderiv_none_coeff k s
 
 end GlobalTheory.PsCo.Cw2a
+end
+end

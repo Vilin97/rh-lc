@@ -4,21 +4,20 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DualLatticeIsLatticeAndHermitianDual
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LatticeExtensionAlongFieldEmbeddingDuals
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NablaDeltaOperatorLatticePreserved
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNeZeroSmulMemAlt
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefActionReprMemSubfield
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HasRatBasisOfAct
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
-public import Formalism.LocalToGlobal.Divisibility.ClassSumLemmas
-public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+import Formalism.LocalToGlobal.IndefiniteReal.MemSpanOfSmulMem
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -46,6 +45,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefActionReprMemSubfield
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HasRatBasisOfAct
+import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
+public import Formalism.LocalToGlobal.Divisibility.ClassSumLemmas
+public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNeZeroSmulMemAlt
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NonzeroSmulMemIntegralSpan
+
+theorem exists_ne_zero_smul_mem {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V]
+    [Module K V] [Module (NumberField.RingOfIntegers K) V]
+    [IsScalarTower (NumberField.RingOfIntegers K) K V]
+    {M : Submodule (NumberField.RingOfIntegers K) V} {x : V}
+    (hx : x ∈ Submodule.span K (M : Set V)) :
+    ∃ d : NumberField.RingOfIntegers K, d ≠ 0 ∧ d • x ∈ M := by
+  apply Formalism.IndefR.LatticeTransfer.Lat.exists_smul_mem <;> assumption
+
+end GlobalTheory.NonzeroSmulMemIntegralSpan
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeightLawGoodOfFieldEmbedding
+
+section
 
 @[expose] public section
 
@@ -250,3 +278,6 @@ theorem lawGood (hF : FOk emb σ) (hS : S.Ok)
 end Step
 
 end GlobalTheory.Mem.LatGood
+end
+end
+end

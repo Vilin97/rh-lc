@@ -4,11 +4,14 @@ public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDe
 public import Formalism.LocalToGlobal.UnitaryNorms.CharTransport
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdNormOne
-public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AutOrder
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -42,6 +45,32 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import GroundTheory.AutomorphicForms.CuspidalProjection.Global
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AutOrder
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.ConvolutionTheory.K.autOrder :
+    ∀ (K : Type) [Field K] [NumberField K] (σ : K ≃+* K), ∃ m : ℕ, 0 < m ∧ σ ^ m = 1 := by
+  intro K _ _ σ
+  let τ : K ≃ₐ[ℚ] K := AlgEquiv.ofRingEquiv (f := σ) (fun x => by simp)
+  refine ⟨orderOf τ, orderOf_pos τ, ?_⟩
+  have h : ∀ m : ℕ, ∀ x, (σ ^ m) x = (τ ^ m) x := by
+    intro m
+    induction m with
+    | zero => intro x; rfl
+    | succ m ih => intro x; rw [pow_succ, pow_succ]; exact ih _
+  ext x
+  rw [h, pow_orderOf_eq_one]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.GalEquiv
+
+section
 
 @[expose] public section
 
@@ -116,3 +145,5 @@ theorem UpperTheory.ConvolutionTheory.K.galEquiv :
   · change (resMap K n σ)^[m] g = g
     rw [resMap_iter, hσ]
     exact resMap_refl K n g
+end
+end

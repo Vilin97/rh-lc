@@ -1,7 +1,7 @@
 module
 
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.ExPhiPlusOnto
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicPhiMinusExact
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicCharacterEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +41,63 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicFiltrationExhaustiveStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaOpenMirabolic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedJacquetExactSmoothStatement
+import Mathlib.Topology.Algebra.Group.Units
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicCharacterEqStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun
+
+theorem _root_.GlobalTheory.T.mirabolic_character_eq : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.BZMir.Fun.MirCharEq k := by
+  first | exact @GlobalTheory.CompanionTheory.BZMir.mirChar_eq_thetaA_single | exact GlobalTheory.CompanionTheory.BZMir.mirChar_eq_thetaA_single | (intros; apply GlobalTheory.CompanionTheory.BZMir.mirChar_eq_thetaA_single <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaOpenMirabolicStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun
+
+theorem _root_.GlobalTheory.T.theta_open_mirabolic : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.BZMir.Fun.ThetaOpen k := by
+  first | exact @GlobalTheory.CompanionTheory.BZFun.thetaOpen | exact GlobalTheory.CompanionTheory.BZFun.thetaOpen | (intros; apply GlobalTheory.CompanionTheory.BZFun.thetaOpen <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicPhiMinusExact
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun
+
+namespace GlobalTheory.CompanionTheory.BZMir
+
+theorem exPhiMinus (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] :
+    GlobalTheory.BZMir.Fun.ExPhiMinus k := by
+  intro ψ hψ n V₁ V₂ V₃ _ _ _ _ _ _ τ₁ τ₂ τ₃ h₁ h₂ h₃ f g hf hg hfg
+  have hopen : IsOpen ((mirChar k ψ n).ker : Set (MirUin k (n + 1))) := by
+    rw [GlobalTheory.T.mirabolic_character_eq k ψ n]
+    exact GlobalTheory.T.theta_open_mirabolic k ψ hψ (n + 1) _
+  exact GlobalTheory.T.twisted_jacquet_exact_smooth τ₁ τ₂ τ₃ h₁ h₂ h₃ (MirUin k (n + 1)) (mirChar k ψ n) hopen
+    (GlobalTheory.T.mirabolic_filtration_exhaustive k (n + 1)) f g hf hg hfg
+
+end GlobalTheory.CompanionTheory.BZMir
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MirabolicPhiMinusExactStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +105,5 @@ open GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun
 
 theorem _root_.GlobalTheory.T.mirabolic_phi_minus_exact : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.BZMir.Fun.ExPhiMinus k := by
   first | exact @GlobalTheory.CompanionTheory.BZMir.exPhiMinus | exact GlobalTheory.CompanionTheory.BZMir.exPhiMinus | (intros; apply GlobalTheory.CompanionTheory.BZMir.exPhiMinus <;> assumption)
+end
+end

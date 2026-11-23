@@ -8,12 +8,10 @@ public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.
 public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IsCosetQuadraticPhaseTestFunctionConjCharacterMu
 public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatIntegralGaussianShapeRootOfUnityPhStatement
 public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SelfDualVacuumGaussianShapeRootOfUnityPhases
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelParabolicTransformPhaseStatement
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelThetaTransformationLawMul
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticEqParabolicJParabolicJParabolic
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocycl
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TransSIntertwines
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TransSUnique
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelThetaTransformationSiegelParabolic
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.RationalSchwartzBruhatAlgebraIntegralLinear
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatInvariantIntegralMatrixMul
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocycl
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -34,6 +32,8 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +41,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,8 +54,218 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelThetaTransformationLawMul
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticEqParabolicJParabolicJParabolic
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocycl
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TransSIntertwines
+public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsUnitarySiegelThetaTransformationLawStandar
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SymplecticSiegelActionMemUpperHalfSpaceAndCocyclStatement
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.EchEqOneIff
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelParabolicTransformPhase
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW GlobalTheory.Phase
+open scoped ComplexConjugate Real
+
+namespace GlobalTheory.Phase.ParabValues
+
+open GlobalTheory.SW.Parab
+
+theorem ph_rat_mul_exp (r q : ℚ) : Ph ((r : ℂ) * cexp (-(Real.pi * I * (q : ℂ)))) := by
+  refine ⟨2 * q.den, by have := q.den_pos; omega, ?_⟩
+  have hn : ‖cexp (-(Real.pi * I * (q : ℂ)))‖ = 1 := by
+    have : -(Real.pi * I * (q : ℂ)) = ((-(Real.pi * q) : ℝ) : ℂ) * I := by push_cast; ring
+    rw [this, Complex.norm_exp_ofReal_mul_I]
+  have he : cexp (-(Real.pi * I * (q : ℂ))) ^ (2 * q.den) = 1 := by
+    rw [← Complex.exp_nat_mul, Complex.exp_eq_one_iff]
+    refine ⟨-q.num, ?_⟩
+    have h : (q : ℂ) * (q.den : ℂ) = (q.num : ℂ) := by exact_mod_cast Rat.mul_den_eq_num q
+    push_cast
+    rw [← h]
+    ring
+  rw [mul_pow, he, mul_one, norm_mul, hn, mul_one, Complex.norm_ratCast]
+  have : (|(r : ℝ)|) ^ (2 * q.den) = (r : ℝ) ^ (2 * q.den) := Even.pow_abs ⟨q.den, by ring⟩ _
+  rw [← Complex.ofReal_pow, this]
+  push_cast
+  rfl
+
+theorem trans_explicit (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι]
+    (σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ) (hσ : σ ∈ Matrix.symplecticGroup ι ℚ) (hC : σ.toBlocks₂₁ = 0)
+    (φ : Matrix κ ι ℚ → ℂ) (hφ : IsSB φ) :
+    IsSB (((σ.toBlocks₂₂.det : ℂ) ^ (Fintype.card κ / 2)) •
+      fun x => parChar (σ.toBlocks₁₂ * σ.toBlocks₁₁ᵀ) x * φ (x * σ.toBlocks₁₁)) ∧
+    TransS σ φ (((σ.toBlocks₂₂.det : ℂ) ^ (Fintype.card κ / 2)) •
+      fun x => parChar (σ.toBlocks₁₂ * σ.toBlocks₁₁ᵀ) x * φ (x * σ.toBlocks₁₁)) := by
+  classical
+  set A := σ.toBlocks₁₁ with hA
+  set B := σ.toBlocks₁₂ with hB
+  set D := σ.toBlocks₂₂ with hD
+  have hDA : D * Aᵀ = 1 := by
+    have h := SymplecticGroup.mem_iff.mp hσ
+    rw [← Matrix.fromBlocks_toBlocks σ, hC, Matrix.J, Matrix.fromBlocks_transpose,
+      Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply] at h
+    have := congrArg Matrix.toBlocks₂₁ h
+    simpa using this
+  have hdet : D.det * A.det = 1 := by
+    have := congrArg Matrix.det hDA
+    rwa [Matrix.det_mul, Matrix.det_transpose, Matrix.det_one] at this
+  have hA0 : A.det ≠ 0 := right_ne_zero_of_mul_eq_one hdet
+  have hAu : IsUnit A.det := isUnit_iff_ne_zero.mpr hA0
+  refine ⟨?_, ?_⟩
+  · have h1 := isSB_parChar_mul (B * Aᵀ) _
+      ((GlobalTheory.SW.LinChange.haar_mul ℚ κ ι φ hφ).1 A hA0).1
+    exact (GlobalTheory.SW.isSB_algebra_haar_linear ℚ κ ι _ _ h1 h1).2.1 _
+  · intro τ _ ζ
+    have hden : spDen σ τ = qm D := by
+      unfold spDen
+      rw [hC]
+      have : qm (0 : Matrix ι ι ℚ) = 0 := by ext i j; simp [qm]
+      rw [this, Matrix.zero_mul, zero_add]
+    have hinv : (qm D)⁻¹ = (qm A)ᵀ := by
+      apply Matrix.inv_eq_right_inv
+      have e : (qm A)ᵀ = qm Aᵀ := rfl
+      rw [e, ← qm_mul', hDA]
+      ext i j; by_cases h : i = j <;> simp [qm, Matrix.one_apply, h]
+    have hdetD : (qm D).det = (D.det : ℂ) := ((Rat.castHom ℂ).map_det D).symm
+    have hC' : qm σ.toBlocks₂₁ = 0 := by rw [hC]; ext i j; simp [qm]
+    unfold spAct
+    rw [hden, hinv, hC', hdetD]
+    simp only [Matrix.mul_zero, Matrix.zero_mulVec, dotProduct_zero, Finset.sum_const_zero,
+      mul_zero, Complex.exp_zero, mul_one]
+    let e : Matrix κ ι ℚ ≃ Matrix κ ι ℚ :=
+      { toFun := fun x => x * A
+        invFun := fun x => x * A⁻¹
+        left_inv := fun x => Matrix.mul_nonsing_inv_cancel_right A x hAu
+        right_inv := fun x => Matrix.nonsing_inv_mul_cancel_right A x hAu }
+    unfold thS
+    rw [← tsum_mul_left, ← e.tsum_eq (fun x => _ * (φ x * _))]
+    refine tsum_congr fun x => ?_
+    show ((D.det : ℂ) ^ (Fintype.card κ / 2)) * (parChar (B * Aᵀ) x * φ (x * A)) * _ =
+      _ * (φ (x * A) * cexp (Real.pi * I * ∑ k, (qv ((x * A) k) ⬝ᵥ τ *ᵥ qv ((x * A) k) +
+        2 * (qv ((x * A) k) ⬝ᵥ ζ k))))
+    rw [mul_assoc, mul_comm (parChar _ _), mul_assoc]
+    congr 2
+    unfold parChar
+    rw [← Complex.exp_add]
+    congr 1
+    rw [← mul_neg, ← mul_add, Rat.cast_sum, ← Finset.sum_neg_distrib, ← Finset.sum_add_distrib]
+    congr 1
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [qv_bilin, qv_row_mul, qm_mul']
+    have e1 : qm Aᵀ = (qm A)ᵀ := rfl
+    beta_reduce
+    rw [e1, Matrix.add_mul, Matrix.add_mulVec, dotProduct_add, Matrix.vecMul_transpose,
+      ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
+      Matrix.mulVec_transpose, Matrix.dotProduct_mulVec (qv (x k)) (qm A),
+      Matrix.dotProduct_mulVec (qv (x k)) (qm A)]
+    ring
+
+theorem trans_unique (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι]
+    (σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ) (hσ : σ ∈ Matrix.symplecticGroup ι ℚ)
+    (φ ψ ψ' : Matrix κ ι ℚ → ℂ) (hψ : IsSB ψ) (hψ' : IsSB ψ') (h : TransS σ φ ψ)
+    (h' : TransS σ φ ψ') : ψ = ψ' := by
+  obtain ⟨hd, hs, -⟩ := GlobalTheory.SiegelAction.symplectic_action ι σ hσ _ (I_mem_siegel (ι := ι))
+  refine GlobalTheory.SW.eq_of_thS_eq κ ι ψ ψ' hψ hψ' _ hs fun ζ => ?_
+  have e : ζ = fun k => (ζ k ᵥ* spDen σ (I • (1 : Matrix ι ι ℂ))) ᵥ*
+      (spDen σ (I • (1 : Matrix ι ι ℂ)))⁻¹ := by
+    funext k
+    rw [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hd),
+      Matrix.vecMul_one]
+  rw [e, h _ I_mem_siegel, h' _ I_mem_siegel]
+
+theorem values_parabolic : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι], Even (Fintype.card κ) → ∀ σ ∈ Matrix.symplecticGroup ι ℚ, σ.toBlocks₂₁ = 0 → ∀ φ ψ : Matrix κ ι ℚ → ℂ, IsSB φ → IsSB ψ → TransS σ φ ψ → ∀ y, ∃ (u : ℂ) (y' : Matrix κ ι ℚ), Ph u ∧ ψ y = u * φ y' := by
+  intro κ ι _ _ _ _ σ hσ hC φ ψ hφ hψ h y
+  obtain ⟨h1, h2⟩ := trans_explicit κ ι σ hσ hC φ hφ
+  have e := trans_unique κ ι σ hσ φ _ _ hψ h1 h h2
+  refine ⟨((σ.toBlocks₂₂.det ^ (Fintype.card κ / 2) : ℚ) : ℂ) *
+    parChar (σ.toBlocks₁₂ * σ.toBlocks₁₁ᵀ) y, y * σ.toBlocks₁₁, ph_rat_mul_exp _ _, ?_⟩
+  rw [e]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  push_cast
+  ring
+
+end GlobalTheory.Phase.ParabValues
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SiegelParabolicTransformPhaseStatement
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW GlobalTheory.Phase
+open scoped ComplexConjugate Real
+
+theorem _root_.GlobalTheory.T.siegelParabolic_transform_values_rootOfUnity : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι], Even (Fintype.card κ) → ∀ σ ∈ Matrix.symplecticGroup ι ℚ, σ.toBlocks₂₁ = 0 → ∀ φ ψ : Matrix κ ι ℚ → ℂ, IsSB φ → IsSB ψ → TransS σ φ ψ → ∀ y, ∃ (u : ℂ) (y' : Matrix κ ι ℚ), Ph u ∧ ψ y = u * φ y' := by
+  first | exact @GlobalTheory.Phase.ParabValues.values_parabolic | exact GlobalTheory.Phase.ParabValues.values_parabolic | (intros; apply GlobalTheory.Phase.ParabValues.values_parabolic <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.EqOfSiegelThetaSeriesRationalEqStatement
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW
+open scoped ComplexConjugate Real
+
+theorem _root_.GlobalTheory.T.eq_of_siegelThetaSeriesRational_eq : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι] (φ ψ : Matrix κ ι ℚ → ℂ), IsSB φ → IsSB ψ → ∀ τ ∈ Siegel ι, (∀ ζ, thS φ τ ζ = thS ψ τ ζ) → φ = ψ := by
+  first | exact @GlobalTheory.SW.eq_of_thS_eq | exact GlobalTheory.SW.eq_of_thS_eq | (intros; apply GlobalTheory.SW.eq_of_thS_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.TransSUnique
+
+section
+
+@[expose] public section
+
+open Matrix Complex GlobalTheory.SW GlobalTheory.Phase
+open scoped ComplexConjugate Real
+
+namespace GlobalTheory.Phase
+
+theorem transS_unique {κ ι : Type} [Fintype κ] [Fintype ι] [DecidableEq ι]
+    {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} (hσ : σ ∈ Matrix.symplecticGroup ι ℚ)
+    {φ ψ ψ' : Matrix κ ι ℚ → ℂ} (hψ : IsSB ψ) (hψ' : IsSB ψ') (h : TransS σ φ ψ)
+    (h' : TransS σ φ ψ') : ψ = ψ' := by
+  obtain ⟨hd, hs, -⟩ := GlobalTheory.T.symplecticSiegelAction_mem_upperHalfSpace_and_cocycle ι σ hσ _ I_mem_siegel
+  refine GlobalTheory.T.eq_of_siegelThetaSeriesRational_eq κ ι ψ ψ' hψ hψ' _ hs fun ζ => ?_
+  have e1 := h _ I_mem_siegel fun k => ζ k ᵥ* spDen σ (I • 1)
+  have e2 := h' _ I_mem_siegel fun k => ζ k ᵥ* spDen σ (I • 1)
+  have e := e1.trans e2.symm
+  simpa only [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv _ (Ne.isUnit hd),
+    Matrix.vecMul_one] using e
+
+theorem val_trans_J : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι],
+    Even (Fintype.card κ) → ∀ φ ψ : Matrix κ ι ℚ → ℂ, IsSB φ → IsSB ψ →
+      TransS (Matrix.J ι ℚ) φ ψ → ∀ y, ∃ (u : ℂ) (y' : Matrix κ ι ℚ),
+        Ph u ∧ ψ y = u * haar (fun x => φ x * chr y' x) := by
+  intro κ ι _ _ _ ⟨p, hp⟩ φ ψ ⟨R, hR, h⟩ hψ ht y
+  have e := transS_unique (SymplecticGroup.J_mem ι ℚ) hψ
+    ⟨R, hR, FourierJ.ft_level hR h _⟩ ht (FourierJ.trans_J hp hR h)
+  refine ⟨I ^ (Fintype.card ι * p), y, ⟨4, by norm_num, ?_⟩, ?_⟩
+  · rw [← pow_mul, mul_comm, pow_mul]; simp [Complex.I_pow_four]
+  · rw [e]
+    simp only [FourierJ.ft, FourierJ.pr, FourierJ.ech, chr]
+
+end GlobalTheory.Phase
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.RootOfUnityPhaseVacuumSiegelThetaTransform
+
+section
 
 @[expose] public section
 
@@ -192,3 +403,5 @@ theorem pv_of_transS : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq
     (pv_mul he hJ h1 Q (P _ h1 z1))))
 
 end GlobalTheory.Phase.WeilPV
+end
+end

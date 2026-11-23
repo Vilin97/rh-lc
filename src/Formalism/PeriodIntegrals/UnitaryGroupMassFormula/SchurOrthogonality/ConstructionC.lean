@@ -4,9 +4,8 @@ public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonali
 public import Formalism.PeriodIntegrals.HwIrred
 public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
 public import Formalism.GradedWeylDivisibility.FinalD
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CfEqSumOfSubset
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CrRowActRowAct
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CzDiagUnitary
+public import Formalism.LocalRingCardinality.DataCoeff
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,14 +18,13 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,9 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,9 +44,213 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.LocalRingCardinality.Params
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.InstMeasurableSpaceMat
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CzDiagUnitary
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CfEqSumOfSubset
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WSF
+
+open Formalism.BasicNotions MvPolynomial
+
+theorem cf_eq_sum_of_subset {σ : Type} (f g : MvPolynomial σ ℂ) (S : Finset (σ →₀ ℕ))
+    (hS : f.support ⊆ S) :
+    Formalism.REAL.fockF f g =
+      ∑ m ∈ S, f.coeff m * star (g.coeff m) * ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) := by
+  unfold Formalism.REAL.fockF
+  refine Finset.sum_subset hS fun m _ hm => ?_
+  rw [MvPolynomial.notMem_support_iff.mp hm, zero_mul, zero_mul]
+
+theorem cf_add_left {σ : Type} [DecidableEq σ] (f f' g : MvPolynomial σ ℂ) :
+    Formalism.REAL.fockF (f + f') g = Formalism.REAL.fockF f g + Formalism.REAL.fockF f' g := by
+  classical
+  rw [cf_eq_sum_of_subset (f + f') g (f.support ∪ f'.support) MvPolynomial.support_add,
+    cf_eq_sum_of_subset f g (f.support ∪ f'.support) Finset.subset_union_left,
+    cf_eq_sum_of_subset f' g (f.support ∪ f'.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  rw [MvPolynomial.coeff_add]
+  ring
+
+theorem cf_smul_left {σ : Type} (c : ℂ) (f g : MvPolynomial σ ℂ) :
+    Formalism.REAL.fockF (c • f) g = c * Formalism.REAL.fockF f g := by
+  rw [MvPolynomial.smul_eq_C_mul, Formalism.GradedWeylDivisibility.LFocks_C_mul_left]
+
+theorem cf_F {N : ℕ} (lam : DomWeight N) :
+    (Formalism.REAL.fockF (extremal ℂ N lam) (extremal ℂ N lam)).im = 0 ∧
+      0 < (Formalism.REAL.fockF (extremal ℂ N lam) (extremal ℂ N lam)).re := by
+  have hne : extremal ℂ N lam ≠ 0 := Formalism.GradedWeylDivisibility.hwNe ℂ N N le_rfl lam.natW
+  obtain ⟨h1, h2⟩ := Formalism.GradedWeylDivisibility.fockPos _ _ hne
+  exact ⟨h2, h1⟩
+
+theorem cf_F_ne {N : ℕ} (lam : DomWeight N) :
+    Formalism.REAL.fockF (extremal ℂ N lam) (extremal ℂ N lam) ≠ 0 := by
+  intro h0
+  have h1 := (cf_F lam).2
+  rw [h0, Complex.zero_re] at h1
+  exact lt_irrefl _ h1
+
+def Blin {N : ℕ} (lam : DomWeight N) (q : MvPolynomial (Fin N × Fin N) ℂ) :
+    MvPolynomial (Fin N × Fin N) ℂ →ₗ[ℂ] ℂ where
+  toFun p := normFock lam p q
+  map_add' p p' := by
+    simp only [normFock]
+    rw [cf_add_left, add_div]
+  map_smul' c p := by
+    simp only [normFock, RingHom.id_apply, smul_eq_mul]
+    rw [cf_smul_left, mul_div_assoc]
+
+theorem cf_Blin_apply {N : ℕ} (lam : DomWeight N) (p q : MvPolynomial (Fin N × Fin N) ℂ) :
+    Blin lam q p = normFock lam p q := rfl
+
+theorem cf_herm {N : ℕ} (lam : DomWeight N) (p q : MvPolynomial (Fin N × Fin N) ℂ) :
+    normFock lam q p = star (normFock lam p q) := by
+  unfold normFock
+  rw [Formalism.GradedWeylDivisibility.fockHerm, star_div₀]
+  congr 1
+  have h := (cf_F lam).1
+  apply Complex.ext
+  · simp
+  · simp [h]
+
+theorem normFock_self_ne_zero {N : ℕ} (lam : DomWeight N) (p : MvPolynomial (Fin N × Fin N) ℂ) (hp : p ≠ 0) :
+    normFock lam p p ≠ 0 := by
+  unfold normFock
+  refine div_ne_zero ?_ (cf_F_ne lam)
+  intro h0
+  have h1 := (Formalism.GradedWeylDivisibility.fockPos _ p hp).1
+  rw [h0, Complex.zero_re] at h1
+  exact lt_irrefl _ h1
+
+theorem cf_adj {N : ℕ} (lam : DomWeight N) (g : Matrix (Fin N) (Fin N) ℂ)
+    (p q : MvPolynomial (Fin N × Fin N) ℂ) :
+    normFock lam (Formalism.GradedWeylDivisibility.rowAct ℂ g p) q = normFock lam p (Formalism.GradedWeylDivisibility.rowAct ℂ g.conjTranspose q) := by
+  unfold normFock
+  rw [Formalism.GradedWeylDivisibility.fockRowAdj]
+
+theorem cf_ee {N : ℕ} (lam : DomWeight N) : normFock lam (extremal ℂ N lam) (extremal ℂ N lam) = 1 := by
+  unfold normFock
+  exact div_self (cf_F_ne lam)
+
+end PI.WSF
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.CrRowActRowAct
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WSF
+
+open Formalism.BasicNotions MvPolynomial
+
+theorem cr_rowAct_X {N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) (w : Fin N × Fin N) :
+    Formalism.GradedWeylDivisibility.rowAct ℂ g (X w : MvPolynomial (Fin N × Fin N) ℂ) = ∑ b : Fin N, C (g w.1 b) * X (b, w.2) := by
+  simp [Formalism.GradedWeylDivisibility.rowAct]
+
+theorem cr_rowAct_C {N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) (a : ℂ) :
+    Formalism.GradedWeylDivisibility.rowAct ℂ g (C a : MvPolynomial (Fin N × Fin N) ℂ) = C a :=
+  (Formalism.GradedWeylDivisibility.rowAct ℂ g).commutes a
+
+theorem cr_evalM_rowAct {N : ℕ} (g x : Matrix (Fin N) (Fin N) ℂ) (s : MvPolynomial (Fin N × Fin N) ℂ) :
+    evalM x (Formalism.GradedWeylDivisibility.rowAct ℂ g s) = evalM (g * x) s := by
+  induction s using MvPolynomial.induction_on
+  next a =>
+    rw [cr_rowAct_C]
+    simp [evalM]
+  next p q hp hq =>
+    simp only [map_add (f := _), evalM] at hp hq ⊢
+    rw [hp, hq]
+  next p v hp =>
+    simp only [evalM, map_mul] at hp ⊢
+    rw [hp, cr_rowAct_X]
+    congr 1
+    simp [Matrix.mul_apply]
+
+theorem cr_rowAct_one {N : ℕ} (s : MvPolynomial (Fin N × Fin N) ℂ) :
+    Formalism.GradedWeylDivisibility.rowAct ℂ (1 : Matrix (Fin N) (Fin N) ℂ) s = s := by
+  have h : (Formalism.GradedWeylDivisibility.rowAct ℂ (1 : Matrix (Fin N) (Fin N) ℂ) :
+      MvPolynomial (Fin N × Fin N) ℂ →ₐ[ℂ] MvPolynomial (Fin N × Fin N) ℂ) = AlgHom.id ℂ _ := by
+    apply MvPolynomial.algHom_ext
+    intro w
+    rw [cr_rowAct_X]
+    simp [Matrix.one_apply]
+  rw [h]
+  rfl
+
+theorem cr_rowAct_rowAct {N : ℕ} (g h : Matrix (Fin N) (Fin N) ℂ) (s : MvPolynomial (Fin N × Fin N) ℂ) :
+    Formalism.GradedWeylDivisibility.rowAct ℂ g (Formalism.GradedWeylDivisibility.rowAct ℂ h s) = Formalism.GradedWeylDivisibility.rowAct ℂ (h * g) s := by
+  have hc : (Formalism.GradedWeylDivisibility.rowAct ℂ g).comp (Formalism.GradedWeylDivisibility.rowAct ℂ h) =
+      (Formalism.GradedWeylDivisibility.rowAct ℂ (h * g) : MvPolynomial (Fin N × Fin N) ℂ →ₐ[ℂ] MvPolynomial (Fin N × Fin N) ℂ) := by
+    apply MvPolynomial.algHom_ext
+    intro w
+
+    rw [AlgHom.comp_apply, cr_rowAct_X, map_sum, cr_rowAct_X]
+
+    simp only [map_mul, cr_rowAct_C, cr_rowAct_X, Matrix.mul_apply, map_sum, Finset.mul_sum, Finset.sum_mul,
+    mul_assoc]
+    exact Finset.sum_comm
+  rw [← hc, AlgHom.comp_apply]
+
+theorem cr_polyFun {N : ℕ} (s : MvPolynomial (Fin N × Fin N) ℂ) :
+    ∀ L : MvPolynomial (Fin N × Fin N) ℂ →ₗ[ℂ] ℂ, ∃ P : MvPolynomial (Fin N × Fin N) ℂ,
+      ∀ g : Matrix (Fin N) (Fin N) ℂ, L (Formalism.GradedWeylDivisibility.rowAct ℂ g s) = evalM g P := by
+  intro L
+  let Φ : MvPolynomial (Fin N × Fin N) ℂ →ₐ[ℂ]
+      MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N × Fin N) ℂ) :=
+    aeval fun v => ∑ b : Fin N, C (X (v.1, b) : MvPolynomial (Fin N × Fin N) ℂ) * X (b, v.2)
+  have hmap : ∀ g : Matrix (Fin N) (Fin N) ℂ,
+      MvPolynomial.map (MvPolynomial.eval fun v : Fin N × Fin N => g v.1 v.2) (Φ s) = Formalism.GradedWeylDivisibility.rowAct ℂ g s := by
+    intro g
+    induction s using MvPolynomial.induction_on
+    next a =>
+      rw [cr_rowAct_C]
+      simp [Φ]
+    next p q hp hq =>
+      simp only [map_add (f := _), hp, hq]
+    next p w hp =>
+      simp only [map_mul, hp, cr_rowAct_X]
+
+      simp only [Φ, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
+      MvPolynomial.eval_X]
+  have hmono : ∀ (m : Fin N × Fin N →₀ ℕ) (a : ℂ), L (monomial m a) = a * L (monomial m 1) := by
+    intro m a
+    calc L (monomial m a) = L (a • monomial m (1 : ℂ)) := by rw [smul_monomial, smul_eq_mul, mul_one]
+      _ = a * L (monomial m 1) := by rw [map_smul, smul_eq_mul]
+  refine ⟨∑ m ∈ (Φ s).support, (Φ s).coeff m * C (L (monomial m 1)), fun g => ?_⟩
+  rw [← hmap g]
+  conv_lhs => rw [(Φ s).as_sum]
+
+  simp only [map_sum, MvPolynomial.map_monomial, evalM, map_mul, MvPolynomial.eval_C]
+  exact Finset.sum_congr rfl fun m _ => hmono m _
+
+end PI.WSF
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SchurOrthogonality.ConstructionC
+
+section
 
 @[expose] public section
 
@@ -266,3 +465,6 @@ theorem schurOrth_of (h : PI.HwIrred) (hA : EvalOne) : SchurOrth := by
   rw [hss, hint, hdim, ← Complex.ofReal_natCast, ← Complex.ofReal_mul, Complex.ofReal_re]
 
 end PI.WSF
+end
+end
+end

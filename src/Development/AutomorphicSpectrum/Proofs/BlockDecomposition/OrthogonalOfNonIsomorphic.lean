@@ -9,10 +9,6 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFi
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsInvariantProjectionStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsOpenCompactSubgroupLeStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HaarRightInvariantStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralEqL2InnerStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieSkewAdjointBisStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RepresentationUnitaryAverageStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightTranslateIsometryStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -47,8 +43,146 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.Topology.Sheaves.Init
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.AllLeaves
+import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.IsSliceMap
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieSkewAdjointL2
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RepresentationUnitaryAverageStatement
+import Mathlib.Topology.Algebra.Star.Unitary
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralEqL2Inner
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+namespace GlobalTheory.CompanionTheory.FinDiscOrth
+
+theorem setIntegral_mul_conj_eq_inner : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N)) [μ.IsHaarMeasure] (F : Set (GA E N)), IsFundamentalDomain (latticeGL E N) F μ → ∀ x y : Sm E N, x ∈ squareIntegrableSmoothSubmoduleGL μ → y ∈ squareIntegrableSmoothSubmoduleGL μ → ∫ g in F, x.1 g * (starRingEnd ℂ) (y.1 g) ∂μ = ⟪l2Map μ y, l2Map μ x⟫_ℂ := by
+  intro E _ _ _ N μ _ F hF x y hx hy
+  rw [l2Map_apply μ hx, l2Map_apply μ hy, MemL2Quotient.inner_toL2_eq_theta_pairing, pet_eq hF ((mem_l2Sub μ).1 hx).1 ((mem_l2Sub μ).1 hy).1]
+
+end GlobalTheory.CompanionTheory.FinDiscOrth
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralEqL2InnerStatement
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+theorem _root_.GlobalTheory.T.integral_eq_l2_inner : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N)) [μ.IsHaarMeasure] (F : Set (GA E N)), IsFundamentalDomain (latticeGL E N) F μ → ∀ x y : Sm E N, x ∈ squareIntegrableSmoothSubmoduleGL μ → y ∈ squareIntegrableSmoothSubmoduleGL μ → ∫ g in F, x.1 g * (starRingEnd ℂ) (y.1 g) ∂μ = ⟪l2Map μ y, l2Map μ x⟫_ℂ := by
+  first | exact @GlobalTheory.CompanionTheory.FinDiscOrth.setIntegral_mul_conj_eq_inner | exact GlobalTheory.CompanionTheory.FinDiscOrth.setIntegral_mul_conj_eq_inner | (intros; apply GlobalTheory.CompanionTheory.FinDiscOrth.setIntegral_mul_conj_eq_inner <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieSkewAdjointBis
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+namespace GlobalTheory.CompanionTheory.FinDiscOrth
+
+theorem lie_skew_l2Map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (X : Lie E N) (x y : Sm E N), Continuous x.1 → Continuous y.1 → Continuous (lie E N X x).1 → Continuous (lie E N X y).1 → x ∈ squareIntegrableSmoothSubmoduleGL μ → y ∈ squareIntegrableSmoothSubmoduleGL μ → lie E N X x ∈ squareIntegrableSmoothSubmoduleGL μ → lie E N X y ∈ squareIntegrableSmoothSubmoduleGL μ → ⟪l2Map μ x, l2Map μ (lie E N X y)⟫_ℂ = -⟪l2Map μ (lie E N X x), l2Map μ y⟫_ℂ := by
+  intro E _ _ _ N μ _ _ X x y cx cy cXx cXy hx hy hXx hXy
+  rw [l2Map_apply μ hx, l2Map_apply μ hy, l2Map_apply μ hXx, l2Map_apply μ hXy,
+    GlobalTheory.CompanionTheory.LieSkew.lie_skew E N μ X x y ((mem_l2Sub μ).1 hx) ((mem_l2Sub μ).1 hy)
+      ((mem_l2Sub μ).1 hXx) ((mem_l2Sub μ).1 hXy) cx cy cXx cXy, neg_neg]
+
+end GlobalTheory.CompanionTheory.FinDiscOrth
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieSkewAdjointBisStatement
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+theorem _root_.GlobalTheory.T.lie_skew_adjoint_l2' : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (X : Lie E N) (x y : Sm E N), Continuous x.1 → Continuous y.1 → Continuous (lie E N X x).1 → Continuous (lie E N X y).1 → x ∈ squareIntegrableSmoothSubmoduleGL μ → y ∈ squareIntegrableSmoothSubmoduleGL μ → lie E N X x ∈ squareIntegrableSmoothSubmoduleGL μ → lie E N X y ∈ squareIntegrableSmoothSubmoduleGL μ → ⟪l2Map μ x, l2Map μ (lie E N X y)⟫_ℂ = -⟪l2Map μ (lie E N X x), l2Map μ y⟫_ℂ := by
+  first | exact @GlobalTheory.CompanionTheory.FinDiscOrth.lie_skew_l2Map | exact GlobalTheory.CompanionTheory.FinDiscOrth.lie_skew_l2Map | (intros; apply GlobalTheory.CompanionTheory.FinDiscOrth.lie_skew_l2Map <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightTranslateIsometry
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.FinDiscOrth
+
+theorem rt_mem_l2Sub_and_inner_eq (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N))
+    [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (g : GA E N) (x y : Sm E N) (hx : x ∈ squareIntegrableSmoothSubmoduleGL μ) (hy : y ∈ squareIntegrableSmoothSubmoduleGL μ) :
+    rt E N g x ∈ squareIntegrableSmoothSubmoduleGL μ ∧ ⟪l2Map μ (rt E N g x), l2Map μ (rt E N g y)⟫_ℂ = ⟪l2Map μ x, l2Map μ y⟫_ℂ := by
+  have key : ∀ z : Sm E N, ∀ hz : z ∈ squareIntegrableSmoothSubmoduleGL μ, ∃ h' : rt E N g z ∈ squareIntegrableSmoothSubmoduleGL μ,
+      l2Map μ (rt E N g z) = R (latticeGL E N) μ g (l2Map μ z) := by
+    intro z hz
+    have h' : rt E N g z ∈ squareIntegrableSmoothSubmoduleGL μ := ((mem_l2Sub μ).1 hz).mul_right g
+    refine ⟨h', ?_⟩
+    rw [l2Map_apply μ h', l2Map_apply μ hz, right_translate_toL2]
+    rfl
+  obtain ⟨hx', ex⟩ := key x hx
+  obtain ⟨hy', ey⟩ := key y hy
+  refine ⟨hx', ?_⟩
+  let U : L2 (latticeGL E N) μ →ₗᵢ[ℂ] L2 (latticeGL E N) μ :=
+    ⟨(R (latticeGL E N) μ g).toLinearMap, norm_R g⟩
+  rw [ex, ey]
+  exact U.inner_map_map _ _
+
+end GlobalTheory.CompanionTheory.FinDiscOrth
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightTranslateIsometryStatement
+
+section
+
+@[expose] public section
+
+open scoped Classical InnerProductSpace ComplexConjugate
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB.SpectralAccumulation GlobalTheory.AutomorphicL2Unitary GlobalTheory.SqIntGL
+open scoped GlobalTheory.CuspRep.CuspidalL2GL
+
+theorem _root_.GlobalTheory.T.right_translate_isometry : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (g : GA E N) (x y : Sm E N), x ∈ squareIntegrableSmoothSubmoduleGL μ → y ∈ squareIntegrableSmoothSubmoduleGL μ → rt E N g x ∈ squareIntegrableSmoothSubmoduleGL μ ∧ ⟪l2Map μ (rt E N g x), l2Map μ (rt E N g y)⟫_ℂ = ⟪l2Map μ x, l2Map μ y⟫_ℂ := by
+  first | exact @GlobalTheory.CompanionTheory.FinDiscOrth.rt_mem_l2Sub_and_inner_eq | exact GlobalTheory.CompanionTheory.FinDiscOrth.rt_mem_l2Sub_and_inner_eq | (intros; apply GlobalTheory.CompanionTheory.FinDiscOrth.rt_mem_l2Sub_and_inner_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrthogonalOfNonIsomorphic
+
+section
 
 @[expose] public section
 
@@ -239,4 +373,6 @@ theorem GlobalTheory.CompanionTheory.FinDisc.integral_eq_zero_of_not_isoV :
   by_contra hne
   exact hno (isoV_of_ne μ hV hV' hφ hψ hne)
 
+end
+end
 end

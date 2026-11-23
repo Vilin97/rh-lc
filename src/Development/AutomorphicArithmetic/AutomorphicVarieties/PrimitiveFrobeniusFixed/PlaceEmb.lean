@@ -2,17 +2,6 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.IsAdmissiblePrimeListNil
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.KummerTheory.PlaceDict
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.AdmissiblePrimeNotDvdOrderOfAndNotDvdLevel
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.AlgStep
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.NormCyclotomicPrimeLayerEqNrmGenerator
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.PlaceBasic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.RelNormCyclotomicPrimeEqPowDvdOrderOf
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationComapIsEquivOfLtOneIffMemPrime
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationKummerElementAtConjugatePrime
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationKummerElementEqOneOfNotOver
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XEx
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XMulConjIMul
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XNormDiv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +18,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,6 +37,189 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.AlgStep
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.NormCyclotomicPrimeLayerEqNrmGenerator
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.PlaceBasic
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.StickelbergerAt
+import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZeroMemUnrHom
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.IsAdmissiblePrimeListNil
+import Formalism.ConjugateSelfDual.Statement
+import Formalism.GaloisCohomology.Statement
+import ReciprocityTheory.GaloisValuations.GlobalA
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationComapIsEquivOfLtOneIffMemPrime
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationKummerElementAtConjugatePrime
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.ValuationKummerElementEqOneOfNotOver
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.DegOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.ImportsBis
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.ImportsTer
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.RedRoot
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XJacPowNe
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XMulConjIMul
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XMulConjIMul
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XNormDiv
+import Mathlib.RingTheory.WittVector.IsPoly
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.AdmissiblePrimeNotDvdOrderOfAndNotDvdLevel
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.Base UpperTheory.V.Odd UpperTheory.V.Stick UpperTheory.V.ML
+open scoped nonZeroDivisors Pointwise
+
+theorem UpperTheory.admissible_prime_not_dvd_orderOf_and_not_dvd_level :
+    ∀ (l F r d : ℕ), F ≠ 0 → l.Prime → r.Prime → r ≡ 1 [MOD F] → ML.admitted l F r d → ¬ l ∣ orderOf (r : ZMod (F * d)) ∧ ¬ r ∣ F * d := by
+  intro l F r d _ hl hr hrF hd
+  obtain ⟨hsq, hq⟩ := hd
+  have hone : ∀ p : ℕ, p.Prime → p ≡ 1 [MOD F] → ¬ p ∣ F := fun p hp h hpF => by
+    have h1 : p ≡ 1 [MOD p] := h.of_dvd hpF
+    have h2 : p ∣ 1 := (h1.dvd_iff dvd_rfl).1 dvd_rfl
+    exact hp.one_lt.ne' (Nat.dvd_one.1 h2)
+  refine ⟨?_, ?_⟩
+  · set n := ∏ q ∈ d.primeFactors, orderOf (r : ZMod q) with hn
+    have hln : ¬ l ∣ n := by
+      intro h
+      obtain ⟨q, hqm, hlq⟩ := (Prime.dvd_finsetProd_iff hl.prime _).1 h
+      exact (hq q (Nat.prime_of_mem_primeFactors hqm) (Nat.dvd_of_mem_primeFactors hqm)).2.2.2 hlq
+    have hcop : Nat.Coprime F d := by
+      apply Nat.coprime_of_dvd
+      intro k hk hkF hkd
+      exact hone k hk (hq k hk hkd).2.1 hkF
+    have hpos : 1 ≤ r ^ n := Nat.one_le_pow _ _ hr.pos
+    have hF : r ^ n ≡ 1 [MOD F] := by simpa using hrF.pow n
+    have hD : r ^ n ≡ 1 [MOD d] := by
+      have h1 : ∏ q ∈ d.primeFactors, q ∣ r ^ n - 1 := by
+        apply Finset.prod_primes_dvd
+        · intro a ha
+          exact (Nat.prime_of_mem_primeFactors ha).prime
+        · intro a ha
+          have h2 : (r : ZMod a) ^ n = 1 :=
+            orderOf_dvd_iff_pow_eq_one.1 (Finset.dvd_prod_of_mem (fun q : ℕ => orderOf (r : ZMod q)) ha)
+          have h3 : r ^ n ≡ 1 [MOD a] := by
+            rw [← ZMod.natCast_eq_natCast_iff]
+            simpa using h2
+          exact (Nat.modEq_iff_dvd' hpos).1 h3.symm
+      rw [Nat.prod_primeFactors_of_squarefree hsq] at h1
+      exact ((Nat.modEq_iff_dvd' hpos).2 h1).symm
+    have hFD : r ^ n ≡ 1 [MOD F * d] := (Nat.modEq_and_modEq_iff_modEq_mul hcop).1 ⟨hF, hD⟩
+    have h4 : (r : ZMod (F * d)) ^ n = 1 := by
+      have := (ZMod.natCast_eq_natCast_iff _ _ _).2 hFD
+      simpa using this
+    exact fun h => hln (h.trans (orderOf_dvd_of_pow_eq_one h4))
+  · intro h
+    rcases (Nat.Prime.dvd_mul hr).1 h with h | h
+    · exact hone r hr hrF h
+    · exact (hq r hr h).2.2.1 rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.RelNormCyclotomicPrimeEqPowDvdOrderOf
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.Base UpperTheory.V.Odd UpperTheory.V.Stick UpperTheory.V.ML
+open scoped nonZeroDivisors Pointwise
+
+theorem UpperTheory.relNorm_cyclotomic_prime_eq_pow_dvd_orderOf :
+    ∀ (N r : ℕ) [NeZero N] (K K' : Type) [Field K] [NumberField K] [Field K'] [NumberField K'] [IsCyclotomicExtension {N} ℚ K'] [Algebra K K'], r.Prime → ¬ r ∣ N → ∀ (v : HeightOneSpectrum (𝓞 K)) (v' : HeightOneSpectrum (𝓞 K')), (r : 𝓞 K') ∈ v'.asIdeal → (∀ y : 𝓞 K, algebraMap (𝓞 K) (𝓞 K') y ∈ v'.asIdeal ↔ y ∈ v.asIdeal) → ∃ s : ℕ, s ∣ orderOf (r : ZMod N) ∧ Ideal.relNorm (𝓞 K) v'.asIdeal = v.asIdeal ^ s := by
+  intro N r _ K K' _ _ _ _ _ _ hp hN v v' hr hvv
+  have : Fact r.Prime := ⟨hp⟩
+  have hvp : v'.asIdeal.IsPrime := v'.isPrime
+  have hm : v.asIdeal.IsMaximal := v.isMaximal
+  have hm' : v'.asIdeal.IsMaximal := v'.isMaximal
+  have hmax : (Ideal.span {(r : ℤ)}).IsMaximal :=
+    PrincipalIdealRing.isMaximal_of_irreducible (Nat.prime_iff_prime_int.mp hp).irreducible
+  have hlo : v'.asIdeal.LiesOver (Ideal.span {(r : ℤ)}) := by
+    refine ⟨hmax.eq_of_le (Ideal.IsPrime.ne_top inferInstance) ?_⟩
+    rw [Ideal.span_singleton_le_iff_mem, Ideal.under_def, Ideal.mem_comap, map_natCast]
+    exact hr
+  have hl2 : v'.asIdeal.LiesOver v.asIdeal := ⟨by
+    ext y
+    rw [Ideal.under_def, Ideal.mem_comap]
+    exact (hvv y).symm⟩
+  have h3 := Ideal.inertiaDeg_tower (R := ℤ) v.asIdeal v'.asIdeal
+  rw [IsCyclotomicExtension.Rat.inertiaDeg_eq_of_not_dvd r K' v'.asIdeal hN] at h3
+  refine ⟨v'.asIdeal.inertiaDeg (𝓞 K), ?_, ?_⟩
+  · rw [h3]; exact Dvd.intro_left _ rfl
+  · exact Ideal.relNorm_eq_pow_of_isMaximal v'.asIdeal v.asIdeal
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.XEx
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.Base UpperTheory.V.Odd UpperTheory.V.Stick UpperTheory.V.ML
+open scoped nonZeroDivisors Pointwise
+
+theorem UpperTheory.V.ML.xEx :
+    ∀ (M : ℕ) [NeZero M] (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {M} ℚ K] (b : ℕ) (𝔞 : Ideal (𝓞 K)), b < M → 𝔞 ≠ ⊥ → ∃ X : K, IsX M K b 𝔞 X := by
+  intro M _ K _ _ _ b 𝔞 hb h𝔞
+  have h𝔞0 : 𝔞 ∈ (Ideal (𝓞 K))⁰ := mem_nonZeroDivisors_of_ne_zero h𝔞
+  set S : Set (HeightOneSpectrum (𝓞 K)) := {v | v.asIdeal ∣ Ideal.span {((M : ℕ) : 𝓞 K)}}
+  have hM0 : Ideal.span {((M : ℕ) : 𝓞 K)} ≠ 0 := by
+    rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
+    exact_mod_cast NeZero.ne M
+  have hS : S.Finite := Ideal.finite_factors hM0
+  obtain ⟨v, hvS, hprime, hvc⟩ := degOne K S hS (ClassGroup.mk0 ⟨𝔞, h𝔞0⟩)⁻¹
+  haveI : Fact (Ideal.absNorm v.asIdeal).Prime := ⟨hprime⟩
+  obtain ⟨π, hπ⟩ := (red K (Ideal.absNorm v.asIdeal) v.asIdeal).1 rfl
+  have hpv := ((red K (Ideal.absNorm v.asIdeal) v.asIdeal).2 π hπ).2.2.2
+  have hcop : (Ideal.absNorm v.asIdeal).Coprime M := by
+    rw [Nat.Prime.coprime_iff_not_dvd hprime]
+    rintro ⟨k, hk⟩
+    apply hvS
+    show v.asIdeal ∣ _
+    rw [Ideal.dvd_iff_le, Ideal.span_singleton_le_iff_mem, hk, Nat.cast_mul]
+    exact Ideal.mul_mem_right _ _ hpv
+  have hζ := (IsCyclotomicExtension.zeta_spec M ℚ K).toInteger_isPrimitiveRoot
+  obtain ⟨hπζ, hdvd⟩ := redRoot (𝓞 K) _ π M _ hcop hζ
+  obtain ⟨χ, hχ, -⟩ := teich (𝓞 K) _ π M ((Ideal.absNorm v.asIdeal - 1) / M) _ hζ hπζ (Nat.mul_div_cancel' hdvd)
+  have hXv := xJac M K b _ π χ hcop hb hχ
+  rw [hπ] at hXv
+  have hv0 : v.asIdeal ∈ (Ideal (𝓞 K))⁰ := mem_nonZeroDivisors_of_ne_zero v.ne_bot
+  have hprin : (𝔞 * v.asIdeal).IsPrincipal := by
+    rw [← ClassGroup.mk0_eq_one_iff (mul_mem h𝔞0 hv0)]
+    have hm : ClassGroup.mk0 ⟨𝔞 * v.asIdeal, mul_mem h𝔞0 hv0⟩ =
+        ClassGroup.mk0 ⟨𝔞, h𝔞0⟩ * ClassGroup.mk0 ⟨v.asIdeal, hv0⟩ := by
+      rw [← map_mul]
+      rfl
+    rw [hm]
+    change _ * UpperTheory.V.Kum.primeCl v = 1
+    rw [hvc, mul_inv_cancel]
+  obtain ⟨y, hy⟩ := hprin
+  have hy' : Ideal.span {y} = 𝔞 * v.asIdeal := hy.symm
+  have hy0 : y ≠ 0 := by
+    rintro rfl
+    rw [Ideal.span_singleton_eq_bot.2 rfl] at hy'
+    exact (mul_ne_zero h𝔞 v.ne_bot) hy'.symm
+  have hXy := (xMul M K b).2.2.2.2 y hy0
+  rw [hy'] at hXy
+  exact ⟨_, (xMul M K b).2.1 𝔞 v.asIdeal _ _ h𝔞 v.ne_bot hXy hXv⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFrobeniusFixed.PlaceEmb
+
+section
 
 @[expose] public section
 
@@ -270,3 +440,5 @@ theorem UpperTheory.V.ML.laxEx :
   have h := hX 1 one_ne_zero
   rw [mul_one] at h
   exact xo_ord hr h1 hA h
+end
+end

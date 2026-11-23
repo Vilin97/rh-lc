@@ -3,14 +3,10 @@ module
 public import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.InvariantSubspaceMobiusInverseRecEqOfFinrankLt
 public import Mathlib.RingTheory.Coalgebra.IsFrobenius
 public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.CardSubspacesMulGeneralLinearGroupCardStatement
-public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.CharpolyBlockAndInvariantUnderStabilizerNilradicStatement
-public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.EndomorphismMassEqOfLinearEquivInvariantStatement
-public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.FinsumSubspaceStabilizerMulBlockFunctionsStatement
+public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.CardSubspacesOfFinrankMulCardBasesStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -21,17 +17,13 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Card
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,7 +45,200 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.CharpolyBlockAndInvariantUnderStabilizerNilradicStatement
+public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.EndomorphismMassEqOfLinearEquivInvariantStatement
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.InvariantSubspaceMobiusInverseRecEqOfFinrankLt
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import Mathlib.Algebra.BigOperators.Field
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CharacterTheory.CardSubspacesMulGeneralLinearGroupCard
+
+section
+
+@[expose] public section
+
+open Polynomial GlobalTheory.CuspGL
+
+namespace GlobalTheory.CuspGL
+
+theorem card_GL_eq_prod_range (F : Type) [Field F] [Finite F] (n : ℕ) :
+    Nat.card (GL (Fin n) F) = ∏ i ∈ Finset.range n, (Nat.card F ^ n - Nat.card F ^ i) := by
+  classical
+  haveI := Fintype.ofFinite F
+  rw [Matrix.card_GL_field, Nat.card_eq_fintype_card,
+    ← Fin.prod_univ_eq_prod_range (fun i => Fintype.card F ^ n - Fintype.card F ^ i)]
+
+theorem card_subspaces_mul_glCard : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V] [FiniteDimensional F V] (a : ℕ), a ≤ Module.finrank F V → (Nat.card {W : Submodule F V // Module.finrank F W = a} : ℂ) * (Nat.card F : ℂ) ^ (a * (Module.finrank F V - a)) * glCard F a * glCard F (Module.finrank F V - a) = glCard F (Module.finrank F V) := by
+  intro F _ _ V _ _ _ a ha
+  have h := GlobalTheory.T.card_subspaces_of_finrank_mul_card_bases F V a ha
+  obtain ⟨b, hb⟩ := Nat.exists_eq_add_of_le ha
+  have hb' : Module.finrank F V - a = b := by omega
+  rw [hb']
+  rw [hb] at h ⊢
+  unfold glCard
+  rw [card_GL_eq_prod_range, card_GL_eq_prod_range, card_GL_eq_prod_range]
+  have key : Nat.card {W : Submodule F V // Module.finrank F W = a} * Nat.card F ^ (a * b) *
+      (∏ i ∈ Finset.range a, (Nat.card F ^ a - Nat.card F ^ i)) *
+      (∏ i ∈ Finset.range b, (Nat.card F ^ b - Nat.card F ^ i)) =
+      ∏ i ∈ Finset.range (a + b), (Nat.card F ^ (a + b) - Nat.card F ^ i) := by
+    rw [Finset.prod_range_add, ← h]
+    have h2 : ∏ i ∈ Finset.range b, (Nat.card F ^ (a + b) - Nat.card F ^ (a + i)) =
+        Nat.card F ^ (a * b) * ∏ i ∈ Finset.range b, (Nat.card F ^ b - Nat.card F ^ i) := by
+      simp only [pow_add, ← Nat.mul_sub, Finset.prod_mul_distrib, Finset.prod_const,
+        Finset.card_range, pow_mul]
+    rw [h2]
+    ring
+  exact_mod_cast key
+
+end GlobalTheory.CuspGL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CharacterTheory.CardSubspacesMulGeneralLinearGroupCardStatement
+
+section
+
+@[expose] public section
+
+open Polynomial GlobalTheory.CuspGL
+
+theorem _root_.GlobalTheory.T.card_subspaces_mul_generalLinearGroupCard : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V] [FiniteDimensional F V] (a : ℕ), a ≤ Module.finrank F V → (Nat.card {W : Submodule F V // Module.finrank F W = a} : ℂ) * (Nat.card F : ℂ) ^ (a * (Module.finrank F V - a)) * glCard F a * glCard F (Module.finrank F V - a) = glCard F (Module.finrank F V) := by
+  first | exact @GlobalTheory.CuspGL.card_subspaces_mul_glCard | exact GlobalTheory.CuspGL.card_subspaces_mul_glCard | (intros; apply GlobalTheory.CuspGL.card_subspaces_mul_glCard <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CharacterTheory.FinsumSubspaceStabilizerMulBlockFunctions
+
+section
+
+@[expose] public section
+
+open Polynomial GlobalTheory.CuspGL
+
+namespace GlobalTheory.CuspGL
+
+theorem finsum_stabiliser_mul_blocks (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V]
+    [Module F V] [FiniteDimensional F V] (W : Submodule F V) (Φ : Module.End F W → ℂ)
+    (Φ' : Module.End F (V ⧸ W) → ℂ) :
+    ∑ᶠ g : {g : Module.End F V // ∀ x ∈ W, g x ∈ W},
+        Φ (g.1.restrict g.2) * Φ' (W.mapQ W g.1 (fun x hx => g.2 x hx)) =
+      (Nat.card F : ℂ) ^ (Module.finrank F W * Module.finrank F (V ⧸ W)) *
+        ((∑ᶠ a, Φ a) * ∑ᶠ b, Φ' b) := by
+  classical
+  obtain ⟨s, hs⟩ := W.mkQ.exists_rightInverse_of_surjective W.range_mkQ
+  have hs' : ∀ y, W.mkQ (s y) = y := fun y => LinearMap.congr_fun hs y
+  have hmem : ∀ x : V, (LinearMap.id - s ∘ₗ W.mkQ : V →ₗ[F] V) x ∈ W := by
+    intro x
+    rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply]
+    simp only [LinearMap.sub_apply, LinearMap.id_apply, LinearMap.comp_apply, map_sub, hs',
+      sub_self]
+  let p : V →ₗ[F] W := LinearMap.codRestrict W _ hmem
+  have hp : ∀ x : V, (p x : V) = x - s (W.mkQ x) := fun x => rfl
+  have hπ : ∀ x : W, W.mkQ (x : V) = 0 := fun x => by
+    rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]; exact x.2
+  have hpι : ∀ x : W, p (x : V) = x := fun x => Subtype.ext (by rw [hp, hπ, map_zero, sub_zero])
+  have hps : ∀ y, p (s y) = 0 := fun y => Subtype.ext (by rw [hp, hs', sub_self]; rfl)
+  let G : Module.End F W × Module.End F (V ⧸ W) × ((V ⧸ W) →ₗ[F] W) → Module.End F V :=
+    fun t => W.subtype ∘ₗ t.1 ∘ₗ p + s ∘ₗ t.2.1 ∘ₗ W.mkQ + W.subtype ∘ₗ t.2.2 ∘ₗ W.mkQ
+  have hG : ∀ t x, G t x = (t.1 (p x) : V) + s (t.2.1 (W.mkQ x)) + (t.2.2 (W.mkQ x) : V) :=
+    fun t x => rfl
+  have hGι : ∀ t (x : W), G t x = (t.1 x : V) := by
+    intro t x
+    rw [hG, hpι, hπ]; simp
+  have hGW : ∀ t, ∀ x ∈ W, G t x ∈ W := by
+    intro t x hx
+    rw [hGι t ⟨x, hx⟩]; exact (t.1 _).2
+  have h1 : ∀ t, (G t).restrict (hGW t) = t.1 := by
+    intro t
+    ext x
+    rw [LinearMap.restrict_coe_apply, hGι]
+  have h2 : ∀ t, W.mapQ W (G t) (fun x hx => hGW t x hx) = t.2.1 := by
+    intro t
+    apply Submodule.linearMap_qext
+    ext x
+    simp only [LinearMap.comp_apply]
+    rw [Submodule.mkQ_apply, Submodule.mapQ_apply, ← Submodule.mkQ_apply, hG, map_add (f := _), map_add (f := _),
+      hπ, hπ, hs', zero_add, add_zero, Submodule.mkQ_apply]
+  have h3 : ∀ t, p ∘ₗ G t ∘ₗ s = t.2.2 := by
+    intro t
+    refine LinearMap.ext fun y => ?_
+    simp only [LinearMap.comp_apply]
+    rw [hG, hps, hs', map_add (f := _), map_add (f := _), hps, hpι, hpι, map_zero, zero_add, zero_add]
+  let e : (Module.End F W × Module.End F (V ⧸ W) × ((V ⧸ W) →ₗ[F] W)) ≃
+      {g : Module.End F V // ∀ x ∈ W, g x ∈ W} :=
+    { toFun := fun t => ⟨G t, hGW t⟩
+      invFun := fun g => (g.1.restrict g.2, W.mapQ W g.1 (fun x hx => g.2 x hx), p ∘ₗ g.1 ∘ₗ s)
+      left_inv := fun t => Prod.ext (h1 t) (Prod.ext (h2 t) (h3 t))
+      right_inv := by
+        intro g
+        refine Subtype.ext (LinearMap.ext fun x => ?_)
+        show G _ x = _
+        rw [hG]
+        simp only [LinearMap.restrict_coe_apply, LinearMap.comp_apply]
+        have hq : W.mapQ W g.1 (fun x hx => g.2 x hx) (W.mkQ x) = W.mkQ (g.1 (s (W.mkQ x))) := by
+          conv_lhs => rw [← hs' (W.mkQ x)]
+          rfl
+        rw [hq, hp, hp, map_sub]
+        abel }
+  haveI : Finite V := Module.finite_of_finite F
+  haveI : Finite (Module.End F W) := Module.finite_of_finite F
+  haveI : Finite (Module.End F (V ⧸ W)) := Module.finite_of_finite F
+  haveI : Finite ((V ⧸ W) →ₗ[F] W) := Module.finite_of_finite F
+  haveI := Fintype.ofFinite (Module.End F W)
+  haveI := Fintype.ofFinite (Module.End F (V ⧸ W))
+  haveI := Fintype.ofFinite ((V ⧸ W) →ₗ[F] W)
+  have hcard : Fintype.card ((V ⧸ W) →ₗ[F] W) =
+      Nat.card F ^ (Module.finrank F W * Module.finrank F (V ⧸ W)) := by
+    rw [← Nat.card_eq_fintype_card, Module.natCard_eq_pow_finrank (K := F),
+      Module.finrank_linearMap, mul_comm]
+  rw [← finsum_comp_equiv e]
+  have : ∀ t, Φ ((e t).1.restrict (e t).2) * Φ' (W.mapQ W (e t).1 (fun x hx => (e t).2 x hx))
+      = Φ t.1 * Φ' t.2.1 := by
+    intro t
+    show Φ ((G t).restrict (hGW t)) * Φ' (W.mapQ W (G t) (fun x hx => hGW t x hx)) = _
+    rw [h1, h2]
+  rw [finsum_congr this, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype,
+    finsum_eq_sum_of_fintype, Fintype.sum_prod_type, Finset.sum_mul_sum, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [Fintype.sum_prod_type, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun b _ => ?_
+  simp only [Finset.sum_const, Finset.card_univ, hcard, nsmul_eq_mul, Nat.cast_pow]
+
+end GlobalTheory.CuspGL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CharacterTheory.FinsumSubspaceStabilizerMulBlockFunctionsStatement
+
+section
+
+@[expose] public section
+
+open Polynomial GlobalTheory.CuspGL
+
+theorem _root_.GlobalTheory.T.finsum_subspaceStabilizer_mul_block_functions : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V] [FiniteDimensional F V] (W : Submodule F V) (Φ : Module.End F W → ℂ) (Φ' : Module.End F (V ⧸ W) → ℂ), ∑ᶠ g : {g : Module.End F V // ∀ x ∈ W, g x ∈ W}, Φ (g.1.restrict g.2) * Φ' (W.mapQ W g.1 (fun x hx => g.2 x hx)) = (Nat.card F : ℂ) ^ (Module.finrank F W * Module.finrank F (V ⧸ W)) * ((∑ᶠ a, Φ a) * ∑ᶠ b, Φ' b) := by
+  first | exact @GlobalTheory.CuspGL.finsum_stabiliser_mul_blocks | exact GlobalTheory.CuspGL.finsum_stabiliser_mul_blocks | (intros; apply GlobalTheory.CuspGL.finsum_stabiliser_mul_blocks <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CharacterTheory.EndomorphismMassMulParabolicInductionTrivial
+
+section
 
 @[expose] public section
 
@@ -214,3 +400,5 @@ theorem mass_mult : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup
   ring
 
 end GlobalTheory.CuspGL.MassMult
+end
+end

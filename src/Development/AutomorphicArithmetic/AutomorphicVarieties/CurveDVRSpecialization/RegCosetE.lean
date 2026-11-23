@@ -4,7 +4,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpe
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.ExpSums
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.FullEx
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.SepOfMinors
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DiagonalEntries
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,20 +19,19 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +39,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,9 +51,62 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Henselian
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DiagonalEntries
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.DiagonalizeTwoByTwo.diagE :
+    ∀ {κ : Type} [inst : Field κ]
+    (M : Matrix (Fin (2 : ℕ)) (Fin (2 : ℕ)) κ) (α : Fin (2 : ℕ) → κ),
+    Function.Injective α →
+      M.charpoly = ∏ i : Fin (2 : ℕ), (Polynomial.X - (Polynomial.C : κ → Polynomial κ) (α i)) →
+        ∃ (P : GL (Fin (2 : ℕ)) κ),
+          M * (↑P : Matrix (Fin (2 : ℕ)) (Fin (2 : ℕ)) κ) =
+            (↑P : Matrix (Fin (2 : ℕ)) (Fin (2 : ℕ)) κ) * Matrix.diagonal α := by
+  intro κ _ M α hα h
+  classical
+  have hv : ∀ i : Fin 2, ∃ v : Fin 2 → κ, v ≠ 0 ∧ M.mulVec v = α i • v := by
+    intro i
+    have h0 : (Matrix.scalar (Fin 2) (α i) - M).det = 0 := by
+      rw [← Matrix.eval_charpoly, h, Polynomial.eval_prod]
+      exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp)
+    obtain ⟨v, hv0, hv⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0
+    refine ⟨v, hv0, ?_⟩
+    rw [Matrix.sub_mulVec, sub_eq_zero] at hv
+    rw [← hv]
+    ext j
+    simp [Matrix.mulVec_diagonal]
+  choose v hv0 hv using hv
+  have hli : LinearIndependent κ v :=
+    Module.End.eigenvectors_linearIndependent' (Matrix.toLin' M) α hα v fun i =>
+      ⟨Module.End.mem_eigenspace_iff.2 (by simpa using hv i), hv0 i⟩
+  have hu : IsUnit (Matrix.of v).transpose :=
+    Matrix.linearIndependent_cols_iff_isUnit.1 hli
+  refine ⟨hu.unit, ?_⟩
+  rw [IsUnit.unit_spec]
+  ext j i
+  have := congrFun (hv i) j
+  rw [Matrix.mul_diagonal]
+  simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm] using this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.RegCosetE
+
+section
 
 @[expose] public section
 
@@ -243,3 +295,5 @@ theorem UpperTheory.V.Pr.regCosetE :
   rw [← Matrix.charpoly_units_conj P⁻¹]
   congr 1
   simp [gm, Matrix.mul_assoc]
+end
+end

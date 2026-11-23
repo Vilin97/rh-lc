@@ -3,11 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitDetOfIsOrth
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EmbGLMemRealSU
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainPointBound
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorusAnglesOfUnimodularProdOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasStrictFDerivAtDiagonalTorusZeroStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusElementConjugatedByFrameMemSpecialUnitaryStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusTangentMemSpecialUnitaryLieDiagonalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UpperTriangularSignFormDiagonalUnimodularStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PhaseFrame
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,11 +21,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,7 +46,227 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitDetOfIsOrth
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EmbGLMemRealSU
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusElementConjugatedByFrameMemSpecialUnitaryStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusTangentMemSpecialUnitaryLieDiagonalStatement
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PhaseFrame
+public import Mathlib.LinearAlgebra.Matrix.Block
+import Mathlib.RingTheory.PiTensorProduct
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorusAnglesOfUnimodularProdOne
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+namespace GlobalTheory.TorusAngles
+
+theorem exp_I_arg {w : ℂ} (hw : ‖w‖ = 1) : Complex.exp (Complex.I * (Complex.arg w : ℂ)) = w := by
+  have h := Complex.norm_mul_exp_arg_mul_I w
+  rw [hw] at h
+  simpa [mul_comm] using h
+
+theorem exp_neg_I_arg {w : ℂ} (hw : ‖w‖ = 1) : Complex.exp (-(Complex.I * (Complex.arg w : ℂ))) = w⁻¹ := by
+  rw [Complex.exp_neg, exp_I_arg hw]
+
+theorem exists_angles_of_prod_eq_one : ∀ (r : ℕ) (z : Fin r → ℂ), (∀ a, ‖z a‖ = 1) → ∏ a, z a = 1 →
+    ∃ φ : Fin (r - 1) → ℝ, ∀ a, Complex.exp (Complex.I * (angles φ a : ℂ)) = z a := by
+  intro r z hz hp
+  rcases r with _ | n
+  · exact ⟨fun _ => 0, fun a => a.elim0⟩
+  · refine ⟨fun k => Complex.arg (z ⟨k, by omega⟩), fun a => ?_⟩
+    unfold angles
+    split_ifs with h
+    · exact exp_I_arg (hz _)
+    · have ha : a = Fin.last n := by ext; simp at h ⊢; omega
+      subst ha
+      rw [Fin.prod_univ_castSucc] at hp
+      have hlast : z (Fin.last n) = (∏ k : Fin n, z k.castSucc)⁻¹ := by
+        exact eq_inv_of_mul_eq_one_right hp
+      rw [hlast, Complex.ofReal_neg, Complex.ofReal_sum, mul_neg, Finset.mul_sum, ← Finset.sum_neg_distrib,
+        Complex.exp_sum, ← Finset.prod_inv_distrib]
+      show ∏ k : Fin n, Complex.exp (-(Complex.I * (Complex.arg (z ⟨k, _⟩) : ℂ))) = _
+      refine Finset.prod_congr rfl fun k _ => ?_
+      rw [exp_neg_I_arg (hz _)]
+      rfl
+
+end GlobalTheory.TorusAngles
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorusAnglesOfUnimodularProdOneStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+theorem _root_.GlobalTheory.T.exists_torusAngles_of_unimodular_prod_one : ∀ (r : ℕ) (z : Fin r → ℂ), (∀ a, ‖z a‖ = 1) → ∏ a, z a = 1 → ∃ φ : Fin (r - 1) → ℝ, ∀ a, Complex.exp (Complex.I * (angles φ a : ℂ)) = z a := by
+  first | exact @GlobalTheory.TorusAngles.exists_angles_of_prod_eq_one | exact GlobalTheory.TorusAngles.exists_angles_of_prod_eq_one | (intros; apply GlobalTheory.TorusAngles.exists_angles_of_prod_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasStrictFDerivAtDiagonalTorusZero
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+namespace GlobalTheory.TorusFrame
+
+theorem hasStrictFDerivAt_torus_zero (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (x : Frame Ψ r) : HasStrictFDerivAt (fun θ : Ψ → Fin (r - 1) → ℝ => fun τ a b => (mat x τ * diagonal (fun c => Complex.exp (Complex.I * (angles (θ τ) c : ℂ))) * (mat x τ)⁻¹) a b) (torusDer x) 0 := by
+  refine hasStrictFDerivAt_pi'' fun τ => hasStrictFDerivAt_pi'' fun a => hasStrictFDerivAt_pi'' fun b => ?_
+  set A : Fin r → ((Ψ → Fin (r - 1) → ℝ) →L[ℝ] ℂ) := fun c =>
+    Complex.ofRealCLM.comp ((ContinuousLinearMap.proj c).comp ((LinearMap.toContinuousLinearMap (anglesL r)).comp (ContinuousLinearMap.proj τ))) with hA
+  have hAapp : ∀ c θ, A c θ = (angles (θ τ) c : ℂ) := fun c θ => rfl
+  have hc : ∀ c : Fin r, HasStrictFDerivAt (fun θ : Ψ → Fin (r - 1) → ℝ => mat x τ a c * Complex.exp (Complex.I * (angles (θ τ) c : ℂ)) * (mat x τ)⁻¹ c b)
+      (((mat x τ)⁻¹ c b) • (mat x τ a c • (Complex.exp (Complex.I * (angles ((0 : Ψ → Fin (r - 1) → ℝ) τ) c : ℂ)) • (Complex.I • A c)))) 0 := by
+    intro c
+    have h1 : HasStrictFDerivAt (fun θ : Ψ → Fin (r - 1) → ℝ => (angles (θ τ) c : ℂ)) (A c) 0 := (A c).hasStrictFDerivAt
+    exact ((h1.const_mul Complex.I).cexp.const_mul (mat x τ a c)).mul_const ((mat x τ)⁻¹ c b)
+  have hs := HasStrictFDerivAt.sum (u := Finset.univ) (fun c _ => hc c)
+  refine (hs.congr_fderiv ?_).congr_of_eventuallyEq ?_
+  · ext θ
+    simp only [ContinuousLinearMap.coe_comp', Function.comp_apply, ContinuousLinearMap.proj_apply, torusDer_apply,
+      ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, hAapp,
+      angles_zero, Pi.zero_apply, Complex.ofReal_zero, mul_zero, Complex.exp_zero, one_smul, smul_eq_mul]
+    rw [Matrix.mul_apply]
+    simp only [Matrix.mul_diagonal]
+    refine Finset.sum_congr rfl fun c _ => ?_
+    ring
+  · refine Filter.Eventually.of_forall fun θ => ?_
+    simp only [Finset.sum_apply]
+    rw [Matrix.mul_apply]
+    simp only [Matrix.mul_diagonal]
+end GlobalTheory.TorusFrame
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasStrictFDerivAtDiagonalTorusZeroStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+theorem _root_.GlobalTheory.T.hasStrictFDerivAt_diagonalTorus_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (x : Frame Ψ r), HasStrictFDerivAt (fun θ : Ψ → Fin (r - 1) → ℝ => fun τ a b => (mat x τ * diagonal (fun c => Complex.exp (Complex.I * (angles (θ τ) c : ℂ))) * (mat x τ)⁻¹) a b) (torusDer x) 0 := by
+  first | exact @GlobalTheory.TorusFrame.hasStrictFDerivAt_torus_zero | exact GlobalTheory.TorusFrame.hasStrictFDerivAt_torus_zero | (intros; apply GlobalTheory.TorusFrame.hasStrictFDerivAt_torus_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UpperTriangularSignFormDiagonalUnimodular
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+theorem GlobalTheory.upperTriangular_signForm_diagonal : ∀ (r : ℕ) (b : Matrix (Fin r) (Fin r) ℂ) (s : Fin r → ℝ), (∀ a, s a = 1 ∨ s a = -1) → IsUnit b.det → (∀ a c : Fin r, c < a → b a c = 0) → bᵀ * diagonal (fun a => (s a : ℂ)) * b.map (starRingEnd ℂ) = diagonal (fun a => (s a : ℂ)) → (∀ a c : Fin r, a ≠ c → b a c = 0) ∧ ∀ a, ‖b a a‖ = 1 := by
+  intro r b s hs hdet hup hJ
+  classical
+  set J : Matrix (Fin r) (Fin r) ℂ := diagonal (fun a => (s a : ℂ)) with hJdef
+  have hss : ∀ a, (s a : ℂ) * (s a : ℂ) = 1 := by
+    intro a; rcases hs a with h | h <;> simp [h]
+  have hJJ : J * J = 1 := by
+    rw [hJdef, diagonal_mul_diagonal]
+    ext i j
+    by_cases hij : i = j
+    · subst hij; simp [hss]
+    · simp [diagonal_apply_ne _ hij, one_apply_ne hij]
+  have hbt : BlockTriangular b id := fun i j hij => hup i j hij
+  haveI : Invertible b := b.invertibleOfIsUnitDet hdet
+  have hinv : BlockTriangular b⁻¹ id := blockTriangular_inv_of_blockTriangular hbt
+  have hright : bᵀ * (J * b.map (starRingEnd ℂ) * J) = 1 := by
+    calc bᵀ * (J * b.map (starRingEnd ℂ) * J) = (bᵀ * J * b.map (starRingEnd ℂ)) * J := by
+          simp only [Matrix.mul_assoc]
+      _ = 1 := by rw [hJ, hJJ]
+  have heq : J * b.map (starRingEnd ℂ) * J = (bᵀ)⁻¹ := (Matrix.inv_eq_right_inv hright).symm
+  rw [← Matrix.transpose_nonsing_inv] at heq
+  have hoff : ∀ a c : Fin r, a < c → b a c = 0 := by
+    intro a c hac
+    have h1 := congrFun (congrFun heq a) c
+    have h2 : (b⁻¹)ᵀ a c = 0 := by
+      rw [transpose_apply]; exact hinv hac
+    rw [h2, hJdef, mul_diagonal, diagonal_mul] at h1
+    simp only [map_apply] at h1
+    have hsa : (s a : ℂ) ≠ 0 := by rcases hs a with h | h <;> simp [h]
+    have hsc : (s c : ℂ) ≠ 0 := by rcases hs c with h | h <;> simp [h]
+    have : (starRingEnd ℂ) (b a c) = 0 := by
+      rcases mul_eq_zero.mp h1 with h | h
+      · rcases mul_eq_zero.mp h with h | h
+        · exact absurd h hsa
+        · exact h
+      · exact absurd h hsc
+    simpa using this
+  have hdiag : ∀ a c : Fin r, a ≠ c → b a c = 0 := by
+    intro a c hac
+    rcases lt_or_gt_of_ne hac with h | h
+    · exact hoff a c h
+    · exact hup a c h
+  refine ⟨hdiag, fun a => ?_⟩
+  have h1 := congrFun (congrFun hJ a) a
+  rw [Matrix.mul_apply, Finset.sum_eq_single a] at h1
+  · have hJaa : J a a = (s a : ℂ) := by simp [hJdef]
+    rw [mul_diagonal, transpose_apply, map_apply, hJaa] at h1
+    have hsa : (s a : ℂ) ≠ 0 := by rcases hs a with h | h <;> simp [h]
+    have h2 : b a a * (starRingEnd ℂ) (b a a) = 1 := by
+      have : (s a : ℂ) * (b a a * (starRingEnd ℂ) (b a a)) = (s a : ℂ) * 1 := by
+        linear_combination h1
+      exact mul_left_cancel₀ hsa this
+    rw [Complex.mul_conj] at h2
+    have h3 : Complex.normSq (b a a) = 1 := by exact_mod_cast h2
+    rw [Complex.normSq_eq_norm_sq] at h3
+    have h4 : 0 ≤ ‖b a a‖ := norm_nonneg _
+    nlinarith [sq_nonneg (‖b a a‖ - 1), sq_nonneg (‖b a a‖ + 1)]
+  · intro k _ hk
+    rw [mul_diagonal, transpose_apply, map_apply, hdiag k a hk]
+    simp
+  · intro h; exact absurd (Finset.mem_univ a) h
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UpperTriangularSignFormDiagonalUnimodularStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Filter Topology GlobalTheory.SUVol GlobalTheory.RiemConst ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.L2DbarEstimates GlobalTheory.TorusFrame
+open scoped ENNReal
+
+theorem _root_.GlobalTheory.T.upperTriangular_signForm_diagonal_unimodular : ∀ (r : ℕ) (b : Matrix (Fin r) (Fin r) ℂ) (s : Fin r → ℝ), (∀ a, s a = 1 ∨ s a = -1) → IsUnit b.det → (∀ a c : Fin r, c < a → b a c = 0) → bᵀ * diagonal (fun a => (s a : ℂ)) * b.map (starRingEnd ℂ) = diagonal (fun a => (s a : ℂ)) → (∀ a c : Fin r, a ≠ c → b a c = 0) ∧ ∀ a, ‖b a a‖ = 1 := by
+  first | exact @GlobalTheory.upperTriangular_signForm_diagonal | exact GlobalTheory.upperTriangular_signForm_diagonal | (intros; apply GlobalTheory.upperTriangular_signForm_diagonal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDiagonalTorusParametrisationOrthonormalFra
+
+section
 
 @[expose] public section
 
@@ -125,3 +338,6 @@ theorem torus_param : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
     rw [hD, ← hgx τ, Matrix.mul_assoc, mul_nonsing_inv _ (isUnit_det_of_isOrth hx τ), Matrix.mul_one]
 
 end GlobalTheory.TorusFrame
+end
+end
+end

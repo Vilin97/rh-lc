@@ -3,11 +3,12 @@ module
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsLocalOrbitChart
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChartB
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsAnalyticLogResolution
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PLevelSetLocalInj
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -18,19 +19,14 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,8 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,9 +46,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.FDeriv.Add
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
+public import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterAlgRes
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterMinor
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PLevelSetLocalInj
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+open MvPolynomial
+
+def polyDiff {J : Type} [Fintype J] (p : MvPolynomial J ℂ) (w₀ : J → ℂ) : (J → ℂ) →L[ℂ] ℂ :=
+  ∑ j, eval w₀ (pderiv j p) • ContinuousLinearMap.proj j
+
+theorem polyDiff_apply {J : Type} [Fintype J] (p : MvPolynomial J ℂ) (w₀ v : J → ℂ) :
+    polyDiff p w₀ v = ∑ j, eval w₀ (pderiv j p) * v j := by
+  simp [polyDiff]
+
+theorem hasStrictFDerivAt_eval_poly {J : Type} [Fintype J] (p : MvPolynomial J ℂ) (w₀ : J → ℂ) :
+    HasStrictFDerivAt (fun w => eval w p) (polyDiff p w₀) w₀ := by
+  classical
+  induction p using MvPolynomial.induction_on with
+  | C a =>
+    have h0 : polyDiff (C a) w₀ = 0 := by
+      refine ContinuousLinearMap.ext fun v => ?_
+      simp [polyDiff_apply]
+    rw [h0]
+    simp only [eval_C]
+    exact hasStrictFDerivAt_const a w₀
+  | add p q hp hq =>
+    have h0 : polyDiff (p + q) w₀ = polyDiff p w₀ + polyDiff q w₀ := by
+      refine ContinuousLinearMap.ext fun v => ?_
+      simp [polyDiff_apply, add_mul, Finset.sum_add_distrib]
+    rw [h0]
+    simp only [map_add (f := _)]
+    exact hp.add hq
+  | mul_X p n hp =>
+    have hX : HasStrictFDerivAt (fun w : J → ℂ => w n)
+        (ContinuousLinearMap.proj n : (J → ℂ) →L[ℂ] ℂ) w₀ :=
+      hasStrictFDerivAt_apply n w₀
+    have h := hp.mul hX
+    have h0 : polyDiff (p * X n) w₀ =
+        eval w₀ p • (ContinuousLinearMap.proj n : (J → ℂ) →L[ℂ] ℂ) + w₀ n • polyDiff p w₀ := by
+      have key : ∀ j, eval w₀ (pderiv j (X n : MvPolynomial J ℂ)) = if j = n then 1 else 0 := by
+        intro j
+        by_cases hj : j = n
+        · subst hj
+          simp
+        · simp [pderiv_X_of_ne (Ne.symm hj), hj]
+      refine ContinuousLinearMap.ext fun v => ?_
+      have s1 : ∑ j, eval w₀ p * (if j = n then (1 : ℂ) else 0) * v j = eval w₀ p * v n := by
+        simp
+      have s2 : ∑ j, eval w₀ (pderiv j p) * w₀ n * v j = w₀ n * ∑ j, eval w₀ (pderiv j p) * v j := by
+        rw [Finset.mul_sum]
+        exact Finset.sum_congr rfl fun j _ => by ring
+      simp only [polyDiff_apply, pderiv_mul, map_add (f := _), map_mul, key, eval_X, add_mul,
+        Finset.sum_add_distrib, s1, s2, FunLike.coe_add, FunLike.coe_smul, Pi.add_apply, Pi.smul_apply,
+        ContinuousLinearMap.proj_apply, smul_eq_mul]
+      ring
+    rw [h0]
+    simp only [map_mul, eval_X]
+    exact h
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LocalOrbitChart
+
+section
 
 @[expose] public section
 
@@ -227,3 +310,6 @@ theorem localOrbitChart : LocalOrbitChart.Statement := by
     linear_combination -h1
 
 end GlobalTheory.CompanionTheory.Ar.Giv
+end
+end
+end

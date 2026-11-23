@@ -1,11 +1,8 @@
 module
 
 public import Formalism.LocalToGlobal.CharacterGerms.ConstantCoeffTripleSubstitution
-public import Formalism.LocalToGlobal.CharacterGerms.RowTieValU
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCartAdd
-public import Formalism.LocalToGlobal.CharacterGerms.RowTieJet
-import Formalism.LocalToGlobal.CharacterGerms.SubstSubst
-public import Formalism.LocalToGlobal.CharacterGerms.TripleSubstSecondCoordinate
+public import Formalism.LocalToGlobal.CharacterGerms.IntSubst
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCartAdd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,9 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,10 +40,67 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.ProjectiveLattices.SubConstMemOrig
+import Formalism.LocalToGlobal.CharacterGerms.RowTieCartAdd
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieJet
+import Formalism.LocalToGlobal.CharacterGerms.SubstSubst
+public import Formalism.LocalToGlobal.CharacterGerms.TripleSubstSecondCoordinate
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Presheaf
 import Std.Tactic.BVDecide.Normalize.Prop
-import Formalism.LocalToGlobal.ProjectiveLattices.SubConstMemOrig
+
+-- Source module: Formalism.LocalToGlobal.CharacterGerms.RowTieValU
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators
+open Classical
+
+namespace Formalism.L2.FormalSeriesBounds
+
+open Formalism.IncomingBounds ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ Formalism.L2.Pj
+
+variable {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ} {d : ℕ} [NeZero d]
+  {Orb : Type} [Fintype Orb] {I : Orb → Fin 2 → Type} [∀ o g, Fintype (I o g)]
+
+def IsIU (V : VF C) {σ : Type} (U : MvPowerSeries σ C) : Prop :=
+  IntS V U ∧ V.v (MvPowerSeries.constantCoeff U) = 0
+
+theorem IsIU.one {σ : Type} : IsIU V (1 : MvPowerSeries σ C) := by
+  refine ⟨fun μ => ?_, ?_⟩
+  · unfold VF.Ge
+    rw [MvPowerSeries.coeff_one]
+    split_ifs
+    · rw [AddValuation.map_one]; exact le_rfl
+    · rw [AddValuation.map_zero]; exact le_top
+  · rw [map_one, AddValuation.map_one]
+
+theorem IsIU.mul {σ : Type} {U U' : MvPowerSeries σ C} (h : IsIU V U) (h' : IsIU V U') : IsIU V (U * U') :=
+  ⟨IntS.mul h.1 h'.1, by rw [map_mul, AddValuation.map_mul, h.2, h'.2, add_zero]⟩
+
+section Defs
+
+variable (Y : FBChart C V O dd) (p : ∀ o, PairData Y d (I o))
+
+end Defs
+
+end Formalism.L2.FormalSeriesBounds
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.CharacterGerms.FirstPartialLawAtPoints
+
+section
 
 @[expose] public section
 
@@ -287,3 +337,6 @@ theorem biadd_right {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
 end VP
 
 end Formalism.L2.FormalSeriesBounds
+end
+end
+end

@@ -1,10 +1,7 @@
 module
 
 public import Formalism.LocalRingCardinality.DataCoeff
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RenameUpperLeftCornerMemWeylLatticeStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeylRowActionMemWeylLatticeSquareStatement
-public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+public import Formalism.GradedWeylDivisibility.StatementA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +18,6 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
@@ -47,12 +43,145 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeylRowActionMemWeylLatticeSquare
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+import Mathlib.NumberTheory.Padics.Complex
 import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.KernelAwayPrimes
 public import Formalism.LocalRingCardinality.DataKerP
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
 public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.IsDiscriminantTwelfthRootOfIdealLattice
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.RenameUpperLeftCornerMemWeylLattice
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility
+
+namespace GlobalTheory
+
+namespace WeylRankEmbed
+
+variable (R : Type) [CommRing R] {a b : ℕ} (hab : a ≤ b)
+
+abbrev corner : Fin a × Fin a → Fin b × Fin b :=
+  fun v => (Fin.castLE hab v.1, Fin.castLE hab v.2)
+
+theorem rename_lpMinor (s : ℕ) (h1 : s ≤ a) (h2 : s ≤ b) :
+    rename (corner hab) (lpMinor R s h1 h1) = lpMinor R s h2 h2 := by
+  unfold lpMinor
+  rw [AlgHom.map_det]
+  congr 1
+  ext p q : 2
+  simp [corner]
+
+theorem rename_hw (ν : Fin a → ℕ) (ν' : Fin b → ℕ)
+    (h : ∀ j : Fin b, ν' j = if h : (j : ℕ) < a then ν ⟨j, h⟩ else 0) :
+    rename (corner hab) (hw R le_rfl ν) = hw R le_rfl ν' := by
+  unfold hw
+  rw [map_prod]
+  symm
+  refine (Finset.prod_of_injOn (Fin.castLE hab) ((Fin.castLE_injective hab).injOn)
+    (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _)) ?_ ?_).symm
+  · intro j _ hj
+    have hja : ¬ (j : ℕ) < a := by
+      intro hlt
+      exact hj ⟨⟨j, hlt⟩, by simp, by ext; simp⟩
+    rw [h j, dite_eq_right hja]
+    simp
+  · intro i _
+    rw [map_pow, rename_lpMinor R hab _ _ (by have := i.2; omega)]
+    have e1 : ν' (Fin.castLE hab i) = ν i := by
+      rw [h, dite_eq_left (by simp)]
+      rfl
+    have e2 : nuNext ν' (Fin.castLE hab i) = nuNext ν i := by
+      unfold nuNext
+      by_cases h1 : (i : ℕ) + 1 < a
+      · rw [dite_eq_left h1, dite_eq_left (by simp; omega), h, dite_eq_left (by simpa using h1)]
+        rfl
+      · rw [dite_eq_right h1]
+        split_ifs with h2
+        · rw [h, dite_eq_right (by simpa using h1)]
+        · rfl
+    rw [e1, e2]
+    rfl
+
+theorem rename_rowDiv (x y : Fin a) (k : ℕ) (f : MvPolynomial (Fin a × Fin a) R) :
+    rename (corner hab) (rowDiv R x y k f) =
+      rowDiv R (Fin.castLE hab x) (Fin.castLE hab y) k (rename (corner hab) f) := by
+  have key : (Polynomial.mapAlgHom (rename (R := R) (corner hab))).comp (rowGen R x y) =
+      (rowGen R (Fin.castLE hab x) (Fin.castLE hab y)).comp (rename (corner hab)) := by
+    apply MvPolynomial.algHom_ext
+    intro v
+    by_cases hv : v.1 = y
+    · simp [rowGen, hv, corner]
+    · have hv' : Fin.castLE hab v.1 ≠ Fin.castLE hab y := fun e => hv (Fin.castLE_injective hab e)
+      simp [rowGen, hv, corner]
+  have h2 := congrArg (fun φ => (φ f).coeff k) key
+  simpa [rowDiv, Polynomial.coeff_map] using h2
+
+theorem rename_applyWord (w : List (Fin a × Fin a × ℕ)) (f : MvPolynomial (Fin a × Fin a) R) :
+    rename (corner hab) (applyWord R w f) =
+      applyWord R (w.map fun x => (Fin.castLE hab x.1, Fin.castLE hab x.2.1, x.2.2))
+        (rename (corner hab) f) := by
+  induction w with
+  | nil => rfl
+  | cons x w ih =>
+    simp only [applyWord, List.foldr_cons, List.map_cons] at ih ⊢
+    rw [rename_rowDiv, ih]
+
+end WeylRankEmbed
+
+theorem weyl_rename_castLE_mem :
+    ∀ (R : Type) [CommRing R] (a b : ℕ) (hab : a ≤ b) (ν : Fin a → ℕ) (ν' : Fin b → ℕ), (∀ j : Fin b, ν' j = if h : (j : ℕ) < a then ν ⟨j, h⟩ else 0) → ∀ f ∈ Formalism.GradedWeylDivisibility.weyl R a a le_rfl ν, MvPolynomial.rename (fun v : Fin a × Fin a => ((Fin.castLE hab v.1, Fin.castLE hab v.2) : Fin b × Fin b)) f ∈ Formalism.GradedWeylDivisibility.weyl R b b le_rfl ν' := by
+  intro R _ a b hab ν ν' h f hf
+  change rename (WeylRankEmbed.corner hab) f ∈ _
+  unfold weyl at hf
+  induction hf using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨w, rfl⟩ := hx
+    refine Submodule.subset_span ⟨w.map fun x => (Fin.castLE hab x.1, Fin.castLE hab x.2.1, x.2.2), ?_⟩
+    simp only
+    rw [WeylRankEmbed.rename_applyWord, WeylRankEmbed.rename_hw R hab ν ν' h]
+  | zero => simp
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.RenameUpperLeftCornerMemWeylLatticeStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.rename_upperLeftCorner_mem_weylLattice : ∀ (R : Type) [CommRing R] (a b : ℕ) (hab : a ≤ b) (ν : Fin a → ℕ) (ν' : Fin b → ℕ), (∀ j : Fin b, ν' j = if h : (j : ℕ) < a then ν ⟨j, h⟩ else 0) → ∀ f ∈ Formalism.GradedWeylDivisibility.weyl R a a le_rfl ν, MvPolynomial.rename (fun v : Fin a × Fin a => ((Fin.castLE hab v.1, Fin.castLE hab v.2) : Fin b × Fin b)) f ∈ Formalism.GradedWeylDivisibility.weyl R b b le_rfl ν' := by
+  first | exact @GlobalTheory.weyl_rename_castLE_mem | exact GlobalTheory.weyl_rename_castLE_mem | (intros; apply GlobalTheory.weyl_rename_castLE_mem <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeylRowActionMemWeylLatticeSquareStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.weylRowAction_mem_weylLattice_square : ∀ (R : Type) [CommRing R] (n : ℕ) (ν : Fin n → ℕ), Antitone ν → ∀ (M : Matrix (Fin n) (Fin n) R), ∀ f ∈ Formalism.GradedWeylDivisibility.weyl R n n le_rfl ν, Formalism.GradedWeylDivisibility.rowAct R M f ∈ Formalism.GradedWeylDivisibility.weyl R n n le_rfl ν := by
+  first | exact @GlobalTheory.WeylRowAll.rowAct_mem_weyl_square | exact GlobalTheory.WeylRowAll.rowAct_mem_weyl_square | (intros; apply GlobalTheory.WeylRowAll.rowAct_mem_weyl_square <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsHomogeneousOfMemWeyl
+
+section
 
 @[expose] public section
 
@@ -183,4 +312,6 @@ end Lift
 
 end GlobalTheory.LiftTypePrime
 
+end
+end
 end

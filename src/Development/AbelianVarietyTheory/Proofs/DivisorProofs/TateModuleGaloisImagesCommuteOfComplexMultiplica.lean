@@ -3,15 +3,19 @@ module
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.TateUnramifiedOfTorsionUnramified
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardAbelianVarietyTorsionSepClosed
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulMemSpanOrbitOfNumberFieldLatticeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeFiniteFinrank
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearIndependentNumberFieldEndomorphismsTateModStatement
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+public import Mathlib.Algebra.Module.PID
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,9 +27,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,7 +38,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,8 +50,293 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Polynomial.Module.AEval
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
+import Development.AbelianVarietyTheory.Definitions.Divisors.MapSmulOfIsHausdorff
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.TateUnramifiedOfTorsionUnramified
+import Development.AbelianVarietyTheory.PublishedTheorems.RelativeAmpleness.RelAmpleAndKTrivIff
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.QuadTie
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeFiniteFinrank
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearIndependentNumberFieldEndomorphismsTateModStatement
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AbelianVarietyTheory.PublishedTheorems.BesselIntegrals.ExistsLinearIndependentNormLe
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearIndependentIteratesOfLinearIndepende
+
+section
+
+@[expose] public section
+
+open scoped Matrix
+open Polynomial
+
+namespace GlobalTheory.CyclicVector
+
+theorem exists_linearIndependent_iterates_of_linearIndependent_pow {K : Type} [Field K] {r : ℕ}
+    (g : Matrix (Fin r) (Fin r) K)
+    (hg : LinearIndependent K (fun i : Fin r => g ^ (i : ℕ))) :
+    ∃ v : Fin r → K, LinearIndependent K (fun i : Fin r => (g ^ (i : ℕ)) *ᵥ v) := by
+  classical
+  obtain ⟨x, hx⟩ := Module.exists_ker_toSpanSingleton_eq_annihilator K[X]
+    (Module.AEval' (Matrix.toLin' g))
+  set v := (Module.AEval'.of (Matrix.toLin' g)).symm x with hv
+  refine ⟨v, ?_⟩
+  rw [Fintype.linearIndependent_iff] at hg ⊢
+  intro c hc
+  let q : K[X] := ∑ j : Fin r, monomial (j : ℕ) (c j)
+  have haq : aeval g q = ∑ j : Fin r, c j • g ^ (j : ℕ) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [q, map_sum, aeval_monomial, Algebra.smul_def]
+  have ha : ∀ p : K[X], aeval (Matrix.toLin' g) p = Matrix.toLin' (aeval g p) := fun p =>
+    (aeval_algHom_apply (Matrix.toLinAlgEquiv' (R := K) (n := Fin r)) g p)
+  have hqv : aeval g q *ᵥ v = 0 := by
+    rw [haq, Matrix.sum_mulVec]
+    have hs : ∀ j : Fin r, (c j • g ^ (j : ℕ)) *ᵥ v = c j • (g ^ (j : ℕ) *ᵥ v) := fun j => by
+      ext i; simp [Matrix.mulVec, dotProduct, Finset.mul_sum, mul_assoc]
+    simpa [hs] using hc
+  have hmem : q ∈ Module.annihilator K[X] (Module.AEval' (Matrix.toLin' g)) := by
+    rw [← hx, LinearMap.mem_ker, LinearMap.toSpanSingleton_apply]
+    apply (Module.AEval'.of (Matrix.toLin' g)).symm.injective
+    rw [Module.AEval.of_symm_smul, map_zero, ha]
+    exact hqv
+  have hq : aeval g q = 0 := by
+    apply Matrix.toLin'.injective
+    rw [map_zero, ← ha]
+    refine LinearMap.ext fun u => ?_
+    have := Module.mem_annihilator.1 hmem (Module.AEval'.of (Matrix.toLin' g) u)
+    have h2 := congrArg (Module.AEval'.of (Matrix.toLin' g)).symm this
+    rw [Module.AEval.of_symm_smul, map_zero] at h2
+    simpa using h2
+  exact hg c (haq ▸ hq)
+
+end GlobalTheory.CyclicVector
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowLinearIndependentOfIsFractionRing
+
+section
+
+@[expose] public section
+
+open scoped Matrix
+open IntermediateField
+
+namespace GlobalTheory
+
+theorem exists_pow_linearIndependent_of_isFractionRing (O F : Type) [CommRing O] [Field F]
+    [NumberField F] [Algebra O F] [IsFractionRing O F] :
+    ∃ α : O, LinearIndependent ℚ (fun i : Fin (Module.finrank ℚ F) => algebraMap O F (α ^ (i : ℕ))) := by
+  obtain ⟨γ, hγ⟩ := Field.exists_primitive_element ℚ F
+  obtain ⟨x, y, hy, hxy⟩ := IsFractionRing.div_surjective (A := O) γ
+  have hfin : Finite (IntermediateField ℚ F) :=
+    Field.finite_intermediateField_of_exists_primitive_element ℚ F ⟨γ, hγ⟩
+  obtain ⟨t, t', htt, he⟩ := Finite.exists_ne_map_eq_of_infinite
+    (fun t : ℕ => ℚ⟮algebraMap O F x + (t : F) * algebraMap O F y⟯)
+  have h1 : algebraMap O F x + (t : F) * algebraMap O F y ∈
+      ℚ⟮algebraMap O F x + (t : F) * algebraMap O F y⟯ := mem_adjoin_simple_self _ _
+  have h2 : algebraMap O F x + (t' : F) * algebraMap O F y ∈
+      ℚ⟮algebraMap O F x + (t : F) * algebraMap O F y⟯ := by
+    rw [he]; exact mem_adjoin_simple_self _ _
+  set L := ℚ⟮algebraMap O F x + (t : F) * algebraMap O F y⟯ with hL
+  have hyL : algebraMap O F y ∈ L := by
+    have hd : ((t : F) - t') * algebraMap O F y ∈ L := by
+      have := L.sub_mem h1 h2
+      convert this using 1; ring
+    have htt' : ((t : F) - t') ≠ 0 := sub_ne_zero.2 (by exact_mod_cast htt)
+    have hc : ((t : F) - t') ∈ L := L.sub_mem (L.natCast_mem t) (L.natCast_mem t')
+    have := L.mul_mem (L.inv_mem hc) hd
+    rwa [← mul_assoc, inv_mul_cancel₀ htt', one_mul] at this
+  have hxL : algebraMap O F x ∈ L := by
+    have := L.sub_mem h1 (L.mul_mem (L.natCast_mem t) hyL)
+    simpa using this
+  have hγL : γ ∈ L := hxy ▸ L.div_mem hxL hyL
+  have htop : L = ⊤ := by
+    rw [eq_top_iff, ← hγ, adjoin_simple_le_iff]; exact hγL
+  refine ⟨x + t • y, ?_⟩
+  have ha : algebraMap O F (x + t • y) = algebraMap O F x + (t : F) * algebraMap O F y := by
+    rw [map_add (f := _), map_nsmul, nsmul_eq_mul]
+  have hint : IsIntegral ℚ (algebraMap O F (x + t • y)) := Algebra.IsIntegral.isIntegral _
+  have hdeg : (minpoly ℚ (algebraMap O F (x + t • y))).natDegree = Module.finrank ℚ F := by
+    rw [← adjoin.finrank hint, ha, ← hL, htop, finrank_top']
+  have h' := (linearIndependent_pow (K := ℚ) (algebraMap O F (x + t • y))).comp
+    (Fin.cast hdeg.symm) (Fin.cast_injective _)
+  have hf : (fun i : Fin (Module.finrank ℚ F) => algebraMap O F ((x + t • y) ^ (i : ℕ))) =
+      (fun i : Fin (minpoly ℚ (algebraMap O F (x + t • y))).natDegree =>
+        algebraMap O F (x + t • y) ^ (i : ℕ)) ∘ Fin.cast hdeg.symm := by
+    ext i; simp [map_pow]
+  rw [hf]; exact h'
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulMemSpanOrbitOfNumberFieldLattice
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open scoped CategoryTheory.Obj CategoryTheory.MonObj Pointwise
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.HTLat GlobalTheory.Published GlobalTheory.Published.AbVarRed IsLocalRing
+attribute [local instance] Over.cartesianMonoidalCategory
+open scoped Matrix
+
+namespace GlobalTheory.CyclicLattice
+
+theorem exists_linearIndependent_mulVec_pow {R : Type} [CommRing R] [IsDomain R] {r : ℕ}
+    (g : Matrix (Fin r) (Fin r) R) (hg : LinearIndependent R (fun i : Fin r => g ^ (i : ℕ))) :
+    ∃ v : Fin r → R, LinearIndependent R (fun i : Fin r => (g ^ (i : ℕ)) *ᵥ v) := by
+  classical
+  let K := FractionRing R
+  let f := algebraMap R K
+  have hf : Function.Injective f := IsFractionRing.injective R K
+  let gK := g.map f
+  let Φ : Matrix (Fin r) (Fin r) R →ₗ[R] Matrix (Fin r) (Fin r) K :=
+    (Algebra.linearMap R K).mapMatrix
+  have hΦ : Function.Injective Φ := fun a a' h => by
+    ext i j
+    exact hf (congrFun (congrFun h i) j)
+  have hgK : LinearIndependent K (fun i : Fin r => gK ^ (i : ℕ)) := by
+    have h1 := hg.map' Φ (LinearMap.ker_eq_bot.2 hΦ)
+    have h2 : (Φ ∘ fun i : Fin r => g ^ (i : ℕ)) = fun i : Fin r => gK ^ (i : ℕ) := by
+      funext i
+      simp only [Function.comp_apply, gK, ← Matrix.map_pow]
+      rfl
+    rw [h2] at h1
+    exact (LinearIndependent.iff_fractionRing R K).mp h1
+  obtain ⟨w, hw⟩ :=
+    GlobalTheory.CyclicVector.exists_linearIndependent_iterates_of_linearIndependent_pow gK hgK
+  obtain ⟨s, hs⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors R) w
+  choose u hu using hs
+  refine ⟨u, ?_⟩
+  let Ψ : (Fin r → R) →ₗ[R] (Fin r → K) :=
+    LinearMap.pi (fun i => (Algebra.linearMap R K).comp (LinearMap.proj i))
+  have hΨ : Function.Injective Ψ := fun a a' h => funext fun i => hf (congrFun h i)
+  have hfu : (f ∘ u) = (f s) • w := funext fun j => by
+    simpa [Algebra.smul_def] using hu j
+  have key : (Ψ ∘ fun i : Fin r => g ^ (i : ℕ) *ᵥ u) =
+      fun i : Fin r => (f s) • (gK ^ (i : ℕ) *ᵥ w) := by
+    funext i
+    ext k
+    have e1 := RingHom.map_mulVec f (g ^ (i : ℕ)) u k
+    simp only [Function.comp_apply]
+    change f ((g ^ (i : ℕ) *ᵥ u) k) = _
+    rw [e1, Matrix.map_pow, hfu, Matrix.mulVec_smul]
+  have hsK : f s ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
+  have h3 : LinearIndependent K (fun i : Fin r => (f s) • (gK ^ (i : ℕ) *ᵥ w)) := by
+    have := hw.units_smul (fun _ => Units.mk0 (f s) hsK)
+    have e : (fun i : Fin r => (f s) • (gK ^ (i : ℕ) *ᵥ w)) =
+        (fun _ : Fin r => Units.mk0 (f s) hsK) • (fun i : Fin r => gK ^ (i : ℕ) *ᵥ w) := by
+      funext i
+      simp [Units.smul_def]
+    rw [e]
+    exact this
+  have h4 := (LinearIndependent.iff_fractionRing R K).mpr h3
+  rw [← key] at h4
+  exact h4.of_comp
+
+theorem exists_smul_mem_span_of_linearIndependent {R M : Type} [CommRing R] [IsDomain R]
+    [AddCommGroup M] [Module R M] {r : ℕ} (b : Module.Basis (Fin r) R M) (w : Fin r → M)
+    (hw : LinearIndependent R w) :
+    ∃ c : R, c ≠ 0 ∧ ∀ t : M, c • t ∈ Submodule.span R (Set.range w) := by
+  classical
+  let N : Matrix (Fin r) (Fin r) R := b.toMatrix w
+  have hsum : ∀ z : Fin r → R, b.equivFun (∑ j, z j • w j) = N *ᵥ z := by
+    intro z
+    ext i
+    simp [N, Module.Basis.toMatrix_apply, Matrix.mulVec, dotProduct, mul_comm]
+  have hdet : N.det ≠ 0 := by
+    intro h0
+    obtain ⟨z, hz0, hz⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0
+    apply hz0
+    have : ∑ j, z j • w j = 0 := b.equivFun.injective (by rw [hsum, hz, map_zero])
+    funext j
+    exact Fintype.linearIndependent_iff.1 hw z this j
+  refine ⟨N.det, hdet, fun t => ?_⟩
+  have : N.det • t = ∑ j, (N.adjugate *ᵥ b.equivFun t) j • w j := by
+    apply b.equivFun.injective
+    rw [hsum, map_smul, Matrix.mulVec_mulVec, Matrix.mul_adjugate, Matrix.smul_mulVec,
+      Matrix.one_mulVec]
+  rw [this]
+  exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
+
+theorem exists_smul_mem_span_orbit : ∀ (l : ℕ) [Fact l.Prime] (T : Type) [AddCommGroup T] [Module ℤ_[l] T] [Module.Free ℤ_[l] T] [Module.Finite ℤ_[l] T] (O F : Type) [CommRing O] [Field F] [NumberField F] [Algebra O F] [IsFractionRing O F] (ρ : O →+* Module.End ℤ_[l] T), Module.finrank ℤ_[l] T = Module.finrank ℚ F → (∀ (n : ℕ) (a : Fin n → O), LinearIndependent ℚ (fun i => algebraMap O F (a i)) → LinearIndependent ℤ_[l] (fun i => ρ (a i))) → ∃ (v : T) (c : ℤ_[l]), c ≠ 0 ∧ ∀ t : T, c • t ∈ Submodule.span ℤ_[l] (Set.range fun a => ρ a v) := by
+  intro l _ T _ _ _ _ O F _ _ _ _ _ ρ hrank hind
+  obtain ⟨α, hα⟩ := GlobalTheory.exists_pow_linearIndependent_of_isFractionRing O F
+  set n := Module.finrank ℚ F with hn
+  let b : Module.Basis (Fin n) ℤ_[l] T := Module.finBasisOfFinrankEq ℤ_[l] T hrank
+  set φ := ρ α with hφdef
+  set g := LinearMap.toMatrix b b φ with hgdef
+  have hpow : ∀ i : ℕ, LinearMap.toMatrix b b (φ ^ i) = g ^ i := fun i => by
+    induction i with
+    | zero => simp [LinearMap.toMatrix_one]
+    | succ k ih => rw [pow_succ, LinearMap.toMatrix_mul, ih, pow_succ]
+  have hφ : LinearIndependent ℤ_[l] (fun i : Fin n => φ ^ (i : ℕ)) := by
+    have := hind n (fun i => α ^ (i : ℕ)) hα
+    simpa [φ, map_pow] using this
+  have hg : LinearIndependent ℤ_[l] (fun i : Fin n => g ^ (i : ℕ)) := by
+    have := hφ.map' (LinearMap.toMatrix b b).toLinearMap (LinearMap.toMatrix b b).ker
+    simpa [Function.comp_def, hpow] using this
+  obtain ⟨u, hu⟩ := exists_linearIndependent_mulVec_pow g hg
+  set v : T := b.equivFun.symm u with hv
+  have hw : ∀ i : ℕ, b.equivFun ((φ ^ i) v) = g ^ i *ᵥ u := by
+    intro i
+    have hu' : u = ⇑(b.repr v) := by
+      rw [hv, ← Module.Basis.equivFun_apply, LinearEquiv.apply_symm_apply]
+    rw [← hpow, hu', LinearMap.toMatrix_mulVec_repr, Module.Basis.equivFun_apply]
+  have hli : LinearIndependent ℤ_[l] (fun i : Fin n => (φ ^ (i : ℕ)) v) := by
+    have hfun : (fun i : Fin n => (φ ^ (i : ℕ)) v) =
+        b.equivFun.symm.toLinearMap ∘ (fun i : Fin n => g ^ (i : ℕ) *ᵥ u) := by
+      funext i
+      apply b.equivFun.injective
+      simp only [Function.comp_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply, hw]
+    rw [hfun]
+    exact hu.map' _ b.equivFun.symm.ker
+  obtain ⟨c, hc, hct⟩ := exists_smul_mem_span_of_linearIndependent b _ hli
+  refine ⟨v, c, hc, fun t => Submodule.span_mono ?_ (hct t)⟩
+  rintro _ ⟨i, rfl⟩
+  exact ⟨α ^ (i : ℕ), by simp [φ, map_pow]⟩
+
+end GlobalTheory.CyclicLattice
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulMemSpanOrbitOfNumberFieldLatticeStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open scoped CategoryTheory.Obj CategoryTheory.MonObj Pointwise
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.HTLat GlobalTheory.Published GlobalTheory.Published.AbVarRed IsLocalRing
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.exists_smul_mem_span_orbit_of_numberField_lattice : ∀ (l : ℕ) [Fact l.Prime] (T : Type) [AddCommGroup T] [Module ℤ_[l] T] [Module.Free ℤ_[l] T] [Module.Finite ℤ_[l] T] (O F : Type) [CommRing O] [Field F] [NumberField F] [Algebra O F] [IsFractionRing O F] (ρ : O →+* Module.End ℤ_[l] T), Module.finrank ℤ_[l] T = Module.finrank ℚ F → (∀ (n : ℕ) (a : Fin n → O), LinearIndependent ℚ (fun i => algebraMap O F (a i)) → LinearIndependent ℤ_[l] (fun i => ρ (a i))) → ∃ (v : T) (c : ℤ_[l]), c ≠ 0 ∧ ∀ t : T, c • t ∈ Submodule.span ℤ_[l] (Set.range fun a => ρ a v) := by
+  first | exact @GlobalTheory.CyclicLattice.exists_smul_mem_span_orbit | exact GlobalTheory.CyclicLattice.exists_smul_mem_span_orbit | (intros; apply GlobalTheory.CyclicLattice.exists_smul_mem_span_orbit <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateModuleGaloisImagesCommuteOfComplexMultiplica
+
+section
 
 @[expose] public section
 
@@ -148,3 +437,6 @@ theorem galTate_commute_of_hasCMBy : ∀ (K Ω : Type) [Field K] [Field Ω] [Alg
   exact commute_of_cyclic _ v c hc hv _ _ (galTate_comm_actTate A α l σ) (galTate_comm_actTate A α l τ)
 
 end GlobalTheory.CMComm
+end
+end
+end

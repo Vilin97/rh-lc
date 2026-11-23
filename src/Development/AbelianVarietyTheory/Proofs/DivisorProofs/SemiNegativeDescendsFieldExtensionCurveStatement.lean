@@ -1,13 +1,18 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsIsoFromNormalization
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiNegativeDescendsFieldExtensionCurve
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverCompOfIsClosedImmersion
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.IsLocalizedModuleGermLinearPointOfPrime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -27,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,8 +45,308 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyHomologyEquiv
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AbProj
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsEquivariantToBidual
 import Development.AbelianVarietyTheory.PublishedTheorems.RelativeAmpleness.RelAmpleAndKTrivIff
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonoPullbackMapOfFlat
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Opposite
+
+universe u
+
+noncomputable section
+
+namespace GlobalTheory.SkyMod
+
+variable {X : Scheme.{u}} (x : X)
+
+def Obj (U : X.Opens) (M : Type u) : Type u := PLift (x ∈ U) → M
+
+instance (U : X.Opens) (M : Type u) [AddCommGroup M] : AddCommGroup (Obj x U M) :=
+  inferInstanceAs (AddCommGroup (PLift (x ∈ U) → M))
+
+instance (U : X.Opens) (M : Type u) [AddCommGroup M] [Module (X.presheaf.stalk x) M] :
+    SMul Γ(X, U) (Obj x U M) where
+  smul r m := fun h ↦ X.presheaf.germ U x h.down r • m h
+
+instance (U : X.Opens) (M : Type u) [AddCommGroup M] [Module (X.presheaf.stalk x) M] :
+    Module Γ(X, U) (Obj x U M) where
+  one_smul m := funext fun h ↦ show X.presheaf.germ U x h.down 1 • m h = m h by simp
+  mul_smul r s m := funext fun h ↦ show X.presheaf.germ U x h.down (r * s) • m h =
+    X.presheaf.germ U x h.down r • X.presheaf.germ U x h.down s • m h by simp [mul_smul]
+  smul_zero r := funext fun h ↦ smul_zero (X.presheaf.germ U x h.down r)
+  smul_add r m n := funext fun h ↦ smul_add (X.presheaf.germ U x h.down r) (m h) (n h)
+  add_smul r s m := funext fun h ↦ show X.presheaf.germ U x h.down (r + s) • m h =
+    X.presheaf.germ U x h.down r • m h + X.presheaf.germ U x h.down s • m h by simp [add_smul]
+  zero_smul m := funext fun h ↦ show X.presheaf.germ U x h.down 0 • m h = 0 by simp
+
+variable (M : ModuleCat.{u} (X.presheaf.stalk x))
+
+def skyPresheaf : (X.Opens)ᵒᵖ ⥤ Ab.{u} where
+  obj U := AddCommGrpCat.of (Obj x U.unop M)
+  map f := AddCommGrpCat.ofHom
+    { toFun := fun m h ↦ m ⟨leOfHom f.unop h.down⟩, map_zero' := rfl, map_add' := fun _ _ ↦ rfl }
+
+instance (U : (X.Opens)ᵒᵖ) : Module (X.ringCatSheaf.obj.obj U) ((skyPresheaf x M).obj U) :=
+  inferInstanceAs (Module Γ(X, U.unop) (Obj x U.unop M))
+
+def skyPresheafOfModules : PresheafOfModules.{u} X.ringCatSheaf.obj :=
+  PresheafOfModules.ofPresheaf (skyPresheaf x M) fun U V f r m ↦ funext fun h ↦ by
+    have e := X.presheaf.germ_res_apply f.unop x h.down (r : Γ(X, U.unop))
+    exact congrArg (· • m ⟨leOfHom f.unop h.down⟩) e.symm
+
+theorem skyPresheaf_isSheaf : TopCat.Presheaf.IsSheaf (X := X.toTopCat) (skyPresheaf x M) := by
+  refine (TopCat.Presheaf.isSheaf_iff_isSheafUniqueGluing _).2 fun ι U sf hsf ↦ ?_
+  have key : ∀ i j (hi : x ∈ U i) (hj : x ∈ U j), sf i ⟨hi⟩ = sf j ⟨hj⟩ := fun i j hi hj ↦
+    congrFun (hsf i j) ⟨⟨hi, hj⟩⟩
+  refine ⟨fun h ↦ sf (Opens.mem_iSup.mp h.down).choose ⟨(Opens.mem_iSup.mp h.down).choose_spec⟩,
+    fun i ↦ funext fun h ↦ key _ _ _ _, fun t ht ↦ funext fun h ↦ ?_⟩
+  have := congrFun (ht (Opens.mem_iSup.mp h.down).choose) ⟨(Opens.mem_iSup.mp h.down).choose_spec⟩
+  exact this
+
+def sky : X.Modules where
+  val := skyPresheafOfModules x M
+  isSheaf := skyPresheaf_isSheaf x M
+
+
+variable {x} in
+def skyPresheafMap {M N : ModuleCat.{u} (X.presheaf.stalk x)} (g : M ⟶ N) :
+    skyPresheaf x M ⟶ skyPresheaf x N where
+  app U := AddCommGrpCat.ofHom
+    { toFun := fun m h ↦ g (m h), map_zero' := funext fun _ ↦ map_zero g.hom,
+      map_add' := fun m n ↦ funext fun h ↦ map_add g.hom (m h) (n h) }
+
+def skyFunctor : ModuleCat.{u} (X.presheaf.stalk x) ⥤ X.Modules where
+  obj M := sky x M
+  map {M N} g := ⟨PresheafOfModules.homMk (M₁ := skyPresheafOfModules x M)
+    (M₂ := skyPresheafOfModules x N) (skyPresheafMap g)
+    fun U r m ↦ funext fun h ↦ g.hom.map_smul _ (m h)⟩
+
+def stalkFunctor : X.Modules ⥤ ModuleCat.{u} (X.presheaf.stalk x) where
+  obj F := ModuleCat.of _ (F.presheaf.stalk x)
+  map φ := ModuleCat.ofHom (GlobalTheory.QCoh.stalkLinear φ x)
+  map_id F := by ext1; exact GlobalTheory.QCoh.stalkLinear_id F x
+  map_comp φ ψ := by ext1; exact GlobalTheory.QCoh.stalkLinear_comp φ ψ x
+
+end GlobalTheory.SkyMod
+
+namespace GlobalTheory.SkyMod
+
+variable {X : Scheme.{u}} (x : X)
+
+def unitApp (F : X.Modules) : F ⟶ sky x (ModuleCat.of _ (F.presheaf.stalk x)) :=
+  ⟨PresheafOfModules.homMk (M₁ := F.val)
+    (M₂ := skyPresheafOfModules x (ModuleCat.of _ (F.presheaf.stalk x)))
+    { app := fun U ↦ AddCommGrpCat.ofHom
+        { toFun := fun s h ↦ F.presheaf.germ U.unop x h.down s
+          map_zero' := funext fun h ↦ map_zero _
+          map_add' := fun s t ↦ funext fun h ↦ map_add _ s t }
+      naturality := fun U V i ↦ by
+        ext s
+        funext h
+        exact F.presheaf.germ_res_apply i.unop x h.down s }
+    (fun U r s ↦ funext fun h ↦ GlobalTheory.QCoh.germ_smul F x h.down r s)⟩
+
+def counitAb (M : ModuleCat.{u} (X.presheaf.stalk x)) :
+    (sky x M).presheaf.stalk x ⟶ AddCommGrpCat.of M :=
+  colimit.desc _ (Cocone.mk (AddCommGrpCat.of M)
+    { app := fun U ↦ AddCommGrpCat.ofHom (AddMonoidHom.mk' (M := Obj x U.unop.1 M)
+        (fun m ↦ m ⟨U.unop.2⟩) fun _ _ ↦ rfl)
+      naturality := fun U V i ↦ rfl })
+
+theorem counitAb_germ (M : ModuleCat.{u} (X.presheaf.stalk x)) (U : X.Opens) (hx : x ∈ U)
+    (m : Γ(sky x M, U)) : counitAb x M ((sky x M).presheaf.germ U x hx m) = m ⟨hx⟩ := by
+  rw [TopCat.Presheaf.germ, counitAb]
+  erw [colimit.ι_desc_apply]
+  rfl
+
+end GlobalTheory.SkyMod
+
+namespace GlobalTheory.SkyMod
+
+variable {X : Scheme.{u}} (x : X)
+
+def counitApp (M : ModuleCat.{u} (X.presheaf.stalk x)) :
+    (stalkFunctor x).obj (sky x M) ⟶ M :=
+  ModuleCat.ofHom
+    { toFun := counitAb x M
+      map_add' := map_add (counitAb x M).hom
+      map_smul' := fun r t ↦ by
+        obtain ⟨U, hU, a, rfl⟩ := X.presheaf.exists_germ_eq r
+        obtain ⟨V, hV, s, rfl⟩ := (sky x M).presheaf.exists_germ_eq t
+        have hx : x ∈ U ⊓ V := ⟨hU, hV⟩
+        rw [← X.presheaf.germ_res_apply (homOfLE (inf_le_left : U ⊓ V ≤ U)) x hx,
+          ← (sky x M).presheaf.germ_res_apply (homOfLE (inf_le_right : U ⊓ V ≤ V)) x hx,
+          RingHom.id_apply, ← GlobalTheory.QCoh.germ_smul, counitAb_germ, counitAb_germ]
+        rfl }
+
+@[simp]
+theorem counitApp_germ (M : ModuleCat.{u} (X.presheaf.stalk x)) (U : X.Opens) (hx : x ∈ U)
+    (m : Γ(sky x M, U)) : counitApp x M ((sky x M).presheaf.germ U x hx m) = m ⟨hx⟩ :=
+  counitAb_germ x M U hx m
+
+def adjunction : stalkFunctor x ⊣ skyFunctor x :=
+  Adjunction.mkOfUnitCounit
+    { unit :=
+        { app := unitApp x
+          naturality := fun F G φ ↦ by
+            refine Scheme.Modules.hom_ext _ _ fun U ↦ ?_
+            ext s
+            funext h
+            exact (GlobalTheory.QCoh.stalkLinear_germ φ x h.down s).symm }
+      counit :=
+        { app := counitApp x
+          naturality := fun M N g ↦ by
+            ext t
+            obtain ⟨V, hV, s, rfl⟩ := (sky x M).presheaf.exists_germ_eq t
+            exact (congrArg (counitApp x N) (GlobalTheory.QCoh.stalkLinear_germ ((skyFunctor x).map g) x hV s)).trans
+              ((counitApp_germ x N V hV _).trans (congrArg g (counitApp_germ x M V hV s)).symm) }
+      left_triangle := by
+        ext F : 2
+        ext t
+        obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
+        change counitApp x _ (GlobalTheory.QCoh.stalkLinear (unitApp x F) x _) = _
+        rw [GlobalTheory.QCoh.stalkLinear_germ, counitApp_germ]
+        rfl
+      right_triangle := by
+        ext M : 2
+        refine Scheme.Modules.hom_ext _ _ fun U ↦ ?_
+        ext m
+        funext h
+        exact counitApp_germ x M U h.down m }
+
+end GlobalTheory.SkyMod
+
+theorem GlobalTheory.SkyMod.nonempty_adjunction : ∀ (X : Scheme.{0}) (x : X), Nonempty (GlobalTheory.SkyMod.stalkFunctor x ⊣ GlobalTheory.SkyMod.skyFunctor x) := fun _ x ↦ ⟨GlobalTheory.SkyMod.adjunction x⟩
+
+
+open GlobalTheory.SkyMod in
+theorem GlobalTheory.SkyMod.nonempty_sky_pushforward_iso : ∀ (X Y : Scheme.{0}) (f : X ⟶ Y) (x : X), Nonempty (GlobalTheory.SkyMod.skyFunctor x ⋙ Scheme.Modules.pushforward f ≅ ModuleCat.restrictScalars (f.stalkMap x).hom ⋙ GlobalTheory.SkyMod.skyFunctor (f x)) := by
+  intro X Y f x
+  have key : ∀ (M : ModuleCat.{0} (X.presheaf.stalk x)) (U : Y.Opens) (r : Γ(Y, U))
+      (m : Obj x (f ⁻¹ᵁ U) M) (h : PLift (f x ∈ U)),
+      X.presheaf.germ (f ⁻¹ᵁ U) x h.down (f.app U r) • m h =
+        f.stalkMap x (Y.presheaf.germ U (f x) h.down r) • m h := fun M U r m h ↦ by
+    rw [Scheme.Hom.germ_stalkMap_apply]
+  refine ⟨NatIso.ofComponents (fun M ↦ ⟨⟨PresheafOfModules.homMk (𝟙 _)
+      (fun U r m ↦ funext fun h ↦ key M U.unop r m h)⟩,
+    ⟨PresheafOfModules.homMk (𝟙 _) (fun U r m ↦ funext fun h ↦ (key M U.unop r m h).symm)⟩,
+    rfl, rfl⟩) (fun g ↦ rfl)⟩
+
+
+open GlobalTheory.SkyMod in
+theorem GlobalTheory.mono_pullback_map_of_flat : ∀ (X Y : Scheme.{0}) (f : X ⟶ Y) [Flat f] (G G' : Y.Modules)
+    (φ : G ⟶ G') [Mono φ], Mono ((Scheme.Modules.pullback f).map φ) := by
+  intro X Y f _ G G' φ _
+  rw [GlobalTheory.QCoh.mono_iff_stalkLinear_injective]
+  intro x
+  obtain ⟨a₁⟩ := GlobalTheory.SkyMod.nonempty_adjunction X x
+  obtain ⟨a₂⟩ := GlobalTheory.SkyMod.nonempty_adjunction Y (f x)
+  obtain ⟨e⟩ := GlobalTheory.SkyMod.nonempty_sky_pushforward_iso X Y f x
+  let adjA := ((Scheme.Modules.pullbackPushforwardAdjunction f).comp a₁).ofNatIsoRight e
+  let adjB := a₂.comp (ModuleCat.extendRestrictScalarsAdj (f.stalkMap x).hom)
+  let iso := adjA.leftAdjointUniq adjB
+  have hn := iso.hom.naturality φ
+  have hφ : Function.Injective (GlobalTheory.QCoh.stalkLinear φ (f x)) := GlobalTheory.QCoh.stalkLinear_injective φ (f x)
+  letI := (f.stalkMap x).hom.toAlgebra
+  haveI : Module.Flat (Y.presheaf.stalk (f x)) (X.presheaf.stalk x) := Flat.stalkMap f x
+  have hext : Function.Injective ((ModuleCat.extendScalars (f.stalkMap x).hom).map
+      ((stalkFunctor (f x)).map φ)) := by
+    change Function.Injective (LinearMap.baseChange _ (GlobalTheory.QCoh.stalkLinear φ (f x)))
+    rw [LinearMap.baseChange_eq_ltensor]
+    exact Module.Flat.lTensor_preserves_injective_linearMap _ hφ
+  have h2 : Function.Injective (((Functor.comp (Scheme.Modules.pullback f) (stalkFunctor x)).map φ ≫
+      iso.hom.app G').hom) := by
+    rw [hn, ModuleCat.hom_comp, LinearMap.coe_comp]
+    exact hext.comp (iso.app G).toLinearEquiv.injective
+  rw [ModuleCat.hom_comp, LinearMap.coe_comp] at h2
+  exact Function.Injective.of_comp h2
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonoPullbackMapOfFlatStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry
+
+
+theorem _root_.GlobalTheory.T.mono_pullback_map_of_flat' : ∀ (X Y : Scheme.{0}) (f : X ⟶ Y) [Flat f] (G G' : Y.Modules) (φ : G ⟶ G') [Mono φ], Mono ((Scheme.Modules.pullback f).map φ) := by
+  first | exact @GlobalTheory.mono_pullback_map_of_flat | exact GlobalTheory.mono_pullback_map_of_flat | (intros; apply GlobalTheory.mono_pullback_map_of_flat <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiNegativeDescendsFieldExtensionCurve
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Limits MonoidalCategory CartesianMonoidalCategory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.NeronCurve GlobalTheory.Published
+open scoped CategoryTheory.Obj
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.SemiNegFieldChange
+
+theorem semiNeg_descends_baseChange : ∀ (k : Type) [Field k] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)], IsCurve k C →
+    ∀ (k' : Type) [Field k'] [Algebra k k'], ∃ (C' : Scheme.{0}) (_ : Algebra k' Γ(C', ⊤)) (π : C' ⟶ C), IsCurve k' C' ∧
+      ∀ F : C.Modules, SemiNeg k' ((Scheme.Modules.pullback π).obj F) → SemiNeg k F := by
+  intro k _ C _ hC k' _ _
+  obtain ⟨h1, h2, h3⟩ := hC
+  let t : Sp k' ⟶ Sp k := spMap (algebraMap k k')
+  let f := strHom k C
+  letI A' : Algebra k' Γ(pullback f t, ⊤) := algebraΓOfHom (pullback.snd f t)
+  have hs : strHom k' (pullback f t) = pullback.snd f t := strHom_eq fun _ => rfl
+  refine ⟨pullback f t, A', pullback.fst f t, ⟨?_, ?_, ?_⟩, ?_⟩
+  · rw [hs]; exact (smoothOfRelativeDimension_isStableUnderBaseChange 1).of_isPullback (IsPullback.of_hasPullback f t) h1
+  · rw [hs]; exact GlobalTheory.ProjSpace.isProjOver_pullback_snd _ h2
+  · rw [hs]; haveI := h3; infer_instance
+  · intro F hF W r hW i hi
+    have : IsProper f := by
+      obtain ⟨N, j, hj, e⟩ := h2
+      have := isProper_str k N
+      change IsProper (strHom k (X := C))
+      rw [← e]
+      infer_instance
+    have hinst : (‹Algebra k Γ(C, ⊤)›) = algebraΓOfHom f :=
+      Algebra.algebra_ext _ _ (algebraMap_eq_strHom k C)
+    haveI : Flat (pullback.fst f t) := inferInstance
+    have hm := GlobalTheory.T.mono_pullback_map_of_flat' _ _ (pullback.fst f t) W F i
+    have h := hF _ r (hW.pullback _) _ hm
+    rw [← interNum_congr_lbIso k' _ (isLB_vecOne (LB.isLB_pull hW.isLB_det _)) (isLB_vecOne (hW.pullback _).isLB_det)
+      (fun j => by fin_cases j; exact hW.lbIso_det_pullback _)] at h
+    have P := FieldChangeInter.interNum_pull (f := f) (f' := pullback.snd f t) (π := pullback.fst f t)
+      (IsPullback.of_hasPullback f t) (L := ![det W r]) (isLB_vecOne hW.isLB_det)
+    have e₃ : (fun j => ((![det W r] : Fin 1 → LB C) j).pull (pullback.fst f t)) = ![(det W r).pull (pullback.fst f t)] :=
+      funext fun j => by fin_cases j; rfl
+    rw [e₃] at P
+    rw [hinst]
+    exact P ▸ h
+
+end GlobalTheory.SemiNegFieldChange
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiNegativeDescendsFieldExtensionCurveStatement
+
+section
 
 @[expose] public section
 
@@ -56,3 +362,5 @@ theorem _root_.GlobalTheory.T.semiNegative_descends_fieldExtension_curve : ∀ (
     ∀ (k' : Type) [Field k'] [Algebra k k'], ∃ (C' : Scheme.{0}) (_ : Algebra k' Γ(C', ⊤)) (π : C' ⟶ C), IsCurve k' C' ∧
       ∀ F : C.Modules, SemiNeg k' ((Scheme.Modules.pullback π).obj F) → SemiNeg k F := by
   first | exact @GlobalTheory.SemiNegFieldChange.semiNeg_descends_baseChange | exact GlobalTheory.SemiNegFieldChange.semiNeg_descends_baseChange | (intros; apply GlobalTheory.SemiNegFieldChange.semiNeg_descends_baseChange <;> assumption)
+end
+end

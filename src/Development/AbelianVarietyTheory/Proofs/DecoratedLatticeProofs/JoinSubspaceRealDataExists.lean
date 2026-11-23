@@ -9,17 +9,6 @@ public import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowsJoinPinned
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RangeGoodProjectorEqRangeGoodCoordinates
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CastGAMemGFset
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChainTieAndV0Onto
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColNormExistsImNeZero
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CxFactsOfPrims
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsImNeZeroOfTotallyComplex
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsReadOfMatrixTie
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GoodOperatorSpectrum
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ICCptEq
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InnerEqIntegralOfAe
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KernelJoinOnV0Three
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SeamExLinCpt
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ThetaMapReferenceTupleGoodPartOntoRows
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -55,12 +44,238 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColNormExistsImNeZero
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CxFactsOfPrims
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsImNeZeroOfTotallyComplex
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RangeOpEqSpanOfFormsTie
+public import Formalism.SharpRestriction.Divisibility.PrimeDegreeVariant
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GoodOperatorSpectrum
+public import Formalism.LocalToGlobal.IndefiniteReal.CxLemmas
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InnerEqIntegralOfAe
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.DFinsupp
+public import Formalism.LocalRingCardinality.DataHost
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InnerEqIntegralOfAe
+import Formalism.LocalToGlobal.Divisibility.CoefMod
+import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+import Formalism.LocalToGlobal.IndefiniteReal.AutomorphicEvaluation
+import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+import Formalism.LocalToGlobal.IndefiniteReal.PartsOrth
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.ColDict
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SeamExLinCpt
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ConcreteLevelAdelicSubset
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StableIffCarrierEq
 public import Formalism.LocalToGlobal.ClassRec
 public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
 import Formalism.LocalToGlobal.HilbertRowConditions.IsHilbertCF
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChainTieAndV0Onto
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.IndefR.Links NumberField GlobalTheory.Mem.SJ
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.Mem.SJ
+
+theorem chainTie_and_v0Onto :
+    ∀ (D : D7) (Bs : DefBase D.what₂.LL) (A : DefAmb Bs) (X : CxData A) (fc : DefSub A → DefFace Bs) (s : Bool)
+      (R : Read D X fc s) (cr : Crd A fc) (M : Seam R cr), (R.DcPt → M.ChainTie) ∧ (R.ReadingFormsSpanGoodSubspace → M.GoodPartHasComplexCoordinates) := by
+  intro D Bs A X fc s R cr M
+  refine ⟨fun h u x y => ?_, fun h => ?_⟩
+  · rw [M.cφ_eq, M.cF_eq]
+    exact (h u x y).symm
+  · unfold Seam.GoodPartHasComplexCoordinates
+    rw [← h]
+    refine Submodule.span_le.2 ?_
+    rintro _ ⟨y, rfl⟩
+    exact ⟨_, M.cF_eq y⟩
+
+end GlobalTheory.Mem.SJ
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsReadOfMatrixTie
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.IndefR.Links NumberField GlobalTheory.Mem.SJ
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.Mem.SJ
+
+theorem sharp_iota_eq (D : D7) (μ : D.what₂.Tup) : (RowSide.sharp D).iota μ = D.what₂.iota μ := by
+  unfold RowSide.iota Rows.Data.iota
+  rw [PrimeDegreeVariant.sharp_downTo]
+  rfl
+
+theorem exists_read_of_matrix_tie (D : D7) {Bs : DefBase D.what₂.LL} {A : DefAmb Bs} (X : CxData A)
+    (fc : DefSub A → DefFace Bs) (cr : Crd A fc) (μ : D.what₂.Tup) (hμ : μ = D.what₂.mu0)
+    (hv : Bs.v0 = InfinitePlace.mk D.what₂.embLL) {n : ℕ}
+    (jA : (Fin n → D.what₂.LL) →ₛₗ[D.what₂.embLL] D.what₂.Amb μ)
+    (H E : Matrix (Fin n) (Fin n) D.what₂.LL) (V : Matrix (Fin n) (Fin ((fc X.zs).Df1.nV Bs.μ0)) D.what₂.LL)
+    (wU : D.what₂.Word → (fc X.zs).Dc.Mem)
+    (eNu : ∀ u, (Fin ((fc X.zs).Dc.a (wU u)) → D.what₂.LL) ≃ₗ[D.what₂.LL] (D.div.Nu u).V)
+    (eRR : (Fin (X.data cr true).D → D.what₂.LL) ≃ₗ[D.what₂.LL] D.div.RR.V)
+    (hF : FormsTie D.what₂.embLL (W := (RowSide.sharp D).Amb μ) jA H E ((RowSide.sharp D).eOp μ))
+    (hE : LinearMap.range E.mulVecLin = LinearMap.range V.mulVecLin)
+    (hι : ∀ y, (RowSide.sharp D).iota μ (jA (V.mulVec y)) =
+      (RowSide.sharp D).jEE (eRR (((X.data cr true).ι Bs.μ0).mulVec (((fc X.zs).Df1.Pq Bs.μ0).mulVec y))))
+    (hNu : ∀ u, ∃ L, HLatTie (D.div.Nu u) L ((fc X.zs).Dc.Xc (wU u)) (eNu u)) :
+    ∃ Rd : Read D X fc (twAt D.what₂.embLL Bs.v0), HEq Rd.wU wU ∧ HEq Rd.eNu eNu ∧ HEq Rd.eRR eRR ∧
+      (∀ y, HEq (Rd.jV y) (jA (V.mulVec y))) ∧ Rd.ReadingFormsSpanGoodSubspace ∧ Rd.IotaRd cr ∧ Rd.NuTie ∧
+      ((∃ L, HLatTie D.div.RR L (X.data cr true).XE eRR) → Rd.RRTie cr) ∧
+      ((∀ (u : D.what₂.Word) (x : Fin ((fc X.zs).Dc.a (wU u)) → D.what₂.LL)
+          (y : Fin ((fc X.zs).Df1.nV Bs.μ0) → D.what₂.LL),
+          D.what₂.embLL ((fc X.zs).Dc.Pt (wU u) Bs.μ0 x y) =
+            D.what₂.perCol u μ (D.jN u (eNu u x)) (jA (V.mulVec y))) → Rd.DcPt) := by
+  subst hμ
+  refine ⟨⟨wU, eNu, eRR, jA.comp V.mulVecLin, hv, fun a => ?_⟩, HEq.rfl, HEq.rfl, HEq.rfl, fun _ => HEq.rfl,
+    ?_, fun y => ?_, hNu, fun h => h, fun h => h⟩
+  · rw [emb_eq D.what₂.embLL Bs.v0 a, sgAt_mk D.what₂.embLL hv]
+  · exact (GlobalTheory.range_op_eq_span_of_formsTie D.what₂.embLL (W := (RowSide.sharp D).Amb D.what₂.mu0) jA H E _ V hF hE).symm
+  · have h := hι y
+    rw [sharp_iota_eq] at h
+    exact h
+
+end GlobalTheory.Mem.SJ
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ICCptEq
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.Mem.SJ.RowB
+
+open Formalism.BasicNotions Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.IndefR.Links NumberField GlobalTheory.Mem.SJ
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem iC_cpt_eq {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {A : DefAmb Bs} (X : CxData A)
+    {fc : DefSub A → DefFace Bs} (cr : Crd A fc) (b : Bool) (t : Bs.Tup) (x : Fin ((lv (fc X.zs) b).dQ t) → K) :
+    X.iC cr b t (cpt Bs.v0.embedding x) = X.Θ t (X.jR t (cr.toR X.zs b t x)) := by
+  have hx : x = ∑ k, x k • (Pi.single k 1 : Fin ((lv (fc X.zs) b).dQ t) → K) := by
+    funext i
+    simp [Finset.sum_apply, Pi.single_apply]
+  conv_rhs => rw [hx]
+
+  simp only [CxData.iC, lin, Fintype.linearCombination_apply, map_sum, LinearMap.map_smulₛₗ, cpt, RingHom.id_apply]
+
+theorem theta_eq : ∀ (D : D7) (Bs : DefBase D.what₂.LL) (A : DefAmb Bs) (X : CxData A) (fc : DefSub A → DefFace Bs) (s : Bool) (R : Read D X fc s) (cr : Crd A fc) (M : Seam R cr) (eV : ∀ t, (Fin ((fc X.zs).Df1.nV t) → D.what₂.LL) →ₗ[D.what₂.LL] A.FR t), CxFacts X cr eV → R.IotaRd cr → ∀ y : Fin ((fc X.zs).Df1.nV Bs.μ0) → D.what₂.LL, X.Θ Bs.μ0 (X.jR Bs.μ0 (eV Bs.μ0 y)) = M.eR (D.what₂.iota D.what₂.mu0 (M.cF (cpt D.what₂.embLL y))) := by
+  intro D Bs A X fc s R cr M eV hF hI y
+  rw [M.cF_eq, hI y, M.eR_eq, X.rowMat_base cr true hF.h2, Matrix.one_mulVec, iC_cpt_eq, hF.theta y]
+  rfl
+
+end GlobalTheory.Mem.SJ.RowB
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KernelJoinOnV0Three
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.AutomorphicEvaluation Formalism.IndefR.Lev Formalism.L2.Theta NumberField MeasureTheory GlobalTheory.Mem.SJ Formalism.L2.SG.HidaSetting Formalism.L2.SG.PoincareInHH.PoincareSetting Formalism.L2.SG.RowDict Formalism.L2.SG.ColDict
+open scoped InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.Mem.SJ.KernelJoin
+
+theorem heq_of_reindex {K W Mem : Type} [Field K] (a : Mem → ℕ) {V : W → Type} [∀ u, AddCommGroup (V u)]
+    [∀ u, Module K (V u)] {Z : Mem → Type} {Y : W → Type} (b : ∀ x, Fin (a x) → Z x) (g : ∀ u, V u → Y u)
+    (w w' : W → Mem) (ν : ∀ u, (Fin (a (w u)) → K) ≃ₗ[K] V u) (ν' : ∀ u, (Fin (a (w' u)) → K) ≃ₗ[K] V u)
+    (hw : w = w') (hν : HEq ν ν') (h : ∀ u i, HEq (b (w' u) i) (g u (ν' u (Pi.single i 1)))) :
+    ∀ u i, HEq (b (w u) i) (g u (ν u (Pi.single i 1))) := by
+  subst hw
+  cases hν
+  exact h
+
+theorem smul_apply_eq_of_eq {A B : Type} [AddCommGroup B] [Module ℂ B] (f : A → B) {a a' : A} (h : a = a')
+    (k κ : ℂ) {b : B} (hb : f a' = κ • b) : k • f a = (k * κ) • b := by
+  rw [h, hb, mul_smul]
+
+end GlobalTheory.Mem.SJ.KernelJoin
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ThetaMapReferenceTupleGoodPartOntoRows
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.IndefR.Links NumberField GlobalTheory.Mem.SJ
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.Mem.SJ
+
+theorem kOf_apply_self_on {K : Type} [Field K] (σ : K →+* ℂ) (a : K) : kOf σ (σ a) = a := by
+  unfold kOf
+  have h : ∃ b : K, σ b = σ a := ⟨a, rfl⟩
+  rw [dite_eq_left h]
+  exact σ.injective h.choose_spec
+
+theorem relMat_self_on {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (f : (Fin n → ℂ) →ₗ[ℂ] E)
+    (hf : Function.Injective f) : relMat f f = 1 := by
+  ext i k
+  have h : ∃ y, f y = f (Pi.single k 1) := ⟨_, rfl⟩
+  have : solve f (f (Pi.single k 1)) = Pi.single k 1 := by
+    unfold solve
+    rw [dite_eq_left h]
+    exact hf h.choose_spec
+  simp only [relMat, Matrix.of_apply, this, Matrix.one_apply, Pi.single_apply]
+
+theorem kMat_one_on {K : Type} [Field K] (σ : K →+* ℂ) {n : ℕ} : kMat σ (1 : Matrix (Fin n) (Fin n) ℂ) = 1 := by
+  ext i k
+  simp only [kMat, Matrix.map_apply, Matrix.one_apply]
+  split_ifs
+  · simpa using kOf_apply_self_on σ 1
+  · simpa using kOf_apply_self_on σ 0
+
+theorem thetaMap_referenceTuple_goodPart_onto_rows : ∀ (D : D7) (Bs : DefBase D.what₂.LL) (A : DefAmb Bs) (X : CxData A) (fc : DefSub A → DefFace Bs) (s : Bool) (R : Read D X fc s) (cr : Crd A fc) (eV : ∀ t, (Fin ((fc X.zs).Df1.nV t) → D.what₂.LL) →ₗ[D.what₂.LL] A.FR t), CxFacts X cr eV → R.IotaRd cr → R.ReadingFormsSpanGoodSubspace → (D.what₂.V0 D.what₂.mu0).map (D.what₂.iota D.what₂.mu0) = ⊤ := by
+  intro D Bs A X fc s R cr eV hF hI hV
+  have h1 : X.rowMat cr true Bs.μ0 = 1 := by
+    unfold CxData.rowMat CxData.rowMatC
+    rw [relMat_self_on _ hF.h2.1, kMat_one_on]
+  rw [eq_top_iff, ← D.jEE_basis.2, Submodule.span_le]
+  rintro _ ⟨i, rfl⟩
+  obtain ⟨x, hx⟩ := R.eRR.surjective (D.div.RR.b i)
+  obtain ⟨y, hy⟩ := hF.wf.Pq_surj Bs.μ0 x
+  refine ⟨R.jV y, ?_, ?_⟩
+  · have : R.jV y ∈ Submodule.span ℂ (Set.range R.jV) := Submodule.subset_span ⟨y, rfl⟩
+    rw [hV] at this
+    exact this
+  · have := hI y
+    rw [h1, Matrix.one_mulVec] at this
+    exact this.trans (congrArg D.jEE ((congrArg R.eRR hy).trans hx))
+
+end GlobalTheory.Mem.SJ
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.JoinSubspaceRealDataExists
+
+section
 
 @[expose] public section
 
@@ -196,3 +411,6 @@ theorem core_latTie {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : Fam
 end
 
 end GlobalTheory.Mem.KJoinLat
+end
+end
+end

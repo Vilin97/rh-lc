@@ -5,10 +5,8 @@ public import Formalism.AdmissibleDesigns.InertiaActsTrivially
 public import Formalism.AdmissibleDesigns.KernelLengthHigherColumns
 public import Formalism.AdmissibleDesigns.MemImageOfTensorSum
 public import Formalism.AdmissibleDesigns.RankReductionIdempotentOne
-public import Formalism.AdmissibleDesigns.ContWRec
-public import Formalism.AdmissibleDesigns.EKSymmCont
-public import Formalism.AdmissibleDesigns.ExistsLx
-public import Formalism.AdmissibleDesigns.ExistsUnrDec
+public import Formalism.AdmissibleDesigns.LocCont
+public import Formalism.AdmissibleDesigns.TheoremN5OfNormalizedItems
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,8 +43,105 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.AdmissibleDesigns.EKSymmCont
+public import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
+public import Formalism.AdmissibleDesigns.ExistsUnrDec
+import Mathlib.Tactic.Linter.Style
 import Formalism.AdmissibleDesigns.PiEquiv2
 import Formalism.WachLatticeTwists.SplitClassesAll.Statement
+
+-- Source module: Formalism.AdmissibleDesigns.ContWRec
+
+section
+
+@[expose] public section
+
+variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
+
+noncomputable section
+
+open Formalism.BasicNotions Classical
+
+namespace Formalism.MainNotions.N.KOrb
+
+open Formalism.MainNotions Formalism.MainNotions.N NumberField IsDedekindDomain
+
+variable {D : D7} (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D i) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))
+  (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)
+
+theorem contW_rec (hd : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π) (hc : TruncatedSeriesCountingIdentities.FamilyContinuous i r) (l : K.Col i dc) :
+    KDim.ContW (i := i) (dc := dc) (ρ := ρ) (π := π) l :=
+  contW_of i dc ρ π (K.Norm.rhoCont_of i r ρ π hd hc) l
+
+end Formalism.MainNotions.N.KOrb
+
+end
+end
+end
+
+-- Source module: Formalism.AdmissibleDesigns.ExistsLx
+
+section
+
+@[expose] public section
+
+variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
+
+noncomputable section
+
+open Formalism.BasicNotions Classical
+
+namespace Formalism.MainNotions.N.KHf
+
+open Formalism.MainNotions Formalism.MainNotions.N NumberField IsDedekindDomain Formalism.NG
+
+variable {D : D7} (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D i)
+  {X' : Type} {d : Type} [Fintype d] [DecidableEq d]
+  {R' : Subalgebra (D.nd.O i) (X' → Matrix d d (FractionRing (D.nd.O i)))} {Tc : Type} [CommRing Tc] [Algebra Tc R']
+  (r : (D.nd.Om ≃ₐ[D.host.E] D.nd.Om) →* R') (χ : (D.nd.Om ≃ₐ[D.host.E] D.nd.Om) →* Tcˣ)
+
+theorem exists_Lx {Pe : Type} [AddCommGroup Pe] [Module R' Pe] [Module (D.nd.O i) Pe] [SMulCommClass R' (D.nd.O i) Pe]
+    {PE : Type} [AddCommGroup PE] [Module R' PE] [Module (D.nd.O i) PE] [SMulCommClass R' (D.nd.O i) PE]
+    (hPe : ∀ (c : D.nd.O i) (m : Pe), c • m = (algebraMap (D.nd.O i) R' c) • m)
+    (hPE : ∀ (c : D.nd.O i) (m : PE), c • m = (algebraMap (D.nd.O i) R' c) • m)
+    (j : ℕ → ℕ) (x' : X') (l : K.Col i dc)
+    (hO : letI := evalModO i (R' := R') x'
+      haveI := evalTower i (R' := R') x'
+      OrbC i dc (repE i dc r χ x' (K.colIdx i dc l)))
+    (hdim : DimLx i dc r χ j x' l) :
+    ∃ Lx : Submodule (FractionRing (D.nd.O i)) (↥(Γn i dc (K.colIdx i dc l)) → EvalSp (D.nd.O i) d R' x'),
+      LinearMap.range (colD (K := FractionRing (D.nd.O i)) (V := EvalSp (D.nd.O i) d R' x') r χ
+        (Γn i dc (K.colIdx i dc l))) ≤ Lx ∧
+      (∀ (f : Pe →ₗ[R'] EvalSp (D.nd.O i) d R' x')
+        (z : coZ1s (resRep (uRep (D.nd.O i) (M := Pe) r χ) (Γn i dc (K.colIdx i dc l)))),
+        Submodule.mkQ _ z ∈ Hfe₁ i dc r χ (Pe := Pe) l →
+        (fun g : Γn i dc (K.colIdx i dc l) => f ((z : Γn i dc (K.colIdx i dc l) → Pe) g)) ∈ Lx) ∧
+      (∀ (f : PE →ₗ[R'] EvalSp (D.nd.O i) d R' x')
+        (z : coZ1s (resRep (uRep (D.nd.O i) (M := PE) r χ) (Γn i dc (K.colIdx i dc l)))),
+        Submodule.mkQ _ z ∈ Hfe₁ i dc r χ (Pe := PE) l →
+        (fun g : Γn i dc (K.colIdx i dc l) => f ((z : Γn i dc (K.colIdx i dc l) → PE) g)) ∈ Lx) ∧
+      Module.rank (FractionRing (D.nd.O i))
+          (Lx ⧸ (LinearMap.range (colD (K := FractionRing (D.nd.O i)) (V := EvalSp (D.nd.O i) d R' x') r χ
+            (Γn i dc (K.colIdx i dc l)))).comap Lx.subtype) ≤
+        (j (K.colIdx i dc l) + Module.finrank (FractionRing (D.nd.O i))
+          (LinearMap.ker (colD (K := FractionRing (D.nd.O i)) (V := EvalSp (D.nd.O i) d R' x') r χ
+            (Γn i dc (K.colIdx i dc l)))) : ℕ) := by
+  refine ⟨Lx i dc r χ x' l, ?_, ?_, ?_, hdim⟩
+  · apply colD_le_Lx <;> assumption
+  · intro f z hz
+    apply comp_mem_Lx <;> assumption
+  · intro f z hz
+    apply comp_mem_Lx <;> assumption
+
+end Formalism.MainNotions.N.KHf
+
+end
+end
+end
+
+-- Source module: Formalism.AdmissibleDesigns.ColumnUnramifiedCharacter
+
+section
 
 @[expose] public section
 
@@ -154,4 +248,6 @@ end Cols
 
 end Formalism.MainNotions.N.K.StA
 
+end
+end
 end

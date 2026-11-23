@@ -26,45 +26,8 @@ public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShal
 public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KernelEqualityFirstOf
 public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KernelEqualitySecondOf
 public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KernelLessSecondOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KsecOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KuOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LApply
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LastRowCutoffOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LastRowIntegral
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LevelScalarAction
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LocalAlgebraPowers
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LocalUnramifiedOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LogBallEstimates
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LogNormEstimates
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.MeasureInverseInduction
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.NormAverageBound
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.OneMoreColumnOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PRSPole
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PoissonCutoffAlgebra
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PrimePairSetFirst
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PrimePairSetSecond
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PsiDeterminantFlag
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.QuadraticTransferFirst
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.QuadraticTransferReal
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.RhoSigmaFinite
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.RowsCompactSum
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SeparatedThetaSum
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SmoothVectorHyp
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SphericalIntegralStep
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SquareIntegralBound
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TableDegreeOneUnipotent
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TableDegreeThreeBase
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.ThetaDecayingFunction
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TorusPowerExponential
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TransformEmbeddingBlocks
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentBlockMeasure
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentMeasureProperties
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentZeroOfLevel
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UpperBlockProducts
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.VectorMeasureTranspose
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.VolumeShellOf
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.WeightCoefficients
-public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.WeightInverseContinuity
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.ColumnConjugationMeasure
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageOfIsCuspForm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -100,6 +63,295 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LApply
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HasCompactSupportEtaOf
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LastRowIntegral
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGenericOfIsLocComp
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageOfIsCuspFormStatement
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LocalAlgebraPowers
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LocalUnramifiedOf
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LogBallEstimates
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LogNormEstimates
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.MeasureInverseInduction
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.NormAverageBound
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.OneMoreColumnOf
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PRSPole
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PoissonCutoffAlgebra
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PrimePairSetFirst
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PrimePairSetSecond
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.PsiDeterminantFlag
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.QuadraticTransferFirst
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.QuadraticTransferReal
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.RhoSigmaFinite
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.RowsCompactSum
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SeparatedThetaSum
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SmoothVectorHyp
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SphericalIntegralStep
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SquareIntegralBound
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TableDegreeOneUnipotent
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TableDegreeThreeBase
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.ThetaDecayingFunction
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TorusPowerExponential
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.TransformEmbeddingBlocks
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentBlockMeasure
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentMeasureProperties
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UnipotentZeroOfLevel
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.UpperBlockProducts
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixAdelic
+public import CompanionTheory.AutomorphicTheory.UnitriangularMeasure.AdeleCoordinateMeasure.GJGlobalModulus
+import Mathlib.Tactic.Linter.Style
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.VolumeShellOf
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.WeightCoefficients
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.WeightInverseContinuity
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KsecOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open GlobalTheory.CuspGeneric GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.jumpWindows PositivityTheory.RgJS
+open GroundTheory.Automorphic GroundTheory.Automorphic.FourierWhittaker GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.Spherical
+open scoped ENNReal ComplexConjugate
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.AdelicQuotientData
+
+theorem ksec_of : jumpWindows.G2c → jumpWindows.G5 → CuspDecayShortRowColumn → K9 → KSec := by
+  intro hG2c hG5 hG1d hK9 E _ _ _ k hk ψ hψ hcof π hπ
+  obtain ⟨S₀, hS₀⟩ := hK9 E k hk ψ hψ hcof π hπ
+  refine ⟨S₀, fun S hS => ⟨(hS₀ S hS).1, fun α hα => ?_⟩⟩
+  obtain ⟨φ, hφ, h, x, hh, hx, hsat, -, hone⟩ := (hS₀ S hS).2 α hα
+  have hval : ∀ g, Rt E k h x g = φ.1 (g * h) := fun g => by rw [Rt_apply, hx]
+  have hgood : Good ψ (k - 1) (x : GA E k → ℂ) := by
+    rw [hx]; exact good_of_isCuspForm E k ψ φ (π.cusp φ hφ)
+  refine ⟨φ, hφ, h, Rt E k h x, hval, ?_⟩
+  refine ⟨(hG5 E k ψ hψ).2.2.1 x h hgood, ?_, ?_, ?_, ?_, ?_, hone⟩
+  · intro γ g
+    rw [hval, hval, mul_assoc]
+    exact (π.cusp φ hφ).1.left γ (g * h)
+  · intro t g
+    rw [hval, hval, mul_assoc]
+    exact hπ φ hφ t (g * h)
+  · intro w
+    obtain ⟨Y, -, hYst, hYmem⟩ := hG2c E k w.1 (Finset.univ.val.map (α w)) (by simp)
+    exact (hYmem _).1 (hYst h (hh w.1 w.2) x ((hYmem x).2 (hsat w)))
+  · have e : (⇑(Rt E k h x) : GA E k → ℂ) = fun g => φ.1 (g * h) := funext hval
+    rw [e]
+    exact (hG1d E k hk π hπ φ hφ h).1
+  · have := (hG1d E k hk π hπ φ hφ h).2
+    simpa only [hval] using this
+
+end PositivityTheory.AdelicQuotientData
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.KuOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open GlobalTheory.CuspGeneric GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.jumpWindows PositivityTheory.RgJS
+open GroundTheory.Automorphic GroundTheory.Automorphic.FourierWhittaker GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.Spherical
+open scoped ENNReal ComplexConjugate
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.AdelicQuotientData
+
+theorem ku_of : jumpWindows.G5 → D0 → KU := by
+  intro hG hD E _ _ _ k ψ hψ φ u hφ h1
+  obtain ⟨-, -, -, hW⟩ := hG E k ψ hψ
+  have hWc : Continuous (Wh ψ φ) := (hW φ hφ).1
+  obtain ⟨hpos, hmul, hcont, -⟩ := hD E k
+  have hD1 : Dt (1 : GA E k) = 1 := by
+    have h := hmul 1 1
+    rw [show (1 : GA E k) * 1 = 1 from mul_one 1] at h
+    exact mul_left_cancel₀ (hpos 1).ne' (h.symm.trans (mul_one _).symm)
+  set F : GA E k → ℂ := fun c => conj (Wh ψ φ c) * (Dt c : ℂ) ^ ((u : ℂ) * Complex.I) with hF
+  have hDc : Continuous fun c : GA E k => (Dt c : ℂ) := Complex.continuous_ofReal.comp hcont
+  have hFc : Continuous F := (Complex.continuous_conj.comp hWc).mul
+    (hDc.cpow continuous_const fun c => Complex.ofReal_mem_slitPlane.2 (hpos c))
+  have hF1 : F 1 = 1 := by simp [F, h1, hD1]
+  refine ⟨{c | Dt c ∈ Set.Ioo (1 / 2 : ℝ) 2} ∩ {c | 0 < (F c).re}, ?_, ?_⟩
+  · apply IsOpen.mem_nhds
+    · exact (isOpen_Ioo.preimage hcont).inter (isOpen_lt continuous_const (Complex.continuous_re.comp hFc))
+    · simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_Ioo, hD1, hF1]
+      norm_num
+  · rintro c ⟨⟨ha, hb⟩, hc⟩
+    exact ⟨ha.le, hb.le, hc⟩
+
+end PositivityTheory.AdelicQuotientData
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LastRowCutoffOf
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.AdelicQuotientData
+
+theorem last_row_cutoff_of : jumpWindows.S4 → jumpWindows.S8 → jumpWindows.G0 → LastRowCutoff := @GlobalTheory.CompanionTheory.CutOff.exists_cut
+
+end PositivityTheory.AdelicQuotientData
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.LevelScalarAction
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open GlobalTheory.CuspGeneric GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.jumpWindows PositivityTheory.RgJS
+open GroundTheory.Automorphic GroundTheory.Automorphic.FourierWhittaker GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.Spherical
+open scoped ENNReal ComplexConjugate
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.AdelicQuotientData
+
+namespace LevelScalarAction
+
+variable {E : Type} [Field E] [NumberField E] {k : ℕ}
+
+theorem lev_smul {S : Finset (Pl E)} {x : XB E k} (h : Lev S x) (c : ℂ) : Lev S (c • x) := by
+  intro w hw
+  filter_upwards [h w hw] with u hu
+  have hu' : repW k w u x = x := hu
+  change repW k w u (c • x) = c • x
+  rw [map_smul, hu']
+
+end LevelScalarAction
+
+theorem global_level_of : jumpWindows.G0 → jumpWindows.G1 → jumpWindows.AlmostEverywhereSpherical → jumpWindows.G2c → jumpWindows.G5 → K8 → K9 := by
+  intro hG0 hG1 hG1b hG2c hG5 hK8 E _ _ _ k _ ψ hψ hcond π hπ
+  obtain ⟨φ₀, hφ₀, hne⟩ := Submodule.exists_mem_ne_zero_of_ne_bot π.ne_bot
+  obtain ⟨x₀, hx₀, -, hlev⟩ := hG1 E k π hπ φ₀ hφ₀
+  have hev := hcond.and (hG1b E k π hπ φ₀ hφ₀ x₀ hx₀)
+  have hfin := Filter.eventually_cofinite.1 hev
+  refine ⟨hfin.toFinset, fun S hS => ?_⟩
+  have hoff : ∀ w, w ∉ S → Cond ψ w ∧ ∀ B, (CG.mk π).HasSat w B → SatFn w B x₀ := by
+    intro w hw
+    by_contra hc
+    exact hw (hS ((Set.Finite.mem_toFinset _).2 hc))
+  refine ⟨fun w hw => (hoff w hw).1, fun α hα => ?_⟩
+  have hgood : Good ψ (k - 1) (x₀ : GA E k → ℂ) := by
+    rw [hx₀]; exact GlobalTheory.T.isMirabolicWhittakerStage_of_isCuspForm E k ψ φ₀ (π.cusp _ hφ₀)
+  have hx0 : x₀ ≠ 0 := by
+    intro h
+    subst h
+    exact hne (Subtype.ext (by rw [← hx₀]; rfl))
+  obtain ⟨g, hg⟩ := ((hG5 E k ψ hψ).2.2.2 x₀ hgood).2.1 hx0
+  have hsat : ∀ w : Off E S, SatFn w.1 (Finset.univ.val.map (α w)) x₀ := fun w => (hoff w.1 w.2).2 _ (hα w)
+  obtain ⟨g₀, h1, h2, h3⟩ := (hG0 E k).2.2.2.2.2.2.2.2.2.2.1 S g
+  have hne0 : Wh ψ x₀ g₀ ≠ 0 :=
+    ((hK8 E k ψ hψ S (fun w hw => (hoff w hw).1) α x₀ hgood hsat).2.2 g hg).1 g₀ h1 h2 h3
+  refine ⟨(Wh ψ x₀ g₀)⁻¹ • φ₀, π.V.smul_mem _ hφ₀, g₀, (Wh ψ x₀ g₀)⁻¹ • x₀, h3, ?_, ?_, LevelScalarAction.lev_smul (hlev S) _, ?_⟩
+  · funext y
+    change (Wh ψ x₀ g₀)⁻¹ * x₀ y = (Wh ψ x₀ g₀)⁻¹ * φ₀.1 y
+    rw [hx₀]
+  · intro w
+    obtain ⟨Y, -, -, hY⟩ := hG2c E k w.1 (Finset.univ.val.map (α w)) (by simp)
+    exact (hY _).1 (Y.smul_mem _ ((hY x₀).2 (hsat w)))
+  · rw [(hG5 E k ψ hψ).2.1, one_mul]
+    change whit ψ (k - 1) (fun y => (Wh ψ x₀ g₀)⁻¹ * x₀ y) g₀ = 1
+    rw [GlobalTheory.CuspRep.Generic.whit_smul]
+    exact inv_mul_cancel₀ hne0
+
+end PositivityTheory.AdelicQuotientData
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.VectorMeasureTranspose
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open GlobalTheory.CuspGeneric GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.jumpWindows PositivityTheory.RgJS
+open GroundTheory.Automorphic GroundTheory.Automorphic.FourierWhittaker GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.Spherical
+open scoped ENNReal ComplexConjugate
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.AdelicQuotientData
+
+namespace VectorMeasureTranspose
+
+variable {E : Type} [Field E] [NumberField E] {k : ℕ}
+
+def trM (g : GA E k) : GA E k :=
+  ⟨(g.val)ᵀ, (g⁻¹.val)ᵀ, by rw [← Matrix.transpose_mul, Units.inv_mul, Matrix.transpose_one],
+    by rw [← Matrix.transpose_mul, Units.mul_inv, Matrix.transpose_one]⟩
+
+theorem det_trM (g : GA E k) : GeneralLinearGroup.det (trM g) = GeneralLinearGroup.det g := by
+  exact Units.ext (Matrix.det_transpose g.val)
+
+theorem Dt_trM (g : GA E k) : Dt (trM g) = Dt g := by
+  unfold Dt
+  rw [det_trM]
+
+theorem vecMeasure_eq : vecMeasure E (Fin k) = GroundTheory.Automorphic.GJMatrix.adeleMeasurePi E := rfl
+
+theorem vecMul_eq (g : GA E k) (F : (Fin k → Ad E) → ℝ≥0∞) (hF : Measurable F) :
+    ∫⁻ x, F (x ᵥ* g.val) ∂vecMeasure E (Fin k) = ENNReal.ofReal (Dt g)⁻¹ * ∫⁻ x, F x ∂vecMeasure E (Fin k) := by
+  have hm : Measurable fun x : Fin k → Ad E => x ᵥ* g.val := GroundTheory.Automorphic.GJGlobal.Modulus.measurable_vecMul' g
+  have e1 : ∫⁻ x, F x ∂((GroundTheory.Automorphic.GJMatrix.adeleMeasurePi E).map fun x : Fin k → Ad E => x ᵥ* g.val) =
+      ∫⁻ x, F (x ᵥ* g.val) ∂GroundTheory.Automorphic.GJMatrix.adeleMeasurePi E := lintegral_map hF hm
+  have h := GroundTheory.Automorphic.GJGlobal.Modulus.map_vecMul_adeleMeasurePi g
+  unfold Dt
+  rw [vecMeasure_eq, ← e1, h, lintegral_smul_measure]
+  try rw [smul_eq_mul]
+
+theorem mulVec_eq (g : GA E k) (F : (Fin k → Ad E) → ℝ≥0∞) (hF : Measurable F) :
+    ∫⁻ x, F (g.val *ᵥ x) ∂vecMeasure E (Fin k) = ENNReal.ofReal (Dt g)⁻¹ * ∫⁻ x, F x ∂vecMeasure E (Fin k) := by
+  have e : ∀ x : Fin k → Ad E, F (g.val *ᵥ x) = F (x ᵥ* (trM g).val) := fun x => by
+    show F (g.val *ᵥ x) = F (x ᵥ* (g.val)ᵀ)
+    rw [Matrix.vecMul_transpose]
+  refine (lintegral_congr e).trans ?_
+  rw [vecMul_eq (trM g) F hF, Dt_trM]
+
+end VectorMeasureTranspose
+
+theorem linear_change_variables_of : D0 → AdelicLinearChange := by
+  intro _ E _ _ _ k g F hF
+  exact ⟨VectorMeasureTranspose.mulVec_eq g F hF, VectorMeasureTranspose.vecMul_eq g F hF⟩
+
+end PositivityTheory.AdelicQuotientData
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.RsPoleOfInputs
+
+section
 
 @[expose] public section
 
@@ -180,4 +432,6 @@ theorem rsPole_of_inputs (eJS2G0 : jumpWindows.G0) (eCAUCHY : CAUCHY) (eJS2S1 : 
 
 end PositivityTheory.AdelicQuotientData
 
+end
+end
 end

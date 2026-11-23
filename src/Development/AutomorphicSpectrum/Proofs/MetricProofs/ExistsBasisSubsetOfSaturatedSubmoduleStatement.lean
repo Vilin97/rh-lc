@@ -2,7 +2,6 @@ module
 
 public import Mathlib.LinearAlgebra.FreeModule.Basic
 public import Mathlib.RingTheory.Finiteness.Defs
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsBasisSubsetOfSaturatedSubmodule
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,9 +41,74 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.FreeModule.PID
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.ExistsIntSmulIsAdicIntegralInTensorBasis
 import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.CoordinateIdeals.FubiniLevi
 import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestTer
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Yha6.main :
+    ∀ (Λ : Type) [inst : AddCommGroup Λ] [Module.Free ℤ Λ] [Module.Finite ℤ Λ] (N : Submodule ℤ Λ),
+      (∀ (v : Λ) (n : ℤ), n ≠ (0 : ℤ) → n • v ∈ N → v ∈ N) →
+        ∃ (k : ℕ) (n : ℕ) (b : Module.Basis (Fin n) ℤ Λ) (f : Fin k → Fin n),
+          Function.Injective f ∧ Submodule.span ℤ (Set.range fun (i : Fin k) ↦ (b : Fin n → Λ) (f i)) = N := by
+  intro Λ _ _ _ N hsat
+  obtain ⟨k, snf⟩ := Submodule.smithNormalForm (Module.finBasis ℤ Λ) N
+  refine ⟨k, _, snf.bM, snf.f, snf.f.injective, ?_⟩
+  have ha : ∀ i, snf.a i ≠ 0 := by
+    intro i h
+    have h1 := snf.snf i
+    rw [h, zero_smul] at h1
+    exact snf.bN.ne_zero i (Subtype.ext h1)
+  have hmem : ∀ i, snf.bM (snf.f i) ∈ N := by
+    intro i
+    apply hsat _ (snf.a i) (ha i)
+    rw [← snf.snf i]
+    exact (snf.bN i).2
+  apply le_antisymm
+  · rw [Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    exact hmem i
+  · intro x hx
+    have hx' : (⟨x, hx⟩ : N) ∈ Submodule.span ℤ (Set.range snf.bN) := by
+      rw [snf.bN.span_eq]; trivial
+    have := Submodule.apply_mem_span_image_of_mem_span N.subtype hx'
+    simp only [Submodule.subtype_apply] at this
+    refine Submodule.span_le.mpr ?_ this
+    rintro _ ⟨_, ⟨i, rfl⟩, rfl⟩
+    simp only [Submodule.subtype_apply, snf.snf i]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsBasisSubsetOfSaturatedSubmodule
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Ar.Lattice
+
+theorem exists_basis_span_eq_of_saturated (Λ : Type) [AddCommGroup Λ] [Module.Free ℤ Λ]
+    [Module.Finite ℤ Λ] (N : Submodule ℤ Λ)
+    (hN : ∀ (v : Λ) (n : ℤ), n ≠ 0 → n • v ∈ N → v ∈ N) :
+    ∃ (k n : ℕ) (b : Module.Basis (Fin n) ℤ Λ) (f : Fin k → Fin n),
+      Function.Injective f ∧ Submodule.span ℤ (Set.range fun i => b (f i)) = N :=
+  _root_.UpperTheory.Reformulated.B.Yha6.main Λ N hN
+
+end GlobalTheory.CompanionTheory.Ar.Lattice
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsBasisSubsetOfSaturatedSubmoduleStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +116,5 @@ open NumberField Matrix Filter Topology GlobalTheory.CompanionTheory.Ar GlobalTh
 
 theorem _root_.GlobalTheory.T.exists_basis_subset_of_saturated_submodule : ∀ (Λ : Type) [AddCommGroup Λ] [Module.Free ℤ Λ] [Module.Finite ℤ Λ] (N : Submodule ℤ Λ), (∀ (v : Λ) (n : ℤ), n ≠ 0 → n • v ∈ N → v ∈ N) → ∃ (k n : ℕ) (b : Module.Basis (Fin n) ℤ Λ) (f : Fin k → Fin n), Function.Injective f ∧ Submodule.span ℤ (Set.range fun i => b (f i)) = N := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Lattice.exists_basis_span_eq_of_saturated | exact GlobalTheory.CompanionTheory.Ar.Lattice.exists_basis_span_eq_of_saturated | (intros; apply GlobalTheory.CompanionTheory.Ar.Lattice.exists_basis_span_eq_of_saturated <;> assumption)
+end
+end

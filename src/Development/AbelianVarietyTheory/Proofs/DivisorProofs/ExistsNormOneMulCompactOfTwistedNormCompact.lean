@@ -4,10 +4,7 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwCo
 public import Mathlib.Analysis.Normed.Field.Basic
 public import Mathlib.Topology.Instances.Matrix
 public import Mathlib.Topology.MetricSpace.ProperSpace
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinMatrixReducedOfCharpolySeparableStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCompactPreimageQuadraticMapNoNullVectorsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedArtinianInvolutionIdempotentSplitStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistedCentralizerIsNormOneTorus
+public import Mathlib.FieldTheory.Separable
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,16 +18,16 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Artinian.Instances
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -52,15 +48,171 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
-public import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Minpoly
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCompactPreimageQuadraticMapNoNullVectorsStatement
+public import Mathlib.Algebra.Group.Idempotent
+public import Mathlib.RingTheory.Artinian.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.RingTheory.Artinian.Module
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistedCentralizerIsNormOneTorus
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.Topology.Algebra.Group.Units
 import Development.AbelianVarietyTheory.Definitions.Divisors.SimpleTwistedTraceFormulaStable
 import Development.AbelianVarietyTheory.Definitions.Foundations.SmoothPartStable
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeDefiniteUnitary
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
 import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SatakeComb
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinMatrixReducedOfCharpolySeparable
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+namespace GlobalTheory
+
+theorem adjoin_matrix_reduced_of_charpoly_separable :
+    ∀ (K : Type) [Field K] (n : ℕ) (N : Matrix (Fin n) (Fin n) K), N.charpoly.Separable →
+      ∀ g ∈ Algebra.adjoin K {N}, ∀ m : ℕ, g ^ m = 0 → g = 0 := by
+  intro K _ n N hsep g hg m hm
+  rcases Nat.eq_zero_or_pos m with rfl | hmpos
+  · rw [pow_zero] at hm
+    calc g = g * 1 := (mul_one g).symm
+      _ = 0 := by rw [hm, mul_zero]
+  rw [Algebra.adjoin_singleton_eq_range_aeval] at hg
+  obtain ⟨P, rfl⟩ := hg
+  have h1 : minpoly K N ∣ P ^ m := minpoly.dvd K N (by rw [map_pow]; exact hm)
+  have hs : (minpoly K N).Separable := hsep.of_dvd (Matrix.minpoly_dvd_charpoly N)
+  have h2 : minpoly K N ∣ P := (hs.squarefree.dvd_pow_iff_dvd hmpos.ne').mp h1
+  obtain ⟨q, hq⟩ := h2
+  show aeval N P = 0
+  rw [hq, map_mul, minpoly.aeval, zero_mul]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinMatrixReducedOfCharpolySeparableStatement
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+theorem _root_.GlobalTheory.T.eq_zero_of_pow_eq_zero_of_mem_adjoin_of_charpoly_separable : ∀ (K : Type) [Field K] (n : ℕ) (N : Matrix (Fin n) (Fin n) K), N.charpoly.Separable → ∀ g ∈ Algebra.adjoin K {N}, ∀ m : ℕ, g ^ m = 0 → g = 0 := by
+  first | exact @GlobalTheory.adjoin_matrix_reduced_of_charpoly_separable | exact GlobalTheory.adjoin_matrix_reduced_of_charpoly_separable | (intros; apply GlobalTheory.adjoin_matrix_reduced_of_charpoly_separable <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedArtinianInvolutionIdempotentSplit
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+namespace GlobalTheory
+
+theorem reducedArtinian_exists_idem {R : Type} [CommRing R] [IsReduced R] [IsArtinianRing R]
+    (a : R) : ∃ e b : R, e * e = e ∧ e = a * b ∧ a * e = a := by
+  obtain ⟨n, y, hy⟩ := IsArtinian.exists_pow_succ_smul_dvd a (1 : R)
+  simp only [smul_eq_mul, mul_one, Nat.succ_eq_add_one] at hy
+  have key : ∀ k : ℕ, a ^ n = a ^ (n + k) * y ^ k := by
+    intro k
+    induction k with
+    | zero => simp
+    | succ k ih => linear_combination ih + (-(a ^ k * y ^ k)) * hy
+  have hm : a ^ (n + 1) = a ^ (n + 1 + (n + 1)) * y ^ (n + 1) := by
+    linear_combination a * key (n + 1)
+  refine ⟨a ^ (n + 1) * y ^ (n + 1), a ^ n * y ^ (n + 1), ?_, by ring, ?_⟩
+  · linear_combination (-(y ^ (n + 1))) * hm
+  · have h0 : (1 - a ^ (n + 1) * y ^ (n + 1)) * a ^ (n + 1) = 0 := by linear_combination hm
+    have hnil : IsNilpotent ((1 - a ^ (n + 1) * y ^ (n + 1)) * a) := by
+      refine ⟨n + 1, ?_⟩
+      rw [mul_pow, pow_succ (1 - a ^ (n + 1) * y ^ (n + 1)) n, mul_assoc, h0, mul_zero]
+    have := hnil.eq_zero
+    linear_combination -this
+
+theorem reducedArtinian_involution_split :
+    ∀ (R : Type) [CommRing R] [IsReduced R] [IsArtinianRing R] (σ : R →+* R), (∀ x, σ (σ x) = x) →
+      ∃ e f : R, IsIdempotentElem e ∧ IsIdempotentElem f ∧ e * σ e = 0 ∧ e + σ e + f = 1 ∧
+        ∀ w, w * σ w = 0 → w * f = 0 := by
+  intro R _ _ _ σ hσ
+  let S : Set (Ideal R) := {I | ∃ e : R, e * e = e ∧ e * σ e = 0 ∧ I = Ideal.span {1 - e - σ e}}
+  have hS : S.Nonempty := ⟨_, 0, by simp, by simp, rfl⟩
+  obtain ⟨I, ⟨e, he, heσ, rfl⟩, hmin⟩ := WellFounded.has_min wellFounded_lt S hS
+  have hσe : σ e * σ e = σ e := by rw [← map_mul, he]
+  set f := 1 - e - σ e with hfdef
+  have hf : f * f = f := by linear_combination he + hσe + 2 * heσ
+  have hσf : σ f = f := by simp only [hfdef, map_sub, map_one, hσ]; ring
+  have hef : e * f = 0 := by linear_combination -he - heσ
+  have hσef : σ e * f = 0 := by linear_combination -hσe - heσ
+  refine ⟨e, f, he, hf, heσ, by ring, ?_⟩
+  intro w hw
+  by_contra hwf
+  set w' := w * f with hw'def
+  have hw'σ : w' * σ w' = 0 := by
+    rw [hw'def, map_mul, hσf]; linear_combination (f * f) * hw
+  obtain ⟨ε, a, hε, hεa, hw'ε⟩ := reducedArtinian_exists_idem w'
+  have hεne : ε ≠ 0 := by
+    intro h0; rw [h0, mul_zero] at hw'ε; exact hwf hw'ε.symm
+  have hεσ : ε * σ ε = 0 := by
+    rw [hεa, map_mul]; linear_combination (a * σ a) * hw'σ
+  have hw'f : w' * f = w' := by rw [hw'def, mul_assoc, hf]
+  have hεf : ε * f = ε := by rw [hεa]; linear_combination a * hw'f
+  have hσεf : σ ε * f = σ ε := by
+    have := congrArg σ hεf; rw [map_mul, hσf] at this; exact this
+  have hσε : σ ε * σ ε = σ ε := by rw [← map_mul, hε]
+  have heε : e * ε = 0 := by linear_combination (-e) * hεf + ε * hef
+  have heσε : e * σ ε = 0 := by linear_combination (-e) * hσεf + σ ε * hef
+  have hσeε : σ e * ε = 0 := by linear_combination (-σ e) * hεf + ε * hσef
+  have hmem : Ideal.span {1 - (e + ε) - σ (e + ε)} ∈ S :=
+    ⟨e + ε, by linear_combination he + hε + 2 * heε,
+      by rw [map_add (f := _)]; linear_combination heσ + heσε + hσeε + hεσ, rfl⟩
+  apply hmin _ hmem
+  have hff : f * (1 - (e + ε) - σ (e + ε)) = 1 - (e + ε) - σ (e + ε) := by
+    rw [map_add (f := _)]; linear_combination hf - hεf - hσεf
+  refine lt_of_le_of_ne ?_ ?_
+  · rw [Ideal.span_singleton_le_span_singleton]
+    exact ⟨_, hff.symm⟩
+  · intro hEq
+    have : f ∈ Ideal.span {1 - (e + ε) - σ (e + ε)} := by
+      rw [hEq]; exact Ideal.mem_span_singleton_self f
+    obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp this
+    apply hεne
+    have hεg : ε * (1 - (e + ε) - σ (e + ε)) = 0 := by
+      rw [map_add (f := _)]; linear_combination -heε - hσeε - hε - hεσ
+    linear_combination -hεf - ε * hc + c * hεg
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReducedArtinianInvolutionIdempotentSplitStatement
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+theorem _root_.GlobalTheory.T.reduced_artinian_involution_idempotent_split : ∀ (R : Type) [CommRing R] [IsReduced R] [IsArtinianRing R] (σ : R →+* R), (∀ x, σ (σ x) = x) → ∃ e f : R, IsIdempotentElem e ∧ IsIdempotentElem f ∧ e * σ e = 0 ∧ e + σ e + f = 1 ∧ ∀ w, w * σ w = 0 → w * f = 0 := by
+  first | exact @GlobalTheory.reducedArtinian_involution_split | exact GlobalTheory.reducedArtinian_involution_split | (intros; apply GlobalTheory.reducedArtinian_involution_split <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNormOneMulCompactOfTwistedNormCompact
+
+section
 
 @[expose] public section
 
@@ -195,3 +347,5 @@ theorem exists_normOne_mul_compact : ∀ (K : Type) [NontriviallyNormedField K] 
       exact congrArg MulOpposite.op (congrArg Subtype.val (show e + σ e * (zi * σ zi) + zi * f = zi * tA by
         rw [htA]; linear_combination (-e) * hz1))
 end GlobalTheory.Tw.NormOneCore
+end
+end

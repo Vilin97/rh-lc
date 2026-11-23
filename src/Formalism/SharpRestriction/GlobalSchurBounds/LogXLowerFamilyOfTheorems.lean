@@ -5,7 +5,7 @@ public import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallShar
 import Formalism.LocalToGlobal.GlobalTheory.LossRequirementsOfSmallShares
 import Formalism.LocalToGlobal.GlobalTheory.PlacesP
 public import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
-public import Formalism.SharpRestriction.SmoothDesignExistence.LinkGLOBALPk
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +42,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+import Formalism.SharpRestriction.GlobalSchurBounds.QuadraticLogDerivCongr
+
+-- Source module: Formalism.SharpRestriction.SmoothDesignExistence.LinkGLOBALPk
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.Pk
+
+open Formalism.BasicNotions Formalism.MainNotions.Lnk Formalism.MainNotions.GlobalTheoryTheory
+
+theorem closed_CH (𝒞 : FamClass) : Closed 𝒞 fun _ CH => 0 < CH := by
+  refine ⟨1, one_pos, fun _ _ _ => ⟨⟨0, fun _ => 0, fun _ => 1, fun _ => 0⟩, fun Fm CH _ hL => ?_⟩⟩
+  have h : (1 : ℝ) ≤ CH := hL.2.2.1 CH (by simp [Formalism.MainNotions.FamP.cMid])
+  linarith
+
+end Formalism.MainNotions.Pk
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.LogXLowerFamilyOfTheorems
+
+section
 
 @[expose] public section
 
@@ -107,4 +137,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.GlobalTh
 
 end Formalism.MainNotions.Wire
 
+end
+end
 end

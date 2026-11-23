@@ -2,12 +2,14 @@ module
 
 public import Formalism.SharpRestriction.Divisibility.ProductZerothFirstParts
 public import Formalism.GaussJetBounds.StatementU
-public import Formalism.GaussJetBounds.OneLetterGauss
-public import Formalism.GaussJetBounds.ThmAGauss
+public import Formalism.GaussJetBounds.GaussJetProofs.OneGauss
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -19,7 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,9 +40,29 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GaussJetBounds.ThmAGauss
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.GaussJetBounds.OneLetterGauss
+
+section
+
+@[expose] public section
+
+namespace Formalism.DworkPowerSeriesWeights
+
+theorem oneLetterGauss : OneLetterGauss := one_letter_gauss_sum
+
+end Formalism.DworkPowerSeriesWeights
+end
+end
+
+-- Source module: Formalism.SharpRestriction.Divisibility.JetPolynomialLogs.DworkPowerSeriesWeights
+
+section
 
 @[expose] public section
 
@@ -377,3 +398,6 @@ theorem top0 (l d : ℕ) [NeZero d] (TT : Finset (ZMod d)) (s : ZMod d) :
   simp [topTerm, capL]
 
 end Formalism.MainNotions.DIV.Bridge.DworkPowerSeriesWeights
+end
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.RingTheory.MvPowerSeries.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffFinsuppProdConstFreeEqZeroOfDegreeLt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +19,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.MvPowerSeries.Order
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -46,6 +47,37 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDv
 import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboundarySmul
 import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
 import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsCounitDerivationCounitComp
+public import Mathlib.Data.ENat.Defs
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffFinsuppProdConstFreeEqZeroOfDegreeLt
+
+section
+
+@[expose] public section
+
+open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta GlobalTheory.PDivLat
+
+namespace GlobalTheory.DivMono
+
+theorem coeff_finsuppProd_eq_zero_of_degree_lt :
+    ∀ (R : Type) [CommRing R] (σ τ : Type) (u : τ → MvPowerSeries σ R), (∀ j, constantCoeff (u j) = 0) →
+      ∀ (α : τ →₀ ℕ) (β : σ →₀ ℕ), β.degree < α.degree → coeff β (α.prod fun j e => u j ^ e) = 0 := by
+  intro R _ σ τ u hu α β hβ
+  apply coeff_of_lt_order
+  have hle : ((α.degree : ℕ) : ℕ∞) ≤ (α.prod fun j e => u j ^ e).order := by
+    unfold Finsupp.prod
+    refine le_trans ?_ (le_order_prod (fun j => u j ^ α j) α.support)
+    rw [Finsupp.degree_apply, Nat.cast_sum]
+    exact Finset.sum_le_sum fun j _ => le_order_pow_of_constantCoeff_eq_zero (α j) (hu j)
+  exact lt_of_lt_of_le (by exact_mod_cast hβ) hle
+
+end GlobalTheory.DivMono
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffFinsuppProdConstFreeEqZeroOfDegreeLtStatement
+
+section
 
 @[expose] public section
 
@@ -53,3 +85,5 @@ open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory
 
 theorem _root_.GlobalTheory.T.coeff_finsuppProd_constFree_eq_zero_of_degree_lt : ∀ (R : Type) [CommRing R] (σ τ : Type) (u : τ → MvPowerSeries σ R), (∀ j, constantCoeff (u j) = 0) → ∀ (α : τ →₀ ℕ) (β : σ →₀ ℕ), β.degree < α.degree → coeff β (α.prod fun j e => u j ^ e) = 0 := by
   first | exact @GlobalTheory.DivMono.coeff_finsuppProd_eq_zero_of_degree_lt | exact GlobalTheory.DivMono.coeff_finsuppProd_eq_zero_of_degree_lt | (intros; apply GlobalTheory.DivMono.coeff_finsuppProd_eq_zero_of_degree_lt <;> assumption)
+end
+end

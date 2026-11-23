@@ -3,7 +3,11 @@ module
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsNormRepresentation
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 public import Mathlib.Tactic.Continuity
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpanSInduction
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Algebra.Ring.Subring.Defs
+public import Mathlib.Algebra.Ring.Subsemiring.Basic
+public import Mathlib.Algebra.Star.Basic
+public import Mathlib.LinearAlgebra.Span.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,9 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +46,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpanSInduction
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.Qe24.spanS.{u_1, u_2} :
+    {K : Type u_1} →
+      {V : Type u_2} →
+        [inst : Field K] →
+          [inst_1 : AddCommGroup V] →
+            [inst_2 : _root_.Module K V] → (S : Subring K) → {n : ℕ} → (Fin n → V) → Submodule (↥S) V :=
+    fun {K : Type u_1} {V : Type u_2} [Field K] [AddCommGroup V] [_root_.Module K V] (S : Subring K) {n : ℕ}
+        (x : Fin n → V) ↦
+      Submodule.span (↥S) (Set.range x)
+
+theorem UpperTheory.Reformulated.B.Qe24.spanS_induction.{u_1, u_2} :
+    ∀ {K : Type u_1} {V : Type u_2} [inst : Field K] [StarRing K] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module K V]
+      {S : Subring K} {n : ℕ} {x : Fin n → V} {p : V → Prop},
+      p (0 : V) →
+        (∀ (a b : V), p a → p b → p (a + b)) →
+          (∀ c ∈ S, ∀ (a : V), p a → p (c • a)) → (∀ (i : Fin n), p (x i)) → ∀ v ∈ UpperTheory.Reformulated.B.Qe24.spanS S x, p v := by
+  intro K V _ _ _ _ S n x p h0 hadd hsmul hx v hv
+  unfold UpperTheory.Reformulated.B.Qe24.spanS at hv
+  induction hv using Submodule.span_induction with
+  | mem y hy =>
+    obtain ⟨i, rfl⟩ := hy
+    exact hx i
+  | zero => exact h0
+  | add a b _ _ ha hb => exact hadd a b ha hb
+  | smul c a _ ha => exact hsmul c.1 c.2 a ha
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsOrthTuple
+
+section
 
 @[expose] public section
 
@@ -286,3 +328,6 @@ theorem exists_orth_tuple (hS : IsHermSemilocal S) (hπ : IsUnif S π) (hs : h.I
       | succ m => exact absurd (gram_det_dv hπ x hnd) hdet
 
 end Formalism.HermitianLattices.Ext.L3.U0
+end
+end
+end

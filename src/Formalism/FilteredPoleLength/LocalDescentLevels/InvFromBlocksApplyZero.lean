@@ -1,11 +1,10 @@
 module
 
-public import Formalism.FilteredPoleLength.ReducedBasisBounds.FilteredPoleLength
-public import Formalism.GelfandTransference.HadamardGelfand.Hadamard
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,7 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +40,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GelfandTransference.HadamardGelfand.Hadamard
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.FilteredPoleLength.ReducedBasisBounds.FilteredPoleLength
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.LatticeBaseChangeAlt
+
+open Module Matrix
+
+def ComplexHadamard : Prop :=
+  ∀ (n : ℕ) (M : Matrix (Fin n) (Fin n) ℂ) (A : ℝ), (∀ i j, ‖M i j‖ ≤ A) →
+    ‖M.det‖ ≤ ∏ j, Real.sqrt (∑ i, ‖M i j‖ ^ 2) ∧
+      ‖M.det‖ ≤ (Real.sqrt n * A) ^ n
+
+end Formalism.LatticeBaseChangeAlt
+end
+end
+end
+
+-- Source module: Formalism.FilteredPoleLength.LocalDescentLevels.InvFromBlocksApplyZero
+
+section
 
 @[expose] public section
 
@@ -78,3 +105,6 @@ theorem complexHadamard : ComplexHadamard := by
     exact h2
 
 end Formalism.LatticeBaseChangeAlt
+end
+end
+end

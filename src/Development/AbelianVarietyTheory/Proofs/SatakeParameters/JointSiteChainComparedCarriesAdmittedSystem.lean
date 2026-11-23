@@ -5,20 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Models
 public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.JointDataAtPAndAdelicDatumNonemptyStatement
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteArithmeticGroupMovesFramesStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesPositiveStepsStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesStepZeroStatement
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteLatticeTuplePairsAdmissibleStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteLawAndFixedCoordinateStabiliserLawStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesDataBelowLastStepStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesIndependentAwayFromPlaceOverPStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesScalarPowIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LatticeTupleJointDictionaryStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PlaceExtendsToIso
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SitePlaceInducesPositionEmbeddingsStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StdAtServed
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelProjection
-public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelSeries
-public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.TieStabKaAtAny
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesAllStepsLtMStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,6 +41,168 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteLatticeTuplePairsAdmissibleStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteLawAndFixedCoordinateStabiliserLawStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesDataBelowLastStepStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesIndependentAwayFromPlaceOverP
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesScalarPowIntegralStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LatticeTupleJointDictionaryStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PlaceExtendsToIso
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SitePlaceInducesPositionEmbeddingsStatement
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsPlaceCofactorValuationLowerBound
+import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelProjection
+public import Formalism.LocalToGlobal.InertKernelTheory.TieSerPin
+import Mathlib.Tactic.Linter.HaveILetI
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.TieStabKaAtAny
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesPositiveSteps
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
+
+namespace GlobalTheory.TwV.StepDel
+
+theorem del_of_pos : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => J.Dict std → S.Pair → S.Pos → S.Law → ∀ j, 1 ≤ j → j < D.R.m → S.Del j) := by
+  intro D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X _ std t J S hD hP hPo hL j _ hj
+  exact GlobalTheory.T.kernelSite_frameValues_all_steps_lt_m S hD hP hPo hL j hj
+
+end GlobalTheory.TwV.StepDel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesPositiveStepsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
+
+theorem _root_.GlobalTheory.T.kernelSite_frameValues_positive_steps : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => J.Dict std → S.Pair → S.Pos → S.Law → ∀ j, 1 ≤ j → j < D.R.m → S.Del j) := by
+  first | exact @GlobalTheory.TwV.StepDel.del_of_pos | exact GlobalTheory.TwV.StepDel.del_of_pos | (intros; apply GlobalTheory.TwV.StepDel.del_of_pos <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesStepZero
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
+
+namespace GlobalTheory.TwV.StepZero
+
+theorem del_zero : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S =>
+    J.Dict std → S.Pair → S.Pos → S.Law → S.Del 0) := by
+  intro D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X _ std t J S hD hP hPos hL
+  exact GlobalTheory.T.kernelSite_frameValues_all_steps_lt_m S hD hP hPos hL 0 (by have := GlobalTheory.TwU.m_eq t μ; omega)
+
+end GlobalTheory.TwV.StepZero
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteFrameValuesStepZeroStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
+
+theorem _root_.GlobalTheory.T.kernelSite_frameValues_step_zero : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => J.Dict std → S.Pair → S.Pos → S.Law → S.Del 0) := by
+  first | exact @GlobalTheory.TwV.StepZero.del_zero | exact GlobalTheory.TwV.StepZero.del_zero | (intros; apply GlobalTheory.TwV.StepZero.del_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteSeriesIndependentAwayFromPlaceOverPStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
+
+theorem _root_.GlobalTheory.T.kernelSite_series_independent_away_from_place_over_p : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => J.Dict std → S.Away) := by
+  first | exact @GlobalTheory.TwV.away_of_dict | exact GlobalTheory.TwV.away_of_dict | (intros; apply GlobalTheory.TwV.away_of_dict <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.StdAtServed
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.FrobeniusOrbits GlobalTheory.TwU Classical
+
+namespace GlobalTheory.TwU
+
+theorem std_at_served : ∀ (D : D7) (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (L : SizeData₂ D) (hT : GatTies D) (X : Inst D L) (Y : LatInst D), LatTied hT X Y → 2 * rG L.sc ≤ D.R.k → ∀ v, Std (D.what₂.places.resChar w) ((D.gat u w hg).P.n' v) (D.gat u w hg).P.m (Y.Fl u w hg).t (Y.Fl u w hg).mm (Y.Fl u w hg).c (D.gat u w hg).P.r ((Y.Fl u w hg).TT v) ((Y.Fl u w hg).a v) ((Y.Fl u w hg).b v) ((D.gat u w hg).P.lam0 v) ((Y.Fl u w hg).w v) := by
+  intro D u w hg L hT X Y hLT hk v
+  obtain ⟨hmm, -, -, hr, -⟩ := hLT u w hg
+  have hS := (D.gat u w hg).P.setting v
+  have hgk := hT.gat_k u w hg
+  have hrG : 1 ≤ rG L.sc := Nat.succ_le_succ (Nat.zero_le _)
+  have hm2 := D.R.two_le_m
+  refine ⟨hg.1, hg.2.1, hS.two_le, hS.even, ?_, ?_, ?_, (Y.Fl u w hg).base v, (D.gat u w hg).P.dom v, ?_, ?_⟩
+  · rw [hr]; split_ifs <;> omega
+  · rw [hr, hgk]; split_ifs <;> omega
+  · rw [hmm]; omega
+  · exact fun s => ⟨le_trans (le_max_left _ _) ((Y.Fl u w hg).w_ge v s),
+      le_trans (le_max_right _ _) ((Y.Fl u w hg).w_ge v s)⟩
+  · exact fun s l hl _ => (Y.Fl u w hg).w_mono v s l hl
+
+end GlobalTheory.TwU
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelSeries
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Finset
+
+namespace Formalism.L2.KerInert.SecondKernelSeries
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Ker Formalism.L2.KerInert.K2 Formalism.L2.KerInert.SecondKernelInstances
+
+theorem eFac_ne_zero {p : ℕ} [Fact p.Prime] {X : Sys p} (Y : Pend X) (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) :
+    Y.eS j La * (Y.eT j La')⁻¹ ≠ 0 := by
+  refine mul_ne_zero ?_ (inv_ne_zero ?_) <;>
+  · refine Finset.prod_ne_zero_iff.mpr fun v _ => zpow_ne_zero _ ?_
+    have hs := X.G.P.setting v
+    haveI := hs.frac_alt
+    have h1 : ((p : ℕ) : X.G.P.W v) ≠ 0 := hs.p_unif.ne_zero
+    have h2 : ((p : ℕ) : X.G.P.Qq v) ≠ 0 := by
+      rw [← map_natCast (algebraMap (X.G.P.W v) (X.G.P.Qq v))]
+      exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr h1
+    rw [← map_natCast (X.G.P.ι v)]
+    exact (map_ne_zero _).mpr h2
+
+theorem series_compatibility_of : TieSerOf := by
+  intro p _ X Y j La _ c' L' _
+  unfold srOf
+  rw [smul_smul, inv_mul_cancel₀ (eFac_ne_zero Y j La (c', L')), one_smul]
+
+end Formalism.L2.KerInert.SecondKernelSeries
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.JointSiteChainComparedCarriesAdmittedSystem
+
+section
 
 @[expose] public section
 
@@ -130,4 +278,6 @@ theorem site_cmpLite_siteAdm : Lt.AdmAtEnt2 → Lt.CurveEx → ∀ {D : D7} {L :
 
 end GlobalTheory.TwV
 
+end
+end
 end

@@ -7,16 +7,11 @@ public import Mathlib.NumberTheory.Padics.PadicNumbers
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 public import Mathlib.Topology.Algebra.Valued.NormedValued
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.PowLeComapMapPow
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-public import Mathlib.Analysis.Normed.Algebra.Ultra
-public import Mathlib.Analysis.Normed.Field.Approximation
-public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -29,17 +24,9 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.Ostrowski
-import Mathlib.NumberTheory.Padics.LocalField
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.AdicCompletion.RingHom
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-public import Mathlib.RingTheory.Valuation.Integral
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,7 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -60,14 +46,90 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Normed.Algebra.Ultra
+public import Mathlib.Analysis.Normed.Field.Approximation
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+public import Mathlib.NumberTheory.Ostrowski
+import Mathlib.NumberTheory.Padics.LocalField
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+public import Mathlib.RingTheory.Valuation.Integral
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Algebra.CharP.Algebra
 public import Mathlib.Analysis.Normed.Ring.WithAbs
 public import Mathlib.Data.Int.WithZero
 public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.PowLeComapMapPow
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace GlobalTheory.PowerExtensionEvaluation
+
+theorem pow_le_comap_map_pow {A : Type u_1} {B : Type u_2} [CommRing A] [CommRing B]
+    (I : Ideal A) (f : A →+* B) (n : ℕ) : I ^ n ≤ ((I.map f) ^ n).comap f :=
+  Ideal.map_le_iff_le_comap.mp (le_of_eq (Ideal.map_pow f I n))
+
+theorem factorPow_evalₐ {A : Type u_1} [CommRing A] (I : Ideal A) {m n : ℕ} (hle : m ≤ n)
+    (x : AdicCompletion I A) :
+    Ideal.Quotient.factorPow I hle (AdicCompletion.evalₐ I n x) = AdicCompletion.evalₐ I m x := by
+  obtain ⟨s, rfl⟩ := AdicCompletion.mk_surjective I A x
+  rw [AdicCompletion.evalₐ_mk, AdicCompletion.evalₐ_mk]
+  change Ideal.Quotient.mk (I ^ m) (s.val n) = Ideal.Quotient.mk (I ^ m) (s.val m)
+  rw [Ideal.Quotient.eq]
+  have h := s.property hle
+  rw [SModEq.sub_mem] at h
+  have h2 : s.val m - s.val n ∈ I ^ m := by simpa [smul_eq_mul, Ideal.mul_top] using h
+  have h3 := (I ^ m).neg_mem h2
+  rwa [neg_sub] at h3
+
+theorem exists_extension {A : Type u_1} {B : Type u_2} [CommRing A] [CommRing B]
+    (I : Ideal A) (f : A →+* B) [IsAdicComplete (Ideal.map f I) B] :
+    ∃ g : AdicCompletion I A →+* B, g.comp (algebraMap A (AdicCompletion I A)) = f := by
+  let F : (n : ℕ) → AdicCompletion I A →+* B ⧸ (Ideal.map f I) ^ n := fun n =>
+    (Ideal.quotientMap ((Ideal.map f I) ^ n) f (pow_le_comap_map_pow I f n)).comp
+      (AdicCompletion.evalₐ I n : AdicCompletion I A →+* A ⧸ I ^ n)
+  have hF : ∀ {m n : ℕ} (hle : m ≤ n),
+      (Ideal.Quotient.factorPow (Ideal.map f I) hle).comp (F n) = F m := by
+    intro m n hle
+    ext x
+    obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ I n x)
+    have hm : AdicCompletion.evalₐ I m x = Ideal.Quotient.mk (I ^ m) a := by
+      rw [← factorPow_evalₐ I hle x, ← ha]
+      rfl
+    change Ideal.Quotient.factorPow (Ideal.map f I) hle
+        (Ideal.quotientMap _ f (pow_le_comap_map_pow I f n) (AdicCompletion.evalₐ I n x)) =
+      Ideal.quotientMap _ f (pow_le_comap_map_pow I f m) (AdicCompletion.evalₐ I m x)
+    rw [← ha, hm, Ideal.quotientMap_mk, Ideal.quotientMap_mk]
+    rfl
+  refine ⟨IsAdicComplete.liftRingHom (Ideal.map f I) F hF, ?_⟩
+  apply DFunLike.coe_injective
+  apply IsHausdorff.funext' (Ideal.map f I)
+  intro n a
+  rw [RingHom.coe_comp, Function.comp_apply, IsAdicComplete.mk_liftRingHom]
+  change Ideal.quotientMap _ f (pow_le_comap_map_pow I f n) (AdicCompletion.evalₐ I n (AdicCompletion.of I A a)) = _
+  rw [AdicCompletion.evalₐ_of, Ideal.quotientMap_mk]
+
+end GlobalTheory.PowerExtensionEvaluation
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsAbsoluteValueOfIsDiscreteValuationRing
+
+section
 
 @[expose] public section
 
@@ -447,3 +509,5 @@ theorem exists_isLocalHom_normIntegers {V K C : Type*} [CommRing V] [Field K] [A
   rw [map_mul, hb, mul_inv_cancel₀ h0, map_one]
 
 end GlobalTheory
+end
+end

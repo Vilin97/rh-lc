@@ -1,18 +1,13 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.CardZBasisEqMulFinrank
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CuspDataOfFamily
-public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicEigencomponentConjugateFormStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicSublatticeCovolumePositiveStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RiemannLatticeEigenProjectionStatement
-public import GroundTheory.HeightsAndTheta.Heights.Covolume
+public import Mathlib.NumberTheory.NumberField.EquivReindex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -20,18 +15,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,7 +39,149 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.CoordinateIdeals.FubiniLevi
+public import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.ThreeLeLevel
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CuspDataOfFamily
+public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicEigencomponentConjugateFormStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicSublatticeCovolumePositiveStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RiemannLatticeEigenProjectionStatement
+public import Mathlib.NumberTheory.NumberField.Discriminant.Basic
+import Mathlib.Tactic.TypeStar
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Slopes
+import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.CardZBasisEqMulFinrank
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.NineStatements
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo NumberField NumberField.ComplexEmbedding GroundTheory.Heights₂.Heights.LowerBoundFree
+  Module Matrix
+open scoped Matrix ComplexConjugate Kronecker
+
+section Tower
+
+variable {Em : Type} [Field Em] [NumberField Em]
+
+def towerZBasis {M : Type} [AddCommGroup M] [Module (𝓞 Em) M] {ρ : ℕ} {v : Fin ρ → M}
+    (hv : LinearIndependent (𝓞 Em) v) :
+    Basis (Fin ρ × (Em →+* ℂ)) ℤ (Submodule.span (𝓞 Em) (Set.range v)) :=
+  ((RingOfIntegers.basis Em).smulTower' (Basis.span hv)).reindex
+    (Equiv.prodCongr (Equiv.refl _) (equivReindex Em).symm)
+
+theorem towerZBasis_apply {M : Type} [AddCommGroup M] [Module (𝓞 Em) M] {ρ : ℕ} {v : Fin ρ → M}
+    (hv : LinearIndependent (𝓞 Em) v) (p : Fin ρ × (Em →+* ℂ)) :
+    (towerZBasis hv p : M) = RingOfIntegers.basis Em (equivReindex Em p.2) • v p.1 := by
+  simp [towerZBasis, Basis.smulTower'_apply, Basis.span_apply]
+
+
+end Tower
+
+namespace FullerData
+
+variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {K : Type} [Fintype K] {ι : K → Type}
+  [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [Algebra ℚ Ω] {E : Ψ → Type} [∀ τ, AddCommGroup (E τ)]
+  [∀ τ, Module Ω (E τ)] {Em : Type} [Field Em] [NumberField Em] [IsCMField Em]
+  (D : FullerData II Ψ K ι Ω E Em)
+
+
+
+end FullerData
+
+end GroundTheory.Heights₂.Heights.NineStatements
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.Covolume
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights
+
+open NumberField NumberField.ComplexEmbedding TensorProduct ComplexAt Matrix MeasureTheory Module
+
+open scoped Kronecker
+
+noncomputable section
+
+variable {K : Type*} [Field K] [NumberField K]
+
+section Real
+
+variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
+  [Module.Projective (𝓞 K) E] (h : HermitianMetric K E)
+
+namespace RealSpace
+
+end RealSpace
+
+end Real
+
+open scoped Classical in
+open Classical in
+theorem det_basisMatrix_sq : (basisMatrix K).det ^ 2 = ((discr K : ℤ) : ℂ) := by
+  exact (discr_eq_basisMatrix_det_sq K).symm
+
+theorem basisMatrix_apply' (τ σ : K →+* ℂ) :
+    basisMatrix K τ σ = σ ((RingOfIntegers.basis K (equivReindex K τ) : 𝓞 K) : K) := by
+  simp [basisMatrix, canonicalEmbedding.latticeBasis_apply, integralBasis_apply,
+    canonicalEmbedding.apply_at]
+
+section Gram
+
+variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
+  [Module.Projective (𝓞 K) E] (h : HermitianMetric K E) {ι : Type*} [Fintype ι] [DecidableEq ι]
+
+end Gram
+
+section RiemannRoch
+
+variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
+  [Module.Projective (𝓞 K) E] (h : HermitianMetric K E) {ι : Type*} [Fintype ι] [DecidableEq ι]
+  {s : ι → E}
+
+
+
+end RiemannRoch
+
+namespace HermitianExtension
+
+variable {E' E E'' : HermitianBundle K} (X : HermitianExtension E' E E'')
+
+end HermitianExtension
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicSublatticeGramDeterminant
+
+section
 
 @[expose] public section
 
@@ -360,3 +489,6 @@ theorem det_re_gram_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   linarith [h1]
 
 end GlobalTheory.CompanionTheory.Ar.Cusp.IsoCovol
+end
+end
+end

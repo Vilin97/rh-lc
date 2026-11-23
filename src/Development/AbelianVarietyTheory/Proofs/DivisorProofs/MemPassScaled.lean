@@ -3,20 +3,20 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HasLevelStd
 public import Development.AbelianVarietyTheory.Definitions.Divisors.MemPass
 public import Development.AbelianVarietyTheory.Definitions.Divisors.JetAnalytic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationBoundOfMulSqIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CmLatticeExistsMultipleIntegralPrimeToLStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoprimeMulPrimePowMemConductorStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralDiscMulCoordsOfCmFieldIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NatMulIntegralMemCmLatticePrimeToStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsTransport
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationAtLeastBasicProperties
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationAtLeastRatCastAndExpRat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -25,8 +25,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,9 +44,177 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.OmegaFactorization
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasLevelStd
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasQIff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CmLatticeExistsMultipleIntegralPrimeToLStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoprimeMulPrimePowMemConductorStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NatMulIntegralMemCmLatticePrimeToStatement
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationBoundOfMulSqIntegral
+
+section
+
+@[expose] public section
+
+open NumberField UpperHalfPlane GlobalTheory.HilbFam GlobalTheory.QFam
+open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization (Emb Frac latM qPow upperHalf cK omegaFactor IsPartialZeta HasExpansion)
+open GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates (iterD partialD)
+open scoped Classical MatrixGroups nonZeroDivisors
+open GlobalTheory.LatVal (Sz)
+open GlobalTheory.LatJet (EisExp IsEis FR)
+open IsDedekindDomain
+open GlobalTheory.CMVal (OF Af lattice IsBaseCond IsFinSetSplitPlacesCoprimeConductor condQ hatO)
+open GlobalTheory.LatVal (OneOver)
+open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (a0)
+
+noncomputable section
+
+namespace GlobalTheory.SizeSqIntegral
+
+theorem sz_nat_val (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (D : ℕ) :
+    Sz l lam (-(padicValNat l D : ℝ)) (D : ℂ) := by
+  have h := GlobalTheory.SizeRat.sz_ratCast l lam (D : ℚ) (-(padicValNat l D : ℝ)) (by
+    rw [padicValRat.of_nat, Nat.padicValNat_def]; simp)
+  simpa using h
+
+theorem sz_zero_of_isIntegral (l : ℕ) [hl : Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (x : ℂ)
+    (h : IsIntegral ℤ x) : Sz l lam 0 x :=
+  GlobalTheory.SzRules.sz_of_isIntegral 1 x (fun hd => hl.out.one_lt.ne' (Nat.dvd_one.1 hd)) (by simpa using h)
+
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (D M : ℕ) (x : ℂ), 0 < D → IsIntegral ℤ ((D : ℂ) * x ^ 2) → Sz l lam (-(padicValNat l D : ℝ) / 2) ((D : ℂ) * x) ∧ Sz l lam (-(padicValNat l D : ℝ) / 2) ((M * l ^ padicValNat l D : ℕ) : ℂ) := by
+  intro l hl lam D M x _ hx
+  constructor
+  · apply GlobalTheory.SzRules.sz_of_sq
+    have h := GlobalTheory.SzRules.sz_mul (sz_nat_val l lam D) (sz_zero_of_isIntegral l lam _ hx)
+    rw [add_zero] at h
+    convert h using 1
+    ring
+  · have h1 := sz_nat_val l lam (l ^ padicValNat l D)
+    rw [Nat.padicValNat_def, Nat.multiplicity_prime_pow] at h1
+    have h2 : Sz l lam 0 (M : ℂ) := sz_zero_of_isIntegral l lam _ (by simpa using (isIntegral_algebraMap (R := ℤ) (A := ℂ) (x := (M : ℤ))))
+    have h := GlobalTheory.SzRules.sz_mul h2 h1
+    rw [zero_add, ← Nat.cast_mul] at h
+    refine GlobalTheory.SzRules.sz_mono ?_ h
+    have : (0 : ℝ) ≤ (padicValNat l D : ℝ) := Nat.cast_nonneg _
+    linarith
+
+end GlobalTheory.SizeSqIntegral
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationBoundOfMulSqIntegralStatement
+
+section
+
+@[expose] public section
+
+open NumberField UpperHalfPlane GlobalTheory.HilbFam GlobalTheory.QFam
+open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization (Emb Frac latM qPow upperHalf cK omegaFactor IsPartialZeta HasExpansion)
+open GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates (iterD partialD)
+open scoped Classical MatrixGroups nonZeroDivisors
+open GlobalTheory.LatVal (Sz)
+open GlobalTheory.LatJet (EisExp IsEis FR)
+open IsDedekindDomain
+open GlobalTheory.CMVal (OF Af lattice IsBaseCond IsFinSetSplitPlacesCoprimeConductor condQ hatO)
+open GlobalTheory.LatVal (OneOver)
+open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (a0)
+
+theorem _root_.GlobalTheory.T.algebraicValuation_bound_of_mul_sq_integral : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (D M : ℕ) (x : ℂ), 0 < D → IsIntegral ℤ ((D : ℂ) * x ^ 2) → Sz l lam (-(padicValNat l D : ℝ) / 2) ((D : ℂ) * x) ∧ Sz l lam (-(padicValNat l D : ℝ) / 2) ((M * l ^ padicValNat l D : ℕ) : ℂ) := by
+  first | exact @GlobalTheory.SizeSqIntegral.main | exact GlobalTheory.SizeSqIntegral.main | (intros; apply GlobalTheory.SizeSqIntegral.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralDiscMulCoordsOfCmFieldIntegral
+
+section
+
+@[expose] public section
+
+open NumberField UpperHalfPlane GlobalTheory.HilbFam GlobalTheory.QFam
+open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization (Emb Frac latM qPow upperHalf cK omegaFactor IsPartialZeta HasExpansion)
+open GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates (iterD partialD)
+open scoped Classical MatrixGroups nonZeroDivisors
+open GlobalTheory.LatVal (Sz)
+open GlobalTheory.LatJet (EisExp IsEis FR)
+open IsDedekindDomain
+open GlobalTheory.CMVal (OF Af lattice IsBaseCond IsFinSetSplitPlacesCoprimeConductor condQ hatO)
+open GlobalTheory.LatVal (OneOver)
+open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (a0)
+
+namespace GlobalTheory.HilbFam
+
+theorem isIntegral_coord_of_isIntegral (E : Type) [Field E] [NumberField E] [IsCMField E] (θ : E) (D : ℕ)
+    (x : Fin 2 → FR E) (_hD : 0 < D) (hθ : IsIntegral ℤ θ)
+    (hr : (θ - IsCMField.complexConj E θ) ^ 2 = -(D : E))
+    (hu : IsIntegral ℤ ((x 0 : E) * θ + (x 1 : E))) (j : Fin 2) :
+    IsIntegral ℤ ((D : FR E) * x j ^ 2) ∧ IsIntegral ℤ ((D : FR E) * x j) := by
+  have hc : ∀ y : E, IsIntegral ℤ y → IsIntegral ℤ (IsCMField.complexConj E y) := fun y hy =>
+    map_isIntegral_int (IsCMField.complexConj E) hy
+  have hfix : ∀ y : FR E, IsCMField.complexConj E (y : E) = y := fun y =>
+    IsCMField.complexConj_apply_eq_self E y
+  set r := θ - IsCMField.complexConj E θ with hrdef
+  have hri : IsIntegral ℤ r := hθ.sub (hc _ hθ)
+  have h0 : IsIntegral ℤ ((x 0 : E) * r) := by
+    have := hu.sub (hc _ hu)
+    rw [map_add (f := _), map_mul, hfix, hfix] at this
+    have e : (x 0 : E) * r = (x 0 : E) * θ + (x 1 : E) -
+        ((x 0 : E) * IsCMField.complexConj E θ + (x 1 : E)) := by rw [hrdef]; ring
+    rw [e]; exact this
+  have h1 : IsIntegral ℤ ((x 1 : E) * r) := by
+    have := (hu.mul hri).sub (h0.mul hθ)
+    have e : (x 1 : E) * r = ((x 0 : E) * θ + (x 1 : E)) * r - (x 0 : E) * r * θ := by ring
+    rw [e]; exact this
+  have hj : IsIntegral ℤ ((x j : E) * r) := by
+    fin_cases j
+    · exact h0
+    · exact h1
+  have hD' : (D : E) = -r ^ 2 := by rw [hr]; ring
+  have hinj : Function.Injective (algebraMap (FR E) E) := (algebraMap (FR E) E).injective
+  have hx : algebraMap (FR E) E (x j) = (x j : E) := rfl
+  constructor
+  · rw [← (isIntegral_algebraMap_iff (B := E)), map_mul, map_pow, map_natCast, hx, hD']
+    have e : -r ^ 2 * (x j : E) ^ 2 = -((x j : E) * r * ((x j : E) * r)) := by ring
+    rw [e]; exact (hj.mul hj).neg
+  · rw [← (isIntegral_algebraMap_iff (B := E)), map_mul, map_natCast, hx, hD']
+    have e : -r ^ 2 * (x j : E) = -((x j : E) * r * r) := by ring
+    rw [e]; exact (hj.mul hri).neg
+
+end GlobalTheory.HilbFam
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralDiscMulCoordsOfCmFieldIntegralStatement
+
+section
+
+@[expose] public section
+
+open NumberField UpperHalfPlane GlobalTheory.HilbFam GlobalTheory.QFam
+open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization (Emb Frac latM qPow upperHalf cK omegaFactor IsPartialZeta HasExpansion)
+open GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates (iterD partialD)
+open scoped Classical MatrixGroups nonZeroDivisors
+open GlobalTheory.LatVal (Sz)
+open GlobalTheory.LatJet (EisExp IsEis FR)
+open IsDedekindDomain
+open GlobalTheory.CMVal (OF Af lattice IsBaseCond IsFinSetSplitPlacesCoprimeConductor condQ hatO)
+open GlobalTheory.LatVal (OneOver)
+open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (a0)
+
+theorem _root_.GlobalTheory.T.isIntegral_disc_mul_coords_of_cmField_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (θ : E) (D : ℕ) (x : Fin 2 → FR E), 0 < D → IsIntegral ℤ θ → (θ - IsCMField.complexConj E θ) ^ 2 = -(D : E) → IsIntegral ℤ ((x 0 : E) * θ + (x 1 : E)) → ∀ j, IsIntegral ℤ ((D : FR E) * x j ^ 2) ∧ IsIntegral ℤ ((D : FR E) * x j) := by
+  first | exact @GlobalTheory.HilbFam.isIntegral_coord_of_isIntegral | exact GlobalTheory.HilbFam.isIntegral_coord_of_isIntegral | (intros; apply GlobalTheory.HilbFam.isIntegral_coord_of_isIntegral <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemPassScaled
+
+section
 
 @[expose] public section
 
@@ -160,3 +326,5 @@ theorem passl : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ)
       M₀ * M * D' * M₂ * M₁ * l ^ a0 𝔣 l * l ^ padicValNat l D by ring]
 
 end GlobalTheory.RoadE
+end
+end

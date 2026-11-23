@@ -3,8 +3,7 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.ClozelConjCOfSteps
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SatakeParametersOfTwist
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.AbsPowOneNotIsAlgRat
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.SatConj
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.TwReg
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.ConjSep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +37,54 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.SatConj
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.GKCoh GlobalTheory.LFun
+open UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V.Cj
+open scoped TensorProduct
+
+theorem UpperTheory.V.Cj.satConj :
+    UpperTheory.V.Cj.SatConj := by
+  intro E _ _ _ n hC π
+  induction π using Quotient.inductionOn with | _ π => ?_
+  intro hπ σ
+  obtain ⟨π', τ, τ', h1, h2, h3, -⟩ := hC π hπ σ
+  obtain ⟨hs, hs'⟩ := sep_of_conj h1 h2 h3
+  exact ⟨CG.mk π', fun w B hB => (hs.comp _).exists_hasSatGL (hs'.comp _) hB⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.TwReg
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.GKCoh GlobalTheory.LFun
+open UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V.Cj
+open scoped TensorProduct
+
+theorem UpperTheory.V.Cj.twReg :
+    UpperTheory.V.Cj.TwReg := by
+  intro E _ _ _ a n π μ m hμ hm hr ν hν; refine (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun t => ?_
+  have e := ((hμ t).twist ν).infChar_eq
+  rw [e, (InfType.expo_of_infType E ν).2.1 _ hν t]
+  obtain ⟨-, h1, h2⟩ := hr t
+  refine ⟨(Multiset.nodup_of_le (hm t) h1).map (add_left_injective _), fun z hz => ?_⟩
+  obtain ⟨y, hy, rfl⟩ := Multiset.mem_map.1 hz
+  obtain ⟨k, rfl⟩ := h2 y (Multiset.mem_of_le (hm t) hy)
+  exact ⟨k, by push_cast; ring⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CobordismLinearRelations.BlockConj
+
+section
 
 @[expose] public section
 
@@ -89,3 +136,5 @@ theorem UpperTheory.V.Cj.blockConj :
   obtain ⟨B', b1, b2⟩ := hπ' w _ (sat_twist π hB (hν.1 w))
   refine ⟨_, sat_twist π' b1 (hν'.1 w), ?_⟩
   rw [algSat_shift n a w hν', b2, algSat_shift a n w hν]
+end
+end

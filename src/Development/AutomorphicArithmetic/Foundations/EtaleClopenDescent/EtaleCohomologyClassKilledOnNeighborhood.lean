@@ -3,10 +3,8 @@ module
 public import Development.EtaleCohomology.EtaleSheaves.SecondDegreeKilling.LeafKill2Of
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomologyClassKilledOnNbhdPair
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.RelativeCohomologyColimitOfExactOfNaturality
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.RelativeCohomologyConnectingNaturality
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.AffineGeometricCaseOfObstructionExactNatural
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.NeighbourhoodCohomologyObstructionExact
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.NeighbourhoodShrinkingOfObstructionExactNatural
+public import Development.EtaleCohomology.EtaleSheaves.NeighbourhoodKilling
+public import Development.EtaleCohomology.EtaleSheaves.GlueRelPfNat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,6 +43,31 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.AffineGeometricCaseOfObstructionExactNatural
+public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.NeighbourhoodCohomologyObstructionExact
+public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.NeighbourhoodShrinkingOfObstructionExactNatural
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.RelativeCohomologyConnectingNaturality
+
+section
+
+@[expose] public section
+
+open CategoryTheory GlobalTheory.EtC CochainComplex.HomComplex LateralTheory.E.E4 LateralTheory.E.LeafGhostCut in
+theorem UpperTheory.relativeCohomology_connecting_naturality :
+    LateralTheory.E.NeighbourhoodKilling.ObsNat := by
+  intro q _ U E U' E' f f' u e comm i m w
+  obtain ⟨w, rfl⟩ := w.mk_surjective
+  refine congrArg CohomologyClass.mk (Cocycle.ext ?_)
+  simp only [zcomp, Cocycle.ofHom_coe, Cocycle.mk_coe]
+  rw [← Cochain.comp_assoc_of_first_is_zero_cochain, rmap, LateralTheory.E.GlueRelPfNat.map_fst,
+    Cochain.comp_assoc_of_second_is_zero_cochain]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EtaleCohomologyClassKilledOnNeighborhood
+
+section
 
 @[expose] public section
 
@@ -55,3 +78,5 @@ theorem UpperTheory.Cb.etale_cohomology_class_killed_on_neighborhood :
       (LateralTheory.E.GeoProof.Geo_of (UpperTheory.Cb.affineGeometricCase_of_obstructionExact_natural UpperTheory.Cb.neighbourhood_cohomology_obstruction_exact UpperTheory.relativeCohomology_connecting_naturality)
         (UpperTheory.Cb.neighbourhoodShrinking_of_obstructionExact_natural UpperTheory.Cb.neighbourhood_cohomology_obstruction_exact UpperTheory.relativeCohomology_connecting_naturality))
       (UpperTheory.relativeCohomology_colimit_of_exact_of_naturality UpperTheory.Cb.neighbourhood_cohomology_obstruction_exact UpperTheory.relativeCohomology_connecting_naturality))
+end
+end

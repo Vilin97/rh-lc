@@ -11,19 +11,7 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowA
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowCardWordsLe
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowCloudLe
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowCloudUnitLowerStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaBoundsStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaLeWStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowExact
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowGapFunFNStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowLStarStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNodeGapStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowPrimesConductorStatement
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowSigGaps
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowThinSizeGe
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTopsBandBottomsStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTypePrimesStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowWindowLength
-public import Development.AutomorphicArithmetic.WeightCongruences.IffNum
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaBounds
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,7 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -60,7 +47,159 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaLeW
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowExact
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowGapFunFNStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowLStar
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNodeGap
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowPrimesConductorStatement
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowSigGaps
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ScalePolynomialQuantitiesComparison
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTopsBandBottomsStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowTypePrimesStatement
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowWindowLength
+public import Development.AutomorphicArithmetic.WeightCongruences.ProdNegOneZpow
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaBoundsStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_etaSz_le_b_div_and_log_etaSz_le_and_t_le : SzRow (fun C D L => (L.etaSz ≤ L.sc.b / ((D.R.t : ℝ) ^ 3 * D.R.f * (D.R.k : ℝ) ^ 3)) ∧ (Real.log L.etaSz ≤ L.sc.x ^ (L.sc.eps / 4)) ∧ ((D.R.t : ℝ) ≤ L.etaSz) ∧ ((D.R.t : ℝ) * L.etaSz ≤ L.sc.w'' D.R.n / L.sc.x) ∧ ((D.R.m : ℝ) * ((D.R.t : ℝ) + 1) * L.etaSz ≤ L.sc.w'' D.R.n)) := by
+  first | exact @GlobalTheory.EX.szRow_eta_bounds | exact GlobalTheory.EX.szRow_eta_bounds | (intros; apply GlobalTheory.EX.szRow_eta_bounds <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowEtaLeWStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_m_mul_Sc_add_etaSz_le_w_mul_L_and_bounds : SzRow (fun C D L => ((D.R.m : ℝ) * (L.Sc + L.etaSz) ≤ L.sc.w'' D.R.n * L.sc.L) ∧ ((D.R.N D.R.m : ℝ) * L.etaSz ≤ L.de2 * D.R.m * L.sc.w'' D.R.n) ∧ (L.etaSz ^ 2 * D.R.r * L.sc.L ≤ L.de2 * D.R.m * L.sc.w'' D.R.n ^ 2) ∧ ((D.R.k : ℝ) * L.Sc ≤ L.sc.w'' D.R.n)) := by
+  first | exact @GlobalTheory.EX.szRow_eta_le_w | exact GlobalTheory.EX.szRow_eta_le_w | (intros; apply GlobalTheory.EX.szRow_eta_le_w <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowLStarStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_b_add_Sc_add_etaSz_add_div_lt_lStar : SzRow (fun C D L => (L.sc.b' + L.Sc + L.etaSz + L.sc.b / lStar L < lStar L) ∧ (2 * L.etaSz + D.R.t + 8 * L.sc.b / lStar L + 7 < lStar L)) := by
+  first | exact @GlobalTheory.EX.szRow_lStar | exact GlobalTheory.EX.szRow_lStar | (intros; apply GlobalTheory.EX.szRow_lStar <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowNodeGapStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+theorem _root_.GlobalTheory.T.sizes_node_bounds_le_h0 : SzRow (fun C D L => (12 * L.sc.b / lStar L + 2 * D.R.t + 8 ≤ h0 L ∧ (D.R.k : ℝ) * D.R.t * L.sc.L ≤ h0 L ∧ C.P.Ch0r * (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 * L.sc.L ≤ h0 L ∧ ((D.R.N D.R.m : ℝ) * D.R.f * L.sc.L) ^ C.P.CCount ≤ h0 L ∧ 4 * (D.R.N D.R.m : ℝ) ^ 3 + 2 * D.R.t + 6 ≤ h0 L ∧ C.P.Ch0k * D.R.k * (D.R.m : ℝ) ^ ((9 : ℝ) / 2) ≤ h0 L ∧ 2 * (Mrt D : ℝ) ^ 3 + D.R.t + 3 ≤ h0 L ∧ 120 * (D.R.r : ℝ) * (qSig D : ℝ) ^ ((3 : ℝ) / 2) ≤ h0 L ∧ (D.R.N D.R.m : ℝ) * (D.R.m : ℝ) ^ 10 ≤ h0 L ∧ 16 * (qSig D : ℝ) * D.R.N D.R.m ≤ h0 L)) := by
+  first | exact @GlobalTheory.EX.szRow_nodeGap | exact GlobalTheory.EX.szRow_nodeGap | (intros; apply GlobalTheory.EX.szRow_nodeGap <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SzRowThinSizeGe
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.LevelStarExponents Formalism.MainNotions Formalism.MainNotions.Inhab GlobalTheory.EX NumberField
+
+namespace GlobalTheory.EX
+
+theorem szRow_thinSize_ge : SzRow (fun C D L => ((D.R.k : ℝ) ^ C.P.Cw ≤ L.sc.w'' D.R.n ∧ L.sc.b ^ C.P.cw ≤ L.sc.w'' D.R.n)) := by
+  intro eps he he' C hC
+  obtain ⟨x1, h1⟩ := GlobalTheory.scale_poly_comparison eps (5 * |(C.P.Cw : ℝ)|) (1 / 10) he (by norm_num)
+  refine ⟨0, fun cD _ => ⟨0, fun ch _ => ⟨max x1 16, fun D L hs hx hV => ?_⟩⟩⟩
+  have hx1 : x1 ≤ L.sc.x := le_trans (le_max_left _ _) hx
+  have hx16 : (16 : ℝ) ≤ L.sc.x := le_trans (le_max_right _ _) hx
+  have hone : (1 : ℝ) ≤ L.sc.x := by linarith
+  have hx0 : (0 : ℝ) < L.sc.x := by linarith
+  obtain ⟨⟨hn1, -⟩, -, ⟨hk1, hk2⟩, -⟩ := hV.ranks
+  rw [hs] at hn1 hk1 hk2
+  have h2 : (2 : ℝ) ≤ L.sc.x ^ ((1 : ℝ) / 4) := by
+    have h := Real.rpow_le_rpow (by norm_num) hx16 (show (0 : ℝ) ≤ 1 / 4 by norm_num)
+    have e : (16 : ℝ) ^ ((1 : ℝ) / 4) = 2 := by
+      rw [show (16 : ℝ) = 2 ^ (4 : ℝ) by norm_num, ← Real.rpow_mul (by norm_num)]
+      norm_num
+    rwa [e] at h
+  have hup : ∀ a b : ℝ, 1 / 4 + a ≤ b → 2 * L.sc.x ^ a ≤ L.sc.x ^ b := fun a b hab => by
+    calc 2 * L.sc.x ^ a ≤ L.sc.x ^ ((1 : ℝ) / 4) * L.sc.x ^ a :=
+          mul_le_mul_of_nonneg_right h2 (Real.rpow_nonneg hx0.le _)
+      _ = L.sc.x ^ (1 / 4 + a) := (Real.rpow_add hx0 _ _).symm
+      _ ≤ L.sc.x ^ b := Real.rpow_le_rpow_of_exponent_le hone hab
+  have hn3 : (D.R.n : ℝ) ≤ L.sc.x ^ (3 : ℝ) := hV.ranks.n_le'.trans (hup _ _ (by norm_num))
+  have hk5 : (D.R.k : ℝ) ≤ L.sc.x ^ (5 : ℝ) := hk2.trans (hup _ _ (by linarith))
+  have hn0 : (1 : ℝ) ≤ D.R.n := (Real.one_le_rpow hone (by linarith)).trans hn1
+  have hk0 : (1 : ℝ) ≤ D.R.k := (Real.one_le_rpow hone (by linarith)).trans hk1
+  obtain ⟨-, -, -, -, -, hw, -⟩ := h1 L.sc hs hx1
+  obtain ⟨hw, -, -⟩ := hw D.R.n (by exact_mod_cast hn0) hn3
+  have hb1 : (1 : ℝ) ≤ L.sc.b := Real.one_le_exp (Real.rpow_nonneg hx0.le _)
+  have hA : (1 : ℝ) ≤ L.sc.b ^ ((1 : ℝ) - 1 / 10) := Real.one_le_rpow hb1 (by norm_num)
+  have hB : (1 : ℝ) ≤ L.sc.x ^ (5 * |(C.P.Cw : ℝ)|) := Real.one_le_rpow hone (by positivity)
+  have hcw : C.P.cw = 9 / 10 := hC.2.2.2.2.1
+  have hkC : (D.R.k : ℝ) ^ (C.P.Cw : ℝ) ≤ L.sc.x ^ (5 * |(C.P.Cw : ℝ)|) := by
+    calc (D.R.k : ℝ) ^ (C.P.Cw : ℝ) ≤ (D.R.k : ℝ) ^ |(C.P.Cw : ℝ)| :=
+          Real.rpow_le_rpow_of_exponent_le hk0 (le_abs_self _)
+      _ ≤ (L.sc.x ^ (5 : ℝ)) ^ |(C.P.Cw : ℝ)| :=
+          Real.rpow_le_rpow (by linarith) hk5 (abs_nonneg _)
+      _ = L.sc.x ^ (5 * |(C.P.Cw : ℝ)|) := (Real.rpow_mul hx0.le _ _).symm
+  refine ⟨?_, ?_⟩
+  · refine hkC.trans (le_trans ?_ hw)
+    exact le_mul_of_one_le_left (by linarith) hA
+  · rw [hcw, show (9 / 10 : ℝ) = 1 - 1 / 10 by norm_num]
+    exact le_trans (le_mul_of_one_le_right (by linarith) hB) hw
+
+end GlobalTheory.EX
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WeightCongruences.IffNum
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.MUQ
+
+variable {E K : Type} [Field E] [Field K] {ι : Type} [Fintype ι] {φ : ι → E →+* K} {e : ι → ℚ}
+
+theorem num (h : MUQ φ e) : MU φ (fun i => (e i).num) := by
+  obtain ⟨a, ha, hMU⟩ := h
+  have : (fun i => (e i).num) = a := by
+    funext i
+    rw [ha i, Rat.num_intCast]
+  rw [this]
+  exact hMU
+
+end UpperTheory.MUQ
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExplicitConstantsParameterConditionsLarge
+
+section
 
 @[expose] public section
 
@@ -219,3 +358,5 @@ theorem explicitConstants_parameterConditions_large :
       level_split := hA.2.2.2 }, rfl, rfl⟩
 
 end GlobalTheory.EX
+end
+end

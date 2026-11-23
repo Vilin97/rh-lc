@@ -1,16 +1,15 @@
 module
 
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsHodgeLine
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.EpiRingHomFieldClosureStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExtendToFractionFieldStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericVanishingStalkVanishingStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalHomCharZeroUnitsStatement
+public import Mathlib.Algebra.Field.Subfield.Basic
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -18,10 +17,14 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -43,8 +45,195 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.TensorProduct.Associator
+public import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.Topology.Sheaves.Presheaf
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExtendToFractionFieldStatement
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.Stalk
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalHomCharZeroUnits
+import Mathlib.Tactic.Linter.HaveILetI
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AbProj
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.OneArc
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.SubfieldClosureEqTopOfEpi
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+theorem subfield_closure_eq_top_of_epi : ∀ (O F : Type) [CommRing O] [Field F] (β : O →+* F), (∀ (T : Type) [CommRing T] (g₁ g₂ : F →+* T), g₁.comp β = g₂.comp β → g₁ = g₂) → Subfield.closure (Set.range β) = ⊤ := by
+  intro O F _ _ β h
+  set K := Subfield.closure (Set.range β) with hK
+  by_contra hne
+  have key := h (TensorProduct K F F) Algebra.TensorProduct.includeLeftRingHom
+    (Algebra.TensorProduct.includeRight (R := K) (A := F) (B := F)).toRingHom (by
+      ext o
+      have ho : β o ∈ K := Subfield.subset_closure ⟨o, rfl⟩
+      have e : β o = (⟨β o, ho⟩ : K) • (1 : F) := by
+        rw [Subfield.smul_def, smul_eq_mul, mul_one]
+      show β o ⊗ₜ[K] (1 : F) = (1 : F) ⊗ₜ[K] β o
+      rw [e, TensorProduct.smul_tmul])
+  have hlt : Submodule.span K {(1 : F)} < ⊤ := by
+    rw [lt_top_iff_ne_top]
+    intro ht
+    apply hne
+    rw [eq_top_iff]
+    intro x _
+    have hx : x ∈ Submodule.span K {(1 : F)} := ht ▸ Submodule.mem_top
+    obtain ⟨k, rfl⟩ := Submodule.mem_span_singleton.1 hx
+    rw [Subfield.smul_def, smul_eq_mul, mul_one]
+    exact k.2
+  obtain ⟨φ, hφ0, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ hlt
+  have h1 : φ 1 = 0 := hφ (Submodule.mem_span_singleton_self 1)
+  apply hφ0
+  ext b
+  have e : b ⊗ₜ[K] (1 : F) = (1 : F) ⊗ₜ[K] b := RingHom.congr_fun key b
+  have e2 := congrArg (fun z => TensorProduct.lid K F (TensorProduct.map φ LinearMap.id z)) e
+  simp only [TensorProduct.map_tmul, TensorProduct.lid_tmul, LinearMap.id_apply, h1, zero_smul] at e2
+  rcases smul_eq_zero.1 e2 with h | h
+  · simpa using h
+  · exact absurd h one_ne_zero
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.EpiRingHomFieldClosure
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+namespace GlobalTheory.CompanionTheory.Ggeo
+
+theorem epi_subfield_closure_range_eq_top : ∀ (O F : Type) [CommRing O] [Field F] (β : O →+* F),
+    (∀ (T : Type) [CommRing T] (g₁ g₂ : F →+* T), g₁.comp β = g₂.comp β → g₁ = g₂) →
+    Subfield.closure (Set.range β) = ⊤ :=
+  PositivityTheory.UnitarySelfGeneration.subfield_closure_eq_top_of_epi
+
+end GlobalTheory.CompanionTheory.Ggeo
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.EpiRingHomFieldClosureStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+theorem _root_.GlobalTheory.T.epi_ring_hom_field_closure : ∀ (O F : Type) [CommRing O] [Field F] (β : O →+* F), (∀ (T : Type) [CommRing T] (g₁ g₂ : F →+* T), g₁.comp β = g₂.comp β → g₁ = g₂) → Subfield.closure (Set.range β) = ⊤ := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.epi_subfield_closure_range_eq_top | exact GlobalTheory.CompanionTheory.Ggeo.epi_subfield_closure_range_eq_top | (intros; apply GlobalTheory.CompanionTheory.Ggeo.epi_subfield_closure_range_eq_top <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.GermVanishesOfGenericVanishing
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+theorem germ_vanishes_of_generic_vanishing : ∀ (X : Scheme.{0}) [IsReduced X] (Ω O : Type) [Field Ω] [CommRing O] (ξ : Spec (CommRingCat.of Ω) ⟶ X), (∀ q : X, ξ (IsLocalRing.closedPoint Ω) ⤳ q) → ∀ (s₀ : X ⟶ Spec (CommRingCat.of O)) (gm : O →+* Ω), ξ ≫ s₀ = Spec.map (CommRingCat.ofHom gm) → ∀ (x : X) (a : O), gm a = 0 → (Spec.preimage (X.fromSpecStalk x ≫ s₀)).hom a = 0 := by
+  intro X _ Ω O _ _ ξ hgen s₀ gm hcomp x a ha
+  obtain ⟨t, ht⟩ : ∃ t, t = s₀.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of O)).inv.hom a) :=
+    ⟨_, rfl⟩
+  have hnat := Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom gm)
+  rw [← hcomp, Scheme.Hom.comp_appTop] at hnat
+  have h1 := RingHom.congr_fun (congrArg CommRingCat.Hom.hom hnat) a
+  simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom, ha, map_zero] at h1
+  have hξt : ξ.appTop.hom t = 0 := by
+    rw [ht]
+    first
+    | exact h1.symm
+    | exact h1
+  have hξt' : (ConcreteCategory.hom ξ.appTop) t = 0 := hξt
+  have hpre := Scheme.preimage_basicOpen_top ξ t
+  rw [hξt', Scheme.basicOpen_zero] at hpre
+  have hbot : X.basicOpen t = ⊥ := by
+    rw [eq_bot_iff]
+    intro q hq
+    have hmem : ξ (IsLocalRing.closedPoint Ω) ∈ X.basicOpen t :=
+      (hgen q).mem_open (X.basicOpen t).isOpen hq
+    have hc := (Scheme.Hom.mem_preimage ξ (U := X.basicOpen t)).mpr hmem
+    rw [hpre] at hc
+    exact (TopologicalSpace.Opens.mem_bot.mp hc).elim
+  have ht0 : t = 0 := eq_zero_of_basicOpen_eq_bot t hbot
+  have hnat2 := Scheme.ΓSpecIso_inv_naturality (Spec.preimage (X.fromSpecStalk x ≫ s₀))
+  rw [Spec.map_preimage, Iso.comp_inv_eq] at hnat2
+  rw [hnat2, Scheme.Hom.comp_appTop]
+  simp only [CommRingCat.hom_comp, RingHom.comp_apply]
+  rw [← ht, ht0, map_zero, map_zero]
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericVanishingStalkVanishing
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+namespace GlobalTheory.CompanionTheory.Ggeo
+
+theorem germ_vanish_of_generic_dominated : ∀ (X : Scheme.{0}) [IsReduced X] (Ω O : Type) [Field Ω] [CommRing O] (ξ : Spec (CommRingCat.of Ω) ⟶ X), (∀ q : X, ξ (IsLocalRing.closedPoint Ω) ⤳ q) → ∀ (s₀ : X ⟶ Spec (CommRingCat.of O)) (gm : O →+* Ω), ξ ≫ s₀ = Spec.map (CommRingCat.ofHom gm) → ∀ (x : X) (a : O), gm a = 0 → (Spec.preimage (X.fromSpecStalk x ≫ s₀)).hom a = 0 :=
+  PositivityTheory.UnitarySelfGeneration.germ_vanishes_of_generic_vanishing
+
+end GlobalTheory.CompanionTheory.Ggeo
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericVanishingStalkVanishingStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+theorem _root_.GlobalTheory.T.generic_vanishing_stalk_vanishing : ∀ (X : Scheme.{0}) [IsReduced X] (Ω O : Type) [Field Ω] [CommRing O] (ξ : Spec (CommRingCat.of Ω) ⟶ X), (∀ q : X, ξ (IsLocalRing.closedPoint Ω) ⤳ q) → ∀ (s₀ : X ⟶ Spec (CommRingCat.of O)) (gm : O →+* Ω), ξ ≫ s₀ = Spec.map (CommRingCat.ofHom gm) → ∀ (x : X) (a : O), gm a = 0 → (Spec.preimage (X.fromSpecStalk x ≫ s₀)).hom a = 0 := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.germ_vanish_of_generic_dominated | exact GlobalTheory.CompanionTheory.Ggeo.germ_vanish_of_generic_dominated | (intros; apply GlobalTheory.CompanionTheory.Ggeo.germ_vanish_of_generic_dominated <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalHomCharZeroUnitsStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+theorem _root_.GlobalTheory.T.local_hom_char_zero_units : ∀ (O F L K : Type) [CommRing O] [Field F] [NumberField F] [CommRing L] [Field K] [CharZero K] (β : O →+* F) (θ : O →+* L) (ρ : L →+* K), IsLocalHom ρ → (∀ a, β a = 0 → θ a = 0) → ∀ b, β b ≠ 0 → IsUnit (θ b) := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.unit_of_local_hom_charZero_nf | exact GlobalTheory.CompanionTheory.Ggeo.unit_of_local_hom_charZero_nf | (intros; apply GlobalTheory.CompanionTheory.Ggeo.unit_of_local_hom_charZero_nf <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeCptInteriorIff
+
+section
 
 @[expose] public section
 
@@ -124,3 +313,6 @@ theorem interior_iff_factor : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     exact h2
 
 end GlobalTheory.CompanionTheory.Ar.IntOpen
+end
+end
+end

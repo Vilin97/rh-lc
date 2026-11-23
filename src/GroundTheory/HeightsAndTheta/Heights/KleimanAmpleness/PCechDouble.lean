@@ -1,8 +1,6 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechDoubleSt
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDoubleStair
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.VeryAmpleCechObj
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +38,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDoubleStair
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.TypeStar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechDoubleSt
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+noncomputable section
+
+universe u v w
+
+def CechDouble.Statement : Prop :=
+  ∀ (S : Type u) [CommRing S] (Ω : Type w) [Field Ω] (N r : ℕ) (x : Fin (N + 1) → Ω) (h : Fin (r + 1) → Ω)
+    (E : Type v) [AddCommGroup E] [Module S E]
+    (A : Chart x → Submodule S E) (B : Chart h → Submodule S E) (M : Chart x → Chart h → Submodule S E),
+    (∀ (I I' : Chart x) (J : Chart h), I.1 ⊆ I'.1 → M I J ≤ M I' J) →
+    (∀ (I : Chart x) (J J' : Chart h), J.1 ⊆ J'.1 → M I J ≤ M I J') →
+    (∀ I, Cech.AugExact S (M I) (A I)) → (∀ J, Cech.AugExact S (fun I => M I J) (B J)) →
+    ∀ n : ℕ, Nonempty (Cech.Hdeg (fun _ : Chart x => E) A (Cech.idRes S E (support x)) n ≃ₗ[S]
+      Cech.Hdeg (fun _ : Chart h => E) B (Cech.idRes S E (support h)) n)
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDouble
+
+section
 
 @[expose] public section
 
@@ -318,3 +352,5 @@ theorem CechDouble.proof : CechDouble.Statement := by
 end
 
 end GroundTheory.Heights₂.Heights.Kleiman
+end
+end

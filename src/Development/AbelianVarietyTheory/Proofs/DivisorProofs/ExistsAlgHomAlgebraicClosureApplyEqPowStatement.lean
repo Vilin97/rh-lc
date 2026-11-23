@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgHomAlgebraicClosureApplyEqPow
+public import Mathlib.RingTheory.AlgebraicIndependent.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,8 +41,77 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
 import Mathlib.Topology.Sheaves.Presheaf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsAlgHomOfIsTranscendenceBasis
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgHomInjectiveApplyOfTranscendental
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory
+
+theorem algebraicIndependent_update_pow {R A ι : Type} [CommRing R] [CommRing A] [Algebra R A]
+    [DecidableEq ι] {x : ι → A} (hx : AlgebraicIndependent R x) (i₀ : ι) {n : ℕ} (hn : 0 < n) :
+    AlgebraicIndependent R (Function.update x i₀ (x i₀ ^ n)) := by
+  let e := Equiv.optionSubtypeNe i₀
+  have key : ∀ y : ι → A, y ∘ e = fun o => o.elim (y i₀) (fun b => y b.1) := by
+    intro y; funext o; cases o <;> rfl
+  rw [← algebraicIndependent_equiv e, key] at hx
+  rw [← algebraicIndependent_equiv e, key]
+  obtain ⟨h1, h2⟩ := AlgebraicIndependent.option_iff.1 hx
+  have hrest : (fun b : {b // b ≠ i₀} => Function.update x i₀ (x i₀ ^ n) b.1) =
+      fun b => x b.1 := by
+    funext b; exact Function.update_of_ne b.2 _ _
+  rw [hrest, Function.update_self]
+  exact AlgebraicIndependent.option_iff.2 ⟨h1, h2.pow hn⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgHomAlgebraicClosureApplyEqPow
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory
+
+theorem exists_algHom_algebraicClosure_apply_eq_pow :
+    ∀ (Ω : Type) [Field Ω] (K0 : Subfield Ω) (x : Ω), Transcendental K0 x → ∀ m : ℕ, 0 < m →
+      ∃ τ : Ω →ₐ[K0] AlgebraicClosure Ω, τ x = algebraMap Ω (AlgebraicClosure Ω) x ^ m := by
+  intro Ω _ K0 x hx m hm
+  classical
+  have h1 : AlgebraicIndepOn K0 id ({x} : Set Ω) :=
+    algebraicIndependent_unique_type_iff.2 hx
+  obtain ⟨s, hxs, hs⟩ := exists_isTranscendenceBasis_superset h1
+  let i₀ : s := ⟨x, hxs rfl⟩
+  have h2 := (algebraicIndependent_update_pow hs.1 i₀ hm).map'
+    (f := IsScalarTower.toAlgHom K0 Ω (AlgebraicClosure Ω))
+    (algebraMap Ω (AlgebraicClosure Ω)).injective
+  obtain ⟨j, hj⟩ := GlobalTheory.GenericValue.exists_algHom_of_isTranscendenceBasis hs h2
+  exact ⟨j, by simpa [i₀] using hj i₀⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgHomAlgebraicClosureApplyEqPowStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +120,5 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 theorem _root_.GlobalTheory.T.exists_algHom_algebraicClosure_apply_eq_pow' : ∀ (Ω : Type) [Field Ω] (K0 : Subfield Ω) (x : Ω), Transcendental K0 x → ∀ m : ℕ, 0 < m → ∃ τ : Ω →ₐ[K0] AlgebraicClosure Ω, τ x = algebraMap Ω (AlgebraicClosure Ω) x ^ m := by
   first | exact @GlobalTheory.exists_algHom_algebraicClosure_apply_eq_pow | exact GlobalTheory.exists_algHom_algebraicClosure_apply_eq_pow | (intros; apply GlobalTheory.exists_algHom_algebraicClosure_apply_eq_pow <;> assumption)
+end
+end

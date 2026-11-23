@@ -4,35 +4,33 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticG
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.EntryMem
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.LocalRingsCompletion.dvrFinite
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.DvrFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.H1cZero
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcCycKFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcGalCount
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcScalDim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpAct
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpDim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpKer
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.LMemMax
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantOfKernel
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcDefs
+public import Mathlib.RingTheory.AdicCompletion.Noetherian
+public import Mathlib.RingTheory.Coalgebra.IsFrobenius
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcGalIdx
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcUnrOf
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +38,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,9 +50,146 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.UnramifiedCocycleIsCoboundaryOfBernoulliUnit
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcCycKFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcGalCount
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.LocalPublishedTheorems
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpAct
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpDim
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcSpKer
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.LMemMax
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantOfKernel
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.H1cZero
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module UpperTheory.V UpperTheory.V.X
+
+theorem UpperTheory.V.X.h1cZero :
+    ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (l : ℕ) {SP : Set (HeightOneSpectrum (𝓞 ℚ))} {T Q : Finset ℕ} (v0 : T) {pl : ℕ → ValuationSubring Ω} {K : Subgroup (G ℚ Ω)}, GalData l SP T Q pl K → K.Normal → ∀ (k : Type) [Field k] (M : Type) [AddCommGroup M] [Module k M] (ρ : Representation k (GS Ω SP) M) (γ : G ℚ Ω →* kˣ), (∀ g m, ρ (toGS Ω SP g) m = (γ g : k) • m) → K ≤ γ.ker → (∀ v ∈ T, ∃ g ∈ Dec (F := ℚ) (pl v), γ g ≠ 1) → Van T pl K γ → (galFrame SP T Q v0 pl K).H1c ρ = ⊥ := by
+  intro Ω _ _ _ l SP T Q v0 pl K hD hK k _ M _ _ ρ γ hρ hKγ hT hV
+  rw [eq_bot_iff]
+  rintro ⟨c, b⟩ ⟨h1, h2, h3, h4, h5⟩
+  have h3' : ∀ q : Q, ∀ g ∈ Ine (F := ℚ) (pl q), g ∈ K → c (toGS Ω SP g) = 0 := by
+    intro q g hg hgK
+    exact h3 q ⟨g, Ine_le_Dec _ hg⟩ (Subgroup.mem_subgroupOf.2 ⟨hg, hgK⟩)
+  have h4' : ∀ v : T, ∀ g ∈ Dec (F := ℚ) (pl v), c (toGS Ω SP g) = (γ g : k) • b v - b v := by
+    intro v g hg
+    rw [← hρ]
+    exact h4 v ⟨g, hg⟩
+  have h5' : b v0 = 0 := h5
+  obtain ⟨S, e, hS, -, hTp, hQ⟩ := galIdx Ω l v0 hD
+  have hcont : Continuous (toGS Ω SP) := continuous_quot_mk
+  have hc : ∀ g, c (toGS Ω SP g) = 0 := by
+    intro g
+    refine (Module.forall_dual_apply_eq_zero_iff k _).1 fun f => ?_
+    have hz : ∀ g h, f (c (toGS Ω SP (g * h))) = f (c (toGS Ω SP g)) + (γ g : k) * f (c (toGS Ω SP h)) := by
+      intro g h
+      have := h2 (toGS Ω SP g) (toGS Ω SP h)
+      simp only at this
+      rw [map_mul, this, hρ, map_add (f := _), map_smul, smul_eq_mul]
+    have hu := unrOf Ω k γ K hKγ SP T (fun s => f (c s)) hz (by
+      intro v hv
+      obtain ⟨y, hy⟩ := e.surjective ⟨v, by rw [hS] at hv; exact hv⟩
+      have hv' : (e y).1 = v := congrArg Subtype.val hy
+      rcases y with t | q
+      · have h := hTp t ((t.1 : ℕ) : 𝓞 ℚ)
+        have e' : algebraMap ℚ Ω (((t.1 : ℕ) : 𝓞 ℚ) : ℚ) = ((t.1 : ℕ) : Ω) := by simp
+        rw [e', hv'] at h
+        exact Or.inl ⟨t.1, t.2, h.1 (hD.isOver _ (Or.inl t.2))⟩
+      · refine Or.inr ⟨pl q, hv' ▸ hQ q, fun g hg hgK => ?_⟩
+        simp only [h3' q g hg hgK, map_zero])
+    obtain ⟨m, hm⟩ := hV (fun g => f (c (toGS Ω SP g))) ((h1.comp_continuous hcont).comp f) hz hu (by
+      intro v hv
+      refine ⟨f (b ⟨v, hv⟩), fun g hg => ?_⟩
+      simp only [h4' ⟨v, hv⟩ g hg, map_sub, map_smul, smul_eq_mul])
+    obtain ⟨g0, hg0, hne⟩ := hT v0 v0.2
+    have h0 := hm g0
+    simp only [h4' v0 g0 hg0, h5', smul_zero, sub_zero, map_zero] at h0
+    have hm0 : m = 0 := by
+      have : ((γ g0 : k) - 1) * m = 0 := by rw [sub_mul, one_mul]; exact h0.symm
+      exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 fun h => hne (Units.ext h))
+    have := hm g
+    simpa [hm0] using this
+  refine (Submodule.mem_bot k).2 (Prod.ext (funext fun s => ?_) (funext fun v => ?_))
+  · obtain ⟨g, rfl⟩ : ∃ g, toGS Ω SP g = s := QuotientGroup.mk_surjective s
+    exact hc g
+  · obtain ⟨g0, hg0, hne⟩ := hT v.1 v.2
+    have h0 := h4' v g0 hg0
+    rw [hc] at h0
+    have : ((γ g0 : k) - 1) • b v = 0 := by rw [sub_smul, one_smul]; exact h0.symm
+    exact (smul_eq_zero.1 this).resolve_left (sub_ne_zero.2 fun h => hne (Units.ext h))
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcScalDim
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module UpperTheory.V UpperTheory.V.X
+
+theorem UpperTheory.V.X.scalDim :
+    ∀ {k Γ M : Type} [Field k] [Group Γ] [AddCommGroup M] [Module k M] [Module.Finite k M] (ρ : Representation k Γ M) (γ χ : Γ →* kˣ), (∀ g m, ρ g m = (γ g : k) • m) → (∀ σ, γ σ = 1 → finrank k (LinearMap.ker (ρ σ - 1)) = finrank k M) ∧ (∀ σ, (finrank k M = 0 ∨ γ σ ≠ 1) → finrank k (LinearMap.ker (ρ σ - 1)) = 0) ∧ ((finrank k M = 0 ∨ ∃ g, γ g ≠ χ g) → finrank k (Loc.H0dual χ ρ) = 0) := by
+  intro k Γ M _ _ _ _ _ ρ γ χ h
+  refine ⟨fun σ hσ => ?_, fun σ hσ => ?_, fun hσ => ?_⟩
+  · have : LinearMap.ker (ρ σ - 1) = ⊤ := by
+      rw [eq_top_iff]
+      intro m _
+      simp [h, hσ]
+    rw [this, finrank_top]
+  · have : LinearMap.ker (ρ σ - 1) = ⊥ := by
+      rw [eq_bot_iff]
+      intro m hm
+      rw [Submodule.mem_bot]
+      rcases hσ with h0 | h0
+      · exact (finrank_zero_iff_forall_zero.mp h0) m
+      · have h1 : ((γ σ : k) - 1) • m = 0 := by
+          rw [LinearMap.mem_ker, LinearMap.sub_apply, h] at hm
+          rw [sub_smul, one_smul]
+          exact hm
+        rcases smul_eq_zero.mp h1 with h2 | h2
+        · exact absurd (Units.ext (sub_eq_zero.mp h2)) h0
+        · exact h2
+    rw [this, finrank_bot]
+  · have : Loc.H0dual χ ρ = ⊥ := by
+      rw [eq_bot_iff]
+      intro f hf
+      rw [Submodule.mem_bot]
+      ext m
+      rcases hσ with h0 | ⟨g, hg⟩
+      · rw [(finrank_zero_iff_forall_zero.mp h0) m]; simp
+      · have h1 := hf g m
+        rw [h, map_smul, smul_eq_mul] at h1
+        have h2 : ((γ g : k) - χ g) * f m = 0 := by
+          rw [sub_mul, h1]; simp
+        rcases mul_eq_zero.mp h2 with h3 | h3
+        · exact absurd (Units.ext (sub_eq_zero.mp h3)) hg
+        · simpa using h3
+    rw [this, finrank_bot]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.NumsZero
+
+section
 
 @[expose] public section
 
@@ -217,3 +350,5 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.nums :
     rfl
   exact nums_all P ⟨l, D.residueChar_mem_levelPrimes⟩ hG hN fo (FormData.adRep h j) γ hγ hKγ hD.isCC (k1 _ hD.isCC) j hdim hcc D.sg
     (fun v hv => (f2 v hv).1) e1 hodd D.frame hF
+end
+end

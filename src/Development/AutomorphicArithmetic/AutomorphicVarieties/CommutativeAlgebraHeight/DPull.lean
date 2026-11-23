@@ -1,7 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.OfDetToDet
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapSurj
+public import Mathlib.RingTheory.TensorProduct.Maps
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,9 +40,39 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Polynomial.Basic
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.IsLocalHom
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapSurj
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk2.map_surj :
+    ∀ {A E : Type} [inst : CommRing A] [inst_1 : Ring E]
+    [inst_2 : Algebra A E] {E' : Type} [inst_3 : Ring E'] [inst_4 : Algebra A E'] (f : E' →ₐ[A] E),
+    Function.Surjective (⇑f : E' → E) →
+      ∀ (S : Type) [inst_5 : CommRing S] [inst_6 : Algebra A S],
+        Function.Surjective
+          (⇑(Algebra.TensorProduct.map (AlgHom.id S S) f) : TensorProduct A S E' → TensorProduct A S E) := by
+  intro A E _ _ _ E' _ _ f hf S _ _ x
+  induction x using TensorProduct.induction_on with
+  | zero => exact ⟨0, map_zero _⟩
+  | tmul s e =>
+    obtain ⟨e', rfl⟩ := hf e
+    exact ⟨TensorProduct.tmul A s e', by simp⟩
+  | add x y hx hy =>
+    obtain ⟨x', rfl⟩ := hx
+    obtain ⟨y', rfl⟩ := hy
+    exact ⟨x' + y', map_add _ _ _⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DPull
+
+section
 
 @[expose] public section
 
@@ -146,3 +176,5 @@ theorem UpperTheory.V.CA.d_pull :
       obtain ⟨x', hx', rfl⟩ := hx
       obtain ⟨a, rfl⟩ := hf a
       exact ⟨x' * a, (D.pull f).CH.mul_mem_right _ _ hx', map_mul f _ _⟩
+end
+end

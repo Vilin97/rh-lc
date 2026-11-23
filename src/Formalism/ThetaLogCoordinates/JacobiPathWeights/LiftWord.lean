@@ -1,7 +1,9 @@
 module
 
-public import Formalism.ThetaLogCoordinates.JacobiPathWeights.DefsCol
-public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +44,48 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+-- Source module: Formalism.ThetaLogCoordinates.JacobiPathWeights.DefsCol
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators
+open Finset
+
+namespace Formalism.InvariantFactorPaths.GelfandTsetlinBases
+
+abbrev Form (R : Type*) (n : ℕ) := Finset (Fin n) → R
+
+def sg {n : ℕ} (I : Finset (Fin n)) (m : Fin n) : ℤ := (-1) ^ (I.filter fun j => m < j).card
+
+variable {R : Type*} [CommRing R] {n : ℕ}
+
+def oneF : Form R n := fun I => if I = ∅ then 1 else 0
+
+def wedgeF (K : Form R n) (X : Fin n → R) : Form R n :=
+  fun I => ∑ m ∈ I, ((sg I m : ℤ) : R) * K (I.erase m) * X m
+
+def contrF (K : Form R n) (X : Fin n → R) : Form R n :=
+  fun I => ∑ m ∈ Iᶜ, ((sg I m : ℤ) : R) * X m * K (insert m I)
+
+def stepF (up : Bool) (K : Form R n) (X : Fin n → R) : Form R n :=
+  if up then wedgeF K X else contrF K X
+
+variable {ι : Type*}
+
+end Formalism.InvariantFactorPaths.GelfandTsetlinBases
+end
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.JacobiPathWeights.LiftWord
+
+section
 
 @[expose] public section
 
@@ -63,3 +107,6 @@ def actF {R : Type*} [CommRing R] {n : ℕ} (K : Form R n) (m : Matrix (Fin n) (
   fun J => ∑ I : Finset (Fin n), K I * minorF m I J
 
 end Formalism.InvariantFactorPaths.GelfandTsetlinBases
+end
+end
+end

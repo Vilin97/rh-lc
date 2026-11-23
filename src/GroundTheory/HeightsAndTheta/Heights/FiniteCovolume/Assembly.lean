@@ -41,40 +41,7 @@ public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PGramDetermine
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHermAtPlace
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHyperbolicPairTransitive
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIndexLeDet
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegerSmallAtPlaces
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegralFamilyBound
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIsotropicScaling
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIsotropicSplit
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PKTransitive
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLatticeOrbitsFinite
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLenCauchySchwarz
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLenSq
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineCoeffsFG
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineIndexCoeffs
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineIndexNeZero
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLinePairOrbitsFinite
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMahlerCompactness
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantBound
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantExists
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMinkowskiVolumeForm
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PParabolicDecomposition
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PPhaseOnMinus
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PScalingLaw
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PShortVectorIsotropic
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PShortestVectorIndex
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTorusIntegralHomogeneous
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldOrbit
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldingIntegral
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldingTorus
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVectorOrbitsFinite
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVolumeFormIntComb
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightPos
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedIndexBound
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedLenSmul
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedNormSq
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedSpaceDim
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWittPartner
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.MajorantInvolutionDiagonalForm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -115,6 +82,111 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegralFamilyBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIsotropicScaling
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIsotropicSplit
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PKTransitive
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLatticeOrbitsFinite
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLenCauchySchwarz
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLenSq
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineCoeffsFG
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineIndexCoeffs
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineIndexNeZero
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLinePairOrbitsFinite
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMahlerCompactness
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantExists
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMinkowskiVolumeForm
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PParabolicDecomposition
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PPhaseOnMinus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PScalingLaw
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PShortVectorIsotropic
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PShortestVectorIndex
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTorusIntegralHomogeneous
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldOrbit
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldingIntegral
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldingTorus
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVectorOrbitsFinite
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVolumeFormIntComb
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightPos
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedIndexBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedLenSmul
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWittPartner
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegerSmallAtPlaces
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField
+
+theorem IntegerSmallAtPlaces.proof (E : Type*) [Field E] [NumberField E] :
+    IntegerSmallAtPlaces.Statement E := by
+  intro a ha hlt
+  by_contra hne
+  let b : 𝓞 E := ⟨a, ha⟩
+  have hb : b ≠ 0 := fun h => hne (congrArg Subtype.val h)
+  let w : InfinitePlace E := Classical.arbitrary _
+  have h1 : 1 ≤ w b := InfinitePlace.one_le_of_lt_one hb (fun z _ => hlt z)
+  exact absurd (hlt w) (not_lt.mpr h1)
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedNormSq
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField
+
+theorem WeightedNormSq.proof (E : Type*) [Field E] [NumberField E] : WeightedNormSq.Statement E := by
+  intro c hc a
+  rw [EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun w _ => ?_
+  rw [Fin.sum_univ_two]
+  simp only [weightedEmbed, AddMonoidHom.coe_mk, ZeroHom.coe_mk, PiLp.toLp_apply, Real.norm_eq_abs,
+    sq_abs, show ((1 : Fin 2) = 0) = False from by decide, ↓reduceIte]
+  rw [mul_pow, mul_pow, Real.sq_sqrt (hc w), Complex.sq_norm, Complex.normSq_apply]
+  ring
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PWeightedSpaceDim
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField NumberField.InfinitePlace Module
+
+theorem WeightedSpaceDim.proof (E : Type*) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] :
+    WeightedSpaceDim.Statement E := by
+  unfold WeightedSpaceDim.Statement
+  rw [finrank_euclideanSpace, Fintype.card_prod, Fintype.card_fin,
+    card_eq_nrRealPlaces_add_nrComplexPlaces, IsTotallyComplex.nrRealPlaces_eq_zero,
+    IsTotallyComplex.finrank]
+  ring
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Assembly
+
+section
 
 @[expose] public section
 
@@ -407,3 +479,5 @@ end Conditional
 end
 
 end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end

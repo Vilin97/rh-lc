@@ -1,12 +1,7 @@
 module
 
-public import Formalism.LocalToGlobal.KernelLattices.BaseEx
-public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
-public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetFin
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetOrd
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerSplit
+public import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+public import Formalism.PeriodIntegrals.KerIso
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,7 +17,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -31,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +38,122 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetFin
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetOrd
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.KernelSplitting.IsIntegralHalf
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.LocalToGlobal.KernelLattices.BaseEx
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators ComplexConjugate Pointwise
+open NumberField Formalism.BasicNotions Classical
+
+namespace Formalism.L2.Ker
+
+open Formalism.MainNotions
+
+section HostFacts
+
+variable (D : D7)
+
+def thetaC : ℂ := (1 + Complex.I * (Real.sqrt D.host.d : ℂ)) / 2
+
+def KQuad : Prop := Module.finrank ℚ D.host.K = 2
+
+def ConjOnK : Prop := PI.KerIso.IsConj D.host.K D.host.conj
+
+def TrPos : Prop := ∀ x : D.host.E, x ≠ 0 → 0 < Algebra.trace ℚ D.host.E (x * D.host.conj x)
+
+def CardTau : Prop := Fintype.card D.what₂.Tau = Module.finrank D.host.K D.host.E
+
+def EmbInj : Prop := Function.Injective (TaylorLogMetric.embT D)
+
+def EmbOnK : Prop :=
+  ∀ (τ : D.what₂.Tau) (k : D.host.K), TaylorLogMetric.embT D τ (algebraMap D.host.K D.host.E k) = D.host.φ₀ (k : D.host.E)
+
+def PhiNonReal : Prop := ∃ k : D.host.K, (D.host.φ₀ (k : D.host.E)).im ≠ 0
+
+def DMod8 : Prop := D.host.d % 8 = 7
+
+def SqrtInK : Prop :=
+  ∃ s : D.host.K, s * s = -(D.host.d : D.host.K) ∧
+    D.host.conj (algebraMap D.host.K D.host.E s) = -algebraMap D.host.K D.host.E s
+
+def LatStable : Prop :=
+  ∀ (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), ∀ w ∈ TaylorLogMetric.lamOf D cc δ, thetaC D * w ∈ TaylorLogMetric.lamOf D cc δ
+
+def ConjIdeal : Prop :=
+  ∀ x : 𝓞 D.host.E, x ∈ D.host.conj • D.host.𝔟 ↔ ∃ y ∈ D.host.𝔟, D.host.conj (y : D.host.E) = (x : D.host.E)
+
+def HostFacts : Prop :=
+  KQuad D ∧ ConjOnK D ∧ TrPos D ∧ CardTau D ∧ EmbInj D ∧ EmbOnK D ∧ PhiNonReal D ∧ DMod8 D ∧ SqrtInK D ∧ LatStable D ∧ ConjIdeal D
+
+def MMSelfDual : Prop := PI.KerIso.SelfDualI D.host.K D.host.conj D.host.AA0
+
+def SplitKSplits : Prop := ∀ p : ℕ, p.Prime → SplitK D p → PI.KerIso.SplitsAt D.host.K D.host.conj p
+
+def PeriodExists : Prop :=
+  ∀ (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), cc ≠ ⊥ → δ ≠ 0 → ∃ L : PeriodPair, L.lattice.toAddSubgroup = TaylorLogMetric.lamOf D cc δ
+
+end HostFacts
+
+end Formalism.L2.Ker
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.SelfDualOfDiff
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField
+
+namespace PI.KerIso
+
+def SplitOfJacobi : Prop :=
+  ∀ (K E : Type) [Field K] [NumberField K] [Field E] [NumberField E] [Algebra K E] (cj : E ≃ₐ[ℚ] E) (d p : ℕ) (s : K),
+    d % 8 = 7 → s * s = -(d : K) → cj (algebraMap K E s) = -algebraMap K E s → p.Prime →
+    (p = 2 ∨ jacobiSym (-(d : ℤ)) p = 1) → SplitsAt K cj p
+
+end PI.KerIso
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerSplit
+
+section
+
+@[expose] public section
+
+theorem kernel_split_of_jacobi : PI.KerIso.SplitOfJacobi := by
+  intro K E _ _ _ _ _ cj d p s hd hs hcj hp hJ
+  by_cases h2 : p = 2
+  · subst h2
+    exact PI.UnitaryGroupMassFormula.KerSplit.splitsAt_two cj d s hd hs hcj
+  · exact PI.UnitaryGroupMassFormula.KerSplit.splitsAt_odd cj d p s hs hcj hp h2 (hJ.resolve_left h2)
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.BaseEx
+
+section
 
 @[expose] public section
 
@@ -267,3 +376,6 @@ open Formalism.BasicNotions.Examples₂
 end Test
 
 end Formalism.L2.Ker
+end
+end
+end

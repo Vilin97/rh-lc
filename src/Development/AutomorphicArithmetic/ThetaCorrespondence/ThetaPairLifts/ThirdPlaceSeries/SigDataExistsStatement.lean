@@ -2,7 +2,6 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExponentAndTwistData
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HeckeOpen
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SigDataExists
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,6 +35,361 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedLatticeFinitelyGeneratedSpanning
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.GoodPartLeISupEigenStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSignatureDataSpan
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX
+  GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
+open scoped TensorProduct
+
+namespace GlobalTheory.HeightCounting.FormsStep
+
+theorem eigenvalue_integral_of_baseChange {O M : Type} [CommRing O] [IsDomain O] [IsIntegrallyClosed O]
+    [AddCommGroup M] [Module O M] [Module.Finite O M] (f : Module.End O M)
+    (x : FractionRing O ⊗[O] M) (hx : x ≠ 0) (c : FractionRing O)
+    (h : f.baseChange (FractionRing O) x = c • x) : ∃ a : O, algebraMap O (FractionRing O) a = c := by
+  obtain ⟨p, hp, hpf⟩ := LinearMap.exists_monic_and_aeval_eq_zero O f
+  have hev : (Module.End.baseChangeHom O (FractionRing O) M f).HasEigenvector c x :=
+    ⟨Module.End.mem_eigenspace_iff.mpr h, hx⟩
+  have key := Module.End.aeval_apply_of_hasEigenvector (p := p.map (algebraMap O (FractionRing O))) hev
+  rw [Polynomial.aeval_map_algebraMap, Polynomial.aeval_algHom_apply, hpf, map_zero,
+    Polynomial.eval_map_algebraMap] at key
+  have h0 : Polynomial.aeval c p = 0 := by
+    by_contra hne
+    exact hx ((smul_eq_zero.mp key.symm).resolve_left hne)
+  exact IsIntegrallyClosed.isIntegral_iff.mp ⟨p, hp, by rwa [← Polynomial.aeval_def]⟩
+
+section SigMake
+
+variable (D : D7) (T : TwR D.LL0 D.nd) {S : RatDat D.ntw} (In : RatIn D S)
+
+def sigVal (i : T.Tw) (k : ℕ) (P : PlE D.host) : Prop :=
+  1 ≤ k ∧ k ≤ D.R.r ∧ IsSplitPl D.host P ∧ P ∉ T.S0 i
+
+def sigLam (i : T.Tw) (j : ℕ) (b : Bool) (σ : D.what₂.FT) (k : ℕ) (P : PlE D.host) : FractionRing (T.O i) :=
+  algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i b P : T.O i) ^ k * readT D T i b (In.eig j σ k P)
+
+def SigIdx (i : T.Tw) : Type :=
+  {x : Fin (D.R.m + 1) × Bool × D.what₂.FT // 1 ≤ (x.1 : ℕ) ∧ D.what₂.isot (x.1 : ℕ) x.2.2 ≠ ⊥ ∧ D.nd.goodRow x.2.2 ∧
+    ∀ k P, sigVal D T i k P → ∃ a : T.O i, algebraMap (T.O i) (FractionRing (T.O i)) a = sigLam D T In i x.1 x.2.1 x.2.2 k P}
+
+instance finSigIdx (i : T.Tw) : Finite (SigIdx D T In i) := Subtype.finite
+
+
+open Classical in
+def sigEig (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) : T.O i :=
+  if h : sigVal D T i k P then (x.2.2.2.2 k P h).choose else 1
+
+theorem sigEig_on (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) (h : sigVal D T i k P) :
+    algebraMap (T.O i) (FractionRing (T.O i)) (sigEig D T In i x k P) = sigLam D T In i x.1.1 x.1.2.1 x.1.2.2 k P := by
+  unfold sigEig
+  rw [dite_eq_left h]
+  exact (x.2.2.2.2 k P h).choose_spec
+
+theorem sigEig_off (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) (h : ¬ sigVal D T i k P) :
+    sigEig D T In i x k P = 1 := by
+  unfold sigEig
+  rw [dite_eq_right h]
+
+def sigSys (i : T.Tw) (x : SigIdx D T In i) : ℕ × Bool × (ℕ → PlE D.host → T.O i) :=
+  ((x.1.1 : ℕ), x.1.2.1, sigEig D T In i x)
+
+def sigDataOf : SigData D T where
+  Sig i := ↥(Set.range (sigSys D T In i))
+  fin i := @Fintype.ofFinite _ (Set.finite_range (sigSys D T In i)).to_subtype
+  jS i s := s.1.1
+  jS_range i s := by
+    obtain ⟨x, hx⟩ := s.2
+    rw [← hx]
+    exact ⟨x.2.1, Nat.lt_succ_iff.mp x.1.1.2⟩
+  side i s := s.1.2.1
+  hEig i s := s.1.2.2
+  rowS i s := s.2.choose.1.2.2
+
+end SigMake
+
+theorem sigDataOf_spec (D : D7) (T : TwR D.LL0 D.nd) {S : RatDat D.ntw} (In : RatIn D S) (i : T.Tw)
+    (s : (sigDataOf D T In).Sig i) :
+    sigSys D T In i s.2.choose = s.1 := s.2.choose_spec
+
+theorem hkB_coe_of_val (D : D7) (T : TwR D.LL0 D.nd) {S : RatDat D.ntw} (In : RatIn D S) (hst : HkStab D T S In)
+    (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (P : PlE D.host) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (hv : sigVal D T i k P)
+    (x : ↥(BI D T S In i j b)) :
+    ((hkB D T S In hst i j b k P x : ↥(BI D T S In i j b)) : FmT D T S i j b) = hkT D T S In i j b k P x := by
+  unfold hkB
+  rw [dite_eq_left ⟨h1, h2, hv⟩]
+  rfl
+
+end GlobalTheory.HeightCounting.FormsStep
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseChangeInfLatticeEqSubspace
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory
+
+theorem baseChange_inf_lattice_eq_subspace : ∀ {O V : Type} [CommRing O] [IsDomain O] [AddCommGroup V]
+    [Module (FractionRing O) V] [Module O V]
+    [IsScalarTower O (FractionRing O) V] (N : Submodule O V),
+    Submodule.span (FractionRing O) (N : Set V) = ⊤ → ∀ (W : Submodule (FractionRing O) V),
+    ∃ e : FractionRing O ⊗[O] ↥(N ⊓ W.restrictScalars O) →ₗ[FractionRing O] V,
+      Function.Injective e ∧ LinearMap.range e = W ∧
+      ∀ (c : FractionRing O) (x : ↥(N ⊓ W.restrictScalars O)), e (c ⊗ₜ[O] x) = c • (x : V) := by
+  intro O V _ _ _ _ _ _ N hN W
+  set K := FractionRing O
+  have hV : IsBaseChange K (LinearMap.id : V →ₗ[O] V) :=
+    (isLocalizedModule_iff_isBaseChange (nonZeroDivisors O) K _).1
+      (isLocalizedModule_id (nonZeroDivisors O) V K)
+  have hVt : ∀ (c : K) (v : V), hV.equiv (c ⊗ₜ[O] v) = c • v := fun c v => by
+    rw [IsBaseChange.equiv_tmul]; rfl
+
+  let fN : K ⊗[O] N →ₗ[K] V := hV.equiv.toLinearMap ∘ₗ N.subtype.baseChange K
+  have hfN : ∀ y : N, fN (1 ⊗ₜ y) = y := fun y => by simp [fN, hVt]
+  have hinjN : Function.Injective fN := hV.equiv.injective.comp
+    (Module.Flat.lTensor_preserves_injective_linearMap (M := K) N.subtype N.injective_subtype)
+  have hsurjN : Function.Surjective fN := by
+    rw [← LinearMap.range_eq_top, eq_top_iff, ← hN, Submodule.span_le]
+    exact fun y hy => ⟨1 ⊗ₜ ⟨y, hy⟩, hfN _⟩
+  have hbN : IsBaseChange K N.subtype :=
+    IsBaseChange.of_equiv (LinearEquiv.ofBijective fN ⟨hinjN, hsurjN⟩) (fun y => hfN y)
+  haveI hlN : IsLocalizedModule (nonZeroDivisors O) N.subtype :=
+    (isLocalizedModule_iff_isBaseChange (nonZeroDivisors O) K N.subtype).2 hbN
+
+  set N' := N ⊓ W.restrictScalars O
+  let e : K ⊗[O] N' →ₗ[K] V := hV.equiv.toLinearMap ∘ₗ N'.subtype.baseChange K
+  have het : ∀ (c : K) (x : N'), e (c ⊗ₜ[O] x) = c • (x : V) := fun c x => by
+    simp [e, hVt]
+  refine ⟨e, hV.equiv.injective.comp
+    (Module.Flat.lTensor_preserves_injective_linearMap (M := K) N'.subtype N'.injective_subtype), ?_, het⟩
+  apply le_antisymm
+  · rintro _ ⟨t, rfl⟩
+    induction t using TensorProduct.induction_on with
+    | zero => simp
+    | tmul c x => rw [het]; exact W.smul_mem c x.2.2
+    | add a b ha hb => rw [map_add (f := _)]; exact W.add_mem ha hb
+  · intro v hv
+    obtain ⟨⟨n, d⟩, hd⟩ := IsLocalizedModule.surj (nonZeroDivisors O) N.subtype v
+    have hdv : (d : O) • v = (n : V) := hd
+    have hdK : (d : O) • v = algebraMap O K d • v := (algebraMap_smul K (d : O) v).symm
+    have hW : (n : V) ∈ W := by rw [← hdv, hdK]; exact W.smul_mem _ hv
+    have hne : algebraMap O K d ≠ 0 :=
+      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
+    refine ⟨(algebraMap O K d)⁻¹ ⊗ₜ[O] (⟨n, n.2, hW⟩ : N'), ?_⟩
+    rw [het]
+    show (algebraMap O K d)⁻¹ • (n : V) = v
+    rw [← hdv, hdK, smul_smul, inv_mul_cancel₀ hne, one_smul]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseChangeInfLatticeEqSubspaceStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_injective_baseChange_inf_restrictScalars_range_eq : ∀ {O V : Type} [CommRing O] [IsDomain O] [AddCommGroup V] [Module (FractionRing O) V] [Module O V]
+    [IsScalarTower O (FractionRing O) V] (N : Submodule O V),
+    Submodule.span (FractionRing O) (N : Set V) = ⊤ → ∀ (W : Submodule (FractionRing O) V),
+    ∃ e : FractionRing O ⊗[O] ↥(N ⊓ W.restrictScalars O) →ₗ[FractionRing O] V,
+      Function.Injective e ∧ LinearMap.range e = W ∧
+      ∀ (c : FractionRing O) (x : ↥(N ⊓ W.restrictScalars O)), e (c ⊗ₜ[O] x) = c • (x : V) := by
+  first | exact @GlobalTheory.baseChange_inf_lattice_eq_subspace | exact GlobalTheory.baseChange_inf_lattice_eq_subspace | (intros; apply GlobalTheory.baseChange_inf_lattice_eq_subspace <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SigDataExists
+
+section
+
+@[expose] public section
+
+
+
+section
+noncomputable section
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX
+  GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
+open scoped TensorProduct
+namespace GlobalTheory.HeightCounting.FormsStep
+section SigMake
+variable (D : D7) (T : TwR D.LL0 D.nd) {S : RatDat D.ntw} (In : RatIn D S)
+end SigMake
+theorem span_eig_BI_alt (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw)
+    (In : RatIn D S) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T)
+    (hst : HkStab D T S In) (hSb : In.Sb ⊆ Sx) (hstar : ∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0)
+    (hsp : ∀ i j b, Submodule.span (FractionRing (T.O i)) (BsupT D T S i j b : Set (FmT D T S i j b)) = ⊤)
+    (i : T.Tw) (j : ℕ) (b : Bool) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) :
+    Submodule.span (FractionRing (T.O i))
+      {y : FractionRing (T.O i) ⊗[T.O i] ↥(BI D T S In i j b) | ∃ σ : D.what₂.FT,
+        (D.what₂.isot j σ ≠ ⊥ ∧ D.nd.goodRow σ) ∧ ∀ k P, sigVal D T i k P →
+          (hkB D T S In hst i j b k P).baseChange (FractionRing (T.O i)) y = sigLam D T In i j b σ k P • y} = ⊤ := by
+  obtain ⟨e, he_inj, he_rng, he_tm'⟩ : ∃ e : FractionRing (T.O i) ⊗[T.O i] ↥(BI D T S In i j b) →ₗ[FractionRing (T.O i)]
+      FmT D T S i j b, Function.Injective e ∧ LinearMap.range e = V0T D T S In.rho In.chi In.θ i j b ∧
+      ∀ (c : FractionRing (T.O i)) (x : ↥(BI D T S In i j b)), e (c ⊗ₜ[T.O i] x) = c • (x : FmT D T S i j b) :=
+    GlobalTheory.T.exists_injective_baseChange_inf_restrictScalars_range_eq (BsupT D T S i j b) (hsp i j b) (V0T D T S In.rho In.chi In.θ i j b)
+  have hcomm : ∀ k P, sigVal D T i k P → ∀ y : FractionRing (T.O i) ⊗[T.O i] ↥(BI D T S In i j b),
+      e ((hkB D T S In hst i j b k P).baseChange (FractionRing (T.O i)) y) = hkT D T S In i j b k P (e y) := by
+    intro k P hv y
+    induction y using TensorProduct.induction_on with
+    | zero => simp
+    | tmul c x => rw [LinearMap.baseChange_tmul, he_tm', he_tm', map_smul, hkB_coe_of_val D T In hst i j b k P h1 h2 hv]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
+  have key : V0T D T S In.rho In.chi In.θ i j b ≤ Submodule.map e (Submodule.span (FractionRing (T.O i))
+      {y : FractionRing (T.O i) ⊗[T.O i] ↥(BI D T S In i j b) | ∃ σ : D.what₂.FT,
+        (D.what₂.isot j σ ≠ ⊥ ∧ D.nd.goodRow σ) ∧ ∀ k P, sigVal D T i k P →
+          (hkB D T S In hst i j b k P).baseChange (FractionRing (T.O i)) y = sigLam D T In i j b σ k P • y}) := by
+    refine le_trans (_root_.GlobalTheory.T.lattice_in_isotypic_sup_alt D cf jE A S In b0 b1 Sx T Sp hSb hstar i j b h1 h2) ?_
+    refine iSup₂_le fun σ hσ => ?_
+    intro x hx
+    obtain ⟨hx0, hx1⟩ := Submodule.mem_inf.mp hx
+    rw [← he_rng] at hx0
+    obtain ⟨y, rfl⟩ := LinearMap.mem_range.mp hx0
+    refine Submodule.mem_map_of_mem (Submodule.subset_span ⟨σ, hσ, fun k P hv => he_inj ?_⟩)
+    rw [hcomm k P hv, map_smul]
+    simp only [Submodule.mem_iInf] at hx1
+    exact Module.End.mem_eigenspace_iff.mp (hx1 k P hv)
+  rw [eq_top_iff]
+  intro y _
+  have hy : e y ∈ Submodule.map e _ := key (he_rng ▸ LinearMap.mem_range_self e y)
+  obtain ⟨z, hz, hze⟩ := Submodule.mem_map.mp hy
+  rw [← he_inj hze]
+  exact hz
+theorem sig_of_fg_alt (hfg : ∀ (D : D7) (S : RatDat D.ntw) (In : RatIn D S) (T : TwR D.LL0 D.nd) (i : T.Tw) (j : ℕ) (b : Bool),
+    (BsupT D T S i j b).FG ∧
+      Submodule.span (FractionRing (T.O i)) (BsupT D T S i j b : Set (FmT D T S i j b)) = ⊤) : ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw)
+    (In : RatIn D S) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T)
+    (hst : HkStab D T S In), In.Sb ⊆ Sx → (∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) →
+    ∃ sd : SigData D T,
+      (∀ i j b, 1 ≤ j → j ≤ D.R.m →
+        Submodule.span (FractionRing (T.O i))
+          {x : TensorProduct (T.O i) (FractionRing (T.O i)) ↥(BI D T S In i j b) | ∃ s : sd.Sig i, sd.jS i s = j ∧
+            sd.side i s = b ∧ ∀ k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i →
+              ((hkB D T S In hst i j b k P).baseChange (FractionRing (T.O i))) x =
+                algebraMap (T.O i) (FractionRing (T.O i)) (sd.hEig i s k P) • x} = ⊤) ∧
+      (∀ i (s s' : sd.Sig i), sd.jS i s = sd.jS i s' → sd.side i s = sd.side i s' →
+        (∀ k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i → sd.hEig i s k P = sd.hEig i s' k P) → s = s') ∧
+      (∀ i s, D.what₂.isot (sd.jS i s) (sd.rowS i s) ≠ ⊥ ∧ D.nd.goodRow (sd.rowS i s)) ∧
+      (∀ i s k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i →
+        algebraMap (T.O i) (FractionRing (T.O i)) (sd.hEig i s k P) =
+          algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i (sd.side i s) P : T.O i) ^ k *
+            readT D T i (sd.side i s) (In.eig (sd.jS i s) (sd.rowS i s) k P)) ∧
+      ∀ i s P, sd.hEig i s 0 P = 1 := by
+  intro D cf jE A S In b0 b1 Sx T Sp hst hSb hstar
+  refine ⟨sigDataOf D T In, ?_, ?_, ?_, ?_, ?_⟩
+  · intro i j b h1 h2
+    haveI : Module.Finite (T.O i) ↥(BI D T S In i j b) :=
+      Module.Finite.iff_fg.mpr (fg_BI D T S In (fun i j b => (hfg D S In T i j b).1) i j b)
+    rw [eq_top_iff, ← _root_.GlobalTheory.HeightCounting.FormsStep.span_eig_BI_alt D cf jE A S In b0 b1 Sx T Sp hst hSb hstar (fun i j b => (hfg D S In T i j b).2) i j b h1 h2]
+    refine Submodule.span_le.mpr ?_
+    rintro y ⟨σ, hσ, hy⟩
+    by_cases hy0 : y = 0
+    · rw [hy0]
+      exact Submodule.zero_mem _
+    have hint : ∀ k P, sigVal D T i k P → ∃ a : T.O i,
+        algebraMap (T.O i) (FractionRing (T.O i)) a = sigLam D T In i j b σ k P :=
+      fun k P hv => eigenvalue_integral_of_baseChange _ y hy0 _ (hy k P hv)
+    let x : SigIdx D T In i := ⟨(⟨j, Nat.lt_succ_of_le h2⟩, b, σ), h1, hσ.1, hσ.2, hint⟩
+    refine Submodule.subset_span ⟨⟨sigSys D T In i x, x, rfl⟩, rfl, rfl, fun k P hk1 hk2 hsp hP => ?_⟩
+    rw [hy k P ⟨hk1, hk2, hsp, hP⟩]
+    congr 1
+    exact (sigEig_on D T In i x k P ⟨hk1, hk2, hsp, hP⟩).symm
+  · intro i s s' h1 h2 h3
+    have e1 := sigDataOf_spec D T In i s
+    have e2 := sigDataOf_spec D T In i s'
+    apply Subtype.ext
+    refine Prod.ext h1 (Prod.ext h2 ?_)
+    funext k P
+    by_cases hv : sigVal D T i k P
+    · exact h3 k P hv.1 hv.2.1 hv.2.2.1 hv.2.2.2
+    · change s.1.2.2 k P = s'.1.2.2 k P
+      rw [← e1, ← e2]
+      change sigEig D T In i _ k P = sigEig D T In i _ k P
+      rw [sigEig_off D T In i _ k P hv, sigEig_off D T In i _ k P hv]
+  · intro i s
+    have e1 := sigDataOf_spec D T In i s
+    have hj : s.1.1 = (s.2.choose.1.1 : ℕ) := (congrArg Prod.fst e1).symm
+    show D.what₂.isot s.1.1 s.2.choose.1.2.2 ≠ ⊥ ∧ D.nd.goodRow s.2.choose.1.2.2
+    rw [hj]
+    exact ⟨s.2.choose.2.2.1, s.2.choose.2.2.2.1⟩
+  · intro i s k P hk1 hk2 hsp hP
+    have e1 := sigDataOf_spec D T In i s
+    have hj : s.1.1 = (s.2.choose.1.1 : ℕ) := (congrArg Prod.fst e1).symm
+    have hb : s.1.2.1 = s.2.choose.1.2.1 := (congrArg (fun p => p.2.1) e1).symm
+    have hh : s.1.2.2 = sigEig D T In i s.2.choose := (congrArg (fun p => p.2.2) e1).symm
+    show algebraMap (T.O i) (FractionRing (T.O i)) (s.1.2.2 k P) =
+      algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i s.1.2.1 P : T.O i) ^ k *
+        readT D T i s.1.2.1 (In.eig s.1.1 s.2.choose.1.2.2 k P)
+    rw [hh, hj, hb]
+    exact sigEig_on D T In i _ k P ⟨hk1, hk2, hsp, hP⟩
+  · intro i s P
+    have e1 := sigDataOf_spec D T In i s
+    have hh : s.1.2.2 = sigEig D T In i s.2.choose := (congrArg (fun p => p.2.2) e1).symm
+    show s.1.2.2 0 P = 1
+    rw [hh]
+    exact sigEig_off D T In i _ 0 P (fun h => absurd h.1 (by omega))
+theorem sigData_exists_alt : ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw)
+    (In : RatIn D S) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T)
+    (hst : HkStab D T S In), In.Sb ⊆ Sx → (∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) →
+    ∃ sd : SigData D T,
+      (∀ i j b, 1 ≤ j → j ≤ D.R.m →
+        Submodule.span (FractionRing (T.O i))
+          {x : TensorProduct (T.O i) (FractionRing (T.O i)) ↥(BI D T S In i j b) | ∃ s : sd.Sig i, sd.jS i s = j ∧
+            sd.side i s = b ∧ ∀ k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i →
+              ((hkB D T S In hst i j b k P).baseChange (FractionRing (T.O i))) x =
+                algebraMap (T.O i) (FractionRing (T.O i)) (sd.hEig i s k P) • x} = ⊤) ∧
+      (∀ i (s s' : sd.Sig i), sd.jS i s = sd.jS i s' → sd.side i s = sd.side i s' →
+        (∀ k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i → sd.hEig i s k P = sd.hEig i s' k P) → s = s') ∧
+      (∀ i s, D.what₂.isot (sd.jS i s) (sd.rowS i s) ≠ ⊥ ∧ D.nd.goodRow (sd.rowS i s)) ∧
+      (∀ i s k P, 1 ≤ k → k ≤ D.R.r → IsSplitPl D.host P → P ∉ T.S0 i →
+        algebraMap (T.O i) (FractionRing (T.O i)) (sd.hEig i s k P) =
+          algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i (sd.side i s) P : T.O i) ^ k *
+            readT D T i (sd.side i s) (In.eig (sd.jS i s) (sd.rowS i s) k P)) ∧
+      ∀ i s P, sd.hEig i s 0 P = 1 :=
+  _root_.GlobalTheory.HeightCounting.FormsStep.sig_of_fg_alt bsupT_fg_span_all
+end GlobalTheory.HeightCounting.FormsStep
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SigDataExistsStatement
+
+section
 
 @[expose] public section
 
@@ -64,4 +418,6 @@ theorem _root_.GlobalTheory.T.exists_signature_data_span_alt : ∀ (D : D7) (cf 
             readT D T i (sd.side i s) (In.eig (sd.jS i s) (sd.rowS i s) k P)) ∧
       ∀ i s P, sd.hEig i s 0 P = 1 := by
   first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt | exact _root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt <;> assumption)
+end
+end
 end

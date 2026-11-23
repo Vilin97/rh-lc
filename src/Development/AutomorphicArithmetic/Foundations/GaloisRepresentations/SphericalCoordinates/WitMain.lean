@@ -7,15 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntDvdOfEqNa
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeCompletionEqLatticeVectorAddNsmul
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudeActionAdelicLattice
 public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDenominatorOfLattice
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDivOfREqSmulCompletedLattice
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsIntBilinFormOfScaledForm
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsLatticeLiftCongrModCoprime
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsPrimeToPMultipleInRangeOfBilinForm
-import Development.AutomorphicArithmetic.PAdicLatticeApproximation.FiniteFreeOfBoundedDenominatorsLattice
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.IntegralUnitCongrCoprimeIntMod
-import Development.AutomorphicArithmetic.PAdicLatticeApproximation.LatticeSaturatedAtPAndPrimeToP
-import Development.AutomorphicArithmetic.PAdicLatticeApproximation.PLatticeSaturatedAndCofinite
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ScaledFormCongrModNOfUnitCongr
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.PLatticeSaturatedAndCofinite
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,7 +43,178 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ScaledFormDenEqOneOnLattice
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsLatticeLiftCongrModCoprime
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsPrimeToPMultipleInRangeOfBilinForm
+import Development.AutomorphicArithmetic.PAdicLatticeApproximation.FiniteFreeOfBoundedDenominatorsLattice
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsHolPeriods
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.WitSys
+import Development.AutomorphicArithmetic.PAdicLatticeApproximation.LatticeSaturatedAtPAndPrimeToP
+import Development.AutomorphicArithmetic.PAdicLatticeApproximation.PLatticeSaturatedAndCofinite
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntAfIntCast
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDivOfREqSmulCompletedLattice
+
+section
+
+@[expose] public section
+
+open NumberField
+open GlobalTheory GlobalTheory.PELU GlobalTheory.UPel.HT GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGeo UpperTheory.Gal.W2.Wit
+open scoped TensorProduct
+
+theorem UpperTheory.exists_div_of_r_eq_smul_completedLattice :
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (X : UpperTheory.Gal.W2.Wit.Sys D) (w : VQ D) (n : ℕ) (e : AfP p ⊗[ℚ] VQ D), w ∈ X.lat → 0 < n → n.Coprime p → e ∈ LaHat D → X.r w = n • e → ∃ u ∈ X.lat, w = n • u := by
+  intro p _ D X w n e hw hn hc he hr
+  have hn0 : (n : ℚ) ≠ 0 := Nat.cast_ne_zero.2 hn.ne'
+  have hwu : w = n • ((n : ℚ)⁻¹ • w) := by
+    rw [← Nat.cast_smul_eq_nsmul ℚ n, smul_smul, mul_inv_cancel₀ hn0, one_smul]
+  have hru : X.r ((n : ℚ)⁻¹ • w) = e := by
+    rw [map_smul, hr, ← Nat.cast_smul_eq_nsmul ℚ n, smul_smul, inv_mul_cancel₀ hn0, one_smul]
+  refine ⟨(n : ℚ)⁻¹ • w, ⟨(UpperTheory.p_lattice_saturated_and_cofinite p D X.M X.hM).1 n _ hc ?_, ?_⟩, hwu⟩
+  · rw [← hwu]; exact hw.1
+  · rw [hru]; exact he
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsIntBilinFormOfScaledForm
+
+section
+
+@[expose] public section
+
+open NumberField
+open GlobalTheory GlobalTheory.PELU GlobalTheory.UPel.HT GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGeo UpperTheory.Gal.W2.Wit
+open scoped TensorProduct
+
+theorem UpperTheory.exists_int_bilinForm_of_scaled_form :
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (X : UpperTheory.Gal.W2.Wit.Sys D),
+      ∃ E : LinearMap.BilinForm ℤ X.lat,
+        ∀ u w : X.lat, (E u w : ℚ) = X.s * X.B (u : VQ D) (w : VQ D) := by
+  intro p _ D X
+  have h : ∀ u w : X.lat, ((X.s * X.B (u : VQ D) (w : VQ D)).num : ℚ)
+      = X.s * X.B (u : VQ D) (w : VQ D) := fun u w =>
+    Rat.intCast_num_of_den_eq_one (UpperTheory.scaled_form_den_eq_one_on_lattice p D X u w u.2 w.2)
+  refine ⟨LinearMap.mk₂ ℤ (fun u w : X.lat => (X.s * X.B (u : VQ D) (w : VQ D)).num)
+    ?_ ?_ ?_ ?_, ?_⟩
+  · intro u u' w
+    apply Int.cast_injective (α := ℚ)
+    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add X.B, LinearMap.add_apply, mul_add]
+  · intro c u w
+    apply Int.cast_injective (α := ℚ)
+    rw [smul_eq_mul, Int.cast_mul, h, h, AddSubgroup.coe_zsmul,
+      LinearMap.map_smul_of_tower X.B, LinearMap.smul_apply, zsmul_eq_mul]
+    ring
+  · intro u w w'
+    apply Int.cast_injective (α := ℚ)
+    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add (X.B (u : VQ D)), mul_add]
+  · intro c u w
+    apply Int.cast_injective (α := ℚ)
+    rw [smul_eq_mul, Int.cast_mul, h, h, AddSubgroup.coe_zsmul,
+      LinearMap.map_smul_of_tower (X.B (u : VQ D)), zsmul_eq_mul]
+    ring
+  · intro u w
+    rw [LinearMap.mk₂_apply]
+    exact h u w
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.IntegralUnitCongrCoprimeIntMod
+
+section
+
+@[expose] public section
+
+open NumberField
+open GlobalTheory GlobalTheory.PELU GlobalTheory.UPel.HT GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGeo UpperTheory.Gal.W2.Wit
+open scoped TensorProduct
+
+theorem UpperTheory.integral_unit_congr_coprime_int_mod :
+    ∀ (p : ℕ) [Fact p.Prime] (ε : (AfP p)ˣ), IsIntAf (ε : AfP p) → IsIntAf ((ε⁻¹ : (AfP p)ˣ) : AfP p) → ∀ n : ℕ, 0 < n → n.Coprime p → ∃ (ν : ℤ) (b : AfP p), IsIntAf b ∧ (ε : AfP p) = (ν : AfP p) + (n : AfP p) * b ∧ IsCoprime ν (n : ℤ) := by
+  intro p _ ε hε hε' n hn hnp
+  obtain ⟨ν, b, hb, hνb⟩ := LaHatMod.exists_int_add_mul n hn hnp _ hε
+  obtain ⟨μ, b', hb', hμb⟩ := LaHatMod.exists_int_add_mul n hn hnp _ hε'
+  refine ⟨ν, b, hb, hνb, ?_⟩
+  have hint : IsIntAf ((ν : AfP p) * b' + (μ : AfP p) * b + (n : AfP p) * b * b') := by
+    intro v
+    simp only [map_add (f := _), map_mul, map_intCast, map_natCast]
+    exact add_mem (add_mem (mul_mem (intCast_mem _ ν) (hb' v)) (mul_mem (intCast_mem _ μ) (hb v)))
+      (mul_mem (mul_mem (natCast_mem _ n) (hb v)) (hb' v))
+  have hprod : (1 : AfP p) = (ν : AfP p) * μ +
+      n * ((ν : AfP p) * b' + (μ : AfP p) * b + (n : AfP p) * b * b') := by
+    have : (ε : AfP p) * ((ε⁻¹ : (AfP p)ˣ) : AfP p) = 1 := Units.mul_inv ε
+    rw [← this, hνb, hμb]
+    ring
+  have hdvd : (n : ℤ) ∣ 1 - ν * μ := by
+    apply IntDvd.int_dvd_of_eq_mul_isIntAf p n hn hnp _ _ hint
+    rw [map_intCast, Int.cast_sub, Int.cast_one, Int.cast_mul]
+    linear_combination hprod
+  obtain ⟨k, hk⟩ := hdvd
+  exact ⟨μ, k, by linear_combination -hk⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.ScaledFormCongrModNOfUnitCongr
+
+section
+
+@[expose] public section
+
+open NumberField
+open GlobalTheory GlobalTheory.PELU GlobalTheory.UPel.HT GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGeo UpperTheory.Gal.W2.Wit
+open scoped TensorProduct
+
+theorem UpperTheory.scaled_form_congr_mod_n_of_unit_congr :
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (X : UpperTheory.Gal.W2.Wit.Sys D) (n : ℕ) (ν : ℤ) (b : AfP p) (u u' : VQ D) (a a' : D.La) (e e' : AfP p ⊗[ℚ] VQ D), 0 < n → n.Coprime p → IsIntAf b → (X.ε : AfP p) = (ν : AfP p) + (n : AfP p) * b → u ∈ X.lat → u' ∈ X.lat → e ∈ LaHat D → e' ∈ LaHat D → X.r u = inAf D a + n • e → X.r u' = inAf D a' + n • e' → ∃ z : ℤ, X.s * X.B u u' = (ν : ℚ) * (D.EF a a' : ℤ) + (n : ℚ) * z := by
+  intro p _ D X n ν b u u' a a' e e' hn hc hb hε hu hu' he he' hr hr'
+  have hden := UpperTheory.scaled_form_den_eq_one_on_lattice p D X u u' hu hu'
+  have hform : algebraMap ℚ (AfP p) (X.s * X.B u u') =
+      (X.ε : AfP p) * MultScale.EFA D (X.r u) (X.r u') := X.form u u'
+  generalize X.s * X.B u u' = q at hden hform ⊢
+  have hqz : ((q.num : ℤ) : ℚ) = q := Rat.coe_int_num_of_den_eq_one hden
+  have ha := MultScale.inAf_mem D a
+  have ha' := MultScale.inAf_mem D a'
+  obtain ⟨y, hy, hexp⟩ : ∃ y : AfP p, IsIntAf y ∧
+      MultScale.EFA D (inAf D a + n • e) (inAf D a' + n • e') =
+        ((D.EF a a' : ℤ) : AfP p) + (n : AfP p) * y := by
+    refine ⟨MultScale.EFA D (inAf D a) e' + MultScale.EFA D e (inAf D a') +
+      (n : AfP p) * MultScale.EFA D e e', ?_, ?_⟩
+    · exact MultScale.isIntAf_add (MultScale.isIntAf_add (MultScale.isIntAf_EFA D ha he')
+        (MultScale.isIntAf_EFA D he ha')) (MultScale.isIntAf_mul
+          (by simpa using MultScale.isIntAf_intCast (p := p) (n : ℤ)) (MultScale.isIntAf_EFA D he he'))
+    · simp only [map_add (f := _), LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, nsmul_eq_mul,
+        MultScale.EFA_inAf]
+      ring
+  rw [hr, hr', hexp, hε] at hform
+  have hE := MultScale.isIntAf_intCast (p := p) (D.EF a a')
+  have hN : IsIntAf (n : AfP p) := by simpa using MultScale.isIntAf_intCast (p := p) (n : ℤ)
+  have hy' : IsIntAf ((ν : AfP p) * y + b * (((D.EF a a' : ℤ) : AfP p) + (n : AfP p) * y)) :=
+    MultScale.isIntAf_add (MultScale.isIntAf_mul (MultScale.isIntAf_intCast ν) hy)
+      (MultScale.isIntAf_mul hb (MultScale.isIntAf_add hE (MultScale.isIntAf_mul hN hy)))
+  have hc' : algebraMap ℚ (AfP p) (((q.num - ν * (D.EF a a' : ℤ) : ℤ)) : ℚ) =
+      (n : AfP p) * ((ν : AfP p) * y + b * (((D.EF a a' : ℤ) : AfP p) + (n : AfP p) * y)) := by
+    have h1 : algebraMap ℚ (AfP p) ((q.num : ℤ) : ℚ) = algebraMap ℚ (AfP p) q := by rw [hqz]
+    rw [map_intCast] at h1 ⊢
+    push_cast
+    rw [h1, hform]
+    ring
+  obtain ⟨k, hk⟩ := IntDvd.int_dvd_of_eq_mul_isIntAf p n hn hc _ _ hy' hc'
+  refine ⟨k, ?_⟩
+  have hk' : ((q.num : ℤ) : ℚ) - (ν : ℚ) * (D.EF a a' : ℤ) = (n : ℚ) * k := by exact_mod_cast hk
+  rw [← hqz]
+  linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.WitMain
+
+section
 
 @[expose] public section
 
@@ -234,3 +394,6 @@ theorem main (N : ℕ) (hN : 0 < N) (hNp : N.Coprime p) :
       exact ⟨m, ⟨m • w, hw⟩, hm, rfl⟩
 
 end UpperTheory.Gal.W2.Wit.Sys
+end
+end
+end

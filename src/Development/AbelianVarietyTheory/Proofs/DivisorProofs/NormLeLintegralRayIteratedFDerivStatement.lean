@@ -2,11 +2,12 @@ module
 
 public import Mathlib.Analysis.Calculus.ContDiff.Defs
 public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeLintegralRayIteratedFDeriv
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -22,6 +23,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +45,196 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeLintegralTaylorTailIteratedDeriv
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Set Module
+open scoped ENNReal
+
+namespace GlobalTheory
+
+theorem taylorTail_step_one {F : Type} [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F]
+    (g : ℝ → F) (a : ℝ) (hg : Differentiable ℝ g) (hd : Continuous (deriv g))
+    (hlim : Tendsto g atTop (𝓝 0)) :
+    ENNReal.ofReal ‖g a‖ ≤ ∫⁻ t in Ioi a, ‖deriv g t‖ₑ := by
+  by_cases hI : IntegrableOn (deriv g) (Ioi a)
+  · have hint : ∫ x in Ioi a, deriv g x = 0 - g a :=
+      integral_Ioi_of_hasDerivAt_of_tendsto hg.continuous.continuousWithinAt
+        (fun x _ => (hg x).hasDerivAt) hI hlim
+    rw [zero_sub] at hint
+    have h1 : ‖g a‖ ≤ ∫ x in Ioi a, ‖deriv g x‖ := by
+      calc ‖g a‖ = ‖∫ x in Ioi a, deriv g x‖ := by rw [hint, norm_neg]
+        _ ≤ ∫ x in Ioi a, ‖deriv g x‖ := norm_integral_le_integral_norm _
+    calc ENNReal.ofReal ‖g a‖ ≤ ENNReal.ofReal (∫ x in Ioi a, ‖deriv g x‖) := ENNReal.ofReal_le_ofReal h1
+      _ = ∫⁻ t in Ioi a, ‖deriv g t‖ₑ := ofReal_integral_norm_eq_lintegral_enorm hI
+  · have : ∫⁻ t in Ioi a, ‖deriv g t‖ₑ = ∞ := by
+      by_contra hne
+      exact hI ⟨hd.aestronglyMeasurable, lt_top_iff_ne_top.mpr hne⟩
+    rw [this]; exact le_top
+
+theorem taylorTail_inner (j : ℕ) (s : ℝ) (hs : 0 < s) :
+    ∫⁻ t in Ioo (0:ℝ) s, ENNReal.ofReal (t ^ j / (j.factorial : ℝ))
+      = ENNReal.ofReal (s ^ (j+1) / ((j+1).factorial : ℝ)) := by
+  have hcont : Continuous (fun t : ℝ => t ^ j / (j.factorial : ℝ)) := by fun_prop
+  rw [← ofReal_integral_eq_lintegral_ofReal]
+  · congr 1
+    rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le hs.le,
+      intervalIntegral.integral_div, integral_pow, Nat.factorial_succ]
+    push_cast
+    rw [zero_pow (Nat.succ_ne_zero j), sub_zero, div_div, mul_comm]
+  · exact (hcont.integrableOn_Icc (a := 0) (b := s)).mono_set Ioo_subset_Icc_self
+  · filter_upwards [ae_restrict_mem measurableSet_Ioo] with t ht
+    exact div_nonneg (pow_nonneg ht.1.le _) (by positivity)
+
+theorem taylorTail_tonelli (f : ℝ → ℝ≥0∞) (hf : Measurable f) (j : ℕ) :
+    ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ j / (j.factorial : ℝ)) * ∫⁻ s in Ioi t, f s
+      = ∫⁻ s in Ioi (0:ℝ), ENNReal.ofReal (s ^ (j+1) / ((j+1).factorial : ℝ)) * f s := by
+  set w : ℝ → ℝ≥0∞ := fun t => ENNReal.ofReal (t ^ j / (j.factorial : ℝ)) with hw
+  have hwm : Measurable w := by fun_prop
+  let G : ℝ → ℝ → ℝ≥0∞ := fun t s => w t * (Ioi t).indicator f s
+  have hG : Measurable (Function.uncurry G) := by
+    have hS : MeasurableSet {p : ℝ × ℝ | p.1 < p.2} := measurableSet_lt measurable_fst measurable_snd
+    have : Function.uncurry G = fun p : ℝ × ℝ => w p.1 * ({p : ℝ × ℝ | p.1 < p.2}.indicator (fun p => f p.2) p) := by
+      ext ⟨t, s⟩
+      simp only [Function.uncurry_apply_pair, G, Set.indicator, mem_Ioi, mem_setOf_eq]
+    rw [this]
+    exact (hwm.comp measurable_fst).mul ((hf.comp measurable_snd).indicator hS)
+  have step1 : ∫⁻ t in Ioi (0:ℝ), w t * ∫⁻ s in Ioi t, f s
+      = ∫⁻ t in Ioi (0:ℝ), ∫⁻ s in Ioi (0:ℝ), G t s := by
+    refine setLIntegral_congr_fun measurableSet_Ioi (fun t ht => ?_)
+    simp only [G]
+    rw [lintegral_const_mul _ (hf.indicator measurableSet_Ioi), lintegral_indicator measurableSet_Ioi,
+      Measure.restrict_restrict measurableSet_Ioi, Ioi_inter_Ioi, sup_eq_left.mpr (le_of_lt (mem_Ioi.mp ht))]
+  rw [step1, lintegral_lintegral_swap hG.aemeasurable]
+  refine setLIntegral_congr_fun measurableSet_Ioi (fun s hs => ?_)
+  have : ∀ t, G t s = (Iio s).indicator w t * f s := by
+    intro t
+    by_cases h : t < s <;> simp [G, Set.indicator, h]
+  simp_rw [this]
+  rw [lintegral_mul_const _ (hwm.indicator measurableSet_Iio), lintegral_indicator measurableSet_Iio,
+    Measure.restrict_restrict measurableSet_Iio, Iio_inter_Ioi, taylorTail_inner j s hs]
+
+theorem taylorTail_bound {F : Type} [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F]
+    (h : ℝ → F) (m : ℕ) (hh : ContDiff ℝ (⊤ : ℕ∞) h)
+    (hlim : ∀ j ≤ m, Tendsto (iteratedDeriv j h) atTop (𝓝 0)) :
+    ENNReal.ofReal ‖h 0‖ ≤ ∫⁻ t in Ioi (0:ℝ),
+      ENNReal.ofReal (t ^ m / (m.factorial : ℝ)) * ‖iteratedDeriv (m + 1) h t‖ₑ := by
+  have hdiff : ∀ n : ℕ, Differentiable ℝ (iteratedDeriv n h) := fun n =>
+    hh.differentiable_iteratedDeriv n (by exact_mod_cast ENat.coe_lt_top n)
+  have hcont : ∀ n : ℕ, Continuous (iteratedDeriv n h) := fun n => (hdiff n).continuous
+  have key : ∀ j ≤ m, ENNReal.ofReal ‖h 0‖ ≤ ∫⁻ t in Ioi (0:ℝ),
+      ENNReal.ofReal (t ^ j / (j.factorial : ℝ)) * ‖iteratedDeriv (j + 1) h t‖ₑ := by
+    intro j
+    induction j with
+    | zero =>
+      intro _
+      have := taylorTail_step_one h 0 (hdiff 0) (by rw [← iteratedDeriv_one]; exact hcont 1)
+        (by simpa using hlim 0 (Nat.zero_le _))
+      simpa [iteratedDeriv_one] using this
+    | succ j ih =>
+      intro hj
+      refine (ih (Nat.le_of_succ_le hj)).trans ?_
+      calc ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ j / (j.factorial : ℝ)) * ‖iteratedDeriv (j + 1) h t‖ₑ
+          ≤ ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ j / (j.factorial : ℝ)) *
+              ∫⁻ s in Ioi t, ‖iteratedDeriv (j + 1 + 1) h s‖ₑ := by
+            refine lintegral_mono (fun t => ?_)
+            refine mul_le_mul_of_nonneg_left ?_ (zero_le')
+            have := taylorTail_step_one (iteratedDeriv (j+1) h) t (hdiff _)
+              (by rw [← iteratedDeriv_succ]; exact hcont _) (hlim (j+1) hj)
+            simpa [iteratedDeriv_succ] using this
+        _ = _ := taylorTail_tonelli _ ((hcont _).enorm.measurable) j
+  exact key m le_rfl
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeLintegralTaylorTailIteratedDerivStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Set Module
+open scoped ENNReal
+
+
+theorem _root_.GlobalTheory.T.norm_le_lintegral_taylor_tail_iteratedDeriv : ∀ {F : Type} [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F] (h : ℝ → F) (m : ℕ), ContDiff ℝ (⊤ : ℕ∞) h → (∀ j ≤ m, Tendsto (iteratedDeriv j h) atTop (𝓝 0)) → ENNReal.ofReal ‖h 0‖ ≤ ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ m / (m.factorial : ℝ)) * ‖iteratedDeriv (m + 1) h t‖ₑ := by
+  first | exact @GlobalTheory.taylorTail_bound | exact GlobalTheory.taylorTail_bound | (intros; apply GlobalTheory.taylorTail_bound <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeLintegralRayIteratedFDeriv
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Set Module
+open scoped ENNReal
+
+namespace GlobalTheory
+
+theorem norm_le_lintegral_ray_iteratedFDeriv
+    {E F : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F]
+    [NormedSpace ℝ F] [CompleteSpace F] (G : E → F) (m : ℕ) (x v : E)
+    (hG : ContDiff ℝ (⊤ : ℕ∞) G)
+    (hdec : ∀ j ≤ m, Tendsto (fun t : ℝ => iteratedFDeriv ℝ j G (x + t • v)) atTop (𝓝 0)) :
+    ENNReal.ofReal ‖G x‖ ≤ ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ m / (m.factorial : ℝ) *
+      (‖v‖ ^ (m + 1) * ‖iteratedFDeriv ℝ (m + 1) G (x + t • v)‖)) := by
+  set L : ℝ →L[ℝ] E := ContinuousLinearMap.smulRight (1 : ℝ →L[ℝ] ℝ) v with hL
+  have hLt : ∀ t : ℝ, L t = t • v := fun t => by simp [hL]
+  set Gx : E → F := fun z => G (x + z) with hGx
+  have hGx' : ContDiff ℝ (⊤ : ℕ∞) Gx := hG.comp (contDiff_const.add contDiff_id)
+  set h : ℝ → F := Gx ∘ L with hh
+  have hhs : ContDiff ℝ (⊤ : ℕ∞) h := hGx'.comp L.contDiff
+  have key : ∀ (j : ℕ) (t : ℝ),
+      iteratedDeriv j h t = iteratedFDeriv ℝ j G (x + t • v) (fun _ => v) := by
+    intro j t
+    rw [iteratedDeriv_eq_iteratedFDeriv, hh,
+      L.iteratedFDeriv_comp_right hGx' t (by exact_mod_cast le_top),
+      ContinuousMultilinearMap.compContinuousLinearMap_apply, hGx,
+      iteratedFDeriv_comp_add_left, hLt]
+    simp [hLt]
+  have bound : ∀ (j : ℕ) (t : ℝ),
+      ‖iteratedDeriv j h t‖ ≤ ‖iteratedFDeriv ℝ j G (x + t • v)‖ * ‖v‖ ^ j := by
+    intro j t
+    rw [key]
+    refine ((iteratedFDeriv ℝ j G (x + t • v)).le_opNorm _).trans (le_of_eq ?_)
+    simp [Finset.prod_const]
+  have hdec' : ∀ j ≤ m, Tendsto (iteratedDeriv j h) atTop (𝓝 0) := by
+    intro j hj
+    refine squeeze_zero_norm (fun t => bound j t) ?_
+    have := ((hdec j hj).norm).mul_const (‖v‖ ^ j)
+    simpa using this
+  have h0 : h 0 = G x := by simp [hh, hGx, hLt]
+  have main := GlobalTheory.T.norm_le_lintegral_taylor_tail_iteratedDeriv h m hhs hdec'
+  rw [h0] at main
+  refine main.trans (lintegral_mono_ae ?_)
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  have ha : 0 ≤ t ^ m / (m.factorial : ℝ) := by
+    have : (0:ℝ) < t := ht
+    positivity
+  rw [← ofReal_norm_eq_enorm, ← ENNReal.ofReal_mul ha]
+  refine ENNReal.ofReal_le_ofReal (mul_le_mul_of_nonneg_left ?_ ha)
+  rw [mul_comm]
+  exact bound (m + 1) t
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeLintegralRayIteratedFDerivStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +244,5 @@ open scoped ENNReal
 
 theorem _root_.GlobalTheory.T.norm_le_lintegral_ray_iteratedFDeriv' : ∀ {E F : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F] (G : E → F) (m : ℕ) (x v : E), ContDiff ℝ (⊤ : ℕ∞) G → (∀ j ≤ m, Tendsto (fun t : ℝ => iteratedFDeriv ℝ j G (x + t • v)) atTop (𝓝 0)) → ENNReal.ofReal ‖G x‖ ≤ ∫⁻ t in Ioi (0:ℝ), ENNReal.ofReal (t ^ m / (m.factorial : ℝ) * (‖v‖ ^ (m + 1) * ‖iteratedFDeriv ℝ (m + 1) G (x + t • v)‖)) := by
   first | exact @GlobalTheory.norm_le_lintegral_ray_iteratedFDeriv | exact GlobalTheory.norm_le_lintegral_ray_iteratedFDeriv | (intros; apply GlobalTheory.norm_le_lintegral_ray_iteratedFDeriv <;> assumption)
+end
+end

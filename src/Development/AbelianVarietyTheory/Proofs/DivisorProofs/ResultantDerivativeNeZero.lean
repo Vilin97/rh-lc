@@ -2,12 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.JoinCastSucc
 public import Mathlib.RingTheory.Polynomial.Resultant.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreduciblePencilLinePolynomialGenericLineStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NotSquareLinearFactorOfPencilLineDiscriminantNeZStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PencilLinePolynomialNatDegreeLeAndCoeffStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreePencilLineDiscriminantLeStatement
-public import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.Nilpotent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapLine
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreduciblePencilLinePolynomialGenericLine
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,8 +43,271 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreePencilLineDiscriminantLeStatement
+public import Mathlib.Algebra.MvPolynomial.Funext
+import Mathlib.Algebra.MvPolynomial.Nilpotent
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AbelianVarietyTheory.Definitions.Divisors.MemSubPtsCutBaseChangeIff
 import Development.AbelianVarietyTheory.Definitions.Divisors.WellChosen
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IrreduciblePencilLinePolynomialGenericLineStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.HSChoice GlobalTheory.PencilDisc
+
+theorem _root_.GlobalTheory.T.irreducible_pencilLinePolynomial_generic_line : ∀ (F : Type) [Field F] (D N : ℕ) (f : MvPolynomial (Fin (D + 1) × Fin N) F), Irreducible f → Irreducible (GlobalTheory.PencilDisc.line (fun i j => (MvPolynomial.X (Sum.inl (i, j)) : MvPolynomial ((Fin D × Fin N) ⊕ (Fin N ⊕ Fin N)) F)) (fun j => MvPolynomial.X (Sum.inr (Sum.inl j))) (fun j => MvPolynomial.X (Sum.inr (Sum.inr j))) f) := by
+  first | exact @GlobalTheory.PencilDisc.irreducible_line_generic | exact GlobalTheory.PencilDisc.irreducible_line_generic | (intros; apply GlobalTheory.PencilDisc.irreducible_line_generic <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NotSquareLinearFactorOfPencilLineDiscriminantNeZ
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.HSChoice GlobalTheory.PencilDisc
+
+namespace GlobalTheory.PencilDisc
+
+def lineSubst {K : Type} [Field K] {N : ℕ} (a b : Fin N → K) : MvPolynomial (Fin 1 × Fin N) K →ₐ[K] Polynomial K :=
+  aeval fun p : Fin 1 × Fin N => Polynomial.C (a p.2) + Polynomial.C (b p.2) * Polynomial.X
+
+theorem line_eq_lineSubst {F K : Type} [Field F] [Field K] [Algebra F K] {D N : ℕ}
+    (s : Fin D → Fin N → K) (a b : Fin N → K) (f : MvPolynomial (Fin (D + 1) × Fin N) F) :
+    line s a b f = lineSubst a b (spec s f) := by
+  simp only [line, spec]
+  induction f using MvPolynomial.induction_on with
+  | C c =>
+    simp only [aeval_C, lineSubst]
+    rw [IsScalarTower.algebraMap_apply F K (MvPolynomial (Fin 1 × Fin N) K),
+      IsScalarTower.algebraMap_apply F K (Polynomial K), AlgHom.commutes]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | mul_X p n ih =>
+    simp only [map_mul, ih, aeval_X]
+    congr 1
+    obtain ⟨i, j⟩ := n
+    induction i using Fin.lastCases <;> simp [join, lineSubst]
+
+theorem eval_spec {F K : Type} [Field F] [Field K] [Algebra F K] {D N : ℕ}
+    (s : Fin D → Fin N → K) (b : Fin N → K) (f : MvPolynomial (Fin (D + 1) × Fin N) F) :
+    eval (fun p : Fin 1 × Fin N => b p.2) (spec s f) = aeval (join s b) f := by
+  simp only [spec]
+  induction f using MvPolynomial.induction_on with
+  | C c =>
+    simp only [aeval_C]
+    rw [IsScalarTower.algebraMap_apply F K (MvPolynomial (Fin 1 × Fin N) K)]
+    simp
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | mul_X p n ih =>
+    simp only [map_mul, ih, aeval_X]
+    congr 1
+    obtain ⟨i, j⟩ := n
+    induction i using Fin.lastCases <;> simp [join]
+
+theorem lineSubst_lin {K : Type} [Field K] {N : ℕ} (a b y : Fin N → K) :
+    lineSubst a b (lin y) = Polynomial.C (∑ j, a j * y j) + Polynomial.C (∑ j, b j * y j) * Polynomial.X := by
+
+  simp only [lin, lineSubst, map_sum, map_mul, aeval_X, aeval_C, Polynomial.algebraMap_eq, add_mul,
+  Finset.sum_add_distrib, Polynomial.C_mul, Finset.sum_mul, map_sum]
+  congr 1
+  refine Finset.sum_congr rfl fun j _ => ?_
+  ring
+
+theorem eval_lin {K : Type} [Field K] {N : ℕ} (b y : Fin N → K) :
+    eval (fun p : Fin 1 × Fin N => b p.2) (lin y) = ∑ j, b j * y j := by
+  simp [lin]
+
+theorem coeff_ne_zero_of_resultant_ne_zero {K : Type} [Field K] {δ : ℕ} (hδ : 1 ≤ δ) (P : Polynomial K)
+    (hP : P.natDegree ≤ δ) (h : Polynomial.resultant P (Polynomial.derivative P) δ (δ - 1) ≠ 0) : P.coeff δ ≠ 0 := by
+  by_contra hc
+  apply h
+  have hlt : P.natDegree < δ := by
+    rcases hP.lt_or_eq with h1 | h1
+    · exact h1
+    exfalso
+    by_cases hP0 : P = 0
+    · rw [hP0, Polynomial.natDegree_zero] at h1
+      omega
+    exact hP0 (Polynomial.leadingCoeff_eq_zero.mp (by rw [Polynomial.leadingCoeff, h1]; exact hc))
+  rcases Nat.lt_or_ge δ 2 with h2 | h2
+  · obtain rfl : δ = 1 := by omega
+    have hd : Polynomial.derivative P = 0 := by
+      rw [Polynomial.eq_C_of_natDegree_eq_zero (by omega : P.natDegree = 0), Polynomial.derivative_C]
+    simp [hd]
+  · apply Polynomial.resultant_eq_zero_of_lt_lt _ _ _ _ hlt
+    calc (Polynomial.derivative P).natDegree ≤ P.natDegree - 1 := Polynomial.natDegree_derivative_le P
+      _ < δ - 1 := by omega
+
+theorem noSquare_spec_of_disc_ne_zero : ∀ (F K : Type) [Field F] [Field K] [Algebra F K] (D N δ : ℕ) (f : MvPolynomial (Fin (D + 1) × Fin N) F) (s : Fin D → Fin N → K) (a b : Fin N → K), 1 ≤ δ → (GlobalTheory.PencilDisc.line s a b f).natDegree ≤ δ → (GlobalTheory.PencilDisc.line s a b f).coeff δ = MvPolynomial.aeval (GlobalTheory.HSChoice.join s b) f → GlobalTheory.PencilDisc.disc δ s a b f ≠ 0 → GlobalTheory.HSChoice.NoSquare (GlobalTheory.HSChoice.spec s f) := by
+  intro F K _ _ _ D N δ f s a b hδ hdeg hcoeff hdisc
+  have hres : (line s a b f).resultant (Polynomial.derivative (line s a b f)) δ (δ - 1) ≠ 0 := hdisc
+  have hc : (line s a b f).coeff δ ≠ 0 := coeff_ne_zero_of_resultant_ne_zero hδ _ hdeg hres
+  have hspec0 : eval (fun p : Fin 1 × Fin N => b p.2) (spec s f) ≠ 0 := by
+    rw [eval_spec, ← hcoeff]
+    exact hc
+  refine ⟨fun h0 => hspec0 (by rw [h0, map_zero]), fun y _ hdvd => ?_⟩
+  obtain ⟨q, hq⟩ := hdvd
+  by_cases hβ : ∑ j, b j * y j = 0
+  · apply hspec0
+    rw [hq, map_mul, map_pow, eval_lin, hβ]
+    simp
+  · have hnat : (line s a b f).natDegree = δ :=
+      Polynomial.natDegree_eq_of_le_of_coeff_ne_zero hdeg hc
+    have hP0 : line s a b f ≠ 0 := fun h0 => hc (by rw [h0, Polynomial.coeff_zero])
+    have hcop : IsCoprime (line s a b f) (Polynomial.derivative (line s a b f)) := by
+      by_contra hnc
+      apply hres
+      have hd' : (Polynomial.derivative (line s a b f)).natDegree ≤ δ - 1 := by
+        rw [← hnat]
+        exact Polynomial.natDegree_derivative_le _
+      obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hd'
+      rw [hk, Polynomial.resultant_add_right_deg _ _ _ _ _ le_rfl, ← hnat,
+        Polynomial.resultant_eq_zero_iff.mpr ⟨Or.inl hP0, hnc⟩, mul_zero]
+    have hQ : line s a b f = lineSubst a b (lin y) * lineSubst a b (lin y) * lineSubst a b q := by
+      rw [line_eq_lineSubst, hq, map_mul, map_pow, sq]
+    have h1 : lineSubst a b (lin y) ∣ line s a b f :=
+      ⟨lineSubst a b (lin y) * lineSubst a b q, by rw [hQ]; ring⟩
+    have h2 : lineSubst a b (lin y) ∣ Polynomial.derivative (line s a b f) := by
+      refine ⟨Polynomial.derivative (lineSubst a b (lin y)) * lineSubst a b q +
+        Polynomial.derivative (lineSubst a b (lin y)) * lineSubst a b q +
+        lineSubst a b (lin y) * Polynomial.derivative (lineSubst a b q), ?_⟩
+      rw [hQ, Polynomial.derivative_mul, Polynomial.derivative_mul]
+      ring
+    have hu := hcop.isUnit_of_dvd' h1 h2
+    rw [lineSubst_lin] at hu
+    have hdeg0 := Polynomial.natDegree_eq_zero_of_isUnit hu
+    rw [add_comm, Polynomial.natDegree_linear hβ] at hdeg0
+    exact one_ne_zero hdeg0
+
+end GlobalTheory.PencilDisc
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NotSquareLinearFactorOfPencilLineDiscriminantNeZStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.HSChoice GlobalTheory.PencilDisc
+
+theorem _root_.GlobalTheory.T.not_square_linear_factor_of_pencilLineDiscriminant_ne_zero : ∀ (F K : Type) [Field F] [Field K] [Algebra F K] (D N δ : ℕ) (f : MvPolynomial (Fin (D + 1) × Fin N) F) (s : Fin D → Fin N → K) (a b : Fin N → K), 1 ≤ δ → (GlobalTheory.PencilDisc.line s a b f).natDegree ≤ δ → (GlobalTheory.PencilDisc.line s a b f).coeff δ = MvPolynomial.aeval (GlobalTheory.HSChoice.join s b) f → GlobalTheory.PencilDisc.disc δ s a b f ≠ 0 → GlobalTheory.HSChoice.NoSquare (GlobalTheory.HSChoice.spec s f) := by
+  first | exact @GlobalTheory.PencilDisc.noSquare_spec_of_disc_ne_zero | exact GlobalTheory.PencilDisc.noSquare_spec_of_disc_ne_zero | (intros; apply GlobalTheory.PencilDisc.noSquare_spec_of_disc_ne_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PencilLinePolynomialNatDegreeLeAndCoeff
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.HSChoice GlobalTheory.PencilDisc
+
+namespace GlobalTheory.PencilDisc
+
+theorem prod_pow_natDegree_le_and_coeff {R ι : Type} [CommRing R] (s : Finset ι) (v : ι → Polynomial R) (w m : ι → ℕ)
+    (h : ∀ p, (v p).natDegree ≤ w p) :
+    (∏ p ∈ s, v p ^ m p).natDegree ≤ ∑ p ∈ s, m p * w p ∧
+      (∏ p ∈ s, v p ^ m p).coeff (∑ p ∈ s, m p * w p) = ∏ p ∈ s, (v p).coeff (w p) ^ m p := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert p s hp ih =>
+    have h1 : (v p ^ m p).natDegree ≤ m p * w p :=
+      Polynomial.natDegree_pow_le.trans (Nat.mul_le_mul_left _ (h p))
+    rw [Finset.prod_insert hp, Finset.sum_insert hp, Finset.prod_insert hp]
+    refine ⟨Polynomial.natDegree_mul_le.trans (add_le_add h1 ih.1), ?_⟩
+    rw [Polynomial.coeff_mul_add_eq_of_natDegree_le h1 ih.1, ih.2,
+      Polynomial.coeff_pow_of_natDegree_le (h p)]
+
+theorem line_natDegree_le_and_coeff (F R : Type) [CommRing F] [CommRing R] [Algebra F R] (D N δ : ℕ)
+    (f : MvPolynomial (Fin (D + 1) × Fin N) F) (hf : IsMultiHomogeneous (fun _ => δ) f)
+    (u : Fin D → Fin N → R) (a b : Fin N → R) :
+    (GlobalTheory.PencilDisc.line u a b f).natDegree ≤ δ ∧
+      (GlobalTheory.PencilDisc.line u a b f).coeff δ = MvPolynomial.aeval (GlobalTheory.HSChoice.join u b) f := by
+  classical
+  set v : Fin (D + 1) × Fin N → Polynomial R :=
+    join (fun i j => Polynomial.C (u i j)) fun j => Polynomial.C (a j) + Polynomial.C (b j) * Polynomial.X with hv
+  let w : Fin (D + 1) × Fin N → ℕ := fun p => if p.1 = Fin.last D then 1 else 0
+  have hdeg : ∀ p, (v p).natDegree ≤ w p := by
+    rintro ⟨i, j⟩
+    refine Fin.lastCases ?_ (fun i => ?_) i
+    · simp only [hv, w, join, if_true, Fin.lastCases_last]
+      rw [add_comm]
+      exact Polynomial.natDegree_linear_le
+    · simp [hv, w, join]
+  have hco : ∀ p, (v p).coeff (w p) = join u b p := by
+    rintro ⟨i, j⟩
+    refine Fin.lastCases ?_ (fun i => ?_) i
+    · simp [hv, w, join]
+    · simp [hv, w, join]
+  have hsum : ∀ m ∈ f.support, ∑ p, m p * w p = δ := by
+    intro m hm
+    have := hf m (by simpa using hm) (Fin.last D)
+    rw [Fintype.sum_prod_type, Finset.sum_eq_single (Fin.last D)]
+    · simpa [w] using this
+    · intro i _ hi
+      simp [w, hi]
+    · simp
+  have hkey : ∀ m ∈ f.support, (∏ p, v p ^ m p).natDegree ≤ δ ∧
+      (∏ p, v p ^ m p).coeff δ = ∏ p, join u b p ^ m p := by
+    intro m hm
+    have := prod_pow_natDegree_le_and_coeff Finset.univ v w m hdeg
+    rw [hsum m hm] at this
+    simpa only [hco] using this
+  have hline : line u a b f =
+      ∑ m ∈ f.support, Polynomial.C (algebraMap F R (f.coeff m)) * ∏ p, v p ^ m p := by
+    rw [line, ← hv, aeval_def, eval₂_eq']
+    rfl
+  rw [hline, aeval_def, eval₂_eq']
+  refine ⟨Polynomial.natDegree_sum_le_of_forall_le _ _ fun m hm =>
+    (Polynomial.natDegree_C_mul_le _ _).trans (hkey m hm).1, ?_⟩
+  rw [Polynomial.finsetSum_coeff]
+  refine Finset.sum_congr rfl fun m hm => ?_
+  rw [Polynomial.coeff_C_mul, (hkey m hm).2]
+
+end GlobalTheory.PencilDisc
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PencilLinePolynomialNatDegreeLeAndCoeffStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.MultiplicativeHeights GlobalTheory.HSChoice GlobalTheory.PencilDisc
+
+theorem _root_.GlobalTheory.T.pencilLinePolynomial_natDegree_le_and_coeff : ∀ (F R : Type) [CommRing F] [CommRing R] [Algebra F R] (D N δ : ℕ) (f : MvPolynomial (Fin (D + 1) × Fin N) F), IsMultiHomogeneous (fun _ => δ) f → ∀ (u : Fin D → Fin N → R) (a b : Fin N → R), (GlobalTheory.PencilDisc.line u a b f).natDegree ≤ δ ∧ (GlobalTheory.PencilDisc.line u a b f).coeff δ = MvPolynomial.aeval (GlobalTheory.HSChoice.join u b) f := by
+  first | exact @GlobalTheory.PencilDisc.line_natDegree_le_and_coeff | exact GlobalTheory.PencilDisc.line_natDegree_le_and_coeff | (intros; apply GlobalTheory.PencilDisc.line_natDegree_le_and_coeff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResultantDerivativeNeZero
+
+section
 
 @[expose] public section
 
@@ -151,3 +403,6 @@ theorem exists_poly_noSquare : ∀ (F : Type) [Field F] [CharZero F] (D N δ : �
     exact GlobalTheory.T.not_square_linear_factor_of_pencilLineDiscriminant_ne_zero F K D N δ f s _ _ hδ hc'.1 hc'.2 hs
 
 end GlobalTheory.PencilDisc
+end
+end
+end

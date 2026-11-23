@@ -1,8 +1,7 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PNefAmpleFibre
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSemiampleNef
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GeoNum
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,54 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GeoNum
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSemiampleNef
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.HilbertSamuel
+
+open MvPolynomial
+
+noncomputable section
+
+namespace SemiampleNefAlt
+
+set_option linter.unusedSectionVars false
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+theorem charOf_prime {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRing ι)} [W.IsPrime]
+    (h : ReciprocityTheory.ChartRestriction.G.Geo.charOf W ≠ 0) : (ReciprocityTheory.ChartRestriction.G.Geo.charOf W).Prime := by
+  have hI : (W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRing ι)).IsPrime := Ideal.comap_isPrime _ _
+  have hg : Submodule.IsPrincipal.generator (W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRing ι)) ≠ 0 := by
+    intro h0
+    apply h
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.charOf
+    rw [h0]
+    rfl
+  rw [← Submodule.IsPrincipal.span_singleton_generator
+    (W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRing ι))] at hI
+  exact Int.prime_iff_natAbs_prime.mp ((Ideal.span_singleton_prime hg).mp hI)
+
+
+end SemiampleNefAlt
+
+
+end
+
+end GroundTheory.Heights₂.Heights.HilbertSamuel
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.KleimanNef
+
+section
 
 @[expose] public section
 
@@ -126,3 +173,5 @@ theorem KleimanNef.proof (hF : KH.KleimanNefFStatement) : KH.KleimanNefIntersect
 end
 
 end GroundTheory.Heights₂.Heights.ForSecondHalf
+end
+end

@@ -1,7 +1,6 @@
 module
 
-public import Development.EtaleCohomology.EtaleSheaves.TruncationPieces
-public import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+public import Development.EtaleCohomology.EtaleSheaves.DescIntPf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.TruncationPieces
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_E3Cut LateralTheory.E.StalkCut LateralTheory.E.DescIntPf
+
+namespace LateralTheory.E.TruncationPieces
+
+def RelK (R : Type) [CommRing R] (F : Shv R) (n : ℤ) {K L : Cx R} (f : K ⟶ L) : Prop :=
+  (∀ m : ℤ, m + 1 = n → Function.Surjective (HK.pull R f F m)) ∧ Function.Injective (HK.pull R f F n)
+
+def piece (R : Type) [CommRing R] {U E : Spc} (u : U ⟶ E) (p : ℕ) :
+    (HomologicalComplex.single (Shv R) (ComplexShape.up ℤ) (-(p : ℤ))).obj (((chains R).obj U).X (-(p : ℤ))) ⟶
+    (HomologicalComplex.single (Shv R) (ComplexShape.up ℤ) (-(p : ℤ))).obj (((chains R).obj E).X (-(p : ℤ))) :=
+  (HomologicalComplex.single (Shv R) (ComplexShape.up ℤ) (-(p : ℤ))).map (((chains R).map u).f (-(p : ℤ)))
+
+def Piece : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) {U E : Spc} (u : U ⟶ E) (p : ℕ) (k : ℤ),
+  RelZS R F k (disc.map (u.app (Opposite.op (SimplexCategory.mk p)))) → RelK R F (k + p) (piece R u p)
+
+def Filt : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) {U E : Spc} (u : U ⟶ E) (n : ℤ),
+  (∀ p : ℕ, RelK R F n (piece R u p)) → RelZS R F n u
+
+theorem etale_relK_single_degree_pieces_of_piece_and_filtration (hP : Piece) (hF : Filt) : LateralTheory.E.DescIntPf.EtaleRelativeIsoTruncationFromLevels := by
+  intro R _ F U E u n hlow h0
+  refine hF R F u n (fun p => ?_)
+  rcases Nat.eq_zero_or_pos p with rfl | hp
+  · have := hP R F u 0 n h0
+    simpa using this
+  · have hk : n - (p : ℤ) < n := by omega
+    have := hP R F u p (n - p) (hlow p (n - p) hk)
+    simpa using this
+
+end LateralTheory.E.TruncationPieces
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.FiltPf
+
+section
 
 @[expose] public section
 
@@ -188,4 +232,6 @@ open LateralTheory.E.FiltPf in
 theorem LateralTheory.E.TruncationPieces.Filt_of_tower (hT : Tower) : LateralTheory.E.TruncationPieces.Filt := by
   intro R _ F U E u n h
   exact hT R F ((chains R).map u) n (fun i hi => ⟨chains_X_isZero R U i hi, chains_X_isZero R E i hi⟩) h
-
+end
+end
+end

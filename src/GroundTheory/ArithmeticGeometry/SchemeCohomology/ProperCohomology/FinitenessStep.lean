@@ -12,18 +12,14 @@ import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.Imm
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ChowProduct
 public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.CokernelCoherent
 public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ExistsChow
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.IrreducibleImage
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackCoherent
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackUnit
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RelativeSerre
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RestrictIso
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SectionBasis
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SectionTensor
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SupportMore
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SchemeImage
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.QuasiAffine
+public import Mathlib.AlgebraicGeometry.IdealSheaf.IrreducibleComponent
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -40,6 +36,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.SetTheory.ZFC.PSet
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -60,6 +57,150 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackCoherent
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackUnit
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RelativeSerre
+public import Mathlib.AlgebraicGeometry.Restrict
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SectionBasis
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SectionTensor
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.SupportMore
+import Mathlib.AlgebraicGeometry.QuasiAffine
+
+-- Source module: GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.IrreducibleImage
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Arith.SchemeCoh
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace Limits
+
+universe u
+
+noncomputable section
+
+lemma isIso_opens_ι_restrict {Z : Scheme.{u}} (O : Z.Opens) : IsIso (O.ι ∣_ O) := by
+  apply isIso_of_isOpenImmersion_of_opensRange_eq_top
+  apply le_antisymm le_top
+  intro x _
+  refine ⟨⟨x, ?_⟩, ?_⟩
+  · change O.ι x ∈ O
+    exact x.2
+  · apply Subtype.ext
+    exact morphismRestrict_base_coe O.ι O ⟨x, _⟩
+
+theorem exists_irreducible_isIso_restrict (Z : Scheme.{u}) [IsNoetherian Z] [Nonempty Z] :
+    ∃ (Z₁ : Scheme.{u}) (c : Z₁ ⟶ Z) (O : Z.Opens), IsClosedImmersion c ∧ IrreducibleSpace Z₁ ∧
+      (O : Set Z).Nonempty ∧ IsIso (c ∣_ O) := by
+  obtain ⟨z⟩ := ‹Nonempty Z›
+  have hC := irreducibleComponent_mem_irreducibleComponents z
+  set C := irreducibleComponent z
+  set O := Z.irreducibleComponentOpen C
+  refine ⟨Z.irreducibleComponent C hC, Z.irreducibleComponentι C hC, O, inferInstance,
+    inferInstance, ?_, ?_⟩
+  · obtain ⟨o, ho, hne, hoC⟩ :=
+      NoetherianSpace.exists_isOpen_nonempty_subset_irreducibleComponent C hC
+
+    by_contra h
+    rw [Set.not_nonempty_iff_eq_empty] at h
+    have hcl := closure_sUnion_irreducibleComponents_sdiff_singleton
+      NoetherianSpace.finite_irreducibleComponents C hC
+    have : (O : Set Z) = (⋃₀ (irreducibleComponents Z \ {C}))ᶜ := rfl
+    rw [this, Set.compl_empty_iff] at h
+    rw [h, Set.compl_univ, closure_empty] at hcl
+    exact hC.1.nonempty.ne_empty hcl.symm
+  · have hI := Z.irreducibleComponentIdeal_def C hC
+    have : IsIso (O.ι ∣_ O) := isIso_opens_ι_restrict O
+    have key := SchemeImage.imageRestrictLift_fac O.ι O
+    change IsIso ((Z.irreducibleComponentIdeal C hC).subschemeι ∣_ O)
+    rw [hI]
+    change IsIso (O.ι.imageι ∣_ O)
+    rw [← key]
+    infer_instance
+
+end
+
+end GroundTheory.Arith.SchemeCoh
+end
+end
+
+-- Source module: GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RestrictIso
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Arith.SchemeCoh
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace Limits
+
+universe u
+
+noncomputable section
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+
+lemma isIso_morphismRestrict_of_le {U U' : Y.Opens} (h : U' ≤ U) [IsIso (f ∣_ U)] :
+    IsIso (f ∣_ U') := by
+  have h1 : IsPullback (f ∣_ U') (f ⁻¹ᵁ U').ι U'.ι f := isPullback_morphismRestrict f U'
+  have h2 : IsPullback (f ∣_ U) (f ⁻¹ᵁ U).ι U.ι f := isPullback_morphismRestrict f U
+  have hU : Y.homOfLE h ≫ U.ι = U'.ι := Y.homOfLE_ι h
+  have hX : X.homOfLE (f.preimage_mono h) ≫ (f ⁻¹ᵁ U).ι = (f ⁻¹ᵁ U').ι := X.homOfLE_ι _
+  have hsq : X.homOfLE (f.preimage_mono h) ≫ f ∣_ U = f ∣_ U' ≫ Y.homOfLE h := by
+    rw [← cancel_mono U.ι, Category.assoc, morphismRestrict_ι, Category.assoc, hU,
+      morphismRestrict_ι, ← Category.assoc, hX]
+  have h3 : IsPullback (X.homOfLE (f.preimage_mono h)) (f ∣_ U') (f ∣_ U) (Y.homOfLE h) := by
+    refine IsPullback.of_right ?_ hsq h2.flip
+    rw [hX, hU]
+    exact h1.flip
+  exact h3.isIso_snd_of_isIso
+
+lemma bijective_app_of_isIso_morphismRestrict {U : Y.Opens} [IsIso (f ∣_ U)] {V : Y.Opens}
+    (hV : V ≤ U) : Function.Bijective (f.app V) := by
+  have := isIso_morphismRestrict_of_le f hV
+  have h0 : IsIso ((f ∣_ V).app ⊤) := inferInstance
+  have h1 : IsIso (f.app (V.ι ''ᵁ ⊤) ≫
+      X.presheaf.map (eqToHom (image_morphismRestrict_preimage f V ⊤)).op) := by
+    rw [← morphismRestrict_app]
+    exact h0
+  have h2 : IsIso (f.app (V.ι ''ᵁ ⊤)) := IsIso.of_isIso_comp_right _
+    (X.presheaf.map (eqToHom (image_morphismRestrict_preimage f V ⊤)).op)
+  have e : V.ι ''ᵁ ⊤ = V := V.ι_image_top
+  rw [e] at h2
+  exact ConcreteCategory.bijective_of_isIso _
+
+lemma injOn_of_isIso_morphismRestrict {U : Y.Opens} [IsIso (f ∣_ U)] :
+    Set.InjOn f.base (f ⁻¹ᵁ U : Set X) := by
+  intro a ha b hb hab
+  have hinj : Function.Injective (f ∣_ U).base :=
+    (TopCat.homeoOfIso (Scheme.forgetToTop.mapIso (asIso (f ∣_ U)))).injective
+  have := @hinj ⟨a, ha⟩ ⟨b, hb⟩ (Subtype.ext
+    ((morphismRestrict_base_coe f U ⟨a, ha⟩).trans (hab.trans
+      (morphismRestrict_base_coe f U ⟨b, hb⟩).symm)))
+  exact congrArg Subtype.val this
+
+lemma exists_preimage_of_isIso_morphismRestrict {U : Y.Opens} [IsIso (f ∣_ U)] {y : Y}
+    (hy : y ∈ U) : ∃ x : X, x ∈ f ⁻¹ᵁ U ∧ f.base x = y := by
+  have hsurj : Function.Surjective (f ∣_ U).base :=
+    (TopCat.homeoOfIso (Scheme.forgetToTop.mapIso (asIso (f ∣_ U)))).surjective
+  obtain ⟨⟨x, hx⟩, hxy⟩ := hsurj ⟨y, hy⟩
+  refine ⟨x, hx, ?_⟩
+  exact (morphismRestrict_base_coe f U ⟨x, hx⟩).symm.trans (congrArg Subtype.val hxy)
+
+end
+
+end GroundTheory.Arith.SchemeCoh
+end
+end
+
+-- Source module: GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FinitenessStep
+
+section
 
 @[expose] public section
 
@@ -295,3 +436,5 @@ theorem finiteH_of_supportedIn
 end
 
 end GroundTheory.Arith.SchemeCoh
+end
+end

@@ -9,10 +9,8 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.EffectiveSca
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsEffectiveWeightSectionStatement
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsHolomorphicSectionOfAnalytic
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsReferenceGeometrySameGenericStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsFiniteNonemptyStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsCptGenResidueFieldGenericStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginCoordsOverFieldStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginGoodPrimesFiniteStatement
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.GenericPointsOpenIntegralCover
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IsQProjOverOfIsIso
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,8 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -52,8 +47,158 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsCptGen
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsCptGenResidueFieldGeneric
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.NumberTheory.Height.NumberField
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginCoordsOverFieldStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginGoodPrimesFiniteStatement
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.EmbedsGeneric
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsFiniteNonempty
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CompanionTheory.Ar
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.Comps
+
+theorem finite_maximal_points (X : Type) [TopologicalSpace X] [TopologicalSpace.NoetherianSpace X]
+    [QuasiSober X] [T0Space X] : {x : X | ∀ x' : X, x' ⤳ x → x' = x}.Finite := by
+  refine Set.Finite.of_injOn (f := fun x : X => closure {x}) (t := irreducibleComponents X) ?_ ?_
+    (TopologicalSpace.NoetherianSpace.finite_irreducibleComponents)
+  · intro x hx
+    have hZ : irreducibleComponent x ∈ irreducibleComponents X := irreducibleComponent_mem_irreducibleComponents x
+    have hirr : IsIrreducible (irreducibleComponent x) := isIrreducible_irreducibleComponent
+    have hcl : IsClosed (irreducibleComponent x) := isClosed_irreducibleComponent
+    have hg := hirr.isGenericPoint_genericPoint_closure
+    rw [hcl.closure_eq] at hg
+    have hs : hirr.genericPoint ⤳ x := by
+      rw [specializes_iff_mem_closure, hg.def]
+      exact mem_irreducibleComponent
+    have he := hx _ hs
+    show closure {x} ∈ irreducibleComponents X
+    rw [← he, hg.def]
+    exact hZ
+  · intro x _ y _ h
+    exact (inseparable_iff_closure_eq.2 h).eq
+
+theorem nonempty_maximal_points (X : Type) [TopologicalSpace X] [QuasiSober X] [T0Space X] [Nonempty X] :
+    {x : X | ∀ x' : X, x' ⤳ x → x' = x}.Nonempty := by
+  obtain ⟨x⟩ := ‹Nonempty X›
+  have hZ : irreducibleComponent x ∈ irreducibleComponents X := irreducibleComponent_mem_irreducibleComponents x
+  have hirr : IsIrreducible (irreducibleComponent x) := isIrreducible_irreducibleComponent
+  have hcl : IsClosed (irreducibleComponent x) := isClosed_irreducibleComponent
+  have hg := hirr.isGenericPoint_genericPoint_closure
+  rw [hcl.closure_eq] at hg
+  refine ⟨hirr.genericPoint, fun x' hx' => ?_⟩
+  have hm : Maximal IsIrreducible (irreducibleComponent x) := hZ
+  have hsub : irreducibleComponent x ⊆ closure {x'} := by
+    rw [← hg.def]
+    exact hx'.closure_subset
+  have hirr' : IsIrreducible (closure {x'}) := isIrreducible_singleton.closure
+  have heq : closure {x'} = irreducibleComponent x := (hm.eq_of_subset hirr' hsub).symm
+  exact (inseparable_iff_closure_eq.2 (heq.trans hg.def.symm)).eq
+
+theorem exists_typeFn {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) (p q : ℕ) :
+    ∃ (g : ℕ) (ty : Fin g → (E →+* ℂ)), IsTypeFn H p q ty := by
+  classical
+  let m : (E →+* ℂ) → ℕ := fun τ => if τ (H.rt : E) = H.rt0 then p else q
+  let e := Fintype.equivFin (Σ τ : E →+* ℂ, Fin (m τ))
+  refine ⟨_, fun i => (e.symm i).1, ?_⟩
+  have key : ∀ τ : E →+* ℂ, Nat.card {i // (e.symm i).1 = τ} = m τ := by
+    intro τ
+    have e1 : {i // (e.symm i).1 = τ} ≃ Fin (m τ) :=
+      (e.symm.subtypeEquiv (fun _ => Iff.rfl)).trans (Equiv.sigmaSubtype τ)
+    rw [Nat.card_congr e1, Nat.card_fin]
+  intro τ
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · rw [key]; simp [m, h]
+  · rw [key]; simp [m, h]
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Tor.Level H}
+
+theorem moduli_nonempty (hc : N1c) (Xo : Moduli D l) : Nonempty Xo.X := by
+  rcases Nat.eq_zero_or_pos (D.p + D.q) with h | h
+  · obtain ⟨f, -, -⟩ := Xo.rep (Sp (KA l)) (𝟙 _) inferInstance (GlobalTheory.Models.RankZero.zeroObj h l _)
+    exact ⟨f (IsLocalRing.closedPoint (KA l))⟩
+  · obtain ⟨g, ty, hty⟩ := exists_typeFn H D.p D.q
+    obtain ⟨F⟩ := hc E H D l Xo (KA l).val.toRingHom g ty h rfl hty
+    exact ⟨F.u ⟨0, F.n_pos⟩ 0 (IsLocalRing.closedPoint ℂ)⟩
+
+theorem model_nonempty {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} (Y : Model Xo c β)
+    (h : Nonempty Xo.X) : Nonempty Y.X := by
+  obtain ⟨x⟩ := h
+  obtain ⟨z, -, -⟩ := Scheme.Pullback.exists_preimage_pullback
+    (f := Xo.s) (g := spMap (IntermediateField.inclusion c.le).toRingHom) x (IsLocalRing.closedPoint c.F)
+    (Subsingleton.elim _ _)
+  exact ⟨Y.j z⟩
+
+theorem finite_nonempty_maximal : _root_.GlobalTheory.CompanionTheory.Ar.Top.Given →
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H)
+      (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)),
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Finite ∧
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Nonempty := by
+  intro hG E _ _ _ H D l Xo c Y
+  have : NumberField c.F := { to_charZero := inferInstance, to_finiteDimensional := c.fin }
+  have : TopologicalSpace.NoetherianSpace Y.X := GlobalTheory.ModelSum.noetherianSpace_of_isProjOver Y.proj
+  have : Nonempty Y.X := model_nonempty Y (moduli_nonempty hG.1.2.2.1 Xo)
+  exact ⟨finite_maximal_points Y.X, nonempty_maximal_points Y.X⟩
+
+end GlobalTheory.CompanionTheory.Ar.Comps
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsFiniteNonemptyStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CompanionTheory.Ar
+theorem _root_.GlobalTheory.T.generic_points_finite_nonempty :
+    _root_.GlobalTheory.CompanionTheory.Ar.Top.Given →
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H)
+      (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)),
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Finite ∧
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Nonempty := by
+  intro hG E _ _ _ H D l Xo c Y
+  have : NumberField c.F := { to_charZero := inferInstance, to_finiteDimensional := c.fin }
+  have : TopologicalSpace.NoetherianSpace Y.X := GlobalTheory.ModelSum.noetherianSpace_of_isProjOver Y.proj
+  have : Nonempty Y.X := Comps.model_nonempty Y (Comps.moduli_nonempty hG.1.2.2.1 Xo)
+  exact ⟨Comps.finite_maximal_points Y.X, Comps.nonempty_maximal_points Y.X⟩
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsCptGenResidueFieldGenericStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj GlobalTheory.CompanionTheory.Ar
+
+theorem _root_.GlobalTheory.T.isCptGen_residue_field_generic : ∀ (X : Scheme.{0}), (∀ x : X, IsDomain (X.presheaf.stalk x)) → ∀ x : X, (∀ y : X, y ⤳ x → y = x) → IsCptGen (Ω := X.residueField x) (X.fromSpecResidueField x) := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.isCptGen_of_maximal | exact GlobalTheory.CompanionTheory.Ar.isCptGen_of_maximal | (intros; apply GlobalTheory.CompanionTheory.Ar.isCptGen_of_maximal <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsGoodRootTower
+
+section
 
 @[expose] public section
 
@@ -189,3 +334,5 @@ theorem exists_good_tower : Top.Given → Out.WeilSt → Flat.FlatLineGenerator 
   exact ⟨T, go, fun a => hlam a, fun B a p hp => hR B a p hp⟩
 
 end GlobalTheory.CompanionTheory.Ar.TopTower
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.ShortIntervalPrimes
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePrimesOverPrimeCoprimalityEquiv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,6 +16,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +42,107 @@ import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaValueIdeals
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateWideInd
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SiegelKlingenDeligneRibet
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SupEqTopOfLeMaximal
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace GlobalTheory.PrimesAboveExistence
+
+theorem sup_eq_top_of_le_maximal {R : Type} [CommRing R] {A B I : Ideal R}
+    (h : ∀ M : Ideal R, M.IsMaximal → B ≤ M → A ≤ M) (hA : I ⊔ A = ⊤) : I ⊔ B = ⊤ := by
+  by_contra hne
+
+  obtain ⟨M, hM, hle⟩ := Ideal.exists_le_maximal _ hne
+  have hAM : A ≤ M := h M hM (le_sup_right.trans hle)
+  exact hM.ne_top (top_le_iff.mp (hA ▸ sup_le (le_sup_left.trans hle) hAM))
+
+theorem exists_primes_above {F : Type} [Field F] [NumberField F] (l : ℕ) (hl : Nat.Prime l) :
+    ∃ P : Finset (Ideal (𝓞 F)),
+      (∀ 𝔭 ∈ P, Ideal.IsMaximal 𝔭 ∧ 𝔭 ≠ ⊥ ∧ l ∣ (Ideal.absNorm : Ideal (𝓞 F) → ℕ) 𝔭) ∧
+      ∀ I : Ideal (𝓞 F), Formalism.MainNotions.ShortIntervalPrimes.CoprimeTo F (∏ 𝔭 ∈ P, 𝔭) I ↔
+        Formalism.MainNotions.ShortIntervalPrimes.CoprimeTo F (Ideal.span {(l : 𝓞 F)}) I := by
+  classical
+  set L : Ideal (𝓞 F) := Ideal.span {(l : 𝓞 F)} with hL
+  have hL0 : L ≠ ⊥ := by
+    rw [hL, Ne, Ideal.span_singleton_eq_bot]
+    exact_mod_cast hl.ne_zero
+
+  refine ⟨(UniqueFactorizationMonoid.normalizedFactors L).toFinset, ?_, ?_⟩
+  · intro 𝔭 h𝔭
+    rw [Multiset.mem_toFinset, Ideal.mem_normalizedFactors_iff hL0] at h𝔭
+    obtain ⟨hp, hle⟩ := h𝔭
+    have hne : 𝔭 ≠ ⊥ := fun h => hL0 (le_bot_iff.mp (h ▸ hle))
+    have hmax : 𝔭.IsMaximal := hp.isMaximal hne
+    refine ⟨hmax, hne, ?_⟩
+
+    have hdvd : Ideal.absNorm 𝔭 ∣ l ^ Module.finrank ℤ (𝓞 F) := by
+      have h := Ideal.absNorm_dvd_absNorm_of_le hle
+      rwa [hL, Ideal.absNorm_span_singleton,
+        show (l : 𝓞 F) = algebraMap ℤ (𝓞 F) (l : ℤ) by simp,
+        Algebra.norm_algebraMap, Int.natAbs_pow, Int.natAbs_natCast] at h
+    obtain ⟨k, -, hk⟩ := (Nat.dvd_prime_pow hl).mp hdvd
+    have hk0 : k ≠ 0 := by
+      rintro rfl
+      exact hmax.ne_top (Ideal.absNorm_eq_one_iff.mp (by simpa using hk))
+    change l ∣ Ideal.absNorm 𝔭
+    rw [hk]
+    exact dvd_pow_self l hk0
+  · intro I
+    unfold Formalism.MainNotions.ShortIntervalPrimes.CoprimeTo
+    refine and_congr_right fun _ =>
+      ⟨fun h => sup_eq_top_of_le_maximal ?_ h, fun h => sup_eq_top_of_le_maximal ?_ h⟩
+    ·
+      intro M hM hLM
+      have hmem : M ∈ (UniqueFactorizationMonoid.normalizedFactors L).toFinset := by
+        rw [Multiset.mem_toFinset, Ideal.mem_normalizedFactors_iff hL0]
+        exact ⟨hM.isPrime, hLM⟩
+      exact Ideal.le_of_dvd (Finset.dvd_prod_of_mem (fun 𝔭 => 𝔭) hmem)
+    ·
+      intro M hM hPM
+      obtain ⟨𝔭, h𝔭, hle⟩ := (Ideal.IsPrime.prod_le hM.isPrime).mp hPM
+      rw [Multiset.mem_toFinset, Ideal.mem_normalizedFactors_iff hL0] at h𝔭
+      have hne : 𝔭 ≠ ⊥ := fun h => hL0 (le_bot_iff.mp (h ▸ h𝔭.2))
+      have h𝔭M : 𝔭 = M := (h𝔭.1.isMaximal hne).eq_of_le hM.ne_top hle
+      exact h𝔭M ▸ h𝔭.2
+
+end GlobalTheory.PrimesAboveExistence
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePrimesOverPrimeCoprimalityEquiv
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+namespace GlobalTheory.PrimesOverL
+
+theorem primes_over_l : ∀ {F : Type} [Field F] [NumberField F] (l : ℕ), l.Prime →
+    ∃ P : Finset (Ideal (𝓞 F)), (∀ 𝔭 ∈ P, 𝔭.IsMaximal ∧ 𝔭 ≠ ⊥ ∧ l ∣ Ideal.absNorm 𝔭) ∧
+      ∀ I : Ideal (𝓞 F), CoprimeTo F (∏ 𝔭 ∈ P, 𝔭) I ↔ CoprimeTo F (Ideal.span {(l : 𝓞 F)}) I := by
+  first
+  | exact @_root_.GlobalTheory.PrimesAboveExistence.exists_primes_above
+  | exact _root_.GlobalTheory.PrimesAboveExistence.exists_primes_above
+  | (apply _root_.GlobalTheory.PrimesAboveExistence.exists_primes_above <;> assumption)
+  | (intros; apply _root_.GlobalTheory.PrimesAboveExistence.exists_primes_above <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.PrimesAboveExistence.exists_primes_above <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.PrimesAboveExistence.exists_primes_above ..)
+
+end GlobalTheory.PrimesOverL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePrimesOverPrimeCoprimalityEquivStatement
+
+section
+
 @[expose] public section
 
 open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
@@ -50,3 +152,5 @@ theorem _root_.GlobalTheory.T.exists_finite_primes_over_prime_coprimality_equiv 
     ∃ P : Finset (Ideal (𝓞 F)), (∀ 𝔭 ∈ P, 𝔭.IsMaximal ∧ 𝔭 ≠ ⊥ ∧ l ∣ Ideal.absNorm 𝔭) ∧
       ∀ I : Ideal (𝓞 F), CoprimeTo F (∏ 𝔭 ∈ P, 𝔭) I ↔ CoprimeTo F (Ideal.span {(l : 𝓞 F)}) I := by
   first | exact @GlobalTheory.PrimesOverL.primes_over_l | exact GlobalTheory.PrimesOverL.primes_over_l | (intros; apply GlobalTheory.PrimesOverL.primes_over_l <;> assumption)
+end
+end

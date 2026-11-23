@@ -3,24 +3,7 @@ module
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.AcrisKummerUnits.Splits
 public import Mathlib.RingTheory.DividedPowers.DPMorphism
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AbsolutelyIntegrallyClosedOfNewtonStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ComparableModSquareLocalization
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DichotomyOfComparableModSquareStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DividedPowerMorphismCompatibleStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DividedPowerQuotientExists
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IdempotentLocalInductionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IdempotentLocalizationDichotomyStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralLocalizationAwayInRingStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalizationPreservesClosedness
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonApproximationLocalToGlobalStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonApproximationOfDichotomy
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonPolygonSlopeExistenceStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PolynomialRootsOfClosedQuotientStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowerDivisibilityRootExtractionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SectionOrthogonalIdempotentSumStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SectionOverIdempotentPropertiesStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SurjectivePreservesClosednessComparabilityStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationOfLocalDichotomyStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationPowerIffStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LiftIdempotentAdicComplete
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,11 +21,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-public import Mathlib.RingTheory.Unramified.LocalStructure
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -62,10 +42,171 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DichotomyOfComparableModSquareStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DividedPowerMorphismCompatibleStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DividedPowerQuotientExists
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IdempotentLocalInductionStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IdempotentLocalizationDichotomyStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralLocalizationAwayInRing
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalizationPreservesClosedness
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonApproximationLocalToGlobalStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonApproximationOfDichotomy
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NewtonPolygonSlopeExistenceStatement
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PolynomialRootsOfClosedQuotientStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SectionOrthogonalIdempotentSumStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SectionOverIdempotentPropertiesStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SurjectivePreservesClosednessComparability
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationOfLocalDichotomyStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationPowerIffStatement
+import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Unramified.LocalStructure
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.RingTheory.Etale.StandardEtale
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ComparableModSquareLocalization
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison CrystallineSemistableComparison.R
+
+namespace GlobalTheory.CompanionTheory.CompMod
+
+theorem exists_eq_add_of_mem_span_quot {S : Type} [CommRing S] (ϖ x y : S)
+    (h : Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) x ∈
+      Ideal.span {Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) y}) :
+    ∃ c d : S, x = y * c + ϖ ^ 2 * d := by
+  obtain ⟨c', hc'⟩ := Ideal.mem_span_singleton.1 h
+  obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective c'
+  rw [← map_mul] at hc'
+  obtain ⟨d, hd⟩ := Ideal.mem_span_singleton.1 (Ideal.Quotient.eq.1 hc')
+  exact ⟨c, d, by linear_combination hd⟩
+
+theorem mem_span_or_mem_span {S : Type} [CommRing S] (ϖ : S)
+    [IsAdicComplete (Ideal.span {ϖ}) S] (h0 : Val0 (S := S ⧸ Ideal.span {ϖ ^ 2}))
+    (P : Ideal S) (hP : P.IsPrime) (f g : S ⧸ compI P) :
+    f ∈ Ideal.span {g, Ideal.Quotient.mk (compI P) ϖ ^ 2} ∨
+      g ∈ Ideal.span {f, Ideal.Quotient.mk (compI P) ϖ ^ 2} := by
+  obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective f
+  obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective g
+  obtain ⟨ε, hε, h1, h2⟩ := h0 (Ideal.Quotient.mk _ a) (Ideal.Quotient.mk _ b)
+  obtain ⟨e, ⟨he, rfl⟩, -⟩ :=
+    IdemLift.existsUnique_idempotent_lift ϖ 2 two_ne_zero ε hε
+  rw [← map_mul] at h1
+  have h2' : Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) ((1 - e) * b) ∈
+      Ideal.span {Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) a} := by
+    simpa [map_mul, map_sub, map_one] using h2
+  obtain ⟨c, d, hcd⟩ := exists_eq_add_of_mem_span_quot ϖ _ _ h1
+  obtain ⟨c', d', hcd'⟩ := exists_eq_add_of_mem_span_quot ϖ _ _ h2'
+  have key : ∀ t : S, IsIdempotentElem t → t ∈ P →
+      Ideal.Quotient.mk (compI P) t = 0 := fun t ht htP =>
+    Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.subset_span ⟨ht, htP⟩)
+  by_cases heP : e ∈ P
+  · right
+    have hz := key e he heP
+    have hb := congrArg (Ideal.Quotient.mk (compI P)) hcd'
+    simp only [map_mul, map_add (f := _), map_sub, map_one, map_pow, hz, sub_zero, one_mul] at hb
+    rw [hb]
+    exact Ideal.mem_span_pair.2 ⟨Ideal.Quotient.mk _ c', Ideal.Quotient.mk _ d', by ring⟩
+  · left
+    have hmul : e * (1 - e) ∈ P := by
+      have : e * (1 - e) = 0 := by
+        have he' : e * e = e := he
+        linear_combination -he'
+      rw [this]
+      exact P.zero_mem
+    have h1e : 1 - e ∈ P := (hP.mem_or_mem hmul).resolve_left heP
+    have hz := key (1 - e) he.one_sub h1e
+    have hz' : Ideal.Quotient.mk (compI P) e = 1 := by
+      rw [map_sub, map_one] at hz
+      exact (sub_eq_zero.1 hz).symm
+    have ha := congrArg (Ideal.Quotient.mk (compI P)) hcd
+    simp only [map_mul, map_add (f := _), map_pow, hz', one_mul] at ha
+    rw [ha]
+    exact Ideal.mem_span_pair.2 ⟨Ideal.Quotient.mk _ c, Ideal.Quotient.mk _ d, by ring⟩
+
+end GlobalTheory.CompanionTheory.CompMod
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegralLocalizationAwayInRingStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison CrystallineSemistableComparison.R
+
+theorem _root_.GlobalTheory.T.integral_localization_away_in_ring : ∀ {S : Type} [CommRing S] (ϖ : S), ϖ ∈ nonZeroDivisors S → Val ϖ → ∀ x : Localization.Away ϖ, IsIntegral S x → ∃ y : S, algebraMap S (Localization.Away ϖ) y = x := by
+  first | exact @GlobalTheory.CompanionTheory.ValIntClosed.exists_eq_of_isIntegral | exact GlobalTheory.CompanionTheory.ValIntClosed.exists_eq_of_isIntegral | (intros; apply GlobalTheory.CompanionTheory.ValIntClosed.exists_eq_of_isIntegral <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowerDivisibilityRootExtraction
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison CrystallineSemistableComparison.R
+
+namespace GlobalTheory.CompanionTheory.ValPowDvd
+
+theorem dvd_of_pow_mul_dvd_pow : ∀ {S : Type} [CommRing S] (ϖ : S), ϖ ∈ nonZeroDivisors S → Val ϖ →
+    ∀ (z : S) (m d : ℕ), 0 < d → ϖ ^ (m * d) ∣ z ^ d → ϖ ^ m ∣ z := by
+  intro S _ ϖ hϖ hV z m d hd hdiv
+  obtain ⟨d', rfl⟩ : ∃ d', d = d' + 1 := ⟨d - 1, by omega⟩
+  obtain ⟨w, hw⟩ := hdiv
+  obtain ⟨e, he, h1, h2⟩ := hV (ϖ ^ m) z ⟨m, Ideal.subset_span (Set.mem_insert _ _)⟩
+  obtain ⟨c', hc'⟩ := Ideal.mem_span_singleton'.mp h1
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp h2
+  have h3 : (e * ϖ ^ m) ^ (d' + 1) = (c' * z) ^ (d' + 1) := by rw [hc']
+  rw [mul_pow, mul_pow, hw, he.pow_succ_eq d', ← pow_mul] at h3
+  have key : (e - w * c' ^ (d' + 1)) * ϖ ^ (m * (d' + 1)) = 0 := by linear_combination h3
+  have he' : e = w * c' ^ (d' + 1) :=
+    sub_eq_zero.mp ((mem_nonZeroDivisors_iff.mp (pow_mem hϖ (m * (d' + 1)))).2 _ key)
+  have hee : e * e = e := he.eq
+  exact ⟨e * w * c' ^ d' + c, by
+    linear_combination (-1 : S) * hc + (-z) * hee + (z * e) * he' + (e * w * c' ^ d') * hc' +
+      (w * c' ^ d' * ϖ ^ m) * hee⟩
+
+end GlobalTheory.CompanionTheory.ValPowDvd
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowerDivisibilityRootExtractionStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison CrystallineSemistableComparison.R
+
+theorem _root_.GlobalTheory.T.power_divisibility_root_extraction : ∀ {S : Type} [CommRing S] (ϖ : S), ϖ ∈ nonZeroDivisors S → Val ϖ → ∀ (z : S) (m d : ℕ), 0 < d → ϖ ^ (m * d) ∣ z ^ d → ϖ ^ m ∣ z := by
+  first | exact @GlobalTheory.CompanionTheory.ValPowDvd.dvd_of_pow_mul_dvd_pow | exact GlobalTheory.CompanionTheory.ValPowDvd.dvd_of_pow_mul_dvd_pow | (intros; apply GlobalTheory.CompanionTheory.ValPowDvd.dvd_of_pow_mul_dvd_pow <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SurjectivePreservesClosednessComparabilityStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison CrystallineSemistableComparison.R
+
+theorem _root_.GlobalTheory.T.surjective_preserves_closedness_comparability : ∀ {S : Type} [CommRing S] {T : Type} [CommRing T] (φ : S →+* T), Function.Surjective φ → (Aic (S := S) → Aic (S := T)) ∧ (Val0 (S := S) → Val0 (S := T)) := by
+  first | exact @GlobalTheory.CompanionTheory.SurjPass.absolutely_closed_comparable_surjective | exact GlobalTheory.CompanionTheory.SurjPass.absolutely_closed_comparable_surjective | (intros; apply GlobalTheory.CompanionTheory.SurjPass.absolutely_closed_comparable_surjective <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.AcrisKummerUnits.ValuationSquareOfValuationMod
+
+section
 
 @[expose] public section
 
@@ -210,3 +351,5 @@ theorem CrystallineSemistableComparison.RL.pd_quot : ∀ {S : Type} [CommRing S]
   exact hpd
 
 theorem CrystallineSemistableComparison.RL.pd_mor : ∀ {S : Type} [CommRing S] {S' E E' : Type} [CommRing S'] [CommRing E] [CommRing E'] (π : S →+* E) (π' : S' →+* E') (I : Ideal S) (I' : Ideal S') {J : Ideal E} {J' : Ideal E'} (δ : DividedPowers J) (δ' : DividedPowers J') (F₀ : S →+* S') (F : E →+* E'), Function.Surjective π → PdI I → IsPd π I δ → IsPd π' I' δ' → (∀ x ∈ I, F₀ x ∈ I') → (∀ x, F (π x) = π' (F₀ x)) → DividedPowers.IsDPMorphism δ δ' F := GlobalTheory.T.divided_power_morphism_compatible
+end
+end

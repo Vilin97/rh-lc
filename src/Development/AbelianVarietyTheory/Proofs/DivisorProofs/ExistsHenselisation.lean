@@ -6,11 +6,8 @@ public import Mathlib.RingTheory.Localization.AtPrime.Basic
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleNbhdLocalRingToHenselisationAlgebraMapStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleNbhdLocalRingToHenselisationInjectiveOfNbhdStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSubMemMaximalIdealPointedEtaleNeighbourhooStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatHensStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HensIsLocalRingAndIsLocalHomOfStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HenselianLocalRingHensStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MaximalIdealPointedEtaleNeighbourhoodEqMapStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PointedEtaleNeighbourhoodLocalRingIsDirectedStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InstPreorder
+public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,9 +26,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,6 +49,192 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Flat.Localization
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PointedEtaleNeighbourhoodLocalRingIsDirectedStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HensIsLocalRingAndIsLocalHomOfStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HenselianLocalRingHens
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.RingTheory.Unramified.LocalRing
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatLocalRingPointedEtaleNeighbourhood
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+namespace GlobalTheory.Henselisation
+
+theorem EtNbhd.flat_B : ∀ (R : Type) [CommRing R] [IsLocalRing R] (i : EtNbhd R), Module.Flat R i.B := by
+  intro R _ _ i
+  haveI : Module.Flat i.A i.B := IsLocalization.flat i.B i.q.primeCompl
+  exact Module.Flat.trans R i.A i.B
+
+end GlobalTheory.Henselisation
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatLocalRingPointedEtaleNeighbourhoodStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+theorem _root_.GlobalTheory.T.flat_localRing_pointedEtaleNeighbourhood : ∀ (R : Type) [CommRing R] [IsLocalRing R] (i : EtNbhd R), Module.Flat R i.B := by
+  first | exact @GlobalTheory.Henselisation.EtNbhd.flat_B | exact GlobalTheory.Henselisation.EtNbhd.flat_B | (intros; apply GlobalTheory.Henselisation.EtNbhd.flat_B <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatHens
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+noncomputable section
+
+namespace GlobalTheory.Henselisation
+
+variable {R : Type} [CommRing R] [IsLocalRing R]
+
+theorem Hens.of_trans {i j : EtNbhd R} (h : i ≤ j) (y : i.B) :
+    Hens.of j (EtNbhd.trans h y) = Hens.of i y :=
+  Ring.DirectLimit.of_f h y
+
+theorem Hens.exists_of (hdir : IsDirected (EtNbhd R) (· ≤ ·)) (z : Hens R) :
+    ∃ (i : EtNbhd R) (y : i.B), Hens.of i y = z :=
+  haveI : IsDirectedOrder (EtNbhd R) := hdir
+  Ring.DirectLimit.exists_of (G := fun i : EtNbhd R => i.B)
+    (f := fun _ _ h => ⇑(EtNbhd.trans h)) z
+
+theorem Hens.exists_of_fin (hdir : IsDirected (EtNbhd R) (· ≤ ·)) :
+    ∀ (l : ℕ) (x : Fin l → Hens R), ∃ (i : EtNbhd R) (y : Fin l → i.B), ∀ k, Hens.of i (y k) = x k := by
+  intro l
+  induction l with
+  | zero => exact fun x => ⟨EtNbhd.base, fun k => k.elim0, fun k => k.elim0⟩
+  | succ l ih =>
+    intro x
+    obtain ⟨i, y, hy⟩ := ih (fun k => x k.castSucc)
+    obtain ⟨j, z, hz⟩ := Hens.exists_of hdir (x (Fin.last l))
+    obtain ⟨m, him, hjm⟩ := directed_of (· ≤ ·) i j
+    refine ⟨m, Fin.lastCases (EtNbhd.trans hjm z) (fun k => EtNbhd.trans him (y k)), ?_⟩
+    intro k
+    induction k using Fin.lastCases with
+    | last => dsimp only; rw [Fin.lastCases_last, Hens.of_trans, hz]
+    | cast k => dsimp only; rw [Fin.lastCases_castSucc, Hens.of_trans, hy]
+
+theorem flat_hens_of_stages (hdir : IsDirected (EtNbhd R) (· ≤ ·))
+    (hinj : ∀ i : EtNbhd R, Function.Injective (Hens.of i))
+    (halg : ∀ (i : EtNbhd R) (r : R), Hens.of i (algebraMap R i.B r) = algebraMap R (Hens R) r)
+    (hflat : ∀ i : EtNbhd R, Module.Flat R i.B) : Module.Flat R (Hens R) := by
+  have hsmul : ∀ (i : EtNbhd R) (r : R) (y : i.B), Hens.of i (r • y) = r • Hens.of i y := by
+    intro i r y
+    rw [Algebra.smul_def, Algebra.smul_def, map_mul, halg]
+  refine Module.Flat.iff_forall_isTrivialRelation.mpr ?_
+  intro l f x hfx
+  obtain ⟨i, y, hy⟩ := Hens.exists_of_fin hdir l x
+  have h0 : ∑ k, f k • y k = 0 := by
+    apply hinj i
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum]
+    simp only [hsmul, hy]
+    exact hfx
+  obtain ⟨k, a, z, hya, haf⟩ := Module.Flat.iff_forall_isTrivialRelation.mp (hflat i) h0
+  refine ⟨k, a, fun j => Hens.of i (z j), fun m => ?_, haf⟩
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hy m, hya m, map_sum]
+  simp only [hsmul]
+
+theorem flat_hens : ∀ (R : Type) [CommRing R] [IsLocalRing R], Module.Flat R (Hens R) :=
+  fun R _ _ => flat_hens_of_stages (GlobalTheory.T.pointedEtaleNeighbourhoodLocalRing_isDirected R) (GlobalTheory.T.etaleNbhdLocalRingToHenselisation_injective_of_nbhd R) (GlobalTheory.T.etaleNbhdLocalRingToHenselisation_algebraMap R) (GlobalTheory.T.flat_localRing_pointedEtaleNeighbourhood R)
+
+end GlobalTheory.Henselisation
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatHensStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+theorem _root_.GlobalTheory.T.flat_hens' : ∀ (R : Type) [CommRing R] [IsLocalRing R], Module.Flat R (Hens R) := by
+  first | exact @GlobalTheory.Henselisation.flat_hens | exact GlobalTheory.Henselisation.flat_hens | (intros; apply GlobalTheory.Henselisation.flat_hens <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HenselianLocalRingHensStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+theorem _root_.GlobalTheory.T.henselianLocalRing_hens' : ∀ (R : Type) [CommRing R] [IsLocalRing R], HenselianLocalRing (Hens R) := by
+  first | exact @GlobalTheory.Henselisation.henselianLocalRing_hens | exact GlobalTheory.Henselisation.henselianLocalRing_hens | (intros; apply GlobalTheory.Henselisation.henselianLocalRing_hens <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MaximalIdealPointedEtaleNeighbourhoodEqMap
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+namespace GlobalTheory.Henselisation.EtNbhd
+
+instance isLocalHom_algebraMap_B {R : Type} [CommRing R] [IsLocalRing R] (i : EtNbhd R) :
+    IsLocalHom (algebraMap R i.B) := by
+  refine ⟨fun a ha => ?_⟩
+  by_contra hna
+  have hm : a ∈ maximalIdeal R := hna
+  have hq : algebraMap R i.A a ∈ i.q := by
+    show i.pt (algebraMap R i.A a) = 0
+    rw [AlgHom.commutes]
+    exact (residue_eq_zero_iff a).2 hm
+  have : algebraMap R i.B a ∈ maximalIdeal i.B := by
+    rw [IsScalarTower.algebraMap_apply R i.A i.B]
+    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff i.B i.q _).2 hq
+  exact this ha
+
+theorem maximalIdeal_B_eq_map (R : Type) [CommRing R] [IsLocalRing R] (i : EtNbhd R) :
+    maximalIdeal i.B = (maximalIdeal R).map (algebraMap R i.B) :=
+  Algebra.FormallyUnramified.map_maximalIdeal.symm
+
+end GlobalTheory.Henselisation.EtNbhd
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MaximalIdealPointedEtaleNeighbourhoodEqMapStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.Henselisation
+
+theorem _root_.GlobalTheory.T.maximalIdeal_pointedEtaleNeighbourhood_eq_map : ∀ (R : Type) [CommRing R] [IsLocalRing R] (i : EtNbhd R), maximalIdeal i.B = (maximalIdeal R).map (algebraMap R i.B) := by
+  first | exact @GlobalTheory.Henselisation.EtNbhd.maximalIdeal_B_eq_map | exact GlobalTheory.Henselisation.EtNbhd.maximalIdeal_B_eq_map | (intros; apply GlobalTheory.Henselisation.EtNbhd.maximalIdeal_B_eq_map <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHenselisation
+
+section
 
 @[expose] public section
 
@@ -118,3 +300,5 @@ theorem exists_henselisation : ∀ (R : Type) [CommRing R] [IsLocalRing R], ∃ 
       ⟨AlgEquiv.ofInjective (ofA i) (GlobalTheory.T.etaleNbhdLocalRingToHenselisation_injective_of_nbhd R i)⟩⟩
 
 end GlobalTheory.Henselisation
+end
+end

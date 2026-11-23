@@ -2,9 +2,9 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.PieceTop
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.MemPw
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.Rdata
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.RqLift
-import GroundTheory.AutomorphicForms.GLnLocal
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.FinrankAdjoinPowLe
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,15 +18,17 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,8 +50,199 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Artinian.Defs
+public import Mathlib.RingTheory.Artinian.Module
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.RqLift
+import GroundTheory.AutomorphicForms.GLnLocal
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.RingTheory.TotallySplit
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.SEps
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PositivityTheory.RgUd.TP.Desc.Piece.PSect
+
+open Module Polynomial
+
+theorem idem {k S : Type*} [Field k] [CommRing S] [Algebra k S] [FiniteDimensional k S] [IsReduced S] :
+    ∃ (m : ℕ) (e : Fin m → S), (∀ t, IsIdempotentElem (e t)) ∧ ∑ t, e t = 1 ∧
+      (∀ t t', t ≠ t' → e t * e t' = 0) ∧ ∀ t s, s * e t = 0 ∨ ∃ w, s * e t * w = e t := by
+  classical
+  have : IsArtinianRing S := IsArtinianRing.of_finite k S
+  haveI : Fintype (MaximalSpectrum S) := Fintype.ofFinite _
+  set φ := IsArtinianRing.equivPi S with hφ
+  let σ := (Fintype.equivFin (MaximalSpectrum S)).symm
+  refine ⟨Fintype.card (MaximalSpectrum S), fun t => φ.symm (Pi.single (σ t) 1), ?_, ?_, ?_, ?_⟩
+  · intro t
+    show _ * _ = _
+    rw [← map_mul]
+    congr 1
+    ext M
+    by_cases h : M = σ t
+    · subst h; simp
+    · simp [h]
+  · apply φ.injective
+
+    rw [map_sum, map_one]
+    simp only [AlgEquiv.apply_symm_apply]
+    rw [Equiv.sum_comp σ (fun M => (Pi.single M 1 : ∀ M : MaximalSpectrum S, S ⧸ M.asIdeal))]
+    exact Finset.univ_sum_single (1 : ∀ M : MaximalSpectrum S, S ⧸ M.asIdeal)
+  · intro t t' htt
+    rw [← map_mul]
+    have hne : σ t ≠ σ t' := fun h => htt (σ.injective h)
+    have : (Pi.single (σ t) 1 * Pi.single (σ t') 1 : ∀ M : MaximalSpectrum S, S ⧸ M.asIdeal) = 0 := by
+      ext M
+      by_cases h1 : M = σ t
+      · subst h1; simp [hne.symm]
+      · simp [h1]
+    rw [this, map_zero]
+  · intro t s
+    have := (σ t).isMaximal
+    by_cases ha : φ s (σ t) = 0
+    · left
+      apply φ.injective
+      rw [map_mul, AlgEquiv.apply_symm_apply, map_zero]
+      ext M
+      by_cases h1 : M = σ t
+      · subst h1; simp [ha]
+      · simp [h1]
+    · right
+      obtain ⟨b, hb⟩ := Ideal.Quotient.exists_inv ha
+      refine ⟨φ.symm (Pi.single (σ t) b), ?_⟩
+      apply φ.injective
+      rw [map_mul, map_mul, AlgEquiv.apply_symm_apply, AlgEquiv.apply_symm_apply]
+      ext M
+      by_cases h1 : M = σ t
+      · subst h1; simp only [Pi.mul_apply, Pi.single_eq_same, mul_one]; exact hb
+      · simp [h1]
+
+theorem sEps {k R : Type*} [Field k] [CommRing R] [Algebra k R] [IsPrincipalIdealRing R] (S : Subalgebra k R)
+    (hS : ∀ r : R, ∃ s ∈ S, IsNilpotent (r - s)) (q : ℕ) (hnil : ∀ r : R, IsNilpotent r → r ^ q = 0) :
+    ∃ ε : R, IsNilpotent ε ∧ ∀ r : R, ∃ σ : Fin q → R, (∀ l, σ l ∈ S) ∧ r = ∑ l, σ l * ε ^ (l : ℕ) := by
+  classical
+  set ε := Submodule.IsPrincipal.generator (nilradical R) with hε
+  have hspan : Ideal.span {ε} = nilradical R := Ideal.span_singleton_generator _
+  have hεn : IsNilpotent ε := mem_nilradical.mp (Submodule.IsPrincipal.generator_mem _)
+  refine ⟨ε, hεn, fun r => ?_⟩
+  have key : ∀ n : ℕ, ∃ σ : Fin n → R, (∀ l, σ l ∈ S) ∧
+      ∃ u : R, r = ∑ l, σ l * ε ^ (l : ℕ) + ε ^ n * u := by
+    intro n
+    induction n with
+    | zero => exact ⟨Fin.elim0, fun l => l.elim0, r, by simp⟩
+    | succ n ih =>
+      obtain ⟨σ, hσ, u, hu⟩ := ih
+      obtain ⟨s, hs, hn⟩ := hS u
+      have hm : u - s ∈ Ideal.span {ε} := by rw [hspan]; exact mem_nilradical.mpr hn
+      obtain ⟨v, hv⟩ := Ideal.mem_span_singleton'.mp hm
+      refine ⟨Fin.snoc σ s, fun l => ?_, v, ?_⟩
+      · refine Fin.lastCases ?_ (fun i => ?_) l
+        · simpa using hs
+        · simpa using hσ i
+      · rw [Fin.sum_univ_castSucc]
+        simp only [Fin.snoc_castSucc, Fin.snoc_last, Fin.val_castSucc, Fin.val_last]
+        rw [hu]
+        have : u = s + v * ε := by rw [hv]; ring
+        rw [this]
+        ring
+  obtain ⟨σ, hσ, u, hu⟩ := key q
+  refine ⟨σ, hσ, ?_⟩
+  rw [hu, hnil ε hεn, zero_mul, add_zero]
+
+end PositivityTheory.RgUd.TP.Desc.Piece.PSect
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.FrobeniusSections.Rdata
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PositivityTheory.RgUd.TP.Desc.Piece.PSect
+
+open Module Polynomial
+
+theorem rdata {k R : Type*} [Field k] [CommRing R] [Algebra k R] [FiniteDimensional k R] [IsPrincipalIdealRing R]
+    (p c : ℕ) [Fact p.Prime] [CharP k p] [FiniteDimensional k (Tw k p c)]
+    (hnil : ∀ r : R, IsNilpotent r → r ^ (p ^ c) = 0)
+    (hroot : ∀ a : k, ∃ w : R, w ^ (p ^ c) = algebraMap k R a) :
+    ∃ (r : ℕ) (s : Fin r → R) (c' : Fin r → Fin r → Fin r → k) (u : Fin r → k) (ε : R) (m : ℕ)
+      (κ : Fin m → Fin r → k),
+      (∀ j j', s j * s j' = ∑ t, c' j j' t • s t) ∧ ∑ j, u j • s j = 1 ∧ ε ^ (p ^ c) = 0 ∧
+      (∀ y : R, ∃ γ : Fin (p ^ c) → Fin r → k, y = ∑ l, ∑ j, γ l j • (s j * ε ^ (l : ℕ))) ∧
+      (∀ t, IsIdempotentElem (∑ j, κ t j • s j)) ∧ (∑ t, ∑ j, κ t j • s j) = 1 ∧
+      (∀ t t', t ≠ t' → (∑ j, κ t j • s j) * (∑ j, κ t' j • s j) = 0) ∧
+      ∀ t (v : Fin r → k), (∑ j, v j • s j) * (∑ j, κ t j • s j) = 0 ∨
+        ∃ w : R, (∑ j, v j • s j) * (∑ j, κ t j • s j) * w = ∑ j, κ t j • s j := by
+  classical
+  obtain ⟨S, hSred, hSlift⟩ := sectionEx p c hnil hroot
+  have : IsReduced S := ⟨fun x hx => Subtype.ext (hSred x x.2 (hx.map S.val))⟩
+  have : FiniteDimensional k S := FiniteDimensional.finiteDimensional_submodule (Subalgebra.toSubmodule S)
+  obtain ⟨m, e, he1, he2, he3, he4⟩ := idem (k := k) (S := S)
+  obtain ⟨ε, hεn, hε⟩ := sEps S hSlift (p ^ c) hnil
+  let b := Module.finBasis k S
+  have hsum : ∀ x : S, ∑ j, b.repr x j • ((b j : S) : R) = (x : R) := by
+    intro x
+    have h := congrArg S.val (b.sum_repr x)
+
+    rw [map_sum] at h
+    simpa using h
+  refine ⟨finrank k S, fun j => (b j : R), fun j j' t => b.repr (b j * b j') t, fun j => b.repr 1 j, ε, m,
+    fun t j => b.repr (e t) j, ?_, ?_, hnil ε hεn, ?_, ?_, ?_, ?_, ?_⟩
+  · intro j j'
+    rw [hsum]; rfl
+  · rw [hsum]; rfl
+  · intro y
+    obtain ⟨σ, hσ, hy⟩ := hε y
+    refine ⟨fun l j => b.repr ⟨σ l, hσ l⟩ j, ?_⟩
+    rw [hy]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    simp only [← smul_mul_assoc, ← Finset.sum_mul]
+    rw [hsum]
+  · intro t
+    simp only [hsum]
+    exact congrArg Subtype.val (he1 t)
+  · simp only [hsum]
+    have h := congrArg S.val he2
+
+    rw [map_sum, map_one] at h
+    simpa using h
+  · intro t t' htt
+    simp only [hsum]
+    exact congrArg Subtype.val (he3 t t' htt)
+  · intro t v
+    simp only [hsum]
+    have hx : ∑ j, v j • ((b j : S) : R) = ((∑ j, v j • b j : S) : R) := by
+      simp
+    rw [hx]
+    rcases he4 t (∑ j, v j • b j) with h0 | ⟨w, hw⟩
+    · left; exact congrArg Subtype.val h0
+    · right; exact ⟨w, congrArg Subtype.val hw⟩
+
+end PositivityTheory.RgUd.TP.Desc.Piece.PSect
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.TwFin
+
+section
 
 @[expose] public section
 
@@ -294,3 +487,6 @@ theorem sect (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonar
         · rw [mul_comm, h t hEt, map_zero]
 
 end PositivityTheory.RgUd.TP.Desc.Piece.PSect
+end
+end
+end

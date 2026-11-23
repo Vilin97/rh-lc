@@ -2,9 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.WitSys
 public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDenominatorOfLattice
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDualVectorOfIntegralFunctional
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.FiniteFreeOfBoundedDenominatorsLattice
-public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.LatticeSaturatedAtPAndPrimeToP
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoprimeNsmulEndomorphismPreservesCompletio
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +40,56 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.FiniteFreeOfBoundedDenominatorsLattice
+public import Development.AutomorphicArithmetic.PAdicLatticeApproximation.LatticeSaturatedAtPAndPrimeToP
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsDualVectorOfIntegralFunctional
+
+section
+
+@[expose] public section
+
+open NumberField
+open GlobalTheory GlobalTheory.PELU GlobalTheory.UPel.HT GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGeo UpperTheory.Gal.W2.Wit
+open scoped TensorProduct
+
+theorem UpperTheory.exists_dual_vector_of_integral_functional :
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (X : UpperTheory.Gal.W2.Wit.Sys D) (g : VQ D →ₗ[ℚ] ℚ), (∀ u ∈ X.lat, ∃ z : ℤ, g u = z) → ∃ w ∈ X.M, ∀ u, X.s * X.B w u = g u := by
+  intro p _ D X g hg
+  have := D.finLa
+  have hnd : X.B.Nondegenerate :=
+    (LinearMap.IsRefl.nondegenerate_iff_separatingLeft (LinearMap.IsAlt.isRefl X.alt)).mpr X.nondeg
+  let w0 := (X.B.toDual hnd).symm g
+  have hB : ∀ u, X.B w0 u = g u := by
+    intro u
+    exact LinearMap.BilinForm.apply_toDual_symm_apply (hB := hnd) g u
+  have hw : ∀ u, X.s * X.B (X.s⁻¹ • w0) u = g u := by
+    intro u
+    rw [map_smul, LinearMap.smul_apply, hB, smul_eq_mul, ← mul_assoc,
+      mul_inv_cancel₀ X.s_pos.ne', one_mul]
+  refine ⟨X.s⁻¹ • w0, ?_, hw⟩
+  rw [X.perf]
+  intro u hu
+  rw [hw]
+  obtain ⟨t, ht0, htp, htm⟩ := DenEnd.exists_coprime_nsmul_mem D (X.r u)
+  have hlat : t • u ∈ X.lat :=
+    X.mem_lat.mpr ⟨X.M.nsmul_mem hu t, by simpa only [map_nsmul] using htm⟩
+  obtain ⟨z, hz⟩ := hg _ hlat
+  rw [map_nsmul, nsmul_eq_mul] at hz
+  have ht : (t : ℚ) ≠ 0 := by exact_mod_cast ht0.ne'
+  have hq : g u = (z : ℚ) / (t : ℚ) := by
+    rw [eq_div_iff ht, mul_comm, hz]
+  have hd := Rat.den_dvd z t
+  rw [Rat.divInt_eq_div] at hd
+  push_cast at hd
+  rw [hq]
+  exact Nat.Coprime.coprime_dvd_left (Int.natCast_dvd_natCast.mp hd) htp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.PAdicLatticeApproximation.ExistsPrimeToPMultipleInRangeOfBilinForm
+
+section
 
 @[expose] public section
 
@@ -121,3 +169,5 @@ theorem UpperTheory.exists_prime_to_p_multiple_in_range_of_bilinForm :
   refine ⟨∑ i, f (b i) • t i, b.ext fun j => ?_⟩
 
   simp [map_sum, LinearMap.sum_apply, ht, mul_comm]
+end
+end

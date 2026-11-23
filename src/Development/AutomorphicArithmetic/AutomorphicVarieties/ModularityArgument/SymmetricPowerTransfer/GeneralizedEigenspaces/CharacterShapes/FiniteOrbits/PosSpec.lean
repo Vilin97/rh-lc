@@ -3,15 +3,21 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GeneralizedEigenspaces.CharacterShapes.UnitaryThreeTestFunctionHeckeRelations
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceFibreCardinality.EigVec
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceFibreCardinality.Extract
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceFibreCardinality.TrPos
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.FormsFin
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceNil
+public import Mathlib.Algebra.DirectSum.LinearMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -19,7 +25,10 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -27,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,7 +48,52 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Lemma
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceFibreCardinality.TrPos
+
+section
+
+@[expose] public section
+
+open Module in
+theorem UpperTheory.V.Z.Sym.Tf.trPos :
+    UpperTheory.V.Z.Sym.Tf.TrPos := by
+  intro Λ M _ _ _ u hc
+  classical
+  have hint := UpperTheory.V.Z.Sym.Tf.Vg_int (u := u) hc
+  have hfin : {χ | UpperTheory.V.Z.Sym.Tf.Vg u χ ≠ ⊥}.Finite := by
+    have := (UpperTheory.V.Z.Sym.Tf.Vg_indep hc).fintypeNeBotOfFiniteDimensional
+    exact Set.finite_coe_iff.mp (@Finite.of_fintype _ this)
+  refine ⟨hfin.toFinset, fun χ => Module.finrank ℂ (UpperTheory.V.Z.Sym.Tf.Vg u χ), ?_, ?_, ?_⟩
+  · intro χ
+    simp [Set.Finite.mem_toFinset, UpperTheory.V.Z.Sym.IsGenEig]
+  · intro χ hχ
+    rw [Set.Finite.mem_toFinset] at hχ
+    exact Submodule.one_le_finrank_iff.mpr hχ
+  · intro a
+    rw [LinearMap.trace_eq_sum_trace_restrict' hint hfin (fun χ => UpperTheory.V.Z.Sym.Tf.Vg_maps hc a χ)]
+    refine Finset.sum_congr rfl fun χ _ => ?_
+    have h1 : Set.MapsTo ⇑(1 : Module.End ℂ M) ↑(UpperTheory.V.Z.Sym.Tf.Vg u χ) ↑(UpperTheory.V.Z.Sym.Tf.Vg u χ) :=
+      fun v hv => hv
+    have key := UpperTheory.V.Z.Sym.Tf.trace_Vg hc χ 1 id h1 (fun b v _ => by simp) (fun b => rfl) a
+      (by simpa using UpperTheory.V.Z.Sym.Tf.Vg_maps hc a χ)
+    simp only [mul_one] at key
+    rw [key]
+    have h2 : LinearMap.restrict (1 : Module.End ℂ M) h1 = 1 := by
+      ext v
+      rfl
+    rw [h2, LinearMap.trace_one, mul_comm]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GeneralizedEigenspaces.CharacterShapes.FiniteOrbits.PosSpec
+
+section
 
 @[expose] public section
 
@@ -107,4 +160,6 @@ theorem UpperTheory.V.Z.Sym.So.posSpec :
           exact mul_pos (Complex.zero_lt_real.2 ha) (by exact_mod_cast hdd j ψ hk1)
       · simp [S', β', T, hχj0]
 
+end
+end
 end

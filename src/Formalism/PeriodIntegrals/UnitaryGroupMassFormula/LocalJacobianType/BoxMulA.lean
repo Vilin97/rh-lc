@@ -46,7 +46,36 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ClassFieldTheory.GlobalClassField.LocPowB
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import ReciprocityTheory.ResidueCardinality.ArtinOntoB
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.GlobalClassField.LocPowB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.DiscreteGroups.GlobalClassField
+
+open NumberField IsDedekindDomain
+
+theorem ul_card_residue_eq (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) :
+    Nat.card (IsLocalRing.ResidueField (v.adicCompletionIntegers F)) =
+      Ideal.absNorm v.asIdeal := by
+  rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  exact ReciprocityTheory.Bridge.ResidueFieldCardinality.card_residue v
+
+end ReciprocityTheory.DiscreteGroups.GlobalClassField
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalJacobianType.BoxMulA
+
+section
 
 @[expose] public section
 
@@ -328,3 +357,6 @@ theorem modF_Fv (a : Fv F v) (ha : a ≠ 0) :
 end Char
 
 end PI.UnitaryGroupMassFormula.LocJacTyp.BM
+end
+end
+end

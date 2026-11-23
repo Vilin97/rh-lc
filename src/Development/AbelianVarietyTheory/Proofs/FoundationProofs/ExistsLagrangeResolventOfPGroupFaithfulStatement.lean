@@ -2,7 +2,7 @@ module
 
 public import Mathlib.GroupTheory.PGroup
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLagrangeResolventOfPGroupFaithful
+public import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,6 +16,7 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.GroupTheory.IndexNormal
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -29,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +45,136 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Foundations.CosetTrace
+public import Mathlib.GroupTheory.Sylow
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.LinearAlgebra.LinearIndependent.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSurjHomZmodOfIsPGroup
+
+section
+
+@[expose] public section
+
+open GlobalTheory.AlmostEt
+open scoped NNReal
+
+namespace GlobalTheory.AlmostEt
+
+theorem exists_surj_hom_zmod_of_isPGroup :
+    ∀ (p : ℕ) [Fact p.Prime] (G : Type) [Group G] [Finite G] [Nontrivial G],
+      IsPGroup p G → ∃ χ : G →* Multiplicative (ZMod p), Function.Surjective χ := by
+  intro p hp G _ _ _ hG
+  obtain ⟨n, hn, hc⟩ := hG.nontrivial_iff_card.1 inferInstance
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  obtain ⟨K, hK⟩ := Sylow.exists_subgroup_card_pow_prime (G := G) p (n := m)
+    (by rw [hc]; exact pow_dvd_pow p (Nat.le_succ m))
+  have hi : K.index = p := by
+    have := K.card_mul_index
+    rw [hK, hc, pow_succ] at this
+    exact Nat.eq_of_mul_eq_mul_left (pow_pos hp.out.pos m) this
+  haveI : K.Normal := Subgroup.normal_of_index_eq_minFac_card (by
+    rw [hi, hc, hp.out.pow_minFac (Nat.succ_ne_zero m)])
+  let e : (G ⧸ K) ≃* Multiplicative (ZMod p) :=
+    mulEquivOfPrimeCardEq (p := p) (by rw [← hi]; rfl) (by simp)
+  refine ⟨e.toMonoidHom.comp (QuotientGroup.mk' K), ?_⟩
+  exact e.surjective.comp (QuotientGroup.mk'_surjective K)
+
+end GlobalTheory.AlmostEt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSurjHomZmodOfIsPGroupStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.AlmostEt
+open scoped NNReal
+
+theorem _root_.GlobalTheory.T.exists_surjective_hom_zmod_of_isPGroup : ∀ (p : ℕ) [Fact p.Prime] (G : Type) [Group G] [Finite G] [Nontrivial G], IsPGroup p G → ∃ χ : G →* Multiplicative (ZMod p), Function.Surjective χ := by
+  first | exact @GlobalTheory.AlmostEt.exists_surj_hom_zmod_of_isPGroup | exact GlobalTheory.AlmostEt.exists_surj_hom_zmod_of_isPGroup | (intros; apply GlobalTheory.AlmostEt.exists_surj_hom_zmod_of_isPGroup <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLagrangeResolventOfPGroupFaithful
+
+section
+
+@[expose] public section
+
+open GlobalTheory.AlmostEt
+open scoped NNReal
+
+namespace GlobalTheory.AlmostEt
+
+theorem exists_lagrange_resolvent : ∀ (L : Type) [Field L] (p : ℕ), p.Prime → ∀ (G : Type) [Group G]
+    [MulSemiringAction G L] [Finite G] [Nontrivial G] [FaithfulSMul G L], IsPGroup p G →
+    ∀ ζ : L, IsPrimitiveRoot ζ p → (∀ g : G, g • ζ = ζ) →
+    ∃ (σ : G) (α : L), α ≠ 0 ∧ σ • α = ζ * α ∧ ∀ g : G, g • α ^ p = α ^ p := by
+  intro L _ p hp G _ _ _ _ _ hG ζ hζ hfix
+  haveI : Fact p.Prime := ⟨hp⟩
+  haveI : Fact (1 < p) := ⟨hp.one_lt⟩
+  classical
+  letI : Fintype G := Fintype.ofFinite G
+  obtain ⟨χ, hχ⟩ := GlobalTheory.T.exists_surjective_hom_zmod_of_isPGroup p G hG
+  set ψ : G → L := fun g => ζ ^ (Multiplicative.toAdd (χ g)).val with hψdef
+  have hζp : ζ ^ p = 1 := hζ.pow_eq_one
+  have hmod : ∀ n : ℕ, ζ ^ n = ζ ^ (n % p) := fun n => by
+    conv_lhs => rw [← Nat.div_add_mod n p, pow_add, pow_mul, hζp, one_pow, one_mul]
+  have hψmul : ∀ a b, ψ (a * b) = ψ a * ψ b := by
+    intro a b
+    simp only [hψdef, map_mul, toAdd_mul, ZMod.val_add, ← pow_add]
+    exact (hmod _).symm
+  have hψp : ∀ g, ψ g ^ p = 1 := by
+    intro g; simp only [hψdef]; rw [← pow_mul, mul_comm, pow_mul, hζp, one_pow]
+  have hψne : ∀ g, ψ g ≠ 0 := fun g h => by
+    have := hψp g; rw [h, zero_pow hp.ne_zero] at this; exact zero_ne_one this
+  have hψfix : ∀ g h : G, g • ψ h = ψ h := fun g h => by simp only [hψdef, smul_pow', hfix]
+  let f : G → (L →* L) := fun g => (MulSemiringAction.toRingHom G L g : L →* L)
+  have hf : Function.Injective f := by
+    intro g h hgh
+    apply FaithfulSMul.eq_of_smul_eq_smul (α := L)
+    intro x
+    exact DFunLike.congr_fun hgh x
+  have hli : LinearIndependent L (fun g : G => ((f g : L →* L) : L → L)) :=
+    (linearIndependent_monoidHom L L).comp f hf
+  have hex : ∃ x : L, ∑ g : G, ψ g⁻¹ * (g • x) ≠ 0 := by
+    by_contra hcon
+    push_neg at hcon
+    have h0 : ∑ g : G, ψ g⁻¹ • ((f g : L →* L) : L → L) = 0 := by
+      funext x
+      simpa [f, Finset.sum_apply] using hcon x
+    exact hψne _ ((Fintype.linearIndependent_iff.mp hli) (fun g => ψ g⁻¹) h0 1)
+  obtain ⟨x, hx⟩ := hex
+  set α := ∑ g : G, ψ g⁻¹ * (g • x) with hα
+  have hact : ∀ h : G, h • α = ψ h * α := by
+    intro h
+    rw [hα, Finset.smul_sum, Finset.mul_sum]
+    simp only [smul_mul', hψfix, smul_smul]
+    refine Fintype.sum_equiv (Equiv.mulLeft h) _ _ (fun g => ?_)
+    simp only [Equiv.coe_mulLeft]
+    have e : ψ h * ψ h⁻¹ = 1 := by
+      rw [← hψmul, mul_inv_cancel]; simp [hψdef]
+    rw [mul_inv_rev, hψmul g⁻¹ h⁻¹]
+    linear_combination (-(ψ g⁻¹ * ((h * g) • x))) * e
+  obtain ⟨σ, hσ⟩ := hχ (Multiplicative.ofAdd 1)
+  refine ⟨σ, α, hx, ?_, ?_⟩
+  · rw [hact σ]
+    congr 1
+    simp [hψdef, hσ, ZMod.val_one]
+  · intro g
+    rw [smul_pow', hact g, mul_pow, hψp, one_mul]
+
+end GlobalTheory.AlmostEt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsLagrangeResolventOfPGroupFaithfulStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +183,5 @@ open scoped NNReal
 
 theorem _root_.GlobalTheory.T.exists_lagrange_resolvent_of_pGroup_faithful : ∀ (L : Type) [Field L] (p : ℕ), p.Prime → ∀ (G : Type) [Group G] [MulSemiringAction G L] [Finite G] [Nontrivial G] [FaithfulSMul G L], IsPGroup p G → ∀ ζ : L, IsPrimitiveRoot ζ p → (∀ g : G, g • ζ = ζ) → ∃ (σ : G) (α : L), α ≠ 0 ∧ σ • α = ζ * α ∧ ∀ g : G, g • α ^ p = α ^ p := by
   first | exact @GlobalTheory.AlmostEt.exists_lagrange_resolvent | exact GlobalTheory.AlmostEt.exists_lagrange_resolvent | (intros; apply GlobalTheory.AlmostEt.exists_lagrange_resolvent <;> assumption)
+end
+end

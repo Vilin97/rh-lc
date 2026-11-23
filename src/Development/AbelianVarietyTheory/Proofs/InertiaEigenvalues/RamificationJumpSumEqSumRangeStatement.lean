@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NoTowerQ
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RamificationJumpSumEqSumRange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,9 +40,43 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RamificationJumpSumEqSumRange
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory.LocalField GlobalTheory.PMon.Ram
+
+namespace GlobalTheory.PMon.Ram
+
+theorem jumpSum_eq_sum_range : ∀ (G : Type) [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G) (n : ℕ), Antitone R →
+    (∀ t, t < n ↔ ¬ A ⊓ R t ≤ B) → jumpSum R A B = ∑ t ∈ Finset.range n, Nat.card ↥(A ⊓ R t) := by
+  intro G _ R A B n _ h
+  classical
+  unfold jumpSum
+  rw [finsum_eq_sum_of_support_subset (s := Finset.range n)]
+  · refine Finset.sum_congr rfl fun t ht => ?_
+    rw [if_neg ((h t).1 (Finset.mem_range.1 ht))]
+  · intro t ht
+    rw [Function.mem_support] at ht
+    simp only [Finset.coe_range, Set.mem_Iio]
+    by_contra hn
+    exact ht (if_pos (not_not.1 (mt (h t).2 hn)))
+
+end GlobalTheory.PMon.Ram
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RamificationJumpSumEqSumRangeStatement
+
+section
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory.LocalField GlobalTheory.PMon.Ram
 
 theorem _root_.GlobalTheory.T.ramificationJumpSum_eq_sum_range : ∀ (G : Type) [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G) (n : ℕ), Antitone R → (∀ t, t < n ↔ ¬ A ⊓ R t ≤ B) → jumpSum R A B = ∑ t ∈ Finset.range n, Nat.card ↥(A ⊓ R t) := by
   first | exact @GlobalTheory.PMon.Ram.jumpSum_eq_sum_range | exact GlobalTheory.PMon.Ram.jumpSum_eq_sum_range | (intros; apply GlobalTheory.PMon.Ram.jumpSum_eq_sum_range <;> assumption)
+end
+end

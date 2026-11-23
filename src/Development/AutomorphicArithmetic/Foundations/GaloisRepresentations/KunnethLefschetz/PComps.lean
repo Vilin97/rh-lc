@@ -1,7 +1,8 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
-public import Development.EtaleCohomology.EtaleTrace.LCompIntPf
+public import Development.EtaleCohomology.EtaleTrace.LCompDecPf
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.IsIntegralOfSmoothFieldOfConnectedSpace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +41,33 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.EtaleCohomology.EtaleTrace.LCompDecPf
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.LCompIntPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry
+
+namespace LateralTheory.EtaleTrace
+
+theorem LCompInt_of : LCompInt := by
+  intro k _ _ d X p hp hc
+  have := hp.2
+  have : Smooth p := SmoothOfRelativeDimension.smooth d p
+  exact GlobalTheory.isIntegral_of_smooth_field_of_connectedSpace p
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.PComps
+
+section
 
 @[expose] public section
 
@@ -83,3 +109,6 @@ theorem comps_holds : Comps := by
     exact (hj (e.injective (((hmem j x).mp hx.1).trans ((hmem j' x).mp hx.2).symm))).elim
 
 end UpperTheory.Gal.KunnethLefschetz
+end
+end
+end

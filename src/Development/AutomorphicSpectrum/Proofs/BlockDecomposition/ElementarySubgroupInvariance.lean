@@ -56,7 +56,52 @@ import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
 import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
-import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdelicGaussians.UpperRightUnipotentInvariance
+import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import GroundTheory.AutomorphicForms.FourierWhittaker.IsAddFundamentalDomainImageOfMapVecLattice
+import GroundTheory.AutomorphicForms.FourierWhittaker.Series
+import GroundTheory.AutomorphicForms.LocallyProfinite
+import GroundTheory.GlobalFields.HerbrandQuotients.RationalForm
+import GroundTheory.LocalFields.FilteredSurj
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdelicGaussians.UpperRightUnipotentInvariance
+
+section
+
+section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Filter Topology
+open GroundTheory.Global GroundTheory.LocalField GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
+open GroundTheory.Automorphic.FourierWhittaker (vecDomain vecMeasure pair)
+open scoped NumberField.AdeleRing
+
+namespace Ad3.GA
+
+def b1M : Matrix (Fin 2) (Fin 2) ℚ →* Matrix (Fin 3) (Fin 3) ℚ where
+  toFun γ := !![γ 0 0, γ 0 1, 0; γ 1 0, γ 1 1, 0; 0, 0, 1]
+  map_one' := by ext i j; fin_cases i <;> fin_cases j <;> simp
+  map_mul' a b := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Fin.sum_univ_three]
+
+def b2M : Matrix (Fin 2) (Fin 2) ℚ →* Matrix (Fin 3) (Fin 3) ℚ where
+  toFun γ := !![1, 0, 0; 0, γ 0 0, γ 0 1; 0, γ 1 0, γ 1 1]
+  map_one' := by ext i j; fin_cases i <;> fin_cases j <;> simp
+  map_mul' a b := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Fin.sum_univ_three]
+
+def e2 : GL (Fin 2) ℚ →* GL (Fin 3) ℚ := Units.map b2M
+
+end Ad3.GA
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ElementarySubgroupInvariance
+
+section
 
 @[expose] public section
 
@@ -305,3 +350,6 @@ theorem eq_zero_of_vecCoeff_eq_zero {f : (ι → 𝔸[K]) → ℂ} (hc : Continu
   exact hxU
 
 end GlobalTheory.CompanionTheory.AdelicFourier
+end
+end
+end

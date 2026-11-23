@@ -2,7 +2,6 @@ module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.DecompositionData
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FontaineAtAll
-public import Formalism.SharpRestriction.SmoothDesignExistence.ContinuousHom
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,34 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.SharpRestriction.SmoothDesignExistence.ContinuousHom
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.Pk
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N
+
+def FontAll (D : D7) : Prop :=
+  ∀ (l : ℕ) [Fact l.Prime] (K LL : Loc.FinExt l), TruncatedSeriesCountingIdentities.FontaineAt ((D.loc l).PD K) ↥LL.1 ↥(Loc.OL LL)
+
+theorem font_of_all_places {D : D7} (h : FontAll D) (i : D.nd.Loc) : TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL i :=
+  fun w hw C => h (D.nd.l i) (D.nbr i w hw).Kw C.LL
+
+end Formalism.MainNotions.Pk
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FontainePropertiesAllPlacesAlt
+
+section
+
 @[expose] public section
 
 open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions Formalism.MainNotions.N
@@ -50,3 +77,5 @@ theorem fontaineProperties_all_places : ∀ (D : D7) (i : D.nd.Loc), Formalism.M
   fun D i => Formalism.MainNotions.Pk.font_of_all_places (fun l _ K LL => GlobalTheory.FontaineAll.fontaineAt_all D l K LL) i
 
 end GlobalTheory.FontaineAdm
+end
+end

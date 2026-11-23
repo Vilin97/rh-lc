@@ -5,7 +5,6 @@ public import Mathlib.Algebra.Group.Pi.Hom
 public import Mathlib.Algebra.Group.Subgroup.Defs
 public import Mathlib.Algebra.Ring.Int.Defs
 public import Mathlib.Tactic.Continuity
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZValuationsAtIndicesTorusSurjective
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,6 +24,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,8 +45,62 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValsAtApply
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.Group.Subgroup.Finite
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZValuationsAtIndicesTorusSurjective
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma
+
+namespace GlobalTheory.UnitLemma
+
+theorem valsAt_torus_surjective : ∀ (G : Type) [CommGroup G] (τ : G →* G), (∀ x, τ (τ x) = x) → ∀ (T : Subgroup G), (∀ t, t ∈ T ↔ t * τ t = 1) → ∀ (ι : Type) (s : ι → ι) (w : ι → G →* Multiplicative ℤ), (∀ i x, 0 ≤ Multiplicative.toAdd (w (s i) x) ↔ 0 ≤ Multiplicative.toAdd (w i (τ x))) → (∀ i (n : ℤ), ∃ y : G, w i y = Multiplicative.ofAdd n ∧ ∀ j, j ≠ i → w j y = 1) → ∀ (r : ℕ) (e : Fin r → ι), (∀ j k, e j = e k → j = k) → (∀ j k, s (e j) ≠ e k) → Function.Surjective (((MulEquiv.funMultiplicative _ ℤ).symm.toMonoidHom.comp (MonoidHom.pi (w ∘ e))).comp T.subtype) := by
+  intro G _ τ hττ T hT ι s w hsw hex r e he hs n
+  choose y hy1 hy2 using fun j : Fin r => hex (e j) (Multiplicative.toAdd n j)
+  have hτ : ∀ i j, w (e i) (τ (y j)) = 1 := by
+    intro i j
+    have h1 : w (s (e i)) (y j) = 1 := hy2 j _ (hs i j)
+    have a := (hsw (e i) (y j)).1 (by rw [h1]; simp)
+    have b := (hsw (e i) (y j)⁻¹).1 (by rw [map_inv, h1]; simp)
+    rw [map_inv, map_inv, toAdd_inv] at b
+    apply Multiplicative.toAdd.injective
+    simp only [toAdd_one]
+    omega
+  have hu : ∀ j, y j * (τ (y j))⁻¹ ∈ T := by
+    intro j
+    rw [hT, map_mul, map_inv, hττ]
+    group
+  refine ⟨⟨∏ j, y j * (τ (y j))⁻¹, Subgroup.prod_mem T fun j _ => hu j⟩, ?_⟩
+  simp only [MonoidHom.comp_apply, Subgroup.coe_subtype]
+  apply Multiplicative.toAdd.injective
+  funext i
+  simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+    MulEquiv.piMultiplicative_symm_apply, toAdd_ofAdd, MonoidHom.pi_apply, Function.comp_apply]
+  rw [map_prod, toAdd_prod]
+  have hc : ∀ j, Multiplicative.toAdd (w (e i) (y j * (τ (y j))⁻¹)) = if i = j then Multiplicative.toAdd n i else 0 := by
+    intro j
+    rw [map_mul, map_inv, hτ, inv_one, mul_one]
+    split_ifs with hij
+    · subst hij; rw [hy1]; rfl
+    · rw [hy2 j (e i) fun h => hij (he _ _ h)]; rfl
+  simp only [hc, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+
+end GlobalTheory.UnitLemma
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZValuationsAtIndicesTorusSurjectiveStatement
+
+section
 
 @[expose] public section
 
@@ -53,3 +108,5 @@ open GlobalTheory.UnitLemma
 
 theorem _root_.GlobalTheory.T.zValuationsAtIndices_torus_surjective : ∀ (G : Type) [CommGroup G] (τ : G →* G), (∀ x, τ (τ x) = x) → ∀ (T : Subgroup G), (∀ t, t ∈ T ↔ t * τ t = 1) → ∀ (ι : Type) (s : ι → ι) (w : ι → G →* Multiplicative ℤ), (∀ i x, 0 ≤ Multiplicative.toAdd (w (s i) x) ↔ 0 ≤ Multiplicative.toAdd (w i (τ x))) → (∀ i (n : ℤ), ∃ y : G, w i y = Multiplicative.ofAdd n ∧ ∀ j, j ≠ i → w j y = 1) → ∀ (r : ℕ) (e : Fin r → ι), (∀ j k, e j = e k → j = k) → (∀ j k, s (e j) ≠ e k) → Function.Surjective (((MulEquiv.funMultiplicative _ ℤ).symm.toMonoidHom.comp (MonoidHom.pi (w ∘ e))).comp T.subtype) := by
   first | exact @GlobalTheory.UnitLemma.valsAt_torus_surjective | exact GlobalTheory.UnitLemma.valsAt_torus_surjective | (intros; apply GlobalTheory.UnitLemma.valsAt_torus_surjective <;> assumption)
+end
+end

@@ -1,8 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.MapGenBChar
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Denchar
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Primval
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Denint
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +38,61 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.MapGenBChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Denchar
+
+section
+
+@[expose] public section
+
+open Finset UpperTheory.V.Bern
+
+theorem UpperTheory.V.Bern.b_denchar :
+    ∀ {R : Type} [CommRing R] [Algebra ℚ R] {N : ℕ} (k : ℕ) (Φ : ZMod N → R) (A : Subring R), 0 < N → (∀ a, Φ a ∈ A) → (den N k : R) * genB k Φ ∈ A := by
+  intro R _ _ N k Φ A hN hΦ
+  unfold genB
+  rw [Finset.mul_sum]
+  refine A.sum_mem fun a _ => ?_
+  obtain ⟨z, hz⟩ := b_denint N k a hN
+  have h : (den N k : R) * algebraMap ℚ R (bcoef N k a) = (z : R) := by
+    rw [← map_natCast (algebraMap ℚ R), ← map_mul, hz, map_intCast]
+  rw [mul_left_comm, h]
+  exact A.mul_mem (hΦ _) (intCast_mem A z)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Primval
+
+section
+
+@[expose] public section
+
+open Finset UpperTheory.V.Bern
+
+theorem UpperTheory.V.Bern.b_primval :
+    ∀ {R : Type} [CommRing R] {N : ℕ} [NeZero N] (χ : DirichletCharacter R N) (x : ZMod χ.conductor), χ.primitiveCharacter x = 0 ∨ ∃ u : (ZMod N)ˣ, χ.primitiveCharacter x = χ u := by
+  intro R _ N _ χ x
+  by_cases hx : IsUnit x
+  · right
+    obtain ⟨u, hu⟩ := ZMod.unitsMap_surjective χ.conductor_dvd_level hx.unit
+    refine ⟨u, ?_⟩
+    conv_rhs => rw [← χ.changeLevel_primitiveCharacter]
+    rw [DirichletCharacter.changeLevel_eq_cast_of_dvd, ← ZMod.unitsMap_val, hu]
+    · simp
+    · exact χ.conductor_dvd_level
+  · left
+    exact MulChar.map_nonunit _ hx
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.BernoulliNumbers.Primmem
+
+section
 
 @[expose] public section
 
@@ -91,3 +145,5 @@ theorem UpperTheory.V.Bern.b_primmem :
     exact this
   · have := b_denchar k (⇑χ) (integralClosure ℤ R).toSubring (Nat.pos_of_ne_zero hN) (fun a => hint a)
     exact this
+end
+end

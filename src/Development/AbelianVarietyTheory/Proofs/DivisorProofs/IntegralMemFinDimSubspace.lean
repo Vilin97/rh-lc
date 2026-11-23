@@ -2,7 +2,6 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DualMemSpanEvalOfFiniteDimensional
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +41,32 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DualMemSpanEvalOfFiniteDimensional
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Yyc2.dual_mem_span_eval_of_finiteDimensional :
+    ∀ {Y : Type} (E : Submodule ℂ (Y → ℂ)) [FiniteDimensional ℂ ↥E] (φ : Module.Dual ℂ ↥E),
+      φ ∈ Submodule.span ℂ (Set.range fun (y : Y) ↦ LinearMap.proj y ∘ₗ E.subtype) := by
+  intro Y E _ φ
+  apply FiniteDimensional.mem_span_of_iInf_ker_le_ker
+  intro x hx
+  have h0 : x = 0 := by
+    apply Subtype.ext
+    funext y
+    exact (Submodule.mem_iInf _).1 hx y
+  rw [h0]
+  exact Submodule.zero_mem _
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralMemFinDimSubspace
+
+section
 
 @[expose] public section
 
@@ -56,3 +81,5 @@ theorem dual_mem_span_eval_of_finiteDimensional {Y : Type} (E : Submodule ℂ (Y
   _root_.UpperTheory.Reformulated.B.Yyc2.dual_mem_span_eval_of_finiteDimensional E φ
 
 end GlobalTheory
+end
+end

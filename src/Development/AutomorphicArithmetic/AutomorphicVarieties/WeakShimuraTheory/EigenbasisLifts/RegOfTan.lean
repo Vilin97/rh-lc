@@ -2,17 +2,17 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.ContinuousResP
 public import Mathlib.Algebra.DualNumber
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.MonomialRepresentations.RegOfDim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.DvrFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.DerLam
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.DimLow
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.TanEmb
+public import Mathlib.Algebra.Module.SpanRank
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RegularLocalRegularSequence.RingKrullDimQuotientSpanSingletonAddOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,8 +24,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,11 +48,136 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.DvrFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.DerLam
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoQuot
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.DimLeOfInt
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.TrivialOnInertiaOfUnr
+import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.MapRepApply
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.IsTanZero
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RedIdeal
+public import Lean.Meta.ExprDefEq
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.TanEmb
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.MonomialRepresentations.RegOfDim
+
+section
+
+@[expose] public section
+
+open Polynomial Matrix
+
+theorem UpperTheory.V.AlgebraTools.regOfDim :
+    ∀ (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] (J : Ideal R), J ≠ ⊤ →
+      ((IsLocalRing.maximalIdeal R).spanFinrank : WithBot ℕ∞) ≤ ringKrullDim (R ⧸ J) → J = ⊥ := by
+  intro R _ _ _ J hJ hdim
+  have hR := ringKrullDim_le_spanFinrank_maximalIdeal R
+  have hq := ringKrullDim_quotient_le J
+  have heq : ((IsLocalRing.maximalIdeal R).spanFinrank : WithBot ℕ∞) = ringKrullDim R :=
+    le_antisymm (hdim.trans hq) hR
+  have hJeq : ringKrullDim (R ⧸ J) = ((IsLocalRing.maximalIdeal R).spanFinrank : WithBot ℕ∞) :=
+    le_antisymm (hq.trans hR) hdim
+  haveI : IsRegularLocalRing R := ⟨heq⟩
+  haveI := PI.UnitaryGroupMassFormula.RLRS.IsRegularLocalRing.isDomain R
+  by_contra hne
+  obtain ⟨r, hrJ, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
+  have hnz : r ∈ nonZeroDivisors R := mem_nonZeroDivisors_of_ne_zero hr0
+  have h1 := ringKrullDim_quotient_succ_le_of_nonZeroDivisor hnz
+  have hsub : Ideal.span {r} ≤ J := (Ideal.span_singleton_le_iff_mem J).2 hrJ
+  have h2 : ringKrullDim (R ⧸ J) ≤ ringKrullDim (R ⧸ Ideal.span {r}) :=
+    ringKrullDim_le_of_surjective (Ideal.Quotient.factor hsub) (Ideal.Quotient.factor_surjective hsub)
+  have h3 : ringKrullDim (R ⧸ J) + 1 ≤ ringKrullDim (R ⧸ J) := by
+    calc ringKrullDim (R ⧸ J) + 1 ≤ ringKrullDim (R ⧸ Ideal.span {r}) + 1 := by gcongr
+      _ ≤ ringKrullDim R := h1
+      _ = ringKrullDim (R ⧸ J) := by rw [hJeq, heq]
+  rw [hJeq] at h3
+  norm_cast at h3
+  omega
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.DimLow
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial Matrix UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws UpperTheory.V.Ws.Eb GlobalTheory.GalOfCusp
+
+theorem UpperTheory.V.Ws.Eb.dimLow :
+    ∀ {l : ℕ} [Fact l.Prime] (c : Coef l) (N : ℕ) (B : Type) [CommRing B] [Algebra c.O B] [IsCO c.O B] (f : MvPowerSeries (Fin N) c.O →ₐ[c.O] B) (J : Ideal B), ((Ideal.Quotient.mk J).comp (f : MvPowerSeries (Fin N) c.O →+* B)).Finite → (∀ a, a ≠ 0 → ∀ b, f a * b ∈ J → b ∈ J) →
+        ∀ (x : B →ₐ[c.O] PadicAlgCl l) (p : Ideal B) [p.IsPrime], p = RingHom.ker x → J ≤ p → (N : WithBot ℕ∞) ≤ ringKrullDim (Localization.AtPrime p ⧸ J.map (algebraMap B (Localization.AtPrime p))) := by
+  intro l _ c N B _ _ _ f J hfin hreg x p _ hpx hJp
+  obtain ⟨P, hP, hPp⟩ := Ideal.exists_minimalPrimes_le hJp
+  haveI hPprime : P.IsPrime := hP.1.1
+  have hJP : J ≤ P := hP.1.2
+  haveI : IsCO c.O (B ⧸ P) :=
+    co_quot c.O B (B ⧸ P) (Ideal.Quotient.mkₐ c.O P) Ideal.Quotient.mk_surjective
+  set g : MvPowerSeries (Fin N) c.O →ₐ[c.O] B ⧸ P := (Ideal.Quotient.mkₐ c.O P).comp f with hg
+  have hinj : Function.Injective g := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro a ha
+    by_contra hne
+    have hmem : f a ∈ P := by
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      exact ha
+    obtain ⟨y, hyJ, hy⟩ := Ideal.exists_mul_mem_of_mem_minimalPrimes hP hmem
+    exact hyJ (hreg a hne y hy)
+  have hfinP : (g : MvPowerSeries (Fin N) c.O →+* B ⧸ P).Finite := by
+    have h2 := (RingHom.Finite.of_surjective _ (Ideal.Quotient.factor_surjective hJP)).comp hfin
+    convert h2 using 1
+    exact RingHom.ext fun a => rfl
+  have hxP : ∀ a ∈ P, x a = 0 := fun a ha => by
+    have h3 : a ∈ RingHom.ker x := hpx ▸ hPp ha
+    exact h3
+  set xb : B ⧸ P →ₐ[c.O] PadicAlgCl l := Ideal.Quotient.liftₐ P x hxP with hxb
+  have hxbmk : ∀ b, xb (Ideal.Quotient.mk P b) = x b := fun b => rfl
+  have hht := htLow c N (B ⧸ P) g hinj hfinP xb
+  set q : Ideal (B ⧸ P) := RingHom.ker xb with hq
+  haveI : q.IsPrime := RingHom.ker_isPrime _
+  have hpq : p = Ideal.comap (Ideal.Quotient.mk P) q := by
+    ext b
+    rw [hpx, Ideal.mem_comap, hq, RingHom.mem_ker, RingHom.mem_ker, hxbmk]
+  let φ := Localization.localRingHom p q (Ideal.Quotient.mk P) hpq
+  have hφ : Function.Surjective φ := by
+    intro z
+    obtain ⟨⟨r, s⟩, rfl⟩ := IsLocalization.mk'_surjective q.primeCompl z
+    obtain ⟨r', rfl⟩ := Ideal.Quotient.mk_surjective r
+    obtain ⟨s', hs'⟩ := Ideal.Quotient.mk_surjective (s : B ⧸ P)
+    have hs'p : s' ∈ p.primeCompl := by
+      intro h
+      apply s.2
+      rw [hpq] at h
+      rw [← hs']
+      exact h
+    refine ⟨IsLocalization.mk' (Localization.AtPrime p) r' ⟨s', hs'p⟩, ?_⟩
+    rw [Localization.localRingHom_mk']
+    congr 1
+    exact Subtype.ext hs'
+  have hker : ∀ a ∈ J.map (algebraMap B (Localization.AtPrime p)), φ a = 0 := by
+    intro a ha
+    have hle : J.map (algebraMap B (Localization.AtPrime p)) ≤ RingHom.ker φ := by
+      rw [Ideal.map_le_iff_le_comap]
+      intro b hb
+      rw [Ideal.mem_comap, RingHom.mem_ker]
+      rw [Localization.localRingHom_to_map]
+      rw [Ideal.Quotient.eq_zero_iff_mem.mpr (hJP hb), map_zero]
+    exact hle ha
+  have hψ := Ideal.Quotient.lift_surjective_of_surjective _ hker hφ
+  have hdim := ringKrullDim_le_of_surjective _ hψ
+  rw [IsLocalization.AtPrime.ringKrullDim_eq_height q (Localization.AtPrime q)] at hdim
+  calc (N : WithBot ℕ∞) ≤ (q.height : WithBot ℕ∞) := by exact_mod_cast hht
+    _ ≤ _ := hdim
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.EigenbasisLifts.RegOfTan
+
+section
 
 @[expose] public section
 
@@ -142,3 +269,5 @@ theorem UpperTheory.V.Ws.Eb.regOfTan :
   obtain ⟨s, hs⟩ := (IsLocalization.map_eq_zero_iff (RingHom.ker x).primeCompl _ a).1 h4
   have h5 : (s : B) * a ∈ q := by rw [hs]; exact q.zero_mem
   exact (hq.mem_or_mem h5).resolve_left fun h => s.2 (hqx h)
+end
+end

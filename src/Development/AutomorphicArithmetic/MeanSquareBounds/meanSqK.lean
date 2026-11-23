@@ -2,16 +2,13 @@ module
 
 public import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds
 public import Development.AutomorphicArithmetic.MeanSquareBounds.MeanSqAbs
-public import Development.AutomorphicArithmetic.MeanSquareBounds.RRLe
-public import Development.AutomorphicArithmetic.MeanSquareBounds.SPsqLe
-public import Development.AutomorphicArithmetic.MeanSquareBounds.SumCNLe
-import Development.AutomorphicArithmetic.MeanSquareBounds.SumMinLeDiv
-public import Development.AutomorphicArithmetic.MeanSquareBounds.twistK
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMain
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff
+public import Formalism.GL3MeanSquares.SecondEstimateOfIntervalHypothesis
+public import Development.AutomorphicArithmetic.MeanSquareBounds.SumMinLeDiv
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqDiagA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -27,6 +24,7 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +46,160 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AutomorphicArithmetic.MeanSquareBounds.SPsqLe
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.TailMertens
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff
+import Development.AutomorphicArithmetic.MeanSquareBounds.SumMinLeDiv
+public import Development.AutomorphicArithmetic.MeanSquareBounds.twistK
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMain
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Lemma
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.RRLe
+
+section
+
+@[expose] public section
+
+open Finset Formalism.HermitianLattices.ZeroFreeRegionGL2 Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+
+namespace QH
+
+theorem RR_le :
+    ∃ C : ℝ, 0 < C ∧ ∀ y : ℝ, 3 ≤ y → ∀ (N m₀ : ℕ) (w : ℝ), 1 ≤ w →
+      (∀ p : ℕ, p.Prime → p ∣ m₀ → p ≤ N → (p : ℝ) ≤ w) → RR (cN y) m₀ N ≤ C * (Real.sqrt y + w * Real.log y) := by
+  obtain ⟨C₁, hC₁, hsP⟩ := exists_primePowerSum_le_mul_log
+  have hK := dA_KC_pos
+  refine ⟨3 * dA_KC + C₁, by positivity, ?_⟩
+  intro y hy N m₀ w hw hm
+  have hy0 : (0:ℝ) ≤ y := by linarith
+  have hlog : 0 ≤ Real.log y := Real.log_nonneg (by linarith)
+  have hf0 : ∀ n, 0 ≤ cN y n := fun n => dA_cN_nonneg hy0 n
+  have hsplit : RR (cN y) m₀ N ≤
+      (∑ n ∈ Icc 1 N with IsPrimePow n ∧ Even (n.factorization n.minFac), cN y n) +
+      ∑ n ∈ Icc 1 N with IsPrimePow n ∧ n.minFac ∣ m₀, cN y n := by
+    unfold RR
+    rw [Finset.sum_filter, Finset.sum_filter, Finset.sum_filter, ← Finset.sum_add_distrib]
+    refine Finset.sum_le_sum fun n _ => ?_
+    have := hf0 n
+    by_cases h1 : IsPrimePow n <;> by_cases h2 : Even (n.factorization n.minFac) <;>
+      by_cases h3 : n.minFac ∣ m₀ <;> simp [h1, h2, h3, this]
+  have hA : (∑ n ∈ Icc 1 N with IsPrimePow n ∧ Even (n.factorization n.minFac), cN y n)
+      ≤ 3 * dA_KC * Real.sqrt y := by
+    have hsub : (Icc 1 N).filter (fun n => IsPrimePow n ∧ Even (n.factorization n.minFac))
+        ⊆ (Icc 1 N).image (fun m => m ^ 2) := by
+      intro n hn
+      simp only [Finset.mem_filter, Finset.mem_Icc] at hn
+      obtain ⟨⟨hn1, hnN⟩, hpp, hev⟩ := hn
+      obtain ⟨p, k, hp, hk, rfl⟩ := (isPrimePow_nat_iff _).1 hpp
+      rw [Nat.pow_minFac hk.ne', hp.minFac_eq, Nat.factorization_pow_self hp] at hev
+      obtain ⟨j, rfl⟩ := hev
+      refine Finset.mem_image.2 ⟨p ^ j, ?_, by ring⟩
+      have h1 : 1 ≤ p ^ j := Nat.one_le_pow _ _ hp.pos
+      have h2 : p ^ j ≤ p ^ (j + j) := Nat.pow_le_pow_right hp.pos (by omega)
+      exact Finset.mem_Icc.2 ⟨h1, h2.trans hnN⟩
+    calc _ ≤ ∑ n ∈ (Icc 1 N).image (fun m => m ^ 2), cN y n :=
+          Finset.sum_le_sum_of_subset_of_nonneg hsub (fun n _ _ => hf0 n)
+      _ = ∑ m ∈ Icc 1 N, cN y (m ^ 2) :=
+          Finset.sum_image (fun a _ b _ h => Nat.pow_left_injective (by norm_num) h)
+      _ = ∑ m ∈ Icc 1 N, ArithmeticFunction.vonMangoldt m * min 1 (y / (m:ℝ) ^ 2) := by
+          refine Finset.sum_congr rfl fun m _ => ?_
+          simp only [cN, ArithmeticFunction.vonMangoldt_apply_pow two_ne_zero, Nat.cast_pow]
+      _ ≤ dA_KC * ∑ m ∈ Icc 1 N, min 1 (y / (m:ℝ) ^ 2) := by
+          refine dA_vM_major _ (fun n => le_min zero_le_one (div_nonneg hy0 (by positivity))) ?_ N
+          intro n hn
+          apply min_le_min_left
+          apply div_le_div_of_nonneg_left hy0 (pow_pos (Nat.cast_pos.mpr hn) 2)
+          have := (Nat.cast_nonneg n : (0:ℝ) ≤ n)
+          push_cast
+          nlinarith
+      _ ≤ dA_KC * (3 * Real.sqrt y) :=
+          mul_le_mul_of_nonneg_left (dA_sum_min_sq y (by linarith) N) hK.le
+      _ = 3 * dA_KC * Real.sqrt y := by ring
+  have hB : (∑ n ∈ Icc 1 N with IsPrimePow n ∧ n.minFac ∣ m₀, cN y n)
+      ≤ C₁ * w * Real.log y := by
+    set P := (Icc 1 N).filter (fun p => p.Prime ∧ p ∣ m₀ ∧ (p:ℝ) ≤ w) with hP
+    have hmaps : ∀ n ∈ (Icc 1 N).filter (fun n => IsPrimePow n ∧ n.minFac ∣ m₀),
+        n.minFac ∈ P := by
+      intro n hn
+      simp only [Finset.mem_filter, Finset.mem_Icc] at hn
+      obtain ⟨⟨hn1, hnN⟩, hpp, hd⟩ := hn
+      have hpr : n.minFac.Prime := Nat.minFac_prime hpp.ne_one
+      have hle : n.minFac ≤ N := (Nat.minFac_le (by omega)).trans hnN
+      simp only [hP, Finset.mem_filter, Finset.mem_Icc]
+      exact ⟨⟨hpr.one_lt.le, hle⟩, hpr, hd, hm _ hpr hd hle⟩
+    have hcard : (P.card : ℝ) ≤ w := by
+      have hs : P ⊆ Icc 1 ⌊w⌋₊ := by
+        intro p hp
+        simp only [hP, Finset.mem_filter, Finset.mem_Icc] at hp ⊢
+        exact ⟨hp.1.1, Nat.le_floor hp.2.2.2⟩
+      have h1 := Finset.card_le_card hs
+      rw [Nat.card_Icc, Nat.add_sub_cancel] at h1
+      calc (P.card : ℝ) ≤ ⌊w⌋₊ := by exact_mod_cast h1
+        _ ≤ w := Nat.floor_le (by linarith)
+    rw [← Finset.sum_fiberwise_of_maps_to hmaps]
+    calc _ ≤ ∑ p ∈ P, C₁ * Real.log y := by
+          refine Finset.sum_le_sum fun p _ => ?_
+          refine le_trans ?_ (hsP y hy N p)
+          unfold sP
+          refine Finset.sum_le_sum_of_subset_of_nonneg ?_ (fun n _ _ => hf0 n)
+          intro n hn
+          simp only [Finset.mem_filter] at hn ⊢
+          exact ⟨hn.1.1, hn.1.2.1, hn.2⟩
+      _ = P.card * (C₁ * Real.log y) := by rw [Finset.sum_const, nsmul_eq_mul]
+      _ ≤ w * (C₁ * Real.log y) :=
+          mul_le_mul_of_nonneg_right hcard (mul_nonneg hC₁.le hlog)
+      _ = C₁ * w * Real.log y := by ring
+  have hsq : 0 ≤ Real.sqrt y := Real.sqrt_nonneg y
+  have hwl : 0 ≤ w * Real.log y := mul_nonneg (by linarith) hlog
+  calc RR (cN y) m₀ N ≤ _ := hsplit
+    _ ≤ 3 * dA_KC * Real.sqrt y + C₁ * w * Real.log y := add_le_add hA hB
+    _ ≤ (3 * dA_KC + C₁) * (Real.sqrt y + w * Real.log y) := by
+        nlinarith [mul_nonneg (by linarith : (0:ℝ) ≤ 3 * dA_KC) hwl, mul_nonneg hC₁.le hsq]
+
+end QH
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.SumCNLe
+
+section
+
+@[expose] public section
+
+open Finset Formalism.HermitianLattices.ZeroFreeRegionGL2 Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+
+namespace QH
+
+theorem sum_cN_le :
+    ∃ C : ℝ, 0 < C ∧ ∀ y Z : ℝ, 0 ≤ y → 2 ≤ Z → ∑ n ∈ Icc 1 ⌊Z⌋₊, cN y n ≤ C * y * Real.log Z := by
+  obtain ⟨C, hC, hM⟩ := Formalism.HermitianLattices.Ext.BoxTail.tail_mertens
+  refine ⟨C + 1, by linarith, fun y Z hy hZ => ?_⟩
+  have hlog : 0 ≤ Real.log Z := Real.log_nonneg (by linarith)
+  calc ∑ n ∈ Icc 1 ⌊Z⌋₊, cN y n
+        ≤ ∑ n ∈ Icc 1 ⌊Z⌋₊, y * (ArithmeticFunction.vonMangoldt n / (n : ℝ)) := by
+          apply Finset.sum_le_sum
+          intro n hn
+          have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast (Finset.mem_Icc.mp hn).1
+          have hΛ : 0 ≤ ArithmeticFunction.vonMangoldt n := ArithmeticFunction.vonMangoldt_nonneg
+          simp only [cN]
+          calc ArithmeticFunction.vonMangoldt n * min 1 (y / n)
+              ≤ ArithmeticFunction.vonMangoldt n * (y / n) :=
+                mul_le_mul_of_nonneg_left (min_le_right _ _) hΛ
+            _ = y * (ArithmeticFunction.vonMangoldt n / n) := by ring
+    _ = y * ∑ n ∈ Icc 1 ⌊Z⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ) := by
+          rw [Finset.mul_sum]
+    _ ≤ y * (C * Real.log Z) := mul_le_mul_of_nonneg_left (hM Z hZ) hy
+    _ ≤ (C + 1) * y * Real.log Z := by nlinarith [mul_nonneg hy hlog]
+
+end QH
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.meanSqK
+
+section
 
 @[expose] public section
 
@@ -267,3 +418,5 @@ theorem meanSqK :
     _ = (C3 + 25 * C1 ^ 2 + 4 * C2 ^ 2 + 20 * C1 * C2 + C4 ^ 2) * y * L := by ring
 
 end QH
+end
+end

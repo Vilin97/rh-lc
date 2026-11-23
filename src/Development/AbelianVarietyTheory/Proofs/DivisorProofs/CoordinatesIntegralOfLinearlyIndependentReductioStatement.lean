@@ -3,7 +3,7 @@ module
 public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 public import Mathlib.Algebra.Field.Defs
 public import Mathlib.Algebra.Ring.Hom.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoordinatesIntegralOfLinearlyIndependentReductio
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -12,7 +12,6 @@ import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -23,7 +22,12 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,6 +48,11 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Development.AbelianVarietyTheory.Definitions.Degenerations.SepticCharacterInjective
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsPolAVSectionInverseImage
 import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
@@ -57,6 +66,120 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.T
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.CanonGenIsGen
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralCoefficients
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NonzeroDeterminantIntegrality
+
+open Matrix
+
+theorem exists_det_ne_zero {K I Λ : Type} [Field K] [Fintype Λ] [DecidableEq Λ] (v : I → Λ → K)
+    (h : ∀ c : Λ → K, (∀ i, ∑ l, c l * v i l = 0) → c = 0) :
+    ∃ f : Λ → I, (Matrix.of fun a l => v (f a) l).det ≠ 0 := by
+  have hspan : Submodule.span K (Set.range v) = ⊤ := by
+    by_contra hne
+    obtain ⟨φ, hφ, hle⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hne)
+    have hexp : ∀ x : Λ → K, φ x = ∑ l, φ (Pi.single l 1) * x l := by
+      intro x
+      conv_lhs => rw [pi_eq_sum_univ' x]
+
+      rw [map_sum]
+      refine Finset.sum_congr rfl fun l _ => ?_
+      rw [map_smul, smul_eq_mul, mul_comm]
+    have hc := h (fun l => φ (Pi.single l 1)) (fun i => by
+      rw [← hexp]
+      exact hle (Submodule.subset_span ⟨i, rfl⟩))
+    apply hφ
+    refine LinearMap.ext fun x => ?_
+    rw [hexp]
+    refine Finset.sum_eq_zero fun l _ => ?_
+    have := congrFun hc l
+    simp only [Pi.zero_apply] at this
+    rw [this, zero_mul]
+  obtain ⟨κ, a, -, hsp, hli⟩ := exists_linearIndependent' K v
+  let b : Module.Basis κ K (Λ → K) := Module.Basis.mk hli (by rw [hsp, hspan])
+  let e : Λ ≃ κ := (Pi.basisFun K Λ).indexEquiv b
+  refine ⟨fun l => a (e l), ?_⟩
+  have hli' : LinearIndependent K (Matrix.of fun x l => v (a (e x)) l).row :=
+    hli.comp e e.injective
+  have := Matrix.linearIndependent_rows_iff_isUnit.mp hli'
+  exact ((Matrix.isUnit_iff_isUnit_det _).mp this).ne_zero
+
+theorem integral_coefficients : ∀ (W : Type) [CommRing W] [IsDomain W] (K₀ K₁ : Type) [Field K₀] [Field K₁]
+    (i₀ : W →+* K₀) (i₁ : W →+* K₁), Function.Injective i₀ → (∀ a : W, i₁ a ≠ 0 → IsUnit a) →
+    ∀ (I Λ : Type) [Fintype Λ] (u : I → Λ → W),
+    (∀ c : Λ → K₁, (∀ i : I, ∑ l : Λ, c l * i₁ (u i l) = 0) → c = 0) →
+    ∀ (w : I → W) (z : Λ → K₀), (∀ i : I, i₀ (w i) = ∑ l : Λ, z l * i₀ (u i l)) →
+    ∃ z₀ : Λ → W, (∀ l : Λ, i₀ (z₀ l) = z l) ∧ ∀ i : I, w i = ∑ l : Λ, z₀ l * u i l := by
+  intro W _ _ K₀ K₁ _ _ i₀ i₁ hinj hunit I Λ _ u hu w z hz
+  classical
+  obtain ⟨f, hf⟩ := exists_det_ne_zero (fun i l => i₁ (u i l)) hu
+  let M : Matrix Λ Λ W := Matrix.of fun a l => u (f a) l
+  have hdet : IsUnit M.det := by
+    apply hunit
+    rw [RingHom.map_det]
+    exact hf
+  let z₀ : Λ → W := M⁻¹ *ᵥ (fun a => w (f a))
+  have hM : M *ᵥ z₀ = fun a => w (f a) := by
+    simp only [z₀]
+    rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hdet, Matrix.one_mulVec]
+  have hdet₀ : IsUnit (i₀.mapMatrix M).det := by
+    rw [← RingHom.map_det]
+    exact hdet.map i₀
+  have key : (fun l => i₀ (z₀ l)) = z := by
+    apply Matrix.mulVec_injective_of_isUnit ((Matrix.isUnit_iff_isUnit_det _).mpr hdet₀)
+    funext a
+    have h1 := congrArg i₀ (congrFun hM a)
+    rw [hz] at h1
+
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul] at h1 ⊢
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply]
+    rw [h1]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    rw [mul_comm]
+    rfl
+  refine ⟨z₀, fun l => congrFun key l, fun i => hinj ?_⟩
+
+  rw [hz, map_sum]
+  refine Finset.sum_congr rfl fun l _ => ?_
+  rw [map_mul, ← congrFun key l]
+
+end GlobalTheory.NonzeroDeterminantIntegrality
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoordinatesIntegralOfLinearlyIndependentReductio
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField MeasureTheory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.GeometryOfNumbersTheory
+open GlobalTheory GlobalTheory.LieHt GlobalTheory.Cartier GlobalTheory.ThetaOnto GlobalTheory.KeyCl GlobalTheory.Ex GlobalTheory.MBLow GlobalTheory.SecJet
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem GlobalTheory.MBLow.coords_integral_of_closed_indep :
+  ∀ (W : Type) [CommRing W] [IsDomain W] (K₀ K₁ : Type) [Field K₀] [Field K₁] (i₀ : W →+* K₀) (i₁ : W →+* K₁), Function.Injective i₀ → (∀ a, i₁ a ≠ 0 → IsUnit a) → ∀ (I Λ : Type) [Fintype Λ] (u : I → Λ → W), (∀ c : Λ → K₁, (∀ i, ∑ l, c l * i₁ (u i l) = 0) → c = 0) → ∀ (w : I → W) (z : Λ → K₀), (∀ i, i₀ (w i) = ∑ l, z l * i₀ (u i l)) → ∃ z₀ : Λ → W, (∀ l, i₀ (z₀ l) = z l) ∧ ∀ i, w i = ∑ l, z₀ l * u i l := by
+  first
+  | exact @_root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients
+  | exact _root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients
+  | (apply _root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients <;> assumption)
+  | (intros; apply _root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.NonzeroDeterminantIntegrality.integral_coefficients ..)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoordinatesIntegralOfLinearlyIndependentReductioStatement
+
+section
 
 @[expose] public section
 
@@ -68,3 +191,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.coordinates_integral_of_linearly_independent_reduction : ∀ (W : Type) [CommRing W] [IsDomain W] (K₀ K₁ : Type) [Field K₀] [Field K₁] (i₀ : W →+* K₀) (i₁ : W →+* K₁), Function.Injective i₀ → (∀ a, i₁ a ≠ 0 → IsUnit a) → ∀ (I Λ : Type) [Fintype Λ] (u : I → Λ → W), (∀ c : Λ → K₁, (∀ i, ∑ l, c l * i₁ (u i l) = 0) → c = 0) → ∀ (w : I → W) (z : Λ → K₀), (∀ i, i₀ (w i) = ∑ l, z l * i₀ (u i l)) → ∃ z₀ : Λ → W, (∀ l, i₀ (z₀ l) = z l) ∧ ∀ i, w i = ∑ l, z₀ l * u i l := by
   first | exact @GlobalTheory.MBLow.coords_integral_of_closed_indep | exact GlobalTheory.MBLow.coords_integral_of_closed_indep | (intros; apply GlobalTheory.MBLow.coords_integral_of_closed_indep <;> assumption)
+end
+end

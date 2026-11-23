@@ -2,7 +2,10 @@ module
 
 public import Mathlib.NumberTheory.Padics.PadicIntegers
 public import Mathlib.RingTheory.WittVector.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittVectorColengthRangeEqDetValuation
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.WittVector.DiscreteValuationRing
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,12 +44,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthCommensurableSpanSpanOfDetNeZero
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Divisors.KerIdealCompOfSurjective
 import Development.AbelianVarietyTheory.Definitions.Divisors.RedSurjective
 import Development.AbelianVarietyTheory.Definitions.Divisors.ToSpanSingletonConstGenInjective
 import Mathlib.CategoryTheory.Preadditive.EndoFunctor
 import Mathlib.RingTheory.Bialgebra.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthQuotRangeEqAddValDet
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open IsDiscreteValuationRing
+
+section CokernelLength
+
+variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+
+theorem length_quot_range_eq_addVal_det {M : Type*} [AddCommGroup M] [Module R M]
+    [Module.Free R M] [Module.Finite R M] (f : M →ₗ[R] M) :
+    Module.length R (M ⧸ LinearMap.range f) = addVal R (LinearMap.det f) :=
+  GlobalTheory.length_quotient_range_eq_addVal_det f
+
+end CokernelLength
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittVectorColengthRangeEqDetValuation
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu
+
+namespace GlobalTheory.Dieu.ColenDet
+
+theorem map_eq_unit_mul_pow {p : ℕ} [Fact p.Prime] {k : Type} [Field k] [CharP k p]
+    (ψ : ℤ_[p] →+* WittVector p k) {x : ℤ_[p]} (hx : x ≠ 0) :
+    ψ x = ψ (PadicInt.unitCoeff hx : ℤ_[p]) * (p : WittVector p k) ^ x.valuation := by
+  conv_lhs => rw [PadicInt.unitCoeff_spec hx]
+  rw [map_mul, map_pow, map_natCast]
+
+theorem addVal_map {p : ℕ} [Fact p.Prime] {k : Type} [Field k] [CharP k p] [PerfectRing k p]
+    (ψ : ℤ_[p] →+* WittVector p k) {x : ℤ_[p]} (hx : x ≠ 0) :
+    IsDiscreteValuationRing.addVal (WittVector p k) (ψ x) = (x.valuation : ℕ∞) := by
+  rw [map_eq_unit_mul_pow ψ hx, AddValuation.map_mul, AddValuation.map_pow,
+    IsDiscreteValuationRing.addVal_uniformizer (WittVector.irreducible p),
+    (IsDiscreteValuationRing.addVal_eq_zero_iff).mpr ((PadicInt.unitCoeff hx).isUnit.map ψ)]
+  simp
+
+theorem colength_det : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] (N : Type) [AddCommGroup N] [Module (WittVector p k) N] [Module.Free (WittVector p k) N] [Module.Finite (WittVector p k) N] (ψ : ℤ_[p] →+* (WittVector p k)) (u : N →ₗ[(WittVector p k)] N) (d : ℤ_[p]), LinearMap.det u = ψ d → (∀ e : ℕ, Module.length (WittVector p k) (N ⧸ LinearMap.range u) = e → ‖d‖ = (p : ℝ) ^ (-(e : ℤ))) ∧ (¬ Function.Injective u → d = 0) ∧ Function.Injective ψ := by
+  intro p _ k _ _ _ N _ _ _ _ ψ u d hdet
+  have hψ : Function.Injective ψ := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro x hx
+    by_contra h0
+    have h1 := addVal_map ψ h0
+    rw [hx, AddValuation.map_zero] at h1
+    exact ENat.top_ne_coe _ h1
+  have hlen := GlobalTheory.length_quot_range_eq_addVal_det u
+  refine ⟨fun e he => ?_, fun hu => ?_, hψ⟩
+  · rw [hlen, hdet] at he
+    have hd : d ≠ 0 := by
+      rintro rfl
+      rw [map_zero, AddValuation.map_zero] at he
+      exact ENat.top_ne_coe _ he
+    rw [addVal_map ψ hd] at he
+    have he' : d.valuation = e := by exact_mod_cast he
+    rw [PadicInt.norm_eq_zpow_neg_valuation hd, he']
+  · have h0 : LinearMap.det u = 0 := by
+      by_contra h
+      apply hu
+      rwa [LinearMap.det_eq_zero_iff_ker_ne_bot, not_not, LinearMap.ker_eq_bot] at h
+    exact hψ (by rw [← hdet, h0, map_zero])
+
+end GlobalTheory.Dieu.ColenDet
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittVectorColengthRangeEqDetValuationStatement
+
+section
 
 @[expose] public section
 
@@ -54,3 +143,5 @@ open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.
 
 theorem _root_.GlobalTheory.T.wittVector_colength_range_eq_det_valuation : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] (N : Type) [AddCommGroup N] [Module (WittVector p k) N] [Module.Free (WittVector p k) N] [Module.Finite (WittVector p k) N] (ψ : ℤ_[p] →+* (WittVector p k)) (u : N →ₗ[(WittVector p k)] N) (d : ℤ_[p]), LinearMap.det u = ψ d → (∀ e : ℕ, Module.length (WittVector p k) (N ⧸ LinearMap.range u) = e → ‖d‖ = (p : ℝ) ^ (-(e : ℤ))) ∧ (¬ Function.Injective u → d = 0) ∧ Function.Injective ψ := by
   first | exact @GlobalTheory.Dieu.ColenDet.colength_det | exact GlobalTheory.Dieu.ColenDet.colength_det | (intros; apply GlobalTheory.Dieu.ColenDet.colength_det <;> assumption)
+end
+end

@@ -2,7 +2,6 @@ module
 
 import Development.EtaleCohomology.EtaleTrace.GenOnAgreePf
 public import Development.EtaleCohomology.EtaleTrace.FinSurjPf
-public import Development.EtaleCohomology.EtaleTrace.FinSurjPfDense
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,10 +20,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.MvPolynomial.Ideal
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,8 +42,75 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.FinSurjPfDense
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry MvPolynomial
+attribute [local instance] MvPolynomial.gradedAlgebra
+
+namespace LateralTheory.EtaleTrace.Cov
+
+theorem loc_generic_top (X : Scheme.{0}) [IsIntegral X] (z : X.functionField) : z ∈ loc X (genericPoint X) := by
+  refine ⟨z, ?_⟩
+  simp [RingHom.algebraMap_toAlgebra, TopCat.Presheaf.stalkSpecializes_refl]
+
+theorem FSDense_pf : FSDense := by
+  intro k _ X _ p d π w cw hind
+
+  have hz : ∀ (n : ℕ) (g : MvPolynomial (Fin (d + 1)) k), g.IsHomogeneous n →
+      g ∈ (π (genericPoint X)).asHomogeneousIdeal → g = 0 := by
+    intro n g hg hmem
+    have hgX : (g * MvPolynomial.X 0).IsHomogeneous (n + 1) := hg.mul (isHomogeneous_X k (0 : Fin (d + 1)))
+    have h1 := (cw.opens (n + 1) (Nat.succ_pos n) (g * MvPolynomial.X 0) hgX (genericPoint X))
+    have hnot : genericPoint X ∉ π ⁻¹ᵁ Proj.basicOpen _ (g * MvPolynomial.X 0) := by
+      intro h
+      have h' : π (genericPoint X) ∈ Proj.basicOpen _ (g * MvPolynomial.X 0) := h
+      rw [Proj.mem_basicOpen] at h'
+      exact h' (Ideal.mul_mem_right _ _ hmem)
+    have he : eval₂ (kHom p) w (g * MvPolynomial.X 0) = 0 := by
+      by_contra hne
+      exact hnot (h1.2 ⟨hne, fun _ _ => loc_generic_top X _⟩)
+    have := hind (n + 1) _ hgX he
+    rcases mul_eq_zero.mp this with h | h
+    · exact h
+    · exact absurd h (X_ne_zero 0)
+  have hbot : ∀ a ∈ (π (genericPoint X)).asHomogeneousIdeal, a = 0 := by
+    intro a ha
+    classical
+    rw [← DirectSum.sum_support_decompose (homogeneousSubmodule (Fin (d + 1)) k) a]
+    refine Finset.sum_eq_zero fun i _ => ?_
+    refine hz i _ ?_ ((π (genericPoint X)).asHomogeneousIdeal.isHomogeneous i ha)
+    exact (mem_homogeneousSubmodule i _).mp (SetLike.coe_mem _)
+  constructor
+  intro y
+  have hle : (show ProjectiveSpectrum (homogeneousSubmodule (Fin (d + 1)) k) from π (genericPoint X)) ≤
+      (show ProjectiveSpectrum (homogeneousSubmodule (Fin (d + 1)) k) from y) := by
+    rw [← ProjectiveSpectrum.as_ideal_le_as_ideal]
+    intro a ha
+    rw [hbot a ha]
+    exact zero_mem _
+  have hc := (ProjectiveSpectrum.le_iff_mem_closure _ _ _).mp hle
+  exact closure_mono (Set.singleton_subset_iff.mpr (Set.mem_range_self _)) hc
+end Cov
+end EtaleTrace
+end LateralTheory
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.FinSurjPfAll
+
+section
 
 @[expose] public section
 
@@ -118,3 +183,9 @@ theorem FSAffine_pf : FSAffine := by
   exact (Proj.isAffineOpen_basicOpen _ _ ((mem_homogeneousSubmodule 1 _).mpr hL) one_pos).preimage ι
 
 theorem FinSurj_of_full (h1 : PNBasic) : FinSurj := FinSurj_of h1 FSAffine_pf FSDense_pf
+end Cov
+end EtaleTrace
+end LateralTheory
+end
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.SqSubLeNormSub
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexFormulaNormsInvolution
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,126 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TwoMulIndexSqsInvolution
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexNormMulRelIndexSqsKer
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+namespace GlobalTheory.QNorm
+
+theorem relIndex_norm_mul_relIndex_sqs_ker :
+    ∀ (A : Type) [CommGroup A] (σ : A →* A), (∀ a, σ (σ a) = a) → (∀ a, a * σ a = 1 → ∃ b, a = b / σ b) → (MonoidHom.id A * σ).range.relIndex (σ.eqLocus (MonoidHom.id A)) * (sqs (MonoidHom.id A * σ).ker).relIndex (MonoidHom.id A * σ).ker = (sqs (σ.eqLocus (MonoidHom.id A))).relIndex (σ.eqLocus (MonoidHom.id A)) := by
+  intro A _ σ hσ h90
+  set N : A →* A := MonoidHom.id A * σ with hN
+  set B : Subgroup A := σ.eqLocus (MonoidHom.id A) with hB
+  let f : A →* A := MonoidHom.id A / σ
+  have hNa : ∀ a, N a = a * σ a := fun a => rfl
+  have hfa : ∀ a, f a = a / σ a := fun a => rfl
+  have hBa : ∀ a, a ∈ B ↔ σ a = a := fun a => Iff.rfl
+  have hK : ∀ a, a ∈ N.ker ↔ a * σ a = 1 := fun a => Iff.rfl
+  have hsq : ∀ (U : Subgroup A) (a : A), a ∈ sqs U ↔ ∃ b ∈ U, b ^ 2 = a := fun U a => Iff.rfl
+  have h1 : sqs B ≤ N.range := by
+    intro a ha
+    obtain ⟨b, hb, rfl⟩ := (hsq _ _).1 ha
+    exact ⟨b, by rw [hNa, (hBa b).1 hb, sq]⟩
+  have h2 : N.range ≤ B := by
+    rintro _ ⟨a, rfl⟩
+    rw [hBa, hNa, map_mul, hσ, mul_comm]
+  have h3 : f.range = N.ker := by
+    ext a
+    constructor
+    · rintro ⟨b, rfl⟩
+      rw [hK, hfa, map_div, hσ]
+      simp
+    · intro ha
+      obtain ⟨b, hb⟩ := h90 a ((hK a).1 ha)
+      exact ⟨b, hb.symm⟩
+  have h4 : (sqs B).comap N = (sqs N.ker).comap f := by
+    ext a
+    rw [Subgroup.mem_comap, Subgroup.mem_comap, hsq, hsq]
+    constructor
+    · rintro ⟨b, hb, hab⟩
+      rw [hBa] at hb
+      rw [hNa] at hab
+      refine ⟨a / b, ?_, ?_⟩
+      · rw [hK, map_div, hb, div_mul_div_comm, ← hab, sq, div_self']
+      · rw [hfa, div_pow, hab, sq, mul_div_mul_left_eq_div]
+    · rintro ⟨c, hc, hac⟩
+      rw [hK] at hc
+      rw [hfa] at hac
+      have hc' : σ c = c⁻¹ := eq_inv_of_mul_eq_one_right hc
+      have ha' : σ a = a / c ^ 2 := by rw [hac]; simp
+      refine ⟨a / c, ?_, ?_⟩
+      · rw [hBa, map_div, hc', ha', sq, div_inv_eq_mul, div_mul_eq_div_div, div_mul_cancel]
+      · rw [hNa, ha', div_pow, sq a, mul_div_assoc]
+  have h5 : (sqs B).relIndex N.range = (sqs N.ker).relIndex N.ker := by
+    rw [← Subgroup.index_comap, h4, Subgroup.index_comap, h3]
+  rw [← h5, mul_comm]
+  exact Subgroup.relIndex_mul_relIndex _ _ _ h1 h2
+
+end GlobalTheory.QNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexNormMulRelIndexSqsKerStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.relIndex_norm_mul_relIndex_sqs_ker' : ∀ (A : Type) [CommGroup A] (σ : A →* A), (∀ a, σ (σ a) = a) → (∀ a, a * σ a = 1 → ∃ b, a = b / σ b) → (MonoidHom.id A * σ).range.relIndex (σ.eqLocus (MonoidHom.id A)) * (sqs (MonoidHom.id A * σ).ker).relIndex (MonoidHom.id A * σ).ker = (sqs (σ.eqLocus (MonoidHom.id A))).relIndex (σ.eqLocus (MonoidHom.id A)) := by
+  first | exact @GlobalTheory.QNorm.relIndex_norm_mul_relIndex_sqs_ker | exact GlobalTheory.QNorm.relIndex_norm_mul_relIndex_sqs_ker | (intros; apply GlobalTheory.QNorm.relIndex_norm_mul_relIndex_sqs_ker <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TwoMulIndexSqsInvolutionStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.two_mul_index_sqs_eq_relIndex_fixed_mul_relIndex_ker : ∀ (A : Type) [CommGroup A] (σ : A →* A) (ε : A), (∀ a, σ (σ a) = a) → (∀ a, a * σ a = 1 → ∃ b, a = b / σ b) → ε ≠ 1 → ε ^ 2 = 1 → σ ε = ε → (∀ a : A, a ^ 2 = 1 → a = 1 ∨ a = ε) → 2 * (sqs (⊤ : Subgroup A)).index = (sqs (σ.eqLocus (MonoidHom.id A))).relIndex (σ.eqLocus (MonoidHom.id A)) * (sqs (MonoidHom.id A * σ).ker).relIndex (MonoidHom.id A * σ).ker := by
+  first | exact @GlobalTheory.QNorm.two_mul_index_sqs_involution | exact GlobalTheory.QNorm.two_mul_index_sqs_involution | (intros; apply GlobalTheory.QNorm.two_mul_index_sqs_involution <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexFormulaNormsInvolution
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+namespace GlobalTheory.QNorm
+
+theorem two_mul_index_sqs_mul_relIndex_norm_involution :
+    ∀ (A : Type) [CommGroup A] (σ : A →* A) (ε : A), (∀ a, σ (σ a) = a) → (∀ a, a * σ a = 1 → ∃ b, a = b / σ b) → ε ≠ 1 → ε ^ 2 = 1 → σ ε = ε → (∀ a : A, a ^ 2 = 1 → a = 1 ∨ a = ε) → 2 * (sqs (⊤ : Subgroup A)).index * (MonoidHom.id A * σ).range.relIndex (σ.eqLocus (MonoidHom.id A)) = (sqs (σ.eqLocus (MonoidHom.id A))).relIndex (σ.eqLocus (MonoidHom.id A)) ^ 2 := by
+  intro A _ σ ε h1 h2 h3 h4 h5 h6
+  have hn := GlobalTheory.T.relIndex_norm_mul_relIndex_sqs_ker' A σ h1 h2
+  have hs := GlobalTheory.T.two_mul_index_sqs_eq_relIndex_fixed_mul_relIndex_ker A σ ε h1 h2 h3 h4 h5 h6
+  rw [hs, sq, mul_assoc, mul_comm ((sqs (MonoidHom.id A * σ).ker).relIndex (MonoidHom.id A * σ).ker), hn]
+
+end GlobalTheory.QNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexFormulaNormsInvolutionStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +168,5 @@ open scoped WithZero
 
 theorem _root_.GlobalTheory.T.index_formula_norms_involution : ∀ (A : Type) [CommGroup A] (σ : A →* A) (ε : A), (∀ a, σ (σ a) = a) → (∀ a, a * σ a = 1 → ∃ b, a = b / σ b) → ε ≠ 1 → ε ^ 2 = 1 → σ ε = ε → (∀ a : A, a ^ 2 = 1 → a = 1 ∨ a = ε) → 2 * (sqs (⊤ : Subgroup A)).index * (MonoidHom.id A * σ).range.relIndex (σ.eqLocus (MonoidHom.id A)) = (sqs (σ.eqLocus (MonoidHom.id A))).relIndex (σ.eqLocus (MonoidHom.id A)) ^ 2 := by
   first | exact @GlobalTheory.QNorm.two_mul_index_sqs_mul_relIndex_norm_involution | exact GlobalTheory.QNorm.two_mul_index_sqs_mul_relIndex_norm_involution | (intros; apply GlobalTheory.QNorm.two_mul_index_sqs_mul_relIndex_norm_involution <;> assumption)
+end
+end

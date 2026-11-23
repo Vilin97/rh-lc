@@ -1,7 +1,7 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.IsCoreMod
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandInvariantCommuteGenerator
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.CommuteGelfandInvariantMatrixUnitsOfGlRel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,47 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapMemKfin
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandInvariantCommuteGenerator
+
+section
+
+@[expose] public section
+
+open Matrix Finset
+open PositivityTheory.RgBcC.RealD (epow gelA)
+
+namespace GlobalTheory.CompanionTheory.ModelS
+
+theorem epow_eq_pow_of {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    (E : Fin n → Fin n → Module.End ℂ V) (m : ℕ) (a b : Fin n) :
+    epow E m a b = ((Matrix.of E : Matrix (Fin n) (Fin n) (Module.End ℂ V)) ^ m) a b := by
+  induction m generalizing a b with
+  | zero =>
+      change (if a = b then 1 else 0) = _
+      simp only [pow_zero, Matrix.one_apply]
+  | succ m ih =>
+      change (∑ c, E a c * epow E m c b) = _
+      simp only [pow_succ', Matrix.mul_apply, Matrix.of_apply, ih]
+
+theorem gelA_central : ∀ (n : ℕ) (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    (E : Fin n → Fin n → Module.End ℂ V), Formalism.REAL.GlRel E →
+    ∀ (m : ℕ) (a b : Fin n), gelA E m * E a b = E a b * gelA E m := by
+  intro n V _ _ E hE m a b
+  rw [eq_comm, ← sub_eq_zero]
+  delta gelA
+  simp only [epow_eq_pow_of]
+  rw [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
+  simp only [GlobalTheory.SmoothForms.comm_pow_of_apply E hE, Finset.sum_sub_distrib, Finset.sum_ite_eq,
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true, sub_self]
+
+end GlobalTheory.CompanionTheory.ModelS
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandInvariantCommuteGeneratorStatement
+
+section
+
 @[expose] public section
 
 open Matrix Finset MeasureTheory
@@ -51,3 +92,5 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem _root_.GlobalTheory.T.gelfand_invariant_commute_generator : ∀ (n : ℕ) (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] (E : Fin n → Fin n → Module.End ℂ V), Formalism.REAL.GlRel E → ∀ (m : ℕ) (a b : Fin n), gelA E m * E a b = E a b * gelA E m := by
   first | exact @GlobalTheory.CompanionTheory.ModelS.gelA_central | exact GlobalTheory.CompanionTheory.ModelS.gelA_central | (intros; apply GlobalTheory.CompanionTheory.ModelS.gelA_central <;> assumption)
+end
+end

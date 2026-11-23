@@ -1,13 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DivPowerCompatTwoFormDerivativeCompOneForm
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFreeThickeningLevelFinitelyManyElements
+public import Development.AbelianVarietyTheory.Definitions.Divisors.RatBasisLinearIndependentInt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltrationIdealLeMapOfIsDPMorphism
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -38,6 +40,302 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsStdStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLiftAndAugmentationMap
+public import Mathlib.RingTheory.DividedPowers.SubDPIdeal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltration
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FilProperties
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDPMorphismOfIsStd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PoincareLemmaTruncatedDivPowerPolyOneVariableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuotientSubDPIdeal
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FourTermComplexQuasiIsoAtFormalProperties
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltrationIdealLeMapOfIsDPMorphismStatement
+
+section
+
+@[expose] public section
+
+open DividedPowers GlobalTheory.Cris GlobalTheory.PDA
+
+theorem _root_.GlobalTheory.T.dividedPowerFiltrationIdeal_le_map_of_isDPMorphism : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPowers J) (C : Type) [CommRing C] (J' : Ideal C) (δ' : DividedPowers J') (f : B →+* C), IsDPMorphism δ δ' f → J' = J.map f → ∀ N, fil δ' N ≤ (fil δ N).map f := by
+  first | exact @GlobalTheory.PDA.fil_le_map_fil | exact GlobalTheory.PDA.fil_le_map_fil | (intros; apply GlobalTheory.PDA.fil_le_map_fil <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPdPoly
+
+section
+
+@[expose] public section
+
+open DividedPowers GlobalTheory.Cris GlobalTheory.PDA
+
+namespace GlobalTheory
+
+theorem exists_pdPoly : ∀ (B : Type) [CommRing B], Nonempty (PDPoly B) :=
+  fun B _ ↦ ⟨stdPoly B⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FilIsSubDPIdeal
+
+section
+
+@[expose] public section
+
+open DividedPowers GlobalTheory.Cris GlobalTheory.PDA
+
+namespace GlobalTheory.PDA
+
+theorem fil_isSubDPIdeal : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPowers J) (N : ℕ), 1 ≤ N →
+    δ.IsSubDPIdeal (fil δ N) := by
+  intro B _ J δ N hN
+  refine ⟨GlobalTheory.Cris.ExpBij.dpFil_le δ hN, fun n hn j hj ↦ ?_⟩
+  have h := GlobalTheory.Cris.ExpBij.dpow_mem_dpFil_mul δ hN hj n
+  exact GlobalTheory.Cris.ExpBij.dpFil_anti δ (Nat.le_mul_of_pos_left N (Nat.pos_of_ne_zero hn)) h
+
+end GlobalTheory.PDA
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFreeCrystallineThickeningOneElementLevel
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+  GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+namespace GlobalTheory.PDForm.FreeThick
+
+theorem ringHom_eq_of_basis {B C : Type} [CommRing B] [CommRing C] (Q : PDPoly B) {f g : Q.P →+* C}
+    (h1 : ∀ b, f (algebraMap B Q.P b) = g (algebraMap B Q.P b)) (h2 : ∀ k, f (Q.e k) = g (Q.e k)) : f = g := by
+  ext p
+  have hp : p ∈ Submodule.span B (Set.range Q.e) := Q.e.mem_span p
+  induction hp using Submodule.span_induction with
+  | mem x hx => obtain ⟨k, rfl⟩ := hx; exact h2 k
+  | zero => simp
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  | smul b x _ hx => rw [Algebra.smul_def, map_mul, map_mul, hx, h1]
+
+end GlobalTheory.PDForm.FreeThick
+
+namespace GlobalTheory.PDForm
+
+
+open GlobalTheory.PDForm.FreeThick in
+theorem exists_isFree_one_qAt : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0})
+    (t : X ⟶ Sp R) (n : ℕ) (T : Thick κ t), IsLev T.δ (n + 1) → ∃ (F : Thick κ t) (u : T ⟶ F) (τ : Unit → F.B),
+      IsFree (n + 1) u τ ∧ (KK κ t).QAt u := by
+  intro R _ I κ X t n T hT
+  obtain ⟨Q⟩ := GlobalTheory.exists_pdPoly T.B
+  obtain ⟨η, hη⟩ := GlobalTheory.T.exists_dividedPowers_ext_isStd T.B T.J T.δ Q
+  obtain ⟨hlift, ε, hε⟩ := GlobalTheory.PDA.PDPoly.exists_lift_and_aug T.B Q
+  have hfil := GlobalTheory.PDA.fil_properties Q.P (Q.ext T.J) η
+  obtain ⟨K, hK⟩ : ∃ K : Ideal Q.P, K = fil η (n + 1) := ⟨_, rfl⟩
+  have hsub : η.IsSubDPIdeal K := by rw [hK]; exact GlobalTheory.PDA.fil_isSubDPIdeal Q.P (Q.ext T.J) η (n + 1) (by omega)
+  obtain ⟨δ', hδ', huniv⟩ := (GlobalTheory.DPQuot.quotient_subDPIdeal Q.P (Q.ext T.J) η).1 K hsub
+  have hKle : K ≤ Q.ext T.J := by rw [hK]; exact (hfil.2.2.1 1 (n + 1) (by omega)).trans hfil.2.1.le
+  letI : Algebra R Q.P := ((algebraMap T.B Q.P).comp (algebraMap R T.B)).toAlgebra
+  haveI : IsScalarTower R T.B Q.P := IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
+  have hε1 : ∀ b, ε (algebraMap T.B Q.P b) = b := fun b ↦ by simp
+  have hεJ : ∀ p : Q.P, ε p ∈ T.J ↔ p ∈ Q.ext T.J := by
+    intro p
+    constructor
+    · intro hp
+      have : p = algebraMap T.B Q.P (ε p) + (p - algebraMap T.B Q.P (ε p)) := by ring
+      rw [this]
+      refine add_mem (Q.algebraMap_mem_ext hp) (Ideal.mem_sup_right ((hε _).2 ?_))
+      rw [map_sub, hε1, sub_self]
+    · intro hp
+      have hle : Q.ext T.J ≤ T.J.comap (ε : Q.P →+* T.B) := by
+        refine sup_le (Ideal.map_le_iff_le_comap.2 fun b hb ↦ ?_) fun q hq ↦ ?_
+        · rw [Ideal.mem_comap]; change ε (algebraMap T.B Q.P b) ∈ T.J; rw [hε1]; exact hb
+        · rw [Ideal.mem_comap]; change ε q ∈ T.J; rw [(hε q).1 hq]; exact T.J.zero_mem
+      exact hle hp
+  let π₀ : Q.P →+* T.B₀ := T.π.comp (ε : Q.P →+* T.B)
+  have hπ₀ : ∀ p, π₀ p = 0 ↔ p ∈ Q.ext T.J := fun p ↦ (T.ker _).trans (hεJ p)
+  let πF : Q.P ⧸ K →+* T.B₀ := Ideal.Quotient.lift K π₀ fun p hp ↦ (hπ₀ p).2 (hKle hp)
+  have hπF : ∀ p, πF (Ideal.Quotient.mk K p) = T.π (ε p) := fun p ↦ rfl
+  have hlev : IsLev δ' (n + 1) := by
+    have h := GlobalTheory.T.dividedPowerFiltrationIdeal_le_map_of_isDPMorphism Q.P (Q.ext T.J) η (Q.P ⧸ K) _ δ' (Ideal.Quotient.mk K) hδ' rfl (n + 1)
+    rw [← hK, Ideal.map_quotient_self] at h
+    exact le_bot_iff.1 h
+  have halg : algebraMap R (Q.P ⧸ K) = (Ideal.Quotient.mk K).comp ((algebraMap T.B Q.P).comp (algebraMap R T.B)) :=
+    rfl
+  let F : Thick κ t :=
+    { B := Q.P ⧸ K
+      J := (Q.ext T.J).map (Ideal.Quotient.mk K)
+      δ := δ'
+      nil := (isDPNilpotent_iff_exists_isLevel δ').2 ⟨_, hlev⟩
+      dp := by rw [halg]; exact IsDPMorphism.comp _ hδ' (IsDPMorphism.comp _ hη.dp T.dp)
+      B₀ := T.B₀
+      π := πF
+      surj := fun b₀ ↦ by
+        obtain ⟨b, rfl⟩ := T.surj b₀
+        exact ⟨Ideal.Quotient.mk K (algebraMap T.B Q.P b), by rw [hπF, hε1]⟩
+      ker := fun y ↦ by
+        obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective y
+        rw [Ideal.mem_quotient_iff_mem hKle]
+        exact hπ₀ p
+      x := T.x
+      w := by
+        rw [T.w]
+        congr 1
+        refine RingHom.ext fun r ↦ ?_
+        change T.π (algebraMap R T.B r) = T.π (ε (algebraMap T.B Q.P (algebraMap R T.B r)))
+        rw [hε1] }
+  let φ : T.B →ₐ[R] F.B :=
+    { (Ideal.Quotient.mk K).comp (algebraMap T.B Q.P) with commutes' := fun _ ↦ rfl }
+  let u : T ⟶ F :=
+    ⟨φ, RingHom.id T.B₀, fun b ↦ by
+      change T.π b = T.π (ε (algebraMap T.B Q.P b)); rw [hε1],
+     IsDPMorphism.comp _ hδ' hη.dp, by rw [spMap_id, Category.id_comp]⟩
+  refine ⟨F, u, fun _ ↦ Ideal.Quotient.mk K (Q.e 1), ⟨hlev, fun _ ↦ Ideal.mem_map_of_mem _ (Q.e_one_mem_ext T.J), ?_⟩, ?_⟩
+  · intro S hS a c hc
+    have hS' : fil S.δ (n + 1) = ⊥ := hS
+    obtain ⟨G, hG1, hG2⟩ := hlift S.B (a.φ : T.B →+* S.B) (fun k ↦ S.δ.dpow k (c ())) (S.δ.dpow_zero (hc ()))
+      fun m k ↦ S.δ.mul_dpow (hc ())
+    have hGa : G.comp (algebraMap T.B Q.P) = (a.φ : T.B →+* S.B) := RingHom.ext hG1
+    have hGdp : IsDPMorphism η S.δ G :=
+      GlobalTheory.PDA.PDPoly.isDPMorphism_of_isStd T.B T.J T.δ Q η hη S.B S.J S.δ G (c ()) (hc ()) (by rw [hGa]; exact a.dp)
+        hG2
+    have hGK : ∀ p ∈ K, G p = 0 := fun p hp ↦ by
+      have h := hfil.2.2.2.2.2.2 S.B S.J S.δ G hGdp (n + 1)
+      rw [hS', ← hK] at h
+      exact (Ideal.mem_bot).1 (h (Ideal.mem_map_of_mem G hp))
+    let Gb : Q.P ⧸ K →+* S.B := Ideal.Quotient.lift K G hGK
+    have hGb : ∀ p, Gb (Ideal.Quotient.mk K p) = G p := fun p ↦ rfl
+    let gφ : F.B →ₐ[R] S.B :=
+      { Gb with
+        commutes' := fun r ↦ by
+          change G (algebraMap T.B Q.P (algebraMap R T.B r)) = _
+          rw [hG1]; exact a.φ.commutes r }
+    have hgdp : IsDPMorphism F.δ S.δ (gφ : F.B →+* S.B) := by
+      refine huniv S.B S.J S.δ Gb ?_
+      have : Gb.comp (Ideal.Quotient.mk K) = G := RingHom.ext hGb
+      rw [this]; exact hGdp
+    let g : F ⟶ S :=
+      ⟨gφ, a.φ₀, fun b' ↦ by
+        obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective b'
+        change a.φ₀ (T.π (ε p)) = S.π (G p)
+        rw [a.comm, show a.φ (ε p) = G (algebraMap T.B Q.P (ε p)) from (hG1 _).symm]
+        have hm : p - algebraMap T.B Q.P (ε p) ∈ Q.ext T.J :=
+          Ideal.mem_sup_right ((hε _).2 (by rw [map_sub, hε1, sub_self]))
+        have h2 := hGdp.1 (Ideal.mem_map_of_mem G hm)
+        rw [← S.ker, map_sub, map_sub, sub_eq_zero] at h2
+        exact h2.symm,
+       hgdp, a.pt⟩
+    refine ⟨g, ⟨Thick.Hom.ext' (AlgHom.ext fun b ↦ hG1 b), fun _ ↦ ?_⟩, ?_⟩
+    · change G (Q.e 1) = c ()
+      rw [hG2 1, S.δ.dpow_one (hc ())]
+    · rintro g' ⟨h1, h2⟩
+      refine Thick.Hom.ext' (AlgHom.ext fun b' ↦ ?_)
+      obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective b'
+      change ((g'.φ : F.B →+* S.B).comp (Ideal.Quotient.mk K)) p = G p
+      have hHdp : IsDPMorphism η S.δ ((g'.φ : F.B →+* S.B).comp (Ideal.Quotient.mk K)) :=
+        IsDPMorphism.comp _ g'.dp hδ'
+      refine congrArg (fun f : Q.P →+* S.B ↦ f p) (ringHom_eq_of_basis Q (fun b ↦ ?_) fun k ↦ ?_)
+      · change (u ≫ g').φ b = G (algebraMap T.B Q.P b)
+        rw [h1]; exact (hG1 b).symm
+      · rw [hG2 k, ← hη.var k, hHdp.map_dpow (Q.e_one_mem_ext T.J)]
+        change S.δ.dpow k (g'.φ (Ideal.Quotient.mk K (Q.e 1))) = _
+        rw [show g'.φ (Ideal.Quotient.mk K (Q.e 1)) = c () from h2 ()]
+  · have hsemi : SemiHom (RingHom.id R) (Ideal.Quotient.mk K) := fun r p ↦ map_smul (Ideal.Quotient.mkₐ R K) r p
+    exact GlobalTheory.T.poincareLemma_truncated_divPowerPoly_oneVariable R T.B T.J T.δ Q η (Q.P ⧸ K) F.J δ' (Ideal.Quotient.mk K) n hη hT hsemi hδ'
+      Ideal.Quotient.mk_surjective rfl (fun b ↦ by rw [Ideal.Quotient.eq_zero_iff_mem, hK]) φ
+      (SemiHom.of_algHom u.φ) u.dp fun _ ↦ rfl
+
+end GlobalTheory.PDForm
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFreeCrystallineThickeningOneElementLevelStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+theorem _root_.GlobalTheory.T.exists_freeCrystallineThickening_oneElement_level : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0}) (t : X ⟶ Sp R) (n : ℕ) (T : Thick κ t), IsLev T.δ (n + 1) → ∃ (F : Thick κ t) (u : T ⟶ F) (τ : Unit → F.B), IsFree (n + 1) u τ ∧ (KK κ t).QAt u := by
+  first | exact @GlobalTheory.PDForm.exists_isFree_one_qAt | exact GlobalTheory.PDForm.exists_isFree_one_qAt | (intros; apply GlobalTheory.PDForm.exists_isFree_one_qAt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFreeThickeningLevelFinitelyManyElements
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+  GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+namespace GlobalTheory.PDForm.FreeFin
+
+variable {R : Type} [CommRing R] {I : Ideal R} {κ : DividedPowers I} {X : Scheme.{0}} {t : X ⟶ Sp R}
+
+theorem isFree_id (n : ℕ) (T : Thick κ t) (hT : IsLev T.δ n) :
+    IsFree n (𝟙 T) (Fin.elim0 : Fin 0 → T.B) := by
+  refine ⟨hT, fun i ↦ i.elim0, fun S _ a c _ ↦ ⟨a, ⟨Category.id_comp a, fun i ↦ i.elim0⟩, ?_⟩⟩
+  rintro g ⟨hg, -⟩
+  rw [← hg, Category.id_comp]
+
+theorem isFree_cons (n m : ℕ) {T F F' : Thick κ t} (u : T ⟶ F) (τ : Fin m → F.B) (hu : IsFree n u τ)
+    (u' : F ⟶ F') (τ' : Unit → F'.B) (hu' : IsFree n u' τ') :
+    IsFree n (u ≫ u') (Fin.cons (τ' ()) (fun i ↦ u'.φ (τ i)) : Fin (m + 1) → F'.B) := by
+  obtain ⟨-, hτ, hU⟩ := hu
+  obtain ⟨hF', hτ', hU'⟩ := hu'
+  refine ⟨hF', fun i ↦ Fin.cases (hτ' ()) (fun j ↦ Thick.Hom.mem u' (hτ j)) i, ?_⟩
+  intro S hS a c hc
+  obtain ⟨g₁, ⟨hg₁a, hg₁c⟩, hg₁u⟩ := hU S hS a (fun j ↦ c j.succ) (fun j ↦ hc j.succ)
+  obtain ⟨g, ⟨hga, hgc⟩, hgu⟩ := hU' S hS g₁ (fun _ ↦ c 0) (fun _ ↦ hc 0)
+  refine ⟨g, ⟨?_, fun i ↦ ?_⟩, ?_⟩
+  · rw [Category.assoc, hga, hg₁a]
+  · refine Fin.cases ?_ (fun j ↦ ?_) i
+    · simpa using hgc ()
+    · simp only [Fin.cons_succ]
+      rw [← Thick.comp_φ, hga, hg₁c]
+  · rintro g' ⟨hg'a, hg'c⟩
+    have h1 : u' ≫ g' = g₁ := by
+      refine hg₁u _ ⟨by rw [← Category.assoc, hg'a], fun j ↦ ?_⟩
+      have := hg'c j.succ
+      simp only [Fin.cons_succ] at this
+      rw [Thick.comp_φ, this]
+    refine hgu _ ⟨h1, fun _ ↦ ?_⟩
+    simpa using hg'c 0
+
+theorem exists_free : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0})
+    (t : X ⟶ Sp R) (n m : ℕ) (T : Thick κ t), IsLev T.δ (n + 1) →
+    ∃ (F : Thick κ t) (u : T ⟶ F) (τ : Fin m → F.B), IsFree (n + 1) u τ ∧ (KK κ t).QAt u := by
+  intro R _ I κ X t n m T hT
+  induction m with
+  | zero => exact ⟨T, 𝟙 T, Fin.elim0, isFree_id _ T hT, QAtFormal.qAt_ident _ T⟩
+  | succ m ih =>
+    obtain ⟨F, u, τ, hu, hq⟩ := ih
+    obtain ⟨F', u', τ', hu', hq'⟩ := GlobalTheory.T.exists_freeCrystallineThickening_oneElement_level R I κ X t n F hu.1
+    exact ⟨F', u ≫ u', _, isFree_cons (n + 1) m u τ hu u' τ' hu', QAtFormal.qAt_comp _ u u' hq hq'⟩
+
+end GlobalTheory.PDForm.FreeFin
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFreeThickeningLevelFinitelyManyElementsStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +343,5 @@ open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers Reciproc
 
 theorem _root_.GlobalTheory.T.exists_freeThickening_level_finitelyMany_elements : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0}) (t : X ⟶ Sp R) (n m : ℕ) (T : Thick κ t), IsLev T.δ (n + 1) → ∃ (F : Thick κ t) (u : T ⟶ F) (τ : Fin m → F.B), IsFree (n + 1) u τ ∧ (KK κ t).QAt u := by
   first | exact @GlobalTheory.PDForm.FreeFin.exists_free | exact GlobalTheory.PDForm.FreeFin.exists_free | (intros; apply GlobalTheory.PDForm.FreeFin.exists_free <;> assumption)
+end
+end

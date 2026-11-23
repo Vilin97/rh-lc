@@ -2,28 +2,6 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RankPosOfLeaves
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CapacityEquivalenceStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceCompositionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceInfimumStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceShiftStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceStripStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiscreteInfimumStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorInductionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorLimitStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HullGenerationStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InfimumOfEqualityStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeafBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitListsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitTreesStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairEmbeddingStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairFiniteDimensionalStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairFirstStepStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairRestrictionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairSecondStepStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairSlicesStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdCloseStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SingleGluingStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SliceTypeStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TopologicalInfimumStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,7 +17,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -60,7 +37,184 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceInfimumStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceStripStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscreteAutomorphicRepGLExistsLocalComponent
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscreteSpectrumOfResidual
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HasInfCharInfCharOfCommute
+import Mathlib.Algebra.Module.StablyFree.Basic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorInductionStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorLimitStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HullGenerationStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InfimumOfEqualityStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeafBoundStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitListsStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitTreesStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairEmbeddingStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairFiniteDimensionalStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairFirstStepStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairRestrictionStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairSecondStepStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PairSlicesStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdCloseStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SingleGluingStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SliceTypeStatement
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceComposition
+
+section
+
+@[expose] public section
+
+open Filter Topology
+open GlobalTheory.CompanionTheory.EGlue
+
+namespace GlobalTheory.CompanionTheory.EGlue
+
+theorem convComp_proved : ConvComp := by
+  intro E _ _ _ N t s φ h hφ
+  induction h with
+  | leaf V z z₀ h => exact Conv.leaf V (fun k => z (φ k)) z₀ (h.comp hφ.tendsto_atTop)
+  | node _ _ i₁ i₂ => exact Conv.node i₁ i₂
+
+end GlobalTheory.CompanionTheory.EGlue
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceCompositionStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.EGlue
+
+theorem _root_.GlobalTheory.T.convergence_composition : GlobalTheory.CompanionTheory.EGlue.ConvComp := by
+  first | exact @GlobalTheory.CompanionTheory.EGlue.convComp_proved | exact GlobalTheory.CompanionTheory.EGlue.convComp_proved | (intros; apply GlobalTheory.CompanionTheory.EGlue.convComp_proved <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceShift
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.CompanionTheory.EGlue
+
+theorem convShift_holds : ConvShift := by
+  intro E _ _ _ N t s z z₀ h hz
+  induction h with
+  | leaf V w w₀ hw => exact Conv.leaf V (fun k => w k + z k) (w₀ + z₀) (hw.add hz)
+  | node _ _ i₁ i₂ => exact Conv.node i₁ i₂
+
+end GlobalTheory.CompanionTheory.EGlue
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConvergenceShiftStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.EGlue
+
+theorem _root_.GlobalTheory.T.convergence_shift : GlobalTheory.CompanionTheory.EGlue.ConvShift := by
+  first | exact @GlobalTheory.CompanionTheory.EGlue.convShift_holds | exact GlobalTheory.CompanionTheory.EGlue.convShift_holds | (intros; apply GlobalTheory.CompanionTheory.EGlue.convShift_holds <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiscreteInfimum
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.UnitaryBC
+
+namespace GlobalTheory.CompanionTheory.EGlue
+
+theorem discInf : DiscInf := by
+  intro E _ _ _ M V hV τ
+  obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 hV.ne_bot
+  obtain ⟨f, hf⟩ := Module.Projective.exists_dual_eq_one ℂ h0
+  obtain ⟨m, hm, h⟩ := exists_multiset_qdet (Eop (a := M) τ) (((M : ℂ) - 1) / 2) φ f hf
+  refine ⟨m, hm, fun u ψ hψ => ?_⟩
+  obtain ⟨c, h1⟩ := GlobalTheory.DiscLocEx.exists_scalarD hV (z := cap τ u) (Algebra.subset_adjoin ⟨τ, u, rfl⟩)
+    (GlobalTheory.SpehInfChar.cap_commute_act τ u)
+  have h2 : f (cap τ u φ) = _ := h u
+  rw [h1 φ hφ, map_smul, hf, smul_eq_mul, mul_one] at h2
+  rw [h1 ψ hψ, h2]
+
+end GlobalTheory.CompanionTheory.EGlue
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiscreteInfimumStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.EGlue
+
+theorem _root_.GlobalTheory.T.discrete_infimum : GlobalTheory.CompanionTheory.EGlue.DiscInf := by
+  first | exact @GlobalTheory.CompanionTheory.EGlue.discInf | exact GlobalTheory.CompanionTheory.EGlue.discInf | (intros; apply GlobalTheory.CompanionTheory.EGlue.discInf <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TopologicalInfimum
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.EGlue
+
+noncomputable section
+
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC
+
+namespace GlobalTheory.CompanionTheory.EGlue.Gl0
+
+theorem topInf : GlobalTheory.CompanionTheory.EGlue.TopInf := by
+  intro E _ _ _ τ
+  refine ⟨rfl, fun u φ _ => ?_⟩
+  simp [cap, Formalism.REAL.qdet, Formalism.REAL.qminor, Formalism.REAL.Tm]
+
+end GlobalTheory.CompanionTheory.EGlue.Gl0
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TopologicalInfimumStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.EGlue
+
+theorem _root_.GlobalTheory.T.topological_infimum : GlobalTheory.CompanionTheory.EGlue.TopInf := by
+  first | exact @GlobalTheory.CompanionTheory.EGlue.Gl0.topInf | exact GlobalTheory.CompanionTheory.EGlue.Gl0.topInf | (intros; apply GlobalTheory.CompanionTheory.EGlue.Gl0.topInf <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.E45FinalGluing
+
+section
 
 @[expose] public section
 
@@ -167,4 +321,6 @@ theorem eFinalGlue : PositivityTheory.Rg.BcB.SpectralAccumulation.InfinitesimalC
 
 end GlobalTheory.CompanionTheory.EGlue
 
+end
+end
 end

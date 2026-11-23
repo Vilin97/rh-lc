@@ -9,11 +9,7 @@ public import Development.EtaleCohomology.KummerTheory.PlaceExPfZorn
 public import Development.EtaleCohomology.KummerTheory.PlacePfVal
 public import Development.EtaleCohomology.KummerTheory.PlaceResGoodPf
 public import Development.EtaleCohomology.KummerTheory.PrimTorsPf
-public import Development.EtaleCohomology.KummerTheory.SHInsepHensPf
-public import Development.EtaleCohomology.KummerTheory.SHInsepLocPf
-public import Development.EtaleCohomology.KummerTheory.SHInsepResPf
-public import Development.EtaleCohomology.KummerTheory.SHInvPf
-public import Development.EtaleCohomology.KummerTheory.ShSectPf
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,7 +28,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -52,6 +50,351 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.Style
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.EtaleCohomology.KummerTheory.ShSectPf
+
+-- Source module: Development.EtaleCohomology.KummerTheory.SHInsepHensPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped TensorProduct
+open GlobalTheory.EtC IsLocalRing Polynomial
+
+namespace LateralTheory.KummerTheory
+
+theorem hens_root_of_sub {R S : Type*} [CommRing R] [CommRing S] [HenselianLocalRing R] [IsLocalRing S]
+    (φ : R →+* S) (hc : (maximalIdeal S).comap φ = maximalIdeal R) (f : S[X]) (hf : f.Monic) (a₀ : S)
+    (hlift : ∀ n, f.coeff n ∈ Set.range φ) (ha : a₀ ∈ Set.range φ) (h1 : f.eval a₀ ∈ maximalIdeal S)
+    (h2 : IsUnit (f.derivative.eval a₀)) : ∃ a, f.IsRoot a ∧ a - a₀ ∈ maximalIdeal S := by
+  obtain ⟨g, hg, -, hgm⟩ := lifts_and_degree_eq_and_monic ((lifts_iff_coeff_lifts f).2 hlift) hf
+  obtain ⟨b₀, rfl⟩ := ha
+  have hmem : ∀ x, x ∈ maximalIdeal R ↔ φ x ∈ maximalIdeal S := fun x => by rw [← hc]; rfl
+  have e1 : φ (g.eval b₀) = f.eval (φ b₀) := by rw [← hg, eval_map, eval₂_at_apply]
+  have e2 : φ (g.derivative.eval b₀) = f.derivative.eval (φ b₀) := by
+    rw [← hg, derivative_map, eval_map, eval₂_at_apply]
+  have hu : IsUnit (g.derivative.eval b₀) := by
+    by_contra hu
+    have := (hmem _).1 ((mem_maximalIdeal _).2 hu)
+    rw [e2] at this
+    exact (mem_maximalIdeal _).1 this h2
+  obtain ⟨b, hb, hbb⟩ := HenselianLocalRing.is_henselian g hgm b₀ ((hmem _).2 (e1 ▸ h1)) hu
+  refine ⟨φ b, ?_, ?_⟩
+  · rw [IsRoot.def] at hb ⊢
+    rw [← hg, eval_map, eval₂_at_apply, hb, map_zero]
+  · rw [← map_sub]; exact (hmem _).1 hbb
+
+abbrev incMap (κ K A : Type) [Field κ] [Field K] [Algebra κ K] [CommRing A] [Algebra κ A]
+    (L : IntermediateField κ K) : A ⊗[κ] L →ₐ[A] A ⊗[κ] K :=
+  Algebra.TensorProduct.map (AlgHom.id A A) L.val
+
+theorem incMap_mono {κ K A : Type} [Field κ] [Field K] [Algebra κ K] [CommRing A] [Algebra κ A]
+    {L L' : IntermediateField κ K} (h : L ≤ L') {x : A ⊗[κ] K} (hx : x ∈ (incMap κ K A L).range) :
+    x ∈ (incMap κ K A L').range := by
+  obtain ⟨y, rfl⟩ := hx
+  refine ⟨Algebra.TensorProduct.map (AlgHom.id A A) (IntermediateField.inclusion h) y, ?_⟩
+  have : (incMap κ K A L').comp (Algebra.TensorProduct.map (AlgHom.id A A) (IntermediateField.inclusion h))
+      = incMap κ K A L := Algebra.TensorProduct.ext' (fun a l => by simp)
+  exact congrArg (fun F : A ⊗[κ] L →ₐ[A] A ⊗[κ] K => F y) this
+
+theorem exists_fd_range {κ K A : Type} [Field κ] [Field K] [Algebra κ K] [Algebra.IsIntegral κ K] [CommRing A]
+    [Algebra κ A] (s : Finset (A ⊗[κ] K)) :
+    ∃ L : IntermediateField κ K, FiniteDimensional κ L ∧ ∀ x ∈ s, x ∈ (incMap κ K A L).range := by
+  have one : ∀ x : A ⊗[κ] K, ∃ L : IntermediateField κ K, FiniteDimensional κ L ∧ x ∈ (incMap κ K A L).range := by
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero => exact ⟨⊥, inferInstance, zero_mem _⟩
+    | tmul a k =>
+      refine ⟨IntermediateField.adjoin κ {k},
+        IntermediateField.adjoin.finiteDimensional (Algebra.IsIntegral.isIntegral k), ?_⟩
+      exact ⟨a ⊗ₜ ⟨k, IntermediateField.mem_adjoin_simple_self κ k⟩, by simp⟩
+    | add x y hx hy =>
+      obtain ⟨L₁, h₁, hx⟩ := hx
+      obtain ⟨L₂, h₂, hy⟩ := hy
+      exact ⟨L₁ ⊔ L₂, inferInstance, add_mem (incMap_mono le_sup_left hx) (incMap_mono le_sup_right hy)⟩
+  classical
+  induction s using Finset.induction_on with
+  | empty => exact ⟨⊥, inferInstance, by simp⟩
+  | insert a s _ ih =>
+    obtain ⟨L₁, h₁, ha⟩ := one a
+    obtain ⟨L₂, h₂, hs⟩ := ih
+    refine ⟨L₁ ⊔ L₂, inferInstance, ?_⟩
+    intro x hx
+    rcases Finset.mem_insert.1 hx with rfl | hx
+    · exact incMap_mono le_sup_left ha
+    · exact incMap_mono le_sup_right (hs x hx)
+
+theorem SHInsepHens_of (hL : SHInsepLoc) : SHInsepHens := by
+  intro κ K A _ _ _ _ _ _ hA _
+  have hA' := hA
+  obtain ⟨_, -⟩ := hA'
+  refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
+  intro f hf a₀ h1 h2
+  classical
+  obtain ⟨L, hFD, hs⟩ := exists_fd_range (A := A) (insert a₀ (f.support.image f.coeff))
+  have : IsLocalRing (A ⊗[κ] L) := hL κ L A hA
+  have : HenselianLocalRing (A ⊗[κ] L) := GlobalTheory.henselianLocalRing_of_finite A _
+  have hint : (incMap κ K A L).toRingHom.IsIntegral := by
+    refine RingHom.IsIntegral.tower_top (algebraMap A (A ⊗[κ] L)) _ ?_
+    have e : (incMap κ K A L).toRingHom.comp (algebraMap A (A ⊗[κ] L)) = algebraMap A (A ⊗[κ] K) :=
+      (incMap κ K A L).comp_algebraMap
+    rw [e]
+    exact fun x => Algebra.IsIntegral.isIntegral (R := A) x
+  have hc : (maximalIdeal (A ⊗[κ] K)).comap (incMap κ K A L).toRingHom = maximalIdeal (A ⊗[κ] L) :=
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal' _ hint _)
+  refine hens_root_of_sub (incMap κ K A L).toRingHom hc f hf a₀ ?_ ?_ h1 h2
+  · intro n
+    by_cases hn : n ∈ f.support
+    · exact (AlgHom.mem_range _).1 (hs _ (Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ hn)))
+    · exact ⟨0, by simp [Polynomial.notMem_support_iff.1 hn]⟩
+  · exact (AlgHom.mem_range _).1 (hs _ (Finset.mem_insert_self _ _))
+
+end LateralTheory.KummerTheory
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.KummerTheory.SHInsepLocPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped TensorProduct
+
+namespace LateralTheory.KummerTheory
+
+section
+variable {κ K : Type} [Field κ] [Field K] [Algebra κ K]
+
+theorem shl_nontriv (B : Type) [CommRing B] [Nontrivial B] [Algebra κ B] : Nontrivial (B ⊗[κ] K) :=
+  TensorProduct.nontrivial_of_linearMap_injective_of_flat_right κ B K (Algebra.linearMap κ B)
+    (algebraMap κ B).injective
+
+variable [IsPurelyInseparable κ K] {A : Type} [CommRing A] [Algebra κ A]
+
+theorem shl_pow (q : ℕ) [ExpChar κ q] [ExpChar (A ⊗[κ] K) q] (y : A ⊗[κ] K) :
+    ∃ n : ℕ, ∃ a : A, y ^ q ^ n = algebraMap A (A ⊗[κ] K) a := by
+  induction y using TensorProduct.induction_on with
+  | zero => exact ⟨0, 0, by simp⟩
+  | tmul a k =>
+    obtain ⟨n, c, hc⟩ := (isPurelyInseparable_iff_pow_mem κ q).1 inferInstance k
+    refine ⟨n, c • a ^ q ^ n, ?_⟩
+    rw [Algebra.TensorProduct.tmul_pow, ← hc, Algebra.algebraMap_eq_smul_one, TensorProduct.tmul_smul,
+      Algebra.TensorProduct.algebraMap_apply]
+    simp [TensorProduct.smul_tmul']
+  | add x y hx hy =>
+    obtain ⟨n, a, ha⟩ := hx
+    obtain ⟨m, b, hb⟩ := hy
+    refine ⟨n + m, a ^ q ^ m + b ^ q ^ n, ?_⟩
+    rw [add_pow_expChar_pow, map_add (f := _), map_pow, map_pow, ← ha, ← hb, ← pow_mul, ← pow_mul, ← pow_add,
+      ← pow_add, add_comm m n]
+
+end
+
+theorem SHInsepLoc_of : SHInsepLoc := by
+  intro κ K A _ _ _ _ _ _ hA
+  obtain ⟨hH, _⟩ := hA
+  have : IsLocalRing A := hH.toIsLocalRing
+  obtain ⟨q, hq⟩ := ExpChar.exists κ
+  have : Nontrivial (A ⊗[κ] K) := shl_nontriv A
+  have : ExpChar (A ⊗[κ] K) q := expChar_of_injective_algebraMap (algebraMap κ _).injective q
+  have hqpos : ∀ n : ℕ, q ^ n ≠ 0 := fun n => pow_ne_zero _ (expChar_pos κ q).ne'
+
+  have hm : ∀ a ∈ IsLocalRing.maximalIdeal A, ¬ IsUnit (algebraMap A (A ⊗[κ] K) a) := by
+    intro a ha hu
+    have : Nontrivial ((A ⧸ IsLocalRing.maximalIdeal A) ⊗[κ] K) := shl_nontriv _
+    let φ := Algebra.TensorProduct.map (Ideal.Quotient.mkₐ κ (IsLocalRing.maximalIdeal A)) (AlgHom.id κ K)
+    have h0 : φ (algebraMap A (A ⊗[κ] K) a) = 0 := by
+      simp [φ, Algebra.TensorProduct.algebraMap_apply, Ideal.Quotient.eq_zero_iff_mem.2 ha]
+    have := hu.map φ
+    rw [h0] at this
+    exact not_isUnit_zero this
+  have hkey : ∀ y : A ⊗[κ] K, ¬ IsUnit y →
+      ∃ n : ℕ, ∃ a ∈ IsLocalRing.maximalIdeal A, y ^ q ^ n = algebraMap A (A ⊗[κ] K) a := by
+    intro y hy
+    obtain ⟨n, a, ha⟩ := shl_pow q y
+    refine ⟨n, a, ?_, ha⟩
+    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    intro hu
+    exact hy ((isUnit_pow_iff (hqpos n)).1 (ha ▸ hu.map _))
+  refine IsLocalRing.of_nonunits_add ?_
+  intro x y hx hy hxy
+  obtain ⟨n, a, ha, hxa⟩ := hkey x hx
+  obtain ⟨m, b, hb, hyb⟩ := hkey y hy
+  apply hm (a ^ q ^ m + b ^ q ^ n)
+  · exact Ideal.add_mem _ (Ideal.pow_mem_of_mem _ ha _ (Nat.pos_of_ne_zero (hqpos m)))
+      (Ideal.pow_mem_of_mem _ hb _ (Nat.pos_of_ne_zero (hqpos n)))
+  · have : (x + y) ^ q ^ (n + m) = algebraMap A (A ⊗[κ] K) (a ^ q ^ m + b ^ q ^ n) := by
+      rw [add_pow_expChar_pow, map_add (f := _), map_pow, map_pow, ← hxa, ← hyb, ← pow_mul, ← pow_mul, ← pow_add,
+        ← pow_add, add_comm m n]
+    rw [← this]
+    exact hxy.pow _
+
+end LateralTheory.KummerTheory
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.KummerTheory.SHInsepResPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped TensorProduct
+open Polynomial
+
+namespace LateralTheory.KummerTheory
+
+section
+variable (κ K A : Type) [Field κ] [Field K] [Algebra κ K] [IsPurelyInseparable κ K] [CommRing A]
+  [Algebra κ A]
+
+theorem shInsepRes_pow [Nontrivial (A ⊗[κ] K)] (y : A ⊗[κ] K) :
+    ∃ n : ℕ, ∃ a : A, y ^ (ringExpChar κ) ^ n = algebraMap A (A ⊗[κ] K) a := by
+  set q := ringExpChar κ
+  have : ExpChar (A ⊗[κ] K) q :=
+    expChar_of_injective_algebraMap (algebraMap κ (A ⊗[κ] K)).injective q
+  induction y using TensorProduct.induction_on with
+  | zero => exact ⟨0, 0, by simp⟩
+  | tmul a k =>
+    obtain ⟨n, c, hc⟩ := IsPurelyInseparable.pow_mem κ q k
+    refine ⟨n, c • a ^ q ^ n, ?_⟩
+    rw [Algebra.TensorProduct.tmul_pow, ← hc]
+    show (a ^ q ^ n) ⊗ₜ[κ] (algebraMap κ K c) = (c • a ^ q ^ n) ⊗ₜ[κ] (1 : K)
+    rw [Algebra.algebraMap_eq_smul_one, TensorProduct.tmul_smul, TensorProduct.smul_tmul']
+  | add x y hx hy =>
+    obtain ⟨n, a, ha⟩ := hx
+    obtain ⟨m, b, hb⟩ := hy
+    refine ⟨n + m, a ^ q ^ m + b ^ q ^ n, ?_⟩
+    rw [add_pow_expChar_pow, map_add (f := _), map_pow, map_pow, ← ha, ← hb, ← pow_mul, ← pow_mul, ← pow_add,
+      ← pow_add, add_comm m n]
+
+omit [IsPurelyInseparable κ K] in
+theorem shInsepRes_inj : Function.Injective (algebraMap A (A ⊗[κ] K)) :=
+  Algebra.TensorProduct.includeLeft_injective (S := A) (algebraMap κ K).injective
+
+theorem shInsepRes_localHom [Nontrivial (A ⊗[κ] K)] : IsLocalHom (algebraMap A (A ⊗[κ] K)) := by
+  refine ⟨fun a ha => ?_⟩
+  obtain ⟨u, hu⟩ := ha
+  obtain ⟨n, b, hb⟩ := shInsepRes_pow κ K A (↑u⁻¹ : A ⊗[κ] K)
+  have hQ : (ringExpChar κ) ^ n ≠ 0 := pow_ne_zero _ (expChar_pos κ (ringExpChar κ)).ne'
+  have h1 : algebraMap A (A ⊗[κ] K) (a ^ (ringExpChar κ) ^ n * b) = algebraMap A (A ⊗[κ] K) 1 := by
+    rw [map_mul, map_pow, ← hb, ← hu, ← mul_pow, Units.mul_inv, one_pow, map_one]
+  have h2 := shInsepRes_inj κ K A h1
+  exact (isUnit_pow_iff hQ).mp (isUnit_of_mul_isUnit_left (h2 ▸ isUnit_one))
+
+end
+
+theorem SHInsepRes_of : SHInsepRes := by
+  intro κ K A _ _ _ _ _ _ hA _
+  obtain ⟨hh, hsc⟩ := hA
+  have : IsLocalRing A := hh.toIsLocalRing
+  have : IsLocalHom (algebraMap A (A ⊗[κ] K)) := shInsepRes_localHom κ K A
+  let _ : Algebra (IsLocalRing.ResidueField A) (IsLocalRing.ResidueField (A ⊗[κ] K)) :=
+    (IsLocalRing.ResidueField.map (algebraMap A (A ⊗[κ] K))).toAlgebra
+  have : Algebra.IsAlgebraic (IsLocalRing.ResidueField A) (IsLocalRing.ResidueField (A ⊗[κ] K)) := by
+    constructor
+    intro x
+    obtain ⟨y, rfl⟩ := IsLocalRing.residue_surjective x
+    obtain ⟨n, a, ha⟩ := shInsepRes_pow κ K A y
+    have hQ : 0 < (ringExpChar κ) ^ n := pow_pos (expChar_pos κ (ringExpChar κ)) _
+    refine ⟨X ^ (ringExpChar κ) ^ n - C (IsLocalRing.residue A a), X_pow_sub_C_ne_zero hQ _, ?_⟩
+    rw [map_sub, map_pow, aeval_X, aeval_C, ← map_pow, ha, sub_eq_zero]
+    rfl
+  exact Algebra.IsAlgebraic.isSepClosed (F := IsLocalRing.ResidueField A)
+
+end LateralTheory.KummerTheory
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.KummerTheory.SHInvPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.KummerTheory
+
+theorem shinv_eqv_of_iso {R : Type} [CommRing R] {E E' : Spc} (f : E ⟶ E') [IsIso f] (F : Shv R) : Eqv R f F := by
+  intro n
+  refine Function.bijective_iff_has_inverse.2 ⟨pull R (inv f) F n, fun x => ?_, fun x => ?_⟩
+  · rw [← pull_comp, IsIso.inv_hom_id, pull_id]
+  · rw [← pull_comp, IsIso.hom_inv_id, pull_id]
+
+theorem shinv_pull_comp_fun {R : Type} [CommRing R] {E E' E'' : Spc} (f : E ⟶ E') (g : E' ⟶ E'') (F : Shv R) (n : ℤ) :
+    (pull R (f ≫ g) F n : H R E'' F n → H R E F n) = pull R f F n ∘ pull R g F n := by
+  funext x; exact pull_comp R f g F n x
+
+theorem shinv_eqv_comp {R : Type} [CommRing R] {E E' E'' : Spc} {f : E ⟶ E'} {g : E' ⟶ E''} {F : Shv R}
+    (hf : Eqv R f F) (hg : Eqv R g F) : Eqv R (f ≫ g) F := by
+  intro n; rw [shinv_pull_comp_fun]; exact (hf n).comp (hg n)
+
+theorem shinv_eqv_right {R : Type} [CommRing R] {E E' E'' : Spc} {f : E ⟶ E'} {g : E' ⟶ E''} {F : Shv R}
+    (hf : Eqv R f F) (hfg : Eqv R (f ≫ g) F) : Eqv R g F := by
+  intro n; have := hfg n; rw [shinv_pull_comp_fun] at this
+  exact (Function.Bijective.of_comp_iff' (hf n) _).1 this
+
+theorem SHInv_of (hAlgExt : AlgExt) (hInsep : Insep) : SHInv := by
+  intro hA9 hB2 hB3 hE2 hE3 q _ k _ _ hq X p _ _ A s hSH i
+  obtain ⟨hHL, hsc⟩ := hSH
+  have hqA : IsUnit (q : A) := by simpa using hq.map s.hom
+  have hqκ : IsUnit (q : IsLocalRing.ResidueField A) := by simpa using hqA.map (IsLocalRing.residue A)
+  haveI : IsPurelyInseparable (IsLocalRing.ResidueField A) (AlgebraicClosure (IsLocalRing.ResidueField A)) :=
+    (isSepClosed_iff_isPurelyInseparable_algebraicClosure _ _).mp hsc
+  let res := Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))
+  let alg := Spec.map (CommRingCat.ofHom (algebraMap (IsLocalRing.ResidueField A)
+    (AlgebraicClosure (IsLocalRing.ResidueField A))))
+  let pA := pullback.snd p (Spec.map s)
+  have h1 : Eqv _ (sch.map (pullback.fst pA res)) (tw q i) := hE2 q A ⟨hHL, hsc⟩ hqA pA i
+  have h2 : Eqv _ (sch.map (pullback.fst (pullback.snd pA res) alg)) (tw q i) :=
+    hInsep hA9 hB2 hB3 q _ _ hqκ (pullback.snd pA res) i
+  let f : k →+* AlgebraicClosure (IsLocalRing.ResidueField A) :=
+    (algebraMap (IsLocalRing.ResidueField A) _).comp ((IsLocalRing.residue A).comp s.hom)
+  have h3 := hAlgExt hE2 hE3 q k _ f hq p i
+  have hf : Spec.map (CommRingCat.ofHom f) = (alg ≫ res) ≫ Spec.map s := by
+    simp only [alg, res, ← Spec.map_comp]; rfl
+  have h3' : Eqv _ (sch.map (pullback.fst p ((alg ≫ res) ≫ Spec.map s))) (tw q i) := by
+    have key : ∀ g, g = (alg ≫ res) ≫ Spec.map s → Eqv _ (sch.map (pullback.fst p g)) (tw q i) →
+        Eqv _ (sch.map (pullback.fst p ((alg ≫ res) ≫ Spec.map s))) (tw q i) := by
+      intro g hg h; subst hg; exact h
+    exact key _ hf h3
+  have hcomp : pullback.fst (pullback.snd pA res) alg ≫ pullback.fst pA res ≫ pullback.fst p (Spec.map s) =
+      ((pullbackLeftPullbackSndIso pA res alg).hom ≫ (pullbackLeftPullbackSndIso p (Spec.map s) (alg ≫ res)).hom) ≫
+        pullback.fst p ((alg ≫ res) ≫ Spec.map s) := by
+    rw [Category.assoc, pullbackLeftPullbackSndIso_hom_fst p (Spec.map s) (alg ≫ res)]
+    erw [← Category.assoc (pullbackLeftPullbackSndIso pA res alg).hom, pullbackLeftPullbackSndIso_hom_fst pA res alg]
+    rw [Category.assoc]
+  have hall : Eqv _ (sch.map (pullback.fst (pullback.snd pA res) alg) ≫ sch.map (pullback.fst pA res) ≫
+      sch.map (pullback.fst p (Spec.map s))) (tw q i) := by
+    rw [← Functor.map_comp, ← Functor.map_comp, hcomp, Functor.map_comp]
+    exact shinv_eqv_comp (shinv_eqv_of_iso _ _) h3'
+  exact shinv_eqv_right h1 (shinv_eqv_right h2 hall)
+
+end LateralTheory.KummerTheory
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.KummerTheory.FinSHInv
+
+section
 
 @[expose] public section
 
@@ -88,3 +431,5 @@ theorem etale_strict_henselization_invariance_of_cohomology_in_henselization_i :
   apply LateralTheory.KummerTheory.SHInv_of <;> first | exact etale_cohomology_algebraic_extension_invariance_of_places | exact etale_purely_inseparable_extension_cohomology_invariant_in_henselizati
 theorem intersectionNumber_baseChange : LateralTheory.KummerTheory.SHInv := etale_strict_henselization_invariance_of_cohomology_in_henselization_i
 end LateralTheory.Fin.SHInv
+end
+end

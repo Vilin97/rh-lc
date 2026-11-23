@@ -7,10 +7,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.PTypeEx
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroGTop
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPCuspSupp
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPJacFin
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPProdIrr
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPSuppProd
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPTensor
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroCJDefs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,11 +40,15 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.ArtinTransferDecompositionHolds
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.JacquetFiniteLength2
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPProdIrr
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPSuppProd
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPTensor
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.FiniteDimensionalTranslationCoordinates
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Newform
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.CharacterConductor
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.CharacterConductorBound
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.DeterminantVector
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.DistinctCharacterUnits
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.GEmb
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.InPowAlgebraMap
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.InPowMono
@@ -77,7 +78,7 @@ public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PNo
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PProdRc
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PSumList
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PTpow
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PTwistRc
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.ScalarOnInertiaProp
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PTzInj
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PUntwistRc
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.P_Jmul
@@ -85,16 +86,238 @@ public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Par
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.ScalarInertia
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SchurKernelSubmodule
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SmoothStabiliserSubgroup
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SphericalOfUnramified
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SphericalUnramified
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.StepV0Stable
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Subquotient2
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SubrepresentationTransport
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TensorVector
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TranslationCoordinates
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TwistedSphericalEquivalence
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Uniformizer₂
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.NonzeroLeviEigenvectorExists
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
+import Mathlib.Tactic.Lemma
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.UnramifiedTwist
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPJacFin
+
+section
+
+@[expose] public section
+
+
+
+
+section
+noncomputable section
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL ValuativeRel Matrix
+namespace UpperTheory.TNZ
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+namespace Grp
+namespace JacquetFiniteLength₂
+variable {n : ℕ} (G : Grp k n)
+end JacquetFiniteLength₂
+theorem step_jacFin_alt {n : ℕ} (G : Grp k n) : G.Step_jacFin_alt := by
+  intro L V _ _ π hπ hirr
+  exact ⟨isSmooth_jacU G.e hπ,
+    JacquetFiniteLength₂.hasFiniteLength_jacU G L.loc.bz π hπ (hasFiniteLength_of_isIrreducible hirr)⟩
+end Grp
+end UpperTheory.TNZ
+end
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.ArtinTransferDecompositionHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp GlobalTheory.UnitaryBC UpperTheory.V.Af
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil ValuativeRel Matrix UpperTheory.TNZ
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace UpperTheory.NonzeroTypeTheory
+
+theorem artinTransferDecomposition_holds : ArtinTransferDecompositionCharacter := by
+  unfold ArtinTransferDecompositionCharacter
+  intro E Ω _ _ _ _ _ A w h a ha n χ hχ
+  have hs : ∀ i, GlobalTheory.WeilDeligne.IsSmooth ((χ i).comp (Subgroup.inclusion (GlobalTheory.WeilDeligne.Weil_le_Dec h))) := by
+    intro i
+    have hc : Continuous fun σ : ReciprocityTheory.Gal.Ine A =>
+        Subgroup.inclusion (GlobalTheory.WeilDeligne.Weil_le_Dec h) (GlobalTheory.WeilDeligne.ineIncl h σ) :=
+      continuous_subtype_val.subtype_mk _
+    exact (hχ i).preimage hc
+  choose μ hμ hμe using fun i => ha.factor _ (hs i)
+  exact ⟨μ, hμ, fun i σ => DFunLike.congr_fun (hμe i) σ⟩
+
+end UpperTheory.NonzeroTypeTheory
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.DistinctCharacterUnits
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial
+open Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands UpperTheory.TNZ
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace UpperTheory.NonzeroTypeTheory
+
+namespace DistinctCharacterUnits
+
+theorem exists_unit_ne {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+    {μ ν : kˣ →* ℂˣ} (hne : res μ ≠ res ν) : ∃ u : 𝒪[k]ˣ, μ (unitIncl k u) ≠ ν (unitIncl k u) := by
+  by_contra hh
+  push Not at hh
+  exact hne (MonoidHom.ext hh)
+
+end DistinctCharacterUnits
+
+theorem distinctOnInertia_holds : DistinctOnUnitsDistinctOnInertia := by
+  intro hA E Ω _ _ _ _ _ A w h a ha n G b c hbc
+  obtain ⟨u, hu⟩ := DistinctCharacterUnits.exists_unit_ne (G.dist b c hbc)
+  obtain ⟨t, ht⟩ := (hA E Ω A w h a ha).2 (unitIncl _ u) (valuation_eq_one_iff.mpr ⟨u, rfl⟩)
+  exact ⟨t, by rw [ht]; exact hu⟩
+
+end UpperTheory.NonzeroTypeTheory
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.PTwistRc
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial
+open Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace UpperTheory.TNZ
+
+theorem step_twistRc : TwistRestrictionProp := by
+  intro E Ω _ _ _ _ _ A w h a ha ε rc H d X _ _ σ hs hi η hη
+  refine ⟨isSmooth_twist hs hη.detChar, isIrreducible_twist hi _, ?_⟩
+  rw [← IrrGL.tw_of (hχ := hη), H.twist, H.one]
+
+end UpperTheory.TNZ
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SphericalOfUnramified
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial
+open Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace UpperTheory.TNZ
+
+theorem step_sphOfUnr : SphericalOfUnramifiedProp := by
+  intro E Ω _ _ _ _ _ A w h a ha ε rc H d v hv hd
+  obtain ⟨⟨n, c⟩, rfl⟩ := H.bij.2 v
+  have hn : n = d := by rw [← hd, H.dim]
+  subst hn
+  exact ⟨c.rep.V, inferInstance, inferInstance, c.rep.ρ, c.rep.smooth, c.rep.irr, (H.sph ⟨n, c⟩).2 hv,
+    congrArg rc (IrrGL.of_rep ⟨n, c⟩)⟩
+
+end UpperTheory.TNZ
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TwistedSphericalEquivalence
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace UpperTheory.NonzeroTypeTheory
+
+namespace TwistedSphericalEquivalence
+
+theorem isTwSphProd_of_equiv {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+    {n : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
+    {ρ : Representation ℂ (GL (Fin n) k) V} {ρ' : Representation ℂ (GL (Fin n) k) W} (e : ρ.Equiv ρ')
+    {s : ℕ} {d : Fin s → ℕ} {hd : ∑ a, d a = n} {η : Fin s → kˣ →* ℂˣ}
+    (h : UpperTheory.TNZ.IsTwSphProd ρ' d hd η) : UpperTheory.TNZ.IsTwSphProd ρ d hd η := by
+  obtain ⟨X, i1, i2, σ, hs, hi, hv, ⟨φ⟩⟩ := h
+  exact ⟨X, i1, i2, σ, hs, hi, hv, ⟨Representation.Equiv.trans e φ⟩⟩
+
+end TwistedSphericalEquivalence
+
+theorem twistedSphericalRepresentative_holds : TwistedSphericalRepresentative := by
+  intro k _ _ _ _ n V _ _ ρ h1 h2 s d hd η
+  have e := GlobalTheory.LocGL.IrrGL.equivOf ρ h1 h2
+  exact ⟨fun h => TwistedSphericalEquivalence.isTwSphProd_of_equiv e h, fun h => TwistedSphericalEquivalence.isTwSphProd_of_equiv (Representation.Equiv.symm e) h⟩
+
+end UpperTheory.NonzeroTypeTheory
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Uniformizer₂
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open ValuativeRel
+
+namespace UpperTheory.TNZ.Grp
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+namespace Uniformizer₂
+
+lemma algebraMap_ne_zero {w : 𝒪[k]} (hw : w ≠ 0) : algebraMap 𝒪[k] k w ≠ 0 := by
+  intro h
+  apply hw
+  exact Subtype.ext (by simpa using h)
+
+end Uniformizer₂
+
+theorem step_unif : UniformizerProp (k := k) := by
+  obtain ⟨w, hw⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
+  exact ⟨Units.mk0 _ (Uniformizer₂.algebraMap_ne_zero hw.ne_zero), w, hw, rfl⟩
+
+end UpperTheory.TNZ.Grp
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroFinal
+
+section
 
 @[expose] public section
 
@@ -134,5 +357,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open UpperTheory.V.W (Plc)
 open scoped Matrix
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+end
+end
 end
 end

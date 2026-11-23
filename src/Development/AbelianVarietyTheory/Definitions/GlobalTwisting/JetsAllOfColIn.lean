@@ -3,17 +3,19 @@ module
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.BelowFiniteNonempty
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.JetsInIffStepField
 import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StepBoxIffStepSuppDeg
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DefiniteBaseDataAdmissibleStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubConjEqNeg
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValPowClassNumber
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BaseDataEmbeddingConj
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseFieldsDefiniteLaws
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.IsCond
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,6 +43,83 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ProdAbsNormDivsDvd
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubConjEqNeg
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValPowClassNumber
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FieldsIsConductorPrimesModulus
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions NumberField IsDedekindDomain GlobalTheory.Mem
+open Formalism.L2.Col
+
+namespace GlobalTheory.Mem
+
+theorem Base.fields_isCond : ∀ (B : Base) (X : PreX B.toPre), B.fields.IsCond (B.primes X).cond := by
+  intro B X j
+  exact UpperTheory.Ram.isCond_condN B.host j
+
+end GlobalTheory.Mem
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DefiniteBaseDataAdmissible
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions NumberField IsDedekindDomain GlobalTheory.Mem
+open Formalism.L2.Col
+
+namespace GlobalTheory.Mem.DatLaws
+
+
+open NumberField IsDedekindDomain in
+theorem _root_.GlobalTheory.Mem.DatLaws.dat_ok : ∀ (B : _root_.GlobalTheory.Mem.Base)
+    (X : _root_.GlobalTheory.Mem.PreX B.toPre)
+    (Ch : _root_.Formalism.L2.Col.Chars B.fields (B.primes X) B.R.m),
+    Ch.Ok → Ch.FromHecke B.wts B.embLL →
+      (B.dat X Ch).Ok := by
+  intro B X Ch hCh hH
+  constructor
+  case fields => exact _root_.GlobalTheory.Mem.FieldsLaws.fields_ok B
+  case fieldsConditions => exact (_root_.GlobalTheory.Mem.FieldsLaws.fields_satisfy_definite_laws B).1
+  case embeddingStarConj => exact _root_.GlobalTheory.Mem.Base.baseData_embedding_conj B X Ch
+  case f_eq => exact (_root_.GlobalTheory.Mem.FieldsLaws.fields_satisfy_definite_laws B).2
+  case primes => exact (_root_.GlobalTheory.BasePrimes.primes_ok B X).1
+  case piG_cong => exact (_root_.GlobalTheory.BasePrimes.primes_ok B X).2
+  case cond => exact _root_.GlobalTheory.Mem.Base.fields_isCond B X
+  case chars => exact hCh
+  case hecke => exact hH
+  case wts => exact _root_.GlobalTheory.Mem.Base.wts_isOk B
+  case e_even => exact _root_.GlobalTheory.Mem.Base.dat_e_even B X Ch
+  case sizes => exact _root_.GlobalTheory.Mem.Base.primes_sizes B X
+
+end GlobalTheory.Mem.DatLaws
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DefiniteBaseDataAdmissibleStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions NumberField IsDedekindDomain GlobalTheory.Mem
+open Formalism.L2.Col
+
+theorem _root_.GlobalTheory.T.definiteBaseData_admissible : ∀ (B : Base) (X : PreX B.toPre) (Ch : Chars B.fields (B.primes X) B.R.m), Ch.Ok → Ch.FromHecke B.wts B.embLL → (B.dat X Ch).Ok := by
+  first | exact @GlobalTheory.Mem.DatLaws.dat_ok | exact GlobalTheory.Mem.DatLaws.dat_ok | (intros; apply GlobalTheory.Mem.DatLaws.dat_ok <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.GlobalTwisting.JetsAllOfColIn
+
+section
 
 @[expose] public section
 
@@ -77,3 +156,6 @@ theorem jetsAll_of_colIn (B : GlobalTheory.Mem.Base) (C : Cols B) (W : RowsRest 
     (GlobalTheory.MoveCompare.jetsAll_of_deg _ _ _ _ _ (hJ a u i hi) (GlobalTheory.MoveCompare.cBof_pos hP _ _ _ u) hL hL')
 
 end GlobalTheory.KerT
+end
+end
+end

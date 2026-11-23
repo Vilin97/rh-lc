@@ -1,6 +1,6 @@
 module
 
-public import Development.EtaleCohomology.EtaleSheaves.LeafExciseCut
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +39,36 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafExciseCut
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace LateralTheory.E.E8.ExciseCut
+
+def relMap (q : ℕ) {Z' X' Z X : Scheme.{0}} (ι' : Z' ⟶ X') (ι : Z ⟶ X) (g : Z' ⟶ Z) (f : X' ⟶ X)
+    (w : ι' ≫ f = g ≫ ι) (i n : ℤ) :
+    HK (ZMod q) (mappingCone ((chains _).map (sch.map ι))) (tw q i) n →+
+      HK (ZMod q) (mappingCone ((chains _).map (sch.map ι'))) (tw q i) n :=
+  HK.pull (ZMod q) (mappingCone.map ((chains _).map (sch.map ι')) ((chains _).map (sch.map ι))
+    ((chains _).map (sch.map g)) ((chains _).map (sch.map f)) (by simp only [← Functor.map_comp, w])) (tw q i) n
+
+def LeafConeZero : Prop := ∀ (R : Type) [CommRing R] {K L : Cx R} (φ : K ⟶ L) (F : Shv R),
+  (∀ n, Function.Bijective (HK.pull R φ F n)) → ∀ n, Subsingleton (HK R (mappingCone φ) F n)
+
+end LateralTheory.E.E8.ExciseCut
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+
+section
 
 @[expose] public section
 
@@ -110,3 +140,6 @@ theorem LateralTheory.E.E8.ExciseCut.LeafConeZero_of : LateralTheory.E.E8.Excise
       (fun n => (HomotopyCategory.quotient (Shv R) (ComplexShape.up ℤ)).obj ((res R F)⟦n⟧))
       (shIso R (res R F)) (hb' R φ F hb) n (CohomologyClass.toHom x)
   exact (hz x).trans (hz y).symm
+end
+end
+end

@@ -1,11 +1,12 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.StrongApproximation.SAOpenStatement
-public import GroundTheory.HeightsAndTheta.Theta.GaussianExample
-public import GroundTheory.AutomorphicForms.QuadraticConj
+public import Mathlib.Algebra.QuadraticAlgebra.Basic
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,9 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +42,43 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.AutomorphicForms.QuadraticConj
+public import GroundTheory.AutomorphicForms.QuadraticConj
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: GroundTheory.HeightsAndTheta.Theta.GaussianExample
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Theta
+
+open GroundTheory.Automorphic Matrix
+
+instance fact_gaussQ : Fact (∀ r : ℚ, r ^ 2 ≠ -1 + 0 * r) :=
+  ⟨fun r h => by nlinarith [sq_nonneg r]⟩
+
+abbrev GaussQ : Type := QuadraticAlgebra ℚ (-1) 0
+
+instance : Algebra.IsQuadraticExtension ℚ GaussQ :=
+  ⟨QuadraticAlgebra.finrank_eq_two _ _⟩
+
+end GroundTheory.Heights₂.Theta
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.StrongApproximation.Statements
+
+section
 
 @[expose] public section
 
@@ -354,3 +385,6 @@ end Inhabitants
 end StrongApprox
 
 end GroundTheory.Heights₂.Heights
+end
+end
+end

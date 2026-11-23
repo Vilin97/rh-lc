@@ -1,13 +1,14 @@
 module
 
 public import Development.EtaleCohomology.EtaleSheaves.CurveThroughGenericPointSpreadsToSmoothProperFamily2
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsFiniteFromNormalizationOfPerfectField
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.MemRangeOfProperGenericFibreSeparated
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.TopologicalKrullDimLeOfIsOpenImmersionIntegral
+public import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
+public import Mathlib.AlgebraicGeometry.Normalization
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteIntegralClosureOfEssFiniteTypeField
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ModuleFiniteIntegralClosureOfFiniteTypePerfect
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,8 +24,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,6 +47,167 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsSpecializesLiftGenericBaseChange
+import Mathlib.Tactic.Linter.Style
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.TopologicalKrullDimLeOfIsOpenImmersionIntegral
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.IsFiniteFromNormalizationOfPerfectField
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4
+
+theorem UpperTheory.isFinite_fromNormalization_of_perfectField :
+    ∀ (k : Type) [Field k] [PerfectField k] {D T : Scheme.{0}} (t : T ⟶ Sp k) [LocallyOfFiniteType t] (f : D ⟶ T) [LocallyOfFiniteType f] [QuasiCompact f] [QuasiSeparated f] [IsIntegral D], IsFinite f.fromNormalization := by
+  intro k _ _ D T t _ f _ _ _ _
+  rw [isFinite_iff]
+  refine ⟨inferInstance, fun U hU => ?_⟩
+  rw [f.fromNormalization_app hU]
+  letI := (f.app U).hom.toAlgebra
+  have h : Module.Finite Γ(T, U) (integralClosure Γ(T, U) Γ(D, f ⁻¹ᵁ U)) := by
+    rcases (f ⁻¹ᵁ U).1.eq_empty_or_nonempty with hE | hN
+    · have hb : f ⁻¹ᵁ U = ⊥ := SetLike.ext' hE
+      haveI : Subsingleton Γ(D, f ⁻¹ᵁ U) :=
+        CommRingCat.subsingleton_of_isTerminal (D.sheaf.isTerminalOfEqEmpty hb)
+      infer_instance
+    · obtain ⟨x, hx⟩ := hN
+      obtain ⟨V, hV, hxV, hVle⟩ :=
+        (TopologicalSpace.Opens.isBasis_iff_nbhd.mp D.isBasis_affineOpens) hx
+      haveI : Nonempty V := ⟨⟨x, hxV⟩⟩
+      haveI : Nonempty (f ⁻¹ᵁ U) := ⟨⟨x, hx⟩⟩
+      have hkt : (t.appLE ⊤ U (by simp)).hom.FiniteType :=
+        LocallyOfFiniteType.finiteType_appLE t (isAffineOpen_top _) hU (by simp)
+      let kA : k →+* Γ(T, U) :=
+        (t.appLE ⊤ U (by simp)).hom.comp (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom
+      have hkA : kA.FiniteType :=
+        hkt.comp (RingHom.FiniteType.of_surjective _
+          (Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv.symm.surjective)
+      letI : Algebra k Γ(T, U) := kA.toAlgebra
+      haveI : Algebra.FiniteType k Γ(T, U) := hkA
+      haveI : IsNoetherianRing Γ(T, U) := Algebra.FiniteType.isNoetherianRing k Γ(T, U)
+      have heq : (D.germToFunctionField (f ⁻¹ᵁ U)).hom.comp (f.app U).hom =
+          (D.germToFunctionField V).hom.comp (f.appLE U V hVle).hom := by
+        rw [← CommRingCat.hom_comp, ← CommRingCat.hom_comp]
+        congr 1
+        simp [Scheme.Hom.appLE]
+      let φ : Γ(T, U) →+* D.functionField :=
+        (D.germToFunctionField V).hom.comp (f.appLE U V hVle).hom
+      letI : Algebra Γ(T, U) D.functionField := φ.toAlgebra
+      have h1 : (D.germToFunctionField V).hom.EssFiniteType := GlobalTheory.essFiniteType_germ hV _ _
+      have h2 : (f.appLE U V hVle).hom.EssFiniteType :=
+        (LocallyOfFiniteType.finiteType_appLE f hU hV hVle).essFiniteType
+      haveI : Algebra.EssFiniteType Γ(T, U) D.functionField := h2.comp h1
+      haveI := UpperTheory.module_finite_integralClosure_of_finiteType_perfect k Γ(T, U) D.functionField
+      let ψ : Γ(D, f ⁻¹ᵁ U) →ₐ[Γ(T, U)] D.functionField :=
+        { (D.germToFunctionField (f ⁻¹ᵁ U)).hom with
+          commutes' := fun a => by
+            change (D.germToFunctionField (f ⁻¹ᵁ U)).hom ((f.app U).hom a) = φ a
+            exact congrArg (fun g => g a) heq }
+      exact GlobalTheory.finite_integralClosure_of_family (ι := Unit) (L := fun _ => D.functionField)
+        (fun _ => ψ) (fun b hb => D.germToFunctionField_injective (f ⁻¹ᵁ U)
+          (by rw [map_zero]; exact hb ()))
+  rw [CommRingCat.hom_comp]
+  refine RingHom.Finite.comp ?_ ?_
+  · exact RingHom.Finite.of_surjective _
+      (f.normalizationObjIso hU).commRingCatIsoToRingEquiv.symm.surjective
+  · exact (RingHom.finite_algebraMap).mpr h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.MemRangeOfProperGenericFibreSeparated
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4
+
+
+theorem UpperTheory.mem_range_of_proper_generic_fibre_separated :
+    ∀ (R Ω : Type) [CommRing R] [IsDomain R] [Field Ω] [Algebra R Ω], Function.Injective (algebraMap R Ω) → ∀ {B Y D C : Scheme.{0}} (ι : Sp R ⟶ B) [IsOpenImmersion ι] (π : Y ⟶ B) [IsSeparated π] [IrreducibleSpace Y] (j : D ⟶ Y) [IsOpenImmersion j], Dense (Set.range j) → ∀ (q : D ⟶ Sp R), j ≫ π = q ≫ ι → ∀ (c : C ⟶ Sp Ω) [IsProper c] (v : C ⟶ D), IsPullback v c q (Spec.map (CommRingCat.ofHom (algebraMap R Ω))) → ∀ (y : Y), π y ∈ Set.range (Spec.map (CommRingCat.ofHom (algebraMap R Ω)) ≫ ι) → y ∈ Set.range j := by
+  intro R Ω _ _ _ _ hinj B Y D C ι _ π _ _ j _ hd q hq c _ v hpb y hy
+  set g := Spec.map (CommRingCat.ofHom (algebraMap R Ω)) with hg
+  let U' : Y.Opens := π ⁻¹ᵁ ι.opensRange
+  have hjU : Set.range j ⊆ Set.range U'.ι := by
+    rintro _ ⟨d, rfl⟩
+    rw [Scheme.Opens.range_ι]
+    show π (j d) ∈ ι.opensRange
+    rw [← Scheme.Hom.comp_apply, hq, Scheme.Hom.comp_apply]
+    exact ⟨_, rfl⟩
+  let jU : D ⟶ U' := IsOpenImmersion.lift U'.ι j hjU
+  have hjUf : jU ≫ U'.ι = j := IsOpenImmersion.lift_fac _ _ _
+  have hπU : Set.range (U'.ι ≫ π) ⊆ Set.range ι := by
+    rintro _ ⟨z, rfl⟩
+    exact z.2
+  let w : (U' : Scheme) ⟶ Sp R := IsOpenImmersion.lift ι (U'.ι ≫ π) hπU
+  have hw : w ≫ ι = U'.ι ≫ π := IsOpenImmersion.lift_fac _ _ _
+  have hjw : jU ≫ w = q := by
+    rw [← cancel_mono ι, Category.assoc, hw, ← Category.assoc, hjUf, hq]
+  haveI : IsSeparated (w ≫ ι) := by rw [hw]; infer_instance
+  haveI : IsSeparated w := IsSeparated.of_comp w ι
+  let m : C ⟶ pullback w g := pullback.lift (v ≫ jU) c (by rw [Category.assoc, hjw, hpb.w])
+  have hm : m ≫ pullback.snd w g = c := pullback.lift_snd _ _ _
+  haveI : UniversallyClosed (m ≫ pullback.snd w g) := by rw [hm]; infer_instance
+  haveI : UniversallyClosed m := UniversallyClosed.of_comp_of_isSeparated m (pullback.snd w g)
+  have hleft : IsPullback m v (pullback.fst w g) jU := by
+    refine IsPullback.of_right ?_ (pullback.lift_fst _ _ _) (IsPullback.of_hasPullback w g).flip
+    rw [hm, hjw]
+    exact hpb.flip
+  have hI : hleft.isoPullback.inv ≫ m = pullback.fst (pullback.fst w g) jU :=
+    (Iso.inv_comp_eq _).mpr hleft.isoPullback_hom_fst.symm
+  have hrange : (pullback.fst w g) ⁻¹' Set.range jU ⊆ Set.range m := by
+    intro z hz
+    have e := IsOpenImmersion.range_pullbackFst jU (pullback.fst w g)
+    have hz' : z ∈ Set.range (pullback.fst (pullback.fst w g) jU) := by
+      rw [e]
+      exact hz
+    obtain ⟨t, rfl⟩ := hz'
+    refine ⟨hleft.isoPullback.inv t, ?_⟩
+    rw [← Scheme.Hom.comp_apply, hI]
+  obtain ⟨p, hp⟩ := hy
+  have hyU : y ∈ U' := by
+    show π y ∈ ι.opensRange
+    rw [← hp, Scheme.Hom.comp_apply]
+    exact ⟨_, rfl⟩
+  let yU : U' := ⟨y, hyU⟩
+  have e1 : ι (w yU) = π y := by
+    show (w ≫ ι) yU = π y
+    rw [hw]
+    rfl
+  have hwy : w yU = g p := by
+    apply ι.isOpenEmbedding.injective
+    rw [e1, ← hp]
+    rfl
+  obtain ⟨y', hy'1, -⟩ := Scheme.Pullback.exists_preimage_pullback (f := w) (g := g) yU p hwy
+  have hξ : genericPoint Y ∈ Set.range j := by
+    rw [(genericPoint_spec Y).mem_open_set_iff j.isOpenEmbedding.isOpen_range, Set.univ_inter]
+    exact hd.nonempty
+  obtain ⟨d, hdξ⟩ := hξ
+  have hsp : jU d ⤳ yU := by
+    apply (U'.ι.isOpenEmbedding.isInducing.specializes_iff).mp
+    have e2 : U'.ι (jU d) = genericPoint Y := by
+      rw [← Scheme.Hom.comp_apply, hjUf, hdξ]
+    rw [e2]
+    exact (genericPoint_spec Y).specializes (Set.mem_univ _)
+  obtain ⟨x', hx'sp, hx'fst⟩ := UpperTheory.exists_specializes_lift_generic_base_change R Ω hinj w y' (jU d) (by rw [hy'1]; exact hsp)
+  have hx'm : x' ∈ Set.range m := hrange ⟨d, hx'fst.symm⟩
+  have hy'm : y' ∈ Set.range m := hx'sp.mem_closed m.isClosedMap.isClosed_range hx'm
+  obtain ⟨c0, hc0⟩ := hy'm
+  refine ⟨v c0, ?_⟩
+  have h1 : pullback.fst w g (m c0) = jU (v c0) := by
+    rw [← Scheme.Hom.comp_apply, hleft.w, Scheme.Hom.comp_apply]
+  rw [← hjUf, Scheme.Hom.comp_apply, ← h1, hc0, hy'1]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.ExtensionByZeroOfZariskiQuasiFiniteFactorization
+
+section
 
 @[expose] public section
 
@@ -205,4 +368,6 @@ theorem UpperTheory.Cb.extension_by_zero_of_zariski_quasi_finite_factorization :
   · rw [← Category.assoc, hc21, Category.assoc, Category.assoc, hjg2]
   · rw [Category.assoc, ← Category.assoc j0, hjg0, hF0s, hve]
 
+end
+end
 end

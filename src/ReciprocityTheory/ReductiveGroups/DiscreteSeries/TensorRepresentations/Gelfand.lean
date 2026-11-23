@@ -1,12 +1,15 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.IsInfUnitary
-public import Lemmata.MiscLemmasP.Imports
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -19,10 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,10 +42,34 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.MiscLemmasP.Imports
+
+section
+
+@[expose] public section
+
+universe u_1
+
+namespace Bl.ThirdBlockLemmaA
+
+noncomputable def goal1 :
+  {n : Nat} →   {M : Type u_1} →     [inst : AddCommGroup M] →       [inst_1 : _root_.Module Complex M] →         (Fin n → Fin n → Module.End Complex M) → Nat → Fin n → Fin n → Module.End Complex M := fun A k i j => ((Matrix.of A) ^ k) i j
+
+end Bl.ThirdBlockLemmaA
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.Gelfand
+
+section
 
 @[expose] public section
 
@@ -96,3 +120,6 @@ theorem gelfand_comm {E : Fin n → Fin n → Module.End ℂ M} (hE : IsGlRep E)
   exact sub_eq_zero.mp h
 
 end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end

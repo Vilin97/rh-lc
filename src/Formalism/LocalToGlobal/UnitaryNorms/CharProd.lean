@@ -1,7 +1,7 @@
 module
 
 public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HeckeProd
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HeckeLocalProduct.PvLocalSelf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,21 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HeckeProd
+
+section
+
+@[expose] public section
+
+theorem hecke_product_rule : ∀ (L : Type) [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L), χ.ProductRule :=
+  fun _ _ _ χ => PI.HeckeProdW.productRule χ
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.UnitaryNorms.CharProd
+
+section
+
 @[expose] public section
 
 noncomputable section
@@ -59,3 +74,6 @@ theorem val_principal (S : Finset (HeightOneSpectrum (𝓞 L))) (hS : ∀ v, v �
   eq_inv_of_mul_eq_one_right (χ.productRule S hS k)
 
 end Formalism.L2.Host.HChar
+end
+end
+end

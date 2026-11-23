@@ -1,17 +1,18 @@
 module
 
-public import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.PointwiseKernelBound
-public import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.FarTermsLatticeBound
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermitianFormUnitaryOneOne
+public import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -39,6 +40,60 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LayerProd
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LayerProd
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermitianFormUnitaryOneOne
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.PointwiseKernelBound
+
+section
+
+@[expose] public section
+
+open NumberField Finset
+
+noncomputable section
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.PointwiseKernelBound
+
+open Formalism.MainNotions.S GlobalTheory.Count
+
+def decHS (q : ℕ) (h t : ℝ) : ℝ := Real.exp (-(h / 8) * min (t ^ 2) (t / Real.sqrt (2 * (q : ℝ))))
+
+end GlobalTheory.IndefiniteRowSideFullHecke.PointwiseKernelBound
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.FarTermsLatticeBound
+
+section
+
+@[expose] public section
+
+open NumberField
+
+noncomputable section
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.FarTermsLatticeBound
+
+open Formalism.MainNotions.S GlobalTheory.Count
+
+def farSet (B : RowsAut) (d : InfinitePlace B.I.F → ℝ) (ep : ℝ) (x : B.I.GA) : Set B.I.GA :=
+  {γ | γ ∈ B.I.GFset ∧ ¬ IsNear B d ep x γ}
+
+def latFactor (I : AutInst) (x : I.GA) : ℝ :=
+  (3 * Real.sqrt (I.n : ℝ) / tau1 I x ^ 2) ^ (2 * (I.n ^ 2 * I.f))
+
+end GlobalTheory.IndefiniteRowSideFullHecke.FarTermsLatticeBound
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Statements.CuspFrameWeights.CuspFrame
+
+section
 
 @[expose] public section
 
@@ -75,3 +130,6 @@ def FarBound : Prop :=
           (2 * (B.I.f : ℝ) * 3 ^ B.I.f * Real.exp (-(h * ep ^ 2 / 16)))
 
 end GlobalTheory.Deep
+end
+end
+end

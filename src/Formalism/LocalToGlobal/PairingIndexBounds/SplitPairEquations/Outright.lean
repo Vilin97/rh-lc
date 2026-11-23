@@ -1,12 +1,12 @@
 module
 
 public import Formalism.LocalToGlobal.KernelLattices.LateralTheory
-public import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.EqPAll
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SplitPairGen
+public import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.SplitPairGen
+public import Formalism.LocalToGlobal.PairingIndexBounds.HalvesRecursion.RecursiveLatticeMembership.MemLamOfIff
+public import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.SplitPairOfGen
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -35,10 +35,38 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SplitPairGen
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Tactic.NormNum.Parity
+
+-- Source module: Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.EqPAll
+
+section
+
+@[expose] public section
+
+namespace Formalism.L2.PairingIndexBounds.Eq.SqG
+
+theorem eqP_all {D : Formalism.BasicNotions.D7} {cc : Ideal (NumberField.RingOfIntegers D.host.K)} {δ : ℂ}
+    (B : Formalism.L2.Ker.Base D cc δ) (hcc : Formalism.MainNotions.TaylorLogMetric.IsCurveIdeal D cc) (hδ : Formalism.MainNotions.TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ)
+    (hS : B.StdOK) (χ : Formalism.MainNotions.TaylorLogMetric.IdE D → ℂ) (hχ : Formalism.MainNotions.TaylorLogMetric.IsChi D χ) (hP : SplitPairGen) : B.EqP χ := by
+  have hδ0 : δ ≠ 0 := by
+    intro h0
+    apply Formalism.L2.PairingIndexBounds.Rec.discrNZ D cc hcc
+    rw [← hδ, h0]
+    norm_num
+  exact eqP_gen B hcc hδ hδ0 hS χ hχ hP
+
+end Formalism.L2.PairingIndexBounds.Eq.SqG
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.Outright
+
+section
 
 @[expose] public section
 
@@ -50,3 +78,5 @@ theorem eqP_outright {D : Formalism.BasicNotions.D7} {cc : Ideal (NumberField.Ri
   eqP_all B hcc hδ hS χ hχ split_pair_generation
 
 end Formalism.L2.PairingIndexBounds.Eq.SqG
+end
+end

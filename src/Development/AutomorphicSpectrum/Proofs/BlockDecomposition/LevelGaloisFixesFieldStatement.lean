@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LevelChainValuations.LatCDefs
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LevelGaloisFixesField
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,9 +39,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LevelGaloisFixesField
+
+section
+
+@[expose] public section
+
+open GroundTheory.PAdicHodge Formalism.Per6 DividedPowers CrystallineSemistableComparison CrystallineSemistableComparison.Pb CrystallineSemistableComparison.Pb.Lat
+
+namespace GlobalTheory.CompanionTheory.LatC
+
+theorem sigmaB_fixes_K {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} {M : ℕ}
+    (h : LevHyp l K M) (k : ℕ) : ∀ g (a : K),
+    (lev h k).σB g (algebraMap K (lev h k).B a) = algebraMap K (lev h k).B a := by
+  intro g a
+  have key : gP l g (kP l K a) = kP l K a := by
+    have h1 : galBdRHom (toBot g.1) (algClToBdR l (a : PadicAlgCl l))
+        = algClToBdR l ((toBot g.1) (a : PadicAlgCl l)) :=
+      gal_smul_algClToBdR (toBot g.1) (a : PadicAlgCl l)
+    have h2 : (toBot g.1) (a : PadicAlgCl l) = (a : PadicAlgCl l) := g.2 a
+    rw [h2] at h1
+    exact h1
+  change gB h k g (pk l k (kP l K a)) = pk l k (kP l K a)
+  change Ideal.quotientMap _ (gP l g) (h.galT k g) (Ideal.Quotient.mk _ (kP l K a)) = Ideal.Quotient.mk _ (kP l K a)
+  rw [Ideal.quotientMap_mk, key]
+
+end GlobalTheory.CompanionTheory.LatC
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LevelGaloisFixesFieldStatement
+
+section
+
 @[expose] public section
 
 open GroundTheory.PAdicHodge Formalism.Per6 DividedPowers CrystallineSemistableComparison CrystallineSemistableComparison.Pb CrystallineSemistableComparison.Pb.Lat
 
 theorem _root_.GlobalTheory.T.level_galois_fixes_field : ∀ {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} {M : ℕ} (h : LevHyp l K M) (k : ℕ), ∀ g (a : K), (lev h k).σB g (algebraMap K (lev h k).B a) = algebraMap K (lev h k).B a := by
   first | exact @GlobalTheory.CompanionTheory.LatC.sigmaB_fixes_K | exact GlobalTheory.CompanionTheory.LatC.sigmaB_fixes_K | (intros; apply GlobalTheory.CompanionTheory.LatC.sigmaB_fixes_K <;> assumption)
+end
+end

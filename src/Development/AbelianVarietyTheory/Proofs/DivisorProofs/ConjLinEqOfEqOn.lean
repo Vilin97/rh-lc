@@ -6,8 +6,8 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlane
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzConjMem
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLocalOperator
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDblCoordDblD
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialFourierPreservesSchwartzL2Statement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialRightPreservesL2NormStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasurableThetaSumOfSchrodinger
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.LcscAdelicUnitaryGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +41,198 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialFourierPreservesSchwartzL2
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix ENNReal
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.DblEval
+
+noncomputable section
+
+namespace GlobalTheory.DblEval
+
+theorem lintegral_partL_eq : ∀ {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ']
+    (T : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ → AF F) → ℂ)),
+    (∀ μ : @Measure (κ → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ φ ∈ schA F κ, ∫⁻ x, ‖T φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖φ x‖ₑ ^ 2 ∂μ) →
+    (∀ Φ ∈ schA F (κ ⊕ κ'), partL T Φ ∈ schA F (κ ⊕ κ')) →
+    ∀ μ : @Measure (κ ⊕ κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ Φ ∈ schA F (κ ⊕ κ'), ∫⁻ x, ‖partL T Φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
+  intro F _ _ κ κ' _ _ T hT hmem μ hμ
+  haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F
+  haveI := GlobalTheory.AdelicUnitaryTop.locallyCompact_adele F
+  letI mX : MeasurableSpace (κ → AF F) := borel _
+  haveI : BorelSpace (κ → AF F) := ⟨rfl⟩
+  letI mY : MeasurableSpace (κ' → AF F) := borel _
+  haveI : BorelSpace (κ' → AF F) := ⟨rfl⟩
+  letI mZ : MeasurableSpace (κ ⊕ κ' → AF F) := borel _
+  haveI : BorelSpace (κ ⊕ κ' → AF F) := ⟨rfl⟩
+  let μ₁ : Measure (κ → AF F) := Measure.addHaar
+  let μ₂ : Measure (κ' → AF F) := Measure.addHaar
+  obtain ⟨C₁, hC₁⟩ := hT μ₁ inferInstance
+  refine ⟨C₁, fun Φ hΦ => ?_⟩
+  let e : (κ ⊕ κ' → AF F) ≃ₜ (κ → AF F) × (κ' → AF F) := Homeomorph.sumArrowHomeomorphProdArrow
+  let eA : ((κ → AF F) × (κ' → AF F)) ≃ₜ+ (κ ⊕ κ' → AF F) :=
+    { e.symm with map_add' := fun a b => by funext i; cases i <;> rfl }
+  let ν : Measure (κ ⊕ κ' → AF F) := (μ₁.prod μ₂).map eA
+  haveI : ν.IsAddHaarMeasure := eA.isAddHaarMeasure_map _
+  obtain ⟨c, hμν⟩ : ∃ c : ℝ≥0, μ = c • ν := ⟨_, Measure.isAddLeftInvariant_eq_smul μ ν⟩
+  have key : ∀ f : (κ ⊕ κ' → AF F) → ℝ≥0∞, Measurable f →
+      ∫⁻ z, f z ∂μ = c * ∫⁻ y, ∫⁻ x, f (Sum.elim x y) ∂μ₁ ∂μ₂ := by
+    intro f hf
+    have hmeas : Measurable (⇑eA) := eA.continuous.measurable
+    rw [hμν, lintegral_smul_measure]
+    simp only [ν]
+    rw [lintegral_map hf hmeas, lintegral_prod_symm (fun p => f (eA p)) (hf.comp hmeas).aemeasurable]
+    rfl
+  have hc1 := GlobalTheory.ThetaTransformMeas.continuous_of_mem_schA F (hmem Φ hΦ)
+  have hc2 := GlobalTheory.ThetaTransformMeas.continuous_of_mem_schA F hΦ
+  rw [key _ (hc1.measurable.enorm.pow_const 2), key _ (hc2.measurable.enorm.pow_const 2)]
+  have inner : ∀ y, ∫⁻ x, ‖partL T Φ (Sum.elim x y)‖ₑ ^ 2 ∂μ₁ = C₁ * ∫⁻ x, ‖Φ (Sum.elim x y)‖ₑ ^ 2 ∂μ₁ :=
+    fun y => hC₁ _ (sliceL_mem hΦ y)
+  have hm : Measurable fun y => ∫⁻ x, ‖Φ (Sum.elim x y)‖ₑ ^ 2 ∂μ₁ :=
+    Measurable.lintegral_prod_left' (f := fun p : (κ → AF F) × (κ' → AF F) => ‖Φ (eA p)‖ₑ ^ 2)
+      ((hc2.comp eA.continuous).measurable.enorm.pow_const 2)
+  simp_rw [inner]
+  rw [lintegral_const_mul _ hm]
+  ring
+
+end GlobalTheory.DblEval
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialFourierPreservesSchwartzL2Statement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix ENNReal
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.DblEval
+
+theorem _root_.GlobalTheory.T.partial_fourier_preserves_schwartz_L2 : ∀ {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ']
+    (T : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ → AF F) → ℂ)),
+    (∀ μ : @Measure (κ → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ φ ∈ schA F κ, ∫⁻ x, ‖T φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖φ x‖ₑ ^ 2 ∂μ) →
+    (∀ Φ ∈ schA F (κ ⊕ κ'), partL T Φ ∈ schA F (κ ⊕ κ')) →
+    ∀ μ : @Measure (κ ⊕ κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ Φ ∈ schA F (κ ⊕ κ'), ∫⁻ x, ‖partL T Φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
+  first | exact @GlobalTheory.DblEval.lintegral_partL_eq | exact GlobalTheory.DblEval.lintegral_partL_eq | (intros; apply GlobalTheory.DblEval.lintegral_partL_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialRightPreservesL2Norm
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix ENNReal
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.DblEval
+
+noncomputable section
+
+namespace GlobalTheory.DblEval.L2RightPartial
+
+theorem partR_lintegral_sq_eq_const_mul_of_mem_schA : ∀ {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ']
+    (T : ((κ' → AF F) → ℂ) →ₗ[ℂ] ((κ' → AF F) → ℂ)),
+    (∀ μ : @Measure (κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ φ ∈ schA F κ', ∫⁻ x, ‖T φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖φ x‖ₑ ^ 2 ∂μ) →
+    (∀ Φ ∈ schA F (κ ⊕ κ'), partR T Φ ∈ schA F (κ ⊕ κ')) →
+    ∀ μ : @Measure (κ ⊕ κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ Φ ∈ schA F (κ ⊕ κ'), ∫⁻ x, ‖partR T Φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
+  intro F _ _ κ κ' _ _ T hT hmem μ hμ
+  letI mX : MeasurableSpace (κ → AF F) := borel _
+  haveI : BorelSpace (κ → AF F) := ⟨rfl⟩
+  letI mY : MeasurableSpace (κ' → AF F) := borel _
+  haveI : BorelSpace (κ' → AF F) := ⟨rfl⟩
+  letI mZ : MeasurableSpace (κ ⊕ κ' → AF F) := borel _
+  haveI : BorelSpace (κ ⊕ κ' → AF F) := ⟨rfl⟩
+  haveI : LocallyCompactSpace (AF F) := GlobalTheory.AdelicUnitaryTop.locallyCompact_adele F
+  haveI : SecondCountableTopology (AF F) := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F
+  haveI := hμ
+  let μ₁ : Measure (κ → AF F) := Measure.addHaar
+  let μ₂ : Measure (κ' → AF F) := Measure.addHaar
+  obtain ⟨C, hC⟩ := hT μ₂ inferInstance
+
+  let e : (κ ⊕ κ' → AF F) ≃ₜ (κ → AF F) × (κ' → AF F) := Homeomorph.sumArrowHomeomorphProdArrow
+  let eA : (κ ⊕ κ' → AF F) ≃ₜ+ (κ → AF F) × (κ' → AF F) :=
+    { e.toEquiv with
+      map_add' := fun _ _ => rfl
+      continuous_toFun := e.continuous
+      continuous_invFun := e.symm.continuous }
+  haveI : (μ.map eA).IsAddHaarMeasure := ContinuousAddEquiv.isAddHaarMeasure_map μ eA
+  set c := (μ.map eA).addHaarScalarFactor (μ₁.prod μ₂)
+  have hprod : μ.map eA = c • μ₁.prod μ₂ := Measure.isAddLeftInvariant_eq_smul _ _
+
+  have key : ∀ g : (κ ⊕ κ' → AF F) → ℝ≥0∞, Measurable g →
+      ∫⁻ z, g z ∂μ = c * ∫⁻ a, ∫⁻ b, g (Sum.elim a b) ∂μ₂ ∂μ₁ := by
+    intro g hg
+    have h1 : ∫⁻ z, g z ∂μ = ∫⁻ p, g (e.symm p) ∂(μ.map eA) := by
+      rw [show μ.map eA = μ.map e.toMeasurableEquiv from rfl, lintegral_map_equiv]
+      refine lintegral_congr fun z => ?_
+      exact congrArg g (e.symm_apply_apply z).symm
+    rw [h1, hprod, lintegral_smul_measure, ENNReal.smul_def, smul_eq_mul,
+      lintegral_prod (fun p => g (e.symm p)) (hg.comp e.symm.continuous.measurable).aemeasurable]
+    rfl
+  have hmeas : ∀ Φ ∈ schA F (κ ⊕ κ'), Measurable fun z => ‖Φ z‖ₑ ^ 2 := fun Φ hΦ =>
+    ((GlobalTheory.ThetaTransformMeas.continuous_of_mem_schA F hΦ).measurable.enorm).pow_const 2
+  refine ⟨C, fun Φ hΦ => ?_⟩
+  have hslice : ∀ a : κ → AF F, (fun x => Φ (Sum.elim a x)) ∈ schA F κ' := fun a =>
+    GlobalTheory.ThK.Adapt.slice_mem_schA (Equiv.refl (κ ⊕ κ')) a hΦ
+  have hin : ∀ a : κ → AF F, ∫⁻ b, ‖partR T Φ (Sum.elim a b)‖ₑ ^ 2 ∂μ₂ =
+      C * ∫⁻ b, ‖Φ (Sum.elim a b)‖ₑ ^ 2 ∂μ₂ := fun a => hC _ (hslice a)
+  have hm2 : Measurable fun a : κ → AF F => ∫⁻ b, ‖Φ (Sum.elim a b)‖ₑ ^ 2 ∂μ₂ :=
+    ((hmeas Φ hΦ).comp e.symm.continuous.measurable).lintegral_prod_right'
+  rw [key _ (hmeas _ (hmem Φ hΦ)), key _ (hmeas Φ hΦ)]
+  simp_rw [hin]
+  rw [lintegral_const_mul _ hm2, mul_left_comm]
+
+end GlobalTheory.DblEval.L2RightPartial
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialRightPreservesL2NormStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct NNReal Matrix ENNReal
+open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.DblEval
+
+theorem _root_.GlobalTheory.T.partial_right_preserves_l2_norm : ∀ {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ']
+    (T : ((κ' → AF F) → ℂ) →ₗ[ℂ] ((κ' → AF F) → ℂ)),
+    (∀ μ : @Measure (κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ φ ∈ schA F κ', ∫⁻ x, ‖T φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖φ x‖ₑ ^ 2 ∂μ) →
+    (∀ Φ ∈ schA F (κ ⊕ κ'), partR T Φ ∈ schA F (κ ⊕ κ')) →
+    ∀ μ : @Measure (κ ⊕ κ' → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
+      ∃ C : ℝ≥0∞, ∀ Φ ∈ schA F (κ ⊕ κ'), ∫⁻ x, ‖partR T Φ x‖ₑ ^ 2 ∂μ = C * ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
+  first | exact @GlobalTheory.DblEval.L2RightPartial.partR_lintegral_sq_eq_const_mul_of_mem_schA | exact GlobalTheory.DblEval.L2RightPartial.partR_lintegral_sq_eq_const_mul_of_mem_schA | (intros; apply GlobalTheory.DblEval.L2RightPartial.partR_lintegral_sq_eq_const_mul_of_mem_schA <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinEqOfEqOn
+
+section
 
 @[expose] public section
 
@@ -276,3 +467,6 @@ theorem hasDbl_of_loc {E' : Type} [CommRing E'] [Algebra (AF F) E'] (c : E' →�
 end Main
 
 end GlobalTheory.DblTr
+end
+end
+end

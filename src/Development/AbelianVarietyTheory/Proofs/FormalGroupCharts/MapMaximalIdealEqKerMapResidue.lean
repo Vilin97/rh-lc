@@ -5,10 +5,7 @@ public import Mathlib.RingTheory.AdicCompletion.Basic
 public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
 public import Mathlib.RingTheory.MvPowerSeries.Basic
 public import Mathlib.RingTheory.Noetherian.Defs
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatMvPowerSeriesOfIsNoetherianRingStatement
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatQuotientWeaklyRegularStatement
-public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.IsWeaklyRegularMvPowerSeriesOfFiniteColengthStatement
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
+public import Mathlib.RingTheory.Flat.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,13 +17,13 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.MvPowerSeries.Equiv
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -35,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,7 +44,174 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Regular.RegularSequence
+public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatQuotientWeaklyRegular
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsRegularOfSupportDimQuotientAddLengthLe
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsWeaklyRegularIffIsQuasiRegularSeqOfIsLocalRing
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.PredMulSumPadicValNatFactorialAddCardLe
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
+import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.KrullDimension.Field
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
+import Mathlib.RingTheory.MvPowerSeries.Equiv
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatMvPowerSeries
+
+section
+
+@[expose] public section
+
+open MvPowerSeries IsLocalRing
+open scoped TensorProduct
+
+namespace GlobalTheory.PowerSeriesFlat
+
+theorem flat_pi (T : Type*) [CommRing T] [IsNoetherianRing T] (ι : Type*) :
+    Module.Flat T (ι → T) := by
+  apply Module.Flat.of_forall_isTrivialRelation
+  intro l f x h
+  let φ : (Fin l → T) →ₗ[T] T := Fintype.linearCombination T f
+  have hφ : ∀ v : Fin l → T, φ v = ∑ i, f i * v i := by
+    intro v
+    simp [φ, Fintype.linearCombination_apply, mul_comm]
+  have hfg : (LinearMap.ker φ).FG := IsNoetherian.noetherian _
+  obtain ⟨k, s, hs⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hfg
+  have hx : ∀ t : ι, ∃ c : Fin k → T, ∑ j, c j • s j = fun i => x i t := by
+    intro t
+    have hm : (fun i => x i t) ∈ LinearMap.ker φ := by
+      rw [LinearMap.mem_ker, hφ]
+      have := congrFun h t
+      simpa [Finset.sum_apply] using this
+    rw [← hs] at hm
+    exact (Submodule.mem_span_range_iff_exists_fun T).1 hm
+  choose c hc using hx
+  refine ⟨k, fun i j => s j i, fun j t => c t j, ?_, ?_⟩
+  · intro i
+    funext t
+    have := congrFun (hc t) i
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this ⊢
+    rw [← this]
+    exact Finset.sum_congr rfl fun j _ => mul_comm _ _
+  · intro j
+    have hm : s j ∈ LinearMap.ker φ := by
+      rw [← hs]
+      exact Submodule.subset_span ⟨j, rfl⟩
+    rwa [LinearMap.mem_ker, hφ] at hm
+
+theorem flat_mvPowerSeries :
+    ∀ (T : Type) [CommRing T] [IsNoetherianRing T] (σ : Type),
+      Module.Flat T (MvPowerSeries σ T) :=
+  fun T _ _ σ => flat_pi T (σ →₀ ℕ)
+
+end GlobalTheory.PowerSeriesFlat
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatMvPowerSeriesOfIsNoetherianRing
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+namespace GlobalTheory.FiniteHeight
+
+theorem flat_mvPowerSeries_of_isNoetherianRing :
+    ∀ (T : Type) [CommRing T] [IsNoetherianRing T] (σ : Type),
+      Module.Flat T (MvPowerSeries σ T) :=
+  GlobalTheory.PowerSeriesFlat.flat_mvPowerSeries
+
+end GlobalTheory.FiniteHeight
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatMvPowerSeriesOfIsNoetherianRingStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.module_flat_mvPowerSeries_of_isNoetherianRing : ∀ (T : Type) [CommRing T] [IsNoetherianRing T] (σ : Type), Module.Flat T (MvPowerSeries σ T) := by
+  first | exact @GlobalTheory.FiniteHeight.flat_mvPowerSeries_of_isNoetherianRing | exact GlobalTheory.FiniteHeight.flat_mvPowerSeries_of_isNoetherianRing | (intros; apply GlobalTheory.FiniteHeight.flat_mvPowerSeries_of_isNoetherianRing <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FlatQuotientWeaklyRegularStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.flat_quotient_weakly_regular : ∀ (V A : Type) [CommRing V] [IsNoetherianRing V] [IsLocalRing V] [CommRing A] [IsNoetherianRing A] [IsLocalRing A] [Algebra V A] [IsLocalHom (algebraMap V A)] [Module.Flat V A] (rs : List A), (∀ r ∈ rs, r ∈ maximalIdeal A) → RingTheory.Sequence.IsWeaklyRegular (A ⧸ (maximalIdeal V).map (algebraMap V A)) rs → Module.Flat V (A ⧸ Ideal.ofList rs) := by
+  first | exact @GlobalTheory.flat_quotient_ofList_of_isWeaklyRegular_closedFibre | exact GlobalTheory.flat_quotient_ofList_of_isWeaklyRegular_closedFibre | (intros; apply GlobalTheory.flat_quotient_ofList_of_isWeaklyRegular_closedFibre <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.IsWeaklyRegularMvPowerSeriesOfFiniteColength
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+namespace GlobalTheory
+
+theorem isWeaklyRegular_mvPowerSeries_of_pow_le :
+    ∀ (k : Type) [Field k] (σ : Type) [Finite σ] (n : ℕ) (e : Fin n ≃ σ)
+      (f : σ → MvPowerSeries σ k), (∀ j, MvPowerSeries.constantCoeff (f j) = 0) →
+      (∃ M : ℕ, Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ k)) ^ M ≤
+        Ideal.span (Set.range f)) →
+      RingTheory.Sequence.IsWeaklyRegular (MvPowerSeries σ k) (List.ofFn fun i => f (e i)) := by
+  rintro k _ σ _ n e f h0 ⟨M, hM⟩
+  have := FormalIsogeny.isRegularLocalRing_mvPowerSeries k σ
+  refine (isRegular_of_radical_eq_maximalIdeal ?_ ?_).1
+  · have h1 : Ideal.ofList (List.ofFn fun i => f (e i)) = Ideal.span (Set.range f) := by
+      rw [ofList_ofFn_eq_span_range]
+      exact congrArg Ideal.span (e.surjective.range_comp f)
+    rw [h1]
+    refine le_antisymm ((maximalIdeal.isMaximal _).isPrime.radical_le_iff.2 ?_) fun g hg => ?_
+    · rw [Ideal.span_le]
+      rintro _ ⟨j, rfl⟩
+      exact FormalIsogeny.mem_maximalIdeal_iff_constantCoeff.2 (by simp [h0])
+    · have h2 : MvPowerSeries.constantCoeff g = 0 := by
+        simpa [maximalIdeal_eq_bot] using FormalIsogeny.mem_maximalIdeal_iff_constantCoeff.1 hg
+      have h3 : g ∈ Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ k)) := by
+        rw [← germIdeal_eq_span]
+        exact h2
+      exact ⟨M, hM (Ideal.pow_mem_pow h3 M)⟩
+  · rw [FormalIsogeny.ringKrullDim_mvPowerSeries, ringKrullDim_eq_zero_of_field, zero_add,
+      List.length_ofFn, ← Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_fin]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.IsWeaklyRegularMvPowerSeriesOfFiniteColengthStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.isWeaklyRegular_mvPowerSeries_of_finite_colength : ∀ (k : Type) [Field k] (σ : Type) [Finite σ] (n : ℕ) (e : Fin n ≃ σ) (f : σ → MvPowerSeries σ k), (∀ j, MvPowerSeries.constantCoeff (f j) = 0) → (∃ M : ℕ, Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ k)) ^ M ≤ Ideal.span (Set.range f)) → RingTheory.Sequence.IsWeaklyRegular (MvPowerSeries σ k) (List.ofFn fun i => f (e i)) := by
+  first | exact @GlobalTheory.isWeaklyRegular_mvPowerSeries_of_pow_le | exact GlobalTheory.isWeaklyRegular_mvPowerSeries_of_pow_le | (intros; apply GlobalTheory.isWeaklyRegular_mvPowerSeries_of_pow_le <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.MapMaximalIdealEqKerMapResidue
+
+section
 
 @[expose] public section
 
@@ -118,3 +281,5 @@ theorem free_finite_quotient : ∀ (T : Type) [CommRing T] [IsLocalRing T] [IsNo
   exact Module.free_of_flat_of_isLocalRing
 
 end GlobalTheory.FiniteColength
+end
+end

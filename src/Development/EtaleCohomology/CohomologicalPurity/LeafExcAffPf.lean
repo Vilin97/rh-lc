@@ -1,7 +1,7 @@
 module
 
 public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPf
-public import Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPfNbhd
+public import Development.EtaleCohomology.CohomologicalPurity.InrFold
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,32 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafPrdAffPfNbhd
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.CohomologicalPurity.TubeCut
+
+theorem indNbhd_of_nbhd {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (I : Ideal A) (h : Nbhd φ I) :
+    IndNbhd φ I :=
+  ⟨Discrete PUnit, inferInstance, inferInstance, (Functor.const _).obj (CommRingCat.of B),
+    (Functor.const _).map (CommRingCat.ofHom φ), 𝟙 _, ⟨isColimitConstCocone (Discrete PUnit) (CommRingCat.of B)⟩,
+    fun _ => ⟨h, Category.comp_id _⟩⟩
+
+end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.CohomologicalPurity.LeafExcAffPf
+
+section
 
 @[expose] public section
 
@@ -92,3 +118,6 @@ theorem leafExcAff_pf : LeafExcAff := by
   exact exc_comp q e2 e1
 
 end LateralTheory.CohomologicalPurity.TubeCut
+end
+end
+end

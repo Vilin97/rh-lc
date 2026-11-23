@@ -3,10 +3,11 @@ module
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PointStep
 public import Formalism.HermitianCurvature.StatementJF
 public import Formalism.FormalDegreeBessel.FormalDegreeRatio.UnitaryWeylNormalHolds
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HeisConjInt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HeisenbergLeviConjugationMeasure
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HeisMeasConjInv
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermitianFormFactor
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevAInv
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RhsInt
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.LongWeylElement
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
@@ -14,6 +15,7 @@ import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.CategoryTheory.Countable
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -46,8 +48,225 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Separation.CompletelyRegular
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UwClosedSubgroup
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RhsInt
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConjugationInvarianceEverySetting
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.HeisConjInt
+
+section
+
+@[expose] public section
+
+open Matrix MeasureTheory
+open scoped ComplexConjugate
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.PBH
+
+open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants
+
+variable {k : ℕ}
+
+theorem phi_cont (ρ : ℕ) : Continuous (Dx2.MN.phi (k := k) (ρ := ρ)) := by
+  have e : (Dx2.MN.phi (k := k) (ρ := ρ)) = fun x => Dx2.MN.phi x := rfl
+  rw [e]
+  simp only [Dx2.MN.phi]
+  fun_prop
+
+def heisT (ρ : ℕ) (x : B2.HPar k ρ) : Mt k (1 + ρ) := Matrix.of.symm (B2.heis0 k ρ x)
+
+theorem heis_cont (ρ : ℕ) : Continuous (heisT (k := k) ρ) := B2x5.continuous_heis0 k ρ
+
+theorem heis_emb (ρ : ℕ) : MeasurableEmbedding (heisT (k := k) ρ) :=
+  (heis_cont ρ).measurableEmbedding (Formalism.FourierDecayAlt.P.heisenberg_subgroup_closed k ρ).1
+
+def phiE (ρ : ℕ) : U.RC k 1 ρ ≃ᵐ B2.HPar k ρ where
+  toFun := Dx2.MN.phi
+  invFun p := (fun i _ => p.1 i, (fun _ => 0, fun _ => p.2))
+  left_inv x := by
+    obtain ⟨x1, x2, x3⟩ := x
+    simp only [Dx2.MN.phi, Prod.mk.injEq]
+    refine ⟨?_, Subsingleton.elim _ _, ?_⟩
+    · funext i a; have : a = 0 := Subsingleton.elim _ _; subst this; rfl
+    · funext a; have : a = 0 := Subsingleton.elim _ _; subst this; rfl
+  right_inv p := by simp [Dx2.MN.phi]
+  measurable_toFun := (phi_cont ρ).measurable
+  measurable_invFun := by
+    apply Continuous.measurable
+    exact (continuous_pi fun i => continuous_pi fun _ => (continuous_apply i).comp continuous_fst).prodMk
+      (continuous_const.prodMk (continuous_pi fun _ => continuous_snd))
+
+theorem phi_emb (ρ : ℕ) : MeasurableEmbedding (Dx2.MN.phi (k := k) (ρ := ρ)) := by
+  exact (phiE ρ).measurableEmbedding
+
+theorem heis_int (ρ : ℕ) {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (Φ : B.Mat k (1 + ρ) → B.Mat k (1 + ρ) → E) :
+    ∫ p : Mt k (1 + ρ) × Mt k (1 + ρ), Φ (Matrix.of p.1) (Matrix.of p.2) ∂((B2.μHeis k ρ).prod (B2.μHeis k ρ)) =
+      ∫ xx : U.RC k 1 ρ × U.RC k 1 ρ, Φ (U.Rn k 1 ρ xx.1) (U.Rn k 1 ρ xx.2)
+        ∂((U.muRC k 1 ρ).prod (U.muRC k 1 ρ)) := by
+  have e0 : B2.μHeis k ρ = (volume : Measure (B2.HPar k ρ)).map (heisT ρ) := rfl
+  have e1 : (B2.μHeis k ρ).prod (B2.μHeis k ρ) =
+      ((volume : Measure (B2.HPar k ρ)).prod volume).map (Prod.map (heisT (k := k) ρ) (heisT ρ)) := by
+    rw [e0, Measure.map_prod_map _ _ (heis_emb ρ).measurable (heis_emb ρ).measurable]
+  rw [e1, ((heis_emb ρ).prodMap (heis_emb ρ)).integral_map]
+  have hmp : MeasurePreserving (Prod.map (Dx2.MN.phi (k := k) (ρ := ρ)) (Dx2.MN.phi (k := k) (ρ := ρ)))
+      ((U.muRC k 1 ρ).prod (U.muRC k 1 ρ)) ((volume : Measure (B2.HPar k ρ)).prod volume) := by
+    have := (Dx2.MN.phi_mp (k := k) (ρ := ρ)).prod (Dx2.MN.phi_mp (k := k) (ρ := ρ))
+    simpa [U.muRC] using this
+  rw [← hmp.integral_comp ((phi_emb ρ).prodMap (phi_emb ρ))]
+  apply integral_congr_ae
+  filter_upwards with xx
+  rw [Dx2.MN.rn_heis, Dx2.MN.rn_heis]
+  rfl
+
+def conjE {r : ℕ} (b : B.Mat k r) (hb : IsUnit b.det) : Mt k r ≃ᵐ Mt k r where
+  toFun := conjM b
+  invFun := conjM b⁻¹
+  left_inv x := by
+    show b⁻¹ * (b * Matrix.of x * b⁻¹) * b⁻¹⁻¹ = Matrix.of x
+    rw [Matrix.nonsing_inv_nonsing_inv _ hb]
+    simp only [Matrix.mul_assoc]
+    rw [Matrix.nonsing_inv_mul_cancel_left _ _ hb, Matrix.nonsing_inv_mul _ hb, Matrix.mul_one]
+  right_inv x := by
+    show b * (b⁻¹ * Matrix.of x * b⁻¹⁻¹) * b⁻¹ = Matrix.of x
+    rw [Matrix.nonsing_inv_nonsing_inv _ hb]
+    simp only [Matrix.mul_assoc]
+    rw [Matrix.mul_nonsing_inv_cancel_left _ _ hb, Matrix.mul_nonsing_inv _ hb, Matrix.mul_one]
+  measurable_toFun := B2x5.measurable_conjM b
+  measurable_invFun := B2x5.measurable_conjM b⁻¹
+
+theorem heis_conj_int (ρ : ℕ) {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {g g' : B.Mat k ρ}
+    (hg : g ∈ B.GV k ρ) (hg' : g' ∈ B.GV k ρ) (Φ : Mt k (1 + ρ) × Mt k (1 + ρ) → E) :
+    ∫ p, Φ (conjM ((ιLev k 1 ρ g)⁻¹) p.1, conjM ((ιLev k 1 ρ g')⁻¹) p.2) ∂((B2.μHeis k ρ).prod (B2.μHeis k ρ)) =
+      ∫ p, Φ p ∂((B2.μHeis k ρ).prod (B2.μHeis k ρ)) := by
+  have := sf_heis (k := k) ρ
+  have hu : IsUnit ((ιLev k 1 ρ g)⁻¹).det :=
+    Matrix.isUnit_nonsing_inv_det_iff.2 (LongWeylElement.lev_unit _ (HermitianFormFactor.UH_unit (Ux3.hpk_det k ρ) hg))
+  have hu' : IsUnit ((ιLev k 1 ρ g')⁻¹).det :=
+    Matrix.isUnit_nonsing_inv_det_iff.2 (LongWeylElement.lev_unit _ (HermitianFormFactor.UH_unit (Ux3.hpk_det k ρ) hg'))
+  have m1 : MeasurePreserving (conjE _ hu) (B2.μHeis k ρ) (B2.μHeis k ρ) :=
+    ⟨(conjE _ hu).measurable, heis_meas_conj_inv ρ hg⟩
+  have m2 : MeasurePreserving (conjE _ hu') (B2.μHeis k ρ) (B2.μHeis k ρ) :=
+    ⟨(conjE _ hu').measurable, heis_meas_conj_inv ρ hg'⟩
+  have := (m1.prod m2).integral_comp ((conjE _ hu).measurableEmbedding.prodMap (conjE _ hu').measurableEmbedding) Φ
+  exact this
+
+end Formalism.FourierDecayAlt.P.PBH
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.LevAInv
+
+section
+
+@[expose] public section
+
+open Matrix MeasureTheory
+open scoped ComplexConjugate
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.PBH
+
+open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants
+
+variable {k : ℕ}
+
+def psiInt {ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+    [InnerProductSpace ℂ Wq] (B1 : B.RealPlaceData k (ρ + 1) Wp Wq) (f1 : B.Mat k (ρ + 1) → (Wq →L[ℂ] Wp)) (c : ℂ)
+    (γ : B.Mat k ρ) (b b' : B.Mat k (1 + ρ)) : Wq →L[ℂ] Wp :=
+  (psi k (ρ + 1) B1.z cStd (D.castM (Nat.add_comm 1 ρ) b) *
+      star (psi k (ρ + 1) B1.z' cStd (D.castM (Nat.add_comm 1 ρ) b'))) •
+    f1 ((D.castM (Nat.add_comm 1 ρ) b)⁻¹ * D.castM (Nat.add_comm 1 ρ) (U.mMap k 1 ρ (Matrix.of fun _ _ => c) γ) *
+      D.castM (Nat.add_comm 1 ρ) b')
+
+theorem levA_inv (ρ : ℕ) {h : B.Mat k ρ} (hh : IsUnit h.det) :
+    (D.castM (Nat.add_comm 1 ρ) (ιLev k 1 ρ h))⁻¹ = D.castM (Nat.add_comm 1 ρ) (ιLev k 1 ρ h⁻¹) := by
+  rw [← castM_inv', LongWeylElement.lev_inv _ hh]
+
+theorem pt_eq {ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+    [InnerProductSpace ℂ Wq] (B1 : B.RealPlaceData k (ρ + 1) Wp Wq) (B0 : B.RealPlaceData k ρ Wp Wq)
+    (hz : B1.z = D.castV (Nat.add_comm 1 ρ) (liftVec k 1 ρ B0.z))
+    (hz' : B1.z' = D.castV (Nat.add_comm 1 ρ) (liftVec k 1 ρ B0.z'))
+    (hπ : ∀ y : B.Mat k ρ, B0.π y = B1.π (D.castM (Nat.add_comm 1 ρ) (ιLev k 1 ρ y)))
+    (hπ' : ∀ y : B.Mat k ρ, B0.π' y = B1.π' (D.castM (Nat.add_comm 1 ρ) (ιLev k 1 ρ y)))
+    (f1 : B.Mat k (ρ + 1) → (Wq →L[ℂ] Wp)) (c : ℂ) (γ : B.Mat k ρ)
+    (h0 y h0' y' : Mt k ρ) (a a' : Mt k (1 + ρ))
+    (hh0 : Matrix.of h0 ∈ UWset k ρ B0.z) (hy : Matrix.of y ∈ Nset k ρ)
+    (hh0' : Matrix.of h0' ∈ UWset k ρ B0.z') (hy' : Matrix.of y' ∈ Nset k ρ)
+    (ha : Matrix.of a ∈ Nset k (1 + ρ)) (ha' : Matrix.of a' ∈ Nset k (1 + ρ)) :
+    JF.integrand B1 f1 (D.castM (Nat.add_comm 1 ρ) (U.mMap k 1 ρ (Matrix.of fun _ _ => c) γ))
+        ((levA ρ h0, Qm ρ (a, y)), (levA ρ h0', Qm ρ (a', y'))) =
+      (psi k ρ B0.z cStd (Matrix.of y) * star (psi k ρ B0.z' cStd (Matrix.of y'))) •
+        (B0.π (Matrix.of h0)).comp
+          ((psiInt B1 f1 c ((Matrix.of y * Matrix.of h0)⁻¹ * γ * (Matrix.of y' * Matrix.of h0'))
+              (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y * Matrix.of h0))⁻¹) a))
+              (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y' * Matrix.of h0'))⁻¹) a'))).comp
+            (B0.π' (Matrix.of h0')⁻¹)) := by
+  set κ : 1 + ρ = ρ + 1 := Nat.add_comm 1 ρ with hκ
+  have hH := Ux3.hpk_det k ρ
+  have hu0 : IsUnit (Matrix.of h0).det := HermitianFormFactor.UH_unit hH hh0.1
+  have hu0' : IsUnit (Matrix.of h0').det := HermitianFormFactor.UH_unit hH hh0'.1
+  have huy : IsUnit (Matrix.of y).det := HermitianFormFactor.UH_unit hH hy.1
+  have huy' : IsUnit (Matrix.of y').det := HermitianFormFactor.UH_unit hH hy'.1
+  have hg : IsUnit (ιLev k 1 ρ (Matrix.of y * Matrix.of h0)).det :=
+    LongWeylElement.lev_unit _ (by rw [Matrix.det_mul]; exact huy.mul hu0)
+  have hg' : IsUnit (ιLev k 1 ρ (Matrix.of y' * Matrix.of h0')).det :=
+    LongWeylElement.lev_unit _ (by rw [Matrix.det_mul]; exact huy'.mul hu0')
+
+  have hconj : ∀ (g : B.Mat k (1 + ρ)) (hg : IsUnit g.det) (x : Mt k (1 + ρ)),
+      (Matrix.of (conjM g⁻¹ x) : B.Mat k (1 + ρ)) = g⁻¹ * Matrix.of x * g := by
+    intro g hg x
+    show g⁻¹ * Matrix.of x * g⁻¹⁻¹ = _
+    rw [Matrix.nonsing_inv_nonsing_inv _ hg]
+
+  have hψ1 : psi k (ρ + 1) B1.z cStd (Matrix.of (Qm ρ (a, y))) =
+      psi k (ρ + 1) B1.z cStd (D.castM κ (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y * Matrix.of h0))⁻¹) a))) *
+        psi k ρ B0.z cStd (Matrix.of y) := by
+    rw [hz, psi_Qm ρ B0.z_mem ha hy, psi_castM, psi_castM, hconj _ hg, psi_conjLev ρ B0.z_mem ha hy hh0]
+  have hψ2 : psi k (ρ + 1) B1.z' cStd (Matrix.of (Qm ρ (a', y'))) =
+      psi k (ρ + 1) B1.z' cStd (D.castM κ (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y' * Matrix.of h0'))⁻¹) a'))) *
+        psi k ρ B0.z' cStd (Matrix.of y') := by
+    rw [hz', psi_Qm ρ B0.z'_mem ha' hy', psi_castM, psi_castM, hconj _ hg', psi_conjLev ρ B0.z'_mem ha' hy' hh0']
+
+  have hπa : B1.π (Matrix.of (levA ρ h0)) = B0.π (Matrix.of h0) := (hπ _).symm
+  have hπb : B1.π' (Matrix.of (levA ρ h0'))⁻¹ = B0.π' (Matrix.of h0')⁻¹ := by
+    rw [levA_apply, levA_inv ρ hu0', ← hπ']
+
+  have hpt : (Matrix.of (levA ρ h0))⁻¹ * (Matrix.of (Qm ρ (a, y)))⁻¹ *
+        D.castM κ (U.mMap k 1 ρ (Matrix.of fun _ _ => c) γ) * Matrix.of (Qm ρ (a', y')) * Matrix.of (levA ρ h0') =
+      (D.castM κ (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y * Matrix.of h0))⁻¹) a)))⁻¹ *
+        D.castM κ (U.mMap k 1 ρ (Matrix.of fun _ _ => c)
+          ((Matrix.of y * Matrix.of h0)⁻¹ * γ * (Matrix.of y' * Matrix.of h0'))) *
+        D.castM κ (Matrix.of (conjM ((ιLev k 1 ρ (Matrix.of y' * Matrix.of h0'))⁻¹) a')) := by
+    rw [hconj _ hg, hconj _ hg']
+    show (D.castM κ (ιLev k 1 ρ (Matrix.of h0)))⁻¹ * (D.castM κ (Matrix.of a * ιLev k 1 ρ (Matrix.of y)))⁻¹ *
+        D.castM κ (U.mMap k 1 ρ (Matrix.of fun _ _ => c) γ) * D.castM κ (Matrix.of a' * ιLev k 1 ρ (Matrix.of y')) *
+        D.castM κ (ιLev k 1 ρ (Matrix.of h0')) = _
+    rw [← castM_inv', ← castM_inv', ← castM_inv', ← Dx2.Tower.castM_mul, ← Dx2.Tower.castM_mul,
+      ← Dx2.Tower.castM_mul, ← Dx2.Tower.castM_mul, ← Dx2.Tower.castM_mul, ← Dx2.Tower.castM_mul,
+      sgs_alg ρ _ _ _ _ hu0 huy hu0' huy']
+  unfold JF.integrand JF.xiP B.rho B.sgs psiInt
+  rw [hψ1, hψ2, hπa, hπb, hpt]
+  rw [ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul, smul_smul]
+  congr 1
+  rw [star_mul']
+  ring
+
+end Formalism.FourierDecayAlt.P.PBH
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.AeMemOfHaar
+
+section
 
 @[expose] public section
 
@@ -240,3 +459,6 @@ theorem jfStep_of (hO : MCOm) : JFStep := by
         simp only [Matrix.mul_assoc]
 
 end Formalism.FourierDecayAlt.P.PBH
+end
+end
+end

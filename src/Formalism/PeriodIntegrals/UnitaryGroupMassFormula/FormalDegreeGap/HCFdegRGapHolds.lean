@@ -1,8 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalDegreeGap.HCFdegRGap
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.PmatIsHermitian
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.Transported
+public import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeUnderScaleOfGeneral
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,15 +35,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.PmatIsHermitian
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.Transported
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdCons
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.OmegaDensityUnique
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.KTypeLemma.StdGapOfGapLap
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceFoundations.PsiFor
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.EqZeroOfDatumEmbeddingEqZero
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalDegreeGap.HCFdegRGap
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.UnitaryGroupMassFormula.HCFdegRGap
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S
+
+def HCFdegRGap : Prop :=
+  ∀ (cd : CDHaar) (s : (n : ℕ) → (Fin n → Bool) → NNReal), Formalism.MainNotions.RT.cdScaleTieR cd s →
+  ∀ (N : ℕ) (ε : Fin N → Bool) (lam : Fin N → ℝ) (h : ℝ),
+    1 ≤ (Finset.univ.filter (fun a => ε a = true)).card →
+    1 ≤ (Finset.univ.filter (fun a => ε a = false)).card →
+    Formalism.QuantumDeterminants.IsHCParam lam → Formalism.QuantumDeterminants.GapAtLeast ε lam h →
+    32 * (N : ℝ) * ((Finset.univ.filter (fun a => ε a = true)).card : ℝ) *
+      ((Finset.univ.filter (fun a => ε a = false)).card : ℝ) + 2 < h →
+    ∀ (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+      (σ : Matrix (Fin N) (Fin N) ℂ → (H →L[ℂ] H)) (w : H), IsDS ε lam σ → w ≠ 0 →
+      fdegOf ((s N ε : ENNReal) • Formalism.REAL.muG ε) σ w = Formalism.QuantumDeterminants.fdegHC lam
+
+end PI.UnitaryGroupMassFormula.HCFdegRGap
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalDegreeGap.HCFdegRGapHolds
+
+section
 
 @[expose] public section
 
@@ -155,3 +188,6 @@ theorem hCFdegRGap_holds : HCFdegRGap := by
   exact fdeg_cd_gap hp hq hlam hgap (thrStar_lt ε hp hq hh) hσ hw
 
 end PI.UnitaryGroupMassFormula.HCFdegRGap
+end
+end
+end

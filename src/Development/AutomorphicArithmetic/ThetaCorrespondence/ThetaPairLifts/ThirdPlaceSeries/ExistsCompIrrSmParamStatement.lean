@@ -2,7 +2,8 @@ module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.IsRc
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HeckeOpen
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ExistsCompIrrSmParam
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ExistsSplitPlace
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsComp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,6 +37,70 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ExistsIsRc
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsTypeComponents
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.TypeRec GlobalTheory.GLq GlobalTheory.GLp GlobalTheory.SerSys
+attribute [local instance] GlobalTheory.TypeRec.factG
+
+namespace GlobalTheory.TypeRec
+
+theorem exists_isComp_of_rowDepth {D : D7} (I : Ident D) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r)
+    (h : GlobalTheory.HeightCounting.RowDepth D rep) : ∃ cp, IsComp I rep cp := by
+  have : ∀ σ k v, ∃ c : GlobalTheory.GoodTypes.LocRep D k, ∃ (s : ReciprocityTheory.Aut.SplitPlace D.host.E) (h : s.w = D.naut.plGw k v)
+    (τ : GlobalTheory.SmGL.IrrRep (GL (Fin D.R.r) ((D.naut.plGw k v).adicCompletion D.host.E))),
+    GlobalTheory.HeightCounting.IsLocS (rep σ).S s (h ▸ τ) ∧ c = pull I k v τ := by
+    intro σ k v
+    obtain ⟨s, τ, hs, h1, -⟩ := h σ k v
+    have gen : ∀ (w) (e : s.w = w), ∃ τ' : GlobalTheory.SmGL.IrrRep (GL (Fin D.R.r) (w.adicCompletion D.host.E)),
+        GlobalTheory.HeightCounting.IsLocS (rep σ).S s (e ▸ τ') := by
+      rintro _ rfl
+      exact ⟨τ, h1⟩
+    obtain ⟨τ', a⟩ := gen _ hs
+    exact ⟨_, s, hs, τ', a, rfl⟩
+  choose c hc using this
+  exact ⟨c, hc⟩
+
+end GlobalTheory.TypeRec
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ExistsCompIrrSmParam
+
+section
+
+@[expose] public section
+
+
+
+section
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.TypeRec GlobalTheory.GLq GlobalTheory.GLp GlobalTheory.SerSys
+attribute [local instance] GlobalTheory.TypeRec.factG
+namespace GlobalTheory.TypeRec
+theorem exists_comp_irrSm_param_alt (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
+    (I : Ident D) (rc : GlobalTheory.SerSys.Corr D) (hrc : _root_.GlobalTheory.TypeRec.IsSeriesCorrespondence hL T I rc) (Rw : GlobalTheory.HeightCounting.RowSide D)
+    (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r)
+    (h1 : _root_.GlobalTheory.HeightCounting.RepresentationParametersHold hL D rep (fun σ w => T.e w (Rw.locR σ w)) Rw.satR) (h2 : GlobalTheory.HeightCounting.RowDepth D rep) :
+    ∃ cp : GlobalTheory.GoodTypes.Comp D, IsComp I rep cp ∧
+      ∀ σ k v, IrrSm (cp σ k v) ∧ Rw.locR σ (D.naut.plGw k v) = rc k v D.R.r (cp σ k v) := by
+  obtain ⟨cp, hc⟩ := exists_isComp_of_rowDepth I rep h2
+  refine ⟨cp, hc, fun σ k v => ⟨?_, _root_.GlobalTheory.TypeRec.Model.locR_eq_rc_of_isRc_and_true_reading hrc hc h1 σ k v⟩⟩
+  obtain ⟨s, hs, τ, -, e⟩ := hc σ k v
+  rw [e]
+  exact Model.irrSm_pull I k v τ
+end GlobalTheory.TypeRec
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ExistsCompIrrSmParamStatement
+
+section
 
 @[expose] public section
 
@@ -47,4 +112,6 @@ attribute [local instance] GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_comp_irrSm_locR_eq_rc : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) (I : Ident D) (rc : GlobalTheory.SerSys.Corr D), _root_.GlobalTheory.TypeRec.IsSeriesCorrespondence hL T I rc → ∀ (Rw : GlobalTheory.HeightCounting.RowSide D) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r), _root_.GlobalTheory.HeightCounting.RepresentationParametersHold hL D rep (fun σ w => T.e w (Rw.locR σ w)) Rw.satR → GlobalTheory.HeightCounting.RowDepth D rep → ∃ cp : GlobalTheory.GoodTypes.Comp D, IsComp I rep cp ∧ ∀ σ k v, IrrSm (cp σ k v) ∧ Rw.locR σ (D.naut.plGw k v) = rc k v D.R.r (cp σ k v) := by
   first | exact @_root_.GlobalTheory.TypeRec.exists_comp_irrSm_param_alt | exact _root_.GlobalTheory.TypeRec.exists_comp_irrSm_param_alt | (intros; apply _root_.GlobalTheory.TypeRec.exists_comp_irrSm_param_alt <;> assumption)
+end
+end
 end

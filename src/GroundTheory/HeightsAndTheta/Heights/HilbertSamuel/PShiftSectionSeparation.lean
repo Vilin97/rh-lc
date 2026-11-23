@@ -6,10 +6,7 @@ public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.IsSmoothHermCon
 public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.IsSaturatedFirstCoordinateLine
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PFsLineSmooth
-public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.ImportsAlt
-public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveDivVertical
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.Counterexample
-public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PZhangLowerX
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Imports
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,8 +26,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,6 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,7 +48,230 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveDivVertical
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightObjects
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PPtsIntegralPoints
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ConservationDegreeFormOfExistence
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightPtsIntegralPoints
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.CoordinateIdeals.LineField
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PZhangLowerX
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.ImportsAlt
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo
+
+theorem HeightComparison.proof (hV : CurveDivVertical.Statement) : HeightComparison.Statement := by
+  intro K _ ι _ I A H hI hA hH hHa
+  set m : ℕ := ∑ k, (A.a k).natAbs
+  have hm : ∀ k, (A.a k).natAbs ≤ m := fun k ↦
+    Finset.single_le_sum (f := fun k ↦ (A.a k).natAbs) (fun _ _ ↦ Nat.zero_le _)
+      (Finset.mem_univ k)
+  have hHk : ∀ k, H.a k = 1 := fun k ↦ by rw [hHa]; rfl
+  set Ep := (powLine H m).tensor (invLine A)
+  set Em := (powLine H m).tensor A
+  have hPow := isSmoothHerm_powLine hH m
+  have hEp : IsSmoothHerm Ep := isSmoothHerm_tensor hPow (isSmoothHerm_invLine hA)
+  have hEm : IsSmoothHerm Em := isSmoothHerm_tensor hPow hA
+  set dp : K → ℕ := fun k ↦ ((m : ℤ) - A.a k).toNat
+  set dm : K → ℕ := fun k ↦ ((m : ℤ) + A.a k).toNat
+  have hdp : ∀ k, Ep.a k = dp k := fun k ↦ by
+    have := hm k
+    show (powLine H m).a k + -A.a k = (((m : ℤ) - A.a k).toNat : ℤ)
+    rw [powLine_a, hHk]
+    omega
+  have hdm : ∀ k, Em.a k = dm k := fun k ↦ by
+    have := hm k
+    show (powLine H m).a k + A.a k = (((m : ℤ) + A.a k).toNat : ℤ)
+    rw [powLine_a, hHk]
+    omega
+  obtain ⟨Mp, hMp1, hMp⟩ := exists_chartMon_bound hEp hdp
+  obtain ⟨Mm, hMm1, hMm⟩ := exists_chartMon_bound hEm hdm
+  have hMp0 : 0 < Mp := by linarith
+  have hMm0 : 0 < Mm := by linarith
+  set C := max (Real.log Mp) (Real.log Mm)
+  refine ⟨m, C, fun W hW ↦ ?_⟩
+  have hC : 0 ≤ C := le_max_of_le_left (Real.log_nonneg hMp1)
+  unfold height
+  rcases Nat.eq_zero_or_pos (degC W) with hdeg | hdeg
+  · simp [hdeg, hC]
+  obtain ⟨c, hc⟩ := exists_chartMon_notMem hW
+  have hp := inter_nonneg I hV hI hW (isSmoothHerm_tensor hEp (isSmoothHerm_constLine Mp hMp0))
+    (d := dp) (fun k ↦ by show Ep.a k + 0 = _; rw [add_zero, hdp k]) c (hc dp)
+    (fun z hz ↦ by show _ ≤ Ep.h z * Mp; rw [mul_comm]; exact hMp c z hz.1)
+  have hn := inter_nonneg I hV hI hW (isSmoothHerm_tensor hEm (isSmoothHerm_constLine Mm hMm0))
+    (d := dm) (fun k ↦ by show Em.a k + 0 = _; rw [add_zero, hdm k]) c (hc dm)
+    (fun z hz ↦ by show _ ≤ Em.h z * Mm; rw [mul_comm]; exact hMm c z hz.1)
+  rw [inter_tensor I hI hW hEp (isSmoothHerm_constLine Mp hMp0),
+    inter_tensor I hI hW hPow (isSmoothHerm_invLine hA), inter_powLine I hI hW hH,
+    inter_invLine I hI hW hA] at hp
+  rw [inter_tensor I hI hW hEm (isSmoothHerm_constLine Mm hMm0), inter_tensor I hI hW hPow hA,
+    inter_powLine I hI hW hH] at hn
+  have hcp := inter_constLine_le I hI hW hMp0 hMp1 hdeg
+  have hcn := inter_constLine_le I hI hW hMm0 hMm1 hdeg
+  have hD : (0 : ℝ) < degC W := by exact_mod_cast hdeg
+  have hCp : Real.log Mp * degC W ≤ C * degC W :=
+    mul_le_mul_of_nonneg_right (le_max_left _ _) hD.le
+  have hCn : Real.log Mm * degC W ≤ C * degC W :=
+    mul_le_mul_of_nonneg_right (le_max_right _ _) hD.le
+  rw [abs_div, abs_of_pos hD, div_le_iff₀ hD, add_mul, mul_assoc, div_mul_cancel₀ _ hD.ne', abs_le]
+  constructor <;> linarith
+
+end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.Counterexample.Objects
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
+open scoped Matrix ComplexOrder
+
+namespace Line
+
+end Line
+
+section FS
+
+
+end FS
+
+section Reg
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+structure WeightReg (ι : K → Type) [∀ k, Fintype (ι k)] where
+
+  reg : ℝ → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι
+  deg : ∀ t A, (reg t A).a = A.a
+  smooth : ∀ t A, IsSmoothHerm A → IsSmoothHerm (reg t A)
+  shift : ∀ t (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (k : ℝ), 0 < k → A'.a = A.a →
+    (∀ z : (Σ b, ι b) → ℂ, (∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) → A'.h z = k * A.h z) →
+    ∀ z : (Σ b, ι b) → ℂ, (∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) → (reg t A').h z = k * (reg t A).h z
+
+
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
+def weightRegRef : WeightReg (PBlk 2) where
+  reg _ A := (HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).tensor
+    (constLine (A.h (fun _ => 1) / (HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).h (fun _ => 1))
+      (div_pos (A.pos _ fun _ => ⟨0, one_ne_zero⟩)
+        ((HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).pos _ fun _ => ⟨0, one_ne_zero⟩)))
+  deg _ A := by simp [HermLine.tensor, constLine, HermLine.ofMetrics]
+  smooth _ A _ := isSmoothHerm_tensor (Inter.isSmoothHerm_ofMetrics_fs _) (isSmoothHerm_constLine _ _)
+  shift _ A A' k hk ha hh z _ := by
+    have h1 := hh (fun _ => 1) fun _ => ⟨0, one_ne_zero⟩
+    simp only [HermLine.tensor, constLine, ha, h1]
+    ring
+
+end Reg
+
+section Heights
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+  {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {Ω : Type} [Field Ω] [Algebra ℚ Ω]
+  {E : Ψ → Type} [∀ τ, AddCommGroup (E τ)] [∀ τ, Module Ω (E τ)]
+
+end Heights
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.Counterexample
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.LowerBoundFree
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo Line
+
+section Curve
+
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+theorem inter_constLine_eq [Nonempty K] (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → Geo.HermLine ι) → ℝ)
+    (hI : IsIntersectionFamily I) {W : Ideal (MRing ι)} (hW : IsArithVar W 1)
+    (hH : IsMultiHomogIdeal W) (hdeg : 0 < degC W) (M : ℝ) (hM : 0 < M) :
+    I W 1 ![constLine M hM] = Real.log M * degC W := by
+  obtain ⟨c, hc⟩ := exists_chartMon_notMem hW
+  rw [inter_eq_recR I hI hW (isSmoothHerm_constLine M hM) (d := 0) (fun k ↦ rfl)
+    (isMultiHomog_chartMon c 0) (hc 0), chartMon_zero, recR_one]
+  have h : logNorm (constLine (ι := ι) M hM) 1 = fun _ ↦ -Real.log M := by
+    funext z
+    simp [logNorm, constLine, Real.log_inv]
+  have hfin : Finite (projPts W) := by
+    rw [degC_eq_card_projPts] at hdeg
+    exact (Nat.card_pos_iff.mp hdeg).2
+  have key : ∀ φ : Fin 0 → ((Σ k, ι k) → ℂ) → ℝ, ptsIntegral W φ (fun _ ↦ (1 : ℝ)) = degC W := by
+    intro φ
+    obtain rfl : φ = Fin.elim0 := funext fun j ↦ j.elim0
+    rw [PtsIntegralPoints.homogProof K ι W (fun _ ↦ 1) hH hfin (fun _ _ _ _ ↦ rfl),
+      degC_eq_card_projPts]
+    have := Fintype.ofFinite (projPts W)
+    rw [finsum_eq_sum_of_fintype, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one,
+      Nat.card_eq_fintype_card]
+  unfold arInt
+  rw [h, Inter.Conservation.ptsIntegral_const, key]
+  ring
+
+end Curve
+
+section Point
+
+def ptIdeal : Ideal (MRing (PBlk 2)) := orbitIdeal samplePoint
+
+end Point
+
+section Shift
+
+
+end Shift
+
+section Main
+
+end Main
+
+end GroundTheory.Heights₂.Heights.LowerBoundFree
+end
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PShiftSectionSeparation
+
+section
 
 @[expose] public section
 
@@ -178,3 +397,5 @@ theorem ShiftSectionSeparation.proof (h₁ : ArithIntersectionSystemStatement)
 end
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel
+end
+end

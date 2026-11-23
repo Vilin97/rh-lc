@@ -1,9 +1,8 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchedSupportCompletions
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SmulPowLeOfStep
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.KjMap
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiniteModuleMaximalIdealAnnihilation
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.RingTheory.Ideal.Span
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,8 +21,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.Ideal.Quotient.Index
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,8 +42,114 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Presheaf
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.UltraDefs
+public import Mathlib.RingTheory.Ideal.Operations
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.KjMap
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Nakayama
+public import Mathlib.RingTheory.Ideal.Quotient.Index
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.SpecializationMapCompUniversalSection
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SmulPowLeOfStep
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.smul_pow_le_of_step :
+    ∀ (R : Type) [CommRing R] (𝔞 I 𝔶 : Ideal R) (f : R),
+      (∀ (X : Type) [AddCommGroup X] [Module R X] (X₀ : Type) [AddCommGroup X₀] [Module R X₀] (φ : X₀ →ₗ[R] X) (ψ : X →ₗ[R] X₀) (n : R), (∀ x, φ (ψ x) = n • x) → n ∣ f →
+        (𝔞 • ⊤ : Submodule R X₀) ≤ I • ⊤ → ((Ideal.span {f} * 𝔞) • ⊤ : Submodule R X) ≤ I • ⊤) ∧
+      (∀ (M : Type) [AddCommGroup M] [Module R M], ((Ideal.span {f} * 𝔞) • ⊤ : Submodule R M) ≤ (I ⊔ 𝔶) • ⊤ →
+        ∀ k : ℕ, ((Ideal.span {f ^ k} * 𝔞 ^ k) • ⊤ : Submodule R M) ≤ (I ⊔ 𝔶 ^ k) • ⊤) := by
+  intro R _ 𝔞 I 𝔶 f
+  refine ⟨?_, ?_⟩
+  · intro X _ _ X₀ _ _ φ ψ n hn hnf h
+    obtain ⟨c, rfl⟩ := hnf
+    refine Submodule.smul_le.2 ?_
+    intro r hr x _
+    obtain ⟨a, ha, rfl⟩ := Ideal.mem_span_singleton_mul.1 hr
+    have h1 : a • ψ x ∈ (I • ⊤ : Submodule R X₀) :=
+      h (Submodule.smul_mem_smul ha Submodule.mem_top)
+    have h2 : φ (a • ψ x) ∈ (I • ⊤ : Submodule R X) := by
+      have h3 : φ (a • ψ x) ∈ (I • ⊤ : Submodule R X₀).map φ := Submodule.mem_map_of_mem h1
+      rw [Submodule.map_smul''] at h3
+      exact Submodule.smul_mono le_rfl le_top h3
+    have h4 : (n * c * a) • x = c • φ (a • ψ x) := by
+      rw [map_smul, hn, smul_smul, smul_smul]
+      congr 1
+      ring
+    rw [h4]
+    exact Submodule.smul_mem _ c h2
+  · intro M _ _ h k
+    rw [← Ideal.span_singleton_pow, ← mul_pow]
+    generalize Ideal.span {f} * 𝔞 = b at h
+    induction k with
+    | zero => simp
+    | succ k ih =>
+      have hle : (I ⊔ 𝔶 ^ k) * (I ⊔ 𝔶) ≤ I ⊔ 𝔶 ^ (k + 1) := by
+        rw [Ideal.sup_mul, Ideal.mul_sup (𝔶 ^ k), pow_succ]
+        refine sup_le (le_sup_of_le_left Ideal.mul_le_left) (sup_le (le_sup_of_le_left Ideal.mul_le_right) le_sup_right)
+      calc (b ^ (k + 1) • ⊤ : Submodule R M) = b • (b ^ k • ⊤) := by
+            rw [pow_succ', mul_smul]
+        _ ≤ b • ((I ⊔ 𝔶 ^ k) • ⊤) := smul_mono_right b ih
+        _ = (I ⊔ 𝔶 ^ k) • (b • ⊤) := by
+            rw [← mul_smul, ← mul_smul, mul_comm]
+        _ ≤ (I ⊔ 𝔶 ^ k) • ((I ⊔ 𝔶) • ⊤) := smul_mono_right _ h
+        _ = ((I ⊔ 𝔶 ^ k) * (I ⊔ 𝔶)) • ⊤ := by rw [mul_smul]
+        _ ≤ (I ⊔ 𝔶 ^ (k + 1)) • ⊤ := Submodule.smul_mono_left hle
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiniteModuleMaximalIdealAnnihilation
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.FiniteModuleMaximalIdealAnnihilation.exists_pow_maximalIdeal_smul_finite_eq_zero :
+    ∀ (R Q : Type) [inst : CommRing R] [inst_1 : IsLocalRing R]
+    [inst_2 : AddCommGroup Q] [inst_3 : _root_.Module R Q] [Finite Q],
+    ∃ (c : ℕ), ∀ a ∈ IsLocalRing.maximalIdeal R ^ c, ∀ (z : Q), a • z = (0 : Q) := by
+  intro R Q _ _ _ _ _
+  haveI : Finite (Submodule R Q) :=
+    Finite.of_injective (fun N : Submodule R Q => (N : Set Q)) SetLike.coe_injective
+  obtain ⟨i, j, hij, h⟩ : ∃ i j : ℕ, i < j ∧
+      (IsLocalRing.maximalIdeal R ^ i • (⊤ : Submodule R Q)) =
+        IsLocalRing.maximalIdeal R ^ j • (⊤ : Submodule R Q) := by
+    obtain ⟨i, j, hne, h⟩ := Finite.exists_ne_map_eq_of_infinite
+      (fun n : ℕ => IsLocalRing.maximalIdeal R ^ n • (⊤ : Submodule R Q))
+    rcases lt_or_gt_of_ne hne with hlt | hlt
+    · exact ⟨i, j, hlt, h⟩
+    · exact ⟨j, i, hlt, h.symm⟩
+  have hbot : IsLocalRing.maximalIdeal R ^ i • (⊤ : Submodule R Q) = ⊥ := by
+    refine Submodule.eq_bot_of_le_smul_of_le_jacobson_bot (IsLocalRing.maximalIdeal R) _
+      (Submodule.fg_def.2 ⟨_, Set.toFinite _, Submodule.span_eq _⟩) ?_
+      (IsLocalRing.maximalIdeal_le_jacobson _)
+    calc IsLocalRing.maximalIdeal R ^ i • (⊤ : Submodule R Q)
+        = IsLocalRing.maximalIdeal R ^ j • (⊤ : Submodule R Q) := h
+      _ ≤ IsLocalRing.maximalIdeal R ^ (i + 1) • (⊤ : Submodule R Q) :=
+          Submodule.smul_mono_left (Ideal.pow_le_pow_right hij)
+      _ = _ := by rw [pow_succ', Submodule.mul_smul]
+  refine ⟨i, fun a ha z => ?_⟩
+  have hz : a • z ∈ IsLocalRing.maximalIdeal R ^ i • (⊤ : Submodule R Q) :=
+    Submodule.smul_mem_smul ha Submodule.mem_top
+  rwa [hbot, Submodule.mem_bot] at hz
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.ExistsPowMaximalIdealSmulFiniteEqZero
+
+section
 
 @[expose] public section
 
@@ -101,3 +205,5 @@ theorem UpperTheory.V.Pa.Core.finite_quotient_of_ultrafilter_limit_module :
   rw [sup_comm]
   refine h2 (Submodule.smul_mem_smul (Ideal.mul_mem_mul (Ideal.mem_span_singleton_self _) ?_) Submodule.mem_top)
   rwa [← pow_mul]
+end
+end

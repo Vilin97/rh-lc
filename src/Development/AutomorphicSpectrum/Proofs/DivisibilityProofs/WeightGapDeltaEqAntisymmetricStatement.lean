@@ -3,7 +3,6 @@ module
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsChainFirst
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
 public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
-public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.WeightGapDeltaEqAntisymmetric
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,10 +41,76 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.GenericFibreKerTarget
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.SwapLoc
+import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.WeightGapDeltaEqAntisymmetric
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.Top.FlDeg
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4
+open GroundTheory.Heights₂.Heights.LowerBoundFree GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Top
+
+def xAt {Ψ : Type} {N : ℕ} (τ : Ψ) (i : ℕ) : MvPolynomial (Ψ × Fin N) ℝ :=
+  if h : i < N then X (τ, ⟨i, h⟩) else 0
+
+theorem xAt_val {Ψ : Type} {N : ℕ} (τ : Ψ) (a : Fin N) :
+    (xAt τ (a : ℕ) : MvPolynomial (Ψ × Fin N) ℝ) = X (τ, a) := by
+  simp [xAt]
+
+theorem gapX_eq_xAt_sub {Ψ : Type} {N : ℕ} (τ : Ψ) (s : Fin N) :
+    PB.gapX (τ, s) = xAt τ (s : ℕ) - xAt τ ((s : ℕ) + 1) := by
+  simp [PB.gapX, xAt]
+
+theorem sum_gapX_Ico {Ψ : Type} {N : ℕ} (τ : Ψ) {a b : Fin N} (hab : a ≤ b) :
+    ∑ s ∈ Finset.Ico a b, PB.gapX (τ, s) = X (τ, a) - X (τ, b) := by
+  have h1 : ∑ s ∈ Finset.Ico a b, PB.gapX (τ, s)
+      = ∑ i ∈ Finset.Ico (a : ℕ) (b : ℕ),
+          ((xAt τ i : MvPolynomial (Ψ × Fin N) ℝ) - xAt τ (i + 1)) := by
+    rw [← Fin.map_valEmbedding_Ico, Finset.sum_map]
+    exact Finset.sum_congr rfl fun s _ => gapX_eq_xAt_sub τ s
+  have hle : (a : ℕ) ≤ b := hab
+  have h2 : ∀ n : ℕ, ∑ i ∈ Finset.Ico (a : ℕ) ((a : ℕ) + n),
+      ((xAt τ i : MvPolynomial (Ψ × Fin N) ℝ) - xAt τ (i + 1))
+        = xAt τ (a : ℕ) - xAt τ ((a : ℕ) + n) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [← add_assoc, Finset.sum_Ico_succ_top (Nat.le_add_right _ _), ih]
+      ring
+  obtain ⟨n, hn⟩ := Nat.exists_eq_add_of_le hle
+  rw [h1, hn, h2, ← hn, xAt_val, xAt_val]
+
+theorem toWt_gapDelta_eq_antisymDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
+    PB.toWt (gapDelta Ψ N) = GroundTheory.Heights₂.Heights.antisymDelta Ψ N := by
+  unfold gapDelta GroundTheory.Heights₂.Heights.antisymDelta
+
+  simp only [map_prod, map_sum]
+  refine Finset.prod_congr rfl fun τ _ => Finset.prod_congr rfl fun a _ =>
+    Finset.prod_congr rfl fun b hb => ?_
+  have hab : a ≤ b := (Finset.mem_Ioi.1 hb).le
+  rw [← sum_gapX_Ico τ hab]
+  refine Finset.sum_congr rfl fun s _ => ?_
+  simp [PB.toWt]
+
+end GlobalTheory.CompanionTheory.Ar.Top.FlDeg
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.WeightGapDeltaEqAntisymmetricStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +118,5 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 
 theorem _root_.GlobalTheory.T.weight_gap_delta_eq_antisymmetric : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ), PB.toWt (gapDelta Ψ N) = GroundTheory.Heights₂.Heights.antisymDelta Ψ N := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Top.FlDeg.toWt_gapDelta_eq_antisymDelta | exact GlobalTheory.CompanionTheory.Ar.Top.FlDeg.toWt_gapDelta_eq_antisymDelta | (intros; apply GlobalTheory.CompanionTheory.Ar.Top.FlDeg.toWt_gapDelta_eq_antisymDelta <;> assumption)
+end
+end

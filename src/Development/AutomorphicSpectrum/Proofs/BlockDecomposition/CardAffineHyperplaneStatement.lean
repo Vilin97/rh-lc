@@ -2,7 +2,6 @@ module
 
 public import Mathlib.Algebra.Field.Defs
 public import Mathlib.Data.Matrix.Mul
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardAffineHyperplane
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +42,66 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MemRiemannRochSpaceIffRegularAtEverywhere
 import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.ExponentialNegativity.GapAbsOf
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardAffineHyperplane
+
+section
+
+@[expose] public section
+
+open Matrix Classical PositivityTheory.Rg.Rs GlobalTheory.CompanionTheory.GLFirstBasisOrbit
+
+namespace GlobalTheory.CompanionTheory.GapOpCount
+
+theorem card_dotProduct_eq_one :
+    ∀ (k : Type) [Field k] [Fintype k] (n : ℕ) (a : Fin (n + 1) → k), a ≠ 0 →
+  Fintype.card k * (Finset.univ.filter (fun x : Fin (n + 1) → k => a ⬝ᵥ x = 1)).card = Fintype.card k ^ (n + 1) := by
+  intro k _ _ n a ha
+  obtain ⟨i, hi⟩ : ∃ i, a i ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact ha (funext h)
+  have hax₀ : a ⬝ᵥ Pi.single i (a i)⁻¹ = 1 := by
+    rw [dotProduct_single, mul_inv_cancel₀ hi]
+  have hfib : ∀ c : k, (Finset.univ.filter (fun x : Fin (n + 1) → k => a ⬝ᵥ x = c)).card =
+      (Finset.univ.filter (fun x : Fin (n + 1) → k => a ⬝ᵥ x = 1)).card := by
+    intro c
+    apply Finset.card_bij' (fun x _ => x + (1 - c) • Pi.single i (a i)⁻¹)
+      (fun x _ => x - (1 - c) • Pi.single i (a i)⁻¹)
+    case hi =>
+      intro x hx
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx ⊢
+      rw [dotProduct_add, dotProduct_smul, hax₀, hx, smul_eq_mul, mul_one]
+      ring
+    case hj =>
+      intro x hx
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx ⊢
+      rw [dotProduct_sub, dotProduct_smul, hax₀, hx, smul_eq_mul, mul_one]
+      ring
+    case left_inv =>
+      intro x _
+      simp
+    case right_inv =>
+      intro x _
+      simp
+  have htot : (Finset.univ : Finset (Fin (n + 1) → k)).card =
+      ∑ c : k, (Finset.univ.filter (fun x : Fin (n + 1) → k => a ⬝ᵥ x = c)).card :=
+    Finset.card_eq_sum_card_fiberwise (fun x _ => Finset.mem_univ (a ⬝ᵥ x))
+  have hcard : (Finset.univ : Finset (Fin (n + 1) → k)).card = Fintype.card k ^ (n + 1) := by
+    rw [Finset.card_univ, Fintype.card_fun, Fintype.card_fin]
+  rw [← hcard, htot, Finset.sum_congr rfl (fun c _ => hfib c), Finset.sum_const,
+    Finset.card_univ, smul_eq_mul]
+
+end GlobalTheory.CompanionTheory.GapOpCount
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardAffineHyperplaneStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +110,5 @@ open Matrix Classical PositivityTheory.Rg.Rs GlobalTheory.CompanionTheory.GLFirs
 theorem _root_.GlobalTheory.T.card_affine_hyperplane : ∀ (k : Type) [Field k] [Fintype k] (n : ℕ) (a : Fin (n + 1) → k), a ≠ 0 →
   Fintype.card k * (Finset.univ.filter (fun x : Fin (n + 1) → k => a ⬝ᵥ x = 1)).card = Fintype.card k ^ (n + 1) := by
   first | exact @GlobalTheory.CompanionTheory.GapOpCount.card_dotProduct_eq_one | exact GlobalTheory.CompanionTheory.GapOpCount.card_dotProduct_eq_one | (intros; apply GlobalTheory.CompanionTheory.GapOpCount.card_dotProduct_eq_one <;> assumption)
+end
+end

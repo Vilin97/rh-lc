@@ -2,7 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PositiveDegreeClassesDieOnEtaleCoverStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictlyHenselianIffStatement
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.RingTheory.Henselian
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictlyHenselianIff
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +44,25 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictlyHenselianIffStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.exists_etale_section_iff_henselian_and_isSepClosed : ∀ (R : Type) [CommRing R] [IsLocalRing R], (∀ (A : Type) [CommRing A] [Algebra R A] [Algebra.Etale R A] (q : Ideal A) [q.IsPrime], q.comap (algebraMap R A) = maximalIdeal R → ∃ s : A →ₐ[R] R, (maximalIdeal R).comap s.toRingHom = q) ↔ (HenselianLocalRing R ∧ IsSepClosed (ResidueField R)) := by
+  first | exact @GlobalTheory.StrictHensel.strictlyHenselian_iff | exact GlobalTheory.StrictHensel.strictlyHenselian_iff | (intros; apply GlobalTheory.StrictHensel.strictlyHenselian_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.CohomologySubsingletonPosOfStrictlyHenselian
+
+section
 
 @[expose] public section
 
@@ -84,3 +105,5 @@ theorem UpperTheory.cohomology_subsingleton_pos_of_strictly_henselian :
         rw [hs, sch.map_id, pull_id]
     _ = 0 := by
         rw [sch.map_comp, pull_comp, hx, map_zero]
+end
+end

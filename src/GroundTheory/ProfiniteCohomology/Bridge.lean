@@ -45,7 +45,43 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import GroundTheory.ProfiniteCohomology.BridgeDefs
+public import Mathlib.RepresentationTheory.Coinduced
+public import Mathlib.RepresentationTheory.Continuous.TopRep
+
+-- Source module: GroundTheory.ProfiniteCohomology.BridgeDefs
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.ProfCoh
+
+open CategoryTheory
+
+universe u
+
+variable {k G : Type u} [CommRing k] [TopologicalSpace k] [Group G]
+
+abbrev underlyingRep (X : TopRep.{u} k G) : Rep.{u} k G :=
+  Rep.of X.ρ.toRepresentation
+
+section Discrete
+
+variable [DiscreteTopology k]
+
+variable [TopologicalSpace G]
+
+end Discrete
+
+end GroundTheory.ProfCoh
+end
+end
+
+-- Source module: GroundTheory.ProfiniteCohomology.Bridge
+
+section
 
 @[expose] public section
 
@@ -108,3 +144,5 @@ variable [DiscreteTopology k]
 end Discrete
 
 end GroundTheory.ProfCoh
+end
+end

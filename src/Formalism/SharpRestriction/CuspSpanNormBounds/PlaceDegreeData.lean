@@ -1,7 +1,8 @@
 module
 
 public import Formalism.SharpRestriction.CuspSpanNormBounds.SArith
-public import Formalism.SharpRestriction.CuspSpanNormBounds.DstarEq
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +38,43 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.DstarEq
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.S
+
+open NumberField Formalism.BasicNotions
+
+structure AutTie (D : D7) (B : RowsAut) (pl : InfinitePlace B.I.F ≃ D.what₂.Tau) : Prop where
+  n_eq : B.I.n = D.R.r
+  f_eq : B.I.f = D.R.f
+  rd_eq : B.I.rd = D.host.rdE
+  eps_eq : ∀ v (i : Fin B.I.n), B.I.ε v i = epsS D.R (Fin.cast n_eq i)
+  lam_eq : ∀ v (i : Fin B.I.n), B.lam v i = lamS D.R (D.hc (pl v)) (Fin.cast n_eq i)
+  ds : ∀ v, IsDS (B.I.ε v) (B.lam v) (B.σ v)
+  low : ∀ v, IsLowUnit (B.I.ε v) (B.lam v) (B.σ v) (B.w v)
+  g_eq : B.g = D.host.g 0 * D.host.g 1
+  g0_eq : B.g₀ = D.host.g 0
+  D_eq : B.D = D.what₂.Dall
+  Dstar_eq : D.what₂.Dstar =
+    B.I.Dstar (∏ v, fdegOf (Formalism.REAL.muG (B.I.ε v)) (B.σ v) (B.w v)) B.μf B.fund B.e
+
+end Formalism.MainNotions.S
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+
+section
 
 @[expose] public section
 
@@ -116,3 +152,6 @@ def RowsTie (D : Formalism.BasicNotions.D7) (X : RowsAut) : Prop :=
     (SplitsCompl D.host.E (D.host.g 0) → SplitsCompl X.I.E X.g₀)
 
 end Formalism.MainNotions.PlaceDegreeData
+end
+end
+end

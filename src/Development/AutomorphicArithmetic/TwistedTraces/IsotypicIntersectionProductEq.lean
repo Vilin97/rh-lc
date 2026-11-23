@@ -6,11 +6,8 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSum
 public import Development.AutomorphicArithmetic.TwistedTraces.ExistsScalarOfTwistedIntertwinerCommutingAlgebra
 public import Development.AutomorphicArithmetic.TwistedTraces.FixedProjectionInvariantAndCommutingReps
 public import Development.AutomorphicArithmetic.TwistedTraces.IsotypicComponentProductOfSmoothReps
-public import Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubmoduleProductDecomposition
-public import Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubspaceProductClosed
-import Development.AutomorphicArithmetic.TwistedTraces.MemFixedVectorsOfProductOfCompactOpen
-public import Development.AutomorphicArithmetic.TwistedTraces.TrOnRestrictAndEqOfMapsInto
-public import Development.AutomorphicArithmetic.TwistedTraces.TraceRestrictEqOfHasFinTrace
+public import Development.AutomorphicArithmetic.TwistedTraces.FixedProjectionApplyEquivariantEq
+public import Development.AutomorphicArithmetic.TwistedTraces.ListOfFnProdEqMulUpdateOneOfPairwiseCommute
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -34,8 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,8 +44,225 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.IwahoriDoubleCosets
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AutomorphicArithmetic.TwistedTraces.MemFixedVectorsOfProductOfCompactOpen
+import Mathlib.Tactic.Linter.Style
+public import Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubspaceProductClosed
+import Development.AutomorphicArithmetic.TwistedTraces.MemFixedVectorsOfProductOfCompactOpen
+public import Development.AutomorphicArithmetic.TwistedTraces.TrOnRestrictAndEqOfMapsInto
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.LocEmb
+import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.CuspidalMultiplicityOneTotallyComplex
+import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.SfDefs
+import GroundTheory.AutomorphicForms.CuspidalDiscreteness.Counting
+import GroundTheory.AutomorphicForms.QuotientMeasure
+import GroundTheory.AutomorphicForms.ReductionBlock
+import GroundTheory.AutomorphicForms.WhittakerRelevance
+
+-- Source module: Development.AutomorphicArithmetic.TwistedTraces.IsotypicProjectionProductCommute
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
+open GroundTheory.Automorphic.CuspidalSpectrum GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets GlobalTheory.PRep Formalism.BasicNotions GlobalTheory.CuspRep GlobalTheory.SmGL UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.C.Sf
+
+theorem UpperTheory.isotypic_projection_product_commute :
+    ∀ (r : ℕ) (G : Fin r → Type) [∀ i, Group (G i)] [∀ i, TopologicalSpace (G i)] [∀ i, IsTopologicalGroup (G i)] [∀ i, LocallyCompactSpace (G i)] [∀ i, T2Space (G i)] [∀ i, TotallyDisconnectedSpace (G i)] (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (S : Fin r → Type) [∀ i, AddCommGroup (S i)] [∀ i, Module ℂ (S i)] (π : ∀ i, UnitaryRep (G i) H) (τ : ∀ i, Representation ℂ (G i) (S i)) (Z : Submodule ℂ H) (hsm : ∀ i, GroundTheory.Automorphic.IsSmooth (τ i)), (∀ i j, i ≠ j → ∀ g h v, π i g (π j h v) = π j h (π i g v)) → IsClosed (Z : Set H) → (∀ i, (π i).IsInvariant Z) → ∀ (s : ∀ i, G i ≃ₜ* G i) (I : ∀ i, S i ≃ₗ[ℂ] S i) (R : H →L[ℂ] H), (∀ v ∈ Z, R v ∈ Z) → (∀ i g, ∀ v ∈ Z, R (π i g v) = π i (s i g) (R v)) → (∀ i g x, I i (τ i g x) = τ i (s i g) (I i x)) → ∀ (L K : ∀ i, Subgroup (G i)) (hL : (∀ i, IsCompact (L i : Set (G i)) ∧ IsOpen (L i : Set (G i)))), (∀ i, K i ≤ L i) → (∀ i, ∀ k ∈ K i, (s i).symm k ∈ L i) → ∀ i f, Eqv (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) f → ∃ f', Eqv (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) f' ∧ ∀ x, R ((List.ofFn fun j => prj (fixU (π j) (L j))).prod (f x)) = f' (I i (fixedProj (τ i) (hsm i) (hL i).1 (hL i).2 x : S i)) := by
+  intro r G _ _ _ _ _ _ H _ _ _ S _ _ π τ Z hsm hc hZc hZi s I R hRZ hRs hI L K hL hKL hsK i f hf
+  let a : Fin r → (H →L[ℂ] H) := fun j => prj (fixU (π j) (L j))
+  have hcomm : ∀ p q, p ≠ q → Commute (a p) (a q) := fun p q hpq => by
+    refine ContinuousLinearMap.ext fun v => ?_
+    exact ((UpperTheory.fixedProjection_invariant_and_commuting_reps (G p) (G q) H (π p) (π q) (L p) (L q)).2.2.2 (hc p q hpq)).2 v
+  have hact : ∀ j, j ≠ i → ∀ g v, a j (π i g v) = π i g (a j v) := fun j hj g v =>
+    ((UpperTheory.fixedProjection_invariant_and_commuting_reps (G j) (G i) H (π j) (π i) (L j) (L i)).2.2.2 (hc j i hj)).1 g v
+  obtain ⟨hprod, hQc⟩ := UpperTheory.list_ofFn_prod_eq_mul_update_one_of_pairwise_commute (H →L[ℂ] H) r a hcomm i
+  let b : Fin r → (H →L[ℂ] H) := Function.update a i 1
+  let Q : H →L[ℂ] H := (List.ofFn b).prod
+  have hQa : Commute (a i) Q := hQc (a i) fun j hj => hcomm i j hj.symm
+  have hQπ : ∀ g v, Q (π i g v) = π i g (Q v) := fun g v => by
+    have h : Commute (π i g : H →L[ℂ] H) Q := hQc _ fun j hj => by
+      refine ContinuousLinearMap.ext fun v => ?_
+      exact (hact j hj g v).symm
+    exact (congrArg (fun T : H →L[ℂ] H => T v) h.eq).symm
+  have hb : ∀ p q, p ≠ q → Commute (b p) (b q) := fun p q hpq => by
+    by_cases hp : p = i
+    · subst hp
+      simp only [b, Function.update_self]
+      exact Commute.one_left _
+    · by_cases hq : q = i
+      · subst hq
+        simp only [b, Function.update_self]
+        exact Commute.one_right _
+      · simp only [b, Function.update_of_ne hp, Function.update_of_ne hq]
+        exact hcomm p q hpq
+  have hQZ : ∀ v ∈ Z, Q v ∈ Z := by
+    let M : Submonoid (H →L[ℂ] H) :=
+      { carrier := {T | ∀ v ∈ Z, T v ∈ Z}
+        mul_mem' := fun ha hb v hv => ha _ (hb v hv)
+        one_mem' := fun v hv => hv }
+    have hM : Q ∈ M := by
+      refine Submonoid.list_prod_mem M fun x hx => ?_
+      obtain ⟨j, rfl⟩ := List.mem_ofFn.mp hx
+      by_cases hj : j = i
+      · subst hj
+        simp only [b, Function.update_self]
+        exact M.one_mem
+      · simp only [b, Function.update_of_ne hj]
+        exact fun v hv => (UpperTheory.fixedProjection_invariant_and_commuting_reps (G j) (G j) H (π j) (π j) (L j) (L j)).2.2.1 Z hZc (hZi j) v hv
+    exact hM
+  have hQfix : ∀ j, j ≠ i → ∀ v, Q v ∈ fixU (π j) (L j) := fun j hj v => by
+    have h := (UpperTheory.list_ofFn_prod_eq_mul_update_one_of_pairwise_commute (H →L[ℂ] H) r b hb j).1
+    have h2 : Q v = a j ((List.ofFn (Function.update b j 1)).prod v) := by
+      have h3 : b j = a j := Function.update_of_ne hj _ _
+      change (List.ofFn b).prod v = _
+      rw [h, h3]
+      rfl
+    rw [h2]
+    exact (UpperTheory.fixedProjection_invariant_and_commuting_reps (G j) (G j) H (π j) (π j) (L j) (L j)).1 _
+  let f' : S i →ₗ[ℂ] H := (R : H →ₗ[ℂ] H) ∘ₗ (Q : H →ₗ[ℂ] H) ∘ₗ f ∘ₗ ((I i).symm : S i →ₗ[ℂ] S i)
+  have hf' : ∀ y, f' y = R (Q (f ((I i).symm y))) := fun y => rfl
+  have hfZ : ∀ x, f x ∈ Z := fun x => (Submodule.mem_inf.1 (hf.mem x)).1
+  refine ⟨f', ⟨fun y => ?_, fun g y => ?_⟩, fun x => ?_⟩
+  · rw [hf']
+    have hw := hQZ _ (hfZ ((I i).symm y))
+    refine Submodule.mem_inf.2 ⟨hRZ _ hw, ?_⟩
+    simp only [Submodule.mem_iInf]
+    intro j hj u hu
+    have h := hRs j ((s j).symm u) _ hw
+    rw [(s j).apply_symm_apply] at h
+    rw [← h, hQfix j hj _ _ (hsK j u hu)]
+  · have hIs : (I i).symm (τ i g y) = τ i ((s i).symm g) ((I i).symm y) := by
+      apply (I i).injective
+      rw [hI, (I i).apply_symm_apply, (I i).apply_symm_apply, (s i).apply_symm_apply]
+    rw [hf', hf', hIs, hf.map, hQπ, hRs i _ _ (hQZ _ (hfZ _)), (s i).apply_symm_apply]
+  · have hE : Eqv (τ i) (π i) ⊤ f := ⟨fun _ => Submodule.mem_top, hf.map⟩
+    have h1 := UpperTheory.fixedProjection_apply_equivariant_eq (G i) H (S i) (τ i) (hsm i) (π i) (L i) (hL i).1 (hL i).2 f hE x
+    have h2 : (List.ofFn a).prod (f x) = Q (a i (f x)) := by
+      rw [hprod]
+      exact congrArg (fun T : H →L[ℂ] H => T (f x)) hQa.eq
+    rw [hf', (I i).symm_apply_apply]
+    change R ((List.ofFn a).prod (f x)) = _
+    rw [h2]
+    change R (Q (prj (fixU (π i) (L i)) (f x))) = _
+    rw [h1]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubmoduleProductDecomposition
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
+open GroundTheory.Automorphic.CuspidalSpectrum GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets GlobalTheory.PRep Formalism.BasicNotions GlobalTheory.CuspRep GlobalTheory.SmGL UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.C.Sf
+
+theorem UpperTheory.isotypic_submodule_product_decomposition :
+    ∀ (r : ℕ) (G : Fin r → Type) [∀ i, Group (G i)] [∀ i, TopologicalSpace (G i)] [∀ i, IsTopologicalGroup (G i)] [∀ i, LocallyCompactSpace (G i)] [∀ i, T2Space (G i)] [∀ i, TotallyDisconnectedSpace (G i)] (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (S : Fin r → Type) [∀ i, AddCommGroup (S i)] [∀ i, Module ℂ (S i)] (π : ∀ i, UnitaryRep (G i) H) (τ : ∀ i, Representation ℂ (G i) (S i)) (Z : Submodule ℂ H) (hsm : ∀ i, GroundTheory.Automorphic.IsSmooth (τ i)), (∀ i j, i ≠ j → ∀ g h v, π i g (π j h v) = π j h (π i g v)) → IsClosed (Z : Set H) → (∀ i, (π i).IsInvariant Z) → ∀ (s : ∀ i, G i ≃ₜ* G i) (I : ∀ i, S i ≃ₗ[ℂ] S i) (R : H →L[ℂ] H), (∀ v ∈ Z, R v ∈ Z) → (∀ i g, ∀ v ∈ Z, R (π i g v) = π i (s i g) (R v)) → (∀ i g x, I i (τ i g x) = τ i (s i g) (I i x)) → ∀ (L K : ∀ i, Subgroup (G i)) (hL : (∀ i, IsCompact (L i : Set (G i)) ∧ IsOpen (L i : Set (G i)))), (∀ i, K i ≤ L i) → (∀ i, ∀ k ∈ K i, (s i).symm k ∈ L i) → ∀ (c : ∀ i, Module.End ℂ (fixedVectors (τ i) (K i)) →ₐ[ℂ] Module.End ℂ ↥(Z ⊓ ⨅ i, fixU (π i) (K i))) (J : ∀ i, Module.End ℂ (fixedVectors (τ i) (K i))), (∀ i (x : fixedVectors (τ i) (K i)), ((J i x : fixedVectors (τ i) (K i)) : S i) = I i (fixedProj (τ i) (hsm i) (hL i).1 (hL i).2 x : S i)) → (∀ i t f, Eqv (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) f → ∀ (x : fixedVectors (τ i) (K i)) (y : ↥(Z ⊓ ⨅ i, fixU (π i) (K i))), (y : H) = f x → ((c i t y : ↥(Z ⊓ ⨅ i, fixU (π i) (K i))) : H) = f (t x)) → (∀ i, (Z ⊓ ⨅ i, fixU (π i) (K i)) ≤ spanFix (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) (K i)) → ∃ ρ : Module.End ℂ ↥(Z ⊓ ⨅ i, fixU (π i) (K i)), (∀ v : ↥(Z ⊓ ⨅ i, fixU (π i) (K i)), ((ρ v : ↥(Z ⊓ ⨅ i, fixU (π i) (K i))) : H) = R ((List.ofFn fun j => prj (fixU (π j) (L j))).prod v)) ∧ ∀ i a b, b * J i = J i * a → ρ * c i a = c i b * ρ := by
+  intro r G _ _ _ _ _ _ H _ _ _ S _ _ π τ Z hsm hc hZc hZi s I R hRZ hRs hI L K hL hKL hsK c J hJ hcf hsp
+  let X : Submodule ℂ H := Z ⊓ ⨅ i, fixU (π i) (K i)
+  let Pr : H →L[ℂ] H := (List.ofFn fun j => prj (fixU (π j) (L j))).prod
+  have hPr : ∀ v ∈ Z, Pr v ∈ (Z ⊓ ⨅ j, fixU (π j) (L j)) :=
+    UpperTheory.mem_fixedVectors_of_product_of_compactOpen r G H π Z L (fun j => prj (fixU (π j) (L j)))
+      (fun i v => (UpperTheory.fixedProjection_invariant_and_commuting_reps (G i) (G i) H (π i) (π i) (L i) (L i)).1 v)
+      (fun i v hv => (UpperTheory.fixedProjection_invariant_and_commuting_reps (G i) (G i) H (π i) (π i) (L i) (L i)).2.2.1 Z hZc (hZi i) v hv)
+      (fun i j hij h v => ((UpperTheory.fixedProjection_invariant_and_commuting_reps (G i) (G j) H (π i) (π j) (L i) (L j)).2.2.2 (hc i j hij)).1 h v)
+  have hRX : ∀ v ∈ Z, R (Pr v) ∈ X := fun v hv => by
+    obtain ⟨h1, h2⟩ := Submodule.mem_inf.1 (hPr v hv)
+    refine Submodule.mem_inf.2 ⟨hRZ _ h1, (Submodule.mem_iInf _).2 fun j u hu => ?_⟩
+    have h := hRs j ((s j).symm u) _ h1
+    rw [(s j).apply_symm_apply] at h
+    rw [← h, (Submodule.mem_iInf _).1 h2 j _ (hsK j u hu)]
+  have hm : ∀ i f, Eqv (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) f →
+      ∀ x ∈ fixedVectors (τ i) (K i), f x ∈ X := fun i f hf x hx => by
+    obtain ⟨h1, h2⟩ := Submodule.mem_inf.1 (hf.mem x)
+    refine Submodule.mem_inf.2 ⟨h1, (Submodule.mem_iInf _).2 fun j => ?_⟩
+    by_cases e : j = i
+    · subst e
+      exact fun u hu => by rw [← hf.map, mem_fixedVectors.1 hx u hu]
+    · exact (Submodule.mem_iInf _).1 ((Submodule.mem_iInf _).1 h2 j) e
+  let ρ : Module.End ℂ X := ((R : H →ₗ[ℂ] H) ∘ₗ (Pr : H →ₗ[ℂ] H) ∘ₗ X.subtype).codRestrict X
+    fun v => hRX _ (Submodule.mem_inf.1 v.2).1
+  refine ⟨ρ, fun v => rfl, fun i a b hab => ?_⟩
+  have key : ∀ y ∈ spanFix (τ i) (π i) (Z ⊓ ⨅ j, ⨅ _ : j ≠ i, fixU (π j) (K j)) (K i),
+      ∃ h : y ∈ X, ρ (c i a ⟨y, h⟩) = c i b (ρ ⟨y, h⟩) := fun y hy => by
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      obtain ⟨f, hf, x, hx, rfl⟩ := hy
+      obtain ⟨f', hf', hff⟩ := UpperTheory.isotypic_projection_product_commute r G H S π τ Z hsm hc hZc hZi s I R hRZ hRs hI L K hL hKL hsK i f hf
+      have hρ : ∀ (x' : fixedVectors (τ i) (K i)) (h : f x' ∈ X), ((ρ ⟨f x', h⟩ : X) : H) = f' (J i x') := by
+        intro x' h
+        rw [hJ]
+        exact hff x'
+      have hy := hm i f hf x hx
+      refine ⟨hy, Subtype.ext ?_⟩
+      have e1 : c i a ⟨f x, hy⟩ = ⟨f (a ⟨x, hx⟩), hm i f hf _ (a ⟨x, hx⟩).2⟩ :=
+        Subtype.ext (hcf i a f hf ⟨x, hx⟩ _ rfl)
+      have e2 : ((c i b (ρ ⟨f x, hy⟩) : X) : H) = f' (b (J i ⟨x, hx⟩)) :=
+        hcf i b f' hf' (J i ⟨x, hx⟩) _ (hρ ⟨x, hx⟩ hy)
+      have e3 : b (J i ⟨x, hx⟩) = J i (a ⟨x, hx⟩) := LinearMap.congr_fun hab ⟨x, hx⟩
+      rw [e1, e2, e3]
+      exact hρ _ _
+    | zero => exact ⟨X.zero_mem, by
+        show ρ (c i a 0) = c i b (ρ 0)
+        simp only [map_zero]⟩
+    | add u v _ _ h1 h2 =>
+      obtain ⟨p, hp⟩ := h1
+      obtain ⟨q, hq⟩ := h2
+      refine ⟨X.add_mem p q, ?_⟩
+      show ρ (c i a (⟨u, p⟩ + ⟨v, q⟩)) = c i b (ρ (⟨u, p⟩ + ⟨v, q⟩))
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
+    | smul k u _ h1 =>
+      obtain ⟨p, hp⟩ := h1
+      refine ⟨X.smul_mem k p, ?_⟩
+      show ρ (c i a (k • ⟨u, p⟩)) = c i b (ρ (k • ⟨u, p⟩))
+      rw [map_smul, map_smul, map_smul, map_smul, hp]
+  exact LinearMap.ext fun v => (key v (hsp i v.2)).2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.TwistedTraces.TraceRestrictEqOfHasFinTrace
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
+open GroundTheory.Automorphic.CuspidalSpectrum GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets GlobalTheory.PRep Formalism.BasicNotions GlobalTheory.CuspRep GlobalTheory.SmGL UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.C.Sf
+
+theorem UpperTheory.trace_restrict_eq_of_hasFinTrace :
+    ∀ (S : Type) [AddCommGroup S] [Module ℂ S] (Q Q' : Submodule ℂ S) [FiniteDimensional ℂ Q'] (g : S →ₗ[ℂ] S) (t : ℂ) (m : Module.End ℂ Q') (e : Q' →ₗ[ℂ] S), Q ≤ Q' → HasFinTrace g t → (∀ x, g x ∈ Q) → (∀ x : Q', ((m x : Q') : S) = g (e x)) → (∀ x : Q', (x : S) ∈ Q → e x = x) → LinearMap.trace ℂ Q' m = t := by
+  intro S _ _ Q Q' _ g t m e hQ hg hgQ hm he
+  obtain ⟨hfd, hr⟩ := hg
+  haveI := hfd
+  have hWQ : LinearMap.range g ≤ Q := by
+    rintro _ ⟨x, rfl⟩
+    exact hgQ x
+  let p : Q' →ₗ[ℂ] LinearMap.range g :=
+    (g ∘ₗ e).codRestrict (LinearMap.range g) fun x => LinearMap.mem_range_self g (e x)
+  let q : LinearMap.range g →ₗ[ℂ] Q' := Submodule.inclusion (hWQ.trans hQ)
+  have e1 : m = q ∘ₗ p := by
+    ext x
+    exact hm x
+  have e2 : g.restrict (p := LinearMap.range g) (q := LinearMap.range g)
+      (fun v _ => LinearMap.mem_range_self g v) = p ∘ₗ q := by
+    ext x
+    exact congrArg g (he (q x) (hWQ x.2)).symm
+  rw [e1, LinearMap.trace_comp_comm', ← e2, hr]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.TwistedTraces.IsotypicIntersectionProductEq
+
+section
 
 @[expose] public section
 
@@ -156,3 +368,5 @@ theorem UpperTheory.isotypic_intersection_product_eq :
       (B i * J i) (e i) (hLK i) (ht i) (fun x => hA i _) (fun x => rfl) (he i)
   rw [e4, ← e3, ← e2, e1, hκ B]
   simp only [ht']
+end
+end

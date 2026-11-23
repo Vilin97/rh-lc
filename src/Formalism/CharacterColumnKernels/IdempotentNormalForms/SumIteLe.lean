@@ -1,7 +1,6 @@
 module
 
-public import Formalism.CharacterColumnKernels.StatementNG
-public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthQuotSmulRangeFree
+public import Formalism.CharacterColumnKernels.StatementN
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +40,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthQuotSmulRangeFree
+
+-- Source module: Formalism.CharacterColumnKernels.StatementNG
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace Formalism.NG
+
+def LocalSubalgebraEtaBound : Prop :=
+  ∀ (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (X : Type*) [Finite X]
+    (T : Subalgebra O (X → O)) [IsLocalRing T], (∀ x y : X, x ≠ y → ∃ f ∈ T, f x ≠ f y) →
+    ∀ (V : Type*) [AddCommGroup V] [Module (FractionRing O) V] [FiniteDimensional (FractionRing O) V]
+      [Module O V] [IsScalarTower O (FractionRing O) V]
+      (act : T →+* Module.End (FractionRing O) V), (⨆ x, Vx T act x) = ⊤ →
+    ∀ L : Submodule O V, L.FG → Submodule.span (FractionRing O) (L : Set V) = ⊤ →
+      (∀ f : T, ∀ v ∈ L, act f v ∈ L) →
+    ∀ (Z Zg : Finset X), Zg ⊆ Z → ∀ (a : Module.End (FractionRing O) V) (A : ℤ),
+      (∀ v ∈ L, a v ∈ L) → (∀ f : T, a * act f = act f * a) →
+      (∀ x ∈ Zg, ∀ v ∈ Vx T act x, a v = (A : FractionRing O) • v) →
+      (∀ x ∈ Z, x ∉ Zg → ∀ v ∈ Vx T act x, a v = 0) →
+    ∀ B : X → ℕ∞, (∀ x ∈ Zg, vcc T (Z : Set X) x ≤ B x) →
+      Module.length O (CongMod T act L (Zg : Set X)) ≤
+        ∑ x ∈ Zg, (Module.finrank (FractionRing O) (Vx T act x) : ℕ∞) *
+          (B x + IsDiscreteValuationRing.addVal O (A : O))
+
+end Formalism.NG
+end
+end
+end
+
+-- Source module: Formalism.CharacterColumnKernels.IdempotentNormalForms.SumIteLe
+
+section
 
 @[expose] public section
 
@@ -60,3 +100,6 @@ theorem etaBound : LocalSubalgebraEtaBound := by
   exact hB x hx
 
 end Formalism.NG
+end
+end
+end

@@ -1,17 +1,14 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsPowPolAVPowPolOf
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.WchartCompLePull
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.BoxSymIsSymmetry
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.LcgLinCombEqProd
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.PullGenBoxGen
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -44,8 +41,43 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.BoxSymIsSymmetry
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.LcgLinCombEqProd
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.PullGenBoxGen
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocal
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocalC
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.WchartCompLePull
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+lemma wchart_comp_le_pull {X X' Y : Scheme.{0}} (L : LB X) {J : Type} [Fintype J]
+    (F : J → (X' ⟶ X)) (q : Y ⟶ X') (jN : J → L.ι) :
+    LB.wchart L (fun i => q ≫ F i) jN ≤
+      LB.wchart (LB.LinComb L F (fun _ => 1)) (fun _ : PUnit => q) (fun _ => jN) :=
+  fun _ hy => Set.mem_iInter.2 fun _ => Set.mem_iInter.2 fun i => Set.mem_iInter.1 hy i
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.MapsAtIdIsoPow
+
+section
 
 @[expose] public section
 
@@ -206,3 +238,6 @@ theorem exists_pow : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (j 
   exact ⟨pow D j, ⟨isPowDeg_pow D j⟩⟩
 
 end GlobalTheory.PowDegPre
+end
+end
+end

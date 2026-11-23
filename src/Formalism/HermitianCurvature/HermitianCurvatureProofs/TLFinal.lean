@@ -7,21 +7,6 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BasicLift
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellValues
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapelliVectorEquivariance
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapelliVectorFrame
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IdentityOperator
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.InterlaceSignTwo
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvMulVecOfFixedVector
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LetterLiftOfParts
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftCapelliOperators
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftClosedUnderOperations
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftOfFunctions
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftOfXOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftZeroOrder
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MatrixUnitZeroZeroEqInsert
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinusId
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModelWordsAssemble
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TLChoiceChk
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.XFibreOfParts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -63,6 +48,184 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.InterlaceSignTwo
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvMulVecOfFixedVector
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LetterLiftOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftCapelliOperators
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftClosedUnderOperations
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftOfFunctions
+import Mathlib.Tactic.ENatToNat
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftZeroOrder
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MatrixUnitZeroZeroEqInsert
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinusId
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModelWordsAssemble
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.XFibreOfParts
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.IdentityOperator
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.TL Formalism.REAL Formalism.QuantumDeterminants
+
+noncomputable section
+
+theorem identity_operator : TL.IdOp := by
+  intro k r Wp Wq _ _ _ _ _ Bs
+  let T : B.DTerm k r Wp Wq :=
+    { coef := fun _ => 1
+      coefAdj := fun _ => 1
+      word := []
+      word_lie := fun X hX => by simp at hX
+      adj_id := fun _ _ _ => rfl }
+  have hap : ∀ F, B.opApply [T] F = F := by
+    intro F
+    funext g
+    simp [B.opApply, B.Rw, T]
+  refine ⟨[T], ⟨?_, ?_, ?_⟩, hap⟩
+  · intro T' hT'
+    simp only [List.mem_singleton] at hT'
+    subst hT'
+    refine ⟨?_, ?_⟩ <;> intro g₀ _ <;>
+      refine ⟨Set.univ, fun _ => 1, ?_, Set.mem_univ _, ?_, fun _ _ _ => rfl⟩
+    all_goals
+      first
+      | exact isOpen_univ
+      | exact contDiffOn_const
+      | (open scoped Formalism.FourierDecayAlt.B in exact contDiffOn_const)
+      | (open scoped Matrix.Norms.Elementwise in exact contDiffOn_const)
+      | (open scoped Matrix.Norms.Operator in exact contDiffOn_const)
+      | exact @contDiffOn_const _ _ _ _ _ _ _ _ _ _ _ _
+  · intro p _ f _ g _
+    simp only [hap]
+  · intro T' hT'
+    simp only [List.mem_singleton] at hT'
+    subst hT'
+    refine ⟨fun _ => 1, 0, 0, 0, [], ⟨1, ?_, ?_⟩, ?_, ?_, ?_, ?_⟩
+    · simp
+    · intro g
+      simp
+    · intro l _ _
+      simp
+    · simp [T]
+    · simp
+    · intro g _
+      simp [C6.monoM, C6.Epart, T]
+
+end
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftOfXOfParts
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.TL Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.Fr
+
+noncomputable section
+
+theorem lift_of_x_of_parts : TL.LiftXOfParts := by
+  intro hZ _hC hX Wp Wq _ _ _ _ _ _ P Bs X μ L st l0 hD Y
+  obtain ⟨_, _, hAct, hQQ, _, _, _, hLS⟩ := hD
+  obtain ⟨B0, _, hB⟩ := hX Wp Wq P Bs X
+  obtain ⟨hFB, hEq, hRad⟩ := hB Y
+  set E := xFib Bs B0 (Y + ((P.k : ℂ) - 2) / 2) with hE
+  set s : ℂ := M.sgn P l0 with hs
+  have hx : st.x Y = L.GGi * st.QQ Y 1 1 := by
+    rw [hLS.tau, ← mul_assoc, L.GGi_GG, one_mul]
+  have hx1 : (st.x Y).1 = X.fn 5 * (s • X.t Y 1 1) := by
+    rw [hx, hQQ Y, hAct.2.2.2.2.2.2.2.2.2.2.2.1]
+    rfl
+  refine hZ Wp Wq P Bs 0 0 0 0 (fun _ => s) E (st.x Y) ?_ hFB ?_ ?_
+  · refine ⟨MvPolynomial.C s, by simp, fun g => by simp⟩
+  · intro p hp g hg J
+    simp only [pow_zero, mul_one, smul_apply]
+    rw [hEq p hp g hg J, ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul]
+  · intro Φ x hx'
+    simp only [pow_zero, mul_one, smul_apply]
+    rw [hx1, Module.End.mul_apply, X.fn_apply 5 _ x hx', LinearMap.smul_apply, Submodule.coe_smul, Pi.smul_apply,
+      Pi.smul_apply, hRad Φ x hx', smul_smul, smul_smul]
+    have hG : (0 : ℝ) < Q.GGl P.k P.r Bs.z Bs.z' x.2 := hx'.2.2
+    simp only [Q.fnVal]
+    congr 1
+    have hG' : ((Q.GGl P.k P.r Bs.z Bs.z' x.2 : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hG.ne'
+    field_simp
+
+end
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.TLChoiceChk
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.TL
+
+open Matrix Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.Wd Formalism.FourierDecayAlt.Fr
+
+theorem wordLiftOfParts : WordLiftOfParts := by
+  intro hstep hlet A S _ _ _ _ _ _ r n L st Lf w hA hL hn
+  induction w with
+  | nil =>
+    intro _ e
+    have h1 : ((ofWord L st ([] : List (Letter ℂ S))).F * bTA L ([] : List (Letter ℂ S))) = 1 := by
+      simp [ofWord, bTA, bT, Start.frame]
+    rw [h1, Matrix.one_apply]
+    split_ifs
+    · simpa using hL.one
+    · exact hL.zero _ _
+  | cons l w ih =>
+    intro hw e
+    have hw' : admitted st w := by
+      obtain ⟨h1, h2, h3, h4⟩ := hw
+      refine ⟨?_, fun l' hl' => h2 l' (List.mem_cons_of_mem _ hl'),
+        fun l' hl' => h3 l' (List.mem_cons_of_mem _ hl'), h4.of_cons⟩
+      simp only [List.map_cons, List.nodup_cons] at h1
+      exact h1.2
+    rw [hstep A S r L st l w hA hw e, Matrix.mul_apply]
+    refine Finset.sum_induction _ (Lf _ _) (fun a b ha hb => hL.add ha hb) (hL.zero _ _) ?_
+    intro f _
+    have hcoef : Lf n (9 * (r + 1) * n) ((∑ i : Fin 2, eU l.intersection_update_fsHerm_neg_one i 0 * letterCol L st l w i : SlopeTestRemainingChoices S A) e f) := by
+      rw [Matrix.sum_apply]
+      refine Finset.sum_induction _ (Lf _ _) (fun a b ha hb => hL.add ha hb) (hL.zero _ _) ?_
+      intro i _
+      rw [Matrix.mul_apply]
+      refine Finset.sum_induction _ (Lf _ _) (fun a b ha hb => hL.add ha hb) (hL.zero _ _) ?_
+      intro g _
+      simp only [eU, Matrix.of_apply]
+      split_ifs
+      · rw [one_mul]
+        exact hlet A S r n L st Lf l w hA hL hn hw i g f
+      · rw [zero_mul]
+        exact hL.zero _ _
+    refine hL.mono ?_ ?_ (hL.mul hcoef (ih hw' f))
+    · simp only [List.length_cons]
+      exact le_of_eq (by ring)
+    · simp only [List.length_cons]
+      exact le_of_eq (by ring)
+
+end Formalism.FourierDecayAlt.TL
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.TLFinal
+
+section
 
 @[expose] public section
 
@@ -194,3 +357,5 @@ theorem top_lift_exists : Formalism.FourierDecayAlt.TL.TopLiftExists3 := by
         rw [if_neg hne]
 
 end Formalism.FourierDecayAlt.P
+end
+end

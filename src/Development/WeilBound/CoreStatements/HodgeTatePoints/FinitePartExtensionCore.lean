@@ -6,26 +6,15 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.LocallyO
 import Development.AbelianVarietyTheory.Definitions.Uniformization.IsCPPullback
 public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.IsAbelianSchemeAndExtendOfGenericHoms
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FiniteMapEqOfThickeningsEqStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsOfClosedSubgroupStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsOfTorsionKernelStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapFlatSemiabelianStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapLocallyQuasiFiniteStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SplitTorusExtensionTorsionStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SurjectiveLeftOfFibre
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ThickeningGroupHomExtendsStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionEmbeddingGeometricPoints
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionGroupOpenImmersionLiftStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.UniformizationThickeningCompatStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionEmbeddingGeometricPoints
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.CategoryTheory.Limits.Shapes.Connected
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -56,6 +45,119 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsOfTorsionKernelStatement
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.AbelianSchemeQuotients.IsAbelianScheme
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapFlatSemiabelian
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsUnitFormLocalizationEtaleNbhd
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapLocallyQuasiFinite
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SplitTorusExtensionTorsionStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SurjectiveLeftOfFibre
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ThickTransComp
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ThickeningGroupHomExtends
+import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionEmbeddingGeometricPoints
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionGroupOpenImmersionLiftStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.UniformizationThickeningCompatStatement
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import Mathlib.CategoryTheory.Limits.Shapes.Connected
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsOfClosedSubgroup
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory.CompanionTheory.Ar.BT.RatKer
+
+theorem exists_section_of_generic : ∀ (R : Type) [CommRing R] [IsDomain R] (H : Type) [CommGroup H] (Γf : QFGroup R H) (A E : Over (Spec (CommRingCat.of R))) (a : A ⟶ Γf.G) (b : Γf.G ⟶ E) (e : 𝟙_ (Over (Spec (CommRingCat.of R))) ⟶ E), IsClosedImmersion a.left → IsPullback a (toUnit A) b e → ∀ g : A.left, (A.hom g).asIdeal = ⊥ → ∃ (κ : genPt R ⟶ A) (x : Spec (CommRingCat.of (FractionRing R))), κ.left x = g := by
+  intro R _ _ H _ Γf A E a b e ha hP g hg
+  have hwa : Γf.G.hom (a.left g) = A.hom g := by
+    rw [← Scheme.Hom.comp_apply, Over.w]
+  obtain ⟨t, x, hx⟩ := Γf.11 (a.left g) (by rw [hwa]; exact hg)
+  have hgen : (GlobalTheory.CompanionTheory.Ar.BT.genPt R).hom x = A.hom g := by
+    rw [← Over.w (Γf.9 t), Scheme.Hom.comp_apply, hx, hwa]
+  have hab := congrArg (fun φ => φ.left g) hP.w
+  simp only [Over.comp_left, Scheme.Hom.comp_apply, Over.toUnit_left] at hab
+  have hpt : Γf.9 t ≫ b = toUnit (GlobalTheory.CompanionTheory.Ar.BT.genPt R) ≫ e := by
+    apply Over.OverMorphism.ext
+    apply GlobalTheory.CompanionTheory.Ar.BT.Tors.eq_of_same_point E.hom _ _ (Over.w _) (Over.w _) x x
+    simp only [Over.comp_left, Scheme.Hom.comp_apply, Over.toUnit_left]
+    rw [hx, hab, hgen]
+  refine ⟨hP.lift (Γf.9 t) (toUnit _) hpt, x, ?_⟩
+  apply a.left.isClosedEmbedding.injective
+  rw [← Scheme.Hom.comp_apply, ← Over.comp_left, hP.lift_fst, hx]
+
+end GlobalTheory.CompanionTheory.Ar.BT.RatKer
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointsOfClosedSubgroupStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out
+open scoped CategoryTheory.Obj
+
+theorem _root_.GlobalTheory.T.generic_points_of_closed_subgroup : ∀ (R : Type) [CommRing R] [IsDomain R] (H : Type) [CommGroup H] (Γf : QFGroup R H) (A E : Over (Spec (CommRingCat.of R))) (a : A ⟶ Γf.G) (b : Γf.G ⟶ E) (e : 𝟙_ (Over (Spec (CommRingCat.of R))) ⟶ E), IsClosedImmersion a.left → IsPullback a (toUnit A) b e → ∀ g : A.left, (A.hom g).asIdeal = ⊥ → ∃ (κ : genPt R ⟶ A) (x : Spec (CommRingCat.of (FractionRing R))), κ.left x = g := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.BT.RatKer.exists_section_of_generic | exact GlobalTheory.CompanionTheory.Ar.BT.RatKer.exists_section_of_generic | (intros; apply GlobalTheory.CompanionTheory.Ar.BT.RatKer.exists_section_of_generic <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapFlatSemiabelianStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G.Semi
+
+theorem _root_.GlobalTheory.T.power_map_flat_semiabelian : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (G : Over S) [GrpObj G], IsSemiAbelian G → ∀ N : ℕ, 1 ≤ N → Flat ((𝟙 G) ^ N).left := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.BT.flat_mul_semiAbelian | exact GlobalTheory.CompanionTheory.Ar.BT.flat_mul_semiAbelian | (intros; apply GlobalTheory.CompanionTheory.Ar.BT.flat_mul_semiAbelian <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerMapLocallyQuasiFiniteStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G.Semi
+
+theorem _root_.GlobalTheory.T.power_map_locally_quasi_finite : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G], IsSemiAbelian G → ∀ N : ℕ, 1 ≤ N → LocallyQuasiFinite ((𝟙 G) ^ N).left := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.BT.locallyQuasiFinite_pow_semiAbelian | exact GlobalTheory.CompanionTheory.Ar.BT.locallyQuasiFinite_pow_semiAbelian | (intros; apply GlobalTheory.CompanionTheory.Ar.BT.locallyQuasiFinite_pow_semiAbelian <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ThickeningGroupHomExtendsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out
+open scoped CategoryTheory.Obj
+
+theorem _root_.GlobalTheory.T.thickening_group_hom_extends : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] (I : Ideal R) [IsAdicComplete I R] (P Q P' Q' : Over (Spec (CommRingCat.of R))) [GrpObj P] [GrpObj Q] [GrpObj P'] [GrpObj Q'] [IsFinite P.hom] [IsFinite Q.hom] (jP : P ⟶ P') (jQ : Q ⟶ Q') [IsMonHom jP] [IsMonHom jQ] [Mono jQ] (φ : ∀ e, thickObj R I e P' ⟶ thickObj R I e Q'), (∀ e, IsMonHom (φ e)) → (∀ e, thickMap R I e P' ≫ (φ (e + 1)).left = (φ e).left ≫ thickMap R I e Q') → (∀ e, ∃ w : thickObj R I e P ⟶ thickObj R I e Q, w ≫ (Over.pullback (thick R I e)).map jQ = (Over.pullback (thick R I e)).map jP ≫ φ e) → ∃ c : P ⟶ Q, IsMonHom c ∧ ∀ e, (Over.pullback (thick R I e)).map (c ≫ jQ) = (Over.pullback (thick R I e)).map jP ≫ φ e := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.BT.LiftHom.lift_hom | exact GlobalTheory.CompanionTheory.Ar.BT.LiftHom.lift_hom | (intros; apply GlobalTheory.CompanionTheory.Ar.BT.LiftHom.lift_hom <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.FinitePartExtensionCore
+
+section
 
 @[expose] public section
 
@@ -293,3 +395,6 @@ theorem finitePart_extension : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
     (GlobalTheory.T.uniformization_thickening_compat R _ D A G U) (fun e => (U.gt e).isKernel.w) (U.gt 0).q_flat (U.gt 0).q_surj hq0 (U.gt 0).isKernel N hN T Γ i hi H Γf u hop hfin hcl
 
 end PositivityTheory.HtPt.Stight.D1
+end
+end
+end

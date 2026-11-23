@@ -1,6 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.SumAntidiagonalTuple
+public import Mathlib.Data.Fin.Tuple.NatAntidiagonal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,8 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,9 +39,31 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Algebra.BigOperators.Intervals
+
+-- Source module: Formalism.PeriodIntegrals.SumAntidiagonalTuple
+
+section
+
+@[expose] public section
+
+namespace PI
+
+def SumAntidiagonalTuple : Prop :=
+  ∀ D T : ℕ, D < T →
+    ∑ k ∈ Finset.range (T - D), (Finset.Nat.antidiagonalTuple D k).card = Nat.choose (T - 1) D
+
+end PI
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SumAntidiagonalTuple
+
+section
 
 @[expose] public section
 
@@ -121,3 +141,5 @@ theorem sum_antidiagonalTuple : PI.SumAntidiagonalTuple := by
     rw [h1, h2]
     simp only [card_antidiagonal_tuple_succ_eq_choose]
     exact sum_range_add_choose_eq_choose_succ E n
+end
+end

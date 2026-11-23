@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsUnifAt
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeIntegralFiniteSum
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FinsumOutOfLe
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +38,31 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaNormCommutation.LocalComparisonSplitting.EulerFactorLevels.EulerFinOf
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeIntegralFiniteSum
+
+section
+
+@[expose] public section
+
+open GlobalTheory.BCT PositivityTheory.Rg.BcB.G8.Fin
+open scoped Classical
+
+namespace GlobalTheory.CompanionTheory.HintLevelPt
+
+theorem hint_eq_level_of_forall : ∀ (H : Type) [Group H] (K L : Subgroup H) (u : H → ℂ), L ≤ K →
+    L.relIndex K ≠ 0 → (∀ l ∈ L, ∀ x, u (x * l) = u x) →
+    hint K u = ((L.relIndex K : ℕ) : ℂ)⁻¹ * ∑ᶠ p : H ⧸ L, u p.out := by
+  intro H _ K L u hLK hfin hu
+  exact GlobalTheory.CompanionTheory.HintLevel.hint_eq_level H K L u hLK (fun l hl x => hu l hl x) hfin
+
+end GlobalTheory.CompanionTheory.HintLevelPt
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeIntegralFiniteSumStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.BCT PositivityTheory.Rg.BcB.G8.Fin
@@ -45,3 +70,5 @@ open scoped Classical
 
 theorem _root_.GlobalTheory.T.hecke_integral_finite_sum : ∀ (H : Type) [Group H] (K L : Subgroup H) (u : H → ℂ), L ≤ K → L.relIndex K ≠ 0 → (∀ l ∈ L, ∀ x, u (x * l) = u x) → hint K u = ((L.relIndex K : ℕ) : ℂ)⁻¹ * ∑ᶠ p : H ⧸ L, u p.out := by
   first | exact @GlobalTheory.CompanionTheory.HintLevelPt.hint_eq_level_of_forall | exact GlobalTheory.CompanionTheory.HintLevelPt.hint_eq_level_of_forall | (intros; apply GlobalTheory.CompanionTheory.HintLevelPt.hint_eq_level_of_forall <;> assumption)
+end
+end

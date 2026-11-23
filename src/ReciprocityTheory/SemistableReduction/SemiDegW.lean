@@ -45,9 +45,253 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.SemistableReduction.SemiDegI
-public import ReciprocityTheory.SemistableReduction.SemiDegN
-public import ReciprocityTheory.SemistableReduction.SemiDegQ
+public import ReciprocityTheory.SemistableReduction.SemiDegM
 public import ReciprocityTheory.SemistableReduction.SemiDegE
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import ReciprocityTheory.SemistableReduction.SemiDegR
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: ReciprocityTheory.SemistableReduction.SemiDegN
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.MultiplicativeHeights.SemiPt
+
+open Matrix NumberField ComplexConjugate
+open scoped ComplexOrder
+
+theorem mid_le_zero (hN : IntegralIndexStatement) (hA : AbsDetStatement) {K : Type} [Field K]
+    [NumberField K] {r : ℕ} (S : HermForm K r) (m : ℕ) (g : Fin r → K)
+    (hfix : ∀ a : Fin r, m ≤ (a : ℕ) → (a : ℕ) + m < r → S.c (g a) = g a)
+    (Gm : Submodule (𝓞 K) (Fin r → K)) (hGm : Gm.FG)
+    (hsupp : ∀ x ∈ Gm, ∀ a : Fin r, ((a : ℕ) < m ∨ r ≤ (a : ℕ) + m) → x a = 0)
+    (hint : IsIntegralOn (midForm S m g hfix) Gm)
+    (haniso : ∀ t : Fin r → K, (∀ i : Fin r, (i : ℕ) < m ∨ r ≤ (i : ℕ) + m → t i = 0) →
+      ∑ i, S.c (t i) * g i * t i = 0 → t = 0)
+    (δ : (K →+* ℂ) → Fin r → ℝ) (hδ : ∀ σ a, 0 < δ σ a)
+    (hδmid : ∀ σ (a : Fin r), m ≤ (a : ℕ) → (a : ℕ) + m < r → δ σ a = ‖σ (g a)‖)
+    (C : Submodule (𝓞 K) (Fin r → K)) (hC : C ≤ Gm) (k : ℕ) (c : Fin k → Fin r → K)
+    (hc : IsKBasisIn C c) : latDeg (diagMet δ) C c ≤ 0 := by
+  set Sm := midForm S m g hfix with hSm
+  have hCfg : C.FG := Submodule.FG.of_le hGm hC
+  have hCint : IsIntegralOn Sm C := fun x hx y hy => hint x (hC hx) y (hC hy)
+
+  have hSmh : ∀ z : Fin r → K, (∀ a : Fin r, ((a : ℕ) < m ∨ r ≤ (a : ℕ) + m) → z a = 0) →
+      Sm.h z z = ∑ a, S.c (z a) * g a * z a := by
+    intro z hz
+    simp only [HermForm.h, hSm, midForm, midG, Matrix.diagonal_apply, mul_ite, mul_zero, ite_mul,
+      zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    split_ifs with h
+    · rfl
+    · rw [hz a (by omega)]
+      simp
+  have hdet : (hGram Sm c).det ≠ 0 := by
+    intro h0
+    obtain ⟨t, ht0, ht⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0
+    set z := colMat c *ᵥ t with hz
+    have hzsupp : ∀ a : Fin r, ((a : ℕ) < m ∨ r ≤ (a : ℕ) + m) → z a = 0 := by
+      intro a ha
+      rw [hz, colMat_mulVec, Finset.sum_apply]
+      refine Finset.sum_eq_zero fun j _ => ?_
+      rw [Pi.smul_apply, hsupp _ (hC (hc.1 j)) a ha, smul_zero]
+    have h1 : Sm.h z z = 0 := by
+      rw [hz, ← form_colMat, ht]
+      simp
+    rw [hSmh z hzsupp] at h1
+    have h2 := haniso z hzsupp h1
+    rw [hz, colMat_mulVec] at h2
+    exact ht0 (funext (Fintype.linearIndependent_iff.1 hc.2.1 t h2))
+  have hidx := hN K r k Sm C c hCfg hc hCint hdet
+  have hDpd : ∀ σ, (diagMet δ σ).PosDef := fun σ =>
+    Matrix.posDef_diagonal_iff.2 fun a => by exact_mod_cast hδ σ a
+
+  have hσ : ∀ σ : K →+* ℂ, ‖σ (hGram Sm c).det‖ ≤ (gramC (diagMet δ σ) σ c).det.re := by
+    intro σ
+    set E := embMat σ c with hE
+    have hEc : ((colMat c).map S.c)ᵀ.map σ = Eᴴ := by
+      ext a b
+      simp [hE, embMat, colMat, Matrix.conjTranspose_apply, S.c_emb]
+    have hC' : (hGram Sm c).map σ = Eᴴ * (midG r m g).map σ * E := by
+      rw [hGram_eq, Matrix.map_mul, Matrix.map_mul]
+      simp only [hSm, midForm]
+      rw [hEc]
+      rfl
+    have hGσ : (midG r m g).map σ =
+        diagonal fun a : Fin r => σ (if m ≤ (a : ℕ) ∧ (a : ℕ) + m < r then g a else 0) := by
+      simp only [midG]
+      rw [Matrix.diagonal_map (map_zero σ)]
+    have hherm : ((hGram Sm c).map σ).IsHermitian := by
+      ext i j
+      simp only [Matrix.conjTranspose_apply, Matrix.map_apply, hGram, Matrix.of_apply]
+      rw [← hermForm_swap Sm (c j) (c i), Sm.c_emb]
+      rfl
+    have hineq : ∀ v : Fin k → ℂ, ‖star v ⬝ᵥ (((hGram Sm c).map σ) *ᵥ v)‖ ≤
+        (star v ⬝ᵥ ((gramC (diagMet δ σ) σ c) *ᵥ v)).re := by
+      intro v
+      rw [hC', gramC_eq, quad_eq, quad_eq, hGσ]
+      simp only [diagMet]
+      rw [quad_diag, quad_diag]
+      calc ‖∑ a : Fin r, σ (if m ≤ (a : ℕ) ∧ (a : ℕ) + m < r then g a else 0) *
+              ((‖(E *ᵥ v) a‖ ^ 2 : ℝ) : ℂ)‖
+          ≤ ∑ a : Fin r, ‖σ (if m ≤ (a : ℕ) ∧ (a : ℕ) + m < r then g a else 0) *
+              ((‖(E *ᵥ v) a‖ ^ 2 : ℝ) : ℂ)‖ := norm_sum_le _ _
+        _ ≤ ∑ a : Fin r, δ σ a * ‖(E *ᵥ v) a‖ ^ 2 := by
+            refine Finset.sum_le_sum fun a _ => ?_
+            rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+            gcongr
+            split_ifs with h
+            · rw [hδmid σ a h.1 h.2]
+            · simp only [map_zero, norm_zero]
+              exact (hδ σ a).le
+        _ = (∑ a : Fin r, ((δ σ a : ℝ) : ℂ) * ((‖(E *ᵥ v) a‖ ^ 2 : ℝ) : ℂ)).re := by
+            rw [Complex.re_sum]
+            refine Finset.sum_congr rfl fun a _ => ?_
+            rw [← Complex.ofReal_mul, Complex.ofReal_re]
+    have h5 := hA k (gramC (diagMet δ σ) σ c) ((hGram Sm c).map σ)
+      (gramC_posDef S _ (hDpd σ) σ c hc.2.1) hherm hineq
+    rwa [show ((hGram Sm c).map σ).det = σ (hGram Sm c).det from (RingHom.map_det σ _).symm] at h5
+  have hsum : Real.log |((Algebra.norm ℚ (hGram Sm c).det : ℚ) : ℝ)| ≤
+      ∑ σ : K →+* ℂ, Real.log (gramC (diagMet δ σ) σ c).det.re := by
+    rw [← sum_log_norm_emb]
+    refine Finset.sum_le_sum fun σ _ => Real.log_le_log ?_ (hσ σ)
+    apply norm_pos_iff.2
+    intro h0
+    exact hdet (σ.injective (by rw [h0, map_zero]))
+  have hone : 1 ≤ (spanIdx C c : ℝ) :=
+    Nat.one_le_cast.2 (Nat.one_le_iff_ne_zero.2 (spanIdx_ne_zero C c hCfg hc))
+  have hidx' : 2 * Real.log (spanIdx C c : ℝ) ≤ Real.log |((Algebra.norm ℚ (hGram Sm c).det : ℚ) : ℝ)| := by
+    have := Real.log_le_log (by positivity) hidx
+    rwa [Real.log_pow] at this
+  unfold latDeg
+  unfold spanIdx at hidx'
+  linarith
+
+end ReciprocityTheory.MultiplicativeHeights.SemiPt
+end
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.SemiDegQ
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.MultiplicativeHeights.SemiPt
+
+open Matrix NumberField ComplexConjugate
+open scoped ComplexOrder
+
+theorem gr_at {K : Type} [Field K] [NumberField K] {r : ℕ} (Lp : Submodule (𝓞 K) (Fin r → K))
+    (j : Fin r) : ∀ x ∈ (Lp ⊓ cutSub K r (j + 1)).map (projGe K r j), IsAt j x := by
+  rintro _ ⟨y, ⟨_, hy⟩, rfl⟩ a ha
+  show (if (j : ℕ) ≤ a then y a else 0) = 0
+  split_ifs with h
+  · exact hy a (by have : (a : ℕ) ≠ j := fun e => ha (Fin.ext e); omega)
+  · rfl
+
+theorem exists_at {K : Type} [Field K] [NumberField K] {r : ℕ} (Lp : Submodule (𝓞 K) (Fin r → K))
+    (hsp : ∀ v : Fin r → K, ∃ a : 𝓞 K, a ≠ 0 ∧ a • v ∈ Lp) (j : Fin r) :
+    ∃ x ∈ (Lp ⊓ cutSub K r (j + 1)).map (projGe K r j), x j ≠ 0 := by
+  obtain ⟨a, ha, hav⟩ := hsp (Pi.single j 1)
+  have hcut : a • (Pi.single j 1 : Fin r → K) ∈ cutSub K r (j + 1) := by
+    intro i hi
+    have : i ≠ j := fun e => by rw [e] at hi; omega
+    simp [this]
+  refine ⟨projGe K r j (a • Pi.single j 1), ⟨_, ⟨hav, hcut⟩, rfl⟩, ?_⟩
+  show (if (j : ℕ) ≤ j then (a • (Pi.single j 1 : Fin r → K)) j else 0) ≠ 0
+  rw [if_pos le_rfl]
+  simpa using ha
+
+theorem pair_int {K : Type} [Field K] [NumberField K] {r : ℕ} (S : HermForm K r) (m : ℕ)
+    (g : Fin r → K) (h2m : 2 * m ≤ r) (Lp : Submodule (𝓞 K) (Fin r → K))
+    (hint : ∀ x ∈ Lp, ∀ y ∈ Lp, IsIntegralElt (formM S.c (wittMat r m g) x y))
+    (j : Fin r) (hj : (j : ℕ) < m) :
+    ∀ x ∈ (Lp ⊓ cutSub K r (j + 1)).map (projGe K r j),
+      ∀ y ∈ (Lp ⊓ cutSub K r (Fin.rev j + 1)).map (projGe K r (Fin.rev j)),
+        IsIntegralElt (S.c (x j) * y (Fin.rev j)) := by
+  rintro _ ⟨x, ⟨hxL, hxc⟩, rfl⟩ _ ⟨y, ⟨hyL, hyc⟩, rfl⟩
+  have hrev := Fin.val_rev j
+  have hj' := j.isLt
+  have e1 : projGe K r j x j = x j := by
+    show (if (j : ℕ) ≤ j then x j else 0) = x j
+    rw [if_pos le_rfl]
+  have e2 : projGe K r (Fin.rev j) y (Fin.rev j) = y (Fin.rev j) := by
+    show (if ((Fin.rev j : Fin r) : ℕ) ≤ (Fin.rev j : Fin r) then y (Fin.rev j) else 0) = _
+    rw [if_pos le_rfl]
+  rw [e1, e2]
+  have h := hint x hxL y hyL
+  rw [formM_witt, Finset.sum_eq_single j] at h
+  · rwa [wVal_outer r m g j (Or.inl hj), wPart_outer r m j (Or.inl hj), one_mul] at h
+  · intro a _ ha
+    by_cases hlt : (a : ℕ) < j
+    · have hao : (a : ℕ) < m ∨ r ≤ (a : ℕ) + m := Or.inl (by omega)
+      rw [wPart_outer r m a hao]
+      have : y (Fin.rev a) = 0 := hyc _ (by rw [Fin.val_rev, Fin.val_rev]; omega)
+      rw [this, mul_zero, mul_zero]
+    · have : x a = 0 := hxc a (by have : (a : ℕ) ≠ j := fun e => ha (Fin.ext e); omega)
+      rw [this, map_zero, zero_mul]
+  · intro h'
+    exact absurd (Finset.mem_univ _) h'
+
+theorem mid_supp {K : Type} [Field K] [NumberField K] {r : ℕ} (m : ℕ)
+    (Lp : Submodule (𝓞 K) (Fin r → K)) :
+    ∀ x ∈ (Lp ⊓ cutSub K r (r - m)).map (projGe K r m), ∀ a : Fin r,
+      ((a : ℕ) < m ∨ r ≤ (a : ℕ) + m) → x a = 0 := by
+  rintro _ ⟨y, ⟨_, hy⟩, rfl⟩ a ha
+  show (if m ≤ (a : ℕ) then y a else 0) = 0
+  split_ifs with h
+  · exact hy a (by omega)
+  · rfl
+
+theorem mid_int {K : Type} [Field K] [NumberField K] {r : ℕ} (S : HermForm K r) (m : ℕ)
+    (g : Fin r → K) (hfix : ∀ a : Fin r, m ≤ (a : ℕ) → (a : ℕ) + m < r → S.c (g a) = g a)
+    (Lp : Submodule (𝓞 K) (Fin r → K))
+    (hint : ∀ x ∈ Lp, ∀ y ∈ Lp, IsIntegralElt (formM S.c (wittMat r m g) x y)) :
+    IsIntegralOn (midForm S m g hfix) ((Lp ⊓ cutSub K r (r - m)).map (projGe K r m)) := by
+  rintro _ ⟨x, ⟨hxL, hxc⟩, rfl⟩ _ ⟨y, ⟨hyL, hyc⟩, rfl⟩
+  have h := hint x hxL y hyL
+  convert h using 1
+  rw [formM_witt]
+  simp only [HermForm.h, midForm, midG, Matrix.diagonal_apply, mul_ite, mul_zero, ite_mul,
+    zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  have ha := a.isLt
+  show (if m ≤ (a : ℕ) ∧ (a : ℕ) + m < r then
+      S.c (if m ≤ (a : ℕ) then x a else 0) * g a * (if m ≤ (a : ℕ) then y a else 0)
+      else 0) = _
+  by_cases hmid : m ≤ (a : ℕ) ∧ (a : ℕ) + m < r
+  · have ho : ¬ ((a : ℕ) < m ∨ r ≤ (a : ℕ) + m) := by omega
+    simp only [if_pos hmid, if_pos hmid.1]
+    rw [wVal_mid r m g a ho, wPart_mid r m a ho]
+    ring
+  · rw [if_neg hmid]
+    by_cases hlt : (a : ℕ) < m
+    · have ho : (a : ℕ) < m ∨ r ≤ (a : ℕ) + m := Or.inl hlt
+      rw [wPart_outer r m a ho]
+      have : y (Fin.rev a) = 0 := hyc _ (by rw [Fin.val_rev]; omega)
+      rw [this, mul_zero, mul_zero]
+    · have : x a = 0 := hxc a (by omega)
+      rw [this, map_zero, zero_mul]
+
+end ReciprocityTheory.MultiplicativeHeights.SemiPt
+end
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.SemiDegW
+
+section
 
 @[expose] public section
 
@@ -196,3 +440,6 @@ theorem adapted_semistable (hB : LatDegBasisStatement) (hN : IntegralIndexStatem
   exact this B hB k b hb
 
 end ReciprocityTheory.MultiplicativeHeights.SemiPt
+end
+end
+end

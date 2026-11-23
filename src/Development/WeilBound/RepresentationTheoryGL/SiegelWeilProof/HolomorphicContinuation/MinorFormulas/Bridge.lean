@@ -2,16 +2,15 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeSt
 public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeB
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeC
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeH
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MollifiedIntegrability.ClsGainA
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeA
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeH
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.Analysis.Analytic.IteratedFDeriv
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -26,6 +25,8 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,7 +49,189 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeA
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import Mathlib.RingTheory.PiTensorProduct
+import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeH
+import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MollifiedIntegrability.ClsGainA
+public import Mathlib.Analysis.Analytic.IteratedFDeriv
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.DetSqSplit
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Filter Topology
+
+namespace PositivityTheory.Rg.Sw.SP
+
+open PositivityTheory.Rg.Sw.WR PositivityTheory.Rg.Sw.WR.Z
+
+variable {n : ℕ}
+
+theorem det_line (M0 A : Matrix (Fin n) (Fin n) ℂ) (h : M0.det ≠ 0) :
+    HasDerivAt (fun t : ℂ => (M0 + t • A).det) (M0.det * (M0⁻¹ * A).trace) 0 := by
+  have hM : M0 * M0⁻¹ = 1 := Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr h)
+  set N := M0⁻¹ * A with hN
+  set P : Polynomial ℂ := (det (1 + (Polynomial.X : Polynomial ℂ) • N.map Polynomial.C)).divX.divX with hP
+  have e : (fun t : ℂ => (M0 + t • A).det) = fun t : ℂ => M0.det * (1 + N.trace * t + P.eval t * t ^ 2) := by
+    funext t
+    have : M0 + t • A = M0 * (1 + t • N) := by
+      rw [Matrix.mul_add, Matrix.mul_one, Matrix.mul_smul, hN, ← Matrix.mul_assoc, hM, Matrix.one_mul]
+    rw [this, Matrix.det_mul, Matrix.det_one_add_smul]
+  rw [e]
+  have h1 : HasDerivAt (fun t : ℂ => 1 + N.trace * t + P.eval t * t ^ 2) N.trace 0 := by
+    have ha : HasDerivAt (fun t : ℂ => N.trace * t) N.trace 0 := by
+      simpa using (hasDerivAt_id (0 : ℂ)).const_mul N.trace
+    have hb : HasDerivAt (fun t : ℂ => P.eval t * t ^ 2) 0 0 := by
+      have := (P.hasDerivAt (0 : ℂ)).fun_mul (hasDerivAt_pow 2 (0 : ℂ))
+      simpa using this
+    simpa using (ha.const_add 1).fun_add hb
+  exact h1.const_mul M0.det
+
+theorem c_sq (s : ℂ) (hs : s = 1 ∨ s = -1) : (Complex.I * s) * (Complex.I * s) = -1 := by
+  rcases hs with rfl | rfl <;> simp [Complex.I_mul_I]
+
+theorem det_sq_split (s : ℂ) (hs : s = 1 ∨ s = -1) (B : MC n) :
+    (1 + Matrix.of B * Matrix.of B).det =
+      (1 - (Complex.I * s) • Matrix.of B).det * (1 + (Complex.I * s) • Matrix.of B).det := by
+  rw [← Matrix.det_mul]
+  congr 1
+  have hc := c_sq s hs
+  rw [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_add, Matrix.mul_one, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hc]
+  simp only [neg_smul, one_smul]
+  abel
+
+theorem hCls : HCls := by
+  intro n s hs z m x v hx
+  obtain ⟨h1, h2, h3⟩ := hx
+  set c : ℂ := Complex.I * s with hc
+  set M0 : Matrix (Fin n) (Fin n) ℂ := 1 - c • Matrix.of x
+  set M0' : Matrix (Fin n) (Fin n) ℂ := 1 + c • Matrix.of x
+  set V : Matrix (Fin n) (Fin n) ℂ := Matrix.of v
+  have hdM := det_line M0 (-c • V) h1
+  have hdM' := det_line M0' (c • V) h2
+
+  have e : (fun t : ℂ => clsC s z m 0 1 (x + t • v)) = fun t : ℂ =>
+      Complex.exp (-z * Complex.log ((M0 + t • (-c • V)).det * (M0' + t • (c • V)).det)) * (((M0 + t • (-c • V)).det)⁻¹) ^ m := by
+    funext t
+    simp only [clsC, pow_zero, mul_one, map_one]
+    rw [det_sq_split s hs, mX, mY, Matrix.det_nonsing_inv, Ring.inverse_eq_inv']
+  rw [e]
+  have hW0 : (M0 + (0 : ℂ) • (-c • V)).det * (M0' + (0 : ℂ) • (c • V)).det ∈ Complex.slitPlane := by
+    have e0 : (M0 + (0 : ℂ) • (-c • V)).det * (M0' + (0 : ℂ) • (c • V)).det = (1 + Matrix.of x * Matrix.of x).det := by
+      simp only [zero_smul, add_zero]
+      exact (det_sq_split s hs x).symm
+    rw [e0]
+    exact h3
+  have hW := hdM.fun_mul hdM'
+  have hL := hW.clog (by simpa using hW0)
+  have hE := (hL.const_mul (-z)).cexp
+  have hD := (hdM.inv (by simpa using h1)).pow m
+  have hT := hE.fun_mul hD
+  refine hT.congr_deriv ?_
+  simp only [zero_smul, add_zero]
+  have hM0 : M0.det ≠ 0 := h1
+  have hM0' : M0'.det ≠ 0 := h2
+  have tr1 : (M0⁻¹ * (-c • V)).trace = -c * (Ym s x * V).trace := by
+    rw [Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul]
+    rfl
+  have tr2 : (M0'⁻¹ * (c • V)).trace = c * (Yp s x * V).trace := by
+    rw [Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul]
+    rfl
+  have ecls : clsC s z m 0 1 x = Complex.exp (-z * Complex.log (M0.det * M0'.det)) * (M0.det⁻¹) ^ m := by
+    simp only [clsC, pow_zero, mul_one, map_one]
+    rw [det_sq_split s hs, Matrix.det_nonsing_inv, Ring.inverse_eq_inv']
+  rw [ecls, tr1, tr2]
+  simp only [Pi.inv_apply, Pi.pow_apply, zero_smul, add_zero]
+  rcases Nat.eq_zero_or_pos m with rfl | hm
+  · simp
+    field_simp
+    ring
+  · obtain ⟨k, rfl⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
+    simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one]
+    field_simp
+    have hinv : M0.det * M0.det⁻¹ = 1 := mul_inv_cancel₀ hM0
+    linear_combination (-(c * (Ym s x * V).trace * M0.det⁻¹ ^ k) * (1 + (k : ℂ))) * hinv
+
+end PositivityTheory.Rg.Sw.SP
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.BridgeC
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Filter Topology
+
+namespace PositivityTheory.Rg.Sw.SP
+
+open PositivityTheory.Rg.Sw.WR PositivityTheory.Rg.Sw.WR.Z
+
+variable {n : ℕ}
+
+def gD (s : ℂ) (x : MC n) (k l : Fin n) (kk : Bool × Fin n × Fin n) : ℂ :=
+  if kk.1 then (-(Complex.I * s) • (Yp s x * Matrix.of (eU k l) * Yp s x)) kk.2.1 kk.2.2
+  else ((Complex.I * s) • (Ym s x * Matrix.of (eU k l) * Ym s x)) kk.2.1 kk.2.2
+
+theorem hasDerivAt_vals (s : ℂ) (x : MC n) (hx : x ∈ OmS s) (k l : Fin n) (kk : Bool × Fin n × Fin n) :
+    HasDerivAt (fun t : ℂ => vals s (x + t • eU k l) kk) (gD s x k l kk) 0 := by
+  obtain ⟨b, a, d⟩ := kk
+  cases b
+  · simpa [vals, gD] using hYm n s x (eU k l) hx.1 a d
+  · simpa [vals, gD] using hYp n s x (eU k l) hx.2.1 a d
+
+theorem hasDerivAt_evQ (s z : ℂ) (x : MC n) (hx : x ∈ OmS s) (k l : Fin n) (Q : Fm n) :
+    HasDerivAt (fun t : ℂ => evQ s z Q (x + t • eU k l))
+      (∑ kk, evQ s z (MvPolynomial.pderiv kk Q) x * gD s x k l kk) 0 := by
+  have h := hasDerivAt_eval (fun t : ℂ => vals s (x + t • eU k l)) (gD s x k l) (hasDerivAt_vals s x hx k l)
+    (MvPolynomial.map (Polynomial.evalRingHom z) Q)
+  simp only [zero_smul, add_zero] at h
+  refine h.congr_deriv ?_
+  refine Finset.sum_congr rfl fun kk _ => ?_
+  rw [MvPolynomial.pderiv_map]
+  rfl
+
+theorem sum_bool_fin (F : Bool × Fin n × Fin n → ℂ) :
+    ∑ kk, F kk = ∑ a : Fin n, ∑ d : Fin n, F (false, a, d) + ∑ a : Fin n, ∑ d : Fin n, F (true, a, d) := by
+  rw [Fintype.sum_prod_type, Fintype.sum_bool]
+  simp only [Fintype.sum_prod_type]
+  ring
+
+theorem line_fQ (s : ℂ) (hs : s = 1 ∨ s = -1) (z : ℂ) (m : ℕ) (Q : Fm n) (x : MC n) (hx : x ∈ OmS s) (k l : Fin n) :
+    HasDerivAt (fun t : ℂ => fQ s z m Q (x + t • eU k l)) (fQ s z m (opD s m k l Q) x) 0 := by
+  have h1 := hCls n s hs z m x (eU k l) hx
+  have h2 := hasDerivAt_evQ s z x hx k l Q
+  have h3 := h1.mul h2
+  refine h3.congr_deriv ?_
+  simp only [fQ, opD, LinearMap.add_apply, opH_eq, evQ_add, evQ_multPart, evQ_derPart, trace_eU, sum_bool_fin, gD,
+    Bool.false_eq_true, if_false, if_true, Matrix.smul_apply, sandwich_eU, smul_eq_mul, cB, alB, vals,
+    Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_X, zero_smul, add_zero]
+  simp only [Finset.mul_sum, Finset.sum_add_distrib, mul_add]
+  ring_nf
+  congr 1
+  · congr 1
+    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun d _ => ?_
+    ring
+  · refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun d _ => ?_
+    ring
+
+end PositivityTheory.Rg.Sw.SP
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MinorFormulas.Bridge
+
+section
 
 @[expose] public section
 
@@ -166,3 +349,6 @@ theorem bridge : Bridge := by
   rfl
 
 end PositivityTheory.Rg.Sw.SP
+end
+end
+end

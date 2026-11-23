@@ -8,18 +8,20 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.GammaSizeOfParameters
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HefunPointB
 public import Formalism.LocalToGlobal.Divisibility.ArithClauseRec
-public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.FunTop
-public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.MidExp
-public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
-public import Formalism.SharpRestriction.Divisibility.ClosedSizeLink.AdmissibleFamilyOfThreshold
-public import Formalism.SharpRestriction.Divisibility.HookProducts.LambdaZeroLeFourB
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -46,6 +48,238 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalRingCardinality.DataAmbForm
+import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+public import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+import Formalism.LocalToGlobal.Columns.CoefficientsModP.WeTransposeWordTransposeWord
+import Formalism.LocalToGlobal.HilbertRowConditions.IsHilbertCF
+import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteWeightData
+import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+public import Formalism.LocalToGlobal.IndefiniteRealisationChoice
+import Formalism.LocalToGlobal.SiegelLatticeTheory.PtEquivApply
+import Formalism.MirabolicMackeyTheory.StatementT
+import Formalism.QuotientMetricDivisors.Statement
+import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
+import Formalism.LocalToGlobal.Divisibility.EigenvalueSumLeClosedOf
+import Formalism.LocalToGlobal.PtKOfReal
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+import Mathlib.Tactic.Linter.Style
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
+public import Formalism.SharpRestriction.Divisibility.ClosedSizeLink.AdmissibleFamilyOfThreshold
+public import Formalism.SharpRestriction.ElevenLe
+public import Formalism.LocalRingCardinality.PrincipalHermitianLattice
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.FamilyStatementOfScaledLemmas
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.FunTop
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Module NumberField IsDedekindDomain
+open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions Formalism.MainNotions.Pk Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2 Formalism.L2.Indef Formalism.L2.DIV Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links
+  Formalism.IndefR.Cx Formalism.L2.Top3 Formalism.L2.Top4 Formalism.L2.RowDataTransport Formalism.L2.DIV.Arith4S
+
+namespace Formalism.L2.DIV.FunSharpTop
+
+theorem pow_absorb (x B l CH : ℝ) (hx : 56 ≤ x) (hB : 1 ≤ B) (hl : l ≤ 4 * B) :
+    x ^ CH * B + 14 * l ≤ x ^ (max CH 1 + 1) * B := by
+  have hx1 : 1 ≤ x := by linarith
+  have hM : x ^ CH ≤ x ^ (max CH 1) := Real.rpow_le_rpow_of_exponent_le hx1 (le_max_left _ _)
+  have hM1 : x ≤ x ^ (max CH 1) := by
+    calc x = x ^ (1 : ℝ) := (Real.rpow_one x).symm
+      _ ≤ x ^ (max CH 1) := Real.rpow_le_rpow_of_exponent_le hx1 (le_max_right _ _)
+  have hsplit : x ^ (max CH 1 + 1) = x ^ (max CH 1) * x := by
+    rw [Real.rpow_add (by linarith), Real.rpow_one]
+  rw [hsplit]
+  have hB0 : 0 ≤ B := by linarith
+  have hPx : x ^ CH + 56 ≤ x ^ (max CH 1) * x := by
+    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ x ^ (max CH 1)) (by linarith : (0 : ℝ) ≤ x - 56)]
+  have h2 := mul_le_mul_of_nonneg_right hPx hB0
+  nlinarith
+
+theorem third_of (d Q : ℝ) (h0 : 0 ≤ d) (h1 : 3 * d * Q ≤ 1) (h2 : 1 ≤ Q) : d ≤ 1 / 3 := by nlinarith
+
+variable {𝒜 : FamClass} {sel : Formalism.L2.TSel 𝒜} {selS : SelS 𝒜 sel} {selP : BaseLevelCompatibleSelection 𝒜 sel} {selDH : SelDH 𝒜 sel}
+  {selC : ColumnCompatibleSelection 𝒜 sel selP} {selK : SelK 𝒜 sel}
+
+end Formalism.L2.DIV.FunSharpTop
+
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.MidExp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.DIV.FunSharpTop
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Pk
+
+def reExp (f : List ℝ → ℝ) (l : List ℝ) : List ℝ := l.take 16 ++ f (l.take 16) :: l.drop 17
+
+theorem reExp_eq {eps : ℝ} (Fm : FamP eps) (f : List ℝ → ℝ) (CH : ℝ) :
+    reExp f (Fm.cOut ++ Fm.cMid CH) = Fm.cOut ++ Fm.cMid (f Fm.cOut) := rfl
+
+def sharpThresholdTransform (K : TransportedAlt) : TransportedAlt := ⟨K.pre, K.t, K.mid, fun l => K.last (reExp K.mid l)⟩
+
+theorem large_of_large_thresholds {eps : ℝ} {Fm : FamP eps} {K : TransportedAlt} {CH : ℝ} (h : Fm.Large (sharpThresholdTransform K) CH) :
+    Fm.Large K (K.mid Fm.cOut) := by
+  unfold FamP.Large at h ⊢
+  obtain ⟨h1, -, h3, h4⟩ := h
+  refine ⟨h1, trivial, fun c hc => ?_, fun c hc => ?_⟩
+  · rcases List.mem_cons.1 hc with rfl | hc'
+    · exact le_rfl
+    · exact h3 c (List.mem_cons_of_mem _ hc')
+  · have e := h4 c hc
+    have e2 : (sharpThresholdTransform K).last (Fm.cOut ++ Fm.cMid CH) = K.last (Fm.cOut ++ Fm.cMid (K.mid Fm.cOut)) := by
+      show K.last (reExp K.mid (Fm.cOut ++ Fm.cMid CH)) = _
+      rw [reExp_eq]
+    rw [e2] at e
+    exact e
+
+theorem closed_atMid {𝒞 : FamClass} {P : ∀ {eps : ℝ}, FamP eps → ℝ → Prop} (h : Closed 𝒞 P) :
+    ∃ f : ℝ → List ℝ → ℝ, Closed 𝒞 fun {eps} Fm _ => P Fm (f eps Fm.cOut) := by
+  classical
+  unfold Closed at h
+  obtain ⟨ε1, hε1, hK⟩ := h
+  refine ⟨fun eps l => if hh : 0 < eps ∧ eps ≤ ε1 then (Classical.choose (hK eps hh.1 hh.2)).mid l else 0, ?_⟩
+  unfold Closed
+  refine ⟨ε1, hε1, fun eps he he1 => ⟨sharpThresholdTransform (Classical.choose (hK eps he he1)), fun Fm CH hC hL => ?_⟩⟩
+  dsimp only
+  rw [dite_eq_left ⟨he, he1⟩]
+  exact Classical.choose_spec (hK eps he he1) Fm _ hC (large_of_large_thresholds hL)
+
+theorem closed_largeE {𝒞 : FamClass} {P Q : ∀ {eps : ℝ}, FamP eps → ℝ → Prop} (K0 : ℝ → TransportedAlt) (hP : Closed 𝒞 P)
+    (h : ∀ {eps : ℝ} (Fm : FamP eps) (CH : ℝ), Fm.Large (K0 eps) CH → P Fm CH → Q Fm CH) : Closed 𝒞 Q := by
+  unfold Closed at hP ⊢
+  obtain ⟨ε1, hε1, hK⟩ := hP
+  refine ⟨ε1, hε1, fun eps he he1 => ?_⟩
+  obtain ⟨K, hK'⟩ := hK eps he he1
+  refine ⟨⟨max K.pre (K0 eps).pre, K.t, fun l => max (K.mid l) ((K0 eps).mid l),
+    fun l => max (K.last l) ((K0 eps).last l)⟩, fun Fm CH hC hL => ?_⟩
+  unfold FamP.Large at hL
+  obtain ⟨h1, -, h3, h4⟩ := hL
+  have hA : Fm.Large K CH := by
+    unfold FamP.Large
+    exact ⟨fun c hc => le_trans (le_max_left _ _) (h1 c hc), trivial,
+      fun c hc => le_trans (le_max_left _ _) (h3 c hc), fun c hc => le_trans (le_max_left _ _) (h4 c hc)⟩
+  have hB : Fm.Large (K0 eps) CH := by
+    unfold FamP.Large
+    exact ⟨fun c hc => le_trans (le_max_right _ _) (h1 c hc), trivial,
+      fun c hc => le_trans (le_max_right _ _) (h3 c hc), fun c hc => le_trans (le_max_right _ _) (h4 c hc)⟩
+  exact h Fm CH hB (hK' Fm CH hC hA)
+
+end Formalism.L2.DIV.FunSharpTop
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.Divisibility.HookProducts.LambdaZeroLeFourB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.DIV.HookProducts.FunSharp
+
+open Formalism.BasicNotions Formalism.MainNotions
+
+theorem lambda_zero_le_four_b {D : D7} (L : SizeData₂ D) (hS : SizesAt L) : lam0 D ≤ 4 * L.sc.b := by
+  obtain ⟨-, -, hK, hKR, hT, -, -, -, -, -, -, -, -, hEta, hNodes, -, -, -, -, -, hG, -, -⟩ := hS
+  have hx1 : 1 < L.sc.x := L.sc.one_lt_alt
+  have hθ : 0 ≤ szTh L := by unfold szTh; have := L.sc.eps_pos; positivity
+  have hxθ : 1 ≤ L.sc.x ^ szTh L := Real.one_le_rpow hx1.le hθ
+  have hL1 : 1 ≤ L.sc.L := by unfold Scale.L; exact Real.one_le_rpow hx1.le L.sc.eps_pos.le
+  have hb0 : 0 ≤ L.sc.b := by unfold Scale.b; exact (Real.exp_pos _).le
+  set A : ℝ := L.sc.x ^ szTh L * L.sc.L with hA
+  have hA1 : 1 ≤ A := by rw [hA]; nlinarith
+  set F : ℝ := (D.R.f : ℝ) with hFdef
+  set R : ℝ := (D.R.r : ℝ) with hRdef
+
+  have hF1 : 1 ≤ F := by
+    have h12 : A ≤ F * Real.log D.R.k := hKR.2.2.2.2.2.2.2.2.2.2.2.1
+    by_contra hc
+    have hf0 : D.R.f = 0 := by
+      have : (D.R.f : ℝ) < 1 := not_le.mp hc
+      exact_mod_cast Nat.lt_one_iff.mp (by exact_mod_cast this)
+    rw [hFdef, hf0] at h12
+    simp at h12
+    linarith
+
+  have hR1 : 1 ≤ R := by
+    have hfr : F ≤ R ^ 2 := hKR.2.2.2.2.2.2.2.2.2.2.2.2.2
+    have hR0 : 0 ≤ R := by positivity
+    nlinarith
+
+  have hT1 : 1 ≤ (D.R.t : ℝ) := hT.1
+  have hK1 : 1 ≤ (D.R.k : ℝ) := by
+    have h := hK.1
+    have hp : 0 < L.sc.x ^ (9 / 2 + 10 * L.sc.eps - szTh L) := Real.rpow_pos_of_pos (by linarith) _
+    have hk0 : 0 < (D.R.k : ℝ) := lt_of_lt_of_le hp h
+    have : 0 < D.R.k := by exact_mod_cast hk0
+    exact_mod_cast this
+
+  have hη1 : 1 ≤ L.etaSz := hT1.trans hEta.1
+  have hden : 1 ≤ (D.R.t : ℝ) ^ 3 * F * (D.R.k : ℝ) ^ 3 := by
+    have h1 : 1 ≤ (D.R.t : ℝ) ^ 3 := one_le_pow₀ hT1
+    have h2 : 1 ≤ (D.R.k : ℝ) ^ 3 := one_le_pow₀ hK1
+    have h3 : 1 ≤ (D.R.t : ℝ) ^ 3 * F := by nlinarith
+    nlinarith
+  have hηb : L.etaSz ≤ L.sc.b := hEta.2.1.trans (div_le_self hb0 hden)
+  have hηm : L.etaSz / D.R.m ≤ L.etaSz := by
+    rcases Nat.eq_zero_or_pos D.R.m with h | h
+    · rw [h, Nat.cast_zero, div_zero]; linarith
+    · exact div_le_self (by linarith) (by exact_mod_cast h)
+  have hQ : L.sc.x ^ szTh L * R ^ 19 * F ^ 5 * L.sc.L ≤ L.sc.b :=
+    (hNodes.2.2.1.trans hηm).trans hηb
+
+  have hF5 : F ≤ F ^ 5 := le_self_pow₀ hF1 (by norm_num)
+  have hR19 : R ^ 2 ≤ R ^ 19 := pow_le_pow_right₀ hR1 (by norm_num)
+  have hFR : F * R ^ 2 ≤ F ^ 5 * R ^ 19 := mul_le_mul hF5 hR19 (by positivity) (by positivity)
+  have hQ' : F * R ^ 2 * A ≤ L.sc.b := by
+    have : F * R ^ 2 * A ≤ F ^ 5 * R ^ 19 * A := mul_le_mul_of_nonneg_right hFR (by linarith)
+    have e : F ^ 5 * R ^ 19 * A = L.sc.x ^ szTh L * R ^ 19 * F ^ 5 * L.sc.L := by rw [hA]; ring
+    linarith
+  have hFR0 : 0 ≤ F * R ^ 2 := by positivity
+  have hFRb : F * R ^ 2 ≤ L.sc.b := le_trans (le_mul_of_one_le_right hFR0 hA1) hQ'
+
+  have hg0 : (0 : ℝ) < D.host.g 0 := by exact_mod_cast (D.host.g_prime 0).pos
+  have hg1 : (1 : ℝ) ≤ D.host.g 0 := by exact_mod_cast (D.host.g_prime 0).one_lt.le
+  have hlog0 : 0 ≤ Real.log (2 * (D.host.g 0 : ℝ)) := Real.log_nonneg (by linarith)
+  have hY : ∀ i, (D.host.g i : ℝ) ≤ 2 * (D.host.g 0 : ℝ) := fun i => (hG i 0).2.1
+  have h0 := Formalism.MainNotions.DIV.Proofs.ScaledLatticeNorms.scaled_lattice_nonzero_holds D (D.host.g 0 : ℝ) hY
+  have hlog : Real.log (2 * (D.host.g 0 : ℝ)) ≤ 1 + A := by
+    rw [Real.log_mul (by norm_num) hg0.ne']
+    have h2 : Real.log 2 < 1 := by have := Real.log_two_lt_d9; linarith
+    have h3 : Real.log (D.host.g 0 : ℝ) ≤ A := (hG 0 0).2.2
+    linarith
+  calc lam0 D ≤ 2 * F * R ^ 2 * Real.log (2 * (D.host.g 0 : ℝ)) := h0
+    _ ≤ 2 * F * R ^ 2 * (1 + A) := mul_le_mul_of_nonneg_left hlog (by positivity)
+    _ = 2 * (F * R ^ 2) + 2 * (F * R ^ 2 * A) := by ring
+    _ ≤ 4 * L.sc.b := by linarith
+
+end Formalism.MainNotions.DIV.HookProducts.FunSharp
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HefunFunTop
+
+section
 
 @[expose] public section
 
@@ -172,5 +406,7 @@ theorem closed_funSharp_thr_alt (𝒜 : FamClass)
   exact closed_largeE (fun e => Formalism.MainNotions.DIV.Proofs.thrHH Eb Ec (CF0 e)) h
     fun {eps} Fm CH hL hP hc hT hD => ⟨CF0 eps, hL, hP hc hT hD⟩
 end Formalism.L2.DIV.FunSharpTop
+end
+end
 end
 end

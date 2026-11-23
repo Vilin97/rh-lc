@@ -3,22 +3,7 @@ module
 public import Formalism.GradedWeylDivisibility.StatementC
 import Formalism.GradedWeylDivisibility.FockSpaceTableaux.ColLexInitMinor
 public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.ColSums
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.ColumnLexBideterminant
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.CompDeg
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.EvalDeg
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetdomLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LeadComp
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LeadInterlaced
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.MinorExpLt
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelDecomp
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelDegBound
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelHomog
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelLead
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SMSAssembly
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SSYTExists
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SSYTPeel
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.StandardMonomialSpanOf
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.TwoColumn
+import Formalism.GradedWeylDivisibility.StatementC
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -59,9 +41,203 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCcompLemmas
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.EvalDeg
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetdomLemmas
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LeadInterlaced
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.MinorExpLt
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelDecomp
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelDegBound
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelHomog
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.PeelLead
+import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCassemLemmas
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SSYTExists
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SSYTPeel
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.TwoColumn
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.GradedWeylDivisibility.FockSpaceTableaux.ColumnLexBideterminant
+
+section
+
+section
+
+open MvPolynomial
+
+noncomputable section
+
+namespace Formalism.GradedWeylDivisibility
+
+open scoped MonomialOrder
+
+theorem columnLexBideterminant_of_initialMinor (h : ColLexInitMinor) : ColumnLexBideterminant := by
+  intro R _ _ r n K sz hsz I hI
+  have hm : ∀ k ∈ (Finset.univ : Finset (Fin K)),
+      (colLex r n).leadingCoeff (initMinor R (I k) (hsz k)) = 1 :=
+    fun k _ => (h R r n (sz k) (I k) (hsz k) (hI k)).2
+  have hreg : ∀ k ∈ (Finset.univ : Finset (Fin K)),
+      IsRegular ((colLex r n).leadingCoeff (initMinor R (I k) (hsz k))) := by
+    intro k hk
+    rw [hm k hk]
+    exact isRegular_one
+  refine ⟨?_, ?_⟩
+  · unfold bideterminant bidetExp
+    rw [MonomialOrder.degree_prod_of_regular hreg]
+    exact Finset.sum_congr rfl fun k _ => (h R r n (sz k) (I k) (hsz k) (hI k)).1
+  · unfold bideterminant
+    rw [MonomialOrder.leadingCoeff_prod_of_regular hreg]
+    exact Finset.prod_eq_one hm
+
+end Formalism.GradedWeylDivisibility
+end
+end
+end
+
+-- Source module: Formalism.GradedWeylDivisibility.FockSpaceTableaux.CompDeg
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+noncomputable section
+
+namespace Formalism.GradedWeylDivisibility
+
+theorem componentDegree : CompDeg := by
+  intro B _ r n l j ω s f hf
+  rw [← lccomp_component_colAddGen]
+  exact (lccomp_degreeOf_component_le _ _ _ _).trans hf
+
+end Formalism.GradedWeylDivisibility
+end
+end
+end
+
+-- Source module: Formalism.GradedWeylDivisibility.FockSpaceTableaux.LeadComp
+
+section
+
+section
+
+open MvPolynomial
+
+open scoped MonomialOrder
+
+noncomputable section
+
+namespace Formalism.GradedWeylDivisibility
+
+theorem leadingComponent : LeadComp := by
+  intro R _ r n M _ w f
+  classical
+  by_cases hf : f = 0
+  · subst hf; simp
+  have hd : (colLex r n).degree f ∈
+      (weightedHomogeneousComponent w (Finsupp.weight w ((colLex r n).degree f)) f).support := by
+    rw [mem_support_iff, coeff_weightedHomogeneousComponent, if_pos rfl]
+    exact (colLex r n).coeff_degree_ne_zero_iff.mpr hf
+  have hg0 : weightedHomogeneousComponent w (Finsupp.weight w ((colLex r n).degree f)) f ≠ 0 := by
+    intro h; rw [h] at hd; simp at hd
+  have h1 := (colLex r n).le_degree hd
+  have h2 : (colLex r n).toSyn ((colLex r n).degree
+      (weightedHomogeneousComponent w (Finsupp.weight w ((colLex r n).degree f)) f)) ≤
+      (colLex r n).toSyn ((colLex r n).degree f) := by
+    apply (colLex r n).le_degree
+    have h3 := (colLex r n).degree_mem_support hg0
+    rw [mem_support_iff, coeff_weightedHomogeneousComponent] at h3
+    split_ifs at h3 with h
+    · exact mem_support_iff.mpr h3
+    · exact absurd rfl h3
+  exact (colLex r n).toSyn.injective (le_antisymm h2 h1)
+
+end Formalism.GradedWeylDivisibility
+end
+end
+end
+
+-- Source module: Formalism.GradedWeylDivisibility.FockSpaceTableaux.SMSAssembly
+
+section
+
+section
+
+open MvPolynomial
+
+namespace Formalism.GradedWeylDivisibility
+
+open scoped MonomialOrder
+
+theorem semistandard_module_assembly : SMSAssembly := by
+  intro hCL hCS hSS hLI B _ _ r n ν
+  apply le_antisymm
+  · have key : ∀ d : (colLex r n).syn, ∀ f ∈ dualWeyl B r n ν,
+        (colLex r n).toSyn ((colLex r n).degree f) = d →
+        f ∈ Submodule.span B {f | ∃ (K : ℕ) (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤ n)
+          (I : ∀ k, Fin (sz k) → Fin r), shapeDeg sz = ν ∧ f = bideterminant B sz hsz I} := by
+      intro d
+      induction d using WellFoundedLT.induction with
+      | _ d ih =>
+        intro f hf hd
+        by_cases hf0 : f = 0
+        · rw [hf0]; exact Submodule.zero_mem _
+        have hm := (colLex r n).degree_mem_support hf0
+        obtain ⟨K, sz, hsz, I, hsh, hmono, hexp⟩ :=
+          hSS r n ν _ (hCS B r n ν f hf _ hm) (hLI B r n ν f hf hf0)
+        obtain ⟨hdeg, hlc⟩ := hCL B r n K sz hsz I hmono
+        have hg : bideterminant B sz hsz I ∈ dualWeyl B r n ν := by
+          rw [← hsh]; exact bidetMem B r n K sz hsz I
+        have hgS : bideterminant B sz hsz I ∈ Submodule.span B {f | ∃ (K : ℕ) (sz : Fin K → ℕ)
+            (hsz : ∀ k, sz k ≤ n) (I : ∀ k, Fin (sz k) → Fin r),
+            shapeDeg sz = ν ∧ f = bideterminant B sz hsz I} :=
+          Submodule.subset_span ⟨K, sz, hsz, I, hsh, rfl⟩
+        have hf' : f - (colLex r n).leadingCoeff f • bideterminant B sz hsz I ∈ dualWeyl B r n ν :=
+          Submodule.sub_mem _ hf (Submodule.smul_mem _ _ hg)
+        have h1 : f - (colLex r n).leadingCoeff f • bideterminant B sz hsz I ∈ Submodule.span B
+            {f | ∃ (K : ℕ) (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤ n) (I : ∀ k, Fin (sz k) → Fin r),
+              shapeDeg sz = ν ∧ f = bideterminant B sz hsz I} := by
+          by_cases hne : f - (colLex r n).leadingCoeff f • bideterminant B sz hsz I = 0
+          · rw [hne]; exact Submodule.zero_mem _
+          have hlt := lcassem_sub_lt (colLex r n) (hdeg.trans hexp) hlc hne
+          exact ih _ (by rw [← hd]; exact hlt) _ hf' rfl
+        have h2 := Submodule.add_mem _ h1 (Submodule.smul_mem _ ((colLex r n).leadingCoeff f) hgS)
+        rwa [sub_add_cancel] at h2
+    exact fun f hf => key _ f hf rfl
+  · rw [Submodule.span_le]
+    rintro _ ⟨K, sz, hsz, I, hsh, rfl⟩
+    rw [← hsh]
+    exact bidetMem B r n K sz hsz I
+
+end Formalism.GradedWeylDivisibility
+end
+end
+
+-- Source module: Formalism.GradedWeylDivisibility.FockSpaceTableaux.StandardMonomialSpanOf
+
+section
+
+@[expose] public section
+
+namespace Formalism.GradedWeylDivisibility
+
+theorem standardMonomialSpanOf : StandardMonomialSpanOf := by
+  intro h r n ν _
+  exact h ℤ r n ν
+
+end Formalism.GradedWeylDivisibility
+end
+end
+
+-- Source module: Formalism.GradedWeylDivisibility.FinalC
+
+section
 
 @[expose] public section
 
@@ -176,3 +352,5 @@ theorem dualWeylDominanceZ :
     simp [rowNu]
 
 end Formalism.GradedWeylDivisibility
+end
+end

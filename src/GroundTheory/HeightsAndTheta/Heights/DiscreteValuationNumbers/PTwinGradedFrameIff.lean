@@ -1,7 +1,7 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerBis
-public import GroundTheory.HeightsAndTheta.Heights.IntegralModels.ChartGlueSat
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintypeSumElim
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,9 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,11 +39,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.IntegralModels.ChartGlueSat
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerBis
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle)
+
+universe u v w
+
+def GradedFrameCharacterisation.Statement : Prop :=
+  ∀ (o : Type u) [CommRing o] (Ω : Type v) [Field Ω] [Algebra o Ω] (K : Type) [Fintype K]
+    (ι : K → Type) [∀ k, Fintype (ι k)] (y : (Σ k, ι k) → Ω) (N : ℕ) (E : Type w)
+    [AddCommGroup E] [Module Ω E] (B : ChartBundle o (segreVec y) N E)
+    (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
+    IsFlagFrame y B w b ↔ IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsGradedFrame o y B
+      (fun i => Submodule.span Ω (w '' {j | (j : ℕ) < i})) b w
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinGradedFrameIff
+
+section
 
 @[expose] public section
 
@@ -325,3 +356,5 @@ theorem proof : Statement.{u, v, w} := by
 end GradedFrameCharacterisation
 
 end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end

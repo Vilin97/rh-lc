@@ -2,17 +2,16 @@ module
 
 public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
 public import Development.AutomorphicArithmetic.PrimeDiscriminants.SlopeTestRemainingChoices
-public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffMult
-public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiscrK
-public import Development.AutomorphicArithmetic.FrobeniusLocalisation.MemRam
-public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.KcDiff
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.KcDiffSmulMem
+public import Mathlib.Algebra.AffineMonoid.Basic
+public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+public import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,9 +23,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -49,6 +49,122 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.PadicValNatAbsNormEqZero
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.GrpBridge
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.VdTameWild
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiscrK
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.MemRam
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.KcDiff
+import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.KcDiffSmulMem
+import Mathlib.RingTheory.WittVector.IsPoly
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDifferentExponentDenominator
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain UniqueFactorizationMonoid
+
+namespace GlobalTheory.DifferentElement
+
+end GlobalTheory.DifferentElement
+
+namespace GlobalTheory.DifferentElement
+
+theorem mult_ratio (E : Type) [Field E] [NumberField E] [IsGalois ℚ E] (l : ℕ) (hl : l.Prime) (P : Ideal (𝓞 E))
+    (hP : P.IsPrime) (hlP : (l : 𝓞 E) ∈ P) :
+    (multiplicity P (differentIdeal ℤ (𝓞 E)) : ℚ) / (multiplicity P (Ideal.span {(l : 𝓞 E)}) : ℚ) =
+      ((NumberField.discr E).natAbs.factorization l : ℚ) / (Module.finrank ℚ E : ℚ) := by
+  classical
+  have hl0 : (l : 𝓞 E) ≠ 0 := Nat.cast_ne_zero.2 hl.ne_zero
+  have hP0 : P ≠ ⊥ := by
+    rintro rfl
+    exact hl0 ((Submodule.mem_bot _).1 hlP)
+  have hirr : Irreducible P := (Ideal.prime_of_isPrime hP0 hP).irreducible
+  have hd : (NumberField.discr E).natAbs ≠ 0 := Int.natAbs_ne_zero.mpr (NumberField.discr_ne_zero E)
+  have h := ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.diffExp E l
+    ((NumberField.discr E).natAbs.factorization l) (ordCompl[l] (NumberField.discr E).natAbs) hl
+    (Nat.not_dvd_ordCompl hl hd) (Nat.ordProj_mul_ordCompl_eq_self _ _).symm P hP hlP
+  have hpos := ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.count_span_pos E l hl hP hlP
+  simp only [multiplicity_eq_count_normalizedFactors hirr, normalize_eq]
+  have hn : (Module.finrank ℚ E : ℚ) ≠ 0 := Nat.cast_ne_zero.2 Module.finrank_pos.ne'
+  rw [div_eq_div_iff (by exact_mod_cast hpos.ne') hn]
+  convert congrArg (fun t : ℕ => (t : ℚ)) h using 1 <;> push_cast <;> ring
+
+end GlobalTheory.DifferentElement
+
+namespace GlobalTheory.DifferentElement
+
+
+end GlobalTheory.DifferentElement
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffMult
+
+section
+
+@[expose] public section
+
+open UpperTheory.HF
+
+open NumberField Ideal Formalism.HC Formalism.FrobeniusOrbits
+open scoped Pointwise
+
+theorem UpperTheory.HF.diff_mult :
+    ∀ {φ : Frame} (H : HostAx φ) {l : ℕ}, l.Prime → ∀ (P : Ideal (𝓞 H.E)) [P.IsPrime] [P.LiesOver (span {(l : ℤ)})], (multiplicity P (differentIdeal ℤ (𝓞 H.E)) : ℝ) = H.el l * H.vdH l ∧ multiplicity P (span {(l : 𝓞 H.E)}) = H.el l ∧ (¬ l ∣ H.el l → multiplicity P (differentIdeal ℤ (𝓞 H.E)) = H.el l - 1) ∧ (l ∣ H.el l → H.el l ≤ multiplicity P (differentIdeal ℤ (𝓞 H.E))) := by
+  intro φ H l hl P _ _
+  haveI := H.galois
+  obtain ⟨-, -, hram, -⟩ := grp_bridge H hl P
+  have hmap : (span {(l : ℤ)}).map (algebraMap ℤ (𝓞 H.E)) = span {(l : 𝓞 H.E)} := by
+    simp [Ideal.map_span]
+  have hne : (span {(l : ℤ)}).map (algebraMap ℤ (𝓞 H.E)) ≠ ⊥ :=
+    map_ne_bot_of_ne_bot (by simp [hl.ne_zero])
+  have hmult : multiplicity P (span {(l : 𝓞 H.E)}) = H.el l := by
+    rw [← hmap, ← IsDedekindDomain.ramificationIdx_eq_multiplicity _ _ hne, hram]
+  have hmem : (l : 𝓞 H.E) ∈ P := by
+    have hle : span {(l : 𝓞 H.E)} ≤ P := by
+      rw [← hmap]
+      exact map_le_of_le_comap (Ideal.LiesOver.over (P := P) (p := span {(l : ℤ)})).le
+    exact hle (Ideal.mem_span_singleton_self _)
+  have hrat := GlobalTheory.DifferentElement.mult_ratio H.E l hl P inferInstance hmem
+  rw [hmult, Nat.factorization_def _ hl] at hrat
+  have hel0 : (0 : ℝ) < H.el l := by exact_mod_cast HostRaw.el_pos _ l
+  have hvd : H.vdH l = (multiplicity P (differentIdeal ℤ (𝓞 H.E)) : ℝ) / H.el l := by
+    have hr := congrArg (fun q : ℚ => (q : ℝ)) hrat
+    push_cast at hr
+    simp only [HostRaw.vdH, Nat.padicValNat_def]
+    exact hr.symm
+  have h1 : (multiplicity P (differentIdeal ℤ (𝓞 H.E)) : ℝ) = H.el l * H.vdH l := by
+    rw [hvd]
+    field_simp
+  obtain ⟨htw1, htw2, -⟩ := vd_tame_wild H hl
+  refine ⟨h1, hmult, fun hnd => ?_, fun hd => ?_⟩
+  · have hv := htw1 hnd
+    have hle : 1 ≤ H.el l := HostRaw.el_pos _ l
+    have h2 : (multiplicity P (differentIdeal ℤ (𝓞 H.E)) : ℝ) = ((H.el l - 1 : ℕ) : ℝ) := by
+      rw [Nat.cast_sub hle, h1, hv]
+      field_simp
+      push_cast
+      ring
+    exact_mod_cast h2
+  · have hv := htw2 hd
+    have h2 : (H.el l : ℝ) ≤ multiplicity P (differentIdeal ℤ (𝓞 H.E)) := by
+      rw [h1]
+      nlinarith
+    exact_mod_cast h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffEKSupp
+
+section
 
 @[expose] public section
 
@@ -136,3 +252,5 @@ theorem UpperTheory.HF.diff_EK_supp :
     refine ⟨H.d_ne_two.symm, Nat.prime_two, ?_, ?_⟩
     · exact Int.ofNat_dvd_left.1 hd.discr_primes.2.1
     · exact Int.natAbs_ne_zero.2 (NumberField.discr_ne_zero H.E)
+end
+end

@@ -8,39 +8,26 @@ public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThExprUniq
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.IsotropicCoefficientSplitting
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.NonemptyUnitAt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.TorusAt
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.DatumNsmulEqZero
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.DeterminantBlockProductRenameTorusPolynomial
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTorusOfRows
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.HmEqDiagonal
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsPiActLOfIsTorusOf
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsRepsLevelTranslates
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsTorusAtOfIsTorusOf
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.PolyDerivLevelSqEqAlpha
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.PolyDerivProdFockEqTranslate
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ThetaRuleValuePeriods
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.AppellHumbertSectionEntireWithFactor
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.GCauchyHolds
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.RelabellingGoodEmbeddingIsTypeFn
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.SemicharUnitFrame
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.ThetaFunctionTorusL2Norm
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsHolPeriods
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Calculus.ContDiff.WithLp
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -50,7 +37,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -63,10 +49,134 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.IsBlockProd
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.ThConst
+import Development.AbelianVarietyTheory.Definitions.TorusSections.IsTorusOf
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndRaw
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.HolJetA
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.DeterminantBlockProductRenameTorusPolynomial
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTorusOfRows
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.HmEqDiagonal
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsPiActLOfIsTorusOf
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsRepsLevelTranslates
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.IsTorusAtOfIsTorusOf
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.PolyDerivLevelSqEqAlpha
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ThetaRuleValuePeriods
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.AppellHumbertSectionEntireWithFactor
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.GCauchyHolds
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.RelabellingGoodEmbeddingIsTypeFn
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.SemicharUnitFrame
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.ThetaFunctionTorusL2Norm
+import Mathlib.Analysis.Calculus.ContDiff.WithLp
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.SupGenTies
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.DatumNsmulEqZero
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1 GlobalTheory.AnVal GlobalTheory.BlockTh GlobalTheory.EtaAn
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.AnVal
+
+theorem datum_nsmul_eq_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (D : Datum H)
+    {k : ℕ} (hk : k ≠ 0) {x : D.La} (h : k • x = 0) : x = 0 := by
+  apply D.unimod.1
+  ext y
+  have h1 : D.EF (k • x) y = 0 := by rw [h, map_zero]; rfl
+  rw [map_nsmul, LinearMap.smul_apply, nsmul_eq_mul] at h1
+  rw [map_zero, LinearMap.zero_apply]
+  exact (mul_eq_zero.1 h1).resolve_left (by exact_mod_cast hk)
+
+theorem marking_iso_mod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ' : KA l →+* ℂ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (F : FamilyUnif Xo σ' ty) (i : Fin F.n), (∀ a, (∃ b, F.t i a = l.M • b) → ∃ b, a = l.M • b) ∧ ∀ b, ∃ a e, b = F.t i a + l.M • e := by
+  intro E _ _ _ H Dw l Xo _ σ' g ty F i
+  obtain ⟨k, hk⟩ : l.M ∣ l.M' := Nat.dvd_lcm_left _ _
+  have hM : l.M ≠ 0 := by have := l.three_le; omega
+  have hk0 : k ≠ 0 := by
+    rintro rfl
+    exact Nat.lcm_ne_zero hM l.A_pos.ne' (by simpa [Geo.Tor.Level.M'] using hk)
+  refine ⟨?_, ?_⟩
+  · rintro a ⟨b, hb⟩
+    obtain ⟨c, hc⟩ := (F.t_inj i (k • a)).1 ⟨b, by rw [map_nsmul, hb, hk, mul_comm, mul_smul]⟩
+    refine ⟨c, sub_eq_zero.1 (datum_nsmul_eq_zero Dw hk0 ?_)⟩
+    rw [smul_sub, hc, hk, mul_comm, mul_smul, sub_self]
+  · intro b
+    obtain ⟨a, e, h⟩ := F.t_surj i b
+    exact ⟨a, k • e, by rw [h, hk, mul_smul]⟩
+
+end GlobalTheory.AnVal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.PolyDerivProdFockEqTranslate
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1 GlobalTheory.AnVal GlobalTheory.BlockTh GlobalTheory.EtaAn
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.AnVal
+
+theorem polyDeriv_comp_linear_equiv {σ V W : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [NormedAddCommGroup W] [NormedSpace ℂ W] (e : V ≃L[ℂ] W) (P : MvPolynomial σ ℂ) (u : σ → V)
+    (G : W → ℂ) (x : V) :
+    I2.polyDeriv P u (fun z => G (e z)) x = I2.polyDeriv P (fun ℓ => e (u ℓ)) G (e x) := by
+  unfold I2.polyDeriv
+  refine Finset.sum_congr rfl fun m _ => ?_
+  have h := e.iteratedFDerivWithin_comp_right G (s := Set.univ) uniqueDiffOn_univ (x := x)
+    (Set.mem_univ _) (Multiset.card (Finsupp.toMultiset m))
+  rw [Set.preimage_univ, iteratedFDerivWithin_univ, iteratedFDerivWithin_univ] at h
+  have h' : (fun z => G (e z)) = G ∘ e := rfl
+  rw [h', h]
+  rfl
+
+theorem lintor_hf_neg_right {J : Type} [Fintype J] (v w : EuclideanSpace ℂ J) :
+    I2.Hf v (-w) = -I2.Hf v w := by
+  simp [I2.Hf]
+
+theorem lintor_hf_neg_left {J : Type} [Fintype J] (v w : EuclideanSpace ℂ J) :
+    I2.Hf (-v) w = -I2.Hf v w := by
+  simp [I2.Hf]
+
+theorem polyDeriv_prod_fock_eq_translate : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (X : I2.PT E) (g : ℕ) (ψ : (Fin g → ℂ) ≃ₗ[ℂ] I2.Vsp X.dim) (Hm : Matrix (Fin g) (Fin g) ℂ) (θ : (Fin g → ℂ) → ℂ), (∀ z w, I2.Hf (ψ z) (ψ w) = hermForm Hm z w) → Differentiable ℂ θ → ∀ (n N : ℕ) (a : Fin n → Fin g → ℂ) (Io : Type) (P : MvPolynomial Io ℂ) (u : Io → Fin n → Fin g → ℂ), I2.polyDeriv P u (fun z => ∏ b, fock Hm ((N : ℤ) ^ 2) (a b) (fun w => θ ((N : ℂ) • w)) (z b)) 0 = I2.polyDeriv P (fun ℓ b => ψ (u ℓ b)) (X.U (N ^ 2) (fun b => -ψ (a b)) (I2.s0 X ((N : ℂ) • LinearMap.id) fun v => θ (ψ.symm (v 0)))) 0 := by
+  intro E _ _ _ X g ψ Hm θ hH _ n N a Io P u
+  let e : (Fin n → Fin g → ℂ) ≃L[ℂ] (Fin n → I2.Vsp X.dim) :=
+    ContinuousLinearEquiv.piCongrRight fun _ => ψ.toContinuousLinearEquiv
+  have he : ∀ z, e z = fun b => ψ (z b) := fun _ => rfl
+  have key := polyDeriv_comp_linear_equiv e P u (X.U (N ^ 2) (fun b => -ψ (a b))
+    (I2.s0 X ((N : ℂ) • LinearMap.id) fun v => θ (ψ.symm (v 0)))) 0
+  rw [map_zero] at key
+  refine Eq.trans ?_ key
+  congr 1
+  funext z
+  rw [he]
+  simp only [fock, I2.PT.U, I2.s0, I2.HC, lintor_hf_neg_right, lintor_hf_neg_left, hH, neg_neg,
+    Finset.prod_mul_distrib, ← Complex.exp_sum, Pi.sub_apply, sub_neg_eq_add,
+    LinearMap.smul_apply, LinearMap.id_apply, ← map_add, ← map_smul, LinearEquiv.symm_apply_apply]
+  congr 2
+  simp only [Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_div, mul_neg]
+  push_cast
+  rfl
+
+end GlobalTheory.AnVal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.SumLeFinsumOfSurjectsOntoFinset
+
+section
 
 @[expose] public section
 
@@ -381,3 +491,6 @@ theorem thetaRule_sum_lower : ChartIndepSt2 → ∀ (E : Type) [Field E] [Number
   exact norm_sq_value _ κ _ l.M _ (2 * xR) hM0 (by positivity) hκ (hv.trans (congrArg _ hw))
 
 end GlobalTheory.ThetaLower
+end
+end
+end

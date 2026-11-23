@@ -8,22 +8,19 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.InseparableFrobeni
 public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionRespectsAdd
 public import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunction
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
-public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismLift
-public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
-public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremPointHom
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionAtPoint
-public import GroundTheory.GlobalFields.ComplexMultiplication.TorsionReduction
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -31,9 +28,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -54,9 +48,190 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
+import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionMap
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionAtPoint
+import GroundTheory.GlobalFields.ComplexMultiplication.ReductionAtPoint
+public import GroundTheory.GlobalFields.ComplexMultiplication.TorsionReduction
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismLift
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Global
+
+open Polynomial NumberField IsDedekindDomain IsLocalRing
+
+section Generic
+
+variable {R S : Type*} [CommRing R] [IsDomain R] [CommRing S] [IsDomain S] (f : R →+* S)
+
+theorem isPrimitiveRoot_map_of_natCast_ne_zero {ζ : R} {n : ℕ} (hζ : IsPrimitiveRoot ζ n)
+    (hn : (n : S) ≠ 0) : IsPrimitiveRoot (f ζ) n := by
+  have : NeZero (n : S) := ⟨hn⟩
+  have : NeZero (n : R) := ⟨fun h => hn (by rw [← map_natCast f n, h, map_zero])⟩
+  have hr : eval ζ (cyclotomic n R) = 0 := isRoot_cyclotomic_iff.mpr hζ
+  apply isRoot_cyclotomic_iff.mp
+  show eval (f ζ) (cyclotomic n S) = 0
+  rw [← map_cyclotomic n f, eval_map, eval₂_hom, hr, map_zero]
+
+theorem eq_of_map_eq_of_pow_eq_one {ζ : R} {n : ℕ} [NeZero n] (hζ : IsPrimitiveRoot ζ n)
+    (hn : (n : S) ≠ 0) {η η' : R} (hη : η ^ n = 1) (hη' : η' ^ n = 1) (h : f η = f η') :
+    η = η' := by
+  have hf := isPrimitiveRoot_map_of_natCast_ne_zero f hζ hn
+  obtain ⟨j, hj, rfl⟩ := hζ.eq_pow_of_pow_eq_one hη
+  obtain ⟨k, hk, rfl⟩ := hζ.eq_pow_of_pow_eq_one hη'
+  rw [map_pow, map_pow] at h
+  rw [hf.pow_inj hj hk h]
+
+theorem existsUnique_pow_eq_one_of_isPrimitiveRoot {ζ : R} {n : ℕ} [NeZero n]
+    (hζ : IsPrimitiveRoot ζ n) (hn : (n : S) ≠ 0) {w : S} (hw : w ^ n = 1) :
+    ∃! η : R, η ^ n = 1 ∧ f η = w := by
+  have hf := isPrimitiveRoot_map_of_natCast_ne_zero f hζ hn
+  obtain ⟨i, -, e⟩ := hf.eq_pow_of_pow_eq_one hw
+  have hi : (ζ ^ i) ^ n = 1 := by rw [← pow_mul, mul_comm, pow_mul, hζ.pow_eq_one, one_pow]
+  refine ⟨ζ ^ i, ⟨hi, by rw [map_pow, e]⟩, ?_⟩
+  rintro η ⟨hη, hfη⟩
+  exact eq_of_map_eq_of_pow_eq_one f hζ hn hη hi (by rw [hfη, map_pow, e])
+
+end Generic
+
+theorem two_ne_zero_and_three_ne_zero_of_five_le_ringChar {k : Type*} [Field k]
+    (h : 5 ≤ ringChar k) : (2 : k) ≠ 0 ∧ (3 : k) ≠ 0 := by
+  refine ⟨fun h2 => ?_, fun h3 => ?_⟩
+  · have := Nat.le_of_dvd (by norm_num) ((ringChar.spec k 2).mp (by exact_mod_cast h2))
+    omega
+  · have := Nat.le_of_dvd (by norm_num) ((ringChar.spec k 3).mp (by exact_mod_cast h3))
+    omega
+
+section NumberField
+
+variable {L : Type*} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L))
+
+end NumberField
+
+end GroundTheory.Global
+end
+end
+
+-- Source module: GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremPointHom
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Global
+
+noncomputable section
+
+open WeierstrassCurve.Affine GroundTheory.Arith.Abelian
+
+universe u
+
+section OverF
+
+variable {F : Type u} [Field F] [DecidableEq F] (Ω : Type u) [Field Ω] [Algebra F Ω]
+  [DecidableEq Ω] [PerfectField F] [IsAlgClosed Ω]
+
+omit [DecidableEq F] [PerfectField F] in
+theorem app_eq_of_eq {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic] (φ : Isogeny E E')
+    {L : Type*} [Field L] [Algebra F L] [DecidableEq L] {P P' : (E.baseChange L).toAffine.Point}
+    (h : P = P') (hP : IsGenPt E P) (hP' : IsGenPt E P') : φ.app P hP = φ.app P' hP' := by
+  subst h
+  rfl
+
+theorem pointHomOver_comp {E E' E'' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
+    [E''.IsElliptic] (ψ : Isogeny E' E'') (φ : Isogeny E E') (R : E.toAffine.Point) :
+    pointHomOver Ω (ψ.comp φ) R = pointHomOver Ω ψ (pointHomOver Ω φ R) := by
+  apply constMap_injective E'' E.toAffine.FunctionField
+  set R' := pointHomOver Ω φ R
+  have hX' := isGenPt_genericPoint_add_constMap E' R'
+  have e0 := app_genericPoint_add_constMap Ω φ R
+  have h1 := app_genericPoint_add_constMap Ω (ψ.comp φ) R
+
+  have e : φ.1 + constMap E' E.toAffine.FunctionField R' =
+      Point.map φ.comap (genericPoint E' + constMap E' E'.toAffine.FunctionField R') := by
+    rw [map_add (f := _), Isogeny.map_comap_genericPoint, map_constMap]
+  have hY : IsGenPt E' (φ.1 + constMap E' E.toAffine.FunctionField R') := by
+    rw [e]
+    exact isGenPt_map E' φ.comap hX'
+  have h2 : ψ.app (φ.1 + constMap E' E.toAffine.FunctionField R') hY =
+      Point.map φ.comap (ψ.1 + constMap E'' E'.toAffine.FunctionField (pointHomOver Ω ψ R')) := by
+    rw [← app_genericPoint_add_constMap Ω ψ R', Isogeny.map_app]
+    exact app_eq_of_eq ψ e _ _
+  rw [Isogeny.app_comp, app_eq_of_eq ψ e0 _ hY, h2, map_add (f := _), map_constMap, ← Isogeny.comp_val,
+    add_right_inj] at h1
+  exact h1.symm
+
+theorem pointHomOver_congr {E E' E₁ E₁' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
+    [E₁.IsElliptic] [E₁'.IsElliptic] (φ : Isogeny E E') (hE : E = E₁) (hE' : E' = E₁')
+    (R : E.toAffine.Point) :
+    pointHomOver Ω (φ.congr hE hE') (pointCongr hE R) = pointCongr hE' (pointHomOver Ω φ R) := by
+  subst hE hE'
+  rw [Isogeny.congr_rfl]
+  rfl
+
+end OverF
+
+section Frobenius
+
+variable {F : Type u} [Field F] [DecidableEq F] (Ω : Type u) [Field Ω] [Algebra F Ω]
+  [DecidableEq Ω] [PerfectField F] [IsAlgClosed Ω] (E : WeierstrassCurve F) [E.IsElliptic]
+  (p : ℕ) [Fact p.Prime] [CharP F p]
+
+omit [PerfectField F] [E.IsElliptic] in
+theorem frobeniusPoint_constMap {L : Type*} [Field L] [Algebra F L] [CharP L p] [DecidableEq L]
+    (R : E.toAffine.Point) :
+    frobeniusPoint E p L (constMap E L R) =
+      constMap (frobeniusTwist E p) L (pointMapRing (frobenius F p) E R) := by
+  rcases R with _ | ⟨x, y, h⟩
+  · rfl
+  · obtain ⟨h', e⟩ := pointMapRing_some (frobenius F p) E h
+    rw [e]
+    show Point.some _ _ _ = Point.some _ _ _
+    simp only [Algebra.ofId_apply, frobenius_def, map_pow]
+
+theorem pointHomOver_frobeniusIsogeny (R : E.toAffine.Point) :
+    pointHomOver Ω (frobeniusIsogeny E p) R = pointMapRing (frobenius F p) E R := by
+  have : CharP E.toAffine.FunctionField p :=
+    charP_of_injective_algebraMap (algebraMap F E.toAffine.FunctionField).injective p
+  apply constMap_injective (frobeniusTwist E p) E.toAffine.FunctionField
+  have hX := isGenPt_genericPoint_add_constMap E R
+  have h1 := app_genericPoint_add_constMap Ω (frobeniusIsogeny E p) R
+  rw [frobeniusIsogeny_app, frobeniusPoint_add, frobeniusPoint_constMap] at h1
+  have h2 : frobeniusPoint E p E.toAffine.FunctionField (genericPoint E) = (frobeniusIsogeny E p).1 :=
+    rfl
+  rw [h2, add_right_inj] at h1
+  exact h1.symm
+
+end Frobenius
+
+end
+
+end GroundTheory.Global
+end
+end
+
+-- Source module: GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremFrobenius
+
+section
 
 @[expose] public section
 
@@ -329,3 +504,5 @@ end
 
 end Elliptic
 end GroundTheory.Global
+end
+end

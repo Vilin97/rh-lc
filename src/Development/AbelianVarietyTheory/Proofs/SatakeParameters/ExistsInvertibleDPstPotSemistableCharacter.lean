@@ -1,27 +1,19 @@
 module
 
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ToAStRep
-public import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DmulMulDRight
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FontaineFormalismOfRegular
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCombinationNormNeZeroOfLinearIndependentAlStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFieldCombinationNormNeZeroStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinrankDpstUnramifiedLeDimRepresentation
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KummerNotFrac
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormTensorProductMapLeftStatement
-import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Charpoly.BaseChange
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -29,7 +21,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,19 +40,211 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NStageTrivialCharacterCoeffEqAlt
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ExistsReadingLaws
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
 import Formalism.AlgebraicWeights.IsAlgWeight
+import Formalism.ConjugateSelfDual.Statement
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 import ReciprocityTheory.Automorphisms.PlaceA
+import ReciprocityTheory.GaloisValuations.GlobalA
+public import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FontaineFormalismOfRegular
+public import Mathlib.RingTheory.Norm.Defs
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinrankDpstUnramifiedLeDimRepresentation
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.KummerNotFrac
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormTensorProductMapLeftStatement
+import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ToAStRep
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+open Formalism.BasicNotions.Loc GlobalTheory.Pst GlobalTheory.WeilDeligne
+open scoped TensorProduct
+open GlobalTheory.Pst.TwistLetters
+noncomputable section
+
+open Module
+
+namespace GlobalTheory.Pst.UnitLetter
+
+variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) (L : FinExt l)
+
+def toA : ((Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) ≃ₗ[ℚ_[l]] Bst P ⊗[ℚ_[l]] ↥L.1 :=
+  (TensorProduct.congr (LinearEquiv.funUnique (Fin 1) ℚ_[l] ↥L.1) (LinearEquiv.refl ℚ_[l] (Bst P))).trans
+    (TensorProduct.comm ℚ_[l] ↥L.1 (Bst P))
+
+@[simp] theorem toA_tmul (v : Fin 1 → ↥L.1) (b : Bst P) : toA P L (v ⊗ₜ b) = b ⊗ₜ v 0 := rfl
+
+variable {P L}
+
+theorem toA_mulB (y' y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
+    toA P L (GlobalTheory.Pst.TwistLetters.mulB P (Fin 1 → ↥L.1) y' y) = toA P L y' * toA P L y := by
+  induction y' using TensorProduct.inductionOn with
+  | tmul v' b' =>
+    induction y using TensorProduct.inductionOn with
+    | tmul v b =>
+      rw [GlobalTheory.Pst.TwistLetters.mulB_tmul, toA_tmul, toA_tmul, toA_tmul, Algebra.TensorProduct.tmul_mul_tmul]
+      simp
+    | add x x' hx hx' => simp only [map_add, mul_add, hx, hx']
+  | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, add_mul, hy, hy']
+
+theorem toA_mulV (c : ↥(MaximalUnramifiedExtension l)) (y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
+    toA P L (mulV P ↥L.1 (Fin 1 → ↥L.1) c y) = algebraMap ↥(MaximalUnramifiedExtension l) (Bst P) c • toA P L y := by
+  induction y using TensorProduct.inductionOn with
+  | tmul v b =>
+    rw [mulV_tmul, toA_tmul, toA_tmul, TensorProduct.smul_tmul', smul_eq_mul]
+  | add x x' hx hx' => simp only [map_add, smul_add, hx, hx']
+
+theorem toA_stRep {K : FinExt l} (ρm : Representation ↥L.1 ↥(GK K) (Fin 1 → ↥L.1)) (χ : ↥(GK K) → ↥L.1)
+    (hm : ∀ g v, ρm g v = χ g • v) (g : ↥(GK K)) (y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
+    toA P L (stRep P ρm g y) =
+      Algebra.TensorProduct.map (actSt P (g : GQ l)) (AlgHom.id ℚ_[l] ↥L.1) (toA P L y) *
+        ((1 : Bst P) ⊗ₜ[ℚ_[l]] χ g) := by
+  induction y using TensorProduct.inductionOn with
+  | tmul v b =>
+    rw [stRep_tmul, toA_tmul, toA_tmul, hm, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul]
+    simp [mul_comm]
+  | add x x' hx hx' => simp only [map_add, add_mul, hx, hx']
+
+end GlobalTheory.Pst.UnitLetter
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCombinationNormNeZeroOfLinearIndependentAl
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open Matrix
+
+namespace GlobalTheory
+
+theorem exists_combination_norm_ne_zero_of_linearIndependent
+    {B A : Type} [CommRing B] [IsDomain B] [CommRing A] [Algebra B A]
+    [Module.Free B A] [Module.Finite B A] {d : ℕ} (hd : Module.finrank B A = d)
+    (y : Fin d → A) (hy : LinearIndependent B y) :
+    ∃ x : Fin d → B, Algebra.norm B (∑ i, x i • y i) ≠ 0 := by
+  classical
+  let e := Module.finBasisOfFinrankEq B A hd
+  let Y : Matrix (Fin d) (Fin d) B := fun i j => e.equivFun (y j) i
+  have key : ∀ v : Fin d → B, e.equivFun (∑ j, v j • y j) = Y *ᵥ v := by
+    intro v
+    ext i
+    simp [Y, Matrix.mulVec, dotProduct, mul_comm]
+  have hdet : Y.det ≠ 0 := by
+    intro h0
+    obtain ⟨v, hv0, hv⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr h0
+    have h1 : ∑ j, v j • y j = 0 := by
+      apply e.equivFun.injective
+      rw [key, hv, map_zero]
+    exact hv0 (funext fun j => Fintype.linearIndependent_iff.mp hy v h1 j)
+  refine ⟨Y.adjugate *ᵥ e.equivFun 1, ?_⟩
+  have hsum : ∑ j, (Y.adjugate *ᵥ e.equivFun 1) j • y j = algebraMap B A Y.det := by
+    apply e.equivFun.injective
+    rw [key, Matrix.mulVec_mulVec, Matrix.mul_adjugate, Matrix.smul_mulVec,
+      Matrix.one_mulVec, Algebra.algebraMap_eq_smul_one, map_smul]
+  rw [hsum, Algebra.norm_algebraMap]
+  exact pow_ne_zero _ hdet
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCombinationNormNeZeroOfLinearIndependentAlStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_norm_sum_smul_ne_zero_of_linearIndependent : ∀ {B A : Type} [inst : CommRing B] [IsDomain B] [inst_2 : CommRing A] [inst_3 : Algebra B A] [Module.Free B A] [Module.Finite B A] {d : ℕ}, Module.finrank B A = d → ∀ (y : Fin d → A), LinearIndependent B y → ∃ x : Fin d → B, Algebra.norm B (∑ i, x i • y i) ≠ 0 := by
+  first | exact @GlobalTheory.exists_combination_norm_ne_zero_of_linearIndependent | exact GlobalTheory.exists_combination_norm_ne_zero_of_linearIndependent | (intros; apply GlobalTheory.exists_combination_norm_ne_zero_of_linearIndependent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFieldCombinationNormNeZero
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory
+
+
+open MvPolynomial in
+theorem exists_field_combination_norm_ne_zero {k B A : Type} [Field k] [Infinite k] [CommRing B]
+    [IsDomain B] [Algebra k B] [CommRing A] [Algebra B A] [Module.Free B A] [Module.Finite B A]
+    {d : ℕ} (y : Fin d → A) (hx : ∃ x : Fin d → B, Algebra.norm B (∑ i, x i • y i) ≠ 0) :
+    ∃ a : Fin d → k, Algebra.norm B (∑ i, algebraMap k B (a i) • y i) ≠ 0 := by
+  classical
+  obtain ⟨x₀, hx₀⟩ := hx
+  let b := Module.Free.chooseBasis B A
+  let M : Matrix (Module.Free.ChooseBasisIndex B A) (Module.Free.ChooseBasisIndex B A)
+      (MvPolynomial (Fin d) B) :=
+    Matrix.of fun j l => ∑ i, X i * C (Algebra.leftMulMatrix b (y i) j l)
+  have heval : ∀ x : Fin d → B, eval x M.det = Algebra.norm B (∑ i, x i • y i) := by
+    intro x
+    rw [Algebra.norm_eq_matrix_det b, RingHom.map_det]
+    congr 1
+    ext j l
+
+    simp [M, map_sum, Matrix.sum_apply, mul_comm]
+  by_contra hcon
+  push_neg at hcon
+  have hinf : ∀ _ : Fin d, (Set.range (algebraMap k B)).Infinite := fun _ =>
+    Set.infinite_range_of_injective (algebraMap k B).injective
+  have hQ : M.det = 0 := by
+    refine funext_set (fun _ => Set.range (algebraMap k B)) hinf fun x hx => ?_
+    choose a ha using fun i => hx i (Set.mem_univ i)
+    rw [heval, map_zero, ← hcon a]
+    simp [ha]
+  exact hx₀ (by rw [← heval, hQ, map_zero])
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFieldCombinationNormNeZeroStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_field_coeff_norm_sum_smul_ne_zero : ∀ {k B A : Type} [inst : Field k] [Infinite k] [inst_2 : CommRing B] [IsDomain B] [inst_4 : Algebra k B] [inst_5 : CommRing A] [inst_6 : Algebra B A] [Module.Free B A] [Module.Finite B A] {d : ℕ} (y : Fin d → A), (∃ x : Fin d → B, Algebra.norm B (∑ i, x i • y i) ≠ 0) → ∃ a : Fin d → k, Algebra.norm B (∑ i, algebraMap k B (a i) • y i) ≠ 0 := by
+  first | exact @GlobalTheory.exists_field_combination_norm_ne_zero | exact GlobalTheory.exists_field_combination_norm_ne_zero | (intros; apply GlobalTheory.exists_field_combination_norm_ne_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsInvertibleDPstPotSemistableCharacter
+
+section
 
 @[expose] public section
 
@@ -226,3 +408,6 @@ theorem GlobalTheory.Pst.UnitLetter.exists_unit_Dpst : ∀ {l : ℕ} [Fact l.Pri
   apply (toA P L).injective
   rw [toA_mulB, LinearEquiv.apply_symm_apply, toA_tmul, mul_comm, hv']
   rfl
+end
+end
+end

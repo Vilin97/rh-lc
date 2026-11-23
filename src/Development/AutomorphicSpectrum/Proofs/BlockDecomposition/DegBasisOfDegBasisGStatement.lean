@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.IsotropicMahlerBounds.LogAbsoluteWedges.LogAbsBasic
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegBasisOfDegBasisG
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,9 +38,34 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegBasisOfDegBasisG
+
+section
+
+@[expose] public section
+
+open Matrix PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.D1
+
+namespace GlobalTheory.CompanionTheory.DegreeBasis
+
+theorem degBasis_of_degBasisG : DegBasisG → DegBasis := by
+  intro h E _ _ _ n k x M hM
+  rw [← degG_eq x M]
+  exact h E n (Fin k) x M hM
+
+end GlobalTheory.CompanionTheory.DegreeBasis
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegBasisOfDegBasisGStatement
+
+section
+
 @[expose] public section
 
 open Matrix PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.D1
 
 theorem _root_.GlobalTheory.T.degBasis_of_degBasisG' : DegBasisG → DegBasis := by
   first | exact @GlobalTheory.CompanionTheory.DegreeBasis.degBasis_of_degBasisG | exact GlobalTheory.CompanionTheory.DegreeBasis.degBasis_of_degBasisG | (intros; apply GlobalTheory.CompanionTheory.DegreeBasis.degBasis_of_degBasisG <;> assumption)
+end
+end

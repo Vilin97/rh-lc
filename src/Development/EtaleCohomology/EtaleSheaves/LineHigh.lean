@@ -1,12 +1,9 @@
 module
 
-public import Development.EtaleCohomology.EtaleSheaves.EtaleChapterETwo
-public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -42,6 +39,24 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.QuasiAffine
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.EtaleChapterETwo
+
+section
+
+@[expose] public section
+
+def LateralTheory.E.EtaleChapterETwo : Prop :=
+  GlobalTheory.EtC.A1 → GlobalTheory.EtC.A2 → GlobalTheory.EtC.A3 → GlobalTheory.EtC.A4 → GlobalTheory.EtC.A5 → GlobalTheory.EtC.A7 → GlobalTheory.EtC.A8 → GlobalTheory.EtC.A9 → GlobalTheory.EtC.A10 → GlobalTheory.EtC.A11 → GlobalTheory.EtC.B1 → GlobalTheory.EtC.B2 → GlobalTheory.EtC.B3 → GlobalTheory.EtC.B4 → GlobalTheory.EtC.B5 → GlobalTheory.EtC.B7 → GlobalTheory.EtC.C1 → GlobalTheory.EtC.C2 → GlobalTheory.EtC.C3 → GlobalTheory.EtC.C4 → GlobalTheory.EtC.C5 → GlobalTheory.EtC.D1 → GlobalTheory.EtC.D2 → GlobalTheory.EtC.D3 → GlobalTheory.EtC.E1 → GlobalTheory.EtC.E2
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LineHigh
+
+section
 
 @[expose] public section
 
@@ -292,4 +307,6 @@ theorem goal_of (hD : Desc) (hC : Cover) (h0 : HZero) (hA : AICAcyc) (l0 : LineZ
 
 end LateralTheory.E.t_E2Cut
 
+end
+end
 end

@@ -3,13 +3,10 @@ module
 public import GroundTheory.PAdicHodge.SenTateCharLevels
 public import GroundTheory.PAdicHodge.SenTateCharClosure
 public import GroundTheory.LocalFields.PadicLogSeries
-public import GroundTheory.PAdicHodge.FieldOfNormsResidue
-public import GroundTheory.PAdicHodge.SenTateCharStep
-public import GroundTheory.PAdicHodge.SenTateCharUnitPow
+public import GroundTheory.LocalFields.IntermediateField
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -26,8 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,8 +42,148 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.PAdicHodge.FieldOfNormsTower
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.HerbrandFunction
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.FieldTheory.KrullTopology
+public import GroundTheory.PAdicHodge.SenTateCharStep
+public import GroundTheory.PAdicHodge.SenTateCharUnitPow
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.PAdicHodge.FieldOfNormsUpper
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+set_option linter.unusedSectionVars false
+
+namespace GroundTheory.PAdicHodge
+
+open GroundTheory.LocalField ValuativeRel IntermediateField
+
+section AbsUpper
+
+variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  (Ω : Type*) [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
+  [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
+
+def absUpper (u : ℝ) : Subgroup Gal(Ω/K) where
+  carrier := {σ | ∀ M : FiniteGaloisIntermediateField K Ω,
+    AlgEquiv.restrictNormalHom (M : IntermediateField K Ω) σ ∈
+      upperRamificationGroup K (M : IntermediateField K Ω) u}
+  one_mem' M := by rw [map_one]; exact one_mem _
+  mul_mem' hσ hτ M := by rw [map_mul]; exact mul_mem (hσ M) (hτ M)
+  inv_mem' hσ M := by rw [map_inv]; exact inv_mem (hσ M)
+
+variable {K Ω}
+
+
+
+variable [IsGalois K Ω]
+
+end AbsUpper
+
+section APF
+
+variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  (Ω : Type*) [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
+  [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
+  (L : IntermediateField K Ω)
+
+def upperSupFixing (u : ℝ) : Subgroup Gal(Ω/K) :=
+  absUpper K Ω u ⊔ L.fixingSubgroup
+
+def IsAPF : Prop :=
+  ∀ u : ℝ, IsOpen (upperSupFixing K Ω L u : Set Gal(Ω/K))
+
+def apfIndex (u : ℝ) : ℕ :=
+  (upperSupFixing K Ω L u).relIndex (absUpper K Ω 0)
+
+def apfPsi (u : ℝ) : ℝ :=
+  ∫ w in (0 : ℝ)..u, (apfIndex K Ω L w : ℝ)
+
+def IsStrictlyAPF : Prop :=
+  IsAPF K Ω L ∧ ∃ c : ℝ, 0 < c ∧ ∀ᶠ u in Filter.atTop, c * apfIndex K Ω L u ≤ apfPsi K Ω L u
+
+variable {K Ω L}
+
+variable [IsGalois K Ω]
+
+end APF
+
+end GroundTheory.PAdicHodge
+end
+end
+end
+
+-- Source module: GroundTheory.PAdicHodge.FieldOfNormsResidue
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+set_option linter.unusedSectionVars false
+set_option linter.style.haveILetI false
+
+namespace GroundTheory.PAdicHodge
+
+open GroundTheory.LocalField ValuativeRel Filter Topology IntermediateField IsLocalRing
+
+section Tower
+
+variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
+  [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] {p : ℕ}
+
+namespace NormTower
+
+variable (t : NormTower K Ω p)
+
+end NormTower
+
+end Tower
+
+section FieldOfNorms
+
+variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
+  [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [IsGalois K Ω]
+  {L : IntermediateField K Ω} [IsGalois K L]
+  [hsapf : Fact (IsStrictlyAPF K Ω L)] [hinf : Fact (¬ FiniteDimensional K L)]
+
+namespace FieldOfNorms
+
+instance isLocalRing_integer_L : IsLocalRing 𝒪[L] :=
+  inferInstanceAs (IsLocalRing (valuation L).valuationSubring)
+
+end FieldOfNorms
+
+end FieldOfNorms
+
+end GroundTheory.PAdicHodge
+end
+end
+end
+
+-- Source module: GroundTheory.PAdicHodge.SenTateCharTrace
+
+section
 
 @[expose] public section
 
@@ -326,3 +461,6 @@ theorem nrm_normTrace_charTower_le (hη : Continuous η) (hA : ∀ n, artinImage
 end SenTateChar
 
 end GroundTheory.PAdicHodge
+end
+end
+end

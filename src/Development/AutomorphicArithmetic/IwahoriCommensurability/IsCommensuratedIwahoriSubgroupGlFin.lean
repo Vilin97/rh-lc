@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsSubquotientDetRepParInd
 public import Formalism.SatakeDualWeyl.Statement
-public import Development.AutomorphicArithmetic.IwahoriCommensurability.IsCommensuratedIwahoriGl
+public import GroundTheory.AutomorphicForms.AffineBruhat
+import GroundTheory.LocalFields.PadicLogSeries
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +44,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IwahoriCommensurability.IsCommensuratedIwahoriGl
+
+section
+
+@[expose] public section
+
+open Formalism.UG GroundTheory.Automorphic GroundTheory.Automorphic.GLnLocal Matrix
+
+theorem UpperTheory.isCommensurated_iwahori_gl :
+    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ), IsCommensurated (iwahori k n) := by
+  intro k _ _ _ _ n g
+  have hO : IsOpen (iwahori k n : Set (GL (Fin n) k)) := isOpen_iwahori k n
+  have hC : IsCompact (iwahori k n : Set (GL (Fin n) k)) := isCompact_iwahori k n
+  have hset : (((iwahori k n).map (MulAut.conj g).toMonoidHom : Subgroup (GL (Fin n) k)) :
+      Set (GL (Fin n) k)) = (fun x => g⁻¹ * x * g) ⁻¹' (iwahori k n : Set (GL (Fin n) k)) := by
+    ext x
+    simp only [Subgroup.coe_map, Set.mem_image, SetLike.mem_coe, Set.mem_preimage,
+      MulEquiv.coe_toMonoidHom, MulAut.conj_apply]
+    constructor
+    · rintro ⟨y, hy, rfl⟩
+      simpa [mul_assoc] using hy
+    · intro hx
+      exact ⟨_, hx, by simp [mul_assoc]⟩
+  have hOc : IsOpen (((iwahori k n).map (MulAut.conj g).toMonoidHom : Subgroup (GL (Fin n) k)) :
+      Set (GL (Fin n) k)) := by
+    rw [hset]
+    exact hO.preimage (by fun_prop)
+  haveI : CompactSpace (iwahori k n) := isCompact_iff_compactSpace.mp hC
+  have hU : IsOpen ((((iwahori k n).map (MulAut.conj g).toMonoidHom).subgroupOf (iwahori k n) :
+      Subgroup (iwahori k n)) : Set (iwahori k n)) :=
+    hOc.preimage continuous_subtype_val
+  haveI := Subgroup.quotient_finite_of_isOpen _ hU
+  exact Subgroup.index_ne_zero_of_finite
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IwahoriCommensurability.IsCommensuratedIwahoriSubgroupGlFin
+
+section
 
 @[expose] public section
 
@@ -75,3 +121,5 @@ theorem UpperTheory.isCommensurated_iwahoriSubgroup_gl_fin :
         rfl
   rw [h]
   exact UpperTheory.isCommensurated_iwahori_gl k n
+end
+end

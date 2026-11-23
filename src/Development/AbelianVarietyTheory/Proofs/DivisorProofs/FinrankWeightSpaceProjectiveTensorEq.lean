@@ -3,10 +3,8 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QActMSubAlgebraMap
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.LinearAlgebra.Eigenspace.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterAugmentationSubspaceTopEqKerSmulStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdempotentLocalOfCharacterStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankQuotOneSubIdempotentEqMulStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightSpaceIffIdempotentFixedStatement
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.TensorProduct.Maps
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,12 +23,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,9 +46,267 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.IdempotentFG
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.RingTheory.Artinian.Defs
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.Algebra.Module.Projective
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.LocalRing.Module
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightSpaceIffIdempotentFixedStatement
+import Mathlib.Tactic.TypeStar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterAugmentationSubspaceTopEqKerSmulStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+universe u
+
+theorem _root_.GlobalTheory.T.characterAugmentationSubspace_top_eq_ker_smul :
+    ∀ (k : Type) [Field k] (C : Type) [CommRing C] (H : Type u) [AddCommGroup H]
+      [Module k H] (σ : C →+* Module.End k H) (χ : C →+* k),
+      letI : Module (k ⊗[ℤ] C) H := Module.compHom H
+        (Algebra.TensorProduct.lift (Algebra.ofId k (Module.End k H)) σ.toIntAlgHom
+          (fun _ _ => Algebra.commutes _ _)).toRingHom;
+      ∀ x : H, x ∈ GlobalTheory.HTRho.mSub σ χ ⊤ ↔
+        x ∈ (RingHom.ker (Algebra.TensorProduct.lift (Algebra.ofId k k) χ.toIntAlgHom
+          (fun _ _ => Commute.all _ _) : k ⊗[ℤ] C →ₐ[k] k) • ⊤ : Submodule (k ⊗[ℤ] C) H) := by
+  intro k _ C _ H _ _ σ χ
+  let L := Algebra.TensorProduct.lift (Algebra.ofId k (Module.End k H)) σ.toIntAlgHom
+    (fun _ _ => Algebra.commutes _ _)
+  let φ := Algebra.TensorProduct.lift (Algebra.ofId k k) χ.toIntAlgHom
+    (fun _ _ => Commute.all _ _)
+  let : Module (k ⊗[ℤ] C) H := Module.compHom H L.toRingHom
+  let X := GlobalTheory.HTRho.mSub σ χ ⊤
+  let Y : Submodule (k ⊗[ℤ] C) H := RingHom.ker φ • ⊤
+  change ∀ x : H, x ∈ X ↔ x ∈ Y
+  have hsmul (a : k ⊗[ℤ] C) (y : H) : a • y = L a y := rfl
+  have hL (l : k) (c : C) (y : H) : L (l ⊗ₜ c) y = l • σ c y := by
+    exact congrArg (fun f : Module.End k H => f y)
+      (Algebra.TensorProduct.lift_tmul (Algebra.ofId k (Module.End k H)) σ.toIntAlgHom
+        (fun _ _ => Algebra.commutes _ _) l c)
+  have hφ (l : k) (c : C) : φ (l ⊗ₜ c) = l * χ c := by
+    simp [φ]
+  have hSub (a : k ⊗[ℤ] C) (y : H) : L a y - φ a • y ∈ X := by
+    induction a using TensorProduct.inductionOn with
+    | tmul l c =>
+      rw [hL, hφ, mul_smul, ← smul_sub]
+      exact Submodule.smul_mem X l (Submodule.subset_span ⟨c, y, trivial, by simp⟩)
+    | add a b ha hb =>
+      rw [map_add L, map_add φ, LinearMap.add_apply, add_smul, add_sub_add_comm]
+      exact add_mem ha hb
+  intro x
+  constructor
+  · intro hx
+    induction hx using Submodule.span_induction with
+    | mem z hz =>
+      obtain ⟨c, y, -, rfl⟩ := hz
+      let a : k ⊗[ℤ] C := 1 ⊗ₜ c - χ c ⊗ₜ (1 : C)
+      have ha : a ∈ RingHom.ker φ := by
+        change φ a = 0
+        simp [a, hφ]
+      have hy : a • y ∈ Y := Submodule.smul_mem_smul ha (Submodule.mem_top (x := y))
+      have hay : a • y = σ (algebraMap C C c) y - χ c • y := by
+        rw [hsmul]
+        simp [a, hL]
+      exact hay ▸ hy
+    | zero => exact Y.zero_mem
+    | add a b _ _ ha hb => exact Y.add_mem ha hb
+    | smul l z _ hz =>
+      have hl : (l ⊗ₜ (1 : C) : k ⊗[ℤ] C) • z = l • z := by
+        rw [hsmul, hL, map_one, one_apply_eq_self]
+      exact hl ▸ Y.smul_mem _ hz
+  · intro hx
+    refine Submodule.smul_induction_on (show x ∈ RingHom.ker φ • ⊤ from hx) ?_ ?_
+    · intro a ha y _
+      rw [hsmul]
+      simpa only [RingHom.mem_ker.mp ha, zero_smul, sub_zero] using hSub a y
+    · intro a b ha hb
+      exact X.add_mem ha hb
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdempotentLocalOfCharacter
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+universe u
+
+namespace GlobalTheory
+
+theorem exists_idem_local_of_character :
+    ∀ (k : Type) [Field k] (A : Type) [CommRing A] [Algebra k A] [FiniteDimensional k A]
+      (φ : A →ₐ[k] k), ∃ e : A, IsIdempotentElem e ∧ φ e = 1 ∧
+        ∀ a, φ a = 0 → IsNilpotent (e * a) := by
+  intro k _ A _ _ _ φ
+  haveI : IsArtinianRing A := IsArtinianRing.of_finite k A
+  set m : Ideal A := RingHom.ker φ with hm
+  obtain ⟨n, hn⟩ := IsArtinian.monotone_stabilizes (R := A) (M := A)
+    ⟨fun n => OrderDual.toDual (m ^ n), fun _ _ h => Ideal.pow_le_pow_right h⟩
+  have hst : ∀ j, n ≤ j → m ^ n = m ^ j := fun j hj => hn j hj
+  set N := n + 1 with hN
+  have hI : IsIdempotentElem (m ^ N) := by
+    show m ^ N * m ^ N = m ^ N
+    rw [← pow_add, ← hst (N + N) (by omega), hst N (by omega)]
+  have hfg : (m ^ N).FG := IsNoetherian.noetherian _
+  obtain ⟨f, hf, hIf⟩ := (Ideal.isIdempotentElem_iff_of_fg _ hfg).1 hI
+  refine ⟨1 - f, hf.one_sub, ?_, ?_⟩
+  · have hfm : f ∈ m := by
+      have : f ∈ m ^ N := by rw [hIf]; exact Ideal.subset_span rfl
+      exact Ideal.pow_le_self (by omega) this
+    have : φ f = 0 := hfm
+    simp [this]
+  · intro a ha
+    have ham : a ∈ m := ha
+    have haN : a ^ N ∈ m ^ N := Ideal.pow_mem_pow ham N
+    rw [hIf, Ideal.mem_span_singleton'] at haN
+    obtain ⟨y, hy⟩ := haN
+    refine ⟨N, ?_⟩
+    rw [mul_pow, hf.one_sub.pow_succ_eq n, ← hy]
+    have : (1 - f) * f = 0 := by rw [sub_mul, one_mul, hf.eq, sub_self]
+    calc (1 - f) * (y * f) = y * ((1 - f) * f) := by ring
+      _ = 0 := by rw [this, mul_zero]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdempotentLocalOfCharacterStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+universe u
+
+theorem _root_.GlobalTheory.T.exists_idempotent_local_of_character : ∀ (k : Type) [Field k] (A : Type) [CommRing A] [Algebra k A] [FiniteDimensional k A] (φ : A →ₐ[k] k), ∃ e : A, IsIdempotentElem e ∧ φ e = 1 ∧ ∀ a, φ a = 0 → IsNilpotent (e * a) := by
+  first | (exact @GlobalTheory.exists_idem_local_of_character) | (exact GlobalTheory.exists_idem_local_of_character) | (intros; apply GlobalTheory.exists_idem_local_of_character <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankQuotOneSubIdempotentEqMul
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+universe u
+
+namespace GlobalTheory
+
+theorem finrank_quot_one_sub_idem_eq_mul : ∀ (k : Type) [Field k] (A : Type) [CommRing A] [Algebra k A] [FiniteDimensional k A] (φ : A →ₐ[k] k) (e : A), IsIdempotentElem e → φ e = 1 → (∀ a, φ a = 0 → IsNilpotent (e * a)) → ∀ (H : Type u) [AddCommGroup H] [Module A H] [Module k H] [IsScalarTower k A H] [FiniteDimensional k H] [Module.Projective A H], Module.finrank k (H ⧸ (Ideal.span {1 - e} • ⊤ : Submodule A H)) = Module.finrank k (H ⧸ (RingHom.ker φ • ⊤ : Submodule A H)) * Module.finrank k (A ⧸ Ideal.span {1 - e}) := by
+  intro k _ A _ _ _ φ e he hφe hnil H _ _ _ _ _ _
+  have : Module.Finite A H := Module.Finite.of_restrictScalars_finite k A H
+  set I : Ideal A := Ideal.span {1 - e} with hI
+  have hIφ : ∀ a ∈ I, φ a = 0 := by
+    intro a ha
+    obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp ha
+    simp [hφe]
+  have hItop : I ≠ ⊤ := by
+    intro h
+    have := hIφ 1 (h ▸ Submodule.mem_top)
+    simp at this
+  let B := A ⧸ I
+  have : Nontrivial B := Ideal.Quotient.nontrivial_iff.mpr hItop
+  have hloc : IsLocalRing B := by
+    apply IsLocalRing.of_isUnit_or_isUnit_one_sub_self
+    have key : ∀ x : A, φ x ≠ 0 → IsUnit (Ideal.Quotient.mk I x) := by
+      intro x hx
+      have he1 : Ideal.Quotient.mk I e = 1 := by
+        rw [eq_comm, ← sub_eq_zero, ← map_one (Ideal.Quotient.mk I), ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
+        exact Ideal.subset_span rfl
+      set a := x - algebraMap k A (φ x) with ha
+      have hφa : φ a = 0 := by simp [ha]
+      have hxa : x = algebraMap k A (φ x) + a := by simp [ha]
+      rw [hxa, map_add (f := _)]
+      have hn : IsNilpotent (Ideal.Quotient.mk I a) := by
+        have : Ideal.Quotient.mk I a = Ideal.Quotient.mk I (e * a) := by rw [map_mul, he1, one_mul]
+        rw [this]; exact (hnil a hφa).map _
+      apply hn.isUnit_add_left_of_commute _ (Commute.all _ _)
+      have : IsUnit (algebraMap k B (φ x)) := (isUnit_iff_ne_zero.mpr hx).map _
+      simpa [Ideal.Quotient.mk_algebraMap] using this
+    intro b
+    obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective b
+    by_cases hx : φ x = 0
+    · right
+      rw [← map_one (Ideal.Quotient.mk I), ← map_sub]
+      exact key _ (by simp [hx])
+    · left; exact key x hx
+  let T := B ⊗[A] H
+  have : Module.Free B T := Module.free_of_flat_of_isLocalRing
+
+  have h3 : Module.finrank k (H ⧸ (I • ⊤ : Submodule A H)) = Module.finrank B T * Module.finrank k B := by
+    let b := Module.Free.chooseBasis B T
+    let e1 : T ≃ₗ[A] H ⧸ (I • ⊤ : Submodule A H) := TensorProduct.quotTensorEquivQuotSMul H I
+    let e3 : (H ⧸ (I • ⊤ : Submodule A H)) ≃ₗ[A] (Module.Free.ChooseBasisIndex B T → B) :=
+      e1.symm.trans (b.equivFun.restrictScalars A)
+    rw [(e3.restrictScalars k).finrank_eq, Module.finrank_pi_fintype, Finset.sum_const, Finset.card_univ,
+      smul_eq_mul, Module.finrank_eq_card_chooseBasisIndex (R := B) (M := T)]
+  have h4 : Module.finrank k (H ⧸ (RingHom.ker φ • ⊤ : Submodule A H)) = Module.finrank B T := by
+    have hsurj : Function.Surjective φ := fun c => ⟨algebraMap k A c, φ.commutes c⟩
+    let φB : B →ₐ[k] k := Ideal.Quotient.liftₐ I φ hIφ
+    letI : Algebra A k := φ.toRingHom.toAlgebra
+    letI : Algebra B k := φB.toRingHom.toAlgebra
+    haveI : IsScalarTower A B k := IsScalarTower.of_algebraMap_eq (fun x => rfl)
+    haveI : IsScalarTower k A k := IsScalarTower.of_algebraMap_eq (fun c => (φ.commutes c).symm)
+    let f := Ideal.quotientKerAlgEquivOfSurjective hsurj
+    let g : (A ⧸ RingHom.ker φ) ≃ₗ[A] k :=
+      { f.toLinearEquiv with
+        map_smul' := by
+          intro a x
+          obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
+          change f (Ideal.Quotient.mk _ (a * y)) = φ a * f (Ideal.Quotient.mk _ y)
+          simp [f, Ideal.quotientKerAlgEquivOfSurjective_apply] }
+    let e6 : (k ⊗[A] H) ≃ₗ[A] H ⧸ (RingHom.ker φ • ⊤ : Submodule A H) :=
+      (LinearEquiv.rTensor H g.symm).trans (TensorProduct.quotTensorEquivQuotSMul H (RingHom.ker φ))
+    rw [← (e6.restrictScalars k).finrank_eq,
+      ← (TensorProduct.AlgebraTensorModule.cancelBaseChange A B k k H).finrank_eq,
+      Module.finrank_baseChange]
+  rw [h3, h4]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankQuotOneSubIdempotentEqMulStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+universe u
+
+theorem _root_.GlobalTheory.T.finrank_quot_one_sub_idempotent_eq_mul : ∀ (k : Type) [Field k] (A : Type) [CommRing A] [Algebra k A] [FiniteDimensional k A] (φ : A →ₐ[k] k) (e : A), IsIdempotentElem e → φ e = 1 → (∀ a, φ a = 0 → IsNilpotent (e * a)) → ∀ (H : Type u) [AddCommGroup H] [Module A H] [Module k H] [IsScalarTower k A H] [FiniteDimensional k H] [Module.Projective A H], Module.finrank k (H ⧸ (Ideal.span {1 - e} • ⊤ : Submodule A H)) = Module.finrank k (H ⧸ (RingHom.ker φ • ⊤ : Submodule A H)) * Module.finrank k (A ⧸ Ideal.span {1 - e}) := by
+  first | (exact @GlobalTheory.finrank_quot_one_sub_idem_eq_mul) | (exact GlobalTheory.finrank_quot_one_sub_idem_eq_mul) | (intros; apply GlobalTheory.finrank_quot_one_sub_idem_eq_mul  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankWeightSpaceProjectiveTensorEq
+
+section
 
 @[expose] public section
 
@@ -131,3 +382,6 @@ theorem weight_finrank_eq : ∀ (k : Type) [Field k] [IsAlgClosed k] (C : Type) 
   exact ((Submodule.quotEquivOfEq _ _ hI).restrictScalars k).finrank_eq.symm
 
 end GlobalTheory.WtRank
+end
+end
+end

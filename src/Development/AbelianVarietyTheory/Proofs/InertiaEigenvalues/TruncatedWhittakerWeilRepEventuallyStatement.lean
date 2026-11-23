@@ -1,7 +1,12 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedWhittakerWeilRepEventually
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AbsKMultiplicativeUnitOneHaarScalingStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EtaleHermitianPairStructureFactsStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsNhdsOneEtaleAlgebraMulInvariantStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsOpenCompactAnnihilatorScaledIntegersKStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteEtaleExistsSqRootNearOneStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuadraticStarStructure
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +46,276 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntegralPsiKOverScaledIntegersEqVolumeIndicatorStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EtaleHermitianPairStructureFactsStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSmallDualLattices
+import Mathlib.Tactic.Linter.HaveILetI
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SelfDualIffLatticeVolumeAndPlancherelStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedIntegralEqVolMulOrbitalIntegralStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WhittakerSwapStatement
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteEtaleHermitianPairNormProperties
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+namespace GlobalTheory.JR
+
+theorem Et.norm_facts : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ((∀ s : A.K, A.NL (algebraMap A.K A.L s) = s ^ 2) ∧ (∀ y y' : A.L, A.NL (y * y') = A.NL y * A.NL y') ∧ (∀ t : unitary A.L, A.NL (t : A.L) = 1) ∧ (∀ y : A.L, IsUnit (A.NL y) → IsUnit y) ∧ (∀ y : A.L, IsUnit y → IsUnit (A.NL y))) := by
+  intro F E _ _ _ _ _ A
+  obtain ⟨⟨b⟩, hinj, hN, -, -⟩ := Et.quadratic_structure F E A
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · intro s
+    simp only [Et.NL]
+    rw [Algebra.norm_algebraMap_of_basis b]
+    simp
+  · intro y y'
+    simp only [Et.NL]
+    exact map_mul (Algebra.norm A.K) y y'
+  · intro t
+    apply hinj
+    rw [hN, map_one]
+    exact t.prop.2
+  · intro y hy
+    have h := hy.map (algebraMap A.K A.L)
+    rw [hN] at h
+    exact isUnit_of_mul_isUnit_left h
+  · intro y hy
+    exact hy.map (Algebra.norm A.K)
+
+end GlobalTheory.JR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteEtaleHermitianPairNormPropertiesStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.finiteEtaleHermitianPair_norm_properties : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ((∀ s : A.K, A.NL (algebraMap A.K A.L s) = s ^ 2) ∧ (∀ y y' : A.L, A.NL (y * y') = A.NL y * A.NL y') ∧ (∀ t : unitary A.L, A.NL (t : A.L) = 1) ∧ (∀ y : A.L, IsUnit (A.NL y) → IsUnit y) ∧ (∀ y : A.L, IsUnit y → IsUnit (A.NL y))) := by
+  first | exact @GlobalTheory.JR.Et.norm_facts | exact GlobalTheory.JR.Et.norm_facts | (intros; apply GlobalTheory.JR.Et.norm_facts <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ScaledIntegersKAnnihilatorSmallNearZero
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem GlobalTheory.JR.annihilator_small : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ U ∈ 𝓝 (0 : A.K), ∀ᶠ c in 𝓝[≠] (0 : F), ∀ b : A.K, (∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1) → b ∈ U := by
+  intro F E _ _ _ _ hU A ψ hψ U hUmem
+  haveI : IsUltrametricDist F := hU.ultraF
+  haveI : LocallyCompactSpace F := hU.lcF
+  haveI : ContinuousSMul F A.K := IsModuleTopology.toContinuousSMul F A.K
+  have hfacts := GlobalTheory.T.etaleHermitianPair_structure_facts F E A
+  have hnd : (Algebra.traceForm F A.K).Nondegenerate := hfacts.2.2.1
+  have hOKopen : IsOpen A.OK := hfacts.2.2.2.2.2.2.2.2.2.1
+  obtain ⟨R, hR⟩ := hfacts.2.2.2.2.2.2.2.2.2.2.2
+  have h0 : (0 : A.K) ∈ A.OK := by rw [← hR]; exact R.zero_mem
+  obtain ⟨-, hsmall⟩ := GlobalTheory.JR.exists_small_dual_lattices F ψ hψ A.K (Algebra.traceForm F A.K)
+    (Algebra.traceForm_isSymm F (S := A.K)) hnd
+  obtain ⟨M, N, hMU, -, -, -, hNc, -, hM⟩ := hsmall U hUmem
+  have hev : ∀ᶠ c in 𝓝 (0 : F), ∀ y ∈ (N : Set A.K), c • y ∈ A.OK := by
+    refine hNc.eventually_forall_of_forall_eventually fun y _ => ?_
+    have hc : ContinuousAt (fun p : F × A.K => p.1 • p.2) ((0 : F), y) := continuous_smul.continuousAt
+    have : A.OK ∈ 𝓝 ((fun p : F × A.K => p.1 • p.2) ((0 : F), y)) := by
+      simpa using hOKopen.mem_nhds h0
+    exact hc this
+  filter_upwards [nhdsWithin_le_nhds hev] with c hc b hb
+  apply hMU
+  rw [SetLike.mem_coe, hM]
+  intro y hy
+  have := hb y (hc y hy)
+  simpa [Et.psiK, Algebra.traceForm_apply, mul_comm] using this
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ScaledIntegersKAnnihilatorSmallNearZeroStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.scaledIntegersK_annihilator_small_near_zero : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ U ∈ 𝓝 (0 : A.K), ∀ᶠ c in 𝓝[≠] (0 : F), ∀ b : A.K, (∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1) → b ∈ U := by
+  first | exact @GlobalTheory.JR.annihilator_small | exact GlobalTheory.JR.annihilator_small | (intros; apply GlobalTheory.JR.annihilator_small <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedSetEmptyOutsideNormCoset
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+namespace GlobalTheory.JR
+
+theorem norm_sub_notMem_of_not_norm :
+    ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ((∀ s : A.K, A.NL (algebraMap A.K A.L s) = s ^ 2) ∧ (∀ y y' : A.L, A.NL (y * y') = A.NL y * A.NL y') ∧ (∀ t : unitary A.L, A.NL (t : A.L) = 1) ∧ (∀ y : A.L, IsUnit (A.NL y) → IsUnit y) ∧ (∀ y : A.L, IsUnit y → IsUnit (A.NL y))) → ∀ (x : A.Kˣ) (a : A.K) (D : Set A.K), (∀ b ∈ D, ∃ s s' : A.K, s * s' = 1 ∧ s ^ 2 = 1 + Ring.inverse a * b) → IsUnit a → (¬ ∃ y : A.L, IsUnit y ∧ a = x * A.NL y) → ∀ y : A.L, (x : A.K) * A.NL y - a ∉ D := by
+  intro F E _ _ _ _ _ A ⟨h1, h2, _, h4, _⟩ x a D hD ha hn y hy
+  obtain ⟨s, s', hss, hs⟩ := hD _ hy
+  have hai : a * Ring.inverse a = 1 := Ring.mul_inverse_cancel a ha
+  have key : (x : A.K) * A.NL y = a * s ^ 2 := by
+    rw [hs]
+    linear_combination (-((x : A.K) * A.NL y - a)) * hai
+  have hsu : IsUnit s := IsUnit.of_mul_eq_one s' hss
+  have hs'u : IsUnit s' := IsUnit.of_mul_eq_one s (by rw [mul_comm]; exact hss)
+  have hN : IsUnit (A.NL y) := by
+    have : IsUnit ((x : A.K) * A.NL y) := by
+      rw [key]; exact ha.mul (hsu.pow 2)
+    exact isUnit_of_mul_isUnit_right this
+  refine hn ⟨y * algebraMap A.K A.L s', (h4 y hN).mul (hs'u.map _), ?_⟩
+  rw [h2, h1, ← mul_assoc, key]
+  linear_combination (-a * (s * s' + 1)) * hss
+
+end GlobalTheory.JR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedSetEmptyOutsideNormCosetStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.truncated_set_empty_outside_norm_coset : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ((∀ s : A.K, A.NL (algebraMap A.K A.L s) = s ^ 2) ∧ (∀ y y' : A.L, A.NL (y * y') = A.NL y * A.NL y') ∧ (∀ t : unitary A.L, A.NL (t : A.L) = 1) ∧ (∀ y : A.L, IsUnit (A.NL y) → IsUnit y) ∧ (∀ y : A.L, IsUnit y → IsUnit (A.NL y))) → ∀ (x : A.Kˣ) (a : A.K) (D : Set A.K), (∀ b ∈ D, ∃ s s' : A.K, s * s' = 1 ∧ s ^ 2 = 1 + Ring.inverse a * b) → IsUnit a → (¬ ∃ y : A.L, IsUnit y ∧ a = x * A.NL y) → ∀ y : A.L, (x : A.K) * A.NL y - a ∉ D := by
+  first | exact @GlobalTheory.JR.norm_sub_notMem_of_not_norm | exact GlobalTheory.JR.norm_sub_notMem_of_not_norm | (intros; apply GlobalTheory.JR.norm_sub_notMem_of_not_norm <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedWhittakerWeilRepEventually
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+noncomputable section
+
+namespace GlobalTheory.JR.WhitX
+
+theorem u_formula (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E]
+    [StarRing E] (A : Et F E) (ψ : AddChar F ℂ) (x : A.K) (ω : A.K → ℂ) (μ : Measure A.L) (γ : ℂ)
+    (W : SpecialLinearGroup (Fin 2) A.K → (A.L → ℂ) → A.L → ℂ) (hW : A.IsWeil ψ x ω μ γ W)
+    (φ : A.L → ℂ) (hφ : IsTest φ) (z : A.K) :
+    W (wS A.K * nS z) φ 0 = γ * ∫ y, φ y * A.psiK ψ (z * x * A.NL y) ∂μ := by
+  obtain ⟨hrep, hform⟩ := hW
+  rw [hrep.2.2.1 _ _ _ hφ, (hform _ (hrep.1 _ _ hφ)).2.2 0]
+  congr 1
+  unfold fourB
+  congr 1
+  funext y
+  rw [(hform φ hφ).1 z y]
+  simp [Et.kerL, Et.psiK, mul_comm]
+
+theorem M_sub (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E]
+    [Unram F E] (A : Et F E) (c : F) (hc : c ≠ 0) :
+    ∃ M : AddSubgroup A.K, (M : Set A.K) = {z : A.K | c • z ∈ A.OK} ∧ IsOpen (M : Set A.K) ∧ IsCompact (M : Set A.K) := by
+  obtain ⟨-, -, -, -, -, -, -, -, -, hOo, hOc, R, hR⟩ := GlobalTheory.T.etaleHermitianPair_structure_facts F E A
+  haveI : ContinuousSMul F A.K := IsModuleTopology.toContinuousSMul F A.K
+  refine ⟨(R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c), ?_, ?_, ?_⟩
+  · ext z; simp [← hR]
+  · have : ((R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c) : Set A.K) = (fun z => c • z) ⁻¹' A.OK := by
+      ext z; simp [← hR]
+    rw [this]; exact hOo.preimage (continuous_const_smul c)
+  · have : ((R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c) : Set A.K) = (fun z => c⁻¹ • z) '' A.OK := by
+      ext z; simp only [AddSubgroup.coe_comap, Set.mem_preimage, Set.mem_image, DistribSMul.toAddMonoidHom_apply]
+      constructor
+      · intro h; exact ⟨c • z, by simpa [← hR] using h, by simp [smul_smul, inv_mul_cancel₀ hc]⟩
+      · rintro ⟨w, hw, rfl⟩; simpa [smul_smul, mul_inv_cancel₀ hc, ← hR] using hw
+    rw [this]; exact hOc.image (continuous_const_smul c⁻¹)
+
+theorem lam_weil_eventually : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ (m : A.Meas ψ) (x : A.Kˣ) (γ : ℂ) W, A.IsWeil ψ x A.etaK (m.μL x) γ W → ∀ φ, IsTest φ → ∀ a : A.K, IsUnit a → (∀ y : A.L, IsUnit y → a = x * A.NL y → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = γ * A.orbL m.ν φ y) ∧ ((¬ ∃ y : A.L, IsUnit y ∧ a = x * A.NL y) → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = 0) := by
+  intro F E _ _ _ _ _ A ψ hψ m x γ W hW φ hφ a ha
+  haveI := m.sdK.1
+  haveI := (m.sdL x).1
+  obtain ⟨-, -, hnd, -, -, -, -, -, -, hOo, -, R, hR⟩ := GlobalTheory.T.etaleHermitianPair_structure_facts F E A
+  have key : ∀ c : F, c ≠ 0 → A.abelian₂ m.μK ψ a (fun g => W g φ 0) c =
+      γ * ((m.μK {z | c • z ∈ A.OK}).toReal : ℂ) *
+        ∫ y, φ y * Set.indicator {b : A.K | ∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1} (fun _ => (1 : ℂ))
+          ((x : A.K) * A.NL y - a) ∂(m.μL x) := by
+    intro c hc
+    unfold Et.abelian₂
+    simp_rw [u_formula F E A ψ x A.etaK (m.μL x) γ W hW φ hφ, mul_assoc γ]
+    rw [integral_const_mul, GlobalTheory.T.setIntegral_integral_psiK_swap F E A ψ hψ m.μK inferInstance (m.μL x) inferInstance φ hφ x a c hc]
+    simp_rw [GlobalTheory.T.integral_psiK_over_scaled_integers_eq_volume_indicator F E A ψ hψ m.μK inferInstance c hc]
+    congr 1
+    rw [← integral_const_mul]
+    congr 1; funext y
+    simp only [Set.indicator]
+    split_ifs <;> ring
+  obtain ⟨U1, hU1, hinv⟩ := GlobalTheory.T.exists_nhds_one_etaleAlgebra_mul_invariant F E A φ hφ
+  have hOK1 : A.OK ∈ 𝓝 (1 : A.K) := hOo.mem_nhds (by rw [← hR]; exact R.one_mem)
+  have hsq := GlobalTheory.T.finiteEtale_exists_sq_root_near_one F E A (U1 ∩ A.OK) (inter_mem hU1 hOK1)
+  have hcont : Tendsto (fun b : A.K => 1 + Ring.inverse a * b) (𝓝 0) (𝓝 1) := by
+    have : Continuous (fun b : A.K => 1 + Ring.inverse a * b) := by fun_prop
+    simpa using this.tendsto 0
+  have hU : {b : A.K | ∃ s ∈ U1 ∩ A.OK, ∃ s' ∈ U1 ∩ A.OK, s * s' = 1 ∧ s ^ 2 = 1 + Ring.inverse a * b} ∈ 𝓝 (0 : A.K) :=
+    hcont hsq
+  have hev := GlobalTheory.T.scaledIntegersK_annihilator_small_near_zero F E A ψ hψ _ hU
+  have hne : ∀ᶠ c in 𝓝[≠] (0 : F), c ≠ 0 := self_mem_nhdsWithin
+  constructor
+  · intro y hy hay
+    filter_upwards [hev, hne] with c hc hc0
+    rw [key c hc0]
+    obtain ⟨D, hDset, hDo, hDc⟩ := GlobalTheory.T.exists_openCompact_annihilator_scaled_integersK F E A ψ hψ c hc0
+    obtain ⟨M, hMset, hMo, hMc⟩ := M_sub F E A c hc0
+    have hMD : m.μK M * m.μK D = 1 := by
+      have h := ((GlobalTheory.T.selfDual_iff_lattice_volume_and_plancherel_alt F E ψ hψ A.K (Algebra.traceForm F A.K) (Algebra.traceForm_isSymm F) hnd m.μK
+        inferInstance).1 M hMo hMc).1
+      have hk : A.kerK ψ = fun x y => ψ (Algebra.traceForm F A.K x y) := by
+        funext x y; simp [Et.kerK, Et.psiK, Algebra.traceForm_apply]
+      have hsd : SelfDual m.μK (fun x y => ψ (Algebra.traceForm F A.K x y)) := hk ▸ m.sdK
+      have hDeq : (D : Set A.K) = {y | ∀ x ∈ M, ψ (Algebra.traceForm F A.K x y) = 1} := by
+        rw [hDset]; ext b; simp [← SetLike.mem_coe, hMset, Et.psiK, Algebra.traceForm_apply]
+      rw [hDeq]; exact h.1 hsd
+    rw [← hDset, ← hMset]
+    subst hay
+    rw [GlobalTheory.T.truncatedIntegral_eq_vol_mul_orbitalIntegral F E A (GlobalTheory.T.finiteEtaleHermitianPair_norm_properties F E A) (GlobalTheory.T.absK_multiplicative_unitOne_haarScaling F E A) ψ hψ m x y hy D hDo hDc φ hφ ?_]
+    · have : (m.μK M).toReal * (m.μK D).toReal = 1 := by rw [← ENNReal.toReal_mul, hMD]; simp
+      have : ((m.μK M).toReal : ℂ) * ((m.μK D).toReal : ℂ) = 1 := by exact_mod_cast this
+      linear_combination (γ * A.orbL m.ν φ y) * this
+    · intro b hb
+      have hb' := hc b (by rw [← SetLike.mem_coe, hDset] at hb; exact hb)
+      obtain ⟨s, ⟨hsU, hsO⟩, s', ⟨hsU', hsO'⟩, hss, hs2⟩ := hb'
+      exact ⟨s, s', hsO, hsO', hss, hs2, hinv s hsU s' hsU' hss⟩
+  · intro hno
+    filter_upwards [hev, hne] with c hc hc0
+    rw [key c hc0]
+    have hz := GlobalTheory.T.truncated_set_empty_outside_norm_coset F E A (GlobalTheory.T.finiteEtaleHermitianPair_norm_properties F E A) x a {b : A.K | ∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1}
+      (fun b hb => by
+        obtain ⟨s, -, s', -, hss, hs2⟩ := hc b hb
+        exact ⟨s, s', hss, hs2⟩) ha hno
+    have : (fun y => φ y * Set.indicator {b : A.K | ∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1}
+        (fun _ => (1 : ℂ)) ((x : A.K) * A.NL y - a)) = fun _ => 0 := by
+      funext y; rw [Set.indicator_of_notMem (hz y)]; simp
+    rw [this]; simp
+
+end GlobalTheory.JR.WhitX
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedWhittakerWeilRepEventuallyStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +323,5 @@ open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 theorem _root_.GlobalTheory.T.truncatedWhittaker_weilRep_eventually : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ (m : A.Meas ψ) (x : A.Kˣ) (γ : ℂ) W, A.IsWeil ψ x A.etaK (m.μL x) γ W → ∀ φ, IsTest φ → ∀ a : A.K, IsUnit a → (∀ y : A.L, IsUnit y → a = x * A.NL y → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = γ * A.orbL m.ν φ y) ∧ ((¬ ∃ y : A.L, IsUnit y ∧ a = x * A.NL y) → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = 0) := by
   first | exact @GlobalTheory.JR.WhitX.lam_weil_eventually | exact GlobalTheory.JR.WhitX.lam_weil_eventually | (intros; apply GlobalTheory.JR.WhitX.lam_weil_eventually <;> assumption)
+end
+end

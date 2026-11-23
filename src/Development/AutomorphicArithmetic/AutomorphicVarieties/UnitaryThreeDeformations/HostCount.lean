@@ -14,13 +14,15 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeDeform
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeDeformations.LocalEulerCharacteristicRationals
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeDeformations.SelmerComplexFiniteAndEulerCharacteristic
 import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeGroups.AdRepBaseLiftApply
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HcAvg
+public import Mathlib.GroupTheory.Index
+public import Mathlib.RepresentationTheory.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -33,9 +35,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +43,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -57,10 +55,70 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.Separation.CompletelyRegular
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HcAvg
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qe18.hc_avg :
+    ∀ {k D M : Type} [inst : Field k] [inst_1 : Group D]
+    [inst_2 : AddCommGroup M] [inst_3 : _root_.Module k M] (ρ : Representation k D M) (N : Subgroup D),
+    (↑N.index : k) ≠ (0 : k) →
+      ∀ (z : D → M),
+        (∀ (g h : D), z (g * h) = z g + ((ρ : D → M →ₗ[k] M) g : M → M) (z h)) →
+          (∀ s ∈ N, z s = (0 : M)) → ∃ (m : M), ∀ (g : D), z g = ((ρ : D → M →ₗ[k] M) g : M → M) m - m := by
+  intro k D M _ _ _ _ ρ N hN z hz h0
+  have hidx : N.index ≠ 0 := fun h => hN (by rw [h, Nat.cast_zero])
+  haveI : Fintype (D ⧸ N) := Subgroup.fintypeOfIndexNeZero hidx
+  have hcos : ∀ a b : D, (a : D ⧸ N) = (b : D ⧸ N) → z a = z b := by
+    intro a b hab
+    have hmem : a⁻¹ * b ∈ N := QuotientGroup.eq.mp hab
+    have h1 := hz a (a⁻¹ * b)
+    rw [mul_inv_cancel_left, h0 _ hmem, map_zero, add_zero] at h1
+    exact h1.symm
+  have hcard : Fintype.card (D ⧸ N) = N.index := by
+    rw [Subgroup.index_eq_card, Nat.card_eq_fintype_card]
+  have key : ∀ g : D, ∑ q : D ⧸ N, z q.out
+      = (N.index : k) • z g + ρ g (∑ q : D ⧸ N, z q.out) := by
+    intro g
+    have h1 : ∑ q : D ⧸ N, z (g • q).out = ∑ q : D ⧸ N, z q.out :=
+      Equiv.sum_comp (MulAction.toPerm g) (fun q : D ⧸ N => z q.out)
+    have h2 : ∀ q : D ⧸ N, z (g • q).out = z g + ρ g (z q.out) := by
+      intro q
+      rw [← hz]
+      apply hcos
+      rw [QuotientGroup.out_eq', ← smul_eq_mul, MulAction.Quotient.coe_smul_out]
+    calc ∑ q : D ⧸ N, z q.out = ∑ q : D ⧸ N, z (g • q).out := h1.symm
+      _ = ∑ q : D ⧸ N, (z g + ρ g (z q.out)) := Finset.sum_congr rfl fun q _ => h2 q
+      _ = (N.index : k) • z g + ρ g (∑ q : D ⧸ N, z q.out) := by
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, hcard, map_sum,
+          Nat.cast_smul_eq_nsmul]
+  refine ⟨-((N.index : k)⁻¹ • ∑ q : D ⧸ N, z q.out), fun g => ?_⟩
+  have h3 : (N.index : k) • z g
+      = (∑ q : D ⧸ N, z q.out) - ρ g (∑ q : D ⧸ N, z q.out) :=
+    eq_sub_of_add_eq (key g).symm
+  calc z g = (N.index : k)⁻¹ • ((N.index : k) • z g) := (inv_smul_smul₀ hN _).symm
+    _ = _ := by
+      rw [h3, smul_sub, map_neg, map_smul]
+      abel
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeDeformations.HostCount
+
+section
 
 @[expose] public section
 
@@ -399,3 +457,5 @@ theorem UpperTheory.V.UnitaryThreeInertia.hostFrame_count :
   have L := fun v : S => UpperTheory.local_euler_characteristic_rationals hLF hLE Ω l _ _ (A v) v.1 _ (hA v) (hcv v)
   exact key g1 g2 g3 (fun v => (L v).1) (fun v => (L v).2.1) ((L vl).2.2.1 hvl)
     (fun v h => (L v).2.2.2 fun h' => h (hv v h')) (UpperTheory.global_cohomology_finite_set hPT Ω l hd.l_odd _ _ S A _ hS hA hcont hσ)
+end
+end

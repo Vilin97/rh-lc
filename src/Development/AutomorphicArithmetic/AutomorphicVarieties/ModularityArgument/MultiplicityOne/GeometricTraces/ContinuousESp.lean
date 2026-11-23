@@ -10,19 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceHeckeLe
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceOnInvariantSubmoduleISupEqSumStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryAutFormsWeightLevelFiniteSumFixedVectorsStatement
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasSatakeGLOfIsSatVecGL
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.FinprodSplit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.HintMulEqConv
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.InertLine
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.LevelU
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.Places
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.SplitLine
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrLevel
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrSph
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrUnit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UConj
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UnitHecke
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UnramOf
-import GroundTheory.LocalFields.PadicLogSeries
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.FinprodSplitAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,7 +24,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.CoassocSimps
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -57,6 +44,128 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.HintMulEqConv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.InertLine
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.LevelU
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.Places
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.SplitLine
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrLevel
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrUnit
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UConj
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UnitHecke
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteAdelicUnitaryPointEqOfSectionComponentsEq
+import GroundTheory.LocalFields.PadicLogSeries
+import Mathlib.RingTheory.Coalgebra.CoassocSimps
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.FinprodSplit
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
+
+theorem finprodSplit : FinprodSplit := by
+  intro α S Z T F hZ hT hd h1
+  classical
+  have key : ∏ᶠ w ∈ S, F w = ∏ w ∈ T ∪ Z, F w := by
+    apply finprod_mem_eq_prod_of_inter_mulSupport_eq
+    ext w
+    simp only [Set.mem_inter_iff, Function.mem_mulSupport, Finset.coe_union, Set.mem_union,
+      Finset.mem_coe]
+    constructor
+    · rintro ⟨hS, hF⟩
+      refine ⟨?_, hF⟩
+      by_contra hn
+      exact hF (h1 w hS (fun h => hn (Or.inr h)) (fun h => hn (Or.inl h)))
+    · rintro ⟨hw | hw, hF⟩
+      · exact ⟨hT w hw, hF⟩
+      · exact ⟨hZ w hw, hF⟩
+  rw [key, Finset.prod_union hd, mul_comm]
+
+end UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.TrSph
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Matrix Polynomial Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC Formalism.L2.Host GlobalTheory.BCT GlobalTheory.LFun
+open PositivityTheory.Rg.BcB.G8
+open UpperTheory.V.Af.Bc (cPl)
+open scoped Classical
+
+namespace UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
+
+theorem trSph : TrSph := by
+  intro hEx hSL E _ _ _ n w τ B hB e
+  have hne : fixed τ.ρ (KGL w (n := n)) ≠ ⊥ := hB.1
+  have hfr : Module.finrank ℂ (fixed τ.ρ (KGL w (n := n))) = 1 := (hSL E n w τ hne).1
+  have hact : ∀ x ∈ fixed τ.ρ (KGL w (n := n)),
+      levOp τ.ρ (KGL w (n := n)) (KGL w (n := n)) (fn1 n w e) LinearMap.id x = ev1 n w e B • x := by
+    intro x hx
+    by_cases h0 : x = 0
+    · simp [h0]
+    · exact (hEx E n w e).2 _ τ.ρ x B (hB.2 x hx h0)
+  have hmaps : ∀ v ∈ fixed τ.ρ (KGL w (n := n)),
+      levOp τ.ρ (KGL w (n := n)) (KGL w (n := n)) (fn1 n w e) LinearMap.id v ∈ fixed τ.ρ (KGL w (n := n)) := fun v hv => by
+    rw [hact v hv]
+    exact Submodule.smul_mem _ _ hv
+  have hres : (levOp τ.ρ (KGL w (n := n)) (KGL w (n := n)) (fn1 n w e) LinearMap.id).restrict hmaps =
+      ev1 n w e B • LinearMap.id := by
+    ext ⟨x, hx⟩
+    simp [LinearMap.restrict_apply, hact x hx]
+  haveI : Module.Finite ℂ (fixed τ.ρ (KGL w (n := n))) := Module.finite_of_finrank_pos (by omega)
+  unfold twTr
+  rw [dite_eq_left hmaps, hres, map_smul, LinearMap.trace_id, hfr]
+  simp
+
+end UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.UnramOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Matrix Polynomial Filter Topology
+open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC Formalism.L2.Host GlobalTheory.BCT GlobalTheory.LFun
+open scoped Classical
+
+theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.unramOf :
+    UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.UnramOf := by
+  intro E _ _ _ n S π K' hlev w hw hK
+  obtain ⟨φ, hφ, h0, hfix⟩ := hlev
+  refine ⟨φ, hφ, h0, fun x hx hk => hfix w hw x hx ?_⟩
+  have hmem : cLoc w x ∈ UL n w := by
+    by_cases hs : IsSplitAt w
+    · unfold UL
+      rw [if_pos hs]
+      trivial
+    · exact GlobalTheory.LocInj.cLoc_mem_UL hs x
+  refine ⟨⟨cLoc w x, hmem⟩, ?_, rfl⟩
+  rw [hK]
+  exact Subgroup.mem_subgroupOf.2 hk
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.MultiplicityOne.GeometricTraces.ContinuousESp
+
+section
 
 @[expose] public section
 
@@ -364,3 +473,6 @@ theorem evalD : EvalD := by
       simp
 
 end UpperTheory.V.Z.Mult
+end
+end
+end

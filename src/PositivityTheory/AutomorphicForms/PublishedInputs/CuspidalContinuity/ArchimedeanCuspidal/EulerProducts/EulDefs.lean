@@ -1,7 +1,6 @@
 module
 
-public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.EulerProducts.GenStable
-public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,7 +40,46 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
 import GroundTheory.AutomorphicForms.GL2.FiniteIdeleDecomp
+public import GroundTheory.AutomorphicForms.GL2.GodementSectionFactor
+import GroundTheory.AutomorphicForms.LocallyProfinite
+import GroundTheory.GlobalFields.HerbrandQuotients.RationalForm
+import GroundTheory.LocalFields.FilteredSurj
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
+public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.EulerProducts.GenStable
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Filter Topology
+open GroundTheory.Global GroundTheory.LocalField GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
+open GroundTheory.Automorphic.GodementSection (localChar)
+open scoped NumberField.AdeleRing ValuativeRel
+
+namespace Ad3.GP
+
+def wR : InfinitePlace ℚ := Rat.infinitePlace
+
+theorem wR_isReal : wR.IsReal := Rat.isReal_infinitePlace
+
+def eR : wR.Completion ≃+* ℝ := InfinitePlace.Completion.ringEquivRealOfIsReal wR_isReal
+
+variable {D : Dat}
+
+end Ad3.GP
+end
+end
+end
+
+-- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.EulerProducts.EulDefs
+
+section
 
 @[expose] public section
 
@@ -58,3 +96,6 @@ def aR (a : (InfiniteAdeleRing ℚ)ˣ) : ℝˣ :=
   Units.map (eR.toRingHom.comp (Pi.evalRingHom (fun w : InfinitePlace ℚ => w.Completion) wR)).toMonoidHom a
 
 end Ad3.GP
+end
+end
+end

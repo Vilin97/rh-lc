@@ -4,9 +4,8 @@ public import GroundTheory.ProfiniteCohomology.RestrictedRamification.MaxUnramif
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 public import Mathlib.RingTheory.PicardGroup
 public import ReciprocityTheory.GaloisValuations.Global
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.NSEqFixingSubgroup
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.NormalFixingSubgroupGaloisClosure
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsUnramifiedOutsideIffLeMaxUnramifiedOutside
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GaloisUnramifiedOutsideCohomologyStatement
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.NormalSubgroupLeUnramifiedFixingStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +18,6 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
-public import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -46,8 +44,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.NormalFixingSubgroupGaloisClosure
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsUnramifiedOutsideIffLeMaxUnramifiedOutside
+public import Mathlib.FieldTheory.Galois.Profinite
+import Mathlib.Topology.Connected.Separation
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.NSEqFixingSubgroup
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh ReciprocityTheory.Gal Formalism.ConjugateSelfDual
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂
+
+theorem NS_eq_fixingSubgroup (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
+    (S : Set (HeightOneSpectrum (𝓞 F))) :
+    NS Ω S = (maxUnramifiedOutside F Ω S).fixingSubgroup :=
+  le_antisymm (GlobalTheory.T.normal_subgroup_le_unramified_fixing F Ω S) (GlobalTheory.T.galois_unramified_outside_cohomology F Ω S)
+
+end GlobalTheory.CompanionTheory.Hypotheses₂
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.PtfsGsEquiv
+
+section
 
 @[expose] public section
 
@@ -99,3 +126,6 @@ theorem gsEquiv_toGS' (K : IntermediateField ℚ (AlgebraicClosure ℚ)) [Number
   exact AlgEquiv.restrictNormal_commutes σ E y
 
 end PositivityTheory.Lit1.PTN
+end
+end
+end

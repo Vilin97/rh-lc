@@ -2,11 +2,10 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.LemmaKOfSteps
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.BockAbs
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.Descend
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.FibCount
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.PhiZSeq
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.RankCountAlt
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.TorsStab
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.RankCount
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SChain
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.Bridge
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.RqFacts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +45,107 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.PhiZSeq
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.RankCountAlt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.TorsStab
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.Descend
+
+section
+
+@[expose] public section
+
+open NumberField UpperTheory.V UpperTheory.V.KL UpperTheory.V.ZK UpperTheory.V.ZK.Up CategoryTheory
+
+theorem UpperTheory.V.ZK.Up.descend : UpperTheory.V.ZK.Up.Descend := by
+  intro R _ q k B _ _ Φ hΦ
+  obtain ⟨cls, hcls⟩ := bridge k
+  have hrq := rqFacts q
+  have hsc := sChain ℤ
+  let g : (n : ℕ) → ↥(bd ℤ (GL (Fin n) R) k).ker →+ B := fun n =>
+    ((Φ n).toAddMonoidHom.comp (rq q (GL (Fin n) R) (k + 1))).comp
+      (bd ℤ (GL (Fin n) R) k).ker.subtype.toAddMonoidHom
+  have hg : ∀ n (z : ↥(bd ℤ (GL (Fin n) R) k).ker),
+      g n z = Φ n (rq q (GL (Fin n) R) (k + 1) z) := fun _ _ => rfl
+  have hker : ∀ n, (cls (GL (Fin n) R)).ker ≤ (g n).ker := by
+    intro n z hz
+    rw [AddMonoidHom.mem_ker] at hz ⊢
+    rw [hcls.zero _ z] at hz
+    obtain ⟨w, hw⟩ := LinearMap.mem_range.mp hz
+    rw [hg]
+    apply hΦ.bdry
+    refine LinearMap.mem_range.mpr ⟨rq q _ (k + 1 + 1) w, ?_⟩
+    rw [hrq.1 _ (k + 1) w, hw]
+  let φ : (n : ℕ) → ↑(grpH (GL (Fin n) R) (k + 1)) →+ B := fun n =>
+    (cls (GL (Fin n) R)).liftOfRightInverse (Function.surjInv (hcls.surj _))
+      (Function.rightInverse_surjInv _) ⟨g n, hker n⟩
+  have hφ : ∀ n (z : ↥(bd ℤ (GL (Fin n) R) k).ker),
+      φ n (cls (GL (Fin n) R) z) = Φ n (rq q (GL (Fin n) R) (k + 1) z) := fun n z =>
+    AddMonoidHom.liftOfRightInverse_comp_apply _ _ _ _ z
+  have hcyc : ∀ n (z : ↥(bd ℤ (GL (Fin n) R) k).ker),
+      Cyc (rq q (GL (Fin n) R) (k + 1) (z : Ch ℤ (GL (Fin n) R) (k + 1))) := by
+    intro n z
+    show bd (ZMod q) _ k _ = 0
+    rw [hrq.1, LinearMap.mem_ker.mp z.2, map_zero]
+  have hnat : ∀ n n' (f : GL (Fin n) R →* GL (Fin n') R) (z : ↥(bd ℤ (GL (Fin n) R) k).ker),
+      ∃ z' : ↥(bd ℤ (GL (Fin n') R) k).ker,
+        (z' : Ch ℤ (GL (Fin n') R) (k + 1)) = cm ℤ f (k + 1) z := by
+    intro n n' f z
+    refine ⟨⟨cm ℤ f (k + 1) z, ?_⟩, rfl⟩
+    rw [LinearMap.mem_ker, hsc.2.1, LinearMap.mem_ker.mp z.2, map_zero]
+  refine ⟨φ, ⟨?_, ?_⟩, ?_⟩
+  · intro n n' h x
+    obtain ⟨z, rfl⟩ := hcls.surj _ x
+    obtain ⟨z', hz'⟩ := hnat n n' (stab R n n' h) z
+    rw [← hcls.nat _ _ _ z z' hz', hφ, hφ, hz', ← hrq.2.1]
+    exact hΦ.stab n n' h _ (hcyc n z)
+  · intro d n x
+    obtain ⟨z, rfl⟩ := hcls.surj _ x
+    obtain ⟨z', hz'⟩ := hnat n (d * n) (psi R d n) z
+    rw [← hcls.nat _ _ _ z z' hz', hφ, hφ, hz', ← hrq.2.1, hΦ.psi d n _ (hcyc n z),
+      Nat.cast_smul_eq_nsmul]
+  · intro n z hz
+    exact ⟨cls _ ⟨z, hz⟩, hφ n ⟨z, hz⟩⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.TorsionRankCounts.FibCount
+
+section
+
+@[expose] public section
+
+open NumberField UpperTheory.V UpperTheory.V.KL UpperTheory.V.ZK UpperTheory.V.ZK.Up CategoryTheory
+
+theorem UpperTheory.V.ZK.Up.fibCount : UpperTheory.V.ZK.Up.FibCount := by
+  intro Y T B _ _ _ _ β g c hc S hS
+  classical
+  choose! y hy using hS
+  have := Fintype.ofFinite T
+  calc S.card ≤ c * (S.image (fun s => β (y s))).card := by
+        apply Finset.card_le_mul_card_image
+        intro t _
+        rcases (S.filter (fun s => β (y s) = t)).eq_empty_or_nonempty with hF | ⟨s₀, hs₀⟩
+        · rw [hF]
+          simp
+        · rw [← Finset.card_image_of_injective _ (sub_left_injective (b := s₀))]
+          apply hc
+          intro u hu
+          obtain ⟨s, hs, rfl⟩ := Finset.mem_image.1 hu
+          have hs' := Finset.mem_filter.1 hs
+          have hs₀' := Finset.mem_filter.1 hs₀
+          refine ⟨y s - y s₀, by rw [map_sub, hs'.2, hs₀'.2, sub_self], ?_⟩
+          rw [map_sub, ← hy s hs'.1, ← hy s₀ hs₀'.1]
+    _ ≤ c * Nat.card T := by
+        apply Nat.mul_le_mul_left
+        rw [Nat.card_eq_fintype_card]
+        exact Finset.card_le_univ _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SUpperOf
+
+section
 
 @[expose] public section
 
@@ -106,3 +207,5 @@ private theorem UpperTheory.V.ZK.selmer_upper_bound_of_inputs (hS : TorsStab) (h
 theorem UpperTheory.V.ZK.sUpperOf :
     UpperTheory.V.ZK.SUpperOf :=
   selmer_upper_bound_of_inputs torsStab descend zVal rankCount bock fibCount
+end
+end

@@ -1,20 +1,19 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.ThetaBounds.UnfoldedThetaIntegralConvergesSimilitudeOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeightFinGLLeInvAbsDet
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.KLevTop
-public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.ThetaBounds.ActCont
-import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousAdelicGL2OfContinuousEntries
-import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousQuaternaryQuadraticForm
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Tube
-import GroundTheory.AutomorphicForms.NormDetDiagUnitsPosRealToUnits
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DifferentiableAtChart
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -22,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,8 +40,103 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.ZetaPair
+import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
+import GroundTheory.AutomorphicForms.LocallyProfinite
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.KLevTop
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.ThetaBounds.ActCont
+import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousAdelicGL2OfContinuousEntries
+import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousQuaternaryQuadraticForm
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.Algebra.Support
+public import Mathlib.Topology.LocallyConstant.Basic
+import GroundTheory.AutomorphicForms.NormDetDiagUnitsPosRealToUnits
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeightFinGLLeInvAbsDet
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.HenQ
+open GlobalTheory.CuspRep (GA Af finGL)
+
+noncomputable section
+
+open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
+
+namespace GlobalTheory.HenQ
+
+variable {K : Type} [Field K] [NumberField K] {n : ℕ}
+
+theorem finGL_apply (k : GL (Fin n) (Af K)) (a b : Fin n) :
+    ((finGL K n k : GA K n) : Matrix (Fin n) (Fin n) (AdeleRing (𝓞 K) K)) a b =
+      (1 : Matrix (Fin n) (Fin n) (AdeleRing (𝓞 K) K)) a b
+        - GlobalTheory.CuspRep.sFin K ((1 : Matrix (Fin n) (Fin n) (Af K)) a b)
+        + GlobalTheory.CuspRep.sFin K ((k : Matrix (Fin n) (Fin n) (Af K)) a b) := rfl
+
+theorem sFin_fst (x : Af K) : (GlobalTheory.CuspRep.sFin K x).1 = 0 := rfl
+
+end GlobalTheory.HenQ
+
+namespace GlobalTheory.HenQ
+
+variable {K : Type} [Field K] [NumberField K] {n : ℕ}
+
+end GlobalTheory.HenQ
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Tube
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi19.tube.{u_1, u_2} :
+    ∀ {G : Type u_1} {X : Type u_2} [inst : Group G] [inst_1 : TopologicalSpace G] [ContinuousInv G]
+    [inst_3 : TopologicalSpace X] (T : G → X → X),
+    (Continuous fun (p : G × X) ↦ T p.1 p.2) →
+      (∀ (w : X), T (1 : G) w = w) →
+        (∀ (k : G) (w : X), T k⁻¹ (T k w) = w) →
+          ∀ {g : X → ℂ},
+            IsLocallyConstant g → HasCompactSupport g → ∀ᶠ (k : G) in nhds (1 : G), ∀ (w : X), g (T k w) = g w := by
+  intro G X _ _ _ _ T hT h1 hinv g hg hc
+  have hK : ∀ᶠ k : G in nhds (1 : G), ∀ w ∈ tsupport g, g (T k w) = g w := by
+    refine IsCompact.eventually_forall_of_forall_eventually
+      (P := fun (k : G) (w : X) => g (T k w) = g w) hc.isCompact ?_
+    intro y _
+    have ha := (hg.comp_continuous hT).eventually_eq ((1 : G), y)
+    have hb := (hg.comp_continuous (continuous_snd : Continuous fun p : G × X => p.2)).eventually_eq
+      ((1 : G), y)
+    filter_upwards [ha, hb] with z hza hzb
+    simp only [Function.comp_apply, h1] at hza hzb
+    rw [hza, hzb]
+  have hi : Filter.Tendsto (fun k : G => k⁻¹) (nhds 1) (nhds 1) := by
+    simpa using (continuous_inv (G := G)).tendsto 1
+  filter_upwards [hK, hi.eventually hK] with k hk hk' w
+  by_cases hw : w ∈ tsupport g
+  · exact hk w hw
+  · by_cases hw' : T k w ∈ tsupport g
+    · have h := hk' _ hw'
+      rw [hinv] at h
+      exact h.symm
+    · rw [image_eq_zero_of_notMem_tsupport hw, image_eq_zero_of_notMem_tsupport hw']
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.ThetaBounds.LLevel
+
+section
 
 @[expose] public section
 
@@ -209,3 +300,5 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lLevel :
   refine Subtype.ext (funext fun v => ?_)
   rw [W.L_apply, h₁, h₂]
   simp
+end
+end

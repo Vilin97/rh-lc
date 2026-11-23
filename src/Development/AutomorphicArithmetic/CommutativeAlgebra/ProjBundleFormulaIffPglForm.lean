@@ -5,7 +5,8 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FirstChernCl
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsIsoOfBijectiveOnSimplices
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.LerayHirschOfIsoSquare
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.PullCupPowEqCupPowPull
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.SimplicesPullbackExistsUniqueOfMapEq
+import Development.AutomorphicArithmetic.WhittakerHecke.ExistsUniqueSimplexPullbackOfMapEq
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,6 +45,27 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.BlowupCategories.SpanScale
+import Development.AutomorphicArithmetic.CupPullbacks.ConstCompSingle
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.SimplicesPullbackExistsUniqueOfMapEq
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Pbf UpperTheory.Blow
+
+theorem UpperTheory.simplices_pullback_existsUnique_of_map_eq :
+    ∀ {A B C : Spc} (r : A ⟶ C) (u : B ⟶ C) (k : ℕ) (T : Scheme.{0}) (x : Sx A k T) (y : Sx B k T), x.map r = y.map u →
+        ∃! z : Sx (pullback r u) k T, z.map (pullback.fst r u) = x ∧ z.map (pullback.snd r u) = y := by
+  apply UpperTheory.existsUnique_simplex_pullback_of_map_eq <;> assumption
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ProjBundleFormulaIffPglForm
+
+section
 
 @[expose] public section
 
@@ -197,4 +219,6 @@ theorem UpperTheory.projBundleFormula_iff_pglForm :
     unfold PBF
     simpa only [e] using h1
 
+end
+end
 end

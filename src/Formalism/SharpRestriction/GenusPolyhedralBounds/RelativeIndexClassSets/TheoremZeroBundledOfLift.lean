@@ -3,7 +3,7 @@ module
 public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LocalCOfLen
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthBaseT0
 public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthPoleInLift
-public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroBundledOfLengths
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroSplitOfLocal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,38 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroBundledOfLengths
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions NumberField IsDedekindDomain Module
+
+namespace Formalism.MainNotions.Gaps.EtaleWeightGaps
+
+variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D}
+
+def LenBaseAll (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIntegralCharts.Prov D) : Prop :=
+  ∀ (j : ℕ) (X : PJ D B P j) (ka wL wF : WeightFamilies.Wt D j), LenBase (X := X) (ka := ka) (wL := wL) (wF := wF)
+
+def LenPoleLAll (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIntegralCharts.Prov D) : Prop :=
+  ∀ (j : ℕ) (X : PJ D B P j) (ka wL wF : WeightFamilies.Wt D j), LenPoleL (X := X) (ka := ka) (wL := wL) (wF := wF)
+
+theorem theorem_zero_split_of_lengths (hLB : LenBaseAll D B P) (hLP : LenPoleLAll D B P) :
+    Conclusion1OfComb (D := D) (B := B) (P := P) := theorem_zero_split_of_local (localC_of_len hLB hLP)
+
+end Formalism.MainNotions.Gaps.EtaleWeightGaps
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroBundledOfLift
+
+section
+
 @[expose] public section
 
 open Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions
@@ -59,3 +91,5 @@ theorem theorem_zero_of_named_inputs {D : D7} {B : Formalism.MainNotions.WeightF
   theorem_zero_split_of_lengths lenBase_all lenPoleL_all
 
 end Formalism.MainNotions.Gaps.EtaleWeightGaps
+end
+end

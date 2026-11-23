@@ -1,16 +1,19 @@
 module
 
 public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FamilyFourthBound
-public import Formalism.PolynomialDimension.MultinomialKLog
-public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdLowerBounds
+public import Formalism.PolynomialDimension.EdgeSumGoodRank
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -38,6 +41,76 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdLowerBounds
+
+-- Source module: Formalism.PolynomialDimension.MultinomialDepth.DvdPowOfNotPowSuccDvd
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators TensorProduct
+open Finset
+
+namespace Formalism.CountingSumsFrames
+
+theorem one_sub_sum_mul_prod_le_prod {ι : Type} (s : Finset ι) (κ n d : ι → ℝ) (hκ : ∀ j, 0 ≤ κ j ∧ κ j ≤ 1)
+    (hd : ∀ j, 0 ≤ d j) (h : ∀ j, (1 - κ j) * d j ≤ n j) :
+    (1 - ∑ j ∈ s, κ j) * ∏ j ∈ s, d j ≤ ∏ j ∈ s, n j := by
+  classical
+  have hP : ∀ t : Finset ι, 1 - ∑ j ∈ t, κ j ≤ ∏ j ∈ t, (1 - κ j) := by
+    intro t
+    refine Finset.induction_on t (by simp) ?_
+    intro i t hi ih
+    rw [Finset.sum_insert hi, Finset.prod_insert hi]
+    have h1 : 0 ≤ 1 - κ i := by linarith [(hκ i).2]
+    have h2 : 0 ≤ ∑ j ∈ t, κ j := Finset.sum_nonneg fun j _ => (hκ j).1
+    have h3 := mul_le_mul_of_nonneg_left ih h1
+    nlinarith [mul_nonneg (hκ i).1 h2]
+  have hd0 : 0 ≤ ∏ j ∈ s, d j := Finset.prod_nonneg fun j _ => hd j
+  calc (1 - ∑ j ∈ s, κ j) * ∏ j ∈ s, d j ≤ (∏ j ∈ s, (1 - κ j)) * ∏ j ∈ s, d j :=
+        mul_le_mul_of_nonneg_right (hP s) hd0
+    _ = ∏ j ∈ s, ((1 - κ j) * d j) := Finset.prod_mul_distrib.symm
+    _ ≤ ∏ j ∈ s, n j := Finset.prod_le_prod₀
+        (fun j _ => mul_nonneg (by linarith [(hκ j).2]) (hd j)) (fun j _ => h j)
+
+theorem share_product_bound : ShareProd := by
+  intro J κ n d hκ h
+  push_cast
+  exact one_sub_sum_mul_prod_le_prod Finset.univ κ (fun j => (n j : ℝ)) (fun j => (d j : ℝ)) hκ (fun j => Nat.cast_nonneg _) h
+
+section Partner
+
+variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+
+end Partner
+
+end Formalism.CountingSumsFrames
+end
+end
+end
+
+-- Source module: Formalism.PolynomialDimension.MultinomialKLog
+
+section
+
+@[expose] public section
+
+namespace Formalism.CountingSumsFrames.Top
+
+theorem shareProd : Formalism.CountingSumsFrames.ShareProd := Formalism.CountingSumsFrames.share_product_bound
+
+end Formalism.CountingSumsFrames.Top
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ExtendedStatementOfParts
+
+section
 
 @[expose] public section
 
@@ -215,3 +288,6 @@ theorem restExt_of {D : Formalism.BasicNotions.D7} (hRk : RestRk) (hL1 : Partner
     extended_statement_of_parts hCm (le_trans hCk0.le h1) hstd rk l1 (lift Ct h2) (a2 Ckap h1)⟩
 
 end Formalism.MainNotions.ColumnSystems.Pf
+end
+end
+end

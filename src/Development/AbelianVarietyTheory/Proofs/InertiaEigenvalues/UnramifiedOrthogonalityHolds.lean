@@ -1,7 +1,10 @@
 module
 
 public import ReciprocityTheory.Hypotheses.GalCoh
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.UnramifiedOrthogonality
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.CardH1EqCardH0MulCardH2
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ContinuousCompOfIsOpenKer
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DualityForAbsGal
+import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsPrimeMemAsIdeal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +45,26 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.UnramifiedOrthogonality
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂
+
+theorem unramifiedOrthogonality : ReciprocityTheory.Gal.UnramifiedOrthogonality :=
+  UnrOrth.unramifiedOrthogonality_of localFiniteness localTateDuality
+    LocalEuler.localEulerChar_holds
+
+end GlobalTheory.CompanionTheory.Hypotheses₂
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnramifiedOrthogonalityHolds
+
+section
+
 @[expose] public section
 
 namespace GlobalTheory
@@ -50,3 +73,5 @@ theorem unramifiedOrthogonality_holds : ReciprocityTheory.Gal.UnramifiedOrthogon
   GlobalTheory.CompanionTheory.Hypotheses₂.unramifiedOrthogonality
 
 end GlobalTheory
+end
+end

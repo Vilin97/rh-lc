@@ -3,7 +3,6 @@ module
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineIndex
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.SecondCountableTopologyArchUnitary
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsVectorOrbits
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCongruenceUnitsFiniteIndex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -14,17 +13,18 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.Finset.Functor
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,6 +46,38 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Data.Finset.Functor
+import Mathlib.Order.CompletePartialOrder
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCongruenceUnitsFiniteIndex
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField
+
+theorem CongruenceUnitsFiniteIndex.proof (E : Type*) [Field E] [NumberField E] :
+    CongruenceUnitsFiniteIndex.Statement E := by
+  intro N hN
+  have hI : Ideal.span {(N : 𝓞 E)} ≠ ⊥ := by
+    rw [Ne, Ideal.span_singleton_eq_bot]
+    exact_mod_cast hN.ne'
+  have : Finite (𝓞 E ⧸ Ideal.span {(N : 𝓞 E)}) := Ideal.finiteQuotientOfFreeOfNeBot _ hI
+  have : Finite (𝓞 E ⧸ Ideal.span {(N : 𝓞 E)})ˣ :=
+    Finite.of_injective _ Units.val_injective
+  have : (congruenceUnits E N).FiniteIndex := Subgroup.finiteIndex_ker _
+  exact Subgroup.FiniteIndex.index_ne_zero
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVectorOrbitsFinite
+
+section
 
 @[expose] public section
 
@@ -224,3 +256,5 @@ end Spaces
 end
 
 end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end

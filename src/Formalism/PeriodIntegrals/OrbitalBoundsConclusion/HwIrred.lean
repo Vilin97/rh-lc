@@ -1,12 +1,13 @@
 module
 
 public import Formalism.PeriodIntegrals.HwIrred
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.Assembly
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.ConstructionA
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.ConstructionB
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.ClosedEqNablaC
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.GradedWeylDivisibility.FinalB
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -42,9 +43,56 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalRingCardinality.Params
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.ConstructionA
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.ConstructionB
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightIrreducible.Assembly
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WHw
+
+open Formalism.BasicNotions Formalism.GradedWeylDivisibility MvPolynomial
+
+theorem natW_antitone {N : ℕ} (lam : DomWeight N) : Antitone lam.natW :=
+  fun _ _ hij => Int.toNat_le_toNat (sub_le_sub_right (lam.anti hij) _)
+
+theorem hwIrred_of (hA1 : StableClosedC) (hA2 : FixedKilledC) (hB1 : HWInClosedC)
+    (hB2 : ClosedEqNablaC) : PI.HwIrred := by
+  intro N lam
+  have hν := natW_antitone lam
+  have hsub : delSq ℂ N lam ≤ nablaSq ℂ N lam := weylLeDual ℂ N N le_rfl lam.natW hν
+  have hclosed : RowDivClosed (delSq ℂ N lam) := fun a b k f hf =>
+    weylRowDivStable ℂ N N le_rfl lam.natW a b k f hf
+  have hhw : extremal ℂ N lam ∈ delSq ℂ N lam :=
+    Submodule.subset_span ⟨[], rfl⟩
+  refine ⟨(hB2 N N le_rfl lam.natW hν _ hsub hclosed hhw).symm, ?_, ?_⟩
+  · intro U hU hst
+    by_cases h0 : U = ⊥
+    · exact Or.inl h0
+    · exact Or.inr (hB2 N N le_rfl lam.natW hν U hU (hA1 N lam U hU hst)
+        (hB1 N N le_rfl lam.natW hν U hU (hA1 N lam U hU hst) h0))
+  · intro f hf hfix
+    exact hwLine ℂ N N le_rfl lam.natW hν f hf (hA2 N lam f hf hfix)
+
+end PI.WHw
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HwIrred
+
+section
 
 @[expose] public section
 
 theorem highest_weight_irreducible : PI.HwIrred :=
   PI.WHw.hwIrred_of PI.WHw.stable_subspace_closed PI.WHw.fixed_vectors_killed PI.WHw.highest_weight_in_closure
     PI.WHw.closure_eq_nabla
+end
+end

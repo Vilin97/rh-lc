@@ -3,11 +3,9 @@ module
 public import Formalism.LocalToGlobal.ProjectiveLattices.PartitionExtendByZeroAntitone
 public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.OEOsInjective
 public import Development.AbelianVarietyTheory.Counterexamples.HeightSurvey.EntriesOfGaps
-public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.ThetaMemLattice
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -39,9 +37,61 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqJet
+import Mathlib.Algebra.Order.Star.Int
 import Development.AbelianVarietyTheory.Definitions.Jets.EmbShortThLeThetaPlain
 import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
 import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ExampleSatisfiesConditionsAtFive
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.JetSurvey.ThetaMemLattice
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.DepthBoundTest
+
+open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1
+
+variable {D : D7}
+
+theorem choose_two_add (p q : ℕ) : (p + q).choose 2 = p * q + p.choose 2 + q.choose 2 := by
+  induction q with
+  | zero => simp
+  | succ q ih =>
+    rw [← add_assoc, Nat.choose_succ_succ' (p + q) 1, Nat.choose_succ_succ' q 1, ih]
+    simp only [Nat.choose_one_right]
+    ring
+
+theorem dimY_eq_flag {j : ℕ} (hj : InR D j) : WeightFamilies.dimY D j = D.R.f * D.R.r.choose 2 := by
+  have h : D.R.r = (D.R.sigW j).1 + (D.R.sigW j).2 := by
+    have := hj.1; have := hj.2
+    unfold Ranks.r Ranks.sigW; simp only; omega
+  unfold WeightFamilies.dimY
+  rw [h, choose_two_add, Nat.choose_two_right, Nat.choose_two_right]
+
+variable {L : SizeData₂ D} {P : ParameterChoice' D L}
+
+section Record
+
+variable {B : WeightFamilies.Prov D} {Q : ModuliIntegralCharts.Prov D} {j : ℕ} (X : WeightAlgebra.PJ D B Q j)
+
+end Record
+
+end GlobalTheory.DepthBoundTest
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.RunWeightsSum
+
+section
 
 @[expose] public section
 
@@ -66,3 +116,5 @@ theorem run_weights_sum : ∀ (D : D7) (L : SizeData₂ D) (Pm : ParameterChoice
     nlinarith
 
 end GlobalTheory.RunDepth
+end
+end

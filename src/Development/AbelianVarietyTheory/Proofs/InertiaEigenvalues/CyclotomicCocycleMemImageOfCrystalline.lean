@@ -2,9 +2,16 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RestrictJumps
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsUniqueFits
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsWeakTopologyWachImageIsClosedStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Xstab
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZgFormula
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NotFullBot
+public import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantLattices
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CompactSpaceATopStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousGaloisOrbitWittTensorLatticeWeakTopoloStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousOneTmulStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousWittCbInclusionSmulWeakTopologyStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EtaleComparisonPiWachLatticeClosedWeak
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsContinuousGaloisLatticeMatrixIntegral
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntegersCompleteDVR
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.JDANEqRange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +49,176 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZgFormula
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsWeakTopologyWachImageIsClosed
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc TensorProduct GlobalTheory.NL Formalism.MainNotions.DeltaInvariantLattices GlobalTheory.WeakClosed
+open scoped Topology
+
+namespace GlobalTheory.WeakClosedX
+
+set_option synthInstance.maxHeartbeats 400000
+set_option maxHeartbeats 1600000
+
+theorem jD_aN_eq_range_gen {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {K : FinExt l}
+    {s : ℕ} {LL : FinExt l} {h : Good K s LL}
+    {W : LocWach (P.PD K) ↥LL.1 ↥(OL LL) (P.v LL) (Module.finrank ℚ_[l] ↥(K0 K))}
+    (E : EtSit P AI K s LL h W) (T : Lt K LL) (a : AA K LL) :
+    ∃ (r : ℕ) (y : Fin r → TW (RW LL) T), E.tie.jD T '' (aN W T a : Set (W.DD T)) =
+      Set.range fun c : Fin r → AA K LL => ∑ i, inclR LL (E.tie.io (c i)) • y i := by
+  obtain ⟨S, hS⟩ := W.N_fg T
+  let n : Fin S.card → W.DD T := fun i => (S.equivFin.symm i : W.DD T)
+  have hrange : Set.range n = (S : Set (W.DD T)) := by
+    ext z; constructor
+    · rintro ⟨i, rfl⟩; exact (S.equivFin.symm i).2
+    · intro hz; exact ⟨S.equivFin ⟨z, hz⟩, by simp [n]⟩
+  have hspan : W.N T = Submodule.span (AA K LL) (Set.range n) := by rw [hrange, hS]
+  refine ⟨S.card, fun i => E.tie.jD T (a • n i), ?_⟩
+  ext z
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    obtain ⟨m, hm, rfl⟩ := Submodule.mem_map.1 hx
+    rw [hspan] at hm
+    obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (AA K LL)).1 hm
+    refine ⟨c, ?_⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [smulA, LinearMap.smul_apply, LinearMap.id_apply, Finset.smul_sum, map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    simp only [GlobalTheory.NL.WkRange.jD_smul_letter]
+    exact smul_comm _ _ _
+  · rintro ⟨c, rfl⟩
+    refine ⟨∑ i, c i • (a • n i), ?_, ?_⟩
+    · refine Submodule.mem_map.2 ⟨∑ i, c i • n i, ?_, ?_⟩
+      · rw [hspan]
+        exact (Submodule.mem_span_range_iff_exists_fun (AA K LL)).2 ⟨c, rfl⟩
+      · simp only [smulA, LinearMap.smul_apply, LinearMap.id_apply, Finset.smul_sum]
+        exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum]
+        exact Finset.sum_congr rfl fun i _ => GlobalTheory.NL.WkRange.jD_smul_letter E T _ _
+
+theorem jD_XN_closed : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T : Lt K LL), IsCrys ((D.loc l).PD K) T.ρ → ∃ τ : TopologicalSpace (TW (RW LL) T), letI := τ; T2Space (TW (RW LL) T) ∧ IsTopologicalAddGroup (TW (RW LL) T) ∧ (∀ b : TW (RW LL) T, Continuous (fun g : ↥(GK K) => TWact ((D.locA l).gRW LL (g : GQ l)) T g b)) ∧ Continuous (fun t : ↥T.L.T => (1 : RW LL) ⊗ₜ[↥(OL LL)] t) ∧ IsClosed (((F l).E K s LL h).tie.jD T '' (aN ((HW l).W K s LL h) T ((HW l).W K s LL h).X : Set (((HW l).W K s LL h).DD T))) := by
+  intro D HW F l _ K s LL h T _
+  haveI := LL.2
+  haveI : Module.Free ℤ_[l] ↥(OL LL) :=
+    (GlobalTheory.Per.integers_completeDVR l LL).elim fun _ h => h.2.2.2.1
+  haveI : Module.Finite ℤ_[l] ↥(OL LL) :=
+    (GlobalTheory.Per.integers_completeDVR l LL).elim fun _ h => h.2.2.2.2.1
+  obtain ⟨d, ⟨b⟩⟩ : ∃ d : ℕ, Nonempty (LatB T d) := GlobalTheory.Cyc.exists_basis_lat (R := ℤ_[l]) T
+  let bO := Module.finBasis ℤ_[l] ↥(OL LL)
+  letI τ := twTop T b
+  letI tW : TopologicalSpace (WCb l) := wTop l
+  letI := cbTop l
+  haveI := hausdorff_tilt_witt (l := l)
+  haveI := ring_cb (l := l)
+  haveI : T2Space (WCb l) := GlobalTheory.WeakTop.t2Space_wittVector_product
+  haveI : IsTopologicalRing (WCb l) := GlobalTheory.WeakTop.isTopologicalRing_witt
+  letI := zlMod T
+  haveI := zlTower T
+  have hc : Continuous (GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b) := continuous_induced_dom
+  haveI hT2 : T2Space (TW (RW LL) T) :=
+    T2Space.of_injective_continuous (GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b).injective hc
+  haveI hAG : IsTopologicalAddGroup (TW (RW LL) T) :=
+    Topology.IsInducing.topologicalAddGroup (GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b) ⟨rfl⟩
+  refine ⟨τ, hT2, hAG, GlobalTheory.T.continuous_galois_orbit_wittTensorLatticeWeakTopology (D.locA l) T b, GlobalTheory.T.continuous_one_tmul_latB T b, ?_⟩
+  obtain ⟨r, y, hy⟩ := jD_aN_eq_range_gen ((F l).E K s LL h) T ((HW l).W K s LL h).X
+  rw [hy]
+  letI := aTop (K := K) bO
+  haveI := GlobalTheory.T.compactSpace_aTop' (K := K) bO
+  refine (isCompact_range ?_).isClosed
+  refine continuous_finsetSum _ fun i _ => ?_
+  exact (GlobalTheory.T.continuous_wittCbInclusion_smul_weakTopology ((F l).E K s LL h) T b bO (y i)).comp (continuous_apply i)
+
+end GlobalTheory.WeakClosedX
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsWeakTopologyWachImageIsClosedStatement
+
+section
+
+@[expose] public section
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc TensorProduct GlobalTheory.NL Formalism.MainNotions.DeltaInvariantLattices
+
+theorem _root_.GlobalTheory.T.exists_weakTopology_wachImage_isClosed : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T : Lt K LL), IsCrys ((D.loc l).PD K) T.ρ → ∃ τ : TopologicalSpace (TW (RW LL) T), letI := τ; T2Space (TW (RW LL) T) ∧ IsTopologicalAddGroup (TW (RW LL) T) ∧ (∀ b : TW (RW LL) T, Continuous (fun g : ↥(GK K) => TWact ((D.locA l).gRW LL (g : GQ l)) T g b)) ∧ Continuous (fun t : ↥T.L.T => (1 : RW LL) ⊗ₜ[↥(OL LL)] t) ∧ IsClosed (((F l).E K s LL h).tie.jD T '' (aN ((HW l).W K s LL h) T ((HW l).W K s LL h).X : Set (((HW l).W K s LL h).DD T))) := by
+  first | exact @GlobalTheory.WeakClosedX.jD_XN_closed | exact GlobalTheory.WeakClosedX.jD_XN_closed | (intros; apply GlobalTheory.WeakClosedX.jD_XN_closed <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Xstab
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.NL.XStab
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc TensorProduct GlobalTheory.NL Formalism.MainNotions.DeltaInvariantLattices
+
+section Generic
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
+    [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
+    (W : LocWach PD LL O v n)
+
+theorem γD_smulA (T : LocLat G Qp LL O) (g : W.Gam) (a : LetA O n) (x : W.DD T) :
+    W.γD T g (a • x) = W.γA g a • W.γD T g x := by
+  have := W.γD_smul T g (algebraMap (LetA O n) W.EE a) x
+  rw [algebraMap_smul, W.γE_ext, algebraMap_smul] at this
+  exact this
+
+theorem φpow_γA (k : ℕ) (g : W.Gam) (a : LetA O n) :
+    (W.φA ^ k) (W.γA g a) = W.γA g ((W.φA ^ k) a) := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ', AlgHom.mul_apply, AlgHom.mul_apply, ih, W.φA_γA]
+
+theorem X_dvd_γX (g : W.Gam) : W.X ∣ W.γA g W.X := by
+  obtain ⟨c, hc⟩ : (PowerSeries.X : PowerSeries O) ∣ W.γ₀ g PowerSeries.X :=
+    PowerSeries.X_dvd_iff.2 (W.γ₀_X g).1
+  have h1 : W.γA g letπ = letπ * (fun _ => c) := by
+    funext i
+    simp [LocWach.γA, letγ, letπ, hc]
+  refine ⟨(W.φA ^ (W.s - 1)) (fun _ => c), ?_⟩
+  rw [LocWach.X, ← φpow_γA, h1, map_mul]
+
+theorem γD_mem_aN_X (T : LocLat G Qp LL O) (δ : W.Gam) (x : W.DD T) (hx : x ∈ aN W T W.X) :
+    W.γD T δ x ∈ aN W T W.X := by
+  obtain ⟨y, hy, rfl⟩ := hx
+  obtain ⟨c, hc⟩ := X_dvd_γX W δ
+  refine ⟨c • W.γD T δ y, (W.N T).smul_mem _ (W.N_Γ T δ y hy), ?_⟩
+  change W.X • c • W.γD T δ y = W.γD T δ (W.X • y)
+  rw [γD_smulA, hc, mul_smul]
+
+end Generic
+
+theorem xstab : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T : Lt K LL) (δ : ((HW l).W K s LL h).Gam) (x : ((HW l).W K s LL h).DD T), x ∈ aN ((HW l).W K s LL h) T ((HW l).W K s LL h).X → ((HW l).W K s LL h).γD T δ x ∈ aN ((HW l).W K s LL h) T ((HW l).W K s LL h).X :=
+  fun _ HW l _ K s LL h T δ x hx => γD_mem_aN_X ((HW l).W K s LL h) T δ x hx
+
+end GlobalTheory.NL.XStab
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CyclotomicCocycleMemImageOfCrystalline
+
+section
 
 @[expose] public section
 
@@ -142,3 +319,5 @@ theorem zval : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf 
   exact ((hJm _).1 (HM g)).elim fun w hw => ⟨w, hw.1, hw.2.symm⟩
 
 end GlobalTheory.NL.ZVal
+end
+end

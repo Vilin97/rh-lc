@@ -1,11 +1,14 @@
 module
 
 public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
-public import Lemmata.GeneralBFactSecondTer.Imports
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -27,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +44,52 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Tactic.Lemma
+
+-- Source module: Lemmata.GeneralBFactSecondTer.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_second_ter
+
+theorem goal1 :
+  ∀ {n : Nat} (Q : Fin n → Prop) [inst : DecidablePred.{1} Q],
+  (∀ (q q' : Fin n), LE.le.{0} q' q → Q q → Q q') →
+    ∀ (p : Fin n), Iff (Q p) (LT.lt.{0} p.val (Finset.card.{0} (Finset.filter.{0} Q Finset.univ.{0}))) := by
+  intro n Q _ hQ p
+  constructor
+  · intro hp
+    have h : Finset.Iic p ⊆ Finset.filter Q Finset.univ := by
+      intro q hq
+      rw [Finset.mem_Iic] at hq
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+      exact hQ p q hq hp
+    have hc := Finset.card_le_card h
+    rw [Fin.card_Iic] at hc
+    omega
+  · intro hlt
+    by_contra hp
+    have h : Finset.filter Q Finset.univ ⊆ Finset.Iio p := by
+      intro q hq
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hq
+      rw [Finset.mem_Iio]
+      by_contra hqp
+      exact hp (hQ q p (not_lt.mp hqp) hq)
+    have hc := Finset.card_le_card h
+    rw [Fin.card_Iio] at hc
+    omega
+
+end Bl.general_b_fact_second_ter
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.QaRowStrictMono
+
+section
 
 @[expose] public section
 
@@ -144,3 +192,6 @@ lemma qa_card_sub {T : Finset ℤ} (P : ↥T → Prop) [DecidablePred P]
   · rintro ⟨_, h, hp⟩; exact ⟨h, hp⟩
 
 end Formalism.InvariantFactorPaths.ColumnFamilies
+end
+end
+end

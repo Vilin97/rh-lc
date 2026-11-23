@@ -2,7 +2,7 @@ module
 
 public import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
 public import Mathlib.Algebra.Module.Lattice.Full
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalSituation
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,12 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
@@ -36,8 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,8 +46,60 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalSituation
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.LocalSituation.exists_smul_mem :
+    ∀ {E : Type} [inst : Field E] [inst_1 : NumberField E] [inst_2 : NumberField.IsCMField E] {r : ℕ}
+      (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (w : Fin r → E),
+      ∃ (c : NumberField.RingOfIntegers E), c ≠ (0 : NumberField.RingOfIntegers E) ∧ c • w ∈ X.Λ := by
+  intro E _ _ _ r X w
+  have hw : w ∈ Submodule.span E (X.Λ : Set (Fin r → E)) := by
+    rw [X.Λ_span]; exact Submodule.mem_top
+  induction hw using Submodule.span_induction with
+  | mem x hx => exact ⟨1, one_ne_zero, by rwa [one_smul]⟩
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact X.Λ.zero_mem⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨a, ha, hax⟩ := hx
+    obtain ⟨b, hb, hby⟩ := hy
+    refine ⟨a * b, mul_ne_zero ha hb, ?_⟩
+    rw [smul_add]
+    refine X.Λ.add_mem ?_ ?_
+    · rw [mul_comm, mul_smul]; exact X.Λ.smul_mem b hax
+    · rw [mul_smul]; exact X.Λ.smul_mem a hby
+  | smul t x _ hx =>
+    obtain ⟨a, ha, hax⟩ := hx
+    obtain ⟨p, q, hq, rfl⟩ := IsFractionRing.div_surjective (A := NumberField.RingOfIntegers E) t
+    have hq0 : q ≠ 0 := nonZeroDivisors.ne_zero hq
+    have hq1 : algebraMap (NumberField.RingOfIntegers E) E q ≠ 0 := by
+      simpa using hq0
+    refine ⟨a * q, mul_ne_zero ha hq0, ?_⟩
+    have key : (a * q) • ((algebraMap (NumberField.RingOfIntegers E) E p /
+        algebraMap (NumberField.RingOfIntegers E) E q) • x) = p • (a • x) := by
+      ext i
+      simp only [Pi.smul_apply]
+      simp only [Algebra.smul_def, map_mul, Algebra.algebraMap_self, RingHom.id_apply]
+      field_simp
+    rw [key]
+    exact X.Λ.smul_mem p hax
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.SpanRatSmulMem
+
+section
 
 @[expose] public section
 
@@ -270,3 +318,6 @@ theorem xcLatF {Comp : Type} (X : Comp → Data E r) (𝔄 : FractionalIdeal (no
   fun cu => xcFD_lat 𝔄 h𝔄 cu.2
 
 end Formalism.L2.Pj.FJ
+end
+end
+end

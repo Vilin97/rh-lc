@@ -1,8 +1,6 @@
 module
 
-public import Formalism.SmithDeterminants.StatementGram
-public import Mathlib.Algebra.MvPolynomial.Basic
-public import Mathlib.Algebra.Star.Basic
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +41,32 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.Star.Basic
+
+-- Source module: Formalism.SmithDeterminants.StatementGram
+
+section
+
+@[expose] public section
+
+open Finset
+open scoped ComplexOrder
+
+noncomputable section
+
+namespace Formalism.A
+
+def mfact {σ : Type*} (g : σ →₀ ℕ) : ℕ := g.prod fun _ n => n.factorial
+
+end Formalism.A
+end
+end
+end
+
+-- Source module: Formalism.FockGram.StatementFock
+
+section
 
 @[expose] public section
 
@@ -56,3 +80,6 @@ def fock {R τ : Type*} [CommRing R] [StarRing R] (f g : MvPolynomial τ R) : R 
   ∑ m ∈ f.support, f.coeff m * star (g.coeff m) * (Formalism.A.mfact m : R)
 
 end Formalism.E
+end
+end
+end

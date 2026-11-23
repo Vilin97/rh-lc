@@ -1,7 +1,6 @@
 module
 
-public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GramFormPhiStatement
-public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinima
+public import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,8 +17,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +37,49 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinima
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ReducedBasis
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.SharpRestriction.Divisibility.GeneratorPowers.GramFormPhiStatement
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace Formalism.MainNotions.ModuliIntegralCharts.H1
+
+open NumberField Formalism.MainNotions.ModuliIntegralCharts
+
+def GramFormPhiStatement : Prop :=
+  ∀ (E : Type) [Field E] [NumberField E] (cj : E → E),
+    (∀ (φ : E →+* ℂ) (z : E), φ (cj z) = star (φ z)) → (∃ z : E, cj z ≠ z) →
+    ∀ (w₀ : 𝓞 E), (w₀ : E) + cj w₀ = 1 →
+    ∀ (Y : Type) [AddCommGroup Y] [Module (𝓞 E) Y] [Module.Free ℤ Y] [Module.Finite ℤ Y]
+      (β : SymB cj Y),
+      (∃ (ι : Type) (_ : Fintype ι) (b : Module.Basis ι ℤ Y),
+        (Matrix.of fun i j => (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (b i) (b j)).PosDef) →
+      ∃ b : Module.Basis (Fin (Module.finrank ℤ Y)) ℤ Y,
+        (∀ j, (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (b j) (b j) / 2 ≤
+          (|(NumberField.discr E : ℝ)| ^ ((2 : ℝ) / Module.finrank ℚ E)) /
+              (2 * Module.finrank ℚ E) * (Module.finrank ℤ Y : ℝ) ^ 3 * phiC cj β) ∧
+        ∀ j (z : Y), |(β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (b j) z| ≤
+          2 * Real.sqrt (Module.finrank ℤ Y) * ((β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) z z / 2)
+
+end Formalism.MainNotions.ModuliIntegralCharts.H1
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.Divisibility.GeneratorPowers.GramSpace
+
+section
 
 @[expose] public section
 
@@ -239,3 +277,6 @@ theorem gram_form_phi_holds : GramFormPhiStatement := by
     exact h2
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1
+end
+end
+end

@@ -6,12 +6,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPower
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericGaussFactorisationCoeffSmulInjectiveStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericRowSubstitutionCoeffExponentLeDegreeStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyDiagonalEqSumComponentsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyEqEvalGenericRowSubstitStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyTransvectionEqSumStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneAddStrictLowerMemClosureTransvectionStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneAddStrictUpperMemClosureTransvectionStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RowSubstDualWeylExpressibleMatrixMulClosedStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreeLeOfMemDualWeylLatticeStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,8 +41,144 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyTransvectionEqSumStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneAddStrictLowerMemClosureTransvectionStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneAddStrictUpperMemClosureTransvectionStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RowSubstDualWeylExpressibleMatrixMulClosedStatement
+public import Formalism.GradedWeylDivisibility.StatementA
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RowSubst
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyEqEvalGenericRowSubstit
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility GlobalTheory.GenCoef
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.GenCoef.RowSubstSum
+
+def evY (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R) :
+    MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N × Fin N) O) →+* MvPolynomial (Fin N × Fin N) R :=
+  eval₂Hom (MvPolynomial.map (algebraMap O R)) (fun v => C (Y v.1 v.2))
+
+theorem evY_genSub (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R)
+    (f : MvPolynomial (Fin N × Fin N) O) : evY O N R Y (GlobalTheory.HighWt.genSub O N f) = rowSubst O N R Y f := by
+  induction f using MvPolynomial.induction_on with
+  | C a =>
+    simp [evY, GlobalTheory.HighWt.genSub, rowSubst, MvPolynomial.algebraMap_eq]
+  | add p q hp hq =>
+    simp only [GlobalTheory.HighWt.genSub, map_add (f := _)] at hp hq ⊢
+    rw [hp, hq]
+  | mul_X p v hp =>
+    simp only [GlobalTheory.HighWt.genSub, map_mul] at hp ⊢
+    rw [hp]
+    congr 1
+
+    simp [evY, rowSubst, map_sum]
+
+theorem evY_eq_sum (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R)
+    (P : MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N × Fin N) O)) :
+    evY O N R Y P = ∑ m ∈ P.support, (m.prod fun v k => Y v.1 v.2 ^ k) • MvPolynomial.map (algebraMap O R) (P.coeff m) := by
+  simp only [evY, coe_eval₂Hom, MvPolynomial.eval₂, Finsupp.sum]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  have h : (m.prod fun v k => (C (Y v.1 v.2) : MvPolynomial (Fin N × Fin N) R) ^ k) = C (m.prod fun v k => Y v.1 v.2 ^ k) := by
+    simp [Finsupp.prod, map_prod, map_pow]
+  rw [h, mul_comm, C_mul']
+
+theorem main : ∀ (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R) (f : MvPolynomial (Fin N × Fin N) O), rowSubst O N R Y f = ∑ m ∈ (GlobalTheory.HighWt.genSub O N f).support, (m.prod fun v k => Y v.1 v.2 ^ k) • MvPolynomial.map (algebraMap O R) ((GlobalTheory.HighWt.genSub O N f).coeff m) := by
+  intro O _ N R _ _ Y f
+  rw [← evY_genSub, evY_eq_sum]
+
+end GlobalTheory.GenCoef.RowSubstSum
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixRowSubstitutionPolyEqEvalGenericRowSubstitStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility GlobalTheory.GenCoef
+
+theorem _root_.GlobalTheory.T.matrixRowSubstitutionPoly_eq_eval_genericRowSubstitution : ∀ (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R) (f : MvPolynomial (Fin N × Fin N) O), rowSubst O N R Y f = ∑ m ∈ (GlobalTheory.HighWt.genSub O N f).support, (m.prod fun v k => Y v.1 v.2 ^ k) • MvPolynomial.map (algebraMap O R) ((GlobalTheory.HighWt.genSub O N f).coeff m) := by
+  first | exact @GlobalTheory.GenCoef.RowSubstSum.main | exact GlobalTheory.GenCoef.RowSubstSum.main | (intros; apply GlobalTheory.GenCoef.RowSubstSum.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreeLeOfMemDualWeylLattice
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility GlobalTheory.GenCoef
+
+namespace GlobalTheory.DualWeylDeg
+
+theorem weight_colW_apply {N : ℕ} (m : Fin N × Fin N →₀ ℕ) (t : Fin N) :
+    (Finsupp.weight (colW N N) m) t = ∑ a : Fin N, m (a, t) := by
+  classical
+  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)]
+  simp only [Finset.sum_apply, Pi.smul_apply, colW, smul_eq_mul]
+  rw [Fintype.sum_prod_type]
+  simp only [Pi.single_apply]
+  rw [Finset.sum_comm]
+  rw [Finset.sum_eq_single t]
+  · simp
+  · intro b _ hb; simp; intro h; exact absurd h.symm hb
+  · simp
+
+theorem totalDegree_le_of_mem_dualWeyl : ∀ (O : Type) [CommRing O] (N : ℕ) (ν : Fin N → ℕ)
+    (f : MvPolynomial (Fin N × Fin N) O), f ∈ dualWeyl O N N ν → f.totalDegree ≤ ∑ a, ν a := by
+  intro O _ N ν f hf
+  have h1 : f ∈ weightedHomogeneousSubmodule O (colW N N) ν := (Submodule.mem_inf.mp hf).1
+  rw [mem_weightedHomogeneousSubmodule] at h1
+  rw [totalDegree]
+  refine Finset.sup_le fun m hm => ?_
+  have h2 : Finsupp.weight (colW N N) m = ν := h1 (mem_support_iff.mp hm)
+  have h3 : m.sum (fun _ e => e) = ∑ t, ∑ a : Fin N, m (a, t) := by
+    rw [Finsupp.sum_fintype _ _ (by simp), Fintype.sum_prod_type, Finset.sum_comm]
+  rw [h3]
+  refine le_of_eq (Finset.sum_congr rfl fun t _ => ?_)
+  rw [← weight_colW_apply, h2]
+
+end GlobalTheory.DualWeylDeg
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreeLeOfMemDualWeylLatticeStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility GlobalTheory.GenCoef
+
+theorem _root_.GlobalTheory.T.totalDegree_le_of_mem_dualWeylLattice : ∀ (O : Type) [CommRing O] (N : ℕ) (ν : Fin N → ℕ) (f : MvPolynomial (Fin N × Fin N) O), f ∈ dualWeyl O N N ν → f.totalDegree ≤ ∑ a, ν a := by
+  first | exact @GlobalTheory.DualWeylDeg.totalDegree_le_of_mem_dualWeyl | exact GlobalTheory.DualWeylDeg.totalDegree_le_of_mem_dualWeyl | (intros; apply GlobalTheory.DualWeylDeg.totalDegree_le_of_mem_dualWeyl <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericRowCoefMemCoefAlgebraOfDomain
+
+section
 
 @[expose] public section
 
@@ -319,4 +448,6 @@ theorem coefIn_of_domain : ∀ (O : Type) [CommRing O] [IsDomain O] [CharZero O]
 
 end GlobalTheory.HighWt
 
+end
+end
 end

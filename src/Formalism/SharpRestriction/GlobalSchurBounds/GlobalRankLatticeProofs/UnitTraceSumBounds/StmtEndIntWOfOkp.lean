@@ -1,9 +1,6 @@
 module
 
-public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EndIntWOf
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfRing
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfSubst
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittFrobeniusEnd
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,8 +36,77 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfRing
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfSubst
+public import Formalism.PeriodIntegrals.InvSerSub
+public import Formalism.PeriodIntegrals.W2pair
+public import Formalism.PeriodIntegrals.WfRing
+public import Formalism.PeriodIntegrals.WfSubst
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittLogarithm
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittEndomorphism.FlogConstantCoeff
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EndIntWOf
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.GL3Theta Formalism.MainNotions.TaylorLogMetric Formalism.BasicNotions
+
+namespace Formalism.MainNotions.Ext
+
+def CoefWfRing : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (f g : MvPowerSeries σ ℂ_[p]), CoefWf f → CoefWf g →
+    CoefWf (f + g) ∧ CoefWf (f - g) ∧ CoefWf (f * g) ∧ ∀ c : ℂ_[p], InWf c → CoefWf (MvPowerSeries.C c * f)
+
+def SubstWf : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (f : PowerSeries ℂ_[p]) (a : MvPowerSeries σ ℂ_[p]),
+    CoefWf f → IntegralW a → MvPowerSeries.constantCoeff a = 0 → CoefWf (PowerSeries.subst a f)
+
+def EndIntWG : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (g : G1 p), g.Ok → ModelOverW g.lam g.abelian₂ g.C → ∀ α ∈ W2pair p,
+    IntegralMv (g.mulBy α.1 (Xv ()) : MvPowerSeries Unit ℂ_[p]) →
+    IntegralW (g.mulBy α.1 (Xv ()) : MvPowerSeries Unit ℂ_[p])
+
+end Formalism.MainNotions.Ext
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittEndomorphism.WfEndOfLog
+
+section
+
+@[expose] public section
+
+namespace PI.WfEndProof
+
+theorem wfEnd_of_log (hL : WfLog) : WfEnd := wfEnd_of witt_ring_structure witt_substitution hL
+
+end PI.WfEndProof
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittFrobeniusEnd
+
+section
+
+@[expose] public section
+
+theorem witt_pairing : PI.PairW := PI.WfEndProof.pairW
+
+theorem witt_frobenius_end : PI.WfEnd := PI.WfEndProof.wfEnd_of_log witt_logarithm
+
+theorem wfEnd_of : PI.WfRing → PI.WfSubst → PI.WfLog → PI.WfEnd := PI.WfEndProof.wfEnd_of
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.StmtEndIntWOfOkp
+
+section
 
 @[expose] public section
 
@@ -57,3 +123,5 @@ theorem endIntWG_holds : EndIntWG :=
       ⟨0, by simpa using witt_pairing p α hα⟩ hI
 
 end Formalism.MainNotions.Ext
+end
+end

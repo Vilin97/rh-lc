@@ -1,7 +1,6 @@
 module
 
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeAt
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.NumberFieldEmbeddingsIntoCpIntegral
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +19,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.Valuation.Integral
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,6 +43,42 @@ import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.GermComp1Z
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsSplitGaussChars
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsGenOfIsVBOne
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.NumberFieldEmbeddingsIntoCpIntegral
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Crv GlobalTheory.CompanionTheory.Ar.Conj GlobalTheory.CompanionTheory.Ar.Flat GlobalTheory.CompanionTheory.Ar.Fl
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
+
+noncomputable section
+namespace GlobalTheory.CompanionTheory.Ar.Flat.CPoint
+
+theorem embeddings_padicComplex : ∀ (E : Type) [Field E] [NumberField E] (p : Nat.Primes),
+    (∀ (s : E →+* ℂ_[p]) (a : 𝓞 E), s (a : E) ∈ (algebraMap (OCp p) ℂ_[p]).range) ∧
+      Nat.card (E →+* ℂ_[p]) = Module.finrank ℚ E := by
+  intro E _ _ p
+  refine ⟨fun s a => ?_, ?_⟩
+  · have hO : IsIntegral (OCp p) (s (a : E)) :=
+      (RingOfIntegers.isIntegral_coe a).map_of_comp_eq (Int.castRingHom (OCp p)) s (RingHom.ext_int _ _)
+    have hv := Valuation.valuationSubring.integers (v := NormedField.valuation (K := ℂ_[p]))
+    exact hv.exists_of_le_one (hv.isIntegral_iff_v_le_one.mp hO)
+  · rw [Nat.card_eq_fintype_card]
+    exact NumberField.Embeddings.card E ℂ_[p]
+
+end GlobalTheory.CompanionTheory.Ar.Flat.CPoint
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.NumberFieldEmbeddingsIntoCpIntegralStatement
+
+section
+
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
@@ -55,3 +91,5 @@ theorem _root_.GlobalTheory.T.number_field_embeddings_into_cp_integral : ∀ (E 
     (∀ (s : E →+* ℂ_[p]) (a : 𝓞 E), s (a : E) ∈ (algebraMap (OCp p) ℂ_[p]).range) ∧
       Nat.card (E →+* ℂ_[p]) = Module.finrank ℚ E := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex <;> assumption)
+end
+end

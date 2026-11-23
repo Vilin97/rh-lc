@@ -1,11 +1,7 @@
 module
 
-public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.DPairOneIrr
-public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.MarkWeightedFixedPointEqDefinitePairOdd
-public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.FinitelyManyMarkedClassesTermDegreeOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DotConjTransposeMulMul
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkedFieldPairsEquivDefiniteFieldPairsOdd
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkedRootRealSignatureOne
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DiagHermitianTrivialOfSumFourSquares
+public import Development.AbelianVarietyTheory.Definitions.Divisors.MarkedSumIrr
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +38,240 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.MarkWeightedFixedPointEqDefinitePairOdd
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.FinitelyManyMarkedClassesTermDegreeOne
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsCyclotomicExtensionQI
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFormNegOnOrthogonalOfPositiveIndexOne
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.TwOrbMEqTwOrbUOfNormal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairHermitianFormInvertibleSimilitudeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairGramInvCongruentStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairHermitianFormInvertibleSimilitudeStatement
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkedFieldPairsEquivDefiniteFieldPairsOdd
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.TotallySplit
+
+-- Source module: Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.DPairOneIrr
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.LKDef
+
+def MoveDefInv : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), G.a = 1 → Odd G.n → ∀ (wt sel : Polynomial G.F → ℂ), IsSel G sel →
+    ∀ (Kf : Subgroup G.GAf) (f : G.GAf → ℂ) (r : ℕ) (K : Subgroup (Gr G r)) (φ : Gr G r → ℂ),
+      0 < r → (∀ k ∈ Kf, ∀ g, f (k⁻¹ * g * k) = f g) → (∀ k ∈ K, ∀ g, φ (k⁻¹ * g * sigG G r k) = φ g) →
+      markedSumIrr G wt sel Kf f r K φ = dSumIrr G wt Kf f r K φ
+
+namespace MoveEx
+
+open GlobalTheory.LKTrip.Example GlobalTheory.LKMid.Example
+
+end MoveEx
+
+end GlobalTheory.LKDef
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFormNegOnOrthogonalOfPositiveIndexOneStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.hermitianForm_neg_on_orthogonal_of_positiveIndex_one : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (hA : A.IsHermitian), A.det ≠ 0 → sigPosH hA = 1 → ∀ x y : Fin n → ℂ, 0 < (star x ⬝ᵥ A *ᵥ x).re → star x ⬝ᵥ A *ᵥ y = 0 → y ≠ 0 → (star y ⬝ᵥ A *ᵥ y).re < 0 := by
+  first | exact @GlobalTheory.re_form_neg_of_orth_of_sigPosH_eq_one | exact GlobalTheory.re_form_neg_of_orth_of_sigPosH_eq_one | (intros; apply GlobalTheory.re_form_neg_of_orth_of_sigPosH_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkNormSqEqSimilitudeFactor
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.LKMid
+
+theorem Pair.mark_norm_sq : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (μ : ℂ), P.Mark μ →
+    ‖μ‖ ^ 2 = ((P.c : ℚ) : ℝ) := by
+  intro p _ G P μ hμ
+  obtain ⟨v, _, x, hx, hpos⟩ := hμ
+  obtain ⟨_, _, hlaw⟩ := GlobalTheory.T.similitudePair_hermitianForm_invertible_similitude p G P v
+  set H := G.gram v * G.psi v ((P.β⁻¹ : G.Cˣ) : G.C) with hH
+  set A := G.psi v (P.γ : G.C) with hA
+  set q : ℂ := star x ⬝ᵥ (H *ᵥ x) with hq
+  have hq0 : q ≠ 0 := by
+    intro h0; rw [h0] at hpos; simp at hpos
+  have key : star x ⬝ᵥ ((Aᴴ * H * A) *ᵥ x) = (star μ * μ) * q := by
+    rw [← mulVec_mulVec, ← mulVec_mulVec, hx, dotProduct_mulVec, ← star_mulVec, hx, mulVec_smul, star_smul,
+      smul_dotProduct, dotProduct_smul, hq]
+    simp only [smul_eq_mul]; ring
+  rw [hlaw, Matrix.smul_mulVec, dotProduct_smul, smul_eq_mul] at key
+  have hc : star μ * μ = ((P.c : ℚ) : ℂ) := by
+    have := mul_right_cancel₀ hq0 key.symm
+    exact this
+  have h2 : ((‖μ‖ ^ 2 : ℝ) : ℂ) = ((((P.c : ℚ) : ℝ)) : ℂ) := by
+    rw [Complex.sq_norm, Complex.normSq_eq_conj_mul_self]
+    push_cast
+    exact hc
+  exact_mod_cast h2
+
+end GlobalTheory.LKMid
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkNormSqEqSimilitudeFactorStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.mark_norm_sq_eq_similitudeFactor : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (μ : ℂ), P.Mark μ → ‖μ‖ ^ 2 = ((P.c : ℚ) : ℝ) := by
+  first | (exact @GlobalTheory.LKMid.Pair.mark_norm_sq) | (exact GlobalTheory.LKMid.Pair.mark_norm_sq) | (intros; apply GlobalTheory.LKMid.Pair.mark_norm_sq  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DotConjTransposeMulMul
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.LKMid.Pair
+
+theorem dot_conjTranspose_mul_mul {n : ℕ} (M N : Matrix (Fin n) (Fin n) ℂ) (y z : Fin n → ℂ) :
+    star y ⬝ᵥ (Mᴴ * N * M) *ᵥ z = star (M *ᵥ y) ⬝ᵥ N *ᵥ (M *ᵥ z) := by
+  rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.star_mulVec]
+
+theorem mark_unique : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (μ μ' : ℂ), G.a = 1 →
+    P.Mark μ → P.Mark μ' → μ = μ' := by
+  intro p _ G P μ μ' ha hm hm'
+  obtain ⟨v, hv, x, hx, hxp⟩ := hm
+  obtain ⟨v', hv', x', hx', hxp'⟩ := hm'
+  have hvv : v = v' := by
+    have hc : Fintype.card {w : InfinitePlace G.F // sigPosH (G.gram_herm w) = 1} = 1 := ha
+    rw [Fintype.card_eq_one_iff] at hc
+    obtain ⟨w, hw⟩ := hc
+    exact congrArg Subtype.val ((hw ⟨v, hv⟩).trans (hw ⟨v', hv'⟩).symm)
+  subst hvv
+  by_contra hne
+  have hn := GlobalTheory.T.mark_norm_sq_eq_similitudeFactor p G P μ ⟨v, hv, x, hx, hxp⟩
+  obtain ⟨-, -, hlaw⟩ := GlobalTheory.T.similitudePair_hermitianForm_invertible_similitude p G P v
+
+  have e := dot_conjTranspose_mul_mul (G.psi v P.γ) (G.gram v * G.psi v ((P.β⁻¹ : G.Cˣ) : G.C)) x x'
+  rw [hlaw, hx, hx', Matrix.mulVec_smul, Matrix.smul_mulVec, star_smul, smul_dotProduct,
+    dotProduct_smul, dotProduct_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at e
+  have hc0 : ((P.c : ℚ) : ℝ) ≠ 0 := by exact_mod_cast P.c.ne_zero
+  have hμ : star μ * μ = (((P.c : ℚ) : ℂ)) := by
+    rw [show star μ = (starRingEnd ℂ) μ from rfl, Complex.conj_mul', ← Complex.ofReal_pow, hn, Complex.ofReal_ratCast]
+  have hμ0 : star μ ≠ 0 := by
+    intro h0; rw [h0, zero_mul] at hμ
+    exact hc0 (by exact_mod_cast hμ.symm)
+  have horth : star x ⬝ᵥ (G.gram v * G.psi v ((P.β⁻¹ : G.Cˣ) : G.C)) *ᵥ x' = 0 := by
+    by_contra hne0
+    have h1 : (((P.c : ℚ) : ℂ)) = star μ * μ' := by
+      rw [← mul_assoc] at e; exact mul_right_cancel₀ hne0 e
+    exact hne (mul_left_cancel₀ hμ0 (hμ.trans h1))
+
+  obtain ⟨Z, hZ⟩ := GlobalTheory.T.similitudePair_gram_inv_congruent p G P v
+  rw [hZ, dot_conjTranspose_mul_mul] at horth hxp hxp'
+  have hx'0 : x' ≠ 0 := by
+    rintro rfl; simp at hxp'
+  have hY : (Z : Matrix (Fin G.n) (Fin G.n) ℂ) *ᵥ x' ≠ 0 := by
+    intro h0
+    apply hx'0
+    have := congrArg (fun w => ((Z⁻¹ : GL (Fin G.n) ℂ) : Matrix (Fin G.n) (Fin G.n) ℂ) *ᵥ w) h0
+    simpa [Matrix.mulVec_mulVec] using this
+  have hneg := GlobalTheory.T.hermitianForm_neg_on_orthogonal_of_positiveIndex_one (G.gram v) (G.gram_herm v) (G.gram_det v) hv _ _ hxp horth hY
+  exact absurd hxp' (not_lt.mpr hneg.le)
+
+end GlobalTheory.LKMid.Pair
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkedRootRealSignatureOne
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.LKMid
+
+theorem eval_eq_zero_of_eigenvector {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (x : Fin n → ℂ) (μ : ℂ) (hx : x ≠ 0)
+    (hM : M *ᵥ x = μ • x) (q : Polynomial ℂ) (hq : Polynomial.aeval M q = 0) : q.eval μ = 0 := by
+  have hv : Module.End.HasEigenvector (Matrix.toLin' M) μ x :=
+    ⟨Module.End.mem_eigenspace_iff.2 (by rw [Matrix.toLin'_apply]; exact hM), hx⟩
+  have h1 := Module.End.aeval_apply_of_hasEigenvector hv (p := q)
+  have h2 : Polynomial.aeval (Matrix.toLin' M) q = Matrix.toLin' (Polynomial.aeval M q) := by
+    exact Polynomial.aeval_algHom_apply (Matrix.toLinAlgEquiv' (R := ℂ) (n := Fin n)).toAlgHom M q
+  rw [h2, hq, map_zero, LinearMap.zero_apply] at h1
+  exact (smul_eq_zero.1 h1.symm).resolve_right hx
+
+theorem mark_isRoot_pol : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (μ : ℂ), G.a = 1 → P.Mark μ →
+    ∀ v : InfinitePlace G.F, sigPosH (G.gram_herm v) = 1 → P.pol.eval₂ v.embedding μ = 0 := by
+  intro p _ G P μ ha hm v hv
+  obtain ⟨v₀, hv₀, x, hx, hpos⟩ := hm
+  have hvv : v = v₀ := by
+    unfold HTGroup.a at ha
+    obtain ⟨w, hw⟩ := Fintype.card_eq_one_iff.1 ha
+    have e1 := hw ⟨v, hv⟩
+    have e2 := hw ⟨v₀, hv₀⟩
+    exact congrArg Subtype.val (e1.trans e2.symm)
+  subst hvv
+  have hx0 : x ≠ 0 := by
+    rintro rfl
+    simp at hpos
+  have hq : Polynomial.aeval (G.psi v (P.γ : G.C)) (P.pol.map v.embedding) = 0 := by
+    have h0 : G.psi v (Polynomial.aeval (P.γ : G.C) P.pol) = 0 := by
+      rw [Pair.pol, minpoly.aeval, map_zero]
+    rw [Polynomial.aeval_def, Polynomial.eval₂_map]
+    rw [Polynomial.aeval_def, Polynomial.hom_eval₂] at h0
+    have e : (algebraMap ℂ (Matrix (Fin G.n) (Fin G.n) ℂ)).comp v.embedding = (G.psi v).comp (algebraMap G.F G.C) := by
+      apply RingHom.ext
+      intro a
+      simp only [RingHom.comp_apply, G.psi_F, Matrix.algebraMap_eq_diagonal, Matrix.scalar_apply]
+      rfl
+    rw [e]
+    exact h0
+  have := eval_eq_zero_of_eigenvector _ x μ hx0 hx _ hq
+  rwa [Polynomial.eval_map] at this
+
+end GlobalTheory.LKMid
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkWeightedFixedPointDefinitePairOddOfCounts
+
+section
 
 @[expose] public section
 
@@ -150,3 +380,5 @@ theorem markWeightedFixedPoint_definitePair_odd_of_counts : GlobalTheory.LKDef.M
     · exact absurd rfl hq
 
 end GlobalTheory.RootSumWeights
+end
+end

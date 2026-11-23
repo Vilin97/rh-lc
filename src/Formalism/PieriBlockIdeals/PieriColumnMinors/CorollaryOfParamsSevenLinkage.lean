@@ -1,7 +1,6 @@
 module
 
-public import Formalism.PieriBlockIdeals.HidaLatticeInclusionAtCoarseWeightBound
-public import Formalism.PieriBlockIdeals.PieriColumnMinors.CorollaryOfParamsLinkage
+public import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,8 +37,77 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.CorollaryOfParamsLinkage
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.PieriBlockIdeals.HidaLatticeInclusionAtCoarseWeightBound
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.CohomologicalDescent.Down7
+
+section SF09
+
+open TensorProduct MvPolynomial
+open Formalism.UG Formalism.RankGapBounds.FormsTensorLocalization Formalism.GradedWeylDivisibility Formalism.CohomologicalDescent.LD Formalism.CohomologicalDescent.UnitNormBounds Formalism.CohomologicalDescent.DepthNonnegative Formalism.CohomologicalDescent.LogSmallConstantBounds Formalism.CohomologicalDescent.ShortWeightBounds
+
+def HidaLatticeInclusionAtCoarseWeightBound : Prop :=
+  ∀ P : Par, P.Hyp → P.Large → ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (W : Wts ι),
+    W.Ok P → ∀ (l : ℕ) (X : HidaSetting ι P.Nr W.lam), l.Prime → ¬ IsUnit ((l : ℕ) : X.O) →
+    P.lJ < (l : ℝ) → X.WInputs l (kc P) W.j W.T2 (W.iW P l) →
+    X.Incl l (W.coarseWeightBound P l) ∧ X.Jmin l ≤ W.coarseWeightBound P l
+
+def RecIncl7 : Prop :=
+  LA.LemmaAZ → ∀ P : Par, P.Hyp → P.Large →
+    ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (W : Wts ι), W.Ok P →
+    ∀ X : ℕ → HidaSetting ι P.Nr W.lam, (∀ l : ℕ, l.Prime → ¬ IsUnit ((l : ℕ) : (X l).O)) →
+    (∀ l : ℕ, l.Prime → W.WRange P l → (X l).WInputs l (kc P) W.j W.T2 (W.iW P l)) →
+    ∀ l : ℕ, l.Prime → (X l).Incl l (W.Jrec7 P l) ∧ (X l).Jmin l ≤ W.Jrec7 P l
+
+def CorollaryOfRecord7 : Prop :=
+  LA.LemmaAZ → PrimeCountingBound → ∀ P : Par, P.Hyp → P.Large →
+    ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (W : Wts ι), W.Ok P → Fintype.card ι = P.f →
+    W.Sp.card ≤ 5 →
+    ∀ X : ℕ → HidaSetting ι P.Nr W.lam, (∀ l : ℕ, l.Prime → ¬ IsUnit ((l : ℕ) : (X l).O)) →
+    (∀ l : ℕ, l.Prime → W.WRange P l → (X l).WInputs l (kc P) W.j W.T2 (W.iW P l)) →
+    (∀ l : ℕ, l.Prime → (X l).Incl l (W.Jrec7 P l) ∧ (X l).Incl l ((X l).Jmin l) ∧
+      (X l).Jmin l ≤ W.Jrec7 P l) ∧
+    ∀ Q : Finset ℕ, (∀ l ∈ Q, l.Prime) →
+      ∑ l ∈ Q, (W.Jrec7 P l : ℝ) * Real.log (l : ℝ) ≤
+          totalBound P W.T2.card (30 * (P.m : ℝ) * P.b * P.L ^ 2) ∧
+      ∑ l ∈ Q, ((X l).Jmin l : ℝ) * Real.log (l : ℝ) ≤
+          totalBound P W.T2.card (30 * (P.m : ℝ) * P.b * P.L ^ 2)
+
+def CorollaryOfRecord7Link : Prop :=
+  LA.LemmaAZ → PrimeCountingBound → ∀ P : Par, P.Hyp → P.Large →
+    ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (W : Wts ι), W.Ok P → Fintype.card ι = P.f →
+    W.Sp.card ≤ 5 →
+    ∀ X : ℕ → HidaSetting ι P.Nr W.lam, (∀ l : ℕ, l.Prime → ¬ IsUnit ((l : ℕ) : (X l).O)) →
+    (∀ l : ℕ, l.Prime → W.WRange P l → WInputsLink P W (X l) l) →
+    (∀ l : ℕ, l.Prime → (X l).Incl l (W.Jrec7 P l) ∧ (X l).Incl l ((X l).Jmin l) ∧
+      (X l).Jmin l ≤ W.Jrec7 P l) ∧
+    ∀ Q : Finset ℕ, (∀ l ∈ Q, l.Prime) →
+      ∑ l ∈ Q, (W.Jrec7 P l : ℝ) * Real.log (l : ℝ) ≤
+          totalBound P W.T2.card (30 * (P.m : ℝ) * P.b * P.L ^ 2) ∧
+      ∑ l ∈ Q, ((X l).Jmin l : ℝ) * Real.log (l : ℝ) ≤
+          totalBound P W.T2.card (30 * (P.m : ℝ) * P.b * P.L ^ 2)
+
+end SF09
+
+end Formalism.CohomologicalDescent.Down7
+end
+end
+end
+
+-- Source module: Formalism.PieriBlockIdeals.PieriColumnMinors.CorollaryOfParamsSevenLinkage
+
+section
 
 @[expose] public section
 
@@ -85,3 +152,5 @@ theorem inclusion_w_seven_real_holds : HidaLatticeInclusionAtCoarseWeightBound :
   exact ⟨Incl_mono X l _ _ h1 (JW_le_coarseWeightBound W P l), le_trans h2 (JW_le_coarseWeightBound W P l)⟩
 
 end Formalism.CohomologicalDescent.Down7
+end
+end

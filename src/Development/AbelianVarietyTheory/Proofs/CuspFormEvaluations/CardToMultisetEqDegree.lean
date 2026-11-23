@@ -48,8 +48,81 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.ContDiffOfDifferentiableFd
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchy
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.RCauchy
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.PolyDerivMonomialOne
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchy
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.I2
+
+open Classical in
+theorem gCauchy : GCauchyStatement := by
+  intro ι _ F hF S hS α
+  set N := Fintype.card ι
+  let e : ι ≃ Fin N := Fintype.equivFin ι
+
+  let T : (Fin N → ℂ) →L[ℂ] EuclideanSpace ℂ ι :=
+    (EuclideanSpace.equiv ι ℂ).symm.toContinuousLinearMap.comp
+      (LinearMap.funLeft ℂ ℂ e).toContinuousLinearMap
+  have hT : ∀ z : Fin N → ℂ, ‖T z‖ ^ 2 = ∑ j, ‖z j‖ ^ 2 := by
+    intro z
+    rw [EuclideanSpace.norm_sq_eq]
+    simp only [T, ContinuousLinearMap.coe_comp', ContinuousLinearEquiv.coe_coe,
+      LinearMap.coe_toContinuousLinearMap', Function.comp_apply, LinearMap.funLeft_apply]
+    simp only [EuclideanSpace.equiv, PiLp.continuousLinearEquiv_symm_apply]
+    exact Fintype.sum_equiv e _ _ (fun i => by simp)
+  have hTs : ∀ i : ι, T (Pi.single (e i) 1) = EuclideanSpace.single i 1 := by
+    intro i
+    ext j
+    simp only [T, ContinuousLinearMap.coe_comp', ContinuousLinearEquiv.coe_coe,
+      LinearMap.coe_toContinuousLinearMap', Function.comp_apply, LinearMap.funLeft_apply,
+      EuclideanSpace.equiv, PiLp.continuousLinearEquiv_symm_apply, PiLp.single_apply]
+    by_cases h : j = i
+    · subst h; simp
+    · simp [h, Pi.single_apply, e.injective.ne h]
+  set G : (Fin N → ℂ) → ℂ := F ∘ T
+  have hG : Differentiable ℂ G := hF.comp T.differentiable
+  have hGS : ∀ z, ‖G z‖ ^ 2 * Real.exp (-Real.pi * ∑ i, ‖z i‖ ^ 2) ≤ S := by
+    intro z
+    have := hS (T z)
+    rwa [hT z] at this
+  set k := Multiset.card (Finsupp.toMultiset α)
+  set l : Fin k → Fin N := fun j =>
+    e ((Finsupp.toMultiset α).toList.get (j.cast (Multiset.length_toList _).symm))
+  have hc := cauchy_gauss_le G hG S hGS l
+  have hF' : ContDiff ℂ k F := contDiff_of_differentiable_fd hF k
+  have hcomp : iteratedFDeriv ℂ k G 0 (fun j => Pi.single (l j) 1) =
+      iteratedFDeriv ℂ k F 0 (fun j => EuclideanSpace.single
+        ((Finsupp.toMultiset α).toList.get (j.cast (Multiset.length_toList _).symm)) 1) := by
+    rw [show G = F ∘ T from rfl, T.iteratedFDeriv_comp_right hF' 0 le_rfl]
+    simp only [ContinuousMultilinearMap.compContinuousLinearMap_apply, map_zero]
+    congr 1
+    funext j
+    exact hTs _
+  have hk : k = α.degree := by
+    simp only [k, Finsupp.card_toMultiset]
+    first
+      | rfl
+      | simp [Finsupp.sum, Finsupp.degree]
+  have hdeg : (k : ℝ) = (α.degree : ℝ) := by rw [hk]
+  unfold polyDeriv
+  rw [MvPolynomial.support_monomial, if_neg one_ne_zero, Finset.sum_singleton,
+    MvPolynomial.coeff_monomial, if_pos rfl, one_mul]
+  rw [← hdeg, ← hcomp]
+  exact hc
+
+end ReciprocityTheory.ChartRestriction.G.I2
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.CardToMultisetEqDegree
+
+section
 
 @[expose] public section
 
@@ -257,3 +330,5 @@ theorem translate_jet_bound {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpace
   exact hS _
 
 end GlobalTheory
+end
+end

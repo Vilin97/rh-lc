@@ -3,14 +3,18 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.AdjointLowWeight.SymmetricCubeSymplecticSimilitude
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ScNorm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.CoefSup
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CoefficientsOfField
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.DirichletPrimeToLPartMulLPowerPart
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,7 +41,28 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ReducedCoefficients
 import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ConstSmall
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CoefficientsOfField
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.CoefficientsOfField.coef_of_field :
+    ∀ {l : ℕ} [_inst : Fact (Nat.Prime l)]
+    (K : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] ↥K],
+    ∃ (c : UpperTheory.V.HV.Coef l),
+      ∀ x ∈ K,
+        ‖x‖ ≤ (1 : ℝ) → x ∈ c.O :=
+  @UpperTheory.Reformulated.B.CoefficientRingContainingIntegers.rc_coef
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.IntegralityOfNormCoefficients
+
+section
 
 @[expose] public section
 
@@ -101,3 +126,5 @@ theorem UpperTheory.integrality_of_norm_coefficients :
     filter_upwards [Metric.tendsto_nhds.1 (hf.tendsto g₀) (a ^ n) (pow_pos h0 n)] with g hg
     rw [dist_eq_norm, ← Subalgebra.coe_sub] at hg
     exact Ideal.Quotient.eq.2 ((ha n _).2 hg.le)
+end
+end

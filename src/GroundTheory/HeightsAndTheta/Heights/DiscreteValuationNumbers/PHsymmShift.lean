@@ -1,9 +1,7 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHsymmShift
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RingKrullDimQuotComapRename
-public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,9 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,8 +40,109 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.TypeStar
+public import Lean.Elab.MutualDef
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Field.Defs
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAA
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHsymmShift
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial
+
+noncomputable section
+
+universe u
+
+def HsymmShift.Statement : Prop :=
+  ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
+    [∀ k, Fintype (ι k)] (W : Ideal (MRing ι F)), IsMultiProjPrime W →
+    ∀ d : ℕ, FieldNumbers.relDim W = (d : WithBot (WithTop ℤ)) →
+    ∀ (N : ℕ), 0 < N → ∀ (x : Fin N → K → ℤ) (s : K → ℤ) (r : ℕ) (Y : List (K → ℤ)),
+      r + Y.length = d →
+      ∑ α ∈ Finset.Nat.antidiagonalTuple N r, intNumL F W (rootList (fun i => x i + s) α ++ Y) =
+        ∑ k ∈ Finset.range (r + 1), ((N - 1 + r).choose k : ℤ) *
+          ∑ α ∈ Finset.Nat.antidiagonalTuple N (r - k),
+            intNumL F W (rootList x α ++ List.replicate k s ++ Y)
+
+end
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RingKrullDimQuotComapRename
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
+
+noncomputable section
+
+set_option linter.unusedSectionVars false
+
+namespace ProjectiveBundleNumbers
+
+theorem sum_choose_succ (n : ℕ) (U : ℕ → ℤ) :
+    ∑ k ∈ Finset.range (n + 2), ((n + 1).choose k : ℤ) * U k =
+      ∑ k ∈ Finset.range (n + 1), (n.choose k : ℤ) * U k +
+        ∑ k ∈ Finset.range (n + 1), (n.choose k : ℤ) * U (k + 1) := by
+  rw [Finset.sum_range_succ', Finset.sum_range_succ' (fun k => (n.choose k : ℤ) * U k)]
+  simp only [Nat.choose_succ_succ', Nat.cast_add, add_mul, Finset.sum_add_distrib,
+    Nat.choose_zero_right]
+  rw [Finset.sum_range_succ (fun k => (n.choose (k + 1) : ℤ) * U (k + 1)),
+    Nat.choose_succ_self, Nat.cast_zero, zero_mul, add_zero]
+  ring
+
+section ProjBundle
+
+variable {K : Type*} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+variable {F : Type*} [Field F] {Ω : Type*} [Field Ω] [Algebra F Ω]
+variable {E : Type*} [AddCommGroup E] [Module Ω E] {N : ℕ}
+
+end ProjBundle
+
+section Rename
+
+variable {F : Type} [Field F] {S : Type} [Fintype S] [DecidableEq S] {κ ι' : S → Type}
+  [∀ s, Fintype (κ s)] [∀ s, Fintype (ι' s)]
+
+end Rename
+
+end ProjectiveBundleNumbers
+
+end
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHsymmShift
+
+section
 
 @[expose] public section
 
@@ -239,3 +336,5 @@ theorem HsymmShift.proof : HsymmShift.Statement.{u} := by
 end
 
 end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end

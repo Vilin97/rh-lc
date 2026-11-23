@@ -3,12 +3,10 @@ module
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LinearDescent
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardSigmaStableProdLatticeExtSqStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardStableLatticesStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFullLatticeProdOfComapInlMapSndStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LieLatticeProdComapInlAndMapSndStatement
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -25,8 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,8 +43,213 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DltEqZero
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFullLatticeProdOfComapInlMapSnd
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+namespace GlobalTheory.UnitLemma
+
+theorem isLat_of_comap_inl_of_map_snd (K : UQ) (B₁ B₂ : InvAlg K) (M : Submodule K.O (B₁.A × B₂.A))
+    (h₁ : IsLat K.O K.E (M.comap (LinearMap.inl K.O B₁.A B₂.A)))
+    (h₂ : IsLat K.O K.E (M.map (LinearMap.snd K.O B₁.A B₂.A))) : IsLat K.O K.E M := by
+  obtain ⟨f₁, s₁⟩ := h₁
+  obtain ⟨f₂, s₂⟩ := h₂
+  refine ⟨?_, ?_⟩
+  · refine Submodule.fg_of_fg_map_of_fg_inf_ker (LinearMap.snd K.O B₁.A B₂.A) f₂ ?_
+    have : M ⊓ LinearMap.ker (LinearMap.snd K.O B₁.A B₂.A) =
+        (M.comap (LinearMap.inl K.O B₁.A B₂.A)).map (LinearMap.inl K.O B₁.A B₂.A) := by
+      ext ⟨a, b⟩
+      simp only [Submodule.mem_inf, LinearMap.mem_ker, LinearMap.snd_apply, Submodule.mem_map,
+        Submodule.mem_comap, LinearMap.inl_apply]
+      constructor
+      · rintro ⟨hM, rfl⟩
+        exact ⟨a, hM, rfl⟩
+      · rintro ⟨c, hc, he⟩
+        rw [Prod.mk.injEq] at he
+        obtain ⟨rfl, rfl⟩ := he
+        exact ⟨hc, rfl⟩
+    rw [this]
+    exact f₁.map _
+  · set S := Submodule.span K.E (M : Set (B₁.A × B₂.A)) with hS
+    have hinl : ∀ a : B₁.A, ((a, 0) : B₁.A × B₂.A) ∈ S := by
+      intro a
+      have ha : a ∈ Submodule.span K.E ((M.comap (LinearMap.inl K.O B₁.A B₂.A) : Submodule K.O B₁.A) : Set B₁.A) := by
+        rw [s₁]; trivial
+      have hle : (Submodule.span K.E ((M.comap (LinearMap.inl K.O B₁.A B₂.A) : Submodule K.O B₁.A) : Set B₁.A)).map
+          (LinearMap.inl K.E B₁.A B₂.A) ≤ S := by
+        rw [Submodule.map_span]
+        apply Submodule.span_mono
+        rintro _ ⟨c, hc, rfl⟩
+        exact hc
+      exact hle ⟨a, ha, rfl⟩
+    have hsnd : S.map (LinearMap.snd K.E B₁.A B₂.A) = ⊤ := by
+      rw [hS, Submodule.map_span, ← s₂]
+      congr 1
+    rw [eq_top_iff]
+    rintro ⟨a, b⟩ -
+    have hb : b ∈ S.map (LinearMap.snd K.E B₁.A B₂.A) := by rw [hsnd]; trivial
+    obtain ⟨y, hy, hyb⟩ := hb
+    have : ((a, b) : B₁.A × B₂.A) = y + (a - y.1, 0) := by
+      ext
+      · simp
+      · simp [← hyb]
+    rw [this]
+    exact S.add_mem hy (hinl _)
+
+end GlobalTheory.UnitLemma
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFullLatticeProdOfComapInlMapSndStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+theorem _root_.GlobalTheory.T.isFullLattice_prod_of_comap_inl_map_snd : ∀ (K : UQ) (B₁ B₂ : InvAlg K) (M : Submodule K.O (B₁.A × B₂.A)), IsLat K.O K.E (M.comap (LinearMap.inl K.O B₁.A B₂.A)) → IsLat K.O K.E (M.map (LinearMap.snd K.O B₁.A B₂.A)) → IsLat K.O K.E M := by
+  first | exact @GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd | exact GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd | (intros; apply GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClearDenominators
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.ClearDenominatorsIntegral
+
+open GlobalTheory.UnitLemma
+
+theorem clear_denominators (K : UQ) {V : Type} [AddCommGroup V] [Module (UQ.E K) V] [Module (UQ.O K) V]
+    [IsScalarTower (UQ.O K) (UQ.E K) V] (M : Submodule (UQ.O K) V) {x : V}
+    (hx : x ∈ Submodule.span (UQ.E K) (↑M : Set V)) :
+    ∃ (d : UQ.O K), d ≠ (0 : UQ.O K) ∧ d • x ∈ M := by
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact ⟨1, one_ne_zero, by simpa using hy⟩
+  | zero => exact ⟨1, one_ne_zero, by simp⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨d₁, hd₁, h₁⟩ := hy
+    obtain ⟨d₂, hd₂, h₂⟩ := hz
+    refine ⟨d₁ * d₂, mul_ne_zero hd₁ hd₂, ?_⟩
+    rw [smul_add]
+    refine M.add_mem ?_ ?_
+    · rw [mul_comm, mul_smul]; exact M.smul_mem _ h₁
+    · rw [mul_smul]; exact M.smul_mem _ h₂
+  | smul e y _ hy =>
+    obtain ⟨d, hd, h⟩ := hy
+    obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.surj (nonZeroDivisors (UQ.O K)) e
+    have hb : (b : UQ.O K) ≠ 0 := nonZeroDivisors.coe_ne_zero b
+    refine ⟨(b : UQ.O K) * d, mul_ne_zero hb hd, ?_⟩
+    have key : (b : UQ.O K) • (e • y) = a • y := by
+      rw [← smul_assoc, Algebra.smul_def, mul_comm, hab, algebraMap_smul]
+    rw [mul_comm, mul_smul, key, smul_smul, mul_comm, ← smul_smul]
+    exact M.smul_mem _ h
+
+theorem main : ∀ (K : GlobalTheory.UnitLemma.UQ) {V : Type} [inst : AddCommGroup V] [inst_1 : Module (GlobalTheory.UnitLemma.UQ.E K) V] [inst_2 : Module (GlobalTheory.UnitLemma.UQ.O K) V] [IsScalarTower (GlobalTheory.UnitLemma.UQ.O K) (GlobalTheory.UnitLemma.UQ.E K) V] (M : Submodule (GlobalTheory.UnitLemma.UQ.O K) V) {x : V}, x ∈ Submodule.span (GlobalTheory.UnitLemma.UQ.E K) (↑M : Set V) → ∃ (d : GlobalTheory.UnitLemma.UQ.O K), d ≠ (0 : GlobalTheory.UnitLemma.UQ.O K) ∧ d • x ∈ M :=
+  fun K _ _ _ _ _ M _ hx => clear_denominators K M hx
+
+end GlobalTheory.ClearDenominatorsIntegral
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LieLatticeProdComapInlAndMapSnd
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+namespace GlobalTheory.UnitLemma.LinPair
+
+theorem exists_smul_mem_of_mem_span (K : UQ) {V : Type} [AddCommGroup V] [Module K.E V] [Module K.O V]
+    [IsScalarTower K.O K.E V] (M : Submodule K.O V) {x : V} (hx : x ∈ Submodule.span K.E (M : Set V)) :
+    ∃ d : K.O, d ≠ 0 ∧ d • x ∈ M := by
+  first
+  | exact @_root_.GlobalTheory.ClearDenominatorsIntegral.main
+  | exact _root_.GlobalTheory.ClearDenominatorsIntegral.main
+  | (apply _root_.GlobalTheory.ClearDenominatorsIntegral.main <;> assumption)
+  | (intros; apply _root_.GlobalTheory.ClearDenominatorsIntegral.main <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.ClearDenominatorsIntegral.main <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.ClearDenominatorsIntegral.main ..)
+
+end GlobalTheory.UnitLemma.LinPair
+
+open GlobalTheory.UnitLemma.LinPair in
+theorem GlobalTheory.UnitLemma.InvAlg.lin_fst_snd : ∀ (K : UQ) (B₁ B₂ : InvAlg K) (M : Submodule K.O (B₁.A × B₂.A)),
+    M ∈ (B₁.prod B₂).Lin →
+    M.comap (LinearMap.inl K.O B₁.A B₂.A) ∈ B₁.Lin ∧ M.map (LinearMap.snd K.O B₁.A B₂.A) ∈ B₂.Lin := by
+  intro K B₁ B₂ M hM
+  obtain ⟨⟨hfg, hspan⟩, hg, hσ⟩ := hM
+  have hg' : ∀ y ∈ M, ((B₁.g * y.1, B₂.g * y.2) : B₁.A × B₂.A) ∈ M := fun y hy => hg y hy
+  have hσ' : ∀ y ∈ M, ((B₁.σ y.1, B₂.σ y.2) : B₁.A × B₂.A) ∈ M := fun y hy => hσ y hy
+  replace hspan : Submodule.span K.E (M : Set (B₁.A × B₂.A)) = ⊤ := hspan
+  refine ⟨⟨⟨?_, ?_⟩, ?_, ?_⟩, ⟨⟨hfg.map _, ?_⟩, ?_, ?_⟩⟩
+  ·
+    apply Submodule.fg_of_fg_map_injective (LinearMap.inl K.O B₁.A B₂.A) LinearMap.inl_injective
+    exact isNoetherian_submodule.1 (isNoetherian_of_fg_of_noetherian M hfg) _ (Submodule.map_comap_le _ _)
+  · rw [Submodule.eq_top_iff']
+    intro y
+    have hy : (y, (0 : B₂.A)) ∈ Submodule.span K.E (M : Set (B₁.A × B₂.A)) := by
+      rw [hspan]
+      exact Submodule.mem_top
+    obtain ⟨d, hd, hdy⟩ := exists_smul_mem_of_mem_span K M hy
+    have hdE : algebraMap K.O K.E d ≠ 0 := by
+      rw [Ne, ← (algebraMap K.O K.E).map_zero]
+      exact fun h => hd (IsFractionRing.injective K.O K.E h)
+    have hmem : d • y ∈ M.comap (LinearMap.inl K.O B₁.A B₂.A) := by
+      simpa [Submodule.mem_comap] using hdy
+    refine (Submodule.smul_mem_iff _ hdE).mp ?_
+    rw [algebraMap_smul]
+    exact Submodule.subset_span hmem
+  · intro y hy
+    have := hg' _ hy
+    simpa [Submodule.mem_comap] using this
+  · intro y hy
+    have := hσ' _ hy
+    simpa [Submodule.mem_comap] using this
+  · rw [Submodule.map_coe]
+    have : ⇑(LinearMap.snd K.O B₁.A B₂.A) = ⇑(LinearMap.snd K.E B₁.A B₂.A) := rfl
+    rw [this, ← Submodule.map_span, hspan, Submodule.map_top, LinearMap.range_eq_top]
+    exact LinearMap.snd_surjective
+  · rintro _ ⟨m, hm, rfl⟩
+    exact ⟨_, hg' m hm, rfl⟩
+  · rintro _ ⟨m, hm, rfl⟩
+    exact ⟨_, hσ' m hm, rfl⟩
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LieLatticeProdComapInlAndMapSndStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+theorem _root_.GlobalTheory.T.lieLattice_prod_comap_inl_and_map_snd : ∀ (K : UQ) (B₁ B₂ : InvAlg K) (M : Submodule K.O (B₁.A × B₂.A)), M ∈ (B₁.prod B₂).Lin → M.comap (LinearMap.inl K.O B₁.A B₂.A) ∈ B₁.Lin ∧ M.map (LinearMap.snd K.O B₁.A B₂.A) ∈ B₂.Lin := by
+  first | exact @GlobalTheory.UnitLemma.InvAlg.lin_fst_snd | exact GlobalTheory.UnitLemma.InvAlg.lin_fst_snd | (intros; apply GlobalTheory.UnitLemma.InvAlg.lin_fst_snd <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SumStableLatticesProductEqQPowMul
+
+section
 
 @[expose] public section
 
@@ -189,3 +391,6 @@ theorem fibsum : ∀ (K : UQ) (B₁ B₂ : InvAlg K), B₁.σ B₁.g = B₁.g �
     rw [Finset.mem_product]; rw [h'.1, h'.2]; exact Finset.mem_product.1 hp
 
 end GlobalTheory.UnitLemma.FibSum
+end
+end
+end

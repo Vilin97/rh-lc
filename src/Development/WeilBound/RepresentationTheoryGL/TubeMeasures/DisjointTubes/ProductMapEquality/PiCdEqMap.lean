@@ -1,16 +1,8 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.TubeMeasures.DisjointTubes.TubeSt
-public import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.VolumeSignatureIndependent
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LevelMeasurePushforwardEqProductRealMeasures
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardMeasureUnitaryPQEqVolumeSmulCompactDual
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryVolumeEqRankMassAllSignatures
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RetieVolTieGAndCdScaleTie
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpqLocallyCompactGroup
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LocallyCompactSecondCountableBorelCountable
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-public import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
-import Formalism.LocalToGlobal.GlobalTheory.GL5.FamilyMassVolumeIdentityOfClassDecomp
+public import Formalism.SharpRestriction.GlobalSchurBounds.MassRatioUnfoldedOfTheoremTwo
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolumeRatio
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,8 +37,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.UnitsAinf
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LevelMeasurePushforwardEqProductRealMeasures
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardMeasureUnitaryPQEqVolumeSmulCompactDual
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryVolumeEqRankMassAllSignatures
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RetieVolTieGAndCdScaleTie
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpqLocallyCompactGroup
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LocallyCompactSecondCountableBorelCountable
+import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
+import Formalism.LocalToGlobal.GlobalTheory.GL5.FamilyMassVolumeIdentityOfClassDecomp
+import Mathlib.Tactic.Linter.HaveILetI
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.BridgeA
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.Retie
+
+-- Source module: CompanionTheory.AutomorphicTheory.SiegelUnitTheory.ClassNumberMass
+
+section
+
+@[expose] public section
+
+namespace CompanionTheory.HU
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLattice Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+def SiegelOneAll : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
+    Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E),
+      Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsHermND σ J → SW1b2 F E σ M J
+
+theorem hU_of (h : SiegelOneAll) (D : D7) : RT.MassRatioUnderVolume D := GlobalTheory.VolRatioFromSecondClause.volumeRatio h D
+
+end CompanionTheory.HU
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.SiegelUnitTheory.VolumeSignatureIndependent
+
+section
+
+@[expose] public section
+
+namespace CompanionTheory.HU
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLattice Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
+
+theorem siegel_mass_rank_one : SiegelOneAll := fun F E _ _ _ _ _ σ h M J hJ => sw1b2 F E σ h M J hJ
+
+theorem mass_ratio_under_volume : ∀ D : D7, RT.MassRatioUnderVolume D := hU_of siegel_mass_rank_one
+
+end CompanionTheory.HU
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.TubeMeasures.DisjointTubes.ProductMapEquality.PiCdEqMap
+
+section
 
 @[expose] public section
 
@@ -174,4 +222,6 @@ theorem vol : VolSt := by
 
 end MainStatements.Tam
 
+end
+end
 end

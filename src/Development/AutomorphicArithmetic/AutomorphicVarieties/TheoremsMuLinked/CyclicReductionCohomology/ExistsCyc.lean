@@ -3,15 +3,22 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.DualPair
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.FixCnt
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsCyclic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.OmegaConstruction
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -38,7 +45,39 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 public import Lean.Meta.ExprDefEq
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.OmegaConstruction
+
+section
+
+@[expose] public section
+
+@[reducible] noncomputable def UpperTheory.Reformulated.B.OmegaConstruction.Om :
+    (O : Type) → [inst : CommRing O] → [IsLocalRing O] → ℕ → Type :=
+    fun (O : Type) [CommRing O] [IsLocalRing O] (m : ℕ) ↦ O ⧸ IsLocalRing.maximalIdeal O ^ m
+
+noncomputable def UpperTheory.Reformulated.B.OmegaConstruction.red :
+    {O : Type} →
+      [inst : CommRing O] →
+        [inst_1 : IsLocalRing O] →
+          {n : ℕ} → (m : ℕ) → Matrix (Fin n) (Fin n) O → Matrix (Fin n) (Fin n) (UpperTheory.Reformulated.B.OmegaConstruction.Om O m) :=
+    fun {O : Type} [CommRing O] [IsLocalRing O] {n : ℕ} (m : ℕ) (Z : Matrix (Fin n) (Fin n) O) ↦
+      Z.map (⇑(Ideal.Quotient.mk (IsLocalRing.maximalIdeal O ^ m)) : O → O ⧸ IsLocalRing.maximalIdeal O ^ m)
+
+theorem UpperTheory.Reformulated.B.OmegaConstruction.red_sub :
+    ∀ {O : Type} [inst : CommRing O] [inst_1 : IsLocalRing O] {n : ℕ} (m : ℕ) (A B : Matrix (Fin n) (Fin n) O),
+      UpperTheory.Reformulated.B.OmegaConstruction.red m (A - B) = UpperTheory.Reformulated.B.OmegaConstruction.red m A - UpperTheory.Reformulated.B.OmegaConstruction.red m B := by
+  intro O _ _ n m A B
+  ext i j
+  exact map_sub (Ideal.Quotient.mk (IsLocalRing.maximalIdeal O ^ m)) (A i j) (B i j)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.CyclicReductionCohomology.ExistsCyc
+
+section
 
 @[expose] public section
 
@@ -123,3 +162,5 @@ theorem UpperTheory.V.Th.h0qO :
   refine (hC m).trans ?_
   obtain ⟨-, hfin, -⟩ := hO
   exact Nat.pow_le_pow_right Nat.card_pos (Nat.add_le_add_right (Nat.mul_le_mul_left m hr) C)
+end
+end

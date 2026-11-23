@@ -4,15 +4,20 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGrou
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaussSumFiltrations.RationalGL2InfiniteFiniteFactor
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.EqAmOfBarEq
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.FiniteProjectionSingleSame
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjOfSqNeg
+public import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -27,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,8 +44,44 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjOfSqNeg
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qh17.conj_of_sq_neg :
+    ∀ {t : ℂ} {r : ℝ},
+    r < (0 : ℝ) → t ^ (2 : ℕ) = (↑r : ℂ) → (starRingEnd ℂ : ℂ → ℂ) t = -t := by
+  intro t r hr h
+  have h1 : t.re * t.re - t.im * t.im = r := by
+    have := congrArg Complex.re h
+    simpa [pow_two] using this
+  have h2 : t.re * t.im + t.im * t.re = 0 := by
+    have := congrArg Complex.im h
+    simpa [pow_two] using this
+  have h3 : t.re = 0 := by
+    have hm : t.re * t.im = 0 := by linarith [mul_comm t.im t.re]
+    rcases mul_eq_zero.mp hm with h0 | h0
+    · exact h0
+    · exfalso
+      rw [h0] at h1
+      nlinarith [mul_self_nonneg t.re]
+  apply Complex.ext
+  · simp [h3]
+  · simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.ThetaBounds.NormInf
+
+section
 
 @[expose] public section
 
@@ -225,3 +265,5 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.normInf :
       simp
     rw [h2]
     exact NI.fin_norm D s
+end
+end

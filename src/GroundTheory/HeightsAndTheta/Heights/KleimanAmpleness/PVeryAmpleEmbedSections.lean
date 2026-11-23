@@ -1,9 +1,6 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.VeryAmpleEmbedSectionsSt
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefPlusAmple
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSectionCountTop
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistSections
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AlgebraMapMemChartRingLine
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,11 +18,7 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,8 +38,97 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.Objects
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSectionCountTop
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistSections
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.VeryAmpleEmbedSectionsSt
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+open MvPolynomial Filter
+
+noncomputable section
+
+universe u v w
+
+def VeryAmpleEmbed.Sections.Statement : Prop :=
+  ∀ (k : Type u) [Field k] (Ω : Type w) [Field Ω] [Algebra k Ω] (N : ℕ) (y : Fin (N + 1) → Ω)
+    (Q : LineBundle k y) (r : ℕ) (h : Fin (r + 1) → Ω), y ≠ 0 → IsVeryAmpleBy Q.toSubSystem h →
+    ∀ m : ℕ, (Q.toSubSystem.pow m).secs = (twistSys k h (m : ℤ)).secs
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefPlusAmple
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+open MvPolynomial
+
+noncomputable section
+
+universe u w
+
+section Lemmas
+
+variable {k : Type u} [Field k] {Ω : Type w} [Field Ω] [Algebra k Ω] {N : ℕ}
+  {x : Fin (N + 1) → Ω}
+
+theorem SubSystem.twist_sub_eq_mul (F Q : SubSystem k x Ω) (I : Chart x) :
+    (F.twist Q).sub I = F.sub I * Q.sub I := by
+  rw [Submodule.mul_eq_span_mul_set]
+  change Submodule.span _ _ = _
+  congr 1
+  ext z
+  constructor
+  · rintro ⟨q, hq, y, hy, rfl⟩
+    exact ⟨y, hy, q, hq, by rw [smul_eq_mul, mul_comm]⟩
+  · rintro ⟨y, hy, q, hq, rfl⟩
+    exact ⟨q, hq, y, hy, by rw [smul_eq_mul, mul_comm]⟩
+
+theorem twistMod_zero_eq_one (I : Chart x) : twistMod k x 0 I = 1 := by
+  obtain ⟨i, hi⟩ := I.2.1
+  rw [twistMod_eq_span 0 I hi, zpow_zero, Submodule.one_eq_span]
+
+theorem SubSystem.pow_sub_eq_pow (Q : SubSystem k x Ω) (n : ℕ) (I : Chart x) :
+    (Q.pow n).sub I = Q.sub I ^ n := by
+  induction n with
+  | zero => rw [pow_zero]; exact twistMod_zero_eq_one I
+  | succ n ih => rw [pow_succ, ← ih]; exact SubSystem.twist_sub_eq_mul _ _ I
+
+end Lemmas
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmpleEmbedSections
+
+section
 
 @[expose] public section
 
@@ -156,3 +238,5 @@ theorem VeryAmpleEmbed.Sections.proof : VeryAmpleEmbed.Sections.Statement.{u, w}
 end
 
 end GroundTheory.Heights₂.Heights.Kleiman
+end
+end

@@ -3,12 +3,9 @@ module
 public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsFactorOrder
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.Analysis.Complex.BorelCaratheodory
-public import Mathlib.Analysis.Complex.HasPrimitives
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,9 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -48,9 +43,13 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Complex.BorelCaratheodory
+public import Mathlib.Analysis.Complex.HasPrimitives
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.Analysis.Calculus.Deriv.Inv
 public import Mathlib.Analysis.Calculus.Deriv.Mul
@@ -59,6 +58,58 @@ public import Mathlib.Analysis.Calculus.LogDeriv
 public import Mathlib.Analysis.Complex.AbsMax
 public import Mathlib.Analysis.Complex.Liouville
 import Mathlib.NumberTheory.DirichletCharacter.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsFactorOrder
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.FactorOrderExistence
+
+open Filter Topology
+
+theorem exists_factor_order {U : Set ℂ} {g : ℂ → ℂ} (hg : AnalyticOnNhd ℂ g U) {w : ℂ}
+    (hw : w ∈ U) (hord : analyticOrderAt g w ≠ ⊤) :
+    ∃ h : ℂ → ℂ, AnalyticOnNhd ℂ h U ∧
+      (∀ z : ℂ, g z = (z - w) ^ analyticOrderNatAt g w * h z) ∧ h w ≠ (0 : ℂ) := by
+  classical
+  obtain ⟨h0, h0a, h0ne, hev⟩ := ((hg w hw).analyticOrderAt_ne_top).1 hord
+  set n := analyticOrderNatAt g w with hn
+  refine ⟨fun z => if z = w then h0 w else g z / (z - w) ^ n, ?_, ?_, ?_⟩
+  · intro z hz
+    by_cases hzw : z = w
+    · subst hzw
+      refine h0a.congr ?_
+      filter_upwards [hev] with y hy
+      by_cases hyz : y = z
+      · simp [hyz]
+      · have hne : (y - z) ^ n ≠ 0 := pow_ne_zero _ (sub_ne_zero.2 hyz)
+        simp only [hyz, if_false]
+        rw [hy, smul_eq_mul, mul_div_cancel_left₀ _ hne]
+    · have ha : AnalyticAt ℂ (fun y => g y / (y - w) ^ n) z :=
+        (hg z hz).div ((analyticAt_id.sub analyticAt_const).pow n)
+          (pow_ne_zero _ (sub_ne_zero.2 hzw))
+      refine ha.congr ?_
+      filter_upwards [isOpen_ne.mem_nhds hzw] with y hy
+      simp [hy]
+  · intro z
+    by_cases hzw : z = w
+    · subst hzw
+      have := hev.self_of_nhds
+      simpa using this
+    · have hne : (z - w) ^ n ≠ 0 := pow_ne_zero _ (sub_ne_zero.2 hzw)
+      simp only [hzw, if_false]
+      field_simp
+  · simpa using h0ne
+
+end GlobalTheory.FactorOrderExistence
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NormOneSubConjMul
+
+section
 
 @[expose] public section
 
@@ -308,3 +359,5 @@ theorem main : ∀ r R : ℝ, 0 < r → r < R → R < 1 → ∃ C : ℝ, 0 < C �
     nlinarith
 
 end GlobalTheory.LogDerivZeros
+end
+end

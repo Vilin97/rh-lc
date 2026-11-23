@@ -7,16 +7,12 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForm
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicFormGLContinuous
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasFDerivAtRealLieChartKernelOperatorAtOneStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntegralFderivRealLieChartEqSumKernelOperatorsStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsBoundedContinuousCuspidalAutomorphicZeroAddSmuStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsCuspidalArchimedeanKernelConvolutionOperatorStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.KernelOperatorIntegrableContinuousSmoothStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSmoothOfChartDerivativesAtIdentityStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RapidlyDecreasingKernelMulAdjointConjCoefficientStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CapCommuteRtInfGL
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCuspidalLieActionOfIsCuspForm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -35,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,9 +44,129 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.UnrOutside
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsCuspidalArchimedeanKernelConvolutionOperatorStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.KernelOperatorIntegrableContinuousSmooth
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DifferentiableAtChart
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSmoothOfChartDerivativesAtIdentity
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RapidlyDecreasingKernelMulAdjointConjCoefficientStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CapCommuteRtInfGL
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsBoundedContinuousCuspidalAutomorphicZeroAddSmu
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.JSW
+
+namespace GlobalTheory.JSW
+
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
+
+theorem continuous_unip_adele {r : ℕ} : Continuous fun x : BlockIx a r → Ad E => (unip x : GA E a) := by
+  have hn : Continuous fun x : BlockIx a r → Ad E => (nilM x : Matrix (Fin a) (Fin a) (Ad E)) := by
+    refine continuous_pi fun i => continuous_pi fun j => ?_
+    simp only [nilM, Matrix.of_apply]
+    split_ifs
+    · exact continuous_apply _
+    · exact continuous_const
+  refine Units.continuous_iff.2 ⟨?_, ?_⟩
+  · exact continuous_const.add hn
+  · exact continuous_const.sub hn
+
+theorem isBCC_zero_and_add : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
+    IsBCC (0 : GA E a → ℂ) ∧
+    ∀ (c : ℂ) (F G : GA E a → ℂ), IsBCC F → IsBCC G → IsBCC (c • F + G) := by
+  intro E _ _ _ a
+  refine ⟨⟨continuous_const, ⟨0, fun g => by simp⟩, ?_, fun _ _ => rfl⟩, ?_⟩
+  · intro r _ _ _ _ μ 𝓕 _ _ g
+    simp
+  · intro c F G hF hG
+    obtain ⟨CF, hCF⟩ := hF.bdd
+    obtain ⟨CG, hCG⟩ := hG.bdd
+    refine ⟨(hF.cont.const_smul c).add hG.cont, ⟨‖c‖ * CF + CG, fun g => ?_⟩, ?_, fun γ g => ?_⟩
+    · simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      refine (norm_add_le _ _).trans (add_le_add ?_ (hCG g))
+      rw [norm_mul]
+      exact mul_le_mul_of_nonneg_left (hCF g) (norm_nonneg c)
+    · intro r h0 h1 _ _ μ 𝓕 hμ hFd g
+      haveI := hμ
+      have hfin := covol_lt_top μ 𝓕 hFd
+      have hint : ∀ H : GA E a → ℂ, IsBCC H → IntegrableOn (fun x => H (unip x * g)) 𝓕 μ := by
+        intro H hH
+        obtain ⟨C, hC⟩ := hH.bdd
+        have hc : Continuous fun x : BlockIx a r → Ad E => H (unip x * g) :=
+          hH.cont.comp (continuous_unip_adele.mul continuous_const)
+        haveI : IsFiniteMeasure (μ.restrict 𝓕) := ⟨by rw [Measure.restrict_apply_univ]; exact hfin⟩
+        exact Integrable.of_bound hc.aestronglyMeasurable C (Filter.Eventually.of_forall fun x => hC _)
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      rw [integral_add ((hint F hF).const_mul c) (hint G hG), integral_const_mul,
+        hF.cusp r h0 h1 μ 𝓕 hμ hFd g, hG.cusp r h0 h1 μ 𝓕 hμ hFd g]
+      simp
+    · simp only [Pi.add_apply, Pi.smul_apply, hF.left, hG.left]
+
+end GlobalTheory.JSW
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsBoundedContinuousCuspidalAutomorphicZeroAddSmuStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.JSW
+
+theorem _root_.GlobalTheory.T.isBoundedContinuousCuspidalAutomorphic_zero_add_smul : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), IsBCC (0 : GA E a → ℂ) ∧
+    ∀ (c : ℂ) (F G : GA E a → ℂ), IsBCC F → IsBCC G → IsBCC (c • F + G) := by
+  first | exact @GlobalTheory.JSW.isBCC_zero_and_add | exact GlobalTheory.JSW.isBCC_zero_and_add | (intros; apply GlobalTheory.JSW.isBCC_zero_and_add <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.KernelOperatorIntegrableContinuousSmoothStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.JSW
+
+theorem _root_.GlobalTheory.T.kernelOperator_integrable_continuous_smooth : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (X : Type) [MeasurableSpace X] (ν : Measure X)
+    (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)), IsRapidInf ν k γ → ∀ φ : Sm E a, Continuous φ.1 →
+    (∃ C : ℝ, ∀ g, ‖φ.1 g‖ ≤ C) →
+      (∀ g, Integrable (fun x => k x * φ.1 (g * infGL E a (γ x))) ν) ∧ Continuous (kerOp ν k γ φ.1) := by
+  first | exact @GlobalTheory.JSW.kerOp_integrable_continuous | exact GlobalTheory.JSW.kerOp_integrable_continuous | (intros; apply GlobalTheory.JSW.kerOp_integrable_continuous <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSmoothOfChartDerivativesAtIdentityStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.JSW
+
+theorem _root_.GlobalTheory.T.mem_smooth_of_chart_derivatives_at_identity : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (K : Set (GA E a → ℂ)),
+    (∀ f ∈ K, ∃ (ι : Type) (_ : Fintype ι) (fs : ι → GA E a → ℂ) (ℓ : ι → (Lie E a →L[ℝ] ℂ)), (∀ i, fs i ∈ K) ∧
+      ∀ g, HasFDerivAt (chart f g) (∑ i, fs i g • ℓ i) (oneL E a)) → ∀ f ∈ K, f ∈ Sm E a := by
+  first | exact @GlobalTheory.SmOfDeriv.mem_Sm_of_hasFDerivAt | exact GlobalTheory.SmOfDeriv.mem_Sm_of_hasFDerivAt | (intros; apply GlobalTheory.SmOfDeriv.mem_Sm_of_hasFDerivAt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CuspFormRapidKernelSmoothSpanSmoothCuspidalBound
+
+section
 
 @[expose] public section
 
@@ -267,3 +384,6 @@ theorem mspanR_smooth : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberF
   exact ⟨φ, rfl, fun l => (h l).1, h0.cusp, h0.bdd⟩
 
 end GlobalTheory.JSW
+end
+end
+end

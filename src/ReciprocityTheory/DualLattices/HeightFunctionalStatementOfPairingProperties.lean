@@ -46,9 +46,45 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.DualLattices.IsFibreSq
-public import ReciprocityTheory.DualLattices.ToSigmaAddFstZeroFst
+public import ReciprocityTheory.DualLattices.SqZeroOfSpan
 public import Mathlib.Algebra.Algebra.Prod
 public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+
+-- Source module: ReciprocityTheory.DualLattices.ToSigmaAddFstZeroFst
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.PGsh
+
+universe u
+
+variable {R₀ : Type u} [CommRing R₀]
+
+namespace BX
+
+def tot (B : BX R₀) {R : LAlg R₀} {x y : B.G R} (u : B.P R x y) : Σ x y : B.G R, B.P R x y :=
+  ⟨x, y, u⟩
+
+def tmap (B : BX R₀) {R S : LAlg R₀} (f : LHom R S) (t : Σ x y : B.G R, B.P R x y) :
+    Σ x y : B.G S, B.P S x y :=
+  ⟨B.map f t.1, B.map f t.2.1, B.pmap f t.2.2⟩
+
+variable {B : BX R₀} {R S T : LAlg R₀}
+
+end BX
+
+end ReciprocityTheory.PGsh
+end
+end
+end
+
+-- Source module: ReciprocityTheory.DualLattices.HeightFunctionalStatementOfPairingProperties
+
+section
 
 @[expose] public section
 
@@ -421,3 +457,6 @@ theorem heightFunctionalStatement_of_pairingProperties (B : BX R₀) (h1 : Pairi
     fun y y' h h' hh hh' => BX.part_c h1 Dp N y y' h h' hh hh'⟩
 
 end ReciprocityTheory.PGsh
+end
+end
+end

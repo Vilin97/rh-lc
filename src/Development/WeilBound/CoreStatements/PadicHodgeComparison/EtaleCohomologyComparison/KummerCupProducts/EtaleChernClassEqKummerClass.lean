@@ -9,7 +9,44 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ChernCla
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ChernClassUniqueOfLiftAndLog
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoeffIterateVerschiebung
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompOfCechPt
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EdgeCupOfSteps
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EdgeUniqOf
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EdgeUnique
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EtaleChernClassEqKummerClass
@@ -43,14 +80,12 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullCZsm
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullPullOfPullC
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullSquare
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedResMor
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedRootOfRep
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RepBasic
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RepConcOfInputs
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RepOp
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResGenRes
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResLoc
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChosenInjectiveResolutionEtaleSheafSectionsExact
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResSplit
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResZero
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecMapRes
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecPairApply
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecResMap
@@ -59,7 +94,6 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SignCanc
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StAdd
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StCol
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StExOfStCol
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StTopOfStCol
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StUniq
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StairCupFirst
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumToAcrTeichmuller
@@ -69,43 +103,132 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VnRed
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.CupLeib
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.EvExt
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.FirstChernClassFamily
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EdgeCupOfSteps
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory AlgebraicGeometry Opposite CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.E GlobalTheory.EtC
+
+namespace GlobalTheory.CompanionTheory.EdgeMap
+
+theorem edgeCup_of_steps : CrystallineSemistableComparison.E.CupCls → CrystallineSemistableComparison.E.StTop → CrystallineSemistableComparison.E.StCupA → CrystallineSemistableComparison.E.StCupB → CrystallineSemistableComparison.E.EdgeCup := by
+  intro hCls hTop hA hB
+  unfold CrystallineSemistableComparison.E.EdgeCup
+  intro R _ C _ F₁ F₂ F₃ T₁ T₂ T₃ P μ hT₁ hT₂ i j n hn x y a b hx hy
+  obtain ⟨z, hz, hzx, rfl⟩ := hx
+  obtain ⟨z', hz', hzy, rfl⟩ := hy
+  obtain ⟨hu, hcls⟩ := hCls R C F₁ F₂ F₃ P i j n hn z z' hz hz'
+  refine ⟨P.cupC hn z z', hu, ?_, hcls.symm⟩
+  have hyy := hTop R C F₂ T₂ hT₂ j z' hz' j 0 y hzy
+  have hb := hB R C F₁ F₂ F₃ T₁ T₂ T₃ P μ hT₁ hT₂ i j n hn z z' hz j 0 i (add_zero i) y hzy
+  exact hA R C F₁ F₂ F₃ T₁ T₂ T₃ P μ hT₁ hT₂ i j n z y (P.cupC hn z z') hyy.1 hyy.2 hb i 0 n hn x hzx
+
+end GlobalTheory.CompanionTheory.EdgeMap
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedRootOfRep
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+
+open CategoryTheory AlgebraicGeometry Opposite CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.E GlobalTheory.EtC
+
+namespace GlobalTheory.CompanionTheory.EdgeMap
+
+theorem redRoot_of_rep : CrystallineSemistableComparison.E.RepRoot → CrystallineSemistableComparison.E.RepOp → CrystallineSemistableComparison.E.RepConc → CrystallineSemistableComparison.E.RedRoot := by
+  intro hRoot hOp hConc inOp inRed Q q _ _ hq i X ζ ξ hξ
+  have h1 : Rep (rootClass i ζ) (resGen i ζ) := (hRoot Q i X ζ).2
+  have h2 : Rep (rootClass i ξ) (resGen i ξ) := (hRoot q i X ξ).2
+  have h3 := hOp inOp _ _ _ _ (redMap Q q i) X 0 (rootClass i ζ) _ h1
+  rw [inRed Q q hq i X ζ ξ hξ] at h3
+  exact (hConc (ZMod q) _ X 0 (resGen i ξ)).2.2 _ _ h3 h2
+
+end GlobalTheory.CompanionTheory.EdgeMap
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResLoc
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory AlgebraicGeometry Opposite CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.E GlobalTheory.EtC
+
+namespace GlobalTheory.CompanionTheory.EdgeMap
+
+theorem resLoc : CrystallineSemistableComparison.E.ResLoc := by
+  intro R _ F s U x hx
+  exact (GlobalTheory.EtC.resSec R F U).2.2.1 (s : ℤ) ((s + 1 : ℕ) : ℤ) ((s + 1 + 1 : ℕ) : ℤ) (by omega) (by omega) x (by omega) hx
+
+end GlobalTheory.CompanionTheory.EdgeMap
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResZero
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory AlgebraicGeometry Opposite CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.E GlobalTheory.EtC
+
+namespace GlobalTheory.CompanionTheory.EtRes
+
+theorem resZero : CrystallineSemistableComparison.E.ResZero := by
+  intro R _ F U
+  obtain ⟨h0, h1, -, h3⟩ := GlobalTheory.EtC.resSec R F U
+  exact ⟨h1, h0, h3⟩
+
+end GlobalTheory.CompanionTheory.EtRes
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.StTopOfStCol
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory AlgebraicGeometry Opposite CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.E GlobalTheory.EtC
+
+namespace GlobalTheory.CompanionTheory.EdgeMap
+
+theorem stTop_of_stCol : CrystallineSemistableComparison.E.StCol → CrystallineSemistableComparison.E.StTop := by
+  intro hCol R _ C _ F T hT j z hz s
+  obtain ⟨hι, hdv, -, hex0, hex⟩ := hCol R C F T hT
+  induction s with
+  | zero =>
+    intro k x hx
+    obtain ⟨rfl, rfl⟩ := hx
+    exact ⟨(hex0 j _).2 ⟨_, rfl⟩, by rw [hι, hz, map_zero]⟩
+  | succ s ih =>
+    intro k x hx
+    obtain ⟨a, rfl, ha⟩ := hx
+    have h1 := (ih (k + 1) _ ha).1
+    rw [map_zsmul] at h1
+    have h2 : T.dvC s (k + 1) (d _ k a) = 0 :=
+      (IsUnit.smul_eq_zero ((isUnit_neg_one (α := ℤ)).pow k)).1 h1
+    exact ⟨(hex s k _).2 ⟨a, rfl⟩, by rw [hdv]; exact h2⟩
+
+end GlobalTheory.CompanionTheory.EdgeMap
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.EtaleChernClassEqKummerClass
+
+section
 
 @[expose] public section
 
@@ -246,3 +369,5 @@ theorem firstChern_family : FirstChernClassFamily := firstChern_family_of_lifts 
 theorem etale_comparison_map : EtaleComparisonMapExists := etale_comparison_map_of_facts rootsEx lcNat fRed fEqui fPhi fNat fCup fRoot firstChern_family
 
 end CrystallineSemistableComparison.E.Main
+end
+end

@@ -2,7 +2,6 @@ module
 
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjugateHermitianLineIsometries
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
-public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.CPtsat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,9 +44,276 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
 import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.GenericFibreKerTarget
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.RationalSections.IsRatSectionOn
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjugateHermitianLineIsometries
+public import Mathlib.Analysis.Calculus.FDeriv.Star
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComplexConjugationHermCompat
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.Cmp
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 ReciprocityTheory.AnForm.M GlobalTheory.CompanionTheory.Ar.Cmp Filter Topology
+open ReciprocityTheory.ChartRestriction.G.AI.I1 (IsBlockMap pullDeg)
+
+section Basic
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+theorem conjPt_conjPt (z : (Σ k, ι k) → ℂ) : conjPt (conjPt z) = z := by
+  funext p
+  simp [conjPt]
+
+theorem evC_conjPt (z : (Σ k, ι k) → ℂ) (f : MRing ι) :
+    evC (conjPt z) f = starRingEnd ℂ (evC z f) := by
+  induction f using MvPolynomial.induction_on with
+  | C a => simp [evC]
+  | add p q hp hq =>
+    simp only [evC, map_add (f := _)] at hp hq ⊢
+    rw [hp, hq]
+  | mul_X p i hp =>
+    simp only [evC, map_mul, map_X, eval_X] at hp ⊢
+    rw [hp]
+    simp [conjPt]
+
+def conjCLM : ((Σ k, ι k) → ℂ) →L[ℝ] ((Σ k, ι k) → ℂ) :=
+  ContinuousLinearMap.pi fun p =>
+    (Complex.conjCLE : ℂ →L[ℝ] ℂ).comp (ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : (Σ k, ι k) => ℂ) p)
+
+theorem conjCLM_apply (z : (Σ k, ι k) → ℂ) : conjCLM z = conjPt z := by
+  funext p
+  simp [conjCLM, conjPt]
+
+theorem conjPt_mem_mcPts_iff (P : Ideal (MRing ι)) (z : (Σ k, ι k) → ℂ) :
+    conjPt z ∈ mcPts P ↔ z ∈ mcPts P := by
+  have key : ∀ w : (Σ k, ι k) → ℂ, w ∈ mcPts P → conjPt w ∈ mcPts P := by
+    rintro w ⟨h1, h2⟩
+    refine ⟨fun k => ?_, fun f hf => ?_⟩
+    · obtain ⟨i, hi⟩ := h1 k
+      exact ⟨i, by simpa [conjPt] using hi⟩
+    · have := evC_conjPt w f
+      simp only [evC] at this
+      rw [this, h2 f hf, map_zero]
+  refine ⟨fun h => ?_, key z⟩
+  simpa [conjPt_conjPt] using key _ h
+
+theorem conjLine_smooth (A : HermLine ι) (hA : IsSmoothHerm A) : IsSmoothHerm (conjLine A) := by
+  have hc : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, ι k) → ℂ => conjCLM z)
+      {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := (conjCLM (ι := ι)).contDiff.contDiffOn
+  have := ContDiffOn.comp (g := A.h) (f := fun z : (Σ k, ι k) → ℂ => conjCLM z)
+    (s := {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}) (t := {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}) hA hc (fun z hz k => by
+      obtain ⟨i, hi⟩ := hz k
+      refine ⟨i, ?_⟩
+      show conjCLM z ⟨k, i⟩ ≠ 0
+      rw [conjCLM_apply]
+      simpa [conjPt] using hi)
+  unfold IsSmoothHerm
+  refine this.congr fun z _ => ?_
+  simp [conjLine, conjCLM_apply]
+
+theorem logNorm_conjLine (A : HermLine ι) (s : MRing ι) (z : (Σ k, ι k) → ℂ) :
+    logNorm (conjLine A) s z = logNorm A s (conjPt z) := by
+  have h := evC_conjPt z s
+  simp only [evC] at h
+  simp only [logNorm, conjLine]
+  rw [h, RCLike.norm_conj]
+
+theorem conjLine_tensor (A B : HermLine ι) :
+    conjLine (A.tensor B) = (conjLine A).tensor (conjLine B) := rfl
+
+theorem conjLine_conjLine (A : HermLine ι) : conjLine (conjLine A) = A := by
+  cases A with
+  | mk a h pos smul =>
+    simp only [conjLine, HermLine.mk.injEq, heq_eq_eq, true_and]
+    funext z
+    rw [conjPt_conjPt]
+
+end Basic
+
+theorem conj_basic : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)], (∀ (P : Ideal (MRing ι)) z, conjPt z ∈ mcPts P ↔ z ∈ mcPts P) ∧ (∀ (z : (Σ k, ι k) → ℂ) f, evC (conjPt z) f = starRingEnd ℂ (evC z f)) ∧ (∀ A : HermLine ι, IsSmoothHerm A → IsSmoothHerm (conjLine A)) ∧ (∀ (A : HermLine ι) s z, logNorm (conjLine A) s z = logNorm A s (conjPt z)) ∧ (∀ A B : HermLine ι, conjLine (A.tensor B) = (conjLine A).tensor (conjLine B)) ∧ ∀ A : HermLine ι, conjLine (conjLine A) = A :=
+  fun _ _ _ _ => ⟨conjPt_mem_mcPts_iff, evC_conjPt, conjLine_smooth, logNorm_conjLine, conjLine_tensor, conjLine_conjLine⟩
+
+end GlobalTheory.CompanionTheory.Ar.Cmp
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComplexConjugationHermCompatStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 ReciprocityTheory.AnForm.M GlobalTheory.CompanionTheory.Ar.Cmp Filter Topology
+open ReciprocityTheory.ChartRestriction.G.AI.I1 (IsBlockMap pullDeg)
+
+theorem _root_.GlobalTheory.T.complex_conjugation_herm_compat : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)], (∀ (P : Ideal (MRing ι)) z, conjPt z ∈ mcPts P ↔ z ∈ mcPts P) ∧ (∀ (z : (Σ k, ι k) → ℂ) f, evC (conjPt z) f = starRingEnd ℂ (evC z f)) ∧ (∀ A : HermLine ι, IsSmoothHerm A → IsSmoothHerm (conjLine A)) ∧ (∀ (A : HermLine ι) s z, logNorm (conjLine A) s z = logNorm A s (conjPt z)) ∧ (∀ A B : HermLine ι, conjLine (A.tensor B) = (conjLine A).tensor (conjLine B)) ∧ ∀ A : HermLine ι, conjLine (conjLine A) = A := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Cmp.conj_basic | exact GlobalTheory.CompanionTheory.Ar.Cmp.conj_basic | (intros; apply GlobalTheory.CompanionTheory.Ar.Cmp.conj_basic <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.CMadens
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 ReciprocityTheory.AnForm.M GlobalTheory.CompanionTheory.Ar.Cmp Filter Topology
+open ReciprocityTheory.ChartRestriction.G.AI.I1 (IsBlockMap pullDeg)
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+theorem madens_hess {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] (c : E ≃L[ℝ] E) (φ : E → ℝ) (y u v : E) :
+    fderiv ℝ (fderiv ℝ (φ ∘ c)) y u v = fderiv ℝ (fderiv ℝ φ) (c y) (c u) (c v) := by
+  set e : (E →L[ℝ] ℝ) ≃L[ℝ] (E →L[ℝ] ℝ) := c.symm.arrowCongr (ContinuousLinearEquiv.refl ℝ ℝ) with he
+  have h1 : fderiv ℝ (φ ∘ c) = e ∘ fderiv ℝ φ ∘ c := by
+    funext z
+    rw [c.comp_right_fderiv]
+    ext w
+    simp [he]
+  rw [h1, e.comp_fderiv, c.comp_right_fderiv]
+  simp [he]
+
+theorem madens_cx (D : ℕ) (φ : (Fin D → ℂ) → ℝ) (y : Fin D → ℂ) :
+    cxHessian (fun y' => φ (fun i => starRingEnd ℂ (y' i))) y =
+      (cxHessian φ (fun i => starRingEnd ℂ (y i))).map (starRingEnd ℂ) := by
+  let c : (Fin D → ℂ) ≃L[ℝ] (Fin D → ℂ) := ContinuousLinearEquiv.piCongrRight (fun _ => Complex.conjCLE)
+  have hc : ∀ z, c z = fun i => starRingEnd ℂ (z i) := fun z => rfl
+  have hf : (fun y' : Fin D → ℂ => φ (fun i => starRingEnd ℂ (y' i))) = φ ∘ c := by
+    funext z; simp [hc]
+  have h1 : ∀ i : Fin D, c (Pi.single i 1) = Pi.single i 1 := by
+    intro i; funext k; rw [hc]; by_cases h : k = i
+    · subst h; simp
+    · simp [Pi.single_apply, h]
+  have h2 : ∀ i : Fin D, c (Complex.I • Pi.single i 1) = -(Complex.I • Pi.single i 1) := by
+    intro i; funext k; rw [hc]; by_cases h : k = i
+    · subst h; simp
+    · simp [Pi.single_apply, h]
+  ext i j
+  simp only [cxHessian, Matrix.map_apply, hf, madens_hess, h1, h2, map_neg, ContinuousLinearMap.neg_apply, neg_neg]
+  rw [hc y]
+  generalize fderiv ℝ (fderiv ℝ φ) (fun i => starRingEnd ℂ (y i)) = H
+  simp only [map_div₀, map_add (f := _), map_sub, map_mul, Complex.conj_ofReal, Complex.conj_I, map_ofNat, sub_neg_eq_add, Complex.ofReal_add, Complex.ofReal_sub, Complex.ofReal_neg]
+  ring
+
+theorem c_madens : ∀ (D : ℕ) (φ : Fin D → (Fin D → ℂ) → ℝ) (y : Fin D → ℂ), maDensity (fun j y' => φ j (fun i => starRingEnd ℂ (y' i))) y = maDensity φ (fun i => starRingEnd ℂ (y i)) := by
+  intro D φ y
+  have key : ∀ A : Fin D → Matrix (Fin D) (Fin D) ℂ,
+      mixedDisc (fun k => (A k).map (starRingEnd ℂ)) = starRingEnd ℂ (mixedDisc A) := by
+    intro A
+
+    simp only [mixedDisc, map_mul, map_div₀, map_one, map_natCast, map_sum, map_pow, map_neg]
+    congr 1
+    refine Finset.sum_congr rfl fun S _ => ?_
+    congr 1
+    rw [RingHom.map_det]
+    congr 1
+    ext a b
+    simp [Matrix.sum_apply]
+  simp only [maDensity, madens_cx, key, Complex.conj_re]
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.CPtsat
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 ReciprocityTheory.AnForm.M GlobalTheory.CompanionTheory.Ar.Cmp Filter Topology
+open ReciprocityTheory.ChartRestriction.G.AI.I1 (IsBlockMap pullDeg)
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+section
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι)} {e : ℕ}
+  {Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)}
+
+theorem ptsat_segre (z : (Σ k, ι k) → ℂ) : segre (star z) = star (segre z) := by
+  funext i
+  simp [segre]
+
+theorem ptsat_cons (y : Fin e → ℂ) : star (Fin.cons 1 y : Fin (e + 1) → ℂ) = Fin.cons 1 (star y) := by
+  funext i
+  refine Fin.cases ?_ (fun j => ?_) i <;> simp
+
+theorem ptsat_mem {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts P) : star z ∈ mcPts P :=
+  ((GlobalTheory.T.complex_conjugation_herm_compat K ι).1 P z).2 hz
+
+theorem ptsat_symm (h : ∀ w, Ψ' w = star (Ψ (star w))) (w) : Ψ w = star (Ψ' (star w)) := by
+  rw [h, star_star, star_star]
+
+theorem ptsat_fibre (h : ∀ w, Ψ' w = star (Ψ (star w))) {y w} (hw : w ∈ fibre P Ψ' y) :
+    star w ∈ fibre P Ψ (star y) := by
+  obtain ⟨z, hz, rfl, h2⟩ := hw
+  exact ⟨star z, ptsat_mem hz, ptsat_segre z, by rw [ptsat_symm h, star_star, h2, ptsat_cons]⟩
+
+theorem ptsat_sheet (h : ∀ w, Ψ' w = star (Ψ (star w))) {y w γ} (hγ : IsSheet P Ψ' y w γ) :
+    IsSheet P Ψ (star y) (star w) (star ∘ γ ∘ star) := by
+  refine ⟨by simp only [Function.comp_apply, star_star, ptsat_segre, hγ.1], ?_⟩
+  have ht : Tendsto (star : (Fin e → ℂ) → Fin e → ℂ) (𝓝 (star y)) (𝓝 y) := by
+    simpa using (continuous_star (R := Fin e → ℂ)).tendsto (star y)
+  filter_upwards [ht.eventually hγ.2] with y' hy'
+  refine ⟨by simpa using hy'.1.star_star, ptsat_mem hy'.2.1, ?_⟩
+  rw [ptsat_symm h, Function.comp_apply, Function.comp_apply, ptsat_segre, star_star, hy'.2.2, ptsat_cons,
+    star_star]
+
+end
+
+theorem c_ptsat : SheetIndepStatement → ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ) (Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι), IsArithVar P (e + 1) → IsGoodProj P Ψ → (∀ w i, Ψ' w i = starRingEnd ℂ (Ψ (fun c => starRingEnd ℂ (w c)) i)) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A → IsSectionOn P A s → IsGoodProj P Ψ' ∧ ptsIntegralAt P Ψ' (pot fun j => conjLine (L j)) (logNorm (conjLine A) s) = ptsIntegralAt P Ψ (pot L) (logNorm A s) := by
+  intro hS K _ ι _ P e Ψ Ψ' L A s hP hΨ h0 hL hA hs
+  have h : ∀ w, Ψ' w = star (Ψ (star w)) := fun w => funext (h0 w)
+  refine ⟨fun z hz h1 => hΨ _ (ptsat_mem hz) (by rw [ptsat_symm h, ptsat_segre, star_star, h1, star_zero]), ?_⟩
+  have hm : MeasureTheory.MeasurePreserving (star : (Fin e → ℂ) → Fin e → ℂ) :=
+    MeasureTheory.volume_preserving_pi fun _ => Complex.conjLIE.measurePreserving
+  have he : MeasurableEmbedding (star : (Fin e → ℂ) → Fin e → ℂ) :=
+    (starL' ℝ : (Fin e → ℂ) ≃L[ℝ] (Fin e → ℂ)).toHomeomorph.measurableEmbedding
+  unfold ptsIntegralAt
+  rw [← hm.integral_comp he (fun y => ∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w)]
+  refine MeasureTheory.integral_congr_ae ?_
+  filter_upwards [hm.quasiMeasurePreserving.ae (hS K ι P e Ψ L A s hP hΨ hL hA hs)] with y hy
+  refine finsum_mem_eq_of_bijOn star ⟨fun w hw => ptsat_fibre h hw, star_injective.injOn, fun w hw =>
+    ⟨star w, by simpa using ptsat_fibre (ptsat_symm h) hw, star_star w⟩⟩ fun w _ => ?_
+  unfold sheetDensity
+  by_cases h1 : ∃ γ, IsSheet P Ψ' y w γ
+  · have h2 : ∃ γ, IsSheet P Ψ (star y) (star w) γ := ⟨_, ptsat_sheet h h1.choose_spec⟩
+    rw [dite_eq_left h1, dite_eq_left h2, hy _ _ _ h2.choose_spec (ptsat_sheet h h1.choose_spec),
+      (GlobalTheory.T.complex_conjugation_herm_compat K ι).2.2.2.1]
+    have h3 := c_madens e (fun j y' => pot L j ((star ∘ h1.choose ∘ star) y')) y
+    congr 1
+    · simp only [Function.comp_apply, star_star]
+      rfl
+    · refine Eq.trans ?_ h3
+      congr 1
+      funext j y'
+      show _ = pot L j (star (h1.choose (star (star y'))))
+      rw [star_star]
+      rfl
+  · have h2 : ¬ ∃ γ, IsSheet P Ψ (star y) (star w) γ := fun ⟨γ, hγ⟩ =>
+      h1 ⟨_, by simpa only [star_star] using ptsat_sheet (ptsat_symm h) hγ⟩
+    rw [dite_eq_right h1, dite_eq_right h2]
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.CArint
+
+section
 
 @[expose] public section
 
@@ -118,3 +384,5 @@ theorem c_arint : SheetIndepStatement → PtsIndepStatement → GoodProjExistsSt
   exact hind.trans heq
 
 end PositivityTheory.UnitarySelfGeneration
+end
+end

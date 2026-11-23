@@ -1,8 +1,9 @@
 module
 
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.HBlock
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.IdxDone
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.GlRedEqOneIff
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.LocRed
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.LevelComponentsSurjective
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.PrincipalCongruenceLeLevel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,9 +39,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.IdxProd
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.GlRedEqOneIff
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.IdxDone
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PIW.MassDataColumns
+
+open Formalism.BasicNotions Formalism.L2.SG.HidaSetting Formalism.L2.SG.AdBridge Formalism.L2.SG.TypedSets
+
+theorem global_index_eq_prod_local : IdxProdH := idxProdH_of level_components_surjective level_membership_local
+
+def LocRedRest : Prop :=
+  ∀ {D : D7} (X : HidaSetting D) (hb : AdBridgeIso X.B.I) (_hK : X.LevelSubgroupCharacter) (u : D.what₂.Word),
+    X.MeasTie hb → X.LevelSubgroupNormalized → ∀ p : TypX X,
+      MassDataIdxSteps.StResZ X p ∧ HLatGL X u p ∧ HImU X hb u p
+
+theorem locRedH_of_rest (h : LocRedRest) : LocRedH :=
+  locRedH_of fun X hb hK u hT hL p =>
+    ⟨(h X hb hK u hT hL p).1, (h X hb hK u hT hL p).2.1, hKerIn_of_levelSubgroupCharacter_of_normalized X hb hK hL u p, (h X hb hK u hT hL p).2.2⟩
+
+theorem idxCountStep_of_rest (h : LocRedRest) : IdxCountStep :=
+  idxCountStep_of global_index_eq_prod_local (locRedH_of_rest h)
+
+end PIW.MassDataColumns
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.IdxCountStepOfModels
+
+section
 
 @[expose] public section
 
@@ -227,3 +265,6 @@ theorem idxCountStep_of_models
   idxCountStep_of_rest (locRedRest_of_models h)
 
 end PIW.MassDataColumns
+end
+end
+end

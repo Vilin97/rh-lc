@@ -39,9 +39,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.ChosenEqOfAllRules
+public import Formalism.LocalToGlobal.ProjectiveLattices.AlgebraMapCAt
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Topology.Sheaves.Init
 public import Formalism.LocalToGlobal.ProjectiveLattices.CompOrd
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.PTNonempty
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.ChosenEqOfAllRules
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.SupNormExample
+
+open Formalism.L2.Pj
+
+variable {K : Type} [Field K] {ι : Type} [Fintype ι]
+variable (pts : ∀ (S : Type) [CommRing S] [Algebra K S], Type)
+variable (mapR : ∀ {S T : Type} [CommRing S] [Algebra K S] [CommRing T] [Algebra K T],
+  (S →ₐ[K] T) → pts S → pts T → Prop)
+
+def conjAt (σ : K →+* ℂ) : CAt σ →ₐ[K] CAt ((starRingEnd ℂ).comp σ) :=
+  { (starRingEnd ℂ : ℂ →+* ℂ) with commutes' := fun _ => rfl }
+
+end GlobalTheory.SupNormExample
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.HeightSurvey.FromTestIffOfValAtCx
+
+section
 
 @[expose] public section
 
@@ -87,3 +118,6 @@ variable (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMa
 end Conj
 
 end GlobalTheory.SupLawProbe
+end
+end
+end

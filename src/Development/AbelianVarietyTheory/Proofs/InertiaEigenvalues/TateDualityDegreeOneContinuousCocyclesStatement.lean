@@ -3,14 +3,17 @@ module
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 public import Formalism.GaloisCohomology.LocalTateDualityK
 public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateDualityDegreeOneContinuousCocycles
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCyclotomicIntegralLattice
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoefficientRingIntegersCompactAdicProperties
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsMutuallyDualStableLatticesStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteH1PeriodDatum
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LatticeDualPairingCyclotomic
+import Formalism.SharpRestriction.LevelLetterCocycles.RamificationTwoAndConjugationAtQAndD
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -21,7 +24,12 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +37,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +51,297 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsRationalTatePairingBilinearStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CocycleMemCoboundariesOfTateOrthogonal
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N TensorProduct Module
+
+namespace GlobalTheory.TateOrthV
+
+theorem exists_unitLattice {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (LL : Type)
+    [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL]
+    (hO : GoodO (Qp := ℚ_[l]) LL O) :
+    ∃ L1 : Lattice (O := O) (charRep (cycLL (P.PD K) LL)),
+      L1.T = LinearMap.range (Algebra.linearMap O LL) := by
+  apply GlobalTheory.CycIntegral.cyc_lattice <;> assumption
+
+theorem cocycle_mem_coboundaries_of_tate_orthogonal' : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∀ b ∈ continuousCocycles A'.ρ, (∀ a ∈ continuousCocycles A.ρ, CobL (P.PD K) (cupL A'.ρ m a b)) → b ∈ B1 A'.ρ := by
+  intro hT l _ P K LL _ _ _ O _ _ hO A A' m hm b hb horth
+  obtain ⟨⟨hDom, hDVR, hFrac⟩, hfd, hmt, htr, hopen⟩ := id hO
+  haveI := hDom; haveI := hDVR; haveI := hFrac; haveI := htr
+  haveI : IsTopologicalAddGroup A'.V := IsModuleTopology.topologicalAddGroup LL A'.V
+  obtain ⟨L1, hL1⟩ := exists_unitLattice P K LL O hO
+  obtain ⟨LA, LA', hLL', -⟩ := GlobalTheory.T.exists_mutuallyDual_stable_lattices l P K LL O hO A A' m hm
+  have hT'open : IsOpen (LA'.T : Set A'.V) := Formalism.MainNotions.BlochKatoDuality.Br.lat_open hopen LA'.T LA'.fg LA'.span
+  have hL1open : IsOpen (L1.T : Set LL) := by
+    rw [hL1]
+    have e : ((LinearMap.range (Algebra.linearMap O LL) : Submodule O LL) : Set LL) =
+        Set.range (algebraMap O LL) := by
+      ext y; simp [Algebra.linearMap_apply]
+    rw [e]; exact hopen
+  have hp : ((l : ℕ) : LL) ≠ 0 := by
+    rw [← map_natCast (algebraMap ℚ_[l] LL)]
+    exact (map_ne_zero _).2 (by exact_mod_cast (Fact.out : l.Prime).ne_zero)
+
+  have hcobZ : ∀ x : A'.V, (fun g => A'.ρ g x - x) ∈ continuousCocycles A'.ρ := by
+    intro x
+    refine ⟨(A'.cont x).sub continuous_const, fun g h => ?_⟩
+    simp only [map_mul, Module.End.mul_apply, map_sub]
+    abel
+
+  have key : ∀ n : ℕ, ∃ β ∈ latticeCocycles LA', b - ((l : LL) ^ n) • β ∈ B1 A'.ρ := by
+    intro n
+    set s : LL := (((l : ℕ) : LL) ^ n)⁻¹ with hs
+    let c : ↥(GK K) → A'.V ⧸ LA'.T := fun g => Submodule.Quotient.mk (s • b g)
+    have hcZ : c ∈ divisibleCocycles LA' := by
+      refine ⟨Formalism.MainNotions.BlochKatoDuality.Br.locConst_mk LA'.T hT'open _ (hb.1.const_smul s), fun g h => ?_⟩
+      show Submodule.Quotient.mk (s • b (g * h)) = Submodule.Quotient.mk (s • b g) +
+        actD LA' g (Submodule.Quotient.mk (s • b h))
+      rw [hb.2 g h, smul_add, Submodule.Quotient.mk_add]
+      congr 1
+      show _ = Submodule.Quotient.mk (A'.ρ g (s • b h))
+      rw [map_smul]
+    have hcorth : ∀ d ∈ latticeCocycles LA, CobO (P.PD K) L1 (cupLD LA' m d c) := by
+      intro d hd
+      obtain ⟨f, hfc, hf⟩ := horth d hd.1
+      refine ⟨fun g => (Submodule.Quotient.mk (s • f g) : LL ⧸ L1.T),
+        ⟨Formalism.MainNotions.BlochKatoDuality.Br.locConst_mk L1.T hL1open _ (hfc.const_smul s), fun _ => Submodule.mem_top⟩, ?_⟩
+      funext x
+      obtain ⟨g, h⟩ := x
+      have hf' : ((cycLL (P.PD K) LL g : LLˣ) : LL) • f h - f (g * h) + f g =
+          m (d g) (A'.ρ g (b h)) := congrFun hf (g, h)
+      have hlift : liftD LA' (c h) - s • b h ∈ LA'.T :=
+        (Submodule.Quotient.eq _).1 (Submodule.Quotient.mk_surjective LA'.T (c h)).choose_spec
+      obtain ⟨e, he⟩ := (hLL'.2 _).1 (LA'.stable g _ hlift) (d g) (hd.2 g (Set.mem_univ g))
+      show (Submodule.Quotient.mk (((cycLL (P.PD K) LL g : LLˣ) : LL) • (s • f h)) : LL ⧸ L1.T) -
+          Submodule.Quotient.mk (s • f (g * h)) + Submodule.Quotient.mk (s • f g) =
+          Submodule.Quotient.mk (m (d g) (A'.ρ g (liftD LA' (c h))))
+      rw [← Submodule.Quotient.mk_sub, ← Submodule.Quotient.mk_add, Submodule.Quotient.eq, hL1]
+      have e1 : ((cycLL (P.PD K) LL g : LLˣ) : LL) • (s • f h) - s • f (g * h) + s • f g =
+          s • m (d g) (A'.ρ g (b h)) := by
+        rw [← hf']; simp only [smul_eq_mul]; ring
+      have e2 : m (d g) (A'.ρ g (liftD LA' (c h))) =
+          s • m (d g) (A'.ρ g (b h)) + m (d g) (A'.ρ g (liftD LA' (c h) - s • b h)) := by
+        simp only [map_sub, map_smul, add_sub_cancel]
+      rw [e1, e2]
+      refine ⟨-e, ?_⟩
+      show algebraMap O LL (-e) = _
+      rw [map_neg, ← he]
+      abel
+    obtain ⟨xbar, hx⟩ := GlobalTheory.TateOrth.mem_BD_of_orthogonal hT l P K LL O hO L1 hL1 A A' LA LA' m
+      hLL' c hcZ hcorth
+    obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective LA'.T xbar
+    refine ⟨fun g => s • b g - (A'.ρ g x - x), ⟨(continuousCocycles A'.ρ).sub_mem ((continuousCocycles A'.ρ).smul_mem s hb) (hcobZ x),
+      fun g _ => ?_⟩, ?_⟩
+    · have hg : Submodule.Quotient.mk (A'.ρ g x) - Submodule.Quotient.mk x =
+          (Submodule.Quotient.mk (s • b g) : A'.V ⧸ LA'.T) := congrFun hx g
+      rw [← Submodule.Quotient.mk_sub] at hg
+      exact (Submodule.Quotient.eq _).1 hg.symm
+    · refine ⟨(((l : ℕ) : LL) ^ n) • x, ?_⟩
+      funext g
+      have hps : (((l : ℕ) : LL) ^ n) * s = 1 := mul_inv_cancel₀ (pow_ne_zero n hp)
+      simp only [cob, LinearMap.pi_apply, LinearMap.sub_apply, LinearMap.id_apply, map_smul,
+        Pi.sub_apply, Pi.smul_apply, smul_sub, smul_smul, hps, one_smul]
+      abel
+
+  have hl : ((l : ℕ) : O) ∉ nonunits O → False := by
+    intro hu
+    have hu' : IsUnit ((l : ℕ) : O) := by simpa [mem_nonunits_iff] using hu
+    have hc := (GlobalTheory.GoodCoeff.good_coeff_integers l LL O hO).2.2.2
+    have htop : Ideal.span {((l : ℕ) : O)} = ⊤ := Ideal.span_singleton_eq_top.2 hu'
+    have h10 : (1 : O) = 0 := by
+      apply hc.toIsHausdorff.haus 1
+      intro n
+      rw [htop, Ideal.top_pow, Submodule.top_smul]
+      exact SModEq.top
+    exact one_ne_zero h10
+  have hne : Ideal.span {((l : ℕ) : O)} ≠ ⊤ := by
+    intro htop
+    apply hl
+    intro hmem
+    exact hmem (Ideal.span_singleton_eq_top.1 htop)
+  haveI hfinH : Module.Finite O (LatticeCohomology LA') :=
+    GlobalTheory.TateFiniteH1.tate_finH1 hT l P K LL O hO A' LA'
+  let S : Submodule O ↥(latticeCocycles LA') := ((B1 A'.ρ).restrictScalars O).comap (latticeCocycles LA').subtype
+  have hBS : (latticeCoboundaries LA').comap (latticeCocycles LA').subtype ≤ S := by
+    rintro z ⟨y, -, hy⟩
+    exact ⟨y, hy⟩
+  haveI : Module.Finite O (↥(latticeCocycles LA') ⧸ S) := by
+    refine Module.Finite.of_surjective (Submodule.factor hBS) ?_
+    intro q
+    obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ q
+    exact ⟨Submodule.Quotient.mk z, rfl⟩
+  have hK := Ideal.iInf_pow_smul_eq_bot_of_isLocalRing (M := ↥(latticeCocycles LA') ⧸ S) _ hne
+  obtain ⟨β0, hβ0, hbβ0⟩ := key 0
+  rw [pow_zero, one_smul] at hbβ0
+  have hq : (Submodule.Quotient.mk ⟨β0, hβ0⟩ : ↥(latticeCocycles LA') ⧸ S) = 0 := by
+    rw [← Submodule.mem_bot O, ← hK, Submodule.mem_iInf]
+    intro i
+    obtain ⟨β, hβ, hbβ⟩ := key i
+    have heq : (Submodule.Quotient.mk ⟨β0, hβ0⟩ : ↥(latticeCocycles LA') ⧸ S) =
+        (((l : ℕ) : O) ^ i) • Submodule.Quotient.mk ⟨β, hβ⟩ := by
+      rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.eq]
+      show β0 - (((l : ℕ) : O) ^ i) • β ∈ B1 A'.ρ
+      have h1 : β0 - (((l : ℕ) : O) ^ i) • β = (b - ((l : LL) ^ i) • β) - (b - β0) := by
+        rw [← algebraMap_smul LL (((l : ℕ) : O) ^ i) β, map_pow, map_natCast]
+        abel
+      rw [h1]
+      exact (B1 A'.ρ).sub_mem hbβ hbβ0
+    rw [heq, Ideal.span_singleton_pow]
+    exact Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) Submodule.mem_top
+  have hβ0B : β0 ∈ B1 A'.ρ := (Submodule.Quotient.mk_eq_zero S).1 hq
+  have : b = (b - β0) + β0 := by abel
+  rw [this]
+  exact (B1 A'.ρ).add_mem hbβ0 hβ0B
+
+end GlobalTheory.TateOrthV
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CocycleMemCoboundariesOfTateOrthogonalStatement
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N TensorProduct Module
+
+theorem _root_.GlobalTheory.T.cocycle_mem_coboundaries_of_tate_orthogonal : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∀ b ∈ continuousCocycles A'.ρ, (∀ a ∈ continuousCocycles A.ρ, CobL (P.PD K) (cupL A'.ρ m a b)) → b ∈ B1 A'.ρ := by
+  first | exact @GlobalTheory.TateOrthV.cocycle_mem_coboundaries_of_tate_orthogonal' | exact GlobalTheory.TateOrthV.cocycle_mem_coboundaries_of_tate_orthogonal' | (intros; apply GlobalTheory.TateOrthV.cocycle_mem_coboundaries_of_tate_orthogonal' <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CupOneCocyclesAnticommUpToCoboundary
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N TensorProduct Module
+
+namespace GlobalTheory
+
+section General
+
+variable {G : Type} [Group G] [TopologicalSpace G] {LL : Type} [Field LL] [TopologicalSpace LL]
+  [IsTopologicalRing LL]
+  {V : Type} [AddCommGroup V] [Module LL V] [TopologicalSpace V] [ContinuousAdd V]
+  [ContinuousConstSMul LL V]
+  {V' : Type} [AddCommGroup V'] [Module LL V'] [TopologicalSpace V'] [ContinuousAdd V']
+  [ContinuousConstSMul LL V']
+
+theorem cupAnti_cob_of_flip (χ : G →* LLˣ) (ρ : Representation LL G V) (ρ' : Representation LL G V')
+    (m : V →ₗ[LL] V' →ₗ[LL] LL) (hm : Continuous fun p : V × V' => m p.1 p.2)
+    (hχ : ∀ g x y, m (ρ g x) (ρ' g y) = ((χ g : LLˣ) : LL) * m x y)
+    {a : G → V} (ha : a ∈ continuousCocycles ρ) {b : G → V'} (hb : b ∈ continuousCocycles ρ')
+    (h : ∃ f : G → LL, Continuous f ∧ ReciprocityTheory.Def.d1 (charRep χ) f = cupL ρ m.flip b a) :
+    ∃ f : G → LL, Continuous f ∧ ReciprocityTheory.Def.d1 (charRep χ) f = cupL ρ' m a b := by
+  obtain ⟨f, hf, hfe⟩ := h
+  obtain ⟨hac, ha⟩ := ha
+  obtain ⟨hbc, hb⟩ := hb
+  refine ⟨fun g => -(m (a g) (b g)) - f g, ((hm.comp (hac.prodMk hbc)).neg).sub hf, ?_⟩
+  funext x
+  obtain ⟨g, h⟩ := x
+  have h1 := congrFun hfe (g, h)
+  have h2 := hχ g (a h) (b h)
+  simp only [ReciprocityTheory.Def.d1, charRep, cupL, LinearMap.coe_mk, AddHom.coe_mk, MonoidHom.coe_mk,
+    OneHom.coe_mk, LinearMap.flip_apply, LinearMap.smul_apply, LinearMap.id_apply, smul_eq_mul,
+    ha, hb, map_add, LinearMap.add_apply] at h1 ⊢
+  linear_combination -h1 + h2
+
+theorem cupAnti_cob_of_left (χ : G →* LLˣ) (ρ : Representation LL G V) (ρ' : Representation LL G V')
+    (m : V →ₗ[LL] V' →ₗ[LL] LL) (hm : Continuous fun p : V × V' => m p.1 p.2)
+    (hχ : ∀ g x y, m (ρ g x) (ρ' g y) = ((χ g : LLˣ) : LL) * m x y)
+    {a : G → V} (ha : a ∈ Formalism.WeaklyAdmissibleFiltrations.B1 ρ) {b : G → V'} (hb : b ∈ continuousCocycles ρ') :
+    ∃ f : G → LL, Continuous f ∧ ReciprocityTheory.Def.d1 (charRep χ) f = cupL ρ' m a b := by
+  obtain ⟨x, rfl⟩ := ha
+  obtain ⟨hbc, hb⟩ := hb
+  refine ⟨fun g => m x (b g), hm.comp (continuous_const.prodMk hbc), ?_⟩
+  funext y
+  obtain ⟨g, h⟩ := y
+  have h2 := hχ g x (b h)
+  simp only [ReciprocityTheory.Def.d1, charRep, cupL, cob, LinearMap.coe_mk, AddHom.coe_mk, MonoidHom.coe_mk,
+    OneHom.coe_mk, LinearMap.smul_apply, LinearMap.id_apply, smul_eq_mul, LinearMap.pi_apply,
+    hb, map_add, map_sub, LinearMap.sub_apply]
+  linear_combination -h2
+
+end General
+
+theorem cupL_anticomm_cobL : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∀ a ∈ continuousCocycles A.ρ, ∀ b ∈ continuousCocycles A'.ρ, (CobL (P.PD K) (cupL A'.ρ m a b) ↔ CobL (P.PD K) (cupL A.ρ m.flip b a)) ∧ (a ∈ B1 A.ρ ∨ b ∈ B1 A'.ρ → CobL (P.PD K) (cupL A'.ρ m a b)) := by
+  intro l _ P K LL _ _ _ O _ _ hO A A' m hm a ha b hb
+  haveI : IsTopologicalRing LL := hO.2.2.2.1
+  have hc : Continuous fun p : A.V × A'.V => m p.1 p.2 :=
+    IsModuleTopology.continuous_bilinear_of_finite_left m
+  have hc' : Continuous fun p : A'.V × A.V => m.flip p.1 p.2 :=
+    IsModuleTopology.continuous_bilinear_of_finite_left m.flip
+  have hχ := hm.1
+  have hχ' : ∀ g x y, m.flip (A'.ρ g x) (A.ρ g y) =
+      ((cycLL (P.PD K) LL g : LLˣ) : LL) * m.flip x y := fun g x y => hχ g y x
+  refine ⟨⟨fun h => cupAnti_cob_of_flip _ A'.ρ A.ρ m.flip hc' hχ' hb ha h,
+    fun h => cupAnti_cob_of_flip _ A.ρ A'.ρ m hc hχ ha hb h⟩, ?_⟩
+  rintro (h | h)
+  · exact cupAnti_cob_of_left _ A.ρ A'.ρ m hc hχ h hb
+  · exact cupAnti_cob_of_flip _ A.ρ A'.ρ m hc hχ ha hb
+      (cupAnti_cob_of_left _ A'.ρ A.ρ m.flip hc' hχ' h ha)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CupOneCocyclesAnticommUpToCoboundaryStatement
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N TensorProduct Module
+
+theorem _root_.GlobalTheory.T.cup_one_cocycles_anticomm_up_to_coboundary : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∀ a ∈ continuousCocycles A.ρ, ∀ b ∈ continuousCocycles A'.ρ, (CobL (P.PD K) (cupL A'.ρ m a b) ↔ CobL (P.PD K) (cupL A.ρ m.flip b a)) ∧ (a ∈ B1 A.ρ ∨ b ∈ B1 A'.ρ → CobL (P.PD K) (cupL A'.ρ m a b)) := by
+  first | exact @GlobalTheory.cupL_anticomm_cobL | exact GlobalTheory.cupL_anticomm_cobL | (intros; apply GlobalTheory.cupL_anticomm_cobL <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateDualityDegreeOneContinuousCocycles
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N TensorProduct Module
+
+namespace GlobalTheory
+
+theorem tateDuality_degreeOne_cocycles : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l), ∀ (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∃ β : ↥(continuousCocycles A.ρ) →ₗ[LL] ↥(continuousCocycles A'.ρ) →ₗ[LL] LL, (∀ a b, β a b = 0 ↔ CobL (P.PD K) (cupL A'.ρ m a.1 b.1)) ∧ (∀ a, (∀ b, β a b = 0) ↔ a.1 ∈ B1 A.ρ) ∧ ∀ b, (∀ a, β a b = 0) ↔ b.1 ∈ B1 A'.ρ := by
+  intro hT l _ P K LL _ _ _ O _ _ hO A A' m hm
+  obtain ⟨β, hβ⟩ := GlobalTheory.T.exists_rational_tatePairing_bilinear hT l P K LL O hO A A' m hm
+  have hflip : IsDual1 (P.PD K) A'.ρ A.ρ m.flip :=
+    ⟨fun g x y => hm.1 g y x, hm.2.2.1, hm.2.1, hm.2.2.2.symm⟩
+  have hanti := GlobalTheory.T.cup_one_cocycles_anticomm_up_to_coboundary l P K LL O hO A A' m hm
+  refine ⟨β, hβ, fun a => ⟨fun h => ?_, fun ha b => ?_⟩, fun b => ⟨fun h => ?_, fun hb a => ?_⟩⟩
+  · refine GlobalTheory.T.cocycle_mem_coboundaries_of_tate_orthogonal hT l P K LL O hO A' A m.flip hflip a.1 a.2 (fun b hb => ?_)
+    exact ((hanti a.1 a.2 b hb).1).1 ((hβ a ⟨b, hb⟩).1 (h ⟨b, hb⟩))
+  · exact (hβ a b).2 ((hanti a.1 a.2 b.1 b.2).2 (Or.inl ha))
+  · exact GlobalTheory.T.cocycle_mem_coboundaries_of_tate_orthogonal hT l P K LL O hO A A' m hm b.1 b.2
+      (fun a ha => (hβ ⟨a, ha⟩ b).1 (h ⟨a, ha⟩))
+  · exact (hβ a b).2 ((hanti a.1 a.2 b.1 b.2).2 (Or.inr hb))
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateDualityDegreeOneContinuousCocyclesStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +349,5 @@ open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.Weakl
 
 theorem _root_.GlobalTheory.T.tateDuality_degreeOne_continuous_cocycles : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l), ∀ (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → ∀ (A A' : GRep ↥(GK K) ℚ_[l] LL O) (m : A.V →ₗ[LL] A'.V →ₗ[LL] LL), IsDual1 (P.PD K) A.ρ A'.ρ m → ∃ β : ↥(continuousCocycles A.ρ) →ₗ[LL] ↥(continuousCocycles A'.ρ) →ₗ[LL] LL, (∀ a b, β a b = 0 ↔ CobL (P.PD K) (cupL A'.ρ m a.1 b.1)) ∧ (∀ a, (∀ b, β a b = 0) ↔ a.1 ∈ B1 A.ρ) ∧ ∀ b, (∀ a, β a b = 0) ↔ b.1 ∈ B1 A'.ρ := by
   first | exact @GlobalTheory.tateDuality_degreeOne_cocycles | exact GlobalTheory.tateDuality_degreeOne_cocycles | (intros; apply GlobalTheory.tateDuality_degreeOne_cocycles <;> assumption)
+end
+end

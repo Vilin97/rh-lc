@@ -5,8 +5,7 @@ public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
 public import Mathlib.RingTheory.Flat.Basic
-public import Lemmata.FirstBlockLemmaH.Imports
-public import Lemmata.GeneralBFactThirdVariant.Imports
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,10 +24,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,10 +44,127 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Algebra.Module.Torsion.Basic
 public import Mathlib.RingTheory.Flat.TorsionFree
+
+-- Source module: Lemmata.FirstBlockLemmaH.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.FirstBlockLemmaH
+
+theorem goal1 :
+  ∀ {E : Type} [inst : Field.{0} E] [NumberField.{0} E] {V : Type} [inst_2 : AddCommGroup.{0} V]
+  [inst_3 : Module.{0, 0} E V] [inst_4 : Module.{0, 0} (NumberField.RingOfIntegers.{0} E) V]
+  [IsScalarTower.{0, 0, 0} (NumberField.RingOfIntegers.{0} E) E V] {ι : Type} [Fintype.{0} ι] [DecidableEq.{1} ι]
+  {b : Module.Basis.{0, 0, 0} ι E V} {M : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} E) V},
+  Module.Finite.{0, 0} (NumberField.RingOfIntegers.{0} E) (Subtype.{1} fun (x : V) ↦ Membership.mem.{0, 0} M x) →
+    Exists.{1} fun (s : NumberField.RingOfIntegers.{0} E) ↦
+      And (Membership.mem.{0, 0} (nonZeroDivisors.{0} (NumberField.RingOfIntegers.{0} E)) s)
+        (∀ (v : V),
+          Membership.mem.{0, 0} M v →
+            ∀ (i : ι),
+              Membership.mem.{0, 0}
+                (RingHom.range.{0, 0} (Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} E) E))
+                (HMul.hMul.{0, 0, 0}
+                  (DFunLike.coe.{1, 1, 1} (Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} E) E) s)
+                  (DFunLike.coe.{1, 1, 1} (DFunLike.coe.{1, 1, 1} (Module.Basis.repr.{0, 0, 0} b) v) i))) := by
+  intro E _ _ V _ _ _ _ ι _ _ b M hM
+  obtain ⟨S, hS⟩ := Module.Finite.iff_fg.mp hM
+  obtain ⟨s, hs⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (NumberField.RingOfIntegers E))
+    (S ×ˢ (Finset.univ : Finset ι)) (fun p : V × ι => b.repr p.1 p.2)
+  refine ⟨s, s.2, ?_⟩
+  intro v hv
+  rw [← hS] at hv
+  induction hv using Submodule.span_induction with
+  | mem x hx =>
+    intro i
+    have h := hs (x, i) (Finset.mem_product.mpr ⟨Finset.mem_coe.mp hx, Finset.mem_univ _⟩)
+    rw [IsLocalization.IsInteger, Algebra.smul_def] at h
+    exact RingHom.mem_range.mpr (RingHom.mem_rangeS.mp h)
+  | zero =>
+    intro i
+    rw [map_zero, Finsupp.zero_apply, mul_zero]
+    exact zero_mem _
+  | add x y _ _ hx hy =>
+    intro i
+    rw [map_add (f := _), Finsupp.add_apply, mul_add]
+    exact add_mem (hx i) (hy i)
+  | smul a x _ hx =>
+    intro i
+    rw [← algebraMap_smul E a x, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_left_comm]
+    exact mul_mem (RingHom.mem_range_self _ a) (hx i)
+
+end Bl.FirstBlockLemmaH
+end
+end
+
+-- Source module: Lemmata.GeneralBFactThirdVariant.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_third_variant
+
+theorem goal1 :
+  ∀ {E : Type} [inst : Field.{0} E] [inst_1 : NumberField.{0} E] {Ψ : Finset.{0} (RingHom.{0, 0} E Complex)},
+  (∀ (σ : RingHom.{0, 0} E Complex),
+      Iff (Membership.mem.{0, 0} Ψ σ) (Not (Membership.mem.{0, 0} Ψ (NumberField.ComplexEmbedding.conjugate.{0} σ)))) →
+    ∀ (x : Module.Free.ChooseBasisIndex.{0, 0} Int (NumberField.RingOfIntegers.{0} E) → Real),
+      (∀ (τ : RingHom.{0, 0} E Complex),
+          Membership.mem.{0, 0} Ψ τ →
+            Eq.{1}
+              (Finset.sum.{0, 0} Finset.univ.{0}
+                fun (k : Module.Free.ChooseBasisIndex.{0, 0} Int (NumberField.RingOfIntegers.{0} E)) ↦
+                HMul.hMul.{0, 0, 0} (Complex.ofReal (x k))
+                  (DFunLike.coe.{1, 1, 1} τ
+                    (NumberField.RingOfIntegers.val.{0}
+                      (DFunLike.coe.{1, 1, 1} (NumberField.RingOfIntegers.basis.{0} E) k))))
+              0) →
+        Eq.{1} x 0 := by
+  intro E _ _ Ψ hΨ x hx
+  have hall : ∀ σ : RingHom E Complex, (Finset.univ.sum fun k =>
+      (Complex.ofReal (x k)) * σ (NumberField.RingOfIntegers.val
+        (NumberField.RingOfIntegers.basis E k))) = 0 := by
+    intro σ
+    by_cases hσ : σ ∈ Ψ
+    · exact hx σ hσ
+    · have hc : NumberField.ComplexEmbedding.conjugate σ ∈ Ψ := by
+        by_contra hc
+        exact hσ ((hΨ σ).mpr hc)
+      have h2 := congrArg (starRingEnd Complex) (hx _ hc)
+
+      rw [map_sum, map_zero] at h2
+      simpa only [map_mul, Complex.conj_ofReal, NumberField.ComplexEmbedding.conjugate_coe_eq,
+        Complex.conj_conj] using h2
+  have hli := (NumberField.canonicalEmbedding.latticeBasis E).linearIndependent
+  rw [Fintype.linearIndependent_iff] at hli
+  funext k
+  have h3 := hli (fun k => Complex.ofReal (x k)) (by
+    funext σ
+    rw [Finset.sum_apply]
+    simp only [NumberField.canonicalEmbedding.latticeBasis_apply, Pi.smul_apply,
+      NumberField.canonicalEmbedding.apply_at, NumberField.integralBasis_apply, smul_eq_mul,
+      Pi.zero_apply]
+    exact hall σ) k
+  exact_mod_cast h3
+
+end Bl.general_b_fact_third_variant
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.DatTheta
+
+section
 
 @[expose] public section
 
@@ -311,3 +424,6 @@ theorem theta_bijective (hΨ : ∀ σ : E →+* ℂ, σ ∈ Ψ ↔ ComplexEmbedd
 end General
 
 end Formalism.L2.Pj.DatLin
+end
+end
+end

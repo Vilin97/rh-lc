@@ -1,7 +1,6 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechHdegOfSubSt
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechTransport
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsSerrePoly
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,38 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechTransport
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechHdegOfSubSt
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+noncomputable section
+
+universe u v w
+
+def CechHdegOfSub.Statement : Prop :=
+  ∀ (S : Type u) [CommRing S] (Ω : Type w) [Field Ω] [Algebra S Ω] (N : ℕ)
+    (x : Fin (N + 1) → Ω) (E : Type v) [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
+    (T : SubSystem S x E) (n : ℕ),
+    Nonempty (T.H n ≃ₗ[S] Cech.Hdeg (fun _ : Chart x => E) (fun I => (T.sub I).restrictScalars S)
+      (Cech.idRes S E (support x)) n)
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechHdegOfSub
+
+section
 
 @[expose] public section
 
@@ -108,3 +139,5 @@ theorem CechHdegOfSub.proof : CechHdegOfSub.Statement.{u, v, w} := by
 end
 
 end GroundTheory.Heights₂.Heights.Kleiman
+end
+end

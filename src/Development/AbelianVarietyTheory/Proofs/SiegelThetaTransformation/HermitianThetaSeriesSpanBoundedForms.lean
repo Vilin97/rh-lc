@@ -2,26 +2,15 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IsSystem
 public import Development.AbelianVarietyTheory.Definitions.ThetaValues.ExistsMemRowHighestTotalDegreeEqTwo
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsFamilyInvariantOfFockInner
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsFundamentalDomain
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.FiniteClsAndStab
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.GaussianKernelIntegrableOnThinSlab
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IntegrableTsumOfSummableIntegralNorm
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IsOpenFrames
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.KernelIdentity
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.LatticeOperatorCoefficients
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.MeasurePreservingMulLeft
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.PeriodsLactSymplectic
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SetIntegralCompOfStable
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SummableSetIntegralOfSummableNorm
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DetOfTriangular
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.SumFinsuppAntidiagProdPowDivMultiFactorial
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EventuallyExistsMulIsLowerTriangular
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.CStarAlgebra.Module.Constructions
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+public import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -33,12 +22,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -59,9 +47,205 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsFundamentalDomain
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.FiniteClsAndStab
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.GaussianKernelIntegrableOnThinSlab
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IntegrableTsumOfSummableIntegralNorm
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IsOpenFrames
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.KernelIdentity
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.LatticeOperatorCoefficients
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.MeasurePreservingMulLeft
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.PeriodsLactSymplectic
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SetIntegralCompOfStable
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsWeightedHomogeneousOfMemOrbitSpan
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.PolyDerivSmulLetter
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DetOfTriangular
+import Mathlib.RingTheory.Henselian
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsFamilyInvariantOfFockInner
+
+section
+
+@[expose] public section
+
+open Matrix Complex NumberField MeasureTheory GlobalTheory GlobalTheory.SW GlobalTheory.ThFr ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD
+open scoped ComplexConjugate ComplexOrder Real Classical
+
+namespace GlobalTheory.SW
+
+theorem sum_mul_conj_orthonormalBasis {V ι : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    [FiniteDimensional ℂ V] [Fintype ι] (b b' : OrthonormalBasis ι ℂ V) (l l' : V →ₗ[ℂ] ℂ) :
+    ∑ j, l (b j) * conj (l' (b j)) = ∑ j, l (b' j) * conj (l' (b' j)) := by
+  have := FiniteDimensional.complete ℂ V
+  have h (l : V →ₗ[ℂ] ℂ) : ∃ a : V, ∀ v, l v = inner ℂ a v :=
+    ⟨(InnerProductSpace.toDual ℂ V).symm (LinearMap.toContinuousLinearMap l), fun v => by
+      rw [InnerProductSpace.toDual_symm_apply]; rfl⟩
+  obtain ⟨a, ha⟩ := h l
+  obtain ⟨a', ha'⟩ := h l'
+  simp only [ha, ha', inner_conj_symm, OrthonormalBasis.sum_inner_mul_inner]
+
+theorem exists_family_invariant_of_fockInner {σ : Type} (W : Submodule ℂ (MvPolynomial σ ℂ))
+    [FiniteDimensional ℂ W] (hW : W ≠ ⊥) :
+    ∃ (m : ℕ) (P : Fin m → MvPolynomial σ ℂ), (∀ j, P j ∈ W) ∧ (∃ j, P j ≠ 0) ∧
+      ∀ f : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ, (∀ Q ∈ W, f Q ∈ W) →
+        (∀ Q Q', MvPoly.fockInner (f Q) (f Q') = MvPoly.fockInner Q Q') →
+        ∀ l l' : MvPolynomial σ ℂ →ₗ[ℂ] ℂ,
+          ∑ j, l (f (P j)) * conj (l' (f (P j))) = ∑ j, l (P j) * conj (l' (P j)) := by
+  let cr : InnerProductSpace.Core ℂ W :=
+    { inner := fun x y => MvPoly.fockInner (y : MvPolynomial σ ℂ) x
+      conj_inner_symm := fun x y => MvPoly.fockInner_conj_symm _ _
+      re_inner_nonneg := fun x => by
+        rw [MvPoly.fockInner_self, RCLike.ofReal_re]; exact MvPoly.fockNormSq_nonneg _
+      add_left := fun x y z => MvPoly.fockInner_add_right _ _ _
+      smul_left := fun x y r => MvPoly.fockInner_smul_right _ _ _
+      definite := fun x hx => by
+        rw [MvPoly.fockInner_self] at hx
+        exact Subtype.ext (MvPoly.fockNormSq_eq_zero.mp (RCLike.ofReal_eq_zero.mp hx)) }
+  letI : NormedAddCommGroup W := cr.toNormedAddCommGroup
+  letI : InnerProductSpace ℂ W := InnerProductSpace.ofCore cr.toCore
+  let b := stdOrthonormalBasis ℂ W
+  have hpos : 0 < Module.finrank ℂ W := by
+    rw [Nat.pos_iff_ne_zero, Ne, Submodule.finrank_eq_zero]; exact hW
+  refine ⟨_, fun j => b j, fun j => (b j).2, ⟨⟨0, hpos⟩, fun e => ?_⟩, fun f hf hi l l' => ?_⟩
+  · exact b.orthonormal.ne_zero _ (Subtype.ext e)
+  · let U : W →ₗᵢ[ℂ] W := (f.restrict hf).isometryOfInner fun x y => hi _ _
+    exact sum_mul_conj_orthonormalBasis (b.map (U.toLinearIsometryEquiv rfl)) b
+      (l ∘ₗ W.subtype) (l' ∘ₗ W.subtype)
+
+theorem exists_invFam_rowHighest : ∀ (T : Type) [Fintype T] [DecidableEq T] (p q n : ℕ)
+    (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ), p + q ≤ n →
+    ∃ (m : ℕ) (P : Fin m → Harm.Poly ℂ T p q (Fin n)), (∀ j, P j ∈ Harm.rowHighest ℂ c c') ∧
+      (∃ j, P j ≠ 0) ∧ InvFam P := by
+  intro T _ _ p q n c c' h
+  obtain ⟨m, P, h₁, h₂, h₃⟩ := exists_family_invariant_of_fockInner
+    (Harm.rowHighest (κ := Fin n) ℂ c c') (Harm.rowHighest_ne_bot h c c')
+  refine ⟨m, P, h₁, h₂, fun u hu z w => ?_⟩
+  have hs : star u * u = 1 := funext fun t => Units.ext (Matrix.mem_unitaryGroup_iff'.mp (hu t))
+  refine h₃ (Harm.colActHom u).toLinearMap (fun Q hQ => Harm.colAct_mem_rowHighest u hQ)
+    (fun Q Q' => ?_) (MvPolynomial.aeval z).toLinearMap (MvPolynomial.aeval w).toLinearMap
+  change MvPoly.fockInner (Harm.colAct ℂ T p q (Fin n) u Q) (Harm.colAct ℂ T p q (Fin n) u Q') = _
+  rw [Harm.fockInner_colAct, ← AlgEquiv.mul_apply, ← map_mul, hs, map_one, AlgEquiv.one_apply]
+
+end GlobalTheory.SW
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SummableSetIntegralOfSummableNorm
+
+section
+
+@[expose] public section
+
+open Matrix Complex NumberField MeasureTheory GlobalTheory GlobalTheory.SW GlobalTheory.ThFr ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD
+open scoped ComplexConjugate ComplexOrder Real Classical
+
+namespace GlobalTheory.SW
+
+theorem summable_setIntegral_of_summable_norm {I Y : Type} [MeasurableSpace Y] (ν : Measure Y)
+    (D : I → Set Y) (f : I → Y → ℂ) (h : Summable fun i => ∫ y in D i, ‖f i y‖ ∂ν) :
+    Summable fun i => ∫ y in D i, f i y ∂ν := by
+
+  exact Summable.of_norm_bounded h fun i => norm_integral_le_integral_norm _
+
+def finiteRankDomain {I Y : Type} [MeasurableSpace Y] (ν : Measure Y) (D : I → Set Y) {m : ℕ}
+    (t : Fin m → I → Y → ℂ) : Submodule ℂ (Fin m → ℂ) where
+  carrier := {v | (∀ i, IntegrableOn (fun y => ∑ j, v j * t j i y) (D i) ν) ∧
+    Summable fun i => ∫ y in D i, ‖∑ j, v j * t j i y‖ ∂ν}
+  zero_mem' := by
+    refine ⟨fun i => ?_, ?_⟩
+    · simp
+    · simp
+  add_mem' := by
+    rintro v w ⟨hv, hv'⟩ ⟨hw, hw'⟩
+    have key : ∀ i y, ∑ j, (v + w) j * t j i y = ∑ j, v j * t j i y + ∑ j, w j * t j i y := by
+      intro i y
+      simp [add_mul, Finset.sum_add_distrib]
+    refine ⟨fun i => ?_, ?_⟩
+    · simp only [key]
+      exact (hv i).add (hw i)
+    · simp only [key]
+      refine Summable.of_nonneg_of_le (fun i => integral_nonneg fun y => norm_nonneg _)
+        (fun i => ?_) (hv'.add hw')
+      rw [← integral_add (hv i).norm (hw i).norm]
+      exact integral_mono ((hv i).add (hw i)).norm ((hv i).norm.add (hw i).norm)
+        (fun y => norm_add_le _ _)
+  smul_mem' := by
+    rintro c v ⟨hv, hv'⟩
+    have key : ∀ i y, ∑ j, (c • v) j * t j i y = c * ∑ j, v j * t j i y := by
+      intro i y
+      simp [Finset.mul_sum, mul_assoc]
+    refine ⟨fun i => ?_, ?_⟩
+    · simp only [key]
+      exact (hv i).const_mul c
+    · simp only [key, norm_mul, integral_const_mul]
+      exact hv'.mul_left _
+
+noncomputable def finiteRankFunctional {I Y : Type} [MeasurableSpace Y] (ν : Measure Y)
+    (D : I → Set Y) {m : ℕ} (t : Fin m → I → Y → ℂ) : finiteRankDomain ν D t →ₗ[ℂ] ℂ where
+  toFun v := ∑' i, ∫ y in D i, ∑ j, v.1 j * t j i y ∂ν
+  map_add' := by
+    rintro ⟨v, hv, hv'⟩ ⟨w, hw, hw'⟩
+    have key : ∀ i y, ∑ j, (v + w) j * t j i y = ∑ j, v j * t j i y + ∑ j, w j * t j i y := by
+      intro i y
+      simp [add_mul, Finset.sum_add_distrib]
+    show ∑' i, ∫ y in D i, ∑ j, (v + w) j * t j i y ∂ν
+      = ∑' i, ∫ y in D i, ∑ j, v j * t j i y ∂ν + ∑' i, ∫ y in D i, ∑ j, w j * t j i y ∂ν
+    rw [← Summable.tsum_add (summable_setIntegral_of_summable_norm ν D _ hv')
+      (summable_setIntegral_of_summable_norm ν D _ hw')]
+    refine tsum_congr fun i => ?_
+    simp only [key]
+    exact integral_add (hv i) (hw i)
+  map_smul' := by
+    rintro c ⟨v, hv⟩
+    have key : ∀ i y, ∑ j, (c • v) j * t j i y = c * ∑ j, v j * t j i y := by
+      intro i y
+      simp [Finset.mul_sum, mul_assoc]
+    show ∑' i, ∫ y in D i, ∑ j, (c • v) j * t j i y ∂ν
+      = c * ∑' i, ∫ y in D i, ∑ j, v j * t j i y ∂ν
+    simp only [key, integral_const_mul]
+    exact tsum_mul_left
+
+theorem finiteRank_integral_mem_span : ∀ (A I Y : Type) [Countable I] [MeasurableSpace Y] (ν : Measure Y) (D : I → Set Y) (S : Set A) (m : ℕ) (e : Fin m → A → ℂ) (t : Fin m → I → Y → ℂ), (∀ a ∈ S, (∀ i, IntegrableOn (fun y => ∑ j, e j a * t j i y) (D i) ν) ∧ Summable fun i => ∫ y in D i, ‖∑ j, e j a * t j i y‖ ∂ν) → ∃ b : Fin m → ℂ, ∀ a ∈ S, ∑' i, ∫ y in D i, ∑ j, e j a * t j i y ∂ν = ∑ j, b j * e j a := by
+  intro A I Y _ _ ν D S m e t hS
+
+  obtain ⟨g, hg⟩ := LinearMap.exists_extend (finiteRankFunctional ν D t)
+  refine ⟨fun j => g (Pi.single j 1), fun a ha => ?_⟩
+  have hmem : (fun j => e j a) ∈ finiteRankDomain ν D t := hS a ha
+  have h1 : g (fun j => e j a) = ∑' i, ∫ y in D i, ∑ j, e j a * t j i y ∂ν :=
+    LinearMap.congr_fun hg ⟨fun j => e j a, hmem⟩
+  rw [← h1]
+  have hx : (fun j => e j a) = ∑ j, e j a • (Pi.single j (1 : ℂ) : Fin m → ℂ) := by
+    ext k
+    simp [Pi.single_apply]
+
+  rw [hx, map_sum]
+  simp [mul_comm]
+
+end GlobalTheory.SW
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.HermitianThetaSeriesSpanBoundedForms
+
+section
 
 @[expose] public section
 
@@ -305,3 +489,5 @@ theorem theta_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r :
   rw [← Finset.mul_sum, ← h3, inv_mul_cancel_left₀ hρ']
 
 end GlobalTheory.SW.SpanMain
+end
+end

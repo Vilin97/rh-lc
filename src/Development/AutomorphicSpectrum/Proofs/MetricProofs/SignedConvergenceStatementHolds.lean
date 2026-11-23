@@ -5,9 +5,6 @@ public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ConvergenceSta
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExpandMIntStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LoglogQuotNonneg
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.MixedDensityNonnegOffNullSetStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.PshAddPshPotentialOnOpenStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularFamilyEventuallySmoothPshStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ZeroWeightRegularFamilyStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,11 +44,153 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ZeroWeightRegularFamilyStatement
 import ReciprocityTheory.AnalyticForms.LeviForms.TailCut
 import ReciprocityTheory.AnalyticForms.LeviForms.TailCutA
 import ReciprocityTheory.AnalyticForms.PotentialTheory.AnalyticSubsetChartLocal
 import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.PshAddPshPotentialOnOpen
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.Ar.PshAdd
+
+open ReciprocityTheory.AnForm.M.LocPot
+
+theorem isPshOn_add_psh {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) (U : Set X)
+    (P : LocPot X) (f : X → ℝ) (Θ : LocPot X) (hU : IsOpen U) (hP : IsPotential A P)
+    (hΘ : IsPotential A Θ) (hf : A.SmoothOn U f) (hPf : IsPshOn A U (P + LocPot.ofFun f))
+    (hΘp : IsPsh A Θ) : IsPshOn A U (P + LocPot.ofFun f + Θ) := by
+  intro x j y hy w
+  obtain ⟨hyt, ⟨⟨hyP, -⟩, hyΘ⟩, hyU⟩ := hy
+  have hP2 : ContDiffAt ℝ 2 (P.φ x ∘ (A.chart j).symm) y := by
+    have hmem : (A.chart j).target ∩ (A.chart j).symm ⁻¹' P.U x ∈ 𝓝 y :=
+      ((A.chart j).isOpen_inter_preimage_symm (P.isOpen_U x)).mem_nhds ⟨hyt, hyP⟩
+    exact ((hP.1 x j).contDiffAt hmem).of_le (by norm_cast)
+  have hf2 : ContDiffAt ℝ 2 (f ∘ (A.chart j).symm) y := by
+    have hmem : (A.chart j).target ∩ (A.chart j).symm ⁻¹' U ∈ 𝓝 y :=
+      ((A.chart j).isOpen_inter_preimage_symm hU).mem_nhds ⟨hyt, hyU⟩
+    exact ((hf j).contDiffAt hmem).of_le (by norm_cast)
+  have hΘ2 : ContDiffAt ℝ 2 (Θ.φ x ∘ (A.chart j).symm) y := by
+    have hmem : (A.chart j).target ∩ (A.chart j).symm ⁻¹' Θ.U x ∈ 𝓝 y :=
+      ((A.chart j).isOpen_inter_preimage_symm (Θ.isOpen_U x)).mem_nhds ⟨hyt, hyΘ⟩
+    exact ((hΘ.1 x j).contDiffAt hmem).of_le (by norm_cast)
+  have hPf2 : ContDiffAt ℝ 2 (fun z => P.φ x ((A.chart j).symm z) + f ((A.chart j).symm z)) y :=
+    hP2.add hf2
+  have h1 := hPf x j y ⟨hyt, ⟨hyP, Set.mem_univ _⟩, hyU⟩ w
+  have h2 := hΘp x j y ⟨hyt, hyΘ⟩ w
+  have hsum := ReciprocityTheory.AnForm.levi_add_smul (f := fun z => P.φ x ((A.chart j).symm z) + f ((A.chart j).symm z))
+    (g := Θ.φ x ∘ (A.chart j).symm) 1 hPf2 hΘ2 w
+  have heq : ((P + LocPot.ofFun f + Θ).φ x ∘ (A.chart j).symm) =
+      fun z => (P.φ x ((A.chart j).symm z) + f ((A.chart j).symm z)) +
+        1 * (Θ.φ x ∘ (A.chart j).symm) z := by
+    funext z; simp [Function.comp, HAdd.hAdd, Add.add, LocPot.ofFun]
+  rw [heq, hsum, one_mul]
+  exact add_nonneg h1 h2
+
+end GlobalTheory.CompanionTheory.Ar.PshAdd
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.PshAddPshPotentialOnOpenStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.psh_add_psh_potential_on_open : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) (U : Set X) (P : LocPot X) (f : X → ℝ) (Θ : LocPot X), IsOpen U → IsPotential A P → IsPotential A Θ → A.SmoothOn U f → IsPshOn A U (P + LocPot.ofFun f) → IsPsh A Θ → IsPshOn A U (P + LocPot.ofFun f + Θ) := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.PshAdd.isPshOn_add_psh | exact GlobalTheory.CompanionTheory.Ar.PshAdd.isPshOn_add_psh | (intros; apply GlobalTheory.CompanionTheory.Ar.PshAdd.isPshOn_add_psh <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularFamilyEventuallySmoothPsh
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.Ar.Giv.EvPsh
+
+theorem tendsto_epsT_zero (C : ℝ) :
+    Tendsto (fun t => epsT C t) (nhdsWithin (0 : ℝ) (Set.Ioi 0)) (𝓝 0) := by
+  have hℓ : Tendsto (fun t : ℝ => Real.log (1 / t)) (nhdsWithin (0 : ℝ) (Set.Ioi 0)) atTop := by
+    have h := Real.tendsto_log_atTop.comp tendsto_inv_nhdsGT_zero
+    refine h.congr (fun t => ?_)
+    simp [one_div]
+  have hq : Tendsto (fun x : ℝ => Real.log x / x) atTop (𝓝 0) := by
+    have := Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
+    simpa using this
+  have h2 := (hq.comp hℓ).const_mul C
+  rw [mul_zero] at h2
+  refine h2.congr (fun t => ?_)
+  simp only [Function.comp_apply, epsT]
+  ring
+
+theorem isPsh_of_isPosPot {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X)
+    (Θ : LocPot X) (h : IsPosPot A Θ) : IsPsh A Θ := by
+  intro x j y hy w
+  by_cases hw : w = 0
+  · subst hw
+    simp [levi]
+  · exact (h x j y hy w hw).le
+
+theorem eventually_isPsh_add_pot {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X)
+    (Θ L : LocPot X) (s : X → X → ℂ) (th : LocPot X) (ph : X → ℝ) (phT : ℝ → X → ℝ)
+    (C t₀ : ℝ) (hΘ : IsPotential A Θ) (hΘp : IsPosPot A Θ) (hth : IsPotential A th)
+    (hF : IsRegFamily A Θ L s th ph phT C t₀) :
+    ∀ᶠ t in nhdsWithin (0 : ℝ) (Set.Ioi 0),
+      A.Smooth (phT t) ∧ IsPsh A (th + LocPot.ofFun (phT t) + Θ) := by
+  obtain ⟨ht₀, -, hF⟩ := hF
+  have hε : ∀ᶠ t in nhdsWithin (0 : ℝ) (Set.Ioi 0), epsT C t < 1 :=
+    (tendsto_epsT_zero C).eventually (gt_mem_nhds one_pos)
+  have hsmall : ∀ᶠ t in nhdsWithin (0 : ℝ) (Set.Ioi 0), t ∈ Set.Ioo 0 t₀ :=
+    Ioo_mem_nhdsGT ht₀
+  filter_upwards [hε, hsmall] with t hεt ht
+  obtain ⟨h1, -, -, -, h5, -⟩ := hF t ht.1 ht.2.le
+  refine ⟨h1, ?_⟩
+  have h := GlobalTheory.CompanionTheory.Ar.Giv.isPsh_rsmul_mono A Θ th (phT t) hΘ (isPsh_of_isPosPot A Θ hΘp) hth h1 hεt.le h5
+  have e1 : Θ.rsmul 1 = Θ := by
+    cases Θ
+    simp [LocPot.rsmul]
+  rwa [e1] at h
+
+end GlobalTheory.CompanionTheory.Ar.Giv.EvPsh
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularFamilyEventuallySmoothPshStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.regular_family_eventually_smooth_psh : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) (Θ L : LocPot X) (s : X → X → ℂ) (th : LocPot X) (ph : X → ℝ) (phT : ℝ → X → ℝ) (C t₀ : ℝ), IsPotential A Θ → IsPosPot A Θ → IsPotential A th → IsRegFamily A Θ L s th ph phT C t₀ → ∀ᶠ t in nhdsWithin (0 : ℝ) (Set.Ioi 0), A.Smooth (phT t) ∧ IsPsh A (th + LocPot.ofFun (phT t) + Θ) := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.EvPsh.eventually_isPsh_add_pot | exact GlobalTheory.CompanionTheory.Ar.Giv.EvPsh.eventually_isPsh_add_pot | (intros; apply GlobalTheory.CompanionTheory.Ar.Giv.EvPsh.eventually_isPsh_add_pot <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.SignedConvergenceStatementHolds
+
+section
 
 @[expose] public section
 
@@ -212,3 +352,5 @@ theorem convergenceSigned : ConvergenceSignedStatement := by
   rw [(hmt T).2]
 
 end GlobalTheory.CompanionTheory.Ar.Giv.SignedConv
+end
+end

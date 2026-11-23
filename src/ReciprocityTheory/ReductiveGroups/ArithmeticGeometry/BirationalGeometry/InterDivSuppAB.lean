@@ -52,7 +52,8 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.IsCMOfIsRegularLocalRing
+public import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsRegularOfSupportDimQuotientAddLengthLe
 public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.LocDim
 public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.RingKrullDimLocalizationQuotientEqHeight
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAA
@@ -60,7 +61,25 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeo
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGoodA
 public import Mathlib.Algebra.Algebra.ZMod
 public import Mathlib.RingTheory.KrullDimension.PID
-public import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
+
+-- Source module: ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.IsCMOfIsRegularLocalRing
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.CA
+
+theorem isCM_of_isRegularLocalRing (R : Type*) [CommRing R] [IsRegularLocalRing R] : IsCM R :=
+  GlobalTheory.isCM_of_isRegularLocalRing R
+
+end ReciprocityTheory.CA
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAB
+
+section
 
 @[expose] public section
 
@@ -381,3 +400,6 @@ theorem height_eq_of_isMaximal_int {σ : Type*} [Finite σ] (P : Ideal (MvPolyno
     exact hnP
 
 end ReciprocityTheory.ChartRestriction.G.Geo.DimF
+end
+end
+end

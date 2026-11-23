@@ -4,7 +4,8 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ComapIn
 public import Mathlib.LinearAlgebra.FreeModule.PID
 public import Mathlib.RingTheory.Flat.TorsionFree
 public import Mathlib.RingTheory.SimpleRing.Principal
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteUnitOrbitsStableLatticesSeparable
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqSubmoduleMulLeftImageIntegralClosureOfSeparabl
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,6 +45,234 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdjoinEqTopAndIsReducedOfCharpolySeparable
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
+import Mathlib.Tactic.Basify
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.RingTheory.Localization.Integral
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteSubmodulesBetweenSmulAndSelfStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntegralClosureFgDvrOfSeparableCharpolyStatement
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqSubmoduleMulLeftImageIntegralClosureOfSeparablStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+theorem _root_.GlobalTheory.T.eq_submoduleMulLeftImage_integralClosure_of_separable : ∀ (O E A : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field E] [Algebra O E] [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A] [IsScalarTower O E A] [Module.Finite E A] (g : A), (LinearMap.mulLeft E g).charpoly.Separable → ∀ N : Submodule O A, IsLat O E N → (∀ x ∈ integralClosure O A, ∀ y ∈ N, x * y ∈ N) → ∃ t : Aˣ, N = mulLat O (t : A) (Subalgebra.toSubmodule (integralClosure O A)) := by
+  first | exact @GlobalTheory.UnitLemma.PrincipalLatDVR.eq_mulLat_integralClosure_of_separable | exact GlobalTheory.UnitLemma.PrincipalLatDVR.eq_mulLat_integralClosure_of_separable | (intros; apply GlobalTheory.UnitLemma.PrincipalLatDVR.eq_mulLat_integralClosure_of_separable <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsAevalEqOfMulLeftCharpolySeparable
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory.SepGenElt
+
+theorem exists_aeval_eq : ∀ (E A : Type) [Field E] [CommRing A] [Algebra E A] [Module.Finite E A] (g : A),
+    (LinearMap.mulLeft E g).charpoly.Separable → ∀ x : A, ∃ p : E[X], aeval g p = x := by
+  intro E A _ _ _ _ g hs x
+  have hx : x ∈ Algebra.adjoin E ({g} : Set A) := by
+    rw [GlobalTheory.SepGen.adjoin_eq_top g hs]; trivial
+  rw [Algebra.adjoin_singleton_eq_range_aeval] at hx
+  exact hx
+
+end GlobalTheory.SepGenElt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsAevalEqOfMulLeftCharpolySeparableStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_aeval_eq_of_mulLeft_charpoly_separable : ∀ (E A : Type) [Field E] [CommRing A] [Algebra E A] [Module.Finite E A] (g : A), (LinearMap.mulLeft E g).charpoly.Separable → ∀ x : A, ∃ p : E[X], aeval g p = x := by
+  first | exact @GlobalTheory.SepGenElt.exists_aeval_eq | exact GlobalTheory.SepGenElt.exists_aeval_eq | (intros; apply GlobalTheory.SepGenElt.exists_aeval_eq <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCommonDenominatorAevalOfFg
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory
+
+theorem exists_denominator_aeval_elem (O E A : Type) [CommRing O] [IsDomain O] [Field E] [Algebra O E]
+    [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A] [IsScalarTower O E A] (g : A)
+    (h : ∀ x : A, ∃ p : E[X], aeval g p = x) (x : A) :
+    ∃ c : O, c ≠ 0 ∧ ∃ p : O[X], aeval g p = c • x := by
+  obtain ⟨q, rfl⟩ := h x
+  obtain ⟨b, hb, hq⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors O) q
+  refine ⟨b, nonZeroDivisors.ne_zero hb, IsLocalization.integerNormalization (nonZeroDivisors O) q, ?_⟩
+  rw [← aeval_map_algebraMap E, hq, ← algebraMap_smul E b q, map_smul, algebraMap_smul]
+
+theorem exists_common_denominator_aeval_of_fg (O E A : Type) [CommRing O] [IsDomain O] [Field E]
+    [Algebra O E] [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A]
+    [IsScalarTower O E A] (g : A) (h : ∀ x : A, ∃ p : E[X], aeval g p = x)
+    (S : Submodule O A) (hS : S.FG) :
+    ∃ c : O, c ≠ 0 ∧ ∀ x ∈ S, ∃ p : O[X], aeval g p = c • x := by
+  classical
+  obtain ⟨s, rfl⟩ := hS
+  have key : ∃ c : O, c ≠ 0 ∧ ∀ x ∈ s, ∃ p : O[X], aeval g p = c • x := by
+    induction s using Finset.induction_on with
+    | empty => exact ⟨1, one_ne_zero, by simp⟩
+    | insert a s _ ih =>
+      obtain ⟨c, hc, hs⟩ := ih
+      obtain ⟨d, hd, p, hp⟩ := exists_denominator_aeval_elem O E A g h a
+      refine ⟨c * d, mul_ne_zero hc hd, fun x hx => ?_⟩
+      rcases Finset.mem_insert.1 hx with rfl | hx
+      · exact ⟨c • p, by rw [map_smul, hp, mul_smul]⟩
+      · obtain ⟨q, hq⟩ := hs x hx
+        exact ⟨d • q, by rw [map_smul, hq, mul_comm, mul_smul]⟩
+  obtain ⟨c, hc, hs⟩ := key
+  refine ⟨c, hc, fun x hx => ?_⟩
+  induction hx using Submodule.span_induction with
+  | mem x hx => exact hs x hx
+  | zero => exact ⟨0, by simp⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨p, hp⟩ := hx
+    obtain ⟨q, hq⟩ := hy
+    exact ⟨p + q, by rw [map_add (f := _), hp, hq, smul_add]⟩
+  | smul a x _ hx =>
+    obtain ⟨p, hp⟩ := hx
+    exact ⟨a • p, by rw [map_smul, hp, smul_comm]⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCommonDenominatorAevalOfFgStatement
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+theorem _root_.GlobalTheory.T.exists_common_denominator_aeval_of_fg' : ∀ (O E A : Type) [CommRing O] [IsDomain O] [Field E] [Algebra O E] [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A] [IsScalarTower O E A] (g : A), (∀ x : A, ∃ p : E[X], aeval g p = x) → ∀ S : Submodule O A, S.FG → ∃ c : O, c ≠ 0 ∧ ∀ x ∈ S, ∃ p : O[X], aeval g p = c • x := by
+  first | exact @GlobalTheory.exists_common_denominator_aeval_of_fg | exact GlobalTheory.exists_common_denominator_aeval_of_fg | (intros; apply GlobalTheory.exists_common_denominator_aeval_of_fg <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteUnitOrbitsStableLatticesSeparable
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace GlobalTheory.UnitLemma
+
+theorem aeval_mul_mem_of_stable {O A : Type} [CommRing O] [CommRing A] [Algebra O A] {g : A} {M : Submodule O A}
+    (hM : ∀ y ∈ M, g * y ∈ M) (p : O[X]) {m : A} (hm : m ∈ M) : aeval g p * m ∈ M := by
+  induction p using Polynomial.induction_on with
+  | C a => simpa [Algebra.smul_def] using M.smul_mem a hm
+  | add p q hp hq => simpa [add_mul] using M.add_mem hp hq
+  | monomial n a ih =>
+    have := hM _ ih
+    have e : aeval g (Polynomial.C a * X ^ (n + 1)) * m = g * (aeval g (Polynomial.C a * X ^ n) * m) := by
+      simp only [map_mul, aeval_C, aeval_X, map_pow, pow_succ]; ring
+    rw [e]; exact this
+
+theorem finite_orbits_stLat_of_separable : ∀ (O E A : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Finite (IsLocalRing.ResidueField O)] [Field E] [Algebra O E] [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A] [IsScalarTower O E A] [Module.Finite E A] (g : A), (LinearMap.mulLeft E g).charpoly.Separable → Finite (MulAction.orbitRel.Quotient Aˣ (stLat O E g)) := by
+  intro O E A _ _ _ _ _ _ _ _ _ _ _ _ g hsep
+  set C : Submodule O A := Subalgebra.toSubmodule (integralClosure O A) with hCdef
+  have hCfg : C.FG := GlobalTheory.T.integralClosure_fg_dvr_of_separable_charpoly O E A g hsep
+  obtain ⟨c, hc0, hc⟩ := GlobalTheory.T.exists_common_denominator_aeval_of_fg' O E A g (GlobalTheory.T.exists_aeval_eq_of_mulLeft_charpoly_separable E A g hsep) C hCfg
+  have hfin := GlobalTheory.T.finite_setOf_submodule_between_smul_and_fg O A C hCfg c hc0
+
+  have key : ∀ M : stLat O E g, ∃ t : Aˣ, mulLat O ((t⁻¹ : Aˣ) : A) (M : Submodule O A) ∈
+      {N : Submodule O A | N ≤ C ∧ ∀ x ∈ C, c • x ∈ N} := by
+    intro M
+    obtain ⟨hML, hMg⟩ := M.2
+    set N : Submodule O A := C * (M : Submodule O A) with hN
+    have hMN : (M : Submodule O A) ≤ N := by
+      intro m hm
+      have := Submodule.mul_mem_mul (show (1 : A) ∈ C from (integralClosure O A).one_mem) hm
+      simpa using this
+    have hNlat : IsLat O E N := by
+      refine ⟨Submodule.FG.mul hCfg hML.1, ?_⟩
+      rw [eq_top_iff, ← hML.2]
+      exact Submodule.span_mono hMN
+    have hNC : ∀ x ∈ integralClosure O A, ∀ y ∈ N, x * y ∈ N := by
+      intro x hx y hy
+      refine Submodule.mul_induction_on hy ?_ ?_
+      · intro a ha m hm
+        rw [← mul_assoc]
+        exact Submodule.mul_mem_mul ((integralClosure O A).mul_mem hx ha) hm
+      · intro u v hu hv
+        rw [mul_add]; exact N.add_mem hu hv
+    obtain ⟨t, ht⟩ := GlobalTheory.T.eq_submoduleMulLeftImage_integralClosure_of_separable O E A g hsep N hNlat hNC
+    have hcN : ∀ y ∈ N, c • y ∈ (M : Submodule O A) := by
+      intro y hy
+      refine Submodule.mul_induction_on hy ?_ ?_
+      · intro a ha m hm
+        obtain ⟨p, hp⟩ := hc a ha
+        rw [← smul_mul_assoc, ← hp]
+        exact aeval_mul_mem_of_stable hMg p hm
+      · intro u v hu hv
+        rw [smul_add]; exact Submodule.add_mem _ hu hv
+    refine ⟨t, ?_, ?_⟩
+    · intro x hx
+      rw [mem_mulLat_iff, inv_inv] at hx
+      have h1 : (t : A) * x ∈ N := hMN hx
+      rw [ht, mem_mulLat_iff] at h1
+      rw [hCdef, Subalgebra.mem_toSubmodule]
+      rw [Subalgebra.mem_toSubmodule] at h1
+      simpa [← mul_assoc] using h1
+    · intro y hy
+      rw [mem_mulLat_iff, inv_inv]
+      have h1 : (t : A) * y ∈ N := by
+        rw [ht, mem_mulLat_iff, Subalgebra.mem_toSubmodule]
+        rw [hCdef, Subalgebra.mem_toSubmodule] at hy
+        simpa [← mul_assoc] using hy
+      simpa [mul_smul_comm] using hcN _ h1
+  choose t ht using key
+  let F : MulAction.orbitRel.Quotient Aˣ (stLat O E g) → {N : Submodule O A // N ∈ {N : Submodule O A | N ≤ C ∧ ∀ x ∈ C, c • x ∈ N}} :=
+    fun q => ⟨_, ht q.out⟩
+  haveI : Finite {N : Submodule O A // N ∈ {N : Submodule O A | N ≤ C ∧ ∀ x ∈ C, c • x ∈ N}} := hfin.to_subtype
+  refine Finite.of_injective F ?_
+  intro q₁ q₂ h
+  have h' : mulLat O (((t q₁.out)⁻¹ : Aˣ) : A) (q₁.out : Submodule O A) = mulLat O (((t q₂.out)⁻¹ : Aˣ) : A) (q₂.out : Submodule O A) :=
+    congrArg Subtype.val h
+  rw [← q₁.out_eq, ← q₂.out_eq]
+  apply Quotient.sound
+  refine ⟨t q₁.out * (t q₂.out)⁻¹, ?_⟩
+  apply Subtype.ext
+  rw [stLat_smul_val, Units.val_mul, mulLat_mul, ← h', ← mulLat_mul]
+  simp [mulLat_one]
+
+end GlobalTheory.UnitLemma
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteUnitOrbitsStableLatticesSeparableStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +280,5 @@ open GlobalTheory.UnitLemma Polynomial
 
 theorem _root_.GlobalTheory.T.finite_unit_orbits_stable_lattices_separable : ∀ (O E A : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Finite (IsLocalRing.ResidueField O)] [Field E] [Algebra O E] [IsFractionRing O E] [CommRing A] [Algebra O A] [Algebra E A] [IsScalarTower O E A] [Module.Finite E A] (g : A), (LinearMap.mulLeft E g).charpoly.Separable → Finite (MulAction.orbitRel.Quotient Aˣ (stLat O E g)) := by
   first | exact @GlobalTheory.UnitLemma.finite_orbits_stLat_of_separable | exact GlobalTheory.UnitLemma.finite_orbits_stLat_of_separable | (intros; apply GlobalTheory.UnitLemma.finite_orbits_stLat_of_separable <;> assumption)
+end
+end

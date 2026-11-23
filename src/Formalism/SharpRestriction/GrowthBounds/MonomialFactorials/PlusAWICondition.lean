@@ -1,12 +1,9 @@
 module
 
 public import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestPlusAOf
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestPlusOf
+import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
 public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestRankLProved
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiSmulRight
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationZpOfLatticeInclusion
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.MfacMapDomainAdd
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PhisBRenameMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,8 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,8 +38,175 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiSmulRight
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationZpOfLatticeInclusion
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PhisBRenameMul
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestPlusAOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.G.SymmetricFormBlocks
+
+open MvPolynomial Finset
+
+section Level
+
+variable (p : ℕ) [Fact p.Prime] {N r : ℕ} [NeZero r] (G : Formalism.GM.M.BlockData N)
+
+def RestPlusAW (j : Fin G.T.t → ℕ) (jp : ℕ) (D : ℤ) : Prop :=
+  Formalism.GM.M.goodCount p (fun F F' => Formalism.GM.M.fockN p (G.lettersAt j jp) (G.T.phis p (r := r) (G.lettersAt j jp) F) F')
+            (Formalism.GM.M.YZ p (r := r) (G.lettersAt j jp) G.T.J G.T.thr) D * dXi r (G.B - jp) ≤
+    Formalism.GM.M.goodCount p (bePhi p (r := r) G j jp) (Ljj p (r := r) G j jp) D
+
+theorem plusA_of (j : Fin G.T.t → ℕ) (jp : ℕ) (D : ℤ) (h : RestPlusAW p (r := r) G j jp D) :
+    Formalism.GM.M.bad p (bePhi p (r := r) G j jp) (Ljj p (r := r) G j jp) D ≤ badY p (r := r) G j jp D * dXi r (G.B - jp) := by
+  have h1 := finrank_Ljj_le p (r := r) G j jp
+  have hY : Module.finrank ℤ_[p] (Formalism.GM.M.YZ p (r := r) (G.lettersAt j jp) G.T.J G.T.thr) = dimY p (r := r) G j jp :=
+    Formalism.CountingSumsFrames.finrank_lattice _ _ inf_le_left
+  unfold badY
+  simp only [Formalism.GM.M.bad]
+  rw [hY, Nat.sub_mul]
+  unfold RestPlusAW at h
+  omega
+
+end Level
+
+variable (C0 CE1 CE2 : ℝ) (X : flipOneThree.Inst)
+
+def RestPlusAWI (CM : ℝ) : Prop :=
+  ∀ dl ∈ CountingStatementReduction.clSet C0 CE1 CE2 X, ∀ aTop ∈ cbox C0 CE1 CE2 X dl, ∀ x ∈ idx C0 CE1 CE2 X dl aTop,
+    RestPlusAW X.p (r := X.r) (gB C0 CE1 CE2 X aTop 0 x.1) x.2.1 x.2.2 ⌊D1r C0 CE1 CE2 X CM⌋
+
+theorem restPlusA_of (CM : ℝ) (h : RestPlusAWI C0 CE1 CE2 X CM) : RestPlusA C0 CE1 CE2 X CM := by
+  intro dl hdl aTop ha x hx
+  exact plusA_of X.p (r := X.r) (gB C0 CE1 CE2 X aTop 0 x.1) x.2.1 x.2.2 _ (h dl hdl aTop ha x hx)
+
+end Formalism.MainNotions.G.SymmetricFormBlocks
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.MfacMapDomainAdd
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.G.SymmetricFormBlocks
+
+open MvPolynomial Finset Formalism.GM.ProjS
+
+section Disj
+
+variable {k σ τ : Type} [Field k] [DecidableEq σ] [DecidableEq τ]
+
+theorem mapDomain_add_inj (e : τ → σ) (he : Function.Injective e) (a b : τ →₀ ℕ) (β β' : σ →₀ ℕ)
+    (hβ : ∀ x, β (e x) = 0) (hβ' : ∀ x, β' (e x) = 0)
+    (h : Finsupp.mapDomain e a + β = Finsupp.mapDomain e b + β') : a = b ∧ β = β' := by
+  have ha : a = b := by
+    ext x
+    have h1 := DFunLike.congr_fun h (e x)
+    simpa [Finsupp.mapDomain_apply_of_injective he, hβ, hβ'] using h1
+  subst ha
+  exact ⟨rfl, add_left_cancel h⟩
+
+theorem mfac_mapDomain_add (e : τ → σ) (he : Function.Injective e) (a : τ →₀ ℕ) (β : σ →₀ ℕ)
+    (hβ : ∀ x, β (e x) = 0) : (mfac (Finsupp.mapDomain e a + β) : k) = mfac a * mfac β := by
+  unfold mfac
+  have hd : Disjoint (Finsupp.mapDomain e a).support β.support := by
+    rw [Finset.disjoint_left]
+    intro x hx hx'
+    obtain ⟨y, _, rfl⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support hx)
+    exact (Finsupp.mem_support_iff.1 hx') (hβ y)
+  rw [Finsupp.prod_add_index_of_disjoint hd, Finsupp.prod_mapDomain_index_inj he]
+
+theorem fockK_rename_mul (e : τ → σ) (he : Function.Injective e) (A B : MvPolynomial τ k) (β β' : σ →₀ ℕ) (c : k)
+    (hβ : ∀ x, β (e x) = 0) (hβ' : ∀ x, β' (e x) = 0) :
+    Formalism.GM.M.fockK (rename e A * monomial β 1) (rename e B * monomial β' c) =
+      if β = β' then c * mfac β * Formalism.GM.M.fockK A B else 0 := by
+  classical
+  set F := rename e A * monomial β (1 : k) with hF
+  set G := rename e B * monomial β' c with hG
+  have hcF : ∀ m, F.coeff (Finsupp.mapDomain e m + β) = A.coeff m := by
+    intro m
+    rw [hF, MvPolynomial.coeff_mul_monomial, MvPolynomial.coeff_rename_mapDomain e he, mul_one]
+  have hcF0 : ∀ n, F.coeff n ≠ 0 → ∃ m, n = Finsupp.mapDomain e m + β ∧ A.coeff m ≠ 0 := by
+    intro n hn
+    rw [hF, MvPolynomial.coeff_mul_monomial'] at hn
+    split_ifs at hn with hle
+    · rw [mul_one] at hn
+      obtain ⟨u, hu, hu0⟩ := MvPolynomial.coeff_rename_ne_zero e A (n - β) hn
+      refine ⟨u, ?_, hu0⟩
+      rw [hu]
+      exact (tsub_add_cancel_of_le hle).symm
+    · exact absurd rfl hn
+  have hcG : ∀ m, G.coeff (Finsupp.mapDomain e m + β) = if β = β' then B.coeff m * c else 0 := by
+    intro m
+    split_ifs with hb
+    · subst hb
+      rw [hG, MvPolynomial.coeff_mul_monomial, MvPolynomial.coeff_rename_mapDomain e he]
+    · by_contra hne
+      rw [hG, MvPolynomial.coeff_mul_monomial'] at hne
+      split_ifs at hne with hle
+      · have h1 : (rename e B).coeff (Finsupp.mapDomain e m + β - β') ≠ 0 := fun h0 => hne (by rw [h0, zero_mul])
+        obtain ⟨u, hu, -⟩ := MvPolynomial.coeff_rename_ne_zero e B _ h1
+        have h2 : Finsupp.mapDomain e m + β = Finsupp.mapDomain e u + β' := by
+          rw [hu]
+          exact (tsub_add_cancel_of_le hle).symm
+        exact hb (mapDomain_add_inj e he m u β β' hβ hβ' h2).2
+      · exact hne rfl
+  have hmf : ∀ m : τ →₀ ℕ, ((Finsupp.mapDomain e m + β).prod fun _ j => (j.factorial : k)) =
+      (m.prod fun _ j => (j.factorial : k)) * (β.prod fun _ j => (j.factorial : k)) :=
+    fun m => mfac_mapDomain_add e he m β hβ
+  unfold Formalism.GM.M.fockK
+  have hsub : F.support ⊆ A.support.image (fun m => Finsupp.mapDomain e m + β) := by
+    intro n hn
+    obtain ⟨m, rfl, hm⟩ := hcF0 n (MvPolynomial.mem_support_iff.1 hn)
+    exact Finset.mem_image.2 ⟨m, MvPolynomial.mem_support_iff.2 hm, rfl⟩
+  rw [Finset.sum_subset hsub (fun n _ hn => by
+    rw [MvPolynomial.mem_support_iff, not_not] at hn
+    rw [hn]
+    ring)]
+  have hinj : Set.InjOn (fun m => Finsupp.mapDomain e m + β) A.support :=
+    fun a _ b _ hab => (mapDomain_add_inj e he a b β β hβ hβ hab).1
+  rw [Finset.sum_image hinj]
+  simp only [hcF, hcG, hmf]
+  split_ifs with hb
+  · rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro x _
+    unfold mfac
+    ring
+  · simp
+
+end Disj
+
+end Formalism.MainNotions.G.SymmetricFormBlocks
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PlusAWICondition
+
+section
 
 @[expose] public section
 
@@ -205,4 +367,6 @@ theorem plusACondition (CM : ℝ) : RestPlusA C0 CE1 CE2 X CM :=
 
 end Formalism.MainNotions.G.SymmetricFormBlocks
 
+end
+end
 end

@@ -6,7 +6,9 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoRes
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.LamFactor
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.LamZl
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantOfOpenSet
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.LocallyConstant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,9 +28,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-public import Mathlib.RingTheory.Teichmuller
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,8 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,9 +47,41 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Teichmuller
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.RingTheory.Perfection
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantOfOpenSet
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.LocallyConstantOfOpenSet.lc_of_open :
+    ∀ {G H : Type} [inst : Group G] [inst_1 : TopologicalSpace G]
+    [IsTopologicalGroup G] [inst_3 : Group H] (f : G →* H), IsOpen (↑f.ker : Set G) → IsLocallyConstant (⇑f : G → H) := by
+  intro G H _ _ _ _ f hk
+  rw [IsLocallyConstant.iff_eventually_eq]
+  intro x
+  have hc : Continuous fun y : G => x⁻¹ * y := continuous_const.mul continuous_id
+  have ho : IsOpen ((fun y : G => x⁻¹ * y) ⁻¹' (f.ker : Set G)) := hk.preimage hc
+  have hx : x ∈ (fun y : G => x⁻¹ * y) ⁻¹' (f.ker : Set G) := by
+    simp [Set.mem_preimage, MonoidHom.mem_ker]
+  filter_upwards [ho.mem_nhds hx] with y hy
+  have h1 : f (x⁻¹ * y) = 1 := MonoidHom.mem_ker.mp hy
+  rw [map_mul, map_inv, inv_mul_eq_one] at h1
+  exact h1.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.LamFree
+
+section
 
 @[expose] public section
 
@@ -281,3 +310,5 @@ theorem UpperTheory.V.W.lam_ex_free :
   rw [← he]
   show e' (algebraMap O P (ψ₀ v i g) * ((χ v i (lam_fst l _ ((A v).a g)) : Pˣ) : P)) = _
   rw [h7, hχ1, map_mul, map_add (f := _), map_one, AlgEquiv.commutes]
+end
+end

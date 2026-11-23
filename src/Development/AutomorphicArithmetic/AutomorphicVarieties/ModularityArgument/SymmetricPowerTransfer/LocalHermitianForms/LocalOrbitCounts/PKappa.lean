@@ -6,20 +6,11 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsRe
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.EvenValuationNormCompactUnitsOfSplit
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsDiscriminantNormalForm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.FinsumQuotientNormsOfNonsplit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.IsSquareSqSubFourIffIsSquareUnit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerLevelOneOfIsSquareUnit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerOrderLevelZero
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerSuccEqCardResidueField
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.StabilizerOrderLevelAntitoneLeUnits
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.FixedPointCriteria.FixMlIff
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.IrreducibleParity.NotEvenIrr
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.HsLaw
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.HsNE
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.NonsqMul
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.FixedPointCriteria.Cond
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.CintIdx
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -35,14 +26,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -65,7 +51,93 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerLevelOneOfIsSquareUnit
+import Mathlib.Tactic.Linter.Style
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerSuccEqCardResidueField
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.StabilizerOrderLevelAntitoneLeUnits
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.FixedPointCriteria.FixMlIff
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.IrreducibleParity.NotEvenIrr
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.HsLaw
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.HsNE
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.NonsqMul
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.IsSquareSqSubFourIffIsSquareUnit
+
+section
+
+@[expose] public section
+
+open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Loc.PK
+
+theorem UpperTheory.isSquare_sq_sub_four_iff_isSquare_unit :
+    ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] (Δ τ : K), IsLoc O Δ → τ ^ 2 - 4 ≠ 0 → ∀ (π : O) (n : ℕ) (e : Oˣ) (h : O) (x : Etau K τ), Cond π n e h x → (IsSquare (τ ^ 2 - 4) ↔ IsSquare (e : O)) := by
+  intro O K _ _ _ _ _ Δ τ L hD π n e h x hc
+  haveI := L.frac
+  have E : (ω - algebraMap O (Etau K τ) h) * (ω - algebraMap O (Etau K τ) h) = algebraMap O (Etau K τ) (π ^ n * π ^ n * e) := by
+    rw [hc.om, add_sub_cancel_left]
+    simp only [yy, smul_mul_smul_comm, hc.sq]
+    simp only [algebraMap_etau (O := O), Algebra.smul_def, map_mul]
+  have Er := congrArg QuadraticAlgebra.re E
+  have Ei := congrArg QuadraticAlgebra.im E
+  simp [algebraMap_etau] at Er Ei
+  have hτ : τ = 2 * algebraMap O K h := by linear_combination Ei
+  have key : τ ^ 2 - 4 = (2 * algebraMap O K π ^ n) ^ 2 * algebraMap O K (e : O) := by
+    rw [hτ]
+    linear_combination 4 * Er
+  constructor
+  · rintro ⟨r, hr⟩
+    have hq : 2 * algebraMap O K π ^ n ≠ 0 := by
+      intro h0
+      apply hD
+      rw [key, h0]
+      ring
+    have hsq : (r / (2 * algebraMap O K π ^ n)) ^ 2 = algebraMap O K (e : O) := by
+      rw [div_pow, sq r, ← hr, key]
+      exact mul_div_cancel_left₀ _ (pow_ne_zero 2 hq)
+    obtain ⟨b, hb⟩ := sq_int L _ _ hsq
+    refine ⟨b, IsFractionRing.injective O K ?_⟩
+    rw [map_mul, hb, ← hsq]
+    ring
+  · rintro ⟨b, hb⟩
+    refine ⟨2 * algebraMap O K π ^ n * algebraMap O K b, ?_⟩
+    rw [key, hb, map_mul]
+    ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.RelIndexStabilizerOrderLevelZero
+
+section
+
+@[expose] public section
+
+open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Loc.PK
+
+theorem UpperTheory.relIndex_stabilizer_order_level_zero :
+    ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] (Δ τ : K), IsLoc O Δ → τ ^ 2 - 4 ≠ 0 → ∀ (π : O) (n : ℕ) (e : Oˣ) (h : O) (x : Etau K τ), Cond π n e h x → (Hu O (yy π 0 x)).relIndex (Gu O τ) = 1 := by
+  intro O K _ _ _ _ _ Δ τ L hD π n e h x hc
+  have hy : yy π 0 x = x := by simp [yy]
+  have hO : PK.Ord O (yy π 0 x) = (PK.Mx O τ : Set (Etau K τ)) := by
+    rw [hy, Gen1.span L hc.gen]
+    rfl
+  rw [Subgroup.relIndex_eq_one]
+  intro u hu
+  show PS.ml u (PK.Ord O (yy π 0 x)) = PK.Ord O (yy π 0 x)
+  rw [hO]
+  exact ml_Mx hu.1 hu.2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.PKappa
+
+section
 
 @[expose] public section
 
@@ -323,3 +395,5 @@ theorem UpperTheory.V.Z.Sym.Loc.pKappa :
     rw [(hsNE O K Δ τ L hD 1).1 (NE τ).one_mem, hg1, hp, hp, hcount, hcount, one_mul, neg_one_mul,
       ← Finset.sum_neg_distrib, ← Finset.sum_add_distrib, Finset.sum_congr rfl hterm]
     exact_mod_cast sum_inert r q r0 r1 rs n
+end
+end

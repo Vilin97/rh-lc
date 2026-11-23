@@ -5,19 +5,19 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Gro
 public import Development.AbelianVarietyTheory.Definitions.Divisors.WellChosen
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HypothesesX
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LiftLambdaBound
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadAtFromInputs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadPartDimLeSumLocalSharesWhittakerStatement
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ActLevIffLevelActionOver
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CoverTypeLatticeComparison
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LocalShareCountLeExp
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RegularEmbeddingsCoverBadEmbeddingLocus
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,11 +41,280 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LevelCarrying
+import Development.AbelianVarietyTheory.Definitions.Divisors.CuspIso
+import Development.AbelianVarietyTheory.Definitions.Divisors.GenRatios
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsCoprimeOfNatCast
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsHomogeneousCompIdeal
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsRightActFunPull
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsoOverOfIsOpenImmersion
 public import Development.AbelianVarietyTheory.Definitions.Divisors.MemLevEigenIffTransl
+import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEqAtAllEmbeddings
+import Development.AbelianVarietyTheory.Definitions.Divisors.TupleReadBaseTupleEqFamily
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegreeLeOfPullbackLePowFiniteEtale
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CommuteInvLeft
+import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtArith
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadPartDimLeSumLocalSharesWhittakerStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ActLevIffLevelActionOver
+public import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
+public import Development.AutomorphicArithmetic.LocalEmbeddings.KeepsOfGood
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CongModRefl
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelActionMemCuspFormsOfActionLaws
+import Development.AutomorphicArithmetic.LocalEmbeddings.RootInCore
+import Mathlib.Tactic.Linter.Style
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CoversOfLifts
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HostN
+import Development.AbelianVarietyTheory.Definitions.Divisors.Multiplier
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LocalShareCountLeExp
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RegularEmbeddingsCoverBadEmbeddingLocus
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadAtFromInputs
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Theta
+open GlobalTheory GlobalTheory.CompHS GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.HSApp GlobalTheory.DegVal GlobalTheory.DegCmp
+open GlobalTheory.AllWt (Psi wtOf cuspOn cuspW latOn latW normOn petOn GoodOn GoodW rankOn degOn rankW)
+open GlobalTheory.CompHt (hodgeWt)
+open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR latN levDet secRing transl pull KeepsCusp)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
+open GlobalTheory.BadCount
+open scoped TensorProduct
+
+noncomputable section
+
+namespace GlobalTheory.BadIndef
+
+theorem finiteDimensional_of_lat {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
+    [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (L : Submodule (𝓞 K) V) (hL : L.FG)
+    (hs : Submodule.span K (L : Set V) = ⊤) : FiniteDimensional K V := by
+  obtain ⟨s, rfl⟩ := hL
+  refine Module.finite_def.2 ⟨s, ?_⟩
+  rw [← Submodule.span_span_of_tower (𝓞 K) K (s : Set V)]
+  exact hs
+
+
+end GlobalTheory.BadIndef
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.LocalEmbeddings.RankCover
+
+section
+
+@[expose] public section
+
+set_option synthInstance.maxHeartbeats 400000
+
+noncomputable section
+
+namespace GlobalTheory.CovTop.BadRep
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.DIV Formalism.IndefR.Links Formalism.IndefR.FWT
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.BigTop GlobalTheory.AllWt GlobalTheory.CovTop GlobalTheory.BadCount
+open GlobalTheory.LevDesc (TypeFrame IsTypeLevel typeRed typeEmb grpHR grpGHR transl levelGU)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters (Sq LevelGroup levelU psiU unitri superDiag)
+open GlobalTheory.LevPull (CongMod)
+open Formalism.MainNotions.ArithmeticCylinders
+open scoped TensorProduct
+
+section Mid
+
+variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
+
+
+set_option maxHeartbeats 1000000 in
+theorem rank_cover {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F}
+    {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
+    (fw : FWTie T R κ v₀) (Fc : Face D A) (i : Fin D.R.m) (Y : Deep T.toCore ((i : ℕ) + 1)) {e : ℕ} {o : ℝ} (hY : Y.Good e o)
+    (lev : G → (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La)
+    (hact : ActLev (Xo := T.Q.Xo ((i : ℕ) + 1)) T.Q.c
+      (fun g => (lev g, (LinearMap.id : (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La))))
+    (hρ : ActRho R i (T.cuspA ((i : ℕ) + 1) (wtA (κ i)) (κ i).n) (fw.e i) (actLev (Xo := T.Q.Xo ((i : ℕ) + 1)) T.Q.c
+      (fun g => (lev g, (LinearMap.id : (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La)))))
+    (θ : LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂ →* G) (h1 : ∀ γ, CongMod T.Q.l.Mb (liftLa γ) (lev (θ γ)))
+    (h2 : ∀ γ, CongMod T.Q.l.Mb (liftLa γ) LinearMap.id → θ γ = 1) {G' : Type} [Group G']
+    (c : G ≃* G') (s : G' →* LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂) (hs : ∀ g, θ (s (c g)) = g)
+    (Q : Subgroup (LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂))
+    (hQ : ∀ γ, γ ∈ Q ↔ θ γ ∈ (Fc.lvl false).P) (lamb : Q →* ℂˣ)
+    (hlam : ∀ γ : Q, ((lamb γ : ℂˣ) : ℂ) =
+      D.what₂.embLL (((Fc.lvl false).ψ⁻¹ ⟨θ γ, (hQ _).1 γ.2⟩ : D.what₂.LLˣ) : D.what₂.LL))
+    (e0 : MonoidAlgebra ℂ G') (he : ∀ g, D.what₂.embLL ((idemOf A.X).coeff g) = e0.coeff (c g)) :
+    ∃ (ρ : Representation ℂ (LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂) (ℂ ⊗[Y.d.c₂.F] Y.V (wtZ (wtA (κ i)) (κ i).n)))
+      (χ : (LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂) →* ℂˣ),
+      (∀ (g : (LevelAut (T.Q.Dw ((i : ℕ) + 1)) Y.d.l₂)) (v w : Y.V (wtZ (wtA (κ i)) (κ i).n)),
+        (w : Rul Y.d.Xo₂ Y.d.c₂) = transl Y.d.Xo₂ Y.d.c₂ g v →
+        ρ g ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] v) = ((χ g : ℂˣ) : ℂ) • ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] w)) ∧
+      Formalism.HN.rkK (latType R Fc i) = Module.finrank ℂ (eig ρ Q lamb) ∧
+      Formalism.HN.rkK (CovTop.latBad R Fc i) = Module.finrank ℂ (eig ρ Q lamb ⊓
+        LinearMap.ker (Representation.asAlgebraHom
+          (ρ.comp s : Representation ℂ G' (ℂ ⊗[Y.d.c₂.F] Y.V (wtZ (wtA (κ i)) (κ i).n))) e0) :
+          Submodule ℂ (ℂ ⊗[Y.d.c₂.F] Y.V (wtZ (wtA (κ i)) (κ i).n))) := by
+  have hk : ∀ g, ∀ f ∈ T.cuspA ((i : ℕ) + 1) (wtA (κ i)) (κ i).n, actLev (Xo := T.Q.Xo ((i : ℕ) + 1)) T.Q.c
+      (fun g => (lev g, (LinearMap.id : (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La))) g f ∈
+        T.cuspA ((i : ℕ) + 1) (wtA (κ i)) (κ i).n := fun g f hf => by
+    obtain ⟨h, -⟩ := hρ g ⟨f, hf⟩
+    exact h
+  have hI : InR D ((i : ℕ) + 1) := ⟨Nat.succ_pos _, i.2⟩
+  have hC : cuspW (T.Q.Xo ((i : ℕ) + 1)) T.Q.c (T.U ((i : ℕ) + 1)) (wtZ (wtA (κ i)) (κ i).n) =
+      T.cuspA ((i : ℕ) + 1) (wtA (κ i)) (κ i).n := cuspW_wtZ _ _
+  have hj : ∀ a, algebraMap Y.d.c₂.F ℂ (((Y.d.eF : Y.c'.F →+* Y.d.c₂.F).comp (incF T.Q.c Y.c' Y.hle)) a) = T.σ₀ a :=
+    fun a => rfl
+  have H := rep_data fw.laws hI Y hY (dom_wtA (κ i)) lev hact hk θ h1 h2
+  refine H.elim fun π h => h.elim fun τ a => ?_
+  have H' := rank_gen fw Fc i _ hρ hC hj π τ θ a.2.1 a.2.2.1 a.2.2.2 c s hs Q hQ lamb hlam e0 he
+  refine H'.imp fun ρ h' => h'.imp fun χ b => ⟨fun g v w hw => ?_, b.2⟩
+  rw [b.1, show τ g v = w from Subtype.ext ((a.1 g v).trans hw.symm)]
+
+end Mid
+
+section Point
+
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
+  {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ}
+
+
+set_option maxHeartbeats 1000000 in
+theorem rank_data (p : PtAt ex Csz) (i : Fin D.R.m) (Y : Cov p i) {e : ℕ} {o : ℝ} (hY : Y.Good e o)
+    (θ : LevelAut (dat p i) Y.d.l₂ →* p.P.Gp) (h1 : ∀ γ, CongMod p.T.Q.l.Mb (liftLa γ) ((p.O i).lev (θ γ)))
+    (h2 : ∀ γ, CongMod p.T.Q.l.Mb (liftLa γ) LinearMap.id → θ γ = 1) {G' : Type} [Group G'] (c : p.P.Gp ≃* G')
+    (s : G' →* LevelAut (dat p i) Y.d.l₂) (hs : ∀ g, θ (s (c g)) = g) (Q : Subgroup (LevelAut (dat p i) Y.d.l₂))
+    (hQ : ∀ γ, γ ∈ Q ↔ θ γ ∈ (p.F.lv2.lvl false).P) (lamb : Q →* ℂˣ)
+    (hlam : ∀ γ : Q, ((lamb γ : ℂˣ) : ℂ) =
+      D.what₂.embLL (((p.F.lv2.lvl false).ψ⁻¹ ⟨θ γ, (hQ _).1 γ.2⟩ : D.what₂.LLˣ) : D.what₂.LL))
+    (e0 : MonoidAlgebra ℂ G') (he : ∀ g, D.what₂.embLL ((idemOf p.P.A3.A.X).coeff g) = e0.coeff (c g)) :
+    ∃ (ρ : Representation ℂ (LevelAut (dat p i) Y.d.l₂) (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) (χ : (LevelAut (dat p i) Y.d.l₂) →* ℂˣ),
+      (∀ (g : (LevelAut (dat p i) Y.d.l₂)) (v w : Y.V (Gk p i)), (w : Rul Y.d.Xo₂ Y.d.c₂) = transl Y.d.Xo₂ Y.d.c₂ g v →
+        ρ g ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] v) = ((χ g : ℂˣ) : ℂ) • ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] w)) ∧
+      Formalism.HN.rkK (latType p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ Q lamb) ∧
+      Formalism.HN.rkK (CovTop.latBad p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ Q lamb ⊓
+        LinearMap.ker (Representation.asAlgebraHom (ρ.comp s : Representation ℂ G' (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) e0) :
+          Submodule ℂ (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) :=
+  rank_cover p.fw p.F.lv2 i Y hY (p.O i).lev (p.pins i).2.act.1 ((p.rhoGeo i).1 fun g =>
+    GlobalTheory.LevelCusp.actLev_mem_cuspA_of_actLev p.T p.κ i _ p.fw.laws (p.pins i).2.act.1 g fun _ => rfl)
+    θ h1 h2 c s hs Q hQ lamb hlam e0 he
+
+end Point
+
+end GlobalTheory.CovTop.BadRep
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.LocalEmbeddings.BadRepAt
+
+section
+
+@[expose] public section
+
+set_option synthInstance.maxHeartbeats 400000
+
+noncomputable section
+
+namespace GlobalTheory.CovTop.BadRep
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.DIV Formalism.IndefR.Links Formalism.IndefR.FWT
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.BigTop GlobalTheory.AllWt GlobalTheory.CovTop GlobalTheory.BadCount
+open GlobalTheory.LevDesc (TypeFrame IsTypeLevel typeRed typeEmb grpHR grpGHR transl levelGU)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters (Sq LevelGroup levelU psiU unitri superDiag)
+open GlobalTheory.LevPull (CongMod)
+open Formalism.MainNotions.ArithmeticCylinders
+open scoped TensorProduct
+
+section Point
+
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
+  {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ}
+
+
+set_option maxHeartbeats 2000000 in
+theorem badRep_at (p : PtAt ex Csz) (i : Fin D.R.m) (Y : Cov p i) (hY : GoodCov p i Y) :
+    ∃ (fr : TypeFrame (dat p i) Y.d.l₂) (π : (LevelAut (dat p i) Y.d.l₂) →* G0g D.nd) (s : G0g D.nd →* (LevelAut (dat p i) Y.d.l₂)) (ρ : Representation ℂ (LevelAut (dat p i) Y.d.l₂) (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) (χ : (LevelAut (dat p i) Y.d.l₂) →* ℂˣ) (Pb : Subgroup (G0g D.nd)) (lam : Pb →* ℂˣ) (ψ : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), AddChar (ZMod (D.host.g kv.1)) ℂ) (lamb : Pb.comap π →* ℂˣ) (H : Fin 2 → Subgroup (G0g D.nd)), IsSplit π s ∧ IsWhit D Pb lam ψ ∧ (∀ γ : Pb.comap π, lamb γ = lam ⟨π γ, γ.2⟩) ∧ (∀ k, IsHalf D k (H k)) ∧ Pb.comap π = grpHR fr ∧ (∀ k, (H k).comap π = grpGHR fr k) ∧ (∀ (g : (LevelAut (dat p i) Y.d.l₂)) (v w : Y.V (Gk p i)), (w : Rul Y.d.Xo₂ Y.d.c₂) = transl Y.d.Xo₂ Y.d.c₂ g v → ρ g ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] v) = ((χ g : ℂˣ) : ℂ) • ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] w)) ∧ Formalism.HN.rkK (latType p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ (Pb.comap π) lamb) ∧ Formalism.HN.rkK (CovTop.latBad p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ (Pb.comap π) lamb ⊓ LinearMap.ker (Representation.asAlgebraHom (ρ.comp s : Representation ℂ (G0g D.nd) (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) D.ntypes.e0) : Submodule ℂ (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) := by
+  refine (frame_data p i Y hY.1).elim fun fr h => h.elim fun ε h => h.elim fun iso' h => h.elim fun t h => ?_
+  refine p.grpRecPin.elim fun plg h' => h'.elim fun iso h' => ?_
+  have hl₂ := h.1
+  have hpin := h'.2.2.2
+  let c : p.P.Gp ≃* G0g D.nd := p.R.eG.trans p.cG
+  let θ : LevelAut (dat p i) Y.d.l₂ →* p.P.Gp := t.toMonoidHom.comp (typeRed fr)
+  let π : LevelAut (dat p i) Y.d.l₂ →* G0g D.nd := c.toMonoidHom.comp θ
+  let s : G0g D.nd →* LevelAut (dat p i) Y.d.l₂ := (typeEmb hl₂ fr).comp (t.symm.toMonoidHom.comp c.symm.toMonoidHom)
+  have hs : ∀ g, θ (s (c g)) = g := fun g => by
+    show t (typeRed fr (typeEmb hl₂ fr (t.symm (c.symm (c g))))) = g
+    rw [GlobalTheory.LevDesc.typeRed_typeEmb, MulEquiv.symm_apply_apply, MulEquiv.apply_symm_apply]
+  have hsp : IsSplit π s := by
+    refine ⟨fun g => ?_, fun g γ hγ => ?_⟩
+    · show c (t (typeRed fr (typeEmb hl₂ fr (t.symm (c.symm g))))) = g
+      rw [GlobalTheory.LevDesc.typeRed_typeEmb, MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply]
+    · have h0 : c (t (typeRed fr γ)) = 1 := hγ
+      rw [EmbeddingLike.map_eq_one_iff, EmbeddingLike.map_eq_one_iff, GlobalTheory.LevDesc.typeRed_eq_one] at h0
+      exact hl₂.commute (GlobalTheory.LevDesc.typeEmb_mem hl₂ fr _) h0
+  refine (whit_data p.R.toRealDat p.F.lv2 p.charW.base.grp.levels c plg iso hpin).elim fun Pb w => w.elim fun lam w =>
+    w.elim fun ψ w => ?_
+  have hH := fun k => half_data p.R.toRealDat c plg iso hpin ε iso' t h.2.2.2.1 k
+  have hQ : ∀ γ, γ ∈ Pb.comap π ↔ θ γ ∈ (p.F.lv2.lvl false).P := fun γ => w.2.1 (θ γ)
+  refine (rank_data p i Y hY.1 θ h.2.1 (fun γ hγ => (congrArg t (h.2.2.1 γ hγ)).trans (map_one t)) c s hs (Pb.comap π) hQ
+    (lam.comp (π.subgroupComap Pb)) (fun γ => w.2.2 (θ γ) γ.2 _) D.ntypes.e0 h'.2.1).elim fun ρ r => r.elim fun χ r => ?_
+  exact ⟨fr, π, s, ρ, χ, Pb, lam, ψ, lam.comp (π.subgroupComap Pb), fun k => (hH k).choose, hsp, w.1, fun _ => rfl,
+    fun k => (hH k).choose_spec.1, Subgroup.ext fun γ => (hQ γ).trans (h.2.2.2.2 _),
+    fun k => Subgroup.ext fun γ => (hH k).choose_spec.2 _, r⟩
+
+end Point
+
+end GlobalTheory.CovTop.BadRep
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CoverTypeLatticeComparison
+
+section
+
+@[expose] public section
+
+set_option synthInstance.maxHeartbeats 200000
+
+section
+section
+open CategoryTheory AlgebraicGeometry NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Theta
+open GlobalTheory GlobalTheory.CompHS GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.HSApp GlobalTheory.DegVal GlobalTheory.DegCmp
+open GlobalTheory.AllWt (Psi wtOf cuspOn cuspW latOn latW normOn petOn GoodOn GoodW rankOn degOn rankW)
+open GlobalTheory.CompHt (hodgeWt)
+open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR latN levDet secRing transl pull KeepsCusp)
+open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
+open GlobalTheory.BadCount
+open scoped TensorProduct
+set_option maxHeartbeats 1000000 in
+theorem _root_.GlobalTheory.T.cover_type_lattice_comparison_alt : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.GramCondition → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y _ _ => ∃ (fr : TypeFrame (dat p i) Y.d.l₂) (π : (LevelAut (dat p i) Y.d.l₂) →* G0g (Fm.D x ι).nd) (s : G0g (Fm.D x ι).nd →* (LevelAut (dat p i) Y.d.l₂)) (ρ : Representation ℂ (LevelAut (dat p i) Y.d.l₂) (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) (χ : (LevelAut (dat p i) Y.d.l₂) →* ℂˣ) (Pb : Subgroup (G0g (Fm.D x ι).nd)) (lam : Pb →* ℂˣ) (ψ : ∀ kv : (Σ k : Fin 2, (Fm.D x ι).nd.PlG k), AddChar (ZMod ((Fm.D x ι).host.g kv.1)) ℂ) (lamb : Pb.comap π →* ℂˣ) (H : Fin 2 → Subgroup (G0g (Fm.D x ι).nd)), IsSplit π s ∧ IsWhit (Fm.D x ι) Pb lam ψ ∧ (∀ γ : Pb.comap π, lamb γ = lam ⟨π γ, γ.2⟩) ∧ (∀ k, IsHalf (Fm.D x ι) k (H k)) ∧ Pb.comap π = grpHR fr ∧ (∀ k, (H k).comap π = grpGHR fr k) ∧ (∀ (g : (LevelAut (dat p i) Y.d.l₂)) (v w : Y.V (Gk p i)), (w : Rul Y.d.Xo₂ Y.d.c₂) = transl Y.d.Xo₂ Y.d.c₂ g v → ρ g ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] v) = ((χ g : ℂˣ) : ℂ) • ((1 : ℂ) ⊗ₜ[Y.d.c₂.F] w)) ∧ Formalism.HN.rkK (latType p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ (Pb.comap π) lamb) ∧ Formalism.HN.rkK (CovTop.latBad p.R.toRealDat p.F.lv2 i) = Module.finrank ℂ (eig ρ (Pb.comap π) lamb ⊓ LinearMap.ker (Representation.asAlgebraHom (ρ.comp s : Representation ℂ (G0g (Fm.D x ι).nd) (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) (Fm.D x ι).ntypes.e0) : Submodule ℂ (ℂ ⊗[Y.d.c₂.F] Y.V (Gk p i))) := by
+  intro _ _ _
+  refine _root_.GlobalTheory.CovTop.CovSz.covers_of_lifts_alt (_root_.GlobalTheory.CovTop.Sizes.hostN_alt 0) ?_
+  intro eps Fm x hx ι p i C _ hN _ Y hY
+  exact GlobalTheory.CovTop.BadRep.badRep_at p i Y hY
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.BadComponentsIndefinite
+
+section
 
 @[expose] public section
 
@@ -112,5 +381,7 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.covers_badAt_of_deep_good_size_flat_degree : GlobalTheory.CovTop.HypothesesX → _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → GlobalTheory.Published.GrothendieckDeformation → GlobalTheory.HSCore.Quoted → GlobalTheory.Published.SiegelToroidalIntegral → GlobalTheory.Published.ToroidalForFanKS → GlobalTheory.Published.SemiAbelianLieSeminegative → GlobalTheory.Published.GreenCuspidal → _root_.GlobalTheory.CovTop.GramCondition → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoverDegree → _root_.GlobalTheory.CovTop.ShareCondition → _root_.GlobalTheory.CovTop.CoversCondition fun _ _ _ _ p i _ _ _ => BadAt p i := by
   first | exact @_root_.GlobalTheory.BadIndef.bad_components_indefinite_alt | exact _root_.GlobalTheory.BadIndef.bad_components_indefinite_alt | (intros; apply _root_.GlobalTheory.BadIndef.bad_components_indefinite_alt <;> assumption)
+end
+end
 end
 end

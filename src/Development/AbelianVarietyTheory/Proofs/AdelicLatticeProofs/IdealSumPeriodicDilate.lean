@@ -3,30 +3,30 @@ module
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
 public import Mathlib.RingTheory.ClassGroup.Basic
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.LatticeSumDilateHaarAsymptoticStatement
+public import Mathlib.Algebra.Module.ZLattice.Covolume
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Formalism.LatticeTheta.ThetaShiftInversion
+import Mathlib.Algebra.Module.ZLattice.Summable
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.NumberField.Discriminant.Basic
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,8 +46,222 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Separation.CompletelyRegular
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LatticeTheta.Statement
+import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.NumberTheory.NumberField.Discriminant.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Topology.Separation.CompletelyRegular
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ZlatticeTsumDilateSubIntegralLeRapid
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical
+open scoped ContDiff nonZeroDivisors
+open scoped FourierTransform RealInnerProductSpace SchwartzMap
+
+namespace GlobalTheory
+
+theorem fourier_comp_smul_of_pos {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (f : V → ℂ) {t : ℝ} (ht : 0 < t)
+    (w : V) :
+    (𝓕 (fun x => f (t • x)) : V → ℂ) w
+      = (((t ^ Module.finrank ℝ V)⁻¹ : ℝ) : ℂ) * (𝓕 f : V → ℂ) (t⁻¹ • w) := by
+  rw [Real.fourier_eq', Real.fourier_eq']
+  have h := Measure.integral_comp_smul (volume : Measure V)
+    (fun u : V => cexp (((-2 * Real.pi * ⟪u, t⁻¹ • w⟫ : ℝ) : ℂ) * I) • f u) t
+  rw [abs_of_pos (by positivity), Complex.real_smul] at h
+  rw [← h]
+  congr 1
+  ext v
+  rw [real_inner_smul_left, real_inner_smul_right, ← mul_assoc t, mul_inv_cancel₀ ht.ne', one_mul]
+
+theorem latticeSum_dilate_sub_integral_le (V : Type) [NormedAddCommGroup V]
+    [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V]
+    (L : Submodule ℤ V) [DiscreteTopology L] [IsZLattice ℝ L] (f : V → ℂ)
+    (hf : ContDiff ℝ ∞ f) (hc : HasCompactSupport f) (A : ℕ) :
+    ∃ C : ℝ, ∀ (x₀ : V) (t : ℝ), 0 < t → t ≤ 1 →
+      ‖∑' l : L, f (t • ((l : V) + x₀)) - (∫ x, f x) /
+        ((ZLattice.covolume L * t ^ Module.finrank ℝ V : ℝ) : ℂ)‖ ≤ C * t ^ A := by
+  obtain ⟨hD, -⟩ := Formalism.H.dualIsLattice V L
+  set d := Module.finrank ℝ V with hd
+  set k := A + d + Module.finrank ℤ (Formalism.H.dual L) + 1 with hk
+  set F : 𝓢(V, ℂ) := hc.toSchwartzMap hf with hF
+  have hFf : (F : V → ℂ) = f := rfl
+  obtain ⟨C, hC0, hC⟩ := (𝓕 F : 𝓢(V, ℂ)).decay k 0
+  have hs := ZLattice.summable_norm_pow_inv (Formalism.H.dual L) k (by omega)
+  have hcov : 0 < ZLattice.covolume L := ZLattice.covolume_pos L volume
+  refine ⟨(ZLattice.covolume L)⁻¹ * (C * ∑' y : Formalism.H.dual L, ‖y‖⁻¹ ^ k), ?_⟩
+  intro x₀ t ht ht1
+  have hft : ContDiff ℝ ∞ (fun x : V => f (t • x)) := hf.comp (contDiff_const_smul t)
+  have hct : HasCompactSupport (fun x : V => f (t • x)) :=
+    hc.comp_homeomorph (Homeomorph.smulOfNeZero t ht.ne')
+  obtain ⟨G, hG⟩ : ∃ G : 𝓢(V, ℂ), (G : V → ℂ) = fun x : V => f (t • x) :=
+    ⟨hct.toSchwartzMap hft, rfl⟩
+  obtain ⟨h1, h2⟩ := Formalism.H.poissonSchwartz V L G x₀
+  rw [hG] at h1 h2
+  rw [h2.tsum_eq, h1.tsum_eq_add_tsum_ite 0]
+  have h0 : (𝓕 (fun x : V => f (t • x)) : V → ℂ) ((0 : Formalism.H.dual L) : V) *
+      Complex.exp (2 * Real.pi * Complex.I * (⟪((0 : Formalism.H.dual L) : V), x₀⟫ : ℝ))
+      = (((t ^ d)⁻¹ : ℝ) : ℂ) * ∫ x, f x := by
+    rw [fourier_comp_smul_of_pos f ht, Real.fourier_eq']
+    simp [hd]
+  rw [h0, mul_add]
+  have h3 : ∀ S : ℂ, (ZLattice.covolume L : ℂ)⁻¹ * ((((t ^ d)⁻¹ : ℝ) : ℂ) * ∫ x, f x) + S -
+      (∫ x, f x) / ((ZLattice.covolume L * t ^ d : ℝ) : ℂ) = S := by
+    intro S
+    push_cast
+    rw [div_eq_mul_inv, mul_inv]
+    ring
+  rw [h3, norm_mul, norm_inv, Complex.norm_real, Real.norm_of_nonneg hcov.le,
+    mul_assoc (ZLattice.covolume L volume)⁻¹]
+  refine mul_le_mul_of_nonneg_left ?_ (inv_nonneg.2 hcov.le)
+  rw [← tsum_mul_left, ← tsum_mul_right]
+  refine tsum_of_norm_bounded (((hs.mul_left C).mul_right (t ^ A)).hasSum) ?_
+  intro y
+  split_ifs with hy
+  · rw [norm_zero]; positivity
+  have hn : 0 < ‖(y : V)‖ := norm_pos_iff.2 (fun h => hy (Subtype.ext h))
+  have he : ‖Complex.exp (2 * Real.pi * Complex.I * (⟪(y : V), x₀⟫ : ℝ))‖ = 1 := by
+    rw [Complex.norm_exp]; simp
+  rw [norm_mul, he, mul_one, fourier_comp_smul_of_pos f ht, norm_mul, Complex.norm_real,
+    Real.norm_of_nonneg (by positivity)]
+  have h4 := hC (t⁻¹ • (y : V))
+  rw [norm_iteratedFDeriv_zero, _root_.norm_smul, Real.norm_of_nonneg (by positivity),
+    SchwartzMap.fourier_coe, hFf] at h4
+  change _ ≤ C * ‖(y : V)‖⁻¹ ^ k * t ^ A
+  have h5 : ‖(𝓕 f : V → ℂ) (t⁻¹ • (y : V))‖ ≤ C * ‖(y : V)‖⁻¹ ^ k * t ^ k := by
+    rw [mul_comm, ← le_div_iff₀ (by positivity)] at h4
+    refine h4.trans_eq ?_
+    rw [mul_pow, inv_pow, inv_pow]
+    field_simp
+  have h6 : t ^ k ≤ t ^ (A + d) := pow_le_pow_of_le_one ht.le ht1 (by omega)
+  calc (t ^ d)⁻¹ * ‖(𝓕 f : V → ℂ) (t⁻¹ • (y : V))‖
+      ≤ (t ^ d)⁻¹ * (C * ‖(y : V)‖⁻¹ ^ k * t ^ (A + d)) := by
+        refine mul_le_mul_of_nonneg_left (h5.trans ?_) (by positivity)
+        exact mul_le_mul_of_nonneg_left h6 (by positivity)
+    _ = _ := by rw [pow_add t A d]; field_simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ZlatticeTsumDilateSubIntegralLeRapidStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical
+open scoped ContDiff nonZeroDivisors
+
+theorem _root_.GlobalTheory.T.zlattice_tsum_dilate_sub_integral_le_rapid : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (L : Submodule ℤ V) [DiscreteTopology L] [IsZLattice ℝ L] (f : V → ℂ), ContDiff ℝ ∞ f → HasCompactSupport f → ∀ A : ℕ, ∃ C : ℝ, ∀ (x₀ : V) (t : ℝ), 0 < t → t ≤ 1 → ‖∑' l : L, f (t • ((l : V) + x₀)) - (∫ x, f x) / ((ZLattice.covolume L * t ^ Module.finrank ℝ V : ℝ) : ℂ)‖ ≤ C * t ^ A := by
+  exact @GlobalTheory.latticeSum_dilate_sub_integral_le
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.LatticeSumDilateHaarAsymptotic
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical
+open scoped ContDiff nonZeroDivisors
+
+namespace GlobalTheory
+
+theorem integral_div_covolume_eq_of_haar {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
+    [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (μ ν : Measure V)
+    [μ.IsAddHaarMeasure] [ν.IsAddHaarMeasure] (L : Submodule ℤ V) [DiscreteTopology L]
+    [IsZLattice ℝ L] (f : V → ℂ) (s : ℝ) :
+    (∫ x, f x ∂μ) / ((ZLattice.covolume L μ * s : ℝ) : ℂ) =
+      (∫ x, f x ∂ν) / ((ZLattice.covolume L ν * s : ℝ) : ℂ) := by
+  obtain ⟨c, hc⟩ : ∃ c : NNReal, μ = c • ν := ⟨_, Measure.isAddLeftInvariant_eq_smul μ ν⟩
+  have hc0 : c ≠ 0 := by
+    rintro rfl
+    have : μ = 0 := by simpa using hc
+    exact (NeZero.ne μ) this
+  let b := Module.Free.chooseBasis ℤ L
+  have h1 := ZLattice.covolume_eq_measure_fundamentalDomain L μ
+    (ZLattice.isAddFundamentalDomain b μ)
+  have h2 := ZLattice.covolume_eq_measure_fundamentalDomain L ν
+    (ZLattice.isAddFundamentalDomain b ν)
+  have h3 : ZLattice.covolume L μ = (c : ℝ) * ZLattice.covolume L ν := by
+    rw [h1, h2]
+    conv_lhs => rw [hc]
+    simp [Measure.real]
+  have h4 : ∫ x, f x ∂μ = (c : ℂ) * ∫ x, f x ∂ν := by
+    conv_lhs => rw [hc]
+    rw [integral_smul_nnreal_measure]
+    simp [NNReal.smul_def]
+  have hc1 : ((c : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hc0
+  rw [h3, h4]
+  push_cast
+  rw [mul_assoc, mul_div_mul_left _ _ hc1]
+
+theorem lattice_sum_dilate_haar :
+    ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddHaarMeasure] (L : Submodule ℤ V) [DiscreteTopology L] [IsZLattice ℝ L] (f : V → ℂ), ContDiff ℝ ∞ f → HasCompactSupport f → ∀ A : ℕ, ∃ C : ℝ, ∀ (x₀ : V) (t : ℝ), 0 < t → t ≤ 1 → ‖∑' l : L, f (t • ((l : V) + x₀)) - (∫ x, f x ∂μ) / ((ZLattice.covolume L μ * t ^ Module.finrank ℝ V : ℝ) : ℂ)‖ ≤ C * t ^ A := by
+  intro V _ _ _ _ _ μ _ L _ _ f hf hs A
+  let e : EuclideanSpace ℝ (Fin (Module.finrank ℝ V)) ≃L[ℝ] V := toEuclidean.symm
+  let ν : Measure V := (volume : Measure (EuclideanSpace ℝ (Fin (Module.finrank ℝ V)))).map e
+  have : ν.IsAddHaarMeasure := ContinuousLinearEquiv.isAddHaarMeasure_map e _
+  have hmp : MeasurePreserving e volume ν := ⟨e.continuous.measurable, rfl⟩
+  obtain ⟨C, hC⟩ := GlobalTheory.T.zlattice_tsum_dilate_sub_integral_le_rapid _ (ZLattice.comap ℝ L e.toLinearMap) (f ∘ e)
+    (hf.comp e.contDiff) (hs.comp_homeomorph e.toHomeomorph) A
+  refine ⟨C, fun x₀ t ht ht1 => ?_⟩
+  have h := hC (e.symm x₀) t ht ht1
+  rw [ZLattice.covolume_comap L ν volume hmp, finrank_euclideanSpace_fin] at h
+  have hi : ∫ x, (f ∘ e) x = ∫ x, f x ∂ν :=
+    (hmp.integral_comp e.toHomeomorph.measurableEmbedding f)
+  have hsum : ∑' l : ZLattice.comap ℝ L e.toLinearMap,
+      (f ∘ e) (t • ((l : EuclideanSpace ℝ (Fin (Module.finrank ℝ V))) + e.symm x₀)) =
+      ∑' l : L, f (t • ((l : V) + x₀)) := by
+    let q : ZLattice.comap ℝ L e.toLinearMap ≃ L :=
+      e.toEquiv.subtypeEquiv (fun _ => Iff.rfl)
+    rw [← q.tsum_eq]
+    refine tsum_congr fun l => ?_
+    have : ((q l : L) : V) = e l := rfl
+    simp [this]
+  rw [hi, hsum] at h
+  rw [integral_div_covolume_eq_of_haar μ ν L f]
+  exact h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.LatticeSumDilateHaarAsymptoticStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical
+open scoped ContDiff nonZeroDivisors
+
+theorem _root_.GlobalTheory.T.lattice_sum_dilate_haar_asymptotic : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddHaarMeasure] (L : Submodule ℤ V) [DiscreteTopology L] [IsZLattice ℝ L] (f : V → ℂ), ContDiff ℝ ∞ f → HasCompactSupport f → ∀ A : ℕ, ∃ C : ℝ, ∀ (x₀ : V) (t : ℝ), 0 < t → t ≤ 1 → ‖∑' l : L, f (t • ((l : V) + x₀)) - (∫ x, f x ∂μ) / ((ZLattice.covolume L μ * t ^ Module.finrank ℝ V : ℝ) : ℂ)‖ ≤ C * t ^ A := by
+  exact @GlobalTheory.lattice_sum_dilate_haar
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IdealSumPeriodicDilate
+
+section
 
 @[expose] public section
 
@@ -201,3 +414,5 @@ theorem ideal_sum_periodic_dilate : ∀ (K : Type) [Field K] [NumberField K] (m 
   exact h
 
 end GlobalTheory.IdealSum
+end
+end

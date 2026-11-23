@@ -3,14 +3,16 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.IwahoriHeckeInjectivity.HeckeInj
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.IwahoriBlocks.IwahoriCentralBorel.LevLaws
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.BlkInvVal
-public import Development.WeilBound.CuspidalAdmissibility.FixLev
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TensFun
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,10 +39,52 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.LocHeckeInert
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.IntegralCompression.LAbove
 import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.ComplexWhittaker.ExpEqOfHasDerivAt
+
+-- Source module: Development.WeilBound.CuspidalAdmissibility.FixLev
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory NumberField IsDedekindDomain Filter Topology
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.AutomorphicForm
+open GroundTheory.Automorphic.RightCosetSpace
+open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.GM UpperTheory.ConvolutionTheory.C
+open scoped RestrictedProduct Classical
+
+namespace PositivityTheory.TfC.FixLev
+
+variable {K : Type} [Field K] [NumberField K] {n : ℕ}
+
+theorem finAt_finEmb (u : AdelicGLn.FiniteAdelicGL K n) (v : Pl K) :
+    finAt v (finEmb K n u) =
+      (AdelicGLn.finiteRestrictedEquiv K n u v : GL (Fin n) (v.adicCompletion K)) := by
+  ext a b
+  rw [finAt_apply, AdelicGLn.finiteRestrictedEquiv_apply, ← AdelicGLn.prodEquiv_apply_snd,
+    prodEquiv_finEmb]
+
+section Rep
+
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
+
+end Rep
+
+end PositivityTheory.TfC.FixLev
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsLevelIndicatorUnipotentInvariant
+
+section
 
 @[expose] public section
 
@@ -203,3 +247,5 @@ theorem UpperTheory.exists_level_indicator_unipotent_invariant :
         (fun _ _ h => Sum.inl_injective (finSumFinEquiv.injective h)) hu fun i j => (hb i j).1,
       block_mem S m (fun w => (hm w).trans inf_le_right) d₂.2 (fun i => finSumFinEquiv (Sum.inr i))
         (fun _ _ h => Sum.inr_injective (finSumFinEquiv.injective h)) hu fun i j => (hb i j).2⟩
+end
+end

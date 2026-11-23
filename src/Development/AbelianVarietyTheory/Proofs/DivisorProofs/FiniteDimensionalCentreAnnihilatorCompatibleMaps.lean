@@ -2,11 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SelfMemSpanK
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsSpanFormsNeBot
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompMemKinfEquivariantAutomorphicMapsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsChiDetSplitCentre
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalEigenIntertwinersStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalOfCommutingFiniteAlgebraJointEiStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscreteSpectrumOfResidual
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GrowthOfTame
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemZalgCommuteCompactRep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +39,246 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsChiDetSplitCentre
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalOfCommutingFiniteAlgebraJointEiStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscreteSpectrumOfResidual
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompMemKinfEquivariantAutomorphicMaps
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory Filter Topology
+
+namespace GlobalTheory.AutGrowth
+
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
+
+
+variable (E a) in
+def leftInv : Submodule ℂ (Sm E a) where
+  carrier := {ψ | ∀ γ g, ψ.1 (ratGL E a γ * g) = ψ.1 g}
+  zero_mem' _ _ := rfl
+  add_mem' {ψ ψ'} h h' γ g := by simp [h γ g, h' γ g]
+  smul_mem' c ψ h γ g := by simp [h γ g]
+
+theorem lie_mem_leftInv (X : Lie E a) {ψ : Sm E a} (h : ψ ∈ leftInv E a) : lie E a X ψ ∈ leftInv E a := by
+  intro γ g
+  have e : chart ψ.1 (ratGL E a γ * g) = chart ψ.1 g := by
+    funext x
+    simp only [chart, mul_assoc]
+    split_ifs
+    · exact h γ _
+    · rfl
+  simp only [lie_apply, lieD, e]
+
+
+variable (E a) in
+def fixL (L : Subgroup (GL (Fin a) (Af E))) : Submodule ℂ (Sm E a) where
+  carrier := {ψ | ∀ k ∈ L, finRep E a k ψ = ψ}
+  zero_mem' k _ := map_zero _
+  add_mem' {ψ ψ'} h h' k hk := by rw [map_add (f := _), h k hk, h' k hk]
+  smul_mem' c ψ h k hk := by rw [map_smul, h k hk]
+
+theorem lie_mem_fixL (L : Subgroup (GL (Fin a) (Af E))) (X : Lie E a) {ψ : Sm E a} (h : ψ ∈ fixL E a L) :
+    lie E a X ψ ∈ fixL E a L := by
+  intro k hk
+  have e := LinearMap.congr_fun (lie_rt_fin X k) ψ
+  simp only [Module.End.mul_apply] at e
+  change rt E a (finGL E a k) (lie E a X ψ) = lie E a X ψ
+  rw [← e]
+  exact congrArg (lie E a X) (h k hk)
+
+theorem comp_mem_maps : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
+    (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Sm E a)) (hW : ∀ k, ∀ w ∈ W, cptRep E a k w ∈ W)
+    (T : W →ₗ[ℂ] Sm E a), T ∈ maps L W hW → ∀ z ∈ Zalg E a, z ∘ₗ T ∈ maps L W hW := by
+  intro E _ _ _ a L W hW T hT z hz
+  refine ⟨fun k w => ?_, fun w => ⟨?_, ?_, ?_⟩⟩
+  · simp only [LinearMap.comp_apply, hT.1 k w]
+    exact (LinearMap.congr_fun (GlobalTheory.ZalgCpt.zalg_comm_cptRep E a k z hz) (T w))
+  · exact Zalg_stable (V := tame E a) (fun X _ h => lie_mem_tame X h) hz _ (hT.2 w).1
+  · exact Zalg_stable (V := leftInv E a) (fun X _ h => lie_mem_leftInv X h) hz _ (hT.2 w).2.1
+  · exact Zalg_stable (V := fixL E a L) (fun X _ h => lie_mem_fixL L X h) hz _ (hT.2 w).2.2
+
+end GlobalTheory.AutGrowth
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompMemKinfEquivariantAutomorphicMapsStatement
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.centre_comp_mem_kinfEquivariantAutomorphicMaps : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Sm E a)) (hW : ∀ k, ∀ w ∈ W, cptRep E a k w ∈ W) (T : W →ₗ[ℂ] Sm E a), T ∈ maps L W hW → ∀ z ∈ Zalg E a, z ∘ₗ T ∈ maps L W hW := by
+  first | exact @GlobalTheory.AutGrowth.comp_mem_maps | exact GlobalTheory.AutGrowth.comp_mem_maps | (intros; apply GlobalTheory.AutGrowth.comp_mem_maps <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousCoeffOfSeparating
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.ContinuousRepresentationCoefficients
+
+theorem continuous_coeff_of_separating {X V ι : Type} [TopologicalSpace X] [AddCommGroup V]
+    [Module ℂ V] [FiniteDimensional ℂ V] (L : ι → V →ₗ[ℂ] ℂ)
+    (hL : ∀ v, (∀ i, L i v = 0) → v = 0) (f : X → V) (hf : ∀ i, Continuous fun x => L i (f x))
+    (ℓ : Module.Dual ℂ V) : Continuous fun x => ℓ (f x) := by
+  have hmem : ℓ ∈ Submodule.span ℂ (Set.range L) := by
+    apply FiniteDimensional.mem_span_of_iInf_ker_le_ker
+    intro v hv
+    have h0 : v = 0 := hL v fun i => by
+      simpa using (Submodule.mem_iInf _).1 hv i
+    simp [h0]
+  induction hmem using Submodule.span_induction with
+  | mem x hx => obtain ⟨i, rfl⟩ := hx; exact hf i
+  | zero => simpa using continuous_const
+  | add x y _ _ hx hy => exact hx.add hy
+  | smul c x _ hx => exact (continuous_const (y := c)).mul hx
+
+theorem continuous_translate {E : Type} [Field E] [NumberField E] [NumberField.IsTotallyComplex E]
+    {a : ℕ} (φ : GlobalTheory.CuspRep.Sm E a) (g : GlobalTheory.CuspRep.GA E a) :
+    Continuous fun k : GlobalTheory.CuspRep.Kinf E a =>
+      ((GlobalTheory.CuspRep.cptRep E a k φ : GlobalTheory.CuspRep.Sm E a) : GlobalTheory.CuspRep.GA E a → ℂ) g := by
+  have h1 : ContinuousOn (GlobalTheory.CuspRep.chart φ.1 g) (GlobalTheory.CuspRep.invSet E a) :=
+    (φ.2 g).continuousOn
+  have hu : ∀ k : GlobalTheory.CuspRep.Kinf E a,
+      IsUnit (Matrix.of (k.1 : GlobalTheory.CuspRep.Lie E a)) := fun k => (Unitary.toUnits k).isUnit
+  have h2 : Continuous fun k : GlobalTheory.CuspRep.Kinf E a => (k.1 : GlobalTheory.CuspRep.Lie E a) :=
+    continuous_subtype_val
+  have h3 := h1.comp_continuous h2 hu
+  refine h3.congr fun k => ?_
+  have h4 : (hu k).unit = Unitary.toUnits k := Units.ext rfl
+  show GlobalTheory.CuspRep.chart φ.1 g (k.1 : GlobalTheory.CuspRep.Lie E a) = _
+  unfold GlobalTheory.CuspRep.chart
+  rw [dite_eq_left (hu k), h4]
+  rfl
+
+theorem isContRep_sub {E : Type} [Field E] [NumberField E] [NumberField.IsTotallyComplex E]
+    {a : ℕ} (W : Submodule ℂ (GlobalTheory.CuspRep.Sm E a))
+    (hW : ∀ (k : GlobalTheory.CuspRep.Kinf E a), ∀ w ∈ W, GlobalTheory.CuspRep.cptRep E a k w ∈ W)
+    [FiniteDimensional ℂ W] :
+    GlobalTheory.Published.AutFin.IsContRep (GlobalTheory.PRep.sub (GlobalTheory.CuspRep.cptRep E a) W hW) := by
+  intro ℓ w
+  refine continuous_coeff_of_separating
+    (fun g : GlobalTheory.CuspRep.GA E a =>
+      (LinearMap.proj g : (GlobalTheory.CuspRep.GA E a → ℂ) →ₗ[ℂ] ℂ) ∘ₗ
+        (GlobalTheory.CuspRep.Sm E a).subtype ∘ₗ W.subtype) ?_ _ ?_ ℓ
+  · intro v hv
+    exact Subtype.ext (Subtype.ext (funext hv))
+  · intro g
+    exact continuous_translate w.1 g
+
+end GlobalTheory.ContinuousRepresentationCoefficients
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalEigenIntertwiners
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory Filter Topology
+
+noncomputable section
+
+namespace GlobalTheory.AutGrowth
+
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
+
+theorem isContRep_sub_cptRep (W : Submodule ℂ (Sm E a)) (hW : ∀ k, ∀ w ∈ W, cptRep E a k w ∈ W)
+    [FiniteDimensional ℂ W] : GlobalTheory.Published.AutFin.IsContRep (GlobalTheory.PRep.sub (cptRep E a) W hW) := by
+  first
+  | exact @_root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub
+  | exact _root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub
+  | (apply _root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub <;> assumption)
+  | (intros; apply _root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.ContinuousRepresentationCoefficients.isContRep_sub ..)
+
+theorem finiteDimensional_capEigen_maps : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ (W : Submodule ℂ (Sm E a)) (hW : ∀ k, ∀ w ∈ W, cptRep E a k w ∈ W), FiniteDimensional ℂ W → ∀ (c : (E →+* ℂ) → ℂ → ℂ) (N : Submodule ℂ (W →ₗ[ℂ] Sm E a)), N ≤ maps L W hW → (∀ T ∈ N, ∀ τ u, cap τ u ∘ₗ T = c τ u • T) → FiniteDimensional ℂ N := by
+  intro hHC E _ _ _ a L hL W hW hWf c N hN hcap
+  haveI := hWf
+  have hF := hHC E a L hL W (GlobalTheory.PRep.sub (cptRep E a) W hW) (isContRep_sub_cptRep W hW) c
+  haveI := hF
+  have hmem : ∀ T ∈ N, ∀ w, T w ∈ GlobalTheory.Published.AutFinGL.forms L (GlobalTheory.PRep.sub (cptRep E a) W hW) c := by
+    intro T hT w
+    have hm : (∀ k w, T (GlobalTheory.PRep.sub (cptRep E a) W hW k w) = cptRep E a k (T w)) ∧
+        ∀ w, T w ∈ tame E a ∧ (∀ γ g, (T w).1 (ratGL E a γ * g) = (T w).1 g) ∧
+          ∀ k ∈ L, finRep E a k (T w) = T w := hN hT
+    obtain ⟨heq, hall⟩ := hm
+    obtain ⟨htame, hleft, hfix⟩ := hall w
+    have hZ : ∀ z ∈ Zalg E a, ∃ s : ℂ, z ∘ₗ T = s • T := by
+      intro z hz
+      induction hz using Algebra.adjoin_induction with
+      | mem x hx => obtain ⟨τ, u, rfl⟩ := hx; exact ⟨c τ u, hcap T hT τ u⟩
+      | algebraMap r => exact ⟨r, LinearMap.ext fun v => by simp⟩
+      | add x y _ _ hx hy =>
+        obtain ⟨s, hs⟩ := hx
+        obtain ⟨t, ht⟩ := hy
+        exact ⟨s + t, by rw [LinearMap.add_comp, hs, ht, add_smul]⟩
+      | mul x y _ _ hx hy =>
+        obtain ⟨s, hs⟩ := hx
+        obtain ⟨t, ht⟩ := hy
+        exact ⟨t * s, by rw [Module.End.mul_eq_comp, LinearMap.comp_assoc, ht, LinearMap.comp_smul, hs, smul_smul]⟩
+    refine ⟨⟨hleft, ?_, ?_, ?_, ?_⟩, hfix, GlobalTheory.Published.AutFinGL.type_of_map _ T heq w, fun τ u => ?_⟩
+    · exact isOpen_stab_of_mem_nhds (finRep E a) (T w)
+        (Filter.mem_of_superset (hL.mem_nhds L.one_mem) fun k hk => hfix k hk)
+    · refine Submodule.finiteDimensional_of_le (S₂ := LinearMap.range T) (Submodule.span_le.2 ?_)
+      rintro _ ⟨k, rfl⟩
+      exact ⟨_, heq k w⟩
+    · refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ {T w}) (Submodule.span_le.2 ?_)
+      rintro _ ⟨z, hz, rfl⟩
+      obtain ⟨s, hs⟩ := hZ z hz
+      have e : z (T w) = s • T w := LinearMap.congr_fun hs w
+      show z (T w) ∈ _
+      rw [e]
+      exact Submodule.smul_mem _ s (Submodule.mem_span_singleton_self _)
+    · exact growth_of_tame htame
+    · exact LinearMap.congr_fun (hcap T hT τ u) w
+  let Φ : N →ₗ[ℂ] (W →ₗ[ℂ] Submodule.span ℂ (GlobalTheory.Published.AutFinGL.forms L (GlobalTheory.PRep.sub (cptRep E a) W hW) c)) :=
+    { toFun := fun T => LinearMap.codRestrict _ T.1 fun w => Submodule.subset_span (hmem T.1 T.2 w)
+      map_add' := fun T T' => LinearMap.ext fun w => rfl
+      map_smul' := fun r T => LinearMap.ext fun w => rfl }
+  have hinj : Function.Injective Φ := fun T T' h =>
+    Subtype.ext (LinearMap.ext fun w => congrArg Subtype.val (LinearMap.congr_fun h w))
+  exact Module.Finite.of_injective Φ hinj
+
+end GlobalTheory.AutGrowth
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalEigenIntertwinersStatement
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.finiteDimensional_eigen_intertwiners : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ (W : Submodule ℂ (Sm E a)) (hW : ∀ k, ∀ w ∈ W, cptRep E a k w ∈ W), FiniteDimensional ℂ W → ∀ (c : (E →+* ℂ) → ℂ → ℂ) (N : Submodule ℂ (W →ₗ[ℂ] Sm E a)), N ≤ maps L W hW → (∀ T ∈ N, ∀ τ u, cap τ u ∘ₗ T = c τ u • T) → FiniteDimensional ℂ N := by
+  first | exact @GlobalTheory.AutGrowth.finiteDimensional_capEigen_maps | exact GlobalTheory.AutGrowth.finiteDimensional_capEigen_maps | (intros; apply GlobalTheory.AutGrowth.finiteDimensional_capEigen_maps <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalCentreAnnihilatorCompatibleMaps
+
+section
 
 @[expose] public section
 
@@ -167,3 +403,6 @@ theorem finiteDimensional_mapsJ : GlobalTheory.Published.AutomorphicFormsFiniteG
       (Submodule.equivMapOfInjective (mapsJ φ L).subtype Subtype.val_injective J).symm
 
 end GlobalTheory.AutGrowth.KilledFin
+end
+end
+end

@@ -1,6 +1,7 @@
 module
 
-public import Formalism.FilteredPoleLength.ReducedBasisBounds.AlternatingBinomial
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.LinearAlgebra.BilinearMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,9 +40,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.FilteredPoleLength.ReducedBasisBounds.AlternatingBinomial
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.LatticeBaseChangeAlt
+
+open Real
+
+def TieBoundN : Prop :=
+  ∀ (V : Type) [AddCommGroup V] [Module ℝ V] (B : LinearMap.BilinForm ℝ V),
+    (∀ x y, B x y = B y x) →
+    ∀ (Γ : AddSubgroup V) (x : V),
+      (∀ y ∈ Γ, B x x / 2 ≤ B (x + y) (x + y) / 2) →
+      ∀ g ∈ Γ, ∀ N : ℕ, 2 ≤ N →
+        B (x + (N : ℝ) • g) (x + (N : ℝ) • g) / 2 - B x x / 2 =
+            (N : ℝ) * B x g + (N : ℝ) ^ 2 * (B g g / 2) ∧
+        (N : ℝ) * ((N : ℝ) - 1) * (B g g / 2) ≤
+            B (x + (N : ℝ) • g) (x + (N : ℝ) • g) / 2 - B x x / 2 ∧
+        (0 < B g g → B x x / 2 < B (x + (N : ℝ) • g) (x + (N : ℝ) • g) / 2)
+
+def DetProductRest : Prop :=
+  ∀ (i c : ℕ) (ε : ℝ), 0 ≤ ε → ε ≤ 1 →
+    ((2 : ℝ) ^ c + ε) ^ i - (2 : ℝ) ^ (c * i) ≤ (i : ℝ) * ε * ((2 : ℝ) ^ c + 1) ^ i
+
+end Formalism.LatticeBaseChangeAlt
+end
+end
+end
+
+-- Source module: Formalism.FilteredPoleLength.LocalDescentLevels.MinimumChainBounds
+
+section
 
 @[expose] public section
 
@@ -89,3 +127,5 @@ theorem detProductRest : DetProductRest := by
   exact key
 
 end Formalism.LatticeBaseChangeAlt
+end
+end

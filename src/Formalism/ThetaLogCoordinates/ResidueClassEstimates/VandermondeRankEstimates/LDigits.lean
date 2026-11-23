@@ -1,6 +1,8 @@
 module
 
-public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementL
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Fintype.Pi
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,9 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,13 +41,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Data.Nat.ModEq
+
+-- Source module: Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementL
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators TensorProduct
+open Finset
+
+namespace Formalism.InvariantFactorPaths.BranchingDimensions
+
+def ResidueClassLowerBound : Prop :=
+  ∀ (r Q be c : ℕ), 2 ≤ r → 2 * be < Q →
+    (Q : ℝ) ^ (r - 1) * (1 - 2 * r * be / Q) ≤
+      (((Finset.univ : Finset (Fin r → Fin (Q - 2 * be))).filter
+        (fun u => (∑ l, (u l : ℕ)) % Q = c % Q)).card : ℝ)
+
+end Formalism.InvariantFactorPaths.BranchingDimensions
+end
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.ResidueClassEstimates.VandermondeRankEstimates.LDigits
+
+section
 
 @[expose] public section
 
@@ -251,3 +281,6 @@ section Exact
 end Exact
 
 end Formalism.InvariantFactorPaths.BranchingDimensions
+end
+end
+end

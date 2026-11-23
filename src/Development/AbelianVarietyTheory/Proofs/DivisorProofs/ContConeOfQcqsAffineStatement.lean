@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IndEtOfForallFinset
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContConeOfQcqsAffine
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CohomologyContinuousBaseChangeQcqsStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyEquivalenceBasicPropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OfEtaleCohomologyEquivalenceDiagramStatement
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CohomologyContinuousOnConeOfWhisker
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
+
+namespace GlobalTheory.EtC
+
+theorem contCone_of_whisker : ∀ (R : Type) [CommRing R] (F : Shv R) (I : Type) [SmallCategory I] [IsCofiltered I] (I' : Type) [SmallCategory I'] [IsCofiltered I'] (L : I' ⥤ I) (G : I ⥤ Spc) (c : Cone G), (∀ i, ∃ i', Nonempty (L.obj i' ⟶ i)) → ContCone R F (c.whisker L) → ContCone R F c := by
+  intro R _ F I _ _ I' _ _ L G c hL hc n
+  obtain ⟨h1, h2⟩ := hc n
+  refine ⟨fun x => ?_, fun i y hy => ?_⟩
+  · obtain ⟨i', y, hy⟩ := h1 x
+    exact ⟨L.obj i', y, hy⟩
+  · obtain ⟨i', ⟨f⟩⟩ := hL i
+    have hy' : pull R ((c.whisker L).π.app i') F n (pull R (G.map f) F n y) = 0 := by
+      change pull R (c.π.app (L.obj i')) F n (pull R (G.map f) F n y) = 0
+      rw [← pull_comp, c.w f]
+      exact hy
+    obtain ⟨k', g, hg⟩ := h2 i' _ hy'
+    refine ⟨L.obj k', L.map g ≫ f, ?_⟩
+    rw [Functor.map_comp, pull_comp]
+    exact hg
+
+end GlobalTheory.EtC
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CohomologyContinuousOnConeOfWhiskerStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
+
+theorem _root_.GlobalTheory.T.cohomologyContinuousOnCone_of_whisker : ∀ (R : Type) [CommRing R] (F : Shv R) (I : Type) [SmallCategory I] [IsCofiltered I] (I' : Type) [SmallCategory I'] [IsCofiltered I'] (L : I' ⥤ I) (G : I ⥤ Spc) (c : Cone G), (∀ i, ∃ i', Nonempty (L.obj i' ⟶ i)) → ContCone R F (c.whisker L) → ContCone R F c := by
+  first | (exact @GlobalTheory.EtC.contCone_of_whisker) | (exact GlobalTheory.EtC.contCone_of_whisker) | (intros; apply GlobalTheory.EtC.contCone_of_whisker  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContConeOfQcqsAffine
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
+
+namespace GlobalTheory.EtC
+
+theorem contCone_of_qcqs_affine : ∀ (R : Type) [CommRing R] (F : Shv R), Finitary F → ∀ (I : Type) [SmallCategory I] [IsCofiltered I] (G : I ⥤ Scheme.{0}) (c : Cone G), IsLimit c → (∀ i, CompactSpace (G.obj i)) → (∀ i, QuasiSeparatedSpace (G.obj i)) → (∀ (i j : I) (f : i ⟶ j), IsAffineHom (G.map f)) → ContCone R F (sch.mapCone c) := by
+  intro R _ F hF I _ _ G c hc hcp hqs haff
+  obtain ⟨i₀⟩ : Nonempty I := IsCofiltered.nonempty
+  have hc' : IsLimit ((Over.conePost G i₀).obj c) := Over.isLimitConePost i₀ hc
+  haveI := hcp i₀
+  haveI := hqs i₀
+  have hcore := GlobalTheory.T.cohomologyContinuous_baseChange_qcqs R F hF (G.obj i₀) (Over i₀) (Over.post G) ((Over.conePost G i₀).obj c) hc'
+    (fun j => haff _ _ j.hom) (G.obj i₀) (𝟙 _)
+  have hb := GlobalTheory.T.etaleCohomologyEquivalence_basic_properties R F
+  haveI : IsIso (sch.map (𝟙 (G.obj i₀))) := inferInstance
+  apply GlobalTheory.T.cohomologyContinuousOnCone_of_whisker R F I (Over i₀) (Over.forget i₀) (G ⋙ sch) (sch.mapCone c)
+  · intro i
+    exact ⟨Over.mk (IsCofiltered.minToRight i i₀), ⟨IsCofiltered.minToLeft i i₀⟩⟩
+  · let α : Over.post G ⋙ bc (sch.map (𝟙 (G.obj i₀))) ⟶ Over.forget i₀ ⋙ G ⋙ sch :=
+      { app := fun j => pullback.snd _ _
+        naturality := fun j k f => by
+          simp only [Functor.comp_map, bc, pullback.map]
+          erw [pullback.lift_snd]
+          rfl }
+    refine (GlobalTheory.T.of_etaleCohomologyEquivalence_diagram R F (Over i₀) _ _ ((bc (sch.map (𝟙 (G.obj i₀)))).mapCone ((Over.conePost G i₀).obj c))
+      ((sch.mapCone c).whisker (Over.forget i₀)) α (pullback.snd _ _) ?_ ?_ ?_).1 hcore
+    · intro j
+      simp only [Functor.mapCone_π_app, Cone.whisker_π, bc, pullback.map]
+      erw [pullback.lift_snd]
+      rfl
+    · intro j
+      exact hb.1 _ _ _ (pullback_snd_iso_of_left_iso _ _)
+    · exact hb.1 _ _ _ (pullback_snd_iso_of_left_iso _ _)
+end GlobalTheory.EtC
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContConeOfQcqsAffineStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +142,5 @@ theorem _root_.GlobalTheory.T.contCone_of_isLimit_of_qcqs_affine_transitions : �
   | exact @GlobalTheory.EtC.contCone_of_qcqs_affine
   | exact GlobalTheory.EtC.contCone_of_qcqs_affine
   | (intros; apply GlobalTheory.EtC.contCone_of_qcqs_affine <;> assumption)
+end
+end

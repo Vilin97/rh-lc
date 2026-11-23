@@ -1,7 +1,6 @@
 module
 
 public import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SmoothOnAtlasContinuous
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.StokesA
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.ExistsIntSmulIsAdicIntegralInTensorBasis
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
 import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.PermFinTwoUniv
@@ -53,6 +53,32 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.I
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.SmoothOnAtlasContinuous
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix Filter Topology
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+open GroundTheory.Heights₂.Heights.LowerBoundFree GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp
+open ReciprocityTheory.AnForm (levi)
+
+namespace GlobalTheory.CompanionTheory.Ar.AtlasSmooth
+
+theorem continuous_of_atlas_smooth :
+    ∀ (e : ℕ) (X : Type) [TopologicalSpace X] (A : ReciprocityTheory.AnForm.M.FinHolAtlas e X) (f : X → ℝ),
+      A.Smooth f → Continuous f :=
+  fun _ _ _ A _ hf => ReciprocityTheory.AnForm.M.st_smooth_continuous A hf
+
+end GlobalTheory.CompanionTheory.Ar.AtlasSmooth
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.SmoothOnAtlasContinuousStatement
+
+section
+
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix Filter Topology
@@ -62,3 +88,5 @@ open ReciprocityTheory.AnForm (levi)
 
 theorem _root_.GlobalTheory.T.smooth_on_atlas_continuous : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] (A : ReciprocityTheory.AnForm.M.FinHolAtlas e X) (f : X → ℝ), A.Smooth f → Continuous f := by
   first | exact @GlobalTheory.CompanionTheory.Ar.AtlasSmooth.continuous_of_atlas_smooth | exact GlobalTheory.CompanionTheory.Ar.AtlasSmooth.continuous_of_atlas_smooth | (intros; apply GlobalTheory.CompanionTheory.Ar.AtlasSmooth.continuous_of_atlas_smooth <;> assumption)
+end
+end

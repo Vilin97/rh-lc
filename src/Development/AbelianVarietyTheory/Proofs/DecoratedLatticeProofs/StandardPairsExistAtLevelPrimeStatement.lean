@@ -1,11 +1,18 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TwTransAlt
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.StandardPairsExistAtLevelPrime
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SelfDualAt
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PadicIsNonarchimedeanLocalField
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.SingleMemIdAt
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSplitPointFrameCharacter
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IncAMulMemIntAt
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardAdditiveCharacterLocalNeOneSplitPrime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -17,6 +24,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,9 +45,344 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PlacesDvdNormIffUnderPrimesDvd
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualSplitComponentIsLatticeStabilizerEq
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPointsLieOverDistinctPlaces
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnitaryDatumLevelPrimeSplitDegreeGramFacts
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatSelfDualOfUnimod
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PlaceIdempotentUnderEqOfLiesOver
+import Formalism.LocalToGlobal.Columns.BaseLemmas
+import Mathlib.RingTheory.Valuation.Integral
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.NotSqDvdOfRationalPrimeSplitsCompletely
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+namespace GlobalTheory.St.G.SplitUnram
+
+theorem not_sq_dvd_of_splitsIn : ∀ (E : Type) [Field E] [NumberField E] (T : ℕ), T.Prime → GlobalTheory.St.G.SplitsIn E T →
+    ∀ w : HeightOneSpectrum (𝓞 E), (T : 𝓞 E) ∈ w.asIdeal → ¬ w.asIdeal ^ 2 ∣ Ideal.span {(T : 𝓞 E)} := by
+  intro E _ _ T hT hs w hw hdvd
+  have := w.isPrime
+  have hnd := GlobalTheory.St.G.PsiLoc.not_dvd_different hT hs w.asIdeal hw
+  have hun : Algebra.IsUnramifiedAt ℤ w.asIdeal := not_dvd_differentIdeal_iff.1 hnd
+  have he : w.asIdeal.ramificationIdx ℤ = 1 := Ideal.ramificationIdx_eq_one_iff.2 hun
+  have hp : Prime (T : ℤ) := Nat.prime_iff_prime_int.mp hT
+  have hmax : (Ideal.span {(T : ℤ)}).IsMaximal :=
+    PrincipalIdealRing.isMaximal_of_irreducible hp.irreducible
+  have hmap : Ideal.map (algebraMap ℤ (𝓞 E)) (Ideal.span {(T : ℤ)}) = Ideal.span {((T : ℕ) : 𝓞 E)} := by
+    rw [Ideal.map_span]; simp
+  have hle : Ideal.map (algebraMap ℤ (𝓞 E)) (Ideal.span {(T : ℤ)}) ≤ w.asIdeal := by
+    rw [hmap, Ideal.span_le]; simpa using hw
+  have : w.asIdeal.LiesOver (Ideal.span {(T : ℤ)}) :=
+    ⟨hmax.eq_of_le (Ideal.comap_ne_top _ w.isPrime.ne_top) (Ideal.map_le_iff_le_comap.mp hle)⟩
+  have hb : Ideal.span {(T : ℤ)} ≠ ⊥ := by simpa using hT.ne_zero
+  rw [← Ideal.ramificationIdx'_eq_ramificationIdx (Ideal.span {(T : ℤ)}) w.asIdeal hb] at he
+  have h2 := (Ideal.ramificationIdx'_ne_one_iff hle).2
+  rw [hmap] at h2
+  exact h2 (Ideal.le_of_dvd hdvd) he
+
+end GlobalTheory.St.G.SplitUnram
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.NotSqDvdOfRationalPrimeSplitsCompletelyStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem _root_.GlobalTheory.T.not_sq_dvd_of_rationalPrimeSplitsCompletely : ∀ (E : Type) [Field E] [NumberField E] (T : ℕ), T.Prime → GlobalTheory.St.G.SplitsIn E T → ∀ w : HeightOneSpectrum (𝓞 E), (T : 𝓞 E) ∈ w.asIdeal → ¬ w.asIdeal ^ 2 ∣ Ideal.span {(T : 𝓞 E)} := by
+  first | exact @GlobalTheory.St.G.SplitUnram.not_sq_dvd_of_splitsIn | exact GlobalTheory.St.G.SplitUnram.not_sq_dvd_of_splitsIn | (intros; apply GlobalTheory.St.G.SplitUnram.not_sq_dvd_of_splitsIn <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PadicResidueFieldCardAndPrimeIrreducible
+
+section
+
+@[expose] public section
+
+open ValuativeRel IsLocalRing
+
+noncomputable section
+
+namespace GlobalTheory.TAdicInt
+
+def intEquiv (T : ℕ) [Fact T.Prime] : 𝒪[ℚ_[T]] ≃+* ℤ_[T] where
+  toFun x := ⟨x.1, by
+    have h := (Valuation.mem_integer_iff _ _).1 x.2
+    have := (GlobalTheory.SplitWeil.padic_valuation_lt_iff T 1 x.1).not.1 (by rw [map_one]; exact not_lt.2 h)
+    rwa [norm_one, not_lt] at this⟩
+  invFun x := ⟨x.1, (Valuation.mem_integer_iff _ _).2 (by
+    have := (GlobalTheory.SplitWeil.padic_valuation_lt_iff T 1 x.1).not.2 (by rw [norm_one]; exact not_lt.2 x.2)
+    rwa [map_one, not_lt] at this)⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_mul' _ _ := rfl
+  map_add' _ _ := rfl
+
+theorem card_residueField (T : ℕ) [Fact T.Prime] : Nat.card (ResidueField 𝒪[ℚ_[T]]) = T := by
+  rw [Nat.card_congr ((ResidueField.mapEquiv (intEquiv T)).trans PadicInt.residueField).toEquiv, Nat.card_zmod]
+
+theorem irreducible_natCast (T : ℕ) [Fact T.Prime] : Irreducible (T : 𝒪[ℚ_[T]]) := by
+  have := (PadicInt.irreducible_p (p := T)).map (intEquiv T).symm.toMulEquiv
+  rwa [show (intEquiv T).symm.toMulEquiv (T : ℤ_[T]) = (T : 𝒪[ℚ_[T]]) from
+    map_natCast (intEquiv T).symm T] at this
+
+theorem card_residueField_and_irreducible :
+    ∀ (T : ℕ) [Fact T.Prime], Nat.card (IsLocalRing.ResidueField 𝒪[ℚ_[T]]) = T ∧
+      Irreducible ((T : 𝒪[ℚ_[T]])) :=
+  fun T _ => ⟨card_residueField T, irreducible_natCast T⟩
+
+end GlobalTheory.TAdicInt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PadicResidueFieldCardAndPrimeIrreducibleStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel
+
+theorem _root_.GlobalTheory.T.padic_residueField_card_and_prime_irreducible : ∀ (T : ℕ) [Fact T.Prime], Nat.card (IsLocalRing.ResidueField 𝒪[ℚ_[T]]) = T ∧ Irreducible ((T : 𝒪[ℚ_[T]])) := by
+  first | exact @GlobalTheory.TAdicInt.card_residueField_and_irreducible | exact GlobalTheory.TAdicInt.card_residueField_and_irreducible | (intros; apply GlobalTheory.TAdicInt.card_residueField_and_irreducible <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PlacesDvdNormIffUnderPrimesDvdStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.places_dvd_norm_iff_under_primes_dvd : ∀ (D : Formalism.BasicNotions.D7) (π π' : 𝓞 D.host.E) (T : ℕ), (π' : D.host.E) = star (π : D.host.E) → π * π' = (T : 𝓞 D.host.E) → π ≠ 0 → ∀ x : HeightOneSpectrum (𝓞 D.host.F), (T : 𝓞 D.host.F) ∈ x.asIdeal ↔ ∃ w ∈ Formalism.L2.Col.divs π, w.under (𝓞 D.host.F) = x := by
+  first | exact @GlobalTheory.NormPlaces.places_dvd_iff | exact GlobalTheory.NormPlaces.places_dvd_iff | (intros; apply GlobalTheory.NormPlaces.places_dvd_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.StandardPairsExistAtLevelPrime
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.L2.Forms Formalism.L2.Ker
+open NumberField IsDedekindDomain Matrix MeasureTheory GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.SeeSaw GlobalTheory.LatPair GlobalTheory.SplitWeil
+open GlobalTheory.Unf GlobalTheory.Grow GlobalTheory.FinPl ValuativeRel IsLocalRing
+open scoped TensorProduct Pointwise
+
+namespace GlobalTheory.AdForm
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace StdExProof
+
+theorem qt_facts (T : ℕ) [Fact T.Prime] : Nat.card 𝓀[ℚ_[T]] = T ∧ Irreducible ((T : 𝒪[ℚ_[T]])) := GlobalTheory.T.padic_residueField_card_and_prime_irreducible T
+
+theorem not_sq_dvd (E : Type) [Field E] [NumberField E] (T : ℕ) (hT : T.Prime) (hs : GlobalTheory.St.G.SplitsIn E T)
+    (w : HeightOneSpectrum (𝓞 E)) (hw : (T : 𝓞 E) ∈ w.asIdeal) : ¬ w.asIdeal ^ 2 ∣ Ideal.span {(T : 𝓞 E)} :=
+  GlobalTheory.T.not_sq_dvd_of_rationalPrimeSplitsCompletely E T hT hs w hw
+
+theorem places_over (D : D7) (π π' : 𝓞 D.host.E) (T : ℕ) (hπ' : (π' : D.host.E) = star (π : D.host.E))
+    (hT : π * π' = (T : 𝓞 D.host.E)) (hne : π ≠ 0) (x : HeightOneSpectrum (𝓞 D.host.F)) :
+    (T : 𝓞 D.host.F) ∈ x.asIdeal ↔ ∃ w ∈ Formalism.L2.Col.divs π, w.under (𝓞 D.host.F) = x :=
+  GlobalTheory.T.places_dvd_norm_iff_under_primes_dvd D π π' T hπ' hT hne x
+
+variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem pr_int (p : SplitPt D k) (x : 𝓞 D.host.E) : p.pr (incA D (x : D.host.E)) ∈ 𝒪[k] := by
+  have h1 : IsIntegral ℤ (p.pr (incA D (x : D.host.E))) := (x.2).map ((p.pr.comp (incA D)).toIntAlgHom)
+  have h2 : IsIntegral 𝒪[k] (p.pr (incA D (x : D.host.E))) := h1.tower_top
+  exact (Valuation.integer.integers (valuation k)).mem_of_integral h2
+
+theorem val_pr_eq_one (p : SplitPt D k) {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : Formalism.L2.NTheta.IsIdemAt p.e w)
+    (y : 𝓞 D.host.E) (hy : y ∉ w.asIdeal) : valuation k (p.pr (incA D (y : D.host.E))) = 1 := by
+  have hy0 : y ≠ 0 := fun h => hy (h ▸ w.asIdeal.zero_mem)
+  have hyE : (y : D.host.E) ≠ 0 := by exact_mod_cast hy0
+  have hI : finPart D (p.e * incA D ((y : D.host.E))⁻¹) ∈ intAE D := not_not.1 (mt (hw.2 y hy0).2 hy)
+  have h1 : p.pr (incA D ((y : D.host.E))⁻¹) ∈ 𝒪[k] := by
+    rw [p.int_iff, p.sec_pr]; exact hI
+  have h2 := pr_int p y
+  have hmul : p.pr (incA D (y : D.host.E)) * p.pr (incA D ((y : D.host.E))⁻¹) = 1 := by
+    rw [← map_mul, ← map_mul, mul_inv_cancel₀ hyE, map_one, map_one]
+  have e1 : valuation k (p.pr (incA D (y : D.host.E))) ≤ 1 := h2
+  have e2 : valuation k (p.pr (incA D ((y : D.host.E))⁻¹)) ≤ 1 := h1
+  have e3 := congrArg (valuation k) hmul
+  rw [map_mul, map_one] at e3
+  refine le_antisymm e1 ?_
+  by_contra hlt
+  push_neg at hlt
+  have : valuation k (p.pr (incA D (y : D.host.E))) * valuation k (p.pr (incA D ((y : D.host.E))⁻¹)) < 1 :=
+    mul_lt_one_of_lt_of_le hlt e2
+  rw [e3] at this
+  exact lt_irrefl _ this
+
+theorem isLat_std (p : SplitPt D k) (S : HSp D) (β : Frame p S (Fin S.rank)) (hb : β.b = 1) (L : Lat S)
+    (hL : ∀ z, z ∈ L ↔ z ∈ intVec D _) : β.IsLat L (stdLat k (Fin S.rank)) := by
+  intro x
+  have hL' : ∀ z : Fin S.rank → D.host.E, z ∈ L ↔ ∀ i, ∃ b : 𝓞 D.host.E, (b : D.host.E) = z i := fun z => by
+    rw [hL z]
+    exact ⟨fun h i => ⟨⟨z i, h i⟩, rfl⟩, fun h i => by obtain ⟨b, hb⟩ := h i; exact hb ▸ b.2⟩
+  rw [hb, Matrix.one_mulVec, GlobalTheory.FinPl.Model.mem_latV_std S L hL' p.v, mem_stdLat]
+  refine forall_congr' fun i => ?_
+  rw [p.int_iff]
+  exact ⟨fun h => ⟨GlobalTheory.FinPl.FrameLat.sec_mem_idAt p _, h⟩, fun h => h.2⟩
+
+def scPair (c : 𝒪[k]) (hc : IsUnit c) {n : Type} [Fintype n] (i : n) : Pair k n where
+  lat := stdLat k n
+  isLat := inferInstance
+  fn := c • (stdPair k i).fn
+  fn_ne h := (stdPair k i).fn_ne (LinearMap.ext fun x => (hc.smul_eq_zero).1 (LinearMap.congr_fun h x))
+
+theorem scPair_hasVal (c : 𝒪[k]) (hc : IsUnit c) {n : Type} [Fintype n] (i : n) (x : n → k) (hx : ∀ j, x j ∈ 𝒪[k]) :
+    (scPair c hc i).HasVal x (residue 𝒪[k] (c * ⟨x i, hx i⟩)) :=
+  ⟨mem_stdLat.2 hx, by
+    show c • residue 𝒪[k] ⟨x i, _⟩ = _
+    rw [map_mul, Algebra.smul_def]; rfl⟩
+
+end StdExProof
+end GlobalTheory.AdForm
+
+namespace GlobalTheory.AdForm.StdExProof
+open GlobalTheory.AdForm
+
+theorem stdEx' : StdEx' := by
+  intro B X I hI _hP l Z u ψ hψ L hL
+  haveI hTf : Fact (B.T u).Prime := ⟨l.pr.T_prime u⟩
+  obtain ⟨hcard, hirr⟩ := qt_facts (B.T u)
+  have hcop : IsCoprime (X.piT u) (B.fields.conjO (X.piT u)) := l.pr.piT_cop u
+  have hne : X.piT u ≠ 0 := by
+    intro h0
+    rw [h0, map_zero, isCoprime_zero_left] at hcop
+    exact not_isUnit_zero hcop
+  have hmem : ∀ i : (B.primes X).vT u, X.piT u ∈ i.1.asIdeal := fun i => (Formalism.L2.Col.mem_divs hne _).1 i.2
+  have hconj : ∀ i : (B.primes X).vT u, B.fields.conjO (X.piT u) ∉ i.1.asIdeal := by
+    intro i hc
+    obtain ⟨a, b, hab⟩ := hcop
+    exact i.1.isPrime.ne_top ((Ideal.eq_top_iff_one _).2
+      (hab ▸ i.1.asIdeal.add_mem (Ideal.mul_mem_left _ a (hmem i)) (Ideal.mul_mem_left _ b hc)))
+  have hcP : ∀ i : (B.primes X).vT u, GlobalTheory.IdemSupport.cP (D := I.rec7 l Z) i.1 ≠ i.1 := by
+    intro i h
+    apply hconj i
+    have h1 : X.piT u ∈ (GlobalTheory.IdemSupport.cP (D := I.rec7 l Z) i.1).asIdeal := by rw [h]; exact hmem i
+    have h2 := (GlobalTheory.IdemSupport.mem_cP (D := I.rec7 l Z) i.1 (X.piT u)).1 h1
+    have h3 : B.fields.conjO (X.piT u) = GlobalTheory.IdemSupport.cO (I.rec7 l Z) (X.piT u) := RingOfIntegers.ext rfl
+    rw [h3]; exact h2
+  choose e he using fun i : (B.primes X).vT u => GlobalTheory.StdFrames.exists_isIdemAt (hcP i)
+  have hsplitT := (GlobalTheory.St.G.record_facts (I.rec7 l Z) u).1
+  have hsp : ∀ i : (B.primes X).vT u, ∃ p : SplitPt (I.rec7 l Z) ℚ_[B.T u], p.e = e i := fun i =>
+    (GlobalTheory.InhPt.exists_splitPt_frame_char (I.rec7 l Z)).1 ℚ_[B.T u] (B.T u) hTf.out hcard hirr i.1 (e i) (he i) (he i).1
+      (l.pr.vT_norm u _ i.2) (not_sq_dvd _ (B.T u) hTf.out hsplitT i.1 (by
+        have h := Ideal.mul_mem_right (B.fields.conjO (X.piT u)) _ (hmem i)
+        rw [l.pr.piT_norm u] at h
+        exact h))
+  choose p hpe using hsp
+  have hidem : ∀ i, Formalism.L2.NTheta.IsIdemAt (p i).e i.1 := fun i => (hpe i).symm ▸ he i
+  let wE : (B.primes X).vT u → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.E) := fun i => i.1
+  have hv : ∀ i : (B.primes X).vT u, HeightOneSpectrum.under (𝓞 (I.rec7 l Z).host.F) (wE i) = (p i).v := by
+    intro i
+    obtain ⟨ε, h1, h2⟩ := (p i).above
+    exact GlobalTheory.IdemUnder.under_eq_of_isIdemAt _ _ _ _ ε (hidem i) h1 h2
+  have hover := fun x => places_over (I.rec7 l Z) (X.piT u) (B.fields.conjO (X.piT u)) (B.T u) rfl (l.pr.piT_norm u) hne x
+  have hTv : ∀ i, ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∈ (p i).v.asIdeal := fun i =>
+    (hover (p i).v).2 ⟨wE i, i.2, hv i⟩
+  have hunit : ∀ i, (p i).UnitAA := fun i => GlobalTheory.FinPl.UnitAt.unitAA_level I l Z u (p i) (hTv i)
+  have hpart2 := fun i => (GlobalTheory.InhPt.exists_splitPt_frame_char (I.rec7 l Z)).2 ℚ_[B.T u] (p i)
+  choose χ hχ using fun i => (hpart2 i).2 ψ hψ
+  choose β hβ using fun j i => (hpart2 i).1 ((I.rec7 l Z).sp.X j) (Fin ((I.rec7 l Z).sp.X j).rank) 1 1 (mul_one 1) (mul_one 1)
+  have hβ' : ∀ j i, (β j i).b' = 1 := fun j i => by
+    have := (β j i).bb'
+    rwa [hβ j i, one_mul] at this
+  have hrank : ∀ j, 0 < ((I.rec7 l Z).sp.X j).rank := by
+    intro j
+    obtain ⟨hs, h1, -⟩ := hI.spaces
+    rw [show (I.rec7 l Z).sp.X j = B.sp.X j from rfl, h1 j]
+    show 0 < B.R.k + j * (B.R.t + 1)
+    have := B.R.m_add_three_le_k
+    omega
+  let c : (B.primes X).vT u → 𝒪[ℚ_[B.T u]] := fun i =>
+    ⟨(p i).pr (incA (I.rec7 l Z) (B.fields.conjO (X.piT u) : B.fields.E)), pr_int (p i) (B.fields.conjO (X.piT u))⟩
+  have hcv : ∀ i, valuation ℚ_[B.T u] ((p i).pr (incA (I.rec7 l Z) (B.fields.conjO (X.piT u) : B.fields.E))) = 1 :=
+    fun i => val_pr_eq_one (p i) (hidem i) (B.fields.conjO (X.piT u)) (hconj i)
+  have hc : ∀ i, IsUnit (c i) := fun i =>
+    (Valuation.integer.integers (valuation ℚ_[B.T u])).isUnit_iff_valuation_eq_one.2 (hcv i)
+  let last : ∀ j, Fin ((I.rec7 l Z).sp.X j).rank := fun j => ⟨((I.rec7 l Z).sp.X j).rank - 1, by have := hrank j; omega⟩
+  let Q : ∀ j, (B.primes X).vT u → Pair ℚ_[B.T u] (Fin ((I.rec7 l Z).sp.X j).rank) := fun j i => scPair (c i) (hc i) (last j)
+  have hStd : StdT I l Z u p β Q L := by
+    refine ⟨⟨Equiv.refl _, fun i => hidem i⟩, fun j hj => ⟨hL j hj, fun i => ⟨isLat_std (p i) _ (β j i) (hβ j i) (L j) (hL j hj), ?_⟩⟩⟩
+    intro z hz r hr
+    have hz' : ∀ r', IsIntegral ℤ (z r') := (hL j hj z).1 hz
+    have hx : ∀ r', (p i).pr (incA (I.rec7 l Z) (z r')) ∈ 𝒪[ℚ_[B.T u]] := fun r' => pr_int (p i) ⟨z r', hz' r'⟩
+    change r.1 + 1 = ((I.rec7 l Z).sp.X j).rank at hr
+    have hrl : r = last j := Fin.ext (by show r.1 = _ - 1; omega)
+    subst hrl
+    refine ⟨c i * ⟨_, hx (last j)⟩, ?_, ?_⟩
+    · show (p i).pr (incA (I.rec7 l Z) (B.fields.conjO (X.piT u) : B.fields.E)) * (p i).pr (incA (I.rec7 l Z) (z (last j))) = _
+      rw [← map_mul]
+      exact congrArg _ (map_mul _ _ _).symm
+    · rw [hβ' j i, Matrix.one_mulVec]
+      exact scPair_hasVal (c i) (hc i) (last j) _ hx
+  refine ⟨ℚ_[B.T u], inferInstance, inferInstance, inferInstance, inferInstance, (B.primes X).vT u, p, Finset.univ.toList,
+    ⟨(B.T u : 𝒪[ℚ_[B.T u]]), hirr⟩, χ, β, Q, ⟨Finset.nodup_toList _, fun i => Finset.mem_toList.2 (Finset.mem_univ _),
+    GlobalTheory.AdForm.StdT.places_injective I hI _hP l Z u p β Q L hStd, fun x => Iff.rfl, hunit⟩,
+    fun i => ⟨(hχ i).2.2.2 (hunit i), (hχ i).1⟩, hcard, fun i => ⟨?_, hcv i⟩, fun x => ?_, hβ, hStd⟩
+  · have hm : (p i).pr (incA (I.rec7 l Z) (X.piT u : B.fields.E)) *
+        (p i).pr (incA (I.rec7 l Z) (B.fields.conjO (X.piT u) : B.fields.E)) = (B.T u : ℚ_[B.T u]) := by
+      have : ((X.piT u : B.fields.E) * (B.fields.conjO (X.piT u) : B.fields.E)) = ((B.T u : ℕ) : B.fields.E) := by
+        exact_mod_cast congrArg (fun x : 𝓞 B.fields.E => (x : B.fields.E)) (l.pr.piT_norm u)
+      have h2 : (p i).pr (incA (I.rec7 l Z) (X.piT u : B.fields.E)) *
+          (p i).pr (incA (I.rec7 l Z) (B.fields.conjO (X.piT u) : B.fields.E)) =
+          (p i).pr (incA (I.rec7 l Z) (((B.T u : ℕ) : B.fields.E))) := by
+        rw [← map_mul, ← this]
+        exact congrArg _ (map_mul _ _ _).symm
+      rw [h2]
+      exact map_natCast ((p i).pr.comp (incA (I.rec7 l Z))) (B.T u)
+    have hv2 := congrArg (valuation ℚ_[B.T u]) hm
+    rw [map_mul, hcv i, mul_one] at hv2
+    rw [hv2]
+    rfl
+  · rw [hover x]
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact ⟨wE i, i.2, hv i⟩
+    · rintro ⟨w, hw, rfl⟩
+      exact ⟨⟨w, hw⟩, hv ⟨w, hw⟩⟩
+
+end GlobalTheory.AdForm.StdExProof
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.StandardPairsExistAtLevelPrimeStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.standardPairs_exist_at_levelPrime : GlobalTheory.AdForm.StdEx' := by
   first | exact @GlobalTheory.AdForm.StdExProof.stdEx' | exact GlobalTheory.AdForm.StdExProof.stdEx' | (intros; apply GlobalTheory.AdForm.StdExProof.stdEx' <;> assumption)
+end
+end

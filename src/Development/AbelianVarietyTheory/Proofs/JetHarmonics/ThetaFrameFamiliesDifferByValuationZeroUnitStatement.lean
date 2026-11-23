@@ -1,7 +1,10 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Jets.JetsOnCopiesCompatibleFrames
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ThetaFrameFamiliesDifferByValuationZeroUnit
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.DivCalc
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.ExistsGeneratorOfBasis
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.IntegralOfPullAl
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllUniformizationLawsHold
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,6 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -26,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,8 +43,288 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.WchartLePreimage
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ExistsRosatiGen
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ExistsValGenHasVal
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.GenCalc
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.GsScalJFK
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocalB
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBPull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBTransport
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.WeightedChartPullback.WeightIndep
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CubeVal
 import Development.AbelianVarietyTheory.Definitions.Jets.ExistsSecTieFOfTies
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ThetaGenFam
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open scoped CategoryTheory.Obj
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace ReciprocityTheory.ChartRestriction.G.DVR.TG
+
+open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor IsLocalRing QForm SectionScalarValuation
+
+section FEGen
+
+variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {ϖ : V}
+  {D : DegData V (maximalIdeal V)} {F : Type} [Field F] [Algebra (FractionRing V) F]
+
+theorem exists_fe_gen (hϖ : Irreducible ϖ) {Q : D.toPre.X → ℤ} (hQ : IsQ D.toPre ϖ Q) (k : ℕ)
+    (mu α : D.toPre.X) :
+    ∃ u : LB.Gen (LB.LinComb D.toPre.P.L (DegPre.deltaφ D.toPre F k α mu) (DegPre.deltaε k)), u.IsGen ∧
+      LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ u (DegPre.zF D.toPre F).left)
+        (DegPre.famMult D.toPre F k mu α) := by
+  classical
+  have hL := D.toPre.P.isLB
+  obtain ⟨Ix, _, φV, εV, e', he', hC, c₀, hc₀, hval⟩ :=
+    ReciprocityTheory.ChartRestriction.G.DVR.SectionScalarValuation.famMult_data D hϖ hQ k mu α
+  obtain ⟨eB, heB, veB⟩ := exists_eB D.toPre k α mu e' he' hC
+  have hc0 : c₀ ≠ 0 := ne_zero_of_hasVal hϖ hc₀
+  set c : F := algebraMap (FractionRing V) F c₀ with hc
+  have hcne : c ≠ 0 := (map_ne_zero _).2 hc0
+  let cU : Γ((DegPre.BF D.toPre F).left, ⊤)ˣ :=
+    ⟨gF D.toPre F c, gF D.toPre F c⁻¹, by rw [← map_mul, mul_inv_cancel₀ hcne, map_one],
+      by rw [← map_mul, inv_mul_cancel₀ hcne, map_one]⟩
+  let g0 : LB.Gen (LB.LinComb D.toPre.P.L (Y := (DegPre.BF D.toPre F).left) (K := PEmpty) PEmpty.elim PEmpty.elim) :=
+    ⟨fun _ => res le_top cU⟩
+  have hg0 : g0.IsGen := fun i j => by
+    have hg : (LB.LinComb D.toPre.P.L (Y := (DegPre.BF D.toPre F).left) (K := PEmpty) PEmpty.elim PEmpty.elim).g i j = 1 := by
+      simp [LB.LinComb]; rfl
+    calc res _ (g0.s i) = res _ (g0.s j) := (res_res' _ _ cU).trans (res_res' _ _ cU).symm
+      _ = _ := by rw [hg, _root_.one_mul]
+  have hformU : FormEq (Sum.elim (fun i => (DegPre.prB D.toPre F).left ≫ Sum.elim (D.toPre.famφB (α + k • mu))
+        (fun i => (𝟙 D.toPre.P.A * cQ D.toPre D.toPre.P.A mu).left ≫ D.toPre.famφB α i) i) PEmpty.elim)
+      (Sum.elim (DegPre.deltaε k) PEmpty.elim) (DegPre.deltaφ D.toPre F k α mu) (DegPre.deltaε k) := fun U _ h => by
+    have e0 : ∀ f : PEmpty → U, ∏ i, f i = 1 := fun f => Fintype.prod_empty f
+    rw [Fintype.prod_sum_type, e0, _root_.mul_one]
+    refine Finset.prod_congr rfl fun i _ => ?_
+    rcases i with i | i
+    · simp only [Sum.elim_inl, DegPre.deltaφ, GC.famφ_eq]
+    · simp only [Sum.elim_inr, DegPre.deltaφ, GC.famφ_eq]
+      rw [← Category.assoc, trF_prB, Category.assoc]
+      rfl
+  obtain ⟨u, hu, vu⟩ := exists_gen hL hformU
+    (LB.mulGen D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ eB (DegPre.prB D.toPre F).left) g0)
+    (mulGen_isGen _ _ _ _ _ _ _ (pullGen_isGen _ _ _ _ heB _) hg0)
+  have hval_u : ∀ (Z : Scheme.{0}) (ρ : Z ⟶ (DegPre.BF D.toPre F).left) (z : Z) (J : (Z ⟶ D.toPre.P.A.left) → D.toPre.P.L.ι),
+      Good D.toPre.P.L z J →
+      (val u ρ z J).val = (val eB (ρ ≫ (DegPre.prB D.toPre F).left) z J).val * gs ρ z ⊤ (gF D.toPre F c) := by
+    intro Z ρ z J hJ
+    rw [vu Z ρ z J hJ, val_mul hJ, val_pull hJ, Units.val_mul]
+    congr 1
+    have hmem : ρ z ∈ LB.wchart D.toPre.P.L (K := PEmpty) PEmpty.elim (fun k => J (ρ ≫ PEmpty.elim k)) :=
+      Set.mem_iInter.2 fun k => k.elim
+    exact (congrArg Units.val (gm_res ρ z le_top hmem cU)).trans (gs_unit ρ z ⊤ (by trivial) cU).symm
+  have z₂ : DegPre.zF D.toPre F ≫ DegPre.prB D.toPre F = 1 := lift_snd _ _
+  have hcorr : LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ u (DegPre.zF D.toPre F).left)
+      (DegPre.famMult D.toPre F k mu α) := corr_of_val hL fun y J hJ => Units.ext (by
+    have face1 (x y' : TF (R := V) F ⟶ D.toPre.P.A) : cubV D.toPre.cub y J 1 x y' = 1 := by
+      have H := val_corr hJ (D.toPre.cub.face 0) (lift x y').left
+      rw [val_one] at H
+      refine Eq.trans ?_ H
+      refine Eq.trans ?_ (val_cub D.toPre.cub (lift x y') hJ (pzero D.toPre.P.A _) (x2 D.toPre.P.A 0) (x2 D.toPre.P.A 1)).symm
+      congr 1 <;> simp [x2, pzero, Hom.one_def]
+    have face2 (x y' : TF (R := V) F ⟶ D.toPre.P.A) : cubV D.toPre.cub y J x 1 y' = 1 := by
+      have H := (val_corr hJ D.toPre.cub.cubeSymmetric_swap_first (lift x (lift 1 y')).left).trans
+        (val_cub D.toPre.cub (lift x (lift 1 y')) hJ _ _ _)
+      have E : cubV D.toPre.cub y J x 1 y' = cubV D.toPre.cub y J 1 x y' := by
+        refine Eq.trans H ?_
+        congr 1 <;> simp [x3]
+      rw [E, face1]
+    have N_one (k : ℕ) (a m : TF (R := V) F ⟶ D.toPre.P.A) : cubN (cubV D.toPre.cub y J) k a m 1 = 1 := by
+      apply Finset.prod_eq_one
+      intro i hi
+      have H := (val_corr hJ D.toPre.cub.cubeSymmetric_swap_last (lift (a * m ^ i) (lift m 1)).left).trans
+        (val_cub D.toPre.cub (lift (a * m ^ i) (lift m 1)) hJ _ _ _)
+      have E : cubV D.toPre.cub y J (a * m ^ i) m 1 = cubV D.toPre.cub y J (a * m ^ i) 1 m := by
+        refine Eq.trans H ?_
+        congr 1 <;> simp [x3]
+      rw [E, face2]
+    have E2 : val eB ((DegPre.zF D.toPre F).left ≫ (DegPre.prB D.toPre F).left) y J =
+        val e' (DegPre.jFR (R := V) F) y J := by
+      have E1 := veB (TF (R := V) F) (DegPre.zF D.toPre F ≫ DegPre.prB D.toPre F) y J hJ
+      rw [z₂, N_one, face2, inv_one, _root_.one_mul, _root_.one_mul] at E1
+      have e3 : (1 : TF (R := V) F ⟶ D.toPre.P.A).left ≫ D.toPre.P.A.hom = DegPre.jFR (R := V) F := Over.w _
+      rw [e3] at E1
+      have e4 : (DegPre.zF D.toPre F).left ≫ (DegPre.prB D.toPre F).left = (1 : TF (R := V) F ⟶ D.toPre.P.A).left := by
+        rw [← Over.comp_left, z₂]
+      rw [e4]; exact E1
+    rw [val_pull hJ, Category.id_comp, hval_u _ _ y J hJ, hval F (TF (R := V) F).left (𝟙 (TF (R := V) F).left) y J hJ, E2, gs_gF_zF, gs_scal_jFK,
+      Category.id_comp, ← hc]
+    exact mul_comm _ _)
+  exact ⟨u, hu, hcorr⟩
+
+theorem fam_eq_zero (hϖ : Irreducible ϖ) (G : Fam D.toPre F 1)
+    (h0 : ∀ j : Fin 4 → D.toPre.P.L.ι, (G.s 0).f j = 0) :
+    ∀ (mu : D.toPre.X) (j : Fin 4 → D.toPre.P.L.ι), (G.s mu).f j = 0 := by
+  classical
+  choose Q hQ using QForm.exists_QVal hϖ D
+  intro mu j
+  obtain ⟨u, hu, hc⟩ := exists_fe_gen (F := F) hϖ (Q := Q) hQ 1 mu 0
+  have hrel := G.fe mu 0 u hu hc
+  have e01 : (0 : D.toPre.X) + 1 • mu = mu := by simp
+  rw [e01] at hrel
+  have hL := D.toPre.P.isLB
+  refine TopCat.Presheaf.section_ext (DegPre.BF D.toPre F).left.sheaf _ _ 0 fun y hy => ?_
+  choose ch hch using WeightPf.exists_chart D.toPre.P.L hL
+  let j₁ : Fin 4 → D.toPre.P.L.ι := fun k => ch ((DegPre.famφ D.toPre F mu k).base y)
+  let j₂ : Fin 4 → D.toPre.P.L.ι := fun k => ch (((DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k).base y)
+  let j₃ : Fin 4 ⊕ Fin 4 → D.toPre.P.L.ι := fun k => ch ((DegPre.deltaφ D.toPre F 1 0 mu k).base y)
+  have hcoh : LB.Coh D.toPre.P.L (Sum.elim (DegPre.famφ D.toPre F mu)
+      (Sum.elim (fun k => (DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k)
+        (DegPre.deltaφ D.toPre F 1 0 mu))) (Sum.elim j₁ (Sum.elim j₂ j₃)) := by
+    have key : ∀ z, (Sum.elim j₁ (Sum.elim j₂ j₃)) z = ch (((Sum.elim (DegPre.famφ D.toPre F mu)
+        (Sum.elim (fun k => (DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k)
+          (DegPre.deltaφ D.toPre F 1 0 mu))) z).base y) := by
+      rintro (z | z | z) <;> rfl
+    intro a b hab
+    rw [key a, key b, hab]
+  have E := hrel j₁ j₂ j₃ hcoh
+  have hy1 : y ∈ LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j₁ := Set.mem_iInter.2 fun k => hch _
+  have hy2 : y ∈ LB.wchart D.toPre.P.L (fun k => (DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k) j₂ :=
+    Set.mem_iInter.2 fun k => hch _
+  have hy3 : y ∈ LB.wchart D.toPre.P.L (DegPre.deltaφ D.toPre F 1 0 mu) j₃ := Set.mem_iInter.2 fun k => hch _
+
+  have hz : ((DegPre.BF D.toPre F).left.presheaf.map (homOfLE (inf_le_left.trans inf_le_left :
+      LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j₁ ⊓
+        LB.wchart D.toPre.P.L (fun k => (DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k) j₂ ⊓
+        LB.wchart D.toPre.P.L (DegPre.deltaφ D.toPre F 1 0 mu) j₃ ≤ _)).op).hom ((G.s mu).f j₁) = 0 := by
+    erw [E, h0 j₂, map_zero, map_zero, zero_mul]
+
+  let W := LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j ⊓
+    (LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j₁ ⊓
+      LB.wchart D.toPre.P.L (fun k => (DegPre.trF D.toPre F mu).left ≫ DegPre.famφ D.toPre F 0 k) j₂ ⊓
+      LB.wchart D.toPre.P.L (DegPre.deltaφ D.toPre F 1 0 mu) j₃)
+  have hyW : y ∈ W := ⟨hy, ⟨⟨hy1, hy2⟩, hy3⟩⟩
+  have hW1 : W ≤ LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j ⊓ LB.wchart D.toPre.P.L (DegPre.famφ D.toPre F mu) j₁ :=
+    le_inf inf_le_left (inf_le_right.trans (inf_le_left.trans inf_le_left))
+  have hc1 := congrArg (rs hW1) ((G.s mu).compat j j₁)
+  have hWz : rs (inf_le_left : W ≤ _) ((G.s mu).f j) = 0 := by
+    erw [rs_rs, rs_mul, rs_rs] at hc1
+    erw [hc1]
+    have := congrArg (rs (inf_le_right : W ≤ _)) hz
+    erw [rs_rs] at this
+    erw [this]
+    exact (congrArg _ (map_zero _)).trans (mul_zero _)
+  show (DegPre.BF D.toPre F).left.presheaf.germ _ y hy ((G.s mu).f j) = (DegPre.BF D.toPre F).left.presheaf.germ _ y hy 0
+  erw [← TopCat.Presheaf.germ_res_apply _ (homOfLE (inf_le_left : W ≤ _)) y hyW]
+  exact (congrArg _ hWz).trans ((map_zero _).trans (map_zero _).symm)
+
+end FEGen
+
+section Local
+
+end Local
+
+end ReciprocityTheory.ChartRestriction.G.DVR.TG
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ThetaFrameFamiliesDifferByValuationZeroUnit
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+noncomputable section
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
+open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.DVR.QForm Formalism.MainNotions.ModuliIntegralCharts.H1 Formalism.MainNotions.ModuliIntegralCharts.H1.ExpBijectiveUniformisation Formalism.MainNotions.ModuliIntegralCharts.H1.GSt
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory GlobalTheory.PowGerm GlobalTheory.PtTie
+open ReciprocityTheory.ChartRestriction.G.TB (colM dAct)
+
+namespace GlobalTheory.ThetaFrameLine
+
+section
+variable {V : Type} [CommRing V] [IsDomain V]
+
+theorem cst_prB (D : DegPre V) (F : Type) [Field F] [Algebra (FractionRing V) F] (y : (DegPre.BF D F).left) (a : V) :
+    Geo.Tor.cst ((𝟙 _ ≫ (DegPre.prB D F).left) ≫ D.P.A.hom) y a =
+      gs (𝟙 _) y ⊤ (gF D F (algebraMap (FractionRing V) F (algebraMap V (FractionRing V) a))) := by
+  have hw : (DegPre.prB D F).left ≫ D.P.A.hom = (fst (TF (R := V) F) D.P.A).left ≫ jFK (R := V) F ≫ jK V :=
+    (Over.w (DegPre.prB D F)).trans (Over.w (fst (TF (R := V) F) D.P.A)).symm
+  have e : (jFK (R := V) F ≫ jK V).appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom a) =
+      (Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
+        (algebraMap (FractionRing V) F (algebraMap V (FractionRing V) a)) := by
+    have h := Scheme.ΓSpecIso_inv_naturality
+      (CommRingCat.ofHom ((algebraMap (FractionRing V) F).comp (algebraMap V (FractionRing V))))
+    have h' := congrArg (fun f => f.hom a) h
+    rw [jFK, jK, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    exact h'.symm
+  rw [Category.assoc, hw, Geo.Tor.cst]
+  refine (gs_pull (𝟙 _) _ y ⊤ trivial _).symm.trans (congrArg (gs (𝟙 _) y ⊤) ?_)
+  exact congrArg (fst (TF (R := V) F) D.P.A).left.appTop.hom e
+
+end
+
+theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] (ϖ : V), Irreducible ϖ → ∀ (D : DegData V (maximalIdeal V)) (F : Type) [Field F] [Algebra (FractionRing V) F] (v : AddValuation F (WithTop ℚ)), ValOver ϖ F v → ∀ θ θ' : Fam D.toPre F 1, ThFrame D ϖ F θ → ThFrame D ϖ F θ' → ∃ u : F, v u = 0 ∧ Fam.IsSmul D.toPre F u θ θ' := by
+  intro V _ _ _ _ ϖ hϖ D F _ _ v hv θ θ' h h'
+  obtain ⟨σ, σF, hs, he, hn⟩ := h
+  obtain ⟨τ, τF, ht, hf, hm⟩ := h'
+  have hL := D.toPre.P.isLB
+  have gσ := GlobalTheory.IndivisibleSection.secBGenerates_of_not_dvd GlobalTheory.firstFiveLaws.1.secBaseChange V ϖ hϖ D σ hn
+  obtain ⟨a, ha, -⟩ := gσ τ
+  have hu : IsUnit a := by
+    by_contra hna
+    have hmem : a ∈ maximalIdeal V := hna
+    rw [(IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).1 hϖ, Ideal.mem_span_singleton] at hmem
+    obtain ⟨b, rfl⟩ := hmem
+    refine hm ⟨SecOps.secScale (Out.scal D.toPre.P.A.hom b) σ, ?_⟩
+    show SecIsMul D.toPre.P.A.hom ϖ τ (SecOps.secScale (Out.scal D.toPre.P.A.hom b) σ)
+    intro j
+    refine (ha j).trans ?_
+    simp only [SecOps.secScale, Out.scal, resTop, map_mul, _root_.mul_assoc]
+  refine ⟨algebraMap (FractionRing V) F (algebraMap V (FractionRing V) a), ?_, ?_⟩
+  · have := hv (algebraMap V (FractionRing V) a) 0 ⟨hu.unit, by simp⟩
+    simpa using this
+  · set u := algebraMap (FractionRing V) F (algebraMap V (FractionRing V) a) with hudef
+    have eθ : θ.s 0 = σF := SecOps.sec_ext he
+    have eθ' : θ'.s 0 = τF := SecOps.sec_ext hf
+    have h0 : ∀ j, (θ'.s 0).f j = ((u • θ).s 0).f j := by
+      refine sec_ext_val hL fun y J hJ => ?_
+      have e₁ := GlobalTheory.PullIntegral.sval_of_secScal hs (𝟙 _) y hJ
+      have e₂ := GlobalTheory.PullIntegral.sval_of_secScal ht (𝟙 _) y hJ
+      have e₃ := GlobalTheory.IndivisibleSection.sval_of_secIsMul ha (𝟙 _ ≫ (DegPre.prB D.toPre F).left) y hJ
+      have o : gs (𝟙 (DegPre.BF D.toPre F).left) y ⊤ 1 = 1 := by
+        rw [gs_eq _ y ⊤ trivial, map_one, map_one]
+      rw [o, _root_.one_mul] at e₁ e₂
+      rw [e₁, e₂, cst_prB, ← eθ, ← eθ'] at e₃
+      refine e₃.trans ?_
+      have hmem := hJ.mem (DegPre.famφ D.toPre F 0) (𝟙 _)
+      exact ((gs_mul (𝟙 _) y _ hmem _ _).trans (congrArg₂ (· * ·) (gs_res (𝟙 _) y le_top hmem _) rfl)).symm
+    refine (isSmul_iff u θ θ').2 (sub_eq_zero.1 (fam_ext fun α j => TG.fam_eq_zero hϖ (θ' - u • θ) (fun j => ?_) α j))
+    exact (congrArg (· + -((u • θ).s 0).f j) (h0 j)).trans (add_neg_cancel _)
+
+end GlobalTheory.ThetaFrameLine
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ThetaFrameFamiliesDifferByValuationZeroUnitStatement
+
+section
 
 @[expose] public section
 
@@ -53,3 +338,5 @@ open ReciprocityTheory.ChartRestriction.G.TB (colM dAct)
 
 theorem _root_.GlobalTheory.T.thetaFrameFamilies_differ_by_valuationZero_unit : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] (ϖ : V), Irreducible ϖ → ∀ (D : DegData V (maximalIdeal V)) (F : Type) [Field F] [Algebra (FractionRing V) F] (v : AddValuation F (WithTop ℚ)), ValOver ϖ F v → ∀ θ θ' : Fam D.toPre F 1, ThFrame D ϖ F θ → ThFrame D ϖ F θ' → ∃ u : F, v u = 0 ∧ Fam.IsSmul D.toPre F u θ θ' := by
   first | exact @GlobalTheory.ThetaFrameLine.main | exact GlobalTheory.ThetaFrameLine.main | (intros; apply GlobalTheory.ThetaFrameLine.main <;> assumption)
+end
+end

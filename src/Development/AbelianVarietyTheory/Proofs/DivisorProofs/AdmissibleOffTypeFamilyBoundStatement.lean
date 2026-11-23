@@ -2,7 +2,11 @@ module
 
 public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
 public import Formalism.SharpRestriction.ParamsHeightRankConstant
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdmissibleOffTypeFamilyBound
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDegreeGapBound
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.SharpRestriction.ElevenLe
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.OneLeLetterBlockLength
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,6 +43,185 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VAddNonnegOfIsIntegral
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UBoundOffTop
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions NumberField Classical
+
+namespace GlobalTheory.LevelLoss
+
+variable {D : D7} {L : SizeData₂ D}
+
+theorem u_bound_off_top (h : SizesAt L) (P : ParameterChoice' D L) (hx : 2 ≤ L.sc.x) (u : D.what₂.Word) (τ : D.what₂.Tau)
+    (l : Fin D.R.k) (hl0 : ¬ (l.1 = 0 ∧ τ ∈ topsOf D.host D.eTau)) :
+    |(((D.hcW u τ).u l : ℚ) : ℝ)| ≤ 3 * L.sc.b := by
+  have hk : 5 ≤ D.R.k := by have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega
+  have hm := D.R.two_le_m
+  have hb := GlobalTheory.HCEntries.one_le_b L
+  have hb1 := GlobalTheory.HCEntries.b_bounds h hx τ ⟨0, by omega⟩
+  obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, hE, -, hS, -⟩ := h
+  have hS : L.Sc ≤ L.sc.b := by linarith [GlobalTheory.HCEntries.b'_Sc_le hS, GlobalTheory.HCEntries.b'_pos L]
+  obtain ⟨r, hr⟩ := l
+  rw [abs_le]
+  by_cases h0 : r = 0
+  · subst h0
+    rw [D.hcW_first u τ hr]
+    have h2 := L.cloud_v τ ⟨0, by omega⟩
+    have h3 : (((D.hc τ).v ⟨0, by omega⟩ : ℚ) : ℝ) < (((D.hc τ).u ⟨0, hr⟩ : ℚ) : ℝ) := by
+      exact_mod_cast (D.hc τ).u_gt_v ⟨0, by omega⟩
+    refine ⟨by linarith [h2.1], ?_⟩
+    have ha : (D.eTau τ : D.R.GG) ∉ D.host.topPlaces := fun ha =>
+      hl0 ⟨rfl, by unfold topsOf; exact Finset.mem_filter.2 ⟨Finset.mem_univ _, ha⟩⟩
+    have h1 := P.cloud_place_bound τ (by omega) ha
+    push_cast at h1
+    linarith [h2.2]
+  · by_cases hl : r + 1 < D.R.k
+    · have := L.cloud_u u τ ⟨r, hr⟩ (by show 1 ≤ r; omega) hl
+      constructor <;> linarith [this.1, this.2]
+    · obtain rfl : r = D.R.k - 1 := by omega
+      rw [D.hcW_last u τ (by omega)]
+      have h2 := L.cloud_v τ ⟨D.R.k - 2, by omega⟩
+      have h3 : -(((D.hc τ).b ⟨0, by omega⟩ : ℚ) : ℝ) < (((D.hc τ).u ⟨D.R.k - 1, hr⟩ : ℚ) : ℝ) := by
+        exact_mod_cast (D.hc τ).u_last_gt (by omega) (by omega)
+      have h4 : (((D.hc τ).u ⟨D.R.k - 1, hr⟩ : ℚ) : ℝ) < (((D.hc τ).v ⟨D.R.k - 2, by omega⟩ : ℚ) : ℝ) := by
+        have := (D.hc τ).v_gt_u ⟨D.R.k - 2, by omega⟩
+        have e : (⟨D.R.k - 2 + 1, by omega⟩ : Fin D.R.k) = ⟨D.R.k - 1, hr⟩ :=
+          Fin.ext (by show D.R.k - 2 + 1 = D.R.k - 1; omega)
+        simp only at this
+        rw [e] at this
+        exact_mod_cast this
+      constructor <;> linarith [h2.2, hb1.2]
+
+theorem N_le_b (h : SizesAt L) (P : ParameterChoice' D L) : 5 * (D.R.N D.R.m : ℝ) ≤ L.sc.b := by
+  have h1 := (GlobalTheory.FockDegreeGap.errors_le h P).2.2
+  have hk : (5 : ℝ) ≤ D.R.k := by
+    exact_mod_cast (by have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega : 5 ≤ D.R.k)
+  have h0 : (0 : ℝ) ≤ D.R.N D.R.m := Nat.cast_nonneg _
+  nlinarith
+
+theorem true_entry_le (h : SizesAt L) (P : ParameterChoice' D L) (hx : 2 ≤ L.sc.x) (u : D.what₂.Word) (τ : D.what₂.Tau)
+    (i : ℕ) (hi : i ≤ D.R.m) (a : Fin (D.R.N i)) (ha : ¬ (a.1 = 0 ∧ τ ∈ topsOf D.host D.eTau)) :
+    |((((D.fm u).lam i τ).w a - ((i * (D.R.t + 1) / 2 : ℕ) : ℤ) : ℤ) : ℝ)| ≤ 5 * L.sc.b := by
+  have hN := N_le_b h P
+  have hNe : (D.R.N D.R.m : ℝ) = D.R.k + D.R.m * (D.R.t + 1) := by unfold Ranks.N; push_cast; ring
+  have hk0 : (0 : ℝ) ≤ D.R.k := Nat.cast_nonneg _
+  have ht0 : (0 : ℝ) ≤ D.R.t := Nat.cast_nonneg _
+  have hm0 : (0 : ℝ) ≤ (D.R.m : ℝ) * (D.R.t + 1) := by positivity
+  have s0 : (0 : ℝ) ≤ ((i * (D.R.t + 1) / 2 : ℕ) : ℝ) := Nat.cast_nonneg _
+  have s1 : ((i * (D.R.t + 1) / 2 : ℕ) : ℝ) ≤ (D.R.m : ℝ) * (D.R.t + 1) := by
+    have : i * (D.R.t + 1) / 2 ≤ D.R.m * (D.R.t + 1) :=
+      (Nat.div_le_self _ _).trans (Nat.mul_le_mul_right _ hi)
+    exact_mod_cast this
+  have e0 : ((((D.fm u).lam i τ).w a : ℤ) : ℝ) = (((((D.fm u).lam i τ).w a : ℤ) : ℚ) : ℝ) := by
+    rw [Rat.cast_intCast]
+  rw [Int.cast_sub, Int.cast_natCast, e0, (D.fm u).lam_eq i hi τ a]
+  split_ifs with hk
+  · have b := abs_le.1 (u_bound_off_top h P hx u τ ⟨a.1, hk⟩ ha)
+    have a1 : (a.1 : ℝ) ≤ D.R.k := by exact_mod_cast hk.le
+    have a0 : (0 : ℝ) ≤ a.1 := Nat.cast_nonneg _
+    unfold hcToWeightQ rhoVec
+    push_cast
+    rw [abs_le]
+    constructor <;> linarith [b.1, b.2, GlobalTheory.HCEntries.one_le_b L]
+  · have hq := D.R.blk_lt hi a hk
+    generalize_proofs
+    obtain ⟨w0, w1⟩ := GlobalTheory.HCEntries.wj_bounds h hx ((a.1 - D.R.k) / (D.R.t + 1) + 1) (Nat.le_add_left _ _) hq τ
+    rw [GlobalTheory.FockDegreeGap.wj_succ D _ hq] at w0 w1
+    rw [D.hcW_e]
+    have q1 : (((a.1 - D.R.k) / (D.R.t + 1) + 1 : ℕ) : ℝ) ≤ D.R.m := by exact_mod_cast hq
+    have q0 : (1 : ℝ) ≤ (((a.1 - D.R.k) / (D.R.t + 1) + 1 : ℕ) : ℝ) := by
+      exact_mod_cast Nat.le_add_left _ _
+    unfold wG
+    generalize ((a.1 - D.R.k) / (D.R.t + 1) + 1 : ℕ) = q at q0 q1 ⊢
+    have q2 : (q : ℝ) * (D.R.t + 1) ≤ (D.R.m : ℝ) * (D.R.t + 1) := by gcongr
+    have q3 : (1 : ℝ) * (D.R.t + 1) ≤ (q : ℝ) * (D.R.t + 1) := by gcongr
+    push_cast
+    rw [abs_le]
+    constructor <;> linarith
+
+theorem Wtau_le (h : SizesAt L) (P : ParameterChoice' D L) (hx : 2 ≤ L.sc.x) (u : D.what₂.Word) (τ : D.what₂.Tau) :
+    (Wtau D u τ : ℝ) ≤ 5 * L.sc.b := by
+  have hb := GlobalTheory.HCEntries.one_le_b L
+  rw [← Nat.le_floor_iff (by linarith)]
+  unfold Wtau
+  refine Finset.sup_le fun i hi => Finset.sup_le fun a _ => ?_
+  split_ifs with ha
+  · exact Nat.zero_le _
+  · rw [Nat.le_floor_iff (by linarith), Nat.cast_natAbs, Int.cast_abs]
+    exact true_entry_le h P hx u τ i (Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)) a ha
+
+end GlobalTheory.LevelLoss
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdmissibleOffTypeFamilyBound
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions NumberField Classical
+
+namespace GlobalTheory.LevelBudget
+
+variable {D : D7} {L : SizeData₂ D}
+
+theorem ETpi_le (h : SizesAt L) (P : ParameterChoice' D L) (hx : 2 ≤ L.sc.x) (u : D.what₂.Word) :
+    Formalism.MainNotions.product_first_zeroth_parts.ETpi D u ≤ 12 * D.R.f * L.sc.b := by
+  have hb := GlobalTheory.HCEntries.one_le_b L
+  have hf0 : (0 : ℝ) ≤ D.R.f := Nat.cast_nonneg _
+  unfold Formalism.MainNotions.product_first_zeroth_parts.ETpi
+  have hN := GlobalTheory.LevelLoss.N_le_b h P
+  have hNe : (D.R.N D.R.m : ℝ) = D.R.k + D.R.m * (D.R.t + 1) := by unfold Ranks.N; push_cast; ring
+  have r2 := (GlobalTheory.FockDegreeGap.ranks_le D).2
+  have hk0 : (0 : ℝ) ≤ D.R.k := Nat.cast_nonneg _
+  have h1 : ∑ τ : D.what₂.Tau, (Formalism.MainNotions.product_first_zeroth_parts.Wt D u τ : ℝ) ≤ D.R.f * (5 * L.sc.b) := by
+    have := Finset.sum_le_card_nsmul Finset.univ (fun τ : D.what₂.Tau => (Formalism.MainNotions.product_first_zeroth_parts.Wt D u τ : ℝ)) _
+      (fun τ _ => GlobalTheory.LevelLoss.Wtau_le h P hx u τ)
+    rwa [Finset.card_univ, D.what₂.card_Tau, nsmul_eq_mul] at this
+  have h2 : ((Formalism.MainNotions.product_first_zeroth_parts.tops D).card : ℝ) ≤ D.R.f := by
+    have := Finset.card_le_univ (Formalism.MainNotions.product_first_zeroth_parts.tops D)
+    rw [D.what₂.card_Tau] at this
+    exact_mod_cast this
+  have h3 : ((D.R.t : ℝ) + 1) * ((D.R.m : ℝ) + 1) ≤ L.sc.b := by nlinarith
+  have h4 : ((Formalism.MainNotions.product_first_zeroth_parts.tops D).card : ℝ) * (((D.R.t : ℝ) + 1) * ((D.R.m : ℝ) + 1)) ≤ D.R.f * L.sc.b :=
+    mul_le_mul h2 h3 (by positivity) hf0
+  have h5 : (D.R.f : ℝ) * D.R.N D.R.m ≤ D.R.f * L.sc.b :=
+    mul_le_mul_of_nonneg_left (by linarith [Nat.cast_nonneg (α := ℝ) (D.R.N D.R.m)]) hf0
+  have h6 : 0 ≤ (D.R.f : ℝ) * L.sc.b := by positivity
+  nlinarith
+
+theorem admissible_off_type_level_budget : ∀ {eps : ℝ} (Fm : FamP eps), 0 < eps → eps < 1 / 52 → TuSize Fm → ∃ C x0 : ℝ, 0 ≤ C ∧ ∀ x, x0 ≤ x → ∀ hx : Fm.x1 < x, ∀ i : Fm.Ix x, Formalism.MainNotions.WeightDegreeSizes.LevelPrimeBudget (Fm.D x i) (Fm.L x i) C := by
+  intro eps Fm _ _ ⟨x₁, h1⟩
+  refine ⟨max (12 * Fm.CTu) 0, max 2 x₁, le_max_right _ _, fun x hx0 hx i u => ⟨fun S hS => GlobalTheory.SeenHalf.seen_half Fm x hx i u S hS, ?_⟩⟩
+  have a := ETpi_le (Fm.sizes x hx i) (Fm.params x hx i)
+    (by rw [Fm.L_x x i hx]; exact (le_max_left _ _).trans hx0) u
+  have b := (h1 x ((le_max_right _ _).trans hx0) i).2 u
+  have hb := GlobalTheory.HCEntries.one_le_b (Fm.L x i)
+  have hT : (1 : ℝ) ≤ (((Fm.D x i).mem u).A.T : ℝ) := by exact_mod_cast ((Fm.D x i).mem u).A.T_prime.one_le
+  have hl : 0 ≤ Real.log (((Fm.D x i).mem u).A.T : ℝ) := Real.log_nonneg hT
+  have e : (Fm.L x i).B0 = (Fm.D x i).R.f * (Fm.D x i).R.m * (Fm.L x i).sc.b * (Fm.L x i).sc.L := rfl
+  have hB : 0 ≤ (Fm.L x i).B0 := Formalism.MainNotions.WeightDegreeSizes.loss_bound_nonneg _
+  calc Formalism.MainNotions.product_first_zeroth_parts.ETpi (Fm.D x i) u * Real.log (((Fm.D x i).mem u).A.T : ℝ)
+      ≤ 12 * (Fm.D x i).R.f * (Fm.L x i).sc.b * Real.log (((Fm.D x i).mem u).A.T : ℝ) :=
+        mul_le_mul_of_nonneg_right a hl
+    _ ≤ 12 * (Fm.D x i).R.f * (Fm.L x i).sc.b * (Fm.CTu * (Fm.D x i).R.m * (Fm.L x i).sc.L) :=
+        mul_le_mul_of_nonneg_left b (by positivity)
+    _ = 12 * Fm.CTu * (Fm.L x i).B0 := by rw [e]; ring
+    _ ≤ max (12 * Fm.CTu) 0 * (Fm.L x i).B0 := mul_le_mul_of_nonneg_right (le_max_left _ _) hB
+
+end GlobalTheory.LevelBudget
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdmissibleOffTypeFamilyBoundStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +229,5 @@ open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions Numb
 
 theorem _root_.GlobalTheory.T.admissible_off_type_family_bound : ∀ {eps : ℝ} (Fm : FamP eps), 0 < eps → eps < 1 / 52 → TuSize Fm → ∃ C x0 : ℝ, 0 ≤ C ∧ ∀ x, x0 ≤ x → ∀ hx : Fm.x1 < x, ∀ i : Fm.Ix x, Formalism.MainNotions.WeightDegreeSizes.LevelPrimeBudget (Fm.D x i) (Fm.L x i) C := by
   first | exact @GlobalTheory.LevelBudget.admissible_off_type_level_budget | exact GlobalTheory.LevelBudget.admissible_off_type_level_budget | (intros; apply GlobalTheory.LevelBudget.admissible_off_type_level_budget <;> assumption)
+end
+end

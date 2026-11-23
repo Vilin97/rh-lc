@@ -2,7 +2,13 @@ module
 
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 public import Mathlib.RingTheory.MvPolynomial.Homogeneous
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormCompHomogeneousIsHomogeneousStatement
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +27,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +38,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,9 +51,109 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Algebra.MvPolynomial.Monad
+import Mathlib.Tactic.Polynomial.Basic
 public import Mathlib.RingTheory.Norm.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormCompHomogeneousIsHomogeneous
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+open MvPolynomial
+
+theorem norm_comp_homogeneous_isHomogeneous :
+    ∀ (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] (n d : ℕ)
+      (f : MvPolynomial (Fin n) L), f.IsHomogeneous d →
+      ∃ F : MvPolynomial (Fin n × Fin (Module.finrank K L)) K,
+        F.IsHomogeneous (d * Module.finrank K L) ∧
+        ∀ y : Fin n × Fin (Module.finrank K L) → K, MvPolynomial.eval y F =
+          Algebra.norm K (MvPolynomial.eval
+            (fun i => ∑ j, algebraMap K L (y (i, j)) * Module.finBasis K L j) f) := by
+  intro K L _ _ _ _ n d f hf
+  classical
+  set m := Module.finrank K L
+  set b := Module.finBasis K L
+  let g : Fin n → MvPolynomial (Fin n × Fin m) L := fun i => ∑ j, X (i, j) * C (b j)
+  have hg : ∀ i, (g i).IsHomogeneous 1 := by
+    intro i
+    refine IsHomogeneous.sum _ _ _ (fun j _ => ?_)
+    simpa using (isHomogeneous_X L (i, j)).mul (isHomogeneous_C _ (b j))
+  let G : MvPolynomial (Fin n × Fin m) L := bind₁ g f
+  have hG : G.IsHomogeneous d := by simpa [G, aeval_eq_bind₁] using hf.aeval g hg
+  have hGev : ∀ y : Fin n × Fin m → K, eval (fun p => algebraMap K L (y p)) G =
+      eval (fun i => ∑ j, algebraMap K L (y (i, j)) * b j) f := by
+    intro y
+    have key : ∀ (φ : MvPolynomial (Fin n) L) (x : Fin n × Fin m → L),
+        eval x (bind₁ g φ) = eval (fun i => eval x (g i)) φ := by
+      intro φ x
+      induction φ using MvPolynomial.induction_on <;> simp_all [bind₁_X_right]
+    rw [show G = bind₁ g f from rfl, key]
+    congr 2
+    funext i
+    simp [g]
+    rfl
+  let M : Matrix (Fin m) (Fin m) (MvPolynomial (Fin n × Fin m) K) :=
+    fun i j => ∑ s ∈ G.support, monomial s (Algebra.leftMulMatrix b (AddMonoidAlgebra.coeff G s) i j)
+  have hM : ∀ i j, (M i j).IsHomogeneous d := by
+    intro i j
+    refine IsHomogeneous.sum _ _ _ (fun s hs => isHomogeneous_monomial _ ?_)
+    have := hG (mem_support_iff.mp hs)
+    rwa [Finsupp.degree_eq_weight_one]
+  refine ⟨M.det, ?_, ?_⟩
+  · rw [Matrix.det_apply']
+    refine IsHomogeneous.sum _ _ _ (fun σ _ => ?_)
+    have hp : (∏ i, M (σ i) i).IsHomogeneous (d * m) := by
+      have := IsHomogeneous.prod Finset.univ (fun i => M (σ i) i) (fun _ => d) (fun i _ => hM _ _)
+      simpa [mul_comm] using this
+    have hε : ((Equiv.Perm.sign σ : ℤ) : MvPolynomial (Fin n × Fin m) K).IsHomogeneous 0 := by
+      rw [← map_intCast (C : K →+* MvPolynomial (Fin n × Fin m) K)]
+      exact isHomogeneous_C _ _
+    simpa using hε.mul hp
+  · intro y
+    rw [RingHom.map_det, Algebra.norm_eq_matrix_det b, ← hGev]
+    congr 1
+    ext i j
+    show eval y (M i j) = _
+
+    simp only [M, map_sum, eval_monomial]
+
+    rw [eval_eq' _ G, map_sum, Matrix.sum_apply]
+    refine Finset.sum_congr rfl (fun s _ => ?_)
+    have : AddMonoidAlgebra.coeff G s * ∏ k, (algebraMap K L (y k)) ^ (s k) = (∏ k, y k ^ s k) • AddMonoidAlgebra.coeff G s := by
+      rw [Algebra.smul_def, mul_comm]
+      simp [map_prod, map_pow]
+    rw [this, map_smul, Matrix.smul_apply, smul_eq_mul, mul_comm, Finsupp.prod_fintype]
+    simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormCompHomogeneousIsHomogeneousStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.exists_isHomogeneous_eval_eq_norm : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] (n d : ℕ) (f : MvPolynomial (Fin n) L), f.IsHomogeneous d → ∃ F : MvPolynomial (Fin n × Fin (Module.finrank K L)) K, F.IsHomogeneous (d * Module.finrank K L) ∧ ∀ y : Fin n × Fin (Module.finrank K L) → K, MvPolynomial.eval y F = Algebra.norm K (MvPolynomial.eval (fun i => ∑ j, algebraMap K L (y (i, j)) * Module.finBasis K L j) f) := by
+  first | exact @GlobalTheory.norm_comp_homogeneous_isHomogeneous | exact GlobalTheory.norm_comp_homogeneous_isHomogeneous | (intros; apply GlobalTheory.norm_comp_homogeneous_isHomogeneous <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.COnePropertyFiniteExtension
+
+section
 
 @[expose] public section
 
@@ -82,3 +192,5 @@ theorem c_one_of_finite_extension : ∀ (K L : Type) [Field K] [Field L] [Algebr
     exact (Algebra.norm_eq_zero_iff (R := K)).mp this.symm
 
 end GlobalTheory
+end
+end

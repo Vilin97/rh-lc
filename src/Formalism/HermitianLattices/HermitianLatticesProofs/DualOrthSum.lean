@@ -1,6 +1,6 @@
 module
 
-public import Formalism.HermitianLattices.DualOrthSum
+public import Formalism.HermitianLattices.StatementLat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,8 +39,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.HermitianLattices.DualOrthSum
+
+section
+
+@[expose] public section
+
+open Module
+
+noncomputable section
+
+namespace Formalism.HermitianLatticesTheory
+
+def DualOrthSum : Prop :=
+  ∀ (R K V : Type) [CommRing R] [Field K] [StarRing K] [Algebra R K]
+    [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
+    (h : V →ₗ⋆[K] V →ₗ[K] K) (V₁ V₂ : Submodule K V), IsCompl V₁ V₂ →
+    (∀ x ∈ V₁, ∀ y ∈ V₂, h x y = 0) → (∀ x ∈ V₂, ∀ y ∈ V₁, h x y = 0) →
+    ∀ L₁ L₂ : Submodule R V, (L₁ : Set V) ⊆ V₁ → (L₂ : Set V) ⊆ V₂ →
+      dual h (L₁ ⊔ L₂) = (dual h L₁ ⊓ V₁.restrictScalars R) ⊔ (dual h L₂ ⊓ V₂.restrictScalars R)
+
+end Formalism.HermitianLatticesTheory
+end
+end
+end
+
+-- Source module: Formalism.HermitianLattices.HermitianLatticesProofs.DualOrthSum
+
+section
 
 @[expose] public section
 
@@ -93,3 +122,6 @@ theorem dualOrthSum : DualOrthSum := by
       exact hxd y₂ hy₂
 
 end Formalism.HermitianLatticesTheory
+end
+end
+end

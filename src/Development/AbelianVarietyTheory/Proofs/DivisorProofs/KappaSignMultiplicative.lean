@@ -2,29 +2,30 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SimpleTwistedTraceFormulaStable
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GramDetChangeOfBasesStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GramDetNeZeroOfKerOrthStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAevalOrthogonalRangeUnitarySelfReciprocalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceConjugationPropertiesCmField
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryConjMapsKerAevalBasisAndGramStatement
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +45,190 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Reverse
+public import Mathlib.Data.Matrix.Basic
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceConjugationPropertiesCmField
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryConjMapsKerAevalBasisAndGramStatement
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GramDetNeZeroOfKerOrth
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+theorem GlobalTheory.gram_det_ne_zero_of_ker_orth {K : Type} [Field K] (σ : K →+* K) {n : ℕ} (A : Matrix (Fin n) (Fin n) K) {ι : Type} [Fintype ι] [DecidableEq ι] (u : ι → Fin n → K) (hli : LinearIndependent K u) (hsp : Submodule.span K (Set.range u) = LinearMap.ker (Matrix.toLin' A)) (horth : ∀ x z, A *ᵥ x = 0 → ∑ k, σ ((A *ᵥ z) k) * x k = 0) (hdec : ∀ v, ∃ z y, A *ᵥ y = 0 ∧ v = A *ᵥ z + y) : (Matrix.of fun i j => ∑ k, σ (u i k) * u j k).det ≠ 0 := by
+  intro hdet
+  obtain ⟨c, hc0, hGc⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hdet
+  set x : Fin n → K := ∑ j, c j • u j with hxdef
+  have hx0 : x ≠ 0 := by
+    intro hx
+    apply hc0
+    funext j
+    exact Fintype.linearIndependent_iff.mp hli c hx j
+  have hxspan : x ∈ Submodule.span K (Set.range u) :=
+    Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
+  have hAx : A *ᵥ x = 0 := by
+    rw [hsp, LinearMap.mem_ker, Matrix.toLin'_apply] at hxspan
+    exact hxspan
+  have hu : ∀ i, ∑ k, σ (u i k) * x k = 0 := by
+    intro i
+    have := congrFun hGc i
+    rw [Matrix.mulVec, dotProduct] at this
+    simp only [Matrix.of_apply, Pi.zero_apply] at this
+    rw [← this]
+    simp only [hxdef, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => by ring
+  have hy : ∀ y ∈ LinearMap.ker (Matrix.toLin' A), ∑ k, σ (y k) * x k = 0 := by
+    intro y hy
+    rw [← hsp] at hy
+    obtain ⟨d, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).mp hy
+
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    have : ∀ i, ∑ k, σ (d i) * σ (u i k) * x k = σ (d i) * ∑ k, σ (u i k) * x k := by
+      intro i; rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun k _ => by ring
+    simp [this, hu]
+  have hall : ∀ v : Fin n → K, ∑ k, σ (v k) * x k = 0 := by
+    intro v
+    obtain ⟨z, y, hAy, rfl⟩ := hdec v
+    have h1 := horth x z hAx
+    have h2 := hy y (by rw [LinearMap.mem_ker, Matrix.toLin'_apply]; exact hAy)
+    simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, h1, h2, add_zero]
+  apply hx0
+  funext k
+  have := hall (Pi.single k 1)
+  simpa [Pi.single_apply] using this
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GramDetNeZeroOfKerOrthStatement
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+theorem _root_.GlobalTheory.T.gram_det_ne_zero_of_ker_orth' : ∀ {K : Type} [Field K] (σ : K →+* K) {n : ℕ} (A : Matrix (Fin n) (Fin n) K) {ι : Type} [Fintype ι] [DecidableEq ι] (u : ι → Fin n → K), LinearIndependent K u → Submodule.span K (Set.range u) = LinearMap.ker (Matrix.toLin' A) → (∀ x z, A *ᵥ x = 0 → ∑ k, σ ((A *ᵥ z) k) * x k = 0) → (∀ v, ∃ z y, A *ᵥ y = 0 ∧ v = A *ᵥ z + y) → (Matrix.of fun i j => ∑ k, σ (u i k) * u j k).det ≠ 0 := by
+  first | exact @GlobalTheory.gram_det_ne_zero_of_ker_orth | exact GlobalTheory.gram_det_ne_zero_of_ker_orth | (intros; apply GlobalTheory.gram_det_ne_zero_of_ker_orth <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAevalOrthogonalRangeUnitarySelfReciprocal
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+namespace GlobalTheory
+
+theorem csr_transpose_aeval {K : Type} [Field K] {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (p : K[X]) :
+    (aeval A p)ᵀ = aeval Aᵀ p := by
+  rw [aeval_eq_sum_range, aeval_eq_sum_range, transpose_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [transpose_smul, transpose_pow]
+
+theorem csr_map_aeval {K : Type} [Field K] (σ : K →+* K) {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (p : K[X]) :
+    (aeval A p).map σ = aeval (A.map σ) (p.map σ) := by
+  rw [aeval_eq_sum_range, aeval_eq_sum_range' (n := p.natDegree + 1)]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← RingHom.mapMatrix_apply, map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have hpow : (A ^ i).map σ = (A.map σ) ^ i := by
+      rw [← RingHom.mapMatrix_apply, map_pow]; rfl
+    rw [coeff_map, RingHom.mapMatrix_apply, ← hpow]
+    ext a b
+    simp [Matrix.smul_apply]
+  · exact Nat.lt_succ_of_le (natDegree_map_le)
+
+theorem csr_pow_mul_pow {K : Type} [Field K] {n : ℕ} (γ B : Matrix (Fin n) (Fin n) K)
+    (h : γ * B = 1) (d i : ℕ) (hi : i ≤ d) : γ ^ d * B ^ i = γ ^ (d - i) := by
+  have key : ∀ j, γ ^ j * B ^ j = 1 := by
+    intro j
+    induction j with
+    | zero => simp
+    | succ j ih => rw [pow_succ, pow_succ', mul_assoc, ← mul_assoc γ, h, one_mul, ih]
+  obtain ⟨e, rfl⟩ := Nat.exists_eq_add_of_le hi
+  rw [add_comm i e, pow_add, mul_assoc, key, mul_one, Nat.add_sub_cancel]
+
+theorem csr_reverse {K : Type} [Field K] {n : ℕ} (γ B : Matrix (Fin n) (Fin n) K)
+    (h : γ * B = 1) (P : K[X]) :
+    γ ^ P.natDegree * aeval B P = aeval γ P.reverse := by
+  rw [aeval_eq_sum_range, aeval_eq_sum_range' (n := P.natDegree + 1), Finset.mul_sum]
+  · rw [← Finset.sum_range_reflect]
+    refine Finset.sum_congr rfl fun i hi => ?_
+    have hi' : i ≤ P.natDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
+    have e1 : P.natDegree + 1 - 1 - i = P.natDegree - i := by omega
+    rw [e1, mul_smul_comm, csr_pow_mul_pow γ B h _ _ (Nat.sub_le _ _), coeff_reverse,
+      revAt_le hi']
+    have e2 : P.natDegree - (P.natDegree - i) = i := by omega
+    rw [e2]
+  · exact Nat.lt_succ_of_le (reverse_natDegree_le P)
+
+end GlobalTheory
+
+namespace GlobalTheory
+
+theorem csr_ker_orth_range {K : Type} [Field K] (σ : K →+* K) {n : ℕ}
+    (γ : Matrix (Fin n) (Fin n) K) (hγ : (γ.map σ)ᵀ * γ = 1) (Q : K[X])
+    (hQ : C (σ (Q.coeff 0)) * Q = (Q.map σ).reverse) (x z : Fin n → K)
+    (hx : aeval γ Q *ᵥ x = 0) : ∑ k, σ ((aeval γ Q *ᵥ z) k) * x k = 0 := by
+  have hγB : γ * (γ.map σ)ᵀ = 1 := mul_eq_one_comm.mp hγ
+  have hMt : ((aeval γ Q).map σ)ᵀ = aeval (γ.map σ)ᵀ (Q.map σ) := by
+    rw [csr_map_aeval, csr_transpose_aeval]
+  have hrev : aeval γ (Q.map σ).reverse = σ (Q.coeff 0) • aeval γ Q := by
+    rw [← hQ, aeval_mul, aeval_C, Algebra.smul_def]
+  have hBd : (γ.map σ)ᵀ ^ (Q.map σ).natDegree * γ ^ (Q.map σ).natDegree = 1 := by
+    rw [csr_pow_mul_pow _ _ hγ _ _ le_rfl, Nat.sub_self, pow_zero]
+  have hBP : aeval (γ.map σ)ᵀ (Q.map σ)
+      = (γ.map σ)ᵀ ^ (Q.map σ).natDegree * (σ (Q.coeff 0) • aeval γ Q) := by
+    rw [← hrev, ← csr_reverse γ _ hγB, ← mul_assoc, hBd, one_mul]
+  have hBx : aeval (γ.map σ)ᵀ (Q.map σ) *ᵥ x = 0 := by
+    rw [hBP, ← mulVec_mulVec, smul_mulVec, hx, smul_zero, mulVec_zero]
+  have expand : ∑ k, σ ((aeval γ Q *ᵥ z) k) * x k
+      = ∑ l, σ (z l) * ((((aeval γ Q).map σ)ᵀ) *ᵥ x) l := by
+
+    simp only [mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum,
+    transpose_apply, map_apply]
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
+  rw [expand, hMt, hBx]
+  simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerAevalOrthogonalRangeUnitarySelfReciprocalStatement
+
+section
+
+@[expose] public section
+
+open Matrix Polynomial
+
+theorem _root_.GlobalTheory.T.ker_aeval_orthogonal_range_unitary_selfReciprocal : ∀ {K : Type} [Field K] (σ : K →+* K) {n : ℕ} (γ : Matrix (Fin n) (Fin n) K), (γ.map σ)ᵀ * γ = 1 → ∀ (Q : K[X]), C (σ (Q.coeff 0)) * Q = (Q.map σ).reverse → ∀ (x z : Fin n → K), aeval γ Q *ᵥ x = 0 → ∑ k, σ ((aeval γ Q *ᵥ z) k) * x k = 0 := by
+  first | exact @GlobalTheory.csr_ker_orth_range | exact GlobalTheory.csr_ker_orth_range | (intros; apply GlobalTheory.csr_ker_orth_range <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KappaSignMultiplicative
+
+section
 
 @[expose] public section
 
@@ -246,3 +427,6 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     · exact Or.inr h.neg_one_zpow
 
 end GlobalTheory.KapSignMul
+end
+end
+end

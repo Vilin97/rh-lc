@@ -1,10 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsHermND
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AlgebraMapMemO
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DualInterSelfDualHermitianLatticeSubspaceStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.EichlerIsometry
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsPrincipalIdealRingOfHenselian
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,8 +19,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,9 +43,106 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DualInterSelfDualHermitianLatticeSubspace
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.EichlerIsometry
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsPrincipalIdealRingOfHenselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.AlgebraMapMemO
+
+section
+
+@[expose] public section
+
+open ValuativeRel
+
+namespace GlobalTheory.CommonDenominator
+
+variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
+variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
+
+theorem algebraMap_mem_O (L : Formalism.MainNotions.S.Loc.LocE F E) (t : 𝒪[F]) :
+    algebraMap F E (t : F) ∈ L.O := by
+  rw [L.O_def]
+  have h : algebraMap F E (t : F) = algebraMap 𝒪[F] E t := by
+    rw [IsScalarTower.algebraMap_apply 𝒪[F] F E]; rfl
+  rw [h]
+  exact isIntegral_algebraMap
+
+theorem exists_den (L : Formalism.MainNotions.S.Loc.LocE F E) (c : E) :
+    ∃ t : 𝒪[F], t ≠ 0 ∧ algebraMap F E (t : F) * c ∈ L.O := by
+  haveI : Module.Finite F E := Module.finite_of_finrank_eq_succ L.rank
+  have hc : IsIntegral F c := Algebra.IsIntegral.isIntegral c
+  obtain ⟨m, hm⟩ := IsIntegral.exists_multiple_integral_of_isLocalization
+    (nonZeroDivisors 𝒪[F]) (Rₘ := F) c hc
+  refine ⟨(m : 𝒪[F]), nonZeroDivisors.ne_zero m.2, ?_⟩
+  rw [L.O_def]
+  have h : m • c = algebraMap F E ((m : 𝒪[F]) : F) * c := by
+    rw [Submonoid.smul_def, Algebra.smul_def, IsScalarTower.algebraMap_apply 𝒪[F] F E]; rfl
+  rw [← h]
+  exact hm
+
+theorem main (L : Formalism.MainNotions.S.Loc.LocE F E) {n : ℕ} [IsNonarchimedeanLocalField F]
+    {Λ : Submodule (↥(Formalism.MainNotions.S.Loc.LocE.O L)) (Fin n → E)} (hΛ : GlobalTheory.HL.IsLat L Λ)
+    (x : Fin n → E) :
+    ∃ (t : ↥(Valuation.integer (ValuativeRel.valuation F))),
+      t ≠ (0 : ↥(Valuation.integer (ValuativeRel.valuation F))) ∧
+      (Algebra.algebraMap F E : F → E) (↑t : F) • x ∈ Λ := by
+  have hx : x ∈ Submodule.span E (Λ : Set (Fin n → E)) := by rw [hΛ.2]; exact Submodule.mem_top
+  have key : ∀ (a : E) (ha : a ∈ L.O) (v : Fin n → E), v ∈ Λ → a • v ∈ Λ := by
+    intro a ha v hv
+    have := Λ.smul_mem (⟨a, ha⟩ : L.O) hv
+    exact this
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact ⟨1, one_ne_zero, by simpa using hy⟩
+  | zero => exact ⟨1, one_ne_zero, by simpa using Λ.zero_mem⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨t1, h1, hy⟩ := hy
+    obtain ⟨t2, h2, hz⟩ := hz
+    refine ⟨t1 * t2, mul_ne_zero h1 h2, ?_⟩
+    have e : (Algebra.algebraMap F E : F → E) ((t1 * t2 : 𝒪[F]) : F) • (y + z)
+        = algebraMap F E (t2 : F) • (algebraMap F E (t1 : F) • y)
+          + algebraMap F E (t1 : F) • (algebraMap F E (t2 : F) • z) := by
+      simp only [Subring.coe_mul, map_mul, smul_add, smul_smul]
+      rw [mul_comm (algebraMap F E (t2 : F)) (algebraMap F E (t1 : F))]
+    rw [e]
+    exact Λ.add_mem (key _ (algebraMap_mem_O L t2) _ hy) (key _ (algebraMap_mem_O L t1) _ hz)
+  | smul c y _ hy =>
+    obtain ⟨t, ht, hy⟩ := hy
+    obtain ⟨s, hs, hsc⟩ := exists_den L c
+    refine ⟨s * t, mul_ne_zero hs ht, ?_⟩
+    have e : (Algebra.algebraMap F E : F → E) ((s * t : 𝒪[F]) : F) • (c • y)
+        = (algebraMap F E (s : F) * c) • (algebraMap F E (t : F) • y) := by
+      simp only [Subring.coe_mul, map_mul, smul_smul]
+      rw [mul_right_comm]
+    rw [e]
+    exact key _ hsc _ hy
+
+end GlobalTheory.CommonDenominator
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.DualInterSelfDualHermitianLatticeSubspaceStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+theorem _root_.GlobalTheory.T.dual_inter_selfDualHermitianLattice_subspace : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ {n : ℕ} (Hm : Matrix (Fin n) (Fin n) E), IsHermND L Hm → ∀ Λ, IsSD L Hm Λ → ∀ (m : ℕ) (y : Fin m → Fin n → E), LinearIndependent E y → perp L Hm (perp L Hm (Submodule.span E (Set.range y))) = (Submodule.span E (Set.range y)) ∧ (∀ v, (∀ x ∈ Λ, x ∈ perp L Hm (Submodule.span E (Set.range y)) → hf L Hm x v ∈ L.O) ↔ ∃ a ∈ Λ, v - a ∈ (Submodule.span E (Set.range y))) ∧ (∀ v, (∀ x ∈ Λ, x ∈ (Submodule.span E (Set.range y)) → hf L Hm x v ∈ L.O) ↔ ∃ a ∈ Λ, v - a ∈ perp L Hm (Submodule.span E (Set.range y))) ∧ ∃ b : Fin m → Fin n → E, ∃ c : Fin m → Fin n → E, Λ ⊓ (Submodule.span E (Set.range y)).restrictScalars L.O = Submodule.span L.O (Set.range b) ∧ (∀ j, c j ∈ Λ) ∧ ∀ i j, hf L Hm (b i) (c j) = if i = j then 1 else 0 := by
+  first | exact @GlobalTheory.HL.DualInter.dual_inter | exact GlobalTheory.HL.DualInter.dual_inter | (intros; apply GlobalTheory.HL.DualInter.dual_inter <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIsometryOfSameTrace
+
+section
 
 @[expose] public section
 
@@ -245,3 +340,5 @@ theorem exists_isometry_of_same_trace : ∀ {F : Type} [Field F] [ValuativeRel F
         Lb.smul_mem ⟨_, hβ j⟩ (hcdb j)))) (La.sum_mem fun j _ => La.smul_mem ⟨_, hβ j⟩ (hc j))
 
 end GlobalTheory.HL.SameTrace
+end
+end

@@ -3,11 +3,14 @@ module
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFlipDet
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.BaseIntSet
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsInertTop
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLevelPointRepsConjugateHalfModLattice
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinPartConjMem
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -38,9 +41,227 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IntFormsSubset
 import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.DatEqZero
+public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IsStabForm
+public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IsSystem
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.PolyDerivSmulLetter
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ScalarOfIntertwinesUpToScalar
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsInertTop
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValRingLocRing
+import Formalism.LocalRingCardinality.DataTheta
+import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
+import Formalism.LocalToGlobal.IndefiniteReal.ExistsChosenExtremalVector
+import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteWeightData
+import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.OnbPerp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceModelIndicatorEqMean
+public import Formalism.LocalToGlobal.Divisibility.DefGroup
+public import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardDivisionPointsHalfSplitPlaceNormPow
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardDivisionPointsModHalfLatticeFinsetSumStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FlipIdxNeZero
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EqZeroOrEqOfPlaceIdem
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdemSumMulOfSubset
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AbsNormMaxPowDividingConjugatePlace
+
+section
+
+@[expose] public section
+
+open NumberField Matrix Complex IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Dict GlobalTheory.AdTh GlobalTheory.ClsVal
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
+open GlobalTheory.SW hiding Level IsSB
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
+open GlobalTheory.SingleDatum GlobalTheory.CoverRead
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open GlobalTheory.LevelSeries
+
+namespace GlobalTheory.ConjNormPow
+
+theorem absNorm_comap_equiv {K : Type} [Field K] [NumberField K] (e : 𝓞 K ≃+* 𝓞 K)
+    (I : Ideal (𝓞 K)) : Ideal.absNorm (I.comap e) = Ideal.absNorm I := by
+  rw [Ideal.absNorm_apply, Ideal.absNorm_apply, Submodule.cardQuot_apply, Submodule.cardQuot_apply]
+  exact Nat.card_congr (Ideal.quotientEquiv (I.comap e) I e
+    (Ideal.map_comap_of_surjective _ e.surjective I).symm).toEquiv
+
+theorem absNorm_maxPowDividing_conjPl : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (N : ℕ), Ideal.absNorm ((Formalism.L2.DIV.conjPl P).maxPowDividing (Ideal.span {((N : ℕ) : 𝓞 D.host.E)})) = Ideal.absNorm (P.maxPowDividing (Ideal.span {((N : ℕ) : 𝓞 D.host.E)})) := by
+  intro D P N
+  classical
+  let σ : 𝓞 D.host.E ≃+* 𝓞 D.host.E := RingEquiv.ofRingHom Formalism.L2.DIV.starOHom Formalism.L2.DIV.starOHom
+    (RingHom.ext fun a => Formalism.L2.DIV.starO_starO a) (RingHom.ext fun a => Formalism.L2.DIV.starO_starO a)
+  have hc : (Formalism.L2.DIV.conjPl P).asIdeal = P.asIdeal.comap σ := rfl
+  set J : Ideal (𝓞 D.host.E) := Ideal.span {((N : ℕ) : 𝓞 D.host.E)} with hJdef
+  have hJ : J.comap σ = J := by
+    rw [← Ideal.map_symm, hJdef, Ideal.map_span, Set.image_singleton, map_natCast]
+  have hpow : ∀ k : ℕ, (P.asIdeal.comap σ) ^ k = (P.asIdeal ^ k).comap σ := by
+    intro k
+    rw [← Ideal.map_symm, ← Ideal.map_symm, Ideal.map_pow]
+  have hiff : ∀ k : ℕ, J ≤ (P.asIdeal.comap σ) ^ k ↔ J ≤ P.asIdeal ^ k := by
+    intro k
+    rw [hpow, ← hJ, Ideal.comap_le_comap_iff_of_surjective _ σ.surjective, hJ]
+  have hcount : (Associates.mk (Formalism.L2.DIV.conjPl P).asIdeal).count (Associates.mk J).factors =
+      (Associates.mk P.asIdeal).count (Associates.mk J).factors := by
+    by_cases hJ0 : J = ⊥
+    · rw [hJ0, ← Ideal.zero_eq_bot, Associates.mk_zero, Associates.factors_zero]
+      simp only [Associates.count]
+      split_ifs <;> rfl
+    have hm : Associates.mk J ≠ 0 := Associates.mk_ne_zero.mpr hJ0
+    have key : ∀ (Q : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E)) (k : ℕ),
+        k ≤ (Associates.mk Q.asIdeal).count (Associates.mk J).factors ↔ J ≤ Q.asIdeal ^ k := by
+      intro Q k
+      rw [← Associates.prime_pow_dvd_iff_le hm (Associates.irreducible_mk.mpr Q.irreducible),
+        ← Associates.mk_pow, Associates.mk_le_mk_iff_dvd, Ideal.dvd_iff_le]
+    apply le_antisymm
+    · rw [key P, ← hiff, ← hc, ← key]
+    · rw [key (Formalism.L2.DIV.conjPl P), hc, hiff, ← key]
+  simp only [IsDedekindDomain.HeightOneSpectrum.maxPowDividing]
+  rw [hcount, hc, hpow, absNorm_comap_equiv]
+
+end GlobalTheory.ConjNormPow
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AbsNormMaxPowDividingConjugatePlaceStatement
+
+section
+
+@[expose] public section
+
+open NumberField Matrix Complex IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Dict GlobalTheory.AdTh GlobalTheory.ClsVal
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
+open GlobalTheory.SW hiding Level IsSB
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
+open GlobalTheory.SingleDatum GlobalTheory.CoverRead
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open GlobalTheory.LevelSeries
+
+
+theorem _root_.GlobalTheory.T.absNorm_maxPowDividing_conjugatePlace : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (N : ℕ), Ideal.absNorm ((Formalism.L2.DIV.conjPl P).maxPowDividing (Ideal.span {((N : ℕ) : 𝓞 D.host.E)})) = Ideal.absNorm (P.maxPowDividing (Ideal.span {((N : ℕ) : 𝓞 D.host.E)})) := by
+  first | exact @GlobalTheory.ConjNormPow.absNorm_maxPowDividing_conjPl | exact GlobalTheory.ConjNormPow.absNorm_maxPowDividing_conjPl | (intros; apply GlobalTheory.ConjNormPow.absNorm_maxPowDividing_conjPl <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardDivisionPointsHalfSplitPlaceNormPowStatement
+
+section
+
+@[expose] public section
+
+open NumberField Matrix Complex IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Dict GlobalTheory.AdTh GlobalTheory.ClsVal
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
+open GlobalTheory.SW hiding Level IsSB
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
+open GlobalTheory.SingleDatum GlobalTheory.CoverRead
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open GlobalTheory.LevelSeries
+
+
+theorem _root_.GlobalTheory.T.card_divisionPoints_half_split_place_norm_pow : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ (P : Formalism.L2.DIV.Pl D.host.E) (e : AE D), Formalism.L2.NTheta.IsIdemAt e P → ∀ N : ℕ, 0 < N → Nat.card (GlobalTheory.DivPtFourier.DQ (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) e N) = Ideal.absNorm (P.maxPowDividing (Ideal.span {((N : ℕ) : 𝓞 D.host.E)})) ^ (S.rank * T.rank) := by
+  first | exact @GlobalTheory.DivPtLocal.natCard_DQ | exact GlobalTheory.DivPtLocal.natCard_DQ | (intros; apply GlobalTheory.DivPtLocal.natCard_DQ <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLevelPointRepsConjugateHalfModLattice
+
+section
+
+@[expose] public section
+
+open NumberField Matrix Complex IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Dict GlobalTheory.AdTh GlobalTheory.ClsVal
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
+open GlobalTheory.SW hiding Level IsSB
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
+open GlobalTheory.SingleDatum GlobalTheory.CoverRead
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open GlobalTheory.LevelSeries
+
+noncomputable section
+namespace GlobalTheory.FlipReps
+
+theorem flip_reps : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (V W : HSp D) (χV χW : (AE D)ˣ →* Circle) (om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)) (ΛV : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (ΛW : Submodule (𝓞 D.host.E) (Fin W.rank → D.host.E)) (sW : D.what₂.Tau → Matrix (Fin W.rank) (Fin W.rank) ℂ) (f₀ : WO V W → ℂ), VacPair ψ θ V W χV χW om ΛV ΛW sW f₀ → ∀ (T : Finset (Formalism.L2.DIV.Pl D.host.E)) (m : ℕ) (eT : AE D), IsIdemSum eT T → Odd m → Nat.Coprime m (GlobalTheory.Tow.badN D) → (∀ PP ∈ T, ((m : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal) → ∃ Y : Finset (WO V W), (∀ y ∈ Y, IsHalf (cA D eT) y ∧ m • y ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True)) ∧ (∀ y ∈ Y, ∀ y' ∈ Y, y - y' ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True) → y = y') ∧ (∀ y : WO V W, IsHalf (cA D eT) y → m • y ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True) → ∃ y' ∈ Y, y - y' ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True)) ∧ Y.card = flipIdx V W T m := by
+  intro D ψ θ V W χV χW om ΛV ΛW sW f₀ hP T m eT hT hm hcop hmT
+  obtain ⟨-, -, -, -, hSV, hSW, -⟩ := hP
+  have hm0 : 0 < m := hm.pos
+  obtain ⟨⟨es, hes, hsum⟩, -⟩ := hT
+  set Λ := latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True) with hΛ
+  have hcard : Nat.card (GlobalTheory.DivPtFourier.DQ Λ (cA D eT) m) = flipIdx V W T m := by
+    have hc' : cA D eT = ∑ PP ∈ T, cA D (es PP) := by rw [hsum, map_sum]
+    rw [hc', GlobalTheory.T.card_divisionPointsModHalfLattice_finset_sum Λ (fun c hc u hu => GlobalTheory.PlaceModelSum.idem_smul_latO hc hu) T (fun PP => cA D (es PP)) ?_ ?_ m]
+    · unfold flipIdx
+      refine Finset.prod_congr rfl fun PP hPP => ?_
+      have hi : Formalism.L2.NTheta.IsIdemAt (cA D (es PP)) (Formalism.L2.DIV.conjPl PP) :=
+        GlobalTheory.MovedIdem.isIdemAt_conj (hes PP hPP) fun _ => Iff.rfl
+      rw [GlobalTheory.T.card_divisionPoints_half_split_place_norm_pow D V W ΛV ΛW hSV hSW _ _ hi m hm0, GlobalTheory.T.absNorm_maxPowDividing_conjugatePlace]
+    · intro i hi; rw [← map_mul, (hes i hi).1.1]
+    · intro i hi j hj hij; rw [← map_mul, GlobalTheory.Tow.idemAt_orth (hes i hi) (hes j hj) hij, map_zero]
+  have hfin : Finite (GlobalTheory.DivPtFourier.DQ Λ (cA D eT) m) :=
+    Nat.finite_of_card_ne_zero (by rw [hcard]; exact flipIdx_ne_zero V W T hm0.ne')
+  letI := Fintype.ofFinite (GlobalTheory.DivPtFourier.DQ Λ (cA D eT) m)
+  have hhalf : ∀ y : WO V W, cA D eT • y = y → IsHalf (cA D eT) y := fun y hy =>
+    (GlobalTheory.PlaceModel.isHalf_iff V W).2 ((GlobalTheory.PlaceModel.mem_half V W).2 hy)
+  have hhalf' : ∀ y : WO V W, IsHalf (cA D eT) y → cA D eT • y = y := fun y hy =>
+    (GlobalTheory.PlaceModel.mem_half V W).1 ((GlobalTheory.PlaceModel.isHalf_iff V W).1 hy)
+  refine ⟨Finset.univ.image (fun q : GlobalTheory.DivPtFourier.DQ Λ (cA D eT) m =>
+    ((GlobalTheory.DivPtFourier.rep q : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W)), ?_, ?_, ?_, ?_⟩
+  · intro y hy
+    obtain ⟨q, -, rfl⟩ := Finset.mem_image.1 hy
+    exact ⟨hhalf _ (GlobalTheory.DivPtFourier.rep q).2.1, (GlobalTheory.DivPtFourier.rep q).2.2⟩
+  · intro y hy y' hy' hyy
+    obtain ⟨q, -, rfl⟩ := Finset.mem_image.1 hy
+    obtain ⟨q', -, rfl⟩ := Finset.mem_image.1 hy'
+    have hqq : q' = q := by
+      rw [← GlobalTheory.DivPtFourier.mk_rep q, ← GlobalTheory.DivPtFourier.mk_rep q', QuotientAddGroup.eq, AddSubgroup.mem_addSubgroupOf]
+      refine ⟨?_, ?_⟩
+      · have : ((-GlobalTheory.DivPtFourier.rep q' + GlobalTheory.DivPtFourier.rep q : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W) =
+            ((GlobalTheory.DivPtFourier.rep q : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W) -
+              ((GlobalTheory.DivPtFourier.rep q' : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W) := by
+          push_cast; abel
+        rw [this]; exact hyy
+      · exact (GlobalTheory.PlaceModel.half V W (cA D eT)).add_mem ((GlobalTheory.PlaceModel.half V W (cA D eT)).neg_mem
+          ((GlobalTheory.PlaceModel.mem_half V W).2 (GlobalTheory.DivPtFourier.rep q').2.1))
+          ((GlobalTheory.PlaceModel.mem_half V W).2 (GlobalTheory.DivPtFourier.rep q).2.1)
+    rw [hqq]
+  · intro y hy hmy
+    have hyd : y ∈ GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m := ⟨hhalf' y hy, hmy⟩
+    set q : GlobalTheory.DivPtFourier.DQ Λ (cA D eT) m := QuotientAddGroup.mk (⟨y, hyd⟩ : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m))
+    refine ⟨_, Finset.mem_image_of_mem _ (Finset.mem_univ q), ?_⟩
+    have h := GlobalTheory.DivPtFourier.mk_rep q
+    rw [QuotientAddGroup.eq, AddSubgroup.mem_addSubgroupOf] at h
+    have : ((-GlobalTheory.DivPtFourier.rep q + ⟨y, hyd⟩ : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W) =
+        y - ((GlobalTheory.DivPtFourier.rep q : ↥(GlobalTheory.DivPtFourier.divPts Λ (cA D eT) m)) : WO V W) := by
+      push_cast; abel
+    rw [← this]; exact h.1
+  · rw [Finset.card_image_of_injective _ GlobalTheory.DivPtFourier.rep_injective, Finset.card_univ, ← Nat.card_eq_fintype_card, hcard]
+
+end GlobalTheory.FlipReps
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLevelPointRepsConjugateHalfModLatticeStatement
+
+section
 
 @[expose] public section
 
@@ -58,3 +279,5 @@ open GlobalTheory.LevelSeries
 
 theorem _root_.GlobalTheory.T.exists_levelPoint_reps_conjugate_half_mod_lattice : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (V W : HSp D) (χV χW : (AE D)ˣ →* Circle) (om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)) (ΛV : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (ΛW : Submodule (𝓞 D.host.E) (Fin W.rank → D.host.E)) (sW : D.what₂.Tau → Matrix (Fin W.rank) (Fin W.rank) ℂ) (f₀ : WO V W → ℂ), VacPair ψ θ V W χV χW om ΛV ΛW sW f₀ → ∀ (T : Finset (Formalism.L2.DIV.Pl D.host.E)) (m : ℕ) (eT : AE D), IsIdemSum eT T → Odd m → Nat.Coprime m (GlobalTheory.Tow.badN D) → (∀ PP ∈ T, ((m : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal) → ∃ Y : Finset (WO V W), (∀ y ∈ Y, IsHalf (cA D eT) y ∧ m • y ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True)) ∧ (∀ y ∈ Y, ∀ y' ∈ Y, y - y' ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True) → y = y') ∧ (∀ y : WO V W, IsHalf (cA D eT) y → m • y ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True) → ∃ y' ∈ Y, y - y' ∈ latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True)) ∧ Y.card = flipIdx V W T m := by
   first | exact @GlobalTheory.FlipReps.flip_reps | exact GlobalTheory.FlipReps.flip_reps | (intros; apply GlobalTheory.FlipReps.flip_reps <;> assumption)
+end
+end

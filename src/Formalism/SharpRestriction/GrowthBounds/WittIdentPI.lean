@@ -2,12 +2,13 @@ module
 
 public import Formalism.PeriodIntegrals.WittUnram
 public import Formalism.SharpRestriction.GrowthBounds.ObjBridge
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittUnram
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittUnramified.WittUnramMain
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -42,6 +43,21 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittUnram
+
+section
+
+@[expose] public section
+
+theorem witt_unramified : PI.WittUnram :=
+  PI.WittUnramWork.wittUnram_main
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.WittIdentPI
+
+section
+
 @[expose] public section
 
 namespace Formalism.MainNotions.G.WittPI
@@ -53,3 +69,5 @@ theorem wittIdent_of (H : PI.WittUnram) : Formalism.MainNotions.G.WittIdent :=
 theorem wittIdentity_holds : Formalism.MainNotions.G.WittIdent := wittIdent_of witt_unramified
 
 end Formalism.MainNotions.G.WittPI
+end
+end

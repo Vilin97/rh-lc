@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpecHomExtOfLocalizationsAtAllPrimes
+public import Development.AbelianVarietyTheory.Definitions.ShimuraVarieties.MulLeftCompOfPullbackPointEquivMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,8 +41,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsFlagModelField
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlagCellFrameChangeTriangular
+import Development.AbelianVarietyTheory.Definitions.RegularCharts.Reframe
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFrameCover
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlagCellFrameChangeTriangular
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpecHomExtOfLocalizationsAtAllPrimes
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.FlagMod.FieldFlag
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace Limits NumberField ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.Reg GlobalTheory.FlagEmb GlobalTheory.ProjSpace GlobalTheory.FlagMod GlobalTheory.FlagMod.FieldFlag
+open GlobalTheory.FlagMod.LowRank (ECh Proj str)
+
+theorem hom_ext_of_localization_atPrime : ∀ (S : Type) [CommRing S] (W : Scheme.{0}) (z z' : Sp S ⟶ W),
+    (∀ q : PrimeSpectrum S, spMap (algebraMap S (Localization.AtPrime q.asIdeal)) ≫ z =
+      spMap (algebraMap S (Localization.AtPrime q.asIdeal)) ≫ z') → z = z' := by
+  intro S _ W z z' h
+  refine GlobalTheory.hom_ext_of_fromSpecStalk fun x => ?_
+  let q : PrimeSpectrum S := x
+  have e : (Sp S).fromSpecStalk q =
+      Spec.map (Spec.stalkIso (CommRingCat.of S) q).inv ≫
+        spMap (algebraMap S (Localization.AtPrime q.asIdeal)) := by
+    rw [Spec.fromSpecStalk_eq, spMap, ← Spec.map_comp]
+    exact congrArg Spec.map (Spec.algebraMap_stalkIso_inv (R := CommRingCat.of S) (x := q)).symm
+  change (Sp S).fromSpecStalk q ≫ z = (Sp S).fromSpecStalk q ≫ z'
+  rw [e, Category.assoc, Category.assoc, h q]
+
+end GlobalTheory.FlagMod.FieldFlag
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpecHomExtOfLocalizationsAtAllPrimesStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +87,5 @@ open GlobalTheory.FlagMod.LowRank (ECh Proj str)
 
 theorem _root_.GlobalTheory.T.spec_hom_ext_of_localizations_at_all_primes : ∀ (S : Type) [CommRing S] (W : Scheme.{0}) (z z' : Sp S ⟶ W), (∀ q : PrimeSpectrum S, spMap (algebraMap S (Localization.AtPrime q.asIdeal)) ≫ z = spMap (algebraMap S (Localization.AtPrime q.asIdeal)) ≫ z') → z = z' := by
   first | exact @GlobalTheory.FlagMod.FieldFlag.hom_ext_of_localization_atPrime | exact GlobalTheory.FlagMod.FieldFlag.hom_ext_of_localization_atPrime | (intros; apply GlobalTheory.FlagMod.FieldFlag.hom_ext_of_localization_atPrime <;> assumption)
+end
+end

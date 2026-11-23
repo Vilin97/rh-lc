@@ -2,13 +2,7 @@ module
 
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveDiffForm
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormWaveMDiff
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralNormLeDecay
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LimitOfModuleForms
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLeIntegralFsv
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RoomOffGridSymmetric
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceCompactSupportCoefficient
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StandardPairingOfHeads
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.XiBound
+public import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,8 +42,209 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LimitOfModuleForms
+public import Formalism.HermitianCurvature.CompositeFormulaLevelZero
+public import Mathlib.Analysis.Complex.Circle
+public import Mathlib.Analysis.Fourier.Inversion
+public import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Analysis.Fourier.FourierTransform
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.RoomOffGridSymmetric
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceCompactSupportCoefficient
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StandardPairingOfHeads
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.XiBound
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralNormLeDecay
+
+section
+
+@[expose] public section
+
+open Matrix MeasureTheory Filter Topology
+open scoped ComplexConjugate
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.PBO
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.Q Formalism.FourierDecayAlt.Wd Formalism.YangianSpanCharacter.T Formalism.FourierDecayAlt.P5
+
+theorem norm_fsv (a t : ℂ) : ‖fsv a t‖ = 1 := by
+  unfold fsv
+  rw [Complex.norm_exp]
+  have : (a * t - conj a * conj t).re = 0 := by
+    simp [Complex.mul_re, Complex.sub_re, Complex.conj_re, Complex.conj_im]
+  rw [this, Real.exp_zero]
+
+theorem continuous_fsv₂ : Continuous (fun q : ℂ × ℂ => fsv q.1 q.2) := by
+  unfold fsv
+  exact Complex.continuous_exp.comp ((continuous_fst.mul continuous_snd).sub
+    ((Complex.continuous_conj.comp continuous_fst).mul (Complex.continuous_conj.comp continuous_snd)))
+
+theorem integrable_fsv_mul {φ : ℂ → ℂ} (hφ : Continuous φ) (hi : Integrable φ) (a : ℂ) :
+    Integrable (fun t => fsv a t * φ t) := by
+  refine hi.bdd_mul (c := 1) ?_ (Filter.Eventually.of_forall fun t => (norm_fsv a t).le)
+  exact (continuous_fsv₂.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
+
+theorem continuous_transform {φ : ℂ → ℂ} (hφ : Continuous φ) (hi : Integrable φ) :
+    Continuous (fun s : ℂ => ∫ t, fsv s t * φ t) := by
+  refine continuous_of_dominated (bound := fun t => ‖φ t‖) (fun s => ?_) (fun s => ?_) hi.norm ?_
+  · exact ((continuous_fsv₂.comp (continuous_const.prodMk continuous_id)).mul hφ).aestronglyMeasurable
+  · exact Filter.Eventually.of_forall fun t => by rw [norm_mul, norm_fsv, one_mul]
+  · exact Filter.Eventually.of_forall fun t =>
+      (continuous_fsv₂.comp (continuous_id.prodMk continuous_const)).mul continuous_const
+
+theorem integrable_decay3' : Integrable (fun s : ℂ => ((1 + ‖s‖) ^ 3)⁻¹) := by
+  have hd : Integrable (fun t : ℂ => (1 + ‖t‖) ^ (-(3 : ℝ))) volume := by
+    refine integrable_one_add_norm ?_
+    rw [Complex.finrank_real_complex]; norm_num
+  refine hd.congr (Filter.Eventually.of_forall fun t => ?_)
+  have h1 : (0 : ℝ) < 1 + ‖t‖ := by positivity
+  simp only []
+  rw [Real.rpow_neg h1.le, show (3 : ℝ) = ((3 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
+
+theorem integral_norm_le_decay {Ξ : ℂ → ℂ} (hΞ : Continuous Ξ) {K : ℝ} (hK : ∀ s, ‖Ξ s‖ ≤ K * ((1 + ‖s‖) ^ 3)⁻¹) :
+    Integrable Ξ ∧ ∫ s, ‖Ξ s‖ ≤ K * ∫ s : ℂ, ((1 + ‖s‖) ^ 3)⁻¹ := by
+  have hint : Integrable Ξ :=
+    Integrable.mono' (integrable_decay3'.const_mul K) hΞ.aestronglyMeasurable (Filter.Eventually.of_forall hK)
+  refine ⟨hint, ?_⟩
+  rw [← integral_const_mul]
+  exact integral_mono hint.norm (integrable_decay3'.const_mul K) hK
+
+theorem fsv_sigma {c : ℂ} (hc : c ≠ 0) :
+    fsv (Complex.I * (Real.pi : ℂ) / (2 * c)) c = -1 ∧
+      ‖Complex.I * (Real.pi : ℂ) / (2 * c)‖ = Real.pi / (2 * ‖c‖) := by
+  constructor
+  · unfold fsv
+    have e1 : Complex.I * (Real.pi : ℂ) / (2 * c) * c = Complex.I * (Real.pi / 2 : ℝ) := by
+      push_cast; field_simp
+    have e2 : conj (Complex.I * (Real.pi : ℂ) / (2 * c)) * conj c = -(Complex.I * (Real.pi / 2 : ℝ)) := by
+      rw [← map_mul, e1, map_mul, Complex.conj_I, Complex.conj_ofReal]; ring
+    rw [e1, e2, sub_neg_eq_add, ← two_mul, show (2 : ℂ) * (Complex.I * ((Real.pi / 2 : ℝ) : ℂ)) =
+      Real.pi * Complex.I by push_cast; ring, Complex.exp_pi_mul_I]
+  · rw [norm_div, norm_mul, norm_mul, Complex.norm_I, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos Real.pi_pos, Complex.norm_two, one_mul]
+
+theorem rr_eq_form {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+    [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] {P : M.Par} (p : KB.Pl P Wp Wq)
+    (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (j : ℕ) (hj : j ≤ P.r) (w : List C.Letter) (h : C.LPt)
+    (hh : D.IsLocPt h j) :
+    p.RR F j w h h = p.form j hj w (KB.slv p.T F j hj w h hh.2) (KB.slv p.T F j hj w h hh.2) := by
+  unfold KB.Pl.RR D.RRplace
+  rw [dite_eq_left ⟨hh, hh⟩, dite_eq_left hj]
+  rfl
+
+theorem bdd_of_tendsto {u : ℕ → ℂ} {x : ℂ} (hu : Tendsto u atTop (𝓝 x)) : ∃ B : ℝ, 0 ≤ B ∧ ∀ n, ‖u n‖ ≤ B := by
+  obtain ⟨B, hB⟩ := isBounded_iff_forall_norm_le.1 (Metric.isBounded_range_of_tendsto u hu)
+  exact ⟨max B 0, le_max_right _ _, fun n => (hB _ ⟨n, rfl⟩).trans (le_max_left _ _)⟩
+
+end Formalism.FourierDecayAlt.P.PBO
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLeIntegralFsv
+
+section
+
+@[expose] public section
+
+open MeasureTheory Real
+open scoped FourierTransform RealInnerProductSpace ComplexConjugate
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.PBO
+
+def isoQ : ℂ ≃ₗᵢ[ℝ] ℂ where
+  toFun s := conj (Complex.I * s)
+  invFun w := -Complex.I * conj w
+  map_add' a b := by simp [mul_add]
+  map_smul' c a := by
+    simp only [RingHom.id_apply, Complex.real_smul, map_mul, Complex.conj_ofReal]
+    ring
+  left_inv a := by
+    simp only [map_mul, Complex.conj_I, Complex.conj_conj]
+    ring_nf
+    simp
+  right_inv w := by
+    simp only [map_mul, map_neg, Complex.conj_I, Complex.conj_conj]
+    ring_nf
+    simp [Complex.I_sq]
+  norm_map' s := by simp
+
+theorem isoQ_apply (s : ℂ) : isoQ s = conj (Complex.I * s) := rfl
+
+theorem fsv_smul (s u z : ℂ) : P5.fsv s u * z = 𝐞 (-⟪u, (π⁻¹ : ℝ) • isoQ s⟫) • z := by
+  unfold P5.fsv
+  simp [Circle.smul_def, isoQ_apply]
+  left
+  rw [Real.fourierChar_apply]
+  congr 1
+  have hπ : π ≠ 0 := Real.pi_ne_zero
+  apply Complex.ext <;> simp <;> field_simp <;> ring
+
+theorem norm_le_integral_fsv (φ : ℂ → ℂ) (hφ : Continuous φ) (hi : MeasureTheory.Integrable φ)
+    (hΞ : MeasureTheory.Integrable (fun s : ℂ => ∫ t : ℂ, P5.fsv s t * φ t)) (t : ℂ) :
+    ‖φ t‖ ≤ ∫ s : ℂ, ‖∫ u : ℂ, P5.fsv s u * φ u‖ := by
+  have hc : (π⁻¹ : ℝ) ≠ 0 := inv_ne_zero Real.pi_ne_zero
+  have hL : ∀ s : ℂ, (∫ u : ℂ, P5.fsv s u * φ u) = 𝓕 φ ((π⁻¹ : ℝ) • isoQ s) := by
+    intro s
+    rw [fourier_eq]
+    exact integral_congr_ae (Filter.Eventually.of_forall fun u => fsv_smul s u (φ u))
+  have hmp : MeasurePreserving isoQ := isoQ.measurePreserving
+  have hme : MeasurableEmbedding isoQ := isoQ.toHomeomorph.measurableEmbedding
+  have hint1 : Integrable (fun s : ℂ => 𝓕 φ ((π⁻¹ : ℝ) • s)) := by
+    have h1 : Integrable ((fun s : ℂ => 𝓕 φ ((π⁻¹ : ℝ) • s)) ∘ isoQ) := by
+      have h2 := hΞ
+      simp_rw [hL] at h2
+      exact h2
+    exact (hmp.integrable_comp_emb hme).mp h1
+  have hint : Integrable (𝓕 φ) := by
+    first
+      | exact (integrable_comp_smul_iff volume (𝓕 φ) hc).mp hint1
+  have hinv : 𝓕⁻ (𝓕 φ) t = φ t := by
+    first
+      | exact hi.fourier_inversion hint hφ.continuousAt
+      | exact hi.fourierInv_fourier_eq hint hφ.continuousAt
+  have hb : ‖φ t‖ ≤ ∫ w : ℂ, ‖𝓕 φ w‖ := by
+    rw [← hinv]
+    first
+      | rw [fourierInv_eq]
+    refine (norm_integral_le_integral_norm _).trans (le_of_eq ?_)
+    congr 1
+    funext w
+    first
+      | exact Circle.norm_smul _ _
+  have e1 := hmp.integral_comp hme (fun s : ℂ => ‖𝓕 φ ((π⁻¹ : ℝ) • s)‖)
+  have e2 := Measure.integral_comp_smul (volume : Measure ℂ) (fun w : ℂ => ‖𝓕 φ w‖) (π⁻¹ : ℝ)
+  try dsimp only at e1
+  try dsimp only at e2
+  have heq : (∫ s : ℂ, ‖∫ u : ℂ, P5.fsv s u * φ u‖) =
+      |((π⁻¹ : ℝ) ^ 2)⁻¹| • ∫ w : ℂ, ‖𝓕 φ w‖ := by
+    simp_rw [hL]
+    rw [e1, e2, Complex.finrank_real_complex]
+  rw [heq, smul_eq_mul]
+  have h0 : 0 ≤ ∫ w : ℂ, ‖𝓕 φ w‖ := integral_nonneg fun _ => norm_nonneg _
+  have hπ : 1 ≤ |((π⁻¹ : ℝ) ^ 2)⁻¹| := by
+    rw [inv_pow, inv_inv, abs_of_pos (by positivity)]
+    nlinarith [Real.pi_gt_three]
+  nlinarith
+
+end Formalism.FourierDecayAlt.P.PBO
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.NormFsvSubOnePow
+
+section
 
 @[expose] public section
 
@@ -265,3 +460,6 @@ theorem decayUnif_of (hRH : KB.RadHead) (hHT : KB.HeadTop) (hWDF : WaveDiffForm)
       _ ≤ C := by rw [hCdef]; linarith only [hT10, hT8]
 
 end Formalism.FourierDecayAlt.P.PBO
+end
+end
+end

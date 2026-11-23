@@ -1,6 +1,6 @@
 module
 
-public import Formalism.CharacterColumnKernels.StatementBC
+public import Formalism.CharacterColumnKernels.StatementN
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,9 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,9 +39,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Formalism.CharacterColumnKernels.StatementBC
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace Formalism.NG
+
+def StatVccBaseChange : Prop :=
+  ∀ (O O' : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+    [CommRing O'] [IsDomain O'] [IsDiscreteValuationRing O'] [Algebra O O'] [Module.Free O O']
+    [Module.Finite O O'] (e : ℕ),
+    (∀ y : O, IsDiscreteValuationRing.addVal O' (algebraMap O O' y) =
+      e * IsDiscreteValuationRing.addVal O y) →
+    ∀ (X : Type*) (T : Subalgebra O (X → O)) (T' : Subalgebra O' (X → O')),
+      (T' : Set (X → O')) = Submodule.span O' ((fun f : X → O => algebraMap O O' ∘ f) '' (T : Set (X → O))) →
+    ∀ (Z : Set X) (x : X), vcc T' Z x = e * vcc T Z x
+
+end Formalism.NG
+end
+end
+end
+
+-- Source module: Formalism.CharacterColumnKernels.IdempotentNormalForms.MemCcIdealIffForall
+
+section
 
 @[expose] public section
 
@@ -161,3 +192,6 @@ theorem vccBaseChange : StatVccBaseChange := by
     exact mul_le_mul_of_nonneg_left (iInf₂_le (⟨g j, hg j⟩ : T) (hgZ j)) (zero_le)
 
 end Formalism.NG
+end
+end
+end

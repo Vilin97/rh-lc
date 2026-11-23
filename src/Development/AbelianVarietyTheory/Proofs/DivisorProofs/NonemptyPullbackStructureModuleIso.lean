@@ -6,16 +6,12 @@ public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.E
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsLinearMapMultilinearMapBaseChange
 import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsFiniteLengthOfIsArtinianRingAnnihilator
 import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RestrictPullbackIsoHomAppPullbackSections
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteSetDimDropClosed
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFlatQuasicoherentLocal
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteMapClosedFibre
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModuleLengthDisjointSupport
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PullbackTwistedSectionIso
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SupportPullbackEqPreimage
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Topology.KrullDimension
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.EventuallyExistsFiniteSubsetNonzeroLocus
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -50,8 +46,189 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.HdimEqZeroOfSubsingleton
+public import Mathlib.RingTheory.Length
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RestrictPullbackIsoHomAppPullbackSections
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+import Mathlib.Tactic.Linter.Style
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsQuasicoherentOfForallExistsAffine
+public import Mathlib.AlgebraicGeometry.Morphisms.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModuleLengthDisjointSupport
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PullbackTwistedSectionIso
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SupportPullbackEqPreimage
+import Mathlib.Algebra.Order.Star.Int
 import Std.Tactic.BVDecide.Normalize.Prop
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.EventuallyExistsFiniteSubsetNonzeroLocus
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteSetDimDropClosed
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open TopologicalSpace
+
+namespace GlobalTheory
+
+theorem exists_finite_topologicalKrullDim_inter_add_one_le {T : Type} [TopologicalSpace T]
+    [NoetherianSpace T] [QuasiSober T] (Z : Set T) (hZ : IsClosed Z) :
+    ∃ S : Set T, S.Finite ∧ ∀ C : Set T, IsClosed C → Disjoint S C →
+      topologicalKrullDim (Z ∩ C : Set T) + 1 ≤ topologicalKrullDim Z := by
+  obtain ⟨F, hF, hcl, hirr, rfl⟩ := NoetherianSpace.exists_finite_set_isClosed_irreducible hZ
+  choose g hg using fun t : F => QuasiSober.sober (hirr t.1 t.2) (hcl t.1 t.2)
+  have := hF.to_subtype
+  refine ⟨Set.range g, Set.finite_range g, fun C hC hd => ?_⟩
+  refine topologicalKrullDim_add_one_le (hZ.inter hC) hZ ?_
+  rintro x ⟨⟨t, ht, hxt⟩, -⟩
+  exact ⟨g ⟨t, ht⟩, ⟨t, ht, (hg ⟨t, ht⟩).mem⟩, fun h => Set.disjoint_left.1 hd ⟨_, rfl⟩ h.2,
+    (hg ⟨t, ht⟩).specializes hxt⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFlatQuasicoherentLocal
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
+open GlobalTheory GlobalTheory.QCoh
+
+noncomputable section
+
+namespace GlobalTheory
+
+theorem restrictGlobal_appTop_eq_appLE {X Y : Scheme.{0}} (f : Y ⟶ X) (V : X.Opens)
+    (a : Γ(X, ⊤)) :
+    restrictGlobal Y (f ⁻¹ᵁ V) (f.appTop a) = f.appLE V (f ⁻¹ᵁ V) le_rfl (restrictGlobal X V a) := by
+  have h : f.app V (restrictGlobal X V a) = restrictGlobal Y (f ⁻¹ᵁ V) (f.appTop a) :=
+    ConcreteCategory.congr_hom (f.naturality (homOfLE le_top : V ⟶ ⊤).op) _
+  rw [← h, Scheme.Hom.app_eq_appLE]
+
+theorem length_sectionsOn_pullback_of_free (O : Type) [CommRing O] {X Y : Scheme.{0}}
+    [Algebra O Γ(X, ⊤)] [Algebra O Γ(Y, ⊤)] (f : Y ⟶ X)
+    (hO : ∀ r : O, f.appTop (algebraMap O Γ(X, ⊤) r) = algebraMap O Γ(Y, ⊤) r)
+    (V : X.Opens) (n : ℕ) (hV : IsAffineOpen V) (hU : IsAffineOpen (f ⁻¹ᵁ V))
+    (hfree : letI := (f.app V).hom.toAlgebra; Module.Free Γ(X, V) Γ(Y, f ⁻¹ᵁ V) ∧
+      Module.Finite Γ(X, V) Γ(Y, f ⁻¹ᵁ V) ∧ Module.finrank Γ(X, V) Γ(Y, f ⁻¹ᵁ V) = n)
+    (G : X.Modules) [G.IsQuasicoherent] :
+    Module.length O (sectionsOn ((Scheme.Modules.pullback f).obj G) (f ⁻¹ᵁ V)) =
+      n * Module.length O (sectionsOn G V) := by
+  rw [Scheme.Hom.app_eq_appLE] at hfree
+  letI := appLEAlgebra f (le_refl (f ⁻¹ᵁ V))
+  letI := appLEModule f ((Scheme.Modules.pullback f).obj G) (le_refl (f ⁻¹ᵁ V))
+  haveI := appLE_isScalarTower f ((Scheme.Modules.pullback f).obj G) (le_refl (f ⁻¹ᵁ V))
+  obtain ⟨hF, hFin, hr⟩ := hfree
+  have hbc := isBaseChange_pullbackSections f G hU hV (le_refl (f ⁻¹ᵁ V))
+  let b := Module.Free.chooseBasis Γ(X, V) Γ(Y, f ⁻¹ᵁ V)
+  let ι := Module.Free.ChooseBasisIndex Γ(X, V) Γ(Y, f ⁻¹ᵁ V)
+  let E : Γ((Scheme.Modules.pullback f).obj G, f ⁻¹ᵁ V) ≃ₗ[Γ(X, V)] (ι → Γ(G, V)) :=
+    (hbc.equiv.restrictScalars Γ(X, V)).symm ≪≫ₗ
+      TensorProduct.congr b.equivFun (LinearEquiv.refl Γ(X, V) Γ(G, V)) ≪≫ₗ
+      TensorProduct.comm _ _ _ ≪≫ₗ TensorProduct.piScalarRight _ _ _ _
+  let A : sectionsOn ((Scheme.Modules.pullback f).obj G) (f ⁻¹ᵁ V) ≃+ (ι → sectionsOn G V) :=
+    (sectionsOn.toΓ _ _).trans (E.toAddEquiv.trans
+      (AddEquiv.piCongrRight fun _ ↦ (sectionsOn.toΓ G V).symm))
+  let Φ : sectionsOn ((Scheme.Modules.pullback f).obj G) (f ⁻¹ᵁ V) ≃ₗ[O]
+      (ι → sectionsOn G V) :=
+    A.toLinearEquiv fun r x ↦ by
+      funext i
+      apply (sectionsOn.toΓ G V).injective
+      change sectionsOn.toΓ G V ((sectionsOn.toΓ G V).symm
+          (E (sectionsOn.toΓ _ _ (r • x)) i)) =
+        sectionsOn.toΓ G V (r • (sectionsOn.toΓ G V).symm (E (sectionsOn.toΓ _ _ x) i))
+      rw [AddEquiv.apply_symm_apply, sectionsOn.toΓ_smul, sectionsOn.toΓ_smul,
+        AddEquiv.apply_symm_apply, ← hO, restrictGlobal_appTop_eq_appLE]
+      rw [← appLEModule_smul, E.map_smul]
+      rfl
+  rw [Φ.length_eq, Module.length_pi_of_fintype, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  rcases subsingleton_or_nontrivial Γ(X, V) with hA | hA
+  · haveI : Subsingleton Γ(G, V) := Module.subsingleton Γ(X, V) Γ(G, V)
+    haveI : Subsingleton (sectionsOn G V) := (sectionsOn.toΓ G V).toEquiv.subsingleton_congr.2 this
+    rw [Module.length_eq_zero_iff.2 this, mul_zero, mul_zero]
+  · rw [← hr, Module.finrank_eq_card_chooseBasisIndex]
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteMapClosedFibre
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
+open GlobalTheory GlobalTheory.QCoh
+
+namespace GlobalTheory
+
+
+set_option backward.isDefEq.respectTransparency.types false in
+theorem fibre_finite_isClosed_of_affine_finite {X Y : Scheme.{0}} (f : Y ⟶ X) (V : X.Opens)
+    (hV : IsAffineOpen V) (hU : IsAffineOpen (f ⁻¹ᵁ V))
+    (hfin : letI := (f.app V).hom.toAlgebra; Module.Finite Γ(X, V) Γ(Y, f ⁻¹ᵁ V))
+    (x : X) (hxV : x ∈ V) (hx : IsClosed ({x} : Set X)) :
+    (f.base ⁻¹' {x}).Finite ∧ ∀ y : Y, f.base y = x → IsClosed ({y} : Set Y) := by
+  haveI : IsAffine V.toScheme := hV
+  haveI : IsAffine (f ⁻¹ᵁ V).toScheme := hU
+  haveI hg : IsFinite (f ∣_ V) := by
+    rw [HasAffineProperty.iff_of_isAffine (P := @IsFinite)]
+    refine ⟨inferInstance, ?_⟩
+    have h1 : (f.app (V.ι ''ᵁ ⊤)).hom.Finite := by
+      rw [Scheme.Opens.ι_image_top]; exact hfin
+    have h2 : ∀ {A B : CommRingCat.{0}} (e : A ⟶ B) [IsIso e], e.hom.Finite := fun e _ =>
+      RingHom.Finite.of_surjective _ (ConcreteCategory.bijective_of_isIso e).2
+    rw [morphismRestrict_appTop]
+    exact (h2 _).comp h1
+  have hmemU : ∀ y : Y, f.base y = x → y ∈ f ⁻¹ᵁ V := fun y hy => by
+    show f.base y ∈ V
+    rw [hy]; exact hxV
+  have hres : ∀ (y : Y) (hy : f.base y = x),
+      (f ∣_ V) (⟨y, hmemU y hy⟩ : (f ⁻¹ᵁ V).toScheme) = (⟨x, hxV⟩ : V.toScheme) := by
+    intro y hy
+    exact Subtype.ext ((morphismRestrict_base_coe f V _).trans hy)
+  refine ⟨?_, ?_⟩
+  · refine (((f ∣_ V).finite_preimage_singleton (⟨x, hxV⟩ : V.toScheme)).image
+      (f ⁻¹ᵁ V).ι.base).subset ?_
+    intro y hy
+    exact ⟨⟨y, hmemU y hy⟩, hres y hy, rfl⟩
+  · intro y hy
+    rw [← closure_subset_iff_isClosed]
+    intro z hz
+    rw [← specializes_iff_mem_closure] at hz
+    have hfz : f.base z = x := by
+      have h1 : f.base y ⤳ f.base z := hz.map f.base.hom.continuous
+      rw [hy, specializes_iff_mem_closure, hx.closure_eq] at h1
+      exact h1
+    have hspec : (⟨y, hmemU y hy⟩ : (f ⁻¹ᵁ V).toScheme) ⤳ ⟨z, hmemU z hfz⟩ :=
+      (f ⁻¹ᵁ V).ι.isOpenEmbedding.isInducing.specializes_iff.1 hz
+    have hdisc := ((f ∣_ V).isDiscrete_preimage_singleton (⟨x, hxV⟩ : V.toScheme)).to_subtype
+    have hs2 : (⟨_, hres y hy⟩ : ((f ∣_ V) ⁻¹' {(⟨x, hxV⟩ : V.toScheme)} : Set _)) ⤳
+        ⟨_, hres z hfz⟩ :=
+      Topology.IsInducing.subtypeVal.specializes_iff.1 hspec
+    have := congrArg (fun p => (p.1 : (f ⁻¹ᵁ V).toScheme).1) hs2.eq
+    exact (Set.mem_singleton_iff.2 this.symm)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyPullbackStructureModuleIso
+
+section
 
 @[expose] public section
 
@@ -269,3 +446,6 @@ theorem interNum_pull_eq_mul (k : Type) [Field k] (X Y : Scheme.{0}) [IsIntegral
   exact h0
 
 end GlobalTheory.FieldProj
+end
+end
+end

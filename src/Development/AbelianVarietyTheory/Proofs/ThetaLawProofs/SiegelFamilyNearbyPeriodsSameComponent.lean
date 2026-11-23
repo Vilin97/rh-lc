@@ -8,25 +8,21 @@ public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsHolomor
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsLinearEquivLift
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelStructurePullback
 public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsLocalPeriodMatrix
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsNhdsSubsetImage
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRigidTranslatePrincipalPolarisationOrderTw
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSeparatingPairs
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSymmetricSqrtPrincipalSiegelFiniteEtaleStatement
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsTwoTorsionTranslateSameLambdaBundleStatement
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SameCompOfIsHolTo
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SiegelFamilyComplexPointEqOfSamePeriodMatrixStatement
-public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SqOfCalculus
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Topology.Instances.Matrix
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IsOpenPosDefOfContinuous
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.NotInjOnOfFderivEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -57,8 +53,181 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import ReciprocityTheory.AnalyticForms.AnalyticCharts.Osgood
+import Development.AbelianVarietyTheory.Definitions.AbelianSchemeLaws.FirstCohomologyVanishesSpecOfIsLocalRing
+import Development.AbelianVarietyTheory.Definitions.KeyFormula.GeomIntSelf
+import Development.AbelianVarietyTheory.Definitions.KeyFormula.KeyRuleOneOfKeyFormula
+import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.GoodClass
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRigidTranslatePrincipalPolarisationOrderTw
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.TopLePreimageOfValAtNeZero
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsHolPeriods
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.ExistsUniquePointOfRingHom
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSymmetricSqrtPrincipalSiegelFiniteEtaleStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsTwoTorsionTranslateSameLambdaBundleStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SameCompOfIsHolTo
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SiegelFamilyComplexPointEqOfSamePeriodMatrixStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SqOfCalculus
+import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCTools
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocal
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsNhdsSubsetImage
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj TensorProduct
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory.KeyPow GlobalTheory.KeyFam GlobalTheory.ZM GlobalTheory.AbLaw
+
+namespace GlobalTheory.SiegelOpen
+
+theorem image_mem_nhds_of_injOn {n : ℕ} {U : Set (Fin n → ℂ)} {f : (Fin n → ℂ) → (Fin n → ℂ)}
+    (hU : IsOpen U) (hf : DifferentiableOn ℂ f U) (hinj : Set.InjOn f U) {a : Fin n → ℂ}
+    (ha : a ∈ U) : f '' U ∈ nhds (f a) := by
+  have han : AnalyticAt ℂ f a := analyticAt_pi_iff.mpr fun i =>
+    ReciprocityTheory.AnForm.Osgood.osgood n U (fun x => f x i) hU (differentiableOn_pi.mp hf i) a ha
+  have hb := GlobalTheory.InjHol.bijective_fderiv_of_injOn n U f hU hf hinj a ha
+  have hm : Filter.map f (nhds a) = nhds (f a) :=
+    han.hasStrictFDerivAt.map_nhds_eq_of_surj (LinearMap.range_eq_top.mpr hb.2)
+  rw [← hm]
+  exact Filter.image_mem_map (hU.mem_nhds ha)
+
+theorem eq_of_out {J R : Type} {s t : Matrix J J R} (hs : s.IsSymm) (ht : t.IsSymm)
+    (h : ∀ z : Sym2 J, s z.out.1 z.out.2 = t z.out.1 z.out.2) : s = t := by
+  ext i j
+  have h1 := h s(i, j)
+  have h2 : s((s(i, j) : Sym2 J).out.1, (s(i, j) : Sym2 J).out.2) = s(i, j) :=
+    Quot.out_eq (s(i, j) : Sym2 J)
+  rcases Sym2.eq_iff.mp h2 with ⟨h3, h4⟩ | ⟨h3, h4⟩
+  · rwa [h3, h4] at h1
+  · rw [h3, h4] at h1
+    rw [← hs.apply i j, ← ht.apply i j]
+    exact h1
+
+theorem exists_nhds_subset_image :
+    ∀ (h : ℕ) (B : Set (Fin (h * (h + 1) / 2) → ℂ)) (τ : (Fin (h * (h + 1) / 2) → ℂ) → Matrix (Fin h) (Fin h) ℂ) (b₀ : Fin (h * (h + 1) / 2) → ℂ), IsOpen B → b₀ ∈ B → (∀ i j, DifferentiableOn ℂ (fun b => τ b i j) B) → (∀ b ∈ B, (τ b).IsSymm ∧ ((τ b).map Complex.im).PosDef) → Set.InjOn τ B → ∃ N ∈ nhds (τ b₀), ∀ t ∈ N, t.IsSymm → (t.map Complex.im).PosDef → ∃ b ∈ B, τ b = t := by
+  intro h B τ b₀ hB hb₀ hd hs hinj
+  let e : Sym2 (Fin h) ≃ Fin (h * (h + 1) / 2) := Fintype.equivFinOfCardEq (GlobalTheory.card_sym2_fin h)
+  let p : Matrix (Fin h) (Fin h) ℂ → (Fin (h * (h + 1) / 2) → ℂ) :=
+    fun t k => t (e.symm k).out.1 (e.symm k).out.2
+  have hpc : Continuous p := continuous_pi fun k => continuous_id.matrix_elem _ _
+  have hp : ∀ s t : Matrix (Fin h) (Fin h) ℂ, s.IsSymm → t.IsSymm → p s = p t → s = t := by
+    intro s t hs' ht' hst
+    refine eq_of_out hs' ht' fun z => ?_
+    have := congrFun hst (e z)
+    simpa only [p, Equiv.symm_apply_apply] using this
+  have key := image_mem_nhds_of_injOn (f := fun b => p (τ b)) hB
+    (differentiableOn_pi.mpr fun k => hd _ _)
+    (fun x hx y hy hxy => hinj hx hy (hp _ _ (hs x hx).1 (hs y hy).1 hxy)) hb₀
+  refine ⟨_, hpc.continuousAt.preimage_mem_nhds key, ?_⟩
+  rintro t ⟨b, hb, hbt⟩ ht -
+  exact ⟨b, hb, hp _ _ (hs b hb).1 ht hbt⟩
+
+end GlobalTheory.SiegelOpen
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSeparatingPairs
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open scoped CategoryTheory.Obj TensorProduct
+attribute [local instance] Over.cartesianMonoidalCategory
+open GlobalTheory.KeyPow GlobalTheory.KeyFam GlobalTheory.ZM GlobalTheory.AbLaw
+
+namespace GlobalTheory.EtaleLocInj
+
+theorem exists_separating_pairs {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (h : φ.Etale) :
+    ∃ s : Finset (S × S), ∑ p ∈ s, p.1 * p.2 = 1 ∧ ∀ e e' : S →+* ℂ, e.comp φ = e'.comp φ →
+      ∑ p ∈ s, e p.1 * e' p.2 ≠ 0 → e = e' := by
+  algebraize [φ]
+  obtain ⟨t, ht, h1⟩ := (Algebra.FormallyUnramified.iff_exists_tensorProduct (R := R) (S := S)).1 inferInstance
+  obtain ⟨s, rfl⟩ := TensorProduct.exists_finset t
+  refine ⟨s, ?_, fun e e' hee hne => ?_⟩
+
+  · simpa [map_sum] using h1
+  · letI : Algebra R ℂ := (e.comp φ).toAlgebra
+    let a : S →ₐ[R] ℂ := { e with commutes' := fun _ => rfl }
+    let a' : S →ₐ[R] ℂ := { e' with commutes' := fun r => (RingHom.congr_fun hee r).symm }
+    let F := Algebra.TensorProduct.lift a a' (fun _ _ => Commute.all _ _)
+    ext x
+    have h2 := congrArg F (ht x)
+
+    simp only [F, map_mul, map_sub, map_sum, Algebra.TensorProduct.lift_tmul, map_one, map_zero] at h2
+    rcases mul_eq_zero.1 h2 with h3 | h3
+    · have h4 := (sub_eq_zero.1 h3).symm
+      rw [_root_.one_mul, _root_.mul_one] at h4
+      exact h4
+    · exact (hne h3).elim
+
+theorem eq_of_valAtHom_eq {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U) (x x' : Sp ℂ ⟶ X)
+    (h : ⊤ ≤ x ⁻¹ᵁ U) (h' : ⊤ ≤ x' ⁻¹ᵁ U) (e : valAtHom x U h = valAtHom x' U h') : x = x' := by
+  rw [← AffinePointValues.specMap_appLE_fromSpec hU (R := CommRingCat.of ℂ) x h,
+    ← AffinePointValues.specMap_appLE_fromSpec hU (R := CommRingCat.of ℂ) x' h']
+  congr 2
+  ext1
+  exact e
+
+theorem exists_open_injOn :
+    ∀ (X Y : Scheme.{0}) (π : X ⟶ Y) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X)) (b₀ : Fin m → ℂ), Etale π → IsOpen B → b₀ ∈ B → IsHolTo B y → ∃ B' : Set (Fin m → ℂ), IsOpen B' ∧ b₀ ∈ B' ∧ B' ⊆ B ∧ ∀ b ∈ B', ∀ b' ∈ B', y b ≫ π = y b' ≫ π → y b = y b' := by
+  intro X Y π m B y b₀ hπ _ hb₀ hy
+  obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ := Y.isBasis_affineOpens.exists_subset_of_mem_open
+    (Set.mem_univ (π (y b₀ (default : PrimeSpectrum ℂ)))) isOpen_univ
+  obtain ⟨_, ⟨U, hU, rfl⟩, hxU, hUV⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open
+    (show y b₀ (default : PrimeSpectrum ℂ) ∈ ((π ⁻¹ᵁ V : X.Opens) : Set X) from hxV) (π ⁻¹ᵁ V).isOpen
+  have e : U ≤ π ⁻¹ᵁ V := hUV
+  obtain ⟨s, hs1, hs⟩ := exists_separating_pairs _ (π.etale_appLE hV hU e)
+  set C : Set (Fin m → ℂ) := {b ∈ B | ⊤ ≤ y b ⁻¹ᵁ U} with hC
+  have hCo : IsOpen C := (hy U 0).1
+  have h₀ : ⊤ ≤ y b₀ ⁻¹ᵁ U := (top_le_preimage_iff_mem _ _).2 hxU
+  have hb₀C : b₀ ∈ C := ⟨hb₀, h₀⟩
+  have hc : ∀ f : Γ(X, U), ContinuousAt (fun b => valAt' (y b) U f) b₀ := fun f =>
+    (hy U f).2.continuousOn.continuousAt (hCo.mem_nhds hb₀C)
+  let F : (Fin m → ℂ) × (Fin m → ℂ) → ℂ := fun q => ∑ p ∈ s, valAt' (y q.1) U p.1 * valAt' (y q.2) U p.2
+  have hF : ContinuousAt F (b₀, b₀) := by
+    refine tendsto_finsetSum _ fun p _ => ?_
+    exact ((hc p.1).comp_of_eq continuousAt_fst rfl).mul ((hc p.2).comp_of_eq continuousAt_snd rfl)
+  have hF0 : F (b₀, b₀) ≠ 0 := by
+    simp only [F, ← valAt'_mul, ← valAt'_sum, hs1, valAt'_one _ h₀]
+    exact one_ne_zero
+  obtain ⟨u, hu, v, hv, huv⟩ := mem_nhds_prod_iff.1 (hF.eventually_ne hF0)
+  obtain ⟨B', hB'sub, hB'o, hB'⟩ := mem_nhds_iff.1
+    (Filter.inter_mem (hCo.mem_nhds hb₀C) (Filter.inter_mem hu hv))
+  refine ⟨B', hB'o, hB', fun b hb => (hB'sub hb).1.1, fun b hb b' hb' hbb => ?_⟩
+  have h1 := (hB'sub hb).1.2
+  have h2 := (hB'sub hb').1.2
+  refine eq_of_valAtHom_eq hU _ _ h1 h2 (hs _ _ ?_ ?_)
+  · ext f
+    rw [RingHom.comp_apply, RingHom.comp_apply, ← valAt'_eq_valAtHom, ← valAt'_eq_valAtHom,
+      valAt'_appLE _ _ _ _ _ _ h1, valAt'_appLE _ _ _ _ _ _ h2, hbb]
+  · simp only [← valAt'_eq_valAtHom]
+    have h3 : F (b, b') ≠ 0 := huv (Set.mk_mem_prod (hB'sub hb).2.1 (hB'sub hb').2.2)
+    exact h3
+
+end GlobalTheory.EtaleLocInj
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.SiegelFamilyNearbyPeriodsSameComponent
+
+section
 
 @[expose] public section
 
@@ -232,3 +401,5 @@ theorem exists_nhds_sameComp : Out.Laws → Out.Laws2 → ThetaUnifAV → ∀ (h
     (LocLift.isHolTo_comp_hom (LocLift.isHolTo_mono hyh Metric.isOpen_ball hbB) π) b hb 0 (Metric.mem_ball_self hε)
 
 end GlobalTheory.SiegelNearby
+end
+end

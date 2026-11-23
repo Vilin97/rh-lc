@@ -1,6 +1,8 @@
 module
 
-public import ReciprocityTheory.AnalyticForms.RegularLocalRings.LogResStC
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.FinalTheorems
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,8 +42,158 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.TypeStar
-public import ReciprocityTheory.AnalyticForms.RegularLocalRings.WChartsA
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+
+-- Source module: ReciprocityTheory.AnalyticForms.RegularLocalRings.LogResStC
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+
+universe u
+
+namespace ReciprocityTheory.AnForm.R.FinalTheorems
+
+noncomputable abbrev reesChart {R : Type u} [CommRing R] {m : ℕ} (g : Fin m → R) (i : Fin m) :
+    Subalgebra R (Localization.Away (g i)) :=
+  Algebra.adjoin R (Set.range fun k => IsLocalization.mk' (Localization.Away (g i)) (g k)
+    (⟨g i, Submonoid.mem_powers _⟩ : Submonoid.powers (g i)))
+
+def ReesCharts {X W : Scheme.{u}} (π : W ⟶ X) (J : X.IdealSheafData) : Prop :=
+  ∀ U : X.affineOpens, ∃ (m : ℕ) (g : Fin m → Γ(X, U.1)),
+    Ideal.span (Set.range g) = J.ideal U ∧
+    ∃ V : Fin m → W.Opens, (⨆ i, V i) = π ⁻¹ᵁ U.1 ∧
+      ∀ i, ∃ e : (V i).toScheme ≅ Spec (CommRingCat.of (reesChart g i)),
+        e.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) (reesChart g i))) ≫ U.2.fromSpec =
+          (V i).ι ≫ π
+
+def LogResStC (X : Scheme.{u}) (B : TopologicalSpace.Closeds X) : Prop :=
+  ∃ (J : X.IdealSheafData) (W : Scheme.{u}) (π : W ⟶ X), (J.support : Set X) ⊆ B ∧ Blowup π J ∧
+    (∀ w : W, IsRegularLocalRing (W.presheaf.stalk w)) ∧
+    Snc (Scheme.IdealSheafData.vanishingIdeal
+      ⟨π.base ⁻¹' (B : Set X), IsClosed.preimage π.base.hom.continuous B.2⟩) ∧
+    (∀ x : X, SncAt (Scheme.IdealSheafData.vanishingIdeal B) x →
+      ∃ f ∈ nonZeroDivisors (X.presheaf.stalk x), stalkId J x = Ideal.span {f}) ∧
+    (∃ U : X.Opens, (U : Set X) = {x : X | SncAt (Scheme.IdealSheafData.vanishingIdeal B) x} ∧
+      IsIso (π ∣_ U)) ∧
+    IsSeparated π ∧ LocallyOfFiniteType π ∧ ReesCharts π J
+
+def GFLogStCR : Prop :=
+  ∀ (X : Scheme.{u}) [IsNoetherian X], QE X → IsReduced X → FFinRes X →
+    ∀ B : TopologicalSpace.Closeds X, Sing X ⊆ B → interior (B : Set X) = ∅ → LogResStC X B
+
+end ReciprocityTheory.AnForm.R.FinalTheorems
+end
+end
+
+-- Source module: ReciprocityTheory.AnalyticForms.RegularLocalRings.WChartsA
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.AnForm.R
+
+open MvPolynomial AlgebraicGeometry CategoryTheory
+
+noncomputable section
+
+theorem mem_nonZeroDivisors_of_bijective {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S)
+    (hb : Function.Bijective φ) {a : R} (ha : a ∈ nonZeroDivisors R) : φ a ∈ nonZeroDivisors S := by
+  have key : ∀ x : S, x * φ a = 0 → x = 0 := by
+    intro x hx
+    obtain ⟨z, rfl⟩ := hb.2 x
+    have hz : z * a = 0 := hb.1 (by rw [map_mul, map_zero]; exact hx)
+    rw [(mem_nonZeroDivisors_iff.mp ha).2 z hz, map_zero]
+  exact mem_nonZeroDivisors_iff.mpr ⟨fun x hx => key x (by rwa [mul_comm] at hx), key⟩
+
+theorem isAffineOpen_of_iso {W : Scheme.{0}} (V : W.Opens) {A : CommRingCat.{0}}
+    (e : V.toScheme ≅ Spec A) : IsAffineOpen V :=
+  IsAffine.of_isIso e.hom
+
+theorem sec_mem_nonZeroDivisors {W : Scheme.{0}} (V : W.Opens) {A : CommRingCat.{0}}
+    (e : V.toScheme ≅ Spec A) {a : A} (ha : a ∈ nonZeroDivisors A) :
+    V.topIso.hom (e.hom.appTop ((Scheme.ΓSpecIso A).inv a)) ∈ nonZeroDivisors Γ(W, V) := by
+  have : IsIso e.hom.appTop := inferInstanceAs (IsIso (e.hom.app ⊤))
+  have hb : Function.Bijective ((V.topIso.hom.hom).comp ((e.hom.appTop).hom.comp
+      (Scheme.ΓSpecIso A).inv.hom)) :=
+    (ConcreteCategory.bijective_of_isIso V.topIso.hom).comp
+      ((ConcreteCategory.bijective_of_isIso e.hom.appTop).comp
+        (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso A).inv))
+  exact mem_nonZeroDivisors_of_bijective _ hb ha
+
+theorem sec_algebraMap_of_iso {X W : Scheme.{0}} (π : W ⟶ X) (U : X.affineOpens) (V : W.Opens)
+    (hV : V ≤ π ⁻¹ᵁ U.1) (A : Type) [CommRing A] [Algebra Γ(X, U.1) A]
+    (e : V.toScheme ≅ Spec (.of A))
+    (he : e.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) A)) ≫ U.2.fromSpec = V.ι ≫ π)
+    (r : Γ(X, U.1)) :
+    V.topIso.hom (e.hom.appTop ((Scheme.ΓSpecIso (.of A)).inv (algebraMap _ A r))) = π.appLE _ V hV r := by
+  have hVa := isAffineOpen_of_iso V e
+  have h1 := IsAffineOpen.SpecMap_appLE_fromSpec π U.2 hVa hV
+  have : IsOpenImmersion U.2.fromSpec := IsAffineOpen.isOpenImmersion_fromSpec U.2
+  have : Mono U.2.fromSpec := IsOpenImmersion.mono _
+  have h3 : e.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) A)) =
+      hVa.isoSpec.hom ≫ Spec.map (π.appLE _ V hV) := by
+    rw [← cancel_mono U.2.fromSpec, Category.assoc, he, Category.assoc, h1, ← Category.assoc,
+      IsAffineOpen.isoSpec_hom_fromSpec]
+  have n1 : (Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) A))).appTop
+      ((Scheme.ΓSpecIso _).inv r) = (Scheme.ΓSpecIso (.of A)).inv (algebraMap _ A r) := by
+    rw [← CommRingCat.comp_apply, ← Scheme.ΓSpecIso_inv_naturality, CommRingCat.comp_apply]
+    rfl
+  have n2 : (Spec.map (π.appLE _ V hV)).appTop ((Scheme.ΓSpecIso _).inv r) =
+      (Scheme.ΓSpecIso _).inv (π.appLE _ V hV r) := by
+    rw [← CommRingCat.comp_apply, ← Scheme.ΓSpecIso_inv_naturality, CommRingCat.comp_apply]
+  have n3 : ∀ x : Γ(W, V), hVa.isoSpec.hom.appTop ((Scheme.ΓSpecIso _).inv x) = V.topIso.inv x := by
+    intro x
+    rw [IsAffineOpen.isoSpec_hom_appTop, CommRingCat.comp_apply, ← CommRingCat.comp_apply
+      (Scheme.ΓSpecIso _).inv, Iso.inv_hom_id, CommRingCat.id_apply]
+  calc V.topIso.hom (e.hom.appTop ((Scheme.ΓSpecIso (.of A)).inv (algebraMap _ A r)))
+      = V.topIso.hom ((e.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) A))).appTop
+          ((Scheme.ΓSpecIso _).inv r)) := by
+        rw [Scheme.Hom.comp_appTop, CommRingCat.comp_apply, n1]
+    _ = V.topIso.hom ((hVa.isoSpec.hom ≫ Spec.map (π.appLE _ V hV)).appTop
+          ((Scheme.ΓSpecIso _).inv r)) := by rw [h3]; rfl
+    _ = π.appLE _ V hV r := by
+        rw [Scheme.Hom.comp_appTop, CommRingCat.comp_apply]
+        erw [n2, n3]
+        rw [← CommRingCat.comp_apply, Iso.inv_hom_id, CommRingCat.id_apply]
+
+theorem germ_mem_nonZeroDivisors {W : Scheme.{0}} {V : W.Opens} (hV : IsAffineOpen V) {a : Γ(W, V)}
+    (ha : a ∈ nonZeroDivisors Γ(W, V)) (w : W) (hw : w ∈ V) :
+    W.presheaf.germ V w hw a ∈ nonZeroDivisors (W.presheaf.stalk w) := by
+  let := TopCat.Presheaf.algebra_section_stalk W.presheaf ⟨w, hw⟩
+  have := hV.isLocalization_stalk ⟨w, hw⟩
+  have h := IsLocalization.map_nonZeroDivisors_le (hV.primeIdealOf ⟨w, hw⟩).asIdeal.primeCompl
+    (W.presheaf.stalk w) (Submonoid.mem_map_of_mem (algebraMap Γ(W, V) (W.presheaf.stalk w)) ha)
+  exact h
+
+theorem res_mem_nonZeroDivisors {W : Scheme.{0}} {V O : W.Opens} (h : O ≤ V) (hV : IsAffineOpen V)
+    {a : Γ(W, V)} (ha : a ∈ nonZeroDivisors Γ(W, V)) :
+    W.presheaf.map (homOfLE h).op a ∈ nonZeroDivisors Γ(W, O) := by
+  have key : ∀ x : Γ(W, O), x * W.presheaf.map (homOfLE h).op a = 0 → x = 0 := by
+    intro x hx
+    refine TopCat.Presheaf.section_ext W.sheaf O x 0 (fun w hw => ?_)
+    have hg := germ_mem_nonZeroDivisors hV ha w (h hw)
+    have h1 : W.presheaf.germ O w hw x * W.presheaf.germ V w (h hw) a = 0 := by
+      rw [← W.presheaf.germ_res_apply (homOfLE h) w hw a, ← map_mul, hx, map_zero]
+    change W.presheaf.germ O w hw x = W.presheaf.germ O w hw 0
+    rw [(mem_nonZeroDivisors_iff.mp hg).2 _ h1, map_zero]
+  exact mem_nonZeroDivisors_iff.mpr ⟨fun x hx => key x (by rwa [mul_comm] at hx), key⟩
+
+end
+
+end ReciprocityTheory.AnForm.R
+end
+end
+
+-- Source module: ReciprocityTheory.AnalyticForms.RegularLocalRings.WChartsB
+
+section
 
 @[expose] public section
 
@@ -235,3 +386,5 @@ theorem inter_reesCharts' {X W : Scheme.{0}} (π : W ⟶ X) (J : X.IdealSheafDat
 end
 
 end ReciprocityTheory.AnForm.R
+end
+end

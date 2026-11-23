@@ -4,23 +4,27 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.GeometricFlagBases.PrimeLevelLocalization.PDatEx
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.PAdicHensel.PCjMem
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.AlgebraEquivSetup.PPerfCof
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPlace
+public import Mathlib.NumberTheory.NumberField.CMField
+import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -42,6 +46,48 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.PicardGroup
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPlace
+
+section
+
+@[expose] public section
+
+@[reducible] noncomputable def UpperTheory.Reformulated.B.ExistsPlace.Plc :
+    (E : Type) → [Field E] → Type :=
+    fun (E : Type) [Field E] ↦ IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers E)
+
+theorem UpperTheory.Reformulated.B.ExistsPlace.exists_place :
+    ∀ {E : Type} [inst : Field E] [inst_1 : NumberField E] [NumberField.IsCMField E] (q : ℕ),
+      Nat.Prime q → ∃ (w : UpperTheory.Reformulated.B.ExistsPlace.Plc E), (↑q : NumberField.RingOfIntegers E) ∈ w.asIdeal := by
+  intro E _ _ _ q hq
+  have hne : (q : NumberField.RingOfIntegers E) ≠ 0 := by
+    exact_mod_cast hq.ne_zero
+  have hnu : ¬ IsUnit (q : NumberField.RingOfIntegers E) := by
+    intro h
+    have h1 := h.map (Algebra.norm ℤ (S := NumberField.RingOfIntegers E))
+    have h2 : Algebra.norm ℤ (q : NumberField.RingOfIntegers E) =
+        (q : ℤ) ^ Module.finrank ℤ (NumberField.RingOfIntegers E) := by
+      have := Algebra.norm_algebraMap (R := ℤ) (S := NumberField.RingOfIntegers E) (q : ℤ)
+      simpa using this
+    rw [h2] at h1
+    have hpos : Module.finrank ℤ (NumberField.RingOfIntegers E) ≠ 0 := Module.finrank_pos.ne'
+    have h3 : IsUnit (q : ℤ) := (isUnit_pow_iff hpos).1 h1
+    exact hq.not_isUnit (Int.ofNat_isUnit.1 h3)
+  obtain ⟨M, hM, hqM⟩ := exists_max_ideal_of_mem_nonunits hnu
+  refine ⟨⟨M, hM.isPrime, ?_⟩, hqM⟩
+  intro h
+  rw [h] at hqM
+  exact hne (by simpa using hqM)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ScalarCommutation.AuxiliaryInertOddPrime
+
+section
 
 @[expose] public section
 
@@ -184,3 +230,5 @@ theorem UpperTheory.Gal.Spc.auxiliary_prime_holds :
       exact m'
   · obtain ⟨w, hw, -⟩ := hmk w₁ hw₁ hρ
     exact ⟨w, hw⟩
+end
+end

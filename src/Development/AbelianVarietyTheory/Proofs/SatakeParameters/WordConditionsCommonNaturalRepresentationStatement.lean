@@ -3,7 +3,9 @@ module
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HodgeTateJumpsAtModulesForSign
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThickLetterWordLatticeSurjectionHypotheses
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WordConditionsCommonNaturalRepresentation
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HodgeTateJumpsCoefficientExtensionStatement
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NotDvdCondN
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TwistedDualOrbitPageWordBoxStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,7 +42,117 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WordConditionsAtPlaceOfFrobeniusOrbitStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.OneLeScOfSizeData
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.HTW GlobalTheory.HTW.Rec Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.FrobeniusOrbits
+
+namespace GlobalTheory.HTW.Rec
+
+theorem one_le_Sc {D : D7} (L : SizeData₂ D) : (1 : ℝ) ≤ L.Sc := by
+  have hk := D.R.m_add_three_le_k
+  have hm := D.R.two_le_m
+  set τ := D.eTau.symm ⟨plc (1 : D.R.GG), plc_mem 1⟩
+  set P := D.hc τ
+  have h1 := P.u_gt_v ⟨1, by omega⟩
+  have h2 := P.v_gt_u ⟨0, by omega⟩
+  obtain ⟨z0, hz0⟩ := P.v_int ⟨0, by omega⟩
+  obtain ⟨z1, hz1⟩ := P.v_int ⟨1, by omega⟩
+  have c0 := (L.cloud_v τ ⟨0, by omega⟩).2
+  have c1 := (L.cloud_v τ ⟨1, by omega⟩).1
+  simp only at h1 h2
+  have hlt : P.v ⟨1, by omega⟩ < P.v ⟨0, by omega⟩ := lt_trans h1 h2
+  rw [hz0, hz1] at hlt
+  have hz : z1 < z0 := by exact_mod_cast hlt
+  have hz1' : (0 : ℝ) ≤ (z1 : ℝ) := by
+    have : (((P.v ⟨1, by omega⟩ : ℚ) : ℝ)) = (z1 : ℝ) := by rw [hz1]; push_cast; rfl
+    rw [← this]; exact c1
+  have hz0' : (z0 : ℝ) ≤ L.Sc := by
+    have : (((P.v ⟨0, by omega⟩ : ℚ) : ℝ)) = (z0 : ℝ) := by rw [hz0]; push_cast; rfl
+    rw [← this]; exact c0
+  have : (0 : ℤ) ≤ z1 := by exact_mod_cast hz1'
+  have : (1 : ℝ) ≤ (z0 : ℝ) := by exact_mod_cast (show (1 : ℤ) ≤ z0 by omega)
+  linarith
+
+theorem recWord_small_pos : ∀ {D : D7} (L : SizeData₂ D) (C : ℝ) (j : Fin D.R.m) (ε : ℤˣ) {n : ℕ}
+    (g : ZMod n → D.R.GG) (ψ : D.R.GG), Roomy L C → IsOrbit g ψ →
+    Small (recWord L j ε g) ∧ 1 ≤ (recWord L j ε g).S ∧ 1 ≤ (recWord L j ε g).η := by
+  intro D L C j ε n g ψ hR _
+  have hB := GlobalTheory.T.twistedDualOrbitPageWord_box L C j ε (1 : D.R.GG) (1 : D.R.GG) hR
+  obtain ⟨b1, w1, bw, bη, bS, hsz⟩ := hB
+  refine ⟨⟨b1, w1, bw, bη, bS, fun a => ?_⟩, ?_, ?_⟩
+  · have hB' := GlobalTheory.T.twistedDualOrbitPageWord_box L C j ε (g a) (1 : D.R.GG) hR
+    have h := hB'.2.2.2.2.2 (0 : ZMod (orderOf (1 : D.R.GG)))
+    simp only [pageWord, letter, one_pow, mul_one] at h
+    show etaHat L < (szT (hcAt D (g a)) j (pos ε (g a))).toNat
+    exact Int.lt_toNat.mpr h
+  · show 1 ≤ sHat L
+    unfold sHat
+    exact Nat.le_floor (by exact_mod_cast one_le_Sc L)
+  · show 1 ≤ etaHat L
+    unfold etaHat; omega
+
+end GlobalTheory.HTW.Rec
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.WordConditionsCommonNaturalRepresentation
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.HTW GlobalTheory.HTW.Rec Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.FrobeniusOrbits
+
+namespace GlobalTheory.HTW.Rec
+
+theorem lowCount_eq_smallHodgeTateJumpCountOverLetter {l : ℕ} [Fact l.Prime] {P : LocPrime l} {K LL : FinExt l} (W : Wach P K LL)
+    [Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1)] (T : Lat K LL) (a : ZMod (Module.finrank ℚ_[l] ↥(K0 K))) (η : ℕ) :
+    TruncatedSeriesCountingBounds.lowCount W T a η = lowCount W T a η := by
+  unfold TruncatedSeriesCountingBounds.lowCount lowCount
+  congr 1
+
+theorem recS_wordBase_natural : ∀ {D : D7} (L : SizeData₂ D) (C₀ : ℝ) (HW : HWOf D.loc) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i) (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i)) (Cx : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (hG : Good (D.nbr i w hw).Kw 1 Cx.LL), Roomy L C₀ → LocalSituation.adm7 D → (∀ i, TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL (D := D) i) → LJ.ConclusionJa D → RecS.PtIn i r ρ π → D.nd.l i ∉ D.host.small → D.nd.l i ≠ D.host.q → D.nd.l i ≠ D.host.d → ∃ (ε : ℤˣ) (g : ZMod (RecS.nLet i w hw) → D.R.GG), IsOrbit g (DV.frobG D (D.nd.l i))⁻¹ ∧ RecS.WordBase L HW i r ρ π w hw Cx hG (recWord L (liftIdx D i) ε g) := by
+  intro D L C₀ HW i r ρ π w hw Cx hG hR h7 hF hJ hP h2 hq hd
+  obtain ⟨ε, κ, hin⟩ := GlobalTheory.T.hodgeTateJumps_coefExt_of_roomy_adm7 L C₀ i r ρ π w hw Cx hR h7 hF hJ hP
+  let C : Enl D i w hw := ⟨Cx.LL, Cx.inc⟩
+  obtain ⟨g, hg, hwb⟩ := GlobalTheory.T.wordConditions_at_place_of_frobeniusOrbit L C₀ HW i w hw C hG r ρ π ε κ hR h7 h2 hq hd hin
+  refine ⟨ε, g, hg, ?_⟩
+  have hsm := GlobalTheory.HTW.Rec.recWord_small_pos L C₀ (liftIdx D i) ε g _ hR hg
+  obtain ⟨hdeg, hloc, hnum⟩ := hwb
+  refine
+    { unram := hloc.unram
+      deg := hdeg
+      split := hloc.split
+      t1 := fun T h => ?_
+      t2 := fun T h => ?_
+      t2win := fun T h => ?_
+      num := hnum
+      small := hsm }
+  · obtain ⟨h1, h2, h3⟩ := hloc.t1 T h
+    exact ⟨h1, h2, h3⟩
+  · obtain ⟨⟨h1, _, _⟩, h4⟩ := hloc.t2 T h
+    refine ⟨h1, fun ft a => ?_⟩
+    rw [lowCount_eq_smallHodgeTateJumpCountOverLetter]
+    exact h4 ft a
+  · obtain ⟨⟨_, h2, h3⟩, _⟩ := hloc.t2 T h
+    exact ⟨h2, h3⟩
+
+end GlobalTheory.HTW.Rec
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.WordConditionsCommonNaturalRepresentationStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +160,5 @@ open NumberField IsDedekindDomain GlobalTheory.HTW GlobalTheory.HTW.Rec Formalis
 
 theorem _root_.GlobalTheory.T.wordConditions_common_natural_representation : ∀ {D : D7} (L : SizeData₂ D) (C₀ : ℝ) (HW : HWOf D.loc) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i) (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i)) (Cx : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (hG : Good (D.nbr i w hw).Kw 1 Cx.LL), Roomy L C₀ → LocalSituation.adm7 D → (∀ i, TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL (D := D) i) → LJ.ConclusionJa D → RecS.PtIn i r ρ π → D.nd.l i ∉ D.host.small → D.nd.l i ≠ D.host.q → D.nd.l i ≠ D.host.d → ∃ (ε : ℤˣ) (g : ZMod (RecS.nLet i w hw) → D.R.GG), IsOrbit g (DV.frobG D (D.nd.l i))⁻¹ ∧ RecS.WordBase L HW i r ρ π w hw Cx hG (recWord L (liftIdx D i) ε g) := by
   first | exact @GlobalTheory.HTW.Rec.recS_wordBase_natural | exact GlobalTheory.HTW.Rec.recS_wordBase_natural | (intros; apply GlobalTheory.HTW.Rec.recS_wordBase_natural <;> assumption)
+end
+end

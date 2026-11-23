@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.SemistableReduction.LatSemiSt
-public import Lemmata.GeneralBFactSecond.Imports
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,15 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,9 +40,67 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.GeneralBFactSecond.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_second
+
+theorem goal1 :
+  ∀ {K : Type} [inst : Field.{0} K] [NumberField.{0} K] {r : Nat}
+  (L : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} K) (Fin r → K)),
+  Eq.{1} (Submodule.span.{0, 0} K (SetLike.coe.{0, 0} L)) Top.top.{0} →
+    ∀ (x : Fin r → K),
+      Exists.{1} fun (d : NumberField.RingOfIntegers.{0} K) ↦
+        And (Ne.{1} d 0) (Membership.mem.{0, 0} L (HSMul.hSMul.{0, 0, 0} d x)) := by
+  intro K _ _ r L hL x
+  have hx : x ∈ Submodule.span K (L : Set (Fin r → K)) := by rw [hL]; trivial
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact ⟨1, one_ne_zero, by rw [one_smul]; exact hy⟩
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact L.zero_mem⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨d1, hd1, h1⟩ := hy
+    obtain ⟨d2, hd2, h2⟩ := hz
+    refine ⟨d1 * d2, mul_ne_zero hd1 hd2, ?_⟩
+    rw [smul_add]
+    refine L.add_mem ?_ ?_
+    · rw [mul_comm, mul_smul]; exact L.smul_mem d2 h1
+    · rw [mul_smul]; exact L.smul_mem d1 h2
+  | smul a y _ hy =>
+    obtain ⟨d, hd, h⟩ := hy
+    obtain ⟨⟨b, c⟩, hbc⟩ := IsLocalization.surj (nonZeroDivisors (NumberField.RingOfIntegers K)) a
+    refine ⟨(c : NumberField.RingOfIntegers K) * d, mul_ne_zero (nonZeroDivisors.coe_ne_zero c) hd, ?_⟩
+    have e : ((c : NumberField.RingOfIntegers K) * d) • (a • y) = b • (d • y) := by
+      calc ((c : NumberField.RingOfIntegers K) * d) • (a • y)
+          = (c : NumberField.RingOfIntegers K) • (a • (d • y)) := by rw [mul_smul, smul_comm d a y]
+        _ = (algebraMap (NumberField.RingOfIntegers K) K c) • (a • (d • y)) := (algebraMap_smul K _ _).symm
+        _ = (a * algebraMap (NumberField.RingOfIntegers K) K c) • (d • y) := by rw [smul_smul, mul_comm]
+        _ = b • (d • y) := by rw [hbc, algebraMap_smul]
+    rw [e]
+    exact L.smul_mem b h
+
+end Bl.general_b_fact_second
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.SemiContractC
+
+section
 
 @[expose] public section
 
@@ -210,3 +259,5 @@ theorem sc_index {K : Type} [Field K] [NumberField K] {r k m : ℕ}
     exact hspanc hz
 
 end ReciprocityTheory.MultiplicativeHeights
+end
+end

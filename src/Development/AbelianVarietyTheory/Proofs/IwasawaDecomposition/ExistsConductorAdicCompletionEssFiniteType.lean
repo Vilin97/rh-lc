@@ -3,12 +3,8 @@ module
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import Mathlib.RingTheory.EssentialFiniteness
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ConductorProdFstStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiscrMulMemOfIsIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsRingEquivAdicCompletionLocalizationProdStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsRegularLocalRingAdicCompletionStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormalLocalIsLocalisationOfFiniteOverPolynomialAStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomainStatement
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,12 +23,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Polynomial
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,7 +44,221 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.RingTheory.Flat.Basic
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiscrMulMemOfIsIntegral
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsRingEquivAdicCompletionLocalizationProd
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsRegularLocalRingAdicCompletion
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormalLocalIsLocalisationOfFiniteOverPolynomialAStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomain
+import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Polynomial
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ConductorProdFst
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial
+
+namespace GlobalTheory
+
+theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing S]
+    (e : S ≃+* R × S') (d : S)
+    (hd : ∀ c : FractionRing S, IsIntegral S c →
+      ∃ s : S, algebraMap S (FractionRing S) s = algebraMap S (FractionRing S) d * c) :
+    ∀ c : FractionRing R, IsIntegral R c →
+      ∃ s : R, algebraMap R (FractionRing R) s = algebraMap R (FractionRing R) (e d).1 * c := by
+  intro c hc
+  let g : S →+* FractionRing R × FractionRing S' :=
+    (RingHom.prodMap (algebraMap R (FractionRing R)) (algebraMap S' (FractionRing S'))).comp
+      e.toRingHom
+  have hgx : ∀ x : S, g x = (algebraMap R (FractionRing R) (e x).1,
+      algebraMap S' (FractionRing S') (e x).2) := fun x => rfl
+  have hg : ∀ y : nonZeroDivisors S, IsUnit (g y) := by
+    intro y
+    rw [hgx, Prod.isUnit_iff]
+    have h1 : (e y).1 ∈ nonZeroDivisors R := by
+      rw [mem_nonZeroDivisors_iff_right]
+      intro z hz
+      have h0 : e.symm (z, 0) * (y : S) = 0 := by
+        apply e.injective
+        rw [map_mul, RingEquiv.apply_symm_apply, map_zero]
+        ext <;> simp [hz]
+      have := (mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0
+      have := congrArg (fun w => (e w).1) this
+      simpa using this
+    have h2 : (e y).2 ∈ nonZeroDivisors S' := by
+      rw [mem_nonZeroDivisors_iff_right]
+      intro z hz
+      have h0 : e.symm (0, z) * (y : S) = 0 := by
+        apply e.injective
+        rw [map_mul, RingEquiv.apply_symm_apply, map_zero]
+        ext <;> simp [hz]
+      have := (mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0
+      have := congrArg (fun w => (e w).2) this
+      simpa using this
+    exact ⟨IsLocalization.map_units (FractionRing R) (⟨_, h1⟩ : nonZeroDivisors R),
+      IsLocalization.map_units (FractionRing S') (⟨_, h2⟩ : nonZeroDivisors S')⟩
+  let Θ : FractionRing S →+* FractionRing R × FractionRing S' := IsLocalization.lift hg
+  have hΘ : ∀ x : S, Θ (algebraMap S (FractionRing S) x) = g x := fun x =>
+    IsLocalization.lift_eq hg x
+  have hΘinj : Function.Injective Θ := by
+    rw [IsLocalization.lift_injective_iff]
+    intro x y
+    constructor
+    · intro h; rw [(IsFractionRing.injective S (FractionRing S)) h]
+    · intro h
+      have h' : e x = e y := by
+        rw [hgx, hgx] at h
+        ext
+        · exact IsFractionRing.injective R (FractionRing R) (congrArg Prod.fst h)
+        · exact IsFractionRing.injective S' (FractionRing S') (congrArg Prod.snd h)
+      rw [e.injective h']
+
+  obtain ⟨⟨a, b⟩, rfl⟩ := IsLocalization.mk'_surjective (nonZeroDivisors R) c
+  have hb' : e.symm ((b : R), (1 : S')) ∈ nonZeroDivisors S := by
+    rw [mem_nonZeroDivisors_iff_right]
+    intro z hz
+    have hz' := congrArg e hz
+    rw [map_mul, RingEquiv.apply_symm_apply, map_zero] at hz'
+    have h1 : (e z).1 * b = 0 := congrArg Prod.fst hz'
+    have h2 : (e z).2 * 1 = 0 := congrArg Prod.snd hz'
+    rw [mul_right_mem_nonZeroDivisors_eq_zero_iff b.2] at h1
+    rw [mul_one] at h2
+    apply e.injective
+    rw [map_zero]
+    ext <;> simp [h1, h2]
+  set c := IsLocalization.mk' (FractionRing R) a b with hcdef
+  let b' : nonZeroDivisors S := ⟨_, hb'⟩
+  let c' : FractionRing S := IsLocalization.mk' (FractionRing S) (e.symm (a, 0)) b'
+  have hΘc : Θ c' = (c, 0) := by
+    have hs := IsLocalization.mk'_spec (FractionRing S) (e.symm (a, 0)) b'
+    have hs2 := congrArg Θ hs
+    rw [map_mul, hΘ, hΘ] at hs2
+    have hu := hg b'
+    have hcs := IsLocalization.mk'_spec (FractionRing R) a b
+    rw [← hu.mul_left_inj, hs2]
+    rw [hgx, hgx]
+    simp only [b', RingEquiv.apply_symm_apply, Prod.mk_mul_mk, map_zero, map_one, mul_one,
+      zero_mul]
+    rw [hcs]
+  have hf : Function.Surjective ((RingHom.fst R S').comp e.toRingHom) := by
+    intro r
+    exact ⟨e.symm (r, 0), by simp⟩
+  have hc' : IsIntegral S c' := by
+    obtain ⟨p, hpm, hp⟩ := hc
+    obtain ⟨q, hqmap, -, hqm⟩ := lifts_and_natDegree_eq_and_monic
+      (f := (RingHom.fst R S').comp e.toRingHom) (p := p)
+      ((lifts_iff_coeff_lifts p).mpr (fun n => hf _)) hpm
+    refine ⟨X * q, monic_X.mul hqm, ?_⟩
+    apply hΘinj
+    rw [Polynomial.hom_eval₂, map_zero, hΘc, eval₂_mul, eval₂_X]
+    have hfst : (RingHom.fst (FractionRing R) (FractionRing S')).comp
+        (Θ.comp (algebraMap S (FractionRing S))) =
+        (algebraMap R (FractionRing R)).comp ((RingHom.fst R S').comp e.toRingHom) := by
+      ext x
+      simp [hΘ, hgx]
+    have h1 : (eval₂ (Θ.comp (algebraMap S (FractionRing S))) (c, 0) q).1 = 0 := by
+      have := Polynomial.hom_eval₂ q (Θ.comp (algebraMap S (FractionRing S)))
+        (RingHom.fst (FractionRing R) (FractionRing S')) (c, 0)
+      simp only [RingHom.coe_fst] at this
+      rw [this, hfst, ← eval₂_map, hqmap]
+      exact hp
+    ext
+    · simp [h1]
+    · simp
+  obtain ⟨s, hs⟩ := hd c' hc'
+  refine ⟨(e s).1, ?_⟩
+  have h := congrArg (fun z => (Θ z).1) hs
+  simp only [map_mul, hΘ, hΘc, hgx, Prod.fst_mul] at h
+  exact h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ConductorProdFstStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.exists_mul_fst_eq_of_integral_of_conductor : ∀ (R S' S : Type) [CommRing R] [CommRing S'] [CommRing S] (e : S ≃+* R × S') (d : S), (∀ c : FractionRing S, IsIntegral S c → ∃ s : S, algebraMap S (FractionRing S) s = algebraMap S (FractionRing S) d * c) → ∀ c : FractionRing R, IsIntegral R c → ∃ s : R, algebraMap R (FractionRing R) s = algebraMap R (FractionRing R) (e d).1 * c := by
+  first | exact @GlobalTheory.conductor_prod_fst | exact GlobalTheory.conductor_prod_fst | (intros; apply GlobalTheory.conductor_prod_fst <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiscrMulMemOfIsIntegralStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_ne_zero_mul_integral_eq_tensor : ∀ (T U C : Type) [CommRing T] [IsDomain T] [IsIntegrallyClosed T] [CharZero T] [CommRing U] [IsDomain U] [IsIntegrallyClosed U] [Algebra T U] [Module.Flat T U] [CommRing C] [IsDomain C] [Algebra T C] [Module.Finite T C], Function.Injective (algebraMap T U) → Function.Injective (algebraMap T C) → ∃ d : T, d ≠ 0 ∧ ∀ c : FractionRing (U ⊗[T] C), IsIntegral (U ⊗[T] C) c → ∃ s : (U ⊗[T] C), algebraMap (U ⊗[T] C) (FractionRing (U ⊗[T] C)) s = algebraMap (U ⊗[T] C) (FractionRing (U ⊗[T] C)) (algebraMap T (U ⊗[T] C) d) * c := by
+  first | exact @GlobalTheory.DiscConductor.discr_mul_mem_of_isIntegral | exact GlobalTheory.DiscConductor.discr_mul_mem_of_isIntegral | (intros; apply GlobalTheory.DiscConductor.discr_mul_mem_of_isIntegral <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsRingEquivAdicCompletionLocalizationProdStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_ringEquiv_adicCompletion_localization_prod : ∀ (T C A : Type) [CommRing T] [IsLocalRing T] [IsNoetherianRing T] [CommRing C] [Algebra T C] [Module.Finite T C] [CommRing A] [IsLocalRing A] [Algebra C A] (𝔫 : Ideal C) [𝔫.IsPrime] [IsLocalization.AtPrime A 𝔫], 𝔫.comap (algebraMap T C) = maximalIdeal T → ∃ (S' : Type) (_ : CommRing S') (e : (AdicCompletion (maximalIdeal T) T ⊗[T] C) ≃+* (AdicCompletion (maximalIdeal A) A × S')), ∀ c : C, (e ((1 : AdicCompletion (maximalIdeal T) T) ⊗ₜ[T] c)).1 = algebraMap A (AdicCompletion (maximalIdeal A) A) (algebraMap C A c) := by
+  first | exact @GlobalTheory.CompletionFactor.exists_ringEquiv_completion_prod | exact GlobalTheory.CompletionFactor.exists_ringEquiv_completion_prod | (intros; apply GlobalTheory.CompletionFactor.exists_ringEquiv_completion_prod <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsRegularLocalRingAdicCompletionStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.isRegularLocalRing_adicCompletion' : ∀ (T : Type) [CommRing T] [IsRegularLocalRing T], IsRegularLocalRing (AdicCompletion (maximalIdeal T) T) := by
+  first | exact @GlobalTheory.RegularCompletion.isRegularLocalRing_adicCompletion | exact GlobalTheory.RegularCompletion.isRegularLocalRing_adicCompletion | (intros; apply GlobalTheory.RegularCompletion.isRegularLocalRing_adicCompletion <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomainStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+theorem _root_.GlobalTheory.T.regular_local_ring_normal_domain : ∀ (T : Type) [CommRing T] [IsRegularLocalRing T], IsDomain T ∧ IsIntegrallyClosed T := by
+  first | exact @GlobalTheory.isDomain_and_isIntegrallyClosed_of_isRegularLocalRing | exact GlobalTheory.isDomain_and_isIntegrallyClosed_of_isRegularLocalRing | (intros; apply GlobalTheory.isDomain_and_isIntegrallyClosed_of_isRegularLocalRing <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConductorAdicCompletionEssFiniteType
+
+section
 
 @[expose] public section
 
@@ -171,3 +376,5 @@ theorem exists_conductor_adicCompletion_of_essFiniteType : ∀ (A : Type) [CommR
     exact ⟨s, by rw [hs, hed]⟩
 
 end GlobalTheory
+end
+end

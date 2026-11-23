@@ -41,7 +41,14 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantTheorems.DivPowInteg
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DivPowInteg
+import Mathlib.Data.Nat.Choose.Multinomial
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.DividedPowerIntegrals.GenPow
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.WickFormula.GenVan
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.DividedPowerIntegrals.GenDefs
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantTheorems.WickFormula
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.GaugeBilinearTermEqNegDoubleSum
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.GaugeTrans
@@ -49,6 +56,280 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscrim
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.SCWick
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.SecondOrderIterateEqZero
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.LiftXHasSubst
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.DividedPowerIntegrals.GenVan
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace PI.DivPowInteg.Gen
+
+section
+variable {K σ ι : Type} [CommRing K] [Fintype ι]
+
+noncomputable def lowDeg (f : ι → σ) (t : ℕ) : Submodule K (MvPolynomial σ K) :=
+  restrictSupport K {m | ∑ i, m (f i) < t}
+
+theorem mem_lowDeg {f : ι → σ} {t : ℕ} {R : MvPolynomial σ K} :
+    R ∈ lowDeg f t ↔ ∀ m ∈ R.support, ∑ i, m (f i) < t := by
+  unfold lowDeg
+  rw [mem_restrictSupport_iff]
+  exact ⟨fun h m hm => h (Finset.mem_coe.mpr hm), fun h m hm => h m (Finset.mem_coe.mp hm)⟩
+
+theorem eq_zero_of_mem_lowDeg_zero {f : ι → σ} {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f 0) : R = 0 := by
+  rw [mem_lowDeg] at h
+  by_contra hR
+  obtain ⟨m, hm⟩ := Finset.nonempty_of_ne_empty (mt MvPolynomial.support_eq_empty.mp hR)
+  exact absurd (h m hm) (Nat.not_lt_zero _)
+
+theorem pderiv_mem_lowDeg {f : ι → σ} {t : ℕ} (k : σ) {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f t) : pderiv k R ∈ lowDeg f t := by
+  rw [mem_lowDeg] at h
+
+  rw [R.as_sum, map_sum]
+  refine Submodule.sum_mem _ (fun m hm => ?_)
+  rw [pderiv_monomial, mem_lowDeg]
+  intro m' hm'
+  rw [Finset.mem_singleton.mp (support_monomial_subset hm')]
+  calc ∑ i, (m - Finsupp.single k 1 : σ →₀ ℕ) (f i) ≤ ∑ i, m (f i) :=
+        Finset.sum_le_sum (fun i _ => by rw [Finsupp.tsub_apply]; exact Nat.sub_le _ _)
+    _ < t := h m hm
+
+theorem pderiv_mem_lowDeg_of_succ {f : ι → σ} {t : ℕ} (i : ι) {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f (t + 1)) : pderiv (f i) R ∈ lowDeg f t := by
+  apply PI.WickFormula.Gen.pderiv_mem_lowDeg_of_succ <;> assumption
+
+theorem pow_apply_eq_zero_of_lowDeg (D : Module.End K (MvPolynomial σ K)) (f : ι → σ)
+    (hD : ∀ t R, R ∈ lowDeg f (t + 1) → D R ∈ lowDeg f t) :
+    ∀ n R, R ∈ lowDeg f n → (D ^ n) R = 0 := by
+  intro n
+  induction n with
+  | zero =>
+    intro R hR
+    rw [pow_zero]
+    exact eq_zero_of_mem_lowDeg_zero hR
+  | succ n ih =>
+    intro R hR
+    rw [pow_succ, Module.End.mul_apply]
+    exact ih _ (hD n R hR)
+
+end
+
+section
+variable {K I J : Type} [CommRing K] [Fintype I] [Fintype J]
+
+theorem gdelta_apply (κ : I → J → K) (R : MvPolynomial (I ⊕ J) K) :
+    gdelta κ R = ∑ i, ∑ j, κ i j • pderiv (Sum.inl i) (pderiv (Sum.inr j) R) := by
+  simp [gdelta, LinearMap.sum_apply]
+
+theorem gdelta_mem_lowDeg_inl (κ : I → J → K) {t : ℕ} {R : MvPolynomial (I ⊕ J) K}
+    (h : R ∈ lowDeg (Sum.inl : I → I ⊕ J) (t + 1)) :
+    gdelta κ R ∈ lowDeg (Sum.inl : I → I ⊕ J) t := by
+  rw [gdelta_apply]
+  refine Submodule.sum_mem _ (fun i _ => Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ ?_))
+  exact pderiv_mem_lowDeg_of_succ (f := Sum.inl) i (pderiv_mem_lowDeg (Sum.inr j) h)
+
+theorem gdelta_mem_lowDeg_inr (κ : I → J → K) {t : ℕ} {R : MvPolynomial (I ⊕ J) K}
+    (h : R ∈ lowDeg (Sum.inr : J → I ⊕ J) (t + 1)) :
+    gdelta κ R ∈ lowDeg (Sum.inr : J → I ⊕ J) t := by
+  rw [gdelta_apply]
+  refine Submodule.sum_mem _ (fun i _ => Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ ?_))
+  exact pderiv_mem_lowDeg (Sum.inl i) (pderiv_mem_lowDeg_of_succ (f := Sum.inr) j h)
+
+end
+
+theorem vanL_holds : VanL := by
+  intro K I J _ _ _ κ R n h
+  exact pow_apply_eq_zero_of_lowDeg (gdelta κ) Sum.inl (fun t R hR => gdelta_mem_lowDeg_inl κ hR) n R
+    (mem_lowDeg.mpr h)
+
+theorem vanR_holds : VanR := by
+  intro K I J _ _ _ κ R n h
+  exact pow_apply_eq_zero_of_lowDeg (gdelta κ) Sum.inr (fun t R hR => gdelta_mem_lowDeg_inr κ hR) n R
+    (mem_lowDeg.mpr h)
+
+end PI.DivPowInteg.Gen
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.DividedPowerIntegrals.NatMulFactorialBound
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace PI.DivPowInteg.Top
+
+open PI.DivPowInteg.Gen
+
+section
+
+variable {A K I J : Type} [CommRing A] [CommRing K] [Algebra ℚ K] [Algebra A K]
+  [Fintype I] [Fintype J]
+
+noncomputable def dpow (κ : I → J → K) (n : ℕ) (R : MvPolynomial (I ⊕ J) K) :
+    MvPolynomial (I ⊕ J) K :=
+  ((n.factorial : ℚ)⁻¹) • (gdelta κ ^ n) R
+
+theorem dpow_zero (κ : I → J → K) (R : MvPolynomial (I ⊕ J) K) : dpow κ 0 R = R := by
+  simp [dpow]
+
+theorem dpow_add (κ : I → J → K) (n : ℕ) (p q : MvPolynomial (I ⊕ J) K) :
+    dpow κ n (p + q) = dpow κ n p + dpow κ n q := by
+  simp [dpow, map_add (f := _), smul_add]
+
+theorem gdelta_C (κ : I → J → K) (c : K) : gdelta κ (C c) = 0 := by
+  simp [gdelta]
+
+theorem dpow_C_succ (κ : I → J → K) (k : ℕ) (c : K) : dpow κ (k + 1) (C c) = 0 := by
+  rw [dpow, pow_succ, Module.End.mul_apply, gdelta_C, map_zero, smul_zero]
+
+theorem nat_mul_factorial_bound (k : ℕ) :
+    ((k + 1).factorial : ℚ)⁻¹ * ((k + 1 : ℕ) : ℚ) = (k.factorial : ℚ)⁻¹ := by
+  rw [Nat.factorial_succ]
+  push_cast
+  have h1 : (k.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+  have h2 : ((k : ℚ) + 1) ≠ 0 := by positivity
+  field_simp
+
+theorem dpow_X_mul (κ : I → J → K) (s : I ⊕ J)
+    (D : MvPolynomial (I ⊕ J) K →ₗ[K] MvPolynomial (I ⊕ J) K) (R : MvPolynomial (I ⊕ J) K)
+    (k : ℕ)
+    (h : (gdelta κ ^ (k + 1)) (X s * R) =
+      X s * (gdelta κ ^ (k + 1)) R + (k + 1) • D ((gdelta κ ^ k) R)) :
+    dpow κ (k + 1) (X s * R) = X s * dpow κ (k + 1) R + D (dpow κ k R) := by
+  unfold dpow
+  rw [h, smul_add, mul_smul_comm, ← Nat.cast_smul_eq_nsmul ℚ, smul_smul, nat_mul_factorial_bound,
+    LinearMap.map_smul_of_tower]
+
+def Good (L : Submodule A K) (n : ℕ) (Q : MvPolynomial (I ⊕ J) K) : Prop :=
+  ∀ m, Q.coeff m ∈ L ^ n
+
+theorem good_X_mul (L : Submodule A K) (n : ℕ) (s : I ⊕ J) (Q : MvPolynomial (I ⊕ J) K)
+    (hQ : Good L n Q) : Good L n (X s * Q) := by
+  classical
+  intro m
+  rw [MvPolynomial.coeff_X_mul']
+  split_ifs
+  · exact hQ _
+  · exact Submodule.zero_mem _
+
+theorem good_smul_pderiv (L : Submodule A K) (k : ℕ) (c : K) (hc : c ∈ L) (s : I ⊕ J)
+    (Q : MvPolynomial (I ⊕ J) K) (hQ : Good L k Q) (m : (I ⊕ J) →₀ ℕ) :
+    c * (AddMonoidAlgebra.coeff Q (m + Finsupp.single s 1) * ((m s : K) + 1)) ∈ L ^ (k + 1) := by
+  have hy : AddMonoidAlgebra.coeff Q (m + Finsupp.single s 1) * ((m s : K) + 1) ∈ L ^ k := by
+    have e : AddMonoidAlgebra.coeff Q (m + Finsupp.single s 1) * ((m s : K) + 1) =
+        (m s + 1) • AddMonoidAlgebra.coeff Q (m + Finsupp.single s 1) := by
+      rw [nsmul_eq_mul]
+      push_cast
+      ring
+    rw [e]
+    exact nsmul_mem (hQ _) _
+  rw [pow_succ']
+  exact Submodule.mul_mem_mul hc hy
+
+theorem good_dL (L : Submodule A K) (κ : I → J → K) (hκ : ∀ i j, κ i j ∈ L) (k : ℕ) (i : I)
+    (Q : MvPolynomial (I ⊕ J) K) (hQ : Good L k Q) : Good L (k + 1) (dL κ i Q) := by
+  intro m
+  have e : (dL κ i Q).coeff m = ∑ j, κ i j * AddMonoidAlgebra.coeff (pderiv (Sum.inr j) Q) m := by
+    simp [dL, MvPolynomial.coeff_sum]
+  rw [e]
+  refine Submodule.sum_mem _ fun j _ => ?_
+  rw [MvPolynomial.coeff_pderiv]
+  exact good_smul_pderiv L k (κ i j) (hκ i j) _ Q hQ m
+
+theorem good_dR (L : Submodule A K) (κ : I → J → K) (hκ : ∀ i j, κ i j ∈ L) (k : ℕ) (j : J)
+    (Q : MvPolynomial (I ⊕ J) K) (hQ : Good L k Q) : Good L (k + 1) (dR κ j Q) := by
+  intro m
+  have e : (dR κ j Q).coeff m = ∑ i, κ i j * AddMonoidAlgebra.coeff (pderiv (Sum.inl i) Q) m := by
+    simp [dR, MvPolynomial.coeff_sum]
+  rw [e]
+  refine Submodule.sum_mem _ fun i _ => ?_
+  rw [MvPolynomial.coeff_pderiv]
+  exact good_smul_pderiv L k (κ i j) (hκ i j) _ Q hQ m
+
+theorem integ (h1 : PowXL) (h2 : PowXR) (L : Submodule A K) (κ : I → J → K)
+    (hκ : ∀ i j, κ i j ∈ L) (P : MvPolynomial (I ⊕ J) A) :
+    ∀ n, Good L n (dpow κ n (map (algebraMap A K) P)) := by
+  classical
+  have h0 : ∀ P : MvPolynomial (I ⊕ J) A, Good L 0 (map (algebraMap A K) P) := by
+    intro P m
+    rw [MvPolynomial.coeff_map, pow_zero]
+    exact Submodule.algebraMap_mem _
+  refine MvPolynomial.induction_on
+    (motive := fun P => ∀ n, Good L n (dpow κ n (map (algebraMap A K) P))) P ?_ ?_ ?_
+  · intro a n
+    cases n with
+    | zero =>
+      rw [dpow_zero]
+      exact h0 (C a)
+    | succ k =>
+      rw [MvPolynomial.map_C, dpow_C_succ]
+      intro m
+      rw [MvPolynomial.coeff_zero]
+      exact Submodule.zero_mem _
+  · intro p q hp hq n m
+    rw [map_add (f := _), dpow_add, MvPolynomial.coeff_add]
+    exact Submodule.add_mem _ (hp n m) (hq n m)
+  · intro p s hp n
+    cases n with
+    | zero =>
+      rw [dpow_zero]
+      exact h0 (p * X s)
+    | succ k =>
+      rw [map_mul, MvPolynomial.map_X, mul_comm]
+      cases s with
+      | inl i =>
+        rw [dpow_X_mul κ (Sum.inl i) (dL κ i) (map (algebraMap A K) p) k
+          (h1 K I J κ i (map (algebraMap A K) p) k)]
+        intro m
+        rw [MvPolynomial.coeff_add]
+        exact Submodule.add_mem _ (good_X_mul L _ _ _ (hp (k + 1)) m)
+          (good_dL L κ hκ k i _ (hp k) m)
+      | inr j =>
+        rw [dpow_X_mul κ (Sum.inr j) (dR κ j) (map (algebraMap A K) p) k
+          (h2 K I J κ j (map (algebraMap A K) p) k)]
+        intro m
+        rw [MvPolynomial.coeff_add]
+        exact Submodule.add_mem _ (good_X_mul L _ _ _ (hp (k + 1)) m)
+          (good_dR L κ hκ k j _ (hp k) m)
+
+end
+
+theorem divPowInteg_of (h1 : PowXL) (h2 : PowXR) (h3 : VanL) (h4 : VanR) : PI.DivPowInteg := by
+  intro A K I J _ _ _ _ _ _ L κ hκ P n
+  have hd : PI.DivPowInteg.delta κ = gdelta κ := rfl
+  rw [hd]
+  refine ⟨fun m => integ h1 h2 L κ hκ P n m, fun hv => ?_⟩
+  rcases hv with hv | hv
+  · exact h3 K I J κ _ n fun m hm => hv m (MvPolynomial.support_map_subset _ _ hm)
+  · exact h4 K I J κ _ n fun m hm => hv m (MvPolynomial.support_map_subset _ _ hm)
+
+end PI.DivPowInteg.Top
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantTheorems.DivPowInteg
+
+section
+
+@[expose] public section
+
+theorem divided_power_integrality : PI.DivPowInteg :=
+  PI.DivPowInteg.Top.divPowInteg_of PI.DivPowInteg.Gen.powXL_holds PI.DivPowInteg.Gen.powXR_holds
+    PI.DivPowInteg.Gen.vanL_holds PI.DivPowInteg.Gen.vanR_holds
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.SCMain
+
+section
 
 @[expose] public section
 
@@ -187,3 +468,6 @@ theorem sc_of (hN1 : ConnectionIntegrality) (hN2 : ConnectionCommutator) (hN3 : 
     exact Submodule.zero_mem _
 
 end ReciprocityTheory.ChartRestriction.G.TB.SCPf
+end
+end
+end

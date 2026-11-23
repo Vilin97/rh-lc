@@ -1,7 +1,12 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDeRhamClassOfRigidifiedExtension
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CobOneDiagSumEq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagSumCoc
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BialgebraPullbackTwoVariablesResCocycleEq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSymmetricTwoCocycleOfAdditiveStructureTorsor
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigidifiedPresentationCocycleMemBialgebraSymmetr
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionTowerPresentationCotangentPullbackResRigi
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +43,176 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimitiveDeRhamClassTorsionCharacterStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsTorsCharZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupCocycleMemCobRangeOfDiagonalSumZeroStatement
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCocyclesOmega
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.PtExt
+
+theorem Dat.exists_cocycles_omega : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A →
+    ∀ (p : ℕ) (G : PDivGroup p R) (t : G.TorsionTower A) (c : primDR A) (d : Dat t c),
+    ∃ (z : G.cocycles) (w : G.omega), (∀ n, z.1 n = d.coc n) ∧ ∀ n, w.1 n = d.om n := by
+  intro R _ A _ hA p G t c d
+  have hs : IsSymCoc d.g := isSymCoc_of_isAdd R A hA _ _ d.add
+  refine ⟨⟨fun n => d.coc n, fun n => ⟨coc_mem_symCocycles R A p G t c d hs n,
+    Dat.pullTwo_res_coc R A p G t c d n⟩⟩, ⟨fun n => d.om n, fun n => OmRes.cotMap_res_om R A p G t c d n⟩,
+    fun _ => rfl, fun _ => rfl⟩
+
+end GlobalTheory.PtExt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsTorsCharTorsVal
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open GlobalTheory GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.PtExt
+
+variable {p : ℕ} {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A] {G : PDivGroup p R}
+  (t : PDivGroup.TorsionTower G A) (N : ℕ)
+
+
+open Classical in
+def torsVal (b : G.A N) : Fn0 A := fun _ _ _ x ↦
+  if h : x ^ p ^ N = 1 then t.lift N x h b else 0
+
+theorem lift_spOver {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D']
+    (φ : D →ₐ[R] D') (w : Pt A D) (hw : w ^ p ^ N = 1) (hw' : (spOver φ ≫ w) ^ p ^ N = 1) :
+    t.lift N (spOver φ ≫ w) hw' = φ.comp (t.lift N w hw) :=
+  t.inj N D' _ _ (by rw [t.lift_y, ← spOver_comp, Category.assoc, t.lift_y])
+
+theorem lift_mul {D : Type} [CommRing D] [Algebra R D] (w w' : Pt A D) (hw : w ^ p ^ N = 1)
+    (hw' : w' ^ p ^ N = 1) (h : (w * w') ^ p ^ N = 1) :
+    t.lift N (w * w') h = (toConv (t.lift N w hw) * toConv (t.lift N w' hw')).ofConv :=
+  t.inj N D _ _ (by rw [t.lift_y, t.mul, ofConv_toConv, ofConv_toConv, t.lift_y, t.lift_y])
+
+theorem isTorsChar_torsVal (b : G.A N) (hb : cobOne R (G.A N) b = 0) :
+    IsTorsChar (p ^ N) (torsVal t N b) := by
+  have hc : Coalgebra.comul (R := R) b = b ⊗ₜ 1 + 1 ⊗ₜ b := by
+    rw [cobOne_apply, sub_sub, sub_eq_zero] at hb; exact hb
+  refine ⟨fun D _ _ D' _ _ φ w hw ↦ ?_, fun D _ _ w w' hw hw' ↦ ?_⟩
+  · have hw2 : (spOver φ ≫ w) ^ p ^ N = 1 := by rw [← MonObj.comp_pow, hw, MonObj.comp_one]
+    simp only [torsVal, dite_eq_left hw, dite_eq_left hw2, lift_spOver t N φ w hw hw2,
+      AlgHom.comp_apply]
+  · have h : (w * w') ^ p ^ N = 1 := (t.exists_iff N _).1
+      ⟨(toConv (t.lift N w hw) * toConv (t.lift N w' hw')).ofConv, by
+        rw [t.mul, ofConv_toConv, ofConv_toConv, t.lift_y, t.lift_y]⟩
+    simp only [torsVal, dite_eq_left hw, dite_eq_left hw', dite_eq_left h, lift_mul t N w w' hw hw' h]
+    change (toConv (t.lift N w hw) * toConv (t.lift N w' hw')) b = _
+    simp only [AlgHom.convMul_apply, hc, map_add, Algebra.TensorProduct.lift_tmul, map_one,
+      _root_.mul_one, _root_.one_mul]
+
+theorem exists_isTorsChar :
+    ∀ (p : ℕ) (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (G : PDivGroup p R)
+      (t : PDivGroup.TorsionTower G A) (N : ℕ) (b : G.A N),
+      cobOne R (G.A N) b = 0 → ∃ β : Fn0 A, IsTorsChar (p ^ N) β ∧
+        ∀ (D : Type) [CommRing D] [Algebra R D] (φ : G.A N →ₐ[R] D), β D (spOver φ ≫ t.y N) = φ b := by
+  intro p R _ A _ G t N b hb
+  refine ⟨torsVal t N b, isTorsChar_torsVal t N b hb, fun D _ _ φ ↦ ?_⟩
+  have h : (spOver φ ≫ t.y N) ^ p ^ N = 1 := (t.exists_iff N _).1 ⟨φ, rfl⟩
+  have e : t.lift N (spOver φ ≫ t.y N) h = φ := t.inj N D _ _ (t.lift_y N _ h)
+  simp only [torsVal, dite_eq_left h, e]
+
+end GlobalTheory.PtExt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDeRhamClassOfRigidifiedExtension
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.PtExt
+
+theorem pullTwo_mulBy_pow_self (p : ℕ) (R : Type) [CommRing R] (G : PDivGroup p R) (n : ℕ)
+    (c : G.A n ⊗[R] G.A n) :
+    pullbackTwo (PDiv.mulBy (R := R) (A := G.A n) (p ^ n)) c =
+      (Algebra.TensorProduct.lift (Bialgebra.counitAlgHom R (G.A n)) (Bialgebra.counitAlgHom R (G.A n))
+        (fun _ _ ↦ Commute.all _ _) c) • (1 : G.A n ⊗[R] G.A n) := by
+  induction c using TensorProduct.induction_on with
+  | zero => simp
+  | tmul a b =>
+    have ha := G.mulBy_pow_self n a
+    have hb := G.mulBy_pow_self n b
+    simp only [pullbackTwo, TensorProduct.map_tmul, Algebra.TensorProduct.lift_tmul]
+    change PDiv.mulBy (R := R) (A := G.A n) (p ^ n) a ⊗ₜ[R]
+      PDiv.mulBy (R := R) (A := G.A n) (p ^ n) b = _
+    rw [ha, hb]
+    simp [Algebra.algebraMap_eq_smul_one, Algebra.TensorProduct.one_def, TensorProduct.smul_tmul', smul_smul,
+      TensorProduct.tmul_smul, mul_comm]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), add_smul]
+
+theorem exists_isCan_rigToExt_eq : ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] (N : ℕ), (p : R) ^ N = 0 →
+    ∀ (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A → AllPrim (dp0 R) (𝟙 _) A →
+    Function.Surjective (toH1O (A.hom ≫ 𝟙 _)) →
+    ∀ (G : PDivGroup p R) (t : PDivGroup.TorsionTower G A) (x : G.RigExt),
+      ∃ (c : primDR A) (x' : G.RigExt), IsCan t c x' ∧ G.rigToExt x' = G.rigToExt x := by
+  intro p _ R _ N hN A _ hA hP hS G t x
+  obtain ⟨⟨z, w⟩, rfl⟩ := Submodule.mkQ_surjective _ x
+  have hq : ((p ^ N : ℕ) : R) = 0 := by rw [Nat.cast_pow, hN]
+  have hcob : cobOne R (G.A N) (diagSum R (G.A N) (p ^ N) (z.1 N)) = 0 := by
+    rw [cobOne_diagSum_eq p R G N (p ^ N) hq _ (z.2 N).1, pullTwo_mulBy_pow_self, sub_self]
+  obtain ⟨β, hβ, hβy⟩ := exists_isTorsChar p R A G t N _ hcob
+  obtain ⟨c, d, hd⟩ := GlobalTheory.T.exists_primitive_deRham_class_torsion_character p R N hN A hA hP hS G t β hβ
+  obtain ⟨z', w', hz', hw'⟩ := Dat.exists_cocycles_omega R A hA p G t c d
+  refine ⟨c, G.rigMk (z', w'), ⟨d, z', w', hz', hw', rfl⟩, ?_⟩
+  have h1 : diagSum R (G.A N) (p ^ N) (z'.1 N) = diagSum R (G.A N) (p ^ N) (z.1 N) := by
+    rw [hz', Dat.diagSum_coc R A p G t c d N hN, hd _ _ (t.y_pow N)]
+    have h2 := hβy (G.A N) (AlgHom.id R (G.A N))
+    rwa [spOver_id, Category.id_comp] at h2
+  have hdiag : diagSum R (G.A N) (p ^ N) ((z' - z).1 N) = 0 := by
+    rw [Submodule.coe_sub, Pi.sub_apply, map_sub, h1, sub_self]
+  have hmem := GlobalTheory.T.pDivGroup_cocycle_mem_cob_range_of_diagonalSum_zero p R N hN G (z' - z) hdiag
+  show G.rigToExt (Submodule.Quotient.mk (z', w')) = G.rigToExt (Submodule.Quotient.mk (z, w))
+  simp only [PDivGroup.rigToExt, Submodule.mapQ_apply, LinearMap.fst_apply]
+  exact (Submodule.Quotient.eq _).2 hmem
+
+end GlobalTheory.PtExt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDeRhamClassOfRigidifiedExtensionStatement
+
+section
 
 @[expose] public section
 
@@ -54,3 +229,5 @@ theorem _root_.GlobalTheory.T.exists_deRham_class_of_rigidified_extension :
     ∀ (G : PDivGroup p R) (t : PDivGroup.TorsionTower G A) (x : G.RigExt),
       ∃ (c : primDR A) (x' : G.RigExt), IsCan t c x' ∧ G.rigToExt x' = G.rigToExt x :=
   GlobalTheory.PtExt.exists_isCan_rigToExt_eq
+end
+end

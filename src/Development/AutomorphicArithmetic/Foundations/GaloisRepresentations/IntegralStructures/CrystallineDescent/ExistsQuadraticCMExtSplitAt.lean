@@ -13,17 +13,12 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.InertSplit
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.PrimeWith
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.QuadraticCharTwistOfExistsOfInfinity
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.RealSpan
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.SplitIff
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.SqrtFix
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.TwoPrimes
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.UnrLarge
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ValPrimeOfLt
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
-import Mathlib.Algebra.AffineMonoid.Basic
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.NumberField
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -35,8 +30,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -57,9 +50,116 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.SplitIff
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.SqrtFix
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.TwoPrimes
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.UnrLarge
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Data.Nat.Factorization.Induction
+import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
+import Mathlib.Algebra.AffineMonoid.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
 import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.ExistsInfiniteQcmSplitRam
 import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.InfinitePrimesNegIsSquare
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.InertiaQuadraticRamification.RealSpan
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.HeckeGal GlobalTheory.CuspRep UpperTheory.V.Published
+open UpperTheory.Gal.UnramifiedFromSplittingCriterion
+
+theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.realSpan :
+    RealSpan := by
+  intro E M Ω F _ _ _ _ _ _ _ _ _ _ _ _ _ g hE hR
+  have hnot : ∃ e : E, algebraMap E M e ∉ maximalRealSubfield M := by
+    by_contra h
+    push_neg at h
+    obtain ⟨φ⟩ : Nonempty (M →+* ℂ) := inferInstance
+    apply IsTotallyComplex.complexEmbedding_not_isReal (φ.comp (algebraMap E M))
+    show ComplexEmbedding.conjugate _ = _
+    ext x
+    have := (mem_maximalRealSubfield_iff _).1 (h x) φ
+    simpa [ComplexEmbedding.conjugate_coe_eq] using this
+  obtain ⟨e, he⟩ := hnot
+  set α := algebraMap E M e with hα
+  have h2 : Module.finrank (maximalRealSubfield M) M = 2 :=
+    Algebra.IsQuadraticExtension.finrank_eq_two _ _
+  have htop : IntermediateField.adjoin (maximalRealSubfield M) {α} = ⊤ := by
+    have hd := IntermediateField.finrank_dvd_of_le_right
+      (le_top : IntermediateField.adjoin (maximalRealSubfield M) {α} ≤ ⊤)
+    rw [IntermediateField.finrank_top', h2, Nat.dvd_prime Nat.prime_two] at hd
+    rcases hd with hd | hd
+    · rw [IntermediateField.finrank_eq_one_iff] at hd
+      have hmem := IntermediateField.mem_adjoin_simple_self (maximalRealSubfield M) α
+      rw [hd, IntermediateField.mem_bot] at hmem
+      obtain ⟨y, hy⟩ := hmem
+      exact absurd (hy ▸ y.2) he
+    · exact IntermediateField.eq_of_le_of_finrank_eq le_top
+        (by rw [hd, IntermediateField.finrank_top', h2])
+  intro x
+  have hx : x ∈ IntermediateField.adjoin (maximalRealSubfield M) {α} := by
+    rw [htop]
+    exact IntermediateField.mem_top
+  have hx' : x ∈ (IntermediateField.adjoin (maximalRealSubfield M) {α}).toSubfield := hx
+  rw [IntermediateField.adjoin_toSubfield] at hx'
+  have hle : Subfield.closure (Set.range (algebraMap (maximalRealSubfield M) M) ∪ {α}) ≤
+      RingHom.eqLocusField ((g : Ω →+* Ω).comp (algebraMap M Ω)) (algebraMap M Ω) := by
+    rw [Subfield.closure_le]
+    rintro y (⟨z, rfl⟩ | hy)
+    · exact hR z
+    · rw [Set.mem_singleton_iff] at hy
+      subst hy
+      have h1 := hE e
+      rw [IsScalarTower.algebraMap_apply E M Ω] at h1
+      exact h1
+  exact hle hx'
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ValPrimeOfLt
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi55.val_prime_of_lt :
+    ∀ {Ω : Type} [inst : Field Ω]
+    (A : ValuationSubring Ω) (n : ℕ),
+    n ≠ (0 : ℕ) →
+      (A.valuation : Ω → A.ValueGroup) (↑n : Ω) < (1 : A.ValueGroup) →
+        ∃ (t : ℕ), Nat.Prime t ∧ t ∣ n ∧ (A.valuation : Ω → A.ValueGroup) (↑t : Ω) < (1 : A.ValueGroup) := by
+  intro Ω _ A n
+  induction n using induction_on_primes with
+  | zero => intro h; exact absurd rfl h
+  | one => intro _ h; simp at h
+  | prime_mul p a hp ih =>
+    intro hne h
+    have ha : a ≠ 0 := right_ne_zero_of_mul hne
+    by_cases hpv : A.valuation (p : Ω) < 1
+    · exact ⟨p, hp, dvd_mul_right p a, hpv⟩
+    · have hav : A.valuation (a : Ω) < 1 := by
+        by_contra hc
+        rw [Nat.cast_mul, map_mul] at h
+        exact absurd h (not_lt.mpr (one_le_mul (not_lt.mp hpv) (not_lt.mp hc)))
+      obtain ⟨t, ht, hd, hv⟩ := ih ha hav
+      exact ⟨t, ht, hd.mul_left p, hv⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.ExistsQuadraticCMExtSplitAt
+
+section
 
 @[expose] public section
 
@@ -377,3 +477,6 @@ theorem UpperTheory.Gal.Int.Core.exists_quadratic_CM_ext_split_at : UpperTheory.
       rwa [map_natCast]
     refine GlobalTheory.RealGal.PrimesNegSquare.isSquare_neg_of_dvd q p ?_
     exact_mod_cast (Nat.mul_dvd_mul_left 8 h1).trans hM
+end
+end
+end

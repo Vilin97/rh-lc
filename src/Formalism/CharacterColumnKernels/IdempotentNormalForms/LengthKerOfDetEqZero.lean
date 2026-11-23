@@ -3,7 +3,7 @@ module
 public import Formalism.CharacterColumnKernels.Statement
 public import Mathlib.LinearAlgebra.Determinant
 public import Lemmata.AddValuationProducts.AddValProd
-public import Lemmata.SecondBlockLemmaA.Imports
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.OrderOfVanishing.Noetherian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,8 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,10 +42,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.SecondBlockLemmaA.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace Bl.SecondBlockLemmaA
+
+theorem goal1 :
+  ∀ {O : Type u_1} [inst : CommRing.{u_1} O] [inst_1 : IsDomain.{u_1} O] [inst_2 : IsDiscreteValuationRing.{u_1} O]
+  {ι : Type u_2} (s : Finset.{u_2} ι) (a : ι → O),
+  Eq.{1}
+    (DFunLike.coe.{u_1 + 1, u_1 + 1, 1} (IsDiscreteValuationRing.addVal.{u_1} O)
+      (Finset.prod.{u_2, u_1} s fun (i : ι) ↦ a i))
+    (Finset.sum.{u_2, 0} s fun (i : ι) ↦
+      DFunLike.coe.{u_1 + 1, u_1 + 1, 1} (IsDiscreteValuationRing.addVal.{u_1} O) (a i)) := by
+  intro O _ _ _ ι s a
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp only [Finset.prod_empty, Finset.sum_empty, AddValuation.map_one]
+  | insert i t hi ih =>
+    rw [Finset.prod_insert hi, Finset.sum_insert hi, AddValuation.map_mul, ih]
+
+end Bl.SecondBlockLemmaA
+end
+end
+
+-- Source module: Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+
+section
 
 @[expose] public section
 
@@ -274,3 +307,6 @@ theorem lenKer : StatLenKer := by
   · exact length_ker_of_det_ne_zero A hd
 
 end Formalism.NG
+end
+end
+end

@@ -1,7 +1,6 @@
 module
 
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandF
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.HerbrandB
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsIntEKMulVbar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +18,6 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.Padics.LocalField
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -29,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,8 +41,133 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.GalBasic
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.HerbrandB
+import Mathlib.NumberTheory.Padics.LocalField
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.GalBasic
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandE
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.Padics.Complex
+import Mathlib.Topology.Connected.Separation
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandD
+import ReciprocityTheory.GroupCohomology.IsTowerLim
+import ReciprocityTheory.NeutralLocalFields.Reciprocity
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandF
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.DiscreteGroups.LocalClassField
+
+open _root_.Neutral.B1 ReciprocityTheory.Coh Function
+
+variable {p : ℕ} [Fact p.Prime] {K L : IntermediateField ℚ_[p] (PadicAlgCl p)}
+
+def uval [(subG p K L).Normal] (w : (layerU p K L).V) : PadicAlgCl p :=
+  ((Additive.toMul (Subtype.val (p := fun x => x ∈ Ubar p) w.1) : (PadicAlgCl p)ˣ) : PadicAlgCl p)
+
+section
+
+variable [(subG p K L).Normal]
+
+theorem uval_add (a b : (layerU p K L).V) : uval (a + b) = uval a * uval b := rfl
+
+theorem uval_neg (a : (layerU p K L).V) : uval (-a) = (uval a)⁻¹ := Units.val_inv_eq_inv_val _
+
+theorem uval_sub (a b : (layerU p K L).V) : uval (a - b) = uval a * (uval b)⁻¹ := by
+  rw [sub_eq_add_neg, uval_add, uval_neg]
+
+theorem uval_sum {ι : Type*} (s : Finset ι) (f : ι → (layerU p K L).V) :
+    uval (∑ i ∈ s, f i) = ∏ i ∈ s, uval (f i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => rfl
+  | insert a s ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, uval_add, ih]
+
+theorem uval_rho (σ : GK p K) (w : (layerU p K L).V) :
+    uval ((layerU p K L).rho (QuotientGroup.mk σ) w) = σ (uval w) := rfl
+
+theorem uval_injective : Injective (uval : (layerU p K L).V → PadicAlgCl p) := fun _ _ hab =>
+  Subtype.ext (Subtype.ext (Units.ext hab))
+
+theorem uval_ne_zero (w : (layerU p K L).V) : uval w ≠ 0 := Units.ne_zero _
+
+theorem vbar_eq_zero_iff (x : KbarMult p) :
+    vbar p x = 0 ↔ ‖((Additive.toMul x : (PadicAlgCl p)ˣ) : PadicAlgCl p)‖ = 1 := by
+  have hp : (1 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).one_lt
+  have hpos : 0 < ‖((Additive.toMul x : (PadicAlgCl p)ˣ) : PadicAlgCl p)‖ :=
+    norm_pos_iff.2 (Units.ne_zero _)
+  rw [vbar_apply, neg_eq_zero, Real.logb_eq_zero]
+  constructor
+  · rintro (h | h | h | h | h | h) <;> linarith
+  · intro h; right; right; right; right; left; exact h
+
+theorem norm_uval (w : (layerU p K L).V) : ‖uval w‖ = 1 :=
+  (vbar_eq_zero_iff _).1 ((mem_Ubar_iff p _).1 (Subtype.property (p := fun x => x ∈ Ubar p) w.1))
+
+theorem uval_mem (h : K ≤ L) (w : (layerU p K L).V) : uval w ∈ L :=
+  (mem_iff_fixed h _).2 fun σ hσ =>
+    congrArg (fun y : Ubar p => ((Additive.toMul (y : KbarMult p) : (PadicAlgCl p)ˣ) : PadicAlgCl p))
+      (w.2 ⟨σ, hσ⟩)
+
+theorem exists_uval {x : PadicAlgCl p} (hx : x ∈ L) (h1 : ‖x‖ = 1) : ∃ w : (layerU p K L).V, uval w = x := by
+  have hx0 : x ≠ 0 := by
+    intro h0; rw [h0, norm_zero] at h1; exact zero_ne_one h1
+  let y : KbarMult p := Additive.ofMul (Units.mk0 x hx0)
+  have hy : y ∈ Ubar p := (mem_Ubar_iff p y).2 ((vbar_eq_zero_iff y).2 h1)
+  refine ⟨⟨(⟨y, hy⟩ : Ubar p), fun g => Subtype.ext (Units.ext ?_)⟩, rfl⟩
+  exact g.2 x hx
+
+end
+
+end ReciprocityTheory.DiscreteGroups.LocalClassField
+end
+end
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandE
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.DiscreteGroups.LocalClassField
+
+open _root_.Neutral.B1 ReciprocityTheory.Coh Function
+
+variable {p : ℕ} [Fact p.Prime] {K L : IntermediateField ℚ_[p] (PadicAlgCl p)}
+
+theorem exists_units_subgroup_padic (hK : FiniteDimensional ℚ_[p] K) (E : IntermediateField K (PadicAlgCl p))
+    [FiniteDimensional K E] [IsGalois K E] : ∃ S : Subgroup Eˣ,
+    (∀ (σ : E ≃ₐ[K] E) (u v : Eˣ), u ∈ S → (v : E) = σ u → v ∈ S) ∧
+    (∀ u ∈ S, ‖((u : E) : PadicAlgCl p)‖ = 1) ∧
+    (∃ ε : ℝ, 0 < ε ∧ ∀ u : Eˣ, ‖((u : E) : PadicAlgCl p) - 1‖ < ε → u ∈ S) ∧
+    (∀ u ∈ S, (∀ σ : E ≃ₐ[K] E, σ (u : E) = u) → ∃ v ∈ S, ∏ σ : E ≃ₐ[K] E, σ (v : E) = u) ∧
+    ∀ σ₀ : E ≃ₐ[K] E, (∀ σ, σ ∈ Subgroup.zpowers σ₀) → ∀ u ∈ S, ∏ σ : E ≃ₐ[K] E, σ (u : E) = 1 →
+      ∃ v ∈ S, σ₀ (v : E) = u * v := by
+  have hnt : ∃ x : K, 1 < ‖x‖ := by
+    obtain ⟨x, hx⟩ := NormedField.exists_one_lt_norm ℚ_[p]
+    refine ⟨algebraMap ℚ_[p] K x, ?_⟩
+    show 1 < ‖algebraMap ℚ_[p] (PadicAlgCl p) x‖
+    rwa [norm_algebraMap']
+  let _ : NontriviallyNormedField K := { (inferInstance : NormedField K) with non_trivial := hnt }
+  have : CompleteSpace K := FiniteDimensional.complete ℚ_[p] K
+  let _ : NormedAlgebra K E :=
+    { (inferInstance : Algebra K E) with
+      norm_smul_le := fun a x => le_of_eq (by
+        show ‖(a : PadicAlgCl p) * (x : PadicAlgCl p)‖ = _
+        rw [norm_mul]; rfl) }
+  exact UnitsFilt.exists_units_subgroup (K := K) (L := E)
+
+end ReciprocityTheory.DiscreteGroups.LocalClassField
+end
+end
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrand
+
+section
 
 @[expose] public section
 
@@ -247,3 +369,5 @@ theorem herbrand_layerU (hK : FiniteDimensional ℚ_[p] K) (hL : FiniteDimension
   exact herbrand_of_sub (layerU p K L).rho g₀ hg W hW1 hW2 hW3 (hW4 g₀ hg)
 
 end ReciprocityTheory.DiscreteGroups.LocalClassField
+end
+end

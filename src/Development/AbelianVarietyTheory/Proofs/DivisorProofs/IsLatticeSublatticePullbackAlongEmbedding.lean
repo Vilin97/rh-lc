@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemLowLat
 public import Mathlib.Algebra.Module.Lattice.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsBisRest
+import ReciprocityTheory.SemistableReduction.SemiDegZA
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,10 +43,30 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
 import Development.AbelianVarietyTheory.Definitions.Foundations.NormEulerPolySubOneLe
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsBisRest
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.HermitianEigenvalueInequality
+
+theorem main : ∀ {E : Type} [inst : Field E] [NumberField E] {n : ℕ} (L : Submodule (NumberField.RingOfIntegers E) (Fin n → E)), ∀ x ∈ Submodule.span E (↑L : Set (Fin n → E)), ∃ (d : NumberField.RingOfIntegers E), d ≠ (0 : NumberField.RingOfIntegers E) ∧ d • x ∈ L := by
+  apply ReciprocityTheory.MultiplicativeHeights.SemiPt.clear_denom <;> assumption
+
+end GlobalTheory.HermitianEigenvalueInequality
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLatticeSublatticePullbackAlongEmbedding
+
+section
 
 @[expose] public section
 
@@ -82,3 +102,5 @@ theorem isLattice_lowLat : ∀ (E : Type) [Field E] [NumberField E] (n n₁ : �
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.PlaneSkew
+end
+end

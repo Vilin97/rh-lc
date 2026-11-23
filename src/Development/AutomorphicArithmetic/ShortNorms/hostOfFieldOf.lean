@@ -5,27 +5,20 @@ public import Development.AutomorphicArithmetic.CharacterBoxes.Imports
 public import Development.AutomorphicArithmetic.CharacterBoxes.PairGood
 public import Development.AutomorphicArithmetic.ShortNorms.ShortNorm
 public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.ExplicitFormulaErrorOfHostConditions
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KroneckerTwoNegEqJacobiSymTwo
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NcardPrimesOverOfStabilizer
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormOneIffOfSqrt
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormOneModEqOneAndOfDvd
-public import Development.AutomorphicArithmetic.CharacterBoxes.PairRows
-public import Development.AutomorphicArithmetic.CharacterBoxes.RealBox
-public import Development.AutomorphicArithmetic.MeanSquareBounds.GaussSumFunctionEq
-public import Development.AutomorphicArithmetic.ShortNorms.MulLogLeRpowEventually
-public import Development.AutomorphicArithmetic.ShortNorms.levelData
-public import Development.AutomorphicArithmetic.ThickFrames.ThickFrame2Large
-public import Development.AutomorphicArithmetic.ThickFrames.topsChoiceH
-public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.FiltrationCocycleLiftCriterion
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -33,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,11 +45,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Foundations.RayPrimes
+import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NcardPrimesOverOfStabilizer
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormOneIffOfSqrt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormOneModEqOneAndOfDvd
+public import Development.AutomorphicArithmetic.CharacterBoxes.PairRows
+public import Development.AutomorphicArithmetic.CharacterBoxes.RealBox
+public import Development.AutomorphicArithmetic.MeanSquareBounds.GaussSumFunctionEq
+public import Development.AutomorphicArithmetic.ShortNorms.MulLogLeRpowEventually
+public import Development.AutomorphicArithmetic.ShortNorms.levelData
+public import Development.AutomorphicArithmetic.ThickFrames.ThickFrame2Large
+public import Development.AutomorphicArithmetic.ThickFrames.topsChoiceH
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AutomorphicArithmetic.ThickFrames.MarkedLow
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.JacobiSymNegEqOfThreeModFour
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem jacobiSym_neg_eq_of_three_mod_four (q n : ℕ) (hq : q % 4 = 3) (hn : Odd n) :
+    jacobiSym (-(q : ℤ)) n = jacobiSym (n : ℤ) q := by
+  have hqo : Odd q := Nat.odd_iff.mpr (by omega)
+  have hn2 : n % 2 = 1 := Nat.odd_iff.mp hn
+  rw [jacobiSym.neg _ hn]
+  have h4 : n % 4 = 1 ∨ n % 4 = 3 := by omega
+  rcases h4 with h | h
+  · rw [ZMod.χ₄_nat_one_mod_four h, one_mul,
+      jacobiSym.quadratic_reciprocity_one_mod_four h hqo]
+  · rw [ZMod.χ₄_nat_three_mod_four h,
+      jacobiSym.quadratic_reciprocity_three_mod_four hq h]
+    ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KroneckerTwoNegEqJacobiSymTwo
+
+section
+
+@[expose] public section
+
+open Finset ArithmeticFunction NumberField IsDedekindDomain Filter Topology GlobalTheory.Mem.An Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab
+open scoped nonZeroDivisors
+
+namespace GlobalTheory
+
+theorem kroneckerTwo_neg_eq_jacobiSym_two (q : ℕ) (hq : q % 4 = 3) :
+    GlobalTheoryTheory.kron2 (-(q : ℤ)) = jacobiSym 2 q := by
+  have hodd : Odd q := Nat.odd_iff.mpr (by omega)
+  rw [jacobiSym.at_two hodd, ZMod.χ₈_nat_eq_if_mod_eight]
+  unfold GlobalTheoryTheory.kron2
+  split_ifs <;> omega
+
+theorem kronSym_neg_eq_jacobiSym_and_two :
+    (∀ q n : ℕ, q % 4 = 3 → 0 < n → GlobalTheoryTheory.kronSym (-(q : ℤ)) n = jacobiSym (n : ℤ) q) ∧
+      ∀ n : ℕ, Odd n → GlobalTheoryTheory.kronSym 2 n = ZMod.χ₈ (n : ZMod 8) := by
+  refine ⟨fun q n hq hn => ?_, fun n hn => ?_⟩
+  · unfold GlobalTheoryTheory.kronSym
+    have hodd : Odd (n / 2 ^ n.factorization 2) := by
+      have h := Nat.not_dvd_ordCompl Nat.prime_two hn.ne'
+      exact Nat.odd_iff.mpr (by omega)
+    have hmul : 2 ^ n.factorization 2 * (n / 2 ^ n.factorization 2) = n :=
+      Nat.ordProj_mul_ordCompl_eq_self n 2
+    rw [jacobiSym_neg_eq_of_three_mod_four q _ hq hodd, kroneckerTwo_neg_eq_jacobiSym_two q hq,
+      ← jacobiSym.pow_left, ← jacobiSym.mul_left]
+    congr 1
+    rw [mul_comm]
+    exact_mod_cast hmul
+  · unfold GlobalTheoryTheory.kronSym
+    have h0 : n.factorization 2 = 0 :=
+      Nat.factorization_eq_zero_of_not_dvd (by have := Nat.odd_iff.mp hn; omega)
+    rw [h0, pow_zero, pow_zero, Nat.div_one, mul_one, jacobiSym.at_two hn]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ShortNorms.hostOfFieldOf
+
+section
 
 @[expose] public section
 
@@ -303,3 +381,5 @@ theorem UpperTheory.T3.hostOfFieldOf :
         rfl
       rw [h1]
       exact hN
+end
+end

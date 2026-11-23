@@ -1,11 +1,10 @@
 module
 
-public import Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.LemmaJ
-public import Formalism.SharpRestriction.CuspSpanNormBounds.SBridge
+public import Formalism.HermitianCurvature.FiniteOrderIntersectionInSmooth
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -38,9 +37,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.CuspSpanNormBounds.SBridge
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.LemmaJ
+
+section
+
+@[expose] public section
+
+open MeasureTheory
+
+noncomputable section
+
+namespace Formalism.MainNotions.S.Pv.LemmaJ
+
+open Formalism.BasicNotions Formalism.QuantumDeterminants Formalism.MainNotions.S
+
+def AmpOrb (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 Cn : ℝ) : Prop :=
+  Cnt.Hyp0 D large₂ C' Cl Cg cb Cu cT CT C0 → 1000 ≤ Cl → Cn ≤ Cl →
+  ∀ τ w w', HypTT D w w' → ∀ θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ w w' θ W)
+    (lam' : Fin (2 * D.R.rS + D.R.k + 1) → ℝ), l1dist lam' (lamD D τ) ≤ Cn * D.R.k * (D.R.m : ℝ) ^ 3 →
+    ∀ (A : LocS W) (hA : GoodS D lam' A) (hT : 0 < Tr D w) (hT' : 0 < Tr D w'),
+    ∃ f : MatKR D.R.k D.R.rS →
+        ((toBessel D τ w w' θ W lam' A hW hA hT hT').Wq →L[ℂ] (toBessel D τ w w' θ W lam' A hW hA hT hT').Wp),
+      IsKFinCoefH (toBessel D τ w w' θ W lam' A hW hA hT hT').σ f ∧
+      ∀ γ : MatKR D.R.k D.R.rS, γ ∈ UH (Hpk D.R.k D.R.rS) → 0 < Gf D.R.k D.R.rS W.z W.z' γ →
+        Formalism.FourierDecayAlt.C2.IsMonomial (Formalism.QuantumDeterminants.Zhat D.R.k D.R.rS W.z W.z' γ) →
+        IsRelStab (toBessel D τ w w' θ W lam' A hW hA hT hT') γ →
+        ∀ (μR νR : Measure (Mt D.R.k D.R.rS)) (ν : Measure (PairSp D.R.k D.R.rS)),
+          IsHaarOn (RStab D.R.k D.R.rS γ) μR →
+          IsOrbQuot (toBessel D τ w w' θ W lam' A hW hA hT hT') γ μR ν →
+          IsQuotMeas W.μG (μR.map (fun x => fun i j => (γ⁻¹ * Matrix.of x * γ) i j)) νR →
+          A.J νR γ = OrbInt (toBessel D τ w w' θ W lam' A hW hA hT hT') f γ ν
+
+end Formalism.MainNotions.S.Pv.LemmaJ
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.AmpUnif
+
+section
 
 @[expose] public section
 
@@ -172,3 +213,6 @@ theorem ampUnif_of (hAO : AmpOrbU) (hBC : BigCellEq) (hRC : RootCmp) (hNZ : AmpN
     · exact hrep.1
 
 end Formalism.MainNotions.S.Pv.LemmaJ
+end
+end
+end

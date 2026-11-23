@@ -2,13 +2,16 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.HeckeFinAlt
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.AvgTens
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsLCProd
-import GroundTheory.GlobalFields.Adele.Topology
-import GroundTheory.LocalFields.LocalFourierHaar
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Topology.LocallyConstant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -41,9 +44,34 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import GroundTheory.GlobalFields.Adele.Topology
+import GroundTheory.LocalFields.LocalFourierHaar
 public import Mathlib.Topology.LocallyConstant.Algebra
 import Mathlib.Topology.Separation.Connected
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsLCProd
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qf48.isLC_prod {X : Type*} {ι : Type*} [TopologicalSpace X] (T : Finset ι) (f : ι → X → ℂ)
+    (h : ∀ i ∈ T, IsLocallyConstant (f i)) : IsLocallyConstant fun x ↦ ∏ i ∈ T, f i x := by
+  classical
+  induction T using Finset.induction_on with
+  | empty => simp only [Finset.prod_empty]; exact IsLocallyConstant.const (1 : ℂ)
+  | insert a s ha ih =>
+    simp only [Finset.prod_insert ha]
+    exact (h a (Finset.mem_insert_self a s)).mul
+      (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.ContinuousMapGL
+
+section
 
 @[expose] public section
 
@@ -273,3 +301,5 @@ theorem UpperTheory.ConvolutionTheory.GM.avgE :
     simp only [pv_finPart]
     congr 1
   exact ((UpperTheory.ConvolutionTheory.Tf.avgTens E n hn β e _ hΦ).1 x).symm
+end
+end

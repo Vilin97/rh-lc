@@ -1,11 +1,12 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.AffineCharacterGenerators.AffChar
-public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.GenPieces
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.AevalSingleZero
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.CoeffL1NormNonneg
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.IntMvPolynomialCoeffAbsSumAddLe
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,6 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +43,69 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.AffineCharacterGenerators.Generators
+import Mathlib.Analysis.CStarAlgebra.Classes
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.PieceHom
+
+section
+
+@[expose] public section
+
+open MvPolynomial Filter Topology PositivityTheory.Rg.Fx
+
+theorem UpperTheory.ConvolutionTheory.FX.piece_hom :
+    ∀ (ι : Type) [Fintype ι] (f : EP ι) (k : ℕ), (piece k f).IsHomogeneous k := by
+  intro ι _ f k
+  have hlin : ∀ v : ι → ℝ, (lin v).IsHomogeneous 1 := fun v =>
+    IsHomogeneous.sum _ _ _ fun i _ => by
+      simpa using (isHomogeneous_C ι ((v i : ℝ) : ℂ)).mul (isHomogeneous_X ℂ i)
+  unfold piece Finsupp.sum
+  refine IsHomogeneous.sum _ _ _ fun v _ => IsHomogeneous.sum _ _ _ fun b hb => ?_
+  have hbk : b ≤ k := Nat.lt_succ_iff.mp (Finset.mem_range.mp hb)
+  have h := (homogeneousComponent_isHomogeneous (k - b) (f.coeff v)).mul
+    ((isHomogeneous_C ι ((b.factorial : ℂ)⁻¹)).mul ((hlin v).pow b))
+  have e : k - b + (0 + 1 * b) = k := by omega
+  rwa [e] at h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.GenPieces
+
+section
+
+@[expose] public section
+
+open MvPolynomial Filter Topology PositivityTheory.Rg.Fx
+
+theorem UpperTheory.ConvolutionTheory.FX.gen_pieces :
+    ∀ (τ : Type) [Fintype τ] [DecidableEq τ] (n : ℕ) (f : EP (τ × Fin n)), (∀ w : τ → Equiv.Perm (Fin n), ren (fun ti : τ × Fin n => (ti.1, w ti.1 ti.2)) f = f) → ∃ (K : ℝ) (G : ℕ → MvPolynomial (τ × Fin n) ℂ), ∀ k, aeval blockE (G k) = piece k f ∧ (G k).totalDegree ≤ k ∧ l1 (G k) ≤ K ^ (k + 1) / k.factorial := by
+  intro τ _ _ n f hf
+  have hgen : Generators := UpperTheory.ConvolutionTheory.FX.generators0
+  obtain ⟨K₁, hK₁⟩ := hgen τ n
+  obtain ⟨K₂, hK₂⟩ := UpperTheory.ConvolutionTheory.FX.piece_size (τ × Fin n) f
+  have h : ∀ k, ∃ G : MvPolynomial (τ × Fin n) ℂ, aeval blockE G = piece k f ∧ G.totalDegree ≤ k ∧
+      l1 G ≤ K₁ ^ (k + 1) * l1 (piece k f) := fun k =>
+    hK₁ k (piece k f) (UpperTheory.ConvolutionTheory.FX.piece_hom _ f k).totalDegree_le
+      (fun w => by rw [← UpperTheory.ConvolutionTheory.FX.piece_ren, hf w])
+  choose G hG using h
+  refine ⟨|K₁| * K₂, G, fun k => ⟨(hG k).1, (hG k).2.1, ?_⟩⟩
+  have h0 : 0 ≤ l1 (piece k f) := Finset.sum_nonneg fun _ _ => norm_nonneg _
+  calc l1 (G k) ≤ K₁ ^ (k + 1) * l1 (piece k f) := (hG k).2.2
+    _ ≤ |K₁| ^ (k + 1) * l1 (piece k f) := by
+        refine mul_le_mul_of_nonneg_right ?_ h0
+        rw [← abs_pow]; exact le_abs_self _
+    _ ≤ |K₁| ^ (k + 1) * (K₂ ^ (k + 1) / k.factorial) :=
+        mul_le_mul_of_nonneg_left (hK₂ k) (by positivity)
+    _ = (|K₁| * K₂) ^ (k + 1) / k.factorial := by rw [mul_pow]; ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.GenPiecesK
+
+section
 
 @[expose] public section
 
@@ -84,3 +148,5 @@ theorem UpperTheory.ConvolutionTheory.FX.gen_piecesK :
       have : l1 (0 : MvPolynomial (τ × Fin n) ℂ) = 0 := by simp [l1]
       rw [this]
       positivity
+end
+end

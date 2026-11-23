@@ -3,7 +3,6 @@ module
 public import Mathlib.FieldTheory.IntermediateField.Basic
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 public import Mathlib.RingTheory.AlgebraicIndependent.Basic
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.InjectiveOfInjectiveCompAevalOfTrdegLe
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,7 +45,59 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.Ideal.GoingUp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
 public import Mathlib.Algebra.BigOperators.Field
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.InjectiveOfInjectiveCompAevalOfTrdegLe
+
+section
+
+@[expose] public section
+
+open NumberField ReciprocityTheory.ChartRestriction.G.T0
+
+namespace GlobalTheory
+
+open MvPolynomial
+
+theorem injective_of_injective_comp_aeval_of_trdeg_le {k A κ ι : Type} [Field k] [CommRing A]
+    [IsDomain A] [Algebra k A] [CommRing κ] [Finite ι] (b : ι → A)
+    (hA : Algebra.trdeg k A ≤ Cardinal.mk ι) (χ : A →+* κ)
+    (hχ : Function.Injective (fun q : MvPolynomial ι k => χ (aeval b q))) :
+    Function.Injective χ := by
+  have hb : AlgebraicIndependent k b := by
+    rw [algebraicIndependent_iff_injective_aeval]
+    exact Function.Injective.of_comp (f := χ) hχ
+  have hT := hb.isTranscendenceBasis_of_trdeg_le_of_finite hA
+  have := hT.isAlgebraic
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+  intro a ha
+  by_contra hne
+  have hmem : a ∈ RingHom.ker χ := ha
+  refine Ideal.comap_ne_bot_of_algebraic_mem hne hmem
+    (Algebra.IsAlgebraic.isAlgebraic (R := Algebra.adjoin k (Set.range b)) a) (eq_bot_iff.2 fun y hy => ?_)
+  rw [Ideal.mem_comap, RingHom.mem_ker] at hy
+  rw [Ideal.mem_bot]
+  obtain ⟨y, hy'⟩ := y
+  have hr := hy'
+  rw [Algebra.adjoin_range_eq_range_aeval] at hr
+  obtain ⟨q, rfl⟩ := hr
+  have h0 : χ (aeval b q) = 0 := hy
+  have hq : q = 0 := hχ (show χ (aeval b q) = χ (aeval b 0) by rw [map_zero, map_zero]; exact h0)
+  subst hq
+  apply Subtype.ext
+  simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.DetNeZeroOfGenericLinearFormsVanish
+
+section
 
 @[expose] public section
 
@@ -129,3 +180,5 @@ theorem det_ne_zero_of_generic_linear_forms_vanish :
   exact hΔ0 (hχ (by simpa using h))
 
 end GlobalTheory
+end
+end

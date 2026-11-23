@@ -14,10 +14,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Exist
 public import Development.WeilBound.CoreStatements.PublishedTheorems.FiniteGLInvariants.AffineLieInvariants.Imports
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.SatakeRigidity.FullThetaHolds
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.SatakeRigidity.LStrSat
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.SatakeRigidity.TwistAbsPowAbsPow
-public import Development.WeilBound.RepresentationTheoryGL.GaloisPermutationReps.TameCongruences.LocallyConstantOneCochain
-public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FinIdx
-public import Formalism.SharpRestriction.LevelLetterCocycles.LinearIndependentSmulOfNeZero
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.PInfAsc
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -52,9 +49,237 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeDefiniteUnitary
+public import Formalism.PadicSubsetSums.CentralIdempotents.SchurOrthogonalityCompact
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.RingTheory.RamificationInertia.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FinIdx
+public import Formalism.SharpRestriction.LevelLetterCocycles.LinearIndependentSmulOfNeZero
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.SatakeRigidity.TwistAbsPowAbsPow
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Polynomial Matrix
+open Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.Rg.Rs
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.Rg.BcB.F.Rig
+
+namespace GalX
+
+open GlobalTheory.HeckeGal.Model (absPow absPow_isAbsPow)
+
+theorem absPow_mul_absPow (E : Type) [Field E] [NumberField E] (x y : ℝ) :
+    absPow E x * absPow E y = absPow E (x + y) := by
+  refine Subtype.ext (MonoidHom.ext fun z => Units.ext ?_)
+  change (((absPow E x).1 z : ℂˣ) : ℂ) * (((absPow E y).1 z : ℂˣ) : ℂ) = (((absPow E (x + y)).1 z : ℂˣ) : ℂ)
+  rw [CG.absPow_val_apply, CG.absPow_val_apply, CG.absPow_val_apply, ← Complex.exp_add]
+  push_cast
+  ring_nf
+
+theorem twist_absPow_absPow {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (P : CuspSub E a)
+    (x y : ℝ) : (CG.mk (P.twist (absPow E x))).twist (absPow E y) = CG.mk (P.twist (absPow E (x + y))) := by
+  rw [← absPow_mul_absPow]
+  exact (CG.twist_mul (CG.mk P) _ _).symm
+
+theorem infOfWeight_nodup {n : ℕ} (lam : DomWeight n) : (infOfWeight lam).Nodup := by
+  unfold infOfWeight
+  refine Multiset.Nodup.map (fun j k h => ?_) Finset.univ.nodup
+  have h1 : (((lam.w j - (j : ℕ) : ℤ)) : ℂ) = ((lam.w k - (k : ℕ) : ℤ) : ℂ) := by
+    push_cast
+    linear_combination h
+  have h2 : lam.w j - (j : ℕ) = lam.w k - (k : ℕ) := Int.cast_injective h1
+  rcases lt_trichotomy j k with hjk | rfl | hjk
+  · have := lam.anti hjk.le
+    have : (j : ℕ) < k := hjk
+    omega
+  · rfl
+  · have := lam.anti hjk.le
+    have : (k : ℕ) < j := hjk
+    omega
+
+theorem mem_infOfWeight {n : ℕ} {lam : DomWeight n} {z : ℂ} (hz : z ∈ infOfWeight lam) :
+    ∃ k : ℤ, z = k + ((n : ℂ) - 1) / 2 := by
+  unfold infOfWeight at hz
+  obtain ⟨j, -, rfl⟩ := Multiset.mem_map.1 hz
+  exact ⟨lam.w j - (j : ℕ), by push_cast; ring⟩
+
+theorem prod_map_sum {ι α β : Type*} [CommMonoid β] (s : Finset ι) (M : ι → Multiset α) (f : α → β) :
+    ((∑ i ∈ s, M i).map f).prod = ∏ i ∈ s, ((M i).map f).prod := by
+  induction s using Finset.cons_induction with
+  | empty => simp
+  | cons j s hj ih => rw [Finset.sum_cons, Finset.prod_cons, Multiset.map_add (f := _), Multiset.prod_add, ih]
+
+theorem regTw {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (D : Pre E n) (hr : D.Reg)
+    (i : Fin D.c) {a d : ℕ} (P : CuspSub E a) (he : AscEmb (D.V i) P d) (k : Fin d) :
+    (CG.mk (P.twist (absPow E (spehExp d k + ((a : ℝ) - n) / 2)))).IsRegAlg := by
+  refine (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => ?_
+  obtain ⟨lam, hlam⟩ := hr τ
+  obtain ⟨m0, hm0, hsum⟩ := infAsc_holds E (D.N i) a d (D.V i) P (D.discrete i) he τ _ (D.inf i τ)
+  set s : ℝ := spehExp d k + ((a : ℝ) - n) / 2 with hs
+  have hexpo : ∀ τ, expo (absPow E s) τ = s :=
+    (GlobalTheory.CuspRep.InfType.expo_of_infType E _).2.1 s (absPow_isAbsPow E s)
+  have hm' : (P.twist (absPow E s)).HasInfChar τ (m0.map (· + (s : ℂ))) := by
+    have := hm0.twist (absPow E s)
+    rwa [hexpo] at this
+  rw [CG.HasInfChar.infChar_eq (π := CG.mk _) hm']
+  have hle : D.m i τ ≤ infOfWeight lam := by
+    rw [← hlam]
+    exact Finset.single_le_sum (f := fun j => D.m j τ) (fun _ _ => Multiset.zero_le _) (Finset.mem_univ i)
+  have hk : m0.map (· + (spehExp d k : ℂ)) ≤ D.m i τ := by
+    rw [hsum]
+    exact Finset.single_le_sum (f := fun j : Fin d => m0.map (· + (spehExp d j : ℂ))) (fun _ _ => Multiset.zero_le _)
+      (Finset.mem_univ k)
+  have hnd : (m0.map (· + (spehExp d k : ℂ))).Nodup := Multiset.nodup_of_le (hk.trans hle) (infOfWeight_nodup lam)
+  refine ⟨(Multiset.Nodup.of_map _ hnd).map (add_left_injective _), fun z hz => ?_⟩
+  obtain ⟨y, hy, rfl⟩ := Multiset.mem_map.1 hz
+  obtain ⟨j, hj⟩ := mem_infOfWeight (Multiset.mem_of_le (hk.trans hle) (Multiset.mem_map_of_mem _ hy))
+  refine ⟨j, ?_⟩
+  rw [hs]
+  push_cast
+  linear_combination hj
+
+end GalX
+
+end PositivityTheory.Rg.BcB.F.Rig
+
+end
+end
+end
+
+-- Source module: Formalism.PadicSubsetSums.StableGradedCounts.DegreeOneSplit
+
+section
+
+@[expose] public section
+
+open scoped NumberField
+
+namespace Formalism.IrreducibleCountingLemmas.Z
+
+theorem degree_one_split : DegreeOneSplit := by
+  intro F E _ _ _ _ _ h2 P _ hP hf he
+  classical
+  set p : Ideal (𝓞 F) := P.under (𝓞 F) with hp
+  have hfin : (p.primesOver (𝓞 E)).Finite := Algebra.QuasiFinite.finite_primesOver p
+  let _ : Fintype (p.primesOver (𝓞 E)) := hfin.fintype
+  have hsum := Ideal.sum_ramification_inertia_eq_finrank p (𝓞 E)
+  have hrank : Module.finrank (𝓞 F) (𝓞 E) = 2 := by
+    rw [← h2]
+    exact (IsFractionRing.finrank_eq (𝓞 F) F (𝓞 E) E).symm
+  rw [hrank] at hsum
+  have hf1 : P.inertiaDeg (𝓞 F) = 1 := by
+    have := Ideal.inertiaDeg_tower (R := ℤ) p P
+    rw [hf] at this
+    exact Nat.eq_one_of_mul_eq_one_left this.symm
+  have hPmem : P ∈ p.primesOver (𝓞 E) := ⟨inferInstance, ⟨rfl⟩⟩
+  have hpos : ∀ q : p.primesOver (𝓞 E), 1 ≤ q.1.ramificationIdx (𝓞 F) * q.1.inertiaDeg (𝓞 F) := by
+    intro q
+    have : q.1.IsPrime := q.2.1
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := 𝓞 F) q.1) (Ideal.inertiaDeg_pos q.1 (𝓞 F))
+  rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (⟨P, hPmem⟩ : p.primesOver (𝓞 E)))] at hsum
+  simp only [he, hf1, mul_one] at hsum
+  have hrest : ∑ q ∈ Finset.univ.erase (⟨P, hPmem⟩ : p.primesOver (𝓞 E)),
+      q.1.ramificationIdx (𝓞 F) * q.1.inertiaDeg (𝓞 F) = 1 := by omega
+  have hle : (Finset.univ.erase (⟨P, hPmem⟩ : p.primesOver (𝓞 E))).card ≤ 1 := by
+    calc _ = ∑ q ∈ Finset.univ.erase (⟨P, hPmem⟩ : p.primesOver (𝓞 E)), 1 := by simp
+      _ ≤ _ := Finset.sum_le_sum fun q _ => hpos q
+      _ = 1 := hrest
+  have hge : (Finset.univ.erase (⟨P, hPmem⟩ : p.primesOver (𝓞 E))).card ≠ 0 := by
+    intro h0
+    rw [Finset.card_eq_zero] at h0
+    rw [h0] at hrest
+    simp at hrest
+  rw [Finset.card_erase_of_mem (Finset.mem_univ _), Finset.card_univ] at hle hge
+  have key : Fintype.card { x // x ∈ p.primesOver (𝓞 E) } = 2 := by omega
+  rw [← Nat.card_coe_set_eq, Nat.card_eq_fintype_card]
+  exact key
+
+end Formalism.IrreducibleCountingLemmas.Z
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.GaloisPermutationReps.TameCongruences.LocallyConstantOneCochain
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Polynomial Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.UnitaryBC
+
+namespace PositivityTheory.Rg.DzCong.CongruenceClosure
+
+theorem isSplitAt_of_deg_one {E : Type} [Field E] [NumberField E] [IsCMField E] (v : HeightOneSpectrum (𝓞 E))
+    (hf : v.asIdeal.inertiaDeg ℤ = 1) (he : v.asIdeal.ramificationIdx ℤ = 1) : IsSplitAt v := by
+  classical
+  have := v.isPrime
+  have h2 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
+  have he' : v.asIdeal.ramificationIdx (𝓞 (maximalRealSubfield E)) = 1 := by
+    have := Ideal.ramificationIdx_tower (R := ℤ) (v.asIdeal.under (𝓞 (maximalRealSubfield E))) v.asIdeal
+    rw [he] at this
+    exact Nat.eq_one_of_mul_eq_one_left this.symm
+  have hc := Formalism.IrreducibleCountingLemmas.Z.degree_one_split (maximalRealSubfield E) E h2 v.asIdeal v.ne_bot hf he'
+  obtain ⟨P, Q, hne, hs⟩ := Set.ncard_eq_two.mp hc
+  have hX : ∃ X ∈ (v.asIdeal.under (𝓞 (maximalRealSubfield E))).primesOver (𝓞 E), X ≠ v.asIdeal := by
+    by_cases h : P = v.asIdeal
+    · exact ⟨Q, hs ▸ Set.mem_insert_of_mem _ rfl, fun hQ => hne (h.trans hQ.symm)⟩
+    · exact ⟨P, hs ▸ Set.mem_insert _ _, h⟩
+  obtain ⟨X, hX, hXv⟩ := hX
+  have hXb : X ≠ ⊥ := by
+    rintro rfl
+    have h0 : v.asIdeal.under (𝓞 (maximalRealSubfield E)) = ⊥ := hX.2.over.trans
+      (Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ (𝓞 E)))
+    exact v.ne_bot (Ideal.eq_bot_of_comap_eq_bot h0)
+  have := hX.1
+  refine ⟨⟨X, hX.1, hXb⟩, fun h => hXv (congrArg HeightOneSpectrum.asIdeal h), ?_⟩
+  ext1
+  exact hX.2.over.symm
+
+theorem continuous_coeff_charpoly {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (n i : ℕ) :
+    Continuous fun M : Matrix (Fin n) (Fin n) K => M.charpoly.coeff i := by
+  have h : (fun M : Matrix (Fin n) (Fin n) K => M.charpoly.coeff i) =
+      fun M => MvPolynomial.eval (fun ij : Fin n × Fin n => M ij.1 ij.2)
+        ((Matrix.charpoly.univ K (Fin n)).coeff i) := by
+    funext M
+    exact (Matrix.charpoly.univ_coeff_eval₂Hom (Fin n) (RingHom.id K) (fun ij : Fin n × Fin n => M ij.1 ij.2) i).symm
+  rw [h]
+  exact (MvPolynomial.continuous_eval _).comp
+    (continuous_pi fun ij => (continuous_apply ij.2).comp (continuous_apply ij.1))
+
+end PositivityTheory.Rg.DzCong.CongruenceClosure
+
+namespace PositivityTheory.Rg.DzCong
+
+end PositivityTheory.Rg.DzCong
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GaloisFromTraceFormula.GalWeakOfCuspU
+
+section
 
 @[expose] public section
 
@@ -204,3 +429,6 @@ theorem galStep_le {N : ℕ} (hW : GalWeak N) (E : Type) [Field E] [NumberField 
   exact ⟨B, hB, hBB ▸ hB'⟩
 
 end UpperTheory.V.Z.Tf.GaloisFromTraceFormula
+end
+end
+end

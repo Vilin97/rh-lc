@@ -8,10 +8,9 @@ public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankP
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBwdNF
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBwdNG
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarOmLocPf
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FrameActMemXplus
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FrameMemUUE
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.IsotropicSpanOrthogonalAnisotropicVector
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LsDatumA
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.PartnerCount
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBetaIC
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.IsotropicSpanOrthogonalAnisotropicVector
 import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.Lemmas
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
@@ -50,6 +49,156 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBwd
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.ReHermitianCombinationNonpos
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.EmbeddingIntegerAlgebraMap
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.NegOnePowSq
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.StabilizerIndexVolumes.StabLoc
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBwdBeta
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.IsotropicSpanOrthogonalAnisotropicVector
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LsDatumA
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FrameActMemXplus
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Classical
+open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.TermDef Formalism.L2.SG.DataCut Formalism.L2.SG.LsDatumB
+  Formalism.L2.SG.TermLoc Formalism.L2.SG.Pf.PCount Formalism.L2.SG.Pf.FrameGlobalPatching Formalism.L2.SG.Saturated Formalism.L2.SG.Pf.ScalarFramePf
+
+namespace Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.OrthogonalLocalComplement
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open BwdCut BwdBetaCut BwdNP BetaI
+
+variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
+  {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
+
+theorem frameAct_mem_Xplus {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T')
+    (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) (b : Fin (D.R.rS + 1)) :
+    frameAct (frame G) ξ b ∈ G.fl.Xplus := by
+  rw [SpanOmPf.Xplus_eq]
+  show ∑ a, ((ξ a b : 𝓞 D.host.E) : D.host.E) • frame G a ∈ _
+  exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
+
+theorem form_zero (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) {w : (VS D).V}
+    (hw : w ∈ orth (VS D) (F0.Xplus ⊔ (repF γ).fl.Xplus)) {v : (VS D).V}
+    (hv : v ∈ F0.Xplus ⊔ (repF γ).fl.Xplus) (c : (D.s.atP p).Ep) :
+    LocFacts₂ Zd.M p (baseChange₂ D p w) (c • baseChange₂ D p v) = 0 := by
+  rw [LocFacts.localForm_smul_right, ← h_eq, localForm_baseChange, (PI.UnitaryGroupMassFormula.BetaLUniq.mem_orth (VS D)).1 hw v hv, map_zero,
+    mul_zero]
+
+theorem baseChange_mem_W0 (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) {w : (VS D).V}
+    (hw : w ∈ orth (VS D) (F0.Xplus ⊔ (repF γ).fl.Xplus)) :
+    baseChange₂ D p w ∈ (locH Zd p).W0 (tLoc Zd p γ).f (tLoc Zd p γ).f' := by
+  show ∀ x ∈ (locH Zd p).Xp (tLoc Zd p γ).f ⊔ (locH Zd p).Xp (tLoc Zd p γ).f', (locH Zd p).h (baseChange₂ D p w) x = 0
+  intro x hx
+  rw [h_eq]
+  obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
+  clear hx
+  rw [LocFacts.localForm_add_right]
+  have hA : LocFacts₂ Zd.M p (baseChange₂ D p w) a = 0 := by
+    induction ha using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨i, rfl⟩ := hx
+      rw [tf]
+      refine form_zero Zd p γ hw (Submodule.mem_sup_left ?_) _
+      rw [SpanOmPf.Xplus_eq]
+      exact Submodule.subset_span ⟨i, rfl⟩
+    | zero => exact LocFacts.localForm_zero_right Zd p _
+    | add a b _ _ ha hb => rw [LocFacts.localForm_add_right, ha, hb, add_zero]
+    | smul c w _ hw => rw [LocFacts.localForm_smul_right, hw, mul_zero]
+  clear ha
+  have hB : LocFacts₂ Zd.M p (baseChange₂ D p w) b = 0 := by
+    induction hb using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨i, rfl⟩ := hx
+      rw [tf']
+      exact form_zero Zd p γ hw (Submodule.mem_sup_right (frameAct_mem_Xplus _ _ i)) _
+    | zero => exact LocFacts.localForm_zero_right Zd p _
+    | add a b _ _ ha hb => rw [LocFacts.localForm_add_right, ha, hb, add_zero]
+    | smul c w _ hw => rw [LocFacts.localForm_smul_right, hw, mul_zero]
+  rw [hA, hB, add_zero]
+
+end Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.OrthogonalLocalComplement
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FrameMemUUE
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Classical
+open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.TermDef Formalism.L2.SG.DataCut Formalism.L2.SG.LsDatumB
+  Formalism.L2.SG.TermLoc Formalism.L2.SG.Pf.PCount Formalism.L2.SG.Pf.FrameGlobalPatching Formalism.L2.SG.Saturated Formalism.L2.SG.Pf.ScalarFramePf
+
+namespace Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.OrthogonalLocalComplement
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open BwdCut BwdBetaCut BwdNP BetaI
+
+variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
+  {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
+
+theorem localSign_sq (p : PlF D) (a : Fin (D.R.rS + 1)) : TermLoc.sgnP D p a * TermLoc.sgnP D p a = 1 := by
+  unfold TermLoc.sgnP
+  split
+  · rename_i sg _
+    rw [← map_mul, Prod.mk_mul_mk, Formalism.L2.SG.Pf.FibD.neg_one_pow_sq, one_mul]
+    exact map_one sg.e.symm
+  · exact one_mul 1
+
+theorem hu_all (p : PlF D) (a : Fin (D.R.rS + 1)) : IsUnit (TermLoc.sgnP D p a * frFac Zd.δ p a) :=
+  IsUnit.mul ⟨Units.mkOfMulEqOne _ _ (localSign_sq p a), rfl⟩
+    (Formalism.L2.SG.Pf.StabShape.frFac_unit Zd.δ Zd.M (Zd.agree p) a)
+
+theorem frame_mem_UUE {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsFullLattice D.host.E Λ) {T T' : D.host.E}
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (G : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+    frame G b ∈ UUE Λ F (liftF G) := by
+  induction b using Fin.lastCases with
+  | last =>
+    rw [frame_lastG]
+    apply Submodule.subset_span
+    show G.fl.z ∈ (UU Λ F (liftF G) : Set (VS D).V)
+    exact Submodule.mem_sup_right (Submodule.subset_span rfl)
+  | cast i =>
+    rw [frame_csG]
+    haveI := hΛ
+    obtain ⟨s, hs, hsv⟩ := Formalism.L2.SG.Pf.exists_smul_mem Λ (G.fl.e i)
+    have hX : s • G.fl.e i ∈ UU Λ F (liftF G) := by
+      refine Submodule.mem_sup_left (Submodule.mem_sup_right ⟨hsv, ?_⟩)
+      show s • G.fl.e i ∈ (Xsp (liftF G) : Set (VS D).V)
+      exact Submodule.smul_of_tower_mem _ s (Submodule.subset_span ⟨i, rfl⟩)
+    have hs' : ((s : D.host.E)) ≠ 0 := by exact_mod_cast hs
+    have e : G.fl.e i = ((s : D.host.E))⁻¹ • (s • G.fl.e i) := by
+      rw [← algebraMap_smul (R := 𝓞 D.host.E) D.host.E s (G.fl.e i), smul_smul]
+      show G.fl.e i = (((s : D.host.E))⁻¹ * algebraMap (𝓞 D.host.E) D.host.E s) • G.fl.e i
+      rw [show algebraMap (𝓞 D.host.E) D.host.E s = (s : D.host.E) from rfl, inv_mul_cancel₀ hs', one_smul]
+    rw [e]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span hX)
+
+end Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.OrthogonalLocalComplement
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LocalOrthogonalHolds
+
+section
 
 @[expose] public section
 
@@ -146,3 +295,6 @@ theorem localOrthogonal_holds : PartialIsometryExtension Zd u u' F0 what₂ := b
   exact Submodule.neg_mem _ (bcP_X' Zd p F'₂ hd2)
 
 end Formalism.L2.SG.Pf.FrameGlobalPatching.FStar
+end
+end
+end

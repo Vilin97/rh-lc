@@ -14,13 +14,22 @@ import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TorsionPointsDefine
 import Development.WeilBound.CoreStatements.HodgeTatePoints.HcptgenRing
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLat
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatPol
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.PointHTOfFargues
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianAdicTorsionTwoStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianAdicTorsionThree
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.DualOrder
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.CompleteIntegersPropertiesStatement
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PolarisedDivisibleGroupExistsStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelFreeOverLocalRingStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianAdicTorsionFiveStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianAdicTorsionFourStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianAdicTorsionOneStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,12 +37,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -54,8 +62,71 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PointHTOfFarguesHodgeTateStatement
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Basify
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.OneArc
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.PointHTOfFargues
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct NumberField GlobalTheory GlobalTheory.PDivGroup GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT GlobalTheory.CompanionTheory.Ar.HT ReciprocityTheory.ChartRestriction.G.Semi
+
+noncomputable section
+
+namespace PositivityTheory.HtPt.Ge.Fargues
+open GlobalTheory.CompanionTheory
+
+theorem lie_free_finite (S : Scheme.{0}) (G : Over S) [GrpObj G] (hG : Smooth G.hom) (R : Type) [CommRing R]
+    [IsLocalRing R] (x : Spec (CommRingCat.of R) ⟶ S) (E : Type) [AddCommGroup E] [Module R E]
+    (M : LieModel G x E) : Module.Free R E ∧ Module.Finite R E := by
+  obtain ⟨n, ⟨b⟩⟩ := GlobalTheory.T.lie_model_free_over_local_ring S G hG R x E M
+  exact ⟨Module.Free.of_basis b, Module.Finite.of_basis b⟩
+
+def ordTower (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal)
+    (O : Type) [CommRing O] [IsDomain O] [Algebra O C] (hv : v.Integers O) (hp : v (p : C) < 1)
+    (hO : IsAdicComplete (Ideal.span {(p : O)}) O) (S : Scheme.{0}) [IsLocallyNoetherian S] (G : Over S) [GrpObj G]
+    [IsCommMonObj G] (hG : IsSemiAbelian G) (y : Spec (CommRingCat.of O) ⟶ S) (La : Type) [AddCommGroup La]
+    [Module.Free ℤ La] [Module.Finite ℤ La] (X : TorsTower p G y La) (L : Type) [AddCommGroup L] [Module O L]
+    (M : LieModel G y L) : OrdTower p O La L :=
+  haveI : IsLocalRing O := (GlobalTheory.T.complete_integers_properties p C v O hv hp hO).2.1.toIsLocalRing
+  have h3 := GlobalTheory.T.semiabelian_adic_torsion_one p C v O hv hp hO S G hG y La X
+  have h4 := GlobalTheory.T.semiabelian_adic_torsion_two p C v O hv hp hO S G hG y La X
+  have h5 := TwDer.der_main p C v O hv hp hO S G hG y La X L M
+  have h6 := (GlobalTheory.T.semiabelian_adic_torsion_four p C v O hv hp hO S G hG y La X L M).1
+  { A := fun n => (X.Γ n).btOrder ⊤
+    hopf := by
+      obtain ⟨U, H, -, -, -, h, -⟩ := h3
+      exact h
+    res_iff := fun n => (h4 n).1
+    ker_res := fun n => (h4 n).2
+    der := X.IsDer M
+    der_ex := fun n => (h5 n).1
+    der_unique := fun n => (h5 n).2.1
+    der_onto := fun n => (h5 n).2.2.1
+    der_add := fun n f g w w' hf hg => ((h5 n).2.2.2.1 f g w w' hf hg).1
+    der_mul := fun n f g w w' hf hg => ((h5 n).2.2.2.1 f g w w' hf hg).2
+    der_const := fun n => (h5 n).2.2.2.2.1
+    der_zero := fun n => (h5 n).2.2.2.2.2
+    der_res := h6 }
+
+theorem pointHT (hF : FarguesHodgeTate) : PointHT :=
+  GlobalTheory.T.pointHT_of_fargues_hodge_tate hF
+
+end PositivityTheory.HtPt.Ge.Fargues
+
+theorem PositivityTheory.HtPt.Ge.pointHT_of_fargues : FarguesHodgeTate → PointHT := PositivityTheory.HtPt.Ge.Fargues.pointHT
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.SequenceTestFunction
+
+section
 
 @[expose] public section
 
@@ -492,3 +563,5 @@ theorem PositivityTheory.Xgn.sequence_test_function : GlobalTheory.CompanionTheo
       change _ = spMap f ≫ (P.Γ₂.pt (b (π _))).left ≫ P.i₂
       rw [hb]
       exact spMap_cancel κ f _
+end
+end

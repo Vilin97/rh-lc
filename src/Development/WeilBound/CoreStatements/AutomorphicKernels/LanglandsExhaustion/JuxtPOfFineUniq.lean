@@ -1,11 +1,7 @@
 module
 
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtDec
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IrreducibleAdmissibleGL
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtShl
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtSwap
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtUniq
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtWords
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtDefs
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ZelevinskyJacquet.FineJacquetModules.SegDefs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +39,287 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IrreducibleAdmissibleGL
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.NotInSupportOfSubsingleton
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetMultiplicityPosStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ShuffleOfPermStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WordOccursOfSubquotientStatement
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
+import CompanionTheory.AutomorphicTheory.ProductFormulaTheory.CuspidalExhaustion.JuxtSwap
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CuspidalTwistInjectiveStatement
+import Mathlib.Tactic.Basify
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivMultiProdOne
+import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ZelevinskyJacquet.ZelevinskyInterleaving.Interleave
+import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ZelevinskyJacquet.ZelevinskyInterleaving.LInjective
+import CompanionTheory.AutomorphicTheory.ProductFormulaTheory.CuspidalExhaustion.JuxtWords
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtDec
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult Zc Zc.M
+
+namespace PositivityTheory.Exh
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+
+variable (k) in
+def FineUniqP : Prop :=
+  ∀ (Δ : Segment k) {N : ℕ} (hd : ∑ a, (Zc.Seg.dec Δ a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]
+    (τ : Representation ℂ (GL (Fin N) k) V), IsSmooth τ → τ.IsIrreducible →
+    ∀ f : τ.IntertwiningMap (prodIrr (Zc.Seg.dec Δ) hd), Function.Injective f → IsLSeg Δ τ
+
+theorem exists_emb_of_cast {h h' N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
+    (τ : Representation ℂ (GL (Fin N) k) V) (e : h = h') (x : Fin h → IrrGL (k := k)) (y : Fin h' → IrrGL (k := k))
+    (hxy : ∀ i, x i = y (Fin.cast e i)) (hd : ∑ a, (x a).1 = N) (f : τ.IntertwiningMap (prodIrr x hd))
+    (hf : Function.Injective f) :
+    ∃ hd' : ∑ a, (y a).1 = N, ∃ g : τ.IntertwiningMap (prodIrr y hd'), Function.Injective g := by
+  subst e
+  obtain rfl : x = y := funext fun i => by simpa using hxy i
+  exact ⟨hd, f, hf⟩
+
+theorem decW_get_eq (Γ : Segment k) (e : (decW Γ).length = Γ.len) (i : Fin (decW Γ).length) :
+    (decW Γ).get i = Zc.Seg.dec Γ (Fin.cast e i) := by
+  exact List.get_ofFn (fun a : Fin Γ.len => Γ.term (Fin.rev a)) i
+
+theorem decLP (hF : FineUniqP k) : DecLP k := by
+  intro Γ σ h
+  obtain ⟨hd, f, hf⟩ := h
+  have e : (decW Γ).length = Γ.len := List.length_ofFn
+  obtain ⟨hd', g, hg⟩ := exists_emb_of_cast σ.rep e (decW Γ).get (Zc.Seg.dec Γ) (decW_get_eq Γ e) hd f hf
+  exact hF Γ hd' σ.rep σ.2.rep.smooth σ.2.rep.irr g hg
+
+end PositivityTheory.Exh
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtShl
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult Zc Zc.M
+
+namespace PositivityTheory.Exh
+
+section Comb
+
+variable {T : Type*}
+
+theorem interleave_nil_left {v w : List T} (h : Zc.Comb.Interleave [] v w) : w = v := by
+  generalize hu : ([] : List T) = u at h
+  induction h with
+  | nil => rfl
+  | left _ _ => cases hu
+  | right _ ih => rw [ih hu]
+
+theorem interleave_nil_right {u w : List T} (h : Zc.Comb.Interleave u [] w) : w = u := by
+  generalize hv : ([] : List T) = v at h
+  induction h with
+  | nil => rfl
+  | left _ ih => rw [ih hv]
+  | right _ _ => cases hv
+
+theorem interleave_single {a : T} {v w : List T} (h : Zc.Comb.Interleave [a] v w) :
+    ∃ P Q : List T, v = P ++ Q ∧ w = P ++ a :: Q := by
+  generalize hu : [a] = u at h
+  induction h with
+  | nil => cases hu
+  | @left a' u v w h _ =>
+    obtain ⟨rfl, rfl⟩ := List.cons.inj hu
+    exact ⟨[], v, rfl, by rw [interleave_nil_left h]; rfl⟩
+  | @right a' u v w _ ih =>
+    obtain ⟨P, Q, rfl, rfl⟩ := ih hu
+    exact ⟨a' :: P, Q, rfl, rfl⟩
+
+theorem shuffle_two_single {a : T} {D w : List T} (h : Zc.Comb.Shuffle [[a], D] w) :
+    ∃ P Q : List T, D = P ++ Q ∧ w = P ++ a :: Q := by
+  cases h with
+  | cons hs hi =>
+    cases hs with
+    | cons hs' hi' =>
+      cases hs'
+      rw [interleave_nil_right hi'] at hi
+      exact interleave_single hi
+
+end Comb
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem decW_single (ρ : IrrGL (k := k)) (hρ : ρ.IsCusp) : decW (Segment.single ρ hρ) = [ρ] := by
+  simp [decW, Segment.single, Segment.term]
+
+theorem words_of_subq (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hW : ShlP k) (σ b : IrrGL (k := k)) (Δ : Segment k)
+    (hb : IsLSeg Δ b.rep) (hσ : SubqL σ [nxt Δ, b]) (l : List (IrrGL (k := k))) (hl : ∀ ρ ∈ l, ρ.IsCusp) (he : EmbL σ l) :
+    ∃ P Q : List (IrrGL (k := k)), decW Δ = P ++ Q ∧ l = P ++ nxt Δ :: Q := by
+  obtain ⟨hd1, hsub⟩ := hσ
+  obtain ⟨hd2, f, hf⟩ := he
+  have := GlobalTheory.SmGL.Model.nontrivial_of_isIrreducible σ.2.rep.irr
+  have hnt : ∃ v, f v ≠ 0 := by
+    obtain ⟨v, hv⟩ := exists_ne (0 : σ.2.rep.V)
+    exact ⟨v, fun h => hv (hf (h.trans (f.toLinearMap.map_zero).symm))⟩
+  have h1 : 1 ≤ jm l.get hd2 σ.rep := GlobalTheory.T.jacquet_multiplicity_pos hA l.get hd2 σ.rep σ.2.rep.smooth f hnt
+  have hwd : Wd σ.rep l := ⟨hd2, by intro h; rw [h] at h1; simp at h1⟩
+  have hwd2 : Wd (prodIrr [nxt Δ, b].get hd1) l :=
+    GlobalTheory.T.word_occurs_of_subquotient _ σ.rep (isSmooth_prodIrr _ _) hsub l hwd
+  have hc : (nxt Δ).IsCusp := Δ.isCusp_first.nu _
+  obtain ⟨L, hL, hsh⟩ := hW [nxt Δ, b].get hd1 ![Segment.single (nxt Δ) hc, Δ] (by
+      intro i
+      fin_cases i
+      · exact (single_spec hc).2.1
+      · exact hb) l hl hwd2
+  have hL' : L.Perm [Segment.single (nxt Δ) hc, Δ] := by
+    rw [← Multiset.coe_eq_coe, hL]
+    simp [Fin.univ_val_map]
+  have h2 := GlobalTheory.T.shuffle_of_perm _ _ l hsh (hL'.map decW)
+  rw [List.map_cons, List.map_cons, List.map_nil, decW_single] at h2
+  exact shuffle_two_single h2
+
+end PositivityTheory.Exh
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtSwap
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult Zc Zc.M
+
+namespace PositivityTheory.Exh
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem nu_nu_nat (x : IrrGL (k := k)) (a b : ℕ) : (x.nu (a : ℂ)).nu (b : ℂ) = x.nu ((a + b : ℕ) : ℂ) := by
+  rw [IrrGL.nu_nu, Nat.cast_add]
+
+theorem not_linked_single (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (ρ : IrrGL (k := k)) (hρ : ρ.IsCusp) (n j : ℕ)
+    (hj : j + 2 ≤ n) :
+    ¬ (Segment.single (ρ.nu (n : ℂ)) (hρ.nu _)).Linked (Segment.single (ρ.nu (j : ℂ)) (hρ.nu _)) := by
+  apply CompanionTheory.Exh.not_linked_single <;> assumption
+
+theorem mem_tail_decW (Δ : Segment k) (x : IrrGL (k := k)) (hx : x ∈ (decW Δ).tail) :
+    ∃ j : ℕ, j + 2 ≤ Δ.len ∧ x = Δ.first.nu (j : ℂ) := by
+  obtain ⟨m, hm, rfl⟩ := List.getElem_of_mem hx
+  have hm' : m + 1 < Δ.len := by
+    have := hm
+    simp [decW] at this
+    omega
+  refine ⟨Δ.len - (m + 2), by omega, ?_⟩
+  simp only [List.getElem_tail, decW, List.getElem_ofFn, Segment.term, Fin.val_rev]
+
+theorem move_past (hS : SwapP k) (σ ρ : IrrGL (k := k)) (hρ : ρ.IsCusp) :
+    ∀ (Q P : List (IrrGL (k := k))), (∀ q ∈ Q, ∃ hq : q.IsCusp, ¬ (Segment.single ρ hρ).Linked (Segment.single q hq)) →
+      EmbL σ (P ++ ρ :: Q) → EmbL σ (P ++ Q ++ [ρ]) := by
+  apply CompanionTheory.Exh.move_past <;> assumption
+
+theorem emb_move_end (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hS : SwapP k) (σ : IrrGL (k := k)) (Δ : Segment k)
+    (P Q : List (IrrGL (k := k))) (h1 : decW Δ = P ++ Q) (hP : P ≠ []) (he : EmbL σ (P ++ nxt Δ :: Q)) :
+    EmbL σ (decW Δ ++ [nxt Δ]) := by
+  obtain ⟨p, P', rfl⟩ := List.exists_cons_of_ne_nil hP
+  rw [h1]
+  refine move_past hS σ (nxt Δ) (Δ.isCusp_first.nu _) Q (p :: P') ?_ he
+  intro q hq
+  have hq' : q ∈ (decW Δ).tail := by rw [h1]; simp [hq]
+  obtain ⟨j, hj, rfl⟩ := mem_tail_decW Δ q hq'
+  exact ⟨Δ.isCusp_first.nu _, not_linked_single hA Δ.first Δ.isCusp_first Δ.len j (by omega)⟩
+
+end PositivityTheory.Exh
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtUniq
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult Zc Zc.M
+
+namespace PositivityTheory.Exh
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem eq_of_isLSeg (Δ : Segment k) (x y : IrrGL (k := k)) (hx : IsLSeg Δ x.rep) (hy : IsLSeg Δ y.rep) : x = y := by
+  obtain ⟨n, cx⟩ := x
+  obtain ⟨m, cy⟩ := y
+  obtain ⟨hx1, hxc⟩ := hx
+  obtain ⟨hy1, hyc⟩ := hy
+  have hnm : n = m := hx1.symm.trans hy1
+  subst hnm
+  obtain ⟨e⟩ := IsCosocle.unique hxc hyc
+  have hc : cx = cy := by
+    rw [← Quotient.out_eq cx, ← Quotient.out_eq cy]
+    exact Quotient.sound ⟨e.symm⟩
+  rw [hc]
+
+end PositivityTheory.Exh
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtWords
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult Zc Zc.M
+
+namespace PositivityTheory.Exh
+
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem decW_up (Δ : Segment k) : decW (up Δ) = nxt Δ :: decW Δ := by
+  apply CompanionTheory.Exh.decW_up <;> assumption
+
+theorem nxt_not_mem (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : Segment k) : nxt Δ ∉ decW Δ := by
+  intro h
+  rw [decW, List.mem_ofFn] at h
+  obtain ⟨i, hi⟩ := h
+  have h2 := GlobalTheory.T.cuspidal_twist_injective hA Δ.first Δ.isCusp_first _ _ hi
+  have h3 := (Fin.rev i).isLt
+  omega
+
+theorem eq_decW_of_append (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : Segment k) (u P Q : List (IrrGL (k := k)))
+    (h1 : decW Δ = P ++ Q) (h2 : u ++ [nxt Δ] = P ++ nxt Δ :: Q) : u = decW Δ := by
+  apply CompanionTheory.Exh.eq_decW_of_append <;> assumption
+
+end PositivityTheory.Exh
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.JuxtPOfFineUniq
+
+section
 
 @[expose] public section
 
@@ -91,4 +368,6 @@ theorem juxtP_of_fineUniq (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) 
 
 end PositivityTheory.Exh
 
+end
+end
 end

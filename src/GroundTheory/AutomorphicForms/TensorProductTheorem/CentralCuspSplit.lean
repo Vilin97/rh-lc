@@ -4,12 +4,16 @@ public import GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCusp
 public import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspCentral
 public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableLaplacian
 public import GroundTheory.AutomorphicForms.SmoothRep
-public import GroundTheory.AutomorphicForms.TensorProductTheorem.PeterssonComplement
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,10 +45,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.InnerProductSpace.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: GroundTheory.AutomorphicForms.TensorProductTheorem.PeterssonComplement
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GroundTheory.Automorphic
+
+namespace PeterssonComplement
+
+open Polynomial
+
+variable {V : Type*} [AddCommGroup V] [Module ℂ V]
+  {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (ι : V →ₗ[ℂ] H)
+
+variable {ι}
+
+theorem aeval_mem {T : Module.End ℂ V} {Z : Submodule ℂ V} (hZ : ∀ z ∈ Z, T z ∈ Z) (q : ℂ[X]) :
+    ∀ z ∈ Z, aeval T q z ∈ Z := by
+  induction q using Polynomial.induction_on with
+  | C a =>
+    intro z hz
+    rw [aeval_C, Module.algebraMap_end_apply]
+    exact Z.smul_mem a hz
+  | add p q hp hq =>
+    intro z hz
+    rw [map_add (f := _), LinearMap.add_apply]
+    exact Z.add_mem (hp z hz) (hq z hz)
+  | monomial k a ih =>
+    intro z hz
+    rw [pow_succ, ← mul_assoc, map_mul, aeval_X, Module.End.mul_apply]
+    exact ih _ (hZ z hz)
+
+theorem apply_aeval_comm (T : Module.End ℂ V) (q : ℂ[X]) (z : V) : T (aeval T q z) = aeval T q (T z) := by
+  have h := (Commute.all (X : ℂ[X]) q).map (aeval T)
+  rw [aeval_X] at h
+  exact congrArg (fun L : Module.End ℂ V => L z) h.eq
+
+end PeterssonComplement
+
+end GroundTheory.Automorphic
+end
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCuspSplit
+
+section
 
 @[expose] public section
 
@@ -419,3 +475,6 @@ theorem exists_isCompl_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProduc
 end AutomorphicForm
 
 end GroundTheory.Automorphic
+end
+end
+end

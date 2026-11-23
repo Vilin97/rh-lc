@@ -3,11 +3,11 @@ module
 public import Mathlib.Algebra.MvPolynomial.PDeriv
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RingTheory.Localization.AtPrime.Basic
-public import Lemmata.GeneralBFactLeftMore.Imports
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.RingTheory.Ideal.Span
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,11 +43,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.Ideal.BigOperators
+
+-- Source module: Lemmata.GeneralBFactLeftMore.Imports
+
+section
+
+@[expose] public section
+
+open MvPolynomial IsLocalRing
+
+namespace Bl.general_b_fact_left_more
+
+variable {n : ℕ}
+
+theorem goal1 (p : Fin n → ℂ) (a : MvPolynomial (Fin n) ℂ) :
+    a - C (eval p a) ∈ Ideal.span (Set.range fun i => X i - C (p i)) := by
+  induction a using MvPolynomial.induction_on with
+  | C c => simp
+  | add f g hf hg =>
+    have h : f + g - C (eval p (f + g)) = (f - C (eval p f)) + (g - C (eval p g)) := by
+      simp only [map_add (f := _)]; ring
+    rw [h]
+    exact Ideal.add_mem _ hf hg
+  | mul_X f i hf =>
+    have h : f * X i - C (eval p (f * X i)) =
+        (f - C (eval p f)) * X i + C (eval p f) * (X i - C (p i)) := by
+      simp only [map_mul, eval_X]; ring
+    rw [h]
+    refine Ideal.add_mem _ (Ideal.mul_mem_right _ _ hf) (Ideal.mul_mem_left _ _ ?_)
+    exact Ideal.subset_span ⟨i, rfl⟩
+
+end Bl.general_b_fact_left_more
+end
+end
+
+-- Source module: ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChartA
+
+section
 
 @[expose] public section
 
@@ -243,3 +281,5 @@ theorem exists_of_psi_mem_sq [IsLocalRing (locR K p)] (hK : K ≤ ptI p)
 end
 
 end ReciprocityTheory.AnForm.R.JacobianCriterionAlt
+end
+end

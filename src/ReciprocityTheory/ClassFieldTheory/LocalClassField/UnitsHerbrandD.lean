@@ -1,11 +1,12 @@
 module
 
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandC
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandA
+public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.FieldTheory.Galois.NormalBasis
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,14 +43,288 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.Pi
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandB
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandA
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Algebra.BigOperators.Group.Finset.Lemmas
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandC
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.DiscreteGroups.LocalClassField.UnitsFilt
+
+open Finset
+
+variable (K L : Type*) [NontriviallyNormedField K] [CompleteSpace K] [IsUltrametricDist K] [NormedField L]
+  [NormedAlgebra K L] [FiniteDimensional K L] [IsGalois K L]
+
+noncomputable def Phi : L ≃L[K] ((L ≃ₐ[K] L) → K) :=
+  (IsGalois.normalBasis K L).equivFun.toContinuousLinearEquiv
+
+variable {K L}
+
+theorem Phi_symm_apply (c : (L ≃ₐ[K] L) → K) :
+    (Phi K L).symm c = ∑ σ, c σ • σ (IsGalois.normalBasis K L 1) := by
+  show (IsGalois.normalBasis K L).equivFun.symm c = _
+  rw [Module.Basis.equivFun_symm_apply]
+  exact Finset.sum_congr rfl fun σ _ => by rw [IsGalois.normalBasis_apply]
+
+theorem Phi_map (σ : L ≃ₐ[K] L) (x : L) (τ : L ≃ₐ[K] L) : Phi K L (σ x) τ = Phi K L x (σ⁻¹ * τ) := by
+  have : σ x = (Phi K L).symm (fun τ => Phi K L x (σ⁻¹ * τ)) := by
+    rw [Phi_symm_apply]
+    calc σ x = σ ((Phi K L).symm (Phi K L x)) := by simp
+      _ = ∑ ρ, Phi K L x ρ • (σ * ρ) (IsGalois.normalBasis K L 1) := by
+
+        rw [Phi_symm_apply, map_sum]
+        exact Finset.sum_congr rfl fun ρ _ => by rw [map_smul]; rfl
+      _ = ∑ τ, Phi K L x (σ⁻¹ * τ) • τ (IsGalois.normalBasis K L 1) :=
+        Fintype.sum_equiv (Equiv.mulLeft σ) _ _ (fun ρ => by simp)
+  rw [this, ContinuousLinearEquiv.apply_symm_apply]
+
+theorem norm_Phi_map (σ : L ≃ₐ[K] L) (x : L) : ‖Phi K L (σ x)‖ ≤ ‖Phi K L x‖ := by
+  rw [pi_norm_le_iff_of_nonneg (norm_nonneg _)]
+  intro τ
+  rw [Phi_map]
+  exact norm_le_pi_norm _ _
+
+
+variable (K L) in
+noncomputable def proj1 : L →+ L where
+  toFun x := Phi K L x 1 • IsGalois.normalBasis K L 1
+  map_zero' := by simp
+  map_add' x y := by rw [map_add (f := _), Pi.add_apply, add_smul]
+
+theorem norm_Phi_proj1 (x : L) : ‖Phi K L (proj1 K L x)‖ ≤ ‖Phi K L x‖ := by
+  classical
+  rw [pi_norm_le_iff_of_nonneg (norm_nonneg _)]
+  intro τ
+  show ‖Phi K L (Phi K L x 1 • IsGalois.normalBasis K L 1) τ‖ ≤ _
+  rw [map_smul, Pi.smul_apply]
+  have : Phi K L (IsGalois.normalBasis K L 1) τ = if 1 = τ then 1 else 0 :=
+    Module.Basis.equivFun_self _ _ _
+  rw [this, smul_eq_mul]
+  split_ifs
+  · rw [mul_one]; exact norm_le_pi_norm _ _
+  · rw [mul_zero, norm_zero]; exact norm_nonneg _
+
+theorem sum_proj1 (x : L) : ∑ σ : L ≃ₐ[K] L, σ • proj1 K L (σ⁻¹ • x) = x := by
+  calc ∑ σ : L ≃ₐ[K] L, σ • proj1 K L (σ⁻¹ • x)
+      = ∑ σ : L ≃ₐ[K] L, Phi K L x σ • σ (IsGalois.normalBasis K L 1) := by
+        refine Finset.sum_congr rfl fun σ _ => ?_
+        show σ (Phi K L (σ⁻¹ x) 1 • IsGalois.normalBasis K L 1) = _
+        rw [map_smul, Phi_map, inv_inv, mul_one]
+    _ = x := by rw [← Phi_symm_apply, ContinuousLinearEquiv.symm_apply_apply]
+
+theorem norm_le_Phi (x : L) : ‖x‖ ≤ ‖((Phi K L).symm : ((L ≃ₐ[K] L) → K) →L[K] L)‖ * ‖Phi K L x‖ := by
+  have := ((Phi K L).symm : ((L ≃ₐ[K] L) → K) →L[K] L).le_opNorm (Phi K L x)
+  simpa using this
+
+theorem norm_Phi_le (x : L) : ‖Phi K L x‖ ≤ ‖(Phi K L : L →L[K] ((L ≃ₐ[K] L) → K))‖ * ‖x‖ :=
+  (Phi K L : L →L[K] ((L ≃ₐ[K] L) → K)).le_opNorm x
+
+theorem exists_consts : ∃ A B C : ℝ, 0 ≤ A ∧ 0 ≤ B ∧ 0 ≤ C ∧ (∀ x : L, ‖x‖ ≤ A * ‖Phi K L x‖) ∧
+    (∀ x : L, ‖Phi K L x‖ ≤ B * ‖x‖) ∧ ∀ x y : L, ‖Phi K L (x * y)‖ ≤ C * ‖Phi K L x‖ * ‖Phi K L y‖ := by
+  set A := ‖((Phi K L).symm : ((L ≃ₐ[K] L) → K) →L[K] L)‖
+  set B := ‖(Phi K L : L →L[K] ((L ≃ₐ[K] L) → K))‖
+  have hA : 0 ≤ A := norm_nonneg _
+  have hB : 0 ≤ B := norm_nonneg _
+  refine ⟨A, B, B * A * A, hA, hB, by positivity, norm_le_Phi, norm_Phi_le, fun x y => ?_⟩
+  calc ‖Phi K L (x * y)‖ ≤ B * ‖x * y‖ := norm_Phi_le _
+    _ = B * (‖x‖ * ‖y‖) := by rw [norm_mul]
+    _ ≤ B * ((A * ‖Phi K L x‖) * (A * ‖Phi K L y‖)) := by
+      gcongr
+      · exact norm_le_Phi x
+      · exact norm_le_Phi y
+    _ = B * A * A * ‖Phi K L x‖ * ‖Phi K L y‖ := by ring
+
+
+variable (K L) in
+def ball (t : ℝ) (ht : 0 ≤ t) : AddSubgroup L where
+  carrier := {x | ‖Phi K L x‖ ≤ t}
+  zero_mem' := by simpa using ht
+  add_mem' := fun {x y} hx hy => by
+    show ‖Phi K L (x + y)‖ ≤ t
+    rw [map_add (f := _)]
+    exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+  neg_mem' := fun {x} hx => by
+    show ‖Phi K L (-x)‖ ≤ t
+    rw [map_neg, norm_neg]; exact hx
+
+theorem mem_ball {t : ℝ} {ht : 0 ≤ t} {x : L} : x ∈ ball K L t ht ↔ ‖Phi K L x‖ ≤ t := Iff.rfl
+
+end ReciprocityTheory.DiscreteGroups.LocalClassField.UnitsFilt
+end
+end
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandB
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.DiscreteGroups.LocalClassField.UnitsFilt
+
+open Finset
+
+variable {R : Type*} [Field R] {G : Type*} [Group G] [Fintype G] [MulSemiringAction G R]
+
+def act (g : G) : Rˣ →* Rˣ := Units.map (MulSemiringAction.toRingHom G R g : R →* R)
+
+theorem act_val (g : G) (u : Rˣ) : ((act g u : Rˣ) : R) = g • (u : R) := rfl
+
+
+variable (G) in
+def normU : Rˣ →* Rˣ := ∏ g : G, act g
+
+theorem normU_val (u : Rˣ) : ((normU G u : Rˣ) : R) = ∏ g : G, g • (u : R) := by
+  simp [normU, Units.coe_prod, act_val]
+
+theorem smul_prod_univ (g : G) (x : R) : g • ∏ g' : G, g' • x = ∏ g' : G, g' • x := by
+  rw [← MulSemiringAction.toRingHom_apply, map_prod]
+  simp only [MulSemiringAction.toRingHom_apply, smul_smul]
+  exact Fintype.prod_equiv (Equiv.mulLeft g) _ _ fun _ => rfl
+
+theorem prod_smul_smul (g : G) (x : R) : ∏ g' : G, g' • g • x = ∏ g' : G, g' • x := by
+  simp only [smul_smul]
+  exact Fintype.prod_equiv (Equiv.mulRight g) _ _ fun _ => rfl
+
+theorem sum_pow_eq {g₀ : G} (hg : ∀ g, g ∈ Subgroup.zpowers g₀) (f : G → R) :
+    ∑ k ∈ range (orderOf g₀), f (g₀ ^ k) = ∑ g, f g := by
+  classical
+  rw [← IsCyclic.image_range_orderOf hg, sum_image]
+  intro a ha b hb hab
+  exact pow_injOn_Iio_orderOf (by simpa using ha) (by simpa using hb) hab
+
+theorem telescope (g₀ : G) (z : R) (k : ℕ) :
+    g₀ • ∑ j ∈ range k, g₀ ^ j • z - ∑ j ∈ range k, g₀ ^ j • z = g₀ ^ k • z - z := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [sum_range_succ, smul_add, smul_smul, ← pow_succ']
+    linear_combination ih
+
+namespace Filt
+
+variable {I : ℕ → AddSubgroup R} {e : R →+ R} (h : Filt G I e)
+
+include h
+
+theorem act_mem {n : ℕ} (g : G) {u : Rˣ} (hu : u ∈ h.V n) : act g u ∈ h.V n := by
+  rw [mem_V, act_val]
+  have := h.smul n g _ hu
+  rwa [smul_sub, smul_one] at this
+
+theorem normU_mem {n : ℕ} {u : Rˣ} (hu : u ∈ h.V n) : normU G u ∈ h.V n := by
+  rw [normU, MonoidHom.finsetProd_apply]
+  exact (h.V n).prod_mem fun g _ => h.act_mem g hu
+
+theorem norm_surj (u : Rˣ) (hu : (u : R) - 1 ∈ I 0) (hfix : ∀ g : G, g • (u : R) = u) :
+    ∃ v : Rˣ, (v : R) - 1 ∈ I 0 ∧ ∏ g : G, g • (v : R) = u := by
+  let Z : Subgroup Rˣ :=
+    { carrier := {u | ∀ g : G, act g u = u}
+      one_mem' := fun g => map_one _
+      mul_mem' := fun {a b} ha hb g => by rw [map_mul, ha g, hb g]
+      inv_mem' := fun {a} ha g => by rw [map_inv, ha g] }
+  have step : ∀ n, ∀ u ∈ h.V n, u ∈ Z → ∃ v ∈ h.V n, u / normU G v ∈ h.V (n + 1) := by
+    intro n u hu hZ
+    have hx : ∀ g : G, g • ((u : R) - 1) = (u : R) - 1 := fun g => by
+      rw [smul_sub, smul_one, ← act_val, hZ g]
+    have hy : e ((u : R) - 1) ∈ I n := h.e_mem n _ hu
+    have htr : ∑ g : G, g • e ((u : R) - 1) = (u : R) - 1 := by
+      conv_rhs => rw [← h.e_sum ((u : R) - 1)]
+      exact Finset.sum_congr rfl fun g _ => by rw [hx]
+    refine ⟨h.mkU _ (h.le_zero n hy), h.mkU_mem _ hy, h.div_mem_V (h.normU_mem (h.mkU_mem _ (h.le_zero n hy))) ?_⟩
+    have hp := h.prod_one_add (n := n) univ (fun g : G => g • e ((u : R) - 1)) (fun g _ => h.smul n g _ hy)
+    rw [htr] at hp
+    rw [normU_val, mkU_val]
+    simp only [smul_add, smul_one]
+    have := (I (n + 1)).neg_mem hp
+    convert this using 1
+    ring
+  obtain ⟨v, hv, hvu⟩ := exists_of_approx h.V h.V_comp h.V_sep Z (normU G)
+    (fun n u hu => h.normU_mem hu)
+    (fun u g => Units.ext (by rw [act_val, normU_val, smul_prod_univ])) step u hu
+    (fun g => Units.ext (hfix g))
+  exact ⟨v, hv, by rw [← normU_val, hvu]⟩
+
+theorem hilbert90_matrix_subalgebra_norm_one (g₀ : G) (hg : ∀ g, g ∈ Subgroup.zpowers g₀) (u : Rˣ) (hu : (u : R) - 1 ∈ I 0)
+    (hN : ∏ g : G, g • (u : R) = 1) :
+    ∃ v : Rˣ, (v : R) - 1 ∈ I 0 ∧ g₀ • (v : R) = u * v := by
+  have step : ∀ n, ∀ u ∈ h.V n, u ∈ (normU G).ker →
+      ∃ v ∈ h.V n, u / (act g₀ / MonoidHom.id _ : Rˣ →* Rˣ) v ∈ h.V (n + 1) := by
+    intro n u hu hZ
+    set x : R := (u : R) - 1 with hxdef
+    have hx : x ∈ I n := hu
+    have hux : (u : R) = 1 + x := by rw [hxdef]; ring
+    have htr : ∑ g : G, g • x ∈ I (n + 1) := by
+      have hp := h.prod_one_add (n := n) univ (fun g : G => g • x) (fun g _ => h.smul n g _ hx)
+      have h1 : ∏ g : G, (1 + g • x) = 1 := by
+        have := congrArg Units.val (MonoidHom.mem_ker.1 hZ)
+        rw [normU_val, hux] at this
+        simpa only [smul_add, smul_one, Units.val_one] using this
+      rw [h1, sub_self, zero_sub] at hp
+      simpa using (I (n + 1)).neg_mem hp
+    set y : R := ∑ k ∈ range (orderOf g₀), ∑ j ∈ range k, g₀ ^ j • e ((g₀ ^ k)⁻¹ • x) with hydef
+    have hy : y ∈ I n := (I n).sum_mem fun k _ => (I n).sum_mem fun j _ =>
+      h.smul n _ _ (h.e_mem n _ (h.smul n _ _ hx))
+    have hd : g₀ • y - y = x - e (∑ g : G, g • x) := by
+      rw [hydef, smul_sum, ← sum_sub_distrib]
+      simp only [telescope]
+
+      rw [sum_sub_distrib, sum_pow_eq hg (fun g => g • e (g⁻¹ • x)), h.e_sum, ← map_sum,
+      sum_pow_eq hg (fun g => g⁻¹ • x)]
+      congr 2
+      exact Fintype.sum_equiv (Equiv.inv G) _ _ fun _ => rfl
+    have hy0 := h.le_zero n hy
+    have hvV : h.mkU y hy0 ∈ h.V n := h.mkU_mem y hy
+    refine ⟨h.mkU y hy0, hvV, h.div_mem_V
+      ((h.V 0).div_mem (h.act_mem g₀ (h.V_le_zero n hvV)) (h.V_le_zero n hvV)) ?_⟩
+    set z : R := (1 + y)⁻¹ - 1 with hzdef
+    have hz : z ∈ I n := h.inv n y hy
+    have hyz : (1 + y) * (1 + z) = 1 := by
+      rw [hzdef, add_sub_cancel, mul_inv_cancel₀ (h.one_add_ne_zero hy0)]
+    have hval : (((act g₀ / MonoidHom.id _ : Rˣ →* Rˣ) (h.mkU y hy0) : Rˣ) : R) = (1 + g₀ • y) * (1 + z) := by
+      rw [MonoidHom.div_apply, MonoidHom.id_apply, div_eq_mul_inv, Units.val_mul, act_val,
+        Units.val_inv_eq_inv_val, mkU_val, smul_add, smul_one, hzdef, add_sub_cancel]
+    rw [hval, hux]
+    have : 1 + x - (1 + g₀ • y) * (1 + z) = e (∑ g : G, g • x) - (g₀ • y - y) * z := by
+      linear_combination -hyz - hd
+    rw [this]
+    exact (I (n + 1)).sub_mem (h.e_mem _ _ htr)
+      (h.mul n _ _ ((I n).sub_mem (h.smul n _ _ hy) hy) (h.le_zero n hz))
+  obtain ⟨v, hv, hvu⟩ := exists_of_approx h.V h.V_comp h.V_sep (normU G).ker (act g₀ / MonoidHom.id _)
+    (fun n u hu => (h.V n).div_mem (h.act_mem g₀ hu) hu)
+    (fun u => by
+      rw [MonoidHom.mem_ker, MonoidHom.div_apply, MonoidHom.id_apply, map_div, div_eq_one]
+      exact Units.ext (by rw [normU_val, normU_val, act_val, prod_smul_smul])) step u hu
+    (Units.ext (by rw [normU_val, hN]; rfl))
+  refine ⟨v, hv, ?_⟩
+  rw [MonoidHom.div_apply, MonoidHom.id_apply, div_eq_iff_eq_mul] at hvu
+  rw [← act_val, hvu, Units.val_mul]
+
+end Filt
+
+end ReciprocityTheory.DiscreteGroups.LocalClassField.UnitsFilt
+end
+end
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.UnitsHerbrandD
+
+section
 
 @[expose] public section
 
@@ -214,3 +488,5 @@ theorem exists_units_subgroup [IsUltrametricDist L] : ∃ S : Subgroup Lˣ,
     field_simp
 
 end ReciprocityTheory.DiscreteGroups.LocalClassField.UnitsFilt
+end
+end

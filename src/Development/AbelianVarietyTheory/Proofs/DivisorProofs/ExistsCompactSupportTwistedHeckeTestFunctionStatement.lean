@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactSupportTwistedHeckeTestFunction
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +41,36 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnita
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoordL
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntCZero
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactSupportTwistedHeckeTestFunction
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx GlobalTheory.AwayOrb GlobalTheory.FinClsLoc
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.FinClsLoc
+
+theorem support_subset_compact : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (L : G.Level) (f : G.GAf → ℂ),
+    IsTest (MonoidHom.id _) L.K.toSubgroup L.K.toSubgroup f → ∃ Ω : Set G.GAf, IsCompact Ω ∧ ∀ g, f g ≠ 0 → g ∈ Ω := by
+  intro p _ G L f hf
+  obtain ⟨S, hS⟩ := hf.2.2.2
+  refine ⟨⋃ s ∈ S, (fun q : G.GAf × G.GAf => q.1 * s * q.2) '' ((L.K : Set G.GAf) ×ˢ (L.K : Set G.GAf)), ?_, ?_⟩
+  · refine S.isCompact_biUnion fun s _ => ?_
+    exact (L.compact.prod L.compact).image (by fun_prop)
+  · intro g hg
+    obtain ⟨s, hs, k₁, hk₁, k₂, hk₂, rfl⟩ := hS g hg
+    exact Set.mem_biUnion hs ⟨(k₁, k₂), ⟨hk₁, hk₂⟩, rfl⟩
+
+end GlobalTheory.FinClsLoc
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactSupportTwistedHeckeTestFunctionStatement
+
+section
+
 @[expose] public section
 
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx GlobalTheory.AwayOrb GlobalTheory.FinClsLoc
@@ -50,3 +79,5 @@ open scoped TensorProduct Classical
 theorem _root_.GlobalTheory.T.exists_compact_support_twistedHeckeTestFunction : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (L : G.Level) (f : G.GAf → ℂ),
     IsTest (MonoidHom.id _) L.K.toSubgroup L.K.toSubgroup f → ∃ Ω : Set G.GAf, IsCompact Ω ∧ ∀ g, f g ≠ 0 → g ∈ Ω := by
   first | (exact @GlobalTheory.FinClsLoc.support_subset_compact) | (exact GlobalTheory.FinClsLoc.support_subset_compact) | (intros; apply GlobalTheory.FinClsLoc.support_subset_compact  <;> assumption)
+end
+end

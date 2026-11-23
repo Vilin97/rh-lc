@@ -4,17 +4,20 @@ public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.H
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FiniteAdelicComparison.MemLocFrom
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.ParabolicImageOfBasisAdapted
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalVolumeIndices.CompPiVLocGSame
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.HSubCmp
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.MemSsubIffSG
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.MemSsubIffFlagC
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.SecondProjSplitMulVec
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,9 +44,62 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.MemSsubIffSG
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.HSubCmp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PIW.MassDataColumns
+
+open Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub MassDataIdxSpl MassDataIdxStIm
+open scoped TensorProduct
+
+section Split
+
+variable {F E R : Type} [Field F] [Field E] [Algebra F E] [Field R] [Algebra F R]
+  (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (θ : R ⊗[F] E ≃ₐ[R] R × R)
+
+theorem pr_eq_iff {m : Type} (v w : m → R ⊗[F] E) : v = w ↔ pr1 θ v = pr1 θ w ∧ pr2 θ v = pr2 θ w := by
+  constructor
+  · rintro rfl
+    exact ⟨rfl, rfl⟩
+  · rintro ⟨h1, h2⟩
+    funext i
+    apply θ.injective
+    have e1 := congrFun h1 i
+    have e2 := congrFun h2 i
+    rw [fst_apply_alt, fst_apply_alt] at e1
+    rw [snd_apply_alt, snd_apply_alt] at e2
+    exact Prod.ext e1 e2
+
+theorem mem_Hsub_iff {r : ℕ} (P : Frame E n r) (g : HA R σ J) :
+    g ∈ Hsub R σ J P ↔ ∀ b : Fin (r + 1 + r),
+      cmp1 σ J θ g *ᵥ pr1 θ (ratV (F := F) R (tupH P b)) = pr1 θ (ratV (F := F) R (tupH P b)) ∧
+      cmp2 σ J θ g *ᵥ pr2 θ (ratV (F := F) R (tupH P b)) = pr2 θ (ratV (F := F) R (tupH P b)) := by
+  rw [show (g ∈ Hsub R σ J P) ↔ g ∈ stabT R σ J (tupH P) from Iff.rfl, mem_stabT]
+  refine forall_congr' fun b => ?_
+  rw [pr_eq_iff θ]
+  simp only [lin, Matrix.mulVecLin_apply, firstProj_split_mulVec, secondProj_split_mulVec]
+  rfl
+
+end Split
+
+end PIW.MassDataColumns
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.HAdapt
+
+section
 
 @[expose] public section
 
@@ -288,3 +344,6 @@ def HAdaptQ (X : HidaSetting D) (hb : AdBridgeIso X.B.I) (u : D.what₂.Word) (p
       LatBasis X p θ (reindex₂ X p Q) ∧ WClause X hb u p θ Q
 
 end PIW.MassDataColumns
+end
+end
+end

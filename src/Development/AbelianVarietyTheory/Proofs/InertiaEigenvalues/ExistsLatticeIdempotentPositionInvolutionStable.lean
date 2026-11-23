@@ -2,9 +2,6 @@ module
 
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlternatingDifferenceTermWindow
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DltEqZero
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIsIntegralSmallElementPowSmulStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsIntegralOrIsIntegralInvInFieldFactorStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PowSmulMemAdjoinGenStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,6 +47,119 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsIntegralOrIsIntegralInvInFieldFactorStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FullLatticeSandwichBetweenIntegralElements
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIsIntegralSmallElementPowSmul
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma GlobalTheory.UnitLemma.Desc Polynomial
+
+namespace GlobalTheory.UnitLemma.Desc
+
+theorem dvr_dvd_pow {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {a y : O}
+    (ha : a ∈ IsLocalRing.maximalIdeal O) (hy : y ≠ 0) : ∃ k : ℕ, y ∣ a ^ k := by
+  have hyt : IsDiscreteValuationRing.addVal O y ≠ ⊤ := by
+    rwa [Ne, IsDiscreteValuationRing.addVal_eq_top_iff]
+  obtain ⟨n, hn⟩ := WithTop.ne_top_iff_exists.1 hyt
+  have ha1 : 1 ≤ IsDiscreteValuationRing.addVal O a := by
+    rw [ENat.one_le_iff_ne_zero, Ne, IsDiscreteValuationRing.addVal_eq_zero_iff]
+    exact ha
+  refine ⟨n, IsDiscreteValuationRing.addVal_le_iff_dvd.1 ?_⟩
+  rw [IsDiscreteValuationRing.addVal_pow, ← hn]
+  calc ((n : ℕ∞)) = n • (1 : ℕ∞) := by simp
+    _ ≤ n • IsDiscreteValuationRing.addVal O a := nsmul_le_nsmul_right ha1 n
+
+theorem smul_pow_integral (K : UQ) (B : InvAlg K) (a : K.O) (ha : K.Small a) (x : B.A) :
+    ∃ k : ℕ, IsIntegral K.O ((al K a ^ k) • x) := by
+  have hxE : IsIntegral K.E x := Algebra.IsIntegral.isIntegral x
+  obtain ⟨⟨m, hm⟩, hmx⟩ :=
+    IsIntegral.exists_multiple_integral_of_isLocalization (nonZeroDivisors K.O) x hxE
+  have hm0 : m ≠ 0 := nonZeroDivisors.ne_zero hm
+  obtain ⟨k, w, hw⟩ := dvr_dvd_pow ha.2.1 hm0
+  refine ⟨k, ?_⟩
+  have hsm : (m • x : B.A) = (⟨m, hm⟩ : nonZeroDivisors K.O) • x := rfl
+  have : (al K a ^ k) • x = algebraMap K.O B.A w * (m • x) := by
+    rw [← map_pow, algebraMap_smul, hw, mul_comm, mul_smul, Algebra.smul_def]
+  rw [this]
+  exact isIntegral_algebraMap.mul (hsm ▸ hmx)
+
+end GlobalTheory.UnitLemma.Desc
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIsIntegralSmallElementPowSmulStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma GlobalTheory.UnitLemma.Desc Polynomial
+
+theorem _root_.GlobalTheory.T.exists_isIntegral_smallElement_pow_smul : ∀ (K : UQ) (B : InvAlg K) (a : K.O), K.Small a → ∀ x : B.A, ∃ k : ℕ, IsIntegral K.O ((al K a ^ k) • x) := by
+  first | exact @GlobalTheory.UnitLemma.Desc.smul_pow_integral | exact GlobalTheory.UnitLemma.Desc.smul_pow_integral | (intros; apply GlobalTheory.UnitLemma.Desc.smul_pow_integral <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PowSmulMemAdjoinGen
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.UnitLemma.Desc
+
+open GlobalTheory.UnitLemma Polynomial
+
+theorem span_adjoin_gen_eq_top {K : UQ} (B : InvAlg K) (hP : B.P.Separable) :
+    Submodule.span K.E ((Subalgebra.toSubmodule (Algebra.adjoin K.O {B.g}) : Submodule K.O B.A) : Set B.A) = ⊤ := by
+  rw [eq_top_iff]
+  intro x _
+  obtain ⟨f, rfl⟩ := Sandwich.exists_aeval B hP x
+  rw [aeval_eq_sum_range]
+  refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
+  show B.g ^ i ∈ Algebra.adjoin K.O {B.g}
+  exact Subalgebra.pow_mem _ (Algebra.subset_adjoin (Set.mem_singleton _)) i
+
+theorem pow_smul_mem_adjoin_gen : ∀ (K : UQ) (B : InvAlg K) (a : K.O), B.P.Separable → K.Small a →
+    ∃ N : ℕ, ∀ r : B.A, IsIntegral K.O r → (al K a ^ N) • r ∈ Algebra.adjoin K.O {B.g} := by
+  intro K B a hP ha
+  obtain ⟨m, hm⟩ := Sandwich.integral_sub B hP a ha.2.1 _ (span_adjoin_gen_eq_top B hP)
+  refine ⟨m, fun r hr => ?_⟩
+  have h := hm m le_rfl r hr
+  have e : (al K a ^ m) • r = algebraMap K.O B.A a ^ m * r := by
+    rw [Algebra.smul_def, al, ← map_pow, ← map_pow, ← IsScalarTower.algebraMap_apply]
+  rw [e]
+  exact h
+
+end GlobalTheory.UnitLemma.Desc
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PowSmulMemAdjoinGenStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma GlobalTheory.UnitLemma.Desc Polynomial
+
+theorem _root_.GlobalTheory.T.exists_pow_smul_mem_adjoin_gen_of_separable : ∀ (K : UQ) (B : InvAlg K) (a : K.O), B.P.Separable → K.Small a → ∃ N : ℕ, ∀ r : B.A, IsIntegral K.O r → (al K a ^ N) • r ∈ Algebra.adjoin K.O {B.g} := by
+  first | exact @GlobalTheory.UnitLemma.Desc.pow_smul_mem_adjoin_gen | exact GlobalTheory.UnitLemma.Desc.pow_smul_mem_adjoin_gen | (intros; apply GlobalTheory.UnitLemma.Desc.pow_smul_mem_adjoin_gen <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLatticeIdempotentPositionInvolutionStable
+
+section
 
 @[expose] public section
 
@@ -241,3 +350,6 @@ theorem exists_pos : ∀ (K : UQ) (B : InvAlg K) (ι : Type) [Fintype ι] (e π 
   exact ⟨p, hp⟩
 
 end GlobalTheory.UnitLemma.Desc
+end
+end
+end

@@ -8,32 +8,31 @@ public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IntegralCon
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimTranslationRepUnitaryModel
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousCoeffRowAct
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DifferentiableCoeffRowAct
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandInfinitesimalCharacter
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LineInverse
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecondCountableUnitary
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumMemOfStable
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WeylCharEqGtChar
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HwIrred
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.DiscreteSeriesTopClasses.IsInvOne
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.Topology.Instances.Matrix
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-public import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +40,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,11 +52,126 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LineInverse
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.InstBorelUK
+import Mathlib.Tactic.TypeStar
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.IsMultZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumMemOfStable
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WeylCharEqGtChar
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HwIrred
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.Star.Unitary
-import Mathlib.Topology.Sheaves.Init
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WtRInjective
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandInfinitesimalCharacter
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open PositivityTheory.RgTw (Mat)
+
+namespace GlobalTheory.CompanionTheory.GelfAct
+
+variable {n : ℕ}
+
+open scoped Matrix.Norms.Operator in
+theorem hasDerivAt_exp_entry (X : Mat n) (a b : Fin n) :
+    HasDerivAt (fun t : ℝ => NormedSpace.exp ((t : ℂ) • X) a b) (X a b) 0 := by
+  have hsmul (t : ℝ) : (t : ℂ) • X = t • X := by ext; simp
+  simp only [hsmul]
+  have h := hasDerivAt_exp_smul_const (𝕂 := ℝ) X (0 : ℝ)
+  rw [zero_smul, NormedSpace.exp_zero, one_mul] at h
+  let entry : Mat n →L[ℝ] ℂ := (Matrix.entryLinearMap ℝ ℂ a b).toContinuousLinearMap
+  exact entry.hasFDerivAt.comp_hasDerivAt 0 h
+
+end GlobalTheory.CompanionTheory.GelfAct
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecondCountableUnitary
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory Matrix
+open scoped ComplexConjugate Kronecker InnerProductSpace
+
+namespace GlobalTheory.CompanionTheory.CxAvg
+
+section Abstract
+
+variable {K E : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K]
+  [SecondCountableTopology K] [MeasurableSpace K] [BorelSpace K]
+  [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E] [CompleteSpace E]
+  (μ : Measure K) [μ.IsHaarMeasure] (F : K →* (E →L[ℂ] E))
+
+variable {F}
+
+end Abstract
+
+section Concrete
+
+open PositivityTheory.RgTw (Mat hb)
+open PositivityTheory.RgBcC
+
+variable {n : ℕ}
+
+theorem Rm_unitary (lam : Fin n → ℤ) (k : Matrix.unitaryGroup (Fin n) ℂ) :
+    Rm lam k.1 = LinearMap.toMatrix (wb lam) (wb lam)
+      (GlobalTheory.Branching.sqRep ℂ n (dw lam) (GlobalTheory.Branching.unitaryIncl n k)) := by
+  have h : IsUnit k.1.det := (Matrix.isUnit_iff_isUnit_det _).1 (GlobalTheory.Branching.unitaryIncl n k).isUnit
+  have e : Matrix.nonsingInvUnit k.1 h = GlobalTheory.Branching.unitaryIncl n k := Units.ext rfl
+  rw [Rm, dite_eq_left h, e]
+
+theorem Rm_mul (lam : Fin n → ℤ) (k k' : Matrix.unitaryGroup (Fin n) ℂ) :
+    Rm lam (k * k').1 = Rm lam k.1 * Rm lam k'.1 := by
+  rw [Rm_unitary, Rm_unitary, Rm_unitary, map_mul, map_mul, Module.End.mul_eq_comp]
+  exact LinearMap.toMatrix_comp _ _ _ _ _
+
+theorem Rm_one (lam : Fin n → ℤ) : Rm lam (1 : Matrix.unitaryGroup (Fin n) ℂ).1 = 1 := by
+  rw [Rm_unitary, map_one, map_one]
+  exact LinearMap.toMatrix_id _
+
+theorem continuous_unitaryIncl : Continuous (GlobalTheory.Branching.unitaryIncl n) := by
+  rw [Units.continuous_iff]
+  exact ⟨continuous_subtype_val, continuous_subtype_val.matrix_conjTranspose⟩
+
+theorem continuous_Rm (lam : Fin n → ℤ) :
+    Continuous fun k : Matrix.unitaryGroup (Fin n) ℂ => Rm lam k.1 := by
+  simp only [Rm_unitary]
+  refine continuous_matrix fun i j => ?_
+  simp only [LinearMap.toMatrix_apply]
+  exact (GlobalTheory.CompanionTheory.WInfCont.continuous_sqRep_coeff (dw lam) (wb lam j) ((wb lam).coord i)).comp
+    continuous_unitaryIncl
+
+end Concrete
+
+end GlobalTheory.CompanionTheory.CxAvg
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsHighestWeightHermitianDerivation
+
+section
 
 @[expose] public section
 
@@ -410,3 +523,6 @@ theorem rmModel : ∀ {n : ℕ} (ν : Fin n → ℤ), Antitone ν → ∃ (L : T
   exact ⟨EuclideanSpace ℂ (Fin d), inferInstance, inferInstance, inferInstance, frame_model e he hν⟩
 
 end GlobalTheory.CompanionTheory.RmModel
+end
+end
+end

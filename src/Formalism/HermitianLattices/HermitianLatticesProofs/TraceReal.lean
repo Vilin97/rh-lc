@@ -2,13 +2,11 @@ module
 
 public import Formalism.HermitianLattices.DefsCS
 public import Formalism.HermitianLattices.HermitianLatticesProofs.ThetaSummable
-public import Lemmata.GeneralBFactSecondSide.Imports
+public import Mathlib.Algebra.Module.Lattice.Full
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,12 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -51,9 +43,72 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.GeneralBFactSecondSide.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_second'''''
+
+theorem goal1 :
+  ∀ {K V : Type} [inst : Field.{0} K] [NumberField.{0} K] [StarRing.{0} K] [inst_3 : AddCommGroup.{0} V]
+  [inst_4 : Module.{0, 0} K V] [inst_5 : Module.{0, 0} (NumberField.RingOfIntegers.{0} K) V]
+  [inst_6 : IsScalarTower.{0, 0, 0} (NumberField.RingOfIntegers.{0} K) K V]
+  (M : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} K) V),
+  Submodule.IsFullLattice.{0, 0, 0} K M →
+    ∀ (x : V), Exists.{1} fun (n : Int) ↦ And (Ne.{1} n 0) (Membership.mem.{0, 0} M (HSMul.hSMul.{0, 0, 0} n x)) := by
+  intro K V _ _ _ _ _ _ _ M hM x
+  have hx : x ∈ Submodule.span K (M : Set V) := by
+    rw [hM.span_eq_top]; trivial
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact ⟨1, one_ne_zero, by simpa using hy⟩
+  | zero => exact ⟨1, one_ne_zero, by simp⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨a, ha, hay⟩ := hy
+    obtain ⟨b, hb, hbz⟩ := hz
+    refine ⟨a * b, mul_ne_zero ha hb, ?_⟩
+    have h1 : (a * b) • y = b • (a • y) := by rw [mul_comm, mul_smul]
+    have h2 : (a * b) • z = a • (b • z) := by rw [mul_smul]
+    rw [smul_add, h1, h2]
+    exact M.add_mem (zsmul_mem hay b) (zsmul_mem hbz a)
+  | smul c y _ hy =>
+    obtain ⟨a, ha, hay⟩ := hy
+    obtain ⟨d, hd, hint⟩ := ((IsFractionRing.isAlgebraic_iff ℤ ℚ K).mpr (IsAlgebraic.of_finite ℚ c)).exists_integral_multiple
+    let w : NumberField.RingOfIntegers K := ⟨d • c, hint⟩
+    refine ⟨d * a, mul_ne_zero hd ha, ?_⟩
+    have hw : (algebraMap (NumberField.RingOfIntegers K) K w) = (d : K) * c := by
+      show (d • c : K) = _
+      rw [zsmul_eq_mul]
+    have key : (d * a) • (c • y) = w • (a • y) := by
+      rw [← algebraMap_smul K w (a • y), hw, ← Int.cast_smul_eq_zsmul K, ← Int.cast_smul_eq_zsmul K,
+        smul_smul, smul_smul]
+      congr 1
+      push_cast
+      ring
+    rw [key]
+    exact M.smul_mem w hay
+
+end Bl.general_b_fact_second'''''
+end
+end
+
+-- Source module: Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
+
+section
 
 @[expose] public section
 
@@ -315,3 +370,6 @@ theorem traceReal : TraceReal := by
   exact traceReal_main h hS hpos
 
 end Formalism.HermitianLatticesTheory
+end
+end
+end

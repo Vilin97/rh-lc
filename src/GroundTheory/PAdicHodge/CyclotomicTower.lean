@@ -3,8 +3,7 @@ module
 public import GroundTheory.PAdicHodge.NormalizedTrace
 public import GroundTheory.PAdicHodge.CyclotomicField
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormNatCastPrime
-import GroundTheory.PAdicHodge.GaloisOnCp
+public import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,10 +42,35 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.PAdicHodge.GaloisOnCp
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormNatCastPrime
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.CapelliMiscellany.norm_natCast_prime :
+    ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], ‖(↑p : PadicAlgCl p)‖ = (↑p : ℝ)⁻¹ := by
+  intro p _
+  rw [← map_natCast (algebraMap ℚ_[p] (PadicAlgCl p)) p]
+  exact (PadicAlgCl.norm_extends p (p : ℚ_[p])).trans Padic.norm_p
+end
+end
+
+-- Source module: GroundTheory.PAdicHodge.CyclotomicTower
+
+section
 
 @[expose] public section
 
@@ -455,3 +473,5 @@ theorem norm_normTrace_cycl_le {n m : ℕ} (hn : 1 ≤ n) (hnm : n ≤ m) {x : P
 end
 
 end GroundTheory.PAdicHodge
+end
+end

@@ -1,7 +1,6 @@
 module
 
-public import Formalism.GaussJetBounds.StatementE
-public import Formalism.GaussJetBounds.StatementC
+public import Formalism.GaussJetBounds.Statement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,34 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GaussJetBounds.StatementC
+
+-- Source module: Formalism.GaussJetBounds.StatementE
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+universe u
+
+namespace Formalism.DworkPowerSeriesWeights
+
+open Formalism.IncomingBounds
+
+def frameTop {d N0 N1 : ℕ} (TT : Finset (ZMod d)) (y : ZV d N0 N1) : Bool :=
+  decide (y.1 ∈ TT ∧ y.2.1.val = 0)
+
+end Formalism.DworkPowerSeriesWeights
+end
+end
+end
+
+-- Source module: Formalism.GaussJetBounds.StatementG
+
+section
 
 @[expose] public section
 
@@ -107,3 +134,6 @@ def ThmAJetA : Prop :=
           ((d : ℝ) * N0 * N1) * (Real.logb l (a : ℝ) + 1))
 
 end Formalism.DworkPowerSeriesWeights
+end
+end
+end

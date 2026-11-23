@@ -1,7 +1,10 @@
 module
 
 public import Formalism.WachLatticeTwists.RamifiedBlockRings.RightIdealImageOfSurjective
-public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
+public import Formalism.CharacterColumnKernels.StatGlobalModule
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GenFin
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalConcreteOf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +43,63 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace Formalism.NG
+
+universe u v w x
+
+theorem globalModule_of (hF : StatFinPres.{max u w, x}) : StatGlobalModule.{u, v, w, x} := by
+  intro O _ _ _ X X' T T' Z p q b hT hZ d _ _ R' _ hdet NN _ _ g₀ n hspan hφ π' ρπ hρπ α _ _ bl hbl
+    ρk hsurj hblk _ hcard
+  obtain ⟨m, P, ⟨eM⟩⟩ := hF R' NN g₀ n hspan
+  have hφ' : ∀ x', p x' ∉ Z → ∃ φ : Coker P →ₗ[R'] EvalSp O d R' x', φ ≠ 0 := by
+    intro x' hx
+    obtain ⟨φ, hφ0⟩ := hφ x' hx
+    refine ⟨φ.comp eM.symm.toLinearMap, fun h => hφ0 ?_⟩
+    refine LinearMap.ext fun y => ?_
+    have hy := LinearMap.congr_fun h (eM y)
+    simpa using hy
+  have hcard' : ((Fintype.card (Fin g₀) * ∑ k : α, Fintype.card {a // bl a = k} : ℕ) : Cardinal) <
+      Cardinal.mk (IsLocalRing.ResidueField O) := by
+    rw [Fintype.card_fin]
+    exact hcard
+  refine (globalConcrete O X X' T T' Z p q b hT hZ d R' (Fin m) (Fin g₀) P (fun Θ => hdet (Fin g₀) Θ)
+    hφ' π' ρπ hρπ α bl hbl ρk hsurj hblk hcard').trans
+    (le_of_eq (Finset.sum_congr rfl fun k _ => ?_))
+  have hk := kerHomRect R' O (Fin m) (Fin g₀) {a // bl a = k} (ρk k).toRingHom P
+  let eqv : (Coker P →ₗ[R'] LatQ O {a // bl a = k} (ρk k).toRingHom) ≃ₗ[O]
+      (NN →ₗ[R'] LatQ O {a // bl a = k} (ρk k).toRingHom) :=
+    { toFun := fun f => f.comp eM.toLinearMap
+      invFun := fun f => f.comp eM.symm.toLinearMap
+      map_add' := fun _ _ => LinearMap.ext fun _ => rfl
+      map_smul' := fun _ _ => LinearMap.ext fun _ => rfl
+      left_inv := fun f => LinearMap.ext fun y => congrArg f (eM.apply_symm_apply y)
+      right_inv := fun f => LinearMap.ext fun y => congrArg f (eM.symm_apply_apply y) }
+  exact hk.trans eqv.length_eq
+
+theorem globalModule : StatGlobalModule := globalModule_of finPres
+
+end Formalism.NG
+end
+end
+end
+
+-- Source module: Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.IdempotentImageSurjective
+
+section
 
 @[expose] public section
 
@@ -120,3 +177,6 @@ theorem lemma_five_three_holds : BlockRingDecompositionLemma := by
   exact hmain.trans (Finset.sum_le_sum_of_subset (Finset.subset_univ _))
 
 end Formalism.RepresentationBoundsCohomology.ringDataObjects
+end
+end
+end

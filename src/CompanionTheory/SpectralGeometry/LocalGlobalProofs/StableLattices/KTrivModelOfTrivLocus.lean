@@ -3,13 +3,8 @@ module
 public import CompanionTheory.AutomorphicTheory.TemperedLocalSpectra.ObstructionLifting.H1StructureDimLe
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftLeftFst
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsHeckeQuotientTriple
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.AbelianSchemeSpreadsOut
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.ExistsFgSmoothOfRelativeDimension
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.ExistsModelAbelianLb
-import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.MorphismsSpreadOutToFgSubalgebra
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianSchemeModelBaseChangeSubalgebra
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsIsoAppOfIsAbelianScheme
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TrivOfSectionOfLocallyTriv
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsGrpPullback
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.AbelianSchemeQuotients.IsAbelianScheme
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -47,6 +43,139 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCTools
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.ExistsFgSmoothOfRelativeDimension
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.ExistsModelAbelianLb
+import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.MorphismsSpreadOutToFgSubalgebra
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianSchemeModelBaseChangeSubalgebra
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.IsIntegralOfSmoothFieldOfConnectedSpace
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsIsoAppTopOfIsPullbackOfSurjective
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianSchemeSpreadsOutFiniteTypeSubringStatement
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Development.AbelianVarietyTheory.Definitions.AbelianSchemeLaws.FirstCohomologyVanishesSpecOfIsLocalRing
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.TheoremOfCubeTwoProjectiveFactors
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.SmoothMorphisms.AbelianSchemeSpreadsOut
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open scoped CategoryTheory.Obj CategoryTheory.MonObj
+
+namespace GlobalTheory.CompanionTheory.Ar.Approx
+
+theorem isCommMonObj_of_iso {C : Type*} [Category C] [MonoidalCategory C] [BraidedCategory C] {M N : C}
+    [MonObj M] [MonObj N] [IsCommMonObj N] (e : M ≅ N) [IsMonHom e.hom] : IsCommMonObj M where
+  mul_comm := by
+    rw [← cancel_mono e.hom, Category.assoc, IsMonHom.mul_hom, ← BraidedCategory.braiding_naturality_assoc,
+      IsCommMonObj.mul_comm N]
+
+theorem isAbelianScheme_of_isGrpPullback {S S' : Scheme.{0}} {f : S' ⟶ S} {G : Over S} [GrpObj G]
+    [GrpObj (Over.mk (pullback.snd G.hom f))] (φ : pullback G.hom f ⟶ G.left)
+    (h : IsGrpPullback (Over.mk (pullback.snd G.hom f)) G f φ) (hG : IsAbelianScheme G) :
+    IsAbelianScheme (Over.mk (pullback.snd G.hom f)) := by
+  obtain ⟨e, he, -⟩ := grpPullback_iso h (isGrpPullback_pullback G f)
+  have := hG.comm
+  have := hG.smooth
+  have := hG.proper
+  have := hG.geomConnected
+  refine ⟨isCommMonObj_of_iso e, ?_, ?_, ?_⟩
+  · show Smooth (pullback.snd G.hom f); infer_instance
+  · show IsProper (pullback.snd G.hom f); infer_instance
+  · show GeometricallyConnected (pullback.snd G.hom f); infer_instance
+
+end GlobalTheory.CompanionTheory.Ar.Approx
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsIsoAppOfIsAbelianScheme
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open scoped CategoryTheory.Obj CategoryTheory.MonObj
+
+namespace GlobalTheory.CompanionTheory.Ar.Approx
+
+theorem isAbelianScheme_pullback {S S' : Scheme.{0}} (A : Over S) [GrpObj A]
+    (hA : IsAbelianScheme A) (f : S' ⟶ S) : IsAbelianScheme ((Over.pullback f).obj A) :=
+  { comm := by have := hA.comm; infer_instance
+    smooth := by have := hA.smooth; show Smooth (pullback.snd _ _); infer_instance
+    proper := by have := hA.proper; show IsProper (pullback.snd _ _); infer_instance
+    geomConnected := by
+      have := hA.geomConnected; show GeometricallyConnected (pullback.snd _ _); infer_instance }
+
+theorem isIso_appTop_restrict {S : Scheme.{0}} (A : Over S) [GrpObj A]
+    (hA : IsAbelianScheme A) (V : S.Opens) [IsAffine V.toScheme] :
+    IsIso (A.hom ∣_ V).appTop := by
+  let R : Type := Γ(V.toScheme, ⊤)
+  let e : V.toScheme ≅ Sp R := V.toScheme.isoSpec
+  let f : Sp R ⟶ S := e.inv ≫ V.ι
+  have hf : e.hom ≫ f = V.ι := by simp [f]
+  obtain ⟨S₀, B, _, φ, -, hfin, hB, hpb⟩ :=
+    GlobalTheory.T.abelianScheme_spreads_out_finiteType_subring R ((Over.pullback f).obj A) ∅ (isAbelianScheme_pullback A hA f)
+  have : IsNoetherianRing S₀ := Algebra.FiniteType.isNoetherianRing ℤ S₀
+  have := hB.smooth
+  have := hB.proper
+  have := hB.geomConnected
+  have : GeometricallyIntegral B.hom :=
+    GlobalTheory.geometricallyIntegral_of_smooth_of_geometricallyConnected_fibres B.hom
+  have w : (A.hom ⁻¹ᵁ V).ι ≫ A.hom = (A.hom ∣_ V ≫ e.hom) ≫ f := by
+    rw [Category.assoc, hf]
+    exact (isPullback_morphismRestrict A.hom V).flip.w
+  have sq : IsPullback (pullback.lift _ _ w) (A.hom ∣_ V) (pullback.snd A.hom f) e.hom := by
+    refine IsPullback.of_right (h₁₂ := pullback.fst A.hom f) (v₁₃ := A.hom) (h₂₂ := f) ?_
+      (pullback.lift_snd _ _ _) (.of_hasPullback _ _)
+    rw [pullback.lift_fst, hf]
+    exact (isPullback_morphismRestrict A.hom V).flip
+  exact GlobalTheory.ProperFunctions.isIso_appTop_baseChange (sq.paste_horiz hpb.1)
+
+theorem isIso_app_of_isAbelianScheme : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A],
+    IsAbelianScheme A → ∀ U : S.Opens, IsIso (A.hom.app U) := fun _ A _ hA U ↦
+  GlobalTheory.ProperFunctions.isIso_app_of_forall_affineOpens A.hom (fun V ↦
+    have : IsAffine V.1.toScheme := V.2
+    isIso_appTop_restrict A hA V.1) U
+
+end GlobalTheory.CompanionTheory.Ar.Approx
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.TrivOfSectionOfLocallyTriv
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+attribute [local instance] Over.cartesianMonoidalCategory
+open scoped CategoryTheory.Obj CategoryTheory.MonObj
+
+namespace GlobalTheory.CompanionTheory.Ar.Approx
+
+theorem triv_of_section_of_locally_triv : ∀ (X S : Scheme.{0}) (p : X ⟶ S) (e : S ⟶ X), e ≫ p = 𝟙 S → (∀ U : S.Opens, IsIso (p.app U)) → ∀ M : LB X, M.IsLB → GlobalTheory.AbLaw.Triv (M.pull e) → (∀ x : S, ∃ U : S.Opens, x ∈ U ∧ GlobalTheory.AbLaw.Triv (M.pull (p ⁻¹ᵁ U).ι)) → GlobalTheory.AbLaw.Triv M :=
+  fun _ _ p e he hp _ hM h₀ loc =>
+    GlobalTheory.CubeGlue.triv_of_locally_triv hM p e he (GlobalTheory.CubeGlue.surjective_restrict p hp) h₀ loc
+
+end GlobalTheory.CompanionTheory.Ar.Approx
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.KTrivModelOfTrivLocus
+
+section
 
 @[expose] public section
 
@@ -273,3 +402,6 @@ theorem kTrivModel_of_trivLocus : TrivLocus → KTrivModel := by
     rw [(cls_eq_iff hL (pull_isLB hM φ)).2 hLM, cls_pull hM, cls_pull hM₂, cls_pull hM, ← pull_comp, hc]
 
 end GlobalTheory.CompanionTheory.KTrivSpread
+end
+end
+end

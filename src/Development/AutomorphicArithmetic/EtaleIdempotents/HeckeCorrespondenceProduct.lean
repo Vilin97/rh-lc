@@ -1,12 +1,10 @@
 module
 
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.VecZero
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsKill
+public import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -15,6 +13,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,7 +40,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsKill
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk55.exists_kill.{u_1} :
+    ∀ {l : ℕ} [inst : Fact (Nat.Prime l)] {H : Type u_1}
+    [inst_1 : AddCommGroup H] [inst_2 : _root_.Module ℤ_[l] H] (h : H),
+    (1 : ℚ_[l]) ⊗ₜ[ℤ_[l]] h = (0 : TensorProduct ℤ_[l] ℚ_[l] H) → ∃ (b : ℕ), l ^ b • h = (0 : H) := by
+  intro l _ H _ _ h hh
+  have h0 : TensorProduct.mk ℤ_[l] ℚ_[l] H 1 h = 0 := hh
+  obtain ⟨s, hs⟩ :=
+    (IsLocalizedModule.eq_zero_iff (nonZeroDivisors ℤ_[l]) (TensorProduct.mk ℤ_[l] ℚ_[l] H 1)).1 h0
+  have hs0 : (s : ℤ_[l]) ≠ 0 := nonZeroDivisors.coe_ne_zero s
+  have hs' : (s : ℤ_[l]) • h = 0 := hs
+  refine ⟨(s : ℤ_[l]).valuation, ?_⟩
+  rw [PadicInt.unitCoeff_spec hs0, mul_smul] at hs'
+  have h2 : ((l : ℤ_[l]) ^ (s : ℤ_[l]).valuation) • h = 0 :=
+    (IsUnit.smul_eq_zero (Units.isUnit _)).1 hs'
+  rw [← Nat.cast_smul_eq_nsmul ℤ_[l], Nat.cast_pow]
+  exact h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.EtaleIdempotents.HeckeCorrespondenceProduct
+
+section
 
 @[expose] public section
 
@@ -147,3 +179,5 @@ theorem UpperTheory.hecke_correspondence_product :
   simp only [d] at hz0
   rw [smul_sub, sub_eq_zero] at hz0
   rw [hz0, smul_smul, pow_add, mul_comm]
+end
+end

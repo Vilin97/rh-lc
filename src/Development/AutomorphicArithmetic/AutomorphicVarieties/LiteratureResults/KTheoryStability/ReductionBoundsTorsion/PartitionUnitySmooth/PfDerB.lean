@@ -1,13 +1,14 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.Smoothing
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.QuadBd
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -23,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,8 +43,56 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.CStarAlgebra.Basic
+public import Mathlib.Basic.Complex.BigOperators
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.QuadBd
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace PositivityTheory.KB.SmoothPartitionUnityBasic.DerivationBounds
+
+theorem quad_bd (N : ℕ) (V : Matrix (Fin N) (Fin N) ℂ) (M : ℝ) (hM : 0 ≤ M) (hV : ∀ a b, ‖V a b‖ ≤ M)
+    (y : Fin N → ℂ) : |(star y ⬝ᵥ (V *ᵥ y)).re| ≤ N * M * (star y ⬝ᵥ y).re := by
+  have e1 : star y ⬝ᵥ (V *ᵥ y) = ∑ a, ∑ b, star (y a) * V a b * y b := by
+    simp [dotProduct, mulVec, Finset.mul_sum, mul_assoc]
+  have e2 : (star y ⬝ᵥ y).re = ∑ a, ‖y a‖ ^ 2 := by
+    simp only [dotProduct, Complex.re_sum]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    rw [Complex.sq_norm, Complex.normSq_apply]
+    simp [Complex.mul_re]
+  rw [e2]
+  calc |(star y ⬝ᵥ (V *ᵥ y)).re| ≤ ‖star y ⬝ᵥ (V *ᵥ y)‖ := Complex.abs_re_le_norm _
+    _ ≤ ∑ a, ∑ b, ‖y a‖ * M * ‖y b‖ := by
+        rw [e1]
+        refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun a _ => ?_)
+        refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun b _ => ?_)
+        rw [norm_mul, norm_mul, norm_star]
+        gcongr
+        exact hV a b
+    _ ≤ ∑ a, ∑ b, (M / 2 * ‖y a‖ ^ 2 + M / 2 * ‖y b‖ ^ 2) := by
+        refine Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ => ?_
+        nlinarith [mul_nonneg hM (sq_nonneg (‖y a‖ - ‖y b‖))]
+    _ = N * M * ∑ a, ‖y a‖ ^ 2 := by
+        simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+          nsmul_eq_mul, ← Finset.mul_sum]
+        ring
+
+end PositivityTheory.KB.SmoothPartitionUnityBasic.DerivationBounds
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.PfDerB
+
+section
 
 @[expose] public section
 
@@ -111,4 +159,6 @@ theorem pf_DerB : DerB := by
 
 end PositivityTheory.KB.SmoothPartitionUnityBasic
 
+end
+end
 end

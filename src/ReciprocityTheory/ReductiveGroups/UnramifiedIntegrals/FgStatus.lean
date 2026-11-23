@@ -39,7 +39,46 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgClose
+public import Formalism.FormalGroupLog.Statement
+import Mathlib.RingTheory.WittVector.IsPoly
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.CoeffOneSubstOfConstantCoeffEqZero
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.EndIntegral
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgBasic
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgMulN
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormSqrtNegPowPrimeSqSub
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ShortWIntModel
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.TchOfIntegral
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.OneSubTwoOmegaSq
+
+-- Source module: ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgClose
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.ChartRestriction.L1
+
+open PowerSeries Formalism.G Formalism.LT Formalism.L2.Th1.CM
+
+theorem integral_of_map_kur {l : ℕ} [Fact l.Prime] {f : PowerSeries (MaximalUnramifiedExtension l)}
+    (h : IntegralPS (PowerSeries.map (MaximalUnramifiedExtension l).subtype f)) : IntegralPS f := fun n => by
+  have := h n
+  rw [PowerSeries.coeff_map] at this
+  exact this
+
+theorem cm3 : CM3 :=
+  GlobalTheory.HondaCM3.cm3
+
+end ReciprocityTheory.ChartRestriction.L1
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgStatus
+
+section
 
 @[expose] public section
 
@@ -48,3 +87,5 @@ namespace ReciprocityTheory.ChartRestriction.L1
 theorem cmIntegralityThree : Formalism.L2.Th1.CM.CM3 := cm3
 
 end ReciprocityTheory.ChartRestriction.L1
+end
+end

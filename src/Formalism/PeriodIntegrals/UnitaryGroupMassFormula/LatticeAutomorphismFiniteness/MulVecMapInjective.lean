@@ -2,15 +2,14 @@ module
 
 import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountPositivity.CardLeOfNegFamily
 public import Formalism.LocalRingCardinality.DataSpaces
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.SylvesterLe
-public import Lemmata.GeneralBFactUpperAltForm.Imports
+public import Formalism.SatakeDualWeyl.Statement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,8 +21,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -32,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +47,140 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.Algebra.Module.Submodule.Ker
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.SylvesterLe
+
+section
+
+@[expose] public section
+
+namespace PI.AutLzFinite.SlopeTestRemainingChoices
+
+open Matrix
+
+theorem cT_conj_eq {m p : Type} (M : Matrix m p ℂ) : Formalism.UG.cT (starRingEnd ℂ) M = Mᴴ := by
+  ext i j
+  simp [Formalism.UG.cT]
+
+theorem form_Jpq (p q : ℕ) (y : Fin p ⊕ Fin q → ℂ) :
+    star y ⬝ᵥ (Formalism.UG.Jpq p q *ᵥ y) =
+      (∑ i, star (y (Sum.inl i)) * y (Sum.inl i)) - ∑ j, star (y (Sum.inr j)) * y (Sum.inr j) := by
+  unfold Formalism.UG.Jpq
+  simp [dotProduct, Fintype.sum_sum_type, Matrix.fromBlocks_mulVec, Matrix.neg_mulVec,
+    Function.comp_def, sub_eq_add_neg] <;> ring
+
+theorem sylvester_le {n k : Type} [Fintype n] [DecidableEq n] [Fintype k] [DecidableEq k]
+    (J : Matrix n n ℂ) {p q : ℕ} (hJ : Formalism.UG.HasSignature J p q) (B : Matrix n k ℂ)
+    (hB : Function.Injective B.mulVec)
+    (hneg : ∀ v : k → ℂ, (star (B *ᵥ v) ⬝ᵥ (J *ᵥ (B *ᵥ v))).re ≤ 0) : Fintype.card k ≤ q := by
+  classical
+  obtain ⟨e, P, hP⟩ := hJ
+  rw [cT_conj_eq] at hP
+  by_contra hcon
+  push_neg at hcon
+  let T : (k → ℂ) →ₗ[ℂ] (Fin q → ℂ) := (LinearMap.funLeft ℂ ℂ Sum.inr) ∘ₗ
+    (Matrix.mulVecLin ((P⁻¹ : GL (Fin p ⊕ Fin q) ℂ) : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ)) ∘ₗ
+    (LinearMap.funLeft ℂ ℂ e.symm) ∘ₗ (Matrix.mulVecLin B)
+  have hker : LinearMap.ker T ≠ ⊥ := by
+    apply LinearMap.ker_ne_bot_of_finrank_lt
+    rw [Module.finrank_fin_fun, Module.finrank_fintype_fun_eq_card]
+    exact hcon
+  obtain ⟨v, hvK, hv0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hker
+  have hTv : T v = 0 := LinearMap.mem_ker.1 hvK
+  have hyr : ∀ j, (((P⁻¹ : GL (Fin p ⊕ Fin q) ℂ) : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) *ᵥ
+      ((B *ᵥ v) ∘ e.symm)) (Sum.inr j) = 0 := fun j => congrFun hTv j
+  set w : n → ℂ := B *ᵥ v with hwdef
+  set y : Fin p ⊕ Fin q → ℂ :=
+    ((P⁻¹ : GL (Fin p ⊕ Fin q) ℂ) : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) *ᵥ (w ∘ e.symm) with hydef
+  have hw : w ∘ e.symm = (P : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) *ᵥ y := by
+    rw [hydef, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
+  have hwne : w ≠ 0 := by
+    intro h
+    apply hv0
+    apply hB
+    show B *ᵥ v = B *ᵥ 0
+    rw [Matrix.mulVec_zero]
+    exact h
+  have hyne : y ≠ 0 := by
+    intro h
+    apply hwne
+    funext i
+    have h3 := congrFun hw (e i)
+    rw [h, Matrix.mulVec_zero] at h3
+    simpa using h3
+  obtain ⟨i, hi⟩ : ∃ i, y (Sum.inl i) ≠ 0 := by
+    by_contra hall
+    push_neg at hall
+    apply hyne
+    funext s
+    cases s with
+    | inl i => exact hall i
+    | inr j => exact hyr j
+  have h1 : star w ⬝ᵥ (J *ᵥ w) = star (w ∘ e.symm) ⬝ᵥ (J.reindex e e *ᵥ (w ∘ e.symm)) := by
+    simp only [dotProduct, mulVec, Matrix.reindex_apply, Matrix.submatrix_apply, Function.comp_apply,
+      Pi.star_apply]
+    refine Fintype.sum_equiv e _ _ (fun a => ?_)
+    simp only [Equiv.symm_apply_apply]
+    congr 1
+    exact Fintype.sum_equiv e _ _ (fun b => by simp only [Equiv.symm_apply_apply])
+  have hform : star w ⬝ᵥ (J *ᵥ w) = star y ⬝ᵥ (Formalism.UG.Jpq p q *ᵥ y) := by
+    rw [h1, hw, Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
+      Matrix.mulVec_mulVec, hP]
+  have hre : ∀ z : ℂ, (star z * z).re = Complex.normSq z := fun z => by
+    rw [Complex.star_def, Complex.mul_re, Complex.conj_re, Complex.conj_im, Complex.normSq_apply]
+    ring
+  have hpos : 0 < (star w ⬝ᵥ (J *ᵥ w)).re := by
+    rw [hform, form_Jpq]
+    simp only [hyr, mul_zero, Finset.sum_const_zero, sub_zero, Complex.re_sum, hre]
+    exact Finset.sum_pos' (fun j _ => Complex.normSq_nonneg _)
+      ⟨i, Finset.mem_univ _, Complex.normSq_pos.2 hi⟩
+  have := hneg v
+  linarith
+
+end PI.AutLzFinite.SlopeTestRemainingChoices
+end
+end
+
+-- Source module: Lemmata.GeneralBFactUpperAltForm.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_upper_alt_form
+
+theorem goal1 :
+  ∀ {K : Type} [inst : Field.{0} K] {n k : Type} [Fintype.{0} n] [DecidableEq.{1} n] [inst_3 : Fintype.{0} k]
+  [DecidableEq.{1} k] (f : RingHom.{0, 0} K Complex) (A : Matrix.{0, 0, 0} n k K),
+  Function.Injective.{1, 1} (Matrix.mulVec.{0, 0, 0} A) →
+    Function.Injective.{1, 1} (Matrix.mulVec.{0, 0, 0} (Matrix.map.{0, 0, 0, 0} A (DFunLike.coe.{1, 1, 1} f))) := by
+  intro K _ n k _ _ _ _ f A hA
+  have hker : LinearMap.ker (Matrix.toLin' A) = ⊥ :=
+    LinearMap.ker_eq_bot.mpr (fun x y hxy => hA (by simpa only [Matrix.toLin'_apply] using hxy))
+  obtain ⟨g, hg⟩ := (Matrix.toLin' A).exists_leftInverse_of_injective hker
+  have hBA : LinearMap.toMatrix' g * A = 1 := by
+    have h := congrArg LinearMap.toMatrix' hg
+    rwa [LinearMap.toMatrix'_comp, LinearMap.toMatrix'_id, LinearMap.toMatrix'_toLin'] at h
+  have h1 : (LinearMap.toMatrix' g).map f * A.map f = 1 := by
+    rw [← Matrix.map_mul, hBA, Matrix.map_one _ f.map_zero f.map_one]
+  intro v w hvw
+  have h2 := congrArg (fun u => Matrix.mulVec ((LinearMap.toMatrix' g).map f) u) hvw
+  simpa only [Matrix.mulVec_mulVec, h1, Matrix.one_mulVec] using h2
+
+end Bl.general_b_fact_upper_alt_form
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MulVecMapInjective
+
+section
 
 @[expose] public section
 
@@ -182,3 +317,6 @@ theorem pos_perp (hstar : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRing
   omega
 
 end PI.AutLzFinite.SlopeTestRemainingChoices
+end
+end
+end

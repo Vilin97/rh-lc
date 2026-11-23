@@ -1,26 +1,26 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsToricRankOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompleteDVRFiniteMapOfFiniteAlgebraStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLambdaPolarisationSiegelObjectCharZeroFielStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMumfordBundlePullbackGrpPullback
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSemiAbelianModelFiniteExtCompleteDVRStatement
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelStructurePullback
-import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.PotentiallyKnownOfSameLambdaBundle
+public import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsCompleteDvrFiniteSubalgebra
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -29,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +42,313 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsNatDiagIffIsDiag
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SumMulEqZeroOfSumToReal
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsUnimodMod
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChartA
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.Clauses
+public import Development.AbelianVarietyTheory.Definitions.KeyFormula.GeomIntSelf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.GlobalSectionsRankAlgClosed
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.MemNonzeroLocusIffPowFn
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRelativeDimensionAbelianVarietyField
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.AbelianSchemeIdPowFiniteEtaleSurjective
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelPrePullbackPrincipalRingChange
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelPullbackIdCompCancel
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsDescentSymmetricLinearisedBundleStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsFiniteEtaleCoverConstantTorsionStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsPrincipalPolarizationSymmetricSquareRootStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSymmetricLinearisationSquareDiagonalBundleStatement
+public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSymmetricSqrtPrincipalSiegelFiniteEtale
+import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.LamIsoOfDoublingPullbackEqDiagonalSqStatement
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllSixAbelianSchemeLawsHold
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCTools
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.PrecompleteBases.PsbLb
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMumfordBundlePullbackGrpPullback
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSemiAbelianModelFiniteExtCompleteDVR
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelStructurePullback
+import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.PotentiallyKnownOfSameLambdaBundle
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompleteDVRFiniteMapOfFiniteAlgebra
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.PolFan GlobalTheory.ZM GlobalTheory.SiegelTor GlobalTheory.ZH
+open scoped CategoryTheory.Obj
+open GlobalTheory.Poinc Formalism.L2.Pj
+attribute [local instance] Over.cartesianMonoidalCategory
+open Classical
+
+namespace GlobalTheory.CdvrFiniteAlgebra
+
+theorem exists_cdvr_map_of_finite : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], GlobalTheory.LN.CDvr V →
+    ∀ (R₁ : Type) [CommRing R₁] [Algebra (FractionRing V) R₁], Module.Finite (FractionRing V) R₁ → Nontrivial R₁ →
+      ∃ (W : Type) (_ : CommRing W) (_ : IsDomain W) (_ : IsLocalRing W) (f : V →+* W) (ψ : R₁ →+* FractionRing W),
+        GlobalTheory.LN.CDvr W ∧ Function.Injective f ∧ IsLocalHom f ∧ f.Finite ∧
+        ∀ a, ψ (algebraMap (FractionRing V) R₁ (algebraMap V _ a)) = algebraMap W _ (f a) := by
+  intro V _ _ _ hV R₁ _ _ hfin hnt
+  obtain ⟨hdvr, hcomp, hchar⟩ := (GlobalTheory.LN.cDvr_iff V).1 hV
+  let K := FractionRing V
+  let F := AlgebraicClosure K
+  have hchK : CharZero K := IsFractionRing.charZero_of_isFractionRing V
+  have hchF : CharZero F := charZero_of_injective_algebraMap (algebraMap K F).injective
+
+  obtain ⟨m, hm⟩ := Ideal.exists_maximal R₁
+  letI : Field (R₁ ⧸ m) := Ideal.Quotient.field m
+  haveI : Module.Finite K (R₁ ⧸ m) :=
+    Module.Finite.of_surjective (Ideal.Quotient.mkₐ K m).toLinearMap (Ideal.Quotient.mkₐ_surjective K m)
+  haveI : Algebra.IsAlgebraic K (R₁ ⧸ m) := Algebra.IsAlgebraic.of_finite K (R₁ ⧸ m)
+  let t : R₁ →ₐ[K] F := (IsAlgClosed.lift : (R₁ ⧸ m) →ₐ[K] F).comp (Ideal.Quotient.mkₐ K m)
+
+  haveI : IsScalarTower V K F := inferInstance
+  haveI : FaithfulSMul V F := (faithfulSMul_iff_algebraMap_injective V F).2 (by
+    rw [IsScalarTower.algebraMap_eq V K F]
+    exact (algebraMap K F).injective.comp (IsFractionRing.injective V K))
+  haveI : Algebra.IsAlgebraic V F :=
+    (IsFractionRing.comap_isAlgebraic_iff (A := V) (K := K) (C := F)).mpr inferInstance
+  obtain ⟨n, b, hb⟩ := Module.Finite.exists_fin (R := K) (M := R₁)
+  let s : Finset F := Finset.univ.image (fun i => t (b i))
+  obtain ⟨W, hWd, hWc, -, hWfin, -, hWloc, hfrac, -⟩ :=
+    GlobalTheory.exists_complete_dvr_finite_subalgebra V F s
+  have hWch : CharZero W := ⟨fun m n h => Nat.cast_injective (R := F) (by simpa using congrArg Subtype.val h)⟩
+  let φ : FractionRing W →+* F := IsFractionRing.lift (g := W.val.toRingHom) Subtype.val_injective
+  have hφ : Function.Injective φ := φ.injective
+  have hφa : ∀ w : W, φ (algebraMap W (FractionRing W) w) = w := fun w =>
+    IsFractionRing.lift_algebraMap (g := W.val.toRingHom) Subtype.val_injective w
+  have hVa : ∀ a : V, ((algebraMap V W a : W) : F) = algebraMap V F a := fun a => rfl
+  have hK : ∀ c : K, algebraMap K F c ∈ φ.range := by
+    intro c
+    obtain ⟨x, y, hy, rfl⟩ := IsFractionRing.div_surjective (A := V) c
+    refine ⟨algebraMap W _ (algebraMap V W x) / algebraMap W _ (algebraMap V W y), ?_⟩
+    rw [map_div₀, map_div₀, hφa, hφa, hVa, hVa, IsScalarTower.algebraMap_apply V K F,
+      IsScalarTower.algebraMap_apply V K F]
+  have hs : ∀ x ∈ s, x ∈ φ.range := by
+    intro x hx
+    obtain ⟨a, ha, c, hc, hc0, hxc⟩ := hfrac x hx
+    refine ⟨algebraMap W _ ⟨a, ha⟩ / algebraMap W _ ⟨c, hc⟩, ?_⟩
+    rw [map_div₀, hφa, hφa]
+    show a / c = x
+    rw [← hxc, mul_div_cancel_right₀ x hc0]
+  have hrange : ∀ r, t r ∈ φ.range := by
+    intro r
+    have hr : r ∈ Submodule.span K (Set.range b) := hb ▸ Submodule.mem_top
+    induction hr using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨i, rfl⟩ := hx
+      exact hs _ (Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩)
+    | zero => simpa using φ.range.zero_mem
+    | add x y _ _ hx hy => simpa using φ.range.add_mem hx hy
+    | smul c x _ hx =>
+      rw [map_smul, Algebra.smul_def]
+      exact φ.range.mul_mem (hK c) hx
+  let e : FractionRing W ≃+* φ.range := RingEquiv.ofBijective φ.rangeRestrict
+    ⟨fun x y h => hφ (congrArg Subtype.val h), φ.rangeRestrict_surjective⟩
+  let ψ : R₁ →+* FractionRing W := e.symm.toRingHom.comp (t.toRingHom.codRestrict φ.range hrange)
+  have hψ : ∀ r, φ (ψ r) = t r := fun r =>
+    congrArg Subtype.val (e.apply_symm_apply ⟨t r, hrange r⟩)
+  refine ⟨W, inferInstance, inferInstance, inferInstance, algebraMap V W, ψ,
+    (GlobalTheory.LN.cDvr_iff W).2 ⟨hWd, hWc, hWch⟩, ?_, hWloc, RingHom.finite_algebraMap.2 hWfin, ?_⟩
+  · intro x y h
+    exact FaithfulSMul.algebraMap_injective V F (congrArg Subtype.val h)
+  · intro a
+    apply hφ
+    rw [hψ, hφa, AlgHom.commutes, hVa, ← IsScalarTower.algebraMap_apply V K F]
+
+end GlobalTheory.CdvrFiniteAlgebra
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompleteDVRFiniteMapOfFiniteAlgebraStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.PolFan GlobalTheory.ZM GlobalTheory.SiegelTor GlobalTheory.ZH
+open scoped CategoryTheory.Obj
+open GlobalTheory.Poinc Formalism.L2.Pj
+attribute [local instance] Over.cartesianMonoidalCategory
+open Classical
+
+theorem _root_.GlobalTheory.T.exists_completeDVR_finite_map_of_finiteAlgebra : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], GlobalTheory.LN.CDvr V →
+    ∀ (R₁ : Type) [CommRing R₁] [Algebra (FractionRing V) R₁], Module.Finite (FractionRing V) R₁ → Nontrivial R₁ →
+      ∃ (W : Type) (_ : CommRing W) (_ : IsDomain W) (_ : IsLocalRing W) (f : V →+* W) (ψ : R₁ →+* FractionRing W),
+        GlobalTheory.LN.CDvr W ∧ Function.Injective f ∧ IsLocalHom f ∧ f.Finite ∧
+        ∀ a, ψ (algebraMap (FractionRing V) R₁ (algebraMap V _ a)) = algebraMap W _ (f a) := by
+  first | exact @GlobalTheory.CdvrFiniteAlgebra.exists_cdvr_map_of_finite | exact GlobalTheory.CdvrFiniteAlgebra.exists_cdvr_map_of_finite | (intros; apply GlobalTheory.CdvrFiniteAlgebra.exists_cdvr_map_of_finite <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLambdaPolarisationSiegelObjectCharZeroFiel
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.PolFan GlobalTheory.ZM GlobalTheory.SiegelTor GlobalTheory.ZH
+open scoped CategoryTheory.Obj
+open GlobalTheory.Poinc Formalism.L2.Pj
+attribute [local instance] Over.cartesianMonoidalCategory
+open Classical
+
+noncomputable section
+
+namespace GlobalTheory.SiegelSqrtField
+open MonObj GlobalTheory.KeyPow GlobalTheory.KeyFam GlobalTheory.AbLaw GlobalTheory.SiegelSqrt GlobalTheory.SiegelPullComp GlobalTheory.SiegelRingChange
+
+theorem exists_sqOf_of_dim (hL : Out.Laws) (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (R : Type) [CommRing R]
+    [Algebra ℚ R] [IsNoetherianRing R] (β : o →+* R) (c₀ : SiegPre h k ζ (spMap β))
+    (hd : SmoothOfRelativeDimension h c₀.A.hom) (hc₀ : c₀.Principal) :
+    ∃ (R₁ : Type) (_ : CommRing R₁) (_ : Algebra R R₁) (P : Out.PolAV (Sp R₁)) (φ : P.A.left ⟶ c₀.A.left),
+      (Module.Finite R R₁ ∧ Algebra.Etale R R₁ ∧ Module.FaithfullyFlat R R₁) ∧
+        SqOf P c₀ (spMap (algebraMap R R₁)) φ := by
+  have h2 : IsUnit ((2 : ℕ) : R) := by
+    have := (IsUnit.mk0 ((2 : ℕ) : ℚ) (by norm_num)).map (algebraMap ℚ R)
+    rwa [map_natCast] at this
+  obtain ⟨R', _, _, ⟨f₁, e₁, l₁⟩, H₁⟩ := GlobalTheory.T.exists_finiteEtale_cover_constant_torsion R c₀.A h 2 c₀.ab hd h2
+  obtain ⟨c', m', hc'⟩ := pull_sieg (spMap ((algebraMap R R').comp β)) (spMap (algebraMap R R'))
+    (SiegelRingChange.spMap_comp' _ _).symm c₀ hc₀
+  have m'' := m'
+  obtain ⟨φ', -, g', -⟩ := m''
+  obtain ⟨i₀, hi₀⟩ := H₁ c'.A φ' g'
+  letI : Algebra ℚ R' := ((algebraMap R R').comp (algebraMap ℚ R)).toAlgebra
+  haveI : IsNoetherianRing R' := Algebra.FiniteType.isNoetherianRing R R'
+  obtain ⟨R₁, _, _, ⟨f₂, e₂, l₂⟩, H₂⟩ := GlobalTheory.T.exists_symmetric_linearisation_square_diagonalBundle hL h k o ζ R' _ c' h i₀ hc'
+  obtain ⟨c₁, m₁, hc₁⟩ := pull_sieg (spMap ((algebraMap R' R₁).comp ((algebraMap R R').comp β)))
+    (spMap (algebraMap R' R₁)) (SiegelRingChange.spMap_comp' _ _).symm c' hc'
+  have m₁' := m₁
+  obtain ⟨φ₁, φ₂, g₁, sq₁, w₁, -⟩ := m₁'
+  obtain ⟨i, hi, li⟩ := exists_pull_labels g₁ 2 i₀ hi₀
+  letI : Algebra ℚ R₁ := ((algebraMap R' R₁).comp (algebraMap ℚ R')).toAlgebra
+  haveI : IsNoetherianRing R₁ := Algebra.FiniteType.isNoetherianRing R' R₁
+  obtain ⟨u, j, huj⟩ := H₂ c₁.A φ₁ i _ g₁ hi rfl
+  obtain ⟨p₁, p₂, p₃, p₄⟩ := GlobalTheory.abelianScheme_id_pow_finite_etale_surjective _ c₁.A 2 c₁.ab (isUnit_two_sections R₁)
+  have hψ : ∀ {T : Over (Sp R₁)} (x : T ⟶ c₁.A), x ≫ ((𝟙 c₁.A) ^ 2 : c₁.A ⟶ c₁.A) = x ^ 2 := fun x => by
+    rw [MonObj.comp_pow, Category.comp_id]
+  have two : ∀ a : Multiplicative (Fin (2 * h) → ZMod 2), a ^ 2 = 1 := fun a => by
+    apply Multiplicative.toAdd.injective
+    funext x
+    simp only [toAdd_pow, toAdd_one, Pi.smul_apply, Pi.zero_apply]
+    generalize (Multiplicative.toAdd a x) = y
+    revert y; decide
+  have hD : (c'.diag.pull φ₁).IsLB := pull_isLB (diag_isLB c') _
+  obtain ⟨M, hM, iM, sM⟩ := GlobalTheory.T.exists_descent_symmetric_linearised_bundle _ c₁.A c₁.A ((𝟙 c₁.A) ^ 2) _ i (lbPow (c'.diag.pull φ₁) 2)
+    (GlobalTheory.isLB_lbPow hD 2) p₁ p₂ p₃ p₄ (fun a => by rw [hψ, ← map_pow, two, map_one])
+    (fun K _ _ t => ⟨fun x => by rw [hψ]; exact (li K t).1 x, (li K t).2⟩) u j huj
+  have iM' := (GlobalTheory.lbIso_lbPow (diag_iso sq₁ w₁) 2).trans (GlobalTheory.isLB_lbPow (diag_isLB c₁) 2) (GlobalTheory.isLB_lbPow hD 2)
+    (pull_isLB hM _) iM
+  have hd₁ : SmoothOfRelativeDimension h c₁.A.hom :=
+    (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback (g₁.comp g').1 hd
+  obtain ⟨P, φ, hP⟩ := GlobalTheory.T.exists_principalPolarization_symmetric_squareRoot hL h k o ζ R₁ _ c₁ M hc₁ hd₁ hM
+    (GlobalTheory.T.lam_iso_of_doubling_pullback_eq_diagonal_sq hL h k o ζ R₁ _ c₁ M hc₁ hM iM') sM
+  obtain ⟨ψ, hψ'⟩ := sqOf_of_pb hP (pb_comp m' m₁)
+  letI : Algebra R R₁ := ((algebraMap R' R₁).comp (algebraMap R R')).toAlgebra
+  haveI : IsScalarTower R R' R₁ := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  refine ⟨R₁, inferInstance, inferInstance, P, ψ,
+    ⟨Module.Finite.trans R' R₁, Algebra.Etale.comp R R' R₁, Module.FaithfullyFlat.trans R R' R₁⟩, ?_⟩
+  have e : spMap (algebraMap R R₁) = 𝟙 _ ≫ spMap (algebraMap R' R₁) ≫ spMap (algebraMap R R') := by
+    rw [Category.id_comp, ← SiegelRingChange.spMap_comp']
+  rw [e]; exact hψ'
+
+end GlobalTheory.SiegelSqrtField
+end
+
+namespace GlobalTheory.SiegelSqrtField
+open MonObj GlobalTheory.SiegelSqrt GlobalTheory.SiegelPullComp GlobalTheory.SiegelRingChange
+
+theorem exists_sqrt_field : ∀ (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (S : Scheme.{0}) (s : S ⟶ Sp o) (c : SiegPre h k ζ s), c.Principal →
+    ∀ (K : Type) [Field K] [CharZero K] (f : Sp K ⟶ S), ∃ (R₁ : Type) (_ : CommRing R₁) (_ : Algebra K R₁),
+      Module.Finite K R₁ ∧ Nontrivial R₁ ∧ ∃ (P : PolAV (Sp R₁)) (α : P.A.left ⟶ c.A.left) (α₂ : (G2 P.A).left ⟶ (G2 c.A).left),
+        IsGrpPullback P.A c.A (spMap (algebraMap K R₁) ≫ f) α ∧ IsSquare α α₂ ∧ LBIso (abelian₂ P.A P.L) (c.P.pull α₂) := by
+  intro h k o _ ζ S s c hc K _ _ f
+  obtain ⟨β, hβ⟩ : ∃ β : o →+* K, f ≫ s = spMap β :=
+    ⟨(Spec.preimage (f ≫ s)).hom, by simp [spMap]⟩
+  obtain ⟨c₀, m₀, hc₀⟩ := pull_sieg (spMap β) f hβ c hc
+  obtain ⟨g, hg⟩ := GlobalTheory.AbVarRelDim.exists_relDim K c₀.A c₀.ab
+  let c₁ : SiegPre g 2 (0 : K) (spMap (RingHom.id K)) :=
+    { A := c₀.A, ab := c₀.ab, P := c₀.P, isLB := c₀.isLB, rig₁ := c₀.rig₁, rig₂ := c₀.rig₂, symm := c₀.symm,
+      lev := fun _ => 1, lev_add := fun _ _ => (mul_one 1).symm, lev_tors := fun _ => one_pow _,
+      geom := fun k _ _ x β' z _ hz => absurd (hz.trans (map_zero β')) z.ne_zero }
+  have hc₁ : c₁.Principal := hc₀
+  obtain ⟨R₁, _, _, P, φ, ⟨hfin, -, hff⟩, hP⟩ :=
+    exists_sqOf_of_dim GlobalTheory.allSixLaws.1 g 2 K 0 K (RingHom.id K) c₁ hg hc₁
+  obtain ⟨χ, χ₂, hχ, hs, hw, -⟩ := m₀
+  obtain ⟨hφ, -, φ₂, hs', hw'⟩ := hP
+  have lam : (abelian₂ P.A P.L).IsLB := LB.isLB_linComb P.isLB _ _
+  refine ⟨R₁, inferInstance, inferInstance, hfin, ?_, P, φ ≫ χ, φ₂ ≫ χ₂, hφ.comp hχ, ⟨?_, ?_⟩, ?_⟩
+  · haveI := Module.FaithfullyFlat.lTensor_nontrivial K R₁ K
+    exact (TensorProduct.lid K R₁).injective.nontrivial
+  · rw [Category.assoc, hs.1, ← Category.assoc, hs'.1, Category.assoc]
+  · rw [Category.assoc, hs.2, ← Category.assoc, hs'.2, Category.assoc]
+  · exact (hw'.trans lam (pull_isLB c₀.isLB _) (pull_isLB (pull_isLB c.isLB _) _) (iso_pull φ₂ hw)).trans
+      lam (pull_isLB (pull_isLB c.isLB _) _) (pull_isLB c.isLB _) (iso_pull_pull c.isLB χ₂ φ₂)
+
+end GlobalTheory.SiegelSqrtField
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLambdaPolarisationSiegelObjectCharZeroFielStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.PolFan GlobalTheory.ZM GlobalTheory.SiegelTor GlobalTheory.ZH
+open scoped CategoryTheory.Obj
+open GlobalTheory.Poinc Formalism.L2.Pj
+attribute [local instance] Over.cartesianMonoidalCategory
+open Classical
+
+theorem _root_.GlobalTheory.T.exists_lambdaPolarisation_siegelObject_charZeroField : ∀ (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (S : Scheme.{0}) (s : S ⟶ Sp o) (c : SiegPre h k ζ s), c.Principal →
+    ∀ (K : Type) [Field K] [CharZero K] (f : Sp K ⟶ S), ∃ (R₁ : Type) (_ : CommRing R₁) (_ : Algebra K R₁),
+      Module.Finite K R₁ ∧ Nontrivial R₁ ∧ ∃ (P : PolAV (Sp R₁)) (α : P.A.left ⟶ c.A.left) (α₂ : (G2 P.A).left ⟶ (G2 c.A).left),
+        IsGrpPullback P.A c.A (spMap (algebraMap K R₁) ≫ f) α ∧ IsSquare α α₂ ∧ LBIso (abelian₂ P.A P.L) (c.P.pull α₂) := by
+  first | exact @GlobalTheory.SiegelSqrtField.exists_sqrt_field | exact GlobalTheory.SiegelSqrtField.exists_sqrt_field | (intros; apply GlobalTheory.SiegelSqrtField.exists_sqrt_field <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSemiAbelianModelFiniteExtCompleteDVRStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory IsLocalRing
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.PolFan GlobalTheory.ZM GlobalTheory.SiegelTor GlobalTheory.ZH
+open scoped CategoryTheory.Obj
+open GlobalTheory.Poinc Formalism.L2.Pj
+attribute [local instance] Over.cartesianMonoidalCategory
+open Classical
+
+theorem _root_.GlobalTheory.T.exists_semiAbelianModel_finiteExt_completeDVR : ∀ (W : Type) [CommRing W] [IsDomain W] [IsLocalRing W], GlobalTheory.LN.CDvr W → ∀ (P : PolAV (Sp (FractionRing W))),
+    ∃ (V₁ : Type) (_ : CommRing V₁) (_ : IsDomain V₁) (_ : IsLocalRing V₁) (f : W →+* V₁)
+      (fK : FractionRing W →+* FractionRing V₁), GlobalTheory.LN.CDvr V₁ ∧ Function.Injective f ∧ IsLocalHom f ∧ f.Finite ∧
+      (∀ a, fK (algebraMap W _ a) = algebraMap V₁ _ (f a)) ∧
+      ∃ (A : PolAV (Sp (FractionRing V₁))) (β : A.A.left ⟶ P.A.left), IsGrpPullback A.A P.A (spMap fK) β ∧
+        LBIso A.L (P.L.pull β) ∧
+        ∃ (G : Over (Sp V₁)) (_ : GrpObj G) (_ : IsCommMonObj G) (gen : (Over.pullback (jK V₁)).obj G ≅ A.A),
+          IsSemiAbelian G ∧ IsMonHom gen.hom := by
+  first | exact @GlobalTheory.PolSemiAbModel.exists_model | exact GlobalTheory.PolSemiAbModel.exists_model | (intros; apply GlobalTheory.PolSemiAbModel.exists_model <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPolarisedAbelianSemiAbelianSiegelPoint
+
+section
 
 @[expose] public section
 
@@ -90,3 +397,6 @@ theorem exists_polAV_semiAbelian : ∀ (g n : ℕ) (o : Type) [CommRing o] (ζ :
   · simpa [Category.assoc] using lam₂
 
 end GlobalTheory.CExtGen
+end
+end
+end

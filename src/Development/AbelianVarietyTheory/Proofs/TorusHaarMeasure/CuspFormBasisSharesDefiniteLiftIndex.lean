@@ -19,19 +19,12 @@ public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.Nonemp
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.PointsInterpolationGenericSections
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ShareRdOfInBasis
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ShareRhoROfAnFacts
-public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ReadingsCuspAndIndependent
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.CuspReadingsSpanModelFormsShiftedWeightsStatement
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsIndepForms
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsLtMulOfLt
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.FirstMinimumInvariantContinuousPosOnFrames
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.NmatZeroMemBor
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ThetaArchimedeanDataDefiniteModelsNonemptyStatement
-import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
-public import Formalism.LocalToGlobal.ProjectiveLattices.OneCusp
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.CuspFormFrameReadingsLinearIndependent
+public import Formalism.LocalToGlobal.ProjectiveLattices.RosatiLatticeNorms.LinkFD
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -44,7 +37,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -52,7 +44,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -65,11 +56,165 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ModelsAt
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.Generic
+import Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.FinitePlaceArcs.BeSumStatement
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.CuspReadingsSpanModelFormsShiftedWeightsStatement
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsIndepForms
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsLtMulOfLt
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.FirstMinimumInvariantContinuousPosOnFrames
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.NmatZeroMemBor
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ThetaArchimedeanDataDefiniteModelsNonempty
+import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+public import Formalism.LocalToGlobal.ProjectiveLattices.EmbKCoe
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ModerateCoefficientPositivity
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.KronHolPsiStatementHolds
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.BoundedSectionAlgebra
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ReadingsCuspAndIndependent
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj Formalism.L2.Pj.QAt Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions GlobalTheory.ArcCM GlobalTheory.Shares
+
+namespace GlobalTheory.ArcRead
+
+
+
+
+theorem readings_cusp_and_independent :
+    ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ), InR D j → TieReadSt h j := by
+  intro D T h j hj
+  refine ⟨fun u F k => ?_, fun u => GlobalTheory.Dict.readings_independent D T h.toLawsM j hj _ _⟩
+  have hFC : F.1 ∈ T.C j u := cutR_le T.C j u F.2
+  have hhol : rdU (T.U j T.σ₀) F.1 ∈ holSub (T.U j T.σ₀).X (laU (T.U j T.σ₀) (wtA u) u.n) :=
+    ((mem_cusp _ _ _ _ _ F.1).1 hFC).2 T.σ₀ T.good_σ₀
+  exact Formalism.L2.Pj.abelian₂.holSub_SS siegelSpaceAlgebra_holds (T.U j T.σ₀).X (laU (T.U j T.σ₀) (wtA u) u.n) hhol k
+
+end GlobalTheory.ArcRead
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ThetaArchimedeanDataDefiniteModelsNonemptyStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.MainNotions.DIV.Cons Formalism.MainNotions.Gaps Formalism.MainNotions.Gaps.EtaleWeightGaps Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.RunJoin
+
+theorem _root_.GlobalTheory.T.thetaArchimedeanData_definiteModels_nonempty : ∀ (D : D7) (T : Top D) (h : LawsP T) (EX : ErrX D) (p : ℕ) (hj : InR D D.R.m) (large₂ : SizeData₂ D) (H : KHyp) (C2 A2 CT : ℝ) (ka wL wF : WeightFamilies.Wt D D.R.m) (Tn nP nW : ℕ) (h0 : ℝ) (S : Scal (recB h.toLawsCore)) (nus : HeightOneSpectrum (𝓞 (recB h.toLawsCore).KO) → ℝ), ParOK T EX p D.R.m → PageOK large₂ (recPJ h D.R.m hj) H C2 A2 CT ka wL wF Tn nP nW h0 → HypC large₂ (recPJ h D.R.m hj) H C2 A2 7 0 CT S ka wL wF Tn nP nW h0 nus → ∀ (N : ℕ) (w : Fin N → (recB h.toLawsCore).Cusp D.R.m wL), NoCommonZero (T.Q.Xo D.R.m) T.Q.c (fun i => (w i).1) → Nonempty (GlobalTheory.Shares.ArchAt h D.R.m w wF Tn 1) := by
+  first | exact @GlobalTheory.ArchDefinite.archAt_nonempty_of_definite | exact GlobalTheory.ArchDefinite.archAt_nonempty_of_definite | (intros; apply GlobalTheory.ArchDefinite.archAt_nonempty_of_definite <;> assumption)
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.OneCusp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.Pj
+
+open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.BasicNotions Formalism.MainNotions
+open scoped ComplexConjugate
+
+section
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
+
+theorem not_isIso_of_p0_zero (X : Data E r) (h0 : X.p0 = 0) (ξ : Fin r → E) : ¬ X.IsIso ξ := by
+  rintro ⟨-, hh, hne⟩
+  obtain ⟨τ, hτ⟩ : ∃ τ, τ ∈ X.Ψ := by
+    obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
+    by_cases h : ComplexEmbedding.conjugate τ ∈ X.Ψ
+    · exact ⟨_, h⟩
+    · exact ⟨τ, (X.cmType τ).2 h⟩
+  obtain ⟨P, hP, hG⟩ := X.signature ⟨τ, hτ⟩
+  set v : Fin r → ℂ := fun a => τ (ξ a) with hv
+  set w : Fin r → ℂ := P⁻¹.mulVec v with hw
+  have hPw : P.mulVec w = v := by
+    rw [hw, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hP), Matrix.one_mulVec]
+  have h1 : hermC τ X.Gm v v = 0 := by
+    have := congrArg τ hh
+    rw [map_zero] at this
+    rw [← this]
+
+    simp only [hermC, herm, map_sum, map_mul, hv, cc, IsCMField.complexEmbedding_complexConj]
+  have h2 : hermC τ X.Gm v v = ∑ a, ∑ b, w a * gram τ X.Gm P a b * conj (w b) := by
+    have sw : ∀ f : Fin r → Fin r → Fin r → Fin r → ℂ,
+        ∑ x, ∑ y, ∑ a, ∑ b, f x y a b = ∑ a, ∑ b, ∑ x, ∑ y, f x y a b := fun f =>
+      calc ∑ x, ∑ y, ∑ a, ∑ b, f x y a b = ∑ x, ∑ a, ∑ y, ∑ b, f x y a b :=
+            Finset.sum_congr rfl fun x _ => Finset.sum_comm
+        _ = ∑ a, ∑ x, ∑ y, ∑ b, f x y a b := Finset.sum_comm
+        _ = ∑ a, ∑ x, ∑ b, ∑ y, f x y a b :=
+            Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun x _ => Finset.sum_comm
+        _ = ∑ a, ∑ b, ∑ x, ∑ y, f x y a b := Finset.sum_congr rfl fun a _ => Finset.sum_comm
+    have L : ∀ x y, P.mulVec w x * τ (X.Gm x y) * conj (P.mulVec w y) =
+        ∑ a, ∑ b, w a * (P x a * τ (X.Gm x y) * conj (P y b)) * conj (w b) := by
+      intro x y
+      simp only [Matrix.mulVec, dotProduct]
+
+      rw [map_sum, Finset.sum_mul, Finset.sum_mul]
+      refine Finset.sum_congr rfl fun a _ => ?_
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun b _ => ?_
+      rw [map_mul]; ring
+    rw [← hPw]
+    simp only [hermC, L, gram, col, Matrix.of_apply]
+    rw [sw]
+    simp only [Finset.mul_sum, Finset.sum_mul]
+  have h3 : ∑ a, Complex.normSq (w a) = 0 := by
+    rw [h2, hG] at h1
+    have : ∑ a, (Complex.normSq (w a) : ℂ) = 0 := by
+      rw [← neg_eq_zero, ← Finset.sum_neg_distrib, ← h1]
+      refine Finset.sum_congr rfl fun a _ => ?_
+      rw [Finset.sum_eq_single a (fun b _ hb => by simp [Matrix.diagonal_apply_ne _ hb.symm]) (by simp)]
+      simp [sgn, h0, Complex.mul_conj]
+    exact_mod_cast this
+  have h4 : w = 0 := funext fun a => Complex.normSq_eq_zero.mp
+    ((Finset.sum_eq_zero_iff_of_nonneg fun a _ => Complex.normSq_nonneg _).mp h3 a (Finset.mem_univ a))
+  apply hne
+  funext a
+  have : v a = 0 := by rw [← hPw, h4, Matrix.mulVec_zero]; rfl
+  exact (map_eq_zero τ).mp this
+
+variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} (Xo : Moduli Dw l) (c : Coeff l)
+
+theorem dom_zero : Dom (0 : (E →+* ℂ) × ℕ → ℕ) 0 := ⟨fun _ _ _ _ => le_rfl, Even.zero⟩
+
+end
+
+variable {D : D7} {T : Core D}
+
+end Formalism.L2.Pj
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.CuspFormBasisSharesDefiniteLiftIndex
+
+section
 
 @[expose] public section
 
@@ -326,3 +471,6 @@ theorem sharesDef : GlobalTheory.RunJoin.SharesDefSt := by
   exact sharesAt_of_anFacts _ G₀ S Tn _ _ t xs hg' hF' rfl (two_le_dimY hj) hT hL hsh Sh hSh
 
 end GlobalTheory.SharesDefinite
+end
+end
+end

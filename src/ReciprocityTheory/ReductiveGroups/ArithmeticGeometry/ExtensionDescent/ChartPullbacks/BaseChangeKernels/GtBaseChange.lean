@@ -43,12 +43,119 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.AffineSt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.CmapComp
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.Affine
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.SurjOfCover
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniformBaseChange.PullGt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.PrecompleteBases.PsbLb
 import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.CoordOfHasWeight
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.AffineBCSt
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+namespace ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+
+def AffineBCSt : Prop :=
+  ∀ {G B G' B' : Scheme.{0}} {g : G' ⟶ G} {q' : G' ⟶ B'} {q : G ⟶ B} {b : B' ⟶ B},
+    IsPullback g q' q b → IsAffineHom q → ∀ {X : Type} [AddCommMonoid X]
+    {V : B.Opens}, IsAffineOpen V → ∀ {V' : B'.Opens}, IsAffineOpen V' →
+    V' ≤ b ⁻¹ᵁ V → ∀ (hleG : q' ⁻¹ᵁ V' ≤ g ⁻¹ᵁ (q ⁻¹ᵁ V))
+    (φ : Multiplicative X →* Γ(G, q ⁻¹ᵁ V)) (φ' : Multiplicative X →* Γ(G', q' ⁻¹ᵁ V')),
+    (∀ x, φ' x = g.appLE (q ⁻¹ᵁ V) (q' ⁻¹ᵁ V') hleG (φ x)) →
+    Function.Bijective (AddMonoidAlgebra.liftNCRingHom (q.app V).hom φ (fun _ _ => Commute.all _ _)) →
+    Function.Bijective (AddMonoidAlgebra.liftNCRingHom (q'.app V').hom φ' (fun _ _ => Commute.all _ _))
+
+end ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.AffineSt
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+namespace ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+
+theorem affineBCSt : AffineBCSt := by
+  intro G B G' B' g q' q b sq hq X _ V hV V' hV' hle hleG φ φ' hφ' hφ
+  exact coord_affineBC sq hq hV hV' hle hleG φ φ' hφ' hφ
+
+end ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.CmapComp
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+namespace ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+
+abbrev cmap {κ X A : Type} [AddCommGroup X] [CommRing A] (b : Module.Basis κ ℤ X) (v : κ → Aˣ) :
+    Multiplicative X →* A :=
+  (Units.coeHom A).comp (AddMonoidHom.toMultiplicativeLeft
+    (b.constr ℤ (fun k => Additive.ofMul (v k))).toAddMonoidHom)
+
+theorem cmap_comp {κ X A A' : Type} [AddCommGroup X] [CommRing A] [CommRing A']
+    (b : Module.Basis κ ℤ X) (ρ : A →+* A') (v : κ → Aˣ) (v' : κ → A'ˣ)
+    (hv : ∀ k, (v' k).val = ρ (v k).val) (x : Multiplicative X) :
+    cmap b v' x = ρ (cmap b v x) := by
+  have hlin : b.constr ℤ (fun k => Additive.ofMul (v' k)) =
+      (MonoidHom.toAdditive (Units.map (ρ : A →* A'))).toIntLinearMap ∘ₗ
+        b.constr ℤ (fun k => Additive.ofMul (v k)) := by
+    refine b.ext (fun k => ?_)
+    rw [LinearMap.comp_apply, Module.Basis.constr_basis, Module.Basis.constr_basis]
+    show Additive.ofMul (v' k) = Additive.ofMul (Units.map (ρ : A →* A') (v k))
+    congr 1
+    exact Units.ext (by simpa using hv k)
+  have hx := congrArg (fun f => ((Additive.toMul (f (Multiplicative.toAdd x)) : A'ˣ) : A')) hlin
+  first
+  | exact hx
+  | simpa using hx
+
+open ReciprocityTheory.ChartRestriction.G.Semi in
+theorem appLE_res {X Y : Scheme.{0}} (g : Y ⟶ X) {U U₀ : X.Opens} (hU : U ≤ U₀) {V W : Y.Opens}
+    (hV : V ≤ g ⁻¹ᵁ U) (hW : W ≤ g ⁻¹ᵁ U₀) (hVW : V ≤ W) (u : Γ(X, U₀)ˣ) :
+    (res hVW (res hW (pullU g U₀ u))).val = (g.appLE U V hV).hom (res hU u).val := by
+  have key : g.app U₀ ≫ Y.presheaf.map (homOfLE hW).op ≫ Y.presheaf.map (homOfLE hVW).op =
+      X.presheaf.map (homOfLE hU).op ≫ g.appLE U V hV := by
+    rw [Scheme.Hom.map_appLE, ← Functor.map_comp, Scheme.Hom.app_eq_appLE, Scheme.Hom.appLE_map]
+  have h2 := congrArg (fun f => f.hom u.val) key
+  first
+  | exact h2
+  | simpa [res, pullU] using h2
+
+end ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.GtBaseChange
+
+section
 
 @[expose] public section
 
@@ -173,3 +280,6 @@ theorem gtBaseChange : GtBaseChangeSt :=
   GlobalTheory.gtBaseChange
 
 end ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
+end
+end
+end

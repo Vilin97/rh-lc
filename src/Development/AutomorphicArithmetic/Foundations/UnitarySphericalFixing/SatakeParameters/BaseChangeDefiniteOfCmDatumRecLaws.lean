@@ -7,16 +7,12 @@ public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities
 public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
 public import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
 public import Formalism.SharpRestriction.LevelLetterCocycles.SphericalInertData
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BaseChangeDefiniteOfCmDatumRecLaws
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqOfNodupSumMultisetOfEq
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpehShapeIffOfDiscreteSpectrum
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EquivOfISupRange
-import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.TwoAtCharZero
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.InertFrames.InertB
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -47,6 +43,182 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsSplitAtOfIsSplitPl
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqOfNodupSumMultisetOfEq
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpehShapeIffOfDiscreteSpectrum
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EquivOfISupRange
+import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.TwoAtCharZero
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameInert
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+public import GroundTheory.GlobalFields.TateThesis.DegreeOnePrimes
+public import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.SatakeRigidity.LRSplit
+import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+import Mathlib.NumberTheory.RamificationInertia.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BaseChangeDefiniteOfCmDatumRecLaws
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N GlobalTheory.DefiniteBC
+
+namespace GlobalTheory.DefiniteBCFrozen
+
+attribute [local instance] GlobalTheory.CuspRep.host_isCMField
+
+theorem isBC_of_isBaseChange {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N}
+    {B : NBC A} {j : ℕ} {π : B.AU j} {Pa : List (Part A.CG)}
+    (h : GlobalTheory.IndefiniteRowSideFullHecke.BaseChangeDistinctness.IsBaseChange B j π Pa) : SphericalInertData.IsBC N A B j π Pa := by
+  refine ⟨fun p hp => ⟨(h.discrete p hp).1, (h.discrete p hp).2, h.conjSelfDual p hp⟩, ?_, h.rank, h.split,
+    h.inert, h.inf⟩
+  refine h.distinct.map ?_
+  rintro ⟨a, π, d⟩ ⟨a', π', d'⟩ hh
+  simp only [Prod.mk.injEq, Sigma.mk.injEq] at hh
+  obtain ⟨⟨rfl, h2⟩, rfl⟩ := hh
+  cases h2
+  rfl
+
+end GlobalTheory.DefiniteBCFrozen
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsDegreeOnePrimeNotSplitsCompletely
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GroundTheory.Global
+
+namespace GlobalTheory.CompanionTheory.Density
+
+
+open Filter Topology Set in
+theorem exists_degreeOnePrime_not_splitsCompletely :
+    ∀ (L F M : Type) [Field L] [NumberField L] [Field F] [NumberField F] [Algebra L F] [Field M]
+      [NumberField M] [Algebra F M] [IsGalois F M], 1 < Module.finrank F M →
+      ∀ B : Set (HeightOneSpectrum (𝓞 F)), B.Finite →
+        ∃ v ∈ degreeOnePrimes L F, v ∉ B ∧ ¬ SplitsCompletely M v := by
+  intro L F M _ _ _ _ _ _ _ _ _ hdeg B hB
+  by_contra hcon
+  push Not at hcon
+  have hfin : (degreeOnePrimes L F \ ({v : HeightOneSpectrum (𝓞 F) | SplitsCompletely M v} ∩ degreeOnePrimes L F)).Finite := by
+    apply hB.subset
+    intro v hv
+    by_contra hvB
+    exact hv.2 ⟨hcon v hv.1 hvB, hv.1⟩
+  have hinter : ({v : HeightOneSpectrum (𝓞 F) | SplitsCompletely M v} ∩
+      degreeOnePrimes L F).HasDirichletDensity 1 :=
+    (GroundTheory.Global.hasDirichletDensity_iff_of_subset_of_isBoundedUnder
+      Set.inter_subset_right
+      (GroundTheory.Global.isBoundedUnder_primeIdealZetaSum_of_finite hfin) 1).mpr
+      (GroundTheory.Global.hasDirichletDensity_degreeOnePrimes (K := L) (L := F))
+  have hsplit : {v : HeightOneSpectrum (𝓞 F) | SplitsCompletely M v}.HasDirichletDensity 1 :=
+    (GroundTheory.Global.hasDirichletDensity_inter_degreeOnePrimes_iff
+      (K := L) _ 1).mp hinter
+  have hSd := GroundTheory.Global.hasDirichletDensity_setOf_splitsCompletely (K := F) (L := M)
+  have heq : (1 : ℝ) = 1 / Module.finrank F M :=
+    hsplit.dirichletDensity_eq.symm.trans hSd.dirichletDensity_eq
+  have h2 : 2 ≤ Module.finrank F M := hdeg
+  have hfr : (2 : ℝ) ≤ Module.finrank F M := by exact_mod_cast h2
+  have hq : (1 : ℝ) / Module.finrank F M ≤ 1 / 2 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) hfr
+  linarith
+
+end GlobalTheory.CompanionTheory.Density
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.InertFrames.InertB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Matrix
+open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC GlobalTheory.BCT
+open scoped Classical
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+namespace PositivityTheory.Rg.BcB.F.Inert
+
+namespace ExistsNonSplitPlace
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem mem_of_not_isSplitAt {Sec : Set (Pl E)} (hS : IsSection Sec) {w : Pl E} (hw : ¬ IsSplitAt w) :
+    w ∈ Sec := by
+  obtain ⟨u, ⟨hu, hue⟩, -⟩ := hS w
+  by_cases h : u = w
+  · exact h ▸ hu
+  · exact absurd ⟨u, h, hue⟩ hw
+
+theorem exists_not_isSplitAt (B : Set (Pl E)) (hB : B.Finite) : ∃ w : Pl E, w ∉ B ∧ ¬ IsSplitAt w := by
+  set F := maximalRealSubfield E
+  have h2 : Module.finrank F E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two F E
+  obtain ⟨v, -, hvB, hv⟩ := GlobalTheory.CompanionTheory.Density.exists_degreeOnePrime_not_splitsCompletely F F E
+    (by omega) ((fun w : Pl E => w.under (𝓞 F)) '' B) (hB.image _)
+  haveI := v.isMaximal
+  obtain ⟨⟨P, hP⟩⟩ := v.asIdeal.nonempty_primesOver (S := 𝓞 E)
+  have hP0 : P ≠ ⊥ := Ideal.ne_bot_of_mem_primesOver v.ne_bot hP
+  let w : Pl E := ⟨P, hP.1, hP0⟩
+  have hwv : w.under (𝓞 F) = v := HeightOneSpectrum.ext (hP.2.over).symm
+  refine ⟨w, fun hw => hvB ⟨w, hw, hwv⟩, ?_⟩
+  rintro ⟨u, hu, hue⟩
+  apply hv
+  rw [GroundTheory.Global.splitsCompletely_iff_ncard_primesOver, h2]
+  haveI : NoZeroSMulDivisors (𝓞 F) (𝓞 E) := ⟨fun {c x} e => by
+    rw [Algebra.smul_def, mul_eq_zero, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 E))] at e
+    exact e⟩
+  have hle : (v.asIdeal.primesOver (𝓞 E)).ncard ≤ 2 := by
+    have h := Ideal.card_primesOverFinset_le_finrank (𝓞 E) F E v.ne_bot
+    rw [← Set.ncard_coe_finset, IsDedekindDomain.coe_primesOverFinset v.ne_bot, h2] at h
+    exact h
+  have hmem : ∀ x : Pl E, x.under (𝓞 F) = v → x.asIdeal ∈ v.asIdeal.primesOver (𝓞 E) := fun x hx =>
+    ⟨x.isPrime, ⟨(congrArg HeightOneSpectrum.asIdeal hx).symm⟩⟩
+  have hge : 2 ≤ (v.asIdeal.primesOver (𝓞 E)).ncard := by
+    have hne : u.asIdeal ≠ w.asIdeal := fun e => hu (HeightOneSpectrum.ext e)
+    rw [← Set.ncard_pair hne]
+    refine Set.ncard_le_ncard ?_ (IsDedekindDomain.primesOver_finite _ _)
+    rintro x (rfl | rfl)
+    · exact hmem u (hue.trans hwv)
+    · exact hmem w hwv
+  omega
+
+end ExistsNonSplitPlace
+
+theorem inertPlaceEx : InertPlaceEx := by
+  intro E _ _ _ _ n π hπ Sec hS X
+  have hfin : {w : Pl E | ¬ IsUnramU π w}.Finite :=
+    Filter.eventually_cofinite.1 (PositivityTheory.Rg.BcB.F.Rig.eventually_isUnramU hπ)
+  obtain ⟨w, hwB, hw⟩ := ExistsNonSplitPlace.exists_not_isSplitAt ((X : Set (Pl E)) ∪ {w | ¬ IsUnramU π w})
+    (X.finite_toSet.union hfin)
+  refine ⟨w, ExistsNonSplitPlace.mem_of_not_isSplitAt hS hw, fun h => hwB (Or.inl h), hw, ?_⟩
+  by_contra h
+  exact hwB (Or.inr h)
+
+end PositivityTheory.Rg.BcB.F.Inert
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.UnitarySphericalFixing.SatakeParameters.BaseChangeDefiniteOfCmDatumRecLaws
+
+section
 
 @[expose] public section
 
@@ -180,4 +352,6 @@ theorem baseChangeDefinite_of_cmDatum_recLaws : ∀ (D : D7) (rc : RecMap D.naut
 
 end UpperTheory.One.M.Ud
 
+end
+end
 end

@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsVariableChangeEqLatticeCurve
 public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.TranslateProduct
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralJOfNonrealMultiplier
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralJInvariantOfComplexMultiplication
+public import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFoundations.ComplexMultiplicationJPremises
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,7 +38,37 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModJTau
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModLatTau
 import Development.AbelianVarietyTheory.Definitions.Divisors.DatumOfIsIntegersLattice
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralJOfNonrealMultiplier
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+namespace GlobalTheory.CMModel.LatticeJInt
+
+theorem main : ∀ (L : PeriodPair) (β : ℂ), MulStable L β → β.im ≠ 0 →
+    _root_.IsIntegral ℤ (latticeCurve L).j := by
+  intro L β hβ him
+  obtain ⟨c, τ, hτ⟩ := ReciprocityTheory.ChartRestriction.L1.latTau L
+  have hj := GlobalTheory.JInt.main L c τ β hτ hβ him
+  rw [← ReciprocityTheory.ChartRestriction.L1.jInv_eq_jT hτ] at hj
+  rw [latticeCurve_j_eq]
+  exact hj
+
+end GlobalTheory.CMModel.LatticeJInt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralJOfNonrealMultiplierStatement
+
+section
 
 @[expose] public section
 
@@ -46,3 +77,5 @@ open scoped IntermediateField BigOperators Topology
 
 theorem _root_.GlobalTheory.T.isIntegral_j_of_nonreal_multiplier : ∀ (L : PeriodPair) (β : ℂ), MulStable L β → β.im ≠ 0 → _root_.IsIntegral ℤ (latticeCurve L).j := by
   first | exact @GlobalTheory.CMModel.LatticeJInt.main | exact GlobalTheory.CMModel.LatticeJInt.main | (intros; apply GlobalTheory.CMModel.LatticeJInt.main <;> assumption)
+end
+end

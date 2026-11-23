@@ -8,19 +8,15 @@ public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBi
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExactKeyFormulaProof
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ThetaUniformisationComplexAbelianVarieties
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.NumericalSegreClosed
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TopAvoid
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AnalyticProvisionHoldsStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FinalTheoremOfInputsRightStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ModelClauseHolds
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.PointsIntegrableOfResolutionStatementStatement
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.InputsOfUse
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.NineFreeOfUse
-public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.ProvHSOfUse
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.RationalSections.ThmISt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.AvoidRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -51,7 +47,55 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AnalyticProvisionHoldsStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FinalTheoremOfInputsRightStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ModelClauseHolds
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.PointsIntegrableOfResolutionStatementStatement
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.InputsOfUse
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.NineFreeOfUse
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.ProvHSOfUse
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.Avoid
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.ForSecondHalf
+
+open ReciprocityTheory.ChartRestriction.G.Geo
+
+theorem avoid : ReciprocityTheory.ChartRestriction.G.AI.I2.AvoidStatement := by
+  intro R _ K _ ι _ Ws hWs
+  exact GroundTheory.Heights₂.Heights.Inter.AvoidRing.exists_form_avoid (↑Ws : Set (Ideal (MRingOver R ι)))
+    Ws.finite_toSet (fun W hW => hWs W (Finset.mem_coe.mp hW))
+
+end GroundTheory.Heights₂.Heights.ForSecondHalf
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TopAvoid
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Ar.Giv
+
+theorem topAvoid : ReciprocityTheory.ChartRestriction.G.AI.I2.AvoidStatement :=
+  GroundTheory.Heights₂.Heights.ForSecondHalf.avoid
+
+end GlobalTheory.CompanionTheory.Ar.Giv
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.GoodTowerVolumeTheoremBis
+
+section
 
 @[expose] public section
 
@@ -77,3 +121,5 @@ theorem good_tower_volume_theorem_bis :
     GlobalTheory.CompanionTheory.Ar.Giv.topAvoid hQ hZ GlobalTheory.thetaUnifAV_closed
 
 end GlobalTheory.CompanionTheory.Ar.Link
+end
+end

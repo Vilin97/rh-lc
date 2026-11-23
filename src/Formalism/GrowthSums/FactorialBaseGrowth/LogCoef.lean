@@ -1,11 +1,10 @@
 module
 
-public import Formalism.GrowthSums.StatementC
-public import Formalism.GrowthSums.FactorialBaseGrowth.Harmonic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,6 +41,38 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GrowthSums.FactorialBaseGrowth.Harmonic
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.GrowthSums.StatementC
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped BigOperators
+open Finset
+
+namespace Formalism.GrowthSums
+
+def LogCoefVal : Prop :=
+  ∀ p t s : ℕ, p.Prime → 5 ≤ p → 1 ≤ s →
+    ((s : ℝ) + 1) / 4 ≤
+      (padicValRat p (((p ^ (t + 1) : ℕ) : ℚ) ^ s * (∑ y ∈ Ico 1 (p ^ (t + 1)), 1 / (y : ℚ) ^ s) / s) : ℝ)
+        - 1 / ((p : ℝ) - 1)
+
+end Formalism.GrowthSums
+end
+end
+end
+
+-- Source module: Formalism.GrowthSums.FactorialBaseGrowth.LogCoef
+
+section
 
 @[expose] public section
 
@@ -101,3 +130,6 @@ theorem padicValHarmonicPowerSumDivLowerBound : LogCoefVal := by
   linarith
 
 end Formalism.GrowthSums
+end
+end
+end

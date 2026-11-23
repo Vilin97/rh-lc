@@ -3,16 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.InjectiveOfSmulMemRange
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AinfHodgeTateLatticeConstQpModZpEquivStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFrobeniusHodgeTateLatticeAinfStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHodgeSequenceFirstMapLatticeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueMuPInfinityHodgeTateLatticeMapStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FontaineAinfLocalDomainXiAdicOrder
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateLatticeMuPInfinityFreeRankOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSeparatesDualLieGhostComponentStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupHodgeTateFirstMapNaturalStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivisibleGroupLatticeFreeRankHeightStatement
-public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.MemSmulOfTmulEqZero
-public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.SemilinearFactorsThroughReduction
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AinfGhostThetaFrobIterValuesXiMuPadicStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,7 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,6 +43,273 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHodgeSequenceFirstMapLatticeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueMuPInfinityHodgeTateLatticeMapStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FontaineAinfLocalDomainXiAdicOrder
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateLatticeMuPInfinityFreeRankOneStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSeparatesDualLieGhostComponentStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupHodgeTateFirstMapNaturalStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivisibleGroupLatticeFreeRankHeightStatement
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFrobeniusHodgeTateLatticeAinf
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Opposite Matrix GlobalTheory GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta GlobalTheory.PDivLat
+
+namespace GlobalTheory.PDivLat.Frob
+
+variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)]
+  [IsAdicComplete (Ideal.span {(p : O)}) O]
+
+theorem frob_phiInv (a : Ainf p O) : WittVector.frobenius (phiInv p O a) = a := by
+  ext n
+  rw [WittVector.coeff_frobenius_charP, phiInv, WittVector.map_coeff]
+  exact frobeniusEquiv_symm_pow_p _ p _
+
+theorem phiInv_ofPadic' (c : ℤ_[p]) : phiInv p O (ofPadic p O c) = ofPadic p O c := by
+  ext n
+  simp only [phiInv, ofPadic, RingHom.coe_comp, Function.comp_apply, WittVector.map_coeff]
+  exact RingHom.congr_fun (RingHom.ext_zmod
+    (((_root_.frobeniusEquiv (PreTilt O p) p).symm : PreTilt O p →+* PreTilt O p).comp
+      (ZMod.castHom (dvd_refl p) (PreTilt O p))) (ZMod.castHom (dvd_refl p) (PreTilt O p))) _
+
+theorem frob_ofPadic (c : ℤ_[p]) :
+    WittVector.frobenius (ofPadic p O c) = ofPadic p O c := by
+  conv_lhs => rw [← phiInv_ofPadic' c]
+  exact frob_phiInv _
+
+def frobT (G : PDivGroup p O) (y : TDual G) : TDual G where
+  toFun t := WittVector.frobenius (y t)
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
+  map_smul' c t := by
+    rw [LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, frob_ofPadic, smul_eq_mul]
+
+def xiPhiInvT (ε : PreTilt O p) (G : PDivGroup p O) (m : TDual G) : TDual G where
+  toFun t := xi ε * phiInv p O (m t)
+  map_add' s t := by rw [map_add (f := _), map_add (f := _), mul_add]
+  map_smul' c t := by
+    rw [LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, phiInv_ofPadic', smul_eq_mul, mul_left_comm]
+
+def frobLatt (G : PDivGroup p O) :
+    latt G →ₛₗ[(WittVector.frobenius : Ainf p O →+* Ainf p O)] latt G where
+  toFun y := ⟨frobT G y.1, fun n => by
+    obtain ⟨x, hx⟩ := y.2 (n + 1)
+    exact ⟨x, fun t => by rw [← hx]; rfl⟩⟩
+  map_add' y z := by
+    apply Subtype.ext; apply LinearMap.ext; intro t
+    show WittVector.frobenius ((y.1 + z.1) t) = _
+    rw [LinearMap.add_apply, map_add (f := _)]; rfl
+  map_smul' a y := by
+    apply Subtype.ext; apply LinearMap.ext; intro t
+    show WittVector.frobenius ((a • y.1) t) = _
+    rw [LinearMap.smul_apply, smul_eq_mul, map_mul]; rfl
+
+end GlobalTheory.PDivLat.Frob
+
+
+open GlobalTheory.PDivLat.Frob in
+theorem GlobalTheory.PDivLat.exists_frobenius_latt : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O → ∀ (ε : PreTilt O p) (hε : IsPrimitiveSystem ε), ∃ φ : ∀ G : PDivGroup p O, latt G →ₛₗ[(WittVector.frobenius : Ainf p O →+* Ainf p O)] latt G, (∀ G y t, (φ G y).1 t = WittVector.frobenius (y.1 t)) ∧ ∀ G m, ∃ n, φ G n = (WittVector.frobenius (xi ε) : Ainf p O) • m := by
+  intro p _ C _ _ _ v O _ _ _ _ _ hv ε hε
+  obtain ⟨-, -, -, h0, hs, hphi⟩ := GlobalTheory.T.ainfGhostThetaFrobIter_values_xi_mu_padic p C v O hv ε hε
+  refine ⟨fun G => frobLatt G, fun G y t => rfl, fun G m => ?_⟩
+  refine ⟨⟨xiPhiInvT ε G m.1, fun n => ?_⟩, ?_⟩
+  · cases n with
+    | zero => exact ⟨0, fun t => by
+        show ghost p O 0 (xi ε * phiInv p O (m.1 t)) = _
+        rw [ghost_mul, h0, zero_mul, LinearMap.zero_apply]⟩
+    | succ k =>
+      obtain ⟨x, hx⟩ := m.2 k
+      exact ⟨(p : O) • x, fun t => by
+        show ghost p O (k + 1) (xi ε * phiInv p O (m.1 t)) = _
+        rw [ghost_mul, hs, hphi, hx, LinearMap.smul_apply, smul_eq_mul]⟩
+  · apply Subtype.ext; apply LinearMap.ext; intro t
+    show WittVector.frobenius (xi ε * phiInv p O (m.1 t)) = _
+    rw [map_mul, frob_phiInv]; rfl
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFrobeniusHodgeTateLatticeAinfStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Opposite Matrix GlobalTheory GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta GlobalTheory.PDivLat
+
+theorem _root_.GlobalTheory.T.exists_frobenius_hodgeTateLattice_ainf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O → ∀ (ε : PreTilt O p) (hε : IsPrimitiveSystem ε), ∃ φ : ∀ G : PDivGroup p O, latt G →ₛₗ[(WittVector.frobenius : Ainf p O →+* Ainf p O)] latt G, (∀ G y t, (φ G y).1 t = WittVector.frobenius (y.1 t)) ∧ ∀ G m, ∃ n, φ G n = (WittVector.frobenius (xi ε) : Ainf p O) • m := by
+  first | exact @GlobalTheory.PDivLat.exists_frobenius_latt | exact GlobalTheory.PDivLat.exists_frobenius_latt | (intros; apply GlobalTheory.PDivLat.exists_frobenius_latt <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.MemSmulOfTmulEqZero
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct ChangeOfRings
+
+namespace GlobalTheory.CompanionTheory.ModuleReduction
+
+theorem mem_smul_of_tmul_eq_zero {A Q N : Type} [CommRing A] [AddCommGroup Q] [Module A Q]
+    [AddCommGroup N] [Module A N] (g : A →ₗ[A] Q) (hg : Function.Surjective g) (ξ : A)
+    (hk : ∀ a, g a = 0 ↔ ∃ b, a = ξ * b) (m : N) (h : g 1 ⊗ₜ[A] m = 0) :
+    ∃ n : N, m = ξ • n := by
+  have hex : Function.Exact (LinearMap.mulLeft A ξ) g := by
+    intro a
+    rw [hk a]
+    constructor
+    · rintro ⟨b, rfl⟩
+      exact ⟨b, rfl⟩
+    · rintro ⟨b, rfl⟩
+      exact ⟨b, rfl⟩
+  have hex' := rTensor_exact N hex hg
+  have h1 : (LinearMap.rTensor N g) ((1 : A) ⊗ₜ[A] m) = 0 := by
+    simpa using h
+  obtain ⟨t, ht⟩ := (hex' _).1 h1
+  have key : ∀ t : A ⊗[A] N, TensorProduct.lid A N (LinearMap.rTensor N (LinearMap.mulLeft A ξ) t)
+      = ξ • TensorProduct.lid A N t := by
+    intro t
+    induction t using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a n => simp [mul_smul]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
+  refine ⟨TensorProduct.lid A N t, ?_⟩
+  rw [← key, ht]
+  simp
+
+theorem exists_reduction (A O : Type) [CommRing A] [CommRing O] (θ : A →+* O)
+    (hθ : Function.Surjective θ) (ξ : A) (hker : RingHom.ker θ = Ideal.span {ξ})
+    (𝒞 : Type 1) [CategoryTheory.Category.{0} 𝒞] (M : CategoryTheory.Functor 𝒞 (ModuleCat.{0} A)) :
+    ∃ (D : CategoryTheory.Functor 𝒞 (ModuleCat.{0} O)) (r : ∀ X : 𝒞, M.obj X →ₛₗ[θ] D.obj X),
+      (∀ X, Function.Surjective (r X) ∧ ∀ m, r X m = 0 ↔ ∃ n, m = ξ • n) ∧
+      ∀ (X Y : 𝒞) (f : X ⟶ Y) (m : M.obj X), D.map f (r X m) = r Y (M.map f m) := by
+  let Q := (ModuleCat.restrictScalars θ).obj (ModuleCat.of O O)
+  let one : Q := (1 : O)
+  let g : A →ₗ[A] Q := LinearMap.toSpanSingleton A Q one
+  have hgθ : ∀ a, (g a : O) = θ a := fun a => mul_one (θ a)
+  have hsm : ∀ (X : 𝒞) (a : A) (m : M.obj X),
+      (1 : O) ⊗ₜ[A,θ] (a • m) = (θ a) ⊗ₜ[A,θ] m := by
+    intro X a m
+    have h := TensorProduct.smul_tmul (R := A) (R' := A) a one m
+    have e : a • one = (θ a : O) := hgθ a
+    rw [e] at h
+    exact h.symm
+  let r : ∀ X : 𝒞, M.obj X →ₛₗ[θ] (M ⋙ ModuleCat.extendScalars θ).obj X := fun X =>
+    { toFun := fun m => (1 : O) ⊗ₜ[A,θ] m
+      map_add' := fun a b => TensorProduct.tmul_add _ _ _
+      map_smul' := fun a m => by
+        refine (hsm X a m).trans ?_
+        have := ModuleCat.ExtendScalars.smul_tmul θ (M := M.obj X) (θ a) (1 : O) m
+        rw [mul_one] at this
+        exact this.symm }
+  refine ⟨M ⋙ ModuleCat.extendScalars θ, r, fun X => ⟨?_, fun m => ⟨?_, ?_⟩⟩, ?_⟩
+  · intro y
+    change Q ⊗[A] (M.obj X) at y
+    induction y using TensorProduct.induction_on with
+    | zero => exact ⟨0, map_zero _⟩
+    | tmul o n =>
+      obtain ⟨a, ha⟩ := hθ o
+      refine ⟨a • n, ?_⟩
+      refine (hsm X a n).trans ?_
+      rw [ha]
+      rfl
+    | add x y hx hy =>
+      obtain ⟨u, hu⟩ := hx
+      obtain ⟨v, hv⟩ := hy
+      refine ⟨u + v, ?_⟩
+      rw [map_add (f := _), hu, hv]
+      rfl
+  · intro h
+    refine mem_smul_of_tmul_eq_zero g ?_ ξ ?_ m ?_
+    · intro q
+      obtain ⟨a, ha⟩ := hθ q
+      exact ⟨a, (hgθ a).trans ha⟩
+    · intro a
+      have : g a = 0 ↔ θ a = 0 := by
+        rw [← hgθ a]
+        rfl
+      rw [this, ← RingHom.mem_ker, hker, Ideal.mem_span_singleton']
+      constructor
+      · rintro ⟨b, rfl⟩
+        exact ⟨b, mul_comm _ _⟩
+      · rintro ⟨b, rfl⟩
+        exact ⟨b, mul_comm _ _⟩
+    · have e : g 1 = one := one_smul A one
+      rw [e]
+      exact h
+  · rintro ⟨n, rfl⟩
+    have : θ ξ = 0 := by
+      rw [← RingHom.mem_ker, hker]
+      exact Ideal.mem_span_singleton_self ξ
+    change (1 : O) ⊗ₜ[A,θ] (ξ • n) = 0
+    rw [hsm X ξ n, this]
+    exact TensorProduct.zero_tmul (R := A) Q n
+  · intro X Y f m
+    rfl
+
+end GlobalTheory.CompanionTheory.ModuleReduction
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.SemilinearFactorsThroughReduction
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Div
+
+theorem semilinear_factors_through_reduction :
+    ∀ (A O : Type) [CommRing A] [CommRing O] (θ : A →+* O), Function.Surjective θ →
+      ∀ (ξ : A), θ ξ = 0 →
+      ∀ (M D L : Type) [AddCommGroup M] [Module A M] [AddCommGroup D] [Module O D]
+        [AddCommGroup L] [Module O L] (r : M →ₛₗ[θ] D) (q : M →ₛₗ[θ] L),
+        Function.Surjective r → (∀ m, r m = 0 ↔ ∃ n, m = ξ • n) →
+        ∃ π : D →ₗ[O] L, ∀ m, π (r m) = q m := by
+  intro A O _ _ θ hθ ξ hξ M D L _ _ _ _ _ _ r q hr hker
+  have hq : ∀ m m', r m = r m' → q m = q m' := by
+    intro m m' h
+    obtain ⟨n, hn⟩ := (hker (m - m')).1 (by rw [map_sub, h, sub_self])
+    have h0 : q (m - m') = 0 := by rw [hn, map_smulₛₗ, hξ, zero_smul]
+    rwa [map_sub, sub_eq_zero] at h0
+  let s := Function.surjInv hr
+  have hs : ∀ d, r (s d) = d := Function.surjInv_eq hr
+  refine ⟨{ toFun := fun d => q (s d), map_add' := ?_, map_smul' := ?_ }, fun m => hq _ _ (hs _)⟩
+  · intro d d'
+    rw [← map_add (f := _)]
+    exact hq _ _ (by rw [map_add (f := _), hs, hs, hs])
+  · intro o d
+    obtain ⟨a, rfl⟩ := hθ o
+    simp only [RingHom.id_apply]
+    rw [← map_smulₛₗ]
+    exact hq _ _ (by rw [map_smulₛₗ, hs, hs])
+
+end GlobalTheory.CompanionTheory.Div
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrismaticDieudonneHodgeOfHodgeTateDatum
+
+section
 
 @[expose] public section
 
@@ -171,3 +429,6 @@ theorem prismaticDieudonneHodgeAt_of_hasDatum : ∀ (p : ℕ) [Fact p.Prime] (C 
       ((congrArg (fun z : latt (const p O) => z.1 t) (hg m)).trans (hφ1 (const p O) (g m) t))
 
 end GlobalTheory.PDivLat
+end
+end
+end

@@ -2,7 +2,6 @@ module
 
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.HidaSetting
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.HermitianZZEqNeg
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.SurjOfIndep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +19,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +38,50 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.JacobianCoordinates
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.SurjOfIndep
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix
+open scoped ComplexConjugate
+
+namespace Formalism.L2.SG.RealObj.InfCut.UnitaryIsometries.RI
+
+open Formalism.L2.SG.HidaSetting Formalism.L2.SG.RealObj Formalism.L2.SG.RealObj.InfCut.JacobianCoordinates
+
+variable {n : ℕ} (ε : Fin n → Bool)
+
+abbrev dl (i : Fin n) : Fin n → ℂ := Pi.single i 1
+
+theorem hJ_dl (i j : Fin n) : hJ ε (dl i) (dl j) = if i = j then (if ε i then 1 else -1) else 0 := by
+  unfold hJ
+  simp only [dl, Formalism.REAL.Jm, mulVec_diagonal, dotProduct, Pi.star_apply, Pi.single_apply]
+  by_cases h : i = j
+  · subst h; simp
+  · rw [if_neg h]
+    refine Finset.sum_eq_zero fun l _ => ?_
+    by_cases hl : l = i
+    · subst hl; simp [h]
+    · simp [hl]
+
+end Formalism.L2.SG.RealObj.InfCut.UnitaryIsometries.RI
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.GramEqOfHyp
+
+section
 
 @[expose] public section
 
@@ -206,3 +246,6 @@ theorem complement {k : ℕ} (hdim : n = 2 * r + 1 + k)
   · rw [← hz, hiso]; simp only [z0, hJ_smul_left, zw]; ring
 
 end Formalism.L2.SG.RealObj.InfCut.UnitaryIsometries.RI
+end
+end
+end

@@ -47,7 +47,12 @@ import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Presheaf
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Unitary
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.LayerBasic
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.SmulOneMemUnitary
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedEmbeddingToM
+public import Mathlib.Analysis.Matrix.Normed
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.Lemma
+import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Arbitrary
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.BridgeExpK
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.BridgeKType
@@ -57,6 +62,40 @@ import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.PropsKfin
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.VNormSqLowKSubRootLt
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.SmulOneMemUnitary
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset MeasureTheory Matrix
+open scoped ComplexOrder ContDiff ENNReal
+
+namespace ReciprocityTheory.ChartRestriction.DS.S7
+
+open ReciprocityTheory.ChartRestriction.DS
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+variable {n : ℕ}
+
+lemma toMK_one' (ε : Fin n → Bool) : toMK (1 : KG ε) = 1 := rfl
+
+lemma toMK_mul' {ε : Fin n → Bool} (k k' : KG ε) : toMK (k * k') = toMK k * toMK k' := rfl
+
+lemma toMK_mem (ε : Fin n → Bool) (k : KG ε) : toMK k ∈ Kset ε := k.2
+
+end ReciprocityTheory.ChartRestriction.DS.S7
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.CompactIsDSUniqueOfCas
+
+section
 
 @[expose] public section
 
@@ -265,3 +304,6 @@ theorem isDS_props_of_copies {ε : Fin n → Bool} {lam : Fin n → ℝ} (hlam :
   · exact dsUnique_of_cas hgap hDS hcas hDS' (casOnSmooth_of_copies hDS' hgap (hall H' σ' hDS'))
 
 end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end

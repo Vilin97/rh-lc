@@ -1,20 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyMeasAndReps
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AddHaarProperSubmoduleEqZeroModuleTopologyStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSubringEqOKStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteNormedAlgebraEqModuleTopology
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteUnitsQuotSqFiniteEtaleHermitianPairStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsCompactFiniteEtaleHermitianPairOKStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsOpenFiniteEtaleHermitianPairOKStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuadraticStarStructure
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.Normed.Field.ProperSpace
+public import Mathlib.Analysis.Normed.Field.ProperSpace
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -28,12 +24,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TensorProduct.IsBaseChangeFree
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +36,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,10 +49,166 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSubringEqOK
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteNormedAlgebraEqModuleTopology
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteUnitsQuotSqFiniteEtaleHermitianPairStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsCompactFiniteEtaleHermitianPairOKStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsOpenFiniteEtaleHermitianPairOK
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuadraticStarStructure
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Normed.Field.ProperSpace
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.TensorProduct.IsBaseChangeFree
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.Norm.Transitivity
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AddHaarProperSubmoduleEqZeroModuleTopology
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+open Set Pointwise Metric
+
+namespace GlobalTheory.HaarNullSub
+
+theorem addHaar_submodule_eq_zero (F : Type) [NontriviallyNormedField F] [LocallyCompactSpace F]
+    (V : Type) [AddCommGroup V] [Module F V] [Module.Finite F V] [TopologicalSpace V]
+    [IsModuleTopology F V] [MeasurableSpace V] [BorelSpace V] (μ : Measure V)
+    (hμ : μ.IsAddHaarMeasure) (s : Submodule F V) (hs : s ≠ ⊤) : μ (s : Set V) = 0 := by
+  haveI := hμ
+  haveI : ProperSpace F := ProperSpace.of_nontriviallyNormedField_of_weaklyLocallyCompactSpace F
+  haveI : ContinuousAdd V := IsModuleTopology.toContinuousAdd F V
+  haveI : ContinuousSMul F V := inferInstance
+
+  let e₀ : V ≃ₗ[F] (Fin (Module.finrank F V) → F) := (Module.finBasis F V).equivFun
+  have hc : Continuous e₀ := IsModuleTopology.continuous_of_linearMap e₀.toLinearMap
+  have hc' : Continuous e₀.symm := IsModuleTopology.continuous_of_linearMap e₀.symm.toLinearMap
+  let h : V ≃ₜ (Fin (Module.finrank F V) → F) :=
+    { e₀.toEquiv with continuous_toFun := hc, continuous_invFun := hc' }
+
+  have hcl : IsClosed (s : Set V) := by
+    have h1 : IsClosed ((s.map e₀.toLinearMap : Submodule F _) : Set (Fin (Module.finrank F V) → F)) :=
+      Submodule.closed_of_finiteDimensional _
+    have h2 : (s : Set V) = h ⁻¹' ((s.map e₀.toLinearMap : Submodule F _) : Set _) := by
+      ext v
+      simp [h, Submodule.mem_map]
+    rw [h2]; exact h1.preimage h.continuous
+
+  obtain ⟨x, hx⟩ : ∃ x, x ∉ s := by
+    simpa only [Submodule.eq_top_iff', not_exists, Ne, not_forall] using hs
+  obtain ⟨c, c0, c1⟩ := NormedField.exists_norm_lt_one F
+  let u : ℕ → V := fun n => c ^ n • x
+  have hu : Tendsto u atTop (𝓝 0) := by
+    have : Tendsto (fun n : ℕ => c ^ n) atTop (𝓝 0) := tendsto_pow_atTop_nhds_zero_of_norm_lt_one c1
+    simpa [u] using this.smul_const x
+  have hC : IsCompact (insert 0 (range u)) := hu.isCompact_insert_range
+
+  have hdisj : ∀ A ⊆ (s : Set V), Pairwise (Function.onFun Disjoint fun n => {u n} + A) := by
+    intro A hA m n hmn
+    rw [Function.onFun, Set.disjoint_left]
+    rintro _ ⟨_, rfl, a, ha, rfl⟩ ⟨_, rfl, b, hb, hab⟩
+    apply hx
+    have hne : c ^ m - c ^ n ≠ 0 := by
+      intro h0
+      apply hmn
+      have : ‖c‖ ^ m = ‖c‖ ^ n := by rw [← norm_pow, ← norm_pow, sub_eq_zero.mp h0]
+      exact pow_right_injective₀ c0 (ne_of_lt c1) this.symm |>.symm
+    have hmem : (c ^ m - c ^ n) • x ∈ s := by
+      have : (c ^ m - c ^ n) • x = b - a := by
+        simp only [u] at hab
+        rw [sub_smul, show c ^ m • x = c ^ n • x + b - a by rw [hab]; abel]; abel
+      rw [this]; exact s.sub_mem (hA hb) (hA ha)
+    exact (Submodule.smul_mem_iff s hne).mp hmem
+
+  have key : ∀ R : ℝ, μ ((s : Set V) ∩ h ⁻¹' closedBall 0 R) = 0 := by
+    intro R
+    set A := (s : Set V) ∩ h ⁻¹' closedBall 0 R with hAdef
+    have hAc : IsCompact A := by
+      have hK : IsCompact (h ⁻¹' closedBall 0 R) := by
+        rw [← h.image_symm]
+        exact (isCompact_closedBall (0 : Fin (Module.finrank F V) → F) R).image h.symm.continuous
+      exact hK.inter_left hcl
+    have hAm : MeasurableSet A := hcl.measurableSet.inter (isClosed_closedBall.preimage h.continuous).measurableSet
+    by_contra hne
+    apply lt_irrefl (⊤ : ENNReal)
+    calc
+      (⊤ : ENNReal) = ∑' _ : ℕ, μ A := (ENNReal.tsum_const_eq_top_of_ne_zero hne).symm
+      _ = ∑' n : ℕ, μ ({u n} + A) := by
+        congr 1; ext1 n; simp only [image_add_left, measure_preimage_add, singleton_add]
+      _ = μ (⋃ n, {u n} + A) := Eq.symm <| measure_iUnion (hdisj A inter_subset_left) fun n => by
+        simpa only [image_add_left, singleton_add] using (measurable_const_add (-u n)) hAm
+      _ ≤ μ (insert 0 (range u) + A) := by
+        apply measure_mono
+        refine iUnion_subset fun n => add_subset_add ?_ Subset.rfl
+        exact singleton_subset_iff.mpr (mem_insert_of_mem _ (mem_range_self n))
+      _ < ⊤ := (hC.add hAc).measure_lt_top
+  rw [← nonpos_iff_eq_zero]
+  calc
+    μ (s : Set V) ≤ ∑' n : ℕ, μ ((s : Set V) ∩ h ⁻¹' closedBall 0 n) := by
+      conv_lhs => rw [← inter_univ (s : Set V), ← preimage_univ (f := h), ← iUnion_closedBall_nat 0,
+        preimage_iUnion, inter_iUnion]
+      exact measure_iUnion_le _
+    _ = 0 := by simp only [key, tsum_zero]
+
+end GlobalTheory.HaarNullSub
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AddHaarProperSubmoduleEqZeroModuleTopologyStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.addHaar_proper_submodule_eq_zero_moduleTopology : ∀ (F : Type) [NontriviallyNormedField F] [LocallyCompactSpace F] (V : Type) [AddCommGroup V] [Module F V] [Module.Finite F V] [TopologicalSpace V] [IsModuleTopology F V] [MeasurableSpace V] [BorelSpace V] (μ : Measure V), μ.IsAddHaarMeasure → ∀ s : Submodule F V, s ≠ ⊤ → μ (s : Set V) = 0 := by
+  first | exact @GlobalTheory.HaarNullSub.addHaar_submodule_eq_zero | exact GlobalTheory.HaarNullSub.addHaar_submodule_eq_zero | (intros; apply GlobalTheory.HaarNullSub.addHaar_submodule_eq_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSubringEqOKStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.exists_subring_eq_OK : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ∃ R : Subring A.K, (R : Set A.K) = A.OK := by
+  first | exact @GlobalTheory.JR.Et.OK_isSubring | exact GlobalTheory.JR.Et.OK_isSubring | (intros; apply GlobalTheory.JR.Et.OK_isSubring <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsOpenFiniteEtaleHermitianPairOKStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.JR Matrix MeasureTheory Filter Topology
+
+theorem _root_.GlobalTheory.T.isOpen_finiteEtaleHermitianPair_OK : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), IsOpen A.OK := by
+  first | exact @GlobalTheory.JR.OKOpen.isOpen_OK | exact GlobalTheory.JR.OKOpen.isOpen_OK | (intros; apply GlobalTheory.JR.OKOpen.isOpen_OK <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EtaleHermitianPairStructureFacts
+
+section
 
 @[expose] public section
 
@@ -186,3 +338,6 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
   · exact EtMeas.eq_zero_of_trace F A.K x fun y => by simpa [mul_comm] using hx y
 
 end GlobalTheory.JR.EtFacts
+end
+end
+end

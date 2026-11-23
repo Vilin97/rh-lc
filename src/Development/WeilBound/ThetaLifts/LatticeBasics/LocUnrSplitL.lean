@@ -8,13 +8,7 @@ public import Mathlib.Data.Matrix.ColumnRowPartitioned
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.MeasureTheory.Integral.IntegrableOn
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearIntegralCompactOpen
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearUnimodularHaar
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IntegrandEqOnPiece
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IwasawaDecompositionUpperTriangular
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LocalFieldUniformizerNormProperties
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.MemIntegralGLIffIntegralUnitDet
-import GroundTheory.AutomorphicForms.GLnLocal
-import GroundTheory.LocalFields.LocalFourierHaar
+public import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,11 +27,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -57,10 +47,134 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.AutomorphicForms.MeasuresGL
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SphericalZetaCosets
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOfValILeOne
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LocalFieldUniformizerNormProperties
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.MemIntegralGLIffIntegralUnitDet
+import GroundTheory.AutomorphicForms.GLnLocal
+import GroundTheory.LocalFields.LocalFourierHaar
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearIntegralCompactOpenStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
+open scoped ComplexConjugate ValuativeRel
+
+theorem _root_.GlobalTheory.T.generalLinear_integral_compact_open : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}, LF O ϖ nrm q → ∀ n : ℕ, IsOpen (GLint O n : Set (GL (Fin n) F)) ∧ IsCompact (GLint O n : Set (GL (Fin n) F)) ∧ LocallyCompactSpace (GL (Fin n) F) ∧ SecondCountableTopology (GL (Fin n) F) ∧ T2Space (GL (Fin n) F) ∧ IsOpen (Mint O n) ∧ IsClosed (Mint O n) := by
+  first | exact @GlobalTheory.CompanionTheory.QLTop.gl_topology | exact GlobalTheory.CompanionTheory.QLTop.gl_topology | (intros; apply GlobalTheory.CompanionTheory.QLTop.gl_topology <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearUnimodularHaar
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
+open scoped ComplexConjugate ValuativeRel
+
+namespace GlobalTheory.CompanionTheory.QL.HaarGL
+
+theorem exists_haar_unimodular : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}, LF O ϖ nrm q → ∀ n : ℕ, (∃ κ : Measure (GL (Fin n) F), κ.IsMulLeftInvariant ∧ κ (GLint O n : Set (GL (Fin n) F)) = 1) ∧ ∀ μ : Measure (GL (Fin n) F), μ.IsHaarMeasure → μ.IsMulRightInvariant ∧ μ.IsInvInvariant := by
+  intro F _ _ _ _ O ϖ nrm q hLF n
+  obtain ⟨hKo, hKc, hlc, _hsc, ht2, -, -⟩ := GlobalTheory.T.generalLinear_integral_compact_open hLF n
+  haveI := hlc
+  haveI := ht2
+  haveI : BorelSpace (GL (Fin n) F) := GlobalTheory.CompanionTheory.QL.instBorelGL n
+  refine ⟨?_, fun μ hμ => ?_⟩
+  · let μ₀ : Measure (GL (Fin n) F) := Measure.haar
+    have hpos : μ₀ (GLint O n : Set (GL (Fin n) F)) ≠ 0 :=
+      hKo.measure_ne_zero μ₀ ⟨1, (GLint O n).one_mem⟩
+    have hfin : μ₀ (GLint O n : Set (GL (Fin n) F)) ≠ ⊤ := hKc.measure_lt_top.ne
+    refine ⟨(μ₀ (GLint O n : Set (GL (Fin n) F)))⁻¹ • μ₀, inferInstance, ?_⟩
+    rw [Measure.smul_apply, smul_eq_mul, ENNReal.inv_mul_cancel hpos hfin]
+  · haveI := hμ
+    exact ⟨GroundTheory.Automorphic.Measures.isMulRightInvariant_GL F n μ,
+      ⟨GroundTheory.Automorphic.Measures.inv_eq_self_GL F n μ⟩⟩
+
+end GlobalTheory.CompanionTheory.QL.HaarGL
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.IntegrandEqOnPiece
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
+open scoped ComplexConjugate ValuativeRel
+
+namespace GlobalTheory.CompanionTheory.ZetaSph
+
+theorem zeta_spherical : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}, LF O ϖ nrm q → ∀ {c : ℕ} (χ : Fin c → F → ℂ) (α : Fin c → ℂ), UnrChar nrm q χ α → ∀ (φ : GL (Fin c) F → ℂ), IsSphFn O nrm χ φ → ∀ (κ : Measure (GL (Fin c) F)), κ.IsMulLeftInvariant → κ (GLint O c : Set (GL (Fin c) F)) = 1 → ∀ σ : ℝ, (∀ i, ‖α i‖ * (q : ℝ) ^ (((c : ℝ) - 1) / 2 - σ) < 1) → IntegrableOn (fun g => φ g * ((nrm (g : Matrix (Fin c) (Fin c) F).det ^ (σ) : ℝ) : ℂ)) (Mint O c) κ ∧ ∫ g in Mint O c, φ g * ((nrm (g : Matrix (Fin c) (Fin c) F).det ^ (σ) : ℝ) : ℂ) ∂κ = ∏ i : Fin c, (1 - α i * (((q : ℝ) ^ (((c : ℝ) - 1) / 2 - σ) : ℝ) : ℂ))⁻¹ :=
+  _root_.UpperTheory.Reformulated.B.SphericalZetaCosets.zeta_spherical
+
+end GlobalTheory.CompanionTheory.ZetaSph
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.IwasawaDecompositionUpperTriangular
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
+open scoped ComplexConjugate ValuativeRel
+
+namespace GlobalTheory.CompanionTheory.QL.Iwasawa
+
+theorem map_mem_GLint {F : Type} [Field F] [ValuativeRel F] {n : ℕ}
+    (k : GL (Fin n) (ValuativeRel.valuation F).valuationSubring) :
+    GeneralLinearGroup.map (algebraMap (ValuativeRel.valuation F).valuationSubring F) k ∈
+      GLint 𝒪[F] n := by
+  have key : ∀ (u : GL (Fin n) (ValuativeRel.valuation F).valuationSubring),
+      IsInt 𝒪[F] ((GeneralLinearGroup.map
+        (algebraMap (ValuativeRel.valuation F).valuationSubring F) u : GL (Fin n) F) :
+          Matrix (Fin n) (Fin n) F) := by
+    intro u i j
+    have h := (u.1 i j).2
+    exact h
+  refine ⟨key k, ?_⟩
+  rw [← map_inv]
+  exact key k⁻¹
+
+theorem exists_upper_mul_int {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
+    [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}
+    (h : LF O ϖ nrm q) (n : ℕ) (g : GL (Fin n) F) :
+    ∃ b : GL (Fin n) F, (b : Matrix (Fin n) (Fin n) F).BlockTriangular id ∧
+      ∃ k ∈ GLint O n, g = b * k := by
+  obtain rfl := h.O_eq
+  obtain ⟨k, b, hb, hg⟩ :=
+    GlobalTheory.ValIwasawa.iwasawa (ValuativeRel.valuation F).valuationSubring F n g⁻¹
+  refine ⟨b⁻¹, ?_, _, (GLint _ n).inv_mem (map_mem_GLint k), ?_⟩
+  · let _ : Invertible (b : Matrix (Fin n) (Fin n) F) := Units.invertible b
+    rw [Matrix.coe_units_inv]
+    exact Matrix.blockTriangular_inv_of_blockTriangular hb
+  · rw [← _root_.mul_inv_rev, ← hg, inv_inv]
+
+end GlobalTheory.CompanionTheory.QL.Iwasawa
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.LatticeBasics.LocUnrSplitL
+
+section
 
 @[expose] public section
 
@@ -259,3 +373,5 @@ theorem exists_dual (J : GL (Fin n) k) {p J₂ : GL (Fin n ⊕ Fin n) k} (hJ : J
     field_simp
 
 end GlobalTheory.ThK.Dbl.Split
+end
+end

@@ -1,7 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsLogMult
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogResolutionMultLtOfConnectedness
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverIffIsProperAndExistsIsAmpleLB
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLiftedFunctionOnLogResolutionStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimeDivisorOverSourceBirationalStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimeDivisorOverTargetBirationalStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModificationLineBundleGlobalSectionsDimPullEq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrdFunctionFieldPullbackPrimeDivisorOverStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeDivisorCentreThroughImageStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalTopFormPullbackBijectiveBirational
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.MemRangeOfForallHeightEqOneOfIsReflexive
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,6 +28,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.KrullDimension.Field
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -40,6 +50,287 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.CentreAtOfIsAt
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.DiscrepancyFormulaDivisor
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.DivisorPointProperLiftStatement
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.FormOrderBirationalPullback
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularAtNormalPointOfDivisors
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+set_option autoImplicit false
+noncomputable section
+
+namespace GlobalTheory.Discrepancy
+
+theorem regAt_of_isIntegrallyClosed_stalk : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (p : X ⟶ Sp ℂ), IsProjOver p → ∀ y : X, IsIntegrallyClosed (X.presheaf.stalk y) → ∀ f : X.functionField, (∀ z, z ⤳ y → ∀ E : DivOver p, E.IsAt z → f ∈ E.ring) → RegAt y f := by
+  intro X _ _ p hp y hy f hf
+  haveI : IsProper p := ((isProjOver_iff_isProper_and_exists_isAmpleLB p).1 hp).1
+  obtain ⟨U, hU, hx, -⟩ := exists_isAffineOpen_mem_and_subset (x := y) (U := ⊤) trivial
+  haveI : Nonempty U := ⟨⟨y, hx⟩⟩
+  letI := X.presheaf.algebra_section_stalk (⟨y, hx⟩ : U)
+  haveI := hU.isLocalization_stalk ⟨y, hx⟩
+  refine (mem_range_algebraMap_iff_forall_height_eq_one (A := X.presheaf.stalk y) f).2
+    fun q hq h1 => ?_
+  let P : PrimeSpectrum Γ(X, U) := ⟨q.comap (algebraMap _ (X.presheaf.stalk y)), inferInstance⟩
+  have hP1 : P.asIdeal.height = 1 :=
+    (IsLocalization.height_under (hU.primeIdealOf ⟨y, hx⟩).asIdeal.primeCompl q).trans h1
+  have hPQ : P ≤ hU.primeIdealOf ⟨y, hx⟩ := fun s hs => by_contra fun hs' =>
+    hq.ne_top (q.eq_top_of_isUnit_mem hs (IsLocalization.map_units (X.presheaf.stalk y)
+      (⟨s, hs'⟩ : (hU.primeIdealOf ⟨y, hx⟩).asIdeal.primeCompl)))
+  have hz : hU.fromSpec P ∈ U := by
+    have : hU.fromSpec P ∈ Set.range hU.fromSpec := ⟨P, rfl⟩
+    rwa [hU.range_fromSpec] at this
+  let z : U := ⟨hU.fromSpec P, hz⟩
+  have hP : hU.primeIdealOf z = P :=
+    hU.fromSpec.isOpenEmbedding.injective (hU.fromSpec_primeIdealOf z)
+  have hzx : (z : X) ⤳ y := by
+    have h := ((PrimeSpectrum.le_iff_specializes P (hU.primeIdealOf ⟨y, hx⟩)).mp hPQ).map
+      hU.fromSpec.continuous
+    rwa [hU.fromSpec_primeIdealOf ⟨y, hx⟩] at h
+  clear_value z
+  haveI := hU.isLocalization_stalk z
+  have hc : Order.coheight (z : X) = 1 := by
+    have := IsLocalization.AtPrime.ringKrullDim_eq_height (hU.primeIdealOf z).asIdeal
+      (X.presheaf.stalk (z : X))
+    rw [ringKrullDim_stalk_eq_coheight, hP, hP1] at this
+    exact_mod_cast this
+
+  haveI hT : IsLocalization.AtPrime (Localization.AtPrime q) P.asIdeal :=
+    IsLocalization.isLocalization_isLocalization_atPrime_isLocalization
+      (hU.primeIdealOf ⟨y, hx⟩).asIdeal.primeCompl (Localization.AtPrime q) q
+  haveI : IsIntegrallyClosed (Localization.AtPrime q) :=
+    isIntegrallyClosed_of_isLocalization _ q.primeCompl q.primeCompl_le_nonZeroDivisors
+  have hs : (hU.primeIdealOf z).asIdeal.primeCompl = P.asIdeal.primeCompl := by
+    ext s; rw [Ideal.mem_primeCompl_iff, Ideal.mem_primeCompl_iff, hP]
+  haveI hZ : IsLocalization P.asIdeal.primeCompl (X.presheaf.stalk (z : X)) := by
+    rw [← hs]; exact hU.isLocalization_stalk z
+  let e : X.presheaf.stalk (z : X) ≃+* Localization.AtPrime q :=
+    (IsLocalization.algEquiv P.asIdeal.primeCompl (X.presheaf.stalk (z : X))
+      (Localization.AtPrime q)).toRingEquiv
+  haveI : IsIntegrallyClosed (X.presheaf.stalk (z : X)) :=
+    ((IsNormalScheme.isDomain_and_isIntegrallyClosed_iff_of_ringEquiv e).2
+      ⟨inferInstance, inferInstance⟩).2
+  haveI : IsDiscreteValuationRing (X.presheaf.stalk (z : X)) := by
+    have h1 : Ring.KrullDimLE 1 (X.presheaf.stalk (z : X)) := krullDimLE_of_coheight_le hc.le
+    have hf : ¬ IsField (X.presheaf.stalk (z : X)) := fun h => by
+      have := ringKrullDim_eq_zero_of_isField h
+      rw [ringKrullDim_stalk_eq_coheight, hc] at this
+      simp at this
+    have hm := IsLocalRing.isField_iff_maximalIdeal_eq.not.mp hf
+    have h3 : IsIntegrallyClosed (X.presheaf.stalk (z : X)) ∧
+        ∃! P : Ideal (X.presheaf.stalk (z : X)), P ≠ ⊥ ∧ P.IsPrime :=
+      ⟨inferInstance, _, ⟨hm, inferInstance⟩, fun P hP => IsLocalRing.eq_maximalIdeal
+        (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 P hP.1 hP.2)⟩
+    exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk (z : X)) hf).out 1 4).mpr h3
+  obtain ⟨E, hE⟩ := DivOver.exists_isAt (p := p) (z : X)
+  obtain ⟨a, rfl⟩ := (hE f).1 (hf z hzx E hE)
+  obtain ⟨⟨c, s⟩, e⟩ := IsLocalization.surj (hU.primeIdealOf z).asIdeal.primeCompl a
+  refine (mem_primeLocalSubalgebra_iff q _).2 ⟨algebraMap _ _ s.1, ?_, algebraMap _ _ c, ?_⟩
+  · have := s.2
+    rw [Ideal.mem_primeCompl_iff] at this
+    have h' : s.1 ∉ P.asIdeal := by simpa only [hP] using this
+    exact h'
+  · have e' := congrArg (algebraMap _ X.functionField) e
+    rw [map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply] at e'
+    rw [Algebra.smul_def, mul_comm]
+    exact ((algebraMap_germ hx c).trans e'.symm).trans (congrArg _ (algebraMap_germ hx s.1).symm)
+
+end GlobalTheory.Discrepancy
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularAtNormalPointOfDivisorsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+theorem _root_.GlobalTheory.T.regular_at_normal_point_of_divisors : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (p : X ⟶ Sp ℂ), IsProjOver p → ∀ y : X, IsIntegrallyClosed (X.presheaf.stalk y) → ∀ f : X.functionField, (∀ z, z ⤳ y → ∀ E : DivOver p, E.IsAt z → f ∈ E.ring) → RegAt y f := by
+  first | exact @GlobalTheory.Discrepancy.regAt_of_isIntegrallyClosed_stalk | exact GlobalTheory.Discrepancy.regAt_of_isIntegrallyClosed_stalk | (intros; apply GlobalTheory.Discrepancy.regAt_of_isIntegrallyClosed_stalk <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogResolutionMultLtOfConnectedness
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+namespace GlobalTheory.LogResConn
+
+theorem mult_le_ord_of_regularAt {Y : Scheme.{0}} [IsIntegral Y] [IsLocallyNoetherian Y]
+    {F : CartierDiv Y} {v : Y} {f : Y.functionField} (h : (-F).RegularAt v f) (hf : f ≠ 0)
+    (hv : Order.coheight v = 1) : F.mult v ≤ Scheme.ord f v := by
+  obtain ⟨g, hg⟩ := F.exists_isEqn v
+  obtain ⟨a, ha⟩ := hg.neg.regularAt_iff.1 h
+  have hg0 : ((g⁻¹ : Y.functionFieldˣ) : Y.functionField) ≠ 0 := Units.ne_zero _
+  have ha0 : a ≠ 0 := by
+    rintro rfl
+    rw [map_zero] at ha
+    exact mul_ne_zero hf hg0 ha.symm
+  have h2 := ord_algebraMap hv ha0
+  rw [ha, Scheme.ord_mul hf hg0] at h2
+  have h3 := Scheme.ord_mul (x := v) (Units.ne_zero g) hg0
+  rw [← Units.val_mul, mul_inv_cancel, Units.val_one, (unitAt_one v).ord_eq_zero] at h3
+  rw [hg.mult_eq]
+  have : (0 : ℤ) ≤ ((Module.length (Y.presheaf.stalk v) (Y.presheaf.stalk v ⧸ Ideal.span {a})).toNat : ℤ) :=
+    Int.natCast_nonneg _
+  omega
+
+theorem mem_ring_of_regularAt {k : Type} [Field k] {Y : Scheme.{0}} [IsIntegral Y]
+    [IsLocallyNoetherian Y] {q : Y ⟶ Sp k} {E : DivOver q} {F : CartierDiv Y} {w : Y}
+    {f : Y.functionField} (hE : E.IsAt w) (h : (-F).RegularAt w f) (hF : 0 ≤ F.mult w) :
+    f ∈ E.ring := by
+  by_cases hf : f = 0
+  · rw [hf]; exact zero_mem _
+  have h1 := mult_le_ord_of_regularAt h hf hE.coheight_eq_one
+  have h2 := hE.ord_eq (Units.mk0 f hf)
+  have h3 := (E.ord_nonneg_iff (Units.mk0 f hf)).1 (by rw [h2]; simpa using hF.trans h1)
+  simpa using h3
+
+variable {k : Type} [Field k] {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y]
+  [IsLocallyNoetherian Y] [GlobalTheory.IsNormalScheme Y]
+
+theorem regAt_pull {p : X ⟶ Sp k} (s : Y ⟶ X) [IsDominant s] [LocallyOfFiniteType (s ≫ p)]
+    (hbir : Function.Bijective (functionFieldMap s)) {v : Y} {y : X} (hv : Order.coheight v = 1)
+    (hsv : s v ⤳ y) {f : X.functionField} (hf : RegAt y f) : RegAt v (functionFieldMap s f) := by
+  obtain ⟨E', hE'⟩ := DivOver.exists_isAt_of_coheight_eq_one (p := s ≫ p) hv
+  obtain ⟨E, hE⟩ := GlobalTheory.T.exists_primeDivisor_over_target_birational k X Y p s hbir E'
+  have ht := GlobalTheory.T.primeDivisorCentre_through_image k X Y p s E' E hE v (hE'.through specializes_rfl)
+  exact (hE' _).1 ((hE f).1 ((ht.of_specializes hsv) f hf))
+
+theorem unitAt_pull {p : X ⟶ Sp k} (s : Y ⟶ X) [IsDominant s] [LocallyOfFiniteType (s ≫ p)]
+    (hbir : Function.Bijective (functionFieldMap s)) {v : Y} {y : X} (hv : Order.coheight v = 1)
+    (hsv : s v ⤳ y) {f : X.functionField} (hf : UnitAt y f) : UnitAt v (functionFieldMap s f) := by
+  have hf0 := hf.ne_zero
+  obtain ⟨h1, h2⟩ := (unitAt_iff hf0).1 hf
+  refine (unitAt_iff ((map_ne_zero _).2 hf0)).2 ⟨regAt_pull (p := p) s hbir hv hsv h1, ?_⟩
+  rw [← map_inv₀]
+  exact regAt_pull (p := p) s hbir hv hsv h2
+
+end GlobalTheory.LogResConn
+
+namespace GlobalTheory.LogResConn
+
+theorem mult_lt_of_connected : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (p : X ⟶ Sp ℂ) (n : ℕ), IsProjOver p → topologicalKrullDim X = n → ∀ (η : RatForms p n) (m : ℕ) (G N : CartierDiv X) (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (s : Y ⟶ X) [IsDominant s] (K : CartierDiv Y) (B : Closeds Y) (F : CartierDiv Y), η ≠ 0 → 0 < m → IsLogRes p n η m G s K B → (∀ z, F.mult z = (pullCart s G - m • K).mult z / (m : ℤ)) → (∀ U : X.Opens, IsAffineOpen U → Subsingleton (cohOn (twist (GlobalTheory.structureModule Y) (toLB (pullCart s N - F))) (s ⁻¹ᵁ U) 1)) → ∀ (y : X) (σ : Y), IsIntegrallyClosed (X.presheaf.stalk y) → (∀ z, z ⤳ y → ∀ E : DivOver p, E.IsAt z → ∀ g, G.IsEqn z g → discrep E η m g ≤ 0) → (pullCart s G - m • K).mult σ = m → s σ ⤳ y → (∀ v w : Y, v ≠ σ → v ⤳ w → σ ⤳ w → s w ⤳ y → (pullCart s G - m • K).mult v < m) → ∀ v : Y, v ≠ σ → s v ⤳ y → (pullCart s G - m • K).mult v < m := by
+  intro X _ _ p n hp hn η m G N Y _ _ s _ K B F hη hm hres hF hcoh y σ hyint hdisc hσ hsσ hnear
+    v hvσ hsv
+  have hm' : (0 : ℤ) < m := by exact_mod_cast hm
+  have hFσ : F.mult σ = 1 := by rw [hF, hσ]; exact Int.ediv_self hm'.ne'
+  have hFle : ∀ z, F.mult z ≤ 0 ↔ (pullCart s G - m • K).mult z < m := fun z => by
+    rw [hF, ← Int.lt_add_one_iff, zero_add, Int.ediv_lt_iff_lt_mul hm', one_mul]
+  have hFnn : ∀ z, 0 ≤ (pullCart s G - m • K).mult z → 0 ≤ F.mult z := fun z hz => by
+    rw [hF]; exact Int.ediv_nonneg hz hm'.le
+  by_cases hvc : Order.coheight v ≠ 1
+  · have : (pullCart s G - m • K).mult v = 0 := by
+      by_contra h0
+      exact hvc (CartierDiv.coheight_eq_one_of_mult_ne_zero h0)
+    rw [this]; exact hm'
+  push_neg at hvc
+  haveI := hres.smooth
+  haveI : Smooth (s ≫ p) := SmoothOfRelativeDimension.smooth n _
+  haveI : GlobalTheory.IsNormalScheme Y := GlobalTheory.ModifSections.isNormalScheme_of_smooth (s ≫ p)
+  haveI : IsProper (s ≫ p) := ((isProjOver_iff_isProper_and_exists_isAmpleLB (s ≫ p)).1 hres.proj).1
+  haveI : IsProper p := ((isProjOver_iff_isProper_and_exists_isAmpleLB p).1 hp).1
+  haveI : IsProper s := IsProper.of_comp s p
+  have hbir := hres.bir
+  have hσc : Order.coheight σ = 1 :=
+    CartierDiv.coheight_eq_one_of_mult_ne_zero (by rw [hσ]; exact_mod_cast hm.ne')
+  obtain ⟨h, hσreg, hreg⟩ := GlobalTheory.T.exists_lifted_function_on_logResolution X p n hp hn η m G N Y s K B F hres hcoh y σ
+    (fun v w h1 h2 h3 h4 => (hFle v).2 (hnear v w h1 h2 h3 h4)) hsσ hσc
+  obtain ⟨h₀, rfl⟩ := hbir.2 h
+
+  have hη' : EtaleKlt.ratPull p s n η ≠ 0 := fun h0 =>
+    hη ((EtaleKlt.ratPull_bijective_of_birational ℂ X Y p s hbir n).1 (h0.trans (map_zero _).symm))
+
+  have hDnn : ∀ (z : X), z ⤳ y → ∀ (E : DivOver p) (E' : DivOver (s ≫ p)), E.IsAt z →
+      DivOver.Over s E' E → ∀ w, s w = z → E'.IsAt w → 0 ≤ F.mult w := by
+    intro z hz E E' hE hE'E w hwz hw
+    subst hwz
+    obtain ⟨g, hg⟩ := G.exists_isEqn (s w)
+    have hd := hdisc (s w) hz E hE g hg
+    have h1 := GlobalTheory.T.discrepancy_formula_divisor ℂ Y (s ≫ p) n (EtaleKlt.ratPull p s n η) hη' K (pullCart s G) m hm
+      hres.div E' w (fnPull s g) hw (isEqn_pullCart s hg)
+    have h2 : discrep E' (EtaleKlt.ratPull p s n η) m (fnPull s g) = discrep E η m g := by
+      have hform : E'.formOrd (EtaleKlt.ratPull p s n η) = E.formOrd η := by
+        simpa only [DivOver.formOrd] using
+          (GlobalTheory.T.form_order_birational_pullback ℂ X Y p s hbir E' E hE'E n η hη)
+      unfold discrep
+      rw [hform, GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p s hbir E' E hE'E g]
+    rw [h2] at h1
+    rw [h1] at hd
+    have hmq : (0 : ℚ) < m := by exact_mod_cast hm
+    have : (0 : ℚ) ≤ ((pullCart s G - m • K).mult w : ℚ) := by
+      rw [neg_div, neg_nonpos] at hd
+      exact (div_nonneg_iff.1 hd).elim (fun h => h.1) (fun h => absurd h.2 (not_le.2 hmq))
+    exact hFnn w (by exact_mod_cast this)
+
+  have hreg0 : RegAt y h₀ := by
+    refine GlobalTheory.T.regular_at_normal_point_of_divisors X p hp y hyint h₀ fun z hz E hE => ?_
+    obtain ⟨E', hE'E⟩ := GlobalTheory.T.exists_primeDivisor_over_source_birational ℂ X Y p s hbir E
+    obtain ⟨w, hwz, hw⟩ := GlobalTheory.T.divisor_point_proper_lift ℂ X Y p s hbir inferInstance E' E hE'E z hE
+    have hFw := hDnn z hz E E' hE hE'E w hwz hw
+    have hsw : s w ⤳ y := hwz ▸ hz
+    rw [hE'E h₀]
+    by_cases hwσ : w = σ
+    · subst hwσ
+      have := mem_ring_of_regularAt hw hσreg hFw
+      simpa using add_mem this (one_mem E'.ring)
+    · exact mem_ring_of_regularAt hw (hreg w hwσ hw.coheight_eq_one hsw) hFw
+
+  have hunit0 : UnitAt y h₀ := by
+    by_cases hh1 : functionFieldMap s h₀ - 1 = 0
+    · have : h₀ = 1 := hbir.1 (by rw [map_one]; exact sub_eq_zero.1 hh1)
+      rw [this]; exact unitAt_one y
+    have hnu : ¬ UnitAt y (h₀ - 1) := fun hu => by
+      have hu' := unitAt_pull (p := p) s hbir hσc hsσ hu
+      rw [map_sub, map_one] at hu'
+      have := mult_le_ord_of_regularAt hσreg hh1 hσc
+      rw [hu'.ord_eq_zero, hFσ] at this
+      omega
+    obtain ⟨a, ha, e⟩ := zeroAt_iff.2 ⟨hreg0.add ⟨-1, by rw [map_neg, map_one]⟩, by
+      rwa [sub_eq_add_neg] at hnu⟩
+    have h1a : (1 + a) ∉ IsLocalRing.maximalIdeal (X.presheaf.stalk y) := fun h' => by
+      have h1 : (1 : X.presheaf.stalk y) ∈ IsLocalRing.maximalIdeal (X.presheaf.stalk y) := by
+        simpa using sub_mem h' ha
+      exact (IsLocalRing.maximalIdeal.isMaximal _).ne_top
+        (Ideal.eq_top_of_isUnit_mem _ h1 isUnit_one)
+    exact ⟨1 + a, IsLocalRing.notMem_maximalIdeal.1 h1a, by rw [map_add (f := _), map_one, e]; ring⟩
+  have hu := unitAt_pull (p := p) s hbir hvc hsv hunit0
+  have := mult_le_ord_of_regularAt (hreg v hvσ hvc hsv) hu.ne_zero hvc
+  rw [hu.ord_eq_zero] at this
+  exact (hFle v).1 this
+
+end GlobalTheory.LogResConn
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogResolutionMultLtOfConnectednessStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +342,5 @@ open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm
 
 theorem _root_.GlobalTheory.T.logResolution_mult_lt_of_connectedness : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (p : X ⟶ Sp ℂ) (n : ℕ), IsProjOver p → topologicalKrullDim X = n → ∀ (η : RatForms p n) (m : ℕ) (G N : CartierDiv X) (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (s : Y ⟶ X) [IsDominant s] (K : CartierDiv Y) (B : Closeds Y) (F : CartierDiv Y), η ≠ 0 → 0 < m → IsLogRes p n η m G s K B → (∀ z, F.mult z = (pullCart s G - m • K).mult z / (m : ℤ)) → (∀ U : X.Opens, IsAffineOpen U → Subsingleton (cohOn (twist (GlobalTheory.structureModule Y) (toLB (pullCart s N - F))) (s ⁻¹ᵁ U) 1)) → ∀ (y : X) (σ : Y), IsIntegrallyClosed (X.presheaf.stalk y) → (∀ z, z ⤳ y → ∀ E : DivOver p, E.IsAt z → ∀ g, G.IsEqn z g → discrep E η m g ≤ 0) → (pullCart s G - m • K).mult σ = m → s σ ⤳ y → (∀ v w : Y, v ≠ σ → v ⤳ w → σ ⤳ w → s w ⤳ y → (pullCart s G - m • K).mult v < m) → ∀ v : Y, v ≠ σ → s v ⤳ y → (pullCart s G - m • K).mult v < m := by
   first | exact @GlobalTheory.LogResConn.mult_lt_of_connected | exact GlobalTheory.LogResConn.mult_lt_of_connected | (intros; apply GlobalTheory.LogResConn.mult_lt_of_connected <;> assumption)
+end
+end

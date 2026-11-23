@@ -1,8 +1,9 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.BlowupProjections.BlowupProjStatement
-public import Development.WeilBound.CoreStatements.ResolutionCharZero.PlugPrincW
-public import Development.WeilBound.CoreStatements.ResolutionCharZero.PlugResW
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.WeakPair
+public import Development.ResolutionOfSingularities.HasSimpleNormalCrossingsOfInStrictNormalCrossing
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.FromRes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +43,40 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.WeilBound.CoreStatements.ResolutionCharZero.PlugPrincW
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.ResPlug.FromRes
+
+theorem princW : PositivityTheory.ResPlug.PrincW :=
+  princW_of_functorialPrincipalization FunctorialResolution.functorialPrincipalizationCharZero.{0}
+
+end PositivityTheory.ResPlug.FromRes
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.ResolutionCharZero.PlugResW
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.ResPlug.FromRes
+
+theorem resW : PositivityTheory.ResPlug.ResW :=
+  resW_of_functorialResolution FunctorialResolution.functorialResolutionCharZero.{0}
+
+end PositivityTheory.ResPlug.FromRes
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.ResolutionCharZero.PlugResK
+
+section
+
 @[expose] public section
 
 namespace PositivityTheory.ResPlug.FromRes
@@ -50,3 +85,5 @@ theorem resK : ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement :=
   PositivityTheory.ResPlug.resK_of_weak resW princW
 
 end PositivityTheory.ResPlug.FromRes
+end
+end

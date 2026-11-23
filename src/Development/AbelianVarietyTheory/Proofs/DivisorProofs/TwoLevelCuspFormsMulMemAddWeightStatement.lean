@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.BlockTheory.PoincareCuspForms.TwoLevelLogarithm
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelCuspFormsMulMemAddWeight
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,8 +39,74 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ModerateCoefficientPositivity
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.ArakelovInstances.IsStrictDom
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsArchOne
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LactMemDomOfIsom
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.CountAsmPfB
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.AR.Up
+
+open NumberField ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.L2DbarEstimates MeasureTheory Topology Filter
+  Asymptotics
+
+noncomputable section
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem ss_mul_pow {r : ℕ} (X : Data E r) {la L : Wt X.Ψ r} {P Q : Frame X.Ψ r → ℂ}
+    (hP : P ∈ X.SS la) (hQ : X.IsBddSec L Q) (k : ℕ) : P * Q ^ k ∈ X.SS (la + k • L) := by
+  induction k with
+  | zero => simpa using hP
+  | succ k ih =>
+    have h := (siegelSpaceAlgebra_holds r X (la + k • L) L 0).2.1 (P * Q ^ k) ih Q hQ
+    rw [pow_succ, ← mul_assoc, succ_nsmul, ← add_assoc]
+    exact h
+
+end
+
+end ReciprocityTheory.ChartRestriction.G.AR.Up
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelCuspFormsMulMemAddWeight
+
+section
+
+@[expose] public section
+
+open NumberField Module ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.IndefiniteRowSideFullHecke.FrameWeightGapBounds GlobalTheory.ShareOn GlobalTheory.CuspEmb
+
+namespace GlobalTheory.CuspEmb
+
+theorem twoLevels_mul_mem_SS : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (U C : Type) [Group U] [MulAction U C] (M : TwoLevels E r U C) (la mu : Wt M.Ψ r) (F G : C → Frame M.Ψ r → ℂ), F ∈ M.SS la → G ∈ M.SS mu → F * G ∈ M.SS (la + mu) := by
+  intro E _ _ _ r U C _ _ M la mu F G hF hG c
+  have hP := hF c
+  have hQ := (hG c).1
+  have h := ReciprocityTheory.ChartRestriction.G.AR.Up.ss_mul_pow (M.comp c).toData hP hQ 1
+  have hw : castWt (M.comp_Ψ c) (la + mu) =
+      castWt (M.comp_Ψ c) la + 1 • castWt (M.comp_Ψ c) mu := by
+    rw [one_smul]; funext τ; rfl
+  rw [hw]
+  rw [pow_one] at h
+  exact h
+
+end GlobalTheory.CuspEmb
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelCuspFormsMulMemAddWeightStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +114,5 @@ open NumberField Module ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.Ind
 
 theorem _root_.GlobalTheory.T.twoLevelCuspForms_mul_mem_add_weight : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (U C : Type) [Group U] [MulAction U C] (M : TwoLevels E r U C) (la mu : Wt M.Ψ r) (F G : C → Frame M.Ψ r → ℂ), F ∈ M.SS la → G ∈ M.SS mu → F * G ∈ M.SS (la + mu) := by
   first | exact @GlobalTheory.CuspEmb.twoLevels_mul_mem_SS | exact GlobalTheory.CuspEmb.twoLevels_mul_mem_SS | (intros; apply GlobalTheory.CuspEmb.twoLevels_mul_mem_SS <;> assumption)
+end
+end

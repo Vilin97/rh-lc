@@ -3,13 +3,9 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Jets.SideFam
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapDimensionFormulaStatement
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapExistsNonzeroStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapNormIdentityStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapVanishingStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasic
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsKTypeNonzeroBessel
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PositiveRankOneProportionalStatement
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UhMeasurableSet
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselCharacterUnipotentRadicalProperties
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselSubgroupParameterMeasurePreservingStatement
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,7 +42,200 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapVanishingStatement
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasic
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsKTypeNonzeroBessel
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPr
+import Formalism.HermitianCurvature.BesselNonvanishingReduction
+import Formalism.HermitianCurvature.StatementI
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.UhMeasurableSet
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapNormIdentity
+
+section
+
+@[expose] public section
+
+open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+noncomputable section
+
+namespace GlobalTheory.BesselAdjoint
+
+theorem integral_comp_involution {X E : Type*} [MeasurableSpace X] [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {μ : Measure X} {T : X → X} (hT : MeasurePreserving T μ μ) (hTT : ∀ᵐ p ∂μ, T (T p) = p) (f : X → E) :
+    ∫ p, f (T p) ∂μ = ∫ p, f p ∂μ := by
+  by_cases hf : AEStronglyMeasurable f μ
+  · have h1 : AEStronglyMeasurable f (μ.map T) := by rw [hT.map_eq]; exact hf
+    rw [← integral_map hT.measurable.aemeasurable h1, hT.map_eq]
+  · have hg : ¬ AEStronglyMeasurable (fun p => f (T p)) μ := by
+      intro hg
+      apply hf
+      refine (hg.comp_measurePreserving hT).congr ?_
+      filter_upwards [hTT] with p hp
+      simp [hp]
+    rw [integral_non_aestronglyMeasurable hf, integral_non_aestronglyMeasurable hg]
+
+def adjR (W : Type*) [NormedAddCommGroup W] [InnerProductSpace ℂ W] [CompleteSpace W] :
+    (W →L[ℂ] W) →ₗᵢ[ℝ] (W →L[ℂ] W) where
+  toFun A := ContinuousLinearMap.adjoint A
+  map_add' A B := map_add _ A B
+  map_smul' c A := by
+    have e : ∀ B : W →L[ℂ] W, c • B = (c : ℂ) • B := fun B => by
+      ext x; simp
+    rw [RingHom.id_apply, e, e, map_smulₛₗ]; simp
+  norm_map' A := ContinuousLinearMap.adjoint.norm_map A
+
+theorem adjoint_integral {X W : Type*} [MeasurableSpace X] [NormedAddCommGroup W] [InnerProductSpace ℂ W]
+    [CompleteSpace W] (μ : Measure X) (f : X → (W →L[ℂ] W)) :
+    ContinuousLinearMap.adjoint (∫ p, f p ∂μ) = ∫ p, ContinuousLinearMap.adjoint (f p) ∂μ :=
+  ((adjR W).integral_comp_comm f).symm
+
+theorem adjoint_be : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ) (h : ℝ) (R : Rep k r) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (u : ℕ → ℝ) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)), R.IsDS ε mu → Formalism.QuantumDeterminants.GapAtLeast ε mu h → GapOK k r h → SideG k r z π u μW μN μG νq → ∀ v ∈ R.TK, ∀ w ∈ R.TK, ContinuousLinearMap.adjoint (be z Formalism.QuantumDeterminants.cStd π R.σ μW μN w v) = be z Formalism.QuantumDeterminants.cStd π R.σ μW μN v w := by
+  intro _ k r ε mu h R Wp _ _ _ _ z π u μW μN μG νq hDS _ hOK hS v _ w _
+  obtain ⟨hz, hT, ⟨u₀, hπ⟩, -, hW, hN, -, -⟩ := hS
+  obtain ⟨-, hinv, -, -, -, hae⟩ := GlobalTheory.T.besselSubgroup_parameter_measurePreserving k r z μW μN hOK.1 hz hT hW hN
+  obtain ⟨-, -, hψi, hψc, hUW, hNG⟩ := GlobalTheory.BesselPsi.psi_character k r z Formalism.QuantumDeterminants.cStd hz
+  unfold be
+  rw [adjoint_integral, ← integral_comp_involution hinv ?_ (beInt z Formalism.QuantumDeterminants.cStd π R.σ v w)]
+  · refine integral_congr_ae ?_
+    filter_upwards [hae] with p hp
+    obtain ⟨hp1, hp2⟩ := hp
+    obtain ⟨hi, hhi, hih⟩ := P.MatrixMultiplicationContinuity.uw_inv hp1
+    have hg1 : Matrix.of p.1 ∈ GG k r := hp1.1
+    have hg2 : Matrix.of p.2 ∈ GG k r := hp2.1
+    have hg : Matrix.of p.1 * Matrix.of p.2 ∈ GG k r := by
+      have a1 : (Matrix.of p.1)ᴴ * Formalism.QuantumDeterminants.Hpk k r * Matrix.of p.1 = Formalism.QuantumDeterminants.Hpk k r := hg1
+      have a2 : (Matrix.of p.2)ᴴ * Formalism.QuantumDeterminants.Hpk k r * Matrix.of p.2 = Formalism.QuantumDeterminants.Hpk k r := hg2
+      show (Matrix.of p.1 * Matrix.of p.2)ᴴ * Formalism.QuantumDeterminants.Hpk k r * (Matrix.of p.1 * Matrix.of p.2) = Formalism.QuantumDeterminants.Hpk k r
+      calc _ = (Matrix.of p.2)ᴴ * ((Matrix.of p.1)ᴴ * Formalism.QuantumDeterminants.Hpk k r * Matrix.of p.1) * Matrix.of p.2 := by
+            simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+        _ = _ := by rw [a1, a2]
+    have hii : ((Matrix.of p.1)⁻¹)⁻¹ = (Matrix.of p.1 : Mx k r) := Matrix.inv_eq_left_inv hhi
+    have e1 : (Matrix.of p.1)⁻¹ * (Matrix.of p.1 * (Matrix.of p.2)⁻¹ * (Matrix.of p.1)⁻¹) =
+        ((Matrix.of p.1 * Matrix.of p.2)⁻¹ : Mx k r) := by
+      rw [Matrix.mul_inv_rev, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hih, Matrix.one_mul]
+    have e2 : Formalism.QuantumDeterminants.psi k r z Formalism.QuantumDeterminants.cStd (Matrix.of p.1 * (Matrix.of p.2)⁻¹ * (Matrix.of p.1)⁻¹) =
+        star (Formalism.QuantumDeterminants.psi k r z Formalism.QuantumDeterminants.cStd (Matrix.of p.2)) := by
+      rw [(hψc _ hp1 _ (hψi _ hp2).1).2.2.1, (hψi _ hp2).2]
+    have e3 : ContinuousLinearMap.adjoint (π (Matrix.of p.1)⁻¹) = π (Matrix.of p.1) := by
+      symm
+      rw [ContinuousLinearMap.eq_adjoint_iff]
+      intro x y
+      rw [P.MatrixMultiplicationContinuity.piW_inner hT hπ hi, hii]
+    show ContinuousLinearMap.adjoint ((⟪v, R.σ (Matrix.of p.1 * Matrix.of p.2) w⟫_ℂ *
+        star (Formalism.QuantumDeterminants.psi k r z Formalism.QuantumDeterminants.cStd (Matrix.of p.2))) • π (Matrix.of p.1)⁻¹) =
+      (⟪w, R.σ ((Matrix.of p.1)⁻¹ * (Matrix.of p.1 * (Matrix.of p.2)⁻¹ * (Matrix.of p.1)⁻¹)) v⟫_ℂ *
+        star (Formalism.QuantumDeterminants.psi k r z Formalism.QuantumDeterminants.cStd (Matrix.of p.1 * (Matrix.of p.2)⁻¹ * (Matrix.of p.1)⁻¹))) •
+        π ((Matrix.of p.1)⁻¹)⁻¹
+    rw [e1, e2, hii, map_smulₛₗ, e3, P.MatrixMultiplicationContinuity.sigma_inner hDS.2 hg v w, map_mul, inner_conj_symm]
+    rfl
+  · filter_upwards [hae] with p hp
+    obtain ⟨hp1, hp2⟩ := hp
+    obtain ⟨hi, hhi, hih⟩ := P.MatrixMultiplicationContinuity.uw_inv hp1
+    obtain ⟨-, hni, hin⟩ := P.MatrixMultiplicationContinuity.uh_inv hp2.1
+    have hii : ((Matrix.of p.1)⁻¹)⁻¹ = (Matrix.of p.1 : Mx k r) := Matrix.inv_eq_left_inv hhi
+    have hnn : ((Matrix.of p.2)⁻¹)⁻¹ = (Matrix.of p.2 : Mx k r) := Matrix.inv_eq_left_inv hni
+    have e : (Matrix.of p.1)⁻¹ * (Matrix.of p.1 * (Matrix.of p.2)⁻¹ * (Matrix.of p.1)⁻¹)⁻¹ * ((Matrix.of p.1)⁻¹)⁻¹ =
+        (Matrix.of p.2 : Mx k r) := by
+      rw [Matrix.mul_inv_rev, Matrix.mul_inv_rev, hii, hnn, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hih,
+        Matrix.one_mul, Matrix.mul_assoc, hih, Matrix.mul_one]
+    exact Prod.ext hii e
+
+end GlobalTheory.BesselAdjoint
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapNormIdentityStatement
+
+section
+
+@[expose] public section
+
+open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+theorem _root_.GlobalTheory.T.adjoint_besselIntegral_eq_swap_of_gap : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ) (h : ℝ) (R : Rep k r) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (u : ℕ → ℝ) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)), R.IsDS ε mu → Formalism.QuantumDeterminants.GapAtLeast ε mu h → GapOK k r h → SideG k r z π u μW μN μG νq → ∀ v ∈ R.TK, ∀ w ∈ R.TK, ContinuousLinearMap.adjoint (be z Formalism.QuantumDeterminants.cStd π R.σ μW μN w v) = be z Formalism.QuantumDeterminants.cStd π R.σ μW μN v w := by
+  first | exact @GlobalTheory.BesselAdjoint.adjoint_be | exact GlobalTheory.BesselAdjoint.adjoint_be | (intros; apply GlobalTheory.BesselAdjoint.adjoint_be <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.PositiveRankOneProportional
+
+section
+
+@[expose] public section
+
+open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+namespace GlobalTheory
+
+theorem hermitian_rankOne_kernel_shape : ∀ (T W : Type) [NormedAddCommGroup W] [InnerProductSpace ℂ W] [CompleteSpace W] (l₀ La : T → W), (∀ v w, ContinuousLinearMap.adjoint ((innerSL ℂ (La v)).smulRight (l₀ w)) = (innerSL ℂ (La w)).smulRight (l₀ v)) → (∀ v ξ, (⟪ξ, ((innerSL ℂ (La v)).smulRight (l₀ v)) ξ⟫_ℂ).im = 0 ∧ 0 ≤ (⟪ξ, ((innerSL ℂ (La v)).smulRight (l₀ v)) ξ⟫_ℂ).re) → (∃ v, l₀ v ≠ 0) → ∃ c : ℝ, 0 ≤ c ∧ ∀ v, La v = (c : ℂ) • l₀ v := by
+  intro T W _ _ _ l₀ La hadj hpos ⟨v₀, hv₀⟩
+  set a : ℂ := ⟪La v₀, l₀ v₀⟫_ℂ with ha
+  set n : ℝ := ‖l₀ v₀‖ ^ 2 with hn
+  have hnpos : 0 < n := by rw [hn]; exact pow_pos (norm_pos_iff.mpr hv₀) 2
+  have hnn : ⟪l₀ v₀, l₀ v₀⟫_ℂ = (n : ℂ) := by
+    rw [inner_self_eq_norm_sq_to_K, hn]; simp
+  have hnc : (n : ℂ) ≠ 0 := by exact_mod_cast hnpos.ne'
+  obtain ⟨him, hre⟩ := hpos v₀ (l₀ v₀)
+  have e : ⟪l₀ v₀, ((innerSL ℂ (La v₀)).smulRight (l₀ v₀)) (l₀ v₀)⟫_ℂ = a * (n : ℂ) := by
+    rw [ContinuousLinearMap.smulRight_apply, inner_smul_right, hnn, innerSL_apply_apply]
+  rw [e] at him hre
+  simp only [Complex.mul_im, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
+    zero_add, sub_zero] at him hre
+  have haim : a.im = 0 := (mul_eq_zero.mp him).resolve_right hnpos.ne'
+  have hare : 0 ≤ a.re := nonneg_of_mul_nonneg_left hre hnpos
+  have hareal : a = (a.re : ℂ) := Complex.ext (by simp) (by simp [haim])
+  refine ⟨a.re / n, div_nonneg hare hnpos.le, fun v => ?_⟩
+  have key : (n : ℂ) • La v = a • l₀ v := by
+    apply ext_inner_right ℂ
+    intro y
+    have h := ContinuousLinearMap.adjoint_inner_left
+      ((innerSL ℂ (La v)).smulRight (l₀ v₀)) y (l₀ v₀)
+    rw [hadj v v₀, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.smulRight_apply,
+      innerSL_apply_apply, innerSL_apply_apply, inner_smul_right, hnn, ← ha] at h
+    rw [h, inner_smul_left, Complex.conj_ofReal, mul_comm]
+  have : La v = (n : ℂ)⁻¹ • ((n : ℂ) • La v) := by rw [smul_smul, inv_mul_cancel₀ hnc, one_smul]
+  rw [this, key, smul_smul]
+  congr 1
+  rw [Complex.ofReal_div, ← hareal, div_eq_inv_mul]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.PositiveRankOneProportionalStatement
+
+section
+
+@[expose] public section
+
+open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
+open scoped InnerProductSpace ENNReal
+
+theorem _root_.GlobalTheory.T.positive_rank_one_proportional : ∀ (T W : Type) [NormedAddCommGroup W] [InnerProductSpace ℂ W] [CompleteSpace W] (l₀ La : T → W), (∀ v w, ContinuousLinearMap.adjoint ((innerSL ℂ (La v)).smulRight (l₀ w)) = (innerSL ℂ (La w)).smulRight (l₀ v)) → (∀ v ξ, (⟪ξ, ((innerSL ℂ (La v)).smulRight (l₀ v)) ξ⟫_ℂ).im = 0 ∧ 0 ≤ (⟪ξ, ((innerSL ℂ (La v)).smulRight (l₀ v)) ξ⟫_ℂ).re) → (∃ v, l₀ v ≠ 0) → ∃ c : ℝ, 0 ≤ c ∧ ∀ v, La v = (c : ℂ) • l₀ v := by
+  first | exact @GlobalTheory.hermitian_rankOne_kernel_shape | exact GlobalTheory.hermitian_rankOne_kernel_shape | (intros; apply GlobalTheory.hermitian_rankOne_kernel_shape <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapExistsFunctional
+
+section
 
 @[expose] public section
 
@@ -96,3 +286,5 @@ theorem exists_normalised_bessel_map : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r
     simp
 
 end GlobalTheory
+end
+end

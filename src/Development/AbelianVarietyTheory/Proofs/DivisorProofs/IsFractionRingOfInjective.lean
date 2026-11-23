@@ -1,14 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NotDominatesTopPlace
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormallyEtaleBaseChangeEvalHomStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFractionRingTensorOfFractionFieldsStatement
+public import Mathlib.RingTheory.Etale.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormallyEtaleBaseChangeEvalHom
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +41,154 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.TensorProduct.Maps
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.RingTheory.Flat.Basic
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormallyEtaleBaseChangeEvalHomStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.formallyEtale_baseChange_eval_hom : ∀ {k R B : Type} [CommRing k] [CommRing R] [CommRing B] [Algebra k R] [Algebra k B] {r : ℕ} (τ : Fin r → B),
+  (MvPolynomial.eval₂Hom (algebraMap k B) τ).FormallyEtale →
+  (MvPolynomial.eval₂Hom (Algebra.TensorProduct.includeLeftRingHom : R →+* R ⊗[k] B)
+      (fun i => (1 : R) ⊗ₜ[k] τ i)).FormallyEtale := by
+  first | exact @GlobalTheory.formallyEtale_mvPolynomial_eval₂_tensor | exact GlobalTheory.formallyEtale_mvPolynomial_eval₂_tensor | (intros; apply GlobalTheory.formallyEtale_mvPolynomial_eval₂_tensor <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFractionRingTensorOfFractionFields
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory
+
+theorem tensor_fractionRing_of_tensor
+    {k R B K κ L : Type} [Field k] [CommRing R] [CommRing B] [Field K] [Field κ]
+    [Field L] [Algebra k R] [Algebra k B] [Algebra k K] [Algebra k κ] [Algebra R K] [Algebra B κ]
+    [IsScalarTower k R K] [IsScalarTower k B κ] [IsFractionRing R K] [IsFractionRing B κ]
+    [Algebra (K ⊗[k] κ) L] [IsFractionRing (K ⊗[k] κ) L] :
+    Function.Injective ((algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+      (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom) ∧
+    ∀ z : L, ∃ x y : R ⊗[k] B,
+      (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom y ≠ 0 ∧
+      z * (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom y =
+      (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom x := by
+  set f := Algebra.TensorProduct.map
+    (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ) with hfdef
+  set g := algebraMap (K ⊗[k] κ) L
+
+  have key : ∀ w : K ⊗[k] κ, ∃ (x : R ⊗[k] B) (s : nonZeroDivisors R) (t : nonZeroDivisors B),
+      w * (algebraMap R K (s : R) ⊗ₜ[k] algebraMap B κ (t : B)) = f x := by
+    intro w
+    induction w using TensorProduct.induction_on with
+    | zero => exact ⟨0, 1, 1, by simp⟩
+    | tmul a b =>
+      obtain ⟨⟨r, s⟩, hs⟩ := IsLocalization.surj (nonZeroDivisors R) a
+      obtain ⟨⟨c, t⟩, ht⟩ := IsLocalization.surj (nonZeroDivisors B) b
+      refine ⟨r ⊗ₜ[k] c, s, t, ?_⟩
+      simp only [Algebra.TensorProduct.tmul_mul_tmul] at *
+      rw [hs, ht, hfdef, Algebra.TensorProduct.map_tmul]
+      rfl
+    | add w₁ w₂ h₁ h₂ =>
+      obtain ⟨x₁, s₁, t₁, e₁⟩ := h₁
+      obtain ⟨x₂, s₂, t₂, e₂⟩ := h₂
+      refine ⟨x₁ * ((s₂ : R) ⊗ₜ[k] (t₂ : B)) + x₂ * ((s₁ : R) ⊗ₜ[k] (t₁ : B)), s₁ * s₂, t₁ * t₂, ?_⟩
+      have hm : ∀ (s : R) (t : B), f (s ⊗ₜ[k] t) = algebraMap R K s ⊗ₜ[k] algebraMap B κ t := by
+        intro s t; rw [hfdef, Algebra.TensorProduct.map_tmul]; rfl
+      rw [map_add (f := _), map_mul, map_mul, hm, hm, ← e₁, ← e₂]
+      simp only [Submonoid.coe_mul, map_mul, ← Algebra.TensorProduct.tmul_mul_tmul]
+      ring
+
+  have unit_st : ∀ (s : nonZeroDivisors R) (t : nonZeroDivisors B),
+      IsUnit (algebraMap R K (s : R) ⊗ₜ[k] algebraMap B κ (t : B)) := by
+    intro s t
+    have hs : IsUnit (algebraMap R K (s : R)) :=
+      IsLocalization.map_units K s
+    have ht : IsUnit (algebraMap B κ (t : B)) :=
+      IsLocalization.map_units κ t
+    have : algebraMap R K (s : R) ⊗ₜ[k] algebraMap B κ (t : B) =
+        Algebra.TensorProduct.includeLeft (R := k) (S := k) (B := κ) (algebraMap R K (s : R)) *
+        Algebra.TensorProduct.includeRight (R := k) (A := K) (algebraMap B κ (t : B)) := by
+      simp [Algebra.TensorProduct.tmul_mul_tmul]
+    rw [this]
+    exact (hs.map _).mul (ht.map _)
+  refine ⟨?_, ?_⟩
+  · refine (IsFractionRing.injective (K ⊗[k] κ) L).comp ?_
+    change Function.Injective (TensorProduct.map (IsScalarTower.toAlgHom k R K).toLinearMap
+      (IsScalarTower.toAlgHom k B κ).toLinearMap)
+    exact TensorProduct.map_injective_of_flat_flat _ _
+      (IsFractionRing.injective R K) (IsFractionRing.injective B κ)
+  · intro z
+    obtain ⟨⟨u, v⟩, huv⟩ := IsLocalization.surj (nonZeroDivisors (K ⊗[k] κ)) z
+    obtain ⟨xu, su, tu, eu⟩ := key u
+    obtain ⟨xv, sv, tv, ev⟩ := key (v : K ⊗[k] κ)
+    refine ⟨xu * ((sv : R) ⊗ₜ[k] (tv : B)), xv * ((su : R) ⊗ₜ[k] (tu : B)), ?_, ?_⟩
+    all_goals
+      have hm : ∀ (s : R) (t : B), f (s ⊗ₜ[k] t) = algebraMap R K s ⊗ₜ[k] algebraMap B κ t := by
+        intro s t; rw [hfdef, Algebra.TensorProduct.map_tmul]; rfl
+      simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, map_mul, hm]
+    · rw [← ev]; simp only [map_mul]
+      refine mul_ne_zero (mul_ne_zero ?_ ?_) ?_
+      · exact (IsLocalization.map_units L v).ne_zero
+      · exact ((unit_st sv tv).map g).ne_zero
+      · exact ((unit_st su tu).map g).ne_zero
+    · rw [← ev, ← eu]; simp only [map_mul]
+      have huv' : z * g (v : K ⊗[k] κ) = g u := huv
+      linear_combination (g (algebraMap R K ↑sv ⊗ₜ[k] algebraMap B κ ↑tv) *
+        g (algebraMap R K ↑su ⊗ₜ[k] algebraMap B κ ↑tu)) * huv'
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFractionRingTensorOfFractionFieldsStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.isFractionRing_tensor_of_fraction_fields : ∀ {k R B K κ L : Type} [Field k] [CommRing R] [CommRing B] [Field K] [Field κ]
+    [Field L] [Algebra k R] [Algebra k B] [Algebra k K] [Algebra k κ] [Algebra R K] [Algebra B κ]
+    [IsScalarTower k R K] [IsScalarTower k B κ] [IsFractionRing R K] [IsFractionRing B κ]
+    [Algebra (K ⊗[k] κ) L] [IsFractionRing (K ⊗[k] κ) L],
+    Function.Injective ((algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+      (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom) ∧
+    ∀ z : L, ∃ x y : R ⊗[k] B,
+      (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom y ≠ 0 ∧
+      z * (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom y =
+      (algebraMap (K ⊗[k] κ) L).comp (Algebra.TensorProduct.map
+        (IsScalarTower.toAlgHom k R K) (IsScalarTower.toAlgHom k B κ)).toRingHom x := by
+  first | exact @GlobalTheory.tensor_fractionRing_of_tensor | exact GlobalTheory.tensor_fractionRing_of_tensor | (intros; apply GlobalTheory.tensor_fractionRing_of_tensor <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFractionRingOfInjective
+
+section
 
 @[expose] public section
 
@@ -212,3 +359,6 @@ theorem exists_isEtTower_tensor : ∀ {K κ L : Type} [Field K] [Field κ] [Fiel
     rw [hψ]; exact hu y
 
 end GlobalTheory.FieldPair.TensorTower
+end
+end
+end

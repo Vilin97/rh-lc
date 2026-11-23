@@ -5,12 +5,13 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatBcPull
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHens
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfChar
-public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfEx
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.BtExistsBc
+public import Mathlib.RingTheory.Henselian
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUniqueTangentDualNumberStatement
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfLin
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLie
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -34,6 +35,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +48,46 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHenselianFlatOverPrimeStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsBaseChangeGroupStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RegularAtBaseChangeStatement
+import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.BtExistsBc
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfEx
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT
+
+theorem PositivityTheory.HtPt.Htat.ExistsHodgeTate.exists_isHT (hHenselian : type_of% @GlobalTheory.T.exists_henselian_flat_over_prime) (hBaseChange : type_of% @GlobalTheory.T.exists_base_change_group) (hRegular : type_of% @GlobalTheory.T.regular_at_base_change) : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [IsNoetherianRing R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (x : Spec (CommRingCat.of R) ⟶ S) (N : ℕ) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x N i → Smooth G.hom → ∀ (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L) (χ : T →* Rˣ), ∃ w : Module.Dual R L, Γ.IsHT i M N χ w := by
+  intro R _ _ _ _ T _ _ Γ S G _ _ x N i hT hS L _ _ M χ
+  haveI : Smooth G.hom := hS
+  obtain ⟨s, hs⟩ := (PositivityTheory.HtPt.Htat.ht_char_section_of hHenselian hBaseChange hRegular) R T Γ χ
+  obtain ⟨l, hl⟩ := PositivityTheory.HtPt.Htat.ht_linear R T Γ S G x N i hT L M χ s hs
+  have hP := (PositivityTheory.HtPt.Htat.lie_proj S G R x L M).2.1
+  obtain ⟨w, hw⟩ := Module.projective_lifting_property
+    (Submodule.mkQ (Ideal.span {(N : R)})) l (Submodule.mkQ_surjective _)
+  refine ⟨w, s, hs, fun e => ?_⟩
+  obtain ⟨v, ⟨hv1, hv2⟩, -⟩ := GlobalTheory.T.existsUnique_tangent_dual_number R T Γ S G x N i hT L M e
+  refine ⟨v, hv1, hv2, ?_⟩
+  rw [hl e v ⟨hv1, hv2⟩]
+  have := LinearMap.congr_fun hw e
+  simp only [LinearMap.comp_apply] at this
+  rw [← this]
+  rfl
+
+theorem PositivityTheory.HtPt.Htat.ht_exists_of (hHenselian : type_of% @GlobalTheory.T.exists_henselian_flat_over_prime) (hBaseChange : type_of% @GlobalTheory.T.exists_base_change_group) (hRegular : type_of% @GlobalTheory.T.regular_at_base_change) : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [IsNoetherianRing R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (x : Spec (CommRingCat.of R) ⟶ S) (N : ℕ) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x N i → Smooth G.hom → ∀ (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L) (χ : T →* Rˣ), ∃ w : Module.Dual R L, Γ.IsHT i M N χ w :=
+  @PositivityTheory.HtPt.Htat.ExistsHodgeTate.exists_isHT hHenselian hBaseChange hRegular
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.HtExists
+
+section
 
 @[expose] public section
 
@@ -61,3 +103,5 @@ theorem ht_exists : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed
   PositivityTheory.HtPt.Htat.ht_exists_of PositivityTheory.HtPt.Htat.hens_normal PositivityTheory.UnitarySelfGeneration.bt_exists_bc PositivityTheory.HtPt.Htat.reg_pull
 
 end PositivityTheory.UnitarySelfGeneration
+end
+end

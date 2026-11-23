@@ -1,7 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.KummerTowerQqPowLevelEqQ
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TowerLevelEmbeddingInjectiveRangeAdjoinRoots
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsBasisOnZetaPowMulQPow
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingCyclotomicTowerLevel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +44,52 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.TowerLevelEmbeddingInjectiveRangeAdjoinRoots
+
+section
+
+@[expose] public section
+
+open GlobalTheory.K5 GlobalTheory.KumDlog
+
+noncomputable section
+
+namespace GlobalTheory.K5.LevEmb
+
+theorem emb_inj_range : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
+    ∀ (T : Tower p Ω) (m : ℕ), 1 ≤ m → ∀ ι : On p m →ₐ[O0 p] Ω, IsEmb T m ι →
+    Function.Injective ι ∧ ι.range = Lev T m := by
+  intro p _ Ω _ _ hΩ T m hm ι hι
+  obtain ⟨b, hb⟩ := GlobalTheory.K5.OnFree.on_free p m
+  have hadj : Algebra.adjoin (O0 p) {xn p m, yn p m} = ⊤ :=
+    GlobalTheory.K5.OnDVR.adjoin_eq_top_of_basis b (xn p m) (yn p m) (fun i => (i : ℕ)) (fun j => (j : ℕ))
+      (fun i j => hb i j)
+  refine ⟨?_, ?_⟩
+  · obtain ⟨hdom, -, -⟩ := GlobalTheory.K5.OnDVR.isDVR_On p m hm
+    haveI : Module.Finite (O0 p) (On p m) := Module.Finite.of_basis b
+    haveI : Algebra.IsIntegral (O0 p) (On p m) := Algebra.IsIntegral.of_finite _ _
+    have hk : RingHom.ker (ι : On p m →+* Ω) = ⊥ := by
+      apply Ideal.eq_bot_of_comap_eq_bot (R := O0 p)
+      rw [eq_bot_iff]
+      intro a ha
+      rw [Ideal.mem_comap, RingHom.mem_ker] at ha
+      have h1 : algebraMap (O0 p) Ω a = 0 := by
+        rw [← ι.commutes]; exact ha
+      rw [Ideal.mem_bot]
+      exact hΩ.inj (by rw [h1, map_zero])
+    exact (RingHom.injective_iff_ker_eq_bot _).2 hk
+  · rw [← Algebra.map_top, ← hadj, AlgHom.map_adjoin, Set.image_pair, hι.1, hι.2]
+    rfl
+
+end GlobalTheory.K5.LevEmb
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.TowerLevelEmbeddingInjectiveRangeAdjoinRootsStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.K5 GlobalTheory.KumDlog
@@ -49,3 +97,5 @@ open GlobalTheory.K5 GlobalTheory.KumDlog
 theorem _root_.GlobalTheory.T.towerLevelEmbedding_injective_range_adjoinRoots : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω → ∀ (T : Tower p Ω) (m : ℕ), 1 ≤ m → ∀ ι : On p m →ₐ[O0 p] Ω, IsEmb T m ι →
   Function.Injective ι ∧ ι.range = Lev T m := by
   first | exact @GlobalTheory.K5.LevEmb.emb_inj_range | exact GlobalTheory.K5.LevEmb.emb_inj_range | (intros; apply GlobalTheory.K5.LevEmb.emb_inj_range <;> assumption)
+end
+end

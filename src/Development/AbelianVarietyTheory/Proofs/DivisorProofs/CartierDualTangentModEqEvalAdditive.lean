@@ -1,8 +1,9 @@
 module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqZeroOfCobOneEqZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualQuotientFormEqEvalStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorProjectiveDvdOfCoordDvdStatement
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,9 +42,116 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
 import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboundarySmul
+import Development.AbelianVarietyTheory.Definitions.Divisors.KerIdealCompOfSurjective
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsCounitDerivationCounitComp
 import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualQuotientFormEqEval
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+namespace GlobalTheory
+
+theorem dual_quotient_form_eq_eval :
+    ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] [Module.Finite O M]
+      [Module.Projective O M] (I : Ideal O) (u : Module.Dual O M →ₗ[O] O ⧸ I),
+      ∃ b : M, ∀ φ, u φ = Ideal.Quotient.mk I (φ b) := by
+  intro O M _ _ _ _ _ I u
+  obtain ⟨v, hv⟩ := Module.projective_lifting_property (Submodule.mkQ I) u
+    (Submodule.mkQ_surjective I)
+  refine ⟨(Module.evalEquiv O M).symm v, fun φ => ?_⟩
+  have h1 : φ ((Module.evalEquiv O M).symm v) = v φ := by
+    have := congrArg (fun w : Module.Dual O (Module.Dual O M) => w φ)
+      ((Module.evalEquiv O M).apply_symm_apply v)
+    simpa using this
+  rw [h1, ← hv]
+  rfl
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualQuotientFormEqEvalStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+theorem _root_.GlobalTheory.T.exists_point_dual_quotient_form_eq_eval : ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] [Module.Finite O M] [Module.Projective O M] (I : Ideal O) (u : Module.Dual O M →ₗ[O] O ⧸ I), ∃ b : M, ∀ φ, u φ = Ideal.Quotient.mk I (φ b) := by
+  first | exact @GlobalTheory.dual_quotient_form_eq_eval | exact GlobalTheory.dual_quotient_form_eq_eval | (intros; apply GlobalTheory.dual_quotient_form_eq_eval <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorProjectiveDvdOfCoordDvd
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+namespace GlobalTheory
+
+theorem tensor_projective_dvd_of_coord_dvd :
+    ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] (N : Type) [AddCommGroup N] [Module O N] [Module.Projective O M] [Module.Projective O N] (a : O) (z : M ⊗[O] N), (∀ (φ : Module.Dual O M) (ψ : Module.Dual O N), a ∣ TensorProduct.dualDistrib O M N (φ ⊗ₜ ψ) z) → ∃ y, z = a • y := by
+  intro O M _ _ _ N _ _ _ _ a z h
+  obtain ⟨s, hs⟩ := (Module.Projective.out : ∃ s : M →ₗ[O] M →₀ O,
+    Function.LeftInverse (Finsupp.linearCombination O id) s)
+  obtain ⟨s', hs'⟩ := (Module.Projective.out : ∃ s : N →ₗ[O] N →₀ O,
+    Function.LeftInverse (Finsupp.linearCombination O id) s)
+  have hf : ∀ (w : M ⊗[O] N) (p : M × N), finsuppTensorFinsupp' O M N (TensorProduct.map s s' w) p =
+      TensorProduct.dualDistrib O M N ((Finsupp.lapply p.1 ∘ₗ s) ⊗ₜ (Finsupp.lapply p.2 ∘ₗ s')) w := by
+    intro w ⟨i, j⟩
+    induction w using TensorProduct.induction_on with
+    | zero => simp
+    | tmul m n => simp [finsuppTensorFinsupp'_apply_apply, dualDistrib_apply]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
+  set f := finsuppTensorFinsupp' O M N (TensorProduct.map s s' z) with hfdef
+  have hdiv : ∀ p, a ∣ f p := fun p => by rw [hfdef, hf]; exact h _ _
+  choose c hc using hdiv
+  let g : M × N →₀ O := ∑ p ∈ f.support, Finsupp.single p (c p)
+  have hg : f = a • g := by
+    simp only [g, Finset.smul_sum, Finsupp.smul_single, smul_eq_mul, ← hc]
+    exact (Finsupp.sum_single f).symm
+  have hid : (Finsupp.linearCombination O id : (M →₀ O) →ₗ[O] M) ∘ₗ s = LinearMap.id :=
+    LinearMap.ext hs
+  have hid' : (Finsupp.linearCombination O id : (N →₀ O) →ₗ[O] N) ∘ₗ s' = LinearMap.id :=
+    LinearMap.ext hs'
+  refine ⟨TensorProduct.map (Finsupp.linearCombination O id) (Finsupp.linearCombination O id)
+    ((finsuppTensorFinsupp' O M N).symm g), ?_⟩
+  rw [← map_smul, ← map_smul, ← hg, hfdef, LinearEquiv.symm_apply_apply, ← LinearMap.comp_apply,
+    ← TensorProduct.map_comp, hid, hid', TensorProduct.map_id, LinearMap.id_apply]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorProjectiveDvdOfCoordDvdStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup
+
+theorem _root_.GlobalTheory.T.exists_eq_smul_of_dvd_dualDistrib : ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] (N : Type) [AddCommGroup N] [Module O N] [Module.Projective O M] [Module.Projective O N] (a : O) (z : M ⊗[O] N), (∀ (φ : Module.Dual O M) (ψ : Module.Dual O N), a ∣ TensorProduct.dualDistrib O M N (φ ⊗ₜ ψ) z) → ∃ y, z = a • y := by
+  first | exact @GlobalTheory.tensor_projective_dvd_of_coord_dvd | exact GlobalTheory.tensor_projective_dvd_of_coord_dvd | (intros; apply GlobalTheory.tensor_projective_dvd_of_coord_dvd <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CartierDualTangentModEqEvalAdditive
+
+section
 
 @[expose] public section
 
@@ -80,3 +188,5 @@ theorem cartierDual_tangent_mod :
   exact ⟨b, y, hy, hb'⟩
 
 end GlobalTheory
+end
+end

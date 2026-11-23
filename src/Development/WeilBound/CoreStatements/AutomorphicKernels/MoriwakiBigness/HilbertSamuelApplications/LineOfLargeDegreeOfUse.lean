@@ -8,7 +8,46 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedEx
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedExceptionalChartStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedExceptionalCoordsStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedExceptionalLeadingFormStatement
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedGraphBihomogeneousStatement
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExcLead
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedGraphBihomogeneous
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FibreDim
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.GraphStatementHoldsStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.CoordinateProjectionOfArithSystemStatement
@@ -53,7 +92,11 @@ import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedGraphHoriz
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedGraphImage
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdBaseChange
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdBasePtFree
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdFibreRatios
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.DualStdModelField
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ImportsFurther
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualArithVar
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdGenDeg
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdGraphModel
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdImageBot
@@ -62,7 +105,12 @@ public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdModelRa
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdModelTransc
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualTopBasisChange
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualTopSimpleStacked
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualTopSimpleSub
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopSimpleSub
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopSimpleStacked
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopBasisChange
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualEmbBijective
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopStacked
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualTopStacked
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PGenFibreModelTransport
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PGrassFibreDegree
@@ -83,7 +131,8 @@ public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PSectionQuotFin
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PSectionQuotLocal
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointChart
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointInj
-public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointLength
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsVertPointLengthSteps
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.MultAtPosOfMemDivSupp
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointMultChart
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointNagata
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointResidue
@@ -97,44 +146,168 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.Assembly
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PConsequences
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ChangeOfModel
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ExistsUnique
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRed
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSheet
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DualStackedGraphBihomogeneousStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.dual_stacked_graph_bihomogeneous : GroundTheory.Heights₂.Heights.DualStackedGraphBihomog.Statement := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.graph_bihomog | exact GlobalTheory.CompanionTheory.Ar.Giv.graph_bihomog | (intros; apply GlobalTheory.CompanionTheory.Ar.Giv.graph_bihomog <;> assumption)
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdFibreRatios
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I4 ReciprocityTheory.ChartRestriction.G.AI.I1 NumberField MvPolynomial
+
+namespace StandardDualFibreRatios
+
+theorem nonempty_of_basis {K : Type} [Field K] [NumberField K] {i : ℕ} {F : HermLattice K i} {T : Type} [Fintype T]
+    (b : Module.Basis T ℤ (dualLattice F)) (hi : 1 ≤ i) : Nonempty T := by
+  by_contra hT
+  rw [not_nonempty_iff] at hT
+  have h := DualArithmeticVariety.span_basis (K := K) b
+  rw [Set.range_eq_empty, Submodule.span_empty] at h
+  have h1 : (Pi.single (⟨0, hi⟩ : Fin i) 1 : Fin i → K) ∈ (⊥ : Submodule K (Fin i → K)) := h ▸ Submodule.mem_top
+  rw [Submodule.mem_bot] at h1
+  have h2 := congrFun h1 ⟨0, hi⟩
+  simp at h2
+
+end StandardDualFibreRatios
+
+
+open StandardDualFibreRatios in
+theorem DualStdFibreRatios.proof (hTr : GenFibreModelTransport.Statement) (hMod : DualStdGraphModel.Statement)
+    (hRk : DualStdModelRank.Statement) (hTc : DualStdModelTransc.Statement) : DualStdFibreRatios.Statement := by
+  intro K _ _ i T _ _ b G hi
+  obtain ⟨c⟩ := nonempty_of_basis b hi
+  let Φ₀ : Subfield (dualStdModelField K i) :=
+    Subfield.closure (Set.range (dualStdModelPt b ∘ inrV (ι := dualBlocks T) (ι₂ := PBlk i)))
+  have hΦ₀ : (algebraMap Φ₀ (dualStdModelField K i)).fieldRange = Φ₀ := Subfield.fieldRange_subtype _
+  obtain ⟨h0, hrk, htr⟩ := hTr Unit (PBlk i) (Unit ⊕ Unit) (Sum.elim (dualBlocks T) (PBlk i))
+    (inrV (ι := dualBlocks T) (ι₂ := PBlk i))
+    (graphIdeal (dualIdeal b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b))) G (dualStdModelField K i)
+    (dualStdModelPt b) (hMod K i T b) Φ₀ hΦ₀ T
+    (fun t => (⟨Sum.inl (), t⟩ : Σ k, Sum.elim (dualBlocks T) (PBlk i) k))
+    (⟨Sum.inl (), c⟩ : Σ k, Sum.elim (dualBlocks T) (PBlk i) k)
+  obtain ⟨hz, hrk₀⟩ := hRk K i T b Φ₀ hΦ₀ hi c
+  refine ⟨c, fun h => hz (h0.mp h), ?_, ?_⟩
+  · exact hrk.trans hrk₀
+  · exact htr.mpr (hTc K i T b Φ₀ hΦ₀ hi c)
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualTopSimpleSub
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open ReciprocityTheory.ChartRestriction.G.Geo NumberField
+
+noncomputable section
+
+theorem DualTopSimpleSub.proof (hBasis : DualTopBasisChange.Statement)
+    (hStep : DualTopSimpleStacked.Statement) (hDeg : DualStackedDegree.Statement) :
+    DualTopSimpleSub.Statement := by
+  intro K _ _ i F F' T T' _ _ _ _ b hb b' hb' II hi hII hlt hcov
+  have hle := hlt.le
+  have hcard : Fintype.card T = Fintype.card T' := by
+    rw [DualTopStackedExistence.card_eq_of_bijective b hb, DualTopStackedExistence.card_eq_of_bijective b' hb']
+  obtain ⟨b₁, b₁', a, hab⟩ := DualTopStackedExistence.exists_stacked hle b b' hcard
+  have hb₁ := DualEmbBijective.proof K i F T' b₁
+  have hb₁' := DualEmbBijective.proof K i F' T' b₁'
+
+  have h1 : II Unit (dualBlocks T') (dualIdeal b') i (fun _ => dualLine F'.withStdMetric b' hb') =
+      II Unit (dualBlocks T') (dualIdeal b₁') i (fun _ => dualLine F'.withStdMetric b₁' hb₁') :=
+    hBasis K i F'.withStdMetric T' T' b₁' hb₁' b' hb' II hi hII
+  have h2 : II Unit (dualBlocks T') (dualIdeal b₁) i (fun _ => dualLine F.withStdMetric b₁ hb₁) =
+      II Unit (dualBlocks T) (dualIdeal b) i (fun _ => dualLine F.withStdMetric b hb) :=
+    hBasis K i F.withStdMetric T T' b hb b₁ hb₁ II hi hII
+
+  have h3 := hStep K i F F' T' b₁ hb₁ b₁' hb₁' a II hi hII hlt hcov hab
+  have h4 := hDeg K i F F' T' b₁ b₁' a hle hab
+  rw [h1, h3, h2, h4]
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointLength
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open ReciprocityTheory.ChartRestriction.G.Geo MvPolynomial NumberField
+
+noncomputable section
+
+namespace VerticalPointLength
+
+theorem maximal_and_mult_eq (hCh : VertPointChart.Statement) (hMC : VertPointMultChart.Statement)
+    (hSQ : SectionQuotLocal.Statement) {T : Type} [Fintype T] {K' : Type} [Field K'] [NumberField K']
+    {y : (Σ _ : Unit, T) → K'} {s : MRing (fun _ : Unit => T)} (hP : IsArithVar (mCoordIdeal y) 1)
+    (hs : IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) {W : Ideal (MRing (fun _ : Unit => T))}
+    (hW : W ∈ divSupp (mCoordIdeal y) s) :
+    (curvePtIdeal y W).IsMaximal ∧
+      multAt (mCoordIdeal y ⊔ Ideal.span {s}) W = locLen (curvePtIdeal y W) (sectionQuot y (aeval y s)) := by
+  obtain ⟨t, ht⟩ := hW.2 ()
+  obtain ⟨hmax, hrat, hmem⟩ := hCh T K' y s hP hs hsP W hW t ht
+  have hsW : s ∈ W := hW.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self s))
+  obtain ⟨a, b, -, hb, hab⟩ := (hmem 1 s hs).mp hsW
+  rw [pow_one] at hab
+  refine ⟨hmax, ?_⟩
+  rw [hMC T K' y s hP hs hsP W hW t ht a b hb hab,
+    hSQ T K' y s hP hs hsP _ t hmax.isPrime hrat a b hb hab]
+
+end VerticalPointLength
+
+theorem VertPointLength.proof (hCh : VertPointChart.Statement)
+    (hInj : VertPointInj.Statement) (hSurj : VertPointSurj.Statement)
+    (hMC : VertPointMultChart.Statement) (hSQ : SectionQuotLocal.Statement) :
+    VertPointLength.Statement := by
+  intro T _ K' _ _ y s hP hs hsP
+  refine ⟨⟨fun W hW => ?_, hInj T K' y s hP hs hsP,
+      fun m hm => hSurj T K' y s hP hs hsP m hm.1 hm.2⟩,
+    fun W hW => (VerticalPointLength.maximal_and_mult_eq hCh hMC hSQ hP hs hsP hW).2⟩
+  obtain ⟨hmax, hmult⟩ := VerticalPointLength.maximal_and_mult_eq hCh hMC hSQ hP hs hsP hW
+  exact ⟨hmax, hmult ▸ (IndefiniteRowSideFullHecke.Inter.multAt_pos_of_mem_divSupp hW).ne'⟩
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.HilbertSamuelApplications.LineOfLargeDegreeOfUse
+
+section
 
 @[expose] public section
 
@@ -225,3 +398,5 @@ theorem lineOfLargeDegree_of_use :
     (degree_of_system hAIS) hInd hU.z1 hZ2 hI
 
 end GlobalTheory.CompanionTheory.Ar.Giv
+end
+end

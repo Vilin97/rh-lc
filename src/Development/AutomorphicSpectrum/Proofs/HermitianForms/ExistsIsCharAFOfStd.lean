@@ -2,7 +2,8 @@ module
 
 public import Formalism.UnipotentAdelicQuotients.StdAdditiveCharExists
 public import Formalism.UnipotentAdelicQuotients.SWXSDefs
-public import Formalism.PeriodIntegrals.ExplicitFormulaCounts.BridgeStdAddChar
+public import Formalism.PeriodIntegrals.StdCharTR
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardCharacterTrace.SumEmbeddingEqTrace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +44,63 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.StdCharTR
+
+section
+
+@[expose] public section
+
+theorem stdCharTR : PI.StdCharTR.Target :=
+  PI.StdCharTRWork.stdCharTR_main
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.ExplicitFormulaCounts.BridgeStdAddChar
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace PI.Bridge
+
+theorem bridge_stdAddChar : HeckeCharacterZeroLocus.StdAdditiveCharExists := by
+  have h := stdCharTR
+  unfold PI.StdCharTR.Target at h
+  unfold HeckeCharacterZeroLocus.StdAdditiveCharExists
+  intro F _ _ hF
+  obtain ⟨ψ, hψ, hinf⟩ := h F hF
+  unfold Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCharAF at hψ
+  obtain ⟨hc, hn, hk, x₀, hx₀⟩ := hψ
+
+  refine ⟨ψ.compAddMonoidHom (-(AddMonoidHom.id _)), ?_, ?_, ?_, ?_, ?_⟩
+  · change Continuous (fun x => ψ (-x))
+    exact hc.comp continuous_neg
+  · intro x
+    change ‖ψ (-x)‖ = 1
+    exact hn _
+  · intro a
+    change ψ (-(algebraMap F _ a)) = 1
+    rw [← map_neg]
+    exact hk (-a)
+  · refine ⟨-x₀, ?_⟩
+    change ψ (- -x₀) ≠ 1
+    rw [neg_neg]
+    exact hx₀
+  · intro x
+    change ψ (-_) = _
+    rw [AddChar.map_neg_eq_inv, Complex.exp_neg, ← hinf x]
+    rfl
+
+end PI.Bridge
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.HermitianForms.ExistsIsCharAFOfStd
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory HeckeCharacterZeroLocus.SiegelWeilU
@@ -62,3 +120,5 @@ theorem exists_isCharAF (F : Type) [Field F] [NumberField F] (hF : NumberField.I
   exists_isCharAF_of_std PI.Bridge.bridge_stdAddChar F hF
 
 end GlobalTheory.CompanionTheory.AdelicChar
+end
+end

@@ -5,25 +5,29 @@ public import Formalism.SharpRestriction.LevelLetterCocycles.ElementDenominator
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BlochKatoLocalAllOfTateDualityEulerCharStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CrystallineRestrictFiniteExtensionJumpsStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FontaineBounds
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobeniusSubOneSurjectiveWittTiltStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RestrictionCorestrictionH1fStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StrictAdm
+public import Formalism.PeriodIntegrals.ArtSch
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.LocalProperties.Reduced
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,6 +35,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,7 +48,256 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Valuation.Integral
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASSmall
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittCoefficients.CoeffEqOfSubMem
+public import GroundTheory.PAdicHodge.PerfectoidField
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobeniusSubOneSurjectiveWittTilt
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RestrictionCorestrictionH1fStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StrictAdm
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationGluing.ValbLeOfCoeffEqZero
+
+section
+
+@[expose] public section
+
+namespace PI.ArtSch.Glue
+
+open scoped NNReal
+
+noncomputable section
+
+variable {l : ℕ} [hl : Fact l.Prime]
+
+theorem coeff_add_pow (x : OCb l) (n : ℕ) : ∀ k : ℕ,
+    PreTilt.coeff (n + k) x ^ (l ^ k) = PreTilt.coeff n x
+  | 0 => by simp
+  | k + 1 => by
+    rw [pow_succ', pow_mul, ← add_assoc, PreTilt.coeff_pow_p, coeff_add_pow x n k]
+
+theorem v_l_lt_one : (PadicComplex.valued l).v ((l : ℕ) : PadicComplex l) < 1 := by
+  have hv := PadicComplexInt.integers l
+  have hnu : ¬ IsUnit ((l : ℕ) : OC l) := Fact.out
+  have h1 := hv.map_le_one ((l : ℕ) : OC l)
+  have h2 : (PadicComplex.valued l).v (algebraMap (OC l) (PadicComplex l) ((l : ℕ) : OC l)) ≠ 1 :=
+    fun h => hnu (hv.isUnit_iff_valuation_eq_one.mpr h)
+  rw [map_natCast] at h1 h2
+  exact lt_of_le_of_ne h1 h2
+
+theorem valb_le_of_coeff_eq_zero (r : OCb l) (n : ℕ) (hr : PreTilt.coeff n r = 0) :
+    valb l r ≤ (PadicComplex.valued l).v ((l : ℕ) : PadicComplex l) ^ (l ^ n) := by
+  by_cases h0 : r = 0
+  · rw [h0, map_zero]; exact zero_le
+  have hex : ∃ m, PreTilt.coeff m r ≠ 0 := by
+    by_contra hall
+    push_neg at hall
+    exact h0 (Perfection.ext fun m => (hall m).trans (map_zero _).symm)
+  obtain ⟨N, hM⟩ : ∃ N, PreTilt.coeff (N + n) r ≠ 0 :=
+    ⟨_, PreTilt.coeff_nat_find_add_ne_zero (h := hex) n⟩
+  have hk : PreTilt.coeff (N + n) r ^ (l ^ N) = 0 := by
+    have h1 := coeff_add_pow r n (N)
+    rw [hr, Nat.add_comm] at h1
+    exact h1
+  show PreTilt.valAux (PadicComplex l) (PadicComplex.valued l).v (OC l) l r ≤ _
+  rw [PreTilt.valAux_eq (PadicComplexInt.integers l) hM]
+  obtain ⟨y, hy⟩ := Ideal.Quotient.mk_surjective (PreTilt.coeff (N + n) r)
+  rw [← hy, ModP.preVal_mk (PadicComplexInt.integers l) (by rw [hy]; exact hM)]
+  have hdiv : ((l : ℕ) : OC l) ∣ y ^ (l ^ N) := by
+    rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem, map_pow, hy]
+    exact hk
+  have hle := (PadicComplexInt.integers l).le_of_dvd hdiv
+  rw [map_pow, map_pow, map_natCast] at hle
+  rw [pow_add, pow_mul]
+  exact pow_le_pow_left₀ zero_le hle _
+
+theorem exists_small (t : ℝ≥0) (ht : 0 < t) :
+    ∃ n : ℕ, (PadicComplex.valued l).v ((l : ℕ) : PadicComplex l) ^ (l ^ n) < t := by
+  have hq := v_l_lt_one (l := l)
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one ht hq
+  exact ⟨n, lt_of_le_of_lt (pow_le_pow_of_le_one zero_le hq.le
+    (Nat.lt_pow_self (Fact.out : l.Prime).one_lt).le) hn⟩
+
+theorem frob_surj (hR : RootModP) : Function.Surjective (frobenius (ModP (OC l) l) l) := by
+  intro b
+  obtain ⟨z, hz⟩ := hR l 0 b
+  exact ⟨z, by rw [frobenius_def]; linear_combination hz⟩
+
+theorem tiltGlue : TiltGlue := by
+  intro hR hD hS l _ a
+  obtain ⟨⟨x, s⟩, rfl⟩ := IsLocalization.mk'_surjective (nonZeroDivisors (OCb l)) a
+  have hs0 : (s : OCb l) ≠ 0 := nonZeroDivisors.coe_ne_zero s
+  have hl1 : 1 ≤ l := (Fact.out : l.Prime).one_lt.le
+  obtain ⟨c, hc⟩ : ∃ c : OCb l, c = (s : OCb l) ^ (l - 1) := ⟨_, rfl⟩
+  obtain ⟨b, hb⟩ : ∃ b : OCb l, b = x * (s : OCb l) ^ (l - 1) := ⟨_, rfl⟩
+  have hvs : 0 < valb l ((s : OCb l) ^ l) := by
+    rw [pos_iff_ne_zero, Ne, PreTilt.map_eq_zero]
+    exact pow_ne_zero _ hs0
+  obtain ⟨n, hn⟩ := exists_small (l := l) (valb l ((s : OCb l) ^ l)) hvs
+  obtain ⟨z0, hz0⟩ := hR l (PreTilt.coeff n c) (PreTilt.coeff n b)
+  obtain ⟨z, hz'⟩ : ∃ z : OCb l, PreTilt.coeff n z = z0 :=
+    Perfection.coeff_surjective (frob_surj (l := l) hR) n z0
+  obtain ⟨rr, hrr⟩ : ∃ rr : OCb l, rr = z ^ l - c * z - b := ⟨_, rfl⟩
+  have hcr : PreTilt.coeff n rr = 0 := by
+    rw [hrr, map_sub, map_sub, map_mul, map_pow, hz']
+    exact hz0
+  have hvr : valb l rr < valb l ((s : OCb l) ^ l) :=
+    lt_of_le_of_lt (valb_le_of_coeff_eq_zero rr n hcr) hn
+  obtain ⟨e, he⟩ := hD l rr ((s : OCb l) ^ l) hvr.le
+  have hve : valb l e < 1 := by
+    by_contra hge
+    push_neg at hge
+    have h3 : valb l ((s : OCb l) ^ l) ≤ valb l rr := by
+      rw [he, map_mul]
+      exact le_mul_of_one_le_right zero_le hge
+    exact absurd hvr (not_lt.mpr h3)
+  obtain ⟨w, hw⟩ := hS l (-e) (by rwa [Valuation.map_neg])
+  obtain ⟨Z, hZ⟩ : ∃ Z : OCb l, Z = z + (s : OCb l) * w := ⟨_, rfl⟩
+  have hfrob : Z ^ l = z ^ l + (s : OCb l) ^ l * w ^ l := by
+    rw [hZ, add_pow_char, mul_pow]
+  have hcs : c * (s : OCb l) = (s : OCb l) ^ l := by
+    rw [hc, ← pow_succ, Nat.sub_add_cancel hl1]
+  have he1 : z ^ l - c * z - b = (s : OCb l) ^ l * e := by rw [← hrr]; exact he
+  have key : Z ^ l - c * Z - b = 0 := by
+    linear_combination hfrob + he1 + (s : OCb l) ^ l * hw - w * hcs - c * hZ
+  refine ⟨IsLocalization.mk' (Cb l) Z s, ?_⟩
+  simp only [IsFractionRing.mk'_eq_div]
+  have hS0 : algebraMap (OCb l) (Cb l) (s : OCb l) ≠ 0 :=
+    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
+  have hmap := congrArg (algebraMap (OCb l) (Cb l)) key
+  rw [RingHom.map_sub, map_sub, map_mul, map_pow, map_zero, hc, hb, map_mul, map_pow] at hmap
+  have hT0 : algebraMap (OCb l) (Cb l) (s : OCb l) ^ (l - 1) ≠ 0 := pow_ne_zero _ hS0
+  have hSl : algebraMap (OCb l) (Cb l) (s : OCb l) ^ l =
+      algebraMap (OCb l) (Cb l) (s : OCb l) ^ (l - 1) * algebraMap (OCb l) (Cb l) (s : OCb l) := by
+    rw [← pow_succ, Nat.sub_add_cancel hl1]
+  rw [div_pow, hSl, show algebraMap (OCb l) (Cb l) Z ^ l =
+      algebraMap (OCb l) (Cb l) (s : OCb l) ^ (l - 1) * algebraMap (OCb l) (Cb l) Z +
+        algebraMap (OCb l) (Cb l) x * algebraMap (OCb l) (Cb l) (s : OCb l) ^ (l - 1) by
+      linear_combination hmap]
+  field_simp
+  ring
+
+end
+
+end PI.ArtSch.Glue
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASGlue
+
+section
+
+@[expose] public section
+
+theorem tiltSurjectiveOfParts : PI.ArtSch.TiltGlue := PI.ArtSch.Glue.tiltGlue
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ArtinSchreierRoots.ExistsRootOC
+
+section
+
+@[expose] public section
+
+namespace PI.ArtSch.RootWork
+
+open Polynomial
+
+variable (l : ℕ) [Fact l.Prime]
+
+theorem exists_root_OC (c b : OC l) : ∃ z : OC l, z ^ l - c * z - b = 0 := by
+  classical
+  have hl : 2 ≤ l := (Fact.out : l.Prime).two_le
+  let p : (OC l)[X] := X ^ l - (C c * X + C b)
+  have hdeg : (C c * X + C b).degree < (X ^ l : (OC l)[X]).degree := by
+    rw [degree_X_pow]
+    exact lt_of_le_of_lt degree_linear_le (by exact_mod_cast (show 1 < l by omega))
+  have hmon : p.Monic := (monic_X_pow l).sub_of_left hdeg
+  have hnat : p.natDegree = l := by
+    apply natDegree_eq_of_degree_eq_some
+    rw [degree_sub_eq_left_of_degree_lt hdeg, degree_X_pow]
+  let q : ℂ_[l][X] := p.map (algebraMap (OC l) ℂ_[l])
+  have hq : q.degree ≠ 0 := by
+    rw [degree_eq_natDegree (hmon.map _).ne_zero, (hmon.natDegree_map _), hnat]
+    exact_mod_cast (show l ≠ 0 by omega)
+  obtain ⟨x, hx⟩ := IsAlgClosed.exists_root q hq
+  have hx' : eval₂ (algebraMap (OC l) ℂ_[l]) x p = 0 := by
+    rw [← eval_map]
+    exact hx
+  have hint : IsIntegral (OC l) x := ⟨p, hmon, hx'⟩
+  have hmem : x ∈ PadicComplexInt l := (PadicComplexInt.integers l).mem_of_integral hint
+  refine ⟨⟨x, hmem⟩, ?_⟩
+  apply Subtype.ext
+  have h2 : eval₂ (algebraMap (OC l) ℂ_[l]) x p = x ^ l - ((c : ℂ_[l]) * x + (b : ℂ_[l])) := by
+    simp only [p, eval₂_sub, eval₂_add, eval₂_mul, eval₂_X_pow, eval₂_X, eval₂_C]
+    rfl
+  rw [h2] at hx'
+  show x ^ l - (c : ℂ_[l]) * x - (b : ℂ_[l]) = 0
+  rw [sub_sub]
+  exact hx'
+
+end PI.ArtSch.RootWork
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASRoot
+
+section
+
+@[expose] public section
+
+theorem rootModP_holds : PI.ArtSch.RootModP := by
+  intro l _ c b
+  obtain ⟨c', rfl⟩ := Ideal.Quotient.mk_surjective c
+  obtain ⟨b', rfl⟩ := Ideal.Quotient.mk_surjective b
+  obtain ⟨z, hz⟩ := PI.ArtSch.RootWork.exists_root_OC l c' b'
+  refine ⟨Ideal.Quotient.mk _ z, ?_⟩
+  rw [← map_pow, ← map_mul, ← map_sub, ← map_sub, hz, map_zero]
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASWitt
+
+section
+
+@[expose] public section
+
+theorem witt_lift : PI.ArtSch.WittLift := PI.ArtSch.WittLiftWork.wittLift
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TiltDivisibility
+
+section
+
+@[expose] public section
+
+theorem tilt_divisibility : PI.ArtSch.TiltDiv :=
+  @GlobalTheory.ArtinSchreierTilt.tiltDiv
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobeniusSubOneSurjectiveWittTiltStatement
+
+section
+
+@[expose] public section
+
+theorem _root_.GlobalTheory.T.frobenius_sub_one_surjective_witt_tilt : Formalism.MainNotions.ElementDenominator.ArtinSchreierWittOnto := fun l _ x =>
+  PI.ArtSch.main_of witt_lift (tiltSurjectiveOfParts rootModP_holds tilt_divisibility smallSurjective) l x
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalLiftingAdmittedHypothesesAll
+
+section
 
 @[expose] public section
 
@@ -59,3 +313,5 @@ theorem localLifting_admittedHypotheses_all_alt : GlobalTheory.Published.BlochKa
     GlobalTheory.Per.StrictAdm.strict_adm D, GlobalTheory.T.crystalline_restrict_finite_extension_jumps D, GlobalTheory.T.frobenius_sub_one_surjective_witt_tilt⟩
 
 end GlobalTheory.AdmAllRecords
+end
+end

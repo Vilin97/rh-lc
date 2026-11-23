@@ -1,7 +1,7 @@
 module
 
-public import GroundTheory.ArithmeticGeometry.AbelianVarieties.TorsionGalois
-public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsTranslate
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,9 +40,80 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.ProfiniteCohomology.DiscreteModules
+public import Mathlib.FieldTheory.IsSepClosed
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsTranslate
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.TorsionGalois
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Arith.Abelian
+
+open GroundTheory.ProfCoh IntermediateField AddSubgroup WeierstrassCurve
+
+universe w u
+
+section Action
+
+variable (K L : Type u) [Field K] [Field L] [Algebra K L] [DecidableEq L] (W : WeierstrassCurve K)
+
+noncomputable def galPointsHom : Gal(L/K) →* AddMonoid.End (W.baseChange L).toAffine.Point where
+  toFun σ := Affine.Point.map (W' := W.toAffine) (σ : L →ₐ[K] L)
+  map_one' := by
+    refine AddMonoidHom.ext fun P => ?_
+    cases P <;> rfl
+  map_mul' σ τ := by
+    refine AddMonoidHom.ext fun P => ?_
+    cases P <;> rfl
+
+theorem galPointsHom_some (σ : Gal(L/K)) {x y : L}
+    (h : (W.baseChange L).toAffine.Nonsingular x y) :
+    ∃ h' : (W.baseChange L).toAffine.Nonsingular (σ x) (σ y),
+      galPointsHom K L W σ (.some x y h) = .some (σ x) (σ y) h' :=
+  ⟨_, rfl⟩
+
+theorem galPointsHom_some_eq_self {σ : Gal(L/K)} {x y : L}
+    (h : (W.baseChange L).toAffine.Nonsingular x y) (hx : σ x = x) (hy : σ y = y) :
+    galPointsHom K L W σ (.some x y h) = .some x y h := by
+  obtain ⟨h', e⟩ := galPointsHom_some K L W σ h
+  rw [e]
+  simp only [Affine.Point.some.injEq]
+  exact ⟨hx, hy⟩
+
+end Action
+
+section Discrete
+
+variable {K L : Type u} [Field K] [Field L] [Algebra K L] [DecidableEq L] (W : WeierstrassCurve K)
+
+variable [Algebra.IsIntegral K L]
+
+end Discrete
+
+section SepClosed
+
+instance isElliptic_baseChange {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
+    (W : WeierstrassCurve R) [W.IsElliptic] : (W.baseChange A).IsElliptic :=
+  inferInstanceAs (W.map (algebraMap R A)).IsElliptic
+
+variable {K L : Type u} [Field K] [Field L] [Algebra K L] [DecidableEq L] [IsSepClosed L]
+  (W : WeierstrassCurve K) [W.IsElliptic]
+
+end SepClosed
+
+end GroundTheory.Arith.Abelian
+end
+end
+
+-- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilGaloisFunctionField
+
+section
 
 @[expose] public section
 
@@ -281,3 +352,5 @@ theorem galFF_translate (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine.P
 end Points
 
 end GroundTheory.Arith.Abelian
+end
+end

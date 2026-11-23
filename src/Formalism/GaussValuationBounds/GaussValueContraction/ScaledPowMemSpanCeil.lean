@@ -1,7 +1,6 @@
 module
 
-public import Formalism.GaussValuationBounds.KapBound3
-public import Formalism.GaussValuationBounds.GaussValueContraction.TruncationExponentBounds
+public import Formalism.GaussValuationBounds.Statement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +40,38 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.GaussValuationBounds.GaussValueContraction.TruncationExponentBounds
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.RingTheory.Ideal.BigOperators
+
+-- Source module: Formalism.GaussValuationBounds.KapBound3
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.NOK
+
+def Trunc : Prop :=
+  ∀ (A : Type) [CommRing A] (ℓ : ℕ) [Fact ℓ.Prime], 3 ≤ ℓ →
+    ∀ (X u : A) (p : ℕ → A) (y M j : ℕ), 1 ≤ j →
+      p (j - 1) ∈ Ideal.span {(ℓ : A), X ^ (ℓ ^ (j - 1))} →
+      ∀ r : ℕ,
+        (ℓ : A) ^ sigNOK ℓ y M j * (u * X * ∏ s ∈ Finset.range j, p s ^ (ℓ - 1)) ^ r ∈
+          Ideal.span {(ℓ : A) ^ ⌈(r : ℝ) * ℓ / ((ℓ : ℝ) - 1)⌉₊,
+            X ^ M * ∏ s ∈ Finset.range j, p s ^ y}
+
+end Formalism.NOK
+end
+end
+end
+
+-- Source module: Formalism.GaussValuationBounds.GaussValueContraction.ScaledPowMemSpanCeil
+
+section
 
 @[expose] public section
 
@@ -132,3 +160,5 @@ theorem scaledPowMemSpanCeil : Trunc := by
     exact Ideal.mem_span_pair.mpr ⟨α * ∏ s ∈ Finset.range j, p s ^ y, β, by ring⟩
 
 end Formalism.NOK
+end
+end

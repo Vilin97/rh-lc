@@ -1,14 +1,12 @@
 module
 
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.NormLogDerivReflLe
-public import Formalism.PeriodIntegrals.DiscIn
-public import Mathlib.Analysis.SpecialFunctions.Log.Basic
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LogDerivBoundOfZeroFree
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.LogDeriv
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Complex.AbsMax
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,8 +22,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,6 +46,217 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.FDeriv.Pow
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Formalism.PeriodIntegrals.DiscIn
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Complex.BorelCaratheodory
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Analysis.Calculus.DiffContOnCl
+public import Mathlib.Analysis.Complex.Liouville
+import Mathlib.Analysis.Complex.AbsMax
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.NormLogDerivReflLe
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.EF.Loc
+
+open Complex Metric Set Filter Topology ComplexConjugate
+
+def refl (s₀ : ℂ) (R : ℝ) (ρ z : ℂ) : ℂ := ((R : ℂ) ^ 2 - conj (ρ - s₀) * (z - s₀)) / R
+
+lemma norm_refl_sphere {s₀ ρ z : ℂ} {R : ℝ} (hR : 0 < R) (hz : z ∈ sphere s₀ R) :
+    ‖refl s₀ R ρ z‖ = ‖z - ρ‖ := by
+  have hw : ‖z - s₀‖ = R := by rwa [mem_sphere_iff_norm] at hz
+  have hR2 : (R : ℂ) ^ 2 = (z - s₀) * conj (z - s₀) := by
+    rw [mul_conj, normSq_eq_norm_sq, hw]
+    push_cast
+    ring
+  have hk : (z - s₀) * conj (z - s₀) - conj (ρ - s₀) * (z - s₀) = (z - s₀) * conj (z - ρ) := by
+    simp only [map_sub]
+    ring
+  unfold refl
+  rw [hR2, hk, norm_div, norm_mul, Complex.norm_conj, hw, Complex.norm_real, Real.norm_of_nonneg hR.le]
+  field_simp
+
+lemma le_norm_refl {s₀ ρ z : ℂ} {R R' : ℝ} (hR : 0 < R) (hρ : ρ ∈ closedBall s₀ R')
+    (hz : z ∈ closedBall s₀ R) : R - R' ≤ ‖refl s₀ R ρ z‖ := by
+  have ha : ‖ρ - s₀‖ ≤ R' := by rwa [mem_closedBall, dist_eq_norm] at hρ
+  have hw : ‖z - s₀‖ ≤ R := by rwa [mem_closedBall, dist_eq_norm] at hz
+  unfold refl
+  rw [norm_div, Complex.norm_real, Real.norm_of_nonneg hR.le, le_div_iff₀ hR]
+  have h1 : ‖(R : ℂ) ^ 2‖ = R ^ 2 := by
+    rw [norm_pow, Complex.norm_real, Real.norm_of_nonneg hR.le]
+  have h2 : ‖conj (ρ - s₀) * (z - s₀)‖ ≤ R' * R := by
+    rw [norm_mul, Complex.norm_conj]
+    exact mul_le_mul ha hw (norm_nonneg _) ((norm_nonneg _).trans ha)
+  have h3 := norm_sub_norm_le ((R : ℂ) ^ 2) (conj (ρ - s₀) * (z - s₀))
+  rw [h1] at h3
+  nlinarith
+
+lemma refl_center {s₀ ρ : ℂ} {R : ℝ} (hR : 0 < R) : refl s₀ R ρ s₀ = R := by
+  have h : (R : ℂ) ≠ 0 := by exact_mod_cast hR.ne'
+  unfold refl
+  rw [sub_self, mul_zero, sub_zero, pow_two, mul_div_assoc, div_self h, mul_one]
+
+lemma hasDerivAt_refl (s₀ : ℂ) (R : ℝ) (ρ z : ℂ) :
+    HasDerivAt (refl s₀ R ρ) (-(conj (ρ - s₀) * 1) / R) z :=
+  ((((hasDerivAt_id' z).sub_const s₀).const_mul (conj (ρ - s₀))).const_sub ((R : ℂ) ^ 2)).div_const (R : ℂ)
+
+lemma differentiable_refl (s₀ : ℂ) (R : ℝ) (ρ : ℂ) : Differentiable ℂ (refl s₀ R ρ) :=
+  fun z => (hasDerivAt_refl s₀ R ρ z).differentiableAt
+
+lemma norm_logDeriv_refl_le {s₀ ρ z : ℂ} {R R' : ℝ} (hR'R : R' < R) (hR : 0 < R)
+    (hρ : ρ ∈ closedBall s₀ R') (hz : z ∈ closedBall s₀ R) :
+    ‖logDeriv (refl s₀ R ρ) z‖ ≤ R' / (R * (R - R')) := by
+  have hpos : 0 < R - R' := sub_pos.mpr hR'R
+  have hl := le_norm_refl hR hρ hz
+  have hn : 0 < ‖refl s₀ R ρ z‖ := lt_of_lt_of_le hpos hl
+  have ha : ‖ρ - s₀‖ ≤ R' := by rwa [mem_closedBall, dist_eq_norm] at hρ
+  rw [logDeriv_apply, (hasDerivAt_refl s₀ R ρ z).deriv, norm_div, norm_div, norm_neg, mul_one,
+    Complex.norm_conj, Complex.norm_real, Real.norm_of_nonneg hR.le, div_div,
+    div_le_div_iff₀ (mul_pos hR hn) (mul_pos hR hpos)]
+  have h4 := mul_le_mul ha hl hpos.le ((norm_nonneg _).trans ha)
+  nlinarith
+
+lemma logDeriv_prod_pow_mul {Z : Finset ℂ} {m : ℂ → ℕ} {φ : ℂ → ℂ → ℂ} {h : ℂ → ℂ} {s : ℂ}
+    (hφ : ∀ ρ ∈ Z, φ ρ s ≠ 0) (hφd : ∀ ρ ∈ Z, DifferentiableAt ℂ (φ ρ) s) (hh : h s ≠ 0)
+    (hhd : DifferentiableAt ℂ h s) :
+    logDeriv (fun z => (∏ ρ ∈ Z, (φ ρ z) ^ (m ρ)) * h z) s =
+      (∑ ρ ∈ Z, (m ρ : ℂ) * logDeriv (φ ρ) s) + logDeriv h s := by
+  have hP : (∏ ρ ∈ Z, (φ ρ s) ^ (m ρ)) ≠ 0 :=
+    Finset.prod_ne_zero_iff.mpr fun ρ hρ => pow_ne_zero _ (hφ ρ hρ)
+  have hPd : DifferentiableAt ℂ (fun z => ∏ ρ ∈ Z, (φ ρ z) ^ (m ρ)) s :=
+    by
+      have h5 := DifferentiableAt.finsetProd (f := fun ρ z => (φ ρ z) ^ (m ρ)) (fun ρ hρ => (hφd ρ hρ).pow _)
+      rwa [Finset.prod_fn] at h5
+  rw [logDeriv_fun_mul (f := fun z => ∏ ρ ∈ Z, (φ ρ z) ^ (m ρ)) (g := h) (x := s) hP hh hPd hhd]
+  congr 1
+  have h6 := logDeriv_prod (f := fun ρ z => (φ ρ z) ^ (m ρ)) (s := Z) (x := s)
+    (fun ρ hρ => pow_ne_zero _ (hφ ρ hρ)) (fun ρ hρ => (hφd ρ hρ).pow _)
+  rw [Finset.prod_fn] at h6
+  rw [h6]
+  refine Finset.sum_congr rfl fun ρ hρ => ?_
+  exact logDeriv_fun_pow (hφd ρ hρ) (m ρ)
+
+lemma order_eq_of_factor {f h : ℂ → ℂ} {Z : Finset ℂ} {m : ℂ → ℕ} {ρ : ℂ} (hρ : ρ ∈ Z) {U : Set ℂ}
+    (hU : U ∈ 𝓝 ρ) (hf : AnalyticAt ℂ f ρ) (hh : DifferentiableOn ℂ h U) (hhρ : h ρ ≠ 0)
+    (hfac : ∀ z ∈ U, f z = (∏ ρ' ∈ Z, (z - ρ') ^ (m ρ')) * h z) :
+    analyticOrderNatAt f ρ = m ρ := by
+  have hha : AnalyticAt ℂ h ρ := hh.analyticAt hU
+  have hg : AnalyticAt ℂ (fun z => (∏ ρ' ∈ Z.erase ρ, (z - ρ') ^ (m ρ')) * h z) ρ :=
+    by
+      have h7 := Finset.analyticAt_prod (𝕜 := ℂ) (Z.erase ρ) (f := fun ρ' z => (z - ρ') ^ (m ρ')) (c := ρ)
+        (fun ρ' _ => by fun_prop)
+      rw [Finset.prod_fn] at h7
+      exact h7.mul hha
+  have hg0 : (∏ ρ' ∈ Z.erase ρ, (ρ - ρ') ^ (m ρ')) * h ρ ≠ 0 :=
+    mul_ne_zero (Finset.prod_ne_zero_iff.mpr fun ρ' hρ' =>
+      pow_ne_zero _ (sub_ne_zero.mpr (Finset.ne_of_mem_erase hρ').symm)) hhρ
+  have hord : analyticOrderAt f ρ = (m ρ : ℕ∞) := by
+    rw [hf.analyticOrderAt_eq_natCast]
+    refine ⟨_, hg, hg0, ?_⟩
+    filter_upwards [hU] with z hz
+    rw [hfac z hz, ← Finset.mul_prod_erase Z (fun ρ' => (z - ρ') ^ (m ρ')) hρ, smul_eq_mul, mul_assoc]
+  simp [analyticOrderNatAt, hord]
+
+end PI.EF.Loc
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LogDerivBoundOfZeroFree
+
+section
+
+@[expose] public section
+
+namespace PI.EF.Loc
+
+open Complex Metric Set Filter Topology
+
+theorem logDeriv_bound_of_zero_free (hDL : PI.DiscLog) {g : ℂ → ℂ} {s₀ : ℂ} {r R M : ℝ}
+    (hr : 0 < r) (hrR : r < R) (hM : 0 < M) (hg : DifferentiableOn ℂ g (ball s₀ R))
+    (hz : ∀ z ∈ ball s₀ R, g z ≠ 0) (hb : ∀ z ∈ ball s₀ R, ‖g z‖ ≤ Real.exp M * ‖g s₀‖) :
+    ∀ z ∈ closedBall s₀ r, ‖deriv g z / g z‖ ≤ 4 * (r + R) / (R - r) ^ 2 * M := by
+  intro z hzr
+  obtain ⟨L, hL0, hLd, hLe⟩ := hDL g s₀ R hg hz
+  have hR : 0 < R := hr.trans hrR
+  have hs₀ : s₀ ∈ ball s₀ R := mem_ball_self hR
+  have hg0 : 0 < ‖g s₀‖ := norm_pos_iff.mpr (hz s₀ hs₀)
+  have hLdiff : DifferentiableOn ℂ L (ball s₀ R) := fun x hx =>
+    (hLd x hx).differentiableAt.differentiableWithinAt
+  have hre : ∀ x ∈ ball s₀ R, (L x).re ≤ M := by
+    intro x hx
+    have h1 := hb x hx
+    rw [hLe x hx, norm_mul, Complex.norm_exp, mul_comm (Real.exp M)] at h1
+    exact Real.exp_le_exp.mp (le_of_mul_le_mul_left h1 hg0)
+  have hmem : ∀ u ∈ ball (0 : ℂ) R, s₀ + u ∈ ball s₀ R := by
+    intro u hu
+    rw [mem_ball_zero_iff] at hu
+    simpa [dist_eq_norm] using hu
+  have hFd : DifferentiableOn ℂ (fun u => L (s₀ + u)) (ball 0 R) := by
+    intro u hu
+    have h1 : DifferentiableAt ℂ L (s₀ + u) := (hLd _ (hmem u hu)).differentiableAt
+    have h2 : DifferentiableAt ℂ (fun v : ℂ => s₀ + v) u := differentiableAt_id.const_add s₀
+    exact (h1.comp u h2).differentiableWithinAt
+  have hFre : MapsTo (fun u => L (s₀ + u)) (ball 0 R) {w | w.re ≤ M} :=
+    fun u hu => hre _ (hmem u hu)
+  have hF0 : (fun u => L (s₀ + u)) 0 = 0 := by simp [hL0]
+  have hρR : (r + R) / 2 < R := by linarith
+  have hbound : ∀ x ∈ closedBall s₀ ((r + R) / 2),
+      ‖L x‖ ≤ 2 * M * ((r + R) / 2) / (R - (r + R) / 2) := by
+    intro x hx
+    rw [mem_closedBall, dist_eq_norm] at hx
+    have hu : x - s₀ ∈ ball (0 : ℂ) R := by
+      rw [mem_ball_zero_iff]; linarith
+    have h1 := Complex.borelCaratheodory_zero hM hFd hFre hR hu hF0
+    have e : s₀ + (x - s₀) = x := by ring
+    simp only [e] at h1
+    refine h1.trans ?_
+    have hpos : 0 < R - (r + R) / 2 := by linarith
+    rw [div_le_div_iff₀ (by linarith) hpos]
+    nlinarith [mul_nonneg (mul_nonneg hM.le hR.le) (sub_nonneg.mpr hx)]
+  have hδ : 0 < (R - r) / 2 := by linarith
+  have hzr' : ‖z - s₀‖ ≤ r := by rw [mem_closedBall, dist_eq_norm] at hzr; exact hzr
+  have hsub : closedBall z ((R - r) / 2) ⊆ closedBall s₀ ((r + R) / 2) := by
+    intro x hx
+    rw [mem_closedBall, dist_eq_norm] at hx ⊢
+    have : ‖x - s₀‖ ≤ ‖x - z‖ + ‖z - s₀‖ := by
+      have := norm_add_le (x - z) (z - s₀)
+      simpa using this
+    linarith
+  have hsubB : closedBall s₀ ((r + R) / 2) ⊆ ball s₀ R := closedBall_subset_ball hρR
+  have hdc : DiffContOnCl ℂ L (ball z ((R - r) / 2)) := by
+    apply DifferentiableOn.diffContOnCl
+    rw [closure_ball z hδ.ne']
+    exact hLdiff.mono (hsub.trans hsubB)
+  have hc := Complex.norm_deriv_le_of_forall_mem_sphere_norm_le hδ hdc
+    (fun x hx => hbound x (hsub (sphere_subset_closedBall hx)))
+  have hzB : z ∈ ball s₀ R := hsubB (hsub (mem_closedBall_self hδ.le))
+  rw [(hLd z hzB).deriv] at hc
+  refine hc.trans (le_of_eq ?_)
+  have e1 : R - (r + R) / 2 = (R - r) / 2 := by ring
+  have hne : R - r ≠ 0 := by linarith
+  rw [e1]
+  field_simp
+  ring
+
+end PI.EF.Loc
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LocalAbstract
+
+section
 
 @[expose] public section
 
@@ -288,3 +497,6 @@ theorem local_abstract (hDF : PI.DiscFactor) (hDL : PI.DiscLog) {r R' R : ℝ} (
     _ = locC r R' R * M + ε := by rw [mul_add, hCε]
 
 end PI.EF.Loc
+end
+end
+end

@@ -6,21 +6,20 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsJo
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteDimensionalFixedTensorStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteSupportConvolutionTripleStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteSupportProductQuotientStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FinsumCosetSmulLinear
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeIntegralFiniteSumStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeSumInvariantStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriDoubleCosetFiniteStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriHeckeSumAdditiveStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MultiplicativeCharacterOnConeStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdRelIndexNeZeroStatement
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RepresentationTheory.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -28,8 +27,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,9 +47,113 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeIntegralFiniteSumStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeSumInvariantStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriDoubleCosetFiniteStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriHeckeSumAdditiveStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MultiplicativeCharacterOnConeStatement
+public import Mathlib.GroupTheory.Index
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.FiniteDiscreteFamilies.PeakCone
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FinsumCosetSmulLinear
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.HeckeSum
+
+theorem finsum_coset_smul_linear :
+    ∀ (G V : Type) [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
+      (K : Subgroup G) (J : Type) [Fintype J] (c : J → ℂ) (f : J → G → ℂ),
+      (∀ j, (Function.support fun q : G ⧸ K => f j q.out).Finite) → ∀ v : V,
+      ∑ᶠ q : G ⧸ K, (∑ j, c j * f j q.out) • ρ q.out v
+        = ∑ j, c j • ∑ᶠ q : G ⧸ K, f j q.out • ρ q.out v := by
+  intro G V _ _ _ ρ K J _ c f hf v
+  have hs : ∀ j, (Function.support fun q : G ⧸ K => f j q.out • ρ q.out v).Finite := by
+    intro j
+    refine (hf j).subset ?_
+    intro q hq h0
+    apply hq
+    show f j q.out • ρ q.out v = 0
+    have h0' : f j q.out = 0 := h0
+    rw [h0', zero_smul]
+  have hs' : ∀ j ∈ (Finset.univ : Finset J),
+      (Function.support fun q : G ⧸ K => c j • (f j q.out • ρ q.out v)).Finite := by
+    intro j _
+    refine (hs j).subset ?_
+    intro q hq h0
+    apply hq
+    show c j • (f j q.out • ρ q.out v) = 0
+    have h0' : f j q.out • ρ q.out v = 0 := h0
+    rw [h0', smul_zero]
+  calc ∑ᶠ q : G ⧸ K, (∑ j, c j * f j q.out) • ρ q.out v
+      = ∑ᶠ q : G ⧸ K, ∑ j, c j • (f j q.out • ρ q.out v) := by
+        refine finsum_congr fun q => ?_
+        rw [Finset.sum_smul]
+        exact Finset.sum_congr rfl fun j _ => mul_smul _ _ _
+    _ = ∑ j, ∑ᶠ q : G ⧸ K, c j • (f j q.out • ρ q.out v) :=
+        finsum_sum_comm _ _ hs'
+    _ = ∑ j, c j • ∑ᶠ q : G ⧸ K, f j q.out • ρ q.out v := by
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [smul_finsum' (c j) (hs j)]
+
+end GlobalTheory.CompanionTheory.HeckeSum
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdRelIndexNeZero
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.GroupIndex.RelProd
+
+theorem relIndex_prod_eq_mul {G₁ G₂ : Type} [Group G₁] [Group G₂]
+    (I₁ K₁ : Subgroup G₁) (I₂ K₂ : Subgroup G₂) :
+    (I₁.prod I₂).relIndex (K₁.prod K₂) = I₁.relIndex K₁ * I₂.relIndex K₂ := by
+  have hmap : ((I₁.prod I₂).subgroupOf (K₁.prod K₂)) =
+      ((I₁.subgroupOf K₁).prod (I₂.subgroupOf K₂)).comap
+        (Subgroup.prodEquiv K₁ K₂).toMonoidHom := by
+    ext x
+    simp only [Subgroup.mem_subgroupOf, Subgroup.mem_prod, Subgroup.mem_comap]
+    exact Iff.rfl
+  unfold Subgroup.relIndex
+  rw [hmap, Subgroup.index_comap_of_surjective _ (Subgroup.prodEquiv K₁ K₂).surjective,
+    Subgroup.index_prod]
+
+theorem relIndex_prod_ne_zero_of_ne_zero :
+    ∀ (G₁ G₂ : Type) [Group G₁] [Group G₂] (I₁ K₁ : Subgroup G₁) (I₂ K₂ : Subgroup G₂),
+      I₁.relIndex K₁ ≠ 0 → I₂.relIndex K₂ ≠ 0 → (I₁.prod I₂).relIndex (K₁.prod K₂) ≠ 0 := by
+  intro G₁ G₂ _ _ I₁ K₁ I₂ K₂ h₁ h₂
+  rw [relIndex_prod_eq_mul]
+  exact mul_ne_zero h₁ h₂
+
+end GlobalTheory.CompanionTheory.GroupIndex.RelProd
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdRelIndexNeZeroStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.prod_rel_index_ne_zero : ∀ (G₁ G₂ : Type) [Group G₁] [Group G₂] (I₁ K₁ : Subgroup G₁) (I₂ K₂ : Subgroup G₂), I₁.relIndex K₁ ≠ 0 → I₂.relIndex K₂ ≠ 0 → (I₁.prod I₂).relIndex (K₁.prod K₂) ≠ 0 := by
+  first | exact @GlobalTheory.CompanionTheory.GroupIndex.RelProd.relIndex_prod_ne_zero_of_ne_zero | exact GlobalTheory.CompanionTheory.GroupIndex.RelProd.relIndex_prod_ne_zero_of_ne_zero | (intros; apply GlobalTheory.CompanionTheory.GroupIndex.RelProd.relIndex_prod_ne_zero_of_ne_zero <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PairDoubleCosetFiniteSupport
+
+section
 
 @[expose] public section
 
@@ -384,4 +485,6 @@ theorem rReadT : RReadT := by
 
 end PositivityTheory.Rg.BcB.F.Tail
 
+end
+end
 end

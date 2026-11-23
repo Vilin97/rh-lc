@@ -2,18 +2,21 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIvDOfDefinite
 import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.WeilIsAlternatingSkewNatural
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueFullLevel
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsTorusAndQuotientHom
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ObjIsAbelianSchemeDimRigidifiedSym
-import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ExistsUniqueFactorOfIsAlgClosed
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.UnitOnInjectiveOfCommRing
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSympLevel
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ConstGen
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -21,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,10 +43,272 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ThetaMove
+import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.TorsionEqOneOfTranslationKeepsRatios
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.SectionArithmetic
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.SquareUnits
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFullSymplecticLevelStructureOfTateIsoStatement
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsTorusAndQuotientHom
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ObjIsAbelianSchemeDimRigidifiedSym
+import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ExistsUniqueFactorOfIsAlgClosed
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SumMulEqZeroOfSumToReal
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsMonoFamNontrivial
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasRigidCoords
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.AbelianLawCounterexamples.WeilIsUniqueOfLocal
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+  TopologicalSpace
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.ThetaGroupTest
+
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.H1
+  ReciprocityTheory.ChartRestriction.G.H1.SectionArithmetic ReciprocityTheory.ChartRestriction.G.H1.SquareUnits GlobalTheory.ThetaScalar
+
+variable {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} {k : ℤ} {T : Over S}
+
+theorem weilIs_unique_of_local (p : T.left) (hp : ∀ V : T.left.Opens, p ∈ V → V = ⊤) (hL : L.IsLB) {x y : T ⟶ A}
+    {c c' : Γ(T.left, ⊤)ˣ} (h : WeilIs A L k x y c) (h' : WeilIs A L k x y c') :
+    unitRes (T := T) ⊤ c = unitRes (T := T) ⊤ c' := by
+  obtain ⟨V, hV, ⟨θx, θy, hx, hy⟩, H⟩ := h p
+  obtain ⟨V', hV', -, H'⟩ := h' p
+  obtain rfl := hp V hV
+  obtain rfl := hp V' hV'
+  exact commIsOf_unique hL θx θy _ _ (H θx θy hx hy) (H' θx θy hx hy)
+
+end GlobalTheory.ThetaGroupTest
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFullSymplecticLevelStructureUniqueOfLevels
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor NumberField GlobalTheory.FullLevel
+
+namespace GlobalTheory.FullLevel.Uniq
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H}
+
+theorem nsmul_cancel {n : ℕ} (hn : n ≠ 0) {x y : D.La} (h : n • x = n • y) : x = y := by
+  apply D.unimod.1
+  ext w
+  have h1 := congrArg (fun t => D.EF t w) h
+  simp only [map_nsmul, LinearMap.smul_apply, nsmul_eq_mul] at h1
+  exact mul_left_cancel₀ (by exact_mod_cast hn) h1
+
+theorem mem_of_dvd {M : ℕ} (hM : M ≠ 0) {x : D.La} (h : ∀ y, (M : ℤ) ∣ D.EF x y) : ∃ u, x = M • u := by
+  have hM' : (M : ℤ) ≠ 0 := by exact_mod_cast hM
+  choose f hf using h
+  let φ : D.La →ₗ[ℤ] ℤ :=
+    { toFun := f
+      map_add' := fun a b => by
+        apply mul_left_cancel₀ hM'
+        rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)]
+      map_smul' := fun c a => by
+        apply mul_left_cancel₀ hM'
+        rw [← hf, map_smul, hf]
+        simp only [smul_eq_mul, RingHom.id_apply]
+        ring }
+  obtain ⟨u, hu⟩ := D.unimod.2 φ
+  refine ⟨u, D.unimod.1 ?_⟩
+  ext w
+  rw [map_nsmul, LinearMap.smul_apply, hu, hf, nsmul_eq_mul]
+  rfl
+
+theorem mem_lcm {M A : ℕ} (hM : M ≠ 0) {x u v : D.La} (hu : x = M • u) (hv : x = A • v) :
+    ∃ w, x = Nat.lcm M A • w := by
+  have hg : Nat.gcd M A ≠ 0 := fun h => hM (Nat.eq_zero_of_gcd_eq_zero_left h)
+  refine ⟨Nat.gcdA M A • v + Nat.gcdB M A • u, nsmul_cancel hg ?_⟩
+  rw [← mul_nsmul', Nat.gcd_mul_lcm, ← natCast_zsmul x, Nat.gcd_eq_gcd_ab, add_zsmul, smul_add]
+  congr 1
+  · rw [hv, ← natCast_zsmul, ← natCast_zsmul, smul_smul, smul_smul]
+    congr 1
+    push_cast
+    ring
+  · rw [hu, ← natCast_zsmul, ← natCast_zsmul, smul_smul, smul_smul]
+    congr 1
+    push_cast
+    ring
+
+variable {k : Type} [Field k] {Q : Type} [Group Q] {act : 𝓞 E → Q → Q} {e : ℕ → Q → Q → kˣ → Prop}
+  {N : ℕ} {z : kˣ} {ev : D.La → Q}
+
+theorem ev_zero (h : IsSympLevel D act e N z ev) : ev 0 = 1 := (h.2.2.1 0).2 ⟨0, by simp⟩
+
+theorem ev_nsmul (h : IsSympLevel D act e N z ev) (n : ℕ) (a : D.La) : ev (n • a) = ev a ^ n := by
+  induction n with
+  | zero => simp [ev_zero h]
+  | succ n ih => rw [succ_nsmul, h.1, ih, pow_succ]
+
+theorem ev_eq_iff (h : IsSympLevel D act e N z ev) (x y : D.La) : ev x = ev y ↔ ∃ b, x - y = N • b := by
+  rw [← h.2.2.1]
+  have h1 : ev x = ev (x - y) * ev y := by rw [← h.1, sub_add_cancel]
+  rw [h1]
+  exact mul_eq_right
+
+theorem ev_pow_eq (h : IsSympLevel D act e N z ev) (hN : 0 < N) {A : ℕ} (hA : A ∣ N) {x y : D.La}
+    (hxy : ev x ^ (N / A) = ev y ^ (N / A)) : ∃ b, x - y = A • b := by
+  obtain ⟨m, hm⟩ := hA
+  have hA0 : 0 < A := Nat.pos_of_ne_zero (by rintro rfl; simp at hm; omega)
+  have hm0 : m ≠ 0 := by rintro rfl; simp at hm; omega
+  have hd : N / A = m := by rw [hm, Nat.mul_div_cancel_left _ hA0]
+  rw [hd, ← ev_nsmul h, ← ev_nsmul h, ev_eq_iff h] at hxy
+  obtain ⟨b, hb⟩ := hxy
+  refine ⟨b, nsmul_cancel hm0 ?_⟩
+  rw [smul_sub, hb, hm, smul_smul, mul_comm]
+
+end GlobalTheory.FullLevel.Uniq
+
+namespace GlobalTheory.FullLevel
+
+open Uniq
+
+theorem isSympLevel_unique {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} (l : Level H)
+    {k : Type} [Field k] {Q : Type} [Group Q] {act : 𝓞 E → Q → Q} {e : ℕ → Q → Q → kˣ → Prop}
+    (he : ∀ (g g' : Q) (c c' : kˣ), e l.M' g g' c → e l.M' g g' c' → c = c')
+    {z : kˣ} (hz : IsPrimitiveRoot z l.M') {etaA eta ev ev' : D.La → Q}
+    (h : IsSympLevel D act e l.M' z ev) (hi : Induces l etaA eta ev)
+    (h' : IsSympLevel D act e l.M' z ev') (hi' : Induces l etaA eta ev') : ev = ev' := by
+  have hM' := M'_pos l
+  have hM : l.M ≠ 0 := by have := l.three_le; omega
+  have hex : ∀ a, ∃ x, ev x = ev' a := fun a =>
+    (h.2.2.2.1 _).1 ((h'.2.2.2.1 _).2 ⟨a, rfl⟩)
+  choose g hg using hex
+  have h1 : ∀ a, ∃ b, g a - a = l.A • b := fun a =>
+    ev_pow_eq h hM' (A_dvd_M' l) (by rw [hg, hi'.1, hi.1])
+  have h2 : ∀ c ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E), ∀ a : D.La, ∃ b, g (c • a) - c • a = l.M • b := by
+    intro c hc a
+    have hmem : c • a ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) • (⊤ : Submodule (𝓞 E) D.La) :=
+      Submodule.smul_mem_smul hc Submodule.mem_top
+    exact ev_pow_eq h hM' (M_dvd_M' l) (by rw [hg, hi'.2 _ hmem, hi.2 _ hmem])
+  have h3 : ∀ a b, (l.M : ℤ) ∣ D.EF (g a) (g b) - D.EF a b := by
+    intro a b
+    have e1 := h.2.2.2.2 (g a) (g b)
+    rw [hg, hg] at e1
+    have e2 := he _ _ _ _ e1 (h'.2.2.2.2 a b)
+    have e3 : z ^ (D.EF (g a) (g b) - D.EF a b) = 1 := by rw [zpow_sub, e2, mul_inv_cancel]
+    exact (Int.natCast_dvd_natCast.2 (M_dvd_M' l)).trans ((hz.zpow_eq_one_iff_dvd _).1 e3)
+  obtain ⟨n, hn, m, hm, hnm⟩ := Submodule.mem_sup.1 (show (1 : 𝓞 E) ∈ _ from l.coprime ▸ Submodule.mem_top)
+  funext a
+  have h4 : ∃ u, m • (g a - a) = l.M • u := by
+    obtain ⟨b, hb⟩ := h2 m hm a
+    obtain ⟨c, hc⟩ := (ev_eq_iff h (m • g a) (g (m • a))).1 (by rw [h.2.1, hg, hg, h'.2.1])
+    obtain ⟨t, ht⟩ := M_dvd_M' l
+    refine ⟨t • c + b, ?_⟩
+    rw [smul_add, smul_smul, ← ht, ← hc, ← hb, smul_sub]
+    abel
+  have h5 : ∃ u, n • (g a - a) = l.M • u := by
+    refine mem_of_dvd hM fun y => ?_
+    obtain ⟨b, hb⟩ := h2 (H.bar n) (Ideal.mem_map_of_mem (H.bar : 𝓞 E →+* 𝓞 E) hn) y
+    have h6 := h3 a (H.bar n • y)
+    rw [sub_eq_iff_eq_add] at hb
+    rw [hb, map_add (f := _), map_nsmul, nsmul_eq_mul, add_sub_assoc, dvd_add_right (dvd_mul_right _ _)] at h6
+    rw [D.adj, map_sub, LinearMap.sub_apply]
+    exact h6
+  obtain ⟨u, hu⟩ := h4
+  obtain ⟨v, hv⟩ := h5
+  obtain ⟨b, hb⟩ := h1 a
+  have h7 : g a - a = l.M • (v + u) := by rw [smul_add, ← hu, ← hv, ← add_smul, hnm, one_smul]
+  rw [← hg]
+  exact ((ev_eq_iff h _ _).2 (mem_lcm hM h7 hb)).symm
+
+end GlobalTheory.FullLevel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFullSymplecticLevelStructureUniqueOfLevelsStatement
+
+section
+
+@[expose] public section
+
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor NumberField GlobalTheory.FullLevel
+
+theorem _root_.GlobalTheory.T.isFullSymplecticLevelStructure_unique_of_levels : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} (l : Level H) {k : Type} [Field k]
+    {Q : Type} [Group Q] {act : 𝓞 E → Q → Q} {e : ℕ → Q → Q → kˣ → Prop},
+    (∀ (g g' : Q) (c c' : kˣ), e l.M' g g' c → e l.M' g g' c' → c = c') →
+    ∀ {z : kˣ}, IsPrimitiveRoot z l.M' → ∀ {etaA eta ev ev' : D.La → Q},
+    IsSympLevel D act e l.M' z ev → Induces l etaA eta ev →
+    IsSympLevel D act e l.M' z ev' → Induces l etaA eta ev' → ev = ev' := by
+  first | exact @GlobalTheory.FullLevel.isSympLevel_unique | exact GlobalTheory.FullLevel.isSympLevel_unique | (intros; apply GlobalTheory.FullLevel.isSympLevel_unique <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueFullLevel
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.FullLevel
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
+
+theorem weilIs_unitOn_unique {S : Scheme.{0}} (G : Over S) [GrpObj G] {L : LB G.left} (hL : L.IsLB)
+    {k : Type} [Field k] (x : Sp k ⟶ S) (n : ℤ) (g g' : Over.mk x ⟶ G) (c c' : kˣ)
+    (h : Out.WeilIs G L n g g' (unitOn c)) (h' : Out.WeilIs G L n g g' (unitOn c')) : c = c' := by
+  apply (config := { allowSynthFailures := true }) GlobalTheory.weilIs_unique_fieldPoint <;> assumption
+
+theorem exists_unique_fullLevel {D : Datum H} {l : Level H} {B : Type} [CommRing B] {b : Base l B}
+    {S : Scheme.{0}} {s : S ⟶ Sp B} (o : Obj D l b s) (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ S)
+    (β : B →+* k) (hx : x ≫ s = spMap β) (z : kˣ) (hz : IsPrimitiveRoot z l.M')
+    (hzA : (z : k) ^ (l.M' / l.A) = β b.ζ) :
+    ∃! ev : D.La → (Over.mk x ⟶ o.t.G),
+      IsSympLevel D (fun a g => g ≫ o.t.act.act a)
+          (fun n g g' c => Out.WeilIs o.t.G o.t.PP.L n g g' (unitOn c)) l.M' z ev ∧
+        Induces l (fun a => toUnit _ ≫ o.etaA a) (fun a => toUnit _ ≫ o.eta a) ev := by
+  obtain ⟨-, I, hIA, hetaA, heta⟩ := o.geom k x β hx
+  have hzA' : z ^ (l.M' / l.A) = I.ζ l.A := Units.ext (by rw [Units.val_pow_eq_pow_val, hzA, hIA])
+  obtain ⟨ev, hev, hA, hM⟩ := GlobalTheory.T.exists_fullSymplecticLevelStructure_of_tateIso l I hz hzA'
+  have hi : Induces l (fun a => toUnit _ ≫ o.etaA a) (fun a => toUnit _ ≫ o.eta a) ev :=
+    ⟨fun a => (hA a).trans (hetaA a).symm, fun a ha => (hM a ha).trans (heta a ha).symm⟩
+  refine ⟨ev, ⟨hev, hi⟩, ?_⟩
+  rintro ev' ⟨h1, h2⟩
+  have := GlobalTheory.T.isFullSymplecticLevelStructure_unique_of_levels l (fun g g' c c' => weilIs_unitOn_unique o.t.G o.t.PP.isLB x _ g g' c c') hz
+    hev hi h1 h2
+  exact this.symm
+
+end GlobalTheory.FullLevel
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniversalAbelianSchemeTorsionRationalFieldPoint
+
+section
 
 @[expose] public section
 
@@ -176,3 +439,6 @@ theorem torsion_rational : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E
   exact (cancel_epi (spMap κ)).1 (congrArg CommaMorphism.left h)
 
 end GlobalTheory.XFTorsion
+end
+end
+end

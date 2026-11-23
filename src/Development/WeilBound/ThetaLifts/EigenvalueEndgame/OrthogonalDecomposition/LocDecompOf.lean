@@ -1,26 +1,20 @@
 module
 
-public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.Imports
-public import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
-public import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
-public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.RightOnto
-public import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
-public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.HodgeTateFromSandwich
-public import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
-public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
-public import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
-public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.ActsOfReads
-public import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.Span.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -35,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,9 +42,105 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.FreeAlgebra
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
+public import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.RightOnto
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.ActsOfReads
+public import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
+import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.Imports
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PositivityTheory.ThKEnd.Orth
+
+variable {H P Q : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup Q] [Module ℂ Q]
+
+def vals (ρ : H → Module.End ℂ P) (c : H → Module.End ℂ Q) : Set Q :=
+  {y | ∃ U : P →ₗ[ℂ] Q, (∀ h x, U (ρ h x) = c h (U x)) ∧ ∃ x, y = U x}
+
+theorem decomp (ρ : H → Module.End ℂ P) (c : H → Module.End ℂ Q) [Nontrivial P]
+    (irr : ∀ N : Submodule ℂ P, (∀ h, ∀ x ∈ N, ρ h x ∈ N) → N = ⊥ ∨ N = ⊤) (R : Submodule ℂ Q) (hR : ∀ h, ∀ x ∈ R, c h x ∈ R)
+    {f : Q} (hf : f ∈ R) (hs : f ∈ Submodule.span ℂ (vals ρ c)) :
+    ∃ (m : ℕ) (U : Fin m → P →ₗ[ℂ] Q) (ξ : Fin m → P), (∀ i, (∀ h x, U i (ρ h x) = c h (U i x)) ∧ ∀ x, U i x ∈ R) ∧
+      f = ∑ i, U i (ξ i) := by
+  classical
+  let A := FreeAlgebra ℂ H
+  letI : Module A P := Module.compHom P (FreeAlgebra.lift ℂ ρ).toRingHom
+  letI : Module A Q := Module.compHom Q (FreeAlgebra.lift ℂ c).toRingHom
+  have eP : ∀ (a : A) (x : P), a • x = FreeAlgebra.lift ℂ ρ a x := fun _ _ => rfl
+  have eQ : ∀ (a : A) (x : Q), a • x = FreeAlgebra.lift ℂ c a x := fun _ _ => rfl
+  haveI : IsScalarTower ℂ A P := ⟨fun z a x => by rw [eP, eP, map_smul]; rfl⟩
+  haveI : IsScalarTower ℂ A Q := ⟨fun z a x => by rw [eQ, eQ, map_smul]; rfl⟩
+  haveI : IsSimpleModule A P := by
+    refine { eq_bot_or_eq_top := fun N => ?_ }
+    rcases irr (N.restrictScalars ℂ) (fun h x hx => by
+      simpa [eP] using N.smul_mem (FreeAlgebra.ι ℂ h) hx) with h | h
+    · exact Or.inl (Submodule.restrictScalars_injective ℂ A P h)
+    · exact Or.inr (Submodule.restrictScalars_injective ℂ A P h)
+  let R' : Submodule A Q :=
+    { R.toAddSubmonoid with
+      smul_mem' := fun a x hx => by
+        induction a using FreeAlgebra.induction generalizing x with
+        | grade0 z => simpa [eQ] using R.smul_mem z hx
+        | grade1 h => simpa [eQ] using hR h x hx
+        | mul a b ha hb => rw [mul_smul]; exact ha _ (hb _ hx)
+        | add a b ha hb => rw [add_smul]; exact R.add_mem (ha _ hx) (hb _ hx) }
+  obtain ⟨m, z, g, rfl⟩ := Submodule.mem_span_set'.1 hs
+  choose U hU x hx using fun i => (g i).2
+  let V : Fin m → P →ₗ[A] Q := fun i =>
+    { (U i).toAddHom with
+      map_smul' := fun a y => by
+        change U i (a • y) = a • U i y
+        induction a using FreeAlgebra.induction generalizing y with
+        | grade0 z => simp [eP, eQ]
+        | grade1 h => simpa [eP, eQ] using hU i h y
+        | mul a b ha hb => rw [mul_smul, mul_smul, ha, hb]
+        | add a b ha hb => rw [add_smul, add_smul, map_add (f := _), ha, hb] }
+  let T : (Fin m → P) →ₗ[A] Q := ∑ i, V i ∘ₗ LinearMap.proj i
+  have hT : T (fun i => z i • x i) = ∑ i, z i • (g i : Q) := by
+    simp only [T, LinearMap.sum_apply, hx, ← map_smul]
+    rfl
+  obtain ⟨C, hC⟩ := exists_isCompl (R'.comap T)
+  let π := (R'.comap T).subtype ∘ₗ Submodule.linearProjOfIsCompl _ C hC
+  refine ⟨m, fun i => (T ∘ₗ π ∘ₗ LinearMap.single A (fun _ => P) i).restrictScalars ℂ, fun i => z i • x i,
+    fun i => ⟨fun h y => ?_, fun y => Subtype.prop (p := (· ∈ R'.comap T)) _⟩, ?_⟩
+  · simpa [eP, eQ] using (T ∘ₗ π ∘ₗ LinearMap.single A (fun _ => P) i).map_smul (FreeAlgebra.ι ℂ h) y
+  · have e : π (fun i => z i • x i) = fun i => z i • x i :=
+      congrArg Subtype.val (Submodule.linearProjOfIsCompl_apply_left hC ⟨_, show T _ ∈ R from hT ▸ hf⟩)
+
+    simp only [LinearMap.restrictScalars_apply, LinearMap.comp_apply, ← map_sum, LinearMap.single_apply, Finset.univ_sum_single]
+    exact hT.symm.trans (congrArg T e.symm)
+
+end PositivityTheory.ThKEnd.Orth
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.LocDecompOf
+
+section
 
 @[expose] public section
 
@@ -237,4 +328,6 @@ theorem locDecomp_of (hB : ThetaBasic) (hE : EpsOf) (hU : PositivityTheory.ThKF.
 
 end PositivityTheory.ThKEnd.Orth
 
+end
+end
 end

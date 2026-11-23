@@ -4,9 +4,8 @@ public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.ActFinApply
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksAsmA
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksAsmB
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwCent
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwHyp
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwNonPos
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.AllLeaves
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.PExpTwA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +42,128 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwHyp
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.PExpTw
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwCent
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DiscSpec GlobalTheory.CompanionTheory.CTFin PositivityTheory.Rg.Rs
+
+namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockTwistCharacters
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem central_mulChi {a : ℕ} (e w : ℂ) (ψ : Sm E a)
+    (hψ : ∀ (t : ℝ) m, ψ.1 (splitCentre E a t * m) = Complex.exp (e * t) * ψ.1 m) (t : ℝ) (m : GA E a) :
+    (mulChi a (Model.absC E w) ψ).1 (splitCentre E a t * m) =
+      Complex.exp ((e + w * a * (Module.finrank ℚ E : ℂ)) * t) * (mulChi a (Model.absC E w) ψ).1 m := by
+  rw [mulChi_apply, mulChi_apply, map_mul, Units.val_mul, hψ, ExponentTwist.splitCentre_eq, ExponentTwist.chiDet_aT le_rfl,
+    add_mul, Complex.exp_add]
+  ring
+
+theorem centIm_tw {a : ℕ} (V : Submodule ℂ (Sm E a)) (e w : ℂ) (he : (e + w * a * (Module.finrank ℚ E : ℂ)).re = 0)
+    (hV : ∀ φ ∈ V, ∀ (t : ℝ) m, φ.1 (splitCentre E a t * m) = Complex.exp (e * t) * φ.1 m) :
+    SpectralAccumulation.CentIm (tw V w) := by
+  refine ⟨_, he, fun φ hφ t g => ?_⟩
+  obtain ⟨ψ, hψ, rfl⟩ := Submodule.mem_map.1 hφ
+  exact central_mulChi e w ψ (hV ψ hψ) t g
+
+omit [IsCMField E] in
+theorem finrank_ne_zero' : (Module.finrank ℚ E : ℝ) ≠ 0 := by
+  have : 0 < Module.finrank ℚ E := Module.finrank_pos
+  exact_mod_cast this.ne'
+
+theorem re_of_pE {r s : ℕ} {c : ℂ} (hc : pE E (r + s) r c = 0) :
+    c.re = (r : ℝ) * s * (Module.finrank ℚ E : ℝ) / 2 := by
+  have hd := finrank_ne_zero' (E := E)
+  unfold pE at hc
+  push_cast at hc
+  field_simp at hc
+  linarith
+
+theorem centIm_left {r s : ℕ} (V : Submodule ℂ (Sm E r)) {c : ℂ} (hc : pE E (r + s) r c = 0)
+    (hV : ∀ φ ∈ V, ∀ (t : ℝ) m, φ.1 (splitCentre E r t * m) = Complex.exp (c * t) * φ.1 m) :
+    SpectralAccumulation.CentIm (tw V (-(s : ℂ) / 2)) := by
+  refine centIm_tw V c _ ?_ hV
+  have h := re_of_pE (E := E) hc
+  have e1 : (c + -(s : ℂ) / 2 * r * (Module.finrank ℚ E : ℂ)).re = c.re - (s : ℝ) / 2 * r * (Module.finrank ℚ E : ℝ) := by
+    simp [Complex.add_re, Complex.mul_re, Complex.neg_re] <;> ring_nf
+  rw [e1, h]; ring
+
+theorem centIm_right {r s : ℕ} (V : Submodule ℂ (Sm E s)) {c : ℂ} (hc : pE E (r + s) r c = 0)
+    (hV : ∀ φ ∈ V, ∀ (t : ℝ) m, φ.1 (splitCentre E s t * m) = Complex.exp (-c * t) * φ.1 m) :
+    SpectralAccumulation.CentIm (tw V ((r : ℂ) / 2)) := by
+  refine centIm_tw V (-c) _ ?_ hV
+  have h := re_of_pE (E := E) hc
+  have e1 : (-c + (r : ℂ) / 2 * s * (Module.finrank ℚ E : ℂ)).re = -c.re + (r : ℝ) / 2 * s * (Module.finrank ℚ E : ℝ) := by
+    simp [Complex.add_re, Complex.mul_re, Complex.neg_re] <;> ring_nf
+  rw [e1, h]; ring
+
+end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockTwistCharacters
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksTwNonPos
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host
+open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DiscSpec GlobalTheory.CompanionTheory.CTFin PositivityTheory.Rg.Rs
+
+namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockTwistCharacters
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+
+omit [IsCMField E] in
+theorem pE_shift (a r : ℕ) (c w : ℂ) :
+    pE E a r (c + w * r * (Module.finrank ℚ E : ℂ)) = pE E a r c + w.re * r := by
+  have hd : (Module.finrank ℚ E : ℝ) ≠ 0 := by
+    have : 0 < Module.finrank ℚ E := Module.finrank_pos
+    exact_mod_cast this.ne'
+  unfold pE
+  have e : (c + w * r * (Module.finrank ℚ E : ℂ)).re = c.re + w.re * r * (Module.finrank ℚ E : ℝ) := by
+    simp [Complex.add_re, Complex.mul_re]
+  rw [e]
+  field_simp
+  ring
+
+theorem nonPos_tw {a : ℕ} (V : Submodule ℂ (Sm E a)) (w : ℂ) (haut : ∀ φ ∈ V, IsAutForm φ)
+    (hV : ∀ φ ∈ V, ∀ r, 0 < r → r < a → ∀ c ∈ Exp r φ.1, pE E a r c + w.re * r ≤ 0) :
+    SpectralAccumulation.NonPos (tw V w) := by
+  intro φ hφ r hr hra c hc
+  obtain ⟨ψ, hψ, rfl⟩ := Submodule.mem_map.1 hφ
+  have h0 := expTw_holds E a ψ w (haut ψ hψ) r hr hra c hc
+  have h1 := hV ψ hψ r hr hra _ h0
+  have e : c = (c - w * r * (Module.finrank ℚ E : ℂ)) + w * r * (Module.finrank ℚ E : ℂ) := by ring
+  rw [e, pE_shift]
+  exact h1
+
+end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockTwistCharacters
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.InfinitesimalCharacterLimits.LieSumDecompositions.PBlocksAsmC
+
+section
 
 @[expose] public section
 
@@ -134,4 +256,6 @@ theorem hyp_right (hU : IsAutSt U) (hNP : NonPos U) (hT : IsSliceMap U c T) (hpE
 
 end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockAssembly
 
+end
+end
 end

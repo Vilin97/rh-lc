@@ -16,8 +16,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.ExistsAlgebraicPointOfGroupDeterminant
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.GroupDeterminantExistsUniqueDescentOfInjective
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MonicNormLtOne
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.QuotientBasisFiniteDimensional
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.QuotientBasisFiniteModule
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,20 +27,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,7 +43,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -64,10 +55,73 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Separation.Connected
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.QuotientBasisFiniteDimensional
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.QuotientBasisFiniteDimensional.qb_fd :
+    ∀ {l : ℕ} [inst : Fact (Nat.Prime l)] {ι : Type} [Finite ι]
+    (f : ι → PadicAlgCl l),
+    ∃ (K : IntermediateField ℚ_[l] (PadicAlgCl l)), FiniteDimensional ℚ_[l] ↥K ∧ ∀ (i : ι), f i ∈ K := by
+  intro l _ ι _ f
+  refine ⟨IntermediateField.adjoin ℚ_[l] (Set.range f), ?_, fun i =>
+    IntermediateField.subset_adjoin ℚ_[l] (Set.range f) ⟨i, rfl⟩⟩
+  haveI : Finite (Set.range f) := (Set.finite_range f).to_subtype
+  exact IntermediateField.finiteDimensional_adjoin fun x _ =>
+    Algebra.IsIntegral.isIntegral x
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.QuotientBasisFiniteModule
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.FiniteModuleImageInFiniteExtension.qb_fdmod :
+    ∀ {l : ℕ} [inst : Fact (Nat.Prime l)] {M : Type}
+    [inst_1 : AddCommGroup M] [inst_2 : _root_.Module ℤ_[l] M] [Module.Finite ℤ_[l] M] (f : M →ₗ[ℤ_[l]] PadicAlgCl l),
+    ∃ (K : IntermediateField ℚ_[l] (PadicAlgCl l)),
+      FiniteDimensional ℚ_[l] ↥K ∧ ∀ (x : M), (f : M → PadicAlgCl l) x ∈ K := by
+  intro l _ M _ _ hM f
+  obtain ⟨S, hS⟩ := hM.fg_top
+  have hfin : (f '' (S : Set M)).Finite := S.finite_toSet.image _
+  haveI : Finite (f '' (S : Set M)) := hfin.to_subtype
+  refine ⟨IntermediateField.adjoin ℚ_[l] (f '' (S : Set M)), ?_, ?_⟩
+  · exact IntermediateField.finiteDimensional_adjoin
+      (fun x _ => Algebra.IsIntegral.isIntegral x)
+  · intro x
+    have hx : x ∈ Submodule.span ℤ_[l] (S : Set M) := by
+      rw [hS]; exact Submodule.mem_top
+    induction hx using Submodule.span_induction with
+    | mem y hy => exact IntermediateField.subset_adjoin _ _ ⟨y, hy, rfl⟩
+    | zero => rw [map_zero]; exact zero_mem _
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | smul c a _ ha =>
+      rw [map_smul, ← IsScalarTower.algebraMap_smul ℚ_[l] c (f a)]
+      exact IntermediateField.smul_mem _ ha
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.ExistsDeterminantPairOverAlgebraicIntegers
+
+section
 
 @[expose] public section
 
@@ -417,3 +471,5 @@ theorem UpperTheory.V.W.exists_determinantPair_over_algebraicIntegers :
   obtain ⟨K', _, hK'⟩ := fin f'
   obtain ⟨f'', -, hu⟩ := main (K ⊔ K') inferInstance
   rw [hu f (fun x => (le_sup_left : K ≤ _) (hK x)) hf, hu f' (fun x => (le_sup_right : K' ≤ _) (hK' x)) hf']
+end
+end

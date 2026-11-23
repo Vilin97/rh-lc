@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.FiniteCohPushforwardIffOfIsClosedImmersion
 public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.TwistingSheafOneChartEqPreimageStandardChart
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopSelfIntersectionO1Projective
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsIsoGrCechMapPolyToGamma
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,10 +40,89 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MemRiemannRochSpaceIffRegularAtEverywhere
 import Development.AbelianVarietyTheory.Definitions.Divisors.DetJacMatCoordsEqTransitionJacobianDet
 import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsRegularFnIffOfIsAffineOpen
 import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+
+-- Source module: Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LbH0EqChiStructureModuleOfKrullDimZero
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter Asymptotics
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.QCoh GlobalTheory.CechPic
+
+namespace GlobalTheory.NefNumericsModel
+
+section General
+variable {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
+
+end General
+
+section Space
+open ProjSpace
+variable (k : Type) [Field k]
+
+theorem selfIntersection_O1 (N : ℕ) : topSelfIntersection k (O1 k N) N = 1 := by
+  have hc : ∀ j : ℕ, chi k (twistZ (structureModule (PSpace k N)) (O1 k N) (-(j : ℤ))) =
+      Ring.choose (-(j : ℤ) + N) N := fun j => ProjCoh.chi_sheafO k N _
+  rw [topSelf_def, interNum_const_eq_sum k _ (O1_isLB k N) N, Finset.sum_eq_single 0]
+  · rw [hc]
+    simp [Ring.choose_natCast]
+  · intro j hj hj0
+    have hjN : j ≤ N := Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)
+    have hn : -(j : ℤ) + N = ((N - j : ℕ) : ℤ) := by
+      rw [Nat.cast_sub hjN]; ring
+    rw [hc, hn, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (show N - j < N by omega)]
+    simp
+  · intro h
+    exact absurd (Finset.mem_range.2 (Nat.succ_pos N)) h
+
+end Space
+
+end GlobalTheory.NefNumericsModel
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopSelfIntersectionO1Projective
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Set Filter Topology MeasureTheory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.AnForm.M
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.CxPts GlobalTheory.Points GlobalTheory.CechPic GlobalTheory.ProjVar
+
+namespace GlobalTheory.ProjSpaceDegree
+
+theorem topSelf_O1_str : ∀ (k : Type) [Field k] (N : ℕ),
+    letI := GlobalTheory.algebraΓOfHom (PSpace.str k N); topSelfIntersection k (ProjSpace.O1 k N) N = 1 :=
+  fun k _ N => GlobalTheory.NefNumericsModel.selfIntersection_O1 k N
+
+end GlobalTheory.ProjSpaceDegree
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopSelfIntersectionO1ProjectiveStatement
+
+section
 
 @[expose] public section
 
@@ -55,3 +134,5 @@ open GlobalTheory GlobalTheory.Cartier GlobalTheory.CxPts GlobalTheory.Points Gl
 
 theorem _root_.GlobalTheory.T.top_self_intersection_O1_projective : ∀ (k : Type) [Field k] (N : ℕ), letI := GlobalTheory.algebraΓOfHom (PSpace.str k N); topSelfIntersection k (ProjSpace.O1 k N) N = 1 := by
   first | exact @GlobalTheory.ProjSpaceDegree.topSelf_O1_str | exact GlobalTheory.ProjSpaceDegree.topSelf_O1_str | (intros; apply GlobalTheory.ProjSpaceDegree.topSelf_O1_str <;> assumption)
+end
+end

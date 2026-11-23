@@ -8,7 +8,47 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeo
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KleimanGenericPointSectionInputStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KleimanInputNefAmpleSectionCountStatement
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KodairaGenericOfAmpleSectionCountStatement
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.IsFieldSubalgebraSelf
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsKodairaGeneric
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KodairaGenericOfAmpleSectionCount
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeAndCoordinatesOfResolutionStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeGenericOfDegree
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeOfIsIntersectionSystem
@@ -50,7 +90,8 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PCoordArithOfFnField
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PCurveSmallCountLower
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDoubleComplexVanish
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEuclideanSections
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEuclideanSectionsPower
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEuclideanSectionsPower
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ImportsBisAlt
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFSGeomDegPos
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFibreRelLift
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFibreSectionLift
@@ -138,7 +179,6 @@ import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PKHTheoremSFree
 public import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.KeyFormulaVanishingCechMultInvariants
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ChangeOfModel
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GeoNum
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.MoriwakiBig
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.MoriwakiHSFull
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PAmpleCountAlongMultiples
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PChartLatFull
@@ -173,43 +213,74 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLocallyPrincipal
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PMoriwakiBigCurve
 public import GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.KleimanNef
 import GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.PtsIntegrable
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PNefAmpleFibre
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KodairaGenericOfAmpleSectionCountStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2
+
+theorem _root_.GlobalTheory.T.kodaira_generic_of_ample_section_count : VeryAmpleNefPlusAmple.Statement → SectionCount.Statement → GroundTheory.Heights₂.Heights.HilbertSamuel.KodairaGeneric.Statement := by
+  first | exact @GlobalTheory.CompanionTheory.Relay.kodaira_generic_of_ample_section_count | exact GlobalTheory.CompanionTheory.Relay.kodaira_generic_of_ample_section_count | (intros; apply GlobalTheory.CompanionTheory.Relay.kodaira_generic_of_ample_section_count <;> assumption)
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEuclideanSectionsPower
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.HilbertSamuel
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.ArakelovGeometry Filter MeasureTheory
+
+theorem EuclideanSectionsPower.proof (hL : SectionL2Lattice.Statement) (hP : TensorPowerL2Degree.Statement) :
+    EuclideanSectionsPower.Statement := by
+  intro K _ ι _ Ω _ _ y D A P0 II hD hII har hb hA hc
+  obtain ⟨μ, m, hμ, hcon, hZ, hm, hdeg⟩ := hP K ι Ω y D A P0 II hD hII har hb hA hc
+  obtain ⟨r, φ, hinj, hdisc, hlat, hsup, hmul, hrank, hnorm⟩ :=
+    hL K ι Ω y D A har hb hA.semipos.1.continuousOn μ hμ hcon hZ
+  refine ⟨r, φ, hinj, hdisc, hlat, hsup, hmul, hrank, m, hm, fun ε hε => ?_⟩
+  filter_upwards [hdeg ε hε] with q hq
+  intro _ _
+  exact hq (r (m * q)) (φ (m * q)) (hinj _) (hnorm _)
+
+end GroundTheory.Heights₂.Heights.HilbertSamuel
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.OrbitLimits.MoriwakiBig
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Targets
+
+open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.ArakelovGeometry
+
+theorem MoriwakiBig.of_found (hG6 : HilbertSamuel.ArithmeticVolumeBig.Statement) (hC : MoriwakiBigCurve.Statement) :
+    ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.MoriwakiBigStatement := by
+  intro K _ ι _ Ω _ y D A P0 II hII har hb hP0 hs hc hnef hgen
+  rcases Nat.eq_zero_or_pos D with rfl | hD
+  · exact hC K ι Ω y A P0 II hII har hb hP0 hs hc hnef hgen
+  · exact hG6 K ι Ω y D A P0 II hD hII har hb hP0 hs hnef hc
+
+end GroundTheory.Heights₂.Heights.Targets
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.MoriwakiBigTheorem.HSChain
+
+section
 
 @[expose] public section
 
@@ -420,3 +491,6 @@ theorem hsUse_of_hypotheses (hResK : ReciprocityTheory.ChartRestriction.G.Geo.Re
   (hsChain hResK hAIS hDBH).2.2
 
 end PositivityTheory.Pf1.HilbertSamuelMoriwaki
+end
+end
+end

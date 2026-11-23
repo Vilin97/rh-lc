@@ -1,16 +1,7 @@
 module
 
 public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.FarRegularity.LKTExists
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.BoundaryCreationAnticommutatorStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CreationProductSingleBasisStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CreationProductSupportDegreeStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.ExistsOrderedCreationListStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FiniteDimInvariantSubspaceAdjointPairStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HighestWeightVectorKilledByRaisingStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LeviActionCommutesWithBoundaryStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LeviActionUnitaryAdjointStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LocallyFiniteLeviInvariantSubspaceStatement
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.OrderedCreationCommutesPastLeviStatement
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.BoundaryCreationAnticommutator
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,9 +37,172 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CreationProductSingleBasisStatement
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.CreationOperators.DifferentialBoundedSupport
+import Mathlib.Tactic.ReduceModChar
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.ExistsOrderedCreationList
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKMultOneP
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FiniteDimInvariantSubspaceAdjointPair
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.FarRegularity.LKTExists
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.IsSimpleTriv
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HighestWeightVectorKilledByRaisingStatement
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LeviActionCommutesWithBoundaryStatement
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LeviActionUnitaryAdjointStatement
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LocallyFiniteLeviInvariantSubspaceStatement
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.OrderedCreationCommutesPastLevi
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.BoundaryCreationAnticommutatorStatement
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+theorem _root_.GlobalTheory.T.boundary_creation_anticommutator : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (E : Fin n → Fin n → Module.End ℂ V) (e : Pos n),
+    (bd (allT n) E * cre e + cre e * bd (allT n) E : Module.End ℂ (Cn n V)) = lF E e.1.1 e.1.2 := by
+  first | exact @GlobalTheory.CompanionTheory.Cartan.cartan | exact GlobalTheory.CompanionTheory.Cartan.cartan | (intros; apply GlobalTheory.CompanionTheory.Cartan.cartan <;> assumption)
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CreationProductSupportDegree
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+namespace GlobalTheory.CompanionTheory.RgExh
+
+theorem suppIn_deg_cre_prod : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (P : Pos n → Prop) (l : List (Pos n)) (x : Cn n V) (j : ℕ),
+    (∀ i ∈ l, P i) → SuppIn P x → Deg j x →
+      SuppIn P (((l.map cre).prod : Module.End ℂ (Cn n V)) x) ∧
+        Deg (j + l.length) (((l.map cre).prod : Module.End ℂ (Cn n V)) x) := by
+  intro n V _ _ P l x j hl hx hd
+  induction l with
+  | nil => simpa using And.intro hx hd
+  | cons i l ih =>
+    obtain ⟨ih1, ih2⟩ := ih fun k hk => hl k (List.mem_cons_of_mem i hk)
+    have hi : P i := hl i List.mem_cons_self
+    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, List.length_cons]
+    constructor
+    · intro A hA k hk
+      obtain ⟨h1, h2⟩ := CompanionTheory.D.LK.cre_ne hA
+      by_cases hki : k = i
+      · exact hki ▸ hi
+      · exact ih1 _ h2 k (Finset.mem_erase.2 ⟨hki, hk⟩)
+    · intro A hA
+      obtain ⟨h1, h2⟩ := CompanionTheory.D.LK.cre_ne hA
+      have h3 := ih2 _ h2
+      have h4 := Finset.card_erase_add_one h1
+      omega
+
+end GlobalTheory.CompanionTheory.RgExh
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CreationProductSupportDegreeStatement
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+theorem _root_.GlobalTheory.T.creation_product_support_degree : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (P : Pos n → Prop) (l : List (Pos n)) (x : Cn n V) (j : ℕ),
+    (∀ i ∈ l, P i) → SuppIn P x → Deg j x →
+      SuppIn P (((l.map cre).prod : Module.End ℂ (Cn n V)) x) ∧
+        Deg (j + l.length) (((l.map cre).prod : Module.End ℂ (Cn n V)) x) := by
+  first | exact @GlobalTheory.CompanionTheory.RgExh.suppIn_deg_cre_prod | exact GlobalTheory.CompanionTheory.RgExh.suppIn_deg_cre_prod | (intros; apply GlobalTheory.CompanionTheory.RgExh.suppIn_deg_cre_prod <;> assumption)
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.ExistsOrderedCreationListStatement
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+theorem _root_.GlobalTheory.T.exists_ordered_creation_list : ∀ (n : ℕ) (ε : Fin n → Bool) (lev : Fin n → ℕ), Monotone lev →
+    ∃ l : List (Pos n), l.Nodup ∧ (∀ i, i ∈ l ↔ i ∈ om ε ∧ i ∉ omU ε lev) ∧
+      ∀ (pre : List (Pos n)) (f : Pos n) (post : List (Pos n)), l = pre ++ f :: post → ∀ e ∈ l, ∀ k : Pos n,
+        adC e.1.1 e.1.2 f k ≠ 0 → k ∈ post := by
+  first | exact @GlobalTheory.CompanionTheory.RgClusterOrder.exists_inside_order | exact GlobalTheory.CompanionTheory.RgClusterOrder.exists_inside_order | (intros; apply GlobalTheory.CompanionTheory.RgClusterOrder.exists_inside_order <;> assumption)
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FiniteDimInvariantSubspaceAdjointPairStatement
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+theorem _root_.GlobalTheory.T.finite_dim_invariant_subspace_adjoint_pair : ∀ (n : ℕ) (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] (ι : Type) (T : Submodule ℂ (Cn n V))
+    (a b : ι → Module.End ℂ (Cn n V)) (D : Module.End ℂ (Cn n V)) (y : Cn n V), FiniteDimensional ℂ T →
+    (∀ i x z, ∑ A, ⟪a i x A, z A⟫_ℂ = ∑ A, ⟪x A, b i z A⟫_ℂ) →
+    (∀ i, ∀ t ∈ T, a i t ∈ T) → (∀ i, ∀ t ∈ T, b i t ∈ T) →
+    (∀ i, ∀ t ∈ T, a i (D t) = D (a i t)) → (∀ i, ∀ t ∈ T, b i (D t) = D (b i t)) →
+    y ∈ T → (∀ i, a i (D y) = 0) → ∃ y' ∈ T, (∀ i, a i y' = 0) ∧ D y' = D y := by
+  first | exact @GlobalTheory.CompanionTheory.FarReg.highest_preimage_of_stable | exact GlobalTheory.CompanionTheory.FarReg.highest_preimage_of_stable | (intros; apply GlobalTheory.CompanionTheory.FarReg.highest_preimage_of_stable <;> assumption)
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.OrderedCreationCommutesPastLeviStatement
+
+section
+
+@[expose] public section
+
+open Finset CompanionTheory.RgExh CompanionTheory.RgExh.U
+open CompanionTheory.D.LK (Pos Cn ann cre lift bd om cpt allT LocFin)
+open Formalism.REAL (GlRel KHighest IsWeight)
+open CompanionTheory.D.DSIC (KUnit)
+open scoped InnerProductSpace
+
+theorem _root_.GlobalTheory.T.ordered_creation_commutes_past_levi : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (E : Fin n → Fin n → Module.End ℂ V),
+    (∀ e : Pos n, (bd (allT n) E * cre e + cre e * bd (allT n) E : Module.End ℂ (Cn n V)) = lF E e.1.1 e.1.2) →
+    ∀ (l : List (Pos n)) (x : Cn n V),
+      (∀ (pre : List (Pos n)) (f : Pos n) (post : List (Pos n)), l = pre ++ f :: post → ∀ e ∈ l, ∀ k : Pos n,
+        adC e.1.1 e.1.2 f k ≠ 0 → k ∈ post) →
+      (∀ e ∈ l, lF E e.1.1 e.1.2 x = 0) →
+      bd (allT n) E (((l.map cre).prod : Module.End ℂ (Cn n V)) x) =
+        (-1 : ℂ) ^ l.length • ((l.map cre).prod : Module.End ℂ (Cn n V)) (bd (allT n) E x) := by
+  first | exact @GlobalTheory.CompanionTheory.FarReg.BdProd.bd_prod | exact GlobalTheory.CompanionTheory.FarReg.BdProd.bd_prod | (intros; apply GlobalTheory.CompanionTheory.FarReg.BdProd.bd_prod <;> assumption)
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.InjUOfInjR
+
+section
 
 @[expose] public section
 
@@ -120,3 +274,6 @@ theorem injU_of_injR : CompanionTheory.RgExh.U.InjR → CompanionTheory.RgExh.U.
     rw [h2, one_smul]
 
 end GlobalTheory.CompanionTheory.RgExh
+end
+end
+end

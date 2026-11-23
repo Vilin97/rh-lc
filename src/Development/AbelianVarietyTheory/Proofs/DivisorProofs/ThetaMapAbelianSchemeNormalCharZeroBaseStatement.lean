@@ -1,13 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SymTupOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaMapAbelianSchemeNormalCharZeroBase
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -19,7 +22,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -27,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,8 +45,236 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsOverIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.SymTupOne
+import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.GoodClass
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.DivMemOfForallPowSuccDivPowMem
+public import Mathlib.RingTheory.LocalProperties.IntegrallyClosed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.CanonGenIsGen
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNhdThetaMapOnNormalCharZeroAffineStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsThetaConstantListAlgClosedStatement
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Order.CompletePartialOrder
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlueProjectiveSpaceMapsOfAgreeGeometricPoints
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrincipallyPolarisedFibreExistsGeneratorStableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectiveHomogeneousCoordsFieldDetermineDescendStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineOpenNormalNoetherianCharZero
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.ZM GlobalTheory.ZH GlobalTheory.UMin GlobalTheory.UPoinc GlobalTheory.Ex.OneGen
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory
+
+theorem exists_mem_mul_eq_zero_of_algebraMap_eq_zero {R S : Type*} [CommRing R] [CommRing S]
+    [Algebra R S] [IsNoetherianRing R] (M : Submonoid R) [IsLocalization M S] :
+    ∃ f ∈ M, ∀ a : R, algebraMap R S a = 0 → f * a = 0 := by
+  classical
+  obtain ⟨s, hs⟩ := (IsNoetherian.noetherian (RingHom.ker (algebraMap R S)) :
+    (RingHom.ker (algebraMap R S)).FG)
+  have hk : ∀ a ∈ s, ∃ m : M, (m : R) * a = 0 := by
+    intro a ha
+    have : a ∈ RingHom.ker (algebraMap R S) := hs ▸ Submodule.subset_span ha
+    exact (IsLocalization.map_eq_zero_iff M S a).1 this
+  choose! m hm using hk
+  refine ⟨∏ a ∈ s, (m a : R), Submonoid.prod_mem _ fun a _ => (m a).2, ?_⟩
+  have key : ∀ a ∈ Submodule.span R (s : Set R), (∏ a ∈ s, (m a : R)) * a = 0 := by
+    intro a ha
+    induction ha using Submodule.span_induction with
+    | mem b hb =>
+        rw [← Finset.prod_erase_mul _ _ hb, _root_.mul_assoc, hm b hb, mul_zero]
+    | zero => simp
+    | add b c _ _ hb hc => rw [mul_add, hb, hc, add_zero]
+    | smul r b _ hb => rw [smul_eq_mul, _root_.mul_left_comm, hb, mul_zero]
+  intro a ha
+  exact key a (hs ▸ ha)
+
+theorem exists_affineOpen_isIntegrallyClosed_charZero (X : Scheme.{0})
+    (hN : Geo.Tor.IsNormalScheme X) (hL : IsLocallyNoetherian X)
+    (h0 : ∀ x : X, CharZero (X.residueField x)) (x : X) :
+    ∃ U : X.affineOpens, x ∈ (U : X.Opens) ∧ IsDomain Γ(X, U) ∧ IsNoetherianRing Γ(X, U) ∧
+      IsIntegrallyClosed Γ(X, U) ∧ CharZero Γ(X, U) := by
+  obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ :=
+    X.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ x) isOpen_univ
+  haveI : IsNoetherianRing Γ(X, V) := IsLocallyNoetherian.component_noetherian ⟨V, hV⟩
+  letI := X.presheaf.algebra_section_stalk (U := V) ⟨x, hxV⟩
+  haveI := hV.isLocalization_stalk ⟨x, hxV⟩
+  obtain ⟨f, hfM, hf⟩ := exists_mem_mul_eq_zero_of_algebraMap_eq_zero (R := Γ(X, V))
+    (S := X.presheaf.stalk x) (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl
+  have hU : IsAffineOpen (X.basicOpen f) := hV.basicOpen f
+  have hxU : x ∈ X.basicOpen f := by
+    rw [X.mem_basicOpen f x hxV]
+    exact IsLocalization.map_units (X.presheaf.stalk x) ⟨f, hfM⟩
+
+  letI : Algebra Γ(X, V) Γ(X, X.basicOpen f) :=
+    (X.presheaf.map (homOfLE (X.basicOpen_le f)).op).hom.toAlgebra
+  haveI : IsLocalization.Away f Γ(X, X.basicOpen f) := hV.isLocalization_basicOpen f
+  let g : Γ(X, X.basicOpen f) →+* X.presheaf.stalk x := (X.presheaf.germ _ x hxU).hom
+  have hcomp : ∀ a : Γ(X, V), g (algebraMap Γ(X, V) Γ(X, X.basicOpen f) a) =
+      algebraMap Γ(X, V) (X.presheaf.stalk x) a := fun a =>
+    X.presheaf.germ_res_apply (homOfLE (X.basicOpen_le f)) x hxU a
+  have hinj : Function.Injective g := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro σ hσ
+    obtain ⟨⟨r, m⟩, hrm⟩ := IsLocalization.surj (Submonoid.powers f) σ
+    have hr : algebraMap Γ(X, V) (X.presheaf.stalk x) r = 0 := by
+      rw [← hcomp, ← hrm, map_mul, hσ, zero_mul]
+    have hfr := congrArg (algebraMap Γ(X, V) Γ(X, X.basicOpen f)) (hf r hr)
+    rw [map_mul, map_zero] at hfr
+    have hu : IsUnit (algebraMap Γ(X, V) Γ(X, X.basicOpen f) f) :=
+      IsLocalization.map_units Γ(X, X.basicOpen f) ⟨f, Submonoid.mem_powers f⟩
+    have hr0 := hu.mul_right_eq_zero.1 hfr
+    have hmu : IsUnit (algebraMap Γ(X, V) Γ(X, X.basicOpen f) (m : Γ(X, V))) :=
+      IsLocalization.map_units Γ(X, X.basicOpen f) m
+    rw [hr0] at hrm
+    exact hmu.mul_left_eq_zero.1 hrm
+  haveI : IsDomain (X.presheaf.stalk x) := (hN x).1
+  haveI hD : IsDomain Γ(X, X.basicOpen f) := hinj.isDomain g
+  haveI : CharZero (X.residueField x) := h0 x
+  have hcz : CharZero Γ(X, X.basicOpen f) := by
+    refine ⟨fun a b hab => ?_⟩
+    have := congrArg ((X.residue x).hom.comp g) hab
+    simp only [map_natCast] at this
+    exact Nat.cast_injective this
+  have hIC : IsIntegrallyClosed Γ(X, X.basicOpen f) := by
+    refine IsIntegrallyClosed.of_localization_maximal fun p _ hp ↦ ?_
+    let P : Spec Γ(X, X.basicOpen f) := ⟨p, hp.isPrime⟩
+    have hy : hU.fromSpec P ∈ X.basicOpen f := hU.range_fromSpec.le ⟨P, rfl⟩
+    letI : Algebra Γ(X, X.basicOpen f) (X.presheaf.stalk (hU.fromSpec P)) :=
+      X.presheaf.algebra_section_stalk (U := X.basicOpen f) ⟨_, hy⟩
+    have h : IsLocalization p.primeCompl (X.presheaf.stalk (hU.fromSpec P)) :=
+      hU.isLocalization_stalk' P hy
+    haveI := (hN (hU.fromSpec P)).1
+    haveI := (hN (hU.fromSpec P)).2
+    exact IsIntegrallyClosed.of_equiv (R := X.presheaf.stalk (hU.fromSpec P))
+      (IsLocalization.algEquiv p.primeCompl (X.presheaf.stalk (hU.fromSpec P))
+        (Localization.AtPrime p)).toRingEquiv
+  exact ⟨⟨X.basicOpen f, hU⟩, hxU, hD, IsLocallyNoetherian.component_noetherian ⟨_, hU⟩, hIC, hcz⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAffineOpenNormalNoetherianCharZeroStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.ZM GlobalTheory.ZH GlobalTheory.UMin GlobalTheory.UPoinc GlobalTheory.Ex.OneGen
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+
+theorem _root_.GlobalTheory.T.exists_affineOpen_normal_noetherian_charZero : ∀ (X : Scheme.{0}), Geo.Tor.IsNormalScheme X → IsLocallyNoetherian X → (∀ x : X, CharZero (X.residueField x)) → ∀ x : X,
+    ∃ U : X.affineOpens, x ∈ (U : X.Opens) ∧ IsDomain Γ(X, U) ∧ IsNoetherianRing Γ(X, U) ∧ IsIntegrallyClosed Γ(X, U) ∧ CharZero Γ(X, U) := by
+  first | exact @GlobalTheory.exists_affineOpen_isIntegrallyClosed_charZero | exact GlobalTheory.exists_affineOpen_isIntegrallyClosed_charZero | (intros; apply GlobalTheory.exists_affineOpen_isIntegrallyClosed_charZero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlueProjectiveSpaceMapsOfAgreeGeometricPointsStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.ZM GlobalTheory.ZH GlobalTheory.UMin GlobalTheory.UPoinc GlobalTheory.Ex.OneGen
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.glue_projectiveSpace_maps_of_agree_geometric_points : ∀ (o : Type) [CommRing o] (n : ℕ) (X : Scheme.{0}) [IsReduced X] (s : X ⟶ Sp o) (I : Type) (W : I → X.Opens) (f : ∀ i, (W i).toScheme ⟶ PSpace o n), (⨆ i, W i) = ⊤ → (∀ i, f i ≫ PSpace.str o n = (W i).ι ≫ s) → (∀ i j (K : Type) [Field K] [IsAlgClosed K] (y : Sp K ⟶ (W i).toScheme) (y' : Sp K ⟶ (W j).toScheme), y ≫ (W i).ι = y' ≫ (W j).ι → y ≫ f i = y' ≫ f j) → ∃ g : X ⟶ PSpace o n, g ≫ PSpace.str o n = s ∧ ∀ i, (W i).ι ≫ g = f i := by
+  first | exact @GlobalTheory.ThetaGlue.glue_geom | exact GlobalTheory.ThetaGlue.glue_geom | (intros; apply GlobalTheory.ThetaGlue.glue_geom <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaMapAbelianSchemeNormalCharZeroBase
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.ZM GlobalTheory.ZH GlobalTheory.UMin GlobalTheory.UPoinc GlobalTheory.Ex.OneGen
+open scoped CategoryTheory.Obj
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.UMin.ThetaMapGen
+
+theorem agree_at_geom : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (L : LB G.left) (ρ : LB.Gen (L.pull (eSec G))), L.IsLB → ρ.IsGen →
+    ∀ (g m n : ℕ) (o K : Type) [CommRing o] [Field K] [IsAlgClosed K] (z : Sp K ⟶ S) (f₁ f₂ : Sp K ⟶ PSpace o n),
+    Odd m → IsUnit (m : o) → n + 1 = m ^ (4 * g) → PolFib G L g z → f₁ ≫ PSpace.str o n = f₂ ≫ PSpace.str o n →
+    (∀ c : Fin (n + 1) → K, HasTh G L ρ m z c → PCrd f₁ (symTup c)) → (∀ c : Fin (n + 1) → K, HasTh G L ρ m z c → PCrd f₂ (symTup c)) → f₁ = f₂ := by
+  intro S G _ _ L ρ hL hρ g m n o K _ _ _ z f₁ f₂ hm hu hn hP hs h₁ h₂
+  obtain ⟨⟨θ, hθ⟩, -⟩ := GlobalTheory.T.principallyPolarisedFibre_exists_generator_stable S G L hL g K z hP
+  have hmK : (m : K) ≠ 0 := by
+    let φ : o →+* K := (Spec.preimage (f₁ ≫ PSpace.str o n)).hom
+    have := hu.map φ
+    rw [map_natCast] at this
+    exact this.ne_zero
+  obtain ⟨pt, c, hc⟩ := GlobalTheory.T.exists_thetaConstantList_algClosed S G L ρ hL hρ g m (n + 1) K z θ hm hmK hn hP
+  have hH : HasTh G L ρ m z c := ⟨θ, pt, hθ, hc⟩
+  exact (GlobalTheory.T.projectiveHomogeneousCoords_field_determine_descend).1 o K n f₁ f₂ (symTup c) hs (h₁ c hH) (h₂ c hH)
+
+theorem main : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (L : LB G.left) (ρ : LB.Gen (L.pull (eSec G))), L.IsLB → ρ.IsGen → ∀ (g m n : ℕ) (o : Type) [CommRing o] (X : Scheme.{0}) (s : X ⟶ Sp o) (q : X ⟶ S), Odd m → 3 ≤ m → IsUnit (m : o) → n + 1 = m ^ (4 * g) → Geo.Tor.IsNormalScheme X → IsLocallyNoetherian X → (∀ x : X, CharZero (X.residueField x)) → (∀ (R : Type) [CommRing R] (x : Sp R ⟶ X), PolFib G L g (x ≫ q)) → ∃ f : X ⟶ PSpace o n, f ≫ PSpace.str o n = s ∧ ThMap G L ρ m q f := by
+  intro S G _ _ L ρ hL hρ g m n o _ X s q hm h3 hu hn hN hLN h0 hP
+  have loc : ∀ x : X, ∃ (W : X.Opens) (h : W.toScheme ⟶ PSpace o n), x ∈ W ∧ h ≫ PSpace.str o n = W.ι ≫ s ∧
+      ThMap G L ρ m (W.ι ≫ q) h := by
+    intro x
+    obtain ⟨U, hxU, h1, h2, h3', h4⟩ := GlobalTheory.T.exists_affineOpen_normal_noetherian_charZero X hN hLN h0 x
+    exact GlobalTheory.T.exists_nhd_thetaMap_on_normal_charZero_affine S G L ρ hL hρ g m n o X s q hm h3 hu hn hP U h1 h2 h3' h4 x hxU
+  choose W h hxW hs hT using loc
+  haveI : ∀ x : X, _root_.IsReduced (X.presheaf.stalk x) := fun x => by
+    haveI := (hN x).1; infer_instance
+  haveI : IsReduced X := isReduced_of_isReduced_stalk X
+  have hcov : (⨆ x, W x) = ⊤ := by
+    rw [eq_top_iff]; intro x _
+    exact TopologicalSpace.Opens.mem_iSup.2 ⟨x, hxW x⟩
+  obtain ⟨f, hf, hfW⟩ := GlobalTheory.T.glue_projectiveSpace_maps_of_agree_geometric_points o n X s X W h hcov hs (by
+    intro i j K _ _ y y' hyy
+    refine agree_at_geom S G L ρ hL hρ g m n o K (y ≫ (W i).ι ≫ q) _ _ hm hu hn (by rw [← Category.assoc]; exact hP K _) ?_ ?_ ?_
+    · rw [Category.assoc, hs, Category.assoc, hs, ← Category.assoc, hyy, Category.assoc]
+    · intro c hc; exact hT i K y c hc
+    · intro c hc
+      have := hT j K y' c (by rwa [← Category.assoc, ← hyy, Category.assoc])
+      exact this)
+  refine ⟨f, hf, ?_⟩
+  intro K _ x c hc
+  let p0 : Sp K := IsLocalRing.closedPoint K
+  let i := x.base p0
+  have hr : Set.range x.base ⊆ Set.range (W i).ι.base := by
+    rintro _ ⟨y, rfl⟩
+    have : y = p0 := Subsingleton.elim _ _
+    subst this
+    rw [Scheme.Opens.range_ι]; exact hxW i
+  let x' := IsOpenImmersion.lift (W i).ι x hr
+  have hx' : x' ≫ (W i).ι = x := IsOpenImmersion.lift_fac _ _ _
+  have := hT i K x' c (by rw [← Category.assoc, hx']; exact hc)
+  rw [← hx', Category.assoc, hfW i]; exact this
+
+end GlobalTheory.UMin.ThetaMapGen
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaMapAbelianSchemeNormalCharZeroBaseStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +286,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.thetaMap_abelianScheme_normal_charZero_base : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (L : LB G.left) (ρ : LB.Gen (L.pull (eSec G))), L.IsLB → ρ.IsGen → ∀ (g m n : ℕ) (o : Type) [CommRing o] (X : Scheme.{0}) (s : X ⟶ Sp o) (q : X ⟶ S), Odd m → 3 ≤ m → IsUnit (m : o) → n + 1 = m ^ (4 * g) → Geo.Tor.IsNormalScheme X → IsLocallyNoetherian X → (∀ x : X, CharZero (X.residueField x)) → (∀ (R : Type) [CommRing R] (x : Sp R ⟶ X), PolFib G L g (x ≫ q)) → ∃ f : X ⟶ PSpace o n, f ≫ PSpace.str o n = s ∧ ThMap G L ρ m q f := by
   first | exact @GlobalTheory.UMin.ThetaMapGen.main | exact GlobalTheory.UMin.ThetaMapGen.main | (intros; apply GlobalTheory.UMin.ThetaMapGen.main <;> assumption)
+end
+end

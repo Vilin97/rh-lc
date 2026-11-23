@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsEulerContraction
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularFunctionsPthPowerTwist
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,8 +41,49 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtCoord
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsFlatLift
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularFunctionsPthPowerTwist
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory.DI
+
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace in
+theorem _root_.GlobalTheory.DI.pow_mul_locRing_subset_regularAt {X : Scheme.{0}} [IsIntegral X] (p : ℕ)
+    (G H : _root_.GlobalTheory.Cartier.CartierDiv X) (y : X) (h : (H - p • G).Eff) :
+    {z : X.functionField | ∃ c ∈ {c : X.functionField | G.RegularAt y c},
+      ∃ b ∈ _root_.GlobalTheory.LogDR.locRing y, z = c ^ p * b} ⊆
+      {c | H.RegularAt y c} := by
+  rintro z ⟨c, ⟨g, hg, hcg⟩, b, hb, rfl⟩
+  obtain ⟨k, hk, hk1⟩ := h y
+  have hH : H.IsEqn y (k * g ^ p) := by
+    have := hk.add (hg.nsmul p)
+    simpa using this
+  refine ⟨k * g ^ p, hH, ?_⟩
+  rw [← _root_.GlobalTheory.LogDR.mem_locRing] at hcg hk1 ⊢
+  have hz : c ^ p * b * ((k * g ^ p : (X.functionField)ˣ) : X.functionField) =
+      (c * g) ^ p * b * (1 * k) := by
+    push_cast
+    ring
+  rw [hz]
+  exact mul_mem (mul_mem (pow_mem hcg p) hb) hk1
+
+end GlobalTheory.DI
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.RegularFunctionsPthPowerTwist
+
+section
+
 @[expose] public section
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 theorem _root_.GlobalTheory.T.regular_functions_pth_power_twist : ∀ {X : Scheme.{0}} [IsIntegral X] (p : ℕ) (G H : CartierDiv X) (y : X), (H - p • G).Eff → {z : X.functionField | ∃ c ∈ {c : X.functionField | G.RegularAt y c}, ∃ b ∈ locRing y, z = c ^ p * b} ⊆ {c | H.RegularAt y c} := by
   first | exact @_root_.GlobalTheory.DI.pow_mul_locRing_subset_regularAt | exact _root_.GlobalTheory.DI.pow_mul_locRing_subset_regularAt | (intros; apply _root_.GlobalTheory.DI.pow_mul_locRing_subset_regularAt <;> assumption)
+end
+end

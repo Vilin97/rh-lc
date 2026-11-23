@@ -1,6 +1,7 @@
 module
 
-public import Formalism.MahlerMeasure.IsIntegral
+public import Formalism.MahlerMeasure.LevelSum
+public import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,9 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,10 +40,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.MahlerMeasure.IsIntegral
+
+section
+
+@[expose] public section
+
+namespace Formalism.GM.M
+
+open MvPolynomial Finset
+
+def IsIntegral' {σ : Type} (p : ℕ) [Fact p.Prime] (u : MvPolynomial σ ℚ_[p]) : Prop :=
+  ∀ m, ‖u.coeff m‖ ≤ 1
+
+def PhiInt : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (r : ℕ) (w e : Fin r → σ), Function.Injective w → Function.Injective e →
+    (∀ c d, w c ≠ e d) → 1 ≤ r →
+    ∀ (o n z : ℕ) (u : MvPolynomial σ ℚ_[p]), IsIntegral' p u →
+      IsIntegral' p (((p : ℚ_[p]) ^ ((r + 1) * (Nat.log p (o + n + r + z) + 1))) • Formalism.GM.tiePhi w e o n z u)
+
+end Formalism.GM.M
+end
+end
+
+-- Source module: Formalism.MahlerMeasure.MahlerMeasureProofs.PhiInt
+
+section
 
 @[expose] public section
 
@@ -354,3 +382,5 @@ namespace Formalism.GM
 theorem projectorIntegral : M.PhiInt := M.PhiIntegrality.phi_integrality
 
 end Formalism.GM
+end
+end

@@ -3,8 +3,10 @@ module
 public import Mathlib.Algebra.Field.Defs
 public import Mathlib.Data.ZMod.Basic
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.ExistsPowDvdSubOfTwoPowDvdSubOne
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.SumFilterTwoPowRootsEqZeroOfSumEqZero
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.TwoPowDvdSubOneOrAddOneOfPowTwoPow
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Ring.Int.Defs
+public import Mathlib.Algebra.Ring.Parity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,9 +25,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
@@ -52,9 +52,167 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Algebra.Group.Int.Defs
+public import Mathlib.Algebra.Group.Nat.Defs
+public import Mathlib.Algebra.Divisibility.Basic
+public import Mathlib.Algebra.GroupWithZero.Divisibility
+public import Mathlib.Algebra.Ring.Int.Parity
+public import Mathlib.RingTheory.Coprime.Basic
+public import Mathlib.RingTheory.Coprime.Lemmas
+public import Mathlib.RingTheory.Int.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.ZMod.Units
 public import Mathlib.FieldTheory.Finite.Basic
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.SumFilterTwoPowRootsEqZeroOfSumEqZero
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.sum_filter_two_pow_roots_eq_zero_of_sum_eq_zero :
+    ∀ (k : Type) [Field k] (l : ℕ) [Fact l.Prime] [CharP k l], l ≠ 2 → ∀ (d e n : ℕ) (a : ℤ), 2 ≤ e → Odd a → ((l ^ d : ℕ) : ℤ) = 1 + 2 ^ e * a → ∀ (ι : Type) [Fintype ι] [DecidableEq k] (z g : ι → k), (∀ i, z i = 0 ∨ z i ^ (2 ^ n) = 1) → (∀ i, g i ^ (l ^ d) = g i) → ∑ i, z i * g i = 0 → ∑ i ∈ Finset.univ.filter (fun i => z i ^ (2 ^ e) = 1), z i * g i = 0 := by
+  intro k _ l _ _ hl2 d e n a he ha hq ι _ _ z g hz hg hsum
+  have hlp : l.Prime := Fact.out
+  set N := n + e with hN
+  have hzN : ∀ i, z i = 0 ∨ z i ^ (2 ^ N) = 1 := by
+    intro i
+    rcases hz i with h | h
+    · exact Or.inl h
+    · right
+      rw [hN, pow_add, pow_mul, h, one_pow]
+  have hgj : ∀ (j : ℕ) (i : ι), g i ^ ((l ^ d) ^ j) = g i := by
+    intro j i
+    induction j with
+    | zero => simp
+    | succ j ih => rw [pow_succ, pow_mul, ih, hg]
+  have hA : ∀ m : ℕ, ∑ i, z i ^ (1 + 2 ^ e * m) * g i = 0 := by
+    intro m
+    obtain ⟨j, hj⟩ := UpperTheory.exists_pow_dvd_sub_of_two_pow_dvd_sub_one ((l ^ d : ℕ) : ℤ) a (1 + 2 ^ e * (m : ℤ)) e N he ha hq (by simp)
+    have e1 : (l ^ d) ^ j = l ^ (d * j) := (pow_mul l d j).symm
+    have hpow : (∑ i, z i * g i) ^ ((l ^ d) ^ j) = ∑ i, z i ^ ((l ^ d) ^ j) * g i := by
+      rw [e1, sum_pow_char_pow]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [mul_pow, ← e1, hgj]
+    have hzero : ∑ i, z i ^ ((l ^ d) ^ j) * g i = 0 := by
+      rw [← hpow, hsum, zero_pow (pow_ne_zero _ (pow_ne_zero _ hlp.ne_zero))]
+    rw [← hzero]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    congr 1
+    rcases hzN i with h | h
+    · rw [h, zero_pow (by positivity), zero_pow (pow_ne_zero _ (pow_ne_zero _ hlp.ne_zero))]
+    · have hord : orderOf (z i) ∣ 2 ^ N := orderOf_dvd_of_pow_eq_one h
+      have hmod : (1 + 2 ^ e * m) ≡ (l ^ d) ^ j [MOD orderOf (z i)] := by
+        apply Nat.ModEq.of_dvd hord
+        rw [Nat.modEq_iff_dvd]
+        push_cast
+        exact hj
+      rw [← pow_mod_orderOf, show (1 + 2 ^ e * m) % orderOf (z i) = (l ^ d) ^ j % orderOf (z i) from hmod, pow_mod_orderOf]
+  have hB : ∀ i, ∑ m ∈ Finset.range (2 ^ n), z i ^ (1 + 2 ^ e * m) = if z i ^ (2 ^ e) = 1 then (2 ^ n : k) * z i else 0 := by
+    intro i
+    have hterm : ∀ m : ℕ, z i ^ (1 + 2 ^ e * m) = z i * (z i ^ 2 ^ e) ^ m := by
+      intro m
+      rw [pow_add, pow_one, pow_mul]
+    simp_rw [hterm, ← Finset.mul_sum]
+    split_ifs with h
+    · simp [h, mul_comm]
+    · rcases hzN i with h0 | h1
+      · simp [h0]
+      · have hw : (z i ^ 2 ^ e) ^ (2 ^ n) = 1 := by
+          rw [← pow_mul, ← pow_add, add_comm]
+          exact h1
+        rw [geom_sum_eq h, hw, sub_self, zero_div, mul_zero]
+  have htot : ∑ m ∈ Finset.range (2 ^ n), ∑ i, z i ^ (1 + 2 ^ e * m) * g i = 0 :=
+    Finset.sum_eq_zero fun m _ => hA m
+  rw [Finset.sum_comm] at htot
+  simp_rw [← Finset.sum_mul, hB, ite_mul, zero_mul] at htot
+  rw [← Finset.sum_filter] at htot
+  simp_rw [mul_assoc] at htot
+  rw [← Finset.mul_sum] at htot
+  have h2 : (2 : k) ≠ 0 := by
+    intro h
+    have h' : ((2 : ℕ) : k) = 0 := by exact_mod_cast h
+    have := (CharP.cast_eq_zero_iff k l 2).mp h'
+    exact hl2 ((Nat.prime_dvd_prime_iff_eq hlp Nat.prime_two).mp this)
+  exact (mul_eq_zero.mp htot).resolve_left (pow_ne_zero _ h2)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.TwoPowDvdSubOneOrAddOneOfPowTwoPow
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.two_pow_dvd_sub_one_or_add_one_of_pow_two_pow :
+    ∀ (k a : ℕ) (x : ℤ), (2 : ℤ) ^ (a + k) ∣ x ^ (2 ^ k) - 1 → (2 : ℤ) ^ a ∣ x - 1 ∨ (2 : ℤ) ^ a ∣ x + 1 := by
+  have B : ∀ (a : ℕ) (x : ℤ), (2 : ℤ) ^ (a + 1) ∣ x ^ 2 - 1 → (2 : ℤ) ^ a ∣ x - 1 ∨ (2 : ℤ) ^ a ∣ x + 1 := by
+    intro a x h
+    rcases Nat.eq_zero_or_pos a with rfl | ha
+    · left
+      simp
+    obtain ⟨b, rfl⟩ : ∃ b, a = b + 1 := ⟨a - 1, by omega⟩
+    rcases Int.even_or_odd' x with ⟨q, hq | hq⟩
+    · exfalso
+      have h2 : (2 : ℤ) ∣ x ^ 2 - 1 := (dvd_pow_self 2 (by omega : b + 1 + 1 ≠ 0)).trans h
+      rw [hq, show (2 * q) ^ 2 - 1 = 2 * (2 * q ^ 2) - 1 by ring] at h2
+      omega
+    · subst hq
+      have e1 : (2 * q + 1) ^ 2 - 1 = 2 ^ 2 * (q * (q + 1)) := by ring
+      rw [e1, show b + 1 + 1 = 2 + b by omega, pow_add] at h
+      have h' : (2 : ℤ) ^ b ∣ q * (q + 1) := (mul_dvd_mul_iff_left (by norm_num)).1 h
+      rcases Int.even_or_odd q with hqe | hqo
+      · have hc : IsCoprime ((2 : ℤ) ^ b) (q + 1) :=
+          (Int.isCoprime_two_left.2 hqe.add_one).pow_left
+        left
+        have hd := hc.dvd_of_dvd_mul_right h'
+        rw [show 2 * q + 1 - 1 = 2 * q by ring, pow_succ, mul_comm ((2 : ℤ) ^ b) 2]
+        exact mul_dvd_mul_left 2 hd
+      · have hc : IsCoprime ((2 : ℤ) ^ b) q :=
+          (Int.isCoprime_two_left.2 hqo).pow_left
+        right
+        have hd := hc.dvd_of_dvd_mul_left h'
+        rw [show 2 * q + 1 + 1 = 2 * (q + 1) by ring, pow_succ, mul_comm ((2 : ℤ) ^ b) 2]
+        exact mul_dvd_mul_left 2 hd
+  intro k
+  induction k with
+  | zero =>
+    intro a x h
+    left
+    simpa using h
+  | succ k ih =>
+    intro a x h
+    have h' : (2 : ℤ) ^ ((a + 1) + k) ∣ (x ^ 2) ^ (2 ^ k) - 1 := by
+      rw [← pow_mul, ← pow_succ', show a + 1 + k = a + (k + 1) by omega]
+      exact h
+    rcases ih (a + 1) (x ^ 2) h' with h1 | h1
+    · exact B a x h1
+    · rcases Nat.eq_zero_or_pos a with rfl | ha
+      · left
+        simp
+      exfalso
+      have h4 : (2 : ℤ) ^ 2 ∣ x ^ 2 + 1 := (pow_dvd_pow 2 (by omega : 2 ≤ a + 1)).trans h1
+      norm_num at h4
+      rcases Int.even_or_odd' x with ⟨q, hq | hq⟩
+      · rw [hq, show (2 * q) ^ 2 + 1 = 4 * q ^ 2 + 1 by ring] at h4
+        omega
+      · rw [hq, show (2 * q + 1) ^ 2 + 1 = 4 * (q ^ 2 + q) + 2 by ring] at h4
+        omega
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.LxCore
+
+section
 
 @[expose] public section
 
@@ -276,3 +434,5 @@ theorem lx_core {k : Type} [Field k] (l : ℕ) [Fact l.Prime] [CharP k l] (hl : 
   linear_combination hS
 
 end UpperTheory.V.X
+end
+end

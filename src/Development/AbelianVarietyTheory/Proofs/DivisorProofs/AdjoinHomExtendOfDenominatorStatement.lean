@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinHomExtendOfDenominator
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,9 +41,92 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.GroupTheory.MonoidLocalization.Away
+public import Mathlib.RingTheory.Localization.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyAlgHomAdjoin
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.AdjoinAlgebraHomNonempty
+
+theorem nonempty_algHom_adjoin (k F Ω : Type) [Field k] [Field F] [Algebra k F] [Field Ω]
+    [Algebra k Ω] (S : Subalgebra k F) (ψ : S →ₐ[k] Ω) (h : S) (hh : ψ h ≠ 0) (T : Set F)
+    (hT : ∀ x ∈ T, (h : F) * x ∈ S) : Nonempty (Algebra.adjoin k T →ₐ[k] Ω) := by
+  have h0 : h ≠ 0 := fun e => hh (by rw [e, map_zero])
+  have h0F : (h : F) ≠ 0 := fun e => h0 (Subtype.ext e)
+  have hu : ∀ y : Submonoid.powers h, IsUnit (S.val y) := by
+    rintro ⟨y, n, rfl⟩
+    simp only [map_pow]
+    exact (IsUnit.mk0 _ h0F).pow n
+  have hv : ∀ y : Submonoid.powers h, IsUnit (ψ y) := by
+    rintro ⟨y, n, rfl⟩
+    simp only [map_pow]
+    exact (IsUnit.mk0 _ hh).pow n
+  let f : Localization.Away h →ₐ[k] F := IsLocalization.liftAlgHom (M := Submonoid.powers h) hu
+  let g : Localization.Away h →ₐ[k] Ω := IsLocalization.liftAlgHom (M := Submonoid.powers h) hv
+  have hf : ∀ s : S, f (algebraMap S (Localization.Away h) s) = (s : F) := fun s => by
+    simp [f, IsLocalization.liftAlgHom_apply]
+  have hinj : Function.Injective f := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro z hz
+    obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.surj (Submonoid.powers h) z
+    have h1 := congrArg f hab
+    rw [map_mul, hz, zero_mul, hf] at h1
+    have ha : a = 0 := Subtype.ext h1.symm
+    rw [ha, map_zero] at hab
+    exact (IsLocalization.map_units (Localization.Away h) b).mul_left_eq_zero.mp hab
+  have hle : Algebra.adjoin k T ≤ f.range := by
+    refine Algebra.adjoin_le fun x hx => ?_
+    obtain ⟨u, hu'⟩ := IsLocalization.map_units (Localization.Away h)
+      (⟨h, Submonoid.mem_powers h⟩ : Submonoid.powers h)
+    refine ⟨(↑u⁻¹ : Localization.Away h) * algebraMap S _ ⟨_, hT x hx⟩, ?_⟩
+    apply mul_left_cancel₀ h0F
+    have e : f u = (h : F) := by rw [hu']; exact hf h
+    change (h : F) * f _ = _
+    rw [map_mul, hf, ← mul_assoc]
+    have e2 : (h : F) * f (↑u⁻¹ : Localization.Away h) = 1 := by
+      rw [← e, ← map_mul, Units.mul_inv, map_one]
+    rw [e2, one_mul]
+  exact ⟨(g.comp (AlgEquiv.ofInjective f hinj).symm.toAlgHom).comp (Subalgebra.inclusion hle)⟩
+
+end GlobalTheory.AdjoinAlgebraHomNonempty
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinHomExtendOfDenominator
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem adjoin_hom_extend_of_denominator (k F Ω : Type) [Field k] [Field F] [Algebra k F] [Field Ω]
+    [Algebra k Ω] (S : Subalgebra k F) (ψ : S →ₐ[k] Ω) (h : S) (hψ : ψ h ≠ 0) (T : Set F)
+    (hT : ∀ x ∈ T, (h : F) * x ∈ S) : Nonempty (Algebra.adjoin k T →ₐ[k] Ω) := by
+  first
+  | exact @_root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin
+  | exact _root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin
+  | (apply _root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin <;> assumption)
+  | (intros; apply _root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.AdjoinAlgebraHomNonempty.nonempty_algHom_adjoin ..)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinHomExtendOfDenominatorStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.nonempty_adjoin_algHom_of_mul_mem_of_map_ne_zero : ∀ (k F Ω : Type) [Field k] [Field F] [Algebra k F] [Field Ω] [Algebra k Ω] (S : Subalgebra k F) (ψ : S →ₐ[k] Ω) (h : S), ψ h ≠ 0 → ∀ T : Set F, (∀ x ∈ T, (h : F) * x ∈ S) → Nonempty (Algebra.adjoin k T →ₐ[k] Ω) := by
   first | exact @GlobalTheory.adjoin_hom_extend_of_denominator | exact GlobalTheory.adjoin_hom_extend_of_denominator | (intros; apply GlobalTheory.adjoin_hom_extend_of_denominator <;> assumption)
+end
+end

@@ -3,12 +3,7 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.UltraDefs
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import Mathlib.RingTheory.Localization.Away.Basic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegLim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegScal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegTower
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TowerCompl
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ULimScal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ULimTrans
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ULimKer
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +43,172 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Finiteness.Ideal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegScal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TowerCompl
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegLim
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.qRegAt_uLim :
+    ∀ (R σ : Type) [CommRing R] [Finite σ] (F : Filter ℕ), F ≤ atTop → ∀ (I : ℕ → Ideal R) (M : ℕ → Type) [∀ i, AddCommGroup (M i)] [∀ i, Module R (M i)] (y : σ → R) (a k : ℕ), Antitone I → a < k →
+      (∀ j, ∀ᶠ N in F, QRegAt (M N) y (I j) a) →
+      QRegAt (ULim F (fun j => Ideal.span (Set.range y) ^ k ⊔ I j) M) y ⊥ a := by
+  intro R σ _ _ F hF I M _ _ y a k hI hak hq
+  classical
+  set Y : Ideal R := Ideal.span (Set.range y) with hY
+  have hYfg : Y.FG := ⟨(Set.finite_range y).toFinset, by simp [hY]⟩
+  have hK : Antitone (fun j ↦ Y ^ k ⊔ I j) := fun i j hij ↦ sup_le_sup_left (hI hij) _
+  have hk1 : Y ^ k ≤ Y ^ (a + 1) := Ideal.pow_le_pow_right (by omega)
+  intro c hc
+  choose p hp using fun α ↦ ULim.mk_surjective F (fun j ↦ Y ^ k ⊔ I j) M (c α)
+  have hsum : ∑ α : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑α • c α =
+      ULim.mk F (fun j ↦ Y ^ k ⊔ I j) M
+        (fun N ↦ ∑ α : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑α • p α N) := by
+    have e : (fun N ↦ ∑ α : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑α • p α N) =
+        ∑ α : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑α • p α := by
+      ext N
+      simp [Finset.sum_apply]
+
+    rw [e, map_sum]
+    simp [hp]
+  rw [sup_bot_eq, hsum, ULim.mem_smul_top_iff R F hF _ M (Y ^ (a + 1)) hYfg.pow hK] at hc
+  intro α
+  rw [sup_bot_eq, ← hp α, ULim.mem_smul_top_iff R F hF _ M Y hYfg hK]
+  intro j
+  filter_upwards [hc j, hq j] with N hN hqN
+  have hN' : ∑ β : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑β • p β N ∈
+      (Y ^ (a + 1) ⊔ I j) • (⊤ : Submodule R (M N)) :=
+    Submodule.smul_mono_left (sup_le le_sup_left (sup_le (hk1.trans le_sup_left) le_sup_right)) hN
+  exact Submodule.smul_mono_left (sup_le_sup_left le_sup_right Y) (hqN (fun β ↦ p β N) hN' α)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QRegTower
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.isQuasiRegularSeq_of_tower :
+    ∀ (R σ : Type) [CommRing R] [Finite σ] (y : σ → R) (M : Type) [AddCommGroup M] [Module R M] (P : ℕ → Type) [∀ i, AddCommGroup (P i)] [∀ i, Module R (P i)] (q : ∀ k, M →ₗ[R] P k),
+      (∀ k, Function.Surjective (q k)) → (∀ k, LinearMap.ker (q k) = Ideal.span (Set.range y) ^ k • ⊤) →
+      (∀ a k, a < k → QRegAt (P k) y ⊥ a) → GlobalTheory.IsQuasiRegularSeq M y := by
+  intro R σ _ _ y M _ _ P _ _ q hs hk hq
+  rw [isQuasiRegularSeq_iff_qRegAt]
+  intro a c hc α
+  simp only [sup_bot_eq] at hc ⊢
+  have h := hq a (a + 1) (Nat.lt_succ_self a) (fun β => q (a + 1) (c β)) (by
+
+    rw [← hk, LinearMap.mem_ker, map_sum] at hc
+    simp only [map_smul] at hc
+    rw [hc]
+    exact zero_mem _) α
+  simp only [sup_bot_eq] at h
+  have htop : (⊤ : Submodule R (P (a + 1))) = Submodule.map (q (a + 1)) ⊤ := by
+    rw [Submodule.map_top, LinearMap.range_eq_top.2 (hs _)]
+  rw [htop, ← Submodule.map_smul''] at h
+  have h2 : c α ∈ Submodule.comap (q (a + 1))
+      (Submodule.map (q (a + 1)) (Ideal.span (Set.range y) • ⊤ : Submodule R M)) := h
+  rw [Submodule.comap_map_eq, hk] at h2
+  have hle : (Ideal.span (Set.range y) ^ (a + 1) • ⊤ : Submodule R M) ≤ Ideal.span (Set.range y) • ⊤ :=
+    Submodule.smul_mono_left (Ideal.pow_le_self (Nat.succ_ne_zero a))
+  rwa [sup_eq_left.2 hle] at h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ULimScal
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.ULim.scal_eq :
+    ∀ (R ι : Type) [CommRing R] (F : Filter ι) (I : ℕ → Ideal R) (M : ι → Type) [∀ i, AddCommGroup (M i)] [∀ i, Module R (M i)],
+      (∀ (r : ι → R) (s : R), (∀ j, ∀ᶠ N in F, ∀ x : M N, (r N - s) • x ∈ (I j • ⊤ : Submodule R (M N))) →
+        ∀ x : ULim F I M, ULim.scal F I M r x = s • x) ∧
+      (∀ s : R, (∀ j, ∀ᶠ N in F, ∀ x : M N, s • x ∈ (I j • ⊤ : Submodule R (M N))) → ∀ x : ULim F I M, s • x = 0) ∧
+      (∀ (M' : ι → Type) [∀ i, AddCommGroup (M' i)] [∀ i, Module R (M' i)] (f : ∀ i, M i →ₗ[R] M' i) (g : ∀ i, M' i →ₗ[R] M i) (r : ι → R), (∀ i x, g i (f i x) = r i • x) →
+        ∀ x : ULim F I M, ULim.map F (fun _ => le_rfl) g (ULim.map F (I' := I) (fun _ => le_rfl) f x) = ULim.scal F I M r x) := by
+  intro R ι _ F I M _ _
+  have hs : ∀ (r : ι → R) (p : ∀ i, M i), ULim.scal F I M r (ULim.mk F I M p) = ULim.mk F I M (fun i => r i • p i) := by
+    intro r p
+    simp only [ULim.scal, ULim.map_mk, LinearMap.smul_apply, LinearMap.id_apply]
+  have hc : ∀ (s : R) (p : ∀ i, M i), s • ULim.mk F I M p = ULim.mk F I M (fun i => s • p i) := by
+    intro s p
+    rw [← map_smul]
+    rfl
+  refine ⟨?_, ?_, ?_⟩
+  · intro r s h x
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F I M x
+    rw [← sub_eq_zero, hs, hc, ← map_sub, ULim.mk_eq_zero]
+    intro j
+    filter_upwards [h j] with N hN
+    simpa [sub_smul] using hN (p N)
+  · intro s h x
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F I M x
+    rw [hc, ULim.mk_eq_zero]
+    intro j
+    filter_upwards [h j] with N hN
+    exact hN (p N)
+  · intro M' _ _ f g r hfg x
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F I M x
+    rw [ULim.map_mk, ULim.map_mk, hs]
+    simp only [hfg]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ULimTrans
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.ULim.trans_ker :
+    ∀ (R : Type) [CommRing R] (F : Filter ℕ), F ≤ atTop → ∀ (I : ℕ → Ideal R) (M : ℕ → Type) [∀ i, AddCommGroup (M i)] [∀ i, Module R (M i)] (a b : Ideal R), a.FG → Antitone I → ∀ h : b ≤ a,
+      Function.Surjective (ULim.map F (I := fun j => b ⊔ I j) (I' := fun j => a ⊔ I j) (M := M) (fun _ => sup_le_sup_right h _) fun _ => LinearMap.id) ∧
+      LinearMap.ker (ULim.map F (I := fun j => b ⊔ I j) (I' := fun j => a ⊔ I j) (M := M) (fun _ => sup_le_sup_right h _) fun _ => LinearMap.id) = a • ⊤ ∧
+      (a • ⊤ : Submodule R (ULim F (fun j => a ⊔ I j) M)) = ⊥ := by
+  intro R _ F hF I M _ _ a b ha hI h
+  have hI1 : Antitone fun j => b ⊔ I j := fun i j hij => sup_le_sup_left (hI hij) b
+  have hI2 : Antitone fun j => a ⊔ I j := fun i j hij => sup_le_sup_left (hI hij) a
+  have e1 : ∀ j, a ⊔ (b ⊔ I j) = a ⊔ I j := fun j => by rw [← sup_assoc, sup_eq_left.mpr h]
+  have e2 : ∀ j, a ⊔ (a ⊔ I j) = a ⊔ I j := fun j => by rw [← sup_assoc, sup_idem]
+  refine ⟨?_, ?_, ?_⟩
+  · intro y
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F (fun j => a ⊔ I j) M y
+    exact ⟨ULim.mk F (fun j => b ⊔ I j) M p, by rw [ULim.map_mk]; rfl⟩
+  · ext x
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F (fun j => b ⊔ I j) M x
+    rw [LinearMap.mem_ker, ULim.map_mk, ULim.mk_eq_zero, ULim.mem_smul_top_iff R F hF _ M a ha hI1]
+    simp only [LinearMap.id_apply, e1]
+  · refine eq_bot_iff.mpr fun x hx => ?_
+    obtain ⟨p, rfl⟩ := ULim.mk_surjective F (fun j => a ⊔ I j) M x
+    rw [ULim.mem_smul_top_iff R F hF _ M a ha hI2] at hx
+    rw [Submodule.mem_bot, ULim.mk_eq_zero]
+    simpa only [e2] using hx
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.Patched
+
+section
 
 @[expose] public section
 
@@ -206,3 +366,5 @@ theorem UpperTheory.V.AlgebraTools.exists_patched_module :
     have hu := (IsLocalization.Away.algebraMap_isUnit (S := S) f).pow e
     rw [LinearMap.map_smul, ← hu.smul_eq_zero, ← mul_smul, ← map_pow, ← map_mul]
     exact hQ _
+end
+end

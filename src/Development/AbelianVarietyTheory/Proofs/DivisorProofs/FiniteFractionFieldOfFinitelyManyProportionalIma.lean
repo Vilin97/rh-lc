@@ -4,8 +4,7 @@ public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.SimpleRing.Principal
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAlgHomAlgebraicClosureApplyEqPowStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteFieldEmbeddingStalkOfFiniteStalkMapStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSetOfRingHomCompEqOfFiniteStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.StalkSpecializesCompatRingMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +26,6 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,7 +45,142 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.RingTheory.Finiteness.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteFieldEmbeddingStalkOfFiniteStalkMap
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory.StalkField
+
+theorem exists_stalk_field_hom : ∀ (Ω : Type) [Field Ω] (X : Scheme.{0}) (p : Sp Ω ⟶ X), (p.stalkMap (genericPoint (Sp Ω))).hom.Finite → ∃ φ : X.presheaf.stalk (p.base (genericPoint (Sp Ω))) →+* Ω, φ.Finite ∧ ∀ (K : Type) [Field K] (τ₁ τ₂ : Ω →+* K), spMap τ₁ ≫ p = spMap τ₂ ≫ p → τ₁.comp φ = τ₂.comp φ := by
+  intro Ω _ X p hfin
+  have hpt : genericPoint (Sp Ω) = IsLocalRing.closedPoint Ω := Subsingleton.elim _ _
+  rw [hpt] at hfin ⊢
+  refine ⟨(Scheme.stalkClosedPointTo p).hom, ?_, ?_⟩
+  · have e : Scheme.stalkClosedPointTo p = p.stalkMap _ ≫ (stalkClosedPointIso (CommRingCat.of Ω)).hom := rfl
+    rw [e, CommRingCat.hom_comp]
+    exact RingHom.Finite.comp (RingHom.Finite.of_surjective _
+      (ConcreteCategory.bijective_of_isIso (stalkClosedPointIso (CommRingCat.of Ω)).hom).2) hfin
+  · intro K _ τ₁ τ₂ h
+    have hs : ∀ τ : Ω →+* K, (spMap τ ≫ p) (IsLocalRing.closedPoint K) ⤳ p (IsLocalRing.closedPoint Ω) := by
+      intro τ
+      apply specializes_of_eq
+      exact congrArg p (Subsingleton.elim ((spMap τ).base (IsLocalRing.closedPoint K)) (IsLocalRing.closedPoint Ω))
+    have H : ∀ (q₁ q₂ : Sp K ⟶ X), q₁ = q₂ → ∀ (h₁ : q₁ (IsLocalRing.closedPoint K) ⤳ p (IsLocalRing.closedPoint Ω))
+        (h₂ : q₂ (IsLocalRing.closedPoint K) ⤳ p (IsLocalRing.closedPoint Ω)) a,
+        (Scheme.stalkClosedPointTo q₁).hom ((X.presheaf.stalkSpecializes h₁).hom a) =
+          (Scheme.stalkClosedPointTo q₂).hom ((X.presheaf.stalkSpecializes h₂).hom a) := by
+      rintro _ _ rfl _ _ _; rfl
+    ext a
+    simp only [RingHom.comp_apply]
+    rw [← GlobalTheory.TorRef.stalkClosedPointTo_comp_spMap_specializes X p τ₁ (hs τ₁) a,
+      ← GlobalTheory.TorRef.stalkClosedPointTo_comp_spMap_specializes X p τ₂ (hs τ₂) a]
+    exact H _ _ h _ _ a
+
+end GlobalTheory.StalkField
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteFieldEmbeddingStalkOfFiniteStalkMapStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem _root_.GlobalTheory.T.exists_finite_fieldEmbedding_stalk_of_finite_stalkMap : ∀ (Ω : Type) [Field Ω] (X : Scheme.{0}) (p : Sp Ω ⟶ X), (p.stalkMap (genericPoint (Sp Ω))).hom.Finite → ∃ φ : X.presheaf.stalk (p.base (genericPoint (Sp Ω))) →+* Ω, φ.Finite ∧ ∀ (K : Type) [Field K] (τ₁ τ₂ : Ω →+* K), spMap τ₁ ≫ p = spMap τ₂ ≫ p → τ₁.comp φ = τ₂.comp φ := by
+  first | exact @GlobalTheory.StalkField.exists_stalk_field_hom | exact GlobalTheory.StalkField.exists_stalk_field_hom | (intros; apply GlobalTheory.StalkField.exists_stalk_field_hom <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSetOfRingHomCompEqOfFinite
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory
+
+theorem finite_setOf_ringHom_comp_eq_of_finite : ∀ (A Ω K : Type) [CommRing A] [CommRing Ω] [Field K]
+    (φ : A →+* Ω) (ρ : A →+* K), φ.Finite → Set.Finite {τ : Ω →+* K | τ.comp φ = ρ} := by
+  intro A Ω K _ _ _ φ ρ hφ
+  classical
+  letI : Algebra A Ω := φ.toAlgebra
+  haveI : Module.Finite A Ω := hφ
+  obtain ⟨s, hs⟩ := Module.Finite.fg_top (R := A) (M := Ω)
+  haveI : Algebra.IsIntegral A Ω := Algebra.IsIntegral.of_finite A Ω
+  have hint : ∀ g : Ω, ∃ p : Polynomial A, p.Monic ∧ p.eval₂ φ g = 0 := fun g => by
+    obtain ⟨q, hq, he⟩ := Algebra.IsIntegral.isIntegral (R := A) g
+    exact ⟨q, hq, he⟩
+  choose p hpm hpe using hint
+  let F : (Ω →+* K) → (s → K) := fun τ g => τ g
+  apply Set.Finite.of_finite_image (f := F)
+  · refine Set.Finite.subset (Set.Finite.pi (t := fun g : s => (((p g).map ρ).roots.toFinset : Set K))
+      (fun _ => Finset.finite_toSet _)) ?_
+    rintro _ ⟨τ, hτ, rfl⟩ g _
+    have hτ' : τ.comp φ = ρ := hτ
+    simp only [Finset.mem_coe, Multiset.mem_toFinset]
+    rw [Polynomial.mem_roots ((hpm g).map ρ).ne_zero, Polynomial.IsRoot, Polynomial.eval_map,
+      ← hτ', ← Polynomial.hom_eval₂, hpe, map_zero]
+  · intro τ₁ h₁ τ₂ h₂ he
+    have h₁' : τ₁.comp φ = ρ := h₁
+    have h₂' : τ₂.comp φ = ρ := h₂
+    ext x
+    have hx : x ∈ Submodule.span A (s : Set Ω) := hs ▸ Submodule.mem_top
+    induction hx using Submodule.span_induction with
+    | mem y hy => exact congrFun he ⟨y, hy⟩
+    | zero => simp
+    | add y z _ _ hy hz => simp [hy, hz]
+    | smul a y _ hy =>
+      rw [Algebra.smul_def, map_mul, map_mul, hy]
+      congr 1
+      exact (RingHom.congr_fun h₁' a).trans (RingHom.congr_fun h₂' a).symm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSetOfRingHomCompEqOfFiniteStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem _root_.GlobalTheory.T.finite_setOf_ringHom_comp_eq_of_finite' : ∀ (A Ω K : Type) [CommRing A] [CommRing Ω] [Field K] (φ : A →+* Ω) (ρ : A →+* K), φ.Finite → Set.Finite {τ : Ω →+* K | τ.comp φ = ρ} := by
+  first | exact @GlobalTheory.finite_setOf_ringHom_comp_eq_of_finite | exact GlobalTheory.finite_setOf_ringHom_comp_eq_of_finite | (intros; apply GlobalTheory.finite_setOf_ringHom_comp_eq_of_finite <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFractionFieldOfFinitelyManyProportionalIma
+
+section
 
 @[expose] public section
 
@@ -160,3 +293,5 @@ theorem GlobalTheory.LevelFinite.finite_ratio_field : ∀ (o Ω : Type) [CommRin
     simp only [RingHom.coe_comp, Function.comp_apply, AlgHom.coe_toRingHom]
     rw [show (R.val.toRingHom (v i) : Ω) = v i from rfl, h i]
     simp
+end
+end

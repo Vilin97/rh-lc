@@ -2,20 +2,13 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussTubeOfTubeGood
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExponentialDecayByMidpointsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussianTubeTransformBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussianTubeTransformContinuousStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformContinuousStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformHolomorphicLinesStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformLocallyBoundedStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformRecoversFunctionStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TubeTransformIndependentOfBaseStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -29,7 +22,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,9 +41,144 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussianTubeTransformContinuousStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformContinuousStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformHolomorphicLinesStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExponentialFourierIntegralBoundStatement
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Basify
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformRecoversFunctionStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TubeTransformIndependentOfBaseStatement
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussianTubeTransformBound
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology PositivityTheory.RgEis GlobalTheory.CompanionTheory.TubeFourier
+
+namespace GlobalTheory.CompanionTheory.TubeFourier
+
+theorem integrable_gauss_one : Integrable (fun s : ℝ => Real.exp (-s ^ 2)) := by
+  simpa using integrable_exp_neg_mul_sq (b := 1) one_pos
+
+theorem integral_gauss_one : ∫ s : ℝ, Real.exp (-s ^ 2) = Real.sqrt Real.pi := by
+  simpa using integral_gaussian 1
+
+theorem integrable_gauss_prod :
+    Integrable (fun y : ℝ × ℝ => Real.exp (-y.1 ^ 2) * Real.exp (-y.2 ^ 2)) :=
+  Integrable.mul_prod integrable_gauss_one integrable_gauss_one
+
+theorem integral_gauss_prod :
+    ∫ y : ℝ × ℝ, Real.exp (-y.1 ^ 2) * Real.exp (-y.2 ^ 2) = Real.pi := by
+  rw [Measure.volume_eq_prod, integral_prod_mul (fun s : ℝ => Real.exp (-s ^ 2)) (fun s : ℝ => Real.exp (-s ^ 2)),
+    integral_gauss_one, Real.mul_self_sqrt Real.pi_pos.le]
+
+theorem re_dot_pt (x y t : ℝ × ℝ) : (dot (pt x y) t).re = rdot x t := by
+  simp [dot, pt, rdot, Complex.mul_re]
+
+theorem norm_phi_le : ∀ (X : Type) [NormedAddCommGroup X] [NormedSpace ℂ X] (G : ℂ × ℂ → X) (x : ℝ × ℝ) (M : ℝ),
+    (∀ y : ℝ × ℝ, ‖G (pt x y)‖ ≤ M * Real.exp (-(y.1 ^ 2 + y.2 ^ 2))) →
+    ∀ t : ℝ × ℝ, ‖phi G x t‖ ≤ M * Real.pi * Real.exp (-rdot x t) := by
+  intro X _ _ G x M hG t
+  have hb : ∀ y : ℝ × ℝ, ‖Complex.exp (-dot (pt x y) t) • G (pt x y)‖ ≤
+      M * Real.exp (-rdot x t) * (Real.exp (-y.1 ^ 2) * Real.exp (-y.2 ^ 2)) := by
+    intro y
+    rw [norm_smul, Complex.norm_exp, Complex.neg_re, re_dot_pt]
+    calc Real.exp (-rdot x t) * ‖G (pt x y)‖
+        ≤ Real.exp (-rdot x t) * (M * Real.exp (-(y.1 ^ 2 + y.2 ^ 2))) :=
+          mul_le_mul_of_nonneg_left (hG y) (Real.exp_pos _).le
+      _ = M * Real.exp (-rdot x t) * (Real.exp (-y.1 ^ 2) * Real.exp (-y.2 ^ 2)) := by
+          rw [neg_add, Real.exp_add]; ring
+  unfold phi
+  calc ‖∫ y : ℝ × ℝ, Complex.exp (-dot (pt x y) t) • G (pt x y)‖
+      ≤ ∫ y : ℝ × ℝ, M * Real.exp (-rdot x t) * (Real.exp (-y.1 ^ 2) * Real.exp (-y.2 ^ 2)) :=
+        norm_integral_le_of_norm_le (Integrable.const_mul integrable_gauss_prod _) (Eventually.of_forall hb)
+    _ = M * Real.pi * Real.exp (-rdot x t) := by
+        rw [integral_const_mul, integral_gauss_prod]; ring
+
+end GlobalTheory.CompanionTheory.TubeFourier
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaussianTubeTransformBoundStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology PositivityTheory.RgEis GlobalTheory.CompanionTheory.TubeFourier
+
+theorem _root_.GlobalTheory.T.gaussian_tube_transform_bound : ∀ (X : Type) [NormedAddCommGroup X] [NormedSpace ℂ X] (G : ℂ × ℂ → X) (x : ℝ × ℝ) (M : ℝ), (∀ y : ℝ × ℝ, ‖G (pt x y)‖ ≤ M * Real.exp (-(y.1 ^ 2 + y.2 ^ 2))) → ∀ t : ℝ × ℝ, ‖phi G x t‖ ≤ M * Real.pi * Real.exp (-rdot x t) := by
+  first | exact @GlobalTheory.CompanionTheory.TubeFourier.norm_phi_le | exact GlobalTheory.CompanionTheory.TubeFourier.norm_phi_le | (intros; apply GlobalTheory.CompanionTheory.TubeFourier.norm_phi_le <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformLocallyBounded
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology PositivityTheory.RgEis GlobalTheory.CompanionTheory.TubeFourier
+
+namespace GlobalTheory.CompanionTheory.TubeFourier
+
+theorem inv_bounded_on_tube : ∀ (X : Type) [NormedAddCommGroup X] [NormedSpace ℂ X] (T : Type) [TopologicalSpace T]
+    (φ : ℝ × ℝ → T → X), ExpDecay φ → (∀ g : T, Continuous fun t => φ t g) → ∀ C : Set (ℝ × ℝ), IsCompact C →
+    ∀ g : T, ∃ U ∈ 𝓝 g, ∃ M : ℝ, ∀ l ∈ tube C, ∀ g' ∈ U, ‖inv (fun t => φ t g') l‖ ≤ M := by
+  intro X _ _ T _ φ hφ hc C hC g
+  choose ε hε U hU M hM using fun x₀ : ℝ × ℝ => hφ x₀ g
+  have hnhds : ∀ x ∈ C, {y : ℝ × ℝ | |y.1 - x.1| < ε x ∧ |y.2 - x.2| < ε x} ∈ 𝓝 x := by
+    intro x _
+    have h1 : Continuous fun y : ℝ × ℝ => |y.1 - x.1| := by fun_prop
+    have h2 : Continuous fun y : ℝ × ℝ => |y.2 - x.2| := by fun_prop
+    refine ((isOpen_lt h1 continuous_const).inter (isOpen_lt h2 continuous_const)).mem_nhds ?_
+    simpa using hε x
+  obtain ⟨s, -, hcov⟩ := hC.elim_nhds_subcover _ hnhds
+  refine ⟨⋂ x ∈ s, U x, (Filter.biInter_finset_mem s).2 fun x _ => hU x,
+    ‖(((2 * Real.pi) ^ 2 : ℂ)⁻¹)‖ * ∑ x ∈ s, |M x| * (2 / ε x) ^ 2, ?_⟩
+  intro l hl g' hg'
+  have hlC : ((l.1.re, l.2.re) : ℝ × ℝ) ∈ C := hl
+  obtain ⟨x₀, hx₀, h1, h2⟩ := Set.mem_iUnion₂.1 (hcov hlC)
+  have hgU : g' ∈ U x₀ := Set.mem_iInter₂.1 hg' x₀ hx₀
+  have hb := (GlobalTheory.T.exponential_fourier_integral_bound X (fun t => φ t g') l (ε x₀) (M x₀) (hε x₀) (hc g')
+    fun t => hM x₀ (l.1.re, l.2.re) h1.le h2.le g' hgU t).2
+  have hterm : M x₀ * (2 / ε x₀) ^ 2 ≤ |M x₀| * (2 / ε x₀) ^ 2 :=
+    mul_le_mul_of_nonneg_right (le_abs_self _) (sq_nonneg _)
+  have hsum : |M x₀| * (2 / ε x₀) ^ 2 ≤ ∑ x ∈ s, |M x| * (2 / ε x) ^ 2 :=
+    Finset.single_le_sum (f := fun x => |M x| * (2 / ε x) ^ 2)
+      (fun x _ => mul_nonneg (abs_nonneg _) (sq_nonneg _)) hx₀
+  simp only [inv]
+  rw [norm_smul]
+  exact mul_le_mul_of_nonneg_left (hb.trans (hterm.trans hsum)) (norm_nonneg _)
+
+end GlobalTheory.CompanionTheory.TubeFourier
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InverseTransformLocallyBoundedStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology PositivityTheory.RgEis GlobalTheory.CompanionTheory.TubeFourier
+
+theorem _root_.GlobalTheory.T.inverse_transform_locally_bounded : ∀ (X : Type) [NormedAddCommGroup X] [NormedSpace ℂ X] (T : Type) [TopologicalSpace T] (φ : ℝ × ℝ → T → X), ExpDecay φ → (∀ g : T, Continuous fun t => φ t g) → ∀ C : Set (ℝ × ℝ), IsCompact C → ∀ g : T, ∃ U ∈ 𝓝 g, ∃ M : ℝ, ∀ l ∈ tube C, ∀ g' ∈ U, ‖inv (fun t => φ t g') l‖ ≤ M := by
+  first | exact @GlobalTheory.CompanionTheory.TubeFourier.inv_bounded_on_tube | exact GlobalTheory.CompanionTheory.TubeFourier.inv_bounded_on_tube | (intros; apply GlobalTheory.CompanionTheory.TubeFourier.inv_bounded_on_tube <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TubeChainHolds
+
+section
 
 @[expose] public section
 
@@ -182,3 +308,6 @@ theorem tubeChain : TubeChain := by
     simpa [G, gauss] using key
 
 end GlobalTheory.CompanionTheory.TubeFourier
+end
+end
+end

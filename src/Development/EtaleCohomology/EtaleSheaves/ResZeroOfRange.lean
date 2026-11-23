@@ -4,13 +4,7 @@ public import Development.EtaleCohomology.EtaleSheaves.CovOfPoints
 public import Development.EtaleCohomology.EtaleSheaves.LeafTwSecKillCut
 public import Development.EtaleCohomology.EtaleSheaves.LeafConeExactPf
 public import Development.EtaleCohomology.EtaleSheaves.LeafNegPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafOfRingsLocInjPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafOfRingsLocSurjPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafTwAdjPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafTwFieldZPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafTwGenPf
-public import Development.EtaleCohomology.EtaleSheaves.LeafTwPtPf
-public import Development.EtaleCohomology.EtaleSheaves.PointDetect0Of
+import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -49,6 +43,253 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.RingTheory.Etale.StandardEtale
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwFieldZPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwGenPf
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
+import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafOfRingsLocInjPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.E.E8.TwSec
+
+theorem jointlySurj_prec (P : MorphismProperty Scheme.{0}) : Scheme.JointlySurjective (Scheme.precoverage P) :=
+  inferInstance
+
+theorem LeafOfRingsLocInj_of : LeafOfRingsLocInj := by
+  intro R _ M U t ht u
+  have h0 : (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).app (op U) t =
+      (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).app (op U) 0 := by
+    have : ofRings.sec M U t = 0 := ht
+    simp only [ofRings.sec] at this
+    rw [map_zero]
+    exact this
+  have hS := Presheaf.equalizerSieve_mem Scheme.etaleTopology
+    (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)) t 0 h0
+  obtain ⟨𝒰, hle⟩ := Scheme.exists_cover_of_mem_grothendieckTopology hS
+  have := jointlySurj_prec @Etale
+  obtain ⟨i, y, hy⟩ := 𝒰.exists_eq u
+  refine ⟨𝒰.X i, 𝒰.f i, 𝒰.map_prop i, ⟨y, hy⟩, ?_⟩
+  have hm := hle _ _ (Presieve.ofArrows.mk i)
+  have hm' : ((Scheme.Γ ⋙ M).map (𝒰.f i).op).hom t = ((Scheme.Γ ⋙ M).map (𝒰.f i).op).hom 0 := hm
+  rw [map_zero] at hm'
+  exact hm'
+
+end LateralTheory.E.E8.TwSec
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafOfRingsLocSurjPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.E.LeafOfRingsLocSurjPf
+
+theorem cover_hit {X : Scheme.{0}} (S : Sieve X) (hS : S ∈ Scheme.etaleTopology X) (x : X) :
+    ∃ (U : Scheme.{0}) (w : U ⟶ X), Etale w ∧ x ∈ Set.range w ∧ S.arrows w := by
+  obtain ⟨𝒰, h𝒰⟩ := (Scheme.mem_grothendieckTopology_iff).1 hS
+  obtain ⟨i, hi⟩ := ((Scheme.presieve₀_mem_precoverage_iff _).1 𝒰.mem₀).1 x
+  exact ⟨𝒰.X i, 𝒰.f i, 𝒰.map_prop i, hi, h𝒰 _ _ (Presieve.ofArrows.mk i)⟩
+
+theorem LeafOfRingsLocSurj_of : LateralTheory.E.E8.TwSec.LeafOfRingsLocSurj := by
+  intro R _ M X s x
+  have hS := Presheaf.imageSieve_mem Scheme.etaleTopology
+    (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)) (U := op X) s
+  obtain ⟨U, w, hw, hx, t, ht⟩ := cover_hit _ hS x
+  exact ⟨U, w, hw, hx, t, ht.symm⟩
+
+end LateralTheory.E.LeafOfRingsLocSurjPf
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafTwAdjPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC Polynomial
+
+namespace LateralTheory.E.E8.TwSec
+
+theorem twAdj_comap_surj (A : Type) [CommRing A] (q : ℕ) [NeZero q] :
+    Function.Surjective (PrimeSpectrum.comap (algebraMap A (AdjoinRoot (cyclotomic q A)))) := by
+  have hm := cyclotomic.monic q A
+  have := Module.Free.of_basis (AdjoinRoot.powerBasis' hm).basis
+  have : Module.Finite A (AdjoinRoot (cyclotomic q A)) :=
+    Module.Finite.of_basis (AdjoinRoot.powerBasis' hm).basis
+  intro p
+  have : Nontrivial A := by
+    rcases subsingleton_or_nontrivial A with h | h
+    · exact absurd (Subsingleton.elim p.asIdeal ⊤) p.isPrime.ne_top
+    · exact h
+  have : Nontrivial (AdjoinRoot (cyclotomic q A)) := by
+    have hd : 0 < (cyclotomic q A).natDegree := by
+      rw [natDegree_cyclotomic]; exact Nat.totient_pos.2 (NeZero.pos q)
+    have : Nonempty (Fin (cyclotomic q A).natDegree) := ⟨⟨0, hd⟩⟩
+    exact (AdjoinRoot.powerBasisAux' hm).repr.symm.injective.nontrivial
+  exact Algebra.IsIntegral.comap_surjective A _ p
+
+theorem twAdj_etale (A : Type) [CommRing A] (q : ℕ) (hq : IsUnit (q : A)) :
+    Algebra.Etale A (AdjoinRoot (cyclotomic q A)) := by
+  have hsep : (cyclotomic q A).Separable :=
+    (separable_X_pow_sub_C_unit (1 : Aˣ) hq).of_dvd (by simpa using cyclotomic.dvd_X_pow_sub_one q A)
+  obtain ⟨a, b, hab⟩ := hsep
+  let P : StandardEtalePair A := ⟨cyclotomic q A, cyclotomic.monic q A, 1,
+    ⟨b, a, 0, by rw [pow_zero, ← hab]; ring⟩⟩
+  let e1 : P.Ring ≃ₐ[A] Localization.Away (AdjoinRoot.mk (cyclotomic q A) 1) := P.equivAwayAdjoinRoot
+  let e2 : AdjoinRoot (cyclotomic q A) ≃ₐ[AdjoinRoot (cyclotomic q A)]
+      Localization.Away (AdjoinRoot.mk (cyclotomic q A) 1) :=
+    IsLocalization.atUnit _ _ (AdjoinRoot.mk (cyclotomic q A) 1) (by rw [map_one]; exact isUnit_one)
+  have := Algebra.IsStandardEtale.of_equiv (e1.trans (e2.symm.restrictScalars A))
+  infer_instance
+
+theorem LeafTwAdj_of : LeafTwAdj := by
+  intro q _ U u hq
+  obtain ⟨R, f, hf, ⟨x, rfl⟩, -⟩ :=
+    Scheme.exists_affine_mem_range_and_range_subset (X := U) (x := u) (U := ⊤) (by simp)
+  have hqR : IsUnit ((q : ℕ) : R) := by
+    simpa using (hq.map f.appTop.hom).map (Scheme.ΓSpecIso R).hom.hom
+  have := twAdj_etale R q hqR
+  let φ : R ⟶ CommRingCat.of (AdjoinRoot (cyclotomic q R)) :=
+    CommRingCat.ofHom (algebraMap R (AdjoinRoot (cyclotomic q R)))
+  have hφ : Etale (Spec.map φ) :=
+    HasRingHomProperty.Spec_iff.mpr (RingHom.etale_algebraMap.mpr this)
+  refine ⟨Spec (.of (AdjoinRoot (cyclotomic q R))), Spec.map φ ≫ f, inferInstance, ?_, ?_⟩
+  · obtain ⟨y, hy⟩ := twAdj_comap_surj R q x
+    refine ⟨y, ?_⟩
+    subst hy
+    rfl
+  · let ψ := (Scheme.ΓSpecIso (CommRingCat.of (AdjoinRoot (cyclotomic q R)))).inv.hom
+    refine ⟨⟨ψ (AdjoinRoot.root _), ?_, ?_⟩⟩
+    · simpa using (hqR.map (algebraMap R (AdjoinRoot (cyclotomic q R)))).map ψ
+    · have h0 : aeval (AdjoinRoot.root (cyclotomic q R)) (cyclotomic q ℤ) = 0 := by
+        rw [← aeval_map_algebraMap R, map_cyclotomic, AdjoinRoot.aeval_eq, AdjoinRoot.mk_self]
+      have := aeval_algHom_apply ψ.toIntAlgHom (AdjoinRoot.root (cyclotomic q R)) (cyclotomic q ℤ)
+      rw [h0, map_zero] at this
+      exact this
+
+end LateralTheory.E.E8.TwSec
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafTwPtPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.E.E8.TwSec
+
+theorem twF_res_comp {q : ℕ} (j : ℤ) {X Y Z : Scheme.{0}} (a : X ⟶ Y) (b : Y ⟶ Z) (x : (twF q j).obj Γ(Z, ⊤)) :
+    ((twF q j).map (Scheme.Γ.map (a ≫ b).op)).hom x =
+      ((twF q j).map (Scheme.Γ.map a.op)).hom (((twF q j).map (Scheme.Γ.map b.op)).hom x) := by
+  rw [op_comp, Functor.map_comp, Functor.map_comp]; rfl
+
+theorem twF_map_cls {q : ℕ} (j : ℤ) {A B : CommRingCat.{0}} (f : A ⟶ B) (ζ : Prim q A) (c : ZMod q) :
+    ((twF q j).map f).hom (ULift.up c • twCls j ζ) = ULift.up c • twCls j (ζ.map f.hom) := by
+  rw [map_smul]
+  congr 1
+  unfold twCls
+  change Submodule.mapQ _ _ _ (twRel_le q j f.hom) _ = _
+  rw [Submodule.mapQ_apply, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+
+theorem twF_eq_zero_of_not_unit {q : ℕ} (j : ℤ) {A : CommRingCat.{0}} (hq : ¬ IsUnit (q : A)) (t : (twF q j).obj A) :
+    t = 0 := by
+  haveI : IsEmpty (Prim q A) := ⟨fun ζ => hq ζ.2.1⟩
+  obtain ⟨f, rfl⟩ := Submodule.Quotient.mk_surjective _ t
+  rw [Subsingleton.elim f 0]
+  exact Submodule.Quotient.mk_zero _
+
+theorem LeafTwPt_of (hA : LeafTwAdj) (hG : LeafTwGen) (hF : LeafTwFieldZ) : LeafTwPt := by
+  intro q _ j U u t V g v hgv ht
+  by_cases hq : IsUnit (q : Γ(U, ⊤))
+  swap
+  · refine ⟨U, 𝟙 U, inferInstance, ⟨u, rfl⟩, ?_⟩
+    rw [twF_eq_zero_of_not_unit j hq t]; exact map_zero _
+  obtain ⟨W₁, w₁, hw₁, ⟨w, hw⟩, ⟨ζ⟩⟩ := hA q U u hq
+  haveI := hw₁
+  obtain ⟨O, c, hwO, hO⟩ := hG q j W₁ ζ (((twF q j).map (Scheme.Γ.map w₁.op)).hom t) w
+  have hO' : ((twF q j).map (Scheme.Γ.map (O.ι ≫ w₁).op)).hom t =
+      ULift.up c • twCls j (ζ.map (Scheme.Γ.map O.ι.op).hom) := by
+    rw [twF_res_comp, hO]; exact twF_map_cls j _ ζ c
+  obtain ⟨p, hp1, hp2⟩ := Scheme.Pullback.exists_preimage_pullback (f := O.ι ≫ w₁) (g := g)
+    (⟨w, hwO⟩ : O.toScheme) v (by rw [hgv]; exact hw)
+  have hc : c = 0 := by
+    let P := pullback (O.ι ≫ w₁) g
+    let φ := P.evaluation ⊤ p trivial
+    have e : ((twF q j).map (Scheme.Γ.map (pullback.fst (O.ι ≫ w₁) g ≫ O.ι ≫ w₁).op)).hom t = 0 := by
+      rw [pullback.condition, twF_res_comp, ht, map_zero]
+    rw [twF_res_comp, hO', twF_map_cls] at e
+    have key := twF_map_cls j φ (Prim.map (Scheme.Γ.map (pullback.fst (O.ι ≫ w₁) g).op).hom
+      (Prim.map (Scheme.Γ.map O.ι.op).hom ζ)) c
+    exact hF q j (P.residueField p) (Field.toIsField _) _ c
+      (key.symm.trans ((congrArg (fun x => ((twF q j).map φ).hom x) e).trans (map_zero _)))
+  refine ⟨O, O.ι ≫ w₁, inferInstance, ⟨⟨w, hwO⟩, hw⟩, ?_⟩
+  rw [hO', hc]
+  exact zero_smul (ULift (ZMod q)) _
+
+end LateralTheory.E.E8.TwSec
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.PointDetect0Of
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.E4
+
+namespace LateralTheory.E.PointDetect0Pf
+
+def EtSep : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) (X : Scheme.{0}) (s : Sec F X),
+  (∀ x : X, ∃ (U : Scheme.{0}) (g : U ⟶ X), Etale g ∧ x ∈ Set.range g.base ∧ Sec.res g s = 0) → s = 0
+
+theorem etSep : EtSep := by
+  intro R _ F X s h
+  choose U g hE hx h0 using h
+  have hR : Presieve.ofArrows U g ∈ Scheme.precoverage @Etale X := by
+    exact (Scheme.ofArrows_mem_precoverage_iff @Etale).2 ⟨fun x => ⟨x, hx x⟩, hE⟩
+  have hT : Presieve.IsSheaf Scheme.etaleTopology (F.obj ⋙ forget (ModuleCat.{1} (ULift.{1} R))) := by
+    have := (Presheaf.isSheaf_iff_isSheaf_forget Scheme.etaleTopology F.obj (forget _)).1 F.property
+    exact (isSheaf_iff_isSheaf_of_type _ _).1 this
+  apply (hT.isSheafFor_of_mem_precoverage hR).isSeparatedFor.ext
+  rintro Y f ⟨x⟩
+  change Sec.res (g x) s = (F.obj.map (g x).op).hom 0
+  rw [h0 x, map_zero]
+
+end LateralTheory.E.PointDetect0Pf
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.ResZeroOfRange
+
+section
 
 @[expose] public section
 
@@ -169,3 +410,6 @@ theorem LeafSurj0W_of : LateralTheory.E.LeafSurj0Pf.LeafSurj0W := by
   exact core hy.2.2.2.2.2.2.2.1 q i ι (g2 ≫ g1 ≫ p) U y x hx
 
 end LateralTheory.E.LeafSurj0WPf
+end
+end
+end

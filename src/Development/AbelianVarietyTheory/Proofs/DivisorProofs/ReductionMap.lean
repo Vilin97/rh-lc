@@ -4,8 +4,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboun
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsQuasiLogRedStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MvPowerSeriesReductionModPrimeRulesStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiLogReducesStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiLogarithmEqPSmulAddIntegralStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReductionCommutesFormalGroupLawCoboundariesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegreePartIntegralDifferentialOfCoboundaryStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,6 +44,203 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MvPowerSeriesReductionModPrimeRulesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReductionCommutesFormalGroupLawCoboundariesStatement
+import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Embedding
+import Mathlib.RingTheory.WittVector.DiscreteValuationRing
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReductionCommutesFormalGroupLawCoboundariesStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KatzQuasiIntegralCriterion
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+namespace GlobalTheory.Katz
+
+theorem quasiInt_of_cob1_int_of_lin_int : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) k), IsLaw μ → ∀ f : MvPowerSeries (Fin d) (Fr p k), (∀ i, ∃ w : WittVector p k, lin f i = algebraMap (WittVector p k) (Fr p k) w) → cob1 (fun i => Katz.lift p (μ i)) f ∈ intBy p k _ 1 → f ∈ quasiInt p k (Fin d) := by
+  intro p _ k _ _ _ d μ hμ f hlin hcob
+  have key : ∀ N, ∀ α : Fin d →₀ ℕ, α.degree = N → ∀ i, ∃ w : WittVector p k,
+      (α i : Fr p k) * coeff α f = algebraMap (WittVector p k) (Fr p k) w := by
+    intro N
+    induction N using Nat.strong_induction_on with
+    | _ N ih =>
+      intro α hα i
+      rcases Nat.lt_or_ge N 2 with hN | hN
+      · interval_cases N
+        · have h0 : α = 0 := (Finsupp.degree_eq_zero_iff α).1 hα
+          subst h0
+          exact ⟨0, by simp⟩
+        · by_cases hi : α i = 0
+          · exact ⟨0, by simp [hi]⟩
+          · have hα' : α ∈ Set.range (fun a : Fin d ↦ Finsupp.single a 1) := by
+              rw [Finsupp.range_single_one]; exact hα
+            obtain ⟨a, rfl⟩ := hα'
+            have hai : a = i := by
+              by_contra hne
+              exact hi (Finsupp.single_eq_of_ne (Ne.symm hne))
+            subst hai
+            obtain ⟨w, hw⟩ := hlin a
+            refine ⟨w, ?_⟩
+            simp only [Finsupp.single_eq_same, Nat.cast_one, one_mul]
+            exact hw
+      · let g : MvPowerSeries (Fin d) (Fr p k) := fun β => if β.degree < N then coeff β f else 0
+        have hg : ∀ β, coeff β g = if β.degree < N then coeff β f else 0 := fun β => rfl
+        have hgq : g ∈ quasiInt p k (Fin d) := by
+          show ∀ (β : Fin d →₀ ℕ) (j : Fin d), ∃ w : WittVector p k,
+            (β j : Fr p k) * coeff β g = algebraMap _ (Fr p k) w
+          intro β j
+          by_cases hβ : β.degree < N
+          · obtain ⟨w, hw⟩ := ih β.degree hβ β rfl j
+            refine ⟨w, ?_⟩
+            rw [hg, if_pos hβ]; exact hw
+          · exact ⟨0, by rw [hg, if_neg hβ]; simp⟩
+        have hh : ∀ β : Fin d →₀ ℕ, β.degree < N → coeff β (f - g) = 0 := by
+          intro β hβ
+          rw [map_sub, hg, if_pos hβ, sub_self]
+        have hc : ∀ γ : Fin d ⊕ Fin d →₀ ℕ, γ.degree = N → ∃ w : WittVector p k,
+            coeff γ (cob1 (fun i => Katz.lift p (μ i)) (g + (f - g))) =
+              algebraMap (WittVector p k) (Fr p k) w := by
+          intro γ _
+          rw [add_sub_cancel]
+          obtain ⟨w, hw⟩ := hcob γ
+          exact ⟨1 * w, hw⟩
+        obtain ⟨w, hw⟩ := GlobalTheory.T.degree_part_integralDifferential_of_coboundary p k d μ hμ N g (f - g) hN hgq hh hc α i hα
+        refine ⟨w, ?_⟩
+        have hfα : coeff α (f - g) = coeff α f := by
+          rw [map_sub, hg, if_neg (by omega), sub_zero]
+        rw [← hfα]; exact hw
+  show ∀ (α : Fin d →₀ ℕ) (i : Fin d), ∃ w : WittVector p k,
+    (α i : Fr p k) * coeff α f = algebraMap _ (Fr p k) w
+  intro α i
+  exact key _ α rfl i
+
+end GlobalTheory.Katz
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KatzQuasiIntegralCriterionStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+theorem _root_.GlobalTheory.T.katz_quasi_integral_criterion : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) k), IsLaw μ → ∀ f : MvPowerSeries (Fin d) (Fr p k), (∀ i, ∃ w : WittVector p k, lin f i = algebraMap (WittVector p k) (Fr p k) w) → cob1 (fun i => Katz.lift p (μ i)) f ∈ intBy p k _ 1 → f ∈ quasiInt p k (Fin d) := by
+  first | exact @GlobalTheory.Katz.quasiInt_of_cob1_int_of_lin_int | exact GlobalTheory.Katz.quasiInt_of_cob1_int_of_lin_int | (intros; apply GlobalTheory.Katz.quasiInt_of_cob1_int_of_lin_int <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiLogarithmEqPSmulAddIntegral
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.Katz
+
+theorem exists_p_mul_of_constantCoeff_eq_zero (p : ℕ) [Fact p.Prime] {k : Type} [Field k]
+    [CharP k p] [PerfectRing k p] (a : WittVector p k) (ha : WittVector.constantCoeff a = 0) :
+    ∃ c : WittVector p k, a = (p : WittVector p k) * c := by
+  by_cases h0 : a = 0
+  · exact ⟨0, by simp [h0]⟩
+  obtain ⟨m, b, hb, rfl⟩ := WittVector.exists_eq_pow_p_mul a h0
+  cases m with
+  | zero =>
+    exfalso; apply hb
+    simpa using ha
+  | succ m => exact ⟨(p : WittVector p k) ^ m * b, by ring⟩
+
+theorem formalGroupLawCoboundaryOne_sub_eq {R : Type} [CommRing R] {d : ℕ} {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R}
+    (h : ∀ i, constantCoeff (μ i) = 0) (f g : MvPowerSeries (Fin d) R) :
+    cob1 μ (f - g) = cob1 μ f - cob1 μ g := by
+  have := formalCoboundary_add h (f - g) g
+  rw [sub_add_cancel] at this
+  rw [this]; abel
+
+theorem quasiLog_eq_p_smul_add_int : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
+    [PerfectRing k p] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) k) (h : IsLaw μ),
+    ∀ f ∈ quasiLog p h, ∀ b, Red p (cob1 (fun i => Katz.lift p (μ i)) f) (cob1 μ b) →
+      RedV p (lin f) (lin b) →
+      ∃ g ∈ quasiLog p h, f - (p : WittVector p k) • g ∈ intBy p k (Fin d) 1 := by
+  intro p _ k _ _ _ d μ h f hf b hcf hlf
+  obtain ⟨R1, -, R3, R4, -, R6, ZariskiNoetherianInduction⟩ := GlobalTheory.T.mvPowerSeries_reduction_mod_prime_rules p k (Fin d)
+  obtain ⟨-, R1', -, -⟩ := GlobalTheory.T.mvPowerSeries_reduction_mod_prime_rules p k (Fin d ⊕ Fin d)
+  have hL : ∀ i, constantCoeff (Katz.lift p (μ i)) = 0 := fun i => constantCoeff_lift p (h.const i)
+  obtain ⟨-, C2, -, -⟩ := GlobalTheory.T.reduction_commutes_formalGroupLawCoboundaries p k d μ h.const
+  obtain ⟨hcb, hlb⟩ := C2 (Katz.lift p b) b (R3 b)
+  set f' := f - Katz.lift p b with hf'
+
+  have hc' : cob1 (fun i => Katz.lift p (μ i)) f' ∈ intBy p k (Fin d ⊕ Fin d) (p : WittVector p k) := by
+    obtain ⟨-, -, -, S4, -, S6, -⟩ := GlobalTheory.T.mvPowerSeries_reduction_mod_prime_rules p k (Fin d ⊕ Fin d)
+    rw [S6, hf', formalGroupLawCoboundaryOne_sub_eq hL]
+    have := (S4 _ _ _ _ hcf hcb).2
+    rwa [sub_self] at this
+  obtain ⟨-, -, -, -, -, -, S7⟩ := GlobalTheory.T.mvPowerSeries_reduction_mod_prime_rules p k (Fin d ⊕ Fin d)
+  obtain ⟨c0, hc0, hc0e⟩ := (S7 _ _).1 hc'
+  have hpW : (p : WittVector p k) ≠ 0 := WittVector.p_nonzero p k
+  have hpF : (p : Fr p k) ≠ 0 := by
+    have : (p : Fr p k) = algebraMap (WittVector p k) (Fr p k) (p : WittVector p k) := by simp
+    rw [this]
+    exact fun h0 => hpW (IsFractionRing.injective (WittVector p k) (Fr p k) (by simpa using h0))
+  have hsm : ∀ {σ : Type} (x : MvPowerSeries σ (Fr p k)),
+      (p : WittVector p k) • x = (p : Fr p k) • x := by
+    intro σ x
+    rw [← algebraMap_smul (Fr p k) (p : WittVector p k) x]
+    simp
+  have hcg : cob1 (fun i => Katz.lift p (μ i)) ((p : Fr p k)⁻¹ • f') ∈ intBy p k _ 1 := by
+    rw [formalCoboundary_smul hL, hc0e, hsm, smul_smul, inv_mul_cancel₀ hpF, one_smul]
+    exact hc0
+  refine ⟨(p : Fr p k)⁻¹ • f', ⟨?_, hcg⟩, ?_⟩
+  · apply GlobalTheory.T.katz_quasi_integral_criterion p k d μ h _ _ hcg
+    intro i
+    obtain ⟨a, ha, ha0⟩ := hlf i
+    obtain ⟨a', ha', ha0'⟩ := hlb i
+    obtain ⟨c, hc⟩ := exists_p_mul_of_constantCoeff_eq_zero p (a - a') (by
+      rw [map_sub, ha0, ha0', sub_self])
+    refine ⟨c, ?_⟩
+    have e1 : lin f' i = algebraMap (WittVector p k) (Fr p k) (a - a') := by
+      simp only [lin, hf', map_sub] at ha ha' ⊢
+      rw [ha, ha']
+    have e2 : lin ((p : Fr p k)⁻¹ • f') i = (p : Fr p k)⁻¹ * lin f' i := by
+      simp [lin]
+    rw [e2, e1, hc, map_mul]
+    simp [hpF]
+  · rw [hsm, smul_smul, mul_inv_cancel₀ hpF, one_smul, hf', sub_sub_cancel]
+    exact (R1 _).2 ⟨b, R3 b⟩
+
+end GlobalTheory.Katz
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiLogarithmEqPSmulAddIntegralStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct MvPowerSeries GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Katz
+
+theorem _root_.GlobalTheory.T.quasiLogarithm_eq_p_smul_add_integral : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) k) (h : IsLaw μ), ∀ f ∈ quasiLog p h, ∀ b, Red p (cob1 (fun i => Katz.lift p (μ i)) f) (cob1 μ b) → RedV p (lin f) (lin b) → ∃ g ∈ quasiLog p h, f - (p : WittVector p k) • g ∈ intBy p k (Fin d) 1 := by
+  first | exact @GlobalTheory.Katz.quasiLog_eq_p_smul_add_int | exact GlobalTheory.Katz.quasiLog_eq_p_smul_add_int | (intros; apply GlobalTheory.Katz.quasiLog_eq_p_smul_add_int <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReductionMap
+
+section
 
 @[expose] public section
 
@@ -146,3 +343,5 @@ theorem Katz.reductionMap : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [C
       rw [← hΦ, this, map_nsmul, ← Nat.cast_smul_eq_nsmul k, CharP.cast_eq_zero, zero_smul]
 
 end GlobalTheory
+end
+end

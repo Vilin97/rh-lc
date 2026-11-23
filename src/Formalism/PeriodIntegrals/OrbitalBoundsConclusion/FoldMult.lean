@@ -1,7 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.FoldMult
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MultiplicityMeasurability.MeasurableMult
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.FoldBound
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,7 +39,38 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MultiplicityMeasurability.MeasurableMult
+
+-- Source module: Formalism.PeriodIntegrals.FoldMult
+
+section
+
+@[expose] public section
+
+open MeasureTheory
+open scoped ENNReal NNReal
+
+namespace PI.FoldMult
+
+def FoldMult : Prop :=
+  ∀ (G : Type*) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G]
+    [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
+    (Γ : Subgroup G), DiscreteTopology Γ →
+  ∀ (Ω : Set G), IsCompact Ω → (1 : G) ∈ Ω →
+    (∀ x : G, 1 ≤ Formalism.L2.SG.FoldBound.mult Γ Ω x) ∧
+    (∀ x : G, Formalism.L2.SG.FoldBound.mult Γ Ω x < ⊤) ∧
+    (∀ γ ∈ Γ, ∀ x : G, Formalism.L2.SG.FoldBound.mult Γ Ω (γ * x) = Formalism.L2.SG.FoldBound.mult Γ Ω x) ∧
+    Measurable (Formalism.L2.SG.FoldBound.mult Γ Ω)
+
+end PI.FoldMult
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FoldMult
+
+section
 
 @[expose] public section
 
@@ -50,3 +80,5 @@ theorem overlapMultiplicityProperties : PI.FoldMult.FoldMult := by
   intro G _ _ _ _ _ _ _ Γ hΓ Ω hΩ h1
   exact ⟨fun x => one_le_mult Γ Ω h1 x, fun x => mult_lt_top Γ Ω hΩ x,
     fun γ hγ x => mult_mul_left Γ Ω γ hγ x, measurable_mult Γ Ω hΩ⟩
+end
+end

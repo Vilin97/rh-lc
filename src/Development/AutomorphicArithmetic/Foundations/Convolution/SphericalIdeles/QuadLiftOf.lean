@@ -3,11 +3,14 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.RamDefs
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsWeight
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.NormRam
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.QuadLiftUnr
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CuspidalTwistRamifiedCharNeSelfStatement
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.LiftUnr
+import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.NormRam
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -26,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,6 +42,30 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.QuadLiftUnr
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem UpperTheory.ConvolutionTheory.Sph.quadLiftUnr :
+    UpperTheory.ConvolutionTheory.Sph.QuadLiftUnr := by
+  intro K M _ _ _ _ _ _ _ h2 a ha π ⟨w, hram, B, hB⟩
+  haveI : Algebra.IsQuadraticExtension K M := ⟨h2⟩
+  haveI : IsGalois K M := inferInstance
+  have hp : (Module.finrank K M).Prime := h2 ▸ Nat.prime_two
+  exact UpperTheory.ConvolutionTheory.Sph.liftUnr K M hp a ha π fun η hη =>
+    GlobalTheory.T.cuspidal_twist_ramified_char_ne_self K a ha _ η (w.under (𝓞 K)) B hB ((UpperTheory.ConvolutionTheory.Sph.normRam K M hp w hram).2.2 η hη)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.QuadLiftOf
+
+section
 
 @[expose] public section
 
@@ -70,3 +98,5 @@ theorem UpperTheory.ConvolutionTheory.Sph.quadLiftOf :
     have e : B.map (· ^ 1) = B := by simp
     rw [e]
     exact hR K M hp a ha π P hP.weak w hu B hB
+end
+end

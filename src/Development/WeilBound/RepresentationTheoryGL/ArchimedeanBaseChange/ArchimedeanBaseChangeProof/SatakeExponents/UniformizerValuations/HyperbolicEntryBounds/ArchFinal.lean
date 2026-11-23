@@ -2,11 +2,37 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameA
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.HeckeFubiniCompatibility.PCompat
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.ArchPlug
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.HeckeFubiniCompatibility.CompatFub
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.WaveFinal
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.HeckeFubiniCompatibility.TrMulComm
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.IsMultZero
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GLMatrixDerivatives.KChainHolds
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GLMatrixDerivatives.FrameDer
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConjMemNilSet
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContDiffMulRight
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousOnOfIteratedFDerivZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FlagFieldHolds
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandOperatorsCommute
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ImportsBisMore
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsWaveTranslateSub
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IteratedDerivTwoClm
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LengthFunctionCompact
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PositiveConeHomotopyStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PositiveConeStructureStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TraceMulConjTranspose
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.CxDataModel
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GLMatrixDerivatives.ChainOfHolds
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GLMatrixDerivatives.LOfOfKChain
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GelfandFlags.KerComm
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GelfandFlags.KerNId
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GelfandFlags.SecondCountableG
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GelfandFlags.TrZero
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.GelfandFlags.UnitaryMemGLs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -37,6 +63,103 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.QuotientVanishing.LocalQuotientIntegrals.EllFormula2J
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.CasInfOfIm
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.KernelDiagonalIntegrableHolds
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaNormCommutation.LocalComparisonSplitting.GlobalCharacterOfFiniteInputs
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.LefTop
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.RgBcC
+
+theorem lef_top (hE : WaveEx) (hS : WaveSpeed) (hK : KerEx) (hM : MultAlg) (hC : LfSt.KChain) : Lef := by
+  have hKer : VC.VCKer := VC.vcKer_of
+    (VC.kerComm_of GlobalTheory.CompanionTheory.WaveInv.waveN GlobalTheory.CompanionTheory.WaveField.waveA)
+    (VC.kerNId_of GlobalTheory.CompanionTheory.LgBound.lgCpt GlobalTheory.CompanionTheory.ParamInt.intSmooth)
+    (VC.nAvg_of GlobalTheory.CompanionTheory.ParamInt.intSmooth GlobalTheory.CompanionTheory.LgBound.lgCpt GlobalTheory.CompanionTheory.NilUnimod.nilUni)
+    VC.trZero GlobalTheory.CompanionTheory.LgBound.lgCpt
+  have hV : VCSt := VC.vcOf_of GlobalTheory.CompanionTheory.ParamInt.intSmooth hKer hE hS hM GlobalTheory.CompanionTheory.GelC.gelComm
+    GlobalTheory.CompanionTheory.GelFlagPf.gelFlag_holds GlobalTheory.CompanionTheory.FlagHerm.flagField_holds GlobalTheory.CompanionTheory.NilUnimod.nilUni
+    GlobalTheory.CompanionTheory.KerZeroPf.main
+  have hCh : Chain := LfSt.chainOf'_holds hE hS GlobalTheory.CompanionTheory.GelC.gelComm GlobalTheory.CompanionTheory.KerZeroPf.main
+  have hL : LSt := LfSt.lOf_of_kChain hC hE hS hK hM hCh GlobalTheory.T.positive_cone_structure GlobalTheory.T.positive_cone_homotopy
+    GlobalTheory.CompanionTheory.SuppBound.suppSt
+  exact lef_of cxEx_model hV hL
+
+end PositivityTheory.RgBcC
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.LefOfKChain
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.RgBcC
+
+theorem lef_of_kChain (hC : LfSt.KChain) : Lef :=
+  lef_top wave_existence_speed_multiplicity.1 wave_existence_speed_multiplicity.2.1 wave_existence_speed_multiplicity.2.2.1 wave_existence_speed_multiplicity.2.2.2 hC
+
+end PositivityTheory.RgBcC
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.LefschetzHolds
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.RgBcC
+
+theorem lefschetz_holds : Lef := lef_of_kChain LfSt.kChain_holds
+
+end PositivityTheory.RgBcC
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.ArchTop
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.Rg.BcB.F.F0
+
+theorem archimedean_existence_of_compatibility (hC : PositivityTheory.Rg.BcB.CG.CompatEx) (hV : PositivityTheory.Rg.BcB.CG.VCBridge) (hK : PositivityTheory.RgBcC.KerEx) :
+    PositivityTheory.Rg.BcB.F.ArchEx :=
+  archEx_of (PositivityTheory.Rg.BcB.E1.growthJ_of_ell PositivityTheory.Rg.BcB.CV.ellFormula2J) hC PositivityTheory.RgBcC.lefschetz_holds hV
+    PositivityTheory.Rg.BcB.G8.lefschetz_pair_holds hK
+
+end PositivityTheory.Rg.BcB.F.F0
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.ArchPlug
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.Rg.BcB.F.F0
+
+open PositivityTheory.Rg.BcB.CG in
+theorem archEx_of_compat (hC : PositivityTheory.Rg.BcB.CG.CompatEx) : PositivityTheory.Rg.BcB.F.ArchEx :=
+  archimedean_existence_of_compatibility hC vcBridge PositivityTheory.RgBcC.wave_existence_speed_multiplicity.2.2.1
+
+end PositivityTheory.Rg.BcB.F.F0
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.ArchFinal
+
+section
 
 @[expose] public section
 
@@ -45,3 +168,5 @@ namespace PositivityTheory.Rg.BcB.F.F0
 theorem archEx_holds : PositivityTheory.Rg.BcB.F.ArchEx := archEx_of_compat PositivityTheory.Rg.BcB.CG.compatEx
 
 end PositivityTheory.Rg.BcB.F.F0
+end
+end

@@ -5,19 +5,13 @@ public import Mathlib.NumberTheory.NumberField.CMField
 public import Mathlib.NumberTheory.Padics.PadicIntegers
 public import Mathlib.RingTheory.SimpleRing.Principal
 public import Mathlib.RingTheory.Unramified.Basic
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RealOfFixedByConjugations
-public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGFree
-public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGLam
-public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGSemi
-public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGStd
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGTheta
-import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -50,8 +44,173 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Determinant
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGFree
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGLam
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGSemi
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Tactic.Basify
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGTheta
+import Mathlib.Algebra.AffineMonoid.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RealOfFixedByConjugations
+
+section
+
+@[expose] public section
+
+open NumberField TensorProduct
+
+namespace GlobalTheory.CompanionTheory.UnimodularBaseChange
+
+theorem bijective_baseChange :
+    ∀ (Z : Type) [CommRing Z] (L : Type) [AddCommGroup L] [Module.Finite ℤ L] [Module.Free ℤ L]
+      (B : LinearMap.BilinForm ℤ L), Function.Bijective B →
+      Function.Bijective (B.baseChange Z) := by
+  intro Z _ L _ _ _ B hB
+  classical
+  let b := Module.Free.chooseBasis ℤ L
+  let c := b.baseChange Z
+  have h1 : IsUnit (LinearMap.toMatrix b b.dualBasis B).det :=
+    LinearEquiv.isUnit_det (LinearEquiv.ofBijective B hB) b b.dualBasis
+  have h2 : LinearMap.toMatrix c c.dualBasis (B.baseChange Z) =
+      (algebraMap ℤ Z).mapMatrix (LinearMap.toMatrix b b.dualBasis B) := by
+    ext i j
+    simp [c, LinearMap.toMatrix_apply, Module.Basis.baseChange_apply]
+  have h3 : IsUnit (LinearMap.toMatrix c c.dualBasis (B.baseChange Z)).det := by
+    rw [h2, ← RingHom.map_det]
+    exact h1.map _
+  exact (LinearEquiv.ofIsUnitDet h3).bijective
+
+end GlobalTheory.CompanionTheory.UnimodularBaseChange
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGHerm
+
+section
+
+@[expose] public section
+
+open NumberField TensorProduct
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+theorem tw_g_herm : ∀ (Z R : Type) [CommRing Z] [CommRing R] [Algebra Z R] (σ : R →ₐ[Z] R), (∀ r, σ (σ r) = r) → ∀ lam : R →ₗ[Z] Z, (∀ r, lam (σ r) = -lam r) → Function.Bijective (fun r : R => lam.comp (LinearMap.mulLeft Z r)) → ∀ (N : ℕ) (ψ : LinearMap.BilinForm Z (Fin N → R)), (∀ x, ψ x x = 0) → Function.Bijective ψ → (∀ (a : R) x y, ψ (a • x) y = ψ x (σ a • y)) → ∃ A : Matrix (Fin N) (Fin N) R, (A.map σ).transpose = A ∧ IsUnit A.det ∧ ∀ x y, ψ x y = lam (∑ i, ∑ j, x i * A i j * σ (y j)) := by
+  intro Z R _ _ _ σ hσ lam hlam hbij N ψ halt hψ hadj
+  have hskew : ∀ x y, ψ x y = -ψ y x := fun x y => by
+    have := halt (x + y)
+    simp only [map_add (f := _), LinearMap.add_apply, halt] at this
+    linear_combination this
+  have hinj : ∀ a b : R, (∀ r, lam (a * r) = lam (b * r)) → a = b := fun a b h =>
+    hbij.1 (LinearMap.ext fun r => h r)
+  have hex : ∀ i j : Fin N, ∃ a : R, ∀ r : R, lam (a * r) = ψ (r • Pi.single i 1) (Pi.single j 1) := by
+    intro i j
+    obtain ⟨a, ha⟩ := hbij.2 ((ψ.flip (Pi.single j 1)).comp
+      ((LinearMap.toSpanSingleton R (Fin N → R) (Pi.single i 1)).restrictScalars Z))
+    exact ⟨a, fun r => LinearMap.congr_fun ha r⟩
+  choose A hA using hex
+  have hform : ∀ x y, ψ x y = lam (∑ i, ∑ j, x i * A i j * σ (y j)) := by
+    intro x y
+    conv_lhs => rw [pi_eq_sum_univ' x, pi_eq_sum_univ' y]
+
+    simp only [map_sum, LinearMap.sum_apply]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+    have h1 := hadj (σ (y j)) (x i • Pi.single i 1) (Pi.single j 1)
+    rw [hσ, smul_smul, ← hA] at h1
+    rw [← h1]
+    congr 1; ring
+  refine ⟨Matrix.of A, ?_, ?_, hform⟩
+  · ext i j
+    simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply]
+    refine hinj _ _ fun r => ?_
+    have h1 := hlam (A j i * σ r)
+    rw [map_mul, hσ] at h1
+    rw [h1, hA, hA, hadj r, hskew (Pi.single i 1)]
+  · rw [← Matrix.isUnit_iff_isUnit_det, ← Matrix.vecMul_surjective_iff_isUnit]
+    intro w
+    let F : (Fin N → R) →ₗ[Z] Z := ∑ j, lam.comp ((LinearMap.mulLeft Z (w j)).comp
+      (σ.toLinearMap.comp ((LinearMap.proj j : (Fin N → R) →ₗ[R] R).restrictScalars Z)))
+    obtain ⟨x, hx⟩ := hψ.2 F
+    refine ⟨x, funext fun j => hinj _ _ fun r => ?_⟩
+    have h1 := LinearMap.congr_fun hx (Pi.single j (σ r))
+    rw [hform] at h1
+    simp only [F, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.restrictScalars_apply,
+      LinearMap.proj_apply, AlgHom.toLinearMap_apply, LinearMap.mulLeft_apply] at h1
+    have h2 : ∑ d, lam (w d * σ (Pi.single (M := fun _ => R) j (σ r) d)) = lam (w j * r) := by
+      rw [Finset.sum_eq_single j (fun k _ hk => by simp [Pi.single_eq_of_ne hk]) (by simp),
+        Pi.single_eq_same, hσ]
+    rw [← h2, ← h1]
+    congr 1
+    simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Finset.sum_mul]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Finset.sum_eq_single j (fun k _ hk => by simp [Pi.single_eq_of_ne hk]) (by simp),
+      Pi.single_eq_same, hσ]
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGStd
+
+section
+
+@[expose] public section
+
+open NumberField TensorProduct
+
+namespace PositivityTheory.UnitarySelfGeneration
+
+theorem hermitian_form_standard_basis (Z R : Type) [CommRing Z] [CommRing R] [Algebra Z R] (σ : R →ₐ[Z] R) (hσ : ∀ r, σ (σ r) = r)
+    (N : ℕ) (A g : Matrix (Fin N) (Fin N) R) (hg : IsUnit g.det) (h : (g.map σ).transpose * A * g = 1) :
+    ∃ φ : (Fin N → R) ≃ₗ[R] (Fin N → R), ∀ x y,
+      ∑ i, ∑ j, φ x i * A i j * σ (φ y j) = ∑ i, x i * σ (y i) := by
+  have hM : IsUnit (g.map σ).det := by
+    have e : σ g.det = (g.map σ).det := AlgHom.map_det σ g
+    rw [← e]
+    exact hg.map σ
+  refine ⟨Matrix.toLinearEquiv' (g.map σ) (Matrix.invertibleOfIsUnitDet (g.map σ) hM), fun x y => ?_⟩
+  have hs : (fun j => σ (Matrix.mulVec (g.map σ) y j)) = Matrix.mulVec g (fun k => σ (y k)) := by
+    ext j
+
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ]
+  have key : ∀ u w : Fin N → R, ∑ i, ∑ j, u i * A i j * w j = dotProduct u (Matrix.mulVec A w) := by
+    intro u w
+    simp [dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
+  have hT : (A * g).transpose * g.map σ = 1 := by
+    rw [← Matrix.transpose_transpose (g.map σ), ← Matrix.transpose_mul, ← Matrix.mul_assoc, h,
+      Matrix.transpose_one]
+  change ∑ i, ∑ j, Matrix.mulVec (g.map σ) x i * A i j * σ (Matrix.mulVec (g.map σ) y j) = _
+  rw [key _ (fun j => σ (Matrix.mulVec (g.map σ) y j)), hs, Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec,
+    ← Matrix.mulVec_transpose, Matrix.mulVec_mulVec, hT, Matrix.one_mulVec]
+  simp [dotProduct]
+
+theorem tw_g_std : ∀ (Z R : Type) [CommRing Z] [CommRing R] [Algebra Z R] (σ : R →ₐ[Z] R), (∀ r, σ (σ r) = r) → ∀ lam : R →ₗ[Z] Z, (∀ r, lam (σ r) = -lam r) → Function.Bijective (fun r : R => lam.comp (LinearMap.mulLeft Z r)) → ∀ (N : ℕ), (∀ A : Matrix (Fin N) (Fin N) R, (A.map σ).transpose = A → IsUnit A.det → ∃ g : Matrix (Fin N) (Fin N) R, IsUnit g.det ∧ (g.map σ).transpose * A * g = 1) → ∀ ψ ψ' : LinearMap.BilinForm Z (Fin N → R), (∀ x, ψ x x = 0) → Function.Bijective ψ → (∀ (a : R) x y, ψ (a • x) y = ψ x (σ a • y)) → (∀ x, ψ' x x = 0) → Function.Bijective ψ' → (∀ (a : R) x y, ψ' (a • x) y = ψ' x (σ a • y)) → ∃ φ : (Fin N → R) ≃ₗ[R] (Fin N → R), ∀ x y, ψ' (φ x) (φ y) = ψ x y := by
+  intro Z R _ _ _ σ hσ lam hlam hbij N hstd ψ ψ' hψ0 hψb hψs hψ'0 hψ'b hψ's
+  obtain ⟨A, hAh, hAu, hAψ⟩ := tw_g_herm Z R σ hσ lam hlam hbij N ψ hψ0 hψb hψs
+  obtain ⟨A', hA'h, hA'u, hA'ψ⟩ := tw_g_herm Z R σ hσ lam hlam hbij N ψ' hψ'0 hψ'b hψ's
+  obtain ⟨g, hg, hgA⟩ := hstd A hAh hAu
+  obtain ⟨g', hg', hgA'⟩ := hstd A' hA'h hA'u
+  obtain ⟨φ, hφ⟩ := hermitian_form_standard_basis Z R σ hσ N A g hg hgA
+  obtain ⟨φ', hφ'⟩ := hermitian_form_standard_basis Z R σ hσ N A' g' hg' hgA'
+  refine ⟨φ.symm.trans φ', fun x y => ?_⟩
+  rw [LinearEquiv.trans_apply, LinearEquiv.trans_apply, hA'ψ, hφ', ← hφ, φ.apply_symm_apply,
+    φ.apply_symm_apply, ← hAψ]
+
+end PositivityTheory.UnitarySelfGeneration
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGPadic
+
+section
 
 @[expose] public section
 
@@ -229,3 +388,5 @@ theorem tw_g_padic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (bar
     exact he _ _
 
 end PositivityTheory.UnitarySelfGeneration
+end
+end

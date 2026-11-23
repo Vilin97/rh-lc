@@ -6,12 +6,11 @@ public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationPr
 public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.QuasiPeriodConstIsogeny
 public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.FinalI
 public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.BaseChangeCompatible
-public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.TwoTorsionCurveToSeries
-public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.AnaSysW
-public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.ThetaFromPhiDerivative
-public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.Th0FromPhPrime
-import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.BridgeTwoMore
-import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.TwoTorsionU
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.DivByXSq
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.HasSecondLogDeriv
+public import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.StatementJ
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.NormHalfB2SubTwoTorsionLeOne
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.CurveSecondLogDerivative
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -50,6 +49,123 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.CurveEndoAll
+public import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.BridgeTwoMore
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.AnaSysW
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.CurveHyp
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.IsTransSys
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.OneAddMulDerivLogSubst
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.Series
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementX
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.Joints
+import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.BridgeTwoMore
+import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.TwoTorsionU
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.TwoTorsionCurveToSeries
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+namespace Formalism.L2.Th1.B.Crv2
+
+open Formalism.DworkPowerSeriesWeights (Integral)
+open Formalism.InvariantFactorPaths.G7 (Simeq at1 cob d1 swap2 DivAB)
+open Formalism.G (unitBall)
+open Formalism.L2.Th1.C (wpShift HasSecondLogDeriv wTr IsLogPair mulBy EndInt PhNormAt IsBinomScalar)
+open Formalism.L2.Th1.A (fgl iSer logSer expSer wpReg g₂ g₃ IntModel xS tS xPlus bridgeWp bridgeLaw
+  bridgeCurve bridgeCurve3)
+
+section Alg
+
+variable {K : Type} [Field K] [CharZero K]
+
+theorem logPair (W : WeierstrassCurve K) : IsLogPair (logSer W) (expSer W) :=
+  (Formalism.L2.Th1.C.curveFrame K ⊤ W ⟨trivial, trivial, trivial, trivial, trivial⟩).1
+
+end Alg
+
+section Norm
+
+variable {K : Type} [NormedField K] [IsUltrametricDist K] [CharZero K]
+
+theorem twoHyp (W : WeierstrassCurve K) (xT yT : K) (hW : IntModel W)
+    (hE : W.toAffine.Equation xT yT) (h2 : 2 * yT + W.a₁ * xT + W.a₃ = 0) (hx : ‖xT‖ ≤ 1)
+    (hy : ‖yT‖ ≤ 1) : TwoHyp (g₂ W) (g₃ W) (W.b₂ / 12) W.a₁ W.a₃ xT yT :=
+  ⟨h2, Crv.two_torsion_x_root_of_cubic W xT yT hE h2, hx, hy, hW.1, Crv.norm_kap W xT yT hW h2 hx hy⟩
+
+end Norm
+
+end Formalism.L2.Th1.B.Crv2
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.ThetaFromPhiDerivative
+
+section
+
+@[expose] public section
+
+open PowerSeries
+
+noncomputable section
+
+namespace Formalism.L2.Th1.E
+
+namespace Two
+
+variable {K : Type} [NormedField K] [IsUltrametricDist K] [CharZero K]
+
+theorem fExp_zero : Formalism.L2.Th1.B.fExp (0 : PowerSeries K) = 1 := by
+  have h := Formalism.L2.Th1.B.fExp_add (K := K) (ι := Unit) (f := 0) (g := 0) (map_zero _) (map_zero _)
+  rw [add_zero] at h
+  have hc : MvPowerSeries.constantCoeff (Formalism.L2.Th1.B.fExp (0 : MvPowerSeries Unit K)) = 1 :=
+    Formalism.L2.Th1.B.constantCoeff_fExp (map_zero _)
+  have hne : Formalism.L2.Th1.B.fExp (0 : MvPowerSeries Unit K) ≠ 0 := by
+    intro h0; rw [h0, map_zero] at hc; exact zero_ne_one hc
+  exact (mul_left_cancel₀ hne (h.symm.trans (mul_one _).symm))
+
+theorem oneUnit_fExp_neg {f : PowerSeries K} (h : Formalism.InvariantFactorPaths.G7.Simeq (ι := Unit) f 0) :
+    OneUnit (Formalism.L2.Th1.B.fExp (-f)) := by
+  obtain ⟨h0, hI⟩ := h
+  rw [sub_zero] at h0 hI
+  have h0n : MvPowerSeries.constantCoeff (-f : MvPowerSeries Unit K) = 0 := by
+    rw [map_neg, h0, neg_zero]
+  have hf : OneUnit (Formalism.L2.Th1.B.fExp f) :=
+    ⟨Formalism.L2.Th1.B.constantCoeff_fExp h0, (Ser.intS_iff_integral _).2 hI⟩
+  refine Ser.oneUnit_of_mul_eq_one hf ?_
+  rw [← Formalism.L2.Th1.B.fExp_add h0 h0n, add_neg_cancel]
+  exact fExp_zero
+
+end Two
+
+end Formalism.L2.Th1.E
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.Th0FromPhPrime
+
+section
+
+@[expose] public section
+
+namespace Formalism.L2.Th1.E
+
+theorem inWTh0 : InWTh0 := even_theta_half_period_in_model
+
+end Formalism.L2.Th1.E
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.Th0TwoAnalyticOf
+
+section
 
 @[expose] public section
 
@@ -157,3 +273,6 @@ theorem Th0TwoAnalytic_of (hE : HalfFibreExists) (hF : FibreZInstance) (hH : Hal
   exact Formalism.L2.Th1.E.Two.oneUnit_fExp_neg hV'
 
 end Formalism.L2.Th1.B.An2
+end
+end
+end

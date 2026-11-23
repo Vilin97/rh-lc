@@ -23,48 +23,10 @@ public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.S
 public import Development.EtaleCohomology.EtaleSheaves.AICSHPf
 public import Development.EtaleCohomology.EtaleSheaves.AdjoinRootExtension
 public import Development.EtaleCohomology.EtaleSheaves.AffinePf
-public import Development.EtaleCohomology.EtaleSheaves.ArchimedeanCokernel
-public import Development.EtaleCohomology.EtaleSheaves.ArchimedeanComparison
-public import Development.EtaleCohomology.EtaleSheaves.BasePf
-public import Development.EtaleCohomology.EtaleSheaves.CechYoneda
-public import Development.EtaleCohomology.EtaleSheaves.ChainsDiscCoprodPf
-public import Development.EtaleCohomology.EtaleSheaves.CompPf
-public import Development.EtaleCohomology.EtaleSheaves.CompositionGoal
-public import Development.EtaleCohomology.EtaleSheaves.EtAffNbhdPf
-public import Development.EtaleCohomology.EtaleSheaves.EtAlgPf
-import Development.EtaleCohomology.EtaleSheaves.EtStagePf
-public import Development.EtaleCohomology.EtaleSheaves.EtaleBaseChangePolynomialInductionOfLimit
-public import Development.EtaleCohomology.EtaleSheaves.EtaleSpreading.SpreadOf
-public import Development.EtaleCohomology.EtaleSheaves.FracAICPf
-public import Development.EtaleCohomology.EtaleSheaves.FreeCoprodPf
-public import Development.EtaleCohomology.EtaleSheaves.HKCoprodPf
-public import Development.EtaleCohomology.EtaleSheaves.HensIntPf
-public import Development.EtaleCohomology.EtaleSheaves.IECobPf
-public import Development.EtaleCohomology.EtaleSheaves.IdemCoverPf
-public import Development.EtaleCohomology.EtaleSheaves.IntClosPf
-public import Development.EtaleCohomology.EtaleSheaves.IntegralSurjectiveRingCechAugmentationEtaleEqv
-public import Development.EtaleCohomology.EtaleSheaves.KerLocOf
-public import Development.EtaleCohomology.EtaleSheaves.LocAtPf
-public import Development.EtaleCohomology.EtaleSheaves.LocEtPf
-public import Development.EtaleCohomology.EtaleSheaves.LocIEPf
-public import Development.EtaleCohomology.EtaleSheaves.LocTensorPf
-public import Development.EtaleCohomology.EtaleSheaves.PushGluePf
-public import Development.EtaleCohomology.EtaleSheaves.PushPf
-public import Development.EtaleCohomology.EtaleSheaves.RelEqvInjPf
-public import Development.EtaleCohomology.EtaleSheaves.SHAlgSecPf
-public import Development.EtaleCohomology.EtaleSheaves.SecPrePf
-public import Development.EtaleCohomology.EtaleSheaves.SepTensorPf
-public import Development.EtaleCohomology.EtaleSheaves.SimplicialPieceDiscrete
-public import Development.EtaleCohomology.EtaleSheaves.SpSOfIntegralInjective
-public import Development.EtaleCohomology.EtaleSheaves.StrictHenselColimits.ColimOf
-public import Development.EtaleCohomology.EtaleSheaves.StrictLocalStalks.ULAStalkOf
-public import Development.EtaleCohomology.EtaleSheaves.TowerFinPf
-public import Development.EtaleCohomology.EtaleSheaves.TruncBijPf
-public import Development.EtaleCohomology.EtaleSheaves.Truncation
-public import Development.EtaleCohomology.EtaleSheaves.TwFBijPf
-public import Development.EtaleCohomology.WeilConjectures.EtaleAlgebrasHaveSmallModelSet
-public import Development.EtaleCohomology.WeilConjectures.EtaleNeighborhoodsEqualizeParallelMaps
-public import Development.EtaleCohomology.WeilConjectures.EtaleNeighborhoodsHaveCommonRefinement
+public import Development.EtaleCohomology.EtaleSheaves.LocalDescent.DescLocOf
+public import Development.EtaleCohomology.EtaleSheaves.FiltrationLevelInjectivity
+public import Development.EtaleCohomology.EtaleSheaves.CechLevelIsomorphism
+public import Development.EtaleCohomology.EtaleSheaves.KernelLocalization.RangeOfBd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -103,6 +65,124 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.EtaleCohomology.EtaleSheaves.ArchimedeanComparison
+public import Development.EtaleCohomology.EtaleSheaves.BasePf
+public import Development.EtaleCohomology.EtaleSheaves.CechYoneda
+public import Development.EtaleCohomology.EtaleSheaves.ChainsDiscCoprodPf
+public import Development.EtaleCohomology.EtaleSheaves.CompPf
+public import Development.EtaleCohomology.EtaleSheaves.SHExistsPf
+public import Development.EtaleCohomology.EtaleSheaves.EtAffNbhdPf
+public import Development.EtaleCohomology.EtaleSheaves.EtAlgPf
+import Development.EtaleCohomology.EtaleSheaves.EtStagePf
+public import Development.EtaleCohomology.EtaleSheaves.EtaleBaseChangePolynomialInductionOfLimit
+public import Development.EtaleCohomology.EtaleSheaves.EtaleSpreading.FPProof
+public import Development.EtaleCohomology.EtaleSheaves.FracAICPf
+public import Development.EtaleCohomology.EtaleSheaves.FreeCoprodPf
+public import Development.EtaleCohomology.EtaleSheaves.HKCoprodPf
+public import Development.EtaleCohomology.EtaleSheaves.HensIntPf
+public import Development.EtaleCohomology.EtaleSheaves.IdemCoverPf
+public import Development.EtaleCohomology.EtaleSheaves.IntClosPf
+public import Development.EtaleCohomology.EtaleSheaves.IntegralSurjectiveRingCechAugmentationEtaleEqv
+public import Development.EtaleCohomology.EtaleSheaves.KerLocOf
+public import Development.EtaleCohomology.EtaleSheaves.LocAtPf
+public import Development.EtaleCohomology.EtaleSheaves.LocEtPf
+public import Development.EtaleCohomology.EtaleSheaves.LocIEPf
+public import Development.EtaleCohomology.EtaleSheaves.LocTensorPf
+public import Development.EtaleCohomology.EtaleSheaves.PushGluePf
+public import Development.EtaleCohomology.EtaleSheaves.PushPf
+public import Development.EtaleCohomology.EtaleSheaves.RelEqvInjPf
+public import Development.EtaleCohomology.EtaleSheaves.SHAlgSecPf
+public import Development.EtaleCohomology.EtaleSheaves.SecPrePf
+public import Development.EtaleCohomology.EtaleSheaves.SepTensorPf
+public import Development.EtaleCohomology.EtaleSheaves.SimplicialPieceDiscrete
+public import Development.EtaleCohomology.EtaleSheaves.SpSOfIntegralInjective
+public import Development.EtaleCohomology.EtaleSheaves.StrictHenselColimits.ColimOf
+public import Development.EtaleCohomology.EtaleSheaves.StrictLocalStalks.ULAStalkOf
+public import Development.EtaleCohomology.EtaleSheaves.TowerFinPf
+public import Development.EtaleCohomology.EtaleSheaves.TruncBijPf
+public import Development.EtaleCohomology.EtaleSheaves.Truncation
+public import Development.EtaleCohomology.EtaleSheaves.TwFBijPf
+public import Development.EtaleCohomology.WeilConjectures.EtaleAlgebrasHaveSmallModelSet
+public import Development.EtaleCohomology.WeilConjectures.EtaleNeighborhoodsEqualizeParallelMaps
+public import Development.EtaleCohomology.WeilConjectures.EtaleNeighborhoodsHaveCommonRefinement
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.ArchimedeanCokernel
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_E3Cut LateralTheory.E.StalkCut LateralTheory.E.LeafGhostCut
+theorem LateralTheory.E.TruncationCokernelLevelRelations.TruncCok_of (hD : LateralTheory.E.TruncationKernel.RelDesc) : LateralTheory.E.DescLocPf.Fine.TruncCok := by
+  intro hH q _ i n A Y φ hq P hpush het hlow D d hPD Y' w φ' hpo E e Y'' u φ'' he hs hE hpo' m hm y ⟨x, hx⟩
+  have hinj := hD hH q i n φ hq P @hpush @het hlow D d hPD Y' w φ' hpo E e Y'' u φ'' he hs hE hpo'
+  refine LateralTheory.E.KernelLocalization.range_of_bd _ _ _ m n (by omega) y ((injective_iff_map_eq_zero _).1 hinj _ ?_)
+  refine (LateralTheory.E.KernelLocalization.rpull_bd ..).trans ?_
+  rw [← hx]
+  exact LateralTheory.E.KernelLocalization.bd_pull ..
+theorem LateralTheory.E.TruncationCokernelLevelRelations.LvlRel_of : LateralTheory.E.FiltrationLevelInjectivity.LvlRel := by
+  intro hH q _ i n A Y φ hq P hpush het hlow D d hPD Y' w φ' hpo E e Y'' u φ'' he hs hE hpo' p _ m hm
+  have h := LateralTheory.E.LevelsPf.Tp.Levels_of' LateralTheory.E.CechLevelIsoPf.CechLevelIso_of hH q i n φ hq P @hpush @het hlow D d hPD Y' w φ' hpo E e Y'' u φ'' hpo' he hs hE p m hm
+  exact ⟨h.2, h.1 (m - 1) (by omega)⟩
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.CompositionGoal
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.E.CompositionGoal
+
+theorem goal_of : LateralTheory.E.SHExistsPf.Comp := LateralTheory.E.TruncationIsoComparison.Comp_of
+
+end LateralTheory.E.CompositionGoal
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.EtaleSpreading.SpreadOf
+
+section
+
+@[expose] public section
+
+namespace LateralTheory.E.SpreadPf.Main
+
+theorem Spread_of (hS : LateralTheory.E.SpreadPf.Cut.EtStage) : LateralTheory.E.DescendPf.Spread :=
+  LateralTheory.E.SpreadPf.Cut.Spread_of LateralTheory.E.SpreadPf.FPProof.finite_presentation_ring_maps_pre_ind_spread hS
+
+end LateralTheory.E.SpreadPf.Main
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.IECobPf
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits LateralTheory.E.t_E3Cut
+
+namespace LateralTheory.E.IECobPf
+
+theorem et_cobase : Et.IsStableUnderCobaseChange :=
+  (RingHom.isStableUnderCobaseChange_toMorphismProperty_iff).2 RingHom.Etale.isStableUnderBaseChange
+
+theorem IECob_of : LateralTheory.E.ULAStalkPf.IECob := by
+  intro A B C D f g u v sq hf
+  have := et_cobase
+  have hI : IE.IsStableUnderCobaseChange := by
+    unfold IE; infer_instance
+  exact hI.of_isPushout sq.flip hf
+
+end LateralTheory.E.IECobPf
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.N81
+
+section
 
 @[expose] public section
 
@@ -317,3 +397,5 @@ theorem main (H : LateralTheory.E.t_E3Cut.Hyp) : GlobalTheory.EtC.E3 := by
   exact n78 H q i _ hgood p
 
 end UpperTheory.Et.E3
+end
+end

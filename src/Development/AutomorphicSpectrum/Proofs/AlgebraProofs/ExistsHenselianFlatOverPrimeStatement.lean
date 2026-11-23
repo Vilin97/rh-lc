@@ -3,7 +3,7 @@ module
 public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Henselian
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHenselianFlatOverPrime
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHens
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,8 +44,33 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHenselianFlatOverPrime
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.CommAlg
+
+theorem exists_flat_henselian_normal_over_prime :
+    ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (P : Ideal R) [P.IsPrime],
+      ∃ (R' : Type) (_ : CommRing R') (_ : IsDomain R') (_ : HenselianLocalRing R')
+        (_ : Algebra R R'), IsIntegrallyClosed R' ∧ Module.Flat R R' ∧
+          (IsLocalRing.maximalIdeal R').comap (algebraMap R R') = P := by
+  exact @PositivityTheory.HtPt.Htat.hens_normal
+
+end GlobalTheory.CompanionTheory.CommAlg
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHenselianFlatOverPrimeStatement
+
+section
+
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.exists_henselian_flat_over_prime : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (P : Ideal R) [P.IsPrime], ∃ (R' : Type) (_ : CommRing R') (_ : IsDomain R') (_ : HenselianLocalRing R') (_ : Algebra R R'), IsIntegrallyClosed R' ∧ Module.Flat R R' ∧ (IsLocalRing.maximalIdeal R').comap (algebraMap R R') = P := by
   first | exact @GlobalTheory.CompanionTheory.CommAlg.exists_flat_henselian_normal_over_prime | exact GlobalTheory.CompanionTheory.CommAlg.exists_flat_henselian_normal_over_prime | (intros; apply GlobalTheory.CompanionTheory.CommAlg.exists_flat_henselian_normal_over_prime <;> assumption)
+end
+end

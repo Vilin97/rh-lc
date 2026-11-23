@@ -6,12 +6,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCh
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.CompactIntegralFields.ContResQ
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CoefFacts
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CupNorm
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CupRaw
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CupSwap
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.DataAl
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.OpenKer
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.RootCharactersNeOneAtBasepoint
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.SuppMMono
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.ExtRep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +15,6 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -48,6 +42,167 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.OpenKer
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.RootCharactersNeOneAtBasepoint
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.SuppMMono
+import Mathlib.FieldTheory.Galois.Profinite
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CupRaw
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
+
+theorem UpperTheory.V.Ws.Gys.cupRaw :
+    ∀ {O Γ k : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [Field k] (Φ : Fr O Γ) (a : O →+* k) (l : ℕ) [Fact l.Prime] [CharP k l], (Set.range a).Finite → Φ.Ok a → ∀ 𝒩 : Set Γ → Prop, Φ.Gys l 𝒩 → ∀ (w w' : ℤ × ℤ) (J : Type) [Finite J] (y : J → Γ → k), (∀ j, Φ.Coc a w' (y j)) →
+      ∃ N', 𝒩 N' ∧ ∃ (x : Γ → k) (m : Φ.ι → k), (Φ.wN N').Coc a w x ∧ Φ.LocTriv a w x m ∧ (∃ g, a (Φ.rt w g) = 1 ∧ x g ≠ 0) ∧
+        ∀ j, ∃ z, (Φ.wN N').Cup a w w' x (y j) z m := by
+  intro O Γ k _ _ _ _ _ _ Φ a l _ _ hfin hok 𝒩 hG w w' J _ y hy
+  obtain ⟨M, i1, i2, i3, i4, i5, ρ, p, q, m0, hc, hN, hp, hq, hm0, hpm⟩ :=
+    Gys.extRep Φ a l hfin hok.lc w w' J y hy
+  obtain ⟨N', hN', c, hcZ, hc0, hloc, g, hg1, hcg, hspan⟩ :=
+    hG M ρ hc (fun g hg => hN g (hok.kill g hg) (fun j => (hy j).kill g hg)) m0 hm0
+  obtain ⟨hcont, hcoc⟩ := (mem_Z1_iff_cocycle ρ c).1 hcZ
+  have hlc : IsLocallyConstant c := (IsLocallyConstant.iff_continuous c).2 hcont
+  have hrt : ∀ u, (Φ.wN N').rt u = Φ.rt u := fun u => rfl
+  choose mm hmm using hloc
+  have hpg : p (c g) ≠ 0 := hpm _ hspan hcg
+  refine ⟨N', hN', fun s => p (c s), fun v => -p (mm v), ?_, ?_, ?_, ?_⟩
+  · refine ⟨hlc.comp p, ?_, ?_⟩
+    · intro s t
+      rw [hrt, hcoc, map_add (f := _), hp]
+    · intro s hs
+      simp [hc0 s hs]
+  · intro v s hs
+    show p (c s) = -p (mm v) - a ↑((Φ.rt w) s) * -p (mm v)
+    rw [hmm v s hs, map_sub, hp]
+    ring
+  · refine ⟨g, ?_, hpg⟩
+    have h := hp g (c g)
+    rw [hg1] at h
+    change p (c g) = _ at h
+    have h2 : (a ↑((Φ.rt w) g) - 1) * p (c g) = 0 := by linear_combination -h
+    rcases mul_eq_zero.1 h2 with h3 | h3
+    · exact sub_eq_zero.1 h3
+    · exact absurd h3 hpg
+  · intro j
+    refine ⟨fun s => q j (c s), hlc.comp (q j), ?_, ?_, ?_⟩
+    · intro s t
+      simp only [hrt]
+      rw [hcoc, map_add (f := _), hq]
+      ring
+    · intro s hs
+      simp [hc0 s hs]
+    · intro v
+      refine ⟨-q j (mm v), fun s hs => ?_⟩
+      simp only [hrt]
+      rw [hmm v s hs, map_sub, hq]
+      ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.CupSwap
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
+
+theorem UpperTheory.V.Ws.Gys.cupSwap :
+    ∀ {O Γ R : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] [CommRing R] (Φ : Fr O Γ) (a : O →+* R) (w w' : ℤ × ℤ) (x y z : Γ → R) (m n : Φ.ι → R), Φ.Coc a w x → Φ.LocTriv a w x m → Φ.Coc a w' y → Φ.LocTriv a w' y n →
+      Φ.Cup a w w' x y z m → Φ.Cup a w' w y x (x * y - z) n := by
+  intro O Γ R _ _ _ _ Φ a w w' x y z m n hx hm hy hn hz
+  have e : ∀ g, a (Φ.rt (w + w') g) = a (Φ.rt w g) * a (Φ.rt w' g) := fun g => by
+    rw [Fr.rt_add, Units.val_mul, map_mul]
+  refine ⟨?_, fun g h => ?_, fun g hg => ?_, fun v => ?_⟩
+  · exact (hx.lc.comp₂ hy.lc (· * ·)).comp₂ hz.lc (· - ·)
+  · simp only [Pi.sub_apply, Pi.mul_apply]
+    rw [add_comm w' w, hx.coc, hy.coc, hz.coc, e]
+    ring
+  · simp only [Pi.sub_apply, Pi.mul_apply]
+    rw [hx.kill g hg, hz.kill g hg, zero_mul, sub_zero]
+  · obtain ⟨o, ho⟩ := hz.loc v
+    refine ⟨m v * n v - o, fun s hs => ?_⟩
+    simp only [Pi.sub_apply, Pi.mul_apply]
+    rw [add_comm w' w, ho s hs, e, hm v s hs, hn v s hs]
+    ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.DataAl
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
+
+theorem UpperTheory.V.Ws.Gys.dataAl :
+    ∀ {O Γ R : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] [CommRing R] (Φ : Fr O Γ) (a : O →+* R) (p : PD Φ.ι Γ R), Φ.IsRes a p → Supp nM p.r →
+      ∃ x : Γ → R, Φ.Coc a (-wAl) x ∧ x Φ.g0 = 0 ∧ Φ.LocTriv a (-wAl) x (fun v => p.n v 1 0) ∧ ∀ g, p.r g 1 0 = x g * a (Φ.χ 0 g) := by
+  intro O Γ R _ _ _ _ Φ a p hp hs
+  have h12 : ∀ g, p.r g 1 2 = 0 := fun g => hs g 1 2 (by decide) (by decide)
+  have h13 : ∀ g, p.r g 1 3 = 0 := fun g => hs g 1 3 (by decide) (by decide)
+  have hd := hp.res.diag
+  have hu : ∀ g, a (((Φ.χ 0 g)⁻¹ : Oˣ) : O) * a (Φ.χ 0 g) = 1 := fun g => by
+    rw [← map_mul, Units.inv_mul, map_one]
+  have hrt : ∀ g, a (Φ.rt (-wAl) g) = a (Φ.χ 1 g) * a (((Φ.χ 0 g)⁻¹ : Oˣ) : O) := fun g => by
+    rw [← map_mul, ← Units.val_mul]
+    congr 2
+    simp [Fr.rt, wAl]
+  have hlc : ∀ i j, IsLocallyConstant fun g => p.r g i j := fun i j => by
+    refine IsLocallyConstant.desc _ (Ideal.Quotient.mk ((⊥ : Ideal R) ^ 1)) (hp.cont i j 1) ?_
+    rw [RingHom.injective_iff_ker_eq_bot, Ideal.mk_ker, pow_one]
+  refine ⟨fun g => p.r g 1 0 * a (((Φ.χ 0 g)⁻¹ : Oˣ) : O), ⟨?_, ?_, ?_⟩, ?_, ?_, ?_⟩
+  · refine (hlc 1 0).mul ?_
+    have e : (fun g => a (((Φ.χ 0 g)⁻¹ : Oˣ) : O)) = Ring.inverse ∘ fun g => p.r g 0 0 := by
+      funext g
+      simp only [Function.comp, hd]
+      exact (Ring.inverse_unit (Units.map (a : O →* R) (Φ.χ 0 g))).symm
+    rw [e]
+    exact (hlc 0 0).comp _
+  · intro g h
+    have e : p.r (g * h) 1 0 = p.r g 1 0 * a (Φ.χ 0 h) + a (Φ.χ 1 g) * p.r h 1 0 := by
+      rw [map_mul, Matrix.mul_apply, Fin.sum_univ_four, h12, h13, hd, hd]; ring
+    rw [e, hrt, map_mul, mul_inv, Units.val_mul, map_mul]
+    linear_combination (p.r g 1 0 * a (((Φ.χ 0 g)⁻¹ : Oˣ) : O)) * hu h
+  · intro g hg
+    simp [hp.pair.kill g hg]
+  · have : p.r Φ.g0 1 0 = 0 := hp.pair.nrm (by decide)
+    simp [this]
+  · intro v s hsv
+    obtain ⟨l1, l2, l3⟩ := hp.pair.low v
+    have hinv : p.n v * adj (p.n v) = 1 := by
+      rw [IsGSp, one_smul] at l1
+      exact mul_eq_one_comm.mp l1
+    have hU := hp.pair.flag v s hsv
+    have hc := hp.res.char v s hsv 0
+    unfold PD.ψ at hc
+    have key : p.n v * (adj (p.n v) * p.r s * p.n v) = p.r s * p.n v := by
+      rw [← mul_assoc, ← mul_assoc, hinv, one_mul]
+    generalize adj (p.n v) * p.r s * p.n v = U at hU hc key
+    have k := congrFun (congrFun key 1) 0
+    rw [Matrix.mul_apply, Matrix.mul_apply, Fin.sum_univ_four, Fin.sum_univ_four, hU 1 0 (by decide), hU 2 0 (by decide),
+      hU 3 0 (by decide), hc, h12, h13, hd, l2, l2] at k
+    rw [hrt]
+    beta_reduce
+    linear_combination (-a (((Φ.χ 0 s)⁻¹ : Oˣ) : O)) * k + p.n v 1 0 * hu s
+  · intro g
+    beta_reduce
+    rw [mul_assoc, hu, mul_one]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.GysinPsOf
+
+section
 
 @[expose] public section
 
@@ -94,3 +249,5 @@ theorem UpperTheory.V.Ws.Gys.gysinPs_of :
       rw [y2, z2, zero_mul, sub_zero])
   exact ⟨W', s, s1, s2, a1, a2, ⟨fun g => (a3 g).trans (x4 g).symm, a4⟩, g, 2, 0, by decide,
     a5 g ▸ mul_ne_zero hg (((T.fr W').χ 0 g).isUnit.map a).ne_zero⟩
+end
+end

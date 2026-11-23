@@ -1,14 +1,15 @@
 module
 
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OnePointBasisFundamentalDomainVolume
-public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.FreeFamily
-public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.GridSum
-public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.LagSum
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Finset.Card
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -41,6 +42,189 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Fintype.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.FreeFamily
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+
+open Finset
+
+theorem exists_free_family (Y : Finset ℝ) (w : List (Bool × ℝ)) (K D : ℕ)
+    (hw : ∀ l ∈ w, ∃ y ∈ Y, l = (true, y) ∨ l = (false, y + 1))
+    (hcard : w.length + K * D ≤ Y.card) :
+    ∃ g : Fin K → Fin D → ℝ, (∀ a i, g a i ∈ Y) ∧
+      (∀ a i a' i', g a i = g a' i' → a = a' ∧ i = i') ∧
+      ∀ a i, ∀ l ∈ w, ∃ y ∈ Y, y ≠ g a i ∧ (l = (true, y) ∨ l = (false, y + 1)) := by
+  classical
+  choose! f hfY hf using hw
+  set S : Finset ℝ := (w.map f).toFinset with hS
+  have hSc : S.card ≤ w.length := by
+    calc S.card ≤ (w.map f).length := List.toFinset_card_le _
+      _ = w.length := List.length_map _
+  have hT : K * D ≤ (Y \ S).card := by
+    have h1 := Finset.le_card_sdiff S Y
+    generalize K * D = m at hcard ⊢
+    omega
+  obtain ⟨emb⟩ : Nonempty (Fin (K * D) ↪ ↥(Y \ S)) := by
+    rw [Function.Embedding.nonempty_iff_card_le]
+    simpa using hT
+  let φ : Fin K × Fin D ≃ Fin (K * D) := finProdFinEquiv
+  refine ⟨fun a i => (emb (φ (a, i)) : ℝ), ?_, ?_, ?_⟩
+  · intro a i
+    exact (Finset.mem_sdiff.mp (emb (φ (a, i))).2).1
+  · intro a i a' i' h
+    have h1 := emb.injective (Subtype.ext h)
+    have h2 := φ.injective h1
+    simp only [Prod.mk.injEq] at h2
+    exact h2
+  · intro a i l hl
+    refine ⟨f l, hfY l hl, ?_, hf l hl⟩
+    intro heq
+    have heq' : f l = (emb (φ (a, i)) : ℝ) := heq
+    have hmem := (Finset.mem_sdiff.mp (emb (φ (a, i))).2).2
+    apply hmem
+    rw [← heq', hS, List.mem_toFinset, List.mem_map]
+    exact ⟨l, hl, rfl⟩
+
+end GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.GridSum
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+
+open Finset
+
+theorem grid_sqrt_le {K d : ℕ} (grid : Fin K → Fin (d + 1) → ℝ) (nn Q : ℝ → ℝ) (β : ℝ)
+    (hβ : 0 ≤ β)
+    (hpos : ∀ a i, 0 < nn (grid a i) ∧ 0 < nn (grid a i + 1) ∧ 0 < Q (grid a i))
+    (hb : ∀ a i, nn (grid a i) * nn (grid a i + 1) ≤ β ^ 2 * Q (grid a i))
+    (n : Fin K → Fin (d + 1)) :
+    Real.sqrt (((List.ofFn fun a => grid a (n a)).map nn).prod *
+        ((List.ofFn fun a => grid a (n a)).map fun y => nn (y + 1)).prod /
+        ((List.ofFn fun a => grid a (n a)).map Q).prod) ≤ β ^ K := by
+  have hmap : ∀ h : ℝ → ℝ,
+      ((List.ofFn fun a => grid a (n a)).map h).prod = ∏ a, h (grid a (n a)) := by
+    intro h
+    rw [List.map_ofFn, List.prod_ofFn]
+    rfl
+  simp only [hmap]
+  rw [← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
+  have hle : ∏ a, nn (grid a (n a)) * nn (grid a (n a) + 1) / Q (grid a (n a)) ≤
+      ∏ _a : Fin K, β ^ 2 := by
+    apply Finset.prod_le_prod₀
+    · intro a _
+      have h := hpos a (n a)
+      exact div_nonneg (mul_nonneg h.1.le h.2.1.le) h.2.2.le
+    · intro a _
+      rw [div_le_iff₀ (hpos a (n a)).2.2]
+      exact hb a (n a)
+  calc _ ≤ Real.sqrt (∏ _a : Fin K, β ^ 2) := Real.sqrt_le_sqrt hle
+    _ = β ^ K := by
+      rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul, pow_mul',
+        Real.sqrt_sq (pow_nonneg hβ K)]
+
+theorem grid_sum_le {K d : ℕ} (grid c : Fin K → Fin (d + 1) → ℝ) (nn Q : ℝ → ℝ) (β : ℝ)
+    (hβ : 0 ≤ β)
+    (hc : ∀ a, ∑ i, |c a i| ≤ 1)
+    (hpos : ∀ a i, 0 < nn (grid a i) ∧ 0 < nn (grid a i + 1) ∧ 0 < Q (grid a i))
+    (hb : ∀ a i, nn (grid a i) * nn (grid a i + 1) ≤ β ^ 2 * Q (grid a i)) :
+    ∑ n : Fin K → Fin (d + 1), |∏ a, c a (n a)| *
+      Real.sqrt (((List.ofFn fun a => grid a (n a)).map nn).prod *
+        ((List.ofFn fun a => grid a (n a)).map fun y => nn (y + 1)).prod /
+        ((List.ofFn fun a => grid a (n a)).map Q).prod) ≤ β ^ K := by
+  calc _ ≤ ∑ n : Fin K → Fin (d + 1), |∏ a, c a (n a)| * β ^ K := by
+        apply Finset.sum_le_sum
+        intro n _
+        exact mul_le_mul_of_nonneg_left (grid_sqrt_le grid nn Q β hβ hpos hb n) (abs_nonneg _)
+    _ = (∏ a, ∑ i, |c a i|) * β ^ K := by
+        rw [← Finset.sum_mul, Fintype.prod_sum]
+        simp only [Finset.abs_prod]
+    _ ≤ 1 * β ^ K := by
+        refine mul_le_mul_of_nonneg_right ?_ (pow_nonneg hβ K)
+        apply Finset.prod_le_one₀
+        · intro a _
+          exact Finset.sum_nonneg (fun i _ => abs_nonneg _)
+        · intro a _
+          exact hc a
+    _ = β ^ K := one_mul _
+
+end GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.LagSum
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+
+open Finset
+
+theorem lag_abs_term_le {d : ℕ} (y : Fin (d + 1) → ℝ) (h : ∀ i j, i ≠ j → 5 ≤ |y i - y j|)
+    (j : Fin (d + 1)) :
+    |∏ i ∈ (univ : Finset (Fin (d + 1))).erase j, (y j - y i)⁻¹| ≤ (1 / 5 : ℝ) ^ d := by
+  rw [abs_prod]
+  have hcard : ((univ : Finset (Fin (d + 1))).erase j).card = d := by
+    rw [Finset.card_erase_of_mem (mem_univ j)]; simp
+  calc ∏ i ∈ (univ : Finset (Fin (d + 1))).erase j, |(y j - y i)⁻¹|
+      ≤ ∏ _i ∈ (univ : Finset (Fin (d + 1))).erase j, (1 / 5 : ℝ) := by
+        apply Finset.prod_le_prod₀
+        · intro i _; exact abs_nonneg _
+        · intro i hi
+          have hij : j ≠ i := (Finset.ne_of_mem_erase hi).symm
+          rw [abs_inv]
+          have hx : 0 < |y j - y i| := lt_of_lt_of_le (by norm_num) (h j i hij)
+          simpa only [one_div] using
+            (div_le_div_iff₀ (a := (1 : ℝ)) (b := |y j - y i|) (c := 1) (d := 5)
+              hx (by norm_num : 0 < (5 : ℝ))).2 (by simpa using h j i hij)
+    _ = (1 / 5 : ℝ) ^ d := by rw [Finset.prod_const, hcard]
+
+theorem lag_abs_sum_le_one {d : ℕ} (y : Fin (d + 1) → ℝ) (h : ∀ i j, i ≠ j → 5 ≤ |y i - y j|) :
+    ∑ j, |∏ i ∈ (univ : Finset (Fin (d + 1))).erase j, (y j - y i)⁻¹| ≤ 1 := by
+  have hn : (d : ℝ) + 1 ≤ 5 ^ d := by
+    have : d + 1 ≤ 5 ^ d := Nat.lt_pow_self (by norm_num)
+    exact_mod_cast this
+  calc ∑ j, |∏ i ∈ (univ : Finset (Fin (d + 1))).erase j, (y j - y i)⁻¹|
+      ≤ ∑ _j : Fin (d + 1), (1 / 5 : ℝ) ^ d :=
+        Finset.sum_le_sum (fun j _ => lag_abs_term_le y h j)
+    _ = ((d : ℝ) + 1) / 5 ^ d := by
+        rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, div_pow, one_pow]
+        push_cast; ring
+    _ ≤ 1 := by
+        rw [div_le_one (by positivity)]
+        exact hn
+
+end GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.Bridge
+
+section
 
 @[expose] public section
 
@@ -187,3 +371,5 @@ theorem liftGrid_of_sep (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (Y : Finset ℝ) 
 end grid
 
 end CompanionTheory.WaveGrid
+end
+end

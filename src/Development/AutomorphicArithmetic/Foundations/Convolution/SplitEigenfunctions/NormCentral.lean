@@ -5,10 +5,9 @@ public import Development.AutomorphicArithmetic.AdelicQuotients.CentralSectionBa
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousAdelicGL2OfContinuousEntries
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.ContinuousQuaternaryQuadraticForm
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.WeilRepresentation.Smooth
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharDown
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharSel
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.MeanLaws
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ProdBd
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.SplitEig
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.Hilbert90AdeleRingTensorQuadratic
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.NormChar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -44,9 +42,58 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharSel
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.MeanLaws
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ProdBd
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.CycCOfCyclic
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharDown
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open Formalism.L2.Host GroundTheory.Global
+open UpperTheory.ConvolutionTheory.R2
+
+namespace UpperTheory.ConvolutionTheory.RankTwoDescent
+
+theorem charDown : CharDown := by
+  intro E _ _ _ D χ h
+  have hE : Module.finrank ℚ E = 2 := by
+    rw [Module.finrank_eq_card_basis D.b]
+    simp
+  have hθ : D.θ ≠ 0 := by
+    rw [← D.b1]
+    exact D.b.ne_zero 1
+  have hσ : D.σ ≠ 1 := by
+    intro h1
+    have h2 := D.conj
+    rw [h1] at h2
+    have h3 : D.θ = -D.θ := by simpa using h2
+    have h4 : (2 : E) * D.θ = 0 := by linear_combination h3
+    exact hθ (by simpa using h4)
+  refine A.normChar_of_inv hE χ fun c z => ?_
+  rcases GlobalTheory.AdLat.aut_eq_one_or_of_finrank_two D.σ hE hσ c with rfl | rfl
+  · rw [one_smul]
+  · have h1 := h z
+    rw [map_mul, map_inv, mul_inv_eq_one] at h1
+    have h2 : Units.map (D.bar : A E →* A E) z = D.σ • z := Units.ext (coe_smul_idele D.σ z).symm
+    rw [← h2]
+    exact h1.symm
+
+end UpperTheory.ConvolutionTheory.RankTwoDescent
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.NormCentral
+
+section
 
 @[expose] public section
 
@@ -147,3 +194,5 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.toII :
       ring
     rw [e]
     exact h3
+end
+end

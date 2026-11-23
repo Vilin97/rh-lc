@@ -1,7 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HarishChandraLabels.SupportExistsOf
-public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +40,33 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HarishChandraLabels.SupportExistsOf
+
+section
+
+@[expose] public section
+
+open Formalism.IrreducibleCountingLemmas.TYPES CategoryTheory Polynomial
+open scoped TensorProduct
+namespace PI.GreenHCLabel
+
+def SimpleIrr : Prop :=
+  ∀ (Γ : Type) [Group Γ] (τ : FDRep ℂ Γ), Simple τ ↔ IsIrrRep τ.ρ
+
+variable (K : Type) [Field K] [Fintype K] [DecidableEq K]
+
+variable {K}
+
+end PI.GreenHCLabel
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HarishChandraLabels.Basics
+
+section
 
 @[expose] public section
 
@@ -182,3 +207,6 @@ theorem simple_irreducible : SimpleIrr := by
       · exact iso_of_bij f ⟨basics_inj_of_mono f, LinearMap.range_eq_top.1 h⟩
 
 end PI.GreenHCLabel
+end
+end
+end

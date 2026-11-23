@@ -3,7 +3,6 @@ module
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RepresentationTheory.Basic
 public import Mathlib.Topology.Algebra.Group.Defs
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InvariantFunctionalOpenStabilizer
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,9 +43,55 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Topology.Algebra.OpenSubgroup
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InvariantFunctionalOpenStabilizer
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Smooth
+
+def linearFormStabiliser {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V]
+    (ρ : Representation ℂ G V) (l : Module.Dual ℂ V) : Subgroup G where
+  carrier := {g : G | l ∘ₗ ρ g = l}
+  mul_mem' := by
+    intro a b ha hb
+    have ha' : l ∘ₗ ρ a = l := ha
+    have hb' : l ∘ₗ ρ b = l := hb
+    show l ∘ₗ ρ (a * b) = l
+    rw [map_mul, Module.End.mul_eq_comp, ← LinearMap.comp_assoc, ha', hb']
+  one_mem' := by
+    show l ∘ₗ ρ 1 = l
+    rw [map_one]
+    rfl
+  inv_mem' := by
+    intro a ha
+    have ha' : l ∘ₗ ρ a = l := ha
+    show l ∘ₗ ρ a⁻¹ = l
+    conv_lhs => rw [← ha']
+    rw [LinearMap.comp_assoc, ← Module.End.mul_eq_comp, ← map_mul, mul_inv_cancel, map_one]
+    rfl
+
+theorem isOpen_linearForm_stabiliser {G V : Type} [Group G] [TopologicalSpace G]
+    [IsTopologicalGroup G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
+    (K : Subgroup G) (hK : IsOpen (K : Set G)) (l : Module.Dual ℂ V)
+    (hl : ∀ x ∈ K, l ∘ₗ ρ x = l) : IsOpen {g : G | l ∘ₗ ρ g = l} :=
+  Subgroup.isOpen_mono (H₁ := K) (H₂ := linearFormStabiliser ρ l) (fun x hx => hl x hx) hK
+
+end GlobalTheory.CompanionTheory.Smooth
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InvariantFunctionalOpenStabilizerStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.invariant_functional_open_stabilizer : ∀ {G V : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (K : Subgroup G), IsOpen (K : Set G) → ∀ l : Module.Dual ℂ V, (∀ x ∈ K, l ∘ₗ ρ x = l) → IsOpen {g : G | l ∘ₗ ρ g = l} := by
   first | exact @GlobalTheory.CompanionTheory.Smooth.isOpen_linearForm_stabiliser | exact GlobalTheory.CompanionTheory.Smooth.isOpen_linearForm_stabiliser | (intros; apply GlobalTheory.CompanionTheory.Smooth.isOpen_linearForm_stabiliser <;> assumption)
+end
+end

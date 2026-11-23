@@ -2,7 +2,9 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.EqOneOfMemLev
 public import Development.AbelianVarietyTheory.Definitions.Foundations.DiagUnitsEqLocalIdele
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.SplitIso
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.EqZeroOfForallLeExp
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.CharZeroAdicCompletion
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -25,7 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,6 +37,68 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.SplitIso
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GroundTheory.Global.SemiLocal
+
+theorem UpperTheory.V.Af.Tw.splitIso :
+    UpperTheory.V.Af.Tw.SplitIso := by
+  intro F L _ _ _ _ _ h2 w w' hne hunder
+  classical
+  set v := HeightOneSpectrum.under (𝓞 F) w with hv
+  haveI hw : w.asIdeal.LiesOver v.asIdeal := ⟨rfl⟩
+  haveI hw' : w'.asIdeal.LiesOver v.asIdeal := ⟨(congrArg HeightOneSpectrum.asIdeal hunder).symm⟩
+  have hsum := sum_ramificationIdx_mul_inertiaDeg L v
+  rw [h2] at hsum
+  have hpos : ∀ u : PlacesOver L v, 1 ≤ (u : HeightOneSpectrum (𝓞 L)).asIdeal.ramificationIdx (𝓞 F) *
+      (u : HeightOneSpectrum (𝓞 L)).asIdeal.inertiaDeg (𝓞 F) := fun u =>
+    Nat.mul_pos (Ideal.ramificationIdx_pos _ _) (Ideal.inertiaDeg_pos _ _)
+  let a : PlacesOver L v := ⟨w, hw⟩
+  let b : PlacesOver L v := ⟨w', hw'⟩
+  have hab : a ≠ b := fun h => hne (congrArg Subtype.val h).symm
+  have hle := Finset.add_le_sum (s := Finset.univ)
+    (f := fun u : PlacesOver L v => (u : HeightOneSpectrum (𝓞 L)).asIdeal.ramificationIdx (𝓞 F) *
+      (u : HeightOneSpectrum (𝓞 L)).asIdeal.inertiaDeg (𝓞 F))
+    (fun _ _ => Nat.zero_le _) (Finset.mem_univ a) (Finset.mem_univ b) hab
+  have hle2 := hle.trans_eq hsum
+  have ha1 := hpos a
+  have hb1 := hpos b
+  have h1 : w.asIdeal.ramificationIdx (𝓞 F) * w.asIdeal.inertiaDeg (𝓞 F) = 1 := by
+    change _ + _ ≤ 2 at hle2
+    change 1 ≤ w.asIdeal.ramificationIdx (𝓞 F) * w.asIdeal.inertiaDeg (𝓞 F) at ha1
+    change 1 ≤ w'.asIdeal.ramificationIdx (𝓞 F) * w'.asIdeal.inertiaDeg (𝓞 F) at hb1
+    change w.asIdeal.ramificationIdx (𝓞 F) * w.asIdeal.inertiaDeg (𝓞 F) +
+      w'.asIdeal.ramificationIdx (𝓞 F) * w'.asIdeal.inertiaDeg (𝓞 F) ≤ 2 at hle2
+    omega
+  have he : w.asIdeal.ramificationIdx (𝓞 F) = 1 := Nat.eq_one_of_mul_eq_one_right h1
+  have hfin : Module.finrank (v.adicCompletion F) (w.adicCompletion L) = 1 := by
+    rw [finrank_eq_ramificationIdx_mul_inertiaDeg L v w, h1]
+  have hbij : Function.Bijective (completionMap v w) :=
+    Algebra.finrank_eq_one_iff_bijective_algebraMap.mp hfin
+  let e := RingEquiv.ofBijective (completionMap v w) hbij
+  refine ⟨(e.symm : w.adicCompletion L →+* v.adicCompletion F), ?_, ?_⟩
+  · refine GlobalTheory.DenseCompl.continuous_of_valued_eq (HeightOneSpectrum.valuedAdicCompletion_surjective L w) _ ?_
+    intro y
+    obtain ⟨x, rfl⟩ := hbij.2 y
+    have hx : (e.symm : w.adicCompletion L →+* v.adicCompletion F) (completionMap v w x) = x :=
+      e.symm_apply_apply x
+    rw [hx, valued_completionMap, he, pow_one]
+  · intro x
+    exact e.symm_apply_apply x
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.PhiPart
+
+section
 
 @[expose] public section
 
@@ -117,3 +179,5 @@ theorem UpperTheory.V.Af.Tw.phiPart :
     exact hv (hfin.mem_toFinset.1 hu)
   · rw [hp]
     exact Finset.prod_eq_one fun u hu => by rw [(hq' u (hfin.mem_toFinset.1 hu)).2 x hx, map_one]
+end
+end

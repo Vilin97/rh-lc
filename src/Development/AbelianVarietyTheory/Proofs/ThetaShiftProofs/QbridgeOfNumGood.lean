@@ -2,11 +2,11 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ModelsAt
 public import Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.QatOfBridge
-public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.IsNumberFieldFunctionalBoundedCompExtensionStatement
-public import Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.DegreeInfimum.PlaceDegreeSums
+public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.IsNumberFieldFunctionalBoundedCompExtension
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -36,8 +36,113 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.GlobSt
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.KerCorePf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.LocalQuotientRank
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.IsNumberFieldFunctionalBoundedCompExtensionStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+open Formalism.L2.Pj Formalism.L2.PjFree Formalism.L2.Pj.QAt Formalism.L2.LamCM GlobalTheory GlobalTheory.ArcQ GlobalTheory.LamF GlobalTheory.ArcCM
+open scoped LaurentSeries
+
+theorem _root_.GlobalTheory.T.isNumberFieldFunctionalBounded_comp_extension : ∀ (K V : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] (M : Set V) (S : (K →+* ℂ) → V → ℝ) (be : HeightOneSpectrum (𝓞 K) → ℝ) (Carch Bdeg : ℝ) (K' K₁ : Type) [Field K'] [NumberField K'] [Algebra K K'] [Field K₁] [NumberField K₁] [Algebra K K₁] (f : K' →ₐ[K] K₁) (φ : V →ₗ[K] K'), NumGood M S be Carch Bdeg K' φ → NumGood M S be Carch Bdeg K₁ (f.toLinearMap.comp φ) := by
+  first | exact @GlobalTheory.ArcCM.numGood_comp | exact GlobalTheory.ArcCM.numGood_comp | (intros; apply GlobalTheory.ArcCM.numGood_comp <;> assumption)
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.DegreeInfimum.PlaceDegreeSums
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.Pj.QAt.PlaceDegreeSums
+
+open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
+open scoped nonZeroDivisors
+
+variable {K : Type} [Field K] [NumberField K]
+
+theorem sum_infinite_places_mult (f : InfinitePlace K → ℝ) :
+    ∑ σ : InfinitePlace K, (σ.mult : ℝ) * f σ = ∑ τ : K →+* ℂ, f (InfinitePlace.mk τ) := by
+  classical
+  refine Eq.trans ?_ (Finset.sum_fiberwise Finset.univ (fun τ : K →+* ℂ => InfinitePlace.mk τ)
+    (fun τ => f (InfinitePlace.mk τ)))
+  refine Finset.sum_congr rfl fun w _ => ?_
+  rw [Finset.sum_congr rfl (g := fun _ => f w) (fun τ hτ => by rw [(Finset.mem_filter.mp hτ).2]),
+    Finset.sum_const, InfinitePlace.card_filter_mk_eq, nsmul_eq_mul]
+
+theorem sum_count_log_norm (I : FractionalIdeal (𝓞 K)⁰ K) (hI : I ≠ 0) :
+    ∑ᶠ w : HeightOneSpectrum (𝓞 K), (FractionalIdeal.count K w I : ℝ) * logN w =
+      Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) := by
+  classical
+  have h00 := FractionalIdeal.finite_factors I
+  have hfs : {v : HeightOneSpectrum (𝓞 K) | ¬ FractionalIdeal.count K v I = 0}.Finite :=
+    Filter.eventually_cofinite.mp h00
+  have hN : ∀ v : HeightOneSpectrum (𝓞 K),
+      ((FractionalIdeal.absNorm ((v.asIdeal : FractionalIdeal (𝓞 K)⁰ K) ^ FractionalIdeal.count K v I) : ℚ) : ℝ) =
+        ((Ideal.absNorm v.asIdeal : ℕ) : ℝ) ^ FractionalIdeal.count K v I := by
+    intro v
+    simp [map_zpow₀, FractionalIdeal.coeIdeal_absNorm]
+  have hNpos : ∀ v : HeightOneSpectrum (𝓞 K), (0 : ℝ) < ((Ideal.absNorm v.asIdeal : ℕ) : ℝ) := by
+    intro v
+    exact_mod_cast Nat.pos_of_ne_zero (fun h => v.ne_bot (Ideal.absNorm_eq_zero_iff.mp h))
+  have hprod : FractionalIdeal.absNorm I = ∏ v ∈ hfs.toFinset,
+      FractionalIdeal.absNorm ((v.asIdeal : FractionalIdeal (𝓞 K)⁰ K) ^ FractionalIdeal.count K v I) := by
+    conv_lhs => rw [← FractionalIdeal.finprod_heightOneSpectrum_factorization' K hI]
+    rw [finprod_eq_prod_of_mulSupport_subset _ (by
+      intro v hv
+      by_contra h0
+      apply hv
+      have h0' : FractionalIdeal.count K v I = 0 := by
+        by_contra hc
+        exact h0 (Finset.mem_coe.mpr (hfs.mem_toFinset.mpr hc))
+      simp [h0']), map_prod]
+  have hterm : ∀ v : HeightOneSpectrum (𝓞 K), (FractionalIdeal.count K v I : ℝ) * logN v =
+      Real.log ((FractionalIdeal.absNorm ((v.asIdeal : FractionalIdeal (𝓞 K)⁰ K) ^
+        FractionalIdeal.count K v I) : ℚ) : ℝ) := by
+    intro v
+    rw [hN, Real.log_zpow, logN]
+  rw [finsum_eq_sum_of_support_subset _ (s := hfs.toFinset) ?_, hprod]
+  · rw [Rat.cast_prod, Real.log_prod]
+    · exact Finset.sum_congr rfl fun v _ => hterm v
+    · intro v _
+      rw [hN]
+      exact (zpow_pos (hNpos v) _).ne'
+  · intro v hv
+    by_contra h0
+    apply hv
+    have h0' : FractionalIdeal.count K v I = 0 := by
+        by_contra hc
+        exact h0 (Finset.mem_coe.mpr (hfs.mem_toFinset.mpr hc))
+    simp [h0']
+
+end Formalism.L2.Pj.QAt.PlaceDegreeSums
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.QbridgeOfNumGood
+
+section
 
 @[expose] public section
 
@@ -101,3 +206,5 @@ theorem qbridge_of_numGood : ∀ (D : D7) (large₂ : SizeData₂ D) (B : Weight
     exact hd i
 
 end GlobalTheory.ArcCM
+end
+end

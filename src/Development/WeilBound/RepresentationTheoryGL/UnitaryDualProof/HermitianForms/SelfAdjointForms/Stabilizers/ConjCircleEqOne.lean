@@ -1,12 +1,7 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.Stabilizers.AnnAnti
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardCosetRepsEqRelIndexStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCharacterSeparatingLatticeStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCosetRepsOpenInCompactStatement
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.MirabolicVectors.ContinuousMulVec
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.TransversalSums.ContinuousBlkAtApply
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.TransversalSums.SumTranslateTransversal
+public import Mathlib.GroupTheory.Index
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,9 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,9 +40,174 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Complex.Circle
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCharacterSeparatingLattice
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Topology.Algebra.Group.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.GroupTheory.Coset.Defs
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Topology.Algebra.Group.Quotient
+import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.MirabolicVectors.ContinuousMulVec
+import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.TransversalSums.ContinuousBlkAtApply
+import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.TransversalSums.SumTranslateTransversal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardCosetRepsEqRelIndex
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory.CompanionTheory.Transversal
+
+theorem card_eq_relIndex (X : Type) [AddCommGroup X] (A L : AddSubgroup X) (T : Finset X)
+    (_hLA : L ≤ A) (hT : ∀ t ∈ T, t ∈ A) (hu : ∀ a ∈ A, ∃! t, t ∈ T ∧ a - t ∈ L) :
+    T.card = L.relIndex A := by
+  classical
+  let f : T → A ⧸ L.addSubgroupOf A := fun t => QuotientAddGroup.mk ⟨t.1, hT t.1 t.2⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · rintro ⟨t, ht⟩ ⟨t', ht'⟩ h
+      have h' : -(⟨t, hT t ht⟩ : A) + ⟨t', hT t' ht'⟩ ∈ L.addSubgroupOf A := QuotientAddGroup.eq.mp h
+      rw [AddSubgroup.mem_addSubgroupOf] at h'
+      have hL : t - t' ∈ L := by
+        have h2 := L.neg_mem h'
+        convert h2 using 1
+        push_cast
+        abel
+      obtain ⟨u, _, hu'⟩ := hu t (hT t ht)
+      have e1 : t = u := hu' t ⟨ht, by simp⟩
+      have e2 : t' = u := hu' t' ⟨ht', hL⟩
+      exact Subtype.ext (e1.trans e2.symm)
+    · intro q
+      obtain ⟨a, rfl⟩ := QuotientAddGroup.mk_surjective q
+      obtain ⟨t, ⟨ht, hat⟩, _⟩ := hu a.1 a.2
+      refine ⟨⟨t, ht⟩, QuotientAddGroup.eq.mpr ?_⟩
+      rw [AddSubgroup.mem_addSubgroupOf]
+      have e : ((-(⟨t, hT t ht⟩ : A) + a : A) : X) = a.1 - t := by
+        push_cast
+        abel
+      rw [e]
+      exact hat
+  calc T.card = Nat.card T := (Nat.card_eq_finsetCard T).symm
+    _ = Nat.card (A ⧸ L.addSubgroupOf A) := Nat.card_congr (Equiv.ofBijective f hf)
+    _ = L.relIndex A := by simp only [AddSubgroup.relIndex, AddSubgroup.index]
+
+end GlobalTheory.CompanionTheory.Transversal
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardCosetRepsEqRelIndexStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.card_coset_reps_eq_relIndex : ∀ (X : Type) [AddCommGroup X] (A L : AddSubgroup X) (T : Finset X), L ≤ A → (∀ t ∈ T, t ∈ A) → (∀ a ∈ A, ∃! t, t ∈ T ∧ a - t ∈ L) → T.card = L.relIndex A := by
+  first | exact @GlobalTheory.CompanionTheory.Transversal.card_eq_relIndex | exact GlobalTheory.CompanionTheory.Transversal.card_eq_relIndex | (intros; apply GlobalTheory.CompanionTheory.Transversal.card_eq_relIndex <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCharacterSeparatingLatticeStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.exists_character_separating_lattice : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle), Continuous ψ → ψ ≠ 1 → ∀ (n : ℕ) (A : AddSubgroup (Fin n → k)), IsCompact (A : Set (Fin n → k)) → IsOpen (A : Set (Fin n → k)) → ∀ x : Fin n → k, x ∉ A → ∃ η : Fin n → k, (∀ a ∈ A, ψ (η ⬝ᵥ a) = 1) ∧ ψ (η ⬝ᵥ x) ≠ 1 := by
+  first | exact @GlobalTheory.CompanionTheory.CharacterBiduality.exists_annihilator_ne | exact GlobalTheory.CompanionTheory.CharacterBiduality.exists_annihilator_ne | (intros; apply GlobalTheory.CompanionTheory.CharacterBiduality.exists_annihilator_ne <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCosetRepsOpenInCompact
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory.CompanionTheory.Topology
+
+theorem exists_finset_transversal_of_isCompact_of_isOpen
+    (X : Type) [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X]
+    (A L : AddSubgroup X) (hA : IsCompact (A : Set X)) (hL : IsOpen (L : Set X)) (_hLA : L ≤ A) :
+    ∃ T : Finset X, (∀ t ∈ T, t ∈ A) ∧ (∀ a ∈ A, ∃! t, t ∈ T ∧ a - t ∈ L) := by
+  classical
+  have hcoset : ∀ x : X, ((↑) : X → X ⧸ L) '' (Homeomorph.addLeft x '' (L : Set X)) =
+      {(x : X ⧸ L)} := by
+    intro x
+    ext q
+    constructor
+    · rintro ⟨_, ⟨l, hl, rfl⟩, rfl⟩
+      rw [Set.mem_singleton_iff, QuotientAddGroup.eq, Homeomorph.coe_addLeft]
+      simpa using L.neg_mem hl
+    · rintro rfl
+      exact ⟨x, ⟨0, L.zero_mem, by simp⟩, rfl⟩
+  have hdisc : DiscreteTopology (X ⧸ L) := by
+    rw [discreteTopology_iff_isOpen_singleton]
+    intro q
+    induction q using QuotientAddGroup.induction_on with
+    | H x =>
+      rw [← hcoset x]
+      exact QuotientAddGroup.isOpenMap_coe _ ((Homeomorph.addLeft x).isOpenMap _ hL)
+  have hfin : (((↑) : X → X ⧸ L) '' (A : Set X)).Finite :=
+    (hA.image continuous_quotient_mk').finite_of_discrete
+  have hout : ∀ q : X ⧸ L, ((q.out : X) : X ⧸ L) = q := fun q => Quotient.out_eq q
+  refine ⟨hfin.toFinset.image Quotient.out, ?_, ?_⟩
+  · intro t ht
+    simp only [Finset.mem_image, Set.Finite.mem_toFinset, Set.mem_image] at ht
+    obtain ⟨_, ⟨a, ha, rfl⟩, rfl⟩ := ht
+    have h1 : -(a : X ⧸ L).out + a ∈ L := QuotientAddGroup.eq.1 (hout _)
+    have h2 : (a : X ⧸ L).out = a - (-(a : X ⧸ L).out + a) := by abel
+    rw [h2]
+    exact A.sub_mem ha (_hLA h1)
+  · intro a ha
+    have hmem : (a : X ⧸ L).out ∈ hfin.toFinset.image Quotient.out :=
+      Finset.mem_image.2 ⟨(a : X ⧸ L), (Set.Finite.mem_toFinset hfin).2 ⟨a, ha, rfl⟩, rfl⟩
+    have hrel : -(a : X ⧸ L).out + a ∈ L := QuotientAddGroup.eq.1 (hout _)
+    refine ⟨(a : X ⧸ L).out, ⟨hmem, by rw [sub_eq_neg_add]; exact hrel⟩, ?_⟩
+    rintro t' ⟨ht', hat'⟩
+    simp only [Finset.mem_image, Set.Finite.mem_toFinset, Set.mem_image] at ht'
+    obtain ⟨q', -, rfl⟩ := ht'
+    have hq : q' = (a : X ⧸ L) := by
+      rw [← hout q', QuotientAddGroup.eq]
+      rw [sub_eq_neg_add] at hat'
+      exact hat'
+    rw [hq]
+
+end GlobalTheory.CompanionTheory.Topology
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCosetRepsOpenInCompactStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.exists_coset_reps_open_in_compact : ∀ (X : Type) [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] (A L : AddSubgroup X), IsCompact (A : Set X) → IsOpen (L : Set X) → L ≤ A → ∃ T : Finset X, (∀ t ∈ T, t ∈ A) ∧ (∀ a ∈ A, ∃! t, t ∈ T ∧ a - t ∈ L) := by
+  first | exact @GlobalTheory.CompanionTheory.Topology.exists_finset_transversal_of_isCompact_of_isOpen | exact GlobalTheory.CompanionTheory.Topology.exists_finset_transversal_of_isCompact_of_isOpen | (intros; apply GlobalTheory.CompanionTheory.Topology.exists_finset_transversal_of_isCompact_of_isOpen <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.Stabilizers.ConjCircleEqOne
+
+section
 
 @[expose] public section
 
@@ -189,3 +346,6 @@ theorem avg_decomp_pf (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) (hπ : IsSmooth π
 end
 
 end PositivityTheory.RgUd.Form.LeviSmoothness.stab
+end
+end
+end

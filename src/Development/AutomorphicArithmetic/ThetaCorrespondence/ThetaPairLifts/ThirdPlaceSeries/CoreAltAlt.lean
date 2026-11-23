@@ -4,8 +4,11 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ExistsUniqueVec
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsWildInertiaCyclotomicElement
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DefiniteLevelPreimageFinitelyManyCosetsStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPrincipalCongruenceInDefiniteLevelStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InvariantFormBoundedCongruence
+public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.CoeSelfDualLatticeInFrameCoordinatesEq
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FinCongMemLevEnv
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCongruenceLevelMapsIntoLatticeCongruence
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.CompletedLatticeEqAdelicCompletionAndGram
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsPrincipalLevelSubgroupOpen
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +43,327 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryGroupAdelicClassesViaFiniteAdelicPart
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.AdelicUnitaryEqRealMulFiniteSplit
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPrincipalCongruenceInDefiniteLevel
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin Formalism.IndefR Formalism.IndefR.Links Formalism.L2.Theta
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+open scoped Matrix
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.VFormCong
+
+theorem redFn_eq_one_of_finCong {D : D7} {V : TH.HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
+    {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (L : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank) {N : ℕ} {k : GA D V}
+    (hΛ : IsSDFrame V β Λ 1) (hN : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → ((N : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal)
+    (hk : GlobalTheory.Member.FinCong V N k) :
+    ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → Formalism.L2.DIV.redFn β PP (Lev.finE V k) = 1 := by
+  have hfr : Formalism.L2.DIV.IsFrame β Λ := by obtain ⟨c, h, -⟩ := hΛ; exact h
+  have hl : Formalism.L2.Pj.latHat V = GlobalTheory.AdLat.hat D.host.F (Λ : Set (Fin V.rank → D.host.E)) := by
+    rw [GlobalTheory.PrincInLevel.eq_latC hΛ]; exact (GlobalTheory.Member.latHat_eq_hat_and_gram D V).1
+  have hc : ∀ a : GA D V, GlobalTheory.Member.FinCong V N a → ∀ z ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ,
+      ∃ y ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ, (Lev.finE V a).1 *ᵥ z - z = N • y := by
+    intro a ha
+    unfold GlobalTheory.Member.FinCong at ha
+    rw [hl] at ha
+    exact GlobalTheory.PrincInLevel.cong_swap Λ N _ ha
+  have hc' := hc _ (GlobalTheory.Member.PrincLevel.finCong_inv hk)
+  rw [map_inv] at hc'
+  obtain ⟨y, hy, hred⟩ := GlobalTheory.PrincInLevel.exists_int (Formalism.L2.Herm.intAf D.host.F D.host.E) β (Lev.finE V k)
+    (Formalism.L2.Herm.hatL (F := D.host.F) Λ) N hfr (hc k hk) hc'
+  have hy' : Formalism.L2.DIV.frGL β y = Lev.finE V k := hy
+  intro PP hP
+  rw [← hy', Formalism.L2.DIV.redFn_frGL]
+  refine hred _ _ ?_
+  rw [← map_natCast (Ideal.Quotient.mk PP.asIdeal)]
+  exact Ideal.Quotient.eq_zero_iff_mem.2 (hN PP hP)
+
+theorem levFn_eq_one {D : D7} {n : ℕ} (β : GL (Fin n) (Lev.EAf D)) (L : Formalism.L2.DIV.LevDat D.host.E ℂ n)
+    (x : GL (Fin n) (Lev.EAf D)) (h3 : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → Formalism.L2.DIV.redFn β PP x = 1) :
+    Formalism.L2.DIV.levFn β L x = 1 := by
+  have e : Formalism.L2.DIV.levFn β L x = Formalism.L2.DIV.levFn β L 1 := by
+    have hr : Formalism.L2.DIV.rTup β L x = Formalism.L2.DIV.rTup β L 1 := by
+      funext PP
+      show Formalism.L2.DIV.upperLeftBlock _ (Formalism.L2.DIV.redFn β PP.1 x) = Formalism.L2.DIV.upperLeftBlock _ (Formalism.L2.DIV.redFn β PP.1 1)
+      rw [h3 PP.1 (Or.inl PP.2), Formalism.L2.DIV.redFn_one]
+    unfold Formalism.L2.DIV.levFn
+    rw [hr]
+    congr 1
+    · congr 1
+      exact Finset.prod_congr rfl fun PP hPP => Finset.prod_congr rfl fun c _ => by
+        rw [h3 PP (Or.inl hPP), Formalism.L2.DIV.redFn_one]
+    · exact Finset.prod_congr rfl fun PP hPP => by
+        rw [h3 PP (Or.inr hPP), Formalism.L2.DIV.redFn_one]
+  rw [e]
+  exact (Formalism.L2.DIV.levChar D.sp.cm (1 : Matrix (Fin n) (Fin n) D.host.E) β L).map_one
+
+end GlobalTheory.VFormCong
+
+
+
+theorem GlobalTheory.VFormCong.exists_cong_levEnv : ∀ (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) (X : GlobalTheory.NJoin.RealAt D cf nch tp) (M : MtFam D) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r) (hA : GlobalTheory.NJoin.Agree X M rep) (j : Fin D.R.m) (t : X.T), ∃ N : ℕ, 0 < N ∧ ∀ κ, NG.Cong D.host.E D.R.nV N κ → ∃ h : (finHom (Vc D j)).rangeRestrict ((hA.PV j).ψ κ) ∈ (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).J, (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).χ ⟨_, h⟩ = 1 := by
+  intro D cf nch tp X M rep hA j t
+  classical
+  obtain ⟨N, hN0, hNmem⟩ : ∃ N : ℕ, 0 < N ∧ ∀ PP, PP ∈ (X.R.datVt j t).Pg ∨ PP ∈ (X.R.datVt j t).Q →
+      ((N : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal := by
+    refine ⟨∏ PP ∈ (X.R.datVt j t).Pg ∪ (X.R.datVt j t).Q, Ideal.absNorm PP.asIdeal, Finset.prod_pos fun PP _ =>
+      Nat.pos_of_ne_zero fun h => PP.ne_bot (Ideal.absNorm_eq_zero_iff.1 h), fun PP hPP => ?_⟩
+    obtain ⟨u, hu⟩ := Finset.dvd_prod_of_mem (fun PP => Ideal.absNorm (IsDedekindDomain.HeightOneSpectrum.asIdeal PP))
+      (Finset.mem_union.2 hPP)
+    rw [hu, Nat.cast_mul]
+    exact Ideal.mul_mem_right _ _ (Ideal.absNorm_mem _)
+  obtain ⟨N', hN', hcong⟩ :=
+    GlobalTheory.StdFrameCong.exists_cong_finCong D (Vc D j) D.R.nV (hA.PV j) hA.hF (hA.stdV j) N hN0
+  refine ⟨N', hN', fun κ hκ => ?_⟩
+  have hk := hcong κ hκ
+  have hβ := X.given.core.lev.βV j
+  refine ⟨GlobalTheory.PrincInLevel.finCong_mem_levEnv D (Vc D j) (X.R.βV j) (X.R.ΛV j) (X.R.datVt j t) N _ hβ hNmem hk, ?_⟩
+  apply Units.ext
+  change ((Formalism.L2.DIV.levFn (X.R.βV j) (Lev.flag1L (X.R.datVt j t)) (Lev.finE (Vc D j) ((hA.PV j).ψ κ)) : ℂˣ) : ℂ) = 1
+  rw [GlobalTheory.VFormCong.levFn_eq_one (X.R.βV j) (Lev.flag1L (X.R.datVt j t)) _
+    (fun PP hP => GlobalTheory.VFormCong.redFn_eq_one_of_finCong (X.R.datVt j t) hβ hNmem hk PP hP)]
+  rfl
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPrincipalCongruenceInDefiniteLevelStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin Formalism.IndefR Formalism.IndefR.Links Formalism.L2.Theta
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+theorem _root_.GlobalTheory.T.exists_principalCongruence_in_definiteLevel : ∀ (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) (X : GlobalTheory.NJoin.RealAt D cf nch tp) (M : MtFam D) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r) (hA : GlobalTheory.NJoin.Agree X M rep) (j : Fin D.R.m) (t : X.T), ∃ N : ℕ, 0 < N ∧ ∀ κ, NG.Cong D.host.E D.R.nV N κ → ∃ h : (finHom (Vc D j)).rangeRestrict ((hA.PV j).ψ κ) ∈ (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).J, (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).χ ⟨_, h⟩ = 1 := by
+  first | exact @GlobalTheory.VFormCong.exists_cong_levEnv | exact GlobalTheory.VFormCong.exists_cong_levEnv | (intros; apply GlobalTheory.VFormCong.exists_cong_levEnv <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.InvariantFormBoundedCongruence
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+noncomputable section
+
+namespace GlobalTheory.VFormCls
+
+open Formalism.IndefR.Bridge
+
+theorem reps_inj {G Γ' : Type} [Group G] [Group Γ'] {ι : Γ' →* G} {J : Subgroup G} {I : Type} {y : I → G}
+    (hy : IsReps ι J y) : Function.Injective y := by
+  intro i i' h
+  exact (hy (y i)).unique ⟨1, 1, by simp⟩ ⟨1, 1, by simp [h]⟩
+
+theorem transport {G G' Γ' : Type} [Group G] [Group G'] [Group Γ'] (Γ : Subgroup G) (ι : Γ' →* G')
+    (hι : Function.Injective ι) (φ : G →* G') (hφ : Function.Bijective φ) (a : G)
+    (hrat : ∀ h, h ∈ Γ ↔ ∃ γ, ι γ = φ (a⁻¹ * h * a)) (J' : Subgroup G') {I : Type} [Fintype I]
+    (y : I → G') (hy : IsReps ι J' y) :
+    ∃ T : Finset G, (∀ g : G, ∃! t, t ∈ T ∧ ∃ (γ : Γ) (κ : G), κ ∈ J'.comap φ ∧ g = (γ : G) * t * κ) ∧
+      ∀ {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℂ W] (F F' : G' → W),
+        adInner ι J' y F F' = ∑ t ∈ T, ((Nat.card {γ : Γ // t⁻¹ * (γ : G) * t ∈ J'.comap φ} : ℕ) : ℂ)⁻¹ *
+          inner ℂ (F (φ (a⁻¹ * t))) (F' (φ (a⁻¹ * t))) := by
+  classical
+  let e : G ≃* G' := MulEquiv.ofBijective φ hφ
+  have he : ∀ x, φ (e.symm x) = x := fun x => e.apply_symm_apply x
+  let t : I → G := fun i => a * e.symm (y i)
+  have hty : ∀ i, φ (a⁻¹ * t i) = y i := by
+    intro i; simp only [t, ← mul_assoc, inv_mul_cancel, one_mul, he]
+  have tinj : Function.Injective t := by
+    intro i i' h
+    apply reps_inj hy
+    rw [← hty i, ← hty i', h]
+
+  have hrat' : ∀ γ : Γ, ∃ γ', ι γ' = φ (a⁻¹ * γ * a) := fun γ => (hrat γ).1 γ.2
+
+  have key : ∀ (g : G) (i : I), (∃ (γ : Γ) (κ : G), κ ∈ J'.comap φ ∧ g = (γ : G) * t i * κ) ↔
+      ∃ (γ' : Γ') (k : J'), φ (a⁻¹ * g) = ι γ' * y i * k := by
+    intro g i
+    constructor
+    · rintro ⟨γ, κ, hκ, rfl⟩
+      obtain ⟨γ', hγ'⟩ := hrat' γ
+      refine ⟨γ', ⟨φ κ, hκ⟩, ?_⟩
+      rw [hγ', ← hty i]
+      simp only [t, map_mul, map_inv, he]
+      group
+    · rintro ⟨γ', k, h⟩
+      have hγ : a * e.symm (ι γ') * a⁻¹ ∈ Γ := by
+        rw [hrat]; exact ⟨γ', by simp [he, mul_assoc]⟩
+      refine ⟨⟨_, hγ⟩, e.symm k, by simp [he], ?_⟩
+      apply hφ.1
+      have h2 : φ g = φ a * (ι γ' * y i * k) := by
+        rw [← h, map_mul, map_inv]; group
+      rw [h2]
+      simp only [t, map_mul, map_inv, he]
+      group
+  choose c hc using hrat'
+  refine ⟨Finset.univ.image t, ?_, ?_⟩
+  · intro g
+    obtain ⟨i, ⟨γ', k, hi⟩, huniq⟩ := hy (φ (a⁻¹ * g))
+    refine ⟨t i, ⟨Finset.mem_image_of_mem _ (Finset.mem_univ _), (key g i).2 ⟨γ', k, hi⟩⟩, ?_⟩
+    rintro s ⟨hs, hd⟩
+    obtain ⟨i', -, rfl⟩ := Finset.mem_image.1 hs
+    rw [huniq i' ((key g i').1 hd)]
+  · intro W _ _ F F'
+    rw [Finset.sum_image (fun i _ j _ h => tinj h)]
+    unfold adInner
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [hty i]
+    congr 2
+    refine congrArg (fun n : ℕ => (n : ℂ)) (Nat.card_congr (Equiv.symm ?_))
+    refine
+      { toFun := fun γ => ⟨c γ.1, ?_⟩
+        invFun := fun γ' => ⟨⟨a * e.symm (ι γ'.1) * a⁻¹, (hrat _).2 ⟨γ'.1, by simp [he, mul_assoc]⟩⟩, ?_⟩
+        left_inv := ?_
+        right_inv := ?_ }
+    · rw [mem_stab, hc γ.1, ← hty i]
+      have := γ.2
+      rw [Subgroup.mem_comap] at this
+      convert this using 1
+      simp only [map_mul, map_inv]; group
+    · have := γ'.2
+      rw [mem_stab] at this
+      rw [Subgroup.mem_comap]
+      convert this using 1
+      simp only [t, map_mul, map_inv, he]; group
+    · intro γ
+      apply Subtype.ext; apply Subtype.ext
+      apply hφ.1
+      simp only [map_mul, map_inv, he]
+      rw [hc]
+      simp only [map_mul, map_inv]
+      group
+    · intro γ'
+      apply Subtype.ext
+      apply hι
+      rw [hc]
+      simp [he, mul_assoc]
+
+end GlobalTheory.VFormCls
+
+namespace GlobalTheory.VFormCls
+
+theorem adForms_right {G Γ W : Type} [Group G] [Group Γ] {ι : Γ →* G} [NormedAddCommGroup W] [InnerProductSpace ℂ W]
+    {ρ : Γ →* Module.End ℂ W} {J : Subgroup G} {χ : J →* ℂˣ} {F : G → W}
+    (hF : F ∈ Formalism.IndefR.Bridge.AdForms ι ρ J χ) (g : G) (k : J) : F (g * k) = (χ k : ℂ) • F g := by
+  have h0 := hF 1 g k
+  simpa using h0
+
+end GlobalTheory.VFormCls
+
+namespace GlobalTheory.VFormCls
+
+open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.RecTie Formalism.IndefR.principalLevelFrame Formalism.L2.Theta
+
+theorem ipA_eq {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
+    {A : Formalism.L2.DIV.FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
+    (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m) (hTop : TopMultH R)
+    (hinj : ∀ i t, Function.Injective (R.extV i t)) (μ : D.what₂.Tup) (i : Fin D.R.m)
+    (x y : GA D (Vc D i) → (R.cV i).W) :
+    (toLiftReal R F tupT hm hTop hinj).ipA μ i x y = (((RealDat.nP F false)⁻¹ : ℝ) : ℂ) * ipVia (R.extV i (tupT μ)) x y :=
+  rfl
+
+
+
+theorem inner_eq {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
+    (μ : D.what₂.Tup) (hμ : Used0 D μ) (j : Fin D.R.m) :
+    ∃ Fx : D.what₂.Mt μ (j.1 + 1) → (Bridge.Gf (Vc D j) → (X.R.cV j).W),
+      (∀ x, Fx x ∈ Bridge.AdForms (Bridge.ratF (Vc D j)) (X.R.cV j).coef.ρ
+        (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j (X.tupT μ))).J (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j (X.tupT μ))).χ) ∧
+      (∀ x, (X.R.cV j).ext (Fx x) = X.fn hμ j x) ∧
+      ∀ x y, inner ℂ x y = (((RealDat.nP X.F false)⁻¹ : ℝ) : ℂ) *
+        Bridge.adInner (Bridge.ratF (Vc D j)) (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j (X.tupT μ))).J
+          (X.R.B.L j (X.tupT μ)).pres.y (Fx x) (Fx y) := by
+  have hC := X.given.core
+  have hHV := hC.models.HV j (X.tupT μ)
+  have hex : ∀ x : D.what₂.Mt μ (j.1 + 1), ∃ h, X.R.extV j (X.tupT μ) h = X.fn hμ j x :=
+    fun x => (X.IL.jMt μ hμ j x).2.1
+  choose hx hhx using hex
+  refine ⟨fun x => (X.R.HV j (X.tupT μ)).e (hx x), fun x => ?_, fun x => hhx x, fun x y => ?_⟩
+  · have h := LinearMap.mem_range_self (X.R.HV j (X.tupT μ)).e (hx x)
+    rw [hHV.2.1] at h
+    exact h
+  · have hmt := X.recR.tied.lift.mt μ hμ j x y
+    rw [hmt]
+    refine Eq.trans (ipA_eq X.R X.F X.tupT X.hm X.hTop X.hinj μ j (X.fn hμ j x) (X.fn hμ j y)) ?_
+    congr 1
+    unfold ipVia
+    have h1 : X.fn hμ j x ∈ LinearMap.range (X.R.extV j (X.tupT μ)) := ⟨hx x, hhx x⟩
+    have h2 : X.fn hμ j y ∈ LinearMap.range (X.R.extV j (X.tupT μ)) := ⟨hx y, hhx y⟩
+    split_ifs with h
+    · have e1 : h.1.choose = hx x := X.hinj j _ (h.1.choose_spec.trans (hhx x).symm)
+      have e2 : h.2.choose = hx y := X.hinj j _ (h.2.choose_spec.trans (hhx y).symm)
+      exact (congrArg₂ (fun a b => inner ℂ a b) e1 e2).trans (hHV.2.2 (hx x) (hx y))
+    · exact absurd ⟨h1, h2⟩ h
+
+end GlobalTheory.VFormCls
+
+namespace GlobalTheory.VFormCls
+
+open Formalism.IndefR Formalism.L2.Theta
+
+
+
+theorem frame_bij {D : D7} {V : TH.HSp D} {n : ℕ} (P : principalLevelFrame.RowPsi V n) :
+    Function.Bijective ((finHom V).rangeRestrict.comp P.ψ) := by
+  obtain ⟨hsplit, -, hinter, -⟩ := GlobalTheory.UnitarySplit.real_finite_split D V
+  constructor
+  · intro x y h
+    apply P.inj
+    have h1 : finHom V (P.ψ x) = finHom V (P.ψ y) := congrArg Subtype.val h
+    have h2 : (P.ψ y)⁻¹ * P.ψ x = 1 := by
+      apply hinter
+      · show _ ∈ (finHom V).ker
+        rw [MonoidHom.mem_ker, map_mul, map_inv, h1, inv_mul_cancel]
+      · exact (GfC V).mul_mem ((GfC V).inv_mem (P.into y)) (P.into x)
+    exact (inv_mul_eq_one.1 h2).symm
+  · intro x
+    obtain ⟨g, hg⟩ := x.2
+    obtain ⟨a, ha, k, hk, rfl⟩ := hsplit g
+    obtain ⟨h, hh⟩ := P.onto k hk
+    have ha' : finHom V a = 1 := ha
+    refine ⟨h, Subtype.ext ?_⟩
+    rw [MonoidHom.comp_apply, MonoidHom.coe_rangeRestrict, ← hg, map_mul, ha', one_mul, hh]
+
+theorem ratF_inj {D : D7} (V : TH.HSp D) : Function.Injective (Bridge.ratF V) := by
+  rw [injective_iff_map_eq_one]
+  intro γ h
+  have h1 : finHom V (γ : GA D V) = 1 := congrArg Subtype.val h
+  exact Subtype.ext (GlobalTheory.DefFree.AdelCls.rat_inj V γ γ.2
+    ((GlobalTheory.DefFree.AdelCls.finU_eq_one_iff V _).2 (MonoidHom.mem_ker.2 h1)))
+
+end GlobalTheory.VFormCls
+
+namespace GlobalTheory.VFormCls
+
+open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.RecTie Formalism.L2.Theta
+
+
+end GlobalTheory.VFormCls
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CoreAltAlt
+
+section
 
 @[expose] public section
 
@@ -154,5 +478,7 @@ theorem main_alt_alt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7
   obtain ⟨j, hj⟩ : ∃ j : Fin D.R.m, j.1 + 1 = D.nd.j i := ⟨⟨D.nd.j i - 1, by omega⟩, by simp only; omega⟩
   exact _root_.GlobalTheory.VFormCls.core_data_of_point hL D P X hA _ hμ j _ hj hr.1 hr.2
 end GlobalTheory.VFormCls
+end
+end
 end
 end

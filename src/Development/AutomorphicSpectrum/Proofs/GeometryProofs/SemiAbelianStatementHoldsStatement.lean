@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.StrongApproximation.SAOpenStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiAbelianStatementHolds
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.SaOpen
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -50,6 +50,27 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.I
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiAbelianStatementHolds
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CompanionTheory.Ar
+
+namespace GlobalTheory.CompanionTheory.Ar.Link
+
+theorem saStatement_holds : ReciprocityTheory.ChartRestriction.G.SA.SAStatement := PositivityTheory.EqVol.sa
+
+end GlobalTheory.CompanionTheory.Ar.Link
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiAbelianStatementHoldsStatement
+
+section
+
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
@@ -57,3 +78,5 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 theorem _root_.GlobalTheory.T.semi_abelian_statement_holds : ReciprocityTheory.ChartRestriction.G.SA.SAStatement := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Link.saStatement_holds | exact GlobalTheory.CompanionTheory.Ar.Link.saStatement_holds | (intros; apply GlobalTheory.CompanionTheory.Ar.Link.saStatement_holds <;> assumption)
+end
+end

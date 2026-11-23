@@ -1,7 +1,6 @@
 module
 
-public import Development.EtaleCohomology.TateTwists.EtaleAlexanderWhitneyCupLeibniz
-public import Development.EtaleCohomology.KummerTheory.CupAWCutEv
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,7 +39,25 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.EtaleCohomology.KummerTheory.CupAWCutEv
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleAlexanderWhitneyCupLeibniz
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+def LateralTheory.EtaleFoundations.EtaleAlexanderWhitneyCupLeibniz : Prop :=
+  ∀ (R : Type) [CommRing R] {I J K : Cx R} (μ : Pair I J K) {E : Spc} {n m k : ℤ} (hk : n + m = k) (α : Cochain ((chains R).obj E) I n) (β : Cochain ((chains R).obj E) J m) (γ : Cochain ((chains R).obj E) K k) (γ₁ γ₂ : Cochain ((chains R).obj E) K (k + 1)), μ.IsAW hk α β γ → μ.IsAW (by omega) (δ n (n + 1) α) β γ₁ → μ.IsAW (by omega) α (δ m (m + 1) β) γ₂ → δ k (k + 1) γ = γ₁ + n.negOnePow • γ₂
+end
+end
+
+-- Source module: Development.EtaleCohomology.TateTwists.EtaleAlexanderWhitneyCupLeibnizOfPairing
+
+section
 
 @[expose] public section
 
@@ -201,3 +218,6 @@ theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairi
     congr 1
     rw [Int.negOnePow_eq_iff]
     exact ⟨0, by ring⟩
+end
+end
+end

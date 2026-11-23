@@ -2,7 +2,7 @@ module
 
 public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FlagIndices.InstFintypeFlIdx
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagVarietyArithmetic
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PFlagArithVar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -47,6 +47,45 @@ import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRatA
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.RationalSections.IsRatSectionOn
 
+-- Source module: Development.WeilBound.CoreStatements.PluriharmonicCharts.XCFlArith
+
+section
+
+@[expose] public section
+
+open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
+open scoped ComplexOrder Classical
+
+theorem PositivityTheory.Xgp.t_c_fl_arith : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] [Nonempty Ψ] (N : ℕ), 2 ≤ N → IsArithVar (PFl Ψ N) (antisymDegree Ψ N + 1) := by
+  intro Ψ _ _ _ N hN
+  have h := FlagArithVar.proof Ψ N hN
+  rwa [dimFl, ← Nat.choose_two_right] at h
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagVarietyArithmetic
+
+section
+
+@[expose] public section
+
+open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
+open scoped ComplexOrder Classical
+
+namespace GlobalTheory.CompanionTheory.Ar.PB
+
+theorem pFl_isArithVar : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] [Nonempty Ψ] (N : ℕ), 2 ≤ N →
+    IsArithVar (PFl Ψ N) (antisymDegree Ψ N + 1) :=
+  @PositivityTheory.Xgp.t_c_fl_arith
+
+end GlobalTheory.CompanionTheory.Ar.PB
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagVarietyArithmeticStatement
+
+section
+
 @[expose] public section
 
 open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
@@ -54,3 +93,5 @@ open scoped ComplexOrder Classical
 
 theorem _root_.GlobalTheory.T.flag_variety_arithmetic : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] [Nonempty Ψ] (N : ℕ), 2 ≤ N → IsArithVar (PFl Ψ N) (antisymDegree Ψ N + 1) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.PB.pFl_isArithVar | exact GlobalTheory.CompanionTheory.Ar.PB.pFl_isArithVar | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.pFl_isArithVar <;> assumption)
+end
+end

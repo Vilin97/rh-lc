@@ -1,7 +1,13 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MixedSpaceVecPairAsAdeles
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchSchwartzL2BoundedIntertwinerContinuous
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousOfLieIntertwineL2Statement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DerivedActionIntertwinesOfGroupStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearModelArchimedeanSchroedingerStandardStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LintegralSqCompContinuousLinearEquivMixedSpaceStatement
+public import Formalism.LocalToGlobal.BesselHermitianTheta.IsAutFunDef
+public import Development.AbelianVarietyTheory.Counterexamples.PlaceInjectivity.PlaceInjective
+import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,6 +23,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +44,343 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeil
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealTraceArchimedeanEmbeddingsNondegenerate
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
+open IsDedekindDomain NumberField MeasureTheory
+open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels Matrix ENNReal Classical
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Base Spc Model Chr incM)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.InfTraceNondeg
+
+variable {K : Type} [Field K] [NumberField K]
+
+theorem norm_algebraMap_apply (x : K) (v : InfinitePlace K) :
+    ‖(algebraMap K (InfiniteAdeleRing K) x) v‖ = v x := by
+  simp [InfiniteAdeleRing.algebraMap_apply, AbsoluteValue.Completion.norm_coe, InfinitePlace.coe_apply]
+
+theorem norm_eq_of_cont (χ : InfiniteAdeleRing K →+* ℂ) (hχ : Continuous χ) (φ : K →+* ℂ)
+    (h : ∀ x, χ (algebraMap K _ x) = φ x) (a : InfiniteAdeleRing K) :
+    ‖χ a‖ = ‖a (InfinitePlace.mk φ)‖ := by
+  have hc1 : Continuous fun a => ‖χ a‖ := hχ.norm
+  have hc2 : Continuous fun a : InfiniteAdeleRing K => ‖a (InfinitePlace.mk φ)‖ :=
+    (continuous_apply (InfinitePlace.mk φ)).norm
+  refine congrFun ((InfiniteAdeleRing.denseRange_algebraMap K).equalizer hc1 hc2 (funext fun x => ?_)) a
+  simp only [Function.comp, h, norm_algebraMap_apply, InfinitePlace.apply]
+
+end GlobalTheory.InfTraceNondeg
+
+namespace GlobalTheory.InfTraceNondeg
+
+
+
+theorem realTrace_nondeg : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)),
+    IsInfFam θ → ∀ a : Ainf D.host.F, a ≠ 0 →
+      ∃ b : Ainf D.host.F, (∑ ρ, θ ρ ((a * b) ⊗ₜ[D.host.F] (1 : D.host.E))).re ≠ 0 := by
+  intro D θ hθ a ha
+  obtain ⟨v, hv⟩ : ∃ v, a v ≠ 0 := by
+    by_contra h
+    push Not at h
+    exact ha (funext h)
+  obtain ⟨w, hw⟩ := InfinitePlace.comap_surjective (k := D.host.F) (K := D.host.E) v
+  obtain ⟨ρ, hρ⟩ := (GlobalTheory.VolRatioCheck.place_bijective D).2 w
+  let χ : D.what₂.Tau → (Ainf D.host.F →+* ℂ) := fun σ =>
+    (θ σ).comp Algebra.TensorProduct.includeLeftRingHom
+  have hχapp : ∀ σ c, χ σ c = θ σ (c ⊗ₜ[D.host.F] (1 : D.host.E)) := fun _ _ => rfl
+  have hχalg : ∀ σ (x : D.host.F), χ σ (algebraMap D.host.F (Ainf D.host.F) x) =
+      ((tauE D σ).comp (algebraMap D.host.F D.host.E)) x := by
+    intro σ x
+    rw [hχapp, ← Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.algebraMap_apply', (hθ σ).1]
+    rfl
+  have hnorm : ∀ σ c, ‖χ σ c‖ = ‖c (InfinitePlace.mk ((tauE D σ).comp (algebraMap D.host.F D.host.E)))‖ :=
+    fun σ c => norm_eq_of_cont (χ σ) (hθ σ).2 _ (hχalg σ) c
+  have hmul : ∀ x y : Ainf D.host.F, ∀ u, (x * y) u = x u * y u := fun _ _ _ => rfl
+  set e : Ainf D.host.F := Pi.single v 1 with he
+  set b : Ainf D.host.F := Pi.single v (a v)⁻¹ with hb
+  have hab : a * b = e := by
+    funext u
+    rw [hmul]
+    by_cases hu : u = v
+    · subst hu
+      simp [he, hb, hv]
+    · simp [he, hb, Pi.single_apply, hu]
+  have hee : e * e = e := by
+    funext u
+    rw [hmul]
+    by_cases hu : u = v
+    · subst hu; simp [he]
+    · simp [he, Pi.single_apply, hu]
+  have hidem : ∀ σ, χ σ e = 0 ∨ χ σ e = 1 := by
+    intro σ
+    have h1 : χ σ e * χ σ e = χ σ e := by rw [← map_mul, hee]
+    have h2 : χ σ e * (χ σ e - 1) = 0 := by rw [mul_sub, h1, mul_one, sub_self]
+    rcases mul_eq_zero.mp h2 with h | h
+    · exact Or.inl h
+    · exact Or.inr (sub_eq_zero.mp h)
+  have hplace : InfinitePlace.mk ((tauE D ρ).comp (algebraMap D.host.F D.host.E)) = v := by
+    rw [← InfinitePlace.comap_mk]
+    change (InfinitePlace.mk (Formalism.MainNotions.StandardLattice.embOf D ρ)).comap _ = v
+    have hρ' : InfinitePlace.mk (Formalism.MainNotions.StandardLattice.embOf D ρ) = w := hρ
+    have hw' : w.comap (algebraMap D.host.F D.host.E) = v := hw
+    rw [hρ', hw']
+  have hρ1 : χ ρ e = 1 := by
+    rcases hidem ρ with h | h
+    · exfalso
+      have := hnorm ρ e
+      rw [h, hplace, he, Pi.single_eq_same, norm_zero, norm_one] at this
+      exact zero_ne_one this
+    · exact h
+  refine ⟨b, ?_⟩
+  rw [hab, Complex.re_sum]
+  have hterm : ∀ σ, 0 ≤ (θ σ (e ⊗ₜ[D.host.F] (1 : D.host.E))).re := by
+    intro σ
+    rw [← hχapp]
+    rcases hidem σ with h | h <;> simp [h]
+  have hge : (θ ρ (e ⊗ₜ[D.host.F] (1 : D.host.E))).re ≤ ∑ σ, (θ σ (e ⊗ₜ[D.host.F] (1 : D.host.E))).re :=
+    Finset.single_le_sum (fun σ _ => hterm σ) (Finset.mem_univ ρ)
+  rw [← hχapp, hρ1, Complex.one_re] at hge
+  linarith
+
+end GlobalTheory.InfTraceNondeg
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealTraceArchimedeanEmbeddingsNondegenerateStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
+open IsDedekindDomain NumberField MeasureTheory
+open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels Matrix ENNReal Classical
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Base Spc Model Chr incM)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.realTrace_archimedeanEmbeddings_nondegenerate : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)),
+    IsInfFam θ → ∀ a : Ainf D.host.F, a ≠ 0 →
+      ∃ b : Ainf D.host.F, (∑ ρ, θ ρ ((a * b) ⊗ₜ[D.host.F] (1 : D.host.E))).re ≠ 0 := by
+  first | exact @GlobalTheory.InfTraceNondeg.realTrace_nondeg | exact GlobalTheory.InfTraceNondeg.realTrace_nondeg | (intros; apply GlobalTheory.InfTraceNondeg.realTrace_nondeg <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAddCharArchimedeanExpRealLinear
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
+open IsDedekindDomain NumberField MeasureTheory
+open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels Matrix ENNReal Classical
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Base Spc Model Chr incM)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.StdCharLin
+
+theorem continuous_ofMixed (F : Type) [Field F] [NumberField F] :
+    Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm := by
+  refine continuous_pi fun v => ?_
+  rcases v.isReal_or_isComplex with hv | hv
+  · rw [(InfinitePlace.Completion.isometry_extensionEmbeddingOfIsReal hv).isEmbedding.continuous_iff]
+    exact ((continuous_apply _).comp continuous_fst).congr fun y =>
+      (congrFun (congrArg Prod.fst ((InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply y)) ⟨v, hv⟩).symm
+  · rw [(InfinitePlace.Completion.isometry_extensionEmbedding v).isEmbedding.continuous_iff]
+    exact ((continuous_apply _).comp continuous_snd).congr fun y =>
+      (congrFun (congrArg Prod.snd ((InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply y)) ⟨v, hv⟩).symm
+
+theorem stdChar_mixed_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
+    (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsStdChar D ψ (-1) → IsInfFam θ →
+    ∃ β : mixedEmbedding.mixedSpace D.host.F →ₗ[ℝ] ℝ,
+      (∀ a, ψ (((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a, 0) : AdeleRing (𝓞 D.host.F) D.host.F) =
+        Complex.exp (2 * Real.pi * Complex.I * β a)) ∧
+      ∀ a, β a = -(∑ ρ, θ ρ (((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a) ⊗ₜ[D.host.F]
+        (1 : D.host.E))).re := by
+  intro D ψ θ hψ hθ
+  obtain ⟨hc, hall⟩ := hψ
+  have key := hall.2 θ hθ
+  set e := InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F with he
+  let z : Ainf D.host.F → ℂ := fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E))
+  have hkey : ∀ x, ψ ((x, 0) : AdeleRing (𝓞 D.host.F) D.host.F) =
+      Complex.exp (2 * Real.pi * Complex.I * ((-1 : ℤ) : ℂ) * z x) := fun x => key x
+  have him : ∀ x, (z x).im = 0 := by
+    intro x
+    have h1 := hc.2.1 ((x, 0) : AdeleRing (𝓞 D.host.F) D.host.F)
+    rw [hkey x, Complex.norm_exp] at h1
+    have hre : (2 * Real.pi * Complex.I * ((-1 : ℤ) : ℂ) * z x).re = 2 * Real.pi * (z x).im := by
+      simp [Complex.mul_re, Complex.mul_im]
+    rw [hre, Real.exp_eq_one_iff] at h1
+    have hp : (0 : ℝ) < 2 * Real.pi := by positivity
+    rcases mul_eq_zero.1 h1 with h | h
+    · linarith
+    · exact h
+  have hzadd : ∀ x y, z (x + y) = z x + z y := by
+    intro x y
+    simp only [z, TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib]
+  let g : mixedEmbedding.mixedSpace D.host.F →+ ℝ :=
+    { toFun := fun a => -(z (e.symm a)).re
+      map_zero' := by simp [z]
+      map_add' := by intro a b; simp only [map_add (f := _), hzadd, Complex.add_re, neg_add] }
+  have hg : Continuous g := by
+    have : Continuous fun x : Ainf D.host.F => z x :=
+      continuous_finsetSum _ fun ρ _ => (hθ ρ).2
+    exact (Complex.continuous_re.comp (this.comp (continuous_ofMixed D.host.F))).neg
+  refine ⟨(g.toRealLinearMap hg : mixedEmbedding.mixedSpace D.host.F →ₗ[ℝ] ℝ), ?_, fun a => rfl⟩
+  intro a
+  have hz : z (e.symm a) = ((z (e.symm a)).re : ℂ) := Complex.ext rfl (by simp [him])
+  rw [hkey (e.symm a)]
+  congr 1
+  change _ = 2 * Real.pi * Complex.I * ((-(z (e.symm a)).re : ℝ) : ℂ)
+  rw [hz]
+  push_cast
+  simp only [Complex.ofReal_re]
+  ring
+
+end GlobalTheory.StdCharLin
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAddCharArchimedeanExpRealLinearStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
+open IsDedekindDomain NumberField MeasureTheory
+open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels Matrix ENNReal Classical
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Base Spc Model Chr incM)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.standardAddChar_archimedean_exp_realLinear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
+    (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsStdChar D ψ (-1) → IsInfFam θ →
+    ∃ β : mixedEmbedding.mixedSpace D.host.F →ₗ[ℝ] ℝ,
+      (∀ a, ψ (((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a, 0) : AdeleRing (𝓞 D.host.F) D.host.F) =
+        Complex.exp (2 * Real.pi * Complex.I * β a)) ∧
+      ∀ a, β a = -(∑ ρ, θ ρ (((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a) ⊗ₜ[D.host.F]
+        (1 : D.host.E))).re := by
+  exact @GlobalTheory.StdCharLin.stdChar_mixed_linear
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchSchwartzL2BoundedIntertwinerContinuous
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
+open IsDedekindDomain NumberField MeasureTheory
+open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels Matrix ENNReal Classical
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Base Spc Model Chr incM)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.WeilAdm
+
+theorem realcont : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (κ : Type) [Fintype κ]
+    (L : ((κ → mixedEmbedding.mixedSpace D.host.F) × (κ → mixedEmbedding.mixedSpace D.host.F)) ≃ₗ[ℝ] ((κ → mixedEmbedding.mixedSpace D.host.F) × (κ → mixedEmbedding.mixedSpace D.host.F)))
+    (A : SchwartzMap (κ → mixedEmbedding.mixedSpace D.host.F) ℂ →ₗ[ℂ] SchwartzMap (κ → mixedEmbedding.mixedSpace D.host.F) ℂ) (C : ℝ≥0∞), C ≠ ⊤ →
+      (∀ f, ∫⁻ z, ‖A f z‖ₑ ^ 2 ≤ C * ∫⁻ z, ‖f z‖ₑ ^ 2) →
+      (∀ v (f f' : SchwartzMap (κ → mixedEmbedding.mixedSpace D.host.F) ℂ), ⇑f' = GlobalTheory.WeilAdm.schrInf D.host.F ψ v ⇑f →
+        ⇑(A f') = GlobalTheory.WeilAdm.schrInf D.host.F ψ (L v) ⇑(A f)) →
+      Continuous A := by
+  intro D ps hψ κ _ L A C hC hA hI
+  obtain ⟨θ, hθ⟩ := hψ.2.1
+  obtain ⟨β, hβ1, hβ2⟩ := GlobalTheory.T.standardAddChar_archimedean_exp_realLinear D ps θ hψ hθ
+  have hnd : ∀ a, a ≠ 0 → ∃ b, β (a * b) ≠ 0 := by
+    intro a ha
+    have ha' : (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a ≠ 0 := by
+      intro h
+      apply ha
+      calc
+        a = (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F)
+            ((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a) :=
+          ((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).apply_symm_apply a).symm
+        _ = (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F) 0 := congrArg _ h
+        _ = 0 := map_zero _
+    obtain ⟨b, hb⟩ := GlobalTheory.T.realTrace_archimedeanEmbeddings_nondegenerate D θ hθ _ ha'
+    refine ⟨InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F b, ?_⟩
+    rw [hβ2, map_mul, RingEquiv.symm_apply_apply]
+    simpa using hb
+  obtain ⟨n, Q, P, hQP⟩ := GlobalTheory.T.exists_linear_model_archimedean_schroedinger_standard D.host.F ps β hβ1 hnd κ
+  obtain ⟨c, hc⟩ := GlobalTheory.T.lintegral_sq_comp_continuousLinearEquiv_mixedSpace D.host.F κ n Q
+  let CQ := SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (F := ℂ) Q
+  let CQi := SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (F := ℂ) Q.symm
+  have hCQ : ∀ f, ⇑(CQ f) = ⇑f ∘ ⇑Q := fun f => SchwartzMap.compCLMOfContinuousLinearEquiv_apply ℂ Q f
+  have hCQi : ∀ g, ⇑(CQi g) = ⇑g ∘ ⇑Q.symm := fun g => SchwartzMap.compCLMOfContinuousLinearEquiv_apply ℂ Q.symm g
+  have hQQ : ∀ f, CQi (CQ f) = f := fun f => by
+    ext z; rw [hCQi, hCQ]; simp
+  have hQQ' : ∀ g, CQ (CQi g) = g := fun g => by
+    ext z; rw [hCQ, hCQi]; simp
+  let A' : GlobalTheory.RealWeil.Sch (Fin n) →ₗ[ℂ] GlobalTheory.RealWeil.Sch (Fin n) := CQ.toLinearMap ∘ₗ A ∘ₗ CQi.toLinearMap
+  have hA'apply : ∀ g, A' g = CQ (A (CQi g)) := fun g => rfl
+  let L' : (Fin n ⊕ Fin n → ℝ) ≃ₗ[ℝ] (Fin n ⊕ Fin n → ℝ) := P.trans (L.trans P.symm)
+  have hbound : ∀ g, ∫⁻ x, ‖A' g x‖ₑ ^ 2 ≤ C * ∫⁻ x, ‖g x‖ₑ ^ 2 := by
+    intro g
+    have e1 : ∫⁻ x, ‖A' g x‖ₑ ^ 2 = c * ∫⁻ z, ‖A (CQi g) z‖ₑ ^ 2 := by
+      rw [← hc]
+      simp only [hA'apply, hCQ, Function.comp_apply]
+    have e2 : ∫⁻ x, ‖g x‖ₑ ^ 2 = c * ∫⁻ z, ‖CQi g z‖ₑ ^ 2 := by
+      rw [← hc]
+      simp only [hCQi, Function.comp_apply, ContinuousLinearEquiv.symm_apply_apply]
+    rw [e1, e2, ← mul_assoc, mul_comm C c, mul_assoc]
+    exact mul_le_mul' le_rfl (hA _)
+  have hint : ∀ w (g g' : GlobalTheory.RealWeil.Sch (Fin n)), ⇑g' = GlobalTheory.RealWeil.rhoFun w ⇑g →
+      ⇑(A' g') = GlobalTheory.RealWeil.rhoFun (L' w) ⇑(A' g) := by
+    intro w g g' hg
+    have h1 : ⇑(CQi g') = schrInf D.host.F ps (P w) ⇑(CQi g) := by
+      have := congrArg (fun u => u ∘ ⇑Q.symm) (hQP w ⇑(CQi g))
+      simp only [Function.comp_assoc, ContinuousLinearEquiv.self_comp_symm, Function.comp_id] at this
+      rw [this, hCQi, hg, ← hCQ, hQQ']
+    have h2 := hI (P w) (CQi g) (CQi g') h1
+    have hL' : P (L' w) = L (P w) := P.apply_symm_apply _
+    have h3 : ⇑(A (CQi g')) = schrInf D.host.F ps (P (L' w)) ⇑(A (CQi g)) := by
+      rw [h2]
+      exact congrArg (fun v => schrInf D.host.F ps v ⇑(A (CQi g))) hL'.symm
+    calc ⇑(A' g') = ⇑(A (CQi g')) ∘ ⇑Q := hCQ _
+      _ = schrInf D.host.F ps (P (L' w)) ⇑(A (CQi g)) ∘ ⇑Q := congrArg (· ∘ ⇑Q) h3
+      _ = GlobalTheory.RealWeil.rhoFun (L' w) (⇑(A (CQi g)) ∘ ⇑Q) := hQP _ _
+      _ = GlobalTheory.RealWeil.rhoFun (L' w) ⇑(A' g) := congrArg (GlobalTheory.RealWeil.rhoFun (L' w)) (hCQ _).symm
+  have hcont : Continuous A' :=
+    GlobalTheory.T.continuous_of_lie_intertwine_l2 (Fin n) L' A' C hC hbound (GlobalTheory.T.derived_action_intertwines_of_group (Fin n) L'.toLinearMap A' C hC hbound hint)
+  have hAeq : ⇑A = fun f => CQi (A' (CQ f)) := by
+    funext f
+    rw [hA'apply, hQQ, hQQ]
+  rw [hAeq]
+  exact CQi.continuous.comp (hcont.comp CQ.continuous)
+
+end GlobalTheory.WeilAdm
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchSchwartzL2BoundedIntertwinerContinuousStatement
+
+section
 
 @[expose] public section
 
@@ -56,3 +400,5 @@ theorem _root_.GlobalTheory.T.archSchwartz_L2Bounded_intertwiner_continuous : �
         ⇑(A f') = GlobalTheory.WeilAdm.schrInf D.host.F ψ (L v) ⇑(A f)) →
       Continuous A := by
   first | exact @GlobalTheory.WeilAdm.realcont | exact GlobalTheory.WeilAdm.realcont | (intros; apply GlobalTheory.WeilAdm.realcont <;> assumption)
+end
+end

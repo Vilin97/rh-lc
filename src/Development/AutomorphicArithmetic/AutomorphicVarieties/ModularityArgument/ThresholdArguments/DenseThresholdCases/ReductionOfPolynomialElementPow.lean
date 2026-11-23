@@ -1,10 +1,8 @@
 module
 
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.ModularityLinkedEnds
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DGmap
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.OpRelOf
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.NilpotentHeckeOperators.FNil
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.NilpotentHeckeOperators.PowRel
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LocOk
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.NilpotentLevelLowering.ActUVariableEqPow
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.OrdinaryHeckeAlgebraIntegral
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +35,101 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DGmap
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.OpRelOf
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Ring.Hom.Defs
+public import Mathlib.Data.Fintype.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.GroupWithZero.Divisibility
+public import Mathlib.Algebra.Ring.Commute
+public import Mathlib.Data.Nat.Cast.Basic
+public import Mathlib.RingTheory.Nilpotent.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.NilpotentHeckeOperators.PowRel
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.ModularityLinkedEnds
+
+section
+
+@[expose] public section
+
+
+
+
+section
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.N ValuativeRel IsLocalRing
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.LocGL GlobalTheory.GalOfCusp GlobalTheory.SmGL GlobalTheory.SplitWeil
+open UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Hi UpperTheory.V.AlgebraTools UpperTheory.V.Pa UpperTheory.V.Pa.Lev UpperTheory.V.Th
+open scoped TensorProduct
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+abbrev _root_.UpperTheory.V.Th.LevelRelationTwoX : Prop :=
+    _root_.UpperTheory.V.Pa.LocPAlt → ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (V0 : s.Lev) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsCoef l O] [Algebra ℤ_[l] O] (n : ℕ) (r : Resid V0.frame O n) (B : UniversalOrdinaryDeterminantRing r) (J : Ideal B.B) (D : ℕ) (b : TWBase (pairOf B.u) J Empty D) (V : s.Lev) (h : (globOf r V).Hom (globOf r V0)) (q : ℕ) (w : Fin q → Plc L) (A : LevMod b h w) (x δ : ∀ j, ((w j).adicCompletion L)ˣ), (∀ j, ((l : ℕ) : 𝓞 L) ∉ (w j).asIdeal) → (∀ j, IsUnif (x j)) → (∀ j, IsGenMod _ (ellC l _) (δ j)) → ∀ (T : ThData l A.ρ x δ) (ph ta : Fin q → (globOf r V).G₀), _root_.UpperTheory.V.Pa.Lev.LocalLevelConditions A x δ ph ta → ∀ j i, T.act1 (fEl (qj w) (uV A.R) ^ (2 * n.factorial) * (A.p.D.map (MvPolynomial.C : A.R →+* PUY A.R q n)).tr (twoPowerModulus (2 * n.factorial) (ph j) (ta j) (uV A.R j) i (yV A.R j i))) = 0
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.NilpotentHeckeOperators.FNil
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.V.Th.fNil :
+    ∀ (K S : Type) [CommRing K] [IsDomain K] [CommRing S] (f : K →+* S) (n N q : ℕ) (α : Fin n → K) (U : Fin n → S), (∀ k, (U k - f (α k)) ^ N = 0) → ¬ (∀ i i', i ≠ i' → α i ≠ α i' ∧ α i ≠ (q : K) * α i') → (∏ i : Fin n, ∏ i' ∈ Finset.univ.erase i, (U i - U i') * (U i - (q : S) * U i')) ^ (2 * N) = 0 := by
+  intro K S _ _ _ f n N q α U hU hne
+  simp only [not_forall] at hne
+  obtain ⟨i, i', hii', hα⟩ := hne
+  have hcase : (U i - U i') ^ (2 * N) = 0 ∨ (U i - (q : S) * U i') ^ (2 * N) = 0 := by
+    have ha : (U i - f (α i)) ^ N = 0 := hU i
+    have hb : (U i' - f (α i')) ^ N = 0 := hU i'
+    by_cases he : α i = α i'
+    · left
+      have hnb : (-(U i' - f (α i'))) ^ N = 0 := by rw [neg_pow, hb, mul_zero]
+      have hx : U i - U i' = (U i - f (α i)) + -(U i' - f (α i')) := by
+        rw [he]
+        ring
+      rw [hx]
+      exact Commute.add_pow_eq_zero_of_add_le_succ_of_pow_eq_zero (Commute.all _ _) ha hnb
+        (by omega)
+    · right
+      have hq : α i = (q : K) * α i' := by
+        by_contra h'
+        exact hα ⟨he, h'⟩
+      have hnb : (-(q : S) * (U i' - f (α i'))) ^ N = 0 := by rw [mul_pow, hb, mul_zero]
+      have hx : U i - (q : S) * U i' = (U i - f (α i)) + -(q : S) * (U i' - f (α i')) := by
+        rw [hq, map_mul, map_natCast]
+        ring
+      rw [hx]
+      exact Commute.add_pow_eq_zero_of_add_le_succ_of_pow_eq_zero (Commute.all _ _) ha hnb
+        (by omega)
+  have hY : ((U i - U i') * (U i - (q : S) * U i')) ^ (2 * N) = 0 := by
+    rw [mul_pow]
+    rcases hcase with h | h
+    · rw [h, zero_mul]
+    · rw [h, mul_zero]
+  have hdvd : (U i - U i') * (U i - (q : S) * U i') ∣
+      ∏ j : Fin n, ∏ j' ∈ Finset.univ.erase j, (U j - U j') * (U j - (q : S) * U j') :=
+    (Finset.dvd_prod_of_mem (fun j' => (U i - U j') * (U i - (q : S) * U j'))
+      (Finset.mem_erase.2 ⟨hii'.symm, Finset.mem_univ _⟩)).trans
+      (Finset.dvd_prod_of_mem
+        (fun j => ∏ j' ∈ Finset.univ.erase j, (U j - U j') * (U j - (q : S) * U j'))
+        (Finset.mem_univ i))
+  exact zero_dvd_iff.1 (hY ▸ pow_dvd_pow_of_dvd hdvd (2 * N))
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.ReductionOfPolynomialElementPow
+
+section
 
 @[expose] public section
 
@@ -167,4 +258,6 @@ theorem UpperTheory.V.Z.Win.T2.level_relation_two_x :
     rw [← MvPolynomial.coe_eval₂Hom]
     simp only [map_pow, map_prod, map_mul, map_sub, map_natCast, MvPolynomial.eval₂Hom_X', Sum.elim_inl]
     exact fNil ℂ S (algebraMap ℂ S) n n.factorial (qj w j) _ U hU hreg
+end
+end
 end

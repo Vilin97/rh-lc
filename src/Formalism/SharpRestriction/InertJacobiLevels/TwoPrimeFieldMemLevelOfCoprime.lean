@@ -1,7 +1,8 @@
 module
 
-public import Formalism.SharpRestriction.InertJacobiLevels.PrimeSupply
-public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.FrobeniusOrbits.Statement
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -11,6 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -39,6 +41,46 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Formalism.LocalRingCardinality.SpanPowerMembership.Primes
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+
+-- Source module: Formalism.SharpRestriction.InertJacobiLevels.PrimeSupply
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.Inhab
+
+open Formalism.BasicNotions Formalism.FrobeniusOrbits Formalism.TwoAdicCyclotomicDecomposition NumberField
+
+def dlogQ (d : ℕ) (hd : d.Prime) : ℝ :=
+  haveI : Fact d.Prime := ⟨hd⟩
+  haveI : NeZero d := ⟨hd.ne_zero⟩
+  (deriv (DirichletCharacter.LFunction
+      ((quadraticChar (ZMod d)).ringHomComp (Int.castRingHom ℂ) : DirichletCharacter ℂ d)) 1 /
+    DirichletCharacter.LFunction
+      ((quadraticChar (ZMod d)).ringHomComp (Int.castRingHom ℂ) : DirichletCharacter ℂ d) 1).re
+
+structure QDGood (x eps : ℝ) (q d : ℕ) : Prop where
+  hyp : HostHyp q d
+  q_lo : Real.exp (x ^ (eps / 5) / 2) < q
+  q_hi : (q : ℝ) ≤ Real.exp (x ^ (eps / 5))
+  d_lo : Real.exp (x ^ (eps / 5) * Real.log x ^ 2 / 2) < d
+  d_hi : (d : ℝ) ≤ Real.exp (x ^ (eps / 5) * Real.log x ^ 2)
+  split : ∀ p : ℕ, p.Prime → p ≠ 2 → (p : ℝ) ≤ x ^ (eps / 5) → jacobiSym (-(d : ℤ)) p = 1
+  dlog : |dlogQ d hyp.2.1| ≤ x ^ eps
+
+end Formalism.MainNotions.Inhab
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.InertJacobiLevels.TwoPrimeFieldMemLevelOfCoprime
+
+section
 
 @[expose] public section
 
@@ -138,4 +180,6 @@ end Base
 
 end Formalism.MainNotions.Inhab
 
+end
+end
 end

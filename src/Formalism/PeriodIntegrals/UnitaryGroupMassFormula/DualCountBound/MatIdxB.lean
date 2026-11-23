@@ -1,7 +1,8 @@
 module
 
 public import Mathlib.LinearAlgebra.Determinant
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SmithMat
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.RingTheory.Ideal.Span
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,10 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,8 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,10 +41,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SmithNormalForm.ExistsMoveRow
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.LinearAlgebra.Quotient.Pi
+
+-- Source module: Formalism.PeriodIntegrals.SmithMat
+
+section
+
+@[expose] public section
+
+namespace PI
+
+open Matrix
+
+def SmithDiag.{u} : Prop :=
+  ∀ (R : Type u) [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) R),
+    ∃ (U V : Matrix (Fin n) (Fin n) R) (d : Fin n → R),
+      IsUnit U ∧ IsUnit V ∧ U * A * V = diagonal d
+
+def SmithMat.{u} : Prop :=
+  ∀ (R : Type u) [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] (n : ℕ)
+    (A : Matrix (Fin n) (Fin n) R),
+    ∃ (U V : Matrix (Fin n) (Fin n) R) (d : Fin n → R),
+      IsUnit U ∧ IsUnit V ∧ U * A * V = diagonal d ∧ ∀ i j, i ≤ j → d i ∣ d j
+
+end PI
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SmithMat
+
+section
+
+@[expose] public section
+
+theorem smith_normal_form_theory.{u} : PI.SmithMat.{u} := by
+  intro R _ _ _ n A
+  obtain ⟨d, ⟨U, V, hU, hV, h⟩, hd⟩ := PI.SmithWork.smith n A
+  exact ⟨U, V, d, hU, hV, h, hd⟩
+
+theorem smith_diagonal_entries.{u} : PI.SmithDiag.{u} := by
+  intro R _ _ _ n A
+  obtain ⟨U, V, d, hU, hV, h, -⟩ := smith_normal_form_theory R n A
+  exact ⟨U, V, d, hU, hV, h⟩
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DualCountBound.MatIdxB
+
+section
 
 @[expose] public section
 
@@ -160,3 +210,6 @@ theorem card_coker_endo {R N : Type} [CommRing R] [IsDomain R] [IsPrincipalIdeal
     card_coker_matrix _ (LinearMap.toMatrix b b ψ) (by rw [hdet]; exact hψ), hdet]
 
 end PI.NGStepBBW
+end
+end
+end

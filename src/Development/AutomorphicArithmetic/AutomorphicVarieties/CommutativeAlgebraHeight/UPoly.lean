@@ -2,7 +2,6 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
 public import Mathlib.RingTheory.MvPolynomial.Homogeneous
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalMulHomog
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,8 +22,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +41,43 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.IsLocalHom
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalMulHomog
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk4.aeval_mul_homog :
+    ∀ {n : ℕ} {A G S : Type} [inst : CommRing A]
+    [inst_1 : CommRing S] [inst_2 : Algebra A S] {P : MvPolynomial G A},
+    P.IsHomogeneous n →
+      ∀ (b : S) (x : G → S),
+        (MvPolynomial.aeval fun (g : G) ↦ b * x g : MvPolynomial G A → S) P =
+          b ^ n * (MvPolynomial.aeval x : MvPolynomial G A → S) P := by
+  intro n A G S _ _ _ P hP b x
+  rw [MvPolynomial.aeval_def, MvPolynomial.aeval_def, MvPolynomial.eval₂_eq,
+    MvPolynomial.eval₂_eq, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun d hd ↦ ?_
+  have hdeg : ∑ i ∈ d.support, d i = n := by
+    have h := hP (MvPolynomial.mem_support_iff.mp hd)
+    simpa [Finsupp.weight_apply, Finsupp.sum] using h
+  simp only [mul_pow]
+  rw [Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, hdeg]
+  ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.UPoly
+
+section
 
 @[expose] public section
 
@@ -85,3 +115,5 @@ theorem UpperTheory.V.CA.u_poly :
     change MvPolynomial.aeval _ P = b ^ n * (MvPolynomial.aeval _ P)
     rw [← aeval_mul_homog hP]
     congr 2
+end
+end

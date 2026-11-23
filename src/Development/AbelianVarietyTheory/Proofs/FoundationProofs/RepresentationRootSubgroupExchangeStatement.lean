@@ -2,7 +2,8 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RepresentationTheory.Basic
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.RepresentationRootSubgroupExchange
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Module.LinearMap.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,7 +44,155 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Foundations.SamePartIffOfNeZero
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ImportsMore
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.ComplexValueBound
+
+open Finset
+
+theorem main : ∀ {ι κ M : Type} [inst : AddCommGroup M] [inst_1 : Module ℂ M] (T : κ → M →ₗ[ℂ] M) (l : ι → κ → ℂ), (∀ (i j : ι), i ≠ j → ∃ (k : κ), l i k ≠ l j k) → ∀ (s : Finset ι) (u : ι → M), (∀ (i : ι) (k : κ), (T k : M → M) (u i) = l i k • u i) → ∑ i ∈ s, u i = (0 : M) → ∀ i ∈ s, u i = (0 : M) := by
+  intro ι κ M _ _ T l hl s
+  classical
+  induction s using Finset.induction_on with
+  | empty => intro u _ _ i hi; simp at hi
+  | insert a s ha ih =>
+    intro u hu hsum
+    rw [Finset.sum_insert ha] at hsum
+    have hsa : ∑ i ∈ s, u i = -u a := by
+      rw [← sub_eq_zero, sub_neg_eq_add, add_comm]; exact hsum
+    have hs : ∀ j ∈ s, u j = 0 := by
+      intro j hj
+      have hne : a ≠ j := fun h => ha (h ▸ hj)
+      obtain ⟨k, hk⟩ := hl a j hne
+      have hvu : ∀ (i : ι) (k' : κ), (T k' : M → M) ((l i k - l a k) • u i)
+          = l i k' • ((l i k - l a k) • u i) := by
+        intro i k'
+        rw [LinearMap.map_smul, hu, smul_comm]
+      have hvsum : ∑ i ∈ s, (l i k - l a k) • u i = 0 := by
+        have h1 : ∑ i ∈ s, (l i k - l a k) • u i
+            = T k (∑ i ∈ s, u i) - l a k • ∑ i ∈ s, u i := by
+
+          rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+          refine Finset.sum_congr rfl (fun i _ => ?_)
+          rw [hu, sub_smul]
+        rw [h1, hsa, map_neg, hu, smul_neg, sub_neg_eq_add, neg_add_cancel]
+      have h := ih (fun i => (l i k - l a k) • u i) hvu hvsum j hj
+      exact (smul_eq_zero.mp h).resolve_left (sub_ne_zero.mpr (Ne.symm hk))
+    intro i hi
+    rcases Finset.mem_insert.mp hi with rfl | hi
+    · have h0 : ∑ i ∈ s, u i = 0 := Finset.sum_eq_zero hs
+      rw [h0, add_zero] at hsum; exact hsum
+    · exact hs i hi
+
+end GlobalTheory.ComplexValueBound
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.RepresentationRootSubgroupExchange
+
+section
+
+@[expose] public section
+
+open Polynomial Classical GlobalTheory.BadShare
+
+namespace GlobalTheory.BadShare
+
+theorem eq_zero_of_sum_joint_eigenvectors {ι κ M : Type} [AddCommGroup M] [Module ℂ M]
+    (T : κ → M →ₗ[ℂ] M) (l : ι → κ → ℂ) (hl : ∀ i j, i ≠ j → ∃ k, l i k ≠ l j k)
+    (s : Finset ι) : ∀ u : ι → M, (∀ i k, T k (u i) = l i k • u i) → ∑ i ∈ s, u i = 0 →
+      ∀ i ∈ s, u i = 0 := by
+  first
+  | exact @_root_.GlobalTheory.ComplexValueBound.main
+  | exact _root_.GlobalTheory.ComplexValueBound.main
+  | (apply _root_.GlobalTheory.ComplexValueBound.main <;> assumption)
+  | (intros; apply _root_.GlobalTheory.ComplexValueBound.main <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.ComplexValueBound.main <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.ComplexValueBound.main ..)
+
+theorem root_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddCommGroup M] [Module ℂ M] [FiniteDimensional ℂ M] (ρ : Representation ℂ G M), ∀ (B X Y : Subgroup G) (χ : G → ℂ), (∀ x ∈ X, x ∈ B → x = 1) → (∀ b ∈ B, ∀ x ∈ X, ∃ x' ∈ X, ∃ b' ∈ B, b * x = x' * b' ∧ χ b' = χ b) → (∀ x ∈ X, ∀ y ∈ Y, y⁻¹ * x⁻¹ * y * x ∈ B) → (∀ x ∈ X, ∀ x' ∈ X, x ≠ x' → ∃ y ∈ Y, χ (y⁻¹ * x⁻¹ * y * x) ≠ χ (y⁻¹ * x'⁻¹ * y * x')) → ∀ (n : ℕ) (v : Fin n → M), LinearIndependent ℂ v → (∀ i, (∀ b ∈ B, ρ b (v i) = χ b • v i) ∧ ∀ y ∈ Y, ρ y (v i) = v i) → ∃ w : Fin n → M, LinearIndependent ℂ w ∧ ∀ i, (∀ b ∈ B, ρ b (w i) = χ b • w i) ∧ ∀ x ∈ X, ρ x (w i) = w i := by
+  intro G _ _ M _ _ _ ρ B X Y χ hXB hBX hc hsep n v hv hvi
+  have hmul : ∀ (g h : G) (m : M), ρ (g * h) m = ρ g (ρ h m) := fun g h m => by
+    rw [map_mul]; rfl
+  let S : M →ₗ[ℂ] M := ∑ x : X, ρ (x : G)
+  have hS : ∀ m, S m = ∑ x : X, ρ (x : G) m := fun m => by
+    simp only [S, LinearMap.sum_apply]
+  have hinj : ∀ m : M, (∀ b ∈ B, ρ b m = χ b • m) → (∀ y ∈ Y, ρ y m = m) → S m = 0 → m = 0 := by
+    intro m hb hy h0
+    rw [hS] at h0
+    have := eq_zero_of_sum_joint_eigenvectors (ι := X) (κ := Y) (fun y => ρ (y : G))
+      (fun x y => χ ((y : G)⁻¹ * (x : G)⁻¹ * y * x))
+      (fun x x' hne => by
+        obtain ⟨y, hyY, h⟩ := hsep x x.2 x' x'.2 (fun h => hne (Subtype.ext h))
+        exact ⟨⟨y, hyY⟩, h⟩) Finset.univ (fun x => ρ (x : G) m)
+      (fun x y => by
+        have e : (y : G) * x = x * (y * ((y : G)⁻¹ * (x : G)⁻¹ * y * x)) := by group
+        show ρ (y : G) (ρ (x : G) m) = _
+        rw [← hmul, e, hmul, hmul, hb _ (hc x x.2 y y.2), map_smul, hy y y.2, map_smul]) h0
+      1 (Finset.mem_univ _)
+    simpa using this
+  refine ⟨fun i => S (v i), ?_, fun i => ⟨fun b hb => ?_, fun x hx => ?_⟩⟩
+  · rw [Fintype.linearIndependent_iff] at hv ⊢
+    intro g hg
+    apply hv g
+    apply hinj
+    · intro b hb
+
+      rw [map_sum, Finset.smul_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_smul, (hvi i).1 b hb, smul_comm]
+    · intro y hy
+
+      rw [map_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_smul, (hvi i).2 y hy]
+
+    simpa only [map_sum, map_smul] using hg
+  · choose f hf g hg hfg hχ using hBX b hb
+    let F : X → X := fun x => ⟨f x x.2, hf x x.2⟩
+    have hF : Function.Injective F := by
+      intro x1 x2 h
+      have h' : f x1 x1.2 = f x2 x2.2 := congrArg Subtype.val h
+      have e1 := hfg x1 x1.2
+      have e2 := hfg x2 x2.2
+      rw [← h'] at e2
+      have e : (x1 : G)⁻¹ * x2 = (g x1 x1.2)⁻¹ * g x2 x2.2 := by
+        calc (x1 : G)⁻¹ * x2 = (b * x1)⁻¹ * (b * x2) := by group
+          _ = _ := by rw [e1, e2]; group
+      have := hXB _ (X.mul_mem (X.inv_mem x1.2) x2.2)
+        (e ▸ B.mul_mem (B.inv_mem (hg x1 x1.2)) (hg x2 x2.2))
+      exact Subtype.ext (inv_mul_eq_one.1 this)
+    have hB : Function.Bijective F := Finite.injective_iff_bijective.1 hF
+    show ρ b (S (v i)) = χ b • S (v i)
+
+    rw [hS, map_sum, Finset.smul_sum]
+    refine Fintype.sum_bijective F hB _ _ fun x => ?_
+    rw [← hmul, hfg x x.2, hmul, (hvi i).1 _ (hg x x.2), hχ, map_smul]
+  · show ρ x (S (v i)) = S (v i)
+
+    rw [hS, map_sum]
+    refine Fintype.sum_equiv (Equiv.mulLeft (⟨x, hx⟩ : X)) _ _ fun z => ?_
+    rw [← hmul]; rfl
+
+end GlobalTheory.BadShare
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.RepresentationRootSubgroupExchangeStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +200,5 @@ open Polynomial Classical GlobalTheory.BadShare
 
 theorem _root_.GlobalTheory.T.representation_root_subgroup_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddCommGroup M] [Module ℂ M] [FiniteDimensional ℂ M] (ρ : Representation ℂ G M), ∀ (B X Y : Subgroup G) (χ : G → ℂ), (∀ x ∈ X, x ∈ B → x = 1) → (∀ b ∈ B, ∀ x ∈ X, ∃ x' ∈ X, ∃ b' ∈ B, b * x = x' * b' ∧ χ b' = χ b) → (∀ x ∈ X, ∀ y ∈ Y, y⁻¹ * x⁻¹ * y * x ∈ B) → (∀ x ∈ X, ∀ x' ∈ X, x ≠ x' → ∃ y ∈ Y, χ (y⁻¹ * x⁻¹ * y * x) ≠ χ (y⁻¹ * x'⁻¹ * y * x')) → ∀ (n : ℕ) (v : Fin n → M), LinearIndependent ℂ v → (∀ i, (∀ b ∈ B, ρ b (v i) = χ b • v i) ∧ ∀ y ∈ Y, ρ y (v i) = v i) → ∃ w : Fin n → M, LinearIndependent ℂ w ∧ ∀ i, (∀ b ∈ B, ρ b (w i) = χ b • w i) ∧ ∀ x ∈ X, ρ x (w i) = w i := by
   first | exact @GlobalTheory.BadShare.root_exchange | exact GlobalTheory.BadShare.root_exchange | (intros; apply GlobalTheory.BadShare.root_exchange <;> assumption)
+end
+end

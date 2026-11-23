@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.QBinomialSumCardQuotientSubspaces
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussBinomMulProd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,8 +43,36 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.QBinomialSumCardQuotientSubspaces
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem qBinomial_subspaces : ∀ (k V : Type) [Field k] [Finite k] [AddCommGroup V] [Module k V]
+    [FiniteDimensional k V] (X : ℂ),
+    ∑ j ∈ Finset.range (Module.finrank k V + 1),
+        (-1 : ℂ) ^ j * (Nat.card k : ℂ) ^ (j * (j - 1) / 2) *
+          (Nat.card {W : Submodule k V // Module.finrank k (V ⧸ W) = j} : ℂ) * X ^ j =
+      ∏ i ∈ Finset.range (Module.finrank k V), (1 - (Nat.card k : ℂ) ^ i * X) := by
+  intro k V _ _ _ _ _ X
+  simp only [GlobalTheory.GaussCount.card_codim]
+  exact GlobalTheory.GaussCount.gauss_formula (Nat.card k) ℂ X (Module.finrank k V)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.QBinomialSumCardQuotientSubspacesStatement
+
+section
+
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.qBinomial_sum_card_quotient_subspaces : ∀ (k V : Type) [Field k] [Finite k] [AddCommGroup V] [Module k V] [FiniteDimensional k V] (X : ℂ), ∑ j ∈ Finset.range (Module.finrank k V + 1), (-1 : ℂ) ^ j * (Nat.card k : ℂ) ^ (j * (j - 1) / 2) * (Nat.card {W : Submodule k V // Module.finrank k (V ⧸ W) = j} : ℂ) * X ^ j = ∏ i ∈ Finset.range (Module.finrank k V), (1 - (Nat.card k : ℂ) ^ i * X) := by
   first | exact @GlobalTheory.qBinomial_subspaces | exact GlobalTheory.qBinomial_subspaces | (intros; apply GlobalTheory.qBinomial_subspaces <;> assumption)
+end
+end

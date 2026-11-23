@@ -3,7 +3,8 @@ module
 public import Formalism.SharpRestriction.CuspSpanNormBounds.LocSplitType
 public import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
 public import Formalism.HermitianLattices.HermitianLatticesProofs.LocDual
-public import Formalism.SharpRestriction.CuspSpanNormBounds.RowsOneGenusOfCyclic
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Formalism.LocalRingCardinality.DataHost
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,11 +42,63 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.HermitianLattices.StatementJac
+import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ForPrimeFlagLattice
+import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
+import Formalism.SharpRestriction.CuspSpanNormBounds.IsPrimitiveSub
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ForPrimeFlagLattice
 import Formalism.HermitianLattices.HermitianLatticesProofs.UnimodularSpan
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.RowsOneGenusOfCyclic
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.BridgeRowsGenus
+
+open NumberField Formalism.HermitianLatticesTheory
+
+section Cyc
+
+variable {E : Type} [Field E] [NumberField E] [StarRing E]
+  {V : Type} [AddCommGroup V] [Module E V] [Module (𝓞 E) V] [IsScalarTower (𝓞 E) E V]
+
+theorem cyc_star_int (o : 𝓞 E) : star (algebraMap (𝓞 E) E o) ∈ Set.range (algebraMap (𝓞 E) E) := by
+  have h : IsIntegral ℤ (starRingEnd E (algebraMap (𝓞 E) E o)) :=
+    (RingOfIntegers.isIntegral_coe o).map (starRingEnd E).toIntAlgHom
+  exact ⟨⟨_, h⟩, rfl⟩
+
+end Cyc
+
+section Rows
+
+open Module Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.Cnt Formalism.MainNotions.BridgeLemma₂
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+end Rows
+
+end Formalism.MainNotions.BridgeRowsGenus
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.RowsOneGenusOfLocalDiscriminant
+
+section
 
 @[expose] public section
 
@@ -105,4 +152,6 @@ end Rows
 
 end Formalism.MainNotions.BridgeRowsGenus
 
+end
+end
 end

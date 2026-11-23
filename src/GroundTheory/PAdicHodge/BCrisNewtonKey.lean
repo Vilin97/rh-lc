@@ -5,9 +5,7 @@ public import GroundTheory.PAdicHodge.BdRAlgCl
 public import GroundTheory.PAdicHodge.ACrisBdRGalois
 import GroundTheory.PAdicHodge.ACrisBdRInj
 public import GroundTheory.PAdicHodge.BCrisNewtonApprox
-public import GroundTheory.PAdicHodge.BCrisNewtonDom
-public import GroundTheory.PAdicHodge.BCrisNewtonSlope
-public import GroundTheory.PAdicHodge.BCrisNewtonValue
+public import GroundTheory.PAdicHodge.BCrisNewtonNorm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +18,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -34,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,8 +45,239 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import GroundTheory.PAdicHodge.BCrisNewtonValue
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: GroundTheory.PAdicHodge.BCrisNewtonDom
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.PAdicHodge
+
+namespace WittTilt
+
+open _root_.WittVector Laurent ACris
+
+variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
+variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
+
+local notation "𝔸" => Localization.Away (p : AInf K p)
+
+variable {ρ : ℝ}
+
+theorem gn_sum_lt (hρ0 : 0 < ρ) (hρ1 : ρ < 1) {ι : Type*} (s : Finset ι) (f : ι → 𝔸) {M : ℝ}
+    (hM : 0 < M) (h : ∀ i ∈ s, gn K p ρ (f i) < M) : gn K p ρ (∑ i ∈ s, f i) < M := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => rw [Finset.sum_empty, gn_zero]; exact hM
+  | insert i s hi ih =>
+    rw [Finset.sum_insert hi]
+    exact (gn_add_le hρ0 hρ1 _ _).trans_lt (max_lt (h i (Finset.mem_insert_self i s))
+      (ih fun k hk => h k (Finset.mem_insert_of_mem hk)))
+
+theorem sum_sub_sum_mem {R : Type*} [CommRing R] (I : Ideal R) (d : ℕ) (C : ℕ → R) {a a' b b' : R}
+    (ha : a - a' ∈ I) (hb : b - b' ∈ I) :
+    ∑ i ∈ Finset.range (d + 1), C i * a ^ i * b ^ (d - i) -
+      ∑ i ∈ Finset.range (d + 1), C i * a' ^ i * b' ^ (d - i) ∈ I := by
+  rw [← Ideal.Quotient.eq]
+
+  simp only [map_sum, map_mul, map_pow, Ideal.Quotient.eq.2 ha, Ideal.Quotient.eq.2 hb]
+
+theorem algebraMap_acrisZero_algebraMap (w : AInf K p) :
+    algebraMap (ACrisZero K p) (ACris K p) (algebraMap (AInf K p) (ACrisZero K p) w) =
+      algebraMap (AInf K p) (ACris K p) w :=
+  rfl
+
+
+set_option maxHeartbeats 4000000 in
+theorem false_of_dominant (hp0 : ‖(p : K)‖ ≤ ρ) (hρ1 : ρ < 1) {a b : ACris K p} {Na Nb : ℕ}
+    {Fa Fb : ℝ}
+    (hsa : ∀ N ≥ Na, ∀ c : ACrisZero K p,
+      a - algebraMap _ (ACris K p) c ∈ Ideal.span {(p : ACris K p) ^ N} → gn K p ρ (c : 𝔸) = Fa)
+    (hsb : ∀ N ≥ Nb, ∀ c : ACrisZero K p,
+      b - algebraMap _ (ACris K p) c ∈ Ideal.span {(p : ACris K p) ^ N} → gn K p ρ (c : 𝔸) = Fb)
+    (d : ℕ) (x : ℕ → AInf K p)
+    (hsum : ∑ i ∈ Finset.range (d + 1),
+      algebraMap (AInf K p) (ACris K p) (x i) * a ^ i * b ^ (d - i) = 0)
+    {j : ℕ} (hj : j ∈ Finset.range (d + 1))
+    (hpos : 0 < gn K p ρ (algebraMap (AInf K p) 𝔸 (x j)) * Fa ^ j * Fb ^ (d - j))
+    (hdom : ∀ i ∈ Finset.range (d + 1), i ≠ j →
+      gn K p ρ (algebraMap (AInf K p) 𝔸 (x i)) * Fa ^ i * Fb ^ (d - i) <
+        gn K p ρ (algebraMap (AInf K p) 𝔸 (x j)) * Fa ^ j * Fb ^ (d - j)) : False := by
+  have hρ0 : 0 < ρ := norm_p_pos.trans_le hp0
+  set g := fun i => gn K p ρ (algebraMap (AInf K p) 𝔸 (x i)) * Fa ^ i * Fb ^ (d - i) with hg
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hpos hρ1
+  set N := max n (max Na Nb)
+  have hN : ρ ^ N < g j := (pow_le_pow_of_le_one hρ0.le hρ1.le (le_max_left _ _)).trans_lt hn
+  obtain ⟨ca, hca⟩ := exists_approx a N
+  obtain ⟨cb, hcb⟩ := exists_approx b N
+  have hFa := hsa N ((le_max_left _ _).trans (le_max_right _ _)) ca hca
+  have hFb := hsb N ((le_max_right _ _).trans (le_max_right _ _)) cb hcb
+  set T : ℕ → ACrisZero K p := fun i => algebraMap (AInf K p) (ACrisZero K p) (x i) * ca ^ i * cb ^ (d - i)
+  set S : ACrisZero K p := ∑ i ∈ Finset.range (d + 1), T i
+
+  have hS : algebraMap _ (ACris K p) (0 : ACrisZero K p) - algebraMap _ (ACris K p) S ∈
+      Ideal.span {(p : ACris K p) ^ N} := by
+    have eS : algebraMap (ACrisZero K p) (ACris K p) S = ∑ i ∈ Finset.range (d + 1),
+        algebraMap (AInf K p) (ACris K p) (x i) * algebraMap (ACrisZero K p) (ACris K p) ca ^ i *
+          algebraMap (ACrisZero K p) (ACris K p) cb ^ (d - i) := by
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [S, T, map_sum, map_mul, map_pow, algebraMap_acrisZero_algebraMap]
+    have key := sum_sub_sum_mem (Ideal.span {(p : ACris K p) ^ N}) d
+      (fun i => algebraMap (AInf K p) (ACris K p) (x i)) hca hcb
+    rw [hsum, zero_sub, ← eS] at key
+    rw [map_zero, zero_sub]
+    exact key
+  have hle := gn_sub_le_of_mem hp0 hρ1 hS
+  rw [ZeroMemClass.coe_zero, zero_sub, gn_neg hρ0 hρ1] at hle
+
+  have hT : ∀ i, gn K p ρ ((T i : ACrisZero K p) : 𝔸) = g i := by
+    intro i
+    simp only [T, MulMemClass.coe_mul, SubmonoidClass.coe_pow]
+    rw [gn_mul hρ0 hρ1, gn_mul hρ0 hρ1, gn_pow hρ0 hρ1, gn_pow hρ0 hρ1, hFa, hFb]
+    rfl
+  have hSsum : ((S : ACrisZero K p) : 𝔸) = ∑ i ∈ Finset.range (d + 1), ((T i : ACrisZero K p) : 𝔸) := by
+    simp only [S]
+    push_cast
+    rfl
+  have hrest : gn K p ρ (∑ i ∈ (Finset.range (d + 1)).erase j, ((T i : ACrisZero K p) : 𝔸)) < g j :=
+    gn_sum_lt hρ0 hρ1 _ _ hpos fun i hi => by
+      rw [hT]
+      exact hdom i (Finset.mem_of_mem_erase hi) (Finset.ne_of_mem_erase hi)
+  have hsplit : ((S : ACrisZero K p) : 𝔸) = ((T j : ACrisZero K p) : 𝔸) +
+      ∑ i ∈ (Finset.range (d + 1)).erase j, ((T i : ACrisZero K p) : 𝔸) := by
+    rw [hSsum, Finset.add_sum_erase _ (fun i => ((T i : ACrisZero K p) : 𝔸)) hj]
+  have hSj : gn K p ρ ((S : ACrisZero K p) : 𝔸) = g j := by
+    rw [← hT j]
+    refine gn_eq_of_gn_sub_lt hρ0 hρ1 ?_
+    rw [hsplit, sub_add_cancel_left, gn_neg hρ0 hρ1, hT j]
+    exact hrest
+  linarith
+
+end WittTilt
+
+end GroundTheory.PAdicHodge
+end
+end
+end
+
+-- Source module: GroundTheory.PAdicHodge.BCrisNewtonSlope
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.PAdicHodge
+
+namespace WittTilt
+
+open _root_.WittVector Laurent Filter Topology
+
+variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
+variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
+
+local notation "𝔸" => Localization.Away (p : AInf K p)
+
+theorem norm_coeffB_toB_le_one (z : 𝔸) (n : ℤ) : ‖(teichLift K p).coeffB (toB K p z) n‖ ≤ 1 := by
+  obtain ⟨M, x, h⟩ := exists_toB_mul z
+  rw [TeichLift.coeffB_eq _ h]
+  exact norm_zcoeff_incl_le_one x _
+
+theorem exists_gn_eq_monomial {z : 𝔸} (hz : z ≠ 0) {r₀ : ℝ} (hr0 : 0 < r₀) (hr1 : r₀ < 1) :
+    ∃ (β : ℝ) (i : ℤ) (ρ₃ : ℝ), 0 < β ∧ r₀ < ρ₃ ∧ ρ₃ < 1 ∧
+      ∀ ρ ∈ Set.Icc r₀ ρ₃, gn K p ρ z = β * ρ ^ i := by
+  set a := (teichLift K p).coeffB (toB K p z) with ha_def
+  have hconv : ∀ ρ, 0 < ρ → ρ < 1 → ConvergesAt a ρ := fun ρ h0 h1 => convergesAt_toB z h0 h1
+  have ha0 : a ≠ 0 := by
+    intro h
+    have := gn_pos (K := K) hr0 hr1 hz
+    unfold gn at this
+    rw [← ha_def, h] at this
+    simp [gaussNorm] at this
+  set i := highIndex a r₀
+  have hi := highIndex_mem hr0 (hconv r₀ hr0 hr1) ha0
+  set β := ‖a i‖ with hβ_def
+  have hβ : 0 < β := norm_pos_iff.2 (ne_zero_of_mem_domSet hr0 (hconv r₀ hr0 hr1) ha0 hi)
+  have hG : gaussNorm a r₀ = β * r₀ ^ i := hi.symm
+  set ρt := (r₀ + 1) / 2 with hρt
+  have hρt0 : 0 < ρt := by linarith
+  have hρt1 : ρt < 1 := by linarith
+  obtain ⟨L, hL⟩ := exists_pow_lt_of_lt_one hβ hρt1
+  have hev : ∀ᶠ ρ in 𝓝 r₀, ∀ n ∈ Finset.Ioc i (i + L), ‖a n‖ * ρ ^ n < β * ρ ^ i := by
+    rw [Filter.eventually_all_finset]
+    intro n hn
+    have hlt : ‖a n‖ * r₀ ^ n < β * r₀ ^ i := by
+      rw [← hG]
+      exact weight_lt_of_highIndex_lt hr0 (hconv r₀ hr0 hr1) ha0 (Finset.mem_Ioc.1 hn).1
+    have hc : ContinuousAt (fun ρ : ℝ => β * ρ ^ i - ‖a n‖ * ρ ^ n) r₀ :=
+      (continuousAt_const.mul (continuousAt_zpow₀ r₀ i (Or.inl hr0.ne'))).sub
+        (continuousAt_const.mul (continuousAt_zpow₀ r₀ n (Or.inl hr0.ne')))
+    filter_upwards [hc.eventually (lt_mem_nhds (sub_pos.2 hlt))] with ρ hρ
+    exact sub_pos.1 hρ
+  obtain ⟨δ, hδ, hδf⟩ := Metric.eventually_nhds_iff.1 hev
+  refine ⟨β, i, min (r₀ + δ / 2) ρt, hβ, lt_min (by linarith) (by linarith),
+    (min_le_right _ _).trans_lt hρt1, fun ρ hρ => ?_⟩
+  have hρ0 : 0 < ρ := hr0.trans_le hρ.1
+  have hρ1 : ρ < 1 := hρ.2.trans_lt ((min_le_right _ _).trans_lt hρt1)
+  have hρt' : ρ ≤ ρt := hρ.2.trans (min_le_right _ _)
+  have hd : dist ρ r₀ < δ := by
+    rw [Real.dist_eq, abs_of_nonneg (by linarith [hρ.1])]
+    linarith [hρ.2, min_le_left (r₀ + δ / 2) ρt]
+  have hnear := hδf hd
+  unfold gn
+  rw [← ha_def]
+  refine le_antisymm (gaussNorm_le fun n => ?_) ((hconv ρ hρ0 hρ1).le_gaussNorm i)
+  rcases le_or_gt n i with hni | hni
+  ·
+    have h1 : ‖a n‖ * r₀ ^ n ≤ β * r₀ ^ i := hG ▸ (hconv r₀ hr0 hr1).le_gaussNorm n
+    have hq : 1 ≤ ρ / r₀ := (one_le_div hr0).2 hρ.1
+    have h2 : (ρ / r₀) ^ n ≤ (ρ / r₀) ^ i := zpow_le_zpow_right₀ hq hni
+    have e1 : ‖a n‖ * ρ ^ n = (‖a n‖ * r₀ ^ n) * (ρ / r₀) ^ n := by
+      rw [div_zpow, mul_assoc, mul_div_assoc', mul_div_cancel_left₀ _ (zpow_ne_zero n hr0.ne')]
+    have e2 : β * ρ ^ i = (β * r₀ ^ i) * (ρ / r₀) ^ i := by
+      rw [div_zpow, mul_assoc, mul_div_assoc', mul_div_cancel_left₀ _ (zpow_ne_zero i hr0.ne')]
+    rw [e1, e2]
+    exact mul_le_mul h1 h2 (zpow_nonneg (div_nonneg hρ0.le hr0.le) n)
+      (mul_nonneg hβ.le (zpow_nonneg hr0.le i))
+  · rcases le_or_gt n (i + L) with hnL | hnL
+    · exact (hnear n (Finset.mem_Ioc.2 ⟨hni, hnL⟩)).le
+    ·
+      have h1 : ‖a n‖ * ρ ^ n ≤ ρ ^ n :=
+        mul_le_of_le_one_left (zpow_nonneg hρ0.le n) (norm_coeffB_toB_le_one z n)
+      have h2 : ρ ^ n = ρ ^ i * ρ ^ (n - i) := by rw [← zpow_add₀ hρ0.ne']; ring_nf
+      have h3 : ρ ^ (n - i) ≤ ρ ^ (L : ℤ) :=
+        zpow_le_zpow_right_of_le_one₀ hρ0 hρ1.le (by omega)
+      have h4 : ρ ^ (L : ℤ) ≤ ρt ^ L := by
+        rw [zpow_natCast]; exact pow_le_pow_left₀ hρ0.le hρt' L
+      have h5 : ρ ^ (n - i) ≤ β := (h3.trans h4).trans hL.le
+      calc ‖a n‖ * ρ ^ n ≤ ρ ^ i * ρ ^ (n - i) := h1.trans h2.le
+        _ ≤ ρ ^ i * β := mul_le_mul_of_nonneg_left h5 (zpow_nonneg hρ0.le i)
+        _ = β * ρ ^ i := mul_comm _ _
+
+end WittTilt
+
+end GroundTheory.PAdicHodge
+end
+end
+end
+
+-- Source module: GroundTheory.PAdicHodge.BCrisNewtonKey
+
+section
 
 @[expose] public section
 
@@ -250,3 +479,6 @@ theorem exists_norm_eq_zpow_of_iota_eq {y : PadicAlgCl p} (hy : y ≠ 0) {a b : 
 end ACris
 
 end GroundTheory.PAdicHodge
+end
+end
+end

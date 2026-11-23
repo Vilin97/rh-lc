@@ -1,14 +1,14 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Degenerations.InducedModelMorphismCompStructureMap
-public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsRingHomOfMulPowMem
+public import Mathlib.RingTheory.Adjoin.FG
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -20,8 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +43,68 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsRingHomOfMulPowMem
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem exists_mul_pow_mem_of_fg {O Ω : Type} [CommRing O] [Field Ω] [Algebra O Ω]
+    (A B : Subalgebra O Ω) (hA : A.FG)
+    (hB : ∀ x : Ω, ∃ a ∈ B, ∃ b ∈ B, b ≠ 0 ∧ x * b = a) :
+    ∃ d ∈ B, d ≠ 0 ∧ ∀ a ∈ A, ∃ n : ℕ, a * d ^ n ∈ B := by
+  classical
+  obtain ⟨s, hs⟩ := hA
+  have hden : ∀ x : Ω, ∃ b ∈ B, b ≠ 0 ∧ x * b ∈ B := by
+    intro x
+    obtain ⟨a, ha, b, hb, hb0, hx⟩ := hB x
+    exact ⟨b, hb, hb0, by rw [hx]; exact ha⟩
+  choose den hdenB hden0 hdenmul using hden
+  have hD : ∏ x ∈ s, den x ∈ B := Subalgebra.prod_mem B (fun x _ => hdenB x)
+  refine ⟨∏ x ∈ s, den x, hD, Finset.prod_ne_zero_iff.mpr (fun x _ => hden0 x), ?_⟩
+  intro a ha
+  rw [← hs] at ha
+  induction ha using Algebra.adjoin_induction with
+  | mem x hx =>
+
+    refine ⟨1, ?_⟩
+    rw [pow_one, ← Finset.mul_prod_erase s den (Finset.mem_coe.mp hx), ← mul_assoc]
+    exact mul_mem (hdenmul x) (Subalgebra.prod_mem B (fun y _ => hdenB y))
+  | algebraMap r =>
+    exact ⟨0, by rw [pow_zero, mul_one]; exact B.algebraMap_mem r⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨n, hn⟩ := hx
+    obtain ⟨m, hm⟩ := hy
+    refine ⟨n + m, ?_⟩
+    have e : (x + y) * (∏ z ∈ s, den z) ^ (n + m) =
+        x * (∏ z ∈ s, den z) ^ n * (∏ z ∈ s, den z) ^ m +
+          y * (∏ z ∈ s, den z) ^ m * (∏ z ∈ s, den z) ^ n := by ring
+    rw [e]
+    exact add_mem (mul_mem hn (pow_mem hD m)) (mul_mem hm (pow_mem hD n))
+  | mul x y _ _ hx hy =>
+    obtain ⟨n, hn⟩ := hx
+    obtain ⟨m, hm⟩ := hy
+    refine ⟨n + m, ?_⟩
+    have e : x * y * (∏ z ∈ s, den z) ^ (n + m) =
+        (x * (∏ z ∈ s, den z) ^ n) * (y * (∏ z ∈ s, den z) ^ m) := by ring
+    rw [e]
+    exact mul_mem hn hm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsAffineOpenRingOnEqAdjoinInv
+
+section
 
 @[expose] public section
 
@@ -177,3 +239,5 @@ theorem exists_affineOpen_ringOn_eq_adjoin_inv : ∀ (o Ω : Type) [CommRing o] 
     hV.basicOpen g, ha, ha0, h, h ▸ hAS⟩
 
 end GlobalTheory.ZH
+end
+end

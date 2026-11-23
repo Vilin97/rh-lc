@@ -1,7 +1,8 @@
 module
 
-public import ReciprocityTheory.DualLattices.Eisenstein4CoeffBound
-public import Mathlib.NumberTheory.ModularForms.Discriminant
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic
+public import Mathlib.NumberTheory.ModularForms.QExpansion
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,11 +16,9 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.ModularForms.LevelOne.GradedRing
+public import Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,11 +37,53 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.ModularForms.Discriminant
+public import Mathlib.NumberTheory.ModularForms.LevelOne.GradedRing
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.NumberTheory.ModularForms.CuspFormSubmodule
 public import Mathlib.NumberTheory.ModularForms.LevelOne.DimensionFormula
+
+-- Source module: ReciprocityTheory.DualLattices.Eisenstein4CoeffBound
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.PGsh
+
+open ModularForm EisensteinSeries ArithmeticFunction PowerSeries UpperHalfPlane
+open scoped ArithmeticFunction.sigma
+
+def e4Z : PowerSeries ℤ := PowerSeries.mk fun n => if n = 0 then 1 else 240 * (σ 3 n : ℤ)
+
+def e6Z : PowerSeries ℤ := PowerSeries.mk fun n => if n = 0 then 1 else -504 * (σ 5 n : ℤ)
+
+theorem qExpansion_E₄_eq : qExpansion 1 E₄ = PowerSeries.map (Int.castRingHom ℂ) e4Z := by
+  ext n
+  rw [coeff_map, e4Z, coeff_mk]
+  by_cases hn : n = 0
+  · subst hn; norm_num [E_qExpansion_coeff _ ⟨2, rfl⟩]
+  · norm_num [E_qExpansion_coeff _ ⟨2, rfl⟩, hn, show bernoulli 4 = -1 / 30 by decide +kernel]
+
+theorem qExpansion_E₆_eq : qExpansion 1 E₆ = PowerSeries.map (Int.castRingHom ℂ) e6Z := by
+  ext n
+  rw [coeff_map, e6Z, coeff_mk]
+  by_cases hn : n = 0
+  · subst hn; norm_num [E_qExpansion_coeff _ ⟨3, rfl⟩]
+  · norm_num [E_qExpansion_coeff _ ⟨3, rfl⟩, hn, show bernoulli 6 = 1 / 42 by decide +kernel]
+
+end ReciprocityTheory.PGsh
+end
+end
+
+-- Source module: ReciprocityTheory.DualLattices.QExpansionMonoWCoeffZero
+
+section
 
 @[expose] public section
 
@@ -170,3 +211,5 @@ theorem coe_mem_monoSpanF (w : ℕ) (f : ModularForm 𝒮ℒ (w : ℤ)) : (⇑f 
     simp
 
 end ReciprocityTheory.PGsh
+end
+end

@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LieLatticeData
 public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.PolarisedFlagStatement
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemFlagSubIff
+public import Mathlib.LinearAlgebra.StdBasis
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,13 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,9 +42,58 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemFlagSubIff
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.Qi34.flagSub :
+    {F : Type} →
+      [inst : Field F] →
+        {N : Type} →
+          [inst_1 : AddCommGroup N] → [inst_2 : _root_.Module F N] → {n : ℕ} → Module.Basis (Fin n) F N → ℕ → Submodule F N :=
+    fun {F : Type} [Field F] {N : Type} [AddCommGroup N] [_root_.Module F N] {n : ℕ} (b : Module.Basis (Fin n) F N)
+        (i : ℕ) ↦
+      Submodule.span F ((⇑b : Fin n → N) '' {j : Fin n | (↑j : ℕ) < i})
+
+theorem UpperTheory.Reformulated.B.Qi34.mem_flagSub_iff :
+    ∀ {F : Type} [inst : Field F] {n : ℕ} (i : ℕ) (x : Fin n → F),
+      x ∈ UpperTheory.Reformulated.B.Qi34.flagSub (Pi.basisFun F (Fin n)) i ↔ ∀ (j : Fin n), i ≤ (↑j : ℕ) → x j = (0 : F) := by
+  intro F _ n i x
+  unfold UpperTheory.Reformulated.B.Qi34.flagSub
+  rw [Module.Basis.mem_span_image]
+  constructor
+  · intro h j hj
+    by_contra hx
+    have hmem : j ∈ ((Pi.basisFun F (Fin n)).repr x).support := by
+      rw [Finsupp.mem_support_iff, Pi.basisFun_repr]
+      exact hx
+    have hlt : (j : ℕ) < i := h (Finset.mem_coe.mpr hmem)
+    omega
+  · intro h j hj
+    have hx : x j ≠ 0 := by
+      have := Finsupp.mem_support_iff.mp (Finset.mem_coe.mp hj)
+      rwa [Pi.basisFun_repr] at this
+    show (j : ℕ) < i
+    by_contra hlt
+    exact hx (h j (not_lt.mp hlt))
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MemFirstLatticeIff
+
+section
 
 @[expose] public section
 
@@ -379,3 +422,6 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.PtDx.main : ∀ {o C : Type} [CommRi
     obtain ⟨c', hc', rfl⟩ := (PtDx.xId_iff RC D AA.carrier hM hint _ (χ τ) (hχ τ) i y).1 hy
     rw [hX, ← hD] at hc'
     exact PtDx.dId_backward RC D AA.carrier hM p _ (χ τ) (hχ τ) i c' hc'
+end
+end
+end

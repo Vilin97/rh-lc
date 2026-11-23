@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DivPowerCompatTwoFormDerivativeCompOneForm
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftFormsBijectiveDegreeOneTwo
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompatibleFormsCochainsEqDeRhamCochainsSmoothLif
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,9 +39,41 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftFormsBijectiveDegreeOneTwo
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
+
+namespace GlobalTheory.PDForm
+
+theorem lift_forms_bij : ∀ (D : Data) (Λ : Lift D) (U : AffOp D.X),
+    Function.Bijective (fun ω : Ω[Sec D.s U.unop.1⁄D.R] ↦
+      (Submodule.Quotient.mk ((Λ.semi U).m1 ω) : K1 D.R (Λ.L.obj U).δ)) ∧
+    Function.Bijective (fun x : Om D.R (Sec D.s U.unop.1) 2 ↦
+      (Submodule.Quotient.mk ((Λ.semi U).mOm 2 x) : K D.R (Λ.L.obj U).δ 2)) :=
+  fun _ Λ U ↦ ⟨LiftRes.liftOneFormsToCompatible_bijective Λ U, LiftRes.fm_bij Λ U 2⟩
+
+end GlobalTheory.PDForm
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftFormsBijectiveDegreeOneTwoStatement
+
+section
+
 @[expose] public section
 
 open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.CxCoh GlobalTheory.PDA GlobalTheory.PDForm GlobalTheory.SmoothLift
 
 theorem _root_.GlobalTheory.T.liftForms_bijective_degree_one_two : ∀ (D : Data) (Λ : Lift D) (U : AffOp D.X), Function.Bijective (fun ω : Ω[Sec D.s U.unop.1⁄D.R] ↦ (Submodule.Quotient.mk ((Λ.semi U).m1 ω) : K1 D.R (Λ.L.obj U).δ)) ∧ Function.Bijective (fun x : Om D.R (Sec D.s U.unop.1) 2 ↦ (Submodule.Quotient.mk ((Λ.semi U).mOm 2 x) : K D.R (Λ.L.obj U).δ 2)) := by
   first | exact @GlobalTheory.PDForm.lift_forms_bij | exact GlobalTheory.PDForm.lift_forms_bij | (intros; apply GlobalTheory.PDForm.lift_forms_bij <;> assumption)
+end
+end

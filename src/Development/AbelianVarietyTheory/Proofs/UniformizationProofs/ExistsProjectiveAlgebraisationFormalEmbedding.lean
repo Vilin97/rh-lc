@@ -3,17 +3,14 @@ module
 public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsFormCorrection
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUniqueAlgEquivOfCompatibleQuotient
 public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsHomOfVeryAmpleBy
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsLimitOfSuccessiveCorrections
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.HomEqOfPullSections
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsHomogeneousXPowMulAddXPowMul
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsPullbackOfEquationsLift
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SubmoduleEqTopOfSupSmulOfIsNilpotent
+public import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -33,8 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +42,88 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.HomEqOfPullSections
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsHomogeneousXPowMulAddXPowMul
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.IsPullbackOfEquationsLift
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SubmoduleEqTopOfSupSmulOfIsNilpotent
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsLimitOfSuccessiveCorrections
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.Unif
+
+theorem exists_limit_of_successive_corrections (R : Type) [CommRing R] (a : R) (M : Type)
+    [AddCommGroup M] [Module R M] [IsPrecomplete (Ideal.span {a}) M] (K : ℕ → Submodule R M)
+    (hK : ∀ e, K (e + 1) ≤ K e) (ha : ∀ (e : ℕ) (x : M), a ^ (e + 1) • x ∈ K e)
+    (hs : ∀ e, ∀ x ∈ K e, ∃ y : M, x - a ^ (e + 1) • y ∈ K (e + 1)) :
+    ∀ e, ∀ x ∈ K e, ∃ x' y : M, (∀ e', x' ∈ K e') ∧ x - x' = a ^ (e + 1) • y := by
+  intro e x hx
+  have hanti : Antitone K := antitone_nat_of_succ_le hK
+  have hmem : ∀ (n : ℕ) (z : M), z ∈ (Ideal.span {a} ^ n • ⊤ : Submodule R M) ↔
+      ∃ y : M, z = a ^ n • y := by
+    intro n z
+    rw [Ideal.span_singleton_pow, Submodule.ideal_span_singleton_smul,
+      Submodule.mem_smul_pointwise_iff_exists]
+    constructor
+    · rintro ⟨y, -, h⟩
+      exact ⟨y, h.symm⟩
+    · rintro ⟨y, h⟩
+      exact ⟨y, trivial, h.symm⟩
+  choose y hy using hs
+  let s : (n : ℕ) → K (e + n) := fun n =>
+    Nat.rec (motive := fun n => K (e + n)) ⟨x, hx⟩
+      (fun n z => ⟨z.1 - a ^ (e + n + 1) • y (e + n) z.1 z.2, hy _ _ _⟩) n
+  have hs0 : (s 0 : M) = x := rfl
+  have hsn : ∀ n, (s (n + 1) : M) = s n - a ^ (e + n + 1) • y (e + n) (s n).1 (s n).2 :=
+    fun n => rfl
+  have hd : ∀ m n, m ≤ n → ∃ z : M, (s m : M) - s n = a ^ (e + m + 1) • z := by
+    intro m n hmn
+    induction n, hmn using Nat.le_induction with
+    | base => exact ⟨0, by simp⟩
+    | succ n hmn ih =>
+      obtain ⟨z, hz⟩ := ih
+      obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hmn
+      refine ⟨z + a ^ k • y (e + (m + k)) (s (m + k)).1 (s (m + k)).2, ?_⟩
+      rw [hsn, smul_add, ← hz, smul_smul, ← pow_add,
+        show e + m + 1 + k = e + (m + k) + 1 by ring]
+      abel
+  obtain ⟨L, hL⟩ := IsPrecomplete.prec (I := Ideal.span {a}) (M := M) inferInstance
+    (f := fun n => (s n : M)) (by
+      intro m n hmn
+      obtain ⟨z, hz⟩ := hd m n hmn
+      rw [SModEq.sub_mem, hmem]
+      refine ⟨a ^ (e + 1) • z, ?_⟩
+      rw [hz, smul_smul, ← pow_add, show m + (e + 1) = e + m + 1 by ring])
+  have hl : ∀ m, ∃ z : M, (s m : M) - L = a ^ (e + m + 1) • z := by
+    intro m
+    obtain ⟨z, hz⟩ := hd m (e + m + 1) (by omega)
+    have h := hL (e + m + 1)
+    rw [SModEq.sub_mem, hmem] at h
+    obtain ⟨w, hw⟩ := h
+    refine ⟨z + w, ?_⟩
+    rw [smul_add, ← hz, ← hw]
+    abel
+  obtain ⟨z, hz⟩ := hl 0
+  refine ⟨L, z, fun m => ?_, hz⟩
+  obtain ⟨w, hw⟩ := hl m
+  have hLe : L = (s m : M) - a ^ (e + m + 1) • w := by rw [← hw]; abel
+  apply hanti (show m ≤ e + m by omega)
+  rw [hLe]
+  exact Submodule.sub_mem _ (s m).2 (ha _ _)
+
+end GlobalTheory.Unif
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsProjectiveAlgebraisationFormalEmbedding
+
+section
 
 @[expose] public section
 
@@ -185,3 +262,6 @@ theorem GlobalTheory.Unif.exists_projective_of_formal_embedding : ∀ (V : Type)
     exact GlobalTheory.MapUniq.hom_eq_of_pull_sections V B f H' n s' hH' hva' _ (H e) (s e) _ _ w'' (w e) (hH e).1
       (by rw [Category.assoc, hb, hb, c₁]) ((isGen_iff _).2 (T.pgen_comp (hH (e + 1)).1 hw' hv)) (hw e)
       (fun j => Rel.comp T (hH (e + 1)).1 (hr (e + 1) j) (hs e j)) (hr e)
+end
+end
+end

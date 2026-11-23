@@ -2,17 +2,17 @@ module
 
 public import Formalism.FrobeniusOrbits.HostThickExists
 public import Mathlib.Combinatorics.Additive.AP.Three.Behrend
-public import Lemmata.GeneralBFactSecondLast.Imports
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Order.Group.Unbundled.Abs
+public import Mathlib.Data.Fintype.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Algebra.Order.Star.Int
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
-public import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -25,9 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,10 +44,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.Group.Unbundled.Int
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Lemmata.GeneralBFactSecondLast.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_second_last
+
+theorem goal1 :
+  ∀ (B : Int) {S : Nat} (c : Fin S → Int),
+  (∀ (m : Fin S), LT.lt.{0} (abs.{0} (c m)) B) →
+    Eq.{1} (Finset.sum.{0, 0} Finset.univ.{0} fun (m : Fin S) ↦ HMul.hMul.{0, 0, 0} (c m) (HPow.hPow.{0, 0, 0} B m.val))
+        0 →
+      ∀ (m : Fin S), Eq.{1} (c m) 0 := by
+  intro B S
+  induction S with
+  | zero => intro c _ _ m; exact m.elim0
+  | succ n ih =>
+    intro c hc hs m
+    have hB : 0 < B := lt_of_le_of_lt (abs_nonneg _) (hc 0)
+    rw [Fin.sum_univ_succ] at hs
+    have h2 : ∑ i : Fin n, c i.succ * B ^ (i.succ).val = B * ∑ i : Fin n, c i.succ * B ^ i.val := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [Fin.val_succ, pow_succ]
+      ring
+    rw [h2, Fin.val_zero, pow_zero, mul_one] at hs
+    have hd : B ∣ c 0 := ⟨-(∑ i : Fin n, c i.succ * B ^ i.val), by rw [mul_neg]; linarith⟩
+    have h0 : c 0 = 0 := Int.eq_zero_of_abs_lt_dvd hd (hc 0)
+    rw [h0, zero_add] at hs
+    have hT : ∑ i : Fin n, c i.succ * B ^ i.val = 0 := by
+      rcases mul_eq_zero.mp hs with h | h
+      · exact absurd h hB.ne'
+      · exact h
+    have ih' := ih (fun i => c i.succ) (fun i => hc _) hT
+    exact Fin.cases h0 (fun i => ih' i) m
+
+end Bl.general_b_fact_second_last
+end
+end
+
+-- Source module: Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.ThickExists
+
+section
 
 @[expose] public section
 
@@ -388,3 +438,6 @@ theorem hostThickExists : HostThickExists := by
           rw [← Real.exp_add, show -32 * s + 32 * s = 0 by ring, Real.exp_zero, mul_one]
 
 end Formalism.FrobeniusOrbits
+end
+end
+end

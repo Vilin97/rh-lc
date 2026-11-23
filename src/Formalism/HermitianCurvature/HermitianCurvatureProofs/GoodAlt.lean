@@ -2,12 +2,19 @@ module
 
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ParFamIntegrable
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjointnessFromHermitian
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothGOfSf
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothGConst
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeylCellConjTransposeMulApply
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.ParFamIntegrable
+import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CartanInvolutionConjTransposeMul
+import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ComplexifiedDerivativeCommutator
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -20,6 +27,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +50,313 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothGConst
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.HasDerivAtRightDerivativeCurve
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt
+open scoped ContDiff
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.ParameterFamilyAlgebra
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+section RdV
+
+variable {k ρ : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
+
+def cur (X : Q.Mx k ρ) (y : Mt k ρ) (t : ℝ) : Mt k ρ :=
+  Matrix.of.symm (Matrix.of y * NormedSpace.exp ((t : ℂ) • X))
+
+theorem cur_zero (X : Q.Mx k ρ) (y : Mt k ρ) : cur X y 0 = y := by
+  simp [cur, NormedSpace.exp_zero]
+
+theorem cur_add (X : Q.Mx k ρ) (y : Mt k ρ) (s t : ℝ) : cur X (cur X y s) t = cur X y (s + t) := by
+  have hc : Commute ((s : ℂ) • X) ((t : ℂ) • X) := ((Commute.refl X).smul_left _).smul_right _
+  have e : NormedSpace.exp (((s + t : ℝ) : ℂ) • X) =
+      NormedSpace.exp ((s : ℂ) • X) * NormedSpace.exp ((t : ℂ) • X) := by
+    rw [← Matrix.exp_add_of_commute _ _ hc, Complex.ofReal_add, add_smul]
+  unfold cur
+  rw [Equiv.apply_symm_apply, e, Matrix.mul_assoc]
+
+theorem cur_hasDerivAt0 (X : Q.Mx k ρ) (y : Mt k ρ) :
+    HasDerivAt (cur X y) (Matrix.of.symm (Matrix.of y * X)) 0 :=
+  Formalism.REAL.hasDerivAt_mul_exp_smul_zero (Matrix.of y) X
+
+theorem cur_hasDerivAt (X : Q.Mx k ρ) (y : Mt k ρ) (s : ℝ) :
+    HasDerivAt (cur X y) (Matrix.of.symm (Matrix.of (cur X y s) * X)) s := by
+  have h0 := cur_hasDerivAt0 X (cur X y s)
+  rw [← sub_self s] at h0
+  have h1 := h0.comp_sub_const s s
+  refine h1.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_)
+  show cur X y t = cur X (cur X y s) (t - s)
+  rw [cur_add, add_sub_cancel]
+
+def mulX (X : Q.Mx k ρ) : Mt k ρ →ₗ[ℝ] Mt k ρ where
+  toFun y := Matrix.of.symm (Matrix.of y * X)
+  map_add' a b := by
+    show Matrix.of.symm ((Matrix.of a + Matrix.of b) * X) = _
+    rw [Matrix.add_mul]; rfl
+  map_smul' c a := by
+    show Matrix.of.symm ((c • Matrix.of a) * X) = _
+    rw [Matrix.smul_mul]; rfl
+
+variable {Par : Type} [NormedAddCommGroup Par] [NormedSpace ℝ Par] [FiniteDimensional ℝ Par]
+
+def dirL (X : Q.Mx k ρ) : Par × Mt k ρ →L[ℝ] Par × Mt k ρ :=
+  (ContinuousLinearMap.inr ℝ Par (Mt k ρ)).comp
+    ((LinearMap.toContinuousLinearMap (mulX X)).comp (ContinuousLinearMap.snd ℝ Par (Mt k ρ)))
+
+theorem rdv_local {X : Q.Mx k ρ} (hX : Formalism.FourierDecayAlt.P.Qx3.LieLev (Fin.last ρ) X) {f : Par → Q.Mx k ρ → E}
+    {U : Set (Par × Mt k ρ)} {F : Par × Mt k ρ → E} (hU : IsOpen U) (hF : ContDiffOn ℝ ∞ F U)
+    (hfF : ∀ q ∈ U, Matrix.of q.2 ∈ Q.Glev k ρ (Fin.last ρ) → f q.1 (Matrix.of q.2) = F q)
+    {q : Par × Mt k ρ} (hq : q ∈ U) (hqG : Matrix.of q.2 ∈ Q.Glev k ρ (Fin.last ρ)) :
+    HasDerivAt (fun t : ℝ => f q.1 (Matrix.of (cur X q.2 t))) (fderiv ℝ F q (dirL X q)) 0 := by
+  have hc := cur_hasDerivAt0 X q.2
+  have hγ : HasDerivAt (fun t : ℝ => ((q.1, cur X q.2 t) : Par × Mt k ρ)) (dirL X q) 0 :=
+    (hasDerivAt_const (0 : ℝ) q.1).prodMk hc
+  have hγ0 : ((q.1, cur X q.2 0) : Par × Mt k ρ) = q := by rw [cur_zero]
+  have hFd : DifferentiableAt ℝ F q := (hF.differentiableOn (by simp)).differentiableAt (hU.mem_nhds hq)
+  have hcomp := hFd.hasFDerivAt.comp_hasDerivAt_of_eq (0 : ℝ) hγ hγ0.symm
+  refine hcomp.congr_of_eventuallyEq ?_
+  have hmem : ∀ᶠ t : ℝ in 𝓝 0, ((q.1, cur X q.2 t) : Par × Mt k ρ) ∈ U :=
+    hγ.continuousAt.preimage_mem_nhds (by rw [hγ0]; exact hU.mem_nhds hq)
+  filter_upwards [hmem] with t ht
+  exact hfF _ ht (Formalism.FourierDecayAlt.P.Qx3.glev_mul hqG (hX t))
+
+theorem parFam_contAt_comp {Y : Type} [TopologicalSpace Y] {U₀ : Set (Par × Mt k ρ)} {g : Par × Mt k ρ → E}
+    (hg : PBI.ParFam k ρ U₀ g) {m : Y → Par × Mt k ρ} {y₀ : Y} (hm : ContinuousAt m y₀) (hU : m y₀ ∈ U₀)
+    (hG : ∀ y, Matrix.of (m y).2 ∈ Q.Glev k ρ (Fin.last ρ)) : ContinuousAt (fun y => g (m y)) y₀ := by
+  obtain ⟨U, F, hUo, hqU, hF, hgF⟩ := hg (m y₀) hU (hG y₀)
+  have hcF : ContinuousAt F (m y₀) := hF.continuousOn.continuousAt (hUo.mem_nhds hqU)
+  have h := ContinuousAt.comp (g := F) (f := m) (x := y₀) hcF hm
+  refine h.congr ?_
+  have hmem : ∀ᶠ y in 𝓝 y₀, m y ∈ U := hm.preimage_mem_nhds (hUo.mem_nhds hqU)
+  filter_upwards [hmem] with y hy
+  exact (hgF (m y) hy (hG y)).symm
+
+theorem rdv_parFam {X : Q.Mx k ρ} (hX : Formalism.FourierDecayAlt.P.Qx3.LieLev (Fin.last ρ) X) {U₀ : Set (Par × Mt k ρ)}
+    {f : Par → Q.Mx k ρ → E} (hf : PBI.ParFam k ρ U₀ (fun q => f q.1 (Matrix.of q.2))) :
+    PBI.ParFam k ρ U₀ (fun q => RdV X (f q.1) (Matrix.of q.2)) := by
+  intro q₀ hq₀ hG₀
+  obtain ⟨U, F, hU, hqU, hF, hfF⟩ := hf q₀ hq₀ hG₀
+  refine ⟨U, fun q => fderiv ℝ F q (dirL X q), hU, hqU, ?_, fun q hq hqG => ?_⟩
+  · exact (hF.fderiv_of_isOpen (m := ∞) hU Formalism.REAL.withTop_enat_infty_add_one_le_infty).clm_apply
+      (ContinuousLinearMap.contDiff (n := ∞) (dirL (Par := Par) (k := k) (ρ := ρ) X)).contDiffOn
+  · exact (rdv_local hX hU hF hfF hq hqG).deriv
+
+theorem hasDerivAt_right_derivative_curve {X : Q.Mx k ρ} (hX : Formalism.FourierDecayAlt.P.Qx3.LieLev (Fin.last ρ) X) {U₀ : Set (Par × Mt k ρ)}
+    {f : Par → Q.Mx k ρ → E} (hf : PBI.ParFam k ρ U₀ (fun q => f q.1 (Matrix.of q.2))) (Z : Par) (y : Mt k ρ)
+    (s : ℝ) (hq : (Z, cur X y s) ∈ U₀) (hG : Matrix.of (cur X y s) ∈ Q.Glev k ρ (Fin.last ρ)) :
+    HasDerivAt (fun t : ℝ => f Z (Matrix.of (cur X y t))) (RdV X (f Z) (Matrix.of (cur X y s))) s := by
+  obtain ⟨U, F, hU, hqU, hF, hfF⟩ := hf _ hq hG
+  have h0 := rdv_local hX hU hF hfF hqU hG
+  have h1 : HasDerivAt (fun t : ℝ => f Z (Matrix.of (cur X (cur X y s) t)))
+      (RdV X (f Z) (Matrix.of (cur X y s))) 0 := h0.differentiableAt.hasDerivAt
+  rw [← sub_self s] at h1
+  have h2 := h1.comp_sub_const s s
+  refine h2.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_)
+  show f Z (Matrix.of (cur X y t)) = f Z (Matrix.of (cur X (cur X y s) (t - s)))
+  rw [cur_add, add_sub_cancel]
+
+end RdV
+
+theorem parOK_rdV {k ρ : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {X : Q.Mx k ρ}
+    (hX : Formalism.FourierDecayAlt.P.Qx3.LieLev (Fin.last ρ) X) : ParOK k ρ (E := E) (RdV X) := by
+  intro Par _ _ _ _ _ U₀ hU₀ f hf
+  have hD := rdv_parFam hX hf
+  refine ⟨hD, fun q hq hG W hW hqW hz => ?_, fun ν _ Kp hKp hν fi y V hV hyV hyG hKV hi => ?_⟩
+  · show deriv (fun t : ℝ => f q.1 (Matrix.of (cur X q.2 t))) 0 = 0
+    have hγ : ContinuousAt (fun t : ℝ => ((q.1, cur X q.2 t) : Par × Mt k ρ)) 0 :=
+      continuousAt_const.prodMk (cur_hasDerivAt0 X q.2).continuousAt
+    have hγ0 : ((q.1, cur X q.2 0) : Par × Mt k ρ) = q := by rw [cur_zero]
+    have hmem : ∀ᶠ t : ℝ in 𝓝 0, ((q.1, cur X q.2 t) : Par × Mt k ρ) ∈ W :=
+      hγ.preimage_mem_nhds (by rw [hγ0]; exact hW.mem_nhds hqW)
+    have hev : (fun t : ℝ => f q.1 (Matrix.of (cur X q.2 t))) =ᶠ[𝓝 0] (fun _ => (0 : E)) := by
+      filter_upwards [hmem] with t ht
+      exact hz _ ht (Formalism.FourierDecayAlt.P.Qx3.glev_mul hG (hX t))
+    rw [hev.deriv_eq, deriv_const]
+  · have hGt : ∀ t : ℝ, Matrix.of (cur X y t) ∈ Q.Glev k ρ (Fin.last ρ) := fun t =>
+      Formalism.FourierDecayAlt.P.Qx3.glev_mul hyG (hX t)
+    have hpre : cur X y ⁻¹' V ∈ 𝓝 (0 : ℝ) :=
+      (cur_hasDerivAt0 X y).continuousAt.preimage_mem_nhds (by rw [cur_zero]; exact hV.mem_nhds hyV)
+    obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.mp hpre
+    have hδ : 0 < ε / 2 := half_pos hε
+    have hcb : Metric.closedBall (0 : ℝ) (ε / 2) ⊆ cur X y ⁻¹' V := fun t ht =>
+      hball (Metric.closedBall_subset_ball (half_lt_self hε) ht)
+    have hUt : ∀ t ∈ Metric.closedBall (0 : ℝ) (ε / 2), ∀ Z ∈ Kp, (Z, cur X y t) ∈ U₀ :=
+      fun t ht Z hZ => hKV ⟨hZ, hcb ht⟩
+    have hcont : ContinuousOn (fun p : Par × ℝ => RdV X (f p.1) (Matrix.of (cur X y p.2)))
+        (Kp ×ˢ Metric.closedBall (0 : ℝ) (ε / 2)) := by
+      intro p hp
+      have hm : ContinuousAt (fun p : Par × ℝ => ((p.1, cur X y p.2) : Par × Mt k ρ)) p :=
+        continuous_fst.continuousAt.prodMk
+          (ContinuousAt.comp (g := cur X y) (f := Prod.snd) (x := p) (cur_hasDerivAt X y p.2).continuousAt
+            continuous_snd.continuousAt)
+      exact (parFam_contAt_comp (g := fun q => RdV X (f q.1) (Matrix.of q.2)) hD hm (hUt p.2 hp.2 p.1 hp.1)
+        (fun p => hGt p.2)).continuousWithinAt
+    obtain ⟨C, hC⟩ := (hKp.prod (isCompact_closedBall (0 : ℝ) (ε / 2))).exists_bound_of_continuousOn hcont
+    have hae : ∀ᵐ Z ∂ν, Z ∈ Kp := by
+      rw [ae_iff]
+      simpa [Set.compl_def] using hν
+    have hb : Metric.ball (0 : ℝ) (ε / 2) ∈ 𝓝 (0 : ℝ) := Metric.ball_mem_nhds 0 hδ
+    have hin : ∀ t ∈ Metric.ball (0 : ℝ) (ε / 2), t ∈ Metric.closedBall (0 : ℝ) (ε / 2) :=
+      fun t ht => Metric.ball_subset_closedBall ht
+    have hF_int : ∀ t ∈ Metric.closedBall (0 : ℝ) (ε / 2),
+        Integrable (fun Z => f Z (Matrix.of (cur X y t))) ν := fun t ht =>
+      parFam_integrable (f := fun q => f q.1 (Matrix.of q.2)) hf hKp hν (hGt t) (fun Z hZ => hUt t ht Z hZ)
+    have h0c : (0 : ℝ) ∈ Metric.closedBall (0 : ℝ) (ε / 2) := Metric.mem_closedBall_self hδ.le
+    have key := hasDerivAt_integral_of_dominated_loc_of_deriv_le (μ := ν)
+      (F := fun t Z => f Z (Matrix.of (cur X y t)))
+      (F' := fun t Z => RdV X (f Z) (Matrix.of (cur X y t))) (x₀ := 0) (bound := fun _ => C) hb
+      (by
+        filter_upwards [hb] with t ht
+        exact (hF_int t (hin t ht)).aestronglyMeasurable)
+      (hF_int 0 h0c)
+      ((parFam_integrable (f := fun q => RdV X (f q.1) (Matrix.of q.2)) hD hKp hν (hGt 0)
+        (fun Z hZ => hUt 0 h0c Z hZ)).aestronglyMeasurable)
+      (by
+        filter_upwards [hae] with Z hZ
+        intro t ht
+        exact hC (Z, t) ⟨hZ, hin t ht⟩)
+      (integrable_const C)
+      (by
+        filter_upwards [hae] with Z hZ
+        intro t ht
+        exact hasDerivAt_right_derivative_curve hX hf Z y t (hUt t (hin t ht) Z hZ) (hGt t))
+    show deriv (fun t : ℝ => fi (Matrix.of (cur X y t))) 0 = ∫ Z, RdV X (f Z) (Matrix.of y) ∂ν
+    have hev : (fun t : ℝ => fi (Matrix.of (cur X y t))) =ᶠ[𝓝 0]
+        (fun t => ∫ Z, f Z (Matrix.of (cur X y t)) ∂ν) := by
+      filter_upwards [hb] with t ht
+      exact hi (cur X y t) (hcb (hin t ht)) (hGt t)
+    rw [hev.deriv_eq, key.2.deriv, cur_zero]
+
+end Formalism.FourierDecayAlt.P.ParameterFamilyAlgebra
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothGOfSf
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.Q
+open scoped ContDiff
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.ParameterFamilyAlgebra
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+section Ent
+
+variable {k ρ : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
+
+theorem smoothG_of_sf {a : Mx k ρ → ℂ}
+    (h : SmoothFam k ρ (Fin.last ρ) (Set.univ : Set (Formalism.FourierDecayAlt.P.Qx3.XX k ρ)) (fun _ g => a g)) : SmoothG k ρ a := by
+  intro y₀ hy₀
+  obtain ⟨U, F, hU, hxU, hF, hfF⟩ := h ((0 : Fin ρ → ℂ), Matrix.of y₀) (Set.mem_univ _) hy₀
+  have hm : Continuous fun y : Mt k ρ => (((0 : Fin ρ → ℂ), (Matrix.of y : Mx k ρ)) : Formalism.FourierDecayAlt.P.Qx3.XX k ρ) :=
+    continuous_const.prodMk continuous_id
+  have hmd : ContDiff ℝ ∞ fun y : Mt k ρ => (((0 : Fin ρ → ℂ), (Matrix.of y : Mx k ρ)) : Formalism.FourierDecayAlt.P.Qx3.XX k ρ) :=
+    contDiff_const.prodMk contDiff_id
+  refine ⟨(fun y : Mt k ρ => (((0 : Fin ρ → ℂ), (Matrix.of y : Mx k ρ)) : Formalism.FourierDecayAlt.P.Qx3.XX k ρ)) ⁻¹' U,
+    fun y => F ((0 : Fin ρ → ℂ), Matrix.of y), hU.preimage hm, hxU, hF.comp hmd.contDiffOn (fun y hy => hy),
+    fun y hy hG => hfF _ hy hG⟩
+
+theorem smoothG_yv (z : Fin (2 * ρ + k + 1) → ℂ) (j : Fin (mdim k ρ (Fin.last ρ))) :
+    SmoothG k ρ (fun g => yv k ρ z (Fin.last ρ) g j) :=
+  smoothG_of_sf (Formalism.FourierDecayAlt.P.Qx3.sf_yv z j)
+
+theorem smoothG_ybv (z : Fin (2 * ρ + k + 1) → ℂ) (j : Fin (mdim k ρ (Fin.last ρ))) :
+    SmoothG k ρ (fun g => ybv k ρ z (Fin.last ρ) g j) :=
+  smoothG_of_sf (Formalism.FourierDecayAlt.P.Qx3.sf_ybv z j)
+
+theorem parOK_EH (a b : Fin (mdim k ρ (Fin.last ρ))) :
+    ParOK k ρ (E := E) (EH k ρ (posL k ρ (Fin.last ρ) a) (posL k ρ (Fin.last ρ) b)) :=
+  parOK_congr (parOK_add (parOK_rdV (Formalism.FourierDecayAlt.P.Qx3.lieLev_of (Formalism.FourierDecayAlt.P.Qx3.hpart_lie (Fin.last ρ) a b).1))
+    (parOK_csmul Complex.I
+      (parOK_rdV (Formalism.FourierDecayAlt.P.Qx3.lieLev_of (Formalism.FourierDecayAlt.P.Qx3.hpart_lie (Fin.last ρ) a b).2)))) (fun f g => rfl)
+
+theorem parOK_Top (u : ℂ) (a b : Fin (mdim k ρ (Fin.last ρ))) :
+    ParOK k ρ (E := E) (Top (EH k ρ) u (posL k ρ (Fin.last ρ) a) (posL k ρ (Fin.last ρ) b)) := by
+  by_cases hab : posL k ρ (Fin.last ρ) a = posL k ρ (Fin.last ρ) b
+  · exact parOK_congr (parOK_add (parOK_csmul u parOK_id) (parOK_EH a b)) (fun f g => by simp [Formalism.QuantumDeterminants.Top, hab])
+  · exact parOK_congr (parOK_add parOK_zero (parOK_EH a b)) (fun f g => by simp [Formalism.QuantumDeterminants.Top, hab])
+
+theorem parOK_qminor {t : ℕ} (a b : Fin t → Fin (mdim k ρ (Fin.last ρ))) (u : ℂ) :
+    ParOK k ρ (E := E) (qminorOp (EH k ρ) (posL k ρ (Fin.last ρ) ∘ a) (posL k ρ (Fin.last ρ) ∘ b) u) := by
+  have key : ∀ σ : Equiv.Perm (Fin t), ParOK k ρ (E := E) (fun f g =>
+      (((Equiv.Perm.sign σ : ℤ) : ℂ) • (List.ofFn fun j : Fin t =>
+        Top (E := E) (EH k ρ) (u - ((j : ℕ) : ℂ)) ((posL k ρ (Fin.last ρ) ∘ a) (σ j))
+          ((posL k ρ (Fin.last ρ) ∘ b) j)).foldr (fun T h => T h) f g)) := by
+    intro σ
+    refine parOK_csmul _ (parOK_foldr _ ?_)
+    intro T hT
+    obtain ⟨j, rfl⟩ := (List.mem_ofFn' _ _).1 hT
+    exact parOK_Top _ _ _
+  refine parOK_congr (parOK_sum Finset.univ (fun σ _ => key σ)) (fun f g => ?_)
+  simp [qminorOp, Finset.sum_apply]
+
+theorem parOK_chatL (u : ℂ) (a β : Mx k ρ → Fin (mdim k ρ (Fin.last ρ)) → ℂ)
+    (ha : ∀ j, SmoothG k ρ (fun g => a g j)) (hβ : ∀ j, SmoothG k ρ (fun g => β g j)) :
+    ParOK k ρ (E := E) (chatL (EH k ρ) (posL k ρ (Fin.last ρ)) u a β) := by
+  refine parOK_congr (parOK_sum Finset.univ fun i' _ => parOK_sum Finset.univ fun j' _ =>
+    parOK_smulG (smoothG_mul (smoothG_mul (smoothG_const _) (hβ i')) (ha j')) (parOK_qminor _ _ _))
+    (fun f g => rfl)
+
+theorem parOK_chat2L (u : ℂ) (a a' β β' : Mx k ρ → Fin (mdim k ρ (Fin.last ρ)) → ℂ)
+    (ha : ∀ j, SmoothG k ρ (fun g => a g j)) (ha' : ∀ j, SmoothG k ρ (fun g => a' g j))
+    (hβ : ∀ j, SmoothG k ρ (fun g => β g j)) (hβ' : ∀ j, SmoothG k ρ (fun g => β' g j)) :
+    ParOK k ρ (E := E) (chat2L (EH k ρ) (posL k ρ (Fin.last ρ)) u a a' β β') := by
+  refine parOK_congr (parOK_sum Finset.univ fun i₁ _ => parOK_sum Finset.univ fun i₂ _ =>
+    parOK_sum Finset.univ fun j₁ _ => parOK_sum Finset.univ fun j₂ _ => ?_) (fun f g => rfl)
+  by_cases hc : i₁ < i₂ ∧ j₁ < j₂
+  · refine parOK_congr (parOK_smulG (smoothG_mul (smoothG_mul
+      (smoothG_const ((-1 : ℂ) ^ ((i₁ : ℕ) + (i₂ : ℕ) + (j₁ : ℕ) + (j₂ : ℕ))))
+      (smoothG_sub (smoothG_mul (hβ i₁) (hβ' i₂)) (smoothG_mul (hβ i₂) (hβ' i₁))))
+      (smoothG_sub (smoothG_mul (ha j₁) (ha' j₂)) (smoothG_mul (ha j₂) (ha' j₁)))) (parOK_qminor (skip2 i₁ i₂) (skip2 j₁ j₂) u))
+      (fun f g => by simp only [if_pos hc])
+  · exact parOK_congr parOK_zero (fun f g => by simp only [if_neg hc])
+
+theorem parOK_tL (z z' : Fin (2 * ρ + k + 1) → ℂ) (Y : ℂ) (p q : Fin 2) :
+    ParOK k ρ (E := E) (tL k ρ z z' (Fin.last ρ) Y p q) := by
+  fin_cases p <;> fin_cases q
+  · show ParOK k ρ (capL k ρ (Fin.last ρ) (uC k ρ (Fin.last ρ) Y))
+    exact parOK_qminor id id _
+  · show ParOK k ρ (fun f g => -(chatL (EH k ρ) (posL k ρ (Fin.last ρ)) (uC k ρ (Fin.last ρ) Y - 1)
+      (fun _ => xv k ρ z' (Fin.last ρ)) (ybv k ρ z (Fin.last ρ)) f g))
+    exact parOK_neg (parOK_chatL _ _ _ (fun j => smoothG_const _) (fun j => smoothG_ybv z j))
+  · show ParOK k ρ (fun f g => -(chatL (EH k ρ) (posL k ρ (Fin.last ρ)) (uC k ρ (Fin.last ρ) Y) (yv k ρ z (Fin.last ρ))
+      (fun _ => xbv k ρ z' (Fin.last ρ)) f g))
+    exact parOK_neg (parOK_chatL _ _ _ (fun j => smoothG_yv z j) (fun j => smoothG_const _))
+  · show ParOK k ρ (fun f g => -(chat2L (EH k ρ) (posL k ρ (Fin.last ρ)) (uC k ρ (Fin.last ρ) Y - 1)
+      (yv k ρ z (Fin.last ρ)) (fun _ => xv k ρ z' (Fin.last ρ)) (ybv k ρ z (Fin.last ρ))
+      (fun _ => xbv k ρ z' (Fin.last ρ)) f g))
+    exact parOK_neg (parOK_chat2L _ _ _ _ _ (fun j => smoothG_yv z j) (fun j => smoothG_const _)
+      (fun j => smoothG_ybv z j) (fun j => smoothG_const _))
+
+end Ent
+
+end Formalism.FourierDecayAlt.P.ParameterFamilyAlgebra
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.GoodAlt
+
+section
 
 @[expose] public section
 
@@ -183,3 +498,6 @@ theorem good_alt_bis (hOm : ∀ c : Fin ρ → ℂ, c ∈ OmX ρ) (hS : ∀ c c'
 end Act
 
 end Formalism.FourierDecayAlt.P.ParameterFamilyAlgebra
+end
+end
+end

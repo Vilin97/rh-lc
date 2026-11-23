@@ -10,33 +10,30 @@ public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AlmostIsomOfGr
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AnalyticOnUJOfWordBound
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DerivedActionAdditive
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DerivedActionOfSmoothVector
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsBasisLieOfOrthogonal
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsIsotypicSum
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitaryIwasawaLeviOne
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IterateRealSmul
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.PolyGrowthOfIsometricOnK
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.RpowNegLeOfDichotomy
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SecondCountableGrp
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SpecialLinearMulApplyZeroZero
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SumSquaresComm
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.WordBoundOfDelta
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+public import Development.AutomorphicSpectrum.PublishedTheorems.Jets₂.IsPermissibleOfCentre
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LieAlgebraOfLinearGroupClosed
+import Mathlib.Algebra.Order.Archimedean.Real.Hom
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +41,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -57,8 +53,266 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DefClassNum
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsStandardIndModule
+import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsSmoothVec
+import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.RingTheory.PicardGroup
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsIsotypicSum
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitaryIwasawaLeviOne
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DifferentiableAtOrbit
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AnalyticVectorExponentialSeriesStatement
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DerivedActionAdditiveStatement
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.DerivedActionOfSmoothVectorStatement
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LieAlgebraOfLinearGroupClosedStatement
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.PolyGrowthOfIsometricOnK
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.RpowNegLeOfDichotomy
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SecondCountableGrp
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SpecialLinearMulApplyZeroZero
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SumSquaresComm
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.WordBoundOfDelta
+import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsBasisLieOfOrthogonal
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis
+
+variable {n : ℕ}
+
+def vecOf : Matrix (Fin n) (Fin n) ℂ ≃ₗ[ℝ] EuclideanSpace ℂ (Fin n × Fin n) where
+  toFun X := WithLp.toLp 2 (fun p => X p.1 p.2)
+  invFun x := Matrix.of fun i j => x (i, j)
+  map_add' X Y := by ext p; simp
+  map_smul' r X := by ext p; simp
+  left_inv X := by ext i j; simp
+  right_inv x := by ext p; simp
+
+theorem inner_vecOf (X Y : Matrix (Fin n) (Fin n) ℂ) :
+    ⟪vecOf X, vecOf Y⟫_ℝ = (Xᴴ * Y).trace.re := by
+  rw [PiLp.inner_apply, Fintype.sum_prod_type, Finset.sum_comm]
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.re_sum]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  simp [vecOf, Complex.inner]
+  ring
+
+theorem inner_conj {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Matrix.unitaryGroup (Fin n) ℂ)
+    (X Y : Matrix (Fin n) (Fin n) ℂ) :
+    ⟪vecOf (k * X * k⁻¹), vecOf (k * Y * k⁻¹)⟫_ℝ = ⟪vecOf X, vecOf Y⟫_ℝ := by
+  have h1 : kᴴ * k = 1 := (Matrix.mem_unitaryGroup_iff').1 hk
+  have h2 : k * kᴴ = 1 := (Matrix.mem_unitaryGroup_iff).1 hk
+  have hinv : k⁻¹ = kᴴ := Matrix.inv_eq_right_inv h2
+  rw [inner_vecOf, inner_vecOf, hinv]
+  have : (k * X * kᴴ)ᴴ * (k * Y * kᴴ) = k * (Xᴴ * Y) * kᴴ := by
+    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+    calc k * (Xᴴ * kᴴ) * (k * Y * kᴴ) = k * Xᴴ * (kᴴ * k) * Y * kᴴ := by
+          simp only [Matrix.mul_assoc]
+      _ = k * (Xᴴ * Y) * kᴴ := by rw [h1]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+  rw [this, Matrix.trace_mul_comm, ← Matrix.mul_assoc, h1, Matrix.one_mul]
+
+theorem exists_orthonormal {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (W : Submodule ℝ E)
+    [FiniteDimensional ℝ W] :
+    ∃ (d : ℕ) (e : Fin d → E), (∀ i, e i ∈ W) ∧ Orthonormal ℝ e ∧ ∀ x ∈ W, x = ∑ i, ⟪e i, x⟫_ℝ • e i := by
+  let B := stdOrthonormalBasis ℝ W
+  refine ⟨_, fun i => (B i : E), fun i => (B i).2, ?_, ?_⟩
+  · exact B.orthonormal.comp_linearIsometry W.subtypeₗᵢ
+  · intro x hx
+    have := congrArg (Subtype.val) (B.sum_repr' ⟨x, hx⟩)
+    simpa [Submodule.coe_sum] using this.symm
+
+theorem orthogonal_of_preserves {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] {d : ℕ} {e : Fin d → E}
+    (he : Orthonormal ℝ e) (f : Fin d → E) (hexp : ∀ i, f i = ∑ l, ⟪e l, f i⟫_ℝ • e l)
+    (hf : ∀ i j, ⟪f i, f j⟫_ℝ = ⟪e i, e j⟫_ℝ) :
+    (Matrix.of fun l i => ⟪e l, f i⟫_ℝ : Matrix (Fin d) (Fin d) ℝ)ᵀ * Matrix.of (fun l i => ⟪e l, f i⟫_ℝ) = 1 := by
+  ext i j
+  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply]
+  have h : ⟪f i, f j⟫_ℝ = ∑ l, ⟪e l, f i⟫_ℝ * ⟪e l, f j⟫_ℝ := by
+    conv_lhs => rw [hexp j]
+    rw [inner_sum]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    rw [inner_smul_right, mul_comm, real_inner_comm (e l) (f i)]
+  rw [← h, hf, orthonormal_iff_ite.1 he, Matrix.one_apply]
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis
+
+
+open GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis in
+theorem GlobalTheory.CompanionTheory.Hypotheses₂.HCA.exists_basis_lieOf_orthogonal : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} (_hG : IsLinRed G), ∃ (d : ℕ) (b : Fin d → Matrix (Fin n) (Fin n) ℂ), (∀ i, b i ∈ HCSS.lieOf G) ∧ LinearIndependent ℝ b ∧ (∀ X ∈ HCSS.lieOf G, ∃ r : Fin d → ℝ, X = ∑ i, r i • b i) ∧ ∀ k ∈ maxCpt G, ∃ O : Matrix (Fin d) (Fin d) ℝ, Oᵀ * O = 1 ∧ ∀ i, k * b i * k⁻¹ = ∑ l, O l i • b l := by
+  open GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis in
+    intro n G hG
+    obtain ⟨hadd, hsmul, -, hAd⟩ := lieOf_isLieSubalgebra hG
+    let L : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ) :=
+      { carrier := HCSS.lieOf G
+        add_mem' := fun {X Y} hX hY => hadd X Y hX hY
+        zero_mem' := fun t => by simpa using hG.one_mem
+        smul_mem' := fun r X hX => hsmul r X hX }
+    let W : Submodule ℝ (EuclideanSpace ℂ (Fin n × Fin n)) := L.map (vecOf (n := n)).toLinearMap
+    have : FiniteDimensional ℝ (EuclideanSpace ℂ (Fin n × Fin n)) :=
+      FiniteDimensional.complexToReal _
+    obtain ⟨d, e, heW, hon, hexp⟩ := exists_orthonormal W
+    have hmemW : ∀ X ∈ HCSS.lieOf G, vecOf X ∈ W := fun X hX => ⟨X, hX, rfl⟩
+    have hbL : ∀ i, vecOf.symm (e i) ∈ HCSS.lieOf G := by
+      intro i
+      obtain ⟨X, hX, hXe⟩ := heW i
+      have : vecOf.symm (e i) = X := by
+        rw [← hXe]; simp
+      rw [this]; exact hX
+    have hexpM : ∀ X ∈ HCSS.lieOf G, X = ∑ i, ⟪e i, vecOf X⟫_ℝ • vecOf.symm (e i) := by
+      intro X hX
+      have h := hexp _ (hmemW X hX)
+      have h2 := congrArg (vecOf (n := n)).symm h
+
+      rw [map_sum] at h2
+      simpa using h2
+    refine ⟨d, fun i => vecOf.symm (e i), hbL, ?_, ?_, ?_⟩
+    · exact hon.linearIndependent.map' (vecOf (n := n)).symm.toLinearMap
+        (LinearMap.ker_eq_bot.2 (vecOf (n := n)).symm.injective)
+    · intro X hX
+      exact ⟨_, hexpM X hX⟩
+    · intro k hk
+      have hkG : k ∈ G := hk.1
+      have hkU : k ∈ Matrix.unitaryGroup (Fin n) ℂ := hk.2
+      let f : Fin d → EuclideanSpace ℂ (Fin n × Fin n) := fun i => vecOf (k * vecOf.symm (e i) * k⁻¹)
+      have hfW : ∀ i, f i ∈ W := fun i => hmemW _ (hAd k hkG _ (hbL i))
+      have hO := orthogonal_of_preserves hon f (fun i => hexp _ (hfW i)) (fun i j => by
+        have := inner_conj hkU (vecOf.symm (e i)) (vecOf.symm (e j))
+        simpa [f] using this)
+      refine ⟨_, hO, fun i => ?_⟩
+      have h := hexp _ (hfW i)
+      have h2 := congrArg (vecOf (n := n)).symm h
+
+      rw [map_sum] at h2
+      simpa [f] using h2
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.IterateRealSmul
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCA
+open scoped InnerProductSpace ContDiff
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA.OneParam
+
+variable {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+  {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
+
+theorem mnorm_real_smul (s : ℝ) (X : Matrix (Fin n) (Fin n) ℂ) : mnorm (s • X) = |s| * mnorm X := by
+  unfold mnorm
+  simp only [Matrix.smul_apply, norm_smul, Real.norm_eq_abs, Finset.mul_sum]
+
+theorem mnorm_nonneg (X : Matrix (Fin n) (Fin n) ℂ) : 0 ≤ mnorm X :=
+  Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _
+
+theorem iterate_smooth (hG : IsLinRed G) (hrep : Formalism.QuantumDeterminants.IsCRepOn G π) {v : H} (hs : IsSmoothVec G π v)
+    {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ HCSS.lieOf G) (m : ℕ) :
+    IsSmoothVec G π ((dRep π X)^[m] v) := by
+  induction m with
+  | zero => simpa using hs
+  | succ m ih =>
+    rw [Function.iterate_succ_apply']
+    exact (GlobalTheory.T.derived_action_of_smooth_vector hG hrep ih hX).2
+
+theorem iterate_real_smul (hG : IsLinRed G) (hrep : Formalism.QuantumDeterminants.IsCRepOn G π) {v : H} (hs : IsSmoothVec G π v)
+    {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ HCSS.lieOf G) (s : ℝ) (m : ℕ) :
+    (dRep π (s • X))^[m] v = ((s : ℂ) ^ m) • (dRep π X)^[m] v := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    have hsm := iterate_smooth hG hrep hs hX m
+    rw [Function.iterate_succ_apply', ih, Function.iterate_succ_apply', GlobalTheory.GKLie.dRep_smul,
+      (GlobalTheory.T.derived_action_additive hG hrep hsm hsm hX hX).2.2, ← Complex.coe_smul, smul_smul, pow_succ']
+
+theorem analytic_coeff : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : Type} [NormedAddCommGroup H]
+    [InnerProductSpace ℂ H] [CompleteSpace H] {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hG : IsLinRed G)
+    (hU : IsURepOn G π) {v : H} (hs : IsSmoothVec G π v) (hw : WordBound G π v)
+    {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ HCSS.lieOf G) (w : H),
+    AnalyticOnNhd ℝ (fun t : ℝ => ⟪w, π (NormedSpace.exp (t • X)) v⟫_ℂ) Set.univ := by
+  intro n G H _ _ _ π hG hU v hs hw X hX w t₀ _
+  obtain ⟨r, hr, hsum⟩ := GlobalTheory.T.analytic_vector_exponential_series hG hU.1 hU.2.2 hs hw
+  have hrep := hU.1
+  let L : H →L[ℂ] ℂ := (innerSL ℂ w).comp (π (NormedSpace.exp (t₀ • X)))
+  let a : ℕ → ℂ := fun m => ((m.factorial : ℂ)⁻¹) * L ((dRep π X)^[m] v)
+  have key : ∀ s : ℝ, |s| * mnorm X < r → HasSum (fun m : ℕ => (s : ℂ) ^ m * a m)
+      (⟪w, π (NormedSpace.exp ((t₀ + s) • X)) v⟫_ℂ) := by
+    intro s hs'
+    have h1 := hsum (s • X) ((GlobalTheory.T.lie_algebra_of_linear_group_closed hG).2.1 s X hX) (by rwa [mnorm_real_smul])
+    have h2 := L.hasSum h1
+    have e : ⟪w, π (NormedSpace.exp ((t₀ + s) • X)) v⟫_ℂ = L (π (NormedSpace.exp (s • X)) v) := by
+      have hc : Commute (t₀ • X) (s • X) := ((Commute.refl X).smul_left t₀).smul_right s
+      rw [add_smul, Matrix.exp_add_of_commute _ _ hc, hrep.2 _ (hX t₀) _ (hX s)]
+      rfl
+    rw [e]
+    convert h2 using 2 with m
+    rw [iterate_real_smul hG hrep hs hX s m]
+    simp only [a, map_smul, smul_eq_mul]
+    ring
+  let p : FormalMultilinearSeries ℝ ℝ ℂ := fun m => ContinuousMultilinearMap.mkPiRing ℝ (Fin m) (a m)
+  have hpa : ∀ (m : ℕ) (s : ℝ), p m (fun _ => s) = (s : ℂ) ^ m * a m := by
+    intro m s
+    simp [p, ContinuousMultilinearMap.mkPiRing_apply]
+  have hM : 0 < mnorm X + 1 := by linarith [mnorm_nonneg X]
+  have hsmall : ∀ s : ℝ, |s| < r / (mnorm X + 1) → |s| * mnorm X < r := by
+    intro s h
+    rw [lt_div_iff₀ hM] at h
+    nlinarith [abs_nonneg s]
+  set ε : ℝ := r / (mnorm X + 1) with hε
+  have hεpos : 0 < ε := div_pos hr hM
+  have hrad : 0 < p.radius := by
+    have hs0 : |ε / 2| < ε := by rw [abs_of_pos (by linarith)]; linarith
+    have hS := (key (ε / 2) (hsmall _ hs0)).summable.norm
+    let ρ : NNReal := ⟨ε / 2, by linarith⟩
+    have hρ : (0 : NNReal) < ρ := by
+      change (0 : ℝ) < ε / 2
+      linarith
+    have : (ρ : ENNReal) ≤ p.radius := by
+      refine p.le_radius_of_summable_norm ?_
+      refine hS.congr fun m => ?_
+      have hρc : ((ρ : NNReal) : ℝ) = ε / 2 := rfl
+      simp [p, hρc, ContinuousMultilinearMap.norm_mkPiRing, abs_of_pos hεpos, mul_comm]
+    exact lt_of_lt_of_le (by exact_mod_cast hρ) this
+  have han : AnalyticAt ℝ p.sum 0 := (p.hasFPowerSeriesOnBall hrad).analyticAt
+  have han2 : AnalyticAt ℝ (fun t : ℝ => p.sum (t - t₀)) t₀ :=
+    AnalyticAt.comp_of_eq (g := p.sum) (f := fun t : ℝ => t - t₀) han
+      (analyticAt_id.sub analyticAt_const) (by simp)
+  refine han2.congr ?_
+  filter_upwards [Metric.ball_mem_nhds t₀ hεpos] with t ht
+  have hd : |t - t₀| < ε := by simpa [Real.dist_eq] using ht
+  have h3 := key (t - t₀) (hsmall _ hd)
+  rw [show t₀ + (t - t₀) = t by ring] at h3
+  simp only [FormalMultilinearSeries.sum, hpa]
+  exact h3.tsum_eq
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.OneParam
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.AdmissibleOfIwasawaDecomposition
+
+section
 
 @[expose] public section
 
@@ -216,4 +470,6 @@ theorem harishChandra_analyticity_density : GlobalTheory.Published.HarishChandra
 
 end GlobalTheory.CompanionTheory.Hypotheses₂
 
+end
+end
 end

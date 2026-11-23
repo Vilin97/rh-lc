@@ -1,23 +1,11 @@
 module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchDefs
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DiscreteSeriesLowestKTypeUnitUnitaryFormalDegreeStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.BoostDecompositionNormBoundOfEmbeddingLawsStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FormalDegreeLoweringWeightRatioLeStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowestKTypeLieWordNormBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowestKtypeCoefficientExplicitPowerDecayStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NegativeNormPowerIntegrableOfBallVolumeStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealInputOfBranching
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TranslateCoefficientDerivativeIntegralBoundsOfLaStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TranslateCoefficientIntegralBoundsOfUnitaryLawsStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryStabiliserEmbeddingNormLawsStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.VolumeOfBallBoundStatement
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchSmooth
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchVol
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -31,8 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -52,9 +38,122 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.TopfBasis
+import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.BoostDecompositionNormBoundOfEmbeddingLawsStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FormalDegreeLoweringWeightRatioLeStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowestKTypeLieWordNormBoundStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowestKtypeCoefficientExplicitPowerDecayStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NegativeNormPowerIntegrableOfBallVolumeStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealInputOfBranching
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TranslateCoefficientDerivativeIntegralBoundsOfLaStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TranslateCoefficientIntegralBoundsOfUnitaryLawsStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryStabiliserEmbeddingNormLawsStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.VolumeOfBallBoundStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProjectionSmooth
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchVol
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.OneMemNbh
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.DiscreteSeriesLowestKTypeUnitUnitaryFormalDegree
+
+section
+
+@[expose] public section
+
+open MeasureTheory Formalism.MainNotions.S Formalism.BasicNotions Formalism.MainNotions.ArithmeticCylinders GlobalTheory.RowLev NumberField IsDedekindDomain Matrix
+open scoped InnerProductSpace ComplexOrder TensorProduct Classical
+
+namespace GlobalTheory.RowLev
+
+theorem isDS_lowUnit_unitary_fdegOf : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), IsDS ε lam σ → (∃ w, IsLowUnit ε lam σ w) ∧ (∀ (x : Formalism.REAL.UJ ε) a b, ⟪σ (uMat x) a, σ (uMat x) b⟫_ℂ = ⟪a, b⟫_ℂ) ∧ ∀ (c : NNReal) (d : ℝ) (w : H), 0 < c → ‖w‖ = 1 → IsFdeg ((c : ENNReal) • Formalism.REAL.muG ε) σ d → fdegOf (Formalism.REAL.muG ε) σ w = c * d := by
+  intro n ε lam H _ _ σ h
+  obtain ⟨-, -, hU, -, -, ⟨S, hS⟩, -⟩ := h
+  refine ⟨?_, ?_, ?_⟩
+  · obtain ⟨v, hvS, hv, -⟩ := hS.2.2.2.1
+    have hn : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
+    refine ⟨((‖v‖⁻¹ : ℝ) : ℂ) • v, ?_, ?_⟩
+    · rw [norm_smul, Complex.norm_real, norm_inv, norm_norm, inv_mul_cancel₀ hn]
+    · have hle : S ≤ lowKSub ε lam σ := le_sSup hS
+      exact hle (S.smul_mem _ hvS)
+  · intro x a b
+    have hx : uMat x ∈ UJset ε := x.2
+    let f : H →ₗᵢ[ℂ] H := ⟨(σ (uMat x) : H →ₗ[ℂ] H), hU.2.1 _ hx⟩
+    exact f.inner_map_map a b
+  · intro c d w hc hw hF
+    obtain ⟨hd, hI⟩ := hF
+    have h1 := (hI w w w w).2
+    have hc' : (0 : ℝ) < (c : ℝ) := hc
+    have hww : ⟪w, w⟫_ℂ = 1 := by
+      rw [inner_self_eq_norm_sq_to_K, hw]; simp
+    have hpt : (fun g : Formalism.REAL.UJ ε => coefOn σ w w g * star (coefOn σ w w g))
+        = fun g => ((‖coefOn σ w w g‖ ^ 2 : ℝ) : ℂ) := by
+      funext g
+      rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
+    rw [hpt, integral_smul_measure, integral_complex_ofReal, hww, ENNReal.coe_toReal,
+      Complex.real_smul] at h1
+    have h2 : (c : ℝ) * ∫ g, ‖coefOn σ w w g‖ ^ 2 ∂(Formalism.REAL.muG ε) = 1 * 1 / d := by
+      exact_mod_cast h1
+    have h3 : ∫ g, ‖coefOn σ w w g‖ ^ 2 ∂(Formalism.REAL.muG ε) = 1 / ((c : ℝ) * d) := by
+      field_simp at h2 ⊢
+      linarith
+    unfold fdegOf
+    rw [h3, hw]
+    simp
+
+end GlobalTheory.RowLev
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.DiscreteSeriesLowestKTypeUnitUnitaryFormalDegreeStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Formalism.MainNotions.S Formalism.BasicNotions Formalism.MainNotions.ArithmeticCylinders GlobalTheory.RowLev NumberField IsDedekindDomain Matrix
+open scoped InnerProductSpace ComplexOrder TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.discreteSeries_lowestKType_unit_unitary_formalDegree : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), IsDS ε lam σ → (∃ w, IsLowUnit ε lam σ w) ∧ (∀ (x : Formalism.REAL.UJ ε) a b, ⟪σ (uMat x) a, σ (uMat x) b⟫_ℂ = ⟪a, b⟫_ℂ) ∧ ∀ (c : NNReal) (d : ℝ) (w : H), 0 < c → ‖w‖ = 1 → IsFdeg ((c : ENNReal) • Formalism.REAL.muG ε) σ d → fdegOf (Formalism.REAL.muG ε) σ w = c * d := by
+  first | exact @GlobalTheory.RowLev.isDS_lowUnit_unitary_fdegOf | exact GlobalTheory.RowLev.isDS_lowUnit_unitary_fdegOf | (intros; apply GlobalTheory.RowLev.isDS_lowUnit_unitary_fdegOf <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchSmooth
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix Finset Formalism.MainNotions.S Formalism.REAL Formalism.QuantumDeterminants GlobalTheory.Ell GlobalTheory.SepReal UpperTheory.Lit.Branch
+open scoped InnerProductSpace
+
+open GlobalTheory.SepReal.ProjSm in
+theorem UpperTheory.Lit.Branch.mapSmooth :
+    MapSmooth := by
+  intro n e ε lam ε' mu B hpar H H' _ _ _ _ π σ hπ hσ T hT v hv
+  obtain ⟨-, -, -, -, -, -, hlie, hexp, -⟩ := GlobalTheory.T.unitary_stabiliser_embedding_norm_laws n e ε ε' hpar.signs
+  intro k Xs hXs
+  have key : (fun t : Fin k → ℝ => σ ((List.ofFn fun i => NormedSpace.exp (t i • Xs i)).prod) (T v)) =
+      fun t => T (π ((List.ofFn fun i => NormedSpace.exp (t i • embL e (Xs i))).prod) v) := by
+    funext t
+    rw [← hT _ (list_mem _ (by
+      intro x hx
+      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hx
+      exact exp_mem (hXs i) (t i))), embH_list, List.map_ofFn]
+    simp only [Function.comp_def, hexp]
+  rw [key]
+  exact (T.restrictScalars ℝ).contDiff.comp (hv k (fun i => embL e (Xs i)) fun i => hlie _ (hXs i))
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.BranchInput
+
+section
 
 @[expose] public section
 
@@ -190,3 +289,5 @@ theorem UpperTheory.Lit.Branch.realInputE :
       _ = c * big (C2 + 100 + 100 + 1 + C3) n B := by rw [mul_assoc, big_mul]
       _ ≤ c * big (C1 + C3 + C2 + 201) n B :=
           mul_le_mul_of_nonneg_left (big_mono (by linarith) n hB) hcpos.le
+end
+end

@@ -2,20 +2,14 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsLifted
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtCoord
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogLiftOfUnitMemMap
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogLiftPpZero
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.EtaleCoordinatesFlatLiftStatement
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.ExistsFrobeniusLiftStalk
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.FrobeniusLiftUnitTimesCoord
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.LocalRingImageStalkMap
-import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.ModPSquaredStalkSurjective
-public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.SncChartEquationsDifferUnit
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsFlatLift
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +41,222 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.EtaleCoordinatesFlatLiftStatement
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.ExistsFrobeniusLiftStalk
+public import Mathlib.Algebra.Ring.Subring.Defs
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtCoord
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsEulerContraction
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsFlatLift
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Mathlib.Topology.Sheaves.Presheaf
+import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.ModPSquaredStalkSurjective
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.SncChartEquationsDifferUnit
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogLiftOfUnitMemMap
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+namespace GlobalTheory.DI
+
+
+set_option autoImplicit false in
+theorem _root_.GlobalTheory.DI.logLift_of_unit_mem_map : ∀ {K Kt : Type} [Field K] [CommRing Kt] (p : ℕ) [Fact p.Prime] [CharP K p]
+    (π : Kt →+* K) {ι : Type} (F : ι → Kt →+* Kt) (s : Finset ι) (At : Subring Kt), _root_.GlobalTheory.DI.IsFlatLift p π →
+    (∀ i ∈ s, ∀ z ∈ At, ∃ w ∈ At, F i z = z ^ p + p * w) → ∀ g : K, g ≠ 0 → g ∈ At.map π →
+    g⁻¹ ∈ At.map π → _root_.GlobalTheory.DI.LogLift p π F s (At.map π : Set K) g := by
+  intro K Kt _ _ p _ _ π ι F s At hflat hF g hg hmem hinv
+  obtain ⟨z, hz, rfl⟩ := Subring.mem_map.mp hmem
+  obtain ⟨y, hy, hyz⟩ := Subring.mem_map.mp hinv
+  unfold _root_.GlobalTheory.DI.LogLift
+  refine ⟨z, rfl, fun i hi => ?_⟩
+  obtain ⟨w, hw, hFw⟩ := hF i hi z hz
+  refine ⟨y ^ p * w, Subring.mem_map.mpr ⟨y ^ p * w, At.mul_mem (At.pow_mem hy p) hw, rfl⟩, ?_⟩
+  have h0 : (p : Kt) * (w - z ^ p * y ^ p * w) = 0 := by
+    rw [hflat.ann]
+    simp only [map_sub, map_mul, map_pow, hyz]
+    rw [← mul_pow, mul_inv_cancel₀ hg, one_pow, one_mul, sub_self]
+  rw [hFw]
+  linear_combination h0
+
+end GlobalTheory.DI
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogLiftPpZero
+
+section
+
+@[expose] public section
+
+open GlobalTheory GlobalTheory.DI
+
+namespace GlobalTheory.DI
+
+section LogMul
+
+variable {K Kt : Type} [Field K] [CommRing Kt] (p : ℕ) [Fact p.Prime] [CharP K p] (π : Kt →+* K)
+  {ι : Type} (F : ι → Kt →+* Kt) (s : Finset ι) (A : Subring K)
+
+omit [Fact p.Prime] in
+lemma logLift_pp_zero (hπ : IsFlatLift p π) : (p : Kt) * p = 0 := by
+  rw [hπ.ann]; simp [map_natCast, CharP.cast_eq_zero]
+
+omit [Fact p.Prime] in
+lemma logLift_one : LogLift p π F s (A : Set K) 1 :=
+  ⟨1, map_one π, fun i _ => ⟨0, by simp [A.zero_mem], by simp⟩⟩
+
+omit [Fact p.Prime] in
+lemma logLift_mul (hπ : IsFlatLift p π) {g g' : K} (hg : LogLift p π F s (A : Set K) g)
+    (hg' : LogLift p π F s (A : Set K) g') : LogLift p π F s (A : Set K) (g * g') := by
+  obtain ⟨z, hz, hF⟩ := hg
+  obtain ⟨z', hz', hF'⟩ := hg'
+  have hpp := logLift_pp_zero p π hπ
+  refine ⟨z * z', by simp [hz, hz'], fun i hi => ?_⟩
+  obtain ⟨w, hw, hFw⟩ := hF i hi
+  obtain ⟨w', hw', hFw'⟩ := hF' i hi
+  refine ⟨w + w', by rw [map_add (f := _)]; exact A.add_mem hw hw', ?_⟩
+  rw [map_mul, hFw, hFw', mul_pow]
+  linear_combination (z ^ p * z' ^ p * w * w') * hpp
+
+omit [Fact p.Prime] in
+lemma logLift_inv (hπ : IsFlatLift p π) {g : K} (hg0 : g ≠ 0) (hg : LogLift p π F s (A : Set K) g) :
+    LogLift p π F s (A : Set K) g⁻¹ := by
+  obtain ⟨z, hz, hF⟩ := hg
+  have hpp := logLift_pp_zero p π hπ
+  have hπp : π (p : Kt) = 0 := by simp [map_natCast, CharP.cast_eq_zero]
+  obtain ⟨z', hz'⟩ := hπ.surj g⁻¹
+  obtain ⟨e, he⟩ := (hπ.ker (z * z' - 1)).1 (by simp [hz, hz', hg0])
+  set u := z' * (1 - p * e) with hu
+  have hzu : z * u = 1 := by
+    have : z * z' = 1 + p * e := by linear_combination he
+    rw [hu, ← mul_assoc, this]; linear_combination (-(e * e)) * hpp
+  have hπu : π u = g⁻¹ := by simp [hu, hz', hπp]
+  clear_value u
+  refine ⟨u, hπu, fun i hi => ?_⟩
+  obtain ⟨w, hw, hFw⟩ := hF i hi
+  refine ⟨-w, by rw [map_neg]; exact A.neg_mem hw, ?_⟩
+  have h1 : F i z * F i u = 1 := by rw [← map_mul, hzu, map_one]
+  have h2 : F i z * (u ^ p * (1 + p * -w)) = 1 := by
+    rw [hFw]
+    have : z ^ p * u ^ p = 1 := by rw [← mul_pow, hzu, one_pow]
+    linear_combination (1 - (p:Kt) * w * ((p:Kt) * w)) * this - (w * w) * hpp
+  linear_combination (u ^ p * (1 + p * -w)) * h1 - (F i u) * h2
+
+omit [Fact p.Prime] in
+lemma logLift_zpow (hπ : IsFlatLift p π) {g : K} (hg0 : g ≠ 0) (hg : LogLift p π F s (A : Set K) g) :
+    ∀ n : ℤ, LogLift p π F s (A : Set K) (g ^ n) := by
+  have hpow : ∀ {h : K}, LogLift p π F s (A : Set K) h → ∀ k : ℕ, LogLift p π F s (A : Set K) (h ^ k) := by
+    intro h hh k
+    induction k with
+    | zero => simpa using logLift_one p π F s A
+    | succ k ih => rw [pow_succ]; exact logLift_mul p π F s A hπ ih hh
+  intro n
+  cases n with
+  | ofNat k => rw [Int.ofNat_eq_coe, zpow_natCast]; exact hpow hg k
+  | negSucc k =>
+    rw [zpow_negSucc, ← inv_pow]
+    exact hpow (logLift_inv p π F s A hπ hg0 hg) (k + 1)
+
+end LogMul
+
+end GlobalTheory.DI
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusLiftUnitTimesCoord
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory.DI
+
+theorem unit_mul_logarithmic_lift (p : ℕ) {Kt : Type} [CommRing Kt] (At : Subring Kt)
+    (F : Kt →+* Kt) (v v' t : Kt) (_hp : (p : Kt) * p = 0) (hv' : v' ∈ At) (hvv : v * v' = 1)
+    (hF : ∃ w ∈ At, F v = v ^ p + p * w) (ht : F t = t ^ p) :
+    ∃ w ∈ At, F (v * t) = (v * t) ^ p * (1 + p * w) := by
+  obtain ⟨w, hw, hFv⟩ := hF
+  refine ⟨v' ^ p * w, At.mul_mem (At.pow_mem hv' p) hw, ?_⟩
+  have h1 : v ^ p * v' ^ p = 1 := by rw [← mul_pow, hvv, one_pow]
+  rw [map_mul, hFv, ht, mul_pow]
+  linear_combination (-(t ^ p * p * w)) * h1
+
+end GlobalTheory.DI
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.FrobeniusLiftUnitTimesCoord
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+theorem _root_.GlobalTheory.T.frobenius_lift_unit_times_coord : ∀ (p : ℕ) {Kt : Type} [CommRing Kt] (At : Subring Kt) (F : Kt →+* Kt) (v v' t : Kt), (p : Kt) * p = 0 → v' ∈ At → v * v' = 1 → (∃ w ∈ At, F v = v ^ p + p * w) → F t = t ^ p → ∃ w ∈ At, F (v * t) = (v * t) ^ p * (1 + p * w) := by
+  first | exact @_root_.GlobalTheory.DI.unit_mul_logarithmic_lift | exact _root_.GlobalTheory.DI.unit_mul_logarithmic_lift | (intros; apply _root_.GlobalTheory.DI.unit_mul_logarithmic_lift <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalRingImageStalkMap
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+namespace GlobalTheory.DI
+
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace in
+theorem _root_.GlobalTheory.DI.mem_locRing_iff_exists_stalkIm : ∀ {X Y : Scheme.{0}} [IsIntegral X] (π : X ⟶ Y) (y : X) (h : π (genericPoint X) ⤳ π y), Function.Surjective (π.stalkMap y).hom → ∀ c : X.functionField, c ∈ _root_.GlobalTheory.LogDR.locRing y ↔ ∃ z ∈ _root_.GlobalTheory.DI.stalkIm h, (π.stalkMap (genericPoint X)).hom z = c := by
+  intro X Y _ π y h hsurj c
+  have hcomm : ∀ b : Y.presheaf.stalk (π y),
+      (π.stalkMap (genericPoint X)).hom ((Y.presheaf.stalkSpecializes h).hom b) =
+        algebraMap (X.presheaf.stalk y) X.functionField ((π.stalkMap y).hom b) := by
+    intro b
+    exact Scheme.Hom.stalkSpecializes_stalkMap_apply π _ _
+      ((genericPoint_spec X).specializes (Set.mem_univ y)) b
+  constructor
+  · rintro ⟨a, rfl⟩
+    obtain ⟨b, rfl⟩ := hsurj a
+    exact ⟨(Y.presheaf.stalkSpecializes h).hom b, ⟨b, rfl⟩, hcomm b⟩
+  · rintro ⟨z, ⟨b, rfl⟩, rfl⟩
+    exact ⟨(π.stalkMap y).hom b, (hcomm b).symm⟩
+
+end GlobalTheory.DI
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.LocalRingImageStalkMap
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace GlobalTheory GlobalTheory.DI GlobalTheory.LogDR GlobalTheory.LogPair GlobalTheory.Cartier ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+theorem _root_.GlobalTheory.T.local_ring_image_stalk_map : ∀ {X Y : Scheme.{0}} [IsIntegral X] (π : X ⟶ Y) (y : X) (h : π (genericPoint X) ⤳ π y), Function.Surjective (π.stalkMap y).hom → ∀ c : X.functionField, c ∈ locRing y ↔ ∃ z ∈ stalkIm h, (π.stalkMap (genericPoint X)).hom z = c := by
+  first | exact @_root_.GlobalTheory.DI.mem_locRing_iff_exists_stalkIm | exact _root_.GlobalTheory.DI.mem_locRing_iff_exists_stalkIm | (intros; apply _root_.GlobalTheory.DI.mem_locRing_iff_exists_stalkIm <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.LiftedStalkMapGermAppLE
+
+section
 
 @[expose] public section
 
@@ -162,3 +370,6 @@ theorem isLifted_of_sncCharts : ∀ (p : ℕ) [Fact p.Prime] (Y X : Scheme.{0}) 
   exact logLift_zpow p πK F t _ hflat (x i₀ j).ne_zero (hcoord j hj) (m j)
 
 end GlobalTheory.DI
+end
+end
+end

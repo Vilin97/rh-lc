@@ -2,12 +2,8 @@ module
 
 public import Formalism.LocalToGlobal.CharacterGerms.LatticeInclusionFormsInjective
 public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffCoordinatesGoodTangentsLtSqStatement
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffIntegralOnExponentsSubstOfLowerSetStatement
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffLeafGaugeSubMainTermEqZeroOnFirstAxisStatement
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.HPullWUpGTwoGroupEmbeddingEqRenameStatement
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LinearSubstCoordinateIntegralOfDegreeLtStatement
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.PderivLeafGaugeEqPairingAddIntegralStatement
-import Formalism.LocalToGlobal.CharacterGerms.CartesianBoundOnCurves
+public import Formalism.LocalToGlobal.CharacterGerms.GeNatCast
+public import Mathlib.RingTheory.MvPowerSeries.Substitution
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -26,9 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,9 +42,158 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.TwoMulChainStartIndexAddOneOfOdd
+import Formalism.IncomingBounds.IncomingBound
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffLeafGaugeSubMainTermEqZeroOnFirstAxisStatement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.HPullWUpGTwoGroupEmbeddingEqRenameStatement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.TwoMulChainStartIndexAddOneOfOdd
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.FormalGroupCoordinatesPullbackLinearTangentBasisStatement
+import Formalism.LocalToGlobal.CharacterGerms.CartesianBoundOnCurves
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.PderivLeafGaugeEqPairingAddIntegralStatement
+import Mathlib.Tactic.ENatToNat
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.PeriodValuation
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffIntegralOnExponentsSubstOfLowerSet
+
+section
+
+@[expose] public section
+
+open Formalism.L2.FormalSeriesBounds Formalism.IncomingBounds GlobalTheory.MainTerm Classical
+
+namespace GlobalTheory.LowerSubst
+
+open MvPowerSeries
+
+variable {C : Type} [Field C] (V : VF C) {σ : Type} (P : (σ →₀ ℕ) → Prop)
+
+def IntOn (g : MvPowerSeries σ C) : Prop := ∀ μ, P μ → V.Ge 0 (coeff μ g)
+
+theorem intOn_one : IntOn V P (1 : MvPowerSeries σ C) := by
+  intro α _
+  rw [coeff_one]
+  split_ifs with h
+  · exact VF.Ge.one
+  · exact VF.Ge.zero 0
+
+theorem intOn_mul (hP : ∀ μ ν, ν ≤ μ → P μ → P ν) {f g : MvPowerSeries σ C}
+    (hf : IntOn V P f) (hg : IntOn V P g) : IntOn V P (f * g) := by
+  intro α hα
+  rw [coeff_mul]
+  refine VF.Ge.sum fun x hx => ?_
+  rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
+  exact VF.Ge.mul_int (hf _ (hP α _ (hx ▸ le_self_add) hα)) (hg _ (hP α _ (hx ▸ le_add_self) hα))
+
+theorem intOn_prod (hP : ∀ μ ν, ν ≤ μ → P μ → P ν) {ι : Type*} (s : Finset ι)
+    (f : ι → MvPowerSeries σ C) (h : ∀ i ∈ s, IntOn V P (f i)) : IntOn V P (∏ i ∈ s, f i) :=
+  Finset.prod_induction f (IntOn V P) (fun _ _ => intOn_mul V P hP) (intOn_one V P) h
+
+theorem intOn_pow (hP : ∀ μ ν, ν ≤ μ → P μ → P ν) {f : MvPowerSeries σ C} (hf : IntOn V P f)
+    (n : ℕ) : IntOn V P (f ^ n) := by
+  induction n with
+  | zero => simpa using intOn_one V P
+  | succ n ih => rw [pow_succ]; exact intOn_mul V P hP ih hf
+
+theorem subst_int_on_lower :
+    ∀ (C : Type) [Field C] (V : VF C) (σ τ : Type) [Fintype σ] [Fintype τ] (P : (σ →₀ ℕ) → Prop), (∀ μ ν, ν ≤ μ → P μ → P ν) → ∀ (γ : MvPowerSeries τ C) (T : τ → MvPowerSeries σ C), (∀ μ, V.Ge 0 (MvPowerSeries.coeff μ γ)) → (∀ w, MvPowerSeries.constantCoeff (T w) = 0) → (∀ w μ, P μ → V.Ge 0 (MvPowerSeries.coeff μ (T w))) → ∀ μ, P μ → V.Ge 0 (MvPowerSeries.coeff μ (MvPowerSeries.subst T γ)) := by
+  intro C _ V σ τ _ _ P hP γ T hγ hT0 hT α hα
+  have hs : HasSubst T := hasSubst_of_constantCoeff_zero hT0
+  rw [coeff_subst hs, finsum_eq_sum _ (coeff_subst_finite hs γ α)]
+  refine VF.Ge.sum fun β _ => ?_
+  have hp : IntOn V P (β.prod fun s e => T s ^ e) :=
+    intOn_prod V P hP _ _ fun s _ => intOn_pow V P hP (hT s) (β s)
+  rw [smul_eq_mul]
+  exact VF.Ge.mul_int (hγ β) (hp α hα)
+
+end GlobalTheory.LowerSubst
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.CoeffIntegralOnExponentsSubstOfLowerSetStatement
+
+section
+
+@[expose] public section
+
+open Formalism.L2.FormalSeriesBounds Formalism.IncomingBounds GlobalTheory.MainTerm Classical
+
+theorem _root_.GlobalTheory.T.coeffIntegralOnExponents_subst_of_lower_set : ∀ (C : Type) [Field C] (V : VF C) (σ τ : Type) [Fintype σ] [Fintype τ] (P : (σ →₀ ℕ) → Prop), (∀ μ ν, ν ≤ μ → P μ → P ν) → ∀ (γ : MvPowerSeries τ C) (T : τ → MvPowerSeries σ C), (∀ μ, V.Ge 0 (MvPowerSeries.coeff μ γ)) → (∀ w, MvPowerSeries.constantCoeff (T w) = 0) → (∀ w μ, P μ → V.Ge 0 (MvPowerSeries.coeff μ (T w))) → ∀ μ, P μ → V.Ge 0 (MvPowerSeries.coeff μ (MvPowerSeries.subst T γ)) := by
+  first | exact @GlobalTheory.LowerSubst.subst_int_on_lower | exact GlobalTheory.LowerSubst.subst_int_on_lower | (intros; apply GlobalTheory.LowerSubst.subst_int_on_lower <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LinearSubstCoordinateIntegralOfDegreeLt
+
+section
+
+@[expose] public section
+
+open Formalism.L2.FormalSeriesBounds Formalism.IncomingBounds GlobalTheory.MainTerm Classical
+
+namespace GlobalTheory.MainTerm
+
+theorem linPull_coord_int_of_degree_lt :
+    ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) (I J : Type) [Fintype I] [Fintype J] (G : Cart V d I J) (S : Sys G) (t : I → MvPowerSeries I C), S.IsT t → ∀ (N : ℕ) (e : Fin N → I → C), (∀ j x, V.Ge 0 (e j x)) → ∀ μ : Fin N →₀ ℕ, μ.degree < V.l → ∀ c, V.Ge 0 (MvPowerSeries.coeff μ (linPull e (t c))) := by
+  intro C _ V d I J _ _ G S t ht N e he μ hμ c
+  have hz : ∀ b j, V.Ge 0 (S.co (Sum.elim (e j) (0 : J → C)) b) := fun b j =>
+    S.co_int (fun n => by
+      cases n with
+      | inl x => exact he j x
+      | inr κ => exact VF.Ge.zero 0) b
+  obtain ⟨h0, h1, -⟩ := GlobalTheory.T.formalGroupCoordinates_pullback_linear_tangentBasis C V d I J G S t ht (Fin N) e
+    (fun b j => S.co (Sum.elim (e j) (0 : J → C)) b)
+    (fun c k b => if k = 0 then (if c = b then 1 else 0) else S.co (S.cur c k) b)
+    (fun j x => (S.co_spec (Sum.elim (e j) (0 : J → C)) x).symm)
+    (fun c b => by simp)
+    (fun c k x hk => by
+      have hk' : k ≠ 0 := by omega
+      simp only [if_neg hk', Sys.al, S.cur_zero_inl]
+      exact (S.co_spec (S.cur c k) x).symm)
+  have h2 := h1 c μ
+  rw [Finset.sum_range_succ', Finset.sum_eq_zero, zero_add] at h2
+  · simp only [if_true, pow_zero, pow_one, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
+      Finset.mem_univ] at h2
+
+    rw [h2, map_sum]
+    refine VF.Ge.sum fun j _ => ?_
+    rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
+    refine (hz c j).mul_int ?_
+    split_ifs
+    · exact VF.Ge.one
+    · exact VF.Ge.zero 0
+  · intro s _
+    refine Finset.sum_eq_zero fun b _ => ?_
+    rw [MvPowerSeries.coeff_of_lt_order, mul_zero]
+    refine lt_of_lt_of_le ?_ (MvPowerSeries.le_order_pow_of_constantCoeff_eq_zero _ (h0 b))
+    have : V.l ≤ V.l ^ (s + 1) := Nat.le_self_pow (Nat.succ_ne_zero s) _
+    exact_mod_cast lt_of_lt_of_le hμ this
+
+end GlobalTheory.MainTerm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LinearSubstCoordinateIntegralOfDegreeLtStatement
+
+section
+
+@[expose] public section
+
+open Formalism.L2.FormalSeriesBounds Formalism.IncomingBounds GlobalTheory.MainTerm Classical
+
+theorem _root_.GlobalTheory.T.linearSubst_coordinate_integral_of_degree_lt : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) (I J : Type) [Fintype I] [Fintype J] (G : Cart V d I J) (S : Sys G) (t : I → MvPowerSeries I C), S.IsT t → ∀ (N : ℕ) (e : Fin N → I → C), (∀ j x, V.Ge 0 (e j x)) → ∀ μ : Fin N →₀ ℕ, μ.degree < V.l → ∀ c, V.Ge 0 (MvPowerSeries.coeff μ (linPull e (t c))) := by
+  first | exact @GlobalTheory.MainTerm.linPull_coord_int_of_degree_lt | exact GlobalTheory.MainTerm.linPull_coord_int_of_degree_lt | (intros; apply GlobalTheory.MainTerm.linPull_coord_int_of_degree_lt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.GaugeSubMainTermIntegralLowBidegree
+
+section
 
 @[expose] public section
 
@@ -231,3 +374,5 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
     exact VF.Ge.zero 0
 
 end GlobalTheory.MainTerm
+end
+end

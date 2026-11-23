@@ -43,9 +43,128 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExi
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Compact
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumA
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.IsDSSigLam
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigCas
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigKfin
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumEmbeddingMemHlam
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.EquivSigLamOfIsDS
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.RregRep
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.TypeStar
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigCas
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+variable {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (lowK ε lam)}
+  {Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)} {v₀ : T.V}
+
+theorem sigLam_casOnSmooth (hgap : StdGap ε lam) (hP : IsPsiFor ε lam T Ψ) (hv₀ : v₀ ≠ 0) : CasOnSmooth ε lam (sigLam ε Ψ v₀) :=
+  casOnSmooth_of_isDS (isDS_sigLam hgap hP hv₀) hgap
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SmoothRestrict
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+variable {n : ℕ}
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+theorem isSmoothVecU_restrict {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hσ : IsURepOn (UJset ε) σ)
+    (S : Submodule ℂ H) [S.HasOrthogonalProjection] (hSG : ∀ g ∈ UJset ε, ∀ x ∈ S, σ g x ∈ S) (x : S) :
+    IsSmoothVecU ε (fun g => (S.orthogonalProjectionOnto ∘L σ g ∘L S.subtypeL : S →L[ℂ] S)) x ↔
+      IsSmoothVecU ε σ (x : H) := by
+  set P := S.orthogonalProjectionOnto
+  have hP : ∀ w : H, w ∈ S → ((P w : S) : H) = w := by
+    intro w hw
+    have e : P w = ⟨w, hw⟩ := by
+      first
+        | exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self (⟨w, hw⟩ : S)
+        | exact Submodule.orthogonalProjection_mem_subspace_eq_self (⟨w, hw⟩ : S)
+        | exact (Submodule.orthogonalProjectionOnto_mem_subspace_eq_self (K := S) ⟨w, hw⟩ : _)
+        | (show P ((⟨w, hw⟩ : S) : H) = ⟨w, hw⟩; simp [P])
+    rw [e]
+  constructor
+  · intro h g₀ hg₀
+    obtain ⟨U, F, hU, hg₀U, hF, hFe⟩ := h g₀ hg₀
+    refine ⟨U, fun g => ((F g : S) : H), hU, hg₀U, (S.subtypeL.restrictScalars ℝ).contDiff.comp_contDiffOn hF, ?_⟩
+    intro g hgU hg
+    have e1 := hFe g hgU hg
+    have hmem : σ g (x : H) ∈ S := hSG g hg x x.2
+    dsimp only at e1 ⊢
+    rw [← e1]
+    simp only [ContinuousLinearMap.comp_apply, Submodule.subtypeL_apply]
+    exact (hP _ hmem).symm
+  · intro h g₀ hg₀
+    obtain ⟨U, F, hU, hg₀U, hF, hFe⟩ := h g₀ hg₀
+    refine ⟨U, fun g => P (F g), hU, hg₀U, (P.restrictScalars ℝ).contDiff.comp_contDiffOn hF, ?_⟩
+    intro g hgU hg
+    have e1 := hFe g hgU hg
+    dsimp only at e1 ⊢
+    simp only [ContinuousLinearMap.comp_apply, Submodule.subtypeL_apply]
+    rw [e1]
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigKfin
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+variable {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (lowK ε lam)}
+  {Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)} {v₀ : T.V}
+
+theorem sigLam_kfin_smooth (hgap : StdGap ε lam) (hP : IsPsiFor ε lam T Ψ) (hv₀ : v₀ ≠ 0) (x : Hlam ε Ψ v₀) (hx : x ∈ kfinLam ε Ψ v₀) :
+    IsSmoothVecU ε (sigLam ε Ψ v₀) x := by
+
+  obtain ⟨w, -, hw⟩ := Submodule.mem_map.mp (Submodule.mem_comap.mp hx)
+  have hsm : IsSmoothVecU ε (rreg ε) ((x : Hlam ε Ψ v₀) : L2 ε) := by
+    have hw' : (w : L2 ε) = (x : L2 ε) := hw
+    rw [← hw']
+    exact (mem_smD_iff ε (rreg ε) _).mp w.2
+
+  exact (isSmoothVecU_restrict (rreg_isURepOn ε) (Hlam ε Ψ v₀)
+    (rreg_mem_Hlam hgap hP hv₀) x).mpr hsm
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.AllSmoothOfKType
+
+section
 
 @[expose] public section
 
@@ -162,3 +281,6 @@ theorem lowKMultOneG_of_cas :
   exact lowKMultOne_of_cas hDS (stdGap_of_mir hlam hh hlt) hcas S S' hS hS'
 
 end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end

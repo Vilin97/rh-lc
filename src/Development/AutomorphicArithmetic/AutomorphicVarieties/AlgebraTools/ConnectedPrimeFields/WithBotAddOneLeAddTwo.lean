@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.IsWeaklyRegularPairModOneLeft
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.CompDim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.ImportsVariant
+public import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,11 +21,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+public import Mathlib.RingTheory.Regular.Flat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +43,147 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.IsWeaklyRegularPairModOneLeft
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.CplFinite
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.CutDimCongr
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.KrullDimension.Regular
+import Mathlib.RingTheory.TotallySplit
+import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.CmFree
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools.Conn
+
+theorem UpperTheory.V.AlgebraTools.Conn.cmFree :
+    ∀ {A B : Type} [CommRing A] [IsLocalRing A] [CommRing B] [IsLocalRing B] [Algebra A B] [Module.Finite A B]
+      [Module.Free A B], ReciprocityTheory.CA.IsCM A → ReciprocityTheory.CA.IsCM B := by
+  intro A B _ _ _ _ _ _ _ h
+  obtain ⟨hN, n, hdim, rs, hlen, hmem, hreg⟩ := h
+  have hinj : Function.Injective (algebraMap A B) := FaithfulSMul.algebraMap_injective A B
+  have hm : (maximalIdeal B).comap (algebraMap A B) = maximalIdeal A :=
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal B))
+  refine ⟨IsNoetherianRing.of_finite A B, n, ?_, rs.map (algebraMap A B), by simpa using hlen, ?_,
+    hreg.of_faithfullyFlat⟩
+  · rw [← hdim]
+    exact ReciprocityTheory.CA.ringKrullDim_eq_of_isIntegral_of_injective hinj
+  · intro r hr
+    obtain ⟨a, ha, rfl⟩ := List.mem_map.mp hr
+    have := hmem a ha
+    rw [← hm] at this
+    exact this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.Adjoin
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools.Conn
+
+theorem UpperTheory.V.AlgebraTools.Conn.adjoin :
+    ∀ {A R : Type} [CommRing A] [IsLocalRing A] [IsDomain A] [CommRing R] [IsLocalRing R] [IsDomain R] [Algebra A R] [Module.Finite A R] [FaithfulSMul A R], IsBase A → ∀ f : R,
+      ∃ _ : IsLocalRing (Algebra.adjoin A {f}), ReciprocityTheory.CA.IsCM (Algebra.adjoin A {f}) := by
+  intro A R _ _ _ _ _ _ _ _ _ hA f
+  have hf : IsIntegral A f := Algebra.IsIntegral.isIntegral f
+  haveI : IsIntegrallyClosed A := hA.normal
+  haveI : Algebra.IsIntegral (Algebra.adjoin A {f}) R := Algebra.IsIntegral.tower_top A
+  haveI : IsLocalRing (Algebra.adjoin A {f}) :=
+    RingHom.domain_isLocalRing (algebraMap (Algebra.adjoin A {f}) R)
+  refine ⟨inferInstance, ?_⟩
+  haveI : Module.Free A (Algebra.adjoin A {f}) := .of_basis (Algebra.adjoin.powerBasis' hf).basis
+  haveI : Module.Finite A (Algebra.adjoin A {f}) := .of_basis (Algebra.adjoin.powerBasis' hf).basis
+  exact cmFree hA.cm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.ImportsVariant
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools.Conn
+
+theorem UpperTheory.V.AlgebraTools.Conn.one :
+    ∀ {R : Type} [CommRing R] [IsLocalRing R] [IsDomain R], HasBase R → ∀ (f : R) (b c : Ideal R), f ∈ maximalIdeal R →
+      (b ⊓ c).radical = (Ideal.span {f}).radical → b ≠ ⊤ → c ≠ ⊤ →
+      ringKrullDim (R ⧸ (b ⊔ c)) < ringKrullDim (R ⧸ b) → ringKrullDim (R ⧸ (b ⊔ c)) < ringKrullDim (R ⧸ c) →
+      ringKrullDim R ≤ ringKrullDim (R ⧸ (b ⊔ c)) + 2 := by
+  intro R _ _ _ hB f b c hf hrad hb hc hdb hdc
+  obtain ⟨A, _, _, i, hA, hinj, hfin⟩ := hB
+  letI : Algebra A R := i.toAlgebra
+  haveI : Module.Finite A R := hfin
+  haveI : FaithfulSMul A R := (faithfulSMul_iff_algebraMap_injective A R).mpr hinj
+  haveI : IsDomain A := hA.dom
+  haveI : IsNoetherianRing A := hA.cm.1
+  haveI : IsAdicComplete (maximalIdeal A) A := hA.complete
+  by_cases hf0 : f = 0
+  · exfalso
+    subst hf0
+    have hbc : b ⊓ c ≤ ⊥ := by
+      intro x hx
+      have : x ∈ (b ⊓ c).radical := Ideal.le_radical hx
+      rw [hrad, Ideal.span_singleton_eq_bot.mpr rfl, Ideal.radical_eq_iff.mpr (Ideal.isPrime_bot).isRadical] at this
+      exact this
+    have hprod : b * c = ⊥ := le_bot_iff.mp (le_trans Ideal.mul_le_inf hbc)
+    rcases Ideal.mul_eq_bot.mp hprod with h | h
+    · subst h
+      rw [bot_sup_eq] at hdc
+      exact lt_irrefl _ hdc
+    · subst h
+      rw [sup_bot_eq] at hdb
+      exact lt_irrefl _ hdb
+  obtain ⟨hloc, hcm⟩ := adjoin hA f
+  haveI : IsNoetherianRing (Algebra.adjoin A {f}) := hcm.1
+  haveI : Module.Finite A (Algebra.adjoin A {f}) :=
+    Module.Finite.of_injective (IsScalarTower.toAlgHom A (Algebra.adjoin A {f}) R).toLinearMap Subtype.val_injective
+  haveI : IsAdicComplete (maximalIdeal (Algebra.adjoin A {f})) (Algebra.adjoin A {f}) :=
+    cplFinite (A := A) (maximalIdeal _) (maximalIdeal.isMaximal _).ne_top
+  haveI : Module.Finite (Algebra.adjoin A {f}) R := Module.Finite.of_restrictScalars_finite A _ R
+  let x : Algebra.adjoin A {f} := ⟨f, Algebra.self_mem_adjoin_singleton A f⟩
+  have hx0 : x ≠ 0 := fun h => hf0 (congrArg Subtype.val h)
+  have hxm : x ∈ maximalIdeal (Algebra.adjoin A {f}) := by
+    rw [mem_maximalIdeal, mem_nonunits_iff]
+    intro hu
+    have : IsUnit f := hu.map (Algebra.adjoin A {f}).val
+    exact ((mem_maximalIdeal f).mp hf) this
+  have hdim : ringKrullDim (Algebra.adjoin A {f} ⧸ Ideal.ofList [x]) + ↑([x].length) =
+      ringKrullDim (Algebra.adjoin A {f}) := by
+    have hsp : Ideal.ofList [x] = Ideal.span {x} := by simp [Ideal.ofList]
+    rw [hsp]
+    apply ringKrullDim_quotient_span_singleton_succ_eq_ringKrullDim_of_mem_jacobson
+    · exact IsSMulRegular.of_ne_zero hx0
+    · rw [IsLocalRing.ringJacobson_eq_maximalIdeal]
+      exact hxm
+  have hmap : Ideal.map (algebraMap (Algebra.adjoin A {f}) R) (Ideal.ofList [x]) = Ideal.span {f} := by
+    simp [Ideal.ofList, Ideal.map_span]
+    rfl
+  have key := cut (A := Algebra.adjoin A {f}) (R := R) hcm [x] b c (by simpa using hxm) hdim (hmap ▸ hrad) hb hc hdb hdc
+  simp only [List.length_singleton, Nat.cast_one] at key
+  rw [add_assoc] at key
+  exact key
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ConnectedPrimeFields.WithBotAddOneLeAddTwo
+
+section
 
 @[expose] public section
 
@@ -171,3 +308,5 @@ theorem UpperTheory.V.AlgebraTools.Conn.hyper :
     exact hbc.trans_le ((hcomp q1 hq1).trans (hle hbq))
   · rw [← Ideal.map_sup, hdq _ (le_sup_of_le_left hpb), hdq _ hpc]
     exact hbc.trans_le ((hcomp q2 hq2).trans (hle hcq))
+end
+end

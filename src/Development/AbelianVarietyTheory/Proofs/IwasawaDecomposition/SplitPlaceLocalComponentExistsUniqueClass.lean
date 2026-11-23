@@ -10,15 +10,13 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Exist
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsHomTrivOutsideLoc
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLocCompAndIsLocLoc
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNatCongruenceLeOpenSubgroupGL
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalOfLevel
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IrreducibleRepIsotypicOfCentraliserFactor
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PrincipalCongInvMul
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceCompletionEquivUnique
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceProjMemIntegersOfIntegral
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValuedNatCastAdicCompletionLeOne
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDoubleCosetsDefiniteUnitaryMaximalLevelStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FiniteDimensionalForms
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -38,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,8 +48,108 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IrreducibleRepIsotypicOfCentraliserFactor
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceCompletionEquivUnique
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceProjMemIntegersOfIntegral
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Formalism.AlgebraicWeights.IsAlgWeight
+import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+import ReciprocityTheory.Automorphisms.PlaceA
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalOfLevel
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2
+
+namespace GlobalTheory.LevelForms
+
+theorem finiteDimensional_of_level : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) {W : Type} [AddCommGroup W] [Module ℂ W]
+    [FiniteDimensional ℂ W] (ρ : Representation ℂ (GQ L n) W) (N : ℕ), 0 < N →
+    ∀ S : Submodule ℂ (GAf L n → W), (∀ f ∈ S, f ∈ NG.AFall L n ρ ∧ ∀ κ, NG.Cong L n N κ → NG.rt L n κ f = f) →
+    FiniteDimensional ℂ S := by
+  intro L _ _ _ n W _ _ _ ρ N hN S hS
+  haveI := GlobalTheory.AlgFormsFin.fixedForms_finite L n ρ (GlobalTheory.T.finite_doubleCosets_definiteUnitary_maximalLevel L n) hN
+  refine Submodule.finiteDimensional_of_le (S₂ := GlobalTheory.AlgFormsFin.fixedForms L n ρ N) fun f hf => ?_
+  exact ⟨(hS f hf).1.1, fun κ hκ g => congrFun ((hS f hf).2 κ hκ) g⟩
+
+end GlobalTheory.LevelForms
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PrincipalCongInvMul
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2
+
+namespace GlobalTheory
+
+theorem principalCong_inv_mul :
+    ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n N : ℕ) (x y : GAf L n),
+    NG.Cong L n N x → NG.Cong L n N y → NG.Cong L n N (x⁻¹ * y) := by
+  intro L _ _ _ n N x y hx hy
+  have hxi : x⁻¹ ∈ Umax L n := (Umax L n).inv_mem hx.1
+  refine ⟨(Umax L n).mul_mem hxi hy.1, fun i j => ?_⟩
+  choose A hA eA using hx.2
+  choose B hB eB using hy.2
+  have hint : ∀ i j, ((x⁻¹).1 : Matrix (Fin n) (Fin n) (AL L)) i j ∈ ALint L := hxi
+  have key : ((x⁻¹ * y).1 : Matrix (Fin n) (Fin n) (AL L)) - 1 =
+      ((x⁻¹).1 : Matrix (Fin n) (Fin n) (AL L)) *
+        (((y.1 : Matrix (Fin n) (Fin n) (AL L)) - 1) - ((x.1 : Matrix (Fin n) (Fin n) (AL L)) - 1)) := by
+    have h1 : ((x⁻¹).1 : Matrix (Fin n) (Fin n) (AL L)) * (x.1 : Matrix (Fin n) (Fin n) (AL L)) = 1 := by
+      rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel]; rfl
+    rw [sub_sub_sub_cancel_right, mul_sub, h1, Subgroup.coe_mul, Units.val_mul]
+  refine ⟨∑ k, ((x⁻¹).1 : Matrix (Fin n) (Fin n) (AL L)) i k * (B k j - A k j),
+    Subring.sum_mem _ fun k _ => Subring.mul_mem _ (hint i k) (Subring.sub_mem _ (hB k j) (hA k j)), ?_⟩
+  rw [← Matrix.sub_apply, key, Matrix.mul_apply, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [Matrix.sub_apply, Matrix.sub_apply, Matrix.sub_apply, eA, eB]
+  ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValuedNatCastAdicCompletionLeOne
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2
+
+namespace GlobalTheory
+
+theorem valued_natCast_adicCompletion_le_one :
+    ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (N : ℕ),
+    Valued.v ((N : v.adicCompletion F)) ≤ 1 := by
+  intro F _ _ v N
+  induction N with
+  | zero => simp
+  | succ n ih =>
+    rw [Nat.cast_succ]
+    exact Valuation.map_add_le _ ih (le_of_eq (map_one _))
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceLocalComponentExistsUniqueClass
+
+section
 
 @[expose] public section
 
@@ -338,3 +435,6 @@ theorem main : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) 
   exact heq_of_eq (isLocS_unique π π' s' σ σ' hπ hσ hσ')
 
 end GlobalTheory.LocCompSplit
+end
+end
+end

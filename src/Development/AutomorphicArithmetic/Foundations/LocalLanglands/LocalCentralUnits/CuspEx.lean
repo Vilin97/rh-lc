@@ -13,8 +13,8 @@ import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentral
 import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.TameArt
 import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.TwTame
 import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.WDBasic
-public import Development.DiscreteGroups.GlobalIrreducibility.DzLDepth
-import GroundTheory.LocalFields.PadicLogSeries
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LocalLanglandsGL
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PrincipalCongruenceFixedVectorsLeSmoothVectors
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,7 +38,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,6 +51,82 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsOfMemKOne
+import GroundTheory.LocalFields.PadicLogSeries
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.DiscreteGroups.GlobalIrreducibility.DzTypeCut
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial GlobalTheory.WeilDeligne GlobalTheory.LocGL GlobalTheory.LocLanglands GlobalTheory.GLq
+  GlobalTheory.PRep GlobalTheory.SplitWeil
+
+namespace DiscreteGroups.sglob.DzType
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+def LDepth : Prop :=
+  ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (g : ℕ) [Fact g.Prime]
+    (i : ℚ_[g] ≃+* w.adicCompletion E), Continuous i →
+    ∀ n : ℕ, ∀ τ : FDRep ℂ (Gn g n),
+    ∀ σ : GlobalTheory.SmGL.IrrRep (GL (Fin n) (w.adicCompletion E)),
+      GlobalTheory.SerSys.TameGen.Inflates (σ.ρ.comp (Matrix.GeneralLinearGroup.map i.toRingHom)) τ →
+      fixed (cls σ).rep (KOne (w.adicCompletion E) (Fin (cls σ).1)) ≠ ⊥
+
+end DiscreteGroups.sglob.DzType
+end
+end
+end
+
+-- Source module: Development.DiscreteGroups.GlobalIrreducibility.DzLDepth
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain GlobalTheory.GLp GlobalTheory.GLq GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.LocLanglands
+
+namespace DiscreteGroups.sglob.DzType
+
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+theorem lDepth : LDepth := by
+  intro E _ _ w g _ i hi n τ σ hs
+  obtain ⟨φ, hφ, hφe⟩ := hs
+  obtain ⟨u, hu⟩ : ∃ u, φ u ≠ 0 := by
+    by_contra h
+    exact hφ (LinearMap.ext fun u => not_not.1 fun hne => h ⟨u, hne⟩)
+  let e := equivRep σ
+  have hfix : ∀ m ∈ KOne (w.adicCompletion E) (Fin n), σ.ρ m (φ u) = φ u := by
+    intro m hm
+    obtain ⟨k, hk, rfl⟩ := DiscreteGroups.sglob.DzIso.exists_of_mem_KOne i hi hm
+    have := hφe k u
+    rw [hk, map_one, Module.End.one_apply] at this
+    exact this.symm
+  intro hbot
+  have hv : e.toIntertwiningMap (φ u) ∈ fixed (cls σ).rep (KOne (w.adicCompletion E) (Fin (cls σ).1)) := by
+    intro m
+    simp only [MonoidHom.one_apply, Units.val_one, one_smul]
+    rw [← e.toIntertwiningMap.isIntertwining, hfix m m.2]
+  rw [hbot, Submodule.mem_bot] at hv
+  have h2 : e.toLinearEquiv (φ u) = 0 := hv
+  exact hu (e.toLinearEquiv.injective (h2.trans (map_zero _).symm))
+
+end DiscreteGroups.sglob.DzType
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.CuspEx
+
+section
 
 @[expose] public section
 
@@ -309,4 +384,6 @@ theorem cuspEx : CuspEx := by
 
 end UpperTheory.Zero.LLC
 
+end
+end
 end

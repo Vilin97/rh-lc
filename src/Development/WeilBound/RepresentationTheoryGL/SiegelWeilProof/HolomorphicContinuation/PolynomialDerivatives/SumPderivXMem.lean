@@ -1,8 +1,6 @@
 module
 
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.PartialDerivQuadraticPairing
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullStableAlt
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullOperatorEvaluation
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.NullSec
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,10 +19,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +42,208 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Std.Tactic.BVDecide.Normalize.Bool
 import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullStableAlt
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.PolyExpBound
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.HasFDerivAtEvX
+public import Mathlib.Analysis.Calculus.LineDeriv.IntegrationByParts
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.TypeStar
+import Std.Tactic.BVDecide.Normalize.Bool
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.PartialDerivQuadraticPairing
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MvPolynomial
+
+namespace PositivityTheory.Rg.Sw.LC.NullS
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LC
+
+variable {m n : ℕ}
+
+abbrev QA (ε : Fin m → Bool) : Subalgebra ℂ (PX m n) :=
+  Algebra.adjoin ℂ (Set.range fun ij : Fin n × Fin n => (Qp ε ij.1 ij.2 : PX m n))
+
+theorem sgn_mul_self (ε : Fin m → Bool) (a : Fin m) : sgn ε a * sgn ε a = 1 := by
+  unfold sgn; split_ifs <;> norm_num
+
+theorem Qp_eq (ε : Fin m → Bool) (i j : Fin n) :
+    Qp ε i j = ∑ a, C (sgn ε a) * (X (a, i, true) * X (a, j, false)) := by
+  unfold Qp Qb
+  rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  unfold sgn; cases ε a <;> simp
+
+theorem Qp_mem (ε : Fin m → Bool) (i j : Fin n) : (Qp ε i j : PX m n) ∈ QA ε :=
+  Algebra.subset_adjoin ⟨(i, j), rfl⟩
+
+theorem pd_Qp_f (ε : Fin m → Bool) (a : Fin m) (i k l : Fin n) :
+    pderiv (a, i, false) (Qp ε k l : PX m n) = if l = i then C (sgn ε a) * X (a, k, true) else 0 := by
+  rw [Qp_eq]
+
+  simp [map_sum, Derivation.leibniz, pderiv_X, Pi.single_apply]
+  by_cases h : l = i <;> simp [h]
+
+theorem partial_deriv_quadratic_pairing (ε : Fin m → Bool) (a : Fin m) (j k l : Fin n) :
+    pderiv (a, j, true) (Qp ε k l : PX m n) = if k = j then C (sgn ε a) * X (a, l, false) else 0 := by
+  rw [Qp_eq]
+
+  simp [map_sum, Derivation.leibniz, pderiv_X, Pi.single_apply]
+  by_cases h : k = j <;> simp [h]
+
+end PositivityTheory.Rg.Sw.LC.NullS
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullOperatorEvaluation
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MvPolynomial MeasureTheory
+
+namespace PositivityTheory.Rg.Sw.LC.NullS
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LC
+
+variable {m n : ℕ}
+
+theorem mom_add (c : ℝ) (hc : 0 < c) (P Q : PX m n) : mom c (P + Q) = mom c P + mom c Q := by
+  unfold mom
+  rw [← integral_add (integrable_pg c hc P) (integrable_pg c hc Q)]
+  congr 1
+  funext x
+  simp [evX, add_mul]
+
+theorem mom_C_mul (c : ℝ) (a : ℂ) (P : PX m n) : mom c (C a * P) = a * mom c P := by
+  unfold mom
+  rw [← integral_const_mul]
+  congr 1
+  funext x
+  simp [evX, mul_assoc]
+
+theorem mom_sub (c : ℝ) (hc : 0 < c) (P Q : PX m n) : mom c (P - Q) = mom c P - mom c Q := by
+  unfold mom
+  rw [← integral_sub (integrable_pg c hc P) (integrable_pg c hc Q)]
+  congr 1
+  funext x
+  simp [evX, sub_mul]
+
+theorem mom_sum (c : ℝ) (hc : 0 < c) {ι : Type*} (s : Finset ι) (f : ι → PX m n) :
+    mom c (∑ i ∈ s, f i) = ∑ i ∈ s, mom c (f i) := by
+  unfold mom
+  rw [← MeasureTheory.integral_finsetSum s (fun i _ => integrable_pg c hc (f i))]
+  congr 1
+  funext x
+  simp [evX, Finset.sum_mul]
+
+theorem pderiv_Sg (c : ℝ) (k : Fin m × Fin n × Bool) :
+    pderiv k (Sg c : PX m n) = C (-(c : ℂ)) * X (k.1, k.2.1, !k.2.2) := by
+  obtain ⟨a, i, b⟩ := k
+  cases b <;> simp [Sg, pderiv_X, Pi.single_apply, Finset.mul_sum, mul_comm, ite_and,
+    Finset.sum_ite_eq', Finset.sum_ite_eq]
+
+def Qv (c : ℝ) (P : PX m n) (v : Fin m → Fin n → ℂ) : PX m n :=
+  ∑ k, C (crd k v) * (pderiv k P + P * pderiv k (Sg c))
+
+theorem hasFDerivAt_pg (c : ℝ) (P : PX m n) (x : Fin m → Fin n → ℂ) :
+    HasFDerivAt (fun y => evX P y * gs c y) (evX P x • (gs c x • dP (Sg c) x) + gs c x • dP P x) x := by
+  have hg : HasFDerivAt (fun y : Fin m → Fin n → ℂ => gs c y) (gs c x • dP (Sg c) x) x := by
+    have h := (hasFDerivAt_evX (Sg c) x).cexp
+    have he : (fun y : Fin m → Fin n → ℂ => gs c y) = fun y => Complex.exp (evX (Sg c) y) :=
+      funext (gs_eq c)
+    rw [he, gs_eq]
+    exact h
+  exact (hasFDerivAt_evX P x).mul hg
+
+theorem fderiv_pg (c : ℝ) (P : PX m n) (x v : Fin m → Fin n → ℂ) :
+    fderiv ℝ (fun y => evX P y * gs c y) x v = evX (Qv c P v) x * gs c x := by
+  rw [(hasFDerivAt_pg c P x).fderiv]
+
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, dP,
+  ContinuousLinearMap.sum_apply, smul_eq_mul, Qv, evX, map_sum, map_add, map_mul, eval_C]
+  rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl (fun k _ => ?_)
+  ring
+
+theorem integral_fderiv_pg (c : ℝ) (hc : 0 < c) (P : PX m n) (v : Fin m → Fin n → ℂ) :
+    mom c (Qv c P v) = 0 := by
+  unfold mom
+  have e : (fun x => evX (Qv c P v) x * gs c x) =
+      fun x => (1 : ℂ) * fderiv ℝ (fun y => evX P y * gs c y) x v := by
+    funext x
+    rw [fderiv_pg, one_mul]
+  rw [e, integral_mul_fderiv_eq_neg_fderiv_mul_of_integrable]
+  · simp
+  · simp
+  · simpa [fderiv_pg] using integrable_pg c hc (Qv c P v)
+  · simpa using integrable_pg c hc P
+  · intro x _
+    exact differentiableAt_const _
+  · intro x _
+    exact (hasFDerivAt_pg c P x).differentiableAt
+
+def ev1 (k : Fin m × Fin n × Bool) (z : ℂ) : Fin m → Fin n → ℂ := fun a i => if a = k.1 ∧ i = k.2.1 then z else 0
+
+theorem null_operator_evaluation (c : ℝ) (P : PX m n) (k : Fin m × Fin n × Bool) (z : ℂ) :
+    Qv c P (ev1 k z) = C z * (pderiv (k.1, k.2.1, false) P + P * pderiv (k.1, k.2.1, false) (Sg c)) +
+      C (star z) * (pderiv (k.1, k.2.1, true) P + P * pderiv (k.1, k.2.1, true) (Sg c)) := by
+  obtain ⟨a, i, b⟩ := k
+  unfold Qv
+  rw [Fintype.sum_prod_type, Finset.sum_eq_single a, Fintype.sum_prod_type, Finset.sum_eq_single i,
+    Fintype.sum_bool]
+  · simp [crd_apply, ev1, add_comm]
+  · intro j _ hj
+    simp [crd_apply, ev1, hj]
+  · simp
+  · intro j _ hj
+    simp [crd_apply, ev1, hj]
+  · simp
+
+theorem mom_dPhi (c : ℝ) (hc : 0 < c) (k : Fin m × Fin n × Bool) (P : PX m n) :
+    mom c (pderiv k P - C (c : ℂ) * X (k.1, k.2.1, !k.2.2) * P) = 0 := by
+  obtain ⟨a, i, b⟩ := k
+  have h1 := integral_fderiv_pg c hc P (ev1 (a, i, b) 1)
+  have h2 := integral_fderiv_pg c hc P (ev1 (a, i, b) Complex.I)
+  rw [null_operator_evaluation, mom_add c hc, mom_C_mul, mom_C_mul] at h1 h2
+  simp only [star_one, one_mul, Complex.star_def, Complex.conj_I] at h1 h2
+  have hu : mom c (pderiv (a, i, false) P + P * pderiv (a, i, false) (Sg c)) = 0 := by
+    have h3 : 2 * Complex.I * mom c (pderiv (a, i, false) P + P * pderiv (a, i, false) (Sg c)) = 0 := by
+      linear_combination h2 + Complex.I * h1
+    simpa [Complex.I_ne_zero] using h3
+  have hw : mom c (pderiv (a, i, true) P + P * pderiv (a, i, true) (Sg c)) = 0 := by
+    linear_combination h1 - hu
+  have key : pderiv (a, i, b) P - C (c : ℂ) * X (a, i, !b) * P =
+      pderiv (a, i, b) P + P * pderiv (a, i, b) (Sg c) := by
+    rw [pderiv_Sg, map_neg]
+    ring
+  rw [key]
+  cases b
+  · exact hu
+  · exact hw
+
+end PositivityTheory.Rg.Sw.LC.NullS
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.SumPderivXMem
+
+section
 
 @[expose] public section
 
@@ -273,3 +469,6 @@ theorem nullStable : NullStable := by
     exact hP' _ (mul_mem hR (Qp_mem ε i j))
 
 end PositivityTheory.Rg.Sw.LC.NullS
+end
+end
+end

@@ -1,7 +1,6 @@
 module
 
-public import Development.EtaleCohomology.EtaleSheaves.EtaleChapterEThree
-public import Mathlib.CategoryTheory.MorphismProperty.Ind
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +39,22 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.CategoryTheory.MorphismProperty.Ind
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.EtaleChapterEThree
+
+section
+
+@[expose] public section
+
+def LateralTheory.E.EtaleChapterEThree : Prop :=
+  GlobalTheory.EtC.A1 → GlobalTheory.EtC.A2 → GlobalTheory.EtC.A3 → GlobalTheory.EtC.A4 → GlobalTheory.EtC.A5 → GlobalTheory.EtC.A7 → GlobalTheory.EtC.A8 → GlobalTheory.EtC.A9 → GlobalTheory.EtC.A10 → GlobalTheory.EtC.A11 → GlobalTheory.EtC.B1 → GlobalTheory.EtC.B2 → GlobalTheory.EtC.B3 → GlobalTheory.EtC.B4 → GlobalTheory.EtC.B5 → GlobalTheory.EtC.B7 → GlobalTheory.EtC.C1 → GlobalTheory.EtC.C2 → GlobalTheory.EtC.C3 → GlobalTheory.EtC.C4 → GlobalTheory.EtC.C5 → GlobalTheory.EtC.D1 → GlobalTheory.EtC.D2 → GlobalTheory.EtC.D3 → GlobalTheory.EtC.E1 → GlobalTheory.EtC.E2 → GlobalTheory.EtC.E3
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.EtaleBaseChangeFractionFieldIndEtaleOverPolynomi
+
+section
 
 @[expose] public section
 
@@ -207,4 +222,6 @@ theorem goal_of (h1 : AlgResProps) (h2 : Base) (h3 : Step) (h4 : Global) : Later
 
 end LateralTheory.E.t_E3Cut
 
+end
+end
 end

@@ -2,13 +2,12 @@ module
 
 public import Mathlib.LinearAlgebra.LinearIndependent.Defs
 public import Mathlib.RingTheory.AlgebraicIndependent.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinRootMapComplexLinearIndependentStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFormalBranchesOfSeparableReductionStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimitiveMonicSeparableSpecializationStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankMulPowLeFinrankOfPowerSeriesStatement
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,10 +23,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,8 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,10 +45,242 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLiftsOfSeparableStatement
+import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimitiveMonicSeparableSpecializationStatement
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankMulPowLeFinrankOfPowerSeries
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.AlgebraicIndependent.AlgebraicClosure
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinRootMapComplexLinearIndependent
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory
+
+open Polynomial
+
+theorem adjoinRoot_map_complex_linearIndependent :
+    ∀ (D : ℕ) (P : Polynomial (MvPolynomial (Fin D) ℚ)), P.Monic →
+      ∃ τ : AdjoinRoot P →+* AdjoinRoot (P.map (MvPolynomial.map (algebraMap ℚ ℂ))),
+        (∀ i, τ (AdjoinRoot.of P (MvPolynomial.X i)) = AdjoinRoot.of _ (MvPolynomial.X i)) ∧
+        (∀ (q : ℚ) u, τ (q • u) = (q : ℂ) • τ u) ∧
+        ∀ (J : Type) (e : J → AdjoinRoot P), LinearIndependent ℚ e →
+          LinearIndependent ℂ (fun j => τ (e j)) := by
+  intro D P hP
+  set f : MvPolynomial (Fin D) ℚ →+* MvPolynomial (Fin D) ℂ := MvPolynomial.map (algebraMap ℚ ℂ)
+  set Q := P.map f
+  have hQ : Q.Monic := hP.map f
+  have h0 : P.eval₂ ((AdjoinRoot.of Q).comp f) (AdjoinRoot.root Q) = 0 := by
+    rw [← Polynomial.eval₂_map, AdjoinRoot.eval₂_root]
+  let τ := AdjoinRoot.lift ((AdjoinRoot.of Q).comp f) (AdjoinRoot.root Q) h0
+  have hof : ∀ r, τ (AdjoinRoot.of P r) = AdjoinRoot.of Q (f r) := fun r => by
+    simp [τ, AdjoinRoot.lift_of]
+  have hroot : τ (AdjoinRoot.root P) = AdjoinRoot.root Q := AdjoinRoot.lift_root _
+  have hsmul : ∀ (q : ℚ) u, τ (q • u) = (q : ℂ) • τ u := by
+    intro q u
+    rw [Algebra.smul_def, Algebra.smul_def, map_mul, IsScalarTower.algebraMap_apply ℚ (MvPolynomial (Fin D) ℚ),
+      AdjoinRoot.algebraMap_eq, hof, IsScalarTower.algebraMap_apply ℂ (MvPolynomial (Fin D) ℂ),
+      AdjoinRoot.algebraMap_eq]
+    simp [f, MvPolynomial.algebraMap_eq]
+  refine ⟨τ, fun i => by rw [hof]; simp [f], hsmul, ?_⟩
+  intro J e he
+  let τL : AdjoinRoot P →ₗ[ℚ] AdjoinRoot Q :=
+    { toFun := τ
+      map_add' := map_add τ
+      map_smul' := fun q u => by
+        rw [hsmul]
+        exact algebraMap_smul ℂ q (τ u) }
+  let bA := (MvPolynomial.basisMonomials (Fin D) ℚ).smulTower (AdjoinRoot.powerBasis' hP).basis
+  let bB := (MvPolynomial.basisMonomials (Fin D) ℂ).smulTower (AdjoinRoot.powerBasis' hQ).basis
+  have hdim : (AdjoinRoot.powerBasis' hP).dim = (AdjoinRoot.powerBasis' hQ).dim := by
+    simp [AdjoinRoot.powerBasis', Q, hP.natDegree_map]
+  let σ := Equiv.prodCongr (Equiv.refl (Fin D →₀ ℕ)) (finCongr hdim)
+  let E := (Algebra.TensorProduct.basis ℂ bA).equiv bB σ
+  have hbas : ∀ k, τ (bA k) = bB (σ k) := by
+    rintro ⟨a, i⟩
+    simp only [bA, bB, σ, Module.Basis.smulTower_apply, MvPolynomial.coe_basisMonomials,
+      PowerBasis.coe_basis, AdjoinRoot.powerBasis'_gen, Equiv.prodCongr_apply, Equiv.coe_refl,
+      Prod.map, id, finCongr_apply, Fin.val_cast]
+    rw [Algebra.smul_def, Algebra.smul_def, map_mul, map_pow, hroot, AdjoinRoot.algebraMap_eq,
+      AdjoinRoot.algebraMap_eq, hof]
+    simp [f, MvPolynomial.map_monomial]
+  have hkey : ∀ v, E (1 ⊗ₜ[ℚ] v) = τ v := by
+    intro v
+    have := bA.ext (f₁ := (E.toLinearMap.restrictScalars ℚ).comp (TensorProduct.mk ℚ ℂ _ 1))
+      (f₂ := τL) (fun k => by
+        simp only [LinearMap.coe_comp, Function.comp_apply, TensorProduct.mk_apply,
+          LinearMap.coe_restrictScalars, LinearEquiv.coe_coe]
+        rw [← Algebra.TensorProduct.basis_apply, Module.Basis.equiv_apply]
+        exact (hbas k).symm)
+    exact congrArg (fun g => g v) this
+  have hli : LinearIndependent ℂ (fun j => (1 : ℂ) ⊗ₜ[ℚ] e j) :=
+    Module.Flat.linearIndependent_one_tmul he
+  have := hli.map' E.toLinearMap E.ker
+  have h2 : (fun j => τ (e j)) = E.toLinearMap ∘ (fun j => (1 : ℂ) ⊗ₜ[ℚ] e j) := by
+    funext j
+    simp only [Function.comp_apply, LinearEquiv.coe_coe]
+    exact (hkey (e j)).symm
+  rw [h2]
+  exact this
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinRootMapComplexLinearIndependentStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+theorem _root_.GlobalTheory.T.adjoinRoot_complex_map_linearIndependent : ∀ (D : ℕ) (P : Polynomial (MvPolynomial (Fin D) ℚ)), P.Monic → ∃ τ : AdjoinRoot P →+* AdjoinRoot (P.map (MvPolynomial.map (algebraMap ℚ ℂ))), (∀ i, τ (AdjoinRoot.of P (MvPolynomial.X i)) = AdjoinRoot.of _ (MvPolynomial.X i)) ∧ (∀ (q : ℚ) u, τ (q • u) = (q : ℂ) • τ u) ∧ ∀ (J : Type) (e : J → AdjoinRoot P), LinearIndependent ℚ e → LinearIndependent ℂ (fun j => τ (e j)) := by
+  first | exact @GlobalTheory.adjoinRoot_map_complex_linearIndependent | exact GlobalTheory.adjoinRoot_map_complex_linearIndependent | (intros; apply GlobalTheory.adjoinRoot_map_complex_linearIndependent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFormalBranchesOfSeparableReduction
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.ShiftHomomorphism
+
+noncomputable def shiftHom (D : ℕ) (c : Fin D → ℂ) :
+    MvPolynomial (Fin D) ℂ →ₐ[ℂ] MvPowerSeries (Fin D) ℂ :=
+  MvPolynomial.aeval (fun i => MvPowerSeries.X i + MvPowerSeries.C (c i))
+
+theorem shiftHom_X (D : ℕ) (c : Fin D → ℂ) (i : Fin D) :
+    shiftHom D c (MvPolynomial.X i) = MvPowerSeries.X i + MvPowerSeries.C (c i) := by
+  simp [shiftHom]
+
+theorem constantCoeff_comp_shiftHom (D : ℕ) (c : Fin D → ℂ) :
+    (MvPowerSeries.constantCoeff (σ := Fin D) (R := ℂ)).comp (shiftHom D c).toRingHom
+      = MvPolynomial.eval c := by
+  apply MvPolynomial.ringHom_ext
+  · intro r
+    simp only [shiftHom, RingHom.coe_comp, Function.comp_apply, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, MvPolynomial.aeval_C, MvPolynomial.eval_C]
+    first | rfl | simp [MvPowerSeries.algebraMap_apply] | simp [Algebra.algebraMap_eq_smul_one]
+  · intro i; simp [shiftHom]
+
+theorem shiftHom_injective (D : ℕ) (c : Fin D → ℂ) : Function.Injective (shiftHom D c) := by
+  let τ : MvPolynomial (Fin D) ℂ →ₐ[ℂ] MvPolynomial (Fin D) ℂ :=
+    MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (c i))
+  let τ' : MvPolynomial (Fin D) ℂ →ₐ[ℂ] MvPolynomial (Fin D) ℂ :=
+    MvPolynomial.aeval (fun i => MvPolynomial.X i - MvPolynomial.C (c i))
+  have hinv : τ'.comp τ = AlgHom.id ℂ _ := by
+    apply MvPolynomial.algHom_ext; intro i; simp [τ, τ']
+  have hτ : Function.Injective τ := by
+    intro a b h
+    have := congrArg τ' h
+    simpa [← AlgHom.comp_apply, hinv] using this
+  have hfac : shiftHom D c = (MvPolynomial.coeToMvPowerSeries.algHom ℂ).comp τ := by
+    apply MvPolynomial.algHom_ext; intro i; simp [shiftHom, τ]
+  rw [hfac]
+  exact (MvPolynomial.coe_injective _ _).comp hτ
+
+end GlobalTheory.ShiftHomomorphism
+
+namespace GlobalTheory
+
+
+open GlobalTheory.ShiftHomomorphism in
+theorem branches_of_unramified_point : ∀ (D : ℕ) (P : Polynomial (MvPolynomial (Fin D) ℂ)) (c : Fin D → ℂ), P.Monic → (P.map (MvPolynomial.eval c)).Separable → ∃ (n : ℕ) (φ : Fin n → (AdjoinRoot P →ₐ[ℂ] MvPowerSeries (Fin D) ℂ)), (∀ u, (∀ j, φ j u = 0) → u = 0) ∧ ∀ j i, φ j (AdjoinRoot.of P (MvPolynomial.X i)) = MvPowerSeries.X i + MvPowerSeries.C (c i) := by
+  intro D P c hP hsep
+  haveI : IsDomain (MvPowerSeries (Fin D) ℂ) := NoZeroDivisors.to_isDomain _
+  set ψ := shiftHom D c with hψ
+  set Q := P.map ψ.toRingHom with hQ
+  have hQm : Q.Monic := hP.map _
+  have hred : Q.map (MvPowerSeries.constantCoeff (σ := Fin D) (R := ℂ)) = P.map (MvPolynomial.eval c) := by
+    rw [hQ, Polynomial.map_map, constantCoeff_comp_shiftHom]
+  obtain ⟨θ, hθi, hθr⟩ := GlobalTheory.T.exists_lifts_of_separable_reduction D Q hQm (by rw [hred]; exact hsep)
+  have hroot : ∀ j, P.eval₂ ψ.toRingHom (θ j) = 0 := by
+    intro j
+    have := hθr j
+    rw [Polynomial.IsRoot.def, hQ, Polynomial.eval_map] at this
+    exact this
+  refine ⟨Q.natDegree, fun j => AdjoinRoot.liftAlgHom P ψ (θ j) (hroot j), ?_, ?_⟩
+  · intro u hu
+    obtain ⟨R, rfl⟩ := AdjoinRoot.mk_surjective u
+    have hR : AdjoinRoot.mk P R = AdjoinRoot.mk P (R %ₘ P) := by
+      rw [← AdjoinRoot.modByMonicHom_mk hP R, AdjoinRoot.mk_leftInverse hP]
+    rw [hR] at hu ⊢
+    by_contra hne
+    have hR0 : R %ₘ P ≠ 0 := by
+      intro h; apply hne; rw [h, map_zero]
+    have hdeg : (R %ₘ P).natDegree < P.natDegree :=
+      Polynomial.natDegree_lt_natDegree hR0 (Polynomial.degree_modByMonic_lt R hP)
+    have hz : (R %ₘ P).map ψ.toRingHom = 0 := by
+      refine Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero _ hθi ?_ ?_
+      · intro j
+        have := hu j
+        simpa [AdjoinRoot.liftAlgHom, AdjoinRoot.lift_mk, Polynomial.eval_map] using this
+      · calc ((R %ₘ P).map ψ.toRingHom).natDegree ≤ (R %ₘ P).natDegree := Polynomial.natDegree_map_le
+          _ < P.natDegree := hdeg
+          _ = Q.natDegree := (hP.natDegree_map _).symm
+          _ = Fintype.card (Fin Q.natDegree) := (Fintype.card_fin _).symm
+    apply hR0
+    exact Polynomial.map_injective _ (shiftHom_injective D c) (by rw [hz, Polynomial.map_zero])
+  · intro j i
+    simp [AdjoinRoot.liftAlgHom]
+    rw [hψ]; exact shiftHom_X D c i
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFormalBranchesOfSeparableReductionStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+theorem _root_.GlobalTheory.T.exists_formal_branches_of_separable_reduction : ∀ (D : ℕ) (P : Polynomial (MvPolynomial (Fin D) ℂ)) (c : Fin D → ℂ), P.Monic → (P.map (MvPolynomial.eval c)).Separable → ∃ (n : ℕ) (φ : Fin n → (AdjoinRoot P →ₐ[ℂ] MvPowerSeries (Fin D) ℂ)), (∀ u, (∀ j, φ j u = 0) → u = 0) ∧ ∀ j i, φ j (AdjoinRoot.of P (MvPolynomial.X i)) = MvPowerSeries.X i + MvPowerSeries.C (c i) := by
+  first | exact @GlobalTheory.branches_of_unramified_point | exact GlobalTheory.branches_of_unramified_point | (intros; apply GlobalTheory.branches_of_unramified_point <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankMulPowLeFinrankOfPowerSeriesStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+theorem _root_.GlobalTheory.T.finrank_mul_pow_le_finrank_of_prod_mem : ∀ (D n : ℕ) (A : Type) [CommRing A] [Algebra ℂ A] (φ : Fin n → (A →ₐ[ℂ] MvPowerSeries (Fin D) ℂ)) (x : Fin D → A) (c : Fin D → ℂ), (∀ u : A, (∀ j, φ j u = 0) → u = 0) → (∀ j i, φ j (x i) = MvPowerSeries.X i + MvPowerSeries.C (c i)) → ∀ (F G : Submodule ℂ A) [Module.Finite ℂ F] [Module.Finite ℂ G] (m : ℕ), 0 < m → (∀ (f : Fin m → A) (a : Fin D → ℕ), (∀ l, f l ∈ F) → (∀ i, a i < m) → (∏ l, f l) * ∏ i, x i ^ a i ∈ G) → Module.finrank ℂ F * m ^ D ≤ Module.finrank ℂ G := by
+  first | exact @GlobalTheory.finrank_mul_pow_le_finrank_of_powerSeries | exact GlobalTheory.finrank_mul_pow_le_finrank_of_powerSeries | (intros; apply GlobalTheory.finrank_mul_pow_le_finrank_of_powerSeries <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ManyIndependentProductsInFunctionField
+
+section
 
 @[expose] public section
 
@@ -148,3 +376,5 @@ theorem many_independent_products_in_function_field : ∀ (K : Type) [Field K] [
     field_simp
 
 end GlobalTheory
+end
+end

@@ -4,16 +4,18 @@ public import GroundTheory.GlobalFields.TateThesis.EulerFactorsFourierFinite
 public import GroundTheory.AutomorphicForms.GL2.FiniteIdeleDecomp
 public import GroundTheory.AutomorphicForms.GL2.GodementSectionFactor
 public import GroundTheory.LocalFields.LocalZetaEpsilon
-public import GroundTheory.GlobalFields.Artin.ConductorOneDim
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
-import GroundTheory.GlobalFields.LocalAtPlace
-public import GroundTheory.LocalFields.LocalZeta
+public import GroundTheory.GlobalFields.LocalFieldAtPlace
+public import GroundTheory.GlobalFields.TateThesis.LocalConductor
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+public import GroundTheory.GlobalFields.ClassFieldConsequences.ConductorLocal
+import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -25,10 +27,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,9 +51,74 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+import GroundTheory.GlobalFields.LocalAtPlace
+public import GroundTheory.LocalFields.LocalZeta
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.Henselian
+import Mathlib.Tactic.Basify
 import Mathlib.Topology.Sheaves.Init
 import Mathlib.Topology.UniformSpace.Uniformizable
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: GroundTheory.GlobalFields.Artin.ConductorOneDim
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open IsDedekindDomain NumberField GroundTheory.LocalField Module
+
+open scoped GroundTheory.Global.SemiLocal Pointwise
+
+namespace GroundTheory.Global
+
+open IdeleGroup
+
+section LocalConductor
+
+variable {k M : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  [Field M] [ValuativeRel M] [TopologicalSpace M] [IsNonarchimedeanLocalField M]
+  [Algebra k M] [ValuativeExtension k M] [FiniteDimensional k M] [IsGalois k M]
+
+end LocalConductor
+
+section Units
+
+open ValuativeRel
+
+variable {K : Type*} [Field K] [NumberField K]
+
+theorem unitFiltrationUnits_eq_unitsLevel (v : HeightOneSpectrum (𝓞 K)) (n : ℕ) :
+    unitFiltrationUnits (v.adicCompletion K) n = unitsLevel v n := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · exact unitFiltrationUnits_zero_eq_unitsLevel_zero v
+  ext x
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[v.adicCompletion K]
+  rw [mem_unitFiltrationUnits_iff hn hϖ, GroundTheory.Global.mem_unitsLevel_of_one_le hn, ← map_pow,
+    (isEquiv_valuation_valued v).le_iff_le, map_pow, valued_irreducible_valuationInteger v hϖ,
+    ← WithZero.exp_nsmul]
+  simp
+
+end Units
+
+section OneDim
+
+variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
+  [IsGalois K L] (χ : Gal(L/K) →* ℂˣ)
+
+end OneDim
+
+end GroundTheory.Global
+end
+end
+end
+
+-- Source module: GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
+
+section
 
 @[expose] public section
 
@@ -323,3 +388,5 @@ end HeckeCharacter
 end
 
 end GroundTheory.Global
+end
+end

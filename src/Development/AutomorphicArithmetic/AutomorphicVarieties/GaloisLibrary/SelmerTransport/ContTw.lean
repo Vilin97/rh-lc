@@ -2,7 +2,9 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.ConjStableShaFam
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.ContScal
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantFunctions
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.LocallyConstant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,7 +43,35 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Topology.Algebra.Group.Units
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantFunctions
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.LocallyConstantFunctions.locConst :
+    ∀ {Γ A : Type} [inst : Group Γ] [inst_1 : TopologicalSpace Γ]
+    [IsTopologicalGroup Γ] [inst_3 : Group A] (ψ : Γ →* A), IsOpen (↑ψ.ker : Set Γ) → IsLocallyConstant (⇑ψ : Γ → A) := by
+  intro Γ A _ _ _ _ ψ h
+  rw [IsLocallyConstant.iff_exists_open]
+  intro x
+  refine ⟨(fun y => x⁻¹ * y) ⁻¹' (↑ψ.ker : Set Γ),
+    h.preimage (continuous_const.mul continuous_id), ?_, ?_⟩
+  · simp [MonoidHom.mem_ker]
+  · intro y hy
+    have hk : ψ (x⁻¹ * y) = 1 := MonoidHom.mem_ker.mp hy
+    rw [map_mul, map_inv, inv_mul_eq_one] at hk
+    exact hk.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.ContTw
+
+section
 
 @[expose] public section
 
@@ -92,3 +121,5 @@ theorem UpperTheory.V.Base.contTw :
     (map_zpow (Units.map (algebraMap ℤ_[l] O).toMonoidHom) (cycZ k Ω l g) n).symm
   rw [Units.val_mul, mul_smul, e]
   exact congrArg _ (algebraMap_smul O _ m).symm
+end
+end

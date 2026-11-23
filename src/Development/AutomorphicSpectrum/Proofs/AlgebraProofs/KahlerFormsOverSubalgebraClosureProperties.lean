@@ -1,16 +1,15 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.TwoWeightEqOneAddRoot
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DetMulMapDetEqOneOfSesq
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DetOneAddCompCommField
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PowEqOneOfIsIntegralOfMulComplexConjEqOne
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RootMulComplexConjEqOne
+public import Mathlib.LinearAlgebra.Determinant
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -25,9 +24,7 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,9 +44,173 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.TotallySplit
+public import Mathlib.NumberTheory.NumberField.CMField
+public import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Analysis.CStarAlgebra.Classes
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RootMulComplexConjEqOne
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DetMulMapDetEqOneOfSesq
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem det_mul_map_det_eq_one_of_sesq {E : Type*} [Field E] {V : Type*} [AddCommGroup V]
+    [Module E V] [FiniteDimensional E V] (σ : E →+* E) (H : V →ₗ[E] V →ₛₗ[σ] E)
+    (hH : ∀ x, (∀ y, H x y = 0) → x = 0) (g : V →ₗ[E] V)
+    (hg : ∀ x y, H (g x) (g y) = H x y) :
+    LinearMap.det g * σ (LinearMap.det g) = 1 := by
+  classical
+  let b := Module.finBasis E V
+  let S : Matrix _ _ E := Matrix.of fun i j => H (b i) (b j)
+  let G := LinearMap.toMatrix b b g
+  have hgb : ∀ j, g (b j) = ∑ i, G i j • b i := by
+    intro j
+    simp only [G, LinearMap.toMatrix_apply]
+    exact (b.sum_repr (g (b j))).symm
+  have hS : G.transpose * S * σ.mapMatrix G = S := by
+    ext i j
+    have h1 : S i j = H (g (b i)) (g (b j)) := (hg _ _).symm
+    rw [h1, hgb, hgb]
+
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, RingHom.mapMatrix_apply,
+    Matrix.map_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
+    LinearMap.map_smulₛₗ, smul_eq_mul, S, Matrix.of_apply]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    rw [mul_comm]
+  have hdet : S.det ≠ 0 := by
+    intro h0
+    obtain ⟨v, hv, hvS⟩ := Matrix.exists_vecMul_eq_zero_iff.mpr h0
+    apply hv
+    have hx : ∑ i, v i • b i = 0 := by
+      apply hH
+      have : H (∑ i, v i • b i) = 0 := by
+        apply b.ext
+        intro j
+        have := congrFun hvS j
+
+        simpa [Matrix.vecMul, dotProduct, S, map_sum, LinearMap.sum_apply] using this
+      intro y
+      rw [this]; rfl
+    funext i
+    exact Fintype.linearIndependent_iff.mp b.linearIndependent v hx i
+  have hd := congrArg Matrix.det hS
+  rw [Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose, ← RingHom.map_det] at hd
+  have hG : G.det = LinearMap.det g := LinearMap.det_toMatrix b g
+  rw [hG] at hd
+  apply mul_left_cancel₀ hdet
+  linear_combination hd
+
+end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DetOneAddCompCommField
+
+section
+
+@[expose] public section
+
+open NumberField TensorProduct
+
+namespace GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem det_one_add_comp_comm_field {K V W : Type*} [Field K] [AddCommGroup V] [Module K V]
+    [AddCommGroup W] [Module K W] [Module.Finite K V] [Module.Finite K W]
+    (A : V →ₗ[K] W) (B : W →ₗ[K] V) :
+    LinearMap.det (1 + A ∘ₗ B) = LinearMap.det (1 + B ∘ₗ A) := by
+  classical
+  let bV := Module.finBasis K V
+  let bW := Module.finBasis K W
+  rw [← LinearMap.det_toMatrix bW, ← LinearMap.det_toMatrix bV, map_add (f := _), map_add (f := _),
+    LinearMap.toMatrix_comp bW bV bW, LinearMap.toMatrix_comp bV bW bV,
+    LinearMap.toMatrix_one, LinearMap.toMatrix_one, Matrix.det_one_add_mul_comm]
+
+theorem exists_det_congr_one : ∀ (E : Type) [Field E] [NumberField E] (La : Type) [AddCommGroup La] [Module (𝓞 E) La] [Module.Finite (𝓞 E) La] [Module.Projective (𝓞 E) La] (I : Ideal (𝓞 E)) (g : La →ₗ[𝓞 E] La), (∀ a, g a - a ∈ I • (⊤ : Submodule (𝓞 E) La)) → ∃ u : 𝓞 E, u - 1 ∈ I ∧ (u : E) = LinearMap.det (g.baseChange E) := by
+  intro E _ _ La _ _ _ _ I g hg
+  classical
+  obtain ⟨n, p, i, -, -, hpi⟩ := Module.Finite.exists_comp_eq_id_of_projective (𝓞 E) La
+  set N : (Fin n → 𝓞 E) →ₗ[𝓞 E] (Fin n → 𝓞 E) := i ∘ₗ ((g - 1) ∘ₗ p) with hN
+  have key : ∀ (x : La), x ∈ I • (⊤ : Submodule (𝓞 E) La) → ∀ k, i x k ∈ I := by
+    intro x hx k
+    refine Submodule.smul_induction_on hx ?_ ?_
+    · intro r hr y _
+      rw [map_smul, Pi.smul_apply, smul_eq_mul]
+      exact I.mul_mem_right _ hr
+    · intro x y hx hy
+      rw [map_add (f := _), Pi.add_apply]
+      exact I.add_mem hx hy
+  refine ⟨LinearMap.det (1 + N), ?_, ?_⟩
+  · rw [← Ideal.Quotient.eq, ← LinearMap.det_toMatrix', RingHom.map_det, map_one]
+    have : (Ideal.Quotient.mk I).mapMatrix (LinearMap.toMatrix' (1 + N)) = 1 := by
+      rw [map_add (f := _), map_add (f := _), LinearMap.toMatrix'_one, map_one, add_eq_left]
+      ext a b
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.zero_apply,
+        LinearMap.toMatrix'_apply]
+      rw [Ideal.Quotient.eq_zero_iff_mem]
+      exact key _ (hg _) _
+    rw [this, Matrix.det_one]
+  · have h1 : ((LinearMap.det (1 + N) : 𝓞 E) : E) = LinearMap.det ((1 + N).baseChange E) :=
+      (LinearMap.det_baseChange (A := E) (1 + N)).symm
+    rw [h1, LinearMap.baseChange_add, LinearMap.baseChange_one, hN, LinearMap.baseChange_comp,
+      det_one_add_comp_comm_field, ← LinearMap.baseChange_comp, LinearMap.comp_assoc, hpi,
+      LinearMap.comp_id, LinearMap.baseChange_sub, LinearMap.baseChange_one, add_sub_cancel]
+
+end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PowEqOneOfIsIntegralOfMulComplexConjEqOne
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem pow_eq_one_of_isIntegral_of_mul_complexConj_eq_one :
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (u : E), IsIntegral ℤ u →
+      u * IsCMField.complexConj E u = 1 → ∃ n : ℕ, 0 < n ∧ u ^ n = 1 := by
+  intro E _ _ _ u hu h
+  have hn : ∀ s : E →+* ℂ, ‖s u‖ = 1 := by
+    intro s
+    have h1 : s u * (starRingEnd ℂ) (s u) = 1 := by
+      rw [← IsCMField.complexEmbedding_complexConj, ← map_mul, h, map_one]
+    have h2 : ‖s u‖ ^ 2 = 1 := by
+      have := congrArg norm h1
+      rw [norm_mul, Complex.norm_conj, norm_one] at this
+      rw [sq, this]
+    exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) two_ne_zero).1 h2
+  obtain ⟨n, hn0, hn1⟩ := NumberField.Embeddings.pow_eq_one_of_norm_eq_one E ℂ hu hn
+  exact ⟨n, hn0, hn1⟩
+
+end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.KahlerFormsOverSubalgebraClosureProperties
+
+section
 
 @[expose] public section
 
@@ -292,3 +452,5 @@ theorem per_det_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
   simp
 
 end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end

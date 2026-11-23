@@ -5,12 +5,10 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.Spherica
 import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DcoShape
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.MemSuppMono
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.NonVan
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SymAlg
-import GroundTheory.LocalFields.LocalFourierHaar
+import Mathlib.Algebra.AffineMonoid.UniqueSums
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -26,9 +24,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,9 +44,61 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.LocalFields.LocalFourierHaar
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SymAlg
+
+section
+
+@[expose] public section
+
+open MeasureTheory GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GroundTheory.Automorphic.GLnLocal GroundTheory.Automorphic.Iwasawa UpperTheory.ConvolutionTheory.H
+
+theorem UpperTheory.ConvolutionTheory.H.symAlg :
+    ∀ (n l : ℕ) (y : LaurentRing n),
+      symSum y ∈ symmetricLaurent (n := n) ∧ bc l (symSum y) = symSum (bc l y) ∧
+      (∀ p ∈ symmetricLaurent (n := n), symSum (y * p) = symSum y * p) ∧
+      (y ∈ symmetricLaurent (n := n) → bc l y ∈ symmetricLaurent (n := n)) ∧
+      ∀ z : Fin n → ℂˣ, evalAt z (bc l y) = evalAt (z ^ l) y := by
+  intro n l y
+  have hb : ∀ (a : Fin n → ℤ) (c : ℂ), bc l (AddMonoidAlgebra.single a c : LaurentRing n) = AddMonoidAlgebra.single ((l : ℤ) • a) c := by
+    intro a c
+    simp [bc, AddMonoidAlgebra.mapDomainAlgHom, AddMonoidAlgebra.mapDomain_single]
+  have hc : ∀ (σ : Equiv.Perm (Fin n)) (y : LaurentRing n), bc l (permAct σ y) = permAct σ (bc l y) := fun σ y => by
+    have : (bc l).comp (permAct σ) = (permAct σ).comp (bc (n := n) l) :=
+      AddMonoidAlgebra.algHom_ext (fun a => by
+        rw [AlgHom.comp_apply, AlgHom.comp_apply, permAct_single, hb, hb, permAct_single]; rfl) (Subsingleton.elim _ _)
+    exact AlgHom.congr_fun this y
+  refine ⟨fun τ => ?_, ?_, fun p hp => ?_, fun hy σ => ?_, fun z => ?_⟩
+
+  · rw [symSum, map_sum]
+    simp only [permAct_permAct]
+    exact Fintype.sum_equiv (Equiv.mulLeft τ) _ _ fun σ => rfl
+
+  · rw [symSum, symSum, map_sum]
+    exact Finset.sum_congr rfl fun σ _ => hc σ y
+  · rw [symSum, symSum, Finset.sum_mul]
+    exact Finset.sum_congr rfl fun σ _ => by rw [map_mul, hp σ]
+  · rw [← hc, hy σ]
+  · have : (evalAt z).comp (bc l) = evalAt (z ^ l) :=
+      AddMonoidAlgebra.algHom_ext (fun a => by
+        rw [AlgHom.comp_apply, hb, evalAt_single, evalAt_single, monomialChar_apply, monomialChar_apply]
+        congr 1
+        refine Finset.prod_congr rfl fun i _ => ?_
+        rw [Pi.smul_apply, smul_eq_mul, zpow_mul, zpow_natCast, Pi.pow_apply]) (Subsingleton.elim _ _)
+    exact AlgHom.congr_fun this y
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DeepAbs
+
+section
 
 @[expose] public section
 
@@ -224,3 +272,5 @@ theorem UpperTheory.ConvolutionTheory.H.deepAbs :
   rw [lin_sum _ ΛE hlE _ _ _ fun b hb => th_mem E μE (hanti b hb),
     lin_sum _ Λk hlk _ _ _ fun b hb => th_mem k μk (hantl b hb)]
   exact Finset.sum_congr rfl fun b hb => by rw [hth b (hSD b hb)]
+end
+end

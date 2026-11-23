@@ -9,12 +9,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTaylor
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Functor
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicPointExtOfIsSeparated
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNilpotentOfComap
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdEqZeroOfSuccLe
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorPolynomialEvalAlgebraFormalProperties
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorPolynomialEvalAlgebraMulOfProdEqZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TenContractTmul
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TenFib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorHolomorphicExtOfValues
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +27,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,9 +46,191 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorPolynomialEvalAlgebraFormalProperties
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorPolynomialEvalAlgebraMulOfProdEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PeriodClassInjectiveOfRichChartsStatement
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorHolomorphicExtOfValues
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdEqZeroOfSuccLe
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.PeriodFamily
+
+theorem prod_eq_zero_of_succ_le {I : Type} {D : Type} [CommRing D] (N : ℕ) (t : I → D)
+    (h : ∀ s : Fin (N + 1) → I, ∏ a, t (s a) = 0) (k : ℕ) (hk : N + 1 ≤ k) (s : Fin k → I) :
+    ∏ a, t (s a) = 0 := by
+  obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hk
+  rw [Fin.prod_univ_add, h (fun a => s (Fin.castAdd j a)), zero_mul]
+
+theorem taylor_eq_of_le : ∀ {I : Type} [Fintype I] [DecidableEq I] {D : Type} [CommRing D] [Algebra ℂ D] (N : ℕ) (t : I → D), (∀ s : Fin (N + 1) → I, ∏ a, t (s a) = 0) → ∀ (N' : ℕ), N ≤ N' → ∀ f : (I → ℂ) → ℂ, GlobalTheory.PeriodFamily.taylor N' t f = GlobalTheory.PeriodFamily.taylor N t f := by
+  intro I _ _ D _ _ N t h N' hN f
+  induction N', hN using Nat.le_induction with
+  | base => rfl
+  | succ n hn ih =>
+    rw [← ih]
+    unfold taylor
+    rw [Finset.sum_range_succ _ (n + 1)]
+    simp [prod_eq_zero_of_succ_le N t h (n + 1) (by omega)]
+
+end GlobalTheory.PeriodFamily
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TenContractTmul
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory TensorProduct
+
+namespace GlobalTheory.AnPer
+
+open GlobalTheory.CatCoh
+
+attribute [local instance] Charts.Obj.cAlg
+
+variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : Fam I g Λ} {K : Charts F}
+  {D : Type} [CommRing D] [Algebra ℂ D]
+
+def Charts.Obj.tenContract (ℓ : D →ₗ[ℂ] ℂ) (T : K.Obj) : T.ten D →ₗ[ℂ] T.C :=
+  (TensorProduct.lid ℂ T.C).toLinearMap ∘ₗ LinearMap.rTensor T.C ℓ
+
+theorem Charts.Obj.tenContract_tmul (ℓ : D →ₗ[ℂ] ℂ) (T : K.Obj) (d : D) (c : T.C) :
+    T.tenContract ℓ (d ⊗ₜ c) = ℓ d • c := rfl
+
+theorem Charts.Hom.tenContract_ten (ℓ : D →ₗ[ℂ] ℂ) {T T' : K.Obj} (f : T ⟶ T') (x : T.ten D) :
+    T'.tenContract ℓ (Charts.Hom.ten D f x) = f.φ (T.tenContract ℓ x) := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  | tmul d c =>
+    rw [Charts.Hom.ten_tmul, Charts.Obj.tenContract_tmul, Charts.Obj.tenContract_tmul]
+    exact (map_smul (Charts.Hom.φc f) (ℓ d) c).symm
+
+theorem Charts.tenZ_eq_zero (K : Charts F) (hK : K.Rich) (hz : ∃ z, z ∈ F.V) {D : Type} [CommRing D] [Algebra ℂ D]
+    (p : Λ →+ D) (h : H1.mk _ (K.tenZ p) = 0) : p = 0 := by
+  obtain ⟨z, hz⟩ := hz
+  obtain ⟨G, hG⟩ := H1.mk_eq_zero.1 h
+  refine AddMonoidHom.ext fun l ↦ (Module.forall_dual_apply_eq_zero_iff ℂ (p l)).1 fun ℓ ↦ ?_
+  let q : Λ →+ Hol F.V := ((algebraMap ℂ (Hol F.V)).toAddMonoidHom.comp ℓ.toAddMonoidHom).comp p
+  have h0 : K.perZ 0 = 0 := Subtype.ext (by
+    funext T T' f
+    exact map_zero (algebraMap (Hol F.V) T'.C))
+  have hq : K.perCl q = K.perCl 0 := by
+    unfold Charts.perCl
+    rw [h0, map_zero]
+    refine H1.mk_eq_zero.2 ⟨fun T ↦ T.tenContract ℓ (G T), ?_⟩
+    funext T T' f
+    have e : G T' - Charts.Hom.ten D f (G T) = (p f.deg ⊗ₜ[ℂ] (1 : T'.C) : T'.ten D) :=
+      congrFun (congrFun (congrFun hG T) T') f
+    have e' := congrArg (T'.tenContract ℓ) e
+    rw [map_sub, Charts.Hom.tenContract_ten, Charts.Obj.tenContract_tmul, ← Algebra.algebraMap_eq_smul_one] at e'
+    exact e'
+  have h1 : algebraMap ℂ (Hol F.V) (ℓ (p l)) = 0 := DFunLike.congr_fun (GlobalTheory.T.periodClass_injective_of_rich_charts K hK q 0 hq) l
+  have h2 := congrArg (Hol.ev z hz) h1
+  rwa [AlgHom.commutes, map_zero] at h2
+
+end GlobalTheory.AnPer
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TenFib
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj Filter Topology TopologicalSpace TensorProduct
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.AnPer
+attribute [local instance] Over.cartesianMonoidalCategory
+attribute [local instance] Charts.Obj.cAlg
+
+namespace GlobalTheory.AnPer.TenFib
+
+open GlobalTheory.CatCoh
+
+variable {I₀ : Type} [Fintype I₀] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F₀ : Fam I₀ g Λ} {K₀ : Charts F₀} (D : Type) [CommRing D]
+  [Algebra ℂ D] {X₀ : Scheme.{0}} {s₀ : X₀ ⟶ Sp ℂ} {σ₀ : ℂ →+* Hol F₀.V} (r₀ : Real K₀ s₀ σ₀)
+
+def inc (hσ : σ₀ = algebraMap ℂ (Hol F₀.V)) : CoefMap (algebraMap ℂ D) (O (dp0 ℂ) s₀) (K₀.Ten D) where
+  G := r₀.functor
+  α T := (Algebra.TensorProduct.includeRight : T.C →ₐ[ℂ] T.ten D).toRingHom
+  naturality _ _ := rfl
+  smul T a b := by
+    subst hσ
+    change ((1 : D) ⊗ₜ[ℂ] (a • (show T.C from b)) : T.ten D) = algebraMap ℂ D a • ((1 : D) ⊗ₜ[ℂ] (show T.C from b) : T.ten D)
+    rw [tmul_smul, algebraMap_smul]
+
+theorem ten_fib : ∀ {I₀ : Type} [Fintype I₀] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F₀ : Fam I₀ g Λ} {K₀ : Charts F₀} {D : Type} [CommRing D] [Algebra ℂ D] (π : D →ₐ[ℂ] ℂ) {X₀ : Scheme.{0}} {s₀ : X₀ ⟶ Sp ℂ} {σ₀ : ℂ →+* Hol F₀.V} (r₀ : Real K₀ s₀ σ₀) (hσ : σ₀ = algebraMap ℂ (Hol F₀.V)) {D₀ : Type} [CommRing D₀] {π₀ : D₀ →+* ℂ} (κ : DividedPowers (RingHom.ker π₀)) {s' : X₀ ⟶ Sp D₀} (hs : s' = s₀ ≫ spMap π₀) (io : D₀ →+* D) (hio : ∀ d, π (io d) = π₀ d) (hπ : IsNilpotent (RingHom.ker π)) (j₀ : ℂ →+* D₀) (φ : X₀ ⟶ X₀), φ = 𝟙 X₀ → ∀ (k : IsMor (dp0 ℂ) s₀ κ s' j₀ φ), (∀ a, io (j₀ a) = algebraMap ℂ D a) → ∀ (c : FirstDeRham s₀) (p : Λ → ℂ) (per : Λ →+ Hol F₀.V) (q : Λ →+ D), (∀ l, per l = algebraMap ℂ _ (p l)) → (∀ l, q l = algebraMap ℂ D (p l)) → r₀.coef.pull1 c = K₀.perCl per → (r₀.tenCoef π hσ κ hs io hio hπ).pull1 (k.pull1 c) = GlobalTheory.CatCoh.H1.mk _ (K₀.tenZ q) := by
+  intro I₀ _ g Λ _ F₀ K₀ D _ _ π X₀ s₀ σ₀ r₀ hσ D₀ _ π₀ κ s' hs io hio hπ j₀ φ hφ k hj c p per q hper hq hc
+  subst hφ
+  let θ : (inc D r₀ hσ).G ⟶ (k.coef.comp (r₀.tenCoef π hσ κ hs io hio hπ)).G :=
+    { app := fun T ↦
+        { φ := { (Algebra.TensorProduct.includeRight : T.C →ₐ[ℂ] T.ten D).toRingHom with
+            commutes' := fun a ↦ by
+              subst hσ
+              change (Algebra.TensorProduct.includeRight : T.C →ₐ[ℂ] T.ten D) (algebraMap ℂ T.C a) =
+                algebraMap D (T.ten D) (io (j₀ a))
+              rw [AlgHom.commutes, hj, ← IsScalarTower.algebraMap_apply] }
+          φ₀ := RingHom.id (T.C ⧸ T.J)
+          comm := fun b ↦ congrArg (Ideal.Quotient.mk T.J) (by
+            change (show T.C from b) = T.red π (1 ⊗ₜ (show T.C from b))
+            rw [Charts.Obj.red_tmul, map_one, map_one, _root_.one_mul])
+          dp := letI := T.tenRat (D := D); isDPMorphism_of_rat T.δ (T.tenδ π)
+            (Algebra.TensorProduct.includeRight : T.C →ₐ[ℂ] T.ten D).toRingHom fun b hb ↦ by
+              change T.red π (1 ⊗ₜ b) ∈ T.J
+              rwa [Charts.Obj.red_tmul, map_one, map_one, _root_.one_mul]
+          pt := by
+            change spMap (RingHom.id (T.C ⧸ T.J)) ≫ (r₀.obj T).x = (r₀.obj T).x ≫ 𝟙 X₀
+            rw [Cris.spMap_id]
+            exact (Category.id_comp _).trans (Category.comp_id _).symm }
+      naturality := fun _ _ _ ↦ Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl) }
+  have e := (inc D r₀ hσ).pullCohomologyOne_eq_of_natTrans _ θ (fun _ _ ↦ rfl) c
+  rw [CoefMap.pullCohomologyOne_comp] at e
+  refine e.symm.trans ?_
+  obtain ⟨f, rfl⟩ := CatCoh.H1.mk_surjective _ c
+  obtain ⟨G, hG⟩ := CatCoh.H1.mk_eq_mk.1 hc
+  refine CatCoh.H1.mk_eq_mk.2 ⟨fun T ↦ ((1 : D) ⊗ₜ[ℂ] (show T.C from G T) : T.ten D), ?_⟩
+  funext T T' ψ
+  have h1 := congrFun (congrFun (congrFun hG T) T') ψ
+  have h2 : ((1 : D) ⊗ₜ[ℂ] ((show T'.C from G T') - ψ.φ (G T)) : T'.ten D) = (1 : D) ⊗ₜ[ℂ] (show T'.C from f.1 _ _ (r₀.functor.map ψ)) -
+      (1 : D) ⊗ₜ[ℂ] (algebraMap (Hol F₀.V) T'.C (per ψ.deg)) := by
+    rw [← tmul_sub]; exact congrArg _ h1
+  refine (tmul_sub _ _ _).symm.trans (h2.trans ?_)
+  congr 1
+  change _ = algebraMap D (T'.ten D) (q ψ.deg)
+  rw [hper, hq]
+  exact (Algebra.TensorProduct.includeRight : T'.C →ₐ[ℂ] T'.ten D).commutes (p ψ.deg)
+
+end GlobalTheory.AnPer.TenFib
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNilpotentOfIsNilDP
+
+section
 
 @[expose] public section
 
@@ -204,3 +379,6 @@ theorem main : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {Λ : Type} 
     rw [map_mul, io.commutes, AddMonoidHom.smul_apply, hq, smul_eq_mul]
 
 end GlobalTheory.AnPer.TaylorCore
+end
+end
+end

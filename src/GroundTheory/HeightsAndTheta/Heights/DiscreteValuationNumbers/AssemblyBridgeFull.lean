@@ -1,8 +1,13 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBridge
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridge
-public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumIsFieldIntersection
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumPoint
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumRatSection
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabDivCycle
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabMultiHomog
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabMultiHomogIdeal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +46,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridge
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NumbersDVR
+
+universe u
+
+theorem IntNumIsFieldIntersection.of_intNumBase_cutRational
+    (hBase : FieldNumbers.IntNumBase.Statement.{u})
+    (hCut : FieldNumbers.CutRational.Statement.{u}) :
+    IntNumIsFieldIntersection.Statement.{u} :=
+  IntNumIsFieldIntersection.proof VocabMultiHomog.proof
+    (VocabMultiHomogIdeal.proof VocabMultiHomog.proof) VocabDivCycle.proof
+    (IntNumPoint.proof hBase) (IntNumRatSection.proof hCut)
+
+end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridgeFull
+
+section
 
 @[expose] public section
 
@@ -55,3 +89,5 @@ theorem IntNumIsFieldIntersection.full : IntNumIsFieldIntersection.Statement.{u}
     FieldNumbers.CutRational.full
 
 end GroundTheory.Heights₂.Heights.NumbersDVR
+end
+end

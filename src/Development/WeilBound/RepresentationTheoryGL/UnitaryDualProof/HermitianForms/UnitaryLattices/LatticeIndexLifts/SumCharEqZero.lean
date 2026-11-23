@@ -2,14 +2,14 @@ module
 
 public import Mathlib.Analysis.Complex.Circle
 public import Mathlib.NumberTheory.LocalField.Basic
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.UnitaryLattices.SmoothColumnLifts.KerOpen
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaOpenMirabolic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -42,8 +42,32 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.UnitaryLattices.SmoothColumnLifts.KerOpen
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.RgUd.Form.U.Lift2.KerOpen
+
+open Filter Topology
+
+theorem isOpen_ker {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
+    [IsNonarchimedeanLocalField k] (φ : AddChar k Circle) (hφ : Continuous φ) :
+    IsOpen {x : k | φ x = 1} := by
+  apply GlobalTheory.CompanionTheory.BZFun.isOpen_addChar_eq_one <;> assumption
+
+end PositivityTheory.RgUd.Form.U.Lift2.KerOpen
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.UnitaryLattices.LatticeIndexLifts.SumCharEqZero
+
+section
 
 @[expose] public section
 
@@ -196,3 +220,6 @@ theorem isOpen_ker {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
   PositivityTheory.RgUd.Form.U.Lift2.KerOpen.isOpen_ker φ hφ
 
 end PositivityTheory.RgUd.Form.U.Lift2.AvA
+end
+end
+end

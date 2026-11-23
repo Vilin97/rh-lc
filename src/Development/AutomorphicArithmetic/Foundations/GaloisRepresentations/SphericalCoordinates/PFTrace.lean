@@ -1,16 +1,18 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.PFrameEx
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplitIdempotentConjugation
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsCyclotomicExtensionQI
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,8 +39,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.TwOrbMEqTwOrbUOfNormal
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.PerCApply
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplitIdempotentConjugation
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid
+open scoped TensorProduct Classical
+
+noncomputable section
+
+namespace GlobalTheory.CentAtP
+
+variable {p : ℕ} [Fact p.Prime]
+
+theorem exists_conj_ne (G : HTGroup p) : ∃ x ∈ G.Kq, IsCMField.complexConj G.F x ≠ x := by
+  obtain ⟨v⟩ : Nonempty (InfinitePlace G.F) := inferInstance
+  obtain ⟨x, hx, him⟩ := G.hKq.2 v.embedding
+  refine ⟨x, hx, fun h => him ?_⟩
+  have h2 := IsCMField.complexEmbedding_complexConj G.F v.embedding x
+  rw [h] at h2
+  have := congrArg Complex.im h2
+  simp only [Complex.conj_im] at this
+  linarith
+
+end GlobalTheory.CentAtP
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.PFTrace
+
+section
 
 @[expose] public section
 
@@ -160,3 +199,5 @@ theorem UpperTheory.Gal.W2.fTrace_of :
     (fun a => phi G a x) (fun σ => σ x) (fun _ => rfl)]
   rw [Fintype.sum_sum_type, Fintype.sum_sigma, Fintype.sum_sigma]
   simp only [phi_inl, phi_inr]
+end
+end

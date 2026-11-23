@@ -1,9 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.PtKOfReal
-public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.PointB
-import Formalism.LocalToGlobal.PtKOfReal
-public import Formalism.SharpRestriction.Divisibility.HookProducts.NormAtEqSqrtMajAt
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,6 +35,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.PtKOfReal
+public import Formalism.SharpRestriction.Divisibility.HookProducts.NormAtEqSqrtMajAt
+
+-- Source module: Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.PointB
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Module NumberField IsDedekindDomain
+open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2 Formalism.L2.Indef Formalism.L2.DIV Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx
+  Formalism.L2.RowDataTransport
+
+namespace Formalism.L2.DIV.FunSharpTop
+
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {Kc : MainNotions.G.Consts} {Y : DivX D}
+  {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX}
+
+theorem muMax_heq {P : RowSideFamily ex} {Z1 Z2 : DefSub P.A3.fam3.amb3} (h : Z1 = Z2) {S1 : IndefData (P.A3.side3 P.Ps P.ψs Z1)}
+    {S2 : IndefData (P.A3.side3 P.Ps P.ψs Z2)} (hS : HEq S1 S2) : S1.muMaxRR = S2.muMaxRR := by
+  subst h
+  cases hS
+  rfl
+
+end Formalism.L2.DIV.FunSharpTop
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HefunPointB
+
+section
 
 @[expose] public section
 
@@ -76,5 +110,7 @@ theorem funSharp_pt_alt [_root_.NumberField.IsTotallyComplex D.what₂.LL] {Rc :
   rw [hmu, hκ]
   linarith
 end Formalism.L2.DIV.FunSharpTop
+end
+end
 end
 end

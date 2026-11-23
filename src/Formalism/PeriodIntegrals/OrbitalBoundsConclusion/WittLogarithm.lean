@@ -1,8 +1,12 @@
 module
 
 public import Formalism.PeriodIntegrals.InvSerSub
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittLogarithm.FormalLogarithmHolds
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittLogarithm.WfLogOf
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.SubstMem
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.GuLine
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.CoeffPowMemS
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.DXEqDerivative
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExponentialIntegrality.InvNatMemWf
+public import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -14,6 +18,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -21,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,7 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,8 +46,225 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
+public import Mathlib.RingTheory.PowerSeries.Inverse
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExponentialIntegrality.Development
+import Mathlib.Tactic.Lemma
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittLogarithm.CoefWfIff
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WfLogWork
+
+open PI.ExpIntWProof
+
+theorem coefWf_iff {p : ℕ} [Fact p.Prime] (f : PowerSeries ℂ_[p]) :
+    CoefWf (f : MvPowerSeries Unit ℂ_[p]) ↔ ∀ n, PowerSeries.coeff n f ∈ Wf p := by
+  constructor
+  · intro h n
+    exact h (Finsupp.single () n)
+  · intro h n
+    have hn : n = Finsupp.single () (n ()) := by
+      first
+        | exact Finsupp.unique_single n
+        | (ext; simp)
+    rw [hn]
+    exact h (n ())
+
+theorem Wp_le_Wf {p : ℕ} [Fact p.Prime] {x : ℂ_[p]} (h : x ∈ Wp p) : x ∈ Wf p := by
+  show PI.InWf x
+  unfold PI.InWf
+  exact ⟨0, by rw [pow_zero, one_mul]; exact h⟩
+
+end PI.WfLogWork
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittLogarithm.FormalLogarithmHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WfLogWork
+
+open PI.ExpIntWProof PI.AddIntG.Wk
+
+theorem mem_SerS_iff {K : Type*} [CommRing K] (S : Subring K) (f : PowerSeries K) :
+    (f : MvPowerSeries Unit K) ∈ SerS S Unit ↔ ∀ n, PowerSeries.coeff n f ∈ S := by
+  rw [mem_SerS]
+  constructor
+  · intro h n
+    exact h _
+  · intro h e
+    have he : e = Finsupp.single () (e ()) := by
+      ext u
+      simp
+    rw [he]
+    exact h (e ())
+
+variable {p : ℕ} [Fact p.Prime]
+
+theorem C_memS {S : Subring ℂ_[p]} {a : ℂ_[p]} (ha : a ∈ S) :
+    ((algebraMap ℂ_[p] (PowerSeries ℂ_[p]) a : PowerSeries ℂ_[p]) : MvPowerSeries Unit ℂ_[p]) ∈ SerS S Unit := by
+  rw [mem_SerS_iff]
+  intro n
+  rw [Algebra.algebraMap_eq_smul_one, map_smul, PowerSeries.coeff_one, smul_eq_mul]
+  split_ifs <;> simp [ha]
+
+theorem X_memS (S : Subring ℂ_[p]) :
+    ((PowerSeries.X : PowerSeries ℂ_[p]) : MvPowerSeries Unit ℂ_[p]) ∈ SerS S Unit := by
+  rw [mem_SerS_iff]
+  intro n
+  rw [PowerSeries.coeff_X]
+  split_ifs <;> simp
+
+theorem Gv_memS {S : Subring ℂ_[p]} {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]}
+    (h1 : W.a₁ ∈ S) (h2 : W.a₂ ∈ S) (h3 : W.a₃ ∈ S) (h4 : W.a₄ ∈ S) (h6 : W.a₆ ∈ S) (hW : AddIntG.IsWq W wq) :
+    ((Gv W (PowerSeries.X : PowerSeries ℂ_[p]) (wser wq) : PowerSeries ℂ_[p]) : MvPowerSeries Unit ℂ_[p]) ∈
+      SerS S Unit := by
+  have hC : ∀ {a : ℂ_[p]}, a ∈ S →
+      ((algebraMap ℂ_[p] (PowerSeries ℂ_[p]) a : PowerSeries ℂ_[p]) : MvPowerSeries Unit ℂ_[p]) ∈
+        SerS S Unit := fun ha => C_memS ha
+  have hX := X_memS (p := p) S
+  have hw : (wq : MvPowerSeries Unit ℂ_[p]) ∈ SerS S Unit :=
+    (mem_SerS_iff S wq).2 (wq_mem h1 h2 h3 h4 h6 hW)
+  have h2m : (2 : MvPowerSeries Unit ℂ_[p]) ∈ SerS S Unit := by
+    simpa using natCast_mem (SerS S Unit) 2
+  have h3m : (3 : MvPowerSeries Unit ℂ_[p]) ∈ SerS S Unit := by
+    simpa using natCast_mem (SerS S Unit) 3
+  have hv := mul_mem (pow_mem hX 3) hw
+  simp only [Gv, wser]
+  exact sub_mem (add_mem (add_mem (add_mem (add_mem (mul_mem (hC h1) hX)
+    (mul_mem (hC h2) (pow_mem hX 2))) (mul_mem (mul_mem h2m (hC h3)) hv))
+    (mul_mem (mul_mem (mul_mem h2m (hC h4)) hX) hv))
+    (mul_mem (mul_mem h3m (hC h6)) (pow_mem hv 2))) (one_mem _)
+
+theorem omega_eq {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (hW : AddIntG.IsWq W wq) :
+    AddIntG.omegaW W wq = (-Gv W (PowerSeries.X : PowerSeries ℂ_[p]) (wser wq))⁻¹ := by
+  have h := omega_mul_Gv hW
+  have hc : PowerSeries.constantCoeff (-Gv W (PowerSeries.X : PowerSeries ℂ_[p]) (wser wq)) ≠ 0 := by
+    intro h0
+    have e := congrArg PowerSeries.constantCoeff h
+    rw [map_mul, map_neg, map_one] at e
+    rw [map_neg, neg_eq_zero] at h0
+    rw [h0, mul_zero] at e
+    exact one_ne_zero (neg_eq_zero.1 e.symm)
+  rw [PowerSeries.eq_inv_iff_mul_eq_one hc, mul_neg, h, neg_neg]
+
+theorem omega_coeff_mem {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]}
+    (h1 : W.a₁ ∈ Wp p) (h2 : W.a₂ ∈ Wp p) (h3 : W.a₃ ∈ Wp p) (h4 : W.a₄ ∈ Wp p) (h6 : W.a₆ ∈ Wp p)
+    (hW : AddIntG.IsWq W wq) (n : ℕ) : PowerSeries.coeff n (AddIntG.omegaW W wq) ∈ Wp p := by
+  have hG := Gv_memS h1 h2 h3 h4 h6 hW
+  have hc : PowerSeries.constantCoeff (-Gv W (PowerSeries.X : PowerSeries ℂ_[p]) (wser wq)) = 1 := by
+    simp [Gv, wser]
+  have hinv := inv_mem_SerS (Wp p)
+    (f := ((-Gv W (PowerSeries.X : PowerSeries ℂ_[p]) (wser wq) : PowerSeries ℂ_[p]) :
+      MvPowerSeries Unit ℂ_[p])) hc (neg_mem hG)
+  rw [omega_eq hW]
+  exact (mem_SerS_iff (Wp p) _).1 hinv n
+
+theorem formal_logarithm_holds : PI.WfLogL := by
+  intro p _ W wq h1 h2 h3 h4 h6 hW
+  rw [coefWf_iff]
+  intro n
+  rw [AddIntG.flog, PowerSeries.coeff_mk]
+  split_ifs with hn
+  · exact zero_mem _
+  · rw [div_eq_mul_inv]
+    exact mul_mem (Wp_le_Wf (omega_coeff_mem h1 h2 h3 h4 h6 hW (n - 1))) (inv_nat_mem_Wf p n hn)
+
+end PI.WfLogWork
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WittLogarithm.WfLogOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.WfLogWork
+
+open PI.ExpIntWProof
+
+theorem wfLog_of (hI : PI.InvSerSub) (hL : PI.WfLogL) : PI.WfLog := by
+  intro p _ W wq ex h1 h2 h3 h4 h6 hq hex hsub
+  have hfl : CoefWf (AddIntG.flog W wq) := hL p W wq h1 h2 h3 h4 h6 hq
+  refine ⟨hfl, ?_⟩
+  have hw0 : PowerSeries.constantCoeff wq = 1 := by
+    simp only [AddIntG.IsWq] at hq
+    have h := congrArg PowerSeries.constantCoeff hq
+    simpa using h
+  have hc0 : PowerSeries.constantCoeff (AddIntG.flog W wq) = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, AddIntG.flog, PowerSeries.coeff_mk]
+    simp
+  have hc1 : PowerSeries.coeff 1 (AddIntG.flog W wq) = 1 := by
+    clear hI hL h1 h2 h3 h4 h6 hex hsub hfl hc0 hq
+    rw [AddIntG.flog, PowerSeries.coeff_mk]
+    simp only [one_ne_zero, if_false, Nat.sub_self, Nat.cast_one, div_one,
+      PowerSeries.coeff_zero_eq_constantCoeff_apply, AddIntG.omegaW]
+    rw [map_mul, PowerSeries.constantCoeff_inv]
+    simp [hw0]
+    rw [map_ofNat]
+    norm_num
+  let S : Subring ℂ_[p] :=
+    { carrier := {x | InWf x}
+      mul_mem' := by
+        rintro a b ⟨k, hk⟩ ⟨k', hk'⟩
+        refine ⟨k + k', ?_⟩
+        have e : (p : ℂ_[p]) ^ (k + k') * (a * b) = ((p : ℂ_[p]) ^ k * a) * ((p : ℂ_[p]) ^ k' * b) := by
+          ring
+        rw [e]
+        exact (Wp p).mul_mem hk hk'
+      one_mem' := ⟨0, by simpa using (Wp p).one_mem⟩
+      add_mem' := by
+        rintro a b ⟨k, hk⟩ ⟨k', hk'⟩
+        refine ⟨k + k', ?_⟩
+        have e : (p : ℂ_[p]) ^ (k + k') * (a + b) =
+            (p : ℂ_[p]) ^ k' * ((p : ℂ_[p]) ^ k * a) + (p : ℂ_[p]) ^ k * ((p : ℂ_[p]) ^ k' * b) := by
+          ring
+        rw [e]
+        exact (Wp p).add_mem ((Wp p).mul_mem ((Wp p).pow_mem (natCast_mem (Wp p) p) _) hk)
+          ((Wp p).mul_mem ((Wp p).pow_mem (natCast_mem (Wp p) p) _) hk')
+      zero_mem' := ⟨0, by simpa using (Wp p).zero_mem⟩
+      neg_mem' := by
+        rintro a ⟨k, hk⟩
+        exact ⟨k, by rw [mul_neg]; exact (Wp p).neg_mem hk⟩ }
+  have hres := hI ℂ_[p] S (AddIntG.flog W wq) ex (fun n => hfl (Finsupp.single () n)) hc0 hc1 hex hsub
+  intro n
+  have hn : n = Finsupp.single () (n ()) := by
+    ext
+    simp
+  rw [hn]
+  exact hres (n ())
+
+end PI.WfLogWork
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittLogarithm
+
+section
 
 @[expose] public section
 
@@ -129,3 +350,5 @@ private lemma inv_series_sub : PI.InvSerSub := by
 
 theorem witt_logarithm : PI.WfLog :=
   PI.WfLogWork.wfLog_of inv_series_sub PI.WfLogWork.formal_logarithm_holds
+end
+end

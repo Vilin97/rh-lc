@@ -46,10 +46,103 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsA
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsB
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsC
-public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsG
+import Mathlib.Topology.Sheaves.Init
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtA
 import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.Inertia
-public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.ModelC
+public import Mathlib.NumberTheory.Padics.Complex
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.Inertia
+public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.ModelA
+public import Mathlib.NumberTheory.NumberField.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsG
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.DiscreteGroups.LocalClassField
+
+open _root_.Neutral.B1 ReciprocityTheory.Coh
+
+noncomputable section
+
+variable (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+
+def redK : OK p K →+* resK p K :=
+  (resMap p K).codRestrict (resK p K) fun x => (mem_resK_iff p K _).2 ⟨toObar p K x, (x : K).2, rfl⟩
+
+theorem redK_surjective : Function.Surjective (redK p K) := by
+  rintro ⟨c, hc⟩
+  obtain ⟨x, hx, rfl⟩ := (mem_resK_iff p K c).1 hc
+  exact ⟨⟨⟨x, hx⟩, x.2⟩, Subtype.ext rfl⟩
+
+variable {K}
+
+variable (K)
+
+end
+
+end ReciprocityTheory.DiscreteGroups.LocalClassField
+end
+end
+
+-- Source module: ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.ModelC
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.Neutral.Cmp
+
+open Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain ValuativeRel
+
+variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {p : ℕ} [Fact p.Prime]
+
+attribute [local instance] locRel
+
+theorem norm_le_one_of_monic_root (P : Polynomial (PadicAlgCl p)) (hP : P.Monic) (hc : ∀ i, ‖P.coeff i‖ ≤ 1)
+    {x : PadicAlgCl p} (hx : P.eval x = 0) : ‖x‖ ≤ 1 := by
+  by_contra hlt
+  push Not at hlt
+  have key : ∀ m, ‖∑ i ∈ Finset.range (m + 1), P.coeff i * x ^ i‖ ≤ ‖x‖ ^ m := by
+    intro m
+    induction m with
+    | zero => simpa using hc 0
+    | succ m ih =>
+      rw [Finset.sum_range_succ]
+      refine (norm_add_le_max_padic _ _).trans (max_le ?_ ?_)
+      · exact ih.trans (pow_le_pow_right₀ hlt.le (Nat.le_succ m))
+      · rw [norm_mul, norm_pow]
+        calc ‖P.coeff (m + 1)‖ * ‖x‖ ^ (m + 1) ≤ 1 * ‖x‖ ^ (m + 1) := by gcongr; exact hc _
+          _ = ‖x‖ ^ (m + 1) := one_mul _
+  have he := P.eval_eq_sum_range (x := x)
+  rw [hx] at he
+  rcases Nat.eq_zero_or_pos P.natDegree with h0 | hpos
+  · rw [h0] at he
+    simp [hP.coeff_natDegree ▸ (show P.coeff 0 = P.coeff P.natDegree by rw [h0])] at he
+  · obtain ⟨m, hm⟩ : ∃ m, P.natDegree = m + 1 := ⟨P.natDegree - 1, by omega⟩
+    rw [hm, Finset.sum_range_succ, ← hm, hP.coeff_natDegree, one_mul, hm] at he
+    have e2 : x ^ (m + 1) = -∑ i ∈ Finset.range (m + 1), P.coeff i * x ^ i := by
+      linear_combination -he
+    have := key m
+    rw [← norm_neg, ← e2, norm_pow] at this
+    have h3 : ‖x‖ ^ m < ‖x‖ ^ (m + 1) := pow_lt_pow_right₀ hlt (Nat.lt_succ_self m)
+    linarith
+
+end ReciprocityTheory.Neutral.Cmp
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ClassFieldTheory.LocalClassField.TransportBA
+
+section
 
 @[expose] public section
 
@@ -194,3 +287,5 @@ theorem Model.isHomeomorph_units_model : IsHomeomorph m.eU := by
   exact (Homeomorph.mk m.eU.toEquiv h1 h2).isHomeomorph
 
 end ReciprocityTheory.DiscreteGroups.LocalClassField
+end
+end

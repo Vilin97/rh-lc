@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.JSmul
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLetterBijection
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,43 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardLeOfSpan
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLetterBijection
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PhiGam GlobalTheory.AdmLoc GlobalTheory.Models GlobalTheory.TopSteps GlobalTheory.Present GlobalTheory.RedFun Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc
+open scoped LaurentSeries PowerSeries TensorProduct
+
+namespace GlobalTheory.RedFun
+
+theorem exists_letter_bijection {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) (S : TopSit P) :
+    ∃ τ : ZMod S.n → ZMod (Module.finrank ℚ_[l] ↥(K0 S.K)),
+      Function.Bijective τ ∧ (∀ i, (S.W H).emb (τ i) = S.emb i) ∧ ∀ i, τ (i - 1) = τ i - 1 := by
+  obtain ⟨-, -, -, hSb, hSσ, -⟩ := S.hyp.1
+  have hWb := (S.W H).emb_bij
+  have hWσ := (S.W H).emb_σ
+  have key : ∀ j, (S.W H).emb ((Equiv.ofBijective _ hWb).symm j) = j :=
+    Equiv.ofBijective_apply_symm_apply _ hWb
+  refine ⟨fun i => (Equiv.ofBijective _ hWb).symm (S.emb i),
+    (Equiv.ofBijective _ hWb).symm.bijective.comp hSb, fun i => key _, fun i => hWb.1 ?_⟩
+  calc (S.W H).emb ((Equiv.ofBijective _ hWb).symm (S.emb (i - 1)))
+      = S.emb (i - 1) := key _
+    _ = (S.emb (i - 1 + 1)).comp (P.PD S.K).σ := (hSσ _).symm
+    _ = ((S.W H).emb ((Equiv.ofBijective _ hWb).symm (S.emb i))).comp (P.PD S.K).σ := by
+        rw [sub_add_cancel, key]
+    _ = (S.W H).emb ((Equiv.ofBijective _ hWb).symm (S.emb i) - 1) := by
+        rw [← hWσ ((Equiv.ofBijective _ hWb).symm (S.emb i) - 1), sub_add_cancel]
+
+end GlobalTheory.RedFun
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLetterBijectionStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.PhiGam GlobalTheory.AdmLoc GlobalTheory.Models GlobalTheory.TopSteps GlobalTheory.Present GlobalTheory.RedFun Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc
@@ -48,3 +84,5 @@ open scoped LaurentSeries PowerSeries TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_letter_bijection' : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) (S : TopSit P), ∃ τ : ZMod S.n → ZMod (Module.finrank ℚ_[l] ↥(K0 S.K)), Function.Bijective τ ∧ (∀ i, (S.W H).emb (τ i) = S.emb i) ∧ ∀ i, τ (i - 1) = τ i - 1 := by
   first | exact @GlobalTheory.RedFun.exists_letter_bijection | exact GlobalTheory.RedFun.exists_letter_bijection | (intros; apply GlobalTheory.RedFun.exists_letter_bijection <;> assumption)
+end
+end

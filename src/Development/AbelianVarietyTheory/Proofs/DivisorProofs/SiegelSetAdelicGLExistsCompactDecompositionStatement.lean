@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DifferentiableAtChart
 public import GroundTheory.AutomorphicForms.ReductionIwasawa
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SiegelSetAdelicGLExistsCompactDecomposition
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConeCoordinateRatioBoundedStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +22,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,10 +45,187 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfMemWeakIn
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GrowthOfTame
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import GroundTheory.AutomorphicForms.LocallyProfinite
+import GroundTheory.AutomorphicForms.ReductionBlock
+import GroundTheory.GlobalFields.KummerTheory.LocalIndex
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactConeDiagonalConjUpperTriangular
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduction
+
+namespace GlobalTheory
+
+noncomputable def upperConeRescale {E : Type} [Field E] (a : ℕ) (N : Matrix (Fin a) (Fin a) ℝ)
+    (M : Matrix (Fin a) (Fin a) (Cinf E)) : Matrix (Fin a) (Fin a) (Cinf E) :=
+  Matrix.of fun p q => (fun _ => ((N p q : ℝ) : ℂ)) * M p q
+
+lemma continuous_upperConeRescale {E : Type} [Field E] (a : ℕ) :
+    Continuous (fun x : Matrix (Fin a) (Fin a) ℝ × Matrix (Fin a) (Fin a) (Cinf E) => upperConeRescale a x.1 x.2) := by
+  refine continuous_pi fun p => continuous_pi fun q => ?_
+  simp only [upperConeRescale, Matrix.of_apply]
+  refine Continuous.mul ?_ ?_
+  · refine continuous_pi fun _ => ?_
+    exact Complex.continuous_ofReal.comp ((continuous_apply q).comp ((continuous_apply p).comp continuous_fst))
+  · exact (continuous_apply q).comp ((continuous_apply p).comp continuous_snd)
+
+lemma upperCone_conj_diag_eq {E : Type} [Field E] (a : ℕ) (r : Fin a → ℝ) (hr : ∀ i, 0 < r i)
+    (d : GL (Fin a) (Cinf E)) (hd : d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)))
+    (M : Matrix (Fin a) (Fin a) (Cinf E)) (hM : M.BlockTriangular id) :
+    (d⁻¹).val * M * d.val = upperConeRescale a (fun p q => if p ≤ q then r q / r p else 0) M := by
+  have hD : (d⁻¹).val = Matrix.diagonal (fun i => fun _ => ((r i)⁻¹ : ℂ)) := by
+    have h1 : d.val * Matrix.diagonal (fun i => fun _ => ((r i)⁻¹ : ℂ)) = 1 := by
+      rw [hd, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
+      congr 1
+      funext i x
+      have : (r i : ℂ) ≠ 0 := by exact_mod_cast (hr i).ne'
+      simp [this]
+    calc (d⁻¹).val = (d⁻¹).val * (d.val * Matrix.diagonal (fun i => fun _ => ((r i)⁻¹ : ℂ))) := by
+          rw [h1, mul_one]
+      _ = _ := by rw [← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
+  rw [hD, hd]
+  ext p q x
+  rw [Matrix.mul_diagonal, Matrix.diagonal_mul]
+  simp only [upperConeRescale, Matrix.of_apply, Pi.mul_apply]
+  by_cases hpq : p ≤ q
+  · rw [if_pos hpq]
+    have : (r p : ℂ) ≠ 0 := by exact_mod_cast (hr p).ne'
+    push_cast
+    field_simp
+  · rw [if_neg hpq]
+    have h0 : M p q = 0 := hM (lt_of_not_ge hpq)
+    simp [h0]
+
+end GlobalTheory
+
+theorem GlobalTheory.upperCone_conj_compact : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ω : Set (GL (Fin a) (Cinf E))), IsCompact ω → (∀ b ∈ ω, b.val.BlockTriangular id) → ∀ t : ℝ, 0 < t → ∃ Ω : Set (GL (Fin a) (Cinf E)), IsCompact Ω ∧ ∀ (r : Fin a → ℝ) (d : GL (Fin a) (Cinf E)), (∀ i, 0 < r i) → (∀ i j : Fin a, (j : ℕ) = i + 1 → t * r j ≤ r i) → d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)) → ∀ b ∈ ω, d⁻¹ * b * d ∈ Ω := by
+  intro E _ _ _ a ω hω htri t ht
+  obtain ⟨C, hC0, hC⟩ := GlobalTheory.T.cone_coordinate_ratio_bounded a t ht
+  set K : Set (Matrix (Fin a) (Fin a) ℝ) := Set.univ.pi (fun _ => Set.univ.pi (fun _ => Set.Icc (0:ℝ) C)) with hK
+  have hKc : IsCompact K := isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_Icc
+  set A : Set (Matrix (Fin a) (Fin a) (Cinf E)) :=
+    (fun x : Matrix (Fin a) (Fin a) ℝ × GL (Fin a) (Cinf E) => GlobalTheory.upperConeRescale a x.1 x.2.val) '' (K ×ˢ ω)
+  set B : Set (Matrix (Fin a) (Fin a) (Cinf E)) :=
+    (fun x : Matrix (Fin a) (Fin a) ℝ × GL (Fin a) (Cinf E) => GlobalTheory.upperConeRescale a x.1 (x.2⁻¹).val) '' (K ×ˢ ω)
+  have hAc : IsCompact A := (hKc.prod hω).image
+    ((GlobalTheory.continuous_upperConeRescale (E := E) a).comp (continuous_fst.prodMk (Units.continuous_val.comp continuous_snd)))
+  have hBc : IsCompact B := (hKc.prod hω).image
+    ((GlobalTheory.continuous_upperConeRescale (E := E) a).comp (continuous_fst.prodMk (Units.continuous_coe_inv.comp continuous_snd)))
+  refine ⟨Units.embedProduct _ ⁻¹' (A ×ˢ (MulOpposite.op '' B)), ?_, ?_⟩
+  · exact Units.isClosedEmbedding_embedProduct.isCompact_preimage
+      (hAc.prod (hBc.image MulOpposite.continuous_op))
+  intro r d hr hcone hd b hb
+  have hN : (fun p q : Fin a => if p ≤ q then r q / r p else 0) ∈ K := by
+    simp only [hK, Set.mem_pi]
+    intro p _ q _
+    rw [Set.mem_Icc]
+    by_cases hpq : p ≤ q
+    · simp only [if_pos hpq]
+      exact ⟨div_nonneg (hr q).le (hr p).le, hC r hr hcone p q hpq⟩
+    · simp only [if_neg hpq]
+      exact ⟨le_rfl, hC0⟩
+  have hbinv : (b⁻¹).val.BlockTriangular id := by
+    have := Units.invertible b
+    rw [Matrix.coe_units_inv]
+    exact Matrix.blockTriangular_inv_of_blockTriangular (htri b hb)
+  refine ⟨?_, ?_⟩
+  · refine ⟨(_, b), ⟨hN, hb⟩, ?_⟩
+    simp only [Units.val_mul]
+    exact (GlobalTheory.upperCone_conj_diag_eq a r hr d hd b.val (htri b hb)).symm
+  · refine ⟨(d⁻¹ * b * d)⁻¹.val, ⟨(_, b), ⟨hN, hb⟩, ?_⟩, rfl⟩
+    have : (d⁻¹ * b * d)⁻¹ = d⁻¹ * b⁻¹ * d := by group
+    simp only [this, Units.val_mul]
+    exact (GlobalTheory.upperCone_conj_diag_eq a r hr d hd (b⁻¹).val hbinv).symm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactConeDiagonalConjUpperTriangularStatement
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduction
+
+theorem _root_.GlobalTheory.T.exists_compact_coneDiagonal_conj_upperTriangular : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ω : Set (GL (Fin a) (Cinf E))), IsCompact ω → (∀ b ∈ ω, b.val.BlockTriangular id) → ∀ t : ℝ, 0 < t → ∃ Ω : Set (GL (Fin a) (Cinf E)), IsCompact Ω ∧ ∀ (r : Fin a → ℝ) (d : GL (Fin a) (Cinf E)), (∀ i, 0 < r i) → (∀ i j : Fin a, (j : ℕ) = i + 1 → t * r j ≤ r i) → d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)) → ∀ b ∈ ω, d⁻¹ * b * d ∈ Ω := by
+  first | exact @GlobalTheory.upperCone_conj_compact | exact GlobalTheory.upperCone_conj_compact | (intros; apply GlobalTheory.upperCone_conj_compact <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SiegelSetAdelicGLExistsCompactDecomposition
+
+section
+
+@[expose] public section
+
+open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduction
+
+open Pointwise Matrix
+
+namespace GlobalTheory.SiegelSetGL
+
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
+
+theorem continuous_pInfC : Continuous (pInf E) :=
+  continuous_pi fun w =>
+    ((InfinitePlace.Completion.isometryEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)).continuous.comp
+      (continuous_apply w)).comp continuous_fst
+
+theorem continuous_mapInf : Continuous (GeneralLinearGroup.map (n := Fin a) (pInf E)) :=
+  Continuous.units_map _ (continuous_id.matrix_map (continuous_pInfC E))
+
+theorem continuous_mapFin : Continuous (GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
+  Continuous.units_map _ (continuous_id.matrix_map (continuous_snd : Continuous (pFin E)))
+
+theorem exists_compact_decomp : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
+    (ω : Set (AdelicGLn.AdelicGL E a)), IsCompact ω →
+    ω ⊆ (adelicBorel (K := E) (n := a) : Set (AdelicGLn.AdelicGL E a)) → ∀ t : ℝ, 0 < t →
+    ∃ (Ω : Set (GL (Fin a) (Cinf E))) (Kf : Set (GL (Fin a) (Af E))), IsCompact Ω ∧ IsCompact Kf ∧
+      ∀ (r : Fin a → ℝ) (d : GL (Fin a) (Cinf E)), (∀ i, 0 < r i) → (∀ i j : Fin a, (j : ℕ) = i + 1 → t * r j ≤ r i) →
+        d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)) → ∀ b ∈ ω, ∀ k ∈ maxCompact (K := E) (n := a),
+          ∃ c ∈ Ω, ∃ f ∈ Kf, b * infGL E a d * k = infGL E a (d * c) * finGL E a f := by
+  intro E _ _ _ a ω hω hωB t ht
+  set pI := GeneralLinearGroup.map (n := Fin a) (pInf E)
+  set pF := GeneralLinearGroup.map (n := Fin a) (pFin E)
+  have hωI : IsCompact (pI '' ω) := hω.image (continuous_mapInf E a)
+  have hup : ∀ b ∈ pI '' ω, b.val.BlockTriangular id := by
+    rintro _ ⟨b, hb, rfl⟩ i j hij
+    have h0 : (b : Matrix (Fin a) (Fin a) (Ad E)) i j = 0 := hωB hb hij
+    change pInf E ((b : Matrix (Fin a) (Fin a) (Ad E)) i j) = 0
+    rw [h0, map_zero]
+  obtain ⟨Ω0, hΩ0, hΩ⟩ := GlobalTheory.T.exists_compact_coneDiagonal_conj_upperTriangular E a (pI '' ω) hωI hup t ht
+  have hK := isCompact_maxCompact (K := E) (n := a)
+  refine ⟨Ω0 * pI '' (maxCompact (K := E) (n := a) : Set (AdelicGLn.AdelicGL E a)),
+    pF '' ω * pF '' (maxCompact (K := E) (n := a) : Set (AdelicGLn.AdelicGL E a)),
+    hΩ0.mul (hK.image (continuous_mapInf E a)),
+    (hω.image (continuous_mapFin E a)).mul (hK.image (continuous_mapFin E a)), ?_⟩
+  intro r d hr hrt hd b hb k hk
+  refine ⟨(d⁻¹ * pI b * d) * pI k, Set.mul_mem_mul (hΩ r d hr hrt hd _ ⟨b, hb, rfl⟩) ⟨k, hk, rfl⟩,
+    pF b * pF k, Set.mul_mem_mul ⟨b, hb, rfl⟩ ⟨k, hk, rfl⟩, ?_⟩
+  apply ga_ext
+  · change pI (b * infGL E a d * k) = pI (infGL E a (d * (d⁻¹ * pI b * d * pI k)) * finGL E a (pF b * pF k))
+    simp only [map_mul, pI, pInf_infGL, pInf_finGL, mul_one]
+    group
+  · change pF (b * infGL E a d * k) = pF (infGL E a (d * (d⁻¹ * pI b * d * pI k)) * finGL E a (pF b * pF k))
+    simp only [map_mul, pF, pFin_infGL, pFin_finGL, mul_one, one_mul]
+
+end GlobalTheory.SiegelSetGL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SiegelSetAdelicGLExistsCompactDecompositionStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +233,5 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 theorem _root_.GlobalTheory.T.siegelSet_adelicGL_exists_compact_decomposition : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ω : Set (AdelicGLn.AdelicGL E a)), IsCompact ω → ω ⊆ (adelicBorel (K := E) (n := a) : Set (AdelicGLn.AdelicGL E a)) → ∀ t : ℝ, 0 < t → ∃ (Ω : Set (GL (Fin a) (Cinf E))) (Kf : Set (GL (Fin a) (Af E))), IsCompact Ω ∧ IsCompact Kf ∧ ∀ (r : Fin a → ℝ) (d : GL (Fin a) (Cinf E)), (∀ i, 0 < r i) → (∀ i j : Fin a, (j : ℕ) = i + 1 → t * r j ≤ r i) → d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)) → ∀ b ∈ ω, ∀ k ∈ maxCompact (K := E) (n := a), ∃ c ∈ Ω, ∃ f ∈ Kf, b * infGL E a d * k = infGL E a (d * c) * finGL E a f := by
   first | exact @GlobalTheory.SiegelSetGL.exists_compact_decomp | exact GlobalTheory.SiegelSetGL.exists_compact_decomp | (intros; apply GlobalTheory.SiegelSetGL.exists_compact_decomp <;> assumption)
+end
+end

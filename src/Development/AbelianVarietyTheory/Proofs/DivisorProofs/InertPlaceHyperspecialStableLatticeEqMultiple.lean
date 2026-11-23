@@ -4,23 +4,20 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsIdemOfA
 public import Formalism.LocalToGlobal.Divisibility.DefGroup
 public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
 import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsUniqueIdeleOfLinearEquivQuotientLocal
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOrderCompletionSurjectiveFromIntegralAdelesStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableLatticeEqZpowStdInertCompletionStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AdelicUnitarySupportedAtFinitePlaceEqLocalUnitarStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsComplexConjIsometryInertCompletionStatement
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrFrobeniusLift
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRingEquivTensorInertAdicCompletionStatement
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InertPlaceHeckeDoubleCosetsInverseRepsLabel
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SphericalLabelOperatorsOnHyperspecialFixedVector
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StabilisesCompletedLatticeIffLocalMatrixIntegralStatement
-public import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsIntegralSplitIdempotentOverTwo
+public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -35,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,11 +44,162 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableLatticeEqZpowStdInertCompletionStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AdelicUnitarySupportedAtFinitePlaceEqLocalUnitarStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsComplexConjIsometryInertCompletionStatement
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrFrobeniusLift
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRingEquivTensorInertAdicCompletionStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InertPlaceHeckeDoubleCosetsInverseRepsLabel
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SphericalLabelOperatorsOnHyperspecialFixedVector
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StabilisesCompletedLatticeIffLocalMatrixIntegralStatement
+public import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Definitions.Divisors.InstCMHostS
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NormalFam
 public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry₂.HoweUnram
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MulMemIntA
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.Reformulated.B.Uc13
+
+open IsDedekindDomain NumberField
+open scoped TensorProduct
+
+@[reducible] noncomputable def Af (F : Type) [Field F] [NumberField F] : Type :=
+  FiniteAdeleRing (RingOfIntegers F) F
+
+@[reducible] noncomputable def Fv (F : Type) [Field F] [NumberField F]
+    (v : HeightOneSpectrum (RingOfIntegers F)) : Type :=
+  v.adicCompletion F
+
+theorem aux3 (F : Type) [Field F] [NumberField F]
+    (i : HeightOneSpectrum (RingOfIntegers F)) :
+    SubringClass (ValuationSubring (Fv F i)) (Fv F i) :=
+  inferInstance
+
+theorem aux4 (F : Type) [Field F] [NumberField F]
+    (v : HeightOneSpectrum (RingOfIntegers F)) (x : F) :
+    RestrictedProduct.evalRingHom (fun w => Fv F w) v (algebraMap F (Af F) x) =
+      RestrictedProduct.evalRingHom (fun w => Fv F w) v (algebraMap F (Af F) x) :=
+  rfl
+
+noncomputable def evalV (F : Type) [Field F] [NumberField F]
+    (v : HeightOneSpectrum (RingOfIntegers F)) : Af F →ₐ[F] Fv F v where
+  toRingHom := RestrictedProduct.evalRingHom (fun w => Fv F w) v
+  commutes' := aux4 F v
+
+noncomputable def intAf (F : Type) [Field F] [NumberField F] : Set (Af F) :=
+  {a | ∀ (v : HeightOneSpectrum (RingOfIntegers F)), evalV F v a ∈ v.adicCompletionIntegers F}
+
+noncomputable def intA (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E] :
+    AddSubgroup (TensorProduct F (Af F) E) :=
+  AddSubgroup.closure {y | ∃ a ∈ intAf F, ∃ x : RingOfIntegers E, y = a ⊗ₜ[F] (x : E)}
+
+theorem mul_mem_intA (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
+    [Algebra F E] {x y : TensorProduct F (Af F) E}
+    (hx : x ∈ intA F E) (hy : y ∈ intA F E) : x * y ∈ intA F E := by
+  unfold intA at *
+  induction hx, hy using AddSubgroup.closure_induction₂ with
+  | mem x y hx hy =>
+    obtain ⟨a, ha, s, rfl⟩ := hx
+    obtain ⟨b, hb, t, rfl⟩ := hy
+    refine AddSubgroup.subset_closure ⟨a * b, ?_, s * t, ?_⟩
+    · intro v
+      rw [map_mul]
+      exact mul_mem (ha v) (hb v)
+    · rw [Algebra.TensorProduct.tmul_mul_tmul]
+      rfl
+  | zero_left x hx => rw [zero_mul]; exact zero_mem _
+  | zero_right x hx => rw [mul_zero]; exact zero_mem _
+  | add_left x y z hx hy hz h1 h2 => rw [add_mul]; exact add_mem h1 h2
+  | add_right y z x hy hz hx h1 h2 => rw [mul_add]; exact add_mem h1 h2
+  | neg_left x y hx hy h => rw [neg_mul]; exact neg_mem h
+  | neg_right x y hx hy h => rw [mul_neg]; exact neg_mem h
+
+end UpperTheory.Reformulated.B.Uc13
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOrderCompletionSurjectiveFromIntegralAdeles
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped TensorProduct
+
+noncomputable section
+
+namespace GlobalTheory.OrdLift
+
+variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+
+theorem one_mem_intAf : (1 : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) ∈ Formalism.MainNotions.StandardLattice.intAf F := fun v => by
+  rw [map_one]; exact one_mem _
+
+theorem mul_mem_intA {x y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E} (hx : x ∈ GlobalTheory.PlaceComp.intA F E)
+    (hy : y ∈ GlobalTheory.PlaceComp.intA F E) : x * y ∈ GlobalTheory.PlaceComp.intA F E :=
+  by apply _root_.UpperTheory.Reformulated.B.Uc13.mul_mem_intA <;> assumption
+
+end GlobalTheory.OrdLift
+
+theorem GlobalTheory.OrdLift.ordAt_lift : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
+    [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (a : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v ⊗[F] E),
+    a ∈ GlobalTheory.PlaceComp.ordAt E v → ∃ t ∈ GlobalTheory.PlaceComp.intA F E, GlobalTheory.PlaceComp.evF E v t = a := by
+  intro F E _ _ _ _ _ v a ha
+  induction ha using Subring.closure_induction with
+  | mem y hy =>
+    obtain ⟨b, hb, x, rfl⟩ := hy
+    refine ⟨Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.singleV F v b ⊗ₜ[F] (x : E),
+      AddSubgroup.subset_closure ⟨_, GlobalTheory.SplitIdem.singleV_mem_intAf F v ⟨b, hb⟩, x, rfl⟩, ?_⟩
+    show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.singleV F v b) ⊗ₜ[F] (x : E) = _
+    rw [GlobalTheory.SplitIdem.evalV_singleV_same]
+  | zero => exact ⟨0, zero_mem _, map_zero _⟩
+  | one =>
+    refine ⟨1, AddSubgroup.subset_closure ⟨1, GlobalTheory.OrdLift.one_mem_intAf F, 1, ?_⟩, map_one _⟩
+    simp [Algebra.TensorProduct.one_def]
+  | add x y _ _ hx hy =>
+    obtain ⟨s, hs, rfl⟩ := hx
+    obtain ⟨t, ht, rfl⟩ := hy
+    exact ⟨s + t, add_mem hs ht, map_add _ _ _⟩
+  | neg x _ hx =>
+    obtain ⟨s, hs, rfl⟩ := hx
+    exact ⟨-s, neg_mem hs, map_neg _ _⟩
+  | mul x y _ _ hx hy =>
+    obtain ⟨s, hs, rfl⟩ := hx
+    obtain ⟨t, ht, rfl⟩ := hy
+    exact ⟨s * t, GlobalTheory.OrdLift.mul_mem_intA F E hs ht, map_mul _ _ _⟩
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOrderCompletionSurjectiveFromIntegralAdelesStatement
+
+section
+
+@[expose] public section
+
+open IsDedekindDomain NumberField
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.localOrderCompletion_surjective_from_integralAdeles : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (a : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v ⊗[F] E), a ∈ GlobalTheory.PlaceComp.ordAt E v → ∃ t ∈ GlobalTheory.PlaceComp.intA F E, GlobalTheory.PlaceComp.evF E v t = a := by
+  first | exact @GlobalTheory.OrdLift.ordAt_lift | exact GlobalTheory.OrdLift.ordAt_lift | (intros; apply GlobalTheory.OrdLift.ordAt_lift <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InertPlaceHyperspecialStableLatticeEqMultiple
+
+section
 
 @[expose] public section
 
@@ -312,3 +458,6 @@ theorem GlobalTheory.InertLatMult.lattice_eq_mult : ∀ {D : D7} (V : HSp D) (P 
     have hs : ∀ i, fe * z i = z i := fun i => congrFun hz1 i
     rw [hc z hs, hmem _ (hsmul _ z hs)] at hz2
     exact (hLmem z hs).1 ((hk (X z)).2 fun i => by rw [← hXa]; exact hz2 i)
+end
+end
+end

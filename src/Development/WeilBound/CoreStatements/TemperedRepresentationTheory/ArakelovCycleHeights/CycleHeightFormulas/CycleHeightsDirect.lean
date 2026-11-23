@@ -6,43 +6,8 @@ public import Development.AutomorphicSpectrum.PublishedTheorems.Metrics₂.Poinc
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.QpSndStr
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.BlowupProjections.BlowupProjStatement
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArithIntersectionCalculusOfFormMixedProjectionStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialIsomClassInt
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArchimedeanIntegrableOnStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArchimedeanIntegralEq
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArithmeticVarietyPointDimension
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DimClosureGenericPt
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DimOfIsArithVar
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvProdBlockUnit
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsPermOfCntEq
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightEqOfFullIntersectionSystem
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightEqOfFullIntersectionSystemStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianLineBundleSmooth
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianLineBundleSmoothStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ImageZMCoordIdealOfEq
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCurveIntersectionFormula
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCurveIntersectionFormulaStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleCodimensionOne
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleCodimensionOneStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleOfRationalStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCyclePointDictionary
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCyclePointDictionaryStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleRationalExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadCombination
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadCombinationStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadExists
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadExistsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPointLengthFormula
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPointLengthFormulaStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPolarizationIdentityStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdNormPull
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResidueFieldMapPtCoordSndM
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VertEq
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ArithIntersectionSystemOfPoincareLelongStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RationalityOfResolutionStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RationalityOfResolutionStatementStatement
-public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.CycleHeightFormulas.CombLineSingle
-public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.HeightsOfFormMix
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ArFormExists
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArithIntersectionCalculusOfFormMixedProjection
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -56,6 +21,7 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
@@ -79,6 +45,139 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialIsomClassInt
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArchimedeanIntegrableOnStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArchimedeanIntegralEq
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArithmeticVarietyPointDimension
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DimClosureGenericPt
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DimOfIsArithVar
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvProdBlockUnit
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsPermOfCntEq
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightEqOfFullIntersectionSystem
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSmoothHermCombLine
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianLineBundleSmooth
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianLineBundleSmoothStatement
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ImageZMCoordIdealOfEq
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCurveIntersectionFormula
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleCodimensionOne
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleOfRationalStatement
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCyclePointDictionary
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCyclePointDictionaryStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleRationalExists
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadCombination
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadExists
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadExists
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPointLengthFormula
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPointLengthFormulaStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPolarizationIdentity
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdNormPull
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResidueFieldMapPtCoordSndM
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VertEq
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ArithIntersectionSystemOfPoincareLelongStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RationalityOfResolutionStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RationalityOfResolutionStatementStatement
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.CycleHeightFormulas.CombLineSingle
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.HeightsOfFormMix
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArithIntersectionCalculusOfFormMixedProjectionStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.arithIntersectionCalculus_of_form_mixed_projection : GlobalTheory.Published.ArFormExists → GlobalTheory.Published.ArMix → GlobalTheory.Published.HeightProjection → GlobalTheory.Published.ArCalc := by
+  first | exact @GlobalTheory.Published.arCalc_of_form_mix_projection | exact GlobalTheory.Published.arCalc_of_form_mix_projection | (intros; apply GlobalTheory.Published.arCalc_of_form_mix_projection <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightEqOfFullIntersectionSystemStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.height_eq_of_full_intersection_system : GlobalTheory.CompanionTheory.MixZ.PtDict → GlobalTheory.CompanionTheory.MixZ.CodimOne → GlobalTheory.CompanionTheory.MixZ.ExistsRat → GlobalTheory.CompanionTheory.MixZ.CycleOfRat → GlobalTheory.CompanionTheory.MixZ.ArchIntEq → GlobalTheory.CompanionTheory.MixZ.VertEq → GlobalTheory.CompanionTheory.MixZ.PtLen → GlobalTheory.CompanionTheory.MixZ.CurveInt → ReciprocityTheory.ChartRestriction.G.AI.I2.RatRStatement → ∀ II : ReciprocityTheory.ChartRestriction.G.Geo.IntersectionSystem, ReciprocityTheory.ChartRestriction.G.Geo.IsFullIntersectionSystem II → GlobalTheory.CompanionTheory.MixZ.HeightEq II := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.heightEq_holds | exact GlobalTheory.CompanionTheory.MixZ.heightEq_holds | (intros; apply GlobalTheory.CompanionTheory.MixZ.heightEq_holds <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCurveIntersectionFormulaStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_curve_intersection_formula : GlobalTheory.CompanionTheory.MixZ.CurveInt := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.curveInt | exact GlobalTheory.CompanionTheory.MixZ.curveInt | (intros; apply GlobalTheory.CompanionTheory.MixZ.curveInt <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleCodimensionOneStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_cycle_codimension_one : GlobalTheory.CompanionTheory.MixZ.CodimOne := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.codimOne_holds | exact GlobalTheory.CompanionTheory.MixZ.codimOne_holds | (intros; apply GlobalTheory.CompanionTheory.MixZ.codimOne_holds <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleRationalExistsStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_cycle_rational_exists : GlobalTheory.CompanionTheory.MixZ.ExistsRat := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.ExRat.existsRat | exact GlobalTheory.CompanionTheory.MixZ.ExRat.existsRat | (intros; apply GlobalTheory.CompanionTheory.MixZ.ExRat.existsRat <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadCombinationStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_cycle_read_combination : GlobalTheory.CompanionTheory.MixZ.ReadComb := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.readComb | exact GlobalTheory.CompanionTheory.MixZ.readComb | (intros; apply GlobalTheory.CompanionTheory.MixZ.readComb <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedCycleReadExistsStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_cycle_read_exists : GlobalTheory.CompanionTheory.MixZ.ExistsRead := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.existsRead | exact GlobalTheory.CompanionTheory.MixZ.existsRead | (intros; apply GlobalTheory.CompanionTheory.MixZ.existsRead <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MixedPolarizationIdentityStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.mixed_polarization_identity : GlobalTheory.CompanionTheory.MixZ.Polar := by
+  first | exact @GlobalTheory.CompanionTheory.MixZ.PolarProof.polar | exact GlobalTheory.CompanionTheory.MixZ.PolarProof.polar | (intros; apply GlobalTheory.CompanionTheory.MixZ.PolarProof.polar <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.CycleHeightFormulas.CycleHeightsDirect
+
+section
 
 @[expose] public section
 
@@ -206,3 +305,6 @@ theorem cycleHeights_direct (hP : GlobalTheory.CompanionTheory.Ar.Pub.PoincareLe
   GlobalTheory.Published.cycleHeights_of_arCalc (arCalc_direct hP hR)
 
 end GlobalTheory.ArithmeticHeightTower.ArakelovDirectHeights
+end
+end
+end

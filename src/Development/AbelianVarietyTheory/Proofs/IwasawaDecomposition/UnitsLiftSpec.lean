@@ -1,18 +1,15 @@
 module
 
 public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNdStd
-public import Formalism.LocalToGlobal.NumberFieldFamilies.HeckeLift0
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LocAutHodgeTateWeightsLevelZeroDef
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WdOfMono0L
-public import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
-public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
-public import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTameGenAt
-public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNdProj
+public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNd
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -43,11 +40,180 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LocAutHodgeTateWeightsLevelZeroDef
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WdOfMono0L
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
+public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
+public import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTameGenAt
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Mathlib.RingTheory.PicardGroup
+
+-- Source module: Formalism.LocalToGlobal.NumberFieldFamilies.HeckeLift0
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP NumberField IsDedekindDomain Formalism.BasicNotions.Loc TensorProduct Formalism.MainNotions.N Formalism.L2
+
+namespace Formalism.L2.Fam.NPC.BaseC
+
+variable {R : Ranks} (H : Host R) (what₂ : Rows.Data R)
+
+structure MtReal0 (μ : what₂.Tup) (j : ℕ) where
+  wt : NG.AlgWt H.E R.nV
+  J : Subgroup (GAf H.E R.nV)
+  χ : J →* ℂˣ
+  J_open : ∃ N : ℕ, 0 < N ∧ ∀ κ, NG.Cong H.E R.nV N κ → ∃ h : κ ∈ J, χ ⟨κ, h⟩ = 1
+  real : what₂.Mt μ j →ₗ[ℂ] (GAf H.E R.nV → wt.W)
+  real_inj : Function.Injective real
+  real_range : LinearMap.range real = NG.TypeSp wt.ρ J χ
+
+abbrev MtFam0 : Type 1 := ∀ (μ : what₂.Tup) (j : ℕ), 1 ≤ j → j ≤ R.m → MtReal0 H what₂ μ j
+
+variable {H what₂}
+
+def HeckeLift0 (M : MtFam0 H what₂) (Qw : what₂.places.Pl → Finset (HeightOneSpectrum (𝓞 H.E))) : Prop :=
+  ∀ (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ R.m),
+    GenAt0 H (what₂.places.resChar w) (Qw w) v k →
+    ∃ T : Module.End what₂.LL (what₂.MtL (what₂.muTw w) j), ∀ (s : SplitPlace H.E)
+      (ϖ : HeightOneSpectrum.adicCompletion (↥(maximalRealSubfield H.E)) s.v),
+      IsConjPl H v s.w → IsUnif H.E s.v ϖ → ∀ x,
+        (M (what₂.muTw w) j h1 h2).real (what₂.jMt (what₂.muTw w) j (T x)) = NG.tN (M (what₂.muTw w) j h1 h2).J s ϖ k ((M (what₂.muTw w) j h1 h2).real (what₂.jMt (what₂.muTw w) j x))
+
+variable (M : MtFam0 H what₂) (Qw : what₂.places.Pl → Finset (HeightOneSpectrum (𝓞 H.E))) (hR : HeckeLift0 M Qw)
+
+
+open Classical in
+def hLC (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) :
+    Module.End what₂.LL (what₂.MtL (what₂.muTw w) j) :=
+  if h : (1 ≤ j ∧ j ≤ R.m) ∧ GenAt0 H (what₂.places.resChar w) (Qw w) v k then (hR j w v k h.1.1 h.1.2 h.2).choose else 0
+
+theorem hLC_spec (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ R.m)
+    (hg : GenAt0 H (what₂.places.resChar w) (Qw w) v k) (s : SplitPlace H.E)
+    (ϖ : HeightOneSpectrum.adicCompletion (↥(maximalRealSubfield H.E)) s.v) (hc : IsConjPl H v s.w) (hu : IsUnif H.E s.v ϖ)
+    (x : what₂.MtL (what₂.muTw w) j) :
+    (M (what₂.muTw w) j h1 h2).real (what₂.jMt (what₂.muTw w) j (hLC M Qw hR j w v k x)) =
+      NG.tN (M (what₂.muTw w) j h1 h2).J s ϖ k ((M (what₂.muTw w) j h1 h2).real (what₂.jMt (what₂.muTw w) j x)) := by
+  have h : (1 ≤ j ∧ j ≤ R.m) ∧ GenAt0 H (what₂.places.resChar w) (Qw w) v k := ⟨⟨h1, h2⟩, hg⟩
+  unfold hLC
+  rw [dite_eq_left h]
+  exact (hR j w v k h.1.1 h.1.2 h.2).choose_spec s ϖ hc hu x
+
+variable (X : CoefIn what₂)
+
+def hKC (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) :
+    Module.End (FractionRing (OcC X j w)) (VC X j w) :=
+  (hLC M Qw hR j w v k).baseChange (FractionRing (OcC X j w))
+
+theorem hKC_def (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) (x : what₂.MtL (what₂.muTw w) j) :
+    hKC M Qw hR X j w v k (iVC X j w x) = iVC X j w (hLC M Qw hR j w v k x) :=
+  LinearMap.baseChange_tmul _ _ _
+
+def SplitK : Prop :=
+  ∀ j w v k, GenAt0 H (what₂.places.resChar w) (Qw w) v k → ⨆ μ, (hKC M Qw hR X j w v k).maxGenEigenspace μ = ⊤
+
+def baseC (hS : SplitK M Qw hR X) : LocBase0 H what₂ where
+  Oc := OcC X
+  Oc_adic := oc_adic X
+  Oc_complete := oc_complete X
+  ec := ecC X
+  ec_w := ecC_w X
+  V := VC X
+  iV := iVC X
+  iV_basis := iVC_basis X
+  Qw := Qw
+  hL := hLC M Qw hR
+  hK := hKC M Qw hR X
+  hK_def := hKC_def M Qw hR X
+  split := hS
+
+end Formalism.L2.Fam.NPC.BaseC
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNdProj
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions NumberField IsDedekindDomain Module Module.End Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+namespace Formalism.L2.Fam.NPC
+
+
+
+
+section Gen
+
+variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (B : LocBase0 H what₂)
+
+theorem prMtC_lat (hC : PartCompl B) (hL : MtLoc B hC) (i : LocT B) (x : what₂.MtL (what₂.muTw (wOf B i)) (jOf B i))
+    (hx : x ∈ latL B i) :
+    prMtC B hC hL i x = TensorProduct.mk (OOf B i) (FractionRing (OOf B i)) (MtSub B hC i) 1
+      ⟨projOf B hC i (B.iV (jOf B i) (wOf B i) x), Submodule.subset_span ⟨x, hx, rfl⟩⟩ := by
+  apply (mtEquiv B hC hL i).injective
+  have e1 : mtEquiv B hC hL i (prMtC B hC hL i x) = projOf B hC i (B.iV (jOf B i) (wOf B i) x) := by
+    simp [prMtC]
+  rw [e1, TensorProduct.mk_apply]
+  unfold mtEquiv
+  rw [IsBaseChange.equiv_tmul, one_smul]
+  rfl
+
+theorem prMtC_latSpan (hC : PartCompl B) (hL : MtLoc B hC) (i : LocT B) :
+    Submodule.span (OOf B i) (prMtC B hC hL i '' latL B i) =
+      LinearMap.range (TensorProduct.mk (OOf B i) (FractionRing (OOf B i)) (MtSub B hC i) 1) := by
+  set G : Set (partOf B i) := (fun x => projOf B hC i (B.iV (jOf B i) (wOf B i) x)) '' latL B i with hG
+  have e : prMtC B hC hL i '' latL B i =
+      (TensorProduct.mk (OOf B i) (FractionRing (OOf B i)) (MtSub B hC i) 1) '' ((↑) ⁻¹' G : Set (MtSub B hC i)) := by
+    ext z
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      exact ⟨_, ⟨x, hx, rfl⟩, (prMtC_lat B hC hL i x hx).symm⟩
+    · rintro ⟨m, ⟨x, hx, hmx⟩, rfl⟩
+      refine ⟨x, hx, ?_⟩
+      rw [prMtC_lat B hC hL i x hx]
+      congr 1
+      exact Subtype.ext hmx
+  have htop : Submodule.span (OOf B i) ((↑) ⁻¹' G : Set (MtSub B hC i)) = ⊤ := Submodule.span_span_coe_preimage
+  rw [e, Submodule.span_image, htop, Submodule.map_top]
+
+theorem prMtC_span (hC : PartCompl B) (hL : MtLoc B hC) (i : LocT B) :
+    Submodule.span (FractionRing (OOf B i)) (Set.range (prMtC B hC hL i)) = ⊤ := by
+  let b := Module.Free.chooseBasis what₂.LL (what₂.MtL (what₂.muTw (wOf B i)) (jOf B i))
+  have hb := (B.iV_basis (jOf B i) (wOf B i) b).2
+  have h1 : Submodule.span (FractionRing (OOf B i)) (Set.range (B.iV (jOf B i) (wOf B i))) = ⊤ :=
+    eq_top_iff.2 (hb ▸ Submodule.span_mono (Set.range_comp_subset_range b (B.iV (jOf B i) (wOf B i))))
+  have h2 : Set.range (prMtC B hC hL i) =
+      (mtEquiv B hC hL i).symm.toLinearMap '' (projOf B hC i '' Set.range (B.iV (jOf B i) (wOf B i))) := by
+    ext z
+    simp [prMtC]
+  have h3 : LinearMap.range (projOf B hC i) = ⊤ := Submodule.linearProjOfIsCompl_range (hC i)
+  rw [h2, Submodule.span_image, Submodule.span_image, h1, Submodule.map_top, h3, Submodule.map_top,
+    LinearMap.range_eq_top.2 (mtEquiv B hC hL i).symm.surjective]
+
+end Gen
+
+end Formalism.L2.Fam.NPC
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitsLiftSpec
+
+section
 
 @[expose] public section
 
@@ -371,3 +537,6 @@ def psN (X : CoefIn D.what₂) (ψ0 : D.what₂.places.Pl → (G D.host.E D.nd.O
   unitsLift ((Units.map (ecC X j w).toMonoidHom).comp (ψ0 w)) (hP j w)
 
 end GlobalTheory.HeckeLocN
+end
+end
+end

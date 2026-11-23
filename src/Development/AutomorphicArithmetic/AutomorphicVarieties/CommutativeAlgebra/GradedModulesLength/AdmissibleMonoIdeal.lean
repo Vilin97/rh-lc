@@ -7,9 +7,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.LaDifPerm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.LkHolds
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ReesGradedPieceSurjection
-public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleCong
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleGr
-public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleMono
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.EulerVanishingBelowDimension
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,11 +26,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,7 +47,128 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleGr
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.EulerAdditivityDegreeZero
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RulePos
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.VanishingBelowDimensionRule
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Topology.Sheaves.Presheaf
+
+-- Source module: Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleCong
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.V.Pf.V2.Calc
+
+namespace Cong
+
+variable {k : ℕ} {B R : Type} [CommRing B] [CommRing R] [Algebra B R]
+
+theorem lsmul_eq (F : GMod B R k) {s s' : R} (h : s - s' ∈ F.Ann) :
+    LinearMap.lsmul R F.M s = LinearMap.lsmul R F.M s' := by
+  ext x
+  have hx : (s - s') • x = 0 := Module.mem_annihilator.1 h x
+  rw [sub_smul, sub_eq_zero] at hx
+  exact hx
+
+theorem quot_eq (F : GMod B R k) {s s' : R} (h : s - s' ∈ F.Ann) : F.quot s = F.quot s' := by
+  unfold GMod.quot
+  rw [lsmul_eq F h]
+
+theorem ann_eq (F : GMod B R k) {s s' : R} (d : Deg k) (h : s - s' ∈ F.Ann) :
+    F.ann s d = F.ann s' d := by
+  unfold GMod.ann
+  rw [lsmul_eq F h]
+
+theorem ann_le_quot (F : GMod B R k) (s : R) : F.Ann ≤ (F.quot s).Ann := by
+  intro a ha
+  rw [GMod.Ann, Module.mem_annihilator] at *
+  intro y
+  obtain ⟨x, rfl⟩ := (LinearMap.range (LinearMap.lsmul R F.M s)).mkQ_surjective y
+  exact (map_smul (LinearMap.range (LinearMap.lsmul R F.M s)).mkQ a x).symm.trans
+    ((congrArg _ (ha x)).trans (map_zero _))
+
+theorem ann_le_ann (F : GMod B R k) (s : R) (d : Deg k) : F.Ann ≤ (F.ann s d).Ann := by
+  intro a ha
+  rw [GMod.Ann, Module.mem_annihilator] at *
+  intro x
+  exact Subtype.ext (ha x.1)
+
+theorem chi_cong {ts ts' : List (Deg k × R)} : ∀ (F : GMod B R k),
+    List.Forall₂ (fun p q => p.1 = q.1 ∧ p.2 - q.2 ∈ F.Ann) ts ts' →
+      ∀ m, chi ts F m = chi ts' F m := by
+  induction ts generalizing ts' with
+  | nil =>
+    intro F h m
+    cases h
+    rfl
+  | cons p ts ih =>
+    intro F h m
+    cases h with
+    | @cons _ q _ ts'' hpq hrest =>
+      obtain ⟨d, s⟩ := p
+      obtain ⟨d', s'⟩ := q
+      obtain ⟨hd, hs⟩ := hpq
+      have hd' : d = d' := hd
+      subst hd'
+      have hs' : s - s' ∈ F.Ann := hs
+      show chi ts (F.quot s) m - chi ts (F.ann s d) m =
+        chi ts'' (F.quot s') m - chi ts'' (F.ann s' d) m
+      rw [← quot_eq F hs', ← ann_eq F d hs',
+        ih (F.quot s) (hrest.imp fun _ _ h => ⟨h.1, ann_le_quot F s h.2⟩) m,
+        ih (F.ann s d) (hrest.imp fun _ _ h => ⟨h.1, ann_le_ann F s d h.2⟩) m]
+
+end Cong
+
+end Formalism.MainNotions.V.Pf.V2.Calc
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleMono
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.V.Pf.V2.Calc
+
+open IsLocalRing Filter
+
+
+open E4 in
+theorem ruleMono : RuleMono := by
+  intro k X ts F' F F'' hv hF' hF hF'' S hA
+  have hle : F.Ann ≤ F'.Ann := by
+    intro a ha
+    refine Module.mem_annihilator.mpr fun x => S.inj ?_
+    rw [map_smul, map_zero]
+    exact Module.mem_annihilator.mp ha _
+  have h1 := Pos.e1 k X ts F' F F'' hv hF' hF hF'' S hA
+  have h2 := rulePos k X ts F' hv hF' (admissible_mono_ideal X.𝒜 hle hA)
+  filter_upwards [h1, h2] with m a b
+  rw [a]
+  linarith
+
+end Formalism.MainNotions.V.Pf.V2.Calc
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.AdmissibleMonoIdeal
+
+section
 
 @[expose] public section
 
@@ -366,3 +481,5 @@ theorem UpperTheory.V.Alg.M.low_holds :
   calc ((∑ i, c i : ℕ) : ℤ) * 2 ^ (r + r') = ((∑ i, 2 * c i : ℕ) : ℤ) * 2 ^ (r - 1 + r') := harith
     _ ≤ chi (ts Q) ((GMod.self (mGr Q)).quo 𝔮) d := h2
     _ ≤ _ := h1
+end
+end

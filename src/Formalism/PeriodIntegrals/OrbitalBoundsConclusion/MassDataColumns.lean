@@ -9,7 +9,9 @@ public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.L
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.Transfer
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.ContinuousSplitA
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.IsHermNDOfSetting
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.MassUnfoldGenHolds
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.Unfold
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicLocalCompactness.T2SpaceTensorProductFiniteExtension
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.MeasurePrjFPreimage
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,11 +47,38 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.ClassCount
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeColumns.Unfold
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.MassUnfoldGenHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory NumberField Set
+open Formalism.BasicNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub Formalism.L2.SG.Measures Formalism.L2.SG.HidaSetting Formalism.L2.SG.TypedSets
+
+namespace MassDataMassesW
+
+theorem massUnfoldGen_holds : PIW.MassDataColumns.MassUnfoldGen := by
+  intro D X u hM _ U _ hUo hfin 𝓕 h𝓕
+  exact massUnfold_gen (hCM := isCMExt_of_cmData X.B.I.cm) (hJ := isHermND_of_setting X) (M := X.measW u)
+    (hM := hM) (U := U) (hU := hUo.measurableSet) (hfin := hfin) (𝓕 := 𝓕) (h𝓕 := h𝓕)
+
+end MassDataMassesW
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MassDataColumns
+
+section
 
 @[expose] public section
 
@@ -131,3 +159,6 @@ theorem massDataColumns_of' (hAI : ∀ I : Formalism.MainNotions.S.AutInst, Form
   intro D X hb hK FdN FdN' u u' X0 L A
   exact massDataColumns_of (colsDimStep_of' hGF hN hF hC)
     (colsIdxStep_of haar_ratio_eq_relIndex hG (idxTopStep_of hO) hCount) X hb hK FdN FdN' u u' X0 L A
+end
+end
+end

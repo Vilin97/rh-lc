@@ -2,7 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.CechDeRhamCoefMapOneFormsRestrictAlongFunctor
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalTwoCochainsFiniteCategoryBaseChangeBijectiv
+public import Development.AbelianVarietyTheory.Definitions.Divisors.OneFormMapEqKaehlerDifferentialMap
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsAlgHomOfIsBaseChange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,6 +40,169 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLiftSemiOfSemilinearHom
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftBaseChangeProdBijectiveSemilinear
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftSemiPiBijective
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLiftSemiMOm
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open TensorProduct GlobalTheory.CechDR GlobalTheory.DeRham
+
+namespace GlobalTheory.FormsBaseChange
+
+theorem bijective_liftSemi_iff {R R' B B' M N : Type} [CommRing R] [CommRing R'] [CommRing B]
+    [CommRing B'] [Algebra R R'] [Algebra R B] [Algebra R' B'] [Algebra B B'] [Algebra R B']
+    [IsScalarTower R B B'] [IsScalarTower R R' B'] [Algebra.IsPushout R R' B B']
+    [AddCommGroup M] [Module R M] [Module B M] [IsScalarTower R B M]
+    [AddCommGroup N] [Module B N] [Module B' N] [Module R' N] [IsScalarTower B B' N]
+    [IsScalarTower R' B' N] (φ : M →ₗ[B] N) (g : M →ₛₗ[algebraMap R R'] N) (e : ∀ x, g x = φ x) :
+    Function.Bijective (liftSemi g) ↔ IsBaseChange B' φ := by
+  have hc : (liftSemi g : R' ⊗[R] M → N) =
+      φ.liftBaseChange B' ∘ (Algebra.IsPushout.cancelBaseChange R R' B B' M).symm := by
+    funext z
+    induction z with
+    | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
+    | tmul s m => simp [e]
+  rw [hc, Function.Bijective.of_comp_iff _ (LinearEquiv.bijective _)]
+  constructor
+  · intro H
+    exact IsBaseChange.of_equiv (LinearEquiv.ofBijective _ H) fun x ↦ by simp
+  · intro H
+    have : (φ.liftBaseChange B' : B' ⊗[B] M → N) = H.equiv := by
+      funext z
+      induction z with
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
+      | tmul s m => simp
+    rw [this]
+    exact H.equiv.bijective
+
+theorem bijective_liftSemi_mOm (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (B B' : Type)
+    [CommRing B] [CommRing B'] [Algebra R B] [Algebra R' B'] (α : B →+* B')
+    (h : SemiHom (algebraMap R R') α) (f : B →ₛₗ[algebraMap R R'] B') (hf : ∀ b, f b = α b)
+    (h0 : Function.Bijective (liftSemi f)) (h1 : Function.Bijective (liftSemi h.m1)) (j : ℕ) :
+    Function.Bijective (liftSemi (h.mOm j)) := by
+  letI : Algebra B B' := α.toAlgebra
+  letI : Algebra R B' := ((algebraMap R' B').comp (algebraMap R R')).toAlgebra
+  haveI : IsScalarTower R R' B' := .of_algebraMap_eq fun _ ↦ rfl
+  haveI : IsScalarTower R B B' := .of_algebraMap_eq fun r ↦ (h.map_algebraMap r).symm
+  haveI : Algebra.IsPushout R R' B B' :=
+    ⟨IsBaseChange.of_equiv (LinearEquiv.ofBijective _ h0) fun x ↦ by
+      change liftSemi f (1 ⊗ₜ x) = α x
+      rw [liftSemi_tmul, one_smul, hf]⟩
+  let φ : Ω[B⁄R] →ₗ[B] Ω[B'⁄R'] :=
+    { toFun := h.m1
+      map_add' := map_add _
+      map_smul' := fun b x ↦ by
+        rw [h.oneFormMap_smul_semilinear, RingHom.id_apply, ← algebraMap_smul B' b]; rfl }
+  have hφ : IsBaseChange B' φ := (bijective_liftSemi_iff φ h.m1 fun _ ↦ rfl).1 h1
+  refine (bijective_liftSemi_iff _ (h.mOm j) ?_).2 (GlobalTheory.TopForm.isBaseChange_exteriorPower hφ j)
+  let ψ : Om R B j →ₗ[B] Om R' B' j :=
+    { toFun := h.mOm j
+      map_add' := map_add _
+      map_smul' := fun b x ↦ by
+        rw [h.mOm_smul, RingHom.id_apply, ← algebraMap_smul B' b]; rfl }
+  suffices H : ψ = _ from fun x ↦ LinearMap.congr_fun H x
+  apply exteriorPower.linearMap_ext
+  ext1 v
+  simp only [LinearMap.compAlternatingMap_apply, exteriorPowerMapOver_ιMulti]
+  refine Subtype.ext ?_
+  change h.mDR (exteriorPower.ιMulti B j v : DR R B) = _
+  rw [exteriorPower.ιMulti_apply_coe, exteriorPower.ιMulti_apply_coe, ExteriorAlgebra.ιMulti_apply,
+    ExteriorAlgebra.ιMulti_apply, map_list_prod, List.map_ofFn]
+  congr 2
+  funext k
+  exact h.mDR_ι _
+
+end GlobalTheory.FormsBaseChange
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalTwoCochainsFiniteCategoryBaseChangeBijectiv
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.DeRham
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.TotTwoBaseChange
+
+section Pi
+
+variable {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] {J : Type} {M M' : J → Type}
+  [∀ i, AddCommGroup (M i)] [∀ i, Module R (M i)] [∀ i, AddCommGroup (M' i)] [∀ i, Module R' (M' i)]
+
+def piSL (f : ∀ i, M i →ₛₗ[algebraMap R R'] M' i) : (∀ i, M i) →ₛₗ[algebraMap R R'] (∀ i, M' i) where
+  toFun x i := f i (x i)
+  map_add' x y := funext fun i ↦ map_add (f i) (x i) (y i)
+  map_smul' r x := funext fun i ↦ map_smulₛₗ (f i) r (x i)
+
+theorem piSL_bijective [Finite J] {f : ∀ i, M i →ₛₗ[algebraMap R R'] M' i}
+    (hf : ∀ i, Function.Bijective (liftSemi (f i))) : Function.Bijective (liftSemi (piSL f)) :=
+  liftSemi_pi_bijective R R' J M M' f (piSL f) (fun _ _ ↦ rfl) hf
+
+end Pi
+
+section Prod
+
+variable {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] {M N M' N' : Type}
+  [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
+  [AddCommGroup M'] [Module R' M'] [AddCommGroup N'] [Module R' N']
+
+def prodSL (f : M →ₛₗ[algebraMap R R'] M') (g : N →ₛₗ[algebraMap R R'] N') :
+    (M × N) →ₛₗ[algebraMap R R'] (M' × N') where
+  toFun x := (f x.1, g x.2)
+  map_add' x y := Prod.ext (map_add f x.1 y.1) (map_add g x.2 y.2)
+  map_smul' r x := Prod.ext (map_smulₛₗ f r x.1) (map_smulₛₗ g r x.2)
+
+theorem prodSL_bijective {f : M →ₛₗ[algebraMap R R'] M'} {g : N →ₛₗ[algebraMap R R'] N'}
+    (hf : Function.Bijective (liftSemi f)) (hg : Function.Bijective (liftSemi g)) :
+    Function.Bijective (liftSemi (prodSL f g)) :=
+  liftSemi_prod_bijective R R' M N M' N' f g (prodSL f g) (fun _ ↦ rfl) hf hg
+
+end Prod
+
+theorem main : ∀ (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (C : Type) [Category.{0} C] [Finite C] [∀ T T' : C, Finite (T ⟶ T')] (F : C ⥤ CommAlgCat.{0} R) (F' : C ⥤ CommAlgCat.{0} R') (α : ∀ T : C, F.obj T →+* F'.obj T) (hn : ∀ {T T' : C} (φ : T ⟶ T') (b : F.obj T), α T' (mp F φ b) = mp F' φ (α T b)) (hs : ∀ (T : C) (r : R) (b : F.obj T), α T (r • b) = algebraMap R R' r • α T b), (∀ (T : C) (f : F.obj T →ₛₗ[algebraMap R R'] F'.obj T), (∀ b, f b = α T b) → Function.Bijective (liftSemi f)) → Function.Bijective (liftSemi (pullTot2 (⟨𝟭 C, α, hn, hs⟩ : CoefMap (algebraMap R R') F F'))) := by
+  intro R R' _ _ _ C _ _ _ F F' α hn hs H
+  let a : ∀ T : C, F.obj T →ₛₗ[algebraMap R R'] F'.obj T := fun T ↦
+    { toFun := α T, map_add' := map_add _, map_smul' := hs T }
+  have h : ∀ T : C, SemiHom (algebraMap R R') (α T) := hs
+  have h0 : ∀ T, Function.Bijective (liftSemi (a T)) := fun T ↦ H T (a T) fun _ ↦ rfl
+  have h1 : ∀ T, Function.Bijective (liftSemi (h T).m1) := fun T ↦
+    GlobalTheory.kaehler_liftSemi_bijective R R' _ _ (α T) (h T) (a T) (fun _ ↦ rfl) (h0 T)
+  have h2 : ∀ T, Function.Bijective (liftSemi ((h T).mOm 2)) := fun T ↦
+    GlobalTheory.FormsBaseChange.bijective_liftSemi_mOm R R' _ _ (α T) (h T) (a T) (fun _ ↦ rfl) (h0 T) (h1 T) 2
+  have k2 := piSL_bijective fun T : C ↦ piSL_bijective fun T' : C ↦ piSL_bijective fun T'' : C ↦
+    piSL_bijective fun _ : T ⟶ T' ↦ piSL_bijective fun _ : T' ⟶ T'' ↦ h0 T''
+  have k1 := piSL_bijective fun T : C ↦ piSL_bijective fun T' : C ↦
+    piSL_bijective fun _ : T ⟶ T' ↦ h1 T'
+  have k0 := piSL_bijective h2
+  have k := prodSL_bijective k1 k0
+  refine liftSemi_prod_bijective R R' (C2 F) (A1 F × W0 F 2) (C2 F') (A1 F' × W0 F' 2) _ _ _ ?_ k2 k
+  intro x
+  refine Prod.ext ?_ (Prod.ext ?_ ?_)
+  · funext T T' T'' φ ψ; exact cechDeRhamPullbackTotalDegreeTwo_function_part _ φ ψ x
+  · funext T T' φ; exact pullTot2_a _ φ x
+  · funext T; exact pullTot2_η _ x T
+
+end GlobalTheory.TotTwoBaseChange
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalTwoCochainsFiniteCategoryBaseChangeBijectivStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +212,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.totalTwoCochains_finiteCategory_baseChange_bijective : ∀ (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (C : Type) [Category.{0} C] [Finite C] [∀ T T' : C, Finite (T ⟶ T')] (F : C ⥤ CommAlgCat.{0} R) (F' : C ⥤ CommAlgCat.{0} R') (α : ∀ T : C, F.obj T →+* F'.obj T) (hn : ∀ {T T' : C} (φ : T ⟶ T') (b : F.obj T), α T' (mp F φ b) = mp F' φ (α T b)) (hs : ∀ (T : C) (r : R) (b : F.obj T), α T (r • b) = algebraMap R R' r • α T b), (∀ (T : C) (f : F.obj T →ₛₗ[algebraMap R R'] F'.obj T), (∀ b, f b = α T b) → Function.Bijective (liftSemi f)) → Function.Bijective (liftSemi (pullTot2 (⟨𝟭 C, α, hn, hs⟩ : CoefMap (algebraMap R R') F F'))) := by
   first | exact @GlobalTheory.TotTwoBaseChange.main | exact GlobalTheory.TotTwoBaseChange.main | (intros; apply GlobalTheory.TotTwoBaseChange.main <;> assumption)
+end
+end

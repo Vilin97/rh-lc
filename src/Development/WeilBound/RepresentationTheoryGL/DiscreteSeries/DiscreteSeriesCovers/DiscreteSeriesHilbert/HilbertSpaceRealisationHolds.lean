@@ -6,12 +6,8 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Irreduci
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MollifierApproximationHilbertStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VoganMinimalTypeStatementStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WeightVectorsSpanDenseStatement
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertConeOfStableMollifier
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertLowestWeightOfInputs
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertSignatureHolds
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertSquareIntegrableOfSignature
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertStableHolds
-public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.WeightSpaceLeHilbert
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.HilbertSpaceModels.HilbertConeOfStableMollifier
+public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.StepFormulaF
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -48,6 +44,235 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertLowestWeightOfInputs
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.HilbertSpaceModels.HilbertSignatureHolds
+public import Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.StepSqInt
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.RregRep
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Weight
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.RigidityTheorems.IrredA
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.RigidityTheorems.MultOneA
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.HilbertSpaceModels.HilbertSquareIntegrableOfSignature
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigLamMemLpOfNe
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SqIntA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Arbitrary
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Closure
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Unitary
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.BridgeKType
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumIrr
+import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.VNormSqLowKSubRootLt
+import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.HilbertSpaceModels.WeightSpaceLeHilbert
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertConeOfStableMollifier
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset
+
+namespace PositivityTheory.RgDs.Hilb
+
+open ReciprocityTheory.ChartRestriction.DS
+
+theorem hilbert_cone_of_stable_mollifier : StepStable → StepMoll → StepWtSpan → StepCone := by
+  apply CompanionTheory.RgDs.Hilb.hilbert_cone_of_stable_mollifier <;> assumption
+
+end PositivityTheory.RgDs.Hilb
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertSignatureHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix
+
+namespace PositivityTheory.RgDs.Hilb
+
+open ReciprocityTheory.ChartRestriction.DS
+
+theorem hilbert_signature_holds : StepSig := by
+  apply CompanionTheory.RgDs.Hilb.hilbert_signature_holds <;> assumption
+
+end PositivityTheory.RgDs.Hilb
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertSquareIntegrableOfSignature
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory
+open scoped InnerProductSpace
+
+namespace PositivityTheory.RgDs.Hilb
+
+open ReciprocityTheory.ChartRestriction.DS
+
+section SquareIntegrability
+
+variable {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (lowK ε lam)}
+  {Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)}
+
+theorem hq_umem (g : Formalism.REAL.UJ ε) : Formalism.MainNotions.S.umat g ∈ UJset ε :=
+  ReciprocityTheory.ChartRestriction.DS.umat_mem_UJset ε g
+
+theorem hq_one (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w)) :
+    sigLam ε Ψ T.w (Formalism.MainNotions.S.umat (1 : Formalism.REAL.UJ ε)) = 1 := by
+  have e : Formalism.MainNotions.S.umat (1 : Formalism.REAL.UJ ε) = 1 := rfl
+  rw [e]
+  exact hrep.1.1
+
+theorem hq_mul (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w)) (a b : Formalism.REAL.UJ ε) :
+    sigLam ε Ψ T.w (Formalism.MainNotions.S.umat (a * b)) =
+      (sigLam ε Ψ T.w (Formalism.MainNotions.S.umat a)).comp (sigLam ε Ψ T.w (Formalism.MainNotions.S.umat b)) := by
+  have e : Formalism.MainNotions.S.umat (a * b) = Formalism.MainNotions.S.umat a * Formalism.MainNotions.S.umat b := rfl
+  rw [e]
+  exact hrep.1.2 _ (hq_umem a) _ (hq_umem b)
+
+theorem hq_iso (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w)) (g : Formalism.REAL.UJ ε) (v : Hlam ε Ψ T.w) :
+    ‖sigLam ε Ψ T.w (Formalism.MainNotions.S.umat g) v‖ = ‖v‖ :=
+  hrep.2.1 _ (hq_umem g) v
+
+theorem hq_memLp_of_ne (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w))
+    (hirr : Formalism.MainNotions.S.IsIrredOn (Formalism.MainNotions.S.UJset ε) (sigLam ε Ψ T.w)) (w₀ x₀ : Hlam ε Ψ T.w) (hx₀ : x₀ ≠ 0)
+    (h0 : MemLp (fun g : Formalism.REAL.UJ ε => ⟪w₀, sigLam ε Ψ T.w (Formalism.MainNotions.S.umat g) x₀⟫_ℂ) 2 (Formalism.REAL.muG ε))
+    (x : Hlam ε Ψ T.w) :
+    MemLp (fun g : Formalism.REAL.UJ ε => ⟪w₀, sigLam ε Ψ T.w (Formalism.MainNotions.S.umat g) x⟫_ℂ) 2 (Formalism.REAL.muG ε) :=
+  GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := fun g : Formalism.REAL.UJ ε => sigLam ε Ψ T.w (Formalism.MainNotions.S.umat g))
+    (measurePreserving_mul_right ε) (hq_one hrep) (hq_mul hrep) (hq_iso hrep)
+    (Formalism.MainNotions.BridgeCSchur.irr_of hirr) w₀ x₀ hx₀ h0 x
+
+theorem hq_inner
+    (hcoe : ∀ g ∈ UJset ε, ∀ x : Hlam ε Ψ T.w, ((sigLam ε Ψ T.w g x : Hlam ε Ψ T.w) : L2 ε) = rreg ε g x)
+    (y z : Hlam ε Ψ T.w) (g : Formalism.REAL.UJ ε) :
+    ⟪y, sigLam ε Ψ T.w (Formalism.MainNotions.S.umat g) z⟫_ℂ = inner ℂ (y : L2 ε) (rreg ε (Formalism.MainNotions.S.umat g) (z : L2 ε)) := by
+  rw [Submodule.coe_inner, hcoe _ (hq_umem g)]
+
+theorem hq_w_ne (hP : IsPsiFor ε lam T Ψ) : uniformisationL2 ε Ψ T.w T.w ≠ 0 := by
+  have hw : T.w ≠ 0 := by
+    intro h
+    have h1 : ‖T.w‖ = 1 := T.w_norm
+    rw [h, norm_zero] at h1
+    exact zero_ne_one h1
+  exact datumEmbedding_self_ne_zero hP hw
+
+theorem hq_coef_all (hP : IsPsiFor ε lam T Ψ)
+    (hcoe : ∀ g ∈ UJset ε, ∀ x : Hlam ε Ψ T.w, ((sigLam ε Ψ T.w g x : Hlam ε Ψ T.w) : L2 ε) = rreg ε g x)
+    (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w))
+    (hF : ∀ g ∈ UJset ε, ∀ v v' : T.V,
+      inner ℂ (uniformisationL2 ε Ψ T.w v') (rreg ε g (uniformisationL2 ε Ψ T.w v)) =
+        ((‖uniformisationL2 ε Ψ T.w T.w‖ ^ 2 : ℝ) : ℂ) * inner ℂ v' (Ψ g v))
+    (hirr : Formalism.MainNotions.S.IsIrredOn (Formalism.MainNotions.S.UJset ε) (sigLam ε Ψ T.w)) (x : Hlam ε Ψ T.w) :
+    MemLp (fun g : Formalism.REAL.UJ ε =>
+      inner ℂ (uniformisationL2 ε Ψ T.w T.w) (rreg ε (Formalism.MainNotions.S.umat g) (x : L2 ε))) 2 (Formalism.REAL.muG ε) := by
+  apply CompanionTheory.RgDs.Hilb.hq_coef_all <;> assumption
+
+theorem hq_sqInt (hP : IsPsiFor ε lam T Ψ)
+    (hcoe : ∀ g ∈ UJset ε, ∀ x : Hlam ε Ψ T.w, ((sigLam ε Ψ T.w g x : Hlam ε Ψ T.w) : L2 ε) = rreg ε g x)
+    (hrep : IsURepOn (UJset ε) (sigLam ε Ψ T.w))
+    (hF : ∀ g ∈ UJset ε, ∀ v v' : T.V,
+      inner ℂ (uniformisationL2 ε Ψ T.w v') (rreg ε g (uniformisationL2 ε Ψ T.w v)) =
+        ((‖uniformisationL2 ε Ψ T.w T.w‖ ^ 2 : ℝ) : ℂ) * inner ℂ v' (Ψ g v))
+    (hirr : Formalism.MainNotions.S.IsIrredOn (Formalism.MainNotions.S.UJset ε) (sigLam ε Ψ T.w)) :
+    Formalism.MainNotions.S.IsSqIntOn ε (sigLam ε Ψ T.w) := by
+  apply CompanionTheory.RgDs.Hilb.hq_sqInt <;> assumption
+
+end SquareIntegrability
+
+theorem hilbert_square_integrable_of_signature : StepSig → StepSqInt := by
+  intro hS n ε lam T Ψ hP hst hF hirr
+  obtain ⟨hcoe, hrep, -⟩ := hS n ε lam T Ψ hP hst
+  exact hq_sqInt hP hcoe hrep hF hirr
+
+end PositivityTheory.RgDs.Hilb
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertStableHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PositivityTheory.RgDs.Hilb
+
+open ReciprocityTheory.ChartRestriction.DS
+
+theorem hilbert_stable_holds : StepStable := by
+  intro n ε lam T Ψ hP
+  have hv₀ : T.w ≠ 0 := HW.KType.w_ne_zero T
+  have hσ := rreg_isURepOn ε
+  have hV := datumV_isKIrrHW hP hv₀
+  exact closure_genSub_stable hσ (isDerivedOn_smE hσ) hV.1 hV.2.1 (datumV_casimir hP T.w)
+
+theorem hilbert_datum_holds : StepDatum := by
+  intro n ε lam T Ψ hP
+  have hv₀ : T.w ≠ 0 := HW.KType.w_ne_zero T
+  have hσ := rreg_isURepOn ε
+  have hD := isDerivedOn_smE hσ
+  have hV := datumV_isKIrrHW hP hv₀
+  exact isKTypeOf_of_isKIrrHW hσ hD hV (datumV_kStable hP T.w) (fun μ x hx hx0 hμ =>
+    weights_le_of_irr_hw hD.glRep (isInfUnitary_of_isDerivedOn hσ hD) hV hx hx0 hμ)
+
+end PositivityTheory.RgDs.Hilb
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.WeightSpaceLeHilbert
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix
+
+namespace PositivityTheory.RgDs.Hilb
+
+open ReciprocityTheory.ChartRestriction.DS
+
+theorem weight_space_le_hilbert {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (lowK ε lam)}
+    (Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)) : V1 ε Ψ ≤ Hlam ε Ψ T.w := by
+  rintro _ ⟨v, hv, rfl⟩
+  exact UnitaryGroupOfForm.mem_closGen (E := smE ε (rreg ε)) (datumV ε Ψ T.w) v hv
+
+theorem hilb_of (h1 : StepStable) (h2 : StepDatum) (h0 : StepSig) (h3 : StepMoll) (h4 : StepWtSpan)
+    (h5 : StepStable → StepMoll → StepWtSpan → StepCone)
+    (h6 : StepStable → StepMoll → StepWtSpan → StepDatum → StepLowEq)
+    (h7 : StepDatum → StepIrred) (h8 : StepDatum → StepFormulaF) (h10 : StepSig → StepSqInt)
+    (h9 : StepVogan) : Hilb := by
+  apply CompanionTheory.RgDs.Hilb.hilb_of <;> assumption
+
+end PositivityTheory.RgDs.Hilb
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.DiscreteSeries.DiscreteSeriesCovers.DiscreteSeriesHilbert.HilbertSpaceRealisationHolds
+
+section
 
 @[expose] public section
 
@@ -58,3 +283,5 @@ theorem hilbert_space_realisation_holds : PositivityTheory.RgDs.Hilb :=
     GlobalTheory.T.irreducible_of_discrete_series_datum GlobalTheory.T.character_formula_of_discrete_series_datum hilbert_square_integrable_of_signature GlobalTheory.T.vogan_minimal_type_statement
 
 end PositivityTheory.RgDs.Hilb
+end
+end

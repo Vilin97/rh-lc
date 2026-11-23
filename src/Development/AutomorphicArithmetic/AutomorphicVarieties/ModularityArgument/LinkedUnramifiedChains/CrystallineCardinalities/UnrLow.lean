@@ -6,7 +6,9 @@ public import Mathlib.RingTheory.Coalgebra.IsFrobenius
 public import Mathlib.RingTheory.HopfAlgebra.Basic
 public import ReciprocityTheory.GaloisValuations.Global
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.DecZhat
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UlZero
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.Topology.Algebra.Group.Subgroup
+public import Mathlib.Topology.LocallyConstant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +28,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -48,8 +48,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UlZero
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.Rb1.Zc :
+    {D N : Type} → [inst : Group D] → [TopologicalSpace D] → [inst_2 : AddCommGroup N] → Representation ℤ D N → Set (D → N) :=
+    fun {D N : Type} [Group D] [TopologicalSpace D] [AddCommGroup N] (ρ : Representation ℤ D N) ↦
+      {z : D → N | IsLocallyConstant z ∧ ∀ (s t : D), z (s * t) = z s + ((ρ : D → N →ₗ[ℤ] N) s : N → N) (z t)}
+
+theorem UpperTheory.Reformulated.B.Rb1.ul_zero :
+    ∀ {D N : Type} [inst : Group D] [inst_1 : TopologicalSpace D] [inst_2 : IsTopologicalGroup D] [inst_3 : AddCommGroup N]
+      (ρ : Representation ℤ D N) (I : Subgroup D) (φ : D),
+      (I ⊔ Subgroup.zpowers φ).topologicalClosure = ⊤ →
+        ∀ z ∈ UpperTheory.Reformulated.B.Rb1.Zc ρ, (∀ s ∈ I, z s = (0 : N)) → z φ = (0 : N) → ∀ (s : D), z s = (0 : N) := by
+  intro D N _ _ _ _ ρ I φ hcl z hz hI hφ s
+  have hlc : IsLocallyConstant z := hz.1
+  have hco : ∀ (s t : D), z (s * t) = z s + ((ρ : D → N →ₗ[ℤ] N) s : N → N) (z t) := hz.2
+  have h1 : z 1 = 0 := by
+    have h := hco 1 1
+    rw [mul_one, map_one] at h
+    simpa using h
+  let K : Subgroup D :=
+    { carrier := z ⁻¹' {0}
+      mul_mem' := by
+        intro a b ha hb
+        have ha' : z a = 0 := ha
+        have hb' : z b = 0 := hb
+        show z (a * b) = 0
+        rw [hco, ha', hb', map_zero, add_zero]
+      one_mem' := h1
+      inv_mem' := by
+        intro a ha
+        have ha' : z a = 0 := ha
+        show z a⁻¹ = 0
+        have h := hco a⁻¹ a
+        rw [inv_mul_cancel, h1, ha', map_zero, add_zero] at h
+        exact h.symm }
+  have hK : IsClosed (K : Set D) := hlc.isClosed_fiber 0
+  have hle : I ⊔ Subgroup.zpowers φ ≤ K :=
+    sup_le hI (by
+      rw [Subgroup.zpowers_le]
+      exact hφ)
+  have htop : (⊤ : Subgroup D) ≤ K := by
+    rw [← hcl]
+    exact Subgroup.topologicalClosure_minimal _ hle hK
+  exact htop (Subgroup.mem_top s)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.CrystallineCardinalities.UnrLow
+
+section
 
 @[expose] public section
 
@@ -193,3 +250,5 @@ theorem UpperTheory.V.Z.J.unrLow :
   obtain ⟨φ, -, h1, h2⟩ := GC.decZhat F Ω v A hA
   haveI : ((Ine (F := F) A).subgroupOf (Dec (F := F) A)).Normal := ⟨fun n hn g => conj_mem_Ine g.2 hn⟩
   exact ul_abs ρ ho _ φ h1 h2
+end
+end

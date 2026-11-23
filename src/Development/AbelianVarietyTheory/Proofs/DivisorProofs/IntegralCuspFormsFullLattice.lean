@@ -1,9 +1,7 @@
 module
 
 public import Formalism.LocalToGlobal.IndefiniteReal.FWExist
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.SupremumLattice
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulNonnegOfPow
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LMLatOfLIntegral
+public import Formalism.LocalToGlobal.ProjectiveLattices.VAddIntNonneg
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +36,58 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulNonnegOfPow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LMLatOfLIntegral
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.DivisorBase.SupremumLattice
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.SupremumLattice
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
+
+section Ambient
+
+variable {K : Type} [Field K] [NumberField K] {R : Type} [CommRing R] [Algebra K R] [Algebra (𝓞 K) R]
+  [IsScalarTower (𝓞 K) K R] (C : Submodule K R) (Vs : HeightOneSpectrum (𝓞 K) → Set (R → EReal))
+  (hV : ∀ la, ∀ v ∈ Vs la, IsVal la v)
+
+def supIn : Submodule (𝓞 K) R := (latOf C Vs hV).map (C.subtype.restrictScalars (𝓞 K))
+
+theorem supIn_full_iff :
+    ((supIn C Vs hV).FG ∧ Submodule.span K (supIn C Vs hV : Set R) = C) ↔
+      Submodule.IsFullLattice K (latOf C Vs hV) := by
+  have h1 : (supIn C Vs hV).FG ↔ (latOf C Vs hV).FG :=
+    ⟨Submodule.fg_of_fg_map_injective (C.subtype.restrictScalars (𝓞 K)) C.injective_subtype, fun h => h.map _⟩
+  have h2 : Submodule.span K (supIn C Vs hV : Set R) =
+      (Submodule.span K (latOf C Vs hV : Set C)).map C.subtype := by
+    rw [← Submodule.span_image]; rfl
+  rw [h1, h2]
+  constructor
+  · rintro ⟨a, b⟩
+    exact { toIsLattice := Submodule.IsLattice.of_fg K a
+            span_eq_top := Submodule.map_injective_of_injective C.injective_subtype (by
+              rw [b, Submodule.map_subtype_top]) }
+  · intro h
+    exact ⟨h.fg, by rw [Submodule.IsFullLattice.span_eq_top (self := h), Submodule.map_subtype_top]⟩
+
+end Ambient
+
+variable {D : D7}
+
+end GlobalTheory.IndefiniteRowSideFullHecke.SupremumLattice
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralCuspFormsFullLattice
+
+section
 
 @[expose] public section
 
@@ -81,3 +131,6 @@ theorem mLat_of_tie (t : FWTie T R κ v₀) (F : Face D A) (b : Bool) : (R.toCx 
 end Real
 
 end GlobalTheory.GoodLat.Obj
+end
+end
+end

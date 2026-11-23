@@ -19,36 +19,14 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualCovolume
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstKernelProperties
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstKernelPropertiesOfHypotheses
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GrowthOfBasic
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HaarScaling
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvariantOperatorUnderJacquet
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.JointInstanceTheoremA
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelNonzeroModulusDeterminantEq
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelQuotientFinite
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalConditionsAndQuotientSplitting
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalVolumePositivity
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinLeTruncatedExponential
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OutsideSystemsBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PeriodLatticeFactsSplitOfGeneral
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonJointFirstReduction
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonSummationDecay
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsdFormConjRewrite
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PullLatticeTypedUnit
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RecursionGivesUniformBoundsForm
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RecursionWithDensities
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SecondVanishingOffRing
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SettingExistence
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SixteenMulLeTwoPow
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SupremumAIsMajorant
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPIntegralOfPlaces
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TriangleInequalityAtPlace
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentBlockMeasure
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselScaling
+import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -81,6 +59,169 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvariantOperatorUnderJacquet
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.JointInstanceTheoremA
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelNonzeroModulusDeterminantEq
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelQuotientFinite
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalConditionsAndQuotientSplitting
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalVolumePositivity
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinLeTruncatedExponential
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OutsideSystemsBound
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PeriodLatticeFactsSplitOfGeneral
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonJointFirstReduction
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonSummationDecay
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsdFormConjRewrite
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PullLatticeTypedUnit
+import Formalism.HermitianCurvature.StatementJ
+import Mathlib.Tactic.Linter.Style
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RecursionWithDensities
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.SecondVanishingOffRing
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SettingExistence
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SixteenMulLeTwoPow
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SupremumAIsMajorant
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPIntegralOfPlaces
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.TriangleInequalityAtPlace
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentBlockMeasure
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.HaarScaling
+
+section
+
+section
+
+open Matrix MeasureTheory Filter Topology
+open scoped ComplexConjugate ENNReal NNReal
+
+noncomputable section
+
+namespace Formalism.FourierDecayAlt.P.HaarScaling
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2
+
+theorem haar_smul {k r : ℕ} {U : Set (Mat k r)} {μ : Measure (Mt k r)} (h : IsHaarOn U μ) (c : ℝ≥0) (hc : 0 < c) :
+    IsHaarOn U (c • μ) := by
+  apply Formalism.FourierDecayAlt.P.BesselScaling.haar_smul <;> assumption
+
+section
+variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
+  [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq]
+
+def scaleG (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) : RealPlaceData k r Wp Wq :=
+  { D with μG := c • D.μG, haarG := haar_smul D.haarG c hc }
+
+theorem iteratedDeriv_two_const_mul (c : ℂ) (f : ℝ → ℂ) :
+    iteratedDeriv 2 (fun x => c * f x) = fun x => c * iteratedDeriv 2 f x := by
+  have h2 : ∀ g : ℝ → ℂ, iteratedDeriv 2 g = deriv (deriv g) := by
+    intro g
+    rw [iteratedDeriv_succ, iteratedDeriv_one]
+  rw [h2, h2, deriv_const_mul_field', deriv_const_mul_field']
+
+theorem oneMinusDD_const_mul (c : ℂ) (h : ℝ → ℝ → ℂ) (t₁ t₂ : ℝ) :
+    oneMinusDD (fun a b => c * h a b) t₁ t₂ = c * oneMinusDD h t₁ t₂ := by
+  simp only [oneMinusDD, iteratedDeriv_two_const_mul, ← mul_sub]
+
+variable [FiniteDimensional ℂ Wq]
+
+theorem ph_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (F F' : Mat k r → (Wq →L[ℂ] Wp)) (p : SS k r) :
+    Ph (scaleG D c hc) F F' p = ((c : ℝ) : ℂ) * Ph D F F' p := by
+  have hμ : (scaleG D c hc).μG = c • D.μG := rfl
+  unfold Ph
+  rw [hμ, integral_smul_nnreal_measure, NNReal.smul_def, Complex.real_smul]
+  rfl
+
+theorem betaInf_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (F F' : Mat k r → (Wq →L[ℂ] Wp)) :
+    betaInf (scaleG D c hc) F F' = ((c : ℝ) : ℂ) * betaInf D F F' := by
+  apply Formalism.FourierDecayAlt.P.BesselScaling.betaInf_scale <;> assumption
+
+theorem beta_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (F F' : Mat k r → (Wq →L[ℂ] Wp)) :
+    beta (scaleG D c hc) F F' = beta D F F' := rfl
+
+end
+
+end Formalism.FourierDecayAlt.P.HaarScaling
+
+namespace Formalism.FourierDecayAlt.P
+
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2 Formalism.FourierDecayAlt.P.HaarScaling
+
+theorem lemma_b_normalised_of_parts : Formalism.FourierDecayAlt.B2.LemmaBNormFromParts := by
+  intro hC hJ hD hI k r Wp Wq _ _ _ _ _ _ D A hA hF
+  exact hC k r Wp Wq D A hA hF (hJ k r Wp Wq D) (hD k r Wp Wq D) (hI k r Wp Wq D A hA)
+
+theorem lemma_b_any_measure_from_normalised : Formalism.FourierDecayAlt.B2.LemmaBAnyFromNorm := by
+  intro hN hB k r Wp Wq _ _ _ _ _ _ D A hA
+  obtain ⟨c, ⟨hc, hF⟩, -⟩ := hB k r Wp Wq D
+  have hF' : IntFormula (scaleG D c hc) := hF
+  obtain ⟨h1, h2, h3, h4⟩ := hN k r Wp Wq (scaleG D c hc) A hA hF'
+  refine ⟨c, hc, hF, h1, ?_, ?_, h4⟩
+  · intro F F' hF1 hF2
+    rw [← beta_scale D c hc F F', h2 F F' hF1 hF2, betaInf_scale]
+  · intro UU Θ hU hS hC F F' hF1 hF2 hs1 hs2 hI1 hI2 hI3 hI4 hIC
+    exact h3 UU Θ hU hS hC F F' hF1 hF2 hs1 hs2 hI1 hI2 hI3 hI4
+      (fun p hp T hT i j hij hj => (hIC p hp T hT i j hij hj).smul_measure_nnreal)
+
+end Formalism.FourierDecayAlt.P
+
+namespace Formalism.FourierDecayAlt.P.HaarScaling
+
+open Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2
+
+end Formalism.FourierDecayAlt.P.HaarScaling
+end
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.RecursionGivesUniformBoundsForm
+
+section
+
+section
+
+open Finset NumberField Formalism.FourierDecayAlt Formalism.FourierDecayAlt.J
+open scoped ComplexConjugate ComplexOrder Matrix
+
+namespace Formalism.FourierDecayAlt.P.Jx6
+
+end Formalism.FourierDecayAlt.P.Jx6
+
+namespace Formalism.FourierDecayAlt.P
+
+open Jx6
+
+theorem form_gives_theorem_A : Formalism.FourierDecayAlt.J.FormGivesMain := by
+  intro hM P _ B hPos he hKV h2A hF hMass hform hJ hNu hInf hVol hLev hMas hCol hOrd hTyp hInd
+  obtain ⟨a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19,
+    a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35⟩ := hPos
+  have hn : 0 < B.n0c := a33
+  have hen : 0 < B.e1 * B.n0c := mul_pos he hn
+  have key := hM P { B with supdens := B.e1, KtopV := B.KV / (B.e1 * B.n0c) }
+    ⟨a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20,
+      a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, he.le, a35⟩ h2A hF
+    (by
+      constructor
+      · show B.KV ≤ B.e1 * B.n0c * (B.KV / (B.e1 * B.n0c))
+        rw [mul_div_cancel₀ _ hen.ne']
+      · show 0 ≤ B.KV / (B.e1 * B.n0c)
+        exact div_nonneg hKV hen.le)
+    hMass
+    (by show B.e1 ≤ B.e1; exact le_refl _)
+    (by
+      show B.c0 * B.c0' * (B.KV / (B.e1 * B.n0c)) ≤ (1 + B.δ) * B.IntN
+      rw [← mul_div_assoc, div_le_iff₀ hen]
+      linarith)
+    hJ hNu hInf hVol hLev hMas hCol hOrd hTyp hInd
+  exact key
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HeisenbergConjugationMeasurePreserving
+
+section
 
 @[expose] public section
 
@@ -190,3 +331,5 @@ theorem tbb_ptBoundOfCorS : Formalism.FourierDecayAlt.TBB.PtBoundOfCorS := Forma
 theorem tbb_thmBpOfParts : Formalism.FourierDecayAlt.TBB.ThmBpOfParts := Formalism.FourierDecayAlt.P.theorem_b_of_parts
 
 end Formalism.FourierDecayAlt.Final
+end
+end

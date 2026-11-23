@@ -1,20 +1,14 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemIntV
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyEqOfMonicAevalPowersLinearIndependentStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralMatrixUnitsAtPlacesStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralTensorPointsSharpStableRing
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalGroupActionRingHom
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralLocalCenterFiniteMaximalIdealsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalTensorCenterInclusionInjectiveCentralFinranStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixUnitsGiveMatrixAlgebraIso
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowersLinearIndependentOverLocalTensorCenterStatement
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -26,11 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,9 +40,225 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsCyclotomicExtensionQI
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemIntV
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralMatrixUnitsAtPlacesStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralTensorPointsSharpStableRing
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalGroupActionRingHom
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralLocalCenterFiniteMaximalIdealsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntVZero
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+public import Mathlib.RingTheory.Flat.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixUnitsGiveMatrixAlgebraIso
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyEqOfMonicAevalPowersLinearIndependent
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+namespace GlobalTheory
+
+theorem charpoly_eq_of_monic_aeval_linearIndependent :
+    ∀ (K : Type) [CommRing K] (n : ℕ) (X : Matrix (Fin n) (Fin n) K) (P : Polynomial K),
+      P.Monic → P.natDegree = n → Polynomial.aeval X P = 0 →
+      LinearIndependent K (fun i : Fin n => X ^ (i : ℕ)) → X.charpoly = P := by
+  intro K _ n X P hP hdeg hX hli
+  rcases subsingleton_or_nontrivial K with hK | hK
+  · exact Subsingleton.elim _ _
+  have hc : X.charpoly.Monic := Matrix.charpoly_monic X
+  have hcd : X.charpoly.natDegree = n := by
+    simpa using Matrix.charpoly_natDegree_eq_dim X
+  have hcdeg : X.charpoly.degree = n := by
+    rw [Polynomial.degree_eq_natDegree hc.ne_zero, hcd]
+  have hPdeg : P.degree = n := by
+    rw [Polynomial.degree_eq_natDegree hP.ne_zero, hdeg]
+  have hDdeg : (X.charpoly - P).degree < n := by
+    have h := Polynomial.degree_sub_lt (p := X.charpoly) (q := P)
+      (by rw [hcdeg, hPdeg]) hc.ne_zero (by rw [hc.leadingCoeff, hP.leadingCoeff])
+    rwa [hcdeg] at h
+  have hDaeval : Polynomial.aeval X (X.charpoly - P) = 0 := by
+    rw [map_sub, Matrix.aeval_self_charpoly, hX, sub_zero]
+  rw [← sub_eq_zero]
+  by_contra hD0
+  have hnat : (X.charpoly - P).natDegree < n :=
+    (Polynomial.natDegree_lt_iff_degree_lt hD0).mpr hDdeg
+  have hsum : ∑ i : Fin n, (X.charpoly - P).coeff (i : ℕ) • X ^ (i : ℕ) = 0 := by
+    have h := Polynomial.aeval_eq_sum_range' hnat X
+    rw [hDaeval, Finset.sum_range (fun i => (X.charpoly - P).coeff i • X ^ i)] at h
+    exact h.symm
+  have hcoeff := Fintype.linearIndependent_iff.mp hli
+    (fun i : Fin n => (X.charpoly - P).coeff (i : ℕ)) hsum
+  apply hD0
+  ext k
+  rw [Polynomial.coeff_zero]
+  by_cases hk : k < n
+  · exact hcoeff ⟨k, hk⟩
+  · exact Polynomial.coeff_eq_zero_of_natDegree_lt (lt_of_lt_of_le hnat (not_lt.mp hk))
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyEqOfMonicAevalPowersLinearIndependentStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.charpoly_eq_of_monic_aeval_powers_linearIndependent : ∀ (K : Type) [CommRing K] (n : ℕ) (X : Matrix (Fin n) (Fin n) K) (P : Polynomial K), P.Monic → P.natDegree = n → Polynomial.aeval X P = 0 → LinearIndependent K (fun i : Fin n => X ^ (i : ℕ)) → X.charpoly = P := by
+  first | (exact @GlobalTheory.charpoly_eq_of_monic_aeval_linearIndependent) | (exact GlobalTheory.charpoly_eq_of_monic_aeval_linearIndependent) | (intros; apply GlobalTheory.charpoly_eq_of_monic_aeval_linearIndependent  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalTensorCenterInclusionInjectiveCentralFinran
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.OrbFinAf
+
+theorem iotaF_props : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p), Function.Injective (iotaF G v) ∧ (∀ z x, Commute (iotaF G v z) x) ∧ Module.finrank (Qv v) (Qv v ⊗[ℚ] G.C) = G.n ^ 2 * Module.finrank (Qv v) (Qv v ⊗[ℚ] G.F) := by
+  intro p _ G v
+  haveI : IsSimpleRing G.C := G.simpleC
+  haveI : Nontrivial G.C := inferInstance
+  haveI : Module.Finite ℚ G.C := Module.Finite.trans G.F G.C
+  refine ⟨?_, ?_, ?_⟩
+  · have hf : Function.Injective ((IsScalarTower.toAlgHom ℚ G.F G.C).toLinearMap) :=
+      (algebraMap G.F G.C).injective
+    have := Module.Flat.lTensor_preserves_injective_linearMap (M := Qv v) _ hf
+    exact this
+  · intro z x
+    induction z using TensorProduct.induction_on with
+    | zero => simp
+    | add a b ha hb => rw [map_add (f := _)]; exact ha.add_left hb
+    | tmul a f =>
+      induction x using TensorProduct.induction_on with
+      | zero => exact Commute.zero_right _
+      | add c d hc hd => exact hc.add_right hd
+      | tmul b c =>
+        rw [iotaF_tmul]
+        show (a ⊗ₜ[ℚ] algebraMap G.F G.C f) * (b ⊗ₜ[ℚ] c) = (b ⊗ₜ[ℚ] c) * (a ⊗ₜ[ℚ] algebraMap G.F G.C f)
+        rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_comm a b,
+          Algebra.commutes]
+  · rw [Module.finrank_baseChange, Module.finrank_baseChange, ← Module.finrank_mul_finrank ℚ G.F G.C,
+      G.rankC, mul_comm]
+
+end GlobalTheory.OrbFinAf
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalTensorCenterInclusionInjectiveCentralFinranStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.localTensorCenterInclusion_injective_central_finrank : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p), Function.Injective (iotaF G v) ∧ (∀ z x, Commute (iotaF G v z) x) ∧ Module.finrank (Qv v) (Qv v ⊗[ℚ] G.C) = G.n ^ 2 * Module.finrank (Qv v) (Qv v ⊗[ℚ] G.F) := by
+  first | (exact @GlobalTheory.OrbFinAf.iotaF_props) | (exact GlobalTheory.OrbFinAf.iotaF_props) | (intros; apply GlobalTheory.OrbFinAf.iotaF_props  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowersLinearIndependentOverLocalTensorCenter
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+noncomputable section
+
+namespace GlobalTheory.OrbFinAf
+
+theorem pow_indep_tensor : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (γ : G.C), (minpoly G.F γ).natDegree = G.n →
+    ∀ (v : AwayP p) (c : Fin G.n → Qv v ⊗[ℚ] G.F),
+      ∑ i, iotaF G v (c i) * (1 : Qv v) ⊗ₜ[ℚ] γ ^ (i : ℕ) = 0 → c = 0 := by
+  intro p _ G γ hn v c hc
+
+  let ψ : (Fin G.n → G.F) →ₗ[ℚ] G.C :=
+    { toFun := fun f => ∑ i, f i • γ ^ (i : ℕ)
+      map_add' := fun f g => by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
+      map_smul' := fun q f => by
+        simp only [Pi.smul_apply, RingHom.id_apply, Finset.smul_sum, smul_assoc] }
+  have li : LinearIndependent G.F (fun i : Fin G.n => γ ^ (i : ℕ)) := by
+    have := linearIndependent_pow (K := G.F) γ
+    rw [hn] at this
+    exact this
+  have hψ : Function.Injective ψ := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro f hf
+    exact funext ((Fintype.linearIndependent_iff.mp li) f hf)
+  have hinj : Function.Injective (ψ.lTensor (Qv v)) :=
+    Module.Flat.lTensor_preserves_injective_linearMap ψ hψ
+  let e := TensorProduct.piRight ℚ ℚ (Qv v) (fun _ : Fin G.n => G.F)
+  have key : ∀ t : Qv v ⊗[ℚ] (Fin G.n → G.F),
+      ∑ i, iotaF G v (e t i) * (1 : Qv v) ⊗ₜ[ℚ] γ ^ (i : ℕ) = ψ.lTensor (Qv v) t := by
+    intro t
+    induction t using TensorProduct.induction_on with
+    | zero => simp
+    | add x y hx hy =>
+      rw [map_add (f := _), map_add (f := _), ← hx, ← hy, ← Finset.sum_add_distrib]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [Pi.add_apply, map_add (f := _), add_mul]
+    | tmul q f =>
+      rw [LinearMap.lTensor_tmul]
+      have : ∀ i, e (q ⊗ₜ[ℚ] f) i = q ⊗ₜ[ℚ] f i := fun i => rfl
+      simp only [this, iotaF_tmul, Algebra.TensorProduct.tmul_pow, one_pow, Algebra.TensorProduct.tmul_mul_tmul, mul_one]
+      simp only [ψ, LinearMap.coe_mk, AddHom.coe_mk, TensorProduct.tmul_sum, Algebra.smul_def]
+
+  have h0 : ψ.lTensor (Qv v) (e.symm c) = 0 := by
+    rw [← key, LinearEquiv.apply_symm_apply]; exact hc
+  have : e.symm c = 0 := hinj (by rw [h0, map_zero])
+  rw [← e.apply_symm_apply c, this, map_zero]
+
+end GlobalTheory.OrbFinAf
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowersLinearIndependentOverLocalTensorCenterStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.LKMid GlobalTheory.OrbFinAf
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.powers_linearIndependent_over_localTensorCenter : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (γ : G.C), (minpoly G.F γ).natDegree = G.n → ∀ (v : AwayP p) (c : Fin G.n → Qv v ⊗[ℚ] G.F), ∑ i, iotaF G v (c i) * (1 : Qv v) ⊗ₜ[ℚ] γ ^ (i : ℕ) = 0 → c = 0 := by
+  first | (exact @GlobalTheory.OrbFinAf.pow_indep_tensor) | (exact GlobalTheory.OrbFinAf.pow_indep_tensor) | (intros; apply GlobalTheory.OrbFinAf.pow_indep_tensor  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyCompletedTensorMatrixSplitSemilocal
+
+section
 
 @[expose] public section
 
@@ -155,3 +360,6 @@ theorem split_eventually : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (γ : G.
         intro i; rw [this]; rfl
 
 end GlobalTheory.OrbFinAf
+end
+end
+end

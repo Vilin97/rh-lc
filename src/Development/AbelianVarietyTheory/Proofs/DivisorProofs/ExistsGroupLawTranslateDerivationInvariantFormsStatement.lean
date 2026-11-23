@@ -2,14 +2,15 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RedHomAlgebraMap
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SurjectiveOfIsPullbackSqZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGroupLawTranslateDerivationInvariantForms
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCrystallineFormLiftDifferenceEqSum
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -40,7 +41,191 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Divisors.PrimitiveStructureSheafDegTwoVanish
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SurjectiveSpMapOfSq
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct WithConv
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp spMap epsR IsTangent IsGrpPullback)
+open ReciprocityTheory.ChartRestriction.G.Semi (IsAbelianScheme LB RigLB CubicalStr Theta thφ thε thK x3)
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.PDiv GlobalTheory.PtExt
+attribute [local instance] Over.cartesianMonoidalCategory
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.PtExt
+
+theorem surjective_spMap_of_sq {A B : Type} [CommRing A] [CommRing B] (π : A →+* B) (hπ : Function.Surjective π)
+    (hsq : ∀ a ∈ RingHom.ker π, a * a = 0) : Function.Surjective (spMap π) := fun x ↦ by
+  have hx : x ∈ PrimeSpectrum.zeroLocus (RingHom.ker π : Set A) := fun a ha ↦
+    (x.isPrime.mem_or_mem ((hsq a ha).symm ▸ x.asIdeal.zero_mem)).elim id id
+  rw [← range_comap_of_surjective B π hπ] at hx
+  exact hx
+
+theorem pt_dual_le_of_fst : ∀ (R : Type) [CommRing R] (H : Over (Sp R)) (D : Type) [CommRing D] [Algebra R D]
+      (Z : Over.mk (spMap (algebraMap R (DualNumber D))) ⟶ H) (U : H.left.Opens),
+      ⊤ ≤ (spOver (TrivSqZeroExt.fstHom R D D) ≫ Z).left ⁻¹ᵁ U → ⊤ ≤ Z.left ⁻¹ᵁ U := by
+  intro R _ H D _ _ Z U h x _
+  have hs : Function.Surjective (spMap ((TrivSqZeroExt.fstHom R D D : DualNumber D →ₐ[R] D) : DualNumber D →+* D)) :=
+    surjective_spMap_of_sq _ (fun d ↦ ⟨TrivSqZeroExt.inl d, rfl⟩) fun a ha ↦ by
+      have h0 : a.fst = 0 := ha
+      ext <;> simp [h0]
+  obtain ⟨y, rfl⟩ := hs x
+  have hy := h (show y ∈ (⊤ : (Sp D).Opens) from trivial)
+  simpa [Over.comp_left, PDiv.spOver_left] using hy
+
+end GlobalTheory.PtExt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGroupLawTranslateDerivationInvariantForms
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry KaehlerDifferential MonoidalCategory CartesianMonoidalCategory MonObj
+open scoped TensorProduct
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR GlobalTheory.LiftSys GlobalTheory.Obs
+attribute [local instance] Over.cartesianMonoidalCategory
+
+set_option autoImplicit false
+noncomputable section
+
+namespace GlobalTheory.InvForm
+
+section Alg
+variable {R C E : Type} [CommRing R] [CommRing C] [Algebra R C] [CommRing E] [Algebra R E]
+
+theorem dVal_smul_left (φ : C →ₐ[R] DualNumber E) (c : C) (x : Ω[C⁄R]) :
+    dVal φ (c • x) = (φ c).fst * dVal φ x := by
+  letI : Algebra C E := (redHom φ).toAlgebra
+  haveI : IsScalarTower R C E := IsScalarTower.of_algebraMap_eq fun r ↦ (redHom_algebraMap φ r).symm
+  unfold dVal
+  simp only [LinearMap.coe_restrictScalars]
+  rw [LinearMap.map_smul]
+  rfl
+
+def semiDerHom (σ : C →ₐ[R] E) (θ : Ω[C⁄R] →ₗ[R] E) (hθ : ∀ (c : C) (x : Ω[C⁄R]), θ (c • x) = σ c * θ x) :
+    C →ₐ[R] DualNumber E where
+  toFun c := TrivSqZeroExt.inl (σ c) + TrivSqZeroExt.inr (θ (KaehlerDifferential.D R C c))
+  map_one' := by ext <;> simp
+  map_mul' a b := by
+    ext
+    · simp
+    · simp [hθ, MulOpposite.smul_eq_mul_unop]; ring
+  map_zero' := by ext <;> simp
+  map_add' a b := by ext <;> simp
+  commutes' r := by ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl']
+
+theorem fst_semiDerHom (σ : C →ₐ[R] E) (θ : Ω[C⁄R] →ₗ[R] E) (hθ : ∀ (c : C) (x : Ω[C⁄R]), θ (c • x) = σ c * θ x)
+    (c : C) : (semiDerHom σ θ hθ c).fst = σ c := by simp [semiDerHom]
+
+theorem dVal_semiDerHom (σ : C →ₐ[R] E) (θ : Ω[C⁄R] →ₗ[R] E) (hθ : ∀ (c : C) (x : Ω[C⁄R]), θ (c • x) = σ c * θ x) :
+    dVal (semiDerHom σ θ hθ) = θ := by
+  refine LinearMap.ext fun x ↦ ?_
+  induction x using GlobalTheory.CechDR.ind1 with
+  | h b c =>
+    rw [dVal_smul_left, dVal_D, hθ, fst_semiDerHom]
+    simp [semiDerHom]
+  | h0 => simp
+  | ha x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+
+end Alg
+end GlobalTheory.InvForm
+
+namespace GlobalTheory.InvForm
+
+theorem exists_transl_val : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (U V : AffOp A.left)
+    (θ : Ω[Sec A.hom V.unop.1⁄R] →ₗ[R] Sec A.hom U.unop.1 ⊗[R] Sec A.hom V.unop.1),
+    (∀ (c : Sec A.hom V.unop.1) (x : Ω[Sec A.hom V.unop.1⁄R]), θ (c • x) = (1 ⊗ₜ c) * θ x) →
+    ∃ ψ : Sec A.hom U.unop.1 →ₐ[R] DualNumber (Sec A.hom U.unop.1 ⊗[R] Sec A.hom V.unop.1),
+      (∀ b, (ψ b).fst = b ⊗ₜ 1) ∧
+      ∀ w : GlobalTheory.InvForm.InvForm A, θ (evForm A.hom V w.1) = GlobalTheory.InvForm.dVal ψ (evForm A.hom U w.1) := by
+  intro R _ A _ U V θ hθ
+  let T := Sec A.hom U.unop.1 ⊗[R] Sec A.hom V.unop.1
+  let σ : Sec A.hom V.unop.1 →ₐ[R] T := Algebra.TensorProduct.includeRight
+  let τ : Sec A.hom U.unop.1 →ₐ[R] T := Algebra.TensorProduct.includeLeft
+  have hθ' : ∀ (c : Sec A.hom V.unop.1) (x : Ω[Sec A.hom V.unop.1⁄R]), θ (c • x) = σ c * θ x := hθ
+  let φ := semiDerHom σ θ hθ'
+  let aV : Over.mk (spMap (algebraMap R (Sec A.hom V.unop.1))) ⟶ A :=
+    Over.homMk (affPt A.hom V.unop) (affPt_w A.hom V.unop)
+  let aU : Over.mk (spMap (algebraMap R (Sec A.hom U.unop.1))) ⟶ A :=
+    Over.homMk (affPt A.hom U.unop) (affPt_w A.hom U.unop)
+  let p := GlobalTheory.DeRham.spOver φ ≫ aV
+  let x₀ := GlobalTheory.DeRham.spOver τ ≫ aU
+  let y₀ := GlobalTheory.DeRham.spOver σ ≫ aV
+  let q' := y₀⁻¹ * x₀
+  let dualInclusion := TrivSqZeroExt.inlAlgHom R T T
+  let dualProjection := TrivSqZeroExt.fstHom R T T
+  let q := GlobalTheory.DeRham.spOver dualInclusion ≫ q'
+  let red := GlobalTheory.DeRham.spOver dualProjection
+  have h1 : red ≫ p = y₀ := by
+    have hφ : dualProjection.comp φ = σ := AlgHom.ext fun c ↦ fst_semiDerHom σ θ hθ' c
+    simp only [red, p, y₀, ← Category.assoc, GlobalTheory.DeRham.spOver_comp, hφ]
+  have h2 : red ≫ q = q' := by
+    have hsection : dualProjection.comp dualInclusion = AlgHom.id R T := AlgHom.ext fun _ ↦ rfl
+    have hid : GlobalTheory.DeRham.spOver (AlgHom.id R T) = 𝟙 (Over.mk (spMap (algebraMap R T))) := by
+      apply Over.OverMorphism.ext
+      simp only [GlobalTheory.DeRham.spOver, Over.homMk_left, Over.id_left]
+      exact Cris.spMap_id T
+    simp only [red, q, ← Category.assoc, GlobalTheory.DeRham.spOver_comp, hsection, hid, Category.id_comp]
+  have h3 : red ≫ (p * q) = x₀ := by
+    rw [MonObj.comp_mul, h1, h2, mul_inv_cancel_left]
+  have h3Left : spMap dualProjection.toRingHom ≫ (p * q).left = spMap τ.toRingHom ≫ affPt A.hom U.unop := by
+    simpa only [Over.comp_left, red, x₀, aU, GlobalTheory.DeRham.spOver, Over.homMk_left,
+      AlgHom.toRingHom_eq_coe]
+      using congrArg (fun f ↦ f.left) h3
+  have htop : ⊤ ≤ (p * q).left ⁻¹ᵁ U.unop.1 := by
+    have hsurj : Function.Surjective (spMap dualProjection.toRingHom) :=
+      GlobalTheory.PtExt.surjective_spMap_of_sq _ TrivSqZeroExt.fst_surjective fun a ha ↦ by
+        have ha' : a.fst = 0 := ha
+        ext <;> simp [ha']
+    intro x _
+    obtain ⟨t, rfl⟩ := hsurj x
+    change ((spMap dualProjection.toRingHom ≫ (p * q).left).base t) ∈ U.unop.1
+    rw [h3Left]
+    change U.unop.2.fromSpec.base ((spMap τ.toRingHom).base t) ∈ U.unop.1
+    exact (Set.ext_iff.mp U.unop.2.range_fromSpec _).1 ⟨_, rfl⟩
+  have hs : (p * q).left ≫ A.hom = spMap (algebraMap R (DualNumber T)) := Over.w (p * q)
+  let ψ := GlobalTheory.CechKS.FormLocal.valHom (s := A.hom) (U := U.unop.1) (p * q).left htop hs
+  have hψ : spMap ψ.toRingHom ≫ affPt A.hom U.unop = (p * q).left :=
+    GlobalTheory.CechKS.FormLocal.valHom_pt U.unop.2 _ htop hs
+  have hfst : dualProjection.toRingHom.comp ψ.toRingHom = τ.toRingHom := by
+    apply GlobalTheory.CechKS.FormLocal.ringHom_ext_affPt (s := A.hom) U.unop.2
+    change spMap _ ≫ affPt A.hom U.unop = spMap _ ≫ affPt A.hom U.unop
+    rw [Cris.spMap_comp, Category.assoc, hψ]
+    exact h3Left
+  refine ⟨ψ, fun b ↦ RingHom.congr_fun hfst b, fun w ↦ ?_⟩
+  have hp : p.left = spMap φ.toRingHom ≫ affPt A.hom V.unop := by
+    simp only [p, aV, Over.comp_left, GlobalTheory.DeRham.spOver, Over.homMk_left, AlgHom.toRingHom_eq_coe]
+  have hq : q.left = spMap (algebraMap T (DualNumber T)) ≫ q'.left := by
+    have hι : (dualInclusion : T →+* DualNumber T) = algebraMap T (DualNumber T) := RingHom.ext fun _ ↦ rfl
+    simp only [q, Over.comp_left, GlobalTheory.DeRham.spOver, Over.homMk_left, hι]
+  have key := w.2 T V.unop U.unop φ ψ p q q'.left hp hq hψ.symm
+  rw [dVal_semiDerHom] at key
+  exact key
+
+end GlobalTheory.InvForm
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGroupLawTranslateDerivationInvariantFormsStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +237,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_groupLawTranslate_derivation_invariantForms : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (U V : AffOp A.left) (θ : Ω[Sec A.hom V.unop.1⁄R] →ₗ[R] Sec A.hom U.unop.1 ⊗[R] Sec A.hom V.unop.1), (∀ (c : Sec A.hom V.unop.1) (x : Ω[Sec A.hom V.unop.1⁄R]), θ (c • x) = (1 ⊗ₜ c) * θ x) → ∃ ψ : Sec A.hom U.unop.1 →ₐ[R] DualNumber (Sec A.hom U.unop.1 ⊗[R] Sec A.hom V.unop.1), (∀ b, (ψ b).fst = b ⊗ₜ 1) ∧ ∀ w : GlobalTheory.InvForm.InvForm A, θ (evForm A.hom V w.1) = GlobalTheory.InvForm.dVal ψ (evForm A.hom U w.1) := by
   first | exact @GlobalTheory.InvForm.exists_transl_val | exact GlobalTheory.InvForm.exists_transl_val | (intros; apply GlobalTheory.InvForm.exists_transl_val <;> assumption)
+end
+end

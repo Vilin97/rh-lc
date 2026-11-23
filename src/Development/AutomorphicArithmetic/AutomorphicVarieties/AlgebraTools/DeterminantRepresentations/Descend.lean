@@ -1,12 +1,8 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.ExtGen
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.ExtendPoly
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenEval
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenSpan
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.InjTest
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.MapApi
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenEval
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenSpan
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,10 +41,172 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.MvPolynomial.Basic
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+public import Mathlib.Algebra.MvPolynomial.Eval
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenEval
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.GenSpan
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.InjTest
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.MapApi
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Algebra.MvPolynomial.Monad
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.ExtGen
+
+section
+
+@[expose] public section
+
+open Polynomial UpperTheory.V.W
+
+theorem UpperTheory.V.AlgebraTools.Det.extGen :
+    ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] (D D' : GDet n A G),
+    (∀ (m : ℕ) (g : Fin m → G), D.D (MvPolynomial (Fin m) A) (GDet.gen fun j => MonoidAlgebra.single (g j) 1) =
+      D'.D (MvPolynomial (Fin m) A) (GDet.gen fun j => MonoidAlgebra.single (g j) 1)) → D = D' := by
+  intro n A G _ _ D D' h
+  refine GDet.ext fun B _ _ x => ?_
+  obtain ⟨m, g, b, rfl⟩ := UpperTheory.V.AlgebraTools.Det.genSpan (A := A) B x
+  rw [UpperTheory.V.AlgebraTools.Det.genEval D B m (fun j => MonoidAlgebra.single (g j) 1) b,
+    UpperTheory.V.AlgebraTools.Det.genEval D' B m (fun j => MonoidAlgebra.single (g j) 1) b, h]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.LiftIndep
+
+section
+
+@[expose] public section
+
+open Polynomial UpperTheory.V.W
+
+theorem UpperTheory.V.AlgebraTools.Det.liftIndep :
+    ∀ {A G : Type} [CommRing A] [Group G] (d : ∀ σ : Type, MonoidAlgebra (MvPolynomial σ A) G →* MvPolynomial σ A),
+    (∀ (σ τ : Type) (f : MvPolynomial σ A →ₐ[A] MvPolynomial τ A) (x : MonoidAlgebra (MvPolynomial σ A) G),
+      d τ (MonoidAlgebra.mapRingHom G (f : MvPolynomial σ A →+* MvPolynomial τ A) x) = f (d σ x)) →
+    ∀ (B : Type) [CommRing B] [Algebra A B] (σ τ : Type) (p : MvPolynomial σ A →ₐ[A] B) (q : MvPolynomial τ A →ₐ[A] B)
+      (x : MonoidAlgebra (MvPolynomial σ A) G) (z : MonoidAlgebra (MvPolynomial τ A) G),
+      MonoidAlgebra.mapRingHom G (p : MvPolynomial σ A →+* B) x = MonoidAlgebra.mapRingHom G (q : MvPolynomial τ A →+* B) z →
+      p (d σ x) = q (d τ z) := by
+  intro A G _ _ d hd B _ _ σ τ p q x z hxz
+  classical
+  let S : Finset G := x.coeff.support ∪ z.coeff.support
+  let w : MonoidAlgebra (MvPolynomial G A) G := ∑ g ∈ S, MonoidAlgebra.single g (MvPolynomial.X g)
+  let φ : MvPolynomial G A →ₐ[A] MvPolynomial σ A := MvPolynomial.aeval fun g => x.coeff g
+  let ψ : MvPolynomial G A →ₐ[A] MvPolynomial τ A := MvPolynomial.aeval fun g => z.coeff g
+  have hx : MonoidAlgebra.mapRingHom G (φ : MvPolynomial G A →+* MvPolynomial σ A) w = x := by
+    ext g
+    by_cases hg : g ∈ S
+
+    · simp [w, φ, map_sum, MonoidAlgebra.coeff_single, Finsupp.single_apply, hg]
+    · have h0 : x.coeff g = 0 := by
+        by_contra h
+        exact hg (Finset.mem_union_left _ (Finsupp.mem_support_iff.mpr h))
+
+      simp [w, φ, map_sum, MonoidAlgebra.coeff_single, Finsupp.single_apply, hg, h0]
+  have hz : MonoidAlgebra.mapRingHom G (ψ : MvPolynomial G A →+* MvPolynomial τ A) w = z := by
+    ext g
+    by_cases hg : g ∈ S
+
+    · simp [w, ψ, map_sum, MonoidAlgebra.coeff_single, Finsupp.single_apply, hg]
+    · have h0 : z.coeff g = 0 := by
+        by_contra h
+        exact hg (Finset.mem_union_right _ (Finsupp.mem_support_iff.mpr h))
+
+      simp [w, ψ, map_sum, MonoidAlgebra.coeff_single, Finsupp.single_apply, hg, h0]
+  have key : p.comp φ = q.comp ψ := by
+    refine MvPolynomial.algHom_ext fun g => ?_
+    have h := congrArg (fun y : MonoidAlgebra B G => y.coeff g) hxz
+    simpa [φ, ψ] using h
+  calc p (d σ x) = p (φ (d G w)) := by rw [← hd, hx]
+    _ = (p.comp φ) (d G w) := rfl
+    _ = (q.comp ψ) (d G w) := by rw [key]
+    _ = q (d τ z) := by
+      change q (ψ (d G w)) = q (d τ z)
+      rw [← hd, hz]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.ExtendPoly
+
+section
+
+@[expose] public section
+
+open Polynomial UpperTheory.V.W
+
+theorem UpperTheory.V.AlgebraTools.Det.extendPoly :
+    ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] (d : ∀ σ : Type, MonoidAlgebra (MvPolynomial σ A) G →* MvPolynomial σ A),
+    (∀ (σ τ : Type) (f : MvPolynomial σ A →ₐ[A] MvPolynomial τ A) (x : MonoidAlgebra (MvPolynomial σ A) G),
+      d τ (MonoidAlgebra.mapRingHom G (f : MvPolynomial σ A →+* MvPolynomial τ A) x) = f (d σ x)) →
+    (∀ (σ : Type) (b : MvPolynomial σ A) (x : MonoidAlgebra (MvPolynomial σ A) G), d σ (b • x) = b ^ n * d σ x) →
+    ∃ D : GDet n A G, ∀ (σ : Type) (x : MonoidAlgebra (MvPolynomial σ A) G), D.D (MvPolynomial σ A) x = d σ x := by
+  intro n A G _ _ d hnat hhom
+  have hsurj : ∀ (B : Type) [CommRing B] [Algebra A B],
+      Function.Surjective (MonoidAlgebra.mapRingHom G
+        ((MvPolynomial.aeval id : MvPolynomial B A →ₐ[A] B) : MvPolynomial B A →+* B)) := by
+    intro B _ _
+    rw [MonoidAlgebra.coe_mapRingHom]
+    refine MonoidAlgebra.map_surjective _ ?_
+    intro b
+    exact ⟨MvPolynomial.X b, by simp⟩
+  have spec : ∀ (B : Type) [CommRing B] [Algebra A B] (y : MonoidAlgebra B G),
+      MonoidAlgebra.mapRingHom G
+        ((MvPolynomial.aeval id : MvPolynomial B A →ₐ[A] B) : MvPolynomial B A →+* B)
+        (hsurj B y).choose = y :=
+    fun B _ _ y => (hsurj B y).choose_spec
+  have ind : ∀ (B : Type) [CommRing B] [Algebra A B] (x x' : MonoidAlgebra (MvPolynomial B A) G),
+      MonoidAlgebra.mapRingHom G
+          ((MvPolynomial.aeval id : MvPolynomial B A →ₐ[A] B) : MvPolynomial B A →+* B) x =
+        MonoidAlgebra.mapRingHom G
+          ((MvPolynomial.aeval id : MvPolynomial B A →ₐ[A] B) : MvPolynomial B A →+* B) x' →
+      MvPolynomial.aeval id (d B x) = MvPolynomial.aeval id (d B x') :=
+    fun B _ _ x x' h => UpperTheory.V.AlgebraTools.Det.liftIndep d hnat B B B _ _ x x' h
+  refine ⟨⟨fun B _ _ =>
+    { toFun := fun y => MvPolynomial.aeval id (d B (hsurj B y).choose)
+      map_one' := ?_
+      map_mul' := ?_ }, ?_, ?_⟩, ?_⟩
+  · show MvPolynomial.aeval id (d B (hsurj B 1).choose) = 1
+    rw [ind B _ 1 (by rw [spec, map_one]), map_one, map_one]
+  · intro y y'
+    show MvPolynomial.aeval id (d B (hsurj B (y * y')).choose) =
+      MvPolynomial.aeval id (d B (hsurj B y).choose) * MvPolynomial.aeval id (d B (hsurj B y').choose)
+    rw [ind B _ ((hsurj B y).choose * (hsurj B y').choose) (by rw [spec, map_mul, spec, spec]),
+      map_mul, map_mul]
+  · intro B B' _ _ _ _ f y
+    have h := UpperTheory.V.AlgebraTools.Det.liftIndep d hnat B' B' B (MvPolynomial.aeval id)
+      (f.comp (MvPolynomial.aeval id)) (hsurj B' (MonoidAlgebra.mapRingHom G (f : B →+* B') y)).choose
+      (hsurj B y).choose (by
+        rw [spec]
+        conv_lhs => rw [← spec B y]
+        rw [← RingHom.comp_apply, ← MonoidAlgebra.mapRingHom_comp]
+        rfl)
+    exact h
+  · intro B _ _ b y
+    show MvPolynomial.aeval id (d B (hsurj B (b • y)).choose) =
+      b ^ n * MvPolynomial.aeval id (d B (hsurj B y).choose)
+    rw [ind B _ (MvPolynomial.X b • (hsurj B y).choose) (by
+        rw [spec]
+        conv_lhs => rw [← spec B y]
+        ext m
+        rw [MonoidAlgebra.coeff_smul_apply, MonoidAlgebra.coeff_mapRingHom,
+          MonoidAlgebra.coeff_mapRingHom,
+          MonoidAlgebra.coeff_smul_apply (MvPolynomial.X b : MvPolynomial B A) (hsurj B y).choose m]
+        simp [smul_eq_mul]), hhom, map_mul, map_pow, MvPolynomial.aeval_X, id]
+  · intro σ x
+    show MvPolynomial.aeval id (d (MvPolynomial σ A) (hsurj (MvPolynomial σ A) x).choose) = d σ x
+    have h := UpperTheory.V.AlgebraTools.Det.liftIndep d hnat (MvPolynomial σ A) (MvPolynomial σ A) σ
+      (MvPolynomial.aeval id) (AlgHom.id A _) _ x (by rw [spec])
+    simpa using h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.Descend
+
+section
 
 @[expose] public section
 
@@ -139,3 +296,5 @@ theorem UpperTheory.V.AlgebraTools.Det.descend :
   refine ⟨D, hex, fun D2 h2 => ?_⟩
   exact (UpperTheory.V.AlgebraTools.Det.injTest (X := Unit) (fun _ => A') (fun _ => ι)
     (fun a ha => hι (by rw [ha (), map_zero])) ).1 D2 D (fun _ => by rw [h2, hex])
+end
+end

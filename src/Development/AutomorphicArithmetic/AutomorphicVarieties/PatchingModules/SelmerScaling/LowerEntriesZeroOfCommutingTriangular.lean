@@ -2,7 +2,8 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.SelmerSpannedByKappaLaurent
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.OddDiag
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UpperTriangularMul
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,10 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,6 +43,33 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UpperTriangularMul
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qe38.upper_triangular_mul :
+    ∀ {K : Type} [inst : Field K] {n : ℕ}
+    (U T : Matrix (Fin n) (Fin n) K),
+    (∀ (i j : Fin n), j < i → U i j = (0 : K)) →
+      (∀ (i j : Fin n), j < i → T i j = (0 : K)) → ∀ (i j : Fin n), j < i → (U * T) i j = (0 : K) := by
+  intro K _ n U T hU hT i j hij
+  rw [Matrix.mul_apply]
+  refine Finset.sum_eq_zero fun k _ => ?_
+  rcases lt_or_ge k i with hk | hk
+  · rw [hU i k hk, zero_mul]
+  · rw [hT k j (lt_of_lt_of_le hij hk), mul_zero]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.LowerEntriesZeroOfCommutingTriangular
+
+section
 
 @[expose] public section
 
@@ -118,3 +143,5 @@ theorem UpperTheory.V.Pa.localInvariants_eq_zero :
     unfold dY at z
     rw [e, Matrix.sub_apply] at z
     exact sub_eq_zero.1 z
+end
+end

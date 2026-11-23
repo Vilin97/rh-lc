@@ -3,16 +3,14 @@ module
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StConeSliceSheetParam
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StDiscriminantSheetCover
 public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartDehomog
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PConeScaling
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PMassFinite
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PNullSmaller
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceDim
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceIdeal
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -25,13 +23,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -55,6 +47,184 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PMassFinite
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PNullSmaller
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.MeasurableOfContinuousOnNeZero
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PConeScaling
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.ComplexSets
+
+open MvPolynomial Pointwise
+
+theorem eval_smul_of_isHomogeneous {n i : ℕ} {φ : MvPolynomial (Fin n) ℂ} (hφ : φ.IsHomogeneous i)
+    (t : ℂ) (x : Fin n → ℂ) : eval (t • x) φ = t ^ i * eval x φ := by
+  rw [eval_eq, eval_eq, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun d hd => ?_
+  have hdeg : ∑ j ∈ d.support, d j = i := by
+    have h := hφ (mem_support_iff.mp hd)
+    simpa [Finsupp.weight_apply, Finsupp.sum] using h
+  simp only [Pi.smul_apply, smul_eq_mul, mul_pow, Finset.prod_mul_distrib,
+    Finset.prod_pow_eq_pow_sum, hdeg]
+  ring
+
+
+end GroundTheory.Heights₂.Heights.ComplexSets
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceDim
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open MvPolynomial
+
+noncomputable section
+
+def SliceDim.Statement : Prop :=
+  ∀ (n e : ℕ) (J : Ideal (MvPolynomial (Fin n) ℂ)) (ℓ : Fin n → ℂ),
+    IsProjPrime J → ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J) = ((e + 1 : ℕ) : WithBot ℕ∞) →
+    linForm ℓ ∉ J →
+      ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ (J ⊔ Ideal.span {linForm ℓ - 1})) =
+        ((e : ℕ) : WithBot ℕ∞)
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceDim
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open MvPolynomial
+
+noncomputable section
+
+theorem SliceDim.homogeneousComponent_zero_linForm_sub_one {n : ℕ} (ℓ : Fin n → ℂ) :
+    homogeneousComponent 0 (linForm ℓ - 1 : MvPolynomial (Fin n) ℂ) = -1 := by
+  rw [homogeneousComponent_zero]
+  simp [linForm, coeff_sum, coeff_C_mul, coeff_X]
+
+theorem SliceDim.linForm_sub_one_not_mem {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)}
+    (hH : IsHomogIdeal J) (hJ : J ≠ ⊤) (ℓ : Fin n → ℂ) : linForm ℓ - 1 ∉ J := by
+  intro h
+  have h0 := hH _ h 0
+  rw [SliceDim.homogeneousComponent_zero_linForm_sub_one, neg_mem_iff] at h0
+  exact hJ ((Ideal.eq_top_iff_one J).mpr h0)
+
+theorem SliceDim.proof : SliceDim.Statement := by
+  intro n e J ℓ hJ hdim hℓ
+  have hP := hJ.isPrime
+  refine le_antisymm ?_ (IndefiniteRowSideFullHecke.ComplexSets.le_ringKrullDim_slice ⟨hP, hdim⟩ hJ.isHomog hℓ)
+  set r := Ideal.Quotient.mk J (linForm ℓ - 1) with hr_def
+  have hr0 : r ≠ 0 := by
+    rw [hr_def, Ne, Ideal.Quotient.eq_zero_iff_mem]
+    exact SliceDim.linForm_sub_one_not_mem hJ.isHomog hP.ne_top ℓ
+  have hr : r ∈ nonZeroDivisors (MvPolynomial (Fin n) ℂ ⧸ J) := mem_nonZeroDivisors_of_ne_zero hr0
+  have hle : J ≤ J ⊔ Ideal.span {linForm ℓ - 1} := le_sup_left
+  have hkill : Ideal.Quotient.factor hle r = 0 := by
+    rw [hr_def, Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem]
+    exact le_sup_right (a := J) (Ideal.subset_span rfl)
+  have key := ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hle)
+    (Ideal.Quotient.factor_surjective hle) hr hkill
+  rw [hdim] at key
+  generalize ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ (J ⊔ Ideal.span {linForm ℓ - 1})) = D at key ⊢
+  induction D using WithBot.recBotCoe with
+  | bot => exact bot_le
+  | coe b =>
+    induction b using ENat.recTopCoe with
+    | top =>
+      exfalso
+      norm_cast at key
+    | coe m =>
+      have : m + 1 ≤ e + 1 := by exact_mod_cast key
+      exact_mod_cast (by omega : m ≤ e)
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceIdeal
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights
+
+open MvPolynomial
+open scoped nonZeroDivisors
+
+noncomputable section
+
+theorem SliceIdeal.isHomogeneous_linForm {n : ℕ} (u : Fin n → ℂ) : (linForm u).IsHomogeneous 1 :=
+  IsHomogeneous.sum _ _ _ fun j _ => isHomogeneous_C_mul_X (u j) j
+
+theorem SliceIdeal.exists_homogeneous_sub_mem {n : ℕ} (ℓ : Fin n → ℂ) (f : MvPolynomial (Fin n) ℂ) :
+    ∃ d, ∃ G : MvPolynomial (Fin n) ℂ, G.IsHomogeneous d ∧ G - f ∈ Ideal.span {linForm ℓ - 1} := by
+  classical
+  refine ⟨f.totalDegree, ∑ i ∈ Finset.range (f.totalDegree + 1),
+      linForm ℓ ^ (f.totalDegree - i) * homogeneousComponent i f, ?_, ?_⟩
+  · refine IsHomogeneous.sum _ _ _ fun i hi => ?_
+    have hi' : i ≤ f.totalDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
+    have h := ((SliceIdeal.isHomogeneous_linForm ℓ).pow (f.totalDegree - i)).mul
+      (homogeneousComponent_isHomogeneous i f)
+    convert h using 1
+    omega
+  · have hsum : (∑ i ∈ Finset.range (f.totalDegree + 1),
+          linForm ℓ ^ (f.totalDegree - i) * homogeneousComponent i f) - f =
+        ∑ i ∈ Finset.range (f.totalDegree + 1),
+          (linForm ℓ ^ (f.totalDegree - i) - 1) * homogeneousComponent i f := by
+      conv_lhs => arg 2; rw [← sum_homogeneousComponent f]
+      rw [← Finset.sum_sub_distrib]
+      simp only [sub_one_mul]
+    rw [hsum]
+    refine Ideal.sum_mem _ fun i _ => ?_
+    refine Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton.mpr ?_)
+    simpa using sub_dvd_pow_sub_pow (linForm ℓ) 1 (f.totalDegree - i)
+
+end
+
+end GroundTheory.Heights₂.Heights
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PConeSliceSheetParam
+
+section
 
 @[expose] public section
 
@@ -242,3 +412,5 @@ theorem ConeSliceSheetParam.proof (hCov : DiscriminantSheetCover.Statement) :
 end
 
 end GroundTheory.Heights₂.Heights
+end
+end

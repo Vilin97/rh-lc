@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.OneLeHtE
 public import Mathlib.NumberTheory.Height.NumberField
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsMulHeightMinpolyCoeffLeRelativeHeight
+public import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyNormFinLeOne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -13,6 +13,7 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
@@ -24,6 +25,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,6 +39,254 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfinitePlaceMinpolyCoeffLePowMaxEmbeddings
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdelicU
+open scoped TensorProduct NNReal
+open Classical
+
+namespace GlobalTheory
+
+theorem minpoly_coeff_le_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (x : E) (w : InfinitePlace F) (j : ℕ) :
+    w ((minpoly F x).coeff j) ≤ 2 ^ Module.finrank F E *
+      ((max 1 (Finset.univ.sup fun τ : EmbOver E w => ‖τ.1 x‖₊) : ℝ≥0) : ℝ) ^ Module.finrank F E := by
+  letI : Algebra F ℂ := w.embedding.toAlgebra
+  set M : ℝ≥0 := max 1 (Finset.univ.sup fun τ : EmbOver E w => ‖τ.1 x‖₊) with hM
+  set p := minpoly F x
+  have hx : IsIntegral F x := Algebra.IsIntegral.isIntegral x
+  have h1 : p.Monic := minpoly.monic hx
+  have hd : p.natDegree ≤ Module.finrank F E := minpoly.natDegree_le x
+  have h3 : ∀ z ∈ (p.map w.embedding).roots, ‖z‖ ≤ (M : ℝ) := by
+    intro z hz
+    have hz' : z ∈ p.rootSet ℂ := by
+      rw [Polynomial.mem_rootSet]
+      refine ⟨h1.ne_zero, ?_⟩
+      have := (Polynomial.mem_roots (Polynomial.map_monic_ne_zero h1)).1 hz
+      rw [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map]
+      exact this
+    rw [← Algebra.IsAlgebraic.range_eval_eq_rootSet_minpoly] at hz'
+    obtain ⟨ψ, rfl⟩ := hz'
+    let τ : EmbOver E w := ⟨ψ.toRingHom, RingHom.ext fun a => ψ.commutes a⟩
+    have : ‖ψ x‖₊ ≤ M :=
+      le_trans (Finset.le_sup (f := fun τ : EmbOver E w => ‖τ.1 x‖₊) (Finset.mem_univ τ)) (le_max_right _ _)
+    exact_mod_cast this
+  have key := Polynomial.coeff_le_of_roots_le (f := w.embedding) j h1 (IsAlgClosed.splits _) h3
+  rw [Polynomial.coeff_map] at key
+  have hw : w (p.coeff j) = ‖w.embedding (p.coeff j)‖ := (InfinitePlace.norm_embedding_eq w _).symm
+  rw [hw]
+  refine key.trans ?_
+  have hM1 : (1 : ℝ) ≤ M := by exact_mod_cast le_max_left _ _
+  have hpow : (M : ℝ) ^ (p.natDegree - j) ≤ (M : ℝ) ^ Module.finrank F E :=
+    pow_le_pow_right₀ hM1 (le_trans (Nat.sub_le _ _) hd)
+  have hch : ((p.natDegree.choose j : ℕ) : ℝ) ≤ 2 ^ Module.finrank F E := by
+    have := (Nat.choose_le_two_pow p.natDegree j).trans (Nat.pow_le_pow_right (by norm_num) hd)
+    exact_mod_cast this
+  rw [mul_comm]
+  exact mul_le_mul hch hpow (by positivity) (by positivity)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfinitePlaceMinpolyCoeffLePowMaxEmbeddingsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdelicU
+open scoped TensorProduct NNReal
+open Classical
+
+theorem _root_.GlobalTheory.T.infinitePlace_minpoly_coeff_le_pow_max_embeddings : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : E) (w : InfinitePlace F) (j : ℕ), w ((minpoly F x).coeff j) ≤ 2 ^ Module.finrank F E * ((max 1 (Finset.univ.sup fun τ : EmbOver E w => ‖τ.1 x‖₊) : ℝ≥0) : ℝ) ^ Module.finrank F E := by
+  first | exact @GlobalTheory.minpoly_coeff_le_inf | exact GlobalTheory.minpoly_coeff_le_inf | (intros; apply GlobalTheory.minpoly_coeff_le_inf <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NnnormMinpolyCoeffFinitePlaceLePow
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdelicU
+open scoped TensorProduct NNReal
+open Classical
+
+namespace GlobalTheory.CoefHeight
+
+open Polynomial
+
+theorem val_coeff_prod_X_sub_C_le {K : Type} [Field K] (w : Valuation K ℝ≥0) {M : ℝ≥0} (hM : 1 ≤ M)
+    (s : Multiset K) (hs : ∀ z ∈ s, w z ≤ M) (j : ℕ) :
+    w ((s.map fun a => X - C a).prod.coeff j) ≤ M ^ Multiset.card s := by
+  induction s using Multiset.induction_on generalizing j with
+  | empty =>
+    simp only [Multiset.map_zero, Multiset.prod_zero, Multiset.card_zero, pow_zero, coeff_one]
+    split_ifs <;> simp
+  | cons a s ih =>
+    have ha : w a ≤ M := hs a (Multiset.mem_cons_self a s)
+    have hs' : ∀ z ∈ s, w z ≤ M := fun z hz => hs z (Multiset.mem_cons_of_mem hz)
+    rw [Multiset.map_cons, Multiset.prod_cons, Multiset.card_cons, sub_mul, coeff_sub, coeff_C_mul]
+    refine (w.map_sub _ _).trans (max_le ?_ ?_)
+    · cases j with
+      | zero => rw [coeff_X_mul_zero, map_zero]; exact bot_le
+      | succ i => rw [coeff_X_mul]; exact (ih hs' i).trans (pow_le_pow_right₀ hM (Nat.le_succ _))
+    · rw [map_mul, pow_succ']
+      exact mul_le_mul' ha (ih hs' j)
+
+theorem nnnorm_coeff_minpoly_le (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (x : E) (v : HeightOneSpectrum (𝓞 F)) (j : ℕ) :
+    ‖algebraMap F (v.adicCompletion F) ((minpoly F x).coeff j)‖₊ ≤
+      max 1 (absFin F v ((1 : v.adicCompletion F) ⊗ₜ[F] x)) ^ Module.finrank F E := by
+  haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  set M := max 1 (absFin F v ((1 : v.adicCompletion F) ⊗ₜ[F] x)) with hMdef
+  have hM : 1 ≤ M := le_max_left _ _
+  have hint : IsIntegral F x := Algebra.IsIntegral.isIntegral x
+  set p := minpoly F x with hp
+  set q := p.map (algebraMap F (FvBar F v)) with hqdef
+  have hmon : q.Monic := (minpoly.monic hint).map _
+  have hsplit : q.Splits := IsAlgClosed.splits q
+  have hq : q = (q.roots.map fun a => X - C a).prod := hsplit.eq_prod_roots_of_monic hmon
+  have hroots : ∀ z ∈ q.roots, valBar F v z ≤ M := by
+    intro z hz
+    have hq0 : q ≠ 0 := hmon.ne_zero
+    have hz' : aeval z p = 0 := by
+      rw [mem_roots hq0, IsRoot, hqdef, eval_map_algebraMap] at hz; exact hz
+    obtain ⟨τ, hτ⟩ := IntermediateField.exists_algHom_of_splits_of_aeval
+      (fun s => ⟨Algebra.IsIntegral.isIntegral s, IsAlgClosed.splits _⟩) hz'
+    have h1 : finEmb F v τ ((1 : v.adicCompletion F) ⊗ₜ[F] x) = z := by rw [finEmb_tmul, map_one, one_mul, hτ]
+    show absBar F v z ≤ M
+    rw [← h1]; exact (le_absFin F v τ _).trans (le_max_right _ _)
+  have hcard : Multiset.card q.roots ≤ Module.finrank F E := by
+    rw [IsAlgClosed.card_roots_eq_natDegree, hqdef, natDegree_map]; exact minpoly.natDegree_le x
+  have key := val_coeff_prod_X_sub_C_le (valBar F v) hM q.roots hroots j
+  rw [← hq] at key
+  have hc : valBar F v (q.coeff j) = ‖algebraMap F (v.adicCompletion F) (p.coeff j)‖₊ := by
+    show absBar F v _ = _
+    rw [hqdef, coeff_map, IsScalarTower.algebraMap_apply F (v.adicCompletion F) (FvBar F v), absBar_algebraMap]
+  rw [← hc]
+  exact key.trans (pow_le_pow_right₀ hM hcard)
+
+end GlobalTheory.CoefHeight
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NnnormMinpolyCoeffFinitePlaceLePowStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdelicU
+open scoped TensorProduct NNReal
+open Classical
+
+theorem _root_.GlobalTheory.T.nnnorm_minpoly_coeff_finitePlace_le_pow : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : E) (v : HeightOneSpectrum (𝓞 F)) (j : ℕ), ‖algebraMap F (v.adicCompletion F) ((minpoly F x).coeff j)‖₊ ≤ max 1 (absFin F v ((1 : v.adicCompletion F) ⊗ₜ[F] x)) ^ Module.finrank F E := by
+  first | exact @GlobalTheory.CoefHeight.nnnorm_coeff_minpoly_le | exact GlobalTheory.CoefHeight.nnnorm_coeff_minpoly_le | (intros; apply GlobalTheory.CoefHeight.nnnorm_coeff_minpoly_le <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsMulHeightMinpolyCoeffLeRelativeHeight
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdelicU
+open scoped TensorProduct NNReal
+
+namespace GlobalTheory.RatCount.CoefHt
+
+theorem mult_le_two (F : Type) [Field F] [NumberField F] (w : InfinitePlace F) : w.mult ≤ 2 := by
+  unfold InfinitePlace.mult; split_ifs <;> norm_num
+
+
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
+open Classical in
+theorem exists_mulHeight_coeff_minpoly_le : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], ∃ (c : ℝ) (a : ℕ),
+    ∀ (x : E) (j : ℕ), Height.mulHeight₁ ((minpoly F x).coeff j) ≤ c * (GlobalTheory.RatCount.htE F x : ℝ) ^ a := by
+  intro F E _ _ _ _ _
+  refine ⟨4 ^ (Module.finrank F E * Fintype.card (InfinitePlace F)), 2 * Module.finrank F E, fun x j => ?_⟩
+  set m := Module.finrank F E with hm
+  set c := (minpoly F x).coeff j with hc
+  let A : InfinitePlace F → ℝ := fun w =>
+    ((max 1 (Finset.univ.sup fun τ : EmbOver E w => ‖τ.1 x‖₊) : ℝ≥0) : ℝ)
+  let B0 : HeightOneSpectrum (𝓞 F) → ℝ≥0 := fun v => max 1 (absFin F v ((1 : v.adicCompletion F) ⊗ₜ[F] x))
+  let B : HeightOneSpectrum (𝓞 F) → ℝ := fun v => (B0 v : ℝ)
+  have hA : ∀ w, 1 ≤ A w := fun w => by simp only [A]; exact_mod_cast le_max_left _ _
+  have hB : ∀ v, 1 ≤ B v := fun v => by simp only [B, B0]; exact_mod_cast le_max_left _ _
+  have hB0fin : Function.HasFiniteMulSupport B0 := by
+    have h := eventually_absFin_le_one (E := E) F ((1 : AF F) ⊗ₜ[F] x)
+    refine (Filter.eventually_cofinite.1 h).subset fun v hv hv' => hv ?_
+    have e : compFin F E v ((1 : AF F) ⊗ₜ[F] x) = (1 : v.adicCompletion F) ⊗ₜ[F] x := by
+      simp [compFin, map_one]
+    rw [e] at hv'
+    exact max_eq_left hv'
+  have hBfin : Function.HasFiniteMulSupport B := by
+    refine hB0fin.subset fun v hv hv' => hv ?_
+    simp only [B, hv', NNReal.coe_one]
+  have hht : (htE F x : ℝ) = (∏ w, A w) * ∏ᶠ v, B v := by
+    rw [htE, NNReal.coe_mul, NNReal.coe_prod]
+    congr 1
+    exact (MonoidHom.map_finprod NNReal.toRealHom.toMonoidHom hB0fin)
+  have hB1 : ∀ v, 1 ≤ B v ^ m := fun v => one_le_pow₀ (hB v)
+
+  have hinf : (∏ w : InfinitePlace F, max (w c) 1 ^ w.mult) ≤
+      4 ^ (m * Fintype.card (InfinitePlace F)) * (∏ w, A w) ^ (2 * m) := by
+    have h1 : ∀ w : InfinitePlace F, max (w c) 1 ^ w.mult ≤ 4 ^ m * A w ^ (2 * m) := fun w => by
+      have hb : 1 ≤ 2 ^ m * A w ^ m := one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by norm_num)) (one_le_pow₀ (hA w))
+      have h2 : max (w c) 1 ≤ 2 ^ m * A w ^ m := max_le (GlobalTheory.T.infinitePlace_minpoly_coeff_le_pow_max_embeddings F E x w j) hb
+      calc max (w c) 1 ^ w.mult ≤ (2 ^ m * A w ^ m) ^ w.mult :=
+            pow_le_pow_left₀ (le_trans zero_le_one (le_max_right _ _)) h2 _
+        _ ≤ (2 ^ m * A w ^ m) ^ 2 := pow_le_pow_right₀ hb (mult_le_two F w)
+        _ = 4 ^ m * A w ^ (2 * m) := by
+          rw [mul_pow, ← pow_mul, ← pow_mul, mul_comm m 2, pow_mul, mul_comm 2 m, pow_mul]; norm_num
+    calc (∏ w : InfinitePlace F, max (w c) 1 ^ w.mult) ≤ ∏ w : InfinitePlace F, (4 ^ m * A w ^ (2 * m)) :=
+          Finset.prod_le_prod₀ (fun w _ => pow_nonneg (le_trans zero_le_one (le_max_right _ _)) _) fun w _ => h1 w
+      _ = _ := by
+        rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, ← pow_mul, Finset.prod_pow]
+
+  have hfin : (∏ᶠ v : FinitePlace F, max (v c) 1) ≤ (∏ᶠ v, B v) ^ (2 * m) := by
+    have e : (∏ᶠ v : FinitePlace F, max (v c) 1) =
+        ∏ᶠ v : HeightOneSpectrum (𝓞 F), max (FinitePlace.mk v c) 1 := by
+      rw [← finprod_comp_equiv FinitePlace.equivHeightOneSpectrum.symm]
+      rfl
+    have hle : ∀ v : HeightOneSpectrum (𝓞 F), max (FinitePlace.mk v c) 1 ≤ B v ^ m := fun v => by
+      refine max_le ?_ (hB1 v)
+      rw [FinitePlace.mk_apply]
+      have := GlobalTheory.T.nnnorm_minpoly_coeff_finitePlace_le_pow F E x v j
+      simp only [B, B0]
+      exact_mod_cast this
+    have hBm : Function.HasFiniteMulSupport fun v => B v ^ m := by
+      refine hBfin.subset fun v hv hv' => hv ?_
+      simp only [hv', one_pow]
+    have hf : Function.HasFiniteMulSupport fun v : HeightOneSpectrum (𝓞 F) => max (FinitePlace.mk v c) 1 := by
+      refine hBfin.subset fun v hv hv' => hv ?_
+      exact le_antisymm ((hle v).trans (by rw [hv', one_pow])) (le_max_right _ _)
+    rw [e]
+    calc (∏ᶠ v : HeightOneSpectrum (𝓞 F), max (FinitePlace.mk v c) 1) ≤ ∏ᶠ v, B v ^ m :=
+          finprod_le_finprod₀ hf (fun v => le_trans zero_le_one (le_max_right _ _)) hBm hle
+      _ = (∏ᶠ v, B v) ^ m := (finprod_pow hBfin m).symm
+      _ ≤ (∏ᶠ v, B v) ^ (2 * m) := pow_le_pow_right₀ (one_le_finprod fun v => hB v) (by omega)
+  rw [NumberField.mulHeight₁_eq, hht, mul_pow, ← mul_assoc]
+  exact mul_le_mul hinf hfin (finprod_nonneg fun v => le_trans zero_le_one (le_max_right _ _))
+    (mul_nonneg (by positivity) (pow_nonneg (Finset.prod_nonneg fun w _ => le_trans zero_le_one (hA w)) _))
+
+end GlobalTheory.RatCount.CoefHt
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsMulHeightMinpolyCoeffLeRelativeHeightStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +295,5 @@ open NumberField
 
 theorem _root_.GlobalTheory.T.exists_mulHeight_minpoly_coeff_le_relativeHeight : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], ∃ (c : ℝ) (a : ℕ), ∀ (x : E) (j : ℕ), Height.mulHeight₁ ((minpoly F x).coeff j) ≤ c * (GlobalTheory.RatCount.htE F x : ℝ) ^ a := by
   first | exact @GlobalTheory.RatCount.CoefHt.exists_mulHeight_coeff_minpoly_le | exact GlobalTheory.RatCount.CoefHt.exists_mulHeight_coeff_minpoly_le | (intros; apply GlobalTheory.RatCount.CoefHt.exists_mulHeight_coeff_minpoly_le <;> assumption)
+end
+end

@@ -3,8 +3,7 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeGroups.BaseRepGL3NormalisedOfPsiEqOne
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.StabilizerIndexBounds.CardDvdOfPartitionEqualSize
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.StabilizerIndexBounds.InvariantSubmoduleEqSpanEigenbasisOfSeparable
+public import Mathlib.Data.Set.Card
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,14 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,9 +43,77 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Group.Action.Defs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.StabilizerIndexBounds.InvariantSubmoduleEqSpanEigenbasisOfSeparable
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.StabilizerIndexBounds.CardDvdOfPartitionEqualSize
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial Matrix UpperTheory.V
+
+theorem UpperTheory.V.Ws.card_dvd_of_partition_equal_size :
+    ∀ (ι Q : Type) [Finite ι] (T : Q → Set ι) (d : ℕ), (∀ q, (T q).ncard = d) → (∀ i, ∃! q, i ∈ T q) →
+      Nat.card Q ∣ Nat.card ι := by
+  intro ι Q _ T d hT hu
+  classical
+  choose f hf hf' using hu
+  have hfib : ∀ q, T q = {i | f i = q} := by
+    intro q
+    ext i
+    constructor
+    · intro h
+      exact (hf' i q h).symm
+    · intro h
+      rw [Set.mem_setOf_eq] at h
+      rw [← h]
+      exact hf i
+  rcases Nat.eq_zero_or_pos d with rfl | hd
+  · have : IsEmpty ι := ⟨fun i => by
+      have h := hT (f i)
+      rw [Set.ncard_eq_zero (Set.toFinite _)] at h
+      have hi : i ∈ T (f i) := hf i
+      rw [h] at hi
+      simp at hi⟩
+    rw [Nat.card_of_isEmpty (α := ι)]
+    exact dvd_zero _
+  · have hne : ∀ q, (T q).Nonempty := fun q =>
+      Set.nonempty_of_ncard_ne_zero (by rw [hT q]; omega)
+    choose g hg using hne
+    have ginj : Function.Injective g := by
+      intro q q' h
+      calc q = f (g q) := hf' _ _ (hg q)
+        _ = f (g q') := by rw [h]
+        _ = q' := (hf' _ _ (hg q')).symm
+    haveI : Finite Q := Finite.of_injective g ginj
+    letI : Fintype Q := Fintype.ofFinite Q
+    have hc : ∀ q, Nat.card {x // f x = q} = d := fun q => by
+      rw [← hT q, hfib q, ← Nat.card_coe_set_eq]
+      rfl
+    have key : Nat.card ι = Nat.card Q * d := by
+      rw [← Nat.card_congr (Equiv.sigmaFiberEquiv f), Nat.card_sigma]
+      simp only [hc, Finset.sum_const, Finset.card_univ, smul_eq_mul, Nat.card_eq_fintype_card]
+    rw [key]
+    exact dvd_mul_right _ _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.StabilizerIndexBounds.ExistsStabilizerIndexDvdOfNotIrreducibleRestrict
+
+section
 
 @[expose] public section
 
@@ -279,3 +339,5 @@ theorem UpperTheory.V.Ws.exists_stabilizer_index_dvd_of_not_irreducible_restrict
   have hn : Nat.card (Fin n) = n := Nat.card_eq_fintype_card.trans (Fintype.card_fin n)
   rw [hn] at hc
   exact hc
+end
+end

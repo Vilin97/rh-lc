@@ -1,12 +1,10 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.StListTailLog
-public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.StListTailLogSmooth
-public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.SystemIndependence
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.Objects
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -30,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,9 +41,46 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.SystemIndependence
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Linter.Style
 public import ReciprocityTheory.AnalyticForms.PotentialTheory.ContDiffAtOfIsPotential
 public import ReciprocityTheory.AnalyticForms.PotentialTheory.LocDens
 import ReciprocityTheory.AnalyticForms.PotentialTheory.PotentialContDiffAt
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.StListTailLogSmooth
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.AnalyticLimit
+
+open ReciprocityTheory.AnForm.M (FinHolAtlas LocPot)
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Regular (RegChartData)
+
+def ListTailLogSmooth.Statement : Prop :=
+  ∀ {D : ℕ} {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X] (A : FinHolAtlas D X)
+    (R : RegChartData A) (Om : KaehlerForm A) (C₁ : ℝ), ∃ CE : ℝ,
+    ∀ (th : Fin D → LocPot X) (u : Fin D → X → ℝ),
+      (∀ i, IsSmoothPotForm A R.Yo R.r Om C₁ (th i) (u i)) →
+        TailLogBound A R.Yo R.r (fun i => potForm (th i) (u i)) CE
+
+section Inhabitants
+
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Regular (projLineChartData)
+
+end Inhabitants
+
+end GroundTheory.Heights₂.Heights.AnalyticLimit
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PListTailLogSmooth
+
+section
 
 @[expose] public section
 
@@ -224,3 +258,5 @@ theorem ListTailLogSmooth.proof (h : ListTailLog.Statement) : ListTailLogSmooth.
 end
 
 end GroundTheory.Heights₂.Heights.AnalyticLimit
+end
+end

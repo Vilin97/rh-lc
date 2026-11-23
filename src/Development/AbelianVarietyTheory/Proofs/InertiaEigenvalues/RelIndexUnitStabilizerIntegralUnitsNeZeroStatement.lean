@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelIndexUnitStabilizerIntegralUnitsNeZero
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteSubmodulesBetweenMulLeftImageLatticeStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,9 +43,121 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelIndexNeZeroOfBetween
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+open scoped Pointwise
+
+namespace GlobalTheory.UnitLemma.StabIndex
+
+variable {O : Type} [CommRing O] {A : Type} [CommRing A] [Algebra O A]
+
+theorem smul_eq_mulLat (t : Aˣ) (L : Submodule O A) : t • L = mulLat O (t : A) L := by
+  ext y
+  simp [mulLat, Submodule.mem_smul_pointwise_iff_exists, Units.smul_def]
+
+theorem mem_stabLat_iff (t : Aˣ) (L : Submodule O A) : t ∈ stabLat O L ↔ t • L = L := by
+  have key : ∀ y, y ∈ t • L ↔ ((t⁻¹ : Aˣ) : A) * y ∈ L := by
+    intro y
+    rw [smul_eq_mulLat]
+    simp only [mulLat, Submodule.mem_map, LinearMap.mulLeft_apply]
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      rw [← mul_assoc, Units.inv_mul, one_mul]; exact hb
+    · intro h
+      exact ⟨_, h, by rw [← mul_assoc, Units.mul_inv, one_mul]⟩
+  constructor
+  · intro ht
+    ext y
+    rw [key, ht (((t⁻¹ : Aˣ) : A) * y), ← mul_assoc, Units.mul_inv, one_mul]
+  · intro ht y
+    have := key ((t : A) * y)
+    rw [ht, ← mul_assoc, Units.inv_mul, one_mul] at this
+    exact this.symm
+
+end GlobalTheory.UnitLemma.StabIndex
+
+namespace GlobalTheory.UnitLemma.StabIndex
+
+theorem isUnit_algebraMap (K : UQ) (B : InvAlg K) (c : K.O) (hc : c ≠ 0) :
+    IsUnit (algebraMap K.O B.A c) := by
+  rw [IsScalarTower.algebraMap_apply K.O K.E B.A]
+  refine (isUnit_iff_ne_zero.mpr ?_).map (algebraMap K.E B.A)
+  exact (map_ne_zero_iff _ (IsFractionRing.injective K.O K.E)).mpr hc
+
+theorem relIndex_ne_zero_of_between (K : UQ) (B : InvAlg K) (L : Submodule K.O B.A) (c : K.O) (hc : c ≠ 0)
+    (hfin : {M : Submodule K.O B.A | mulLat K.O (algebraMap K.O B.A (c * c)) L ≤ M ∧ M ≤ L}.Finite)
+    (h : ∀ u : B.A, IsIntegral K.O u → ∀ y ∈ L, algebraMap K.O B.A c * u * y ∈ L) :
+    (stabLat K.O L ⊓ B.T).relIndex (intUnits K.O B.A ⊓ B.T) ≠ 0 := by
+  set G := intUnits K.O B.A ⊓ B.T
+  set γ : B.Aˣ := (isUnit_algebraMap K B c hc).unit
+  have hγ : (γ : B.A) = algebraMap K.O B.A c := rfl
+  have hsub : (stabLat K.O L ⊓ B.T).subgroupOf G = MulAction.stabilizer G L := by
+    ext u
+    rw [Subgroup.mem_subgroupOf, MulAction.mem_stabilizer_iff, Subgroup.mem_inf, Subgroup.smul_def,
+      ← mem_stabLat_iff]
+    exact ⟨fun hu => hu.1, fun hu => ⟨hu, (Subgroup.mem_inf.mp u.2).2⟩⟩
+  have horb : (MulAction.orbit G L).Finite := by
+    refine (hfin.preimage (MulAction.injective γ).injOn).subset ?_
+    rintro _ ⟨u, rfl⟩
+    have hu := (Subgroup.mem_inf.mp u.2).1
+    have hM : γ • ((u : B.Aˣ) • L) = mulLat K.O (algebraMap K.O B.A c * ((u : B.Aˣ) : B.A)) L := by
+      rw [smul_smul, smul_eq_mulLat, Units.val_mul, hγ]
+    simp only [Set.mem_preimage, Set.mem_setOf_eq, Subgroup.smul_def, hM]
+    constructor
+    · rintro _ ⟨y, hy, rfl⟩
+      refine ⟨algebraMap K.O B.A c * (((u : B.Aˣ)⁻¹ : B.Aˣ) : B.A) * y, h _ hu.2 y hy, ?_⟩
+      simp only [LinearMap.mulLeft_apply, map_mul]
+      calc algebraMap K.O B.A c * ((u : B.Aˣ) : B.A) * (algebraMap K.O B.A c * (((u : B.Aˣ)⁻¹ : B.Aˣ) : B.A) * y)
+          = algebraMap K.O B.A c * algebraMap K.O B.A c * (((u : B.Aˣ) : B.A) * (((u : B.Aˣ)⁻¹ : B.Aˣ) : B.A)) * y := by ring
+        _ = _ := by rw [Units.mul_inv, mul_one]
+    · rintro _ ⟨y, hy, rfl⟩
+      simp only [LinearMap.mulLeft_apply]
+      exact h _ hu.1 y hy
+  rw [Subgroup.relIndex, hsub]
+  haveI : Finite (MulAction.orbit G L) := horb.to_subtype
+  haveI : Finite (G ⧸ MulAction.stabilizer G L) := Finite.of_equiv _ (MulAction.orbitEquivQuotientStabilizer G L)
+  exact Subgroup.index_ne_zero_of_finite
+
+end GlobalTheory.UnitLemma.StabIndex
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelIndexUnitStabilizerIntegralUnitsNeZero
+
+section
+
+@[expose] public section
+
+open GlobalTheory.UnitLemma Polynomial
+
+namespace GlobalTheory.UnitLemma.StabIndex
+
+theorem relIndex_ne_zero : ∀ (K : UQ) (B : InvAlg K) (L : Submodule K.O B.A), IsLat K.O K.E L → ∀ c : K.O, c ≠ 0 →
+    (∀ u : B.A, IsIntegral K.O u → ∀ y ∈ L, algebraMap K.O B.A c * u * y ∈ L) →
+    (stabLat K.O L ⊓ B.T).relIndex (intUnits K.O B.A ⊓ B.T) ≠ 0 := by
+  intro K B L hL c hc h
+  have hfin : {M : Submodule K.O B.A | mulLat K.O (algebraMap K.O B.A (c * c)) L ≤ M ∧ M ≤ L}.Finite :=
+    GlobalTheory.T.finite_submodules_between_mulLeftImage_lattice K B L hL (c * c) (mul_ne_zero hc hc)
+  exact relIndex_ne_zero_of_between K B L c hc hfin h
+
+end GlobalTheory.UnitLemma.StabIndex
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelIndexUnitStabilizerIntegralUnitsNeZeroStatement
+
+section
+
 @[expose] public section
 
 open GlobalTheory.UnitLemma Polynomial
 
 theorem _root_.GlobalTheory.T.relIndex_unitStabilizer_integralUnits_ne_zero : ∀ (K : UQ) (B : InvAlg K) (L : Submodule K.O B.A), IsLat K.O K.E L → ∀ c : K.O, c ≠ 0 → (∀ u : B.A, IsIntegral K.O u → ∀ y ∈ L, algebraMap K.O B.A c * u * y ∈ L) → (stabLat K.O L ⊓ B.T).relIndex (intUnits K.O B.A ⊓ B.T) ≠ 0 := by
   first | exact @GlobalTheory.UnitLemma.StabIndex.relIndex_ne_zero | exact GlobalTheory.UnitLemma.StabIndex.relIndex_ne_zero | (intros; apply GlobalTheory.UnitLemma.StabIndex.relIndex_ne_zero <;> assumption)
+end
+end

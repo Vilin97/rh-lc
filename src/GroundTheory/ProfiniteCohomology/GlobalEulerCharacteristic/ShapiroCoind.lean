@@ -1,10 +1,6 @@
 module
 
-public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShapiroDefs
-public import GroundTheory.ProfiniteCohomology.EulerCharDefs
-public import Mathlib.GroupTheory.Index
-public import Mathlib.Topology.Algebra.ContinuousMonoidHom
-public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+public import Mathlib.RepresentationTheory.Coinduced
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,7 +39,52 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.ProfiniteCohomology.EulerCharDefs
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+import Mathlib.RingTheory.WittVector.IsPoly
+
+-- Source module: GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShapiroDefs
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.ProfCoh
+
+universe u
+
+variable {k G V : Type*} [CommRing k] [Group G] [AddCommGroup V] [Module k V]
+
+def funDiagRepresentation (X : Type*) [MulAction G X] (ρ : Representation k G V) :
+    Representation k G (X → V) where
+  toFun g :=
+    { toFun := fun F x => ρ g (F (g⁻¹ • x))
+      map_add' := fun F F' => funext fun x => map_add (ρ g) _ _
+      map_smul' := fun c F => funext fun x => map_smul (ρ g) c _ }
+  map_one' := by
+    refine LinearMap.ext fun F => funext fun x => ?_
+    simp
+  map_mul' g h := by
+    refine LinearMap.ext fun F => funext fun x => ?_
+    simp [mul_smul]
+
+abbrev funDiagRep {k G : Type u} [CommRing k] [Group G] (X : Type u) [MulAction G X]
+    (A : Rep.{u} k G) : Rep.{u} k G :=
+  Rep.of (funDiagRepresentation X A.ρ)
+
+end GroundTheory.ProfCoh
+end
+end
+
+-- Source module: GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShapiroCoind
+
+section
 
 @[expose] public section
 
@@ -242,3 +282,5 @@ end Transport
 end
 
 end GroundTheory.ProfCoh
+end
+end

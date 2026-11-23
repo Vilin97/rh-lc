@@ -4,19 +4,9 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedL
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivMultiProdOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinearGroup
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PadicIsNonarchimedeanLocalField
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.CharDual
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.CondEx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweChar
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweConj
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweGroup
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.IdemOp
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.InjMat
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.LowFix
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.UlFact
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweAvg
-public import Development.DiscreteGroups.GlobalIrreducibility.DzGenCpt
-public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.WhittakerCuspidal.WhitCuspOfSegCuspGeneric
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PadicIsNonarchimedeanLocalField
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NontrivialTwJacquetOfSurjective
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,9 +25,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -57,9 +44,182 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.IwahoriDoubleCosets
+import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweSpace
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsUniformizerValuation
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsSubquotientDetRepParInd
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweConj
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.HoweGroup
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.IwahoriDoubleCosets
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsHilbertSchmidtOfFiniteDimensional
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.InjMat
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.LowFix
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.UlFact
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweAvg
+public import Development.DiscreteGroups.GlobalIrreducibility.DzGenCpt
+public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.WhittakerCuspidal.WhitCuspOfSegCuspGeneric
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.CharDual
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets UpperTheory.ConvolutionTheory.Loc
+
+theorem UpperTheory.V.Z.Tf.L4.charDual :
+    ∀ (E : Type) [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E] (ϖ : Eˣ), valuation E (ϖ : E) = uniformizer E → ∀ (ψ₀ ψ : AddChar E Circle) (d e : ℤ), HasConductor ψ₀ (ϖ ^ d) → HasConductor ψ (ϖ ^ e) →
+  ∃ β : Eˣ, valuation E (β : E) = valuation E ((ϖ ^ (d - e) : Eˣ) : E) ∧ ∀ x, ψ x = ψ₀ (β * x) := by
+  intro E _ _ _ _ ϖ _ ψ₀ ψ d e h0 h
+  obtain ⟨b, hb⟩ := GlobalTheory.LocGL.exists_eq_mulShift h0.continuous h0.ne_one h.continuous
+  have hb0 : b ≠ 0 := fun e0 => h.ne_one (by rw [hb, e0, AddChar.mulShift_zero])
+  have hv : ∀ x, ψ x = ψ₀ (b * x) := fun x => by rw [hb, AddChar.mulShift_apply]
+  have hvb : 0 < valuation E b := zero_lt_iff.2 ((Valuation.ne_zero_iff _).2 hb0)
+  have key : ∀ x : E, valuation E x ≤ valuation E ((ϖ ^ e : Eˣ) : E) ↔ valuation E (b * x) ≤ valuation E ((ϖ ^ d : Eˣ) : E) := fun x => by
+    rw [← h x, ← h0 (b * x)]
+    refine ⟨fun H y hy => ?_, fun H y hy => ?_⟩
+    · have := H (b⁻¹ * y) (by
+        rw [map_mul] at hy
+        rw [map_mul, map_inv₀, inv_mul_le_iff₀ hvb]
+        exact hy)
+      rwa [hv, mul_inv_cancel_left₀ hb0] at this
+    · rw [hv]
+      exact H _ (by rw [map_mul, map_mul]; exact mul_le_mul_right hy _)
+  have hve : 0 < valuation E ((ϖ ^ e : Eˣ) : E) := zero_lt_iff.2 ((Valuation.ne_zero_iff _).2 (Units.ne_zero _))
+  have h1 := (key _).1 le_rfl
+  have h2 := (key (b⁻¹ * ((ϖ ^ d : Eˣ) : E))).2 (by rw [mul_inv_cancel_left₀ hb0])
+  rw [map_mul, map_inv₀, inv_mul_le_iff₀ hvb] at h2
+  rw [map_mul] at h1
+  refine ⟨Units.mk0 b hb0, ?_, hv⟩
+  rw [zpow_sub, Units.val_mul, map_mul, Units.val_inv_eq_inv_val, map_inv₀, ← le_antisymm h1 h2, Units.val_mk0,
+    mul_inv_cancel_right₀ hve.ne']
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.CondEx
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets UpperTheory.ConvolutionTheory.Loc
+
+theorem UpperTheory.V.Z.Tf.L4.condEx :
+    ∀ (E : Type) [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E] (ϖ : Eˣ), valuation E (ϖ : E) = uniformizer E → ∀ ψ : AddChar E Circle, Continuous ψ → ψ ≠ 1 → ∃ d : ℤ, HasConductor ψ (ϖ ^ d) := by
+  intro E _ _ _ _ ϖ hϖ ψ hψ hψ1
+  obtain ⟨c, hc⟩ := DiscreteGroups.sglob.DzType.exists_hasConductor_of_continuous_ne_one ψ hψ hψ1
+  have h1 : ord E ϖ = 1 := ord_eq_one (k := E) hϖ
+  have hz : ∀ d : ℤ, ord E (ϖ ^ d) = d := by
+    intro d
+    cases d with
+    | ofNat n => simp [DiscreteGroups.sglob.DzType.ord_pow_bis, h1]
+    | negSucc n =>
+      rw [zpow_negSucc, DiscreteGroups.sglob.DzType.ord_inv_eq_neg_ord, DiscreteGroups.sglob.DzType.ord_pow_bis, h1, Int.negSucc_eq]
+      push_cast; ring
+  have hv : valuation E ((ϖ ^ ord E c : Eˣ) : E) = valuation E (c : E) :=
+    le_antisymm ((DiscreteGroups.sglob.DzType.valuation_le_iff_ord_le _ _).2 (by rw [hz]))
+      ((DiscreteGroups.sglob.DzType.valuation_le_iff_ord_le _ _).2 (by rw [hz]))
+  refine ⟨ord E c, fun x => ?_⟩
+  rw [hv]
+  exact hc x
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4HoweTheory.IdemOp
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets UpperTheory.ConvolutionTheory.Loc
+
+theorem UpperTheory.V.Z.Tf.L4.idemOp :
+    ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [MeasurableSpace G] [BorelSpace G] (μ : Measure G), μ.IsHaarMeasure →
+      ∀ (J : Subgroup G), IsOpen (J : Set G) → IsCompact (J : Set G) → ∀ χ : G → ℂ, IsLocallyConstant χ → (∀ x, ‖χ x‖ = 1) →
+      (∀ x ∈ J, ∀ y ∈ J, χ (x * y) = χ x * χ y) →
+      ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ G V), IsSmooth π →
+        ∃ (B : V →ₗ[ℂ] V) (m : ℂ), m ≠ 0 ∧ IsIntegralOp μ π ((J : Set G).indicator fun x => (χ x)⁻¹) B ∧
+          (∀ v, ∀ x ∈ J, π x (B v) = χ x • B v) ∧ ∀ v, (∀ x ∈ J, π x v = χ x • v) → B v = m • v := by
+  intro G _ _ _ _ _ _ μ hμ J hJo hJc χ hχ hn hm V _ _ π hπ
+  classical
+  set f : G → ℂ := (J : Set G).indicator fun x => (χ x)⁻¹ with hfdef
+  have hne : ∀ x, χ x ≠ 0 := fun x h => by simpa [h] using hn x
+  have hJcl : IsClopen (J : Set G) := ⟨hJc.isClosed, hJo⟩
+  have hf : IsLocallyConstant f := by
+    rw [IsLocallyConstant.iff_eventually_eq]
+    intro x
+    have h1 := (IsLocallyConstant.iff_eventually_eq χ).1 hχ x
+    by_cases hx : x ∈ (J : Set G)
+    · filter_upwards [h1, hJo.mem_nhds hx] with y hy hyJ
+      simp only [hfdef, Set.indicator_of_mem hx, Set.indicator_of_mem hyJ, hy]
+    · filter_upwards [hJcl.isClosed.isOpen_compl.mem_nhds hx] with y hyJ
+      simp only [hfdef, Set.indicator_of_notMem hx, Set.indicator_of_notMem hyJ]
+  have hc : HasCompactSupport f :=
+    HasCompactSupport.intro hJc fun x hx => Set.indicator_of_notMem hx _
+  have hB : IsIntegralOp μ π f (GlobalTheory.OpTrace.smoothOp π μ f) := by
+    intro v l
+    have hi := hπ.smoothOp_integrand hf hc v
+    refine ⟨?_, ?_⟩
+    · have := GlobalTheory.OpTrace.integrable_map (μ := μ) hi.1 hi.2 l l.map_zero
+      simpa only [map_smul, smul_eq_mul] using this
+    · rw [hπ.map_smoothOp (μ := μ) hf hc l v]
+      simp only [smul_eq_mul]
+  generalize GlobalTheory.OpTrace.smoothOp π μ f = B at hB
+  refine ⟨B, (μ.real (J : Set G) : ℂ), ?_, hB, ?_, ?_⟩
+  · have h0 : μ (J : Set G) ≠ 0 := (hJo.measure_pos μ ⟨1, J.one_mem⟩).ne'
+    have h1 : μ (J : Set G) ≠ ⊤ := hJc.measure_lt_top.ne
+    have : μ.real (J : Set G) ≠ 0 := by
+      rw [Measure.real, ENNReal.toReal_ne_zero]
+      exact ⟨h0, h1⟩
+    exact_mod_cast this
+  · intro v x hx
+    rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
+    intro l
+    have h1 := (hB v (l ∘ₗ π x)).2
+    have h2 := (hB v l).2
+    rw [map_sub, map_smul, sub_eq_zero, h2, smul_eq_mul, ← integral_const_mul,
+      ← integral_mul_left_eq_self (fun g => χ x * (f g * l (π g v))) x]
+    refine h1.trans (integral_congr_ae (Filter.Eventually.of_forall fun g => ?_))
+    have e : χ x * f (x * g) = f g := by
+      by_cases hg : g ∈ J
+      · have hxg : x * g ∈ (J : Set G) := J.mul_mem hx hg
+        have hg' : g ∈ (J : Set G) := hg
+        simp only [hfdef, Set.indicator_of_mem hxg, Set.indicator_of_mem hg', hm x hx g hg]
+        have := hne x
+        have := hne g
+        field_simp
+      · have hxg : x * g ∉ (J : Set G) := fun h => hg ((J.mul_mem_cancel_left hx).1 h)
+        have hg' : g ∉ (J : Set G) := hg
+        simp only [hfdef, Set.indicator_of_notMem hxg, Set.indicator_of_notMem hg', mul_zero]
+    simp only [← mul_assoc, e, map_mul, LinearMap.comp_apply, Module.End.mul_apply]
+  · intro v hv
+    rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
+    intro l
+    rw [map_sub, map_smul, sub_eq_zero, (hB v l).2]
+    have e : (fun g => f g * l (π g v)) = (J : Set G).indicator fun _ => l v := by
+      funext g
+      by_cases hg : g ∈ (J : Set G)
+      · simp only [hfdef, Set.indicator_of_mem hg, hv g hg, map_smul, smul_eq_mul]
+        rw [← mul_assoc, inv_mul_cancel₀ (hne g), one_mul]
+      · simp only [hfdef, Set.indicator_of_notMem hg, zero_mul]
+    rw [e, integral_indicator_const _ hJo.measurableSet]
+    simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweLine
+
+section
 
 @[expose] public section
 
@@ -239,3 +399,5 @@ theorem UpperTheory.ConvolutionTheory.Loc.howeLine :
   have h2 : Module.rank ℂ (howeSpace π ψ (howeSet n ϖ a c)) ≤ 1 := (LinearMap.rank_le_of_injective f hf).trans h1
   have h3 := Submodule.nontrivial_iff_ne_bot.2 (h a (le_trans (le_max_right _ _) ha) ψ hψ)
   exact Module.finrank_eq_of_rank_eq (le_antisymm (by simpa using h2) (by simpa using Cardinal.one_le_iff_pos.2 rank_pos))
+end
+end

@@ -1,10 +1,14 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatFunctionalZeroOfFibreIntegralZero
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsFinsetIntegralScaledBoxPiCosetRepsStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsIntegralScaledBoxPiSupersetOfIsCompactStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierTransformInversionLocalFieldPi
+import Aesop.Main
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -41,6 +45,183 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SumIntegralScaledBoxPiCosetRepsShiftInvariantStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsSchwartzBruhatConvolutionLocalFieldPower
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IntegralBoxInvariantEqMeasureRealMulSumReps
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.SplitWeil.FourierPi
+open scoped Topology
+
+noncomputable section
+namespace GlobalTheory.SplitWeil.FourierPi
+
+theorem integral_eq_measureReal_box_mul_sum : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), ν.IsAddHaarMeasure → ∀ (n : Type) [Fintype n] (r R : kˣ) (S : Finset (n → k)), (∀ b ∈ S, b ∈ box n R) → (∀ a ∈ box n R, ∃! b, b ∈ S ∧ a - b ∈ box n r) → ∀ F : (n → k) → ℂ, (∀ t ∈ box n r, ∀ y, F (y + t) = F y) → (∀ y ∉ box n R, F y = 0) → ∫ y, F y ∂(Measure.pi fun _ => ν) = ((Measure.pi fun _ : n => ν).real (box n r) : ℂ) * ∑ b ∈ S, F b := by
+  intro k _ _ _ _ _ _ ν hν n _ r R S hS hrep F hF hF0
+  classical
+  have : ν.IsAddHaarMeasure := hν
+  have : SecondCountableTopology k := secondCountable k
+  have : SigmaFinite ν := inferInstance
+  have : (Measure.pi fun _ : n => ν).IsAddHaarMeasure := inferInstance
+  set μ : Measure (n → k) := Measure.pi fun _ => ν
+  have hmeas : MeasurableSet (box n r) :=
+    MeasurableSet.univ_pi fun _ => (isOpen_cball r).measurableSet
+  have hfin : μ (box n r) < ⊤ := (isCompact_box r).measure_lt_top
+
+  have key : ∀ y, F y = ∑ b ∈ S, (box n r).indicator (fun _ => F b) (y - b) := by
+    intro y
+    by_cases hy : y ∈ box n R
+    · obtain ⟨b, ⟨hbS, hb⟩, huniq⟩ := hrep y hy
+      rw [Finset.sum_eq_single b]
+      · rw [Set.indicator_of_mem hb]
+        have h := hF (y - b) hb b
+        rwa [add_sub_cancel] at h
+      · intro b' hb'S hne
+        have hnot : y - b' ∉ box n r := fun hmem => hne (huniq b' ⟨hb'S, hmem⟩)
+        exact Set.indicator_of_notMem hnot _
+      · intro hbn
+        exact absurd hbS hbn
+    · rw [hF0 y hy]
+      symm
+      refine Finset.sum_eq_zero fun b _ => ?_
+      by_cases hmem : y - b ∈ box n r
+      · rw [Set.indicator_of_mem hmem]
+        have h := hF (y - b) hmem b
+        rw [add_sub_cancel] at h
+        rw [← h, hF0 y hy]
+      · exact Set.indicator_of_notMem hmem _
+  have hint : ∀ b ∈ S, Integrable (fun y => (box n r).indicator (fun _ => F b) (y - b)) μ := by
+    intro b _
+    have h1 : Integrable ((box n r).indicator fun _ : n → k => F b) μ := by
+      refine (integrable_indicator_iff hmeas).2 ?_
+      exact integrableOn_const hfin.ne
+    exact h1.comp_sub_right b
+  calc ∫ y, F y ∂μ = ∫ y, ∑ b ∈ S, (box n r).indicator (fun _ => F b) (y - b) ∂μ := by
+        congr 1
+        funext y
+        exact key y
+    _ = ∑ b ∈ S, ∫ y, (box n r).indicator (fun _ => F b) (y - b) ∂μ := integral_finsetSum S hint
+    _ = ∑ b ∈ S, (μ.real (box n r) : ℂ) * F b := by
+        refine Finset.sum_congr rfl fun b _ => ?_
+        rw [integral_sub_right_eq_self (fun y => (box n r).indicator (fun _ => F b) y) b,
+          integral_indicator_const _ hmeas, Complex.real_smul]
+    _ = _ := by rw [Finset.mul_sum]
+
+end GlobalTheory.SplitWeil.FourierPi
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IntegralBoxInvariantEqMeasureRealMulSumRepsStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.SplitWeil.FourierPi
+open scoped Topology
+
+theorem _root_.GlobalTheory.T.integral_box_invariant_eq_measureReal_mul_sum_reps : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), ν.IsAddHaarMeasure → ∀ (n : Type) [Fintype n] (r R : kˣ) (S : Finset (n → k)), (∀ b ∈ S, b ∈ box n R) → (∀ a ∈ box n R, ∃! b, b ∈ S ∧ a - b ∈ box n r) → ∀ F : (n → k) → ℂ, (∀ t ∈ box n r, ∀ y, F (y + t) = F y) → (∀ y ∉ box n R, F y = 0) → ∫ y, F y ∂(Measure.pi fun _ => ν) = ((Measure.pi fun _ : n => ν).real (box n r) : ℂ) * ∑ b ∈ S, F b := by
+  first | exact @GlobalTheory.SplitWeil.FourierPi.integral_eq_measureReal_box_mul_sum | exact GlobalTheory.SplitWeil.FourierPi.integral_eq_measureReal_box_mul_sum | (intros; apply GlobalTheory.SplitWeil.FourierPi.integral_eq_measureReal_box_mul_sum <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatFunctionalZeroOfFibreIntegralZero
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.SplitWeil.FourierPi
+open scoped Topology
+
+noncomputable section
+namespace GlobalTheory.SplitWeil.FourierPi
+
+theorem map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), ν.IsAddHaarMeasure → ∀ (I₀ I₁ I₂ : Type) [Fintype I₀] [Fintype I₁] [Fintype I₂] (M : Type) [AddCommGroup M] [Module ℂ M] (l : SB ((I₀ → k) × (I₁ → k) × (I₂ → k)) →ₗ[ℂ] M), (∀ (a : I₂ → k) (Φ Φ' : SB ((I₀ → k) × (I₁ → k) × (I₂ → k))), (∀ x, Φ'.1 x = Φ.1 (x + (0, 0, a))) → l Φ' = l Φ) → ∀ Φ : SB ((I₀ → k) × (I₁ → k) × (I₂ → k)), (∀ x₀ x₁, ∫ a, Φ.1 (x₀, x₁, a) ∂(Measure.pi fun _ => ν) = 0) → l Φ = 0 := by
+  intro k _ _ _ _ _ _ ν hν I₀ I₁ I₂ _ _ _ M _ _ l hl Φ hΦ
+  haveI := secondCountable k
+  haveI := hν
+
+  have hU : {t : I₂ → k | ∀ g : (I₀ → k) × (I₁ → k) × (I₂ → k), Φ.1 (g + (0, 0, t)) = Φ.1 g} ∈
+      𝓝 (0 : I₂ → k) := by
+    have ht : Filter.Tendsto
+        (fun t : I₂ → k => ((0, 0, -t) : (I₀ → k) × (I₁ → k) × (I₂ → k))) (𝓝 0) (𝓝 0) := by
+      have hc : Continuous
+          (fun t : I₂ → k => ((0, 0, -t) : (I₀ → k) × (I₁ → k) × (I₂ → k))) := by fun_prop
+      have e : (((0 : I₀ → k), (0 : I₁ → k), -(0 : I₂ → k))) = 0 := by rw [neg_zero]; rfl
+      have h := hc.tendsto 0
+      rwa [e] at h
+    filter_upwards [ht.eventually (GlobalTheory.SBConv.eventually_translate Φ.2)] with t h g
+    have := h g
+    simpa [sub_eq_add_neg] using this
+  obtain ⟨r, hr⟩ := exists_box_subset hU
+  have hK : IsCompact ((fun x : (I₀ → k) × (I₁ → k) × (I₂ → k) => x.2.2) '' tsupport Φ.1) :=
+    Φ.2.2.isCompact.image (by fun_prop)
+  obtain ⟨R, hrR, hKR⟩ := GlobalTheory.T.exists_integralScaledBoxPi_superset_of_isCompact k I₂ _ hK r
+  obtain ⟨S, hSR, hS⟩ := GlobalTheory.T.exists_finset_integralScaledBoxPi_coset_reps k I₂ r R hrR
+  have h0R : (0 : I₂ → k) ∈ box I₂ R := fun i _ => by simp [cball]
+  have h0r : (0 : I₂ → k) ∈ box I₂ r := fun i _ => by simp [cball]
+  have hSne : S.Nonempty := by
+    obtain ⟨b, ⟨hb, -⟩, -⟩ := hS 0 h0R
+    exact ⟨b, hb⟩
+
+  let T : (I₂ → k) → SB ((I₀ → k) × (I₁ → k) × (I₂ → k)) := fun b =>
+    ⟨fun x => Φ.1 (x + (0, 0, b)), Φ.2.1.comp_continuous (continuous_add_const _),
+      Φ.2.2.comp_homeomorph (Homeomorph.addRight _)⟩
+  have hT : ∀ b, l (T b) = l Φ := fun b => hl b Φ (T b) fun _ => rfl
+
+  have hvol : (Measure.pi fun _ : I₂ => ν).real (box I₂ r) ≠ 0 := by
+    rw [measureReal_def]
+    exact (ENNReal.toReal_pos ((isOpen_box r).measure_ne_zero _ ⟨0, h0r⟩)
+      (isCompact_box r).measure_lt_top.ne).ne'
+  have hsum : ∑ b ∈ S, T b = 0 := by
+    apply Subtype.ext
+    funext x
+    obtain ⟨x₀, x₁, a⟩ := x
+    have hF1 : ∀ t ∈ box I₂ r, ∀ y, Φ.1 (x₀, x₁, y + t) = Φ.1 (x₀, x₁, y) := fun t ht y => by
+      have := hr ht (x₀, x₁, y)
+      simpa using this
+    have hF2 : ∀ y ∉ box I₂ R, Φ.1 (x₀, x₁, y) = 0 := fun y hy =>
+      image_eq_zero_of_notMem_tsupport fun hm => hy (hKR ⟨_, hm, rfl⟩)
+    have hval : (∑ b ∈ S, T b).1 (x₀, x₁, a) = ∑ b ∈ S, Φ.1 (x₀, x₁, a + b) := by
+      rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
+      refine Finset.sum_congr rfl fun b _ => ?_
+      simp [T]
+    rw [hval]
+    by_cases ha : a ∈ box I₂ R
+    · rw [GlobalTheory.T.sum_integralScaledBoxPi_coset_reps_shift_invariant k I₂ r R S hSR hS (fun y => Φ.1 (x₀, x₁, y)) hF1 a ha]
+      have h := GlobalTheory.T.integral_box_invariant_eq_measureReal_mul_sum_reps k ν hν I₂ r R S hSR hS (fun y => Φ.1 (x₀, x₁, y)) hF1 hF2
+      rw [hΦ x₀ x₁] at h
+      have h' := (mul_eq_zero.mp h.symm).resolve_left (by exact_mod_cast hvol)
+      simpa using h'
+    · refine Finset.sum_eq_zero fun b hb => hF2 _ fun hab => ha fun i _ => ?_
+      have := add_mem_cball (hab i trivial) (neg_mem_cball (hSR b hb i trivial))
+      simpa using this
+  have hz : (S.card : ℂ) • l Φ = 0 := by
+    have h1 : l (∑ b ∈ S, T b) = (S.card : ℂ) • l Φ := by
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_congr rfl fun b _ => hT b, Finset.sum_const, Nat.cast_smul_eq_nsmul]
+    rw [← h1, hsum, map_zero]
+  exact (smul_eq_zero.mp hz).resolve_left (by exact_mod_cast hSne.card_ne_zero)
+
+end GlobalTheory.SplitWeil.FourierPi
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatFunctionalZeroOfFibreIntegralZeroStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +230,5 @@ open scoped Topology
 
 theorem _root_.GlobalTheory.T.schwartzBruhat_functional_zero_of_fibre_integral_zero : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), ν.IsAddHaarMeasure → ∀ (I₀ I₁ I₂ : Type) [Fintype I₀] [Fintype I₁] [Fintype I₂] (M : Type) [AddCommGroup M] [Module ℂ M] (l : SB ((I₀ → k) × (I₁ → k) × (I₂ → k)) →ₗ[ℂ] M), (∀ (a : I₂ → k) (Φ Φ' : SB ((I₀ → k) × (I₁ → k) × (I₂ → k))), (∀ x, Φ'.1 x = Φ.1 (x + (0, 0, a))) → l Φ' = l Φ) → ∀ Φ : SB ((I₀ → k) × (I₁ → k) × (I₂ → k)), (∀ x₀ x₁, ∫ a, Φ.1 (x₀, x₁, a) ∂(Measure.pi fun _ => ν) = 0) → l Φ = 0 := by
   first | exact @GlobalTheory.SplitWeil.FourierPi.map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero | exact GlobalTheory.SplitWeil.FourierPi.map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero | (intros; apply GlobalTheory.SplitWeil.FourierPi.map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero <;> assumption)
+end
+end

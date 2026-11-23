@@ -2,13 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SpecGood
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.GenericFibreEqvOfSmoothOfNormalLocalDomain
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpHqBij
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpPaste
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpPbEqv
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpUnit
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpValsub
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.SpecializationEqvOfProperOfStrictlyHenselian
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyEquivalenceBasicProperties
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,6 +42,172 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpHqBij
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
+public import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Algebra.Ring.Hom.Defs
+public import Mathlib.RingTheory.LocalRing.Defs
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
+public import Mathlib.Data.Nat.Cast.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonicPolynomialsHaveRootsIffIntegrallyClosedAlgCStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsAlgClosedResidueFieldOfAic
+import Mathlib.RingTheory.Valuation.LocalSubring
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.SpecializationEqvOfProperOfStrictlyHenselian
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.GenericFibreEqvOfSmoothOfNormalLocalDomain
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+theorem UpperTheory.Gal.Mod.generic_fibre_eqv_of_smooth_of_normal_local_domain : GlobalTheory.EtC.E3 → ∀ (q : ℕ) [NeZero q] (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T], AIC T → IsUnit (q : T) → ∀ (L : Type) [Field L] [Algebra T L] [IsFractionRing T L] {X : Scheme.{0}} (p : X ⟶ Spec (CommRingCat.of T)) [Smooth p] (i : ℤ), Eqv _ (sch.map (pullback.fst p (Spec.map (CommRingCat.ofHom (algebraMap T L))))) (tw q i) := by
+  intro hE q _ T _ _ _ hA hq L _ _ _ X p _ i
+  let e : FractionRing T ≃ₐ[T] L := IsLocalization.algEquiv (nonZeroDivisors T) (FractionRing T) L
+  let gF := Spec.map (CommRingCat.ofHom (algebraMap T (FractionRing T)))
+  let u := Spec.map (CommRingCat.ofHom ((e : FractionRing T ≃+* L) : FractionRing T →+* L))
+  have hcomp : Spec.map (CommRingCat.ofHom (algebraMap T L)) = u ≫ gF := by
+    simp only [u, gF, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    congr 2
+    ext t
+    simp [e]
+  haveI : IsIso u := by
+    have : IsIso (CommRingCat.ofHom ((e : FractionRing T ≃+* L) : FractionRing T →+* L)) :=
+      (RingEquiv.toCommRingCatIso (e : FractionRing T ≃+* L)).isIso_hom
+    infer_instance
+  let Φ := pullback.map p (Spec.map (CommRingCat.ofHom (algebraMap T L))) p gF (𝟙 _) u (𝟙 _)
+    (by simp) (by rw [hcomp, Category.comp_id])
+  have hfst : Φ ≫ pullback.fst p gF = pullback.fst p (Spec.map (CommRingCat.ofHom (algebraMap T L))) :=
+    (pullback.lift_fst _ _ _).trans (Category.comp_id _)
+  obtain ⟨hiso, hc, -, -⟩ := eqv_basic (ZMod q) (tw q i)
+  have h1 : Eqv (ZMod q) (sch.map Φ) (tw q i) := hiso _ _ _ inferInstance
+  have h2 : Eqv (ZMod q) (sch.map (pullback.fst p gF)) (tw q i) := hE q T hA hq p i
+  rw [← hfst, Functor.map_comp]
+  exact (hc _ _ _ _ _).1 h1 h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpPaste
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace UpperTheory.Gal.Mod
+
+theorem spPaste : ∀ {Y S A B C : Scheme.{0}} (p : Y ⟶ S) (a : A ⟶ S) (b : B ⟶ S) (c : C ⟶ A) (d : C ⟶ B), c ≫ a = d ≫ b → ∀ φ : pullback (pullback.snd p b) d ⟶ pullback p a, φ ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst _ _ → φ ≫ pullback.snd _ _ = pullback.snd _ _ ≫ c → IsPullback φ (pullback.snd _ _) (pullback.snd _ _) c := by
+  intro Y S A B C p a b c d h φ h1 h2
+  have big : IsPullback (pullback.fst (pullback.snd p b) d ≫ pullback.fst p b)
+      (pullback.snd (pullback.snd p b) d) p (d ≫ b) :=
+    (IsPullback.of_hasPullback (pullback.snd p b) d).paste_horiz
+      (IsPullback.of_hasPullback p b)
+  have big' : IsPullback (φ ≫ pullback.fst p a)
+      (pullback.snd (pullback.snd p b) d) p (c ≫ a) := by
+    rw [h1, h]; exact big
+  exact IsPullback.of_right big' h2 (IsPullback.of_hasPullback p a)
+
+end UpperTheory.Gal.Mod
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpPbEqv
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace UpperTheory.Gal.Mod
+
+theorem spPbEqv : ∀ (R : Type) [CommRing R] (F : Shv R) {W X Y Z : Scheme.{0}} (f : W ⟶ X) (g : W ⟶ Y)
+    (h : X ⟶ Z) (k : Y ⟶ Z), IsPullback f g h k → Eqv R (sch.map (pullback.fst h k)) F →
+    Eqv R (sch.map f) F := by
+  intro R _ F W X Y Z f g h k hpb hE n
+  have hf : sch.map f = sch.map hpb.isoPullback.hom ≫ sch.map (pullback.fst h k) := by
+    rw [← CategoryTheory.Functor.map_comp, IsPullback.isoPullback_hom_fst]
+  have hl : ∀ x, pull R (sch.map hpb.isoPullback.inv) F n (pull R (sch.map hpb.isoPullback.hom) F n x) = x := by
+    intro x
+    rw [← pull_comp, ← CategoryTheory.Functor.map_comp, Iso.inv_hom_id, CategoryTheory.Functor.map_id, pull_id]
+  have hr : ∀ x, pull R (sch.map hpb.isoPullback.hom) F n (pull R (sch.map hpb.isoPullback.inv) F n x) = x := by
+    intro x
+    rw [← pull_comp, ← CategoryTheory.Functor.map_comp, Iso.hom_inv_id, CategoryTheory.Functor.map_id, pull_id]
+  have hb : Function.Bijective (pull R (sch.map hpb.isoPullback.hom) F n) :=
+    Function.bijective_iff_has_inverse.mpr ⟨_, hl, hr⟩
+  have hc : (pull R (sch.map f) F n : _ → _) =
+      (pull R (sch.map hpb.isoPullback.hom) F n) ∘ (pull R (sch.map (pullback.fst h k)) F n) := by
+    funext x
+    rw [hf, pull_comp]
+    rfl
+  rw [hc]
+  exact hb.comp (hE n)
+
+end UpperTheory.Gal.Mod
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpUnit
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace UpperTheory.Gal.Mod
+
+theorem spUnit : ∀ (A k : Type) [CommRing A] [IsLocalRing A] [Field k] (r : A →+* k),
+    Function.Surjective r → ∀ q : ℕ, IsUnit (q : k) → IsUnit (q : A) := by
+  intro A k _ _ _ r hr q hq
+  have hmax : (RingHom.ker r).IsMaximal := RingHom.ker_isMaximal_of_surjective r hr
+  have heq : RingHom.ker r = IsLocalRing.maximalIdeal A := IsLocalRing.eq_maximalIdeal hmax
+  by_contra hn
+  have hmem : (q : A) ∈ IsLocalRing.maximalIdeal A := (IsLocalRing.mem_maximalIdeal _).2 hn
+  rw [← heq, RingHom.mem_ker, map_natCast] at hmem
+  exact hq.ne_zero hmem
+
+end UpperTheory.Gal.Mod
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpValsub
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+theorem UpperTheory.Gal.Mod.spValsub :
+    ∀ (Ω : Type) [Field Ω] [IsAlgClosed Ω] (V : ValuationSubring Ω), AIC V ∧ SH V := by
+  intro Ω _ _ V
+  have hclosed : IsAlgClosed (FractionRing V) :=
+    IsAlgClosed.of_ringEquiv Ω (FractionRing V)
+      (IsLocalization.algEquiv (nonZeroDivisors V) Ω (FractionRing V)).toRingEquiv
+  have hA : AIC V := (GlobalTheory.T.monicPolynomialsHaveRoots_iff_integrallyClosed_algClosed V).2 ⟨inferInstance, hclosed⟩
+  exact ⟨hA, GlobalTheory.GenusTwoPureComparison.Cmp.sh_of_aic hA⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.PSpSpecIf
+
+section
 
 @[expose] public section
 
@@ -151,3 +309,5 @@ theorem UpperTheory.Gal.Mod.spSpecIf :
     rw [← pullHQ_comp', ← Functor.map_comp, ← hJ, Functor.map_comp, pullHQ_comp']
     rfl
   rw [hgI, hsp, hsp, hgJ]
+end
+end

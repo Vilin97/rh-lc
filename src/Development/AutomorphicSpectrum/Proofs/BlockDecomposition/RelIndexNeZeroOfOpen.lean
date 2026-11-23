@@ -6,12 +6,6 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinea
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexNeZeroOfIsOpen
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousPairProjection
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteRestrictionVanishing
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteTestFunctionProductStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RestrictedProductEmbeddingsStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RestrictedProductIntegralStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlotEmbeddingsExistStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlotLevelSubgroupsExistStatement
-import GroundTheory.GlobalFields.LocalFieldAtPlace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,6 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,6 +42,214 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFinsetOfEventually
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.FmTools
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.JoinType
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.ReadSplit
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RestrictedProductEmbeddingsStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RestrictedProductIntegralStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlotEmbeddingsExistStatement
+import GroundTheory.GlobalFields.LocalFieldAtPlace
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteTestFunctionProduct
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter
+open GlobalTheory.CuspRep GlobalTheory.PRep GlobalTheory.UnitaryBC GlobalTheory.BCT GlobalTheory.LFun PositivityTheory.Rg.BcB.E PositivityTheory.Rg.BcB.SpectralAccumulation PositivityTheory.Rg.BcB.G8 PositivityTheory.Rg.BcB.CG
+open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.F.RS PositivityTheory.Rg.BcB.F.Tail PositivityTheory.Rg.BcB.F.FA
+open scoped Classical
+open GlobalTheory.CompanionTheory.FinActS
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.FinActS
+
+theorem finprod_sum_split {α β M : Type*} [CommMonoid M] (f : α ⊕ β → M)
+    (h₁ : (Function.mulSupport fun x => f (Sum.inl x)).Finite)
+    (h₂ : (Function.mulSupport fun x => f (Sum.inr x)).Finite) :
+    ∏ᶠ i, f i = (∏ᶠ x, f (Sum.inl x)) * ∏ᶠ x, f (Sum.inr x) := by
+  have hu : (Set.univ : Set (α ⊕ β)) = Set.range Sum.inl ∪ Set.range Sum.inr := by
+    ext i; cases i <;> simp
+  have e₁ : (Set.range (Sum.inl : α → α ⊕ β) ∩ Function.mulSupport f).Finite := by
+    refine (h₁.image Sum.inl).subset ?_
+    rintro _ ⟨⟨x, rfl⟩, hx⟩
+    exact ⟨x, hx, rfl⟩
+  have e₂ : (Set.range (Sum.inr : β → α ⊕ β) ∩ Function.mulSupport f).Finite := by
+    refine (h₂.image Sum.inr).subset ?_
+    rintro _ ⟨⟨x, rfl⟩, hx⟩
+    exact ⟨x, hx, rfl⟩
+  have hd : Disjoint (Set.range (Sum.inl : α → α ⊕ β)) (Set.range (Sum.inr : β → α ⊕ β)) :=
+    Set.disjoint_left.2 (by rintro _ ⟨x, rfl⟩ ⟨y, hy⟩; cases hy)
+  rw [← finprod_mem_univ, hu, finprod_mem_union' hd e₁ e₂,
+    finprod_mem_range Sum.inl_injective, finprod_mem_range Sum.inr_injective]
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ}
+
+theorem finFn_eq_finprod_factor {S : Set (Pl E)} {φ₁ φ₂ : ∀ w : Pl E, LF a b w} (h₁ : IsTestP φ₁) (h₂ : IsTestP φ₂)
+    (y : Hf E a b) : finFn S φ₁ φ₂ y = ∏ᶠ i : Slot S, sf φ₁ φ₂ i (i.cp a b y) := by
+  set g₁ : Pl E → ℂ := fun w => φ₁ w (atW w y) with hg₁
+  set g₂ : Pl E → ℂ := fun w => if IsSplitAt w then φ₂ w (atW w (thP E a b y)) else 1 with hg₂
+  have o₁ : ∀ᶠ w in cofinite, g₁ w = 1 := by
+    filter_upwards [GlobalTheory.CompanionTheory.FinTestTw.eventually_eq_indicator h₁, (GlobalTheory.CompanionTheory.FinTestTw.isRestrW a b).eventually_mem y] with w e m
+    have m' : atW w y ∈ (K2 a b w : Set (GLw a w × GLw b w)) := m
+    simp only [hg₁]
+    rw [e, Set.indicator_of_mem m']
+    simp
+  have o₂ : ∀ᶠ w in cofinite, φ₂ w (atW w (thP E a b y)) = 1 := by
+    filter_upwards [GlobalTheory.CompanionTheory.FinTestTw.eventually_eq_indicator h₂,
+      (GlobalTheory.CompanionTheory.FinTestTw.isRestrW a b).eventually_mem (thP E a b y)] with w e m
+    have m' : atW w (thP E a b y) ∈ (K2 a b w : Set (GLw a w × GLw b w)) := m
+    rw [e, Set.indicator_of_mem m']
+    simp
+  have f₁ : (Function.mulSupport g₁).Finite := eventually_cofinite.1 o₁
+  have f₂' : (Function.mulSupport fun w => φ₂ w (atW w (thP E a b y))).Finite := eventually_cofinite.1 o₂
+  have f₂ : (Function.mulSupport g₂).Finite := by
+    refine f₂'.subset fun w hw => ?_
+    by_cases hs : IsSplitAt w
+    · simpa [hg₂, hs, Function.mem_mulSupport] using hw
+    · exact absurd (by simp [hg₂, hs]) hw
+  have l₁ : (Function.mulSupport fun x : {w // w ∈ S} => g₁ x.1).Finite :=
+    (f₁.preimage Subtype.val_injective.injOn).subset fun x hx => hx
+  have l₂ : (Function.mulSupport fun x : {w // w ∈ S ∧ IsSplitAt w} => φ₂ x.1 (atW x.1 (thP E a b y))).Finite :=
+    (f₂'.preimage Subtype.val_injective.injOn).subset fun x hx => hx
+  have hs : ∏ᶠ i : Slot S, sf φ₁ φ₂ i (i.cp a b y) =
+      (∏ᶠ x : {w // w ∈ S}, g₁ x.1) * ∏ᶠ x : {w // w ∈ S ∧ IsSplitAt w}, φ₂ x.1 (atW x.1 (thP E a b y)) :=
+    finprod_sum_split (fun i : Slot S => sf φ₁ φ₂ i (i.cp a b y)) l₁ l₂
+  have c₁ : ∏ᶠ x : {w // w ∈ S}, g₁ x.1 = ∏ᶠ w ∈ S, g₁ w :=
+    finprod_subtype_eq_finprod_cond (f := g₁) (fun w => w ∈ S)
+  have c₂ : ∏ᶠ x : {w // w ∈ S ∧ IsSplitAt w}, φ₂ x.1 (atW x.1 (thP E a b y)) = ∏ᶠ w ∈ S, g₂ w := by
+    have e₀ : ∏ᶠ x : {w // w ∈ S ∧ IsSplitAt w}, φ₂ x.1 (atW x.1 (thP E a b y)) =
+        ∏ᶠ x : {w // w ∈ S ∧ IsSplitAt w}, g₂ x.1 :=
+      finprod_congr fun x => by simp [hg₂, x.2.2]
+    rw [e₀, finprod_subtype_eq_finprod_cond (f := g₂) (fun w => w ∈ S ∧ IsSplitAt w)]
+    refine finprod_mem_inter_mulSupport_eq' g₂ {w | w ∈ S ∧ IsSplitAt w} S fun w hw => ?_
+    have hsp : IsSplitAt w := by
+      by_contra hn
+      exact hw (by simp [hg₂, hn])
+    exact ⟨fun h => h.1, fun h => ⟨h, hsp⟩⟩
+  rw [hs, c₁, c₂]
+  exact finprod_mem_mul_distrib' (f₁.subset Set.inter_subset_right) (f₂.subset Set.inter_subset_right)
+
+end GlobalTheory.CompanionTheory.FinActS
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteTestFunctionProductStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter
+open GlobalTheory.CuspRep GlobalTheory.PRep GlobalTheory.UnitaryBC GlobalTheory.BCT GlobalTheory.LFun PositivityTheory.Rg.BcB.E PositivityTheory.Rg.BcB.SpectralAccumulation PositivityTheory.Rg.BcB.G8 PositivityTheory.Rg.BcB.CG
+open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.F.RS PositivityTheory.Rg.BcB.F.Tail PositivityTheory.Rg.BcB.F.FA
+open scoped Classical
+open GlobalTheory.CompanionTheory.FinActS
+
+
+theorem _root_.GlobalTheory.T.finite_test_function_product : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ} {S : Set (Pl E)} {φ₁ φ₂ : ∀ w : Pl E, LF a b w} (h₁ : IsTestP φ₁) (h₂ : IsTestP φ₂)
+    (y : Hf E a b), finFn S φ₁ φ₂ y = ∏ᶠ i : Slot S, sf φ₁ φ₂ i (i.cp a b y) := by
+  first | exact @GlobalTheory.CompanionTheory.FinActS.finFn_eq_finprod_factor | exact GlobalTheory.CompanionTheory.FinActS.finFn_eq_finprod_factor | (intros; apply GlobalTheory.CompanionTheory.FinActS.finFn_eq_finprod_factor <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FactorLevelSubgroupsExist
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter
+open GlobalTheory.CuspRep GlobalTheory.PRep GlobalTheory.UnitaryBC GlobalTheory.BCT GlobalTheory.LFun PositivityTheory.Rg.BcB.E PositivityTheory.Rg.BcB.SpectralAccumulation PositivityTheory.Rg.BcB.G8 PositivityTheory.Rg.BcB.CG
+open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.F.RS PositivityTheory.Rg.BcB.F.Tail PositivityTheory.Rg.BcB.F.FA
+open scoped Classical
+open GlobalTheory.CompanionTheory.FinActS
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.PositionTest
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ}
+
+theorem eventually_factor {S : Set (Pl E)} {P : Slot S → Prop}
+    (h₁ : ∀ᶠ w : Pl E in cofinite, ∀ hw : w ∈ S, P (Sum.inl ⟨w, hw⟩))
+    (h₂ : ∀ᶠ w : Pl E in cofinite, ∀ hw : w ∈ S ∧ IsSplitAt w, P (Sum.inr ⟨w, hw⟩)) :
+    ∀ᶠ i : Slot S in cofinite, P i := by
+  have f₁ := Filter.eventually_cofinite.1 h₁
+  have f₂ := Filter.eventually_cofinite.1 h₂
+  refine Filter.eventually_cofinite.2 ?_
+  refine (((f₁.preimage (Subtype.val_injective (p := fun w => w ∈ S)).injOn).image Sum.inl).union
+    ((f₂.preimage (Subtype.val_injective (p := fun w => w ∈ S ∧ IsSplitAt w)).injOn).image Sum.inr)).subset ?_
+  rintro (⟨w, hw⟩ | ⟨w, hw⟩) hi
+  · exact Or.inl ⟨⟨w, hw⟩, fun h => hi (h hw), rfl⟩
+  · exact Or.inr ⟨⟨w, hw⟩, fun h => hi (h hw), rfl⟩
+
+def localLevel {S : Set (Pl E)} (L₁ L₂ : ∀ w : Pl E, Subgroup (GLw a w × GLw b w)) :
+    ∀ i : Slot S, Subgroup (GLw a i.pl × GLw b i.pl)
+  | .inl w => L₁ w.1
+  | .inr w => L₂ w.1
+
+theorem exists_factor_level₂ {S : Set (Pl E)} {φ₁ φ₂ : ∀ w : Pl E, LF a b w} (h₁ : IsTestP φ₁) (h₂ : IsTestP φ₂) :
+    ∃ L : ∀ i : Slot S, Subgroup (GLw a i.pl × GLw b i.pl),
+      (∀ i, IsOpen (L i : Set (GLw a i.pl × GLw b i.pl))) ∧ (∀ᶠ i in cofinite, L i = K2 a b i.pl) ∧
+      (∀ i, ∀ k ∈ L i, ∀ x, sf φ₁ φ₂ i (x * k) = sf φ₁ φ₂ i x) ∧
+      (∀ i : Slot S, HasCompactSupport (sf φ₁ φ₂ i)) ∧
+      ∀ᶠ i : Slot S in cofinite, sf φ₁ φ₂ i = (K2 a b i.pl : Set (GLw a i.pl × GLw b i.pl)).indicator 1 := by
+  obtain ⟨L₁, o₁, e₁, i₁⟩ := GlobalTheory.CompanionTheory.FinLevelTw.exists_level_of_test h₁
+  obtain ⟨L₂, o₂, e₂, i₂⟩ := GlobalTheory.CompanionTheory.FinLevelTw.exists_level_of_test h₂
+  have c₁ := GlobalTheory.CompanionTheory.FinTestTw.eventually_eq_indicator h₁
+  have c₂ := GlobalTheory.CompanionTheory.FinTestTw.eventually_eq_indicator h₂
+  refine ⟨localLevel L₁ L₂, ?_, ?_, ?_, ?_, ?_⟩
+  · rintro (w | w)
+    · exact o₁ w.1
+    · exact o₂ w.1
+  · exact eventually_factor (e₁.mono fun w h _ => h) (e₂.mono fun w h _ => h)
+  · rintro (w | w) k hk x
+    · exact (i₁ w.1 k hk x).2
+    · exact (i₂ w.1 k hk x).2
+  · rintro (w | w)
+    · exact GlobalTheory.CompanionTheory.FinTestTw.hasCompactSupport_loc h₁ w.1
+    · exact GlobalTheory.CompanionTheory.FinTestTw.hasCompactSupport_loc h₂ w.1
+  · exact eventually_factor (c₁.mono fun w h _ => h) (c₂.mono fun w h _ => h)
+
+end GlobalTheory.CompanionTheory.PositionTest
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlotLevelSubgroupsExistStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix MeasureTheory Filter
+open GlobalTheory.CuspRep GlobalTheory.PRep GlobalTheory.UnitaryBC GlobalTheory.BCT GlobalTheory.LFun PositivityTheory.Rg.BcB.E PositivityTheory.Rg.BcB.SpectralAccumulation PositivityTheory.Rg.BcB.G8 PositivityTheory.Rg.BcB.CG
+open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.F.RS PositivityTheory.Rg.BcB.F.Tail PositivityTheory.Rg.BcB.F.FA
+open scoped Classical
+open GlobalTheory.CompanionTheory.FinActS
+
+
+theorem _root_.GlobalTheory.T.position_level_subgroups_exist : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ} {S : Set (Pl E)} {φ₁ φ₂ : ∀ w : Pl E, LF a b w} (h₁ : IsTestP φ₁) (h₂ : IsTestP φ₂),
+    ∃ L : ∀ i : Slot S, Subgroup (GLw a i.pl × GLw b i.pl),
+      (∀ i, IsOpen (L i : Set (GLw a i.pl × GLw b i.pl))) ∧ (∀ᶠ i in cofinite, L i = K2 a b i.pl) ∧
+      (∀ i, ∀ k ∈ L i, ∀ x, sf φ₁ φ₂ i (x * k) = sf φ₁ φ₂ i x) ∧
+      (∀ i : Slot S, HasCompactSupport (sf φ₁ φ₂ i)) ∧
+      ∀ᶠ i : Slot S in cofinite, sf φ₁ φ₂ i = (K2 a b i.pl : Set (GLw a i.pl × GLw b i.pl)).indicator 1 := by
+  first | exact @GlobalTheory.CompanionTheory.PositionTest.exists_factor_level₂ | exact GlobalTheory.CompanionTheory.PositionTest.exists_factor_level₂ | (intros; apply GlobalTheory.CompanionTheory.PositionTest.exists_factor_level₂ <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RelIndexNeZeroOfOpen
+
+section
 
 @[expose] public section
 
@@ -168,4 +372,6 @@ theorem finActOf : FinActOf := by
 
 end GlobalTheory.CompanionTheory.FinActS
 
+end
+end
 end

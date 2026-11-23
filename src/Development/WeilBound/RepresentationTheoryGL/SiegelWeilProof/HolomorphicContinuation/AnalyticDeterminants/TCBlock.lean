@@ -1,6 +1,6 @@
 module
 
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TCBlockC
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TopCompS
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,8 +22,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,13 +41,99 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.Analysis.Calculus.ContDiff.Basic
 public import Mathlib.Analysis.Calculus.ContDiff.Comp
 public import Mathlib.Analysis.Calculus.ContDiff.Operations
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TCBlockA
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix
+open scoped ContDiff
+
+namespace PositivityTheory.Rg.Sw.LVs.TC
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LVs
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+variable {n : ℕ}
+
+def embL (s : Finset (Fin n)) : Matrix s s ℂ →L[ℂ] Matrix (Fin n) (Fin n) ℂ :=
+  LinearMap.toContinuousLinearMap
+    { toFun := embOn s
+      map_add' := fun T T' => by
+        ext a b
+        simp only [embOn, Matrix.add_apply]
+        split_ifs <;> simp
+      map_smul' := fun x T => by
+        ext a b
+        simp only [embOn, Matrix.smul_apply, RingHom.id_apply]
+        split_ifs <;> simp }
+
+def bdL (j : ℕ) (c c' : ℂ) : Matrix (Fin n) (Fin n) ℂ →L[ℂ] Matrix (Fin n) (Fin n) ℂ :=
+  LinearMap.toContinuousLinearMap
+    { toFun := bdiag j c c'
+      map_add' := fun T T' => by
+        ext a b
+        simp only [bdiag, Matrix.add_apply]
+        split_ifs <;> ring
+      map_smul' := fun x T => by
+        ext a b
+        simp only [bdiag, Matrix.smul_apply, RingHom.id_apply, smul_eq_mul]
+        split_ifs <;> ring }
+
+theorem bdL_apply (j : ℕ) (c c' : ℂ) (t : Matrix (Fin n) (Fin n) ℂ) : bdL j c c' t = bdiag j c c' t := rfl
+
+theorem mem_blkB (j : ℕ) (r : Fin n) : r ∈ blkB (n := n) j ↔ r ∉ blkA (n := n) j := by
+  simp [blkB]
+
+end PositivityTheory.Rg.Sw.LVs.TC
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TCBlockC
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix
+
+namespace PositivityTheory.Rg.Sw.LVs.TC
+
+open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LVs
+
+variable {n : ℕ}
+
+def eBq (j : ℕ) : {x // x ∈ blkB (n := n) j} ≃ {x // ¬ x ∈ blkA (n := n) j} :=
+  Equiv.subtypeEquivRight (fun x => mem_blkB j x)
+
+def piP (j : ℕ) (σA : Equiv.Perm (blkA (n := n) j)) (τ : Equiv.Perm (blkB (n := n) j)) : Equiv.Perm (Fin n) :=
+  Equiv.Perm.subtypeCongr σA ((eBq j).permCongr τ)
+
+end PositivityTheory.Rg.Sw.LVs.TC
+end
+end
+end
+
+-- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AnalyticDeterminants.TCBlock
+
+section
 
 @[expose] public section
 
@@ -314,3 +398,6 @@ theorem detDBlock_of (hA : IterAffine) (hS : IterSymm) (hN : IterNested) : DetDB
     exact Subsingleton.elim _ _
 
 end PositivityTheory.Rg.Sw.LVs.TC
+end
+end
+end

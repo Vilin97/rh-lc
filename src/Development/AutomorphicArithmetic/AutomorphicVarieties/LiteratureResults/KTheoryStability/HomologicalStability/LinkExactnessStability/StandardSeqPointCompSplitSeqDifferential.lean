@@ -3,8 +3,12 @@ module
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.MemSplitSeqIff
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TensorHomCubes.StabDirectedSystem
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.FaceStdSeqGLConjugateCommutingStab
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.GroupHomologyMapEqOfInnerConj
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.HMapSumZsmulAdd
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.RepresentationTheory.Coinduced
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.ExistsFreeResolutionShortExact
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.GroupHomologyLongExactMapsNaturalOfRes
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.ProjectiveRepGroupHomologyPosVanishes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,8 +29,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,6 +51,179 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Lemma
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.PermRepSingle
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.InnerAutActsTriviallyGroupHomology
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+
+namespace GlobalTheory.HomStab
+
+def conjActHom {k G : Type} [CommRing k] [Group G] (g : G) (A : Rep k G) :
+    A ⟶ Rep.res (MulAut.conj g).toMonoidHom A :=
+  Rep.ofHom ⟨A.ρ g, fun h => LinearMap.ext fun a => by
+    change A.ρ g (A.ρ h a) = A.ρ (g * h * g⁻¹) (A.ρ g a)
+    rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
+    simp [mul_assoc]⟩
+
+theorem conjActHom_hom_apply {k G : Type} [CommRing k] [Group G] (g : G) (A : Rep k G) (a : A) :
+    (conjActHom g A).hom a = A.ρ g a := rfl
+
+theorem conj_map_eq_id_zero (k G : Type) [CommRing k] [Group G] (g : G) (A : Rep k G)
+    (u : A ⟶ Rep.res (MulAut.conj g).toMonoidHom A) (hu : ∀ a, u.hom a = A.ρ g a) :
+    groupHomology.map (MulAut.conj g).toMonoidHom u 0 = 𝟙 _ := by
+  rw [← cancel_epi (groupHomology.H0π A), groupHomology.H0π_comp_map, Category.comp_id]
+  ext a
+  have hv : (groupHomology.H0π A).hom (A.ρ g a) = (groupHomology.H0π A).hom a := by
+    rw [← groupHomology.coinvariantsMk_comp_H0Iso_inv]
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply]
+    congr 1
+    exact Representation.Coinvariants.mk_self_apply _ _ _
+  rw [← hv, ← hu]
+  rfl
+
+theorem conj_map_eq_id : ∀ (k G : Type) [CommRing k] [Group G] (g : G) (n : ℕ) (A : Rep k G)
+    (u : A ⟶ Rep.res (MulAut.conj g).toMonoidHom A), (∀ a, u.hom a = A.ρ g a) →
+    groupHomology.map (MulAut.conj g).toMonoidHom u n = 𝟙 _ := by
+  intro k G _ _ g n
+  induction n with
+  | zero => exact conj_map_eq_id_zero k G g
+  | succ n ih =>
+    intro A u hu
+    obtain ⟨ι, K, i, e, h, hS⟩ := exists_free_shortExact k G A
+    have hP : IsZero (groupHomology (Rep.free k G ι) (n + 1)) :=
+      GlobalTheory.T.projective_rep_groupHomology_pos_vanishes k G (Rep.free k G ι) inferInstance n
+    have hmono := groupHomology.mono_δ_of_isZero hS n hP
+    have hnat := (GlobalTheory.T.groupHomology_longExact_maps_natural_of_res k G G (MulAut.conj g).toMonoidHom _ _ hS hS
+      (conjActHom g K) (conjActHom g (Rep.free k G ι)) u
+      (fun a => by
+        change (Rep.free k G ι).ρ g (i.hom a) = i.hom (K.ρ g a)
+        exact (Rep.hom_comm_apply i g a).symm)
+      (fun a => by
+        change u.hom (e.hom a) = e.hom ((Rep.free k G ι).ρ g a)
+        rw [hu]
+        exact (Rep.hom_comm_apply e g a).symm) n).1
+    rw [ih K (conjActHom g K) (fun _ => rfl), Category.comp_id] at hnat
+    rw [← cancel_mono (groupHomology.δ hS (n + 1) n rfl), Category.id_comp]
+    exact hnat.symm
+
+end GlobalTheory.HomStab
+
+section
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+theorem _root_.GlobalTheory.T.innerAut_acts_trivially_groupHomology : ∀ (k G : Type) [CommRing k] [Group G] (g : G) (n : ℕ) (A : Rep k G) (u : A ⟶ Rep.res (MulAut.conj g).toMonoidHom A), (∀ a, u.hom a = A.ρ g a) → groupHomology.map (MulAut.conj g).toMonoidHom u n = 𝟙 _ := by
+  first
+  | exact @GlobalTheory.HomStab.conj_map_eq_id
+  | exact @GlobalTheory.HomStab.conj_map_eq_id_zero
+  | exact @GlobalTheory.HomStab.conjActHom_hom_apply
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.GroupHomologyMapEqOfInnerConj
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+
+namespace GlobalTheory.HomStab.ConjMap
+
+noncomputable def actHom {k G : Type} [CommRing k] [Group G] (B : Rep k G) (g : G) :
+    B ⟶ Rep.res (MulAut.conj g).toMonoidHom B :=
+  Rep.ofHom (X := B.V) (Y := B.V) (ρ := B.ρ) (σ := (Rep.res (MulAut.conj g).toMonoidHom B).ρ)
+    ⟨B.ρ g, fun h => by ext x; simp [Rep.res]⟩
+
+lemma actHom_apply {k G : Type} [CommRing k] [Group G] (B : Rep k G) (g : G) (x : B) :
+    (actHom B g).hom x = B.ρ g x := rfl
+
+end GlobalTheory.HomStab.ConjMap
+
+open GlobalTheory.HomStab.ConjMap in
+theorem GlobalTheory.HomStab.groupHomology_map_conj : ∀ (k G H : Type) [CommRing k] [Group G] [Group H] (A : Rep k H) (B : Rep k G) (f₁ f₂ : H →* G) (u₁ : A ⟶ Rep.res f₁ B) (u₂ : A ⟶ Rep.res f₂ B) (g : G), (∀ h, f₂ h = g * f₁ h * g⁻¹) → (∀ a, u₂.hom a = B.ρ g (u₁.hom a)) → ∀ n : ℕ, groupHomology.map f₂ u₂ n = groupHomology.map f₁ u₁ n := by
+  intro k G H _ _ _ A B f₁ f₂ u₁ u₂ g hf hu n
+  have hf' : f₂ = (MulAut.conj g).toMonoidHom.comp f₁ := by
+    ext h; simp [hf h]
+  have e : groupHomology.map f₂ u₂ n =
+      groupHomology.map ((MulAut.conj g).toMonoidHom.comp f₁)
+        (u₁ ≫ (Rep.resFunctor f₁).map (actHom B g)) n := by
+    apply groupHomology.map_congr hf'
+    ext a
+    simp [hu a, actHom_apply]
+    rfl
+  rw [e, groupHomology.map_comp, GlobalTheory.T.innerAut_acts_trivially_groupHomology k G g n B (actHom B g) (fun a => rfl),
+    Category.comp_id]
+
+section
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.HMapSumZsmulAdd
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+
+namespace GlobalTheory.HomStab
+
+theorem chainsMap_id_add {k G : Type} [CommRing k] [Group G] {A B : Rep k G} (f g : A ⟶ B) :
+    groupHomology.chainsMap (MonoidHom.id G) (f + g) =
+      groupHomology.chainsMap (MonoidHom.id G) f + groupHomology.chainsMap (MonoidHom.id G) g := by
+  ext n : 1
+  apply groupHomology.inhomogeneousChains.ext
+  intro x
+  ext a : 2
+  simp only [groupHomology.chainsMap_f_single, HomologicalComplex.add_f_apply]
+  simp [groupHomology.chainsMap_f_single]
+  rw [← Finsupp.single_add]
+  rfl
+
+theorem hMap_add {k G : Type} [CommRing k] [Group G] {A B : Rep k G} (f g : A ⟶ B) (n : ℕ) :
+    hMap (f + g) n = hMap f n + hMap g n := by
+  unfold hMap groupHomology.map
+  rw [chainsMap_id_add, HomologicalComplex.homologyMap_add]
+
+noncomputable def hMapHom {k G : Type} [CommRing k] [Group G] (A B : Rep k G) (n : ℕ) :
+    (A ⟶ B) →+ (groupHomology A n ⟶ groupHomology B n) :=
+  AddMonoidHom.mk' (fun f => hMap f n) fun f g => hMap_add f g n
+
+theorem hMap_additive : ∀ (k G : Type) [CommRing k] [Group G] (A B : Rep k G) (n : ℕ), (∀ f g : A ⟶ B, hMap (f + g) n = hMap f n + hMap g n) ∧ hMap (0 : A ⟶ B) n = 0 ∧ (∀ (m : ℤ) (f : A ⟶ B), hMap (m • f) n = m • hMap f n) ∧ ∀ (ι : Type) (T : Finset ι) (f : ι → (A ⟶ B)), hMap (∑ i ∈ T, f i) n = ∑ i ∈ T, hMap (f i) n := by
+  intro k G _ _ A B n
+  refine ⟨fun f g => hMap_add f g n, ?_, ?_, ?_⟩
+  · exact map_zero (hMapHom A B n)
+  · intro m f
+    exact map_zsmul (hMapHom A B n) m f
+  · intro ι T f
+    exact map_sum (hMapHom A B n) f T
+
+end GlobalTheory.HomStab
+
+section
+open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
+theorem _root_.GlobalTheory.T.hMap_sum_zsmul_add : ∀ (k G : Type) [CommRing k] [Group G] (A B : Rep k G) (n : ℕ), (∀ f g : A ⟶ B, hMap (f + g) n = hMap f n + hMap g n) ∧ hMap (0 : A ⟶ B) n = 0 ∧ (∀ (m : ℤ) (f : A ⟶ B), hMap (m • f) n = m • hMap f n) ∧ ∀ (ι : Type) (T : Finset ι) (f : ι → (A ⟶ B)), hMap (∑ i ∈ T, f i) n = ∑ i ∈ T, hMap (f i) n := by
+  first
+  | exact @GlobalTheory.HomStab.hMap_additive
+  | exact @GlobalTheory.HomStab.hMap_add
+  | exact @GlobalTheory.HomStab.chainsMap_id_add
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.HomologicalStability.LinkExactnessStability.StandardSeqPointCompSplitSeqDifferential
+
+section
 
 @[expose] public section
 
@@ -153,4 +328,6 @@ theorem _root_.GlobalTheory.T.standardSeqPoint_comp_splitSeqDifferential : ∀ (
   | exact @GlobalTheory.HomStab.ptH_comp_hMap_splitD
   | exact @GlobalTheory.HomStab.stab_comp_stab
   | exact @GlobalTheory.HomStab.altSum_neg_one
+end
+end
 end

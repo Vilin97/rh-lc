@@ -1,8 +1,6 @@
 module
 
-public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SingularValueFrame
-public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
-public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsAuxiliaryPlaceNotMemFinset
+public import Development.AbelianVarietyTheory.Definitions.Foundations.OfInfProjInfMulOfFinProjFin
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,9 +35,59 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsIwasawaOfIsCompact
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsAuxiliaryPlaceNotMemFinset
+import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Definitions.Foundations.ContinuousOfMemCcSmooth
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SingularValueFrame
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.RealRankSubgroupMembership
+
+open scoped TensorProduct NNReal Matrix
+open NumberField Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.UG GlobalTheory.AdelicU GlobalTheory.Doubling
+
+section Matrices
+
+variable {n : ℕ} (ε : Fin n → Bool)
+
+def IsInP (X : Matrix (Fin n) (Fin n) ℂ) : Prop := X.IsHermitian ∧ ∀ i j, ε i = ε j → X i j = 0
+
+def realRank : ℕ := min (Fintype.card {i // ε i = true}) (Fintype.card {i // ε i = false})
+
+end Matrices
+
+section Place
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {n : ℕ}
+  (J : Matrix (Fin n) (Fin n) E) {w : InfinitePlace F}
+
+def IsSignFrame (ε : Fin n → Bool) (b : GL (Fin n) (w.Completion ⊗[F] E)) : Prop :=
+  cT (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR w.Completion σ) b.1 * JR w.Completion J * b.1 =
+    Matrix.diagonal fun i => if ε i then 1 else -1
+
+def inFrame (τ : EmbOver E w) (b : GL (Fin n) (w.Completion ⊗[F] E)) (g : GArch σ J w) : Matrix (Fin n) (Fin n) ℂ :=
+  (b⁻¹ * AdelicU.matHom w.Completion σ J g * b).1.map (infEmb τ)
+
+end Place
+
+end GlobalTheory.IndefiniteRowSideFullHecke.RealRankSubgroupMembership
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.SignFrameUnitaryIso
+
+section
 
 @[expose] public section
 
@@ -193,3 +241,6 @@ def frameEquiv (hb : GlobalTheory.IndefiniteRowSideFullHecke.RealRankSubgroupMem
 end Frame
 
 end GlobalTheory.FrameIsoReal
+end
+end
+end

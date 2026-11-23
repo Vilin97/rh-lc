@@ -1,8 +1,11 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.MainSup
-public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLz
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.LocalRingCardinality.IntCastDvdOfDvdIntegers
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLt
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +41,36 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+
+-- Source module: Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLz
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.J
+
+open Formalism.BasicNotions NumberField
+
+theorem level_prime_splits_totally_real (D : D7) (u : D.what₂.Word) : StandardLattice.SplitsF D (D.mem u).A.T := by
+  have : Fact (D.mem u).A.T.Prime := ⟨(D.mem u).A.T_prime⟩
+  have h := Formalism.BasicNotions.Examples₂.placesOver_ncard_of_split D.host (D.mem u).A.T (D.T_mod_cond u)
+  have h' := splits_sub D.host.F (D.mem u).A.T D.host.E (D.mem u).A.T_prime h
+  rw [finrank_F_eq] at h'
+  exact h'
+
+end Formalism.MainNotions.J
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.LwRankTies
+
+section
 
 @[expose] public section
 
@@ -66,4 +99,6 @@ theorem rank_conditions_of_lowest_space {eps : ℝ} (Fm : FamP eps)
 
 end Formalism.MainNotions.Ext.Lw
 
+end
+end
 end

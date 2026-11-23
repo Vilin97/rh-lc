@@ -1,9 +1,8 @@
 module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.FirstChernCompatibleSystem
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCochainEvalOnSimplexBasicProperties
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCochainEvalOnSimplexDifferentialValues
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImageCochainExists
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsZeroChains
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +41,80 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImageCochainExists
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCochainEvalOnSimplexBasicProperties
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace GlobalTheory.EtC
+
+theorem ev_basic : ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ},
+    (∀ (α β : Cochain ((chains R).obj E) I n) p s h U x,
+      ev (α + β) p s h U x = ev α p s h U x + ev β p s h U x ∧
+      ev (α - β) p s h U x = ev α p s h U x - ev β p s h U x ∧
+      ev (0 : Cochain ((chains R).obj E) I n) p s h U x = 0 ∧
+      ∀ c : ℤ, ev (c • α) p s h U x = c • ev α p s h U x) ∧
+    (∀ (α : Cochain ((chains R).obj E) I n) p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U),
+      Sec.res g (ev α p s h U x) = ev α p s h V (x.res g)) ∧
+    (∀ α β : Cochain ((chains R).obj E) I n,
+      (∀ p s h U x, ev α p s h U x = ev β p s h U x) → α = β) ∧
+    (∀ {E' : Spc} (f : E' ⟶ E) (α : Cochain ((chains R).obj E) I n) p s h U (x : Sx E' p U),
+      ev ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev α p s h U (x.map f)) ∧
+    ∀ {J : Cx R} (m : I ⟶ J) (α : Cochain ((chains R).obj E) I n) p s h U x,
+      ev (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev α p s h U x) := by
+  intro R _ E I n
+  refine ⟨fun α β p s h U x => ⟨CupSpec.ev_add α β p s h U x,
+      map_sub (CupSpec.evHom I n p s h U x) α β, CupSpec.ev_zero p s h U x,
+      fun c => CupSpec.ev_zsmul c α p s h U x⟩,
+    fun α p s h V U g x => CupSpec.ev_res α p s h g x,
+    fun α β H => CupSpec.ev_ext α β H,
+    fun f α p s h U x => CupSpec.ev_pull f α p s h U x, ?_⟩
+  intro J m α p s h U x
+  rw [CupSpec.ev_def, CupSpec.ev_def, Cochain.comp_zero_cochain_v, Cochain.ofHom_v, ← Category.assoc]
+  rfl
+
+end GlobalTheory.EtC
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCochainEvalOnSimplexDifferentialValues
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
+
+namespace GlobalTheory
+
+theorem ev_delta_values : ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n m : ℤ} (hm : n + 1 = m)
+    (α : Cochain ((chains R).obj E) I n) (U : Scheme.{0}),
+    (∀ (x : Sx E 0 U), EtC.ev (δ n m α) 0 m (by simp) U x =
+      Sec.map (I.d n m) (EtC.ev α 0 n (by simp) U x)) ∧
+    ∀ (p : ℕ) (s t : ℤ) (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -((p + 1 : ℕ) : ℤ) + m = t) (x : Sx E (p + 1) U),
+      EtC.ev (δ n m α) (p + 1) t ht U x = Sec.map (I.d s t) (EtC.ev α (p + 1) s hs U x) +
+        m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • EtC.ev α p t (by omega) U (x.face i) := by
+  intro R _ E I n m hm α U
+  exact ⟨fun x => CupSpec.ev_δ_zero hm α U n m (by simp) (by simp) x,
+    fun p s t hs ht x => CupSpec.ev_δ_succ hm α U p s t hs ht x⟩
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.KummerCupProducts.EvExt
+
+section
 
 @[expose] public section
 
@@ -65,3 +138,5 @@ theorem evDel : EvDel := fun R _ E I n m hm β U =>
 theorem inOp : InOp := fun S R _ _ I J ρ E n α β h => GlobalTheory.EtC.SemiMap.op_spec ρ E n α β h
 
 end CrystallineSemistableComparison.E
+end
+end

@@ -40,7 +40,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.LogSumExpBounds.StatementD
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+-- Source module: Formalism.LogSumExpBounds.StatementD
+
+section
+
+@[expose] public section
+
+namespace Formalism.NuclearRankWeightBounds.D
+
+open Finset
+
+noncomputable def lead {N : ℕ} (A : Matrix (Fin N) (Fin N) ℂ) (i : ℕ) : ℂ :=
+  if hi : i ≤ N then (A.submatrix (Fin.castLE hi) (Fin.castLE hi)).det else 1
+
+noncomputable def hs {N : ℕ} (Y : Matrix (Fin N) (Fin N) ℂ) : ℝ :=
+  Real.sqrt (∑ a, ∑ b, ‖Y a b‖ ^ 2)
+
+def q0 {N : ℕ} (ep : Fin N → Bool) : ℕ :=
+  min (univ.filter fun a => ep a = true).card (univ.filter fun a => ep a = false).card
+
+end Formalism.NuclearRankWeightBounds.D
+end
+end
+
+-- Source module: Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
+
+section
 
 @[expose] public section
 
@@ -61,3 +89,6 @@ def epsN (c : ℝ) (n f : ℕ) : ℝ := c / ((n : ℝ) ^ 8 * (f : ℝ) ^ 2)
 
 
 end Formalism.HermitianLatticeCounting.S7
+end
+end
+end

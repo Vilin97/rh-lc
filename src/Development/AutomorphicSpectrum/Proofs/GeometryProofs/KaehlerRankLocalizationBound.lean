@@ -1,10 +1,9 @@
 module
 
 public import Mathlib.RingTheory.RingHom.Smooth
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdjoinInverseIsLocalizationAwayStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerBasisTowerStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerFinrankFractionFieldStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalizationKaehlerPrimeIdealStatement
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.RingTheory.Localization.Away.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,10 +22,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,8 +46,192 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerBasisTowerStatement
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerFinrankFractionField
+public import Mathlib.Algebra.MvPolynomial.Rename
+public import Mathlib.RingTheory.Ideal.Maps
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
 public import Mathlib.RingTheory.Smooth.StandardSmooth
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdjoinInverseIsLocalizationAway
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Ggeo
+
+theorem adjoin_inv_isLocalization_away (Ω : Type) [Field Ω] [CharZero Ω] (A S' : Subalgebra ℚ Ω)
+    (G : Set Ω) (hA : A = Algebra.adjoin ℚ G) (g : A) (hg : g ≠ 0)
+    (hS : S' = Algebra.adjoin ℚ (insert (g : Ω)⁻¹ G)) (hle : A ≤ S') :
+    @IsLocalization.Away A _ g S' _ (Subalgebra.inclusion hle).toRingHom.toAlgebra := by
+  letI : Algebra A S' := (Subalgebra.inclusion hle).toRingHom.toAlgebra
+  have hg0 : (g : Ω) ≠ 0 := fun h => hg (Subtype.ext h)
+  have hinv : (g : Ω)⁻¹ ∈ S' := by
+    rw [hS]; exact Algebra.subset_adjoin (Set.mem_insert _ _)
+  have key : ∀ x ∈ S', ∃ (n : ℕ) (a : A), x * (g : Ω) ^ n = (a : Ω) := by
+    intro x hx
+    rw [hS] at hx
+    induction hx using Algebra.adjoin_induction with
+    | mem x hx =>
+      rcases Set.mem_insert_iff.1 hx with rfl | hx
+      · exact ⟨1, 1, by simp [hg0]⟩
+      · refine ⟨0, ⟨x, ?_⟩, by simp⟩
+        rw [hA]; exact Algebra.subset_adjoin hx
+    | algebraMap r => exact ⟨0, algebraMap ℚ A r, by simp⟩
+    | add x y _ _ hx hy =>
+      obtain ⟨n, a, ha⟩ := hx
+      obtain ⟨m, b, hb⟩ := hy
+      refine ⟨n + m, a * g ^ m + b * g ^ n, ?_⟩
+      push_cast
+      rw [← ha, ← hb]; ring
+    | mul x y _ _ hx hy =>
+      obtain ⟨n, a, ha⟩ := hx
+      obtain ⟨m, b, hb⟩ := hy
+      refine ⟨n + m, a * b, ?_⟩
+      push_cast
+      rw [← ha, ← hb]; ring
+  refine IsLocalization.Away.mk g ?_ ?_ ?_
+  · refine IsUnit.of_mul_eq_one (⟨(g : Ω)⁻¹, hinv⟩ : S') ?_
+    apply Subtype.ext
+    change (g : Ω) * (g : Ω)⁻¹ = 1
+    exact mul_inv_cancel₀ hg0
+  · intro s
+    obtain ⟨n, a, ha⟩ := key s s.2
+    refine ⟨n, a, ?_⟩
+    apply Subtype.ext
+    change (s : Ω) * (g : Ω) ^ n = (a : Ω)
+    exact ha
+  · intro a b hab
+    refine ⟨0, ?_⟩
+    have : (a : Ω) = (b : Ω) := congrArg (fun x : S' => (x : Ω)) hab
+    rw [Subtype.ext this]
+
+end GlobalTheory.CompanionTheory.Ggeo
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdjoinInverseIsLocalizationAwayStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.adjoin_inverse_is_localization_away : ∀ (Ω : Type) [Field Ω] [CharZero Ω] (A S' : Subalgebra ℚ Ω) (G : Set Ω), A = Algebra.adjoin ℚ G →
+    ∀ (g : A), g ≠ 0 → S' = Algebra.adjoin ℚ (insert (g : Ω)⁻¹ G) → ∀ (hle : A ≤ S'),
+    @IsLocalization.Away A _ g S' _ (Subalgebra.inclusion hle).toRingHom.toAlgebra := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.adjoin_inv_isLocalization_away | exact GlobalTheory.CompanionTheory.Ggeo.adjoin_inv_isLocalization_away | (intros; apply GlobalTheory.CompanionTheory.Ggeo.adjoin_inv_isLocalization_away <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerFinrankFractionFieldStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.kaehler_finrank_fraction_field : ∀ (S T K L : Type) [CommRing S] [CommRing T] [Field K] [Field L] [Algebra S T] [Algebra S K]
+    [Algebra S L] [Algebra T L] [Algebra K L] [IsScalarTower S T L] [IsScalarTower S K L]
+    [IsFractionRing S K] [IsFractionRing T L] (m : ℕ) (w : Fin m → T),
+    LinearIndependent T (fun i => KaehlerDifferential.D S T (w i)) →
+    Submodule.span T (Set.range fun i => KaehlerDifferential.D S T (w i)) = ⊤ →
+    Module.finrank L (KaehlerDifferential K L) = m := by
+  first | exact @GlobalTheory.CompanionTheory.Ggeo.finrank_kaehler_fractionRing_eq_of_basis | exact GlobalTheory.CompanionTheory.Ggeo.finrank_kaehler_fractionRing_eq_of_basis | (intros; apply GlobalTheory.CompanionTheory.Ggeo.finrank_kaehler_fractionRing_eq_of_basis <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalizationKaehlerPrimeIdeal
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Ar.BoundaryPull
+
+open MvPolynomial
+
+theorem coe_aeval_subalgebra {K : Type} [Field K] [CharZero K] {τ : Type}
+    (S : Subalgebra ℚ K) (r : τ → K) (h : ∀ p, r p ∈ S) (g : MvPolynomial τ ℤ) :
+    ((aeval (fun p => (⟨r p, h p⟩ : S)) g : S) : K) = aeval r g := by
+  induction g using MvPolynomial.induction_on with
+  | C a => simp
+  | add p q hp hq => simp [hp, hq]
+  | mul_X p i hp => simp [hp]
+
+theorem vanishing_rename_iff :
+    ∀ (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω₀] [CharZero Ω] [Algebra Ω₀ Ω] (σ σ' : Type)
+    (r₀ : σ → Ω₀) (r₁ : σ' → Ω) (v : σ → σ'), (∀ p, algebraMap Ω₀ Ω (r₀ p) = r₁ (v p)) →
+    ∀ (bd : Ideal (MvPolynomial σ ℤ)) (S : Subalgebra ℚ Ω₀) (S' : Subalgebra ℚ Ω) (θ : S →+* S'),
+    (∀ s, ((θ s : S') : Ω) = algebraMap Ω₀ Ω s) → (∀ p, r₀ p ∈ S) → (∀ p, r₁ p ∈ S') →
+    ∀ q : Ideal S',
+    ((∀ g ∈ bd.map (MvPolynomial.rename v), ∀ s : S', (s : Ω) = MvPolynomial.aeval r₁ g → s ∈ q) ↔
+      (∀ g ∈ bd, ∀ s : S, (s : Ω₀) = MvPolynomial.aeval r₀ g → s ∈ q.comap θ)) := by
+  intro Ω₀ Ω _ _ _ _ _ σ σ' r₀ r₁ v hv bd S S' θ hθ h₀ h₁ q
+  have key : ∀ b : MvPolynomial σ ℤ,
+      MvPolynomial.aeval r₁ (MvPolynomial.rename v b) = algebraMap Ω₀ Ω (MvPolynomial.aeval r₀ b) := by
+    intro b
+    induction b using MvPolynomial.induction_on with
+    | C a => simp
+    | add p q hp hq => simp [hp, hq]
+    | mul_X p i hp => simp [hp, hv]
+  constructor
+  · intro H g hg s hs
+    refine Ideal.mem_comap.2 (H (MvPolynomial.rename v g) (Ideal.mem_map_of_mem _ hg) (θ s) ?_)
+    rw [hθ, hs, key]
+  · intro H g hg s hs
+    have claim : ∃ t ∈ q, (t : Ω) = MvPolynomial.aeval r₁ g := by
+      have hspan : g ∈ Ideal.span ((MvPolynomial.rename v : MvPolynomial σ ℤ → MvPolynomial σ' ℤ) '' (bd : Set _)) := hg
+      refine Submodule.span_induction (p := fun g _ => ∃ t ∈ q, (t : Ω) = MvPolynomial.aeval r₁ g)
+        ?_ ?_ ?_ ?_ hspan
+      · rintro _ ⟨b, hb, rfl⟩
+        let s₀ : S := aeval (fun p => (⟨r₀ p, h₀ p⟩ : S)) b
+        have hs₀ : (s₀ : Ω₀) = aeval r₀ b := coe_aeval_subalgebra S r₀ h₀ b
+        refine ⟨θ s₀, Ideal.mem_comap.1 (H b hb s₀ hs₀), ?_⟩
+        rw [hθ, hs₀, key]
+      · exact ⟨0, q.zero_mem, by simp⟩
+      · rintro x y _ _ ⟨t, ht, hx⟩ ⟨u, hu, hy⟩
+        exact ⟨t + u, q.add_mem ht hu, by simp [hx, hy]⟩
+      · rintro c x _ ⟨t, ht, hx⟩
+        refine ⟨aeval (fun p => (⟨r₁ p, h₁ p⟩ : S')) c * t, q.mul_mem_left _ ht, ?_⟩
+        simp [coe_aeval_subalgebra S' r₁ h₁ c, hx]
+    obtain ⟨t, ht, hts⟩ := claim
+    have : s = t := Subtype.ext (hs.trans hts.symm)
+    exact this ▸ ht
+
+end GlobalTheory.CompanionTheory.Ar.BoundaryPull
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.LocalizationKaehlerPrimeIdealStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.localization_kaehler_prime_ideal : ∀ (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω₀] [CharZero Ω] [Algebra Ω₀ Ω] (σ σ' : Type)
+    (r₀ : σ → Ω₀) (r₁ : σ' → Ω) (v : σ → σ'), (∀ p, algebraMap Ω₀ Ω (r₀ p) = r₁ (v p)) →
+    ∀ (bd : Ideal (MvPolynomial σ ℤ)) (S : Subalgebra ℚ Ω₀) (S' : Subalgebra ℚ Ω) (θ : S →+* S'),
+    (∀ s, ((θ s : S') : Ω) = algebraMap Ω₀ Ω s) → (∀ p, r₀ p ∈ S) → (∀ p, r₁ p ∈ S') →
+    ∀ q : Ideal S',
+    ((∀ g ∈ bd.map (MvPolynomial.rename v), ∀ s : S', (s : Ω) = MvPolynomial.aeval r₁ g → s ∈ q) ↔
+      (∀ g ∈ bd, ∀ s : S, (s : Ω₀) = MvPolynomial.aeval r₀ g → s ∈ q.comap θ)) := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.BoundaryPull.vanishing_rename_iff | exact GlobalTheory.CompanionTheory.Ar.BoundaryPull.vanishing_rename_iff | (intros; apply GlobalTheory.CompanionTheory.Ar.BoundaryPull.vanishing_rename_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.KaehlerRankLocalizationBound
+
+section
 
 @[expose] public section
 
@@ -220,3 +403,5 @@ theorem local_step : ∀ (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω
     exact hmem
 
 end GlobalTheory.CompanionTheory.Ar.LocalStep
+end
+end

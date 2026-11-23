@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ZelevinskyJacquet.ZelevinskyInterleaving.Interleave
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ShufflePermFlatten
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +41,41 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ShufflePermFlatten
+
+section
+
+@[expose] public section
+
+open Zc.Comb
+
+universe u
+
+namespace GlobalTheory.CompanionTheory.Comb
+
+theorem interleave_perm_append {T : Type u} {u v w : List T} (h : Interleave u v w) :
+    w.Perm (u ++ v) := by
+  induction h with
+  | nil => exact List.Perm.refl _
+  | left _ ih => exact ih.cons _
+  | right _ ih => exact (ih.cons _).trans List.perm_middle.symm
+
+theorem shuffle_perm_flatten {T : Type u} (us : List (List T)) (w : List T)
+    (h : Shuffle us w) : w.Perm us.flatten := by
+  induction h with
+  | nil => exact List.Perm.refl _
+  | cons _ hi ih =>
+    rw [List.flatten_cons]
+    exact (interleave_perm_append hi).trans (ih.append_left _)
+
+end GlobalTheory.CompanionTheory.Comb
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ShufflePermFlattenStatement
+
+section
+
 @[expose] public section
 
 open Zc.Comb
@@ -49,3 +83,5 @@ universe u
 
 theorem _root_.GlobalTheory.T.perm_flatten_of_shuffle : ∀ {T : Type u} (us : List (List T)) (w : List T), Shuffle us w → w.Perm us.flatten := by
   first | exact @GlobalTheory.CompanionTheory.Comb.shuffle_perm_flatten | exact GlobalTheory.CompanionTheory.Comb.shuffle_perm_flatten | (intros; apply GlobalTheory.CompanionTheory.Comb.shuffle_perm_flatten <;> assumption)
+end
+end

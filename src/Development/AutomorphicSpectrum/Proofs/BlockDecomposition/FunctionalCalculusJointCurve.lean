@@ -5,14 +5,13 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContDiff
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousOnFderivApply
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DerivativeAsRightWords
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LengthFunctionFactsHold
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WordSmooth
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdjKInner
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DifferentiableAtOfSmooth
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
-import Mathlib.Analysis.Calculus.FDeriv.Partial
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -25,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,8 +44,67 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
+import Mathlib.Analysis.Calculus.FDeriv.Partial
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WordSmooth
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Finset Filter Topology
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.WaveK.Base.RwLinPf
+
+open PositivityTheory.RgBcC GlobalTheory.CompanionTheory.WaveK
+open PositivityTheory.RgTw (Mat G)
+open GlobalTheory.CompanionTheory.RCalc (Rd_contDiffOn differentiableAt_of_smooth isOpen_GLs)
+
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+
+theorem word_smooth {n : ℕ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {f : Mat n → V}
+    (hf : ContDiffOn ℝ ∞ f (GLs n)) (w : List (Bool × Fin n × Fin n)) :
+    ContDiffOn ℝ ∞ (Rw w f) (GLs n) := by
+  induction w with
+  | nil => exact hf
+  | cons p w ih => exact Rd_contDiffOn (bs p) ih
+
+theorem rwLin : RwLin := by
+  intro n V W _ _ _ _ ι _ L f hf w
+  induction w with
+  | nil => intro x _; rfl
+  | cons p w ih =>
+    intro x hx
+    have hs : ∀ i, ContDiffOn ℝ ∞ (Rw w (f i)) (GLs n) := fun i => word_smooth (hf i) w
+    have e : Rw w (fun y => ∑ i, L i (f i y)) =ᶠ[𝓝 x] fun y => ∑ i, L i (Rw w (f i) y) :=
+      Filter.eventuallyEq_of_mem (isOpen_GLs.mem_nhds hx) fun y hy => ih y hy
+    have hd : ∀ i, HasFDerivAt (fun y => L i (Rw w (f i) y))
+        ((L i).comp (fderiv ℝ (Rw w (f i)) x)) x := fun i =>
+      (L i).hasFDerivAt.comp x (differentiableAt_of_smooth (hs i) hx).hasFDerivAt
+    have hsum := (HasFDerivAt.fun_sum (u := Finset.univ) fun i _ => hd i).fderiv
+    show fderiv ℝ (Rw w fun y => ∑ i, L i (f i y)) x (x * bs p) =
+      ∑ i, L i (fderiv ℝ (Rw w (f i)) x (x * bs p))
+    rw [e.fderiv_eq]
+    refine (DFunLike.congr_fun hsum (x * bs p)).trans ?_
+    exact ContinuousLinearMap.sum_apply _ _ _
+
+end GlobalTheory.CompanionTheory.WaveK.Base.RwLinPf
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FunctionalCalculusJointCurve
+
+section
 
 @[expose] public section
 
@@ -353,3 +409,6 @@ theorem curveJoint : CurveJoint := by
     exact ⟨_, ⟨j, p :: w, rfl⟩, fun t x _ => rfl⟩
 
 end GlobalTheory.CompanionTheory.CurveJ
+end
+end
+end

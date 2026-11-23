@@ -1,21 +1,15 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
-public import Development.AutomorphicArithmetic.AdelicQuotients.CharpolyLocalAdelicConjDiagonalEq
-public import Development.AutomorphicArithmetic.AdelicQuotients.EqOneOfSmulPlaceEqOfCompletionMapSurjective
-public import Development.AutomorphicArithmetic.AdelicQuotients.FinAtMapGLGalAdMemIwahori
-public import Development.AutomorphicArithmetic.AdelicQuotients.HeightOffMapGLGalAd
-public import Development.AutomorphicArithmetic.AdelicQuotients.NormAlgebraMapBaseLeOneOfPlacesOver
-public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroDvdCharpolyLeAdicCompletion
-public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroDvdCharpolyLeInfinitePlace
-public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroFactorCharpolyIwahoriDiagPowLe
-public import Development.AutomorphicArithmetic.AdelicQuotients.OneLeHeightOffAndSubmultiplicative
-public import Development.AutomorphicArithmetic.AdelicQuotients.OneLeMulHeightConstHeightOffPowOfSmallAtPlace
-public import Development.AutomorphicArithmetic.AdelicQuotients.TwNormConjDiagonalEqConjNormGL
+public import GroundTheory.AutomorphicForms.ReductionHeight
+public import GroundTheory.AutomorphicForms.ReductionIwasawa
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -27,9 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,8 +41,226 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDecayHeights.HeightLe
+import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.IsNormAlong
+import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
+import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import GroundTheory.AutomorphicForms.CuspidalDiscreteness.AltSum
+import GroundTheory.AutomorphicForms.ReductionBlock
+public import Development.AutomorphicArithmetic.AdelicQuotients.FinAtMapGLGalAdMemIwahori
+public import Development.AutomorphicArithmetic.AdelicQuotients.HeightOffMapGLGalAd
+public import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroDvdCharpolyLeAdicCompletion
+public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroDvdCharpolyLeInfinitePlace
+public import Development.AutomorphicArithmetic.AdelicQuotients.NormCoeffZeroFactorCharpolyIwahoriDiagPowLe
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.IsNormAlong
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AdelicQuotients.OneLeMulHeightConstHeightOffPowOfSmallAtPlace
+public import Development.AutomorphicArithmetic.AdelicQuotients.TwNormConjDiagonalEqConjNormGL
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.CharpolyLocalAdelicConjDiagonalEq
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.SemiLocal GroundTheory.Global.AdeleBaseChange
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Tf.Geo
+open scoped NumberField.AdeleRing
+
+theorem UpperTheory.charpoly_local_adelic_conj_diagonal_eq :
+    ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (γ : GL (Fin n) E) (x : AdelicGLn.AdelicGL E n),
+        (∀ w : HeightOneSpectrum (𝓞 E), ((finAt w (x⁻¹ * AdelicGLn.diagonal E n γ * x) : GL (Fin n) (w.adicCompletion E)) :
+          Matrix (Fin n) (Fin n) (w.adicCompletion E)).charpoly = (γ : Matrix (Fin n) (Fin n) E).charpoly.map (algebraMap E (w.adicCompletion E))) ∧
+        ∀ w : InfinitePlace E, ((infAt w (x⁻¹ * AdelicGLn.diagonal E n γ * x) : GL (Fin n) w.Completion) :
+          Matrix (Fin n) (Fin n) w.Completion).charpoly = (γ : Matrix (Fin n) (Fin n) E).charpoly.map (algebraMap E w.Completion) := by
+  intro E _ _ n γ x
+  refine ⟨fun w => ?_, fun w => ?_⟩
+  · have h : ((finAt w (AdelicGLn.diagonal E n γ) : GL (Fin n) (w.adicCompletion E)) :
+        Matrix (Fin n) (Fin n) (w.adicCompletion E)) =
+        (γ : Matrix (Fin n) (Fin n) E).map (algebraMap E (w.adicCompletion E)) := by
+      ext a b
+      rfl
+    rw [finAt_mul, finAt_mul, finAt_inv, Units.val_mul, Units.val_mul, Matrix.coe_units_inv,
+      Matrix.charpoly_units_conj', h, Matrix.charpoly_map]
+  · have h : ((infAt w (AdelicGLn.diagonal E n γ) : GL (Fin n) w.Completion) :
+        Matrix (Fin n) (Fin n) w.Completion) =
+        (γ : Matrix (Fin n) (Fin n) E).map (algebraMap E w.Completion) := by
+      ext a b
+      rfl
+    rw [infAt_mul, infAt_mul, infAt_inv, Units.val_mul, Units.val_mul, Matrix.coe_units_inv,
+      Matrix.charpoly_units_conj', h, Matrix.charpoly_map]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.EqOneOfSmulPlaceEqOfCompletionMapSurjective
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.SemiLocal GroundTheory.Global.AdeleBaseChange
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Tf.Geo
+open scoped NumberField.AdeleRing
+
+theorem UpperTheory.eq_one_of_smul_place_eq_of_completionMap_surjective :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (q : HeightOneSpectrum (𝓞 F)) (w : PlacesOver E q), Function.Surjective (completionMap q w.1) →
+        ∀ σ : E ≃ₐ[F] E, σ • w = w → σ = 1 := by
+  intro F E _ _ _ _ _ q w hs σ hσ
+  have h : w.1 = σ • w.1 := (congrArg Subtype.val hσ).symm
+  haveI : w.1.asIdeal.LiesOver q.asIdeal := w.2
+  have hid : ∀ y, galHom σ w.1 w.1 h y = y := by
+    intro y
+    obtain ⟨a, rfl⟩ := hs y
+    exact galHom_completionMap q σ w.1 w.1 h a
+  refine AlgEquiv.ext fun x ↦ ?_
+  have h2 := galHom_algebraMap σ w.1 w.1 h x
+  rw [hid] at h2
+  exact (algebraMap E (w.1.adicCompletion E)).injective h2.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.NormAlgebraMapBaseLeOneOfPlacesOver
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.SemiLocal GroundTheory.Global.AdeleBaseChange
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Tf.Geo
+open scoped NumberField.AdeleRing
+
+theorem UpperTheory.norm_algebraMap_base_le_one_of_placesOver :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (q : HeightOneSpectrum (𝓞 F)) (w w' : PlacesOver E q) (a : F),
+        ‖algebraMap E (w.1.adicCompletion E) (algebraMap F E a)‖ ≤ 1 → ‖algebraMap E (w'.1.adicCompletion E) (algebraMap F E a)‖ ≤ 1 := by
+  intro F E _ _ _ _ _ q w w' a
+  have key : ∀ u : PlacesOver E q,
+      ‖algebraMap E (u.1.adicCompletion E) (algebraMap F E a)‖ ≤ 1 ↔
+        Valued.v (algebraMap F (q.adicCompletion F) a) ≤ 1 := by
+    intro u
+    rw [Valued.toNormedField.norm_le_one_iff,
+      ← IsScalarTower.algebraMap_apply F E (u.1.adicCompletion E),
+      ← completionMap_algebraMap q u.1, valued_completionMap]
+    exact pow_le_one_iff (Ideal.ramificationIdx_pos (R := 𝓞 F) u.1.asIdeal).ne'
+  exact fun h => (key w').2 ((key w).1 h)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.OneLeHeightOffAndSubmultiplicative
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Polynomial
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.SemiLocal GroundTheory.Global.AdeleBaseChange
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Tf.Geo
+open scoped NumberField.AdeleRing
+
+theorem UpperTheory.one_le_heightOff_and_submultiplicative :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) (q : HeightOneSpectrum (𝓞 F)),
+        (∀ g : AdelicGLn.AdelicGL E n, 1 ≤ heightOff q g) ∧ heightOff q (1 : AdelicGLn.AdelicGL E n) = 1 ∧
+        ∀ g h : AdelicGLn.AdelicGL E n, heightOff q (g * h) ≤ AutomorphicForm.heightConst E n * heightOff q g * heightOff q h := by
+  classical
+  intro F E _ _ _ _ _ n q
+  let f : AdelicGLn.AdelicGL E n → HeightOneSpectrum (𝓞 E) → ℝ := fun x w =>
+    if below F w ≠ q then AutomorphicForm.locHeight (finAt w x) else 1
+  have hoff : ∀ x : AdelicGLn.AdelicGL E n, heightOff q x =
+      (∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w x) ^ w.mult) * ∏ᶠ w, f x w := by
+    intro x
+    unfold heightOff
+    congr 1
+    exact finprod_congr fun w => finprod_eq_if
+  have hone : ∀ x w, 1 ≤ f x w := by
+    intro x w
+    simp only [f]
+    split_ifs
+    · exact AutomorphicForm.one_le_locHeight _
+    · exact le_rfl
+  have hsupp : ∀ x, (Function.mulSupport (f x)).Finite := by
+    intro x
+    refine (AutomorphicForm.finite_mulSupport_locHeight_finAt x).subset ?_
+    intro w hw
+    simp only [Function.mem_mulSupport, f] at hw ⊢
+    intro h
+    apply hw
+    rw [h]
+    simp
+  have hfi1 : ∀ x, 1 ≤ ∏ᶠ w, f x w := fun x =>
+    finprod_induction (fun y : ℝ => 1 ≤ y) le_rfl
+      (fun _ _ hx hy => one_le_mul_of_one_le_of_one_le hx hy) (hone x)
+  refine ⟨fun g => ?_, ?_, fun g h => ?_⟩
+  · rw [hoff]
+    exact one_le_mul_of_one_le_of_one_le (AutomorphicForm.one_le_prod_locHeight g) (hfi1 g)
+  · have h1 : ∀ w, f 1 w = 1 := by
+      intro w
+      simp [f, AutomorphicForm.locHeight_one]
+    rw [hoff, finprod_eq_one_of_forall_eq_one h1]
+    simp [AutomorphicForm.locHeight_one]
+  · set s := ((hsupp g).union (hsupp h)).union (hsupp (g * h))
+    have hfin : ∀ x : AdelicGLn.AdelicGL E n, x = g ∨ x = h ∨ x = g * h →
+        ∏ᶠ w, f x w = ∏ w ∈ s.toFinset, f x w := by
+      intro x hx
+      refine finprod_eq_prod_of_mulSupport_subset _ ?_
+      intro v hv
+      simp only [Set.Finite.coe_toFinset, Set.mem_union]
+      rcases hx with rfl | rfl | rfl
+      · exact Or.inl (Or.inl hv)
+      · exact Or.inl (Or.inr hv)
+      · exact Or.inr hv
+    have hf : ∏ᶠ w, f (g * h) w ≤ (∏ᶠ w, f g w) * ∏ᶠ w, f h w := by
+      rw [hfin _ (Or.inr (Or.inr rfl)), hfin _ (Or.inl rfl), hfin _ (Or.inr (Or.inl rfl)),
+        ← Finset.prod_mul_distrib]
+      refine Finset.prod_le_prod₀ (fun v _ => le_trans zero_le_one (hone _ v)) fun v _ => ?_
+      simp only [f]
+      split_ifs
+      · rw [finAt_mul]
+        exact AutomorphicForm.locHeight_mul_le_of_ultrametric _ _
+      · simp
+    have hi : (∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w (g * h)) ^ w.mult) ≤
+        AutomorphicForm.heightConst E n *
+          (∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w g) ^ w.mult) *
+          ∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w h) ^ w.mult := by
+      rw [AutomorphicForm.heightConst, ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
+      refine Finset.prod_le_prod₀
+        (fun w _ => by have := AutomorphicForm.locHeight_pos (infAt w (g * h)); positivity)
+        fun w _ => ?_
+      rw [← mul_pow, ← mul_pow, infAt_mul]
+      exact pow_le_pow_left₀ (AutomorphicForm.locHeight_pos _).le
+        (AutomorphicForm.locHeight_mul_le _ _) _
+    rw [hoff, hoff, hoff]
+    calc (∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w (g * h)) ^ w.mult) *
+          ∏ᶠ w, f (g * h) w
+        ≤ (AutomorphicForm.heightConst E n *
+            (∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w g) ^ w.mult) *
+            ∏ w : InfinitePlace E, AutomorphicForm.locHeight (infAt w h) ^ w.mult) *
+          ((∏ᶠ w, f g w) * ∏ᶠ w, f h w) :=
+          mul_le_mul hi hf (le_trans zero_le_one (hfi1 _))
+            (mul_nonneg (mul_nonneg (le_trans zero_le_one AutomorphicForm.one_le_heightConst)
+              (le_trans zero_le_one (AutomorphicForm.one_le_prod_locHeight g)))
+              (le_trans zero_le_one (AutomorphicForm.one_le_prod_locHeight h)))
+      _ = _ := by ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.FirstGeometricConditionOfProperties
+
+section
 
 @[expose] public section
 
@@ -235,3 +445,5 @@ theorem UpperTheory.ConvolutionTheory.G.firstGeometricCondition_of_properties :
       linarith
     · exact h
   exact core hA σ hσ n hn q w₀ hs ν hν hsum hJ j hj0 Y hY hj δ _ _ hy hht a b ha hb hab hoth
+end
+end

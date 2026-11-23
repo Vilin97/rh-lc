@@ -1,8 +1,18 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.ComplexBaseChangeOfLiterature
-public import Development.AutomorphicArithmetic.Foundations.Convolution.CbccOfUnit
-public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.BcflUnit
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockEvaluation.Ci
+public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.GmOfBcfl
+public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.LocHeckeInert
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Cbcc
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreDesc
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreLift
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.DescStep
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftAll
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.LiftStep
+import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Places
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.SplitStrong
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +47,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.BcflUnit
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CbccOfCore
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.ConvolutionTheory.T.cbcc_of_core (hC : UpperTheory.ConvolutionTheory.CI) (hG : UpperTheory.ConvolutionTheory.GM.GM) : UpperTheory.V.Z.Bc.CBCc :=
+  have a := liftStep (coreLift hC hG)
+  have b := liftAll a
+  have c := descStep (coreDesc hC hG) b
+  cbcc places a b c (splitStrong c)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.CbccOfUnit
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.ConvolutionTheory.cbcc_of_unit (h : PositivityTheory.Rg.Tf.Loc.BCFLUnit) : UpperTheory.V.Z.Bc.CBCc :=
+  UpperTheory.ConvolutionTheory.T.cbcc_of_core UpperTheory.ConvolutionTheory.ci (UpperTheory.ConvolutionTheory.GM.gm_of_bcfl h)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.Cbcc
+
+section
 
 @[expose] public section
 
 theorem UpperTheory.ConvolutionTheory.cbcc : UpperTheory.V.Z.Bc.CBCc :=
   UpperTheory.ConvolutionTheory.cbcc_of_unit PositivityTheory.Rg.Tf.Loc.bcflUnit
+end
+end

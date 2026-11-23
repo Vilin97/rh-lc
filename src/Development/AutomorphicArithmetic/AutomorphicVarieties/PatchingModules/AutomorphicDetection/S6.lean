@@ -6,10 +6,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingMod
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.HatChi
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.HatEx
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.HatRange
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.HatSt
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.OBLt
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.RFSurj
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.UrepOf
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.GrAlg
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.EpsEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,12 +26,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,7 +47,224 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.IsLocalHom
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.OBLt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.FSurj
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.GrDet
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.GrThick
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+import Mathlib.RingTheory.SimpleRing.Principal
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.InvAlg
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.HatSt
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.CA UpperTheory.V.Pa Polynomial
+open scoped TensorProduct
+
+theorem UpperTheory.V.Pa.hat_st :
+    ∀ {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} {h : G.Hom G0} {n : ℕ} {x : NP G0.frame n} {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsCoef l O] [Algebra ℤ_[l] O] [Algebra O x.K] {r : Resid G.frame O n} {B : Type} [CommRing B] [Algebra O B] [IsCO O B] {u : Pair r B} (P : OoPt h x u), ∀ {Bh : Type} [CommRing Bh] [IsLocalRing Bh] [Algebra B Bh] [Algebra Bh (FractionRing x.A)], (∀ b, algebraMap Bh (FractionRing x.A) (algebraMap B Bh b) = algebraMap x.A (FractionRing x.A) (P.f b)) → ∀ H : Hat h x u.D P.ker Bh (G.frame.eps O B), ∀ y, H.r (H.T.st y) = (H.r y)ᵀ := by
+  intro l _ L G G0 h n x O _ _ _ _ _ _ r B _ _ _ u P Bh _ _ _ _ hf H
+  have key : ∀ g : G.G₀, (algebraMap B Bh) ↑((G.frame.eps O B) g ^ (1 - (n : ℤ))) •
+      ((mat x.ρ) (h.p₀ (G.frame.conj g)⁻¹)).map (algebraMap x.A (FractionRing x.A)) =
+      (((mat x.ρ) (h.p₀ g)).map (algebraMap x.A (FractionRing x.A)))ᵀ := by
+    intro g
+    obtain ⟨he, hc⟩ := eps_eq P g
+    have hunit : P.f (↑((G.frame.eps O B) g ^ (1 - (n : ℤ))) : B) =
+        ↑((G0.frame.eps ℤ_[l] x.A) (h.p₀ g) ^ (1 - (n : ℤ))) := by
+      have hu : Units.map (P.f : B →* x.A) ((G.frame.eps O B) g) =
+          (G0.frame.eps ℤ_[l] x.A) (h.p₀ g) := by
+        apply Units.ext
+        rw [Units.coe_map]
+        exact he
+      rw [← hu, ← map_zpow (Units.map (P.f : B →* x.A)), Units.coe_map]
+      rfl
+    have hinvM : (mat x.ρ) (h.p₀ (G.frame.conj g)) * (mat x.ρ) (h.p₀ (G.frame.conj g)⁻¹) = 1 := by
+      rw [← map_mul, ← map_mul, mul_inv_cancel, map_one, map_one]
+    have hA : ((mat x.ρ) (h.p₀ g))ᵀ =
+        (↑((G0.frame.eps ℤ_[l] x.A) (h.p₀ g) ^ (1 - (n : ℤ))) : x.A) •
+          (mat x.ρ) (h.p₀ (G.frame.conj g)⁻¹) := by
+      have hform := x.form (h.p₀ g)
+      rw [Units.val_one, Matrix.mul_one, ← hc] at hform
+      calc ((mat x.ρ) (h.p₀ g))ᵀ = ((mat x.ρ) (h.p₀ g))ᵀ * ((mat x.ρ) (h.p₀ (G.frame.conj g)) *
+            (mat x.ρ) (h.p₀ (G.frame.conj g)⁻¹)) := by rw [hinvM, Matrix.mul_one]
+        _ = _ := by rw [← Matrix.mul_assoc, hform, Matrix.smul_mul, Matrix.one_mul]
+    rw [← Matrix.transpose_map, hA]
+    ext i j
+    simp only [Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul]
+    rw [Algebra.smul_def, hf, hunit]
+  intro y
+  obtain ⟨z, rfl⟩ := H.surj y
+  refine MonoidAlgebra.induction_on (motive := fun z => H.r (H.T.st (H.ι z)) = (H.r (H.ι z))ᵀ)
+    z ?_ ?_ ?_
+  · intro g
+    rw [MonoidAlgebra.of_apply, H.st, map_smul, H.r_ι, H.r_ι]
+    exact key g
+  · intro a b ha hb
+    simp only [map_add (f := _), ha, hb, Matrix.transpose_add]
+  · intro c a ha
+    simp only [map_smul, ha, Matrix.transpose_smul]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.RFSurj
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools
+
+namespace UpperTheory.V.Pa
+
+theorem rF_surj : ∀ {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} {h : G.Hom G0} {n : ℕ} {x : NP G0.frame n}
+    {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsCoef l O] [Algebra ℤ_[l] O] [Algebra O x.K]
+    {r : Resid G.frame O n} {B : Type} [CommRing B] [Algebra O B] [IsCO O B] {u : Pair r B} (P : OoPt h x u)
+    {Bh : Type} [CommRing Bh] [IsLocalRing Bh] [Algebra B Bh] [Algebra Bh (FractionRing x.A)],
+    (∀ b, algebraMap Bh (FractionRing x.A) (algebraMap B Bh b) = algebraMap x.A (FractionRing x.A) (P.f b)) →
+    RingHom.ker (algebraMap Bh (FractionRing x.A)) = maximalIdeal Bh →
+    Function.Surjective (algebraMap Bh (FractionRing x.A)) := by
+  intro l _ L G G0 h n x O _ _ _ _ _ _ r B _ _ _ u P Bh _ _ _ _ hcomp hker z
+  obtain ⟨⟨a, b⟩, rfl⟩ := IsLocalization.mk'_surjective (nonZeroDivisors x.A) z
+  obtain ⟨a', rfl⟩ := (f_surj P).1 a
+  obtain ⟨b', hb'⟩ := (f_surj P).1 (b : x.A)
+  have hu : IsUnit (algebraMap B Bh b') := by
+    by_contra hn
+    have hm : algebraMap B Bh b' ∈ maximalIdeal Bh := (mem_maximalIdeal _).2 hn
+    rw [← hker, RingHom.mem_ker, hcomp, hb'] at hm
+    exact nonZeroDivisors.coe_ne_zero b
+      ((IsFractionRing.injective x.A (FractionRing x.A)) (hm.trans (map_zero _).symm))
+  obtain ⟨v, hv⟩ := hu
+  refine ⟨algebraMap B Bh a' * ↑v⁻¹, ?_⟩
+  rw [IsLocalization.eq_mk'_iff_mul_eq, ← hb', ← hcomp, ← hv, ← map_mul, mul_assoc,
+    Units.inv_mul, mul_one, hcomp]
+
+end UpperTheory.V.Pa
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ClosureConjugation.UrepOf
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.CA UpperTheory.V.Pa Polynomial
+open scoped TensorProduct
+
+theorem UpperTheory.V.Pa.urep_of :
+    ∀ {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} {h : G.Hom G0} {n : ℕ} {x : NP G0.frame n} {B : Type} [CommRing B] [IsLocalRing B] {D : GDet n B G.G₀} {I : Set (MonoidAlgebra B G.G₀)} {Bh : Type} [CommRing Bh] [IsLocalRing Bh] [Algebra B Bh] [Algebra Bh (FractionRing x.A)] {e : G.G₀ →* Bˣ} (H : Hat h x D I Bh e) {ep : Fin n → H.E} (g : GrAlg H.T n x.a H.r ep), CompleteOrthogonalIdempotents ep → (∀ i, H.DE.D Bh[X] (1 + X ⊗ₜ ep i) = 1 + X) → Nonempty (URep h x D I Bh (algebraMap Bh (FractionRing x.A)) e) := by
+  intro l _ L G G0 h n x B _ _ D I Bh _ _ _ _ e H ep g hep hD
+  letI : CommRing g.AA := g.ring
+  letI : Algebra Bh g.AA := g.alg
+  letI : Ring H.E := H.ring
+  letI : Algebra Bh H.E := H.alg
+  letI : Algebra B H.E := H.algB
+  haveI : IsScalarTower B Bh H.E := H.tower
+  letI algB : Algebra B g.AA := ((algebraMap Bh g.AA).comp (algebraMap B Bh)).toAlgebra
+  haveI tower : IsScalarTower B Bh g.AA := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let vr : G.G₀ →* Matrix (Fin n) (Fin n) g.AA :=
+    ((g.φ.toRingHom.comp H.ι.toRingHom).toMonoidHom).comp (MonoidAlgebra.of Bh G.G₀)
+  have hvr : ∀ γ, vr γ = g.φ (H.ι (MonoidAlgebra.single γ 1)) := fun _ => rfl
+  have key : ∀ w, GDet.repAlg vr g.AA (MonoidAlgebra.mapRingHom G.G₀ (algebraMap B g.AA) w) =
+      g.φ (H.ι (MonoidAlgebra.mapRingHom G.G₀ (algebraMap B Bh) w)) := by
+    intro w
+    have hext : ((GDet.repAlg vr g.AA).toRingHom.comp (MonoidAlgebra.mapRingHom G.G₀ (algebraMap B g.AA))) =
+        (g.φ.toRingHom.comp (H.ι.toRingHom.comp (MonoidAlgebra.mapRingHom G.G₀ (algebraMap B Bh)))) := by
+      apply MonoidAlgebra.ringHom_ext
+      · intro b
+        have hs : MonoidAlgebra.single (1 : G.G₀) (algebraMap B Bh b) =
+            (algebraMap B Bh b) • (1 : MonoidAlgebra Bh G.G₀) := by
+          rw [MonoidAlgebra.one_def, MonoidAlgebra.smul_single', mul_one]
+        simp only [RingHom.comp_apply, MonoidAlgebra.mapRingHom_single, AlgHom.toRingHom_eq_coe,
+          RingHom.coe_coe, GDet.repAlg, MonoidAlgebra.lift_single, map_one, hs, map_smul]
+        exact algebraMap_smul g.AA ((algebraMap B Bh) b) (1 : Matrix (Fin n) (Fin n) g.AA)
+      · intro a
+        simp only [RingHom.comp_apply, MonoidAlgebra.mapRingHom_single, AlgHom.toRingHom_eq_coe,
+          RingHom.coe_coe, GDet.repAlg, MonoidAlgebra.lift_single, map_one]
+        rw [one_smul]
+        show (algebraMap g.AA g.AA).mapMatrix (vr a) = _
+        rw [Algebra.algebraMap_self, RingHom.mapMatrix_id]
+        rfl
+    exact congrArg (fun f => f w) hext
+  let f := g.φ.toLinearMap.restrictScalars B
+  refine ⟨{
+    AA := g.AA
+    ring := g.ring
+    alg := g.alg
+    algB := algB
+    tower := tower
+    fin := g.fin
+    inj := g.inj
+    N := g.N
+    compl := g.compl
+    mul_mem := g.mul_mem
+    typeI := g.typeI
+    vr := vr
+    span := ?_
+    det := gr_det H g hep hD vr hvr
+    form := ?_
+    red := ?_
+    kills := ?_
+    thick := gr_thick H g
+    P := Submodule.map f H.P
+    ker_le_span_sub_sup_map := H.ker_le_span_sub_sup_map.map f
+    vr_mem := fun γ => Submodule.mem_map_of_mem (H.mem γ)
+    cont := ?_ }⟩
+  · apply le_antisymm
+    · rw [Submodule.span_le]
+      rintro _ ⟨γ, rfl⟩
+      exact (g.range _).mp ⟨_, rfl⟩
+    · intro Y hY
+      obtain ⟨y, rfl⟩ := (g.range Y).mpr hY
+      obtain ⟨z, rfl⟩ := H.surj y
+      clear hY
+      induction z using MonoidAlgebra.induction_linear with
+      | zero => simp
+      | add a b ha hb =>
+        rw [map_add (f := _), map_add (f := _)]
+        exact Submodule.add_mem _ ha hb
+      | single γ c =>
+        have hc : (MonoidAlgebra.single γ c : MonoidAlgebra Bh G.G₀) = c • MonoidAlgebra.single γ 1 := by
+          rw [MonoidAlgebra.smul_single', mul_one]
+        rw [hc, map_smul, map_smul]
+        exact Submodule.smul_mem _ c (Submodule.subset_span ⟨γ, rfl⟩)
+  · intro γ
+    have h1 : (vr γ)ᵀ = (algebraMap B Bh ↑(e γ ^ (1 - (n : ℤ)))) • vr (G.frame.conj γ)⁻¹ := by
+      rw [hvr, ← g.st, H.st, map_smul]
+      rfl
+    rw [h1, smul_mul_assoc, ← map_mul, inv_mul_cancel, map_one, ← algebraMap_smul g.AA]
+    rfl
+  · intro γ i j b hb
+    have := g.red (H.ι (MonoidAlgebra.single γ 1)) i j b hb
+    rw [H.r_ι, Matrix.map_apply] at this
+    exact this
+  · intro z hz
+    rw [key, (H.ker _).mpr (TwoSidedIdeal.subset_span ⟨z, hz, rfl⟩), map_zero]
+  · intro j
+    obtain ⟨V, hV⟩ := H.cont j
+    refine ⟨V, fun γ v hv => ?_⟩
+    rw [← Submodule.map_smul'']
+    have hm := Submodule.mem_map_of_mem (f := f) (hV γ v hv)
+    rw [map_sub] at hm
+    exact hm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AutomorphicDetection.S6
+
+section
 
 @[expose] public section
 
@@ -104,3 +313,5 @@ theorem s6 : S6 := by
   exact urep_of H g U.coi hrk
 
 end UpperTheory.V.Pa
+end
+end

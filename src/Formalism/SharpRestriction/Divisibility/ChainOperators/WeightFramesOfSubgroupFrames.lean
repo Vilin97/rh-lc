@@ -1,7 +1,12 @@
 module
 
 public import Formalism.PeriodIntegrals.NablaSpans.MinorProdSpanHasCompl
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MinorSpanCompl
+public import Formalism.PeriodIntegrals.MinorSpanCompl
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MinorSpanComplement.ShapeColumnDegreeColumnSizes
+public import Formalism.GradedWeylDivisibility.FinalC
+public import Formalism.GradedWeylDivisibility.FinalD
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.BideterminantMem
+public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +33,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,8 +47,292 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MinorSpanComplement.ExistsCoeffNeZeroOfMemSpan
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+noncomputable section
+
+namespace PI.MSC
+
+open scoped MonomialOrder
+
+variable {σ R : Type*} [CommRing R]
+
+theorem exists_coeff_ne_zero_of_mem_span (O : MonomialOrder σ) {ι : Type*}
+    (c : ι → MvPolynomial σ R) (hinj : Function.Injective fun i => O.degree (c i))
+    (hlc : ∀ i, O.leadingCoeff (c i) = 1) {g : MvPolynomial σ R}
+    (hg : g ∈ Submodule.span R (Set.range c)) (hg0 : g ≠ 0) :
+    ∃ i, g.coeff (O.degree (c i)) ≠ 0 := by
+  classical
+  obtain ⟨f, rfl⟩ := Finsupp.mem_span_range_iff_exists_finsupp.mp hg
+  have hne : f.support.Nonempty := by
+    rw [Finset.nonempty_iff_ne_empty]
+    intro h
+    apply hg0
+    rw [Finsupp.support_eq_empty.mp h, Finsupp.sum_zero_index]
+  obtain ⟨i, hi, hmax⟩ := Finset.exists_max_image f.support (fun j => O.toSyn (O.degree (c j))) hne
+  refine ⟨i, ?_⟩
+  have hlt : ∀ j ∈ f.support, j ≠ i → O.toSyn (O.degree (c j)) < O.toSyn (O.degree (c i)) := by
+    intro j hj hji
+    refine lt_of_le_of_ne (hmax j hj) ?_
+    intro heq
+    exact hji (hinj (O.toSyn.injective heq))
+  rw [Finsupp.sum, MvPolynomial.coeff_sum, Finset.sum_eq_single i]
+  · rw [MvPolynomial.coeff_smul, smul_eq_mul]
+    have h1 : (c i).coeff (O.degree (c i)) = 1 := hlc i
+    rw [h1, mul_one]
+    exact Finsupp.mem_support_iff.mp hi
+  · intro j hj hji
+    rw [MvPolynomial.coeff_smul, MonomialOrder.coeff_eq_zero_of_lt (hlt j hj hji), smul_zero]
+  · intro h
+    exact absurd hi h
+
+theorem monomial_mem_sup (O : MonomialOrder σ) {ι : Type*} (c : ι → MvPolynomial σ R)
+    (hlc : ∀ i, O.leadingCoeff (c i) = 1) (e : σ →₀ ℕ) (a : R) :
+    monomial e a ∈ Submodule.span R (Set.range c) ⊔
+      restrictSupport R (Set.range fun i => O.degree (c i))ᶜ := by
+  classical
+  haveI := O.wf
+  have key : ∀ s : O.syn, ∀ e : σ →₀ ℕ, O.toSyn e = s → ∀ a : R,
+      monomial e a ∈ Submodule.span R (Set.range c) ⊔
+        restrictSupport R (Set.range fun i => O.degree (c i))ᶜ := by
+    intro s
+    induction s using WellFoundedLT.induction with
+    | _ s ih =>
+      intro e he a
+      by_cases hmem : e ∈ Set.range fun i => O.degree (c i)
+      · obtain ⟨i, rfl⟩ := hmem
+        have hdecomp : monomial (O.degree (c i)) a =
+            a • c i - a • (c i - monomial (O.degree (c i)) 1) := by
+          rw [smul_sub, sub_sub_cancel, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
+        rw [hdecomp]
+        refine Submodule.sub_mem _
+          (Submodule.mem_sup_left (Submodule.smul_mem _ a (Submodule.subset_span ⟨i, rfl⟩)))
+          (Submodule.smul_mem _ a ?_)
+        have hlc1 : (c i).coeff (O.degree (c i)) = 1 := hlc i
+        set q := c i - monomial (O.degree (c i)) 1 with hq
+        rw [MvPolynomial.as_sum q]
+        refine Submodule.sum_mem _ fun d hd => ih (O.toSyn d) ?_ d rfl _
+        rw [← he]
+        have hd' : q.coeff d ≠ 0 := MvPolynomial.mem_support_iff.mp hd
+        have hne : d ≠ O.degree (c i) := by
+          intro hdeq
+          apply hd'
+          rw [hdeq, hq, MvPolynomial.coeff_sub, MvPolynomial.coeff_monomial, if_pos rfl, hlc1, sub_self]
+        have hci : (c i).coeff d ≠ 0 := by
+          rw [hq, MvPolynomial.coeff_sub, MvPolynomial.coeff_monomial, if_neg (Ne.symm hne),
+            sub_zero] at hd'
+          exact hd'
+        have hle := MonomialOrder.le_degree (m := O) (MvPolynomial.mem_support_iff.mpr hci)
+        exact lt_of_le_of_ne hle (fun h => hne (O.toSyn.injective h))
+      · exact Submodule.mem_sup_right ((MvPolynomial.monomial_mem_restrictSupport R).mpr (Or.inl hmem))
+  exact key _ e rfl a
+
+theorem isCompl_map_rename (O : MonomialOrder σ) {τ : Type*} {φ : σ → τ}
+    (hφ : Function.Injective φ) {ι : Type*} (c : ι → MvPolynomial σ R)
+    (hinj : Function.Injective fun i => O.degree (c i)) (hlc : ∀ i, O.leadingCoeff (c i) = 1) :
+    IsCompl (Submodule.map (rename φ).toLinearMap (Submodule.span R (Set.range c)))
+      (restrictSupport R (Finsupp.mapDomain φ '' Set.range fun i => O.degree (c i))ᶜ) := by
+  classical
+  have hmapinj : Function.Injective (Finsupp.mapDomain φ : (σ →₀ ℕ) → (τ →₀ ℕ)) :=
+    Finsupp.mapDomain_injective hφ
+  constructor
+  · rw [Submodule.disjoint_def]
+    intro g hg1 hg2
+    obtain ⟨h, hh, rfl⟩ := Submodule.mem_map.mp hg1
+    by_contra hne
+    have hh0 : h ≠ 0 := fun h0 => hne (by rw [h0]; simp)
+    obtain ⟨i, hi⟩ := exists_coeff_ne_zero_of_mem_span O c hinj hlc hh hh0
+    have hsupp := (MvPolynomial.mem_restrictSupport_iff R).mp hg2
+    have hmem : Finsupp.mapDomain φ (O.degree (c i)) ∈ ((rename φ).toLinearMap h).support := by
+      rw [MvPolynomial.mem_support_iff]
+      show AddMonoidAlgebra.coeff (rename φ h) (Finsupp.mapDomain φ (O.degree (c i))) ≠ 0
+      rw [MvPolynomial.coeff_rename_mapDomain φ hφ]
+      exact hi
+    exact hsupp (Finset.mem_coe.mpr hmem) ⟨O.degree (c i), ⟨i, rfl⟩, rfl⟩
+  · rw [codisjoint_iff, eq_top_iff]
+    intro g _
+    rw [MvPolynomial.as_sum g]
+    refine Submodule.sum_mem _ fun d _ => ?_
+    by_cases hd : d ∈ Finsupp.mapDomain φ '' Set.range fun i => O.degree (c i)
+    · obtain ⟨e, _, rfl⟩ := hd
+      have h1 := monomial_mem_sup O c hlc e (g.coeff (Finsupp.mapDomain φ e))
+      rw [← MvPolynomial.rename_monomial]
+      obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp h1
+      rw [← hyz, map_add (f := _)]
+      refine Submodule.add_mem_sup (Submodule.mem_map_of_mem hy) ?_
+      rw [MvPolynomial.mem_restrictSupport_iff] at hz ⊢
+      intro d' hd'
+      have hd2 : d' ∈ (rename φ z).support := hd'
+      rw [MvPolynomial.support_rename_of_injective hφ] at hd2
+      obtain ⟨d'', hd'', rfl⟩ := Finset.mem_image.mp hd2
+      rintro ⟨e', he', heq⟩
+      exact hz (Finset.mem_coe.mpr hd'') (hmapinj heq ▸ he')
+    · exact Submodule.mem_sup_right ((MvPolynomial.monomial_mem_restrictSupport R).mpr (Or.inl hd))
+
+end PI.MSC
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MinorSpanComplement.RenameInitMinor
+
+section
+
+@[expose] public section
+
+open MvPolynomial Formalism.GradedWeylDivisibility
+
+noncomputable section
+
+namespace PI.MSC
+
+def phi (N n : ℕ) : Fin N × Fin n → ℕ × Fin N := fun v => ((v.2 : ℕ), v.1)
+
+theorem phi_inj (N n : ℕ) : Function.Injective (phi N n) := by
+  rintro ⟨a, s⟩ ⟨a', s'⟩ h
+  simp only [phi, Prod.mk.injEq] at h
+  ext
+  · exact congrArg Fin.val h.2
+  · exact h.1
+
+theorem rename_initMinor (R : Type) [CommRing R] (N n s : ℕ) (hs : s ≤ n) (I : Fin s ↪o Fin N) :
+    rename (phi N n) (initMinor R (r := N) (n := n) (fun p => I p) hs) = PI.minorX R N s I := by
+  unfold initMinor PI.minorX
+  rw [AlgHom.map_det, ← Matrix.det_transpose]
+  congr 1
+  ext i k
+  simp [phi, Matrix.transpose_apply, rename_X]
+
+theorem map_bidet (R : Type) [CommRing R] {r n K : ℕ} (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤ n)
+    (I : ∀ k, Fin (sz k) → Fin r) :
+    MvPolynomial.map (Int.castRingHom R) (bideterminant ℤ sz hsz I) = bideterminant R sz hsz I := by
+  unfold bideterminant initMinor
+  rw [map_prod]
+  refine Finset.prod_congr rfl fun k _ => ?_
+  rw [RingHom.map_det]
+  congr 1
+  ext p q
+  simp [RingHom.mapMatrix_apply]
+
+def gen (R : Type) [CommRing R] (N : ℕ) (ν : YoungDiagram)
+    (I : ∀ c : Fin (ν.rowLen 0), Fin (ν.colLen c) ↪o Fin N) :
+    MvPolynomial (Fin N × Fin (ν.colLen 0)) R :=
+  bideterminant R (sz0 ν) (hsz0 ν) fun c => I c
+
+theorem nablaSpan_eq (R : Type) [CommRing R] (N : ℕ) (ν : YoungDiagram) :
+    PI.nablaSpan R N ν = Submodule.map (rename (phi N (ν.colLen 0))).toLinearMap
+      (Submodule.span R (Set.range (gen R N ν))) := by
+  rw [Submodule.map_span, ← Set.range_comp]
+  unfold PI.nablaSpan
+  congr 1
+  apply congrArg Set.range
+  funext I
+  simp only [Function.comp_apply, AlgHom.toLinearMap_apply, gen, bideterminant, map_prod]
+  refine Finset.prod_congr rfl fun c _ => ?_
+  exact (rename_initMinor R N (ν.colLen 0) (sz0 ν c) (hsz0 ν c) (I c)).symm
+
+theorem span_map_le {σ : Type*} (R : Type) [CommRing R] {A B : Set (MvPolynomial σ ℤ)}
+    (h : A ⊆ Submodule.span ℤ B) :
+    Submodule.span R (MvPolynomial.map (Int.castRingHom R) '' A) ≤
+      Submodule.span R (MvPolynomial.map (Int.castRingHom R) '' B) := by
+  rw [Submodule.span_le]
+  rintro _ ⟨a, ha, rfl⟩
+  have := h ha
+  clear ha
+  induction this using Submodule.span_induction with
+  | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
+  | zero => simp
+  | add x y _ _ hx hy =>
+    rw [map_add (f := _)]
+    exact Submodule.add_mem _ hx hy
+  | smul z x _ hx =>
+    rw [map_zsmul, ← Int.cast_smul_eq_zsmul R]
+    exact Submodule.smul_mem _ _ hx
+
+theorem minorSpanCompl : PI.MinorSpanCompl := by
+  intro R _ N ν
+  rcases subsingleton_or_nontrivial R with hR | hR
+  · refine ⟨⊤, ?_⟩
+    have h0 : PI.nablaSpan R N ν = ⊥ :=
+      eq_bot_iff.mpr fun x _ => (Submodule.mem_bot R).mpr (Subsingleton.elim x 0)
+    rw [h0]
+    exact isCompl_bot_top
+  set n := ν.colLen 0
+  obtain ⟨b, ⟨_, hspan, _⟩, hb⟩ := sSBasis ℤ N n (nuR ν)
+
+  have hZ : Submodule.span ℤ (Set.range (gen ℤ N ν)) = Submodule.span ℤ (Set.range b) := by
+    apply le_antisymm
+    · rw [Submodule.span_le]
+      rintro _ ⟨I, rfl⟩
+      rw [SetLike.mem_coe, hspan]
+      have := bideterminantMem ℤ N n (ν.rowLen 0) (sz0 ν) (hsz0 ν) fun c => I c
+      rwa [shapeColumnDegree_columnSizes] at this
+    · rw [Submodule.span_le]
+      rintro _ ⟨m, rfl⟩
+      obtain ⟨K, sz, hsz, I, hsh, hI, hbm⟩ := (hb m).2.2
+      rw [SetLike.mem_coe, hbm]
+      obtain ⟨J, hJ, heq⟩ := reorder ℤ ν N sz hsz I hI hsh
+      rw [heq]
+      exact Submodule.subset_span ⟨fun c => OrderEmbedding.ofStrictMono (J c) (hJ c), rfl⟩
+  set c : ssIdx N n (nuR ν) → MvPolynomial (Fin N × Fin n) R :=
+    fun m => MvPolynomial.map (Int.castRingHom R) (b m) with hcdef
+  have hT : Submodule.span R (Set.range (gen R N ν)) = Submodule.span R (Set.range c) := by
+    have e1 : Set.range (gen R N ν) = MvPolynomial.map (Int.castRingHom R) '' Set.range (gen ℤ N ν) := by
+      rw [← Set.range_comp]
+      congr 1
+      funext I
+      exact (map_bidet R (sz0 ν) (hsz0 ν) (fun c => I c)).symm
+    have e2 : Set.range c = MvPolynomial.map (Int.castRingHom R) '' Set.range b := by
+      rw [← Set.range_comp]
+      rfl
+    rw [e1, e2]
+    apply le_antisymm
+    · exact span_map_le R (by rw [← hZ]; exact Submodule.subset_span)
+    · exact span_map_le R (by rw [hZ]; exact Submodule.subset_span)
+  have hdl : ∀ m, (colLex N n).degree (c m) = m.1 ∧ (colLex N n).leadingCoeff (c m) = 1 := by
+    intro m
+    obtain ⟨K, sz, hsz, I, _, hI, hbm⟩ := (hb m).2.2
+    have hR := column_lex_bideterminant R N n K sz hsz I hI
+    have hZd := column_lex_bideterminant ℤ N n K sz hsz I hI
+    have hdeg := (hb m).1
+    rw [hbm] at hdeg
+    simp only [hcdef, hbm, map_bidet]
+    exact ⟨hR.1.trans (hZd.1.symm.trans hdeg), hR.2⟩
+  have hinj : Function.Injective fun m => (colLex N n).degree (c m) := by
+    intro m m' h
+    apply Subtype.ext
+    simpa [(hdl m).1, (hdl m').1] using h
+  rw [nablaSpan_eq, hT]
+  exact ⟨_, isCompl_map_rename (colLex N n) (phi_inj N n) c hinj fun m => (hdl m).2⟩
+
+end PI.MSC
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MinorSpanCompl
+
+section
+
+@[expose] public section
+
+theorem minor_span_complement : PI.MinorSpanCompl := PI.MSC.minorSpanCompl
+end
+end
+
+-- Source module: Formalism.SharpRestriction.Divisibility.ChainOperators.WeightFramesOfSubgroupFrames
+
+section
 
 @[expose] public section
 
@@ -52,3 +343,5 @@ namespace Formalism.MainNotions.DIV.Lemmas
 theorem kw_of_cutSB (h : CutKW.KWsb) : CutKW.KW := h minor_span_complement
 
 end Formalism.MainNotions.DIV.Lemmas
+end
+end

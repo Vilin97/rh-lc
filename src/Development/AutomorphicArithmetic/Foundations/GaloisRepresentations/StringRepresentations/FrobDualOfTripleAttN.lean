@@ -3,14 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TripleAtt
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoeffProdOneSubCMulX
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Eps0UnramFrob
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobDualOfAttached
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HkFrobOfAttached
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HodgeOfAttached
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaCompatibleConjugationRepresentation
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPlaceOverMoveValCc
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.JumpsGoodOfAttached
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NoInvAwayOfPure
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnramifiedOfAttached
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaCompatibleConjugationRepresentation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,15 +14,12 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,10 +39,91 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HkFrobOfAttached
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HodgeOfAttached
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaCompatibleConjugationRepresentation
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPlaceOverMoveValCc
+public import Formalism.LocalRingCardinality.Params
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TripleAtt
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NoInvAwayOfPure
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnramifiedOfAttached
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobDualOfAttached
+
+section
+
+@[expose] public section
+
+open GlobalTheory.TripleGal Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
+
+namespace GlobalTheory.TripleFrobDual
+
+theorem charpoly_smul {n : ℕ} (M N : Matrix (Fin n) (Fin n) ℂ) (h : M * N = 1) (m : Multiset ℂ) (c : ℂ)
+    (hM : M.charpoly = (m.map fun β => X - C β).prod) :
+    (c • M).charpoly = (m.map fun β => X - C (c * β)).prod := by
+  have h1 := GlobalTheory.ConjPoly.charpoly_smul_inv M N h m 1 hM
+  have h2 := GlobalTheory.ConjPoly.charpoly_smul_inv N M (mul_eq_one_comm.1 h) (m.map (·⁻¹)) c
+    (by rw [one_smul] at h1; rw [h1, Multiset.map_map]; simp)
+  rw [h2, Multiset.map_map]
+  simp
+
+theorem cyclotomicChar_frobenius_eq_normPlace {D : D7} (i : D.ntw.Tw) {v : HeightOneSpectrum (𝓞 D.host.E)}
+    (hv : v ∉ placesOver D.host.E (D.ntw.l i)) {A : ValuationSubring D.nd.Om} (hA : IsPlaceOver (F := D.host.E) A v)
+    {σ : Gen.GE D.nd} (hσ : IsFrob (F := D.host.E) A (normV v) σ) :
+    ((eps0 D.ntw i σ : (D.ntw.O0 i)ˣ) : D.ntw.O0 i) = (normV v : ℕ) := by
+  have h := cycZ_of_isFrob hv hA hσ
+  change algebraMap ℤ_[D.ntw.l i] (D.ntw.O0 i) ((cycZ D.host.E D.nd.Om (D.ntw.l i) σ : ℤ_[D.ntw.l i]ˣ) : _) = _
+  rw [h, map_natCast]
+
+theorem rd_injective {D : D7} (i : D.ntw.Tw) (ι : FractionRing (D.ntw.O0 i) →+* ℂ) :
+    Function.Injective (rd i ι) :=
+  ι.injective.comp (IsFractionRing.injective _ _)
+
+end GlobalTheory.TripleFrobDual
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.JumpsGoodOfAttached
+
+section
+
+@[expose] public section
+
+open GlobalTheory.TripleGal Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
+
+namespace GlobalTheory.TripleGal.Jumps
+
+theorem odd_rank (R : Ranks) : Odd R.r := by
+  obtain ⟨a, ha⟩ := R.k_even
+  obtain ⟨b, hb⟩ := R.m_even
+  have h2 := R.two_le_m
+  exact ⟨a + b - 1, by simp only [Ranks.r]; omega⟩
+
+theorem map_round_cast (S : Multiset ℂ) (h : ∀ z ∈ S, ∃ n : ℤ, z = (n : ℂ)) :
+    (S.map fun z => ⌊z.re⌋).map (fun n : ℤ => (n : ℂ)) = S := by
+  rw [Multiset.map_map]
+  conv_rhs => rw [← Multiset.map_id S]
+  refine Multiset.map_congr rfl fun z hz => ?_
+  obtain ⟨n, rfl⟩ := h z hz
+  simp
+
+end GlobalTheory.TripleGal.Jumps
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.FrobDualOfTripleAttN
+
+section
 
 @[expose] public section
 
@@ -365,3 +435,6 @@ theorem noInv_of_pure_n : ∀ (D : D7) (i : D.ntw.Tw) (s : D.ntw.Sig i) (ι : Fr
     linarith
 
 end GlobalTheory.PurityInvariants
+end
+end
+end

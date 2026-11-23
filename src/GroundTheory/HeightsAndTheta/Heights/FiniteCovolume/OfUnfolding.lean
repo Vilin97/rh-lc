@@ -19,23 +19,11 @@ public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsStab
 public import Mathlib.Topology.Algebra.Group.Units
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Assembly
 public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PAdelicLatticeDictionary
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchCovolumeBound
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchimedeanUnitaryEquiv
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementExtension
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementLattice
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordEmbedBasis
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordLatticeFullRank
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PDoubleCosetCovolume
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PDualLatticeMultiple
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHaarParabolicCoordinates
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegralFormCovolume
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLatticePointsBelowFinite
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineNormalForm
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantTransport
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PReducedBasisBound
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerCovolume
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTraceHermNondegenerate
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldAlongSubgroup
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StCoordEmbedBasis
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StIntegralFormCovolume
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StTraceHermNondegenerate
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StDualLatticeMultiple
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StCoordLatticeFullRank
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -76,6 +64,219 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchimedeanUnitaryEquiv
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementExtension
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementLattice
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordEmbedBasis
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PDoubleCosetCovolume
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PDualLatticeMultiple
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHaarParabolicCoordinates
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIntegralFormCovolume
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLatticePointsBelowFinite
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineNormalForm
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantTransport
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PReducedBasisBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerCovolume
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnfoldAlongSubgroup
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchCovolumeBound
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField GroundTheory.Automorphic Module MeasureTheory
+
+noncomputable section
+
+variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
+variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
+
+
+omit [NumberField F] [IsTotallyReal F] [DecidableEq ι] in
+theorem ArchCovolumeBound.proof (h : HermitianForm F E W) (v : Basis ι E W)
+    (h₁ : CoordEmbedBasis.Statement E ι)
+    (h₂ : IntegralFormCovolume.Statement (ι → E) (InfinitePlace E → ι → ℂ)
+      (Σ _ : ι, Free.ChooseBasisIndex ℤ (𝓞 E)))
+    (h₃ : TraceHermNondegenerate.Statement h v) (h₄ : DualLatticeMultiple.Statement h)
+    (h₅ : CoordLatticeFullRank.Statement v) : ArchCovolumeBound.Statement h v := by
+  intro D
+  obtain ⟨k, hk0, hk⟩ := h₄ D
+  let e := Pi.basis fun _ : ι => integralBasis E
+  obtain ⟨C, hC⟩ := h₂ (coordEmbed E ι) e (traceHerm h v) volume (Measure.pi.isAddHaarMeasure _) h₃ h₁.1
+    (by rw [h₁.2, finrank_eq_card_basis e])
+  refine ⟨Real.sqrt (C * |(k : ℝ)| ^ Fintype.card (Σ _ : ι, Free.ChooseBasisIndex ℤ (𝓞 E))),
+    fun La hLa => ?_⟩
+  let φ : W →+ (ι → E) := (v.equivFun : W →ₗ[E] ι → E).toAddMonoidHom
+  have hφ : ∀ x, v.equivFun.symm (φ x) = x := fun x => v.equivFun.symm_apply_apply x
+  have hmem : ∀ y, y ∈ La.map φ ↔ v.equivFun.symm y ∈ La := by
+    intro y
+    rw [AddSubgroup.mem_map]
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      rwa [hφ]
+    · intro hy
+      exact ⟨_, hy, v.equivFun.apply_symm_apply y⟩
+  have harch : archLattice v La = AddSubgroup.toIntSubmodule ((La.map φ).map (coordEmbed E ι)) := by
+    rw [archLattice, AddSubgroup.map_map]
+    rfl
+  obtain ⟨hfg, hspan⟩ := h₅ La hLa.isLattice
+  obtain ⟨hint, hdual⟩ := hk La hLa
+  obtain ⟨hD, hZ, hcov⟩ := hC (La.map φ) k hk0 hfg hspan
+    (fun x hx y hy => hint _ ((hmem x).1 hx) _ ((hmem y).1 hy))
+    (fun y hy => by
+      rw [hmem, map_zsmul]
+      refine hdual _ fun x hx => ?_
+      obtain ⟨n, hn⟩ := hy (φ x) (AddSubgroup.mem_map_of_mem φ hx)
+      exact ⟨n, by rw [traceHerm_apply, hφ] at hn; exact hn⟩)
+  rw [harch]
+  exact ⟨hD, hZ, (le_abs_self _).trans (Real.abs_le_sqrt hcov)⟩
+
+end
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCoordLatticeFullRank
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField Module
+
+noncomputable section
+
+variable {E : Type*} [Field E] [NumberField E]
+variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι]
+
+theorem CoordLatticeFullRank.proof (v : Basis ι E W) : CoordLatticeFullRank.Statement v := by
+  intro La hL
+  set f : W →ₗ[E] ι → E := (v.equivFun : W →ₗ[E] ι → E) with hf
+  refine ⟨?_, ?_⟩
+  · classical
+    letI := hL.fg
+    infer_instance
+  set S : Set (ι → E) := ((La.map f.toAddMonoidHom : AddSubgroup (ι → E)) : Set (ι → E)) with hS
+  set T : Submodule ℚ (ι → E) := Submodule.span ℚ S with hT
+
+  have key : ∀ (a : E), ∀ s ∈ S, a • s ∈ T := by
+    intro a s hs
+    obtain ⟨d, hd, hint⟩ := exists_integral_multiples ℤ ℚ ({a} : Finset E)
+    have hda : IsIntegral ℤ (d • a) := hint a (Finset.mem_singleton_self a)
+    obtain ⟨x, hx, rfl⟩ := (AddSubgroup.mem_map).mp hs
+    let b : 𝓞 E := ⟨d • a, hda⟩
+    have hbx : ((b : E) • x) ∈ La := hL.smul_mem b x hx
+    have hfb : f ((b : E) • x) ∈ S := (AddSubgroup.mem_map).mpr ⟨_, hbx, rfl⟩
+    have hd' : ((d : ℚ)) ≠ 0 := by exact_mod_cast hd
+    have heq : a • f.toAddMonoidHom x = ((d : ℚ)⁻¹) • f ((b : E) • x) := by
+      rw [map_smul]
+      show a • f x = ((d : ℚ)⁻¹) • ((d • a) • f x)
+      rw [zsmul_eq_mul, mul_smul, Int.cast_smul_eq_zsmul E, ← Int.cast_smul_eq_zsmul ℚ,
+        smul_smul, inv_mul_cancel₀ hd', one_smul]
+    rw [heq]
+    exact T.smul_mem _ (Submodule.subset_span hfb)
+
+  have stable : ∀ (a : E), ∀ y ∈ T, a • y ∈ T := by
+    intro a y hy
+    induction hy using Submodule.span_induction with
+    | mem s hs => exact key a s hs
+    | zero => simp
+    | add y z _ _ hy hz => rw [smul_add]; exact T.add_mem hy hz
+    | smul q y _ hy =>
+      rw [smul_comm]
+      exact T.smul_mem q hy
+  let T' : Submodule E (ι → E) :=
+    { carrier := T
+      add_mem' := fun hy hz => T.add_mem hy hz
+      zero_mem' := T.zero_mem
+      smul_mem' := fun a y hy => stable a y hy }
+  have hspan : Submodule.span E S = ⊤ := by
+    have hSim : S = f '' (La : Set W) := by
+      rw [hS, AddSubgroup.coe_map]; rfl
+    rw [hSim, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact v.equivFun.surjective
+  have hle : Submodule.span E S ≤ T' := Submodule.span_le.mpr fun s hs => Submodule.subset_span hs
+  rw [hspan] at hle
+  exact eq_top_iff.mpr fun y _ => hle (Submodule.mem_top)
+
+end
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTraceHermNondegenerate
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Heights₂.Heights.FiniteCovolume
+
+open NumberField GroundTheory.Automorphic Module
+
+variable {F E : Type*} [Field F] [Field E] [NumberField E] [Algebra F E]
+  [Algebra.IsQuadraticExtension F E]
+variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι]
+
+
+omit [NumberField E] in
+theorem HermitianForm.eq_zero_of_toSesq_eq_zero (h : HermitianForm F E W) {x : W}
+    (hx : ∀ w, h.toSesq x w = 0) : x = 0 := by
+  apply h.nonsingular.1
+  rw [map_zero]
+  exact LinearMap.ext hx
+
+theorem TraceHermNondegenerate.proof (h : HermitianForm F E W) (v : Basis ι E W) :
+    TraceHermNondegenerate.Statement h v := by
+  have hT := (traceForm_nondegenerate ℚ E).1
+  constructor
+  · intro y hy
+    have key : ∀ w, h.toSesq (v.equivFun.symm y) w = 0 := by
+      intro w
+      apply hT
+      intro a
+      have := hy (v.equivFun (a • w))
+      rw [traceHerm_apply, LinearEquiv.symm_apply_apply, LinearMap.map_smul, smul_eq_mul] at this
+      rw [Algebra.traceForm_apply, mul_comm]
+      exact this
+    have h0 := HermitianForm.eq_zero_of_toSesq_eq_zero h key
+    exact (map_eq_zero_iff _ v.equivFun.symm.injective).1 h0
+  · intro z hz
+    have key : ∀ w, h.toSesq w (v.equivFun.symm z) = 0 := by
+      intro w
+      apply hT
+      intro a
+      have := hz (v.equivFun (conj F E a • w))
+      rw [traceHerm_apply, LinearEquiv.symm_apply_apply, LinearMap.map_smulₛₗ₂, smul_eq_mul] at this
+      rw [Algebra.traceForm_apply, mul_comm]
+      simpa [conj_conj] using this
+    have key' : ∀ w, h.toSesq (v.equivFun.symm z) w = 0 := by
+      intro w
+      have e := (LinearMap.isSymm_def.1 h.isSymm) (v.equivFun.symm z) w
+      rw [key w] at e
+      exact (map_eq_zero_iff _ (conjHom F E).injective).1 e
+    have h0 := HermitianForm.eq_zero_of_toSesq_eq_zero h key'
+    exact (map_eq_zero_iff _ v.equivFun.symm.injective).1 h0
+
+end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.OfUnfolding
+
+section
 
 @[expose] public section
 
@@ -272,3 +473,5 @@ end Open
 end
 
 end GroundTheory.Heights₂.Heights.FiniteCovolume
+end
+end

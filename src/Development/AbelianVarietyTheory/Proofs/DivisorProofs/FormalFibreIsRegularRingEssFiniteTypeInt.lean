@@ -5,7 +5,8 @@ public import Mathlib.FieldTheory.Perfect
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdicCompletionTensorQuotientRingEquivStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalFibreIsRegularRingOfEssFiniteTypeStatement
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,10 +25,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +46,212 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Derivation.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDerivationExtendAdicCompletionLocalization
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularFibreOfLiftedPartialDerivationsStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsRegularLocalRingOfFlatOfMapEqMaximalIdeal
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsRegularLocalRingAdicCompletion
+import Mathlib.RingTheory.RegularLocalRing.Polynomial
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSurjLocalizationMvPolynomialOfEssFiniteTyp
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+namespace GlobalTheory
+
+theorem exists_surj_localization_mvPolynomial_of_essFiniteType :
+    ∀ (Λ R : Type) [CommRing Λ] [CommRing R] [IsLocalRing R] [Algebra Λ R]
+      [Algebra.EssFiniteType Λ R], ∃ (n : ℕ) (P : Ideal (MvPolynomial (Fin n) Λ)) (_ : P.IsPrime)
+      (φ : Localization.AtPrime P →ₐ[Λ] R), Function.Surjective φ := by
+  intro Λ R _ _ _ _ h
+  obtain ⟨σ, hσ⟩ := (Algebra.essFiniteType_iff Λ R).mp h
+  let y : Fin σ.card → R := fun i => (σ.equivFin.symm i : R)
+  let φ₀ : MvPolynomial (Fin σ.card) Λ →ₐ[Λ] R := MvPolynomial.aeval y
+  have hrange : Algebra.adjoin Λ (σ : Set R) = φ₀.range := by
+    rw [← Algebra.adjoin_range_eq_range_aeval]
+    congr 1
+    ext x
+    constructor
+    · intro hx
+      exact ⟨σ.equivFin ⟨x, hx⟩, by simp [y]⟩
+    · rintro ⟨i, rfl⟩
+      exact (σ.equivFin.symm i).2
+  let P : Ideal (MvPolynomial (Fin σ.card) Λ) := (maximalIdeal R).comap φ₀
+  have hunit : ∀ b : P.primeCompl, IsUnit (φ₀ b) := by
+    intro b
+    by_contra hb
+    exact b.2 ((mem_maximalIdeal _).mpr hb)
+  refine ⟨σ.card, P, inferInstance, IsLocalization.liftAlgHom (M := P.primeCompl) (f := φ₀) hunit, ?_⟩
+  intro r
+  obtain ⟨t, ht, htu, hrt⟩ := hσ r
+  rw [hrange] at ht hrt
+  obtain ⟨b, rfl⟩ := ht
+  obtain ⟨a, ha⟩ := hrt
+  have hb : b ∈ P.primeCompl := fun hbP => (mem_maximalIdeal _).mp hbP htu
+  refine ⟨IsLocalization.mk' (Localization.AtPrime P) a ⟨b, hb⟩, ?_⟩
+  rw [IsLocalization.liftAlgHom_apply, IsLocalization.lift_mk'_spec]
+  change φ₀ a = φ₀ b * r
+  exact ha.trans (mul_comm _ _)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSurjLocalizationMvPolynomialOfEssFiniteTypStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_surj_localization_mvPolynomial_of_essFiniteType_local : ∀ (Λ R : Type) [CommRing Λ] [CommRing R] [IsLocalRing R] [Algebra Λ R] [Algebra.EssFiniteType Λ R], ∃ (n : ℕ) (P : Ideal (MvPolynomial (Fin n) Λ)) (_ : P.IsPrime) (φ : Localization.AtPrime P →ₐ[Λ] R), Function.Surjective φ := by
+  first | exact @GlobalTheory.exists_surj_localization_mvPolynomial_of_essFiniteType | exact GlobalTheory.exists_surj_localization_mvPolynomial_of_essFiniteType | (intros; apply GlobalTheory.exists_surj_localization_mvPolynomial_of_essFiniteType <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDerivationExtendAdicCompletionLocalizationStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_derivation_extend_adicCompletion_localization : ∀ (S : Type) [CommRing S] (P : Ideal S) [P.IsPrime] (d : Derivation ℤ S S), ∃ D : Derivation ℤ (AdicCompletion (maximalIdeal (Localization.AtPrime P)) (Localization.AtPrime P)) (AdicCompletion (maximalIdeal (Localization.AtPrime P)) (Localization.AtPrime P)), ∀ x, D (algebraMap S _ x) = algebraMap S _ (d x) := by
+  first | exact @GlobalTheory.derivation_extend_completion_localization_atPrime | exact GlobalTheory.derivation_extend_completion_localization_atPrime | (intros; apply GlobalTheory.derivation_extend_completion_localization_atPrime <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularRingFormalFibreMvPolynomialPerfect
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+namespace GlobalTheory
+
+theorem isRegularRing_adicCompletion_tensor_of_mvPolynomial :
+    ∀ (Λ : Type) [CommRing Λ] [IsDomain Λ] [IsRegularRing Λ] [PerfectField (FractionRing Λ)] (n : ℕ)
+      (P : Ideal (MvPolynomial (Fin n) Λ)) [P.IsPrime] (K : Type) [Field K]
+      [Algebra (Localization.AtPrime P) K] [Algebra.EssFiniteType (Localization.AtPrime P) K],
+      (∀ a : Λ, algebraMap (Localization.AtPrime P) K
+        (algebraMap Λ (Localization.AtPrime P) a) = 0 → a = 0) →
+      IsRegularRing (AdicCompletion (maximalIdeal (Localization.AtPrime P))
+        (Localization.AtPrime P) ⊗[Localization.AtPrime P] K) := by
+  intro Λ _ _ _ _ n P _ K _ _ _ hinj
+  let S₀ := MvPolynomial (Fin n) Λ
+  let R := Localization.AtPrime P
+  let B := AdicCompletion (maximalIdeal R) R
+  haveI : IsRegularLocalRing R := inferInstance
+  haveI : IsRegularLocalRing B := GlobalTheory.RegularCompletion.isRegularLocalRing_adicCompletion R
+  haveI : IsRegularRing B := GlobalTheory.isRegularRing_of_isRegularLocalRing B
+  letI : Algebra S₀ K := ((algebraMap R K).comp (algebraMap S₀ R)).toAlgebra
+  haveI : IsScalarTower S₀ R K := .of_algebraMap_eq fun _ => rfl
+  haveI : Algebra.EssFiniteType S₀ R := Algebra.EssFiniteType.of_isLocalization R P.primeCompl
+  haveI : Algebra.EssFiniteType S₀ K := Algebra.EssFiniteType.comp S₀ R K
+  have hC : ∀ a : Λ, algebraMap S₀ K (MvPolynomial.C a) = 0 → a = 0 := by
+    intro a ha
+    apply hinj a
+    rw [IsScalarTower.algebraMap_apply Λ S₀ R a]
+    exact ha
+  have hD : ∀ s : Fin n, ∃ D : Derivation ℤ B B, ∀ x,
+      D (algebraMap S₀ B x) = algebraMap S₀ B (MvPolynomial.pderiv s x) := fun s =>
+    GlobalTheory.T.exists_derivation_extend_adicCompletion_localization S₀ P ((MvPolynomial.pderiv s).restrictScalars ℤ)
+  have hD' : ∀ s : Fin n, ∃ D : @Derivation ℤ B B _ _ _ (Ring.toIntAlgebra B) _ _, ∀ x,
+      D (algebraMap S₀ B x) = algebraMap S₀ B (MvPolynomial.pderiv s x) := by
+    intro s
+    obtain ⟨D, hD⟩ := hD s
+    exact ⟨@Derivation.mk ℤ B B _ _ _ (Ring.toIntAlgebra B) _ _ D.toLinearMap
+      D.map_one_eq_zero' D.leibniz', hD⟩
+  have h := GlobalTheory.T.regular_fibre_of_lifted_partialDerivations Λ (Fin n) B K hC hD'
+  let e : B ⊗[R] K ≃ₐ[R] B ⊗[S₀] K := IsLocalization.algebraTensorEquiv P.primeCompl R B K
+  exact IsRegularRing.of_ringEquiv e.symm.toRingEquiv
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularRingFormalFibreMvPolynomialPerfectStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.isRegularRing_formal_fibre_mvPolynomial_perfect : ∀ (Λ : Type) [CommRing Λ] [IsDomain Λ] [IsRegularRing Λ] [PerfectField (FractionRing Λ)] (n : ℕ) (P : Ideal (MvPolynomial (Fin n) Λ)) [P.IsPrime] (K : Type) [Field K] [Algebra (Localization.AtPrime P) K] [Algebra.EssFiniteType (Localization.AtPrime P) K], (∀ a : Λ, algebraMap (Localization.AtPrime P) K (algebraMap Λ (Localization.AtPrime P) a) = 0 → a = 0) → IsRegularRing (AdicCompletion (maximalIdeal (Localization.AtPrime P)) (Localization.AtPrime P) ⊗[Localization.AtPrime P] K) := by
+  first | exact @GlobalTheory.isRegularRing_adicCompletion_tensor_of_mvPolynomial | exact GlobalTheory.isRegularRing_adicCompletion_tensor_of_mvPolynomial | (intros; apply GlobalTheory.isRegularRing_adicCompletion_tensor_of_mvPolynomial <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalFibreIsRegularRingOfEssFiniteType
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+namespace GlobalTheory
+
+theorem formalFibre_isRegularRing_of_essFiniteType :
+    ∀ (Λ : Type) [CommRing Λ] [IsDomain Λ] [IsRegularRing Λ] [PerfectField (FractionRing Λ)]
+      (R K : Type) [CommRing R] [IsLocalRing R] [Algebra Λ R] [Algebra.EssFiniteType Λ R]
+      [Field K] [Algebra R K] [Algebra.EssFiniteType R K],
+      (∀ a : Λ, algebraMap R K (algebraMap Λ R a) = 0 → a = 0) →
+      IsRegularRing (AdicCompletion (maximalIdeal R) R ⊗[R] K) := by
+  intro Λ _ _ _ _ R K _ _ _ _ _ _ _ hK
+  obtain ⟨n, P, hP, φ, hφ⟩ := GlobalTheory.T.exists_surj_localization_mvPolynomial_of_essFiniteType_local Λ R
+  let R₀ := Localization.AtPrime P
+  letI : Algebra R₀ R := φ.toRingHom.toAlgebra
+  letI : Algebra R₀ K := ((algebraMap R K).comp φ.toRingHom).toAlgebra
+  haveI : IsScalarTower R₀ R K := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI : IsNoetherianRing R₀ := IsLocalization.isNoetherianRing P.primeCompl _ inferInstance
+  have hsurj : Function.Surjective (algebraMap R₀ R) := hφ
+  haveI : Algebra.FiniteType R₀ R := Algebra.FiniteType.of_surjective (Algebra.ofId R₀ R) hsurj
+  haveI : Algebra.EssFiniteType R₀ R := inferInstance
+  haveI : Algebra.EssFiniteType R₀ K := Algebra.EssFiniteType.comp R₀ R K
+  have hK₀ : ∀ a : Λ, algebraMap R₀ K (algebraMap Λ R₀ a) = 0 → a = 0 := by
+    intro a ha
+    apply hK a
+    have h1 : algebraMap R₀ K (algebraMap Λ R₀ a) = algebraMap R K (φ (algebraMap Λ R₀ a)) := rfl
+    rw [h1, φ.commutes] at ha
+    exact ha
+  have hreg := GlobalTheory.T.isRegularRing_formal_fibre_mvPolynomial_perfect Λ n P K hK₀
+  obtain ⟨e⟩ := GlobalTheory.T.nonempty_adicCompletion_tensor_ringEquiv_of_surjective R₀ R K hsurj
+  exact IsRegularRing.of_ringEquiv e.symm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalFibreIsRegularRingOfEssFiniteTypeStatement
+
+section
+
+@[expose] public section
+
+open IsLocalRing TensorProduct
+
+theorem _root_.GlobalTheory.T.isRegularRing_formalFibre_of_essFiniteType : ∀ (Λ : Type) [CommRing Λ] [IsDomain Λ] [IsRegularRing Λ] [PerfectField (FractionRing Λ)] (R K : Type) [CommRing R] [IsLocalRing R] [Algebra Λ R] [Algebra.EssFiniteType Λ R] [Field K] [Algebra R K] [Algebra.EssFiniteType R K], (∀ a : Λ, algebraMap R K (algebraMap Λ R a) = 0 → a = 0) → IsRegularRing (AdicCompletion (maximalIdeal R) R ⊗[R] K) := by
+  first | exact @GlobalTheory.formalFibre_isRegularRing_of_essFiniteType | exact GlobalTheory.formalFibre_isRegularRing_of_essFiniteType | (intros; apply GlobalTheory.formalFibre_isRegularRing_of_essFiniteType <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalFibreIsRegularRingEssFiniteTypeInt
+
+section
 
 @[expose] public section
 
@@ -106,3 +309,5 @@ theorem formalFibre_isRegularRing_of_essFiniteType_int :
     exact_mod_cast ha
 
 end GlobalTheory
+end
+end

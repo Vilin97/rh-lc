@@ -1,10 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NotDominatesTopPlace
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLocalModelAtComplexPointStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsResidueToComplexOfRationalResidueStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDomainTensorComplex
-import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,7 +12,6 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
-public import Mathlib.FieldTheory.FinTrdeg
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -43,7 +38,168 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDomainTensorComplex
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
+public import Mathlib.FieldTheory.FinTrdeg
 import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLocalModelAtComplexPoint
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.Discrepancy GlobalTheory.FieldPair
+open scoped TensorProduct
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.FieldPair
+
+theorem exists_locModel_at_point :
+    ∀ (A : Type) [CommRing A] [IsDomain A] [Algebra ℂ A] [Algebra.EssFiniteType ℂ A] (ε : A →ₐ[ℂ] ℂ),
+      ∃ T : Subring (FractionRing A), IsLocModel (algebraMap ℂ (FractionRing A)) T ∧
+        RatRes (algebraMap ℂ (FractionRing A)) T ∧
+        ∀ a : A, algebraMap A (FractionRing A) a ∈ T ∧
+          (ε a = 0 → NonUnit T (algebraMap A (FractionRing A) a)) := by
+  intro A _ _ _ _ ε
+  let K := FractionRing A
+  let P : Ideal A := RingHom.ker (ε : A →+* ℂ)
+  haveI : P.IsPrime := RingHom.ker_isPrime _
+  have hle : P.primeCompl ≤ nonZeroDivisors A := P.primeCompl_le_nonZeroDivisors
+  let B : Subalgebra A K := Localization.subalgebra.ofField K P.primeCompl hle
+  haveI hB : IsLocalization P.primeCompl B := Localization.subalgebra.isLocalization_ofField K _ hle
+  let b : A →+* B := algebraMap A B
+  have hu : ∀ y : P.primeCompl, IsUnit ((ε : A →+* ℂ) y) := fun y => by
+    refine isUnit_iff_ne_zero.2 fun h => y.2 ?_
+    exact RingHom.mem_ker.2 h
+  let ψ : B →+* ℂ := IsLocalization.lift hu
+  have hψ : ∀ x, ψ (b x) = ε x := IsLocalization.lift_eq hu
+  have hcK : ∀ z : ℂ, algebraMap ℂ K z = algebraMap A K (algebraMap ℂ A z) :=
+    fun z => IsScalarTower.algebraMap_apply ℂ A K z
+  have hc : ∀ z : ℂ, algebraMap ℂ K z ∈ B.toSubring := fun z => by
+    rw [hcK]; exact B.algebraMap_mem _
+  have hψc : ∀ z : ℂ, ψ ⟨algebraMap ℂ K z, hc z⟩ = z := fun z => by
+    have : (⟨algebraMap ℂ K z, hc z⟩ : B) = b (algebraMap ℂ A z) := Subtype.ext (hcK z)
+    rw [this, hψ]; exact ε.commutes z
+  have key : ∀ x : B, ψ x = 0 → NonUnit B.toSubring (x : K) := fun x hx => by
+    refine (nonUnit_iff (R := B.toSubring) x).2 fun h => ?_
+    have := h.map ψ
+    rw [hx] at this
+    exact not_isUnit_zero this
+  refine ⟨B.toSubring, ⟨hc, IsLocalization.AtPrime.isLocalRing B P, ?_, ?_⟩, ?_, fun a => ?_⟩
+  · have e : (algebraMap ℂ K).codRestrict B.toSubring hc = b.comp (algebraMap ℂ A) := by
+      ext z; exact hcK z
+    rw [e]
+    refine RingHom.EssFiniteType.comp ?_ ?_
+    · exact RingHom.essFiniteType_algebraMap.2 (inferInstance : Algebra.EssFiniteType ℂ A)
+    · exact (RingHom.essFiniteType_algebraMap (R := A) (S := B)).2
+        (Algebra.EssFiniteType.of_isLocalization B P.primeCompl)
+  · intro f
+    obtain ⟨x, y, hy, rfl⟩ := IsFractionRing.div_surjective (A := A) f
+    have hy' : algebraMap A K y ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hy
+    exact ⟨_, B.algebraMap_mem x, _, B.algebraMap_mem y, hy', div_mul_cancel₀ _ hy'⟩
+  · intro r hr
+    refine ⟨ψ ⟨r, hr⟩, key (⟨r, hr⟩ - ⟨algebraMap ℂ K (ψ ⟨r, hr⟩), hc _⟩) ?_⟩
+    rw [ψ.map_sub, hψc, sub_self]
+  · refine ⟨B.algebraMap_mem a, fun ha => key (b a) ?_⟩
+    rw [hψ, ha]
+
+end GlobalTheory.FieldPair
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLocalModelAtComplexPointStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.Discrepancy GlobalTheory.FieldPair
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_localModel_at_complexPoint : ∀ (A : Type) [CommRing A] [IsDomain A] [Algebra ℂ A] [Algebra.EssFiniteType ℂ A] (ε : A →ₐ[ℂ] ℂ),
+  ∃ T : Subring (FractionRing A), IsLocModel (algebraMap ℂ (FractionRing A)) T ∧
+    RatRes (algebraMap ℂ (FractionRing A)) T ∧
+    ∀ a : A, algebraMap A (FractionRing A) a ∈ T ∧ (ε a = 0 → NonUnit T (algebraMap A (FractionRing A) a)) := by
+  first | exact @GlobalTheory.FieldPair.exists_locModel_at_point | exact GlobalTheory.FieldPair.exists_locModel_at_point | (intros; apply GlobalTheory.FieldPair.exists_locModel_at_point <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsResidueToComplexOfRationalResidue
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.Discrepancy GlobalTheory.FieldPair
+open scoped TensorProduct
+
+set_option autoImplicit false
+
+namespace GlobalTheory.FieldPair
+
+theorem exists_residue_complex : ∀ {K : Type} [Field K] [Algebra ℂ K] (R : Subring K) (h : IsLocModel (algebraMap ℂ K) R),
+  RatRes (algebraMap ℂ K) R →
+  ∃ ε : R →+* ℂ, (∀ a : ℂ, ε ⟨algebraMap ℂ K a, h.const_mem a⟩ = a) ∧ ∀ r : R, ε r = 0 ↔ NonUnit R (r : K) := by
+  intro K _ _ R h hr
+  haveI := h.isLocalRing
+  let c0 : ℂ →+* R := (algebraMap ℂ K).codRestrict R h.const_mem
+  let φ : ℂ →+* IsLocalRing.ResidueField R := (IsLocalRing.residue R).comp c0
+  have hφ : Function.Bijective φ := by
+    refine ⟨φ.injective, fun y => ?_⟩
+    obtain ⟨r, rfl⟩ := IsLocalRing.residue_surjective y
+    obtain ⟨a, ha⟩ := hr r r.2
+    refine ⟨a, ?_⟩
+    have hn : NonUnit R ((r - c0 a : R) : K) := by simpa [c0] using ha
+    have hm : r - c0 a ∈ IsLocalRing.maximalIdeal R :=
+      (IsLocalRing.mem_maximalIdeal _).2 ((nonUnit_iff (R := R) (r - c0 a)).1 hn)
+    have := (IsLocalRing.residue_eq_zero_iff (r - c0 a)).2 hm
+    rw [map_sub, sub_eq_zero] at this
+    exact this.symm
+  let e := RingEquiv.ofBijective φ hφ
+  refine ⟨e.symm.toRingHom.comp (IsLocalRing.residue R), fun a => ?_, fun r => ?_⟩
+  · show e.symm (φ a) = a
+    exact e.symm_apply_apply a
+  · rw [nonUnit_iff (R := R) r, RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingEquiv.coe_toRingHom,
+      map_eq_zero_iff _ e.symm.injective, IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal,
+      mem_nonunits_iff]
+
+end GlobalTheory.FieldPair
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsResidueToComplexOfRationalResidueStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.Discrepancy GlobalTheory.FieldPair
+open scoped TensorProduct
+
+theorem _root_.GlobalTheory.T.exists_residue_to_complex_of_rationalResidue : ∀ {K : Type} [Field K] [Algebra ℂ K] (R : Subring K) (h : IsLocModel (algebraMap ℂ K) R),
+  RatRes (algebraMap ℂ K) R →
+  ∃ ε : R →+* ℂ, (∀ a : ℂ, ε ⟨algebraMap ℂ K a, h.const_mem a⟩ = a) ∧ ∀ r : R, ε r = 0 ↔ NonUnit R (r : K) := by
+  first | exact @GlobalTheory.FieldPair.exists_residue_complex | exact GlobalTheory.FieldPair.exists_residue_complex | (intros; apply GlobalTheory.FieldPair.exists_residue_complex <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonDominatingVarietyPointNoTrBasis
+
+section
 
 @[expose] public section
 
@@ -190,3 +346,6 @@ theorem exists_common_field : ∀ {κ : Type} [Field κ] [Algebra ℂ κ] (c : �
   exact ⟨κ', inferInstance, inferInstance, ρ, O', h1, h2, h3, trBasis_of_isLocModel h1⟩
 
 end GlobalTheory.CommonPoint
+end
+end
+end

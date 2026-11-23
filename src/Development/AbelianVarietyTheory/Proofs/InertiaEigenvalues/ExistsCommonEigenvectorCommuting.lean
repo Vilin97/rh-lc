@@ -1,8 +1,8 @@
 module
 
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,15 +21,13 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Coalgebra.CoassocSimps
+import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,10 +47,137 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Module.Equiv.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.IntegralCriterion
+
+theorem main : ∀ (k : Type) [inst : Field k] (n : ℕ) (v : Fin (n + (1 : ℕ)) → k), v ≠ (0 : Fin (n + (1 : ℕ)) → k) → ∃ (P : Matrix (Fin (n + (1 : ℕ))) (Fin (n + (1 : ℕ))) k), IsUnit P ∧ ∀ (a : Fin (n + (1 : ℕ))), P a (0 : Fin (n + (1 : ℕ))) = v a := by
+  intro k _ n v hv
+  set e0 : Fin (n + 1) → k := Pi.single 0 1 with he0def
+  have he0 : e0 ≠ 0 := by
+    intro h
+    have := congrFun h 0
+    simp [e0] at this
+  let f : (k ∙ e0) ≃ₗ[k] (k ∙ v) :=
+    (LinearEquiv.toSpanNonzeroSingleton k _ e0 he0).symm ≪≫ₗ
+      LinearEquiv.toSpanNonzeroSingleton k _ v hv
+  have hf : (f ⟨e0, Submodule.mem_span_singleton_self e0⟩ : Fin (n + 1) → k) = v := by
+    have h1 : (⟨e0, Submodule.mem_span_singleton_self e0⟩ : k ∙ e0) =
+        LinearEquiv.toSpanNonzeroSingleton k _ e0 he0 1 := by
+      ext; simp
+    simp only [f, LinearEquiv.trans_apply, h1, LinearEquiv.symm_apply_apply]
+    simp
+  obtain ⟨g, hg⟩ := Submodule.exists_linearEquiv_restrict_eq f
+  have hge : g e0 = v := by
+    rw [← hf, hg]
+  refine ⟨LinearMap.toMatrix' (g : (Fin (n + 1) → k) →ₗ[k] (Fin (n + 1) → k)), ?_, ?_⟩
+  · refine ⟨⟨LinearMap.toMatrix' (g : (Fin (n + 1) → k) →ₗ[k] (Fin (n + 1) → k)),
+      LinearMap.toMatrix' (g.symm : (Fin (n + 1) → k) →ₗ[k] (Fin (n + 1) → k)), ?_, ?_⟩, rfl⟩
+    · rw [← LinearMap.toMatrix'_comp, ← LinearMap.toMatrix'_id]
+      congr 1
+      ext x : 1
+      simp
+    · rw [← LinearMap.toMatrix'_comp, ← LinearMap.toMatrix'_id]
+      congr 1
+      ext x : 1
+      simp
+  · intro a
+    rw [LinearMap.toMatrix'_apply]
+    change g e0 a = v a
+    rw [hge]
+
+end GlobalTheory.IntegralCriterion
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CommonEigenvectorExistenceInertiaEigenvalues
+
+open Module
+
+theorem exists_common_eigenvector {k ι V : Type} [Field k] [IsAlgClosed k] [AddCommGroup V]
+    [Module k V] [FiniteDimensional k V] (f : ι → Module.End k V)
+    (hcomm : ∀ i j, f i * f j = f j * f i) :
+    ∀ (d : ℕ) (W : Submodule k V), Module.finrank k W = d → W ≠ ⊥ →
+      (∀ i, ∀ w ∈ W, (f i : V → V) w ∈ W) →
+        ∃ x ∈ W, x ≠ (0 : V) ∧ ∀ i, ∃ c : k, (f i : V → V) x = c • x := by
+  intro d
+  induction d using Nat.strong_induction_on with
+  | _ d ih =>
+  intro W hd hW hinv
+  by_cases hs : ∀ i, ∃ c : k, ∀ w ∈ W, f i w = c • w
+  · obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hW
+    exact ⟨x, hx, hx0, fun i => let ⟨c, hc⟩ := hs i; ⟨c, hc x hx⟩⟩
+  · push_neg at hs
+    obtain ⟨i, hi⟩ := hs
+    let g : Module.End k W := (f i).restrict (fun w hw => hinv i w hw)
+    haveI : Nontrivial W := Submodule.nontrivial_iff_ne_bot.mpr hW
+    obtain ⟨c, hc'⟩ := Module.End.exists_eigenvalue g
+    obtain ⟨v, hv⟩ := hc'.exists_hasEigenvector
+    have hgv : g v = c • v := hv.apply_eq_smul
+    have hv0 : v ≠ 0 := hv.2
+    set W' : Submodule k V := W ⊓ Module.End.eigenspace (f i) c with hW'
+    have hvW' : (v : V) ∈ W' := by
+      refine ⟨v.2, ?_⟩
+      rw [SetLike.mem_coe, Module.End.mem_eigenspace_iff]
+      have := congrArg Subtype.val hgv
+      simpa [g] using this
+    have hW'ne : W' ≠ ⊥ := by
+      intro h
+      rw [h, Submodule.mem_bot] at hvW'
+      exact hv0 (Subtype.ext hvW')
+    have hlt : W' < W := by
+      refine lt_of_le_of_ne inf_le_left ?_
+      intro h
+      obtain ⟨w, hw, hne⟩ := hi c
+      have : w ∈ W' := h ▸ hw
+      exact hne ((Module.End.mem_eigenspace_iff).mp this.2)
+    have hdlt : Module.finrank k W' < d := hd ▸ Submodule.finrank_lt_finrank_of_lt hlt
+    have hinv' : ∀ j, ∀ w ∈ W', (f j : V → V) w ∈ W' := by
+      intro j w hw
+      refine ⟨hinv j w hw.1, ?_⟩
+      rw [SetLike.mem_coe, Module.End.mem_eigenspace_iff]
+      have h1 : f i w = c • w := (Module.End.mem_eigenspace_iff).mp hw.2
+      have h2 := congrArg (fun F : Module.End k V => F w) (hcomm i j)
+      simp only [Module.End.mul_apply] at h2
+      rw [h2, h1, map_smul]
+    obtain ⟨x, hx, hx0, hxe⟩ := ih _ hdlt W' rfl hW'ne hinv'
+    exact ⟨x, hx.1, hx0, hxe⟩
+
+theorem target : ∀ {k ι V : Type} [inst : Field k] [IsAlgClosed k] [inst_2 : AddCommGroup V] [inst_3 : Module k V] [FiniteDimensional k V] (f : ι → Module.End k V), (∀ (i j : ι), f i * f j = f j * f i) → ∀ (d : ℕ) (W : Submodule k V), Module.finrank k ↥W = d → W ≠ ⊥ → (∀ (i : ι), ∀ w ∈ W, (f i : V → V) w ∈ W) → ∃ x ∈ W, x ≠ (0 : V) ∧ ∀ (i : ι), ∃ (c : k), (f i : V → V) x = c • x :=
+  fun f hc => exists_common_eigenvector f hc
+
+end GlobalTheory.CommonEigenvectorExistenceInertiaEigenvalues
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCommonEigenvectorCommuting
+
+section
 
 @[expose] public section
 
@@ -292,3 +417,5 @@ namespace GlobalTheory.CommTriang
 open Matrix
 
 end GlobalTheory.CommTriang
+end
+end

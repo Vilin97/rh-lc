@@ -3,13 +3,7 @@ module
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BisimplicialActionSecondFactor
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CechNerveFaceOneZero
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullbackZeroCochainsAlgebraMap
-public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.HodgeWedgeFields.IsPullbackH2Structure
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoboundaryCup0
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoboundaryCup1
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsDualFunctionalsOfLinearIndependent
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFactorOfExactIsField
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlantProductSecondAction
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValSuccAbove
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.HodgeWedgeFields.H1CommutesBaseChange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,6 +41,109 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoboundaryCup0
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoboundaryCup1
+public import Mathlib.Algebra.Field.IsField
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.CommAlgFunctorCoboundaryZeroMemCocyclesOne
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BisimplicialActionSecondFactor
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DnCompDn
+import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.HodgeWedgeFields.H1CommutesBaseChange
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFactorOfExactIsField
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SlantProductSecondAction
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValSuccAbove
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.WeilBound.CoreStatements.TemperedRepresentationTheory.HodgeWedgeFields.IsPullbackH2Structure
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry TensorProduct Opposite MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.CechDR
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace MainStatements.Hodge
+
+def IsPullbackH2Structure {R R' : Type} [CommRing R] [CommRing R'] {X X' : Scheme.{0}} {s : X ⟶ Sp R} {s' : X' ⟶ Sp R'}
+    {σ : R →+* R'} {φ : X' ⟶ X} (h : φ ≫ s = s' ≫ spMap σ) (c : GlobalTheory.CatCoh.H2 (OAff s)) (c' : GlobalTheory.CatCoh.H2 (OAff s')) : Prop :=
+  (pairPull h).pull2 c = (pairRes φ s').pull2 c'
+
+def HopfLeSt : Prop := AllFin fun R _ _ _ F ↦ ∀ g : ℕ, IsField R → Stein F →
+  (∀ n, g ≤ n → Function.Exact (dn F n) (dn F (n + 1))) → Hopf F True →
+  ∀ x : Fin (g + 1) → GlobalTheory.CatCoh.H1 F, ¬ LinearIndependent R x
+
+def H1StructureFieldDim : Prop := AllAb fun R _ A _ g ↦ IsField R → VB R (HO1 A.hom) g
+
+def NoPrimSt : Prop := AllAb fun R _ A _ _ ↦ IsField R →
+  ∀ (z : GlobalTheory.CatCoh.H2 (OAff A.hom)) (a b c : GlobalTheory.CatCoh.H2 (OAff (A ⊗ A).hom)),
+    IsPullbackH2Structure (wOver (fst A A * snd A A)) z a → IsPullbackH2Structure (wOver (fst A A)) z b → IsPullbackH2Structure (wOver (snd A A)) z c →
+    a = b + c → z = 0
+
+def SmallLiftSt : Prop := AllAb fun R _ A _ _ ↦ ∀ [IsLocalRing R] (t : R), (∀ x, ¬ IsUnit x → x * t = 0) →
+  ∀ (X' : Scheme.{0}) (s' : X' ⟶ Sp (R ⧸ Ideal.span {t})) (φ : X' ⟶ A.left)
+    (h : IsPullback φ s' A.hom (spMap (algebraMap R (R ⧸ Ideal.span {t})))) (c' : HO1 s'),
+    ∃ c : HO1 A.hom, IsPullO h.w c c'
+
+def PerfVBSt : Prop := AllFin fun R _ C _ F ↦ ∀ g : ℕ, Perf F → SteinU F →
+  (∀ (k : Type) [Field k] [Algebra R k], ∃ (F' : C ⥤ CommAlgCat.{0} k) (_ : BC F F'),
+    Module.finrank k (GlobalTheory.CatCoh.H1 F') = g) →
+  (∀ (B : Type) [CommRing B] [IsLocalRing B] [Algebra R B] (t : B), (∀ x, ¬ IsUnit x → x * t = 0) →
+    ∃ (F' : C ⥤ CommAlgCat.{0} B) (_ : BC F F') (F'' : C ⥤ CommAlgCat.{0} (B ⧸ Ideal.span {t})) (m : BC F' F''),
+      Function.Surjective m.coef.pull1) → VB R (GlobalTheory.CatCoh.H1 F) g
+
+end MainStatements.Hodge
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsDualFunctionalsOfLinearIndependent
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct GlobalTheory.CatCoh MainStatements.Hodge GlobalTheory.CompanionTheory.HodgeCx GlobalTheory.CompanionTheory.HopfLe
+
+namespace GlobalTheory.CompanionTheory.HopfLe
+
+theorem exists_dual_functionals_of_linearIndependent :
+    ∀ {R V ι : Type} [CommRing R] [AddCommGroup V] [Module R V] [DecidableEq ι], IsField R →
+      ∀ x : ι → V, LinearIndependent R x →
+        ∃ l : ι → V →ₗ[R] R, ∀ i j, l i (x j) = if i = j then 1 else 0 := by
+  intro R V ι _ _ _ _ hR x hx
+  letI : Field R := hR.toField
+  obtain ⟨b, hb⟩ : ∃ b : Module.Basis ι R (Submodule.span R (Set.range x)),
+      ∀ k, (b k : V) = x k := ⟨Module.Basis.span hx, fun k => by rw [Module.Basis.span_apply hx k]⟩
+  have hext : ∀ i : ι, ∃ g : V →ₗ[R] R,
+      g ∘ₗ (Submodule.span R (Set.range x)).subtype = b.coord i :=
+    fun i => LinearMap.exists_extend _
+  choose l hl using hext
+  refine ⟨l, fun i j => ?_⟩
+  have h : l i (b j : V) = b.coord i (b j) := LinearMap.congr_fun (hl i) (b j)
+  rw [hb j] at h
+  rw [h, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
+  simp only [eq_comm]
+
+end GlobalTheory.CompanionTheory.HopfLe
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Cup1BoundaryOfBoundary
+
+section
 
 @[expose] public section
 
@@ -362,3 +456,6 @@ theorem hopfLeSt : CxSt → DictSt → LowSt → HopfLeSt := by
   rw [← GlobalTheory.CompanionTheory.Dict.L1_dn_zero_eq_d0_L0, ← hy, hxt]
 
 end GlobalTheory.CompanionTheory.HopfLe
+end
+end
+end

@@ -4,27 +4,31 @@ public import Formalism.HermitianCurvature.StatementU
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdditiveCharacterPsi
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Block3MulBlocks
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BudgetTopConvergence
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChangeOfVariablesXy
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CoordinateSizesOfHypotheses
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryU1Plain
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryU1Truncated
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PhiBoundPartsOfRadicalParametrisation
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SeminormCompletion
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixTranspose
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopCellsOfParts
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeakToStrongSmoothnessReal
+public import Formalism.HermitianCurvature.StatementG
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CuspidalIrreducibleSubrep
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.EtaleIntegralityFacts
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.FourierUniquenessMirabolic
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbitTailEstimates
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbitalIntegralConvergesAbs
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PhaseFunctionCriticalPoints
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.PhaseFunctionDerivatives
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.StandardCharacterExists
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StationaryPhaseEstimates
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StationaryPhaseModel
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeakApproximationGL
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.WhittakerVanishingImpliesZero
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WirtingerIntegrationByParts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -52,6 +56,52 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CoordinateSizesOfHypotheses
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryU1Plain
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryU1Truncated
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PhiBoundPartsOfRadicalParametrisation
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SeminormCompletion
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixTranspose
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopCellsOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeakToStrongSmoothnessReal
+import Mathlib.Data.Nat.Choose.Multinomial
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.ChangeOfVariablesXy
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+theorem orbit_tail_estimate : Formalism.FourierDecayAlt.G.TailStep :=
+  tail_estimate_of_bound tailBound_statement matrix_cutoff_spec cutoff_phase_bound
+
+theorem change_of_variables_xy : Formalism.FourierDecayAlt.G.InnerXY :=
+  inner_xy_of_reduced orbital_integral_reduced reduced_integrand_integrable split_xy_coordinates amplitude_eq
+
+theorem nonstationary_estimate : Formalism.FourierDecayAlt.G.NonStatStep :=
+  nonstationary_estimate_of_parts nonstationary_phase gradient_lower_bound phase_function_deriv phase_relative_deriv
+    critical_cutoff_spec amplitude_bound_far orbital_integral_converges_abs cutoff_phase_bound change_of_variables_xy
+
+theorem stationary_estimate : Formalism.FourierDecayAlt.G.StatStep :=
+  stationary_estimate_of_parts stationary_phase_holomorphic phase_function_deriv phase_function_critical_points hessian_at_critical hessian_determinant
+    phase_near_critical critical_cutoff_spec amplitude_bound_critical amplitude_continuous_at_critical majorant_y
+    orbital_integral_converges_abs cutoff_phase_bound change_of_variables_xy
+
+theorem germ_rate : Formalism.FourierDecayAlt.G.GermRate :=
+  germ_rate_of_estimates orbital_integral_converges_abs cutoff_phase_bound critical_cutoff_spec exists_small_delta
+    root_set_characterization orbit_tail_estimate change_of_variables_xy nonstationary_estimate stationary_estimate amplitude_limit
+    limit_integral stationary_leading_constant germ_large_parameter
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeBoundInBanachSpace
+
+section
 
 @[expose] public section
 
@@ -84,3 +134,5 @@ theorem germ_expansion_top_level : Formalism.FourierDecayAlt.U.UseGermTop :=
   germ_top_level_of_parts germ_rate det_weyl_matrix top_cells derivative_bound_of_decay
 
 end Formalism.FourierDecayAlt.P
+end
+end

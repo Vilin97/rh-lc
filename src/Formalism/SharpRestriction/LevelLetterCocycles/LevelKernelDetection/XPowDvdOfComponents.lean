@@ -1,19 +1,24 @@
 module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.MapEvalPsPi
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.DetectPt
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.GradedClassDecomposition
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.HfracOf
+public import Formalism.DistinguishedUnitIdeals.UnivPart
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.KerEqOfSpan
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -27,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,9 +44,171 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.DistinguishedUnitIdeals.Statement
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.GradedClassDecomposition
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfLvBasis
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.DetectPt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03.K8
+
+open Formalism.ExponentWindows
+
+theorem detect_pt {LL D : Type} [Field LL] [AddCommGroup D] [Module LL D] [FiniteDimensional LL D]
+    (F : ℤ → Submodule LL D) (hF : IsFilt F) {r : ℕ} (hr : r = Module.finrank LL D)
+    (g : Fin r → ℤ → D) (hsupp : ∀ j, ∃ m : ℤ, ∀ k < m, g j k = 0) (hg : ∀ j k, g j k ∈ F (-k))
+    (hspan : Submodule.span LL (Set.range fun j =>
+      (Submodule.Quotient.mk ⟨g j, fun k _ => hg j k⟩ : GrQ F)) = ⊤)
+    (a : Fin r → PowerSeries LL) (e : ℕ)
+    (h : ∀ k : ℤ, (∑ j, ∑ᶠ i : ℕ, PowerSeries.coeff i (a j) • g j (k - i)) ∈ F ((e : ℤ) - k)) :
+    ∀ j, PowerSeries.X ^ e ∣ a j := by
+  classical
+  have hanti : Antitone F := hF.1
+  have hli : LinearIndependent LL
+      (fun j => (Submodule.Quotient.mk ⟨g j, fun k _ => hg j k⟩ : GrQ F)) := by
+    obtain ⟨_, hrk⟩ := finrank_grQ F hF
+    exact linearIndependent_of_top_le_span_of_card_eq_finrank hspan.ge
+      (by rw [Fintype.card_fin, hrk, hr])
+  have key : ∀ m, m < e → ∀ j, PowerSeries.coeff m (a j) = 0 := by
+    intro m
+    induction m using Nat.strong_induction_on with
+    | _ m ih =>
+      intro hm
+      have hcl : ∀ k' : ℤ, (∑ j, PowerSeries.coeff m (a j) • g j k') ∈ F (1 - k') := by
+        intro k'
+        have hS := h (k' + m)
+        have hle : F ((e : ℤ) - (k' + m)) ≤ F (1 - k') := hanti (by omega)
+        have hS' := hle hS
+        have hR : ∀ j, (∑ᶠ i : ℕ, PowerSeries.coeff i (a j) • g j (k' + m - i)) -
+            PowerSeries.coeff m (a j) • g j k' ∈ F (1 - k') := by
+          intro j
+          obtain ⟨mj, hmj⟩ := hsupp j
+          obtain ⟨N, hN1, hN2⟩ : ∃ N : ℕ, m < N ∧ ∀ i : ℕ, N ≤ i → k' + m - i < mj :=
+            ⟨(k' + m - mj).toNat + m + 1, by omega, fun i hi => by
+              have := Int.self_le_toNat (k' + m - mj); omega⟩
+          have hsub : (Function.support fun i : ℕ => PowerSeries.coeff i (a j) • g j (k' + m - i)) ⊆
+              ↑(Finset.range N) := by
+            intro i hi
+            rw [Function.mem_support] at hi
+            simp only [Finset.coe_range, Set.mem_Iio]
+            by_contra hne
+            apply hi
+            rw [hmj _ (hN2 i (not_lt.mp hne)), smul_zero]
+          rw [finsum_eq_sum_of_support_subset _ hsub,
+            ← Finset.add_sum_erase _ _ (Finset.mem_range.mpr hN1)]
+          simp only [add_sub_cancel_right, add_sub_cancel_left]
+          refine sum_mem fun i hi => ?_
+          obtain ⟨hne, -⟩ := Finset.mem_erase.mp hi
+          rcases lt_or_gt_of_ne hne with hlt | hgt
+          · rw [ih i hlt (by omega) j, zero_smul]
+            exact zero_mem _
+          · exact Submodule.smul_mem _ _ (hanti (by omega) (hg j (k' + m - i)))
+        have hsum := sub_mem hS' (sum_mem (t := Finset.univ) fun j _ => hR j)
+        rw [Finset.sum_sub_distrib, sub_sub_cancel] at hsum
+        exact hsum
+      have hz : ∑ j, PowerSeries.coeff m (a j) •
+          (Submodule.Quotient.mk ⟨g j, fun k _ => hg j k⟩ : GrQ F) = 0 := by
+        have hmk : ∑ j, PowerSeries.coeff m (a j) •
+            (Submodule.Quotient.mk ⟨g j, fun k _ => hg j k⟩ : GrQ F) =
+            (Submodule.mkQ _) (∑ j, PowerSeries.coeff m (a j) •
+              (⟨g j, fun k _ => hg j k⟩ : ↥(Submodule.pi Set.univ fun k : ℤ => F (-k)))) := by
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [map_sum]
+        rw [hmk, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_comap,
+          Submodule.mem_pi]
+        intro k _
+        simpa using hcl k
+      exact fun j => Fintype.linearIndependent_iff.mp hli _ hz j
+  intro j
+  exact PowerSeries.X_pow_dvd_iff.mpr fun m hm => key m hm j
+
+end Formalism.MainNotions.N.Ln03.K8
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.HfracOf
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03.K8
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.MainNotions.WachCoordinates Formalism.MainNotions.WachCoordinates.Br Formalism.ExponentWindows Formalism.ExponentWindows.G TensorProduct
+
+theorem hfrac_of {O LL : Type} [CommRing O] [Field LL] [Algebra O LL] [IsFractionRing O LL] (a : LL) :
+    ∃ y o : O, algebraMap O LL y ≠ 0 ∧ algebraMap O LL y * a = algebraMap O LL o := by
+  haveI : Nontrivial O := (algebraMap O LL).domain_nontrivial
+  obtain ⟨⟨x, s⟩, hx⟩ := IsLocalization.surj (nonZeroDivisors O) a
+  refine ⟨s, x, ?_, ?_⟩
+  · exact IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
+  · rw [mul_comm]
+    exact hx
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL : Type} [Field LL] [Algebra Qp LL]
+    {O : Type} [CommRing O] [Algebra O LL] [TopologicalSpace LL]
+    {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
+    {Lb : LevB W} {hR : Ring9 W} {uZ : ℤ_[PD.p]ˣ} {ιZ : ℤ_[PD.p] →+* O}
+    {T : LocLat G Qp LL O} {C : Coord W (baseIdOf hR) T} {c : ZMod n}
+
+theorem rank_eq [IsFractionRing O LL] (hP3 : Formalism.MainNotions.DeltaInvariantLattices.p3 W T) (hmod : Formalism.MainNotions.DeltaInvariantLattices.wachModuleOverLetters W T W.π₀)
+    {r : ℕ} (e : Fin r → C.V)
+    (hind : LinearIndependent (PowerSeries O) e)
+    (hspan : Submodule.span (PowerSeries O) (Set.range e) = (latOf C).N c) :
+    FiniteDimensional LL (Dc W T c) ∧ r = Module.finrank LL (Dc W T c) := by
+  classical
+  let hBasis : Module.Basis (Fin r) (PowerSeries O) ↥((latOf C).N c) :=
+    (Module.Basis.span hind).map (LinearEquiv.ofEq _ _ hspan)
+  have hBasis_e : ∀ k, (hBasis k : C.V) = e k := fun k => by
+    simp [hBasis, Module.Basis.span_apply]
+  have hcmpLI := Pf.lvBasis_cmp_ind hP3 hmod hfrac_of hBasis hBasis_e
+  let w : Fin r → Dc W T c := fun k =>
+    ⟨W.cmp T ⟨C.t c (e k), Pf.lvBasis_e_mem hBasis hBasis_e k⟩, Pf.lvBasis_cmp_e_letter hBasis hBasis_e k⟩
+  have hwLI : LinearIndependent LL w :=
+    LinearIndependent.of_comp (DcrisL PD T.ρ (W.emb c)).subtype hcmpLI
+  have hwsp : ⊤ ≤ Submodule.span LL (Set.range w) := by
+    intro x _
+    have hx := Pf.lvBasis_letter_le hP3 hmod hBasis hBasis_e x.2
+    have hr : (Set.range fun k => W.cmp T ⟨C.t c (e k), Pf.lvBasis_e_mem hBasis hBasis_e k⟩) =
+        (DcrisL PD T.ρ (W.emb c)).subtype '' Set.range w := by
+      rw [← Set.range_comp]
+      rfl
+    rw [hr, Submodule.span_image, Submodule.mem_map] at hx
+    obtain ⟨y, hy, hyx⟩ := hx
+    have : y = x := Subtype.ext hyx
+    rwa [← this]
+  let bD := Module.Basis.mk hwLI hwsp
+  have hFD : FiniteDimensional LL (Dc W T c) := Module.Finite.of_basis bD
+  refine ⟨hFD, ?_⟩
+  rw [Module.finrank_eq_card_basis bD, Fintype.card_fin]
+
+end Formalism.MainNotions.N.Ln03.K8
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.XPowDvdOfComponents
+
+section
 
 @[expose] public section
 
@@ -202,4 +368,6 @@ theorem detect [IsFractionRing O LL] (hP4 : LevelMapHodgeFiltration W) (hSat : S
 
 end Formalism.MainNotions.N.Ln03.K8
 
+end
+end
 end

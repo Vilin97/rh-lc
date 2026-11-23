@@ -1,13 +1,11 @@
 module
 
 public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.CyclicPowerClassOfExpEquiv
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BallRing
-public import Mathlib.RingTheory.PowerSeries.Expand
-public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartB
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -16,18 +14,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,11 +42,60 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.RingTheory.PowerSeries.Expand
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartB
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BallRing
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.ClosedUnitBallSubring.ballRing :
+    (K : Type) → [inst : NormedField K] → [IsUltrametricDist K] → Subring K :=
+  fun K _ _ =>
+    { carrier := {x : K | ‖x‖ ≤ 1}
+      mul_mem' := fun {a b} ha hb => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        have hb' : ‖b‖ ≤ 1 := hb
+        show ‖a * b‖ ≤ 1
+        rw [norm_mul]
+        exact mul_le_one₀ ha' (norm_nonneg b) hb'
+      one_mem' := by
+        show ‖(1 : K)‖ ≤ 1
+        exact norm_one.le
+      add_mem' := fun {a b} ha hb => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        have hb' : ‖b‖ ≤ 1 := hb
+        show ‖a + b‖ ≤ 1
+        exact (IsUltrametricDist.norm_add_le_max a b).trans (max_le ha' hb')
+      zero_mem' := by
+        show ‖(0 : K)‖ ≤ 1
+        rw [norm_zero]
+        exact zero_le_one
+      neg_mem' := fun {a} ha => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        show ‖-a‖ ≤ 1
+        rw [norm_neg]
+        exact ha' }
+end
+end
+
+-- Source module: Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.LogarithmEquivalence
+
+section
 
 @[expose] public section
 
@@ -504,3 +548,6 @@ theorem log_rescale_alt : LogRescale := LogarithmEquivalence.logRescale
 theorem log_rescale_unique : LogRescaleUnique := LogarithmEquivalence.logRescaleUnique
 
 end Formalism.InvariantFactorPaths.G7
+end
+end
+end

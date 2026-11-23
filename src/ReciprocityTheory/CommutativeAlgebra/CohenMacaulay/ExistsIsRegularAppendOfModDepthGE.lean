@@ -1,7 +1,8 @@
 module
 
 public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.ModDepthGE
-public import Lemmata.GeneralBFactSide.Imports
+public import Mathlib.RingTheory.Ideal.AssociatedPrime.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,10 +21,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.RingTheory.Ideal.AssociatedPrime.Finiteness
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+public import Mathlib.RingTheory.Regular.IsSMulRegular
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,10 +43,63 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Lemmata.GeneralBFactSide.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_3 u_4
+
+namespace Bl.general_b_fact_side
+
+theorem goal1 :
+  ∀ {R : Type u_1} [inst : CommRing.{u_1} R] [inst_1 : IsLocalRing.{u_1} R] [IsNoetherianRing.{u_1} R] {N₁ : Type u_3}
+  {N₂ : Type u_4} [inst_3 : AddCommGroup.{u_3} N₁] [inst_4 : Module.{u_1, u_3} R N₁] [Module.Finite.{u_1, u_3} R N₁]
+  [inst_6 : AddCommGroup.{u_4} N₂] [inst_7 : Module.{u_1, u_4} R N₂] [Module.Finite.{u_1, u_4} R N₂],
+  Not (Membership.mem.{u_1, u_1} (associatedPrimes.{u_1, u_3} R N₁) (IsLocalRing.maximalIdeal.{u_1} R)) →
+    Not (Membership.mem.{u_1, u_1} (associatedPrimes.{u_1, u_4} R N₂) (IsLocalRing.maximalIdeal.{u_1} R)) →
+      Exists.{u_1 + 1} fun (z : R) ↦
+        And (Membership.mem.{u_1, u_1} (IsLocalRing.maximalIdeal.{u_1} R) z)
+          (And (IsSMulRegular.{u_1, u_3} N₁ z) (IsSMulRegular.{u_1, u_4} N₂ z)) := by
+  intro R _ _ _ N₁ N₂ _ _ _ _ _ _ h1 h2
+  have hfin : (associatedPrimes R N₁ ∪ associatedPrimes R N₂).Finite :=
+    (associatedPrimes.finite R N₁).union (associatedPrimes.finite R N₂)
+  have hns : ¬ ((IsLocalRing.maximalIdeal R : Set R) ⊆
+      ⋃ p ∈ associatedPrimes R N₁ ∪ associatedPrimes R N₂, (p : Set R)) := by
+    intro hsub
+    rw [Ideal.subset_iUnion_iff_mem_of_isMaximal_of_finite hfin ⊥ ⊥
+      (fun I hI _ _ => hI.elim (fun h => h.1) (fun h => h.1)) bot_ne_top bot_ne_top] at hsub
+    exact hsub.elim h1 h2
+  obtain ⟨z, hzm, hz⟩ := Set.not_subset.mp hns
+  refine ⟨z, hzm, ?_, ?_⟩
+  · have hz1 : z ∉ ⋃ p ∈ associatedPrimes R N₁, (p : Set R) := fun h => by
+      obtain ⟨p, hp, hzp⟩ := Set.mem_iUnion₂.mp h
+      exact hz (Set.mem_biUnion (Or.inl hp) hzp)
+    rw [biUnion_associatedPrimes_eq_compl_regular R N₁] at hz1
+    simpa using hz1
+  · have hz2 : z ∉ ⋃ p ∈ associatedPrimes R N₂, (p : Set R) := fun h => by
+      obtain ⟨p, hp, hzp⟩ := Set.mem_iUnion₂.mp h
+      exact hz (Set.mem_biUnion (Or.inr hp) hzp)
+    rw [biUnion_associatedPrimes_eq_compl_regular R N₂] at hz2
+    simpa using hz2
+
+end Bl.general_b_fact_side
+end
+end
+
+-- Source module: ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.ExistsIsRegularAppendOfModDepthGE
+
+section
 
 @[expose] public section
 
@@ -218,3 +270,5 @@ theorem ModDepthGE.quotSMulTop {x : R} (hx : x ∈ maximalIdeal R) (reg : IsSMul
   exact ⟨rs, hl, hm, ((isRegular_cons_iff M x rs).mp hr).2⟩
 
 end ReciprocityTheory.CA
+end
+end

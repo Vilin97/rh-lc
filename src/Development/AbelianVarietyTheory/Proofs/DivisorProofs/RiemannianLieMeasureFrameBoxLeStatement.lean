@@ -1,7 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PermMMulTranspose
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianLieMeasureFrameBoxLe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetNeZeroOfIsIdent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemRealLieIffTraceFreeSkewSigns
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,7 +38,281 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianLieMeasureFrameBoxGe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewHermitianBasisVectorTraceFreeSkewCondStatement
+import Std.Tactic.BVDecide.Normalize.Prop
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.IsIntegralCc
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VolumeCoordinateBoxLeHadamardStatement
+import Formalism.PadicSubsetSums.StableGradedCounts.ZBrauerNesbittAlg
+import Mathlib.Topology.Separation.CompletelyRegular
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.PolyGrowthStatementPfB
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemRealLieIffTraceFreeSkewSignsStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.CovTop.VolUp GlobalTheory.CovTop.VolUp.FrameBox
+
+
+theorem _root_.GlobalTheory.T.mem_realLie_iff_traceFree_skew_signs : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (κ : Type) (p q : κ → ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (σ : κ ≃ Ψ) (A : ∀ ρ, Matrix (Fin (p ρ) ⊕ Fin (q ρ)) (Fin r) ℂ) (e : ∀ ρ, Fin (p ρ) ⊕ Fin (q ρ) ≃ Fin r), IsIdent p q Ψ G x σ A e → ∀ Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r), Y ∈ (realLie Ψ G).comap (fromFrame x) ↔ SkewCond (sgnR σ e) Y := by
+  first | exact @GlobalTheory.CovTop.VolUp.FrameBox.mem_comap_realLie_iff_skewCond | exact GlobalTheory.CovTop.VolUp.FrameBox.mem_comap_realLie_iff_skewCond | (intros; apply GlobalTheory.CovTop.VolUp.FrameBox.mem_comap_realLie_iff_skewCond <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormSkewHermitianBasisVectorEqSqrtTwo
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.CovTop.VolUp GlobalTheory.CovTop.VolUp.FrameBox
+
+namespace GlobalTheory.CovTop.VolUp.FrameBox
+
+theorem boxEnt_norm_sq_eq {r : ℕ} (d : Fin r → ℝ) (hd : ∀ a, d a = 1 ∨ d a = -1) (z a b : Fin r)
+    (hab : (a, b) ≠ (z, z)) :
+    ∃ P Q : Fin r × Fin r, P ≠ Q ∧ ∀ p : Fin r × Fin r,
+      ‖boxEnt d z a b p.1 p.2‖ ^ 2 = (if p = P then 1 else 0) + (if p = Q then 1 else 0) := by
+  have hdd : ‖((d a * d b : ℝ) : ℂ)‖ = 1 := by
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_mul]
+    rcases hd a with h | h <;> rcases hd b with h' | h' <;> simp [h, h']
+  rcases lt_trichotomy a b with h | h | h
+  · refine ⟨(a, b), (b, a), ?_, ?_⟩
+    · intro e; simp only [Prod.mk.injEq] at e; exact h.ne e.1
+    · rintro ⟨a', b'⟩
+      simp only [boxEnt, if_pos h, Prod.mk.injEq]
+      split_ifs <;> (try simp only [norm_neg, norm_mul, hdd, Complex.norm_I, norm_one, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
+  · subst h
+    have haz : a ≠ z := fun e => hab (by rw [e])
+    refine ⟨(a, a), (z, z), ?_, ?_⟩
+    · intro e; simp only [Prod.mk.injEq] at e; exact haz e.1
+    · rintro ⟨a', b'⟩
+      simp only [boxEnt, lt_irrefl, if_false, Prod.mk.injEq]
+      split_ifs <;> simp_all
+  · refine ⟨(b, a), (a, b), ?_, ?_⟩
+    · intro e; simp only [Prod.mk.injEq] at e; exact h.ne e.1
+    · rintro ⟨a', b'⟩
+      simp only [boxEnt, if_neg (not_lt.2 h.le), if_pos h, Prod.mk.injEq]
+      split_ifs <;> (try simp only [norm_neg, norm_mul, hdd, Complex.norm_I, norm_one, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
+
+theorem norm_boxVec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (d : Ψ → Fin r → ℝ) (z : Fin r), (∀ τ a, d τ a = 1 ∨ d τ a = -1) → ∀ k, ‖boxVec d z k‖ = √2 := by
+  intro E _ _ _ r Ψ d z hd k
+  obtain ⟨τ, ⟨⟨a, b⟩, hab⟩⟩ := k
+  obtain ⟨P, Q, hPQ, hPn⟩ := boxEnt_norm_sq_eq (d τ) (hd τ) z a b hab
+  rw [EuclideanSpace.norm_eq]
+  congr 1
+  rw [Fintype.sum_prod_type, Finset.sum_eq_single τ]
+  · have : ∀ p : Fin r × Fin r, ‖(boxVec d z ⟨τ, ⟨(a, b), hab⟩⟩) (τ, p)‖ ^ 2 =
+        (if p = P then 1 else 0) + (if p = Q then 1 else 0) := by
+      intro p
+      rw [← hPn p]
+      simp [boxVec]
+    simp only [this, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    norm_num
+  · intro τ' _ hτ'
+    apply Finset.sum_eq_zero
+    intro p _
+    simp [boxVec, hτ']
+  · simp
+
+end GlobalTheory.CovTop.VolUp.FrameBox
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormSkewHermitianBasisVectorEqSqrtTwoStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.CovTop.VolUp GlobalTheory.CovTop.VolUp.FrameBox
+
+
+theorem _root_.GlobalTheory.T.norm_skewHermitianBasisVector_eq_sqrt_two : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (d : Ψ → Fin r → ℝ) (z : Fin r), (∀ τ a, d τ a = 1 ∨ d τ a = -1) → ∀ k, ‖boxVec d z k‖ = √2 := by
+  first | exact @GlobalTheory.CovTop.VolUp.FrameBox.norm_boxVec | exact GlobalTheory.CovTop.VolUp.FrameBox.norm_boxVec | (intros; apply GlobalTheory.CovTop.VolUp.FrameBox.norm_boxVec <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewHermitianCoordinateDualBasisVector
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.CovTop.VolUp GlobalTheory.CovTop.VolUp.FrameBox
+open Classical
+
+namespace GlobalTheory.CovTop.VolUp.FrameBox
+
+theorem boxCoord_boxVec (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ))
+    (d : Ψ → Fin r → ℝ) (z : Fin r) (_hd : ∀ τ a, d τ a = 1 ∨ d τ a = -1) :
+    ∀ j k, boxCoord z j (boxVec d z k) = if j = k then 1 else 0 := by
+  rintro ⟨τ', ⟨⟨a', b'⟩, hj⟩⟩ ⟨τ, ⟨⟨a, b⟩, hk⟩⟩
+  have hjk : ((τ', (⟨(a', b'), hj⟩ : {ab : Fin r × Fin r // ab ≠ (z, z)})) =
+      (τ, (⟨(a, b), hk⟩ : {ab : Fin r × Fin r // ab ≠ (z, z)}))) ↔ τ' = τ ∧ a' = a ∧ b' = b := by
+    constructor
+    · intro h
+      simp only [Prod.mk.injEq, Subtype.mk.injEq] at h
+      exact ⟨h.1, h.2.1, h.2.2⟩
+    · rintro ⟨rfl, rfl, rfl⟩; rfl
+  simp only [hjk]
+  simp only [boxCoord, boxVec, LinearMap.coe_comp, Function.comp_apply, Complex.reLm_coe, Complex.imLm_coe]
+  simp only [entryL, LinearMap.restrictScalars_apply, ContinuousLinearMap.coe_coe, EuclideanSpace.proj, PiLp.toLp_apply]
+  by_cases hτ : τ' = τ
+  swap
+  · split_ifs <;> simp_all
+  subst hτ
+  simp only [true_and, if_true]
+  clear hjk
+  split_ifs with h1 h1' h3 h3 h3 h3 h3 h3
+  all_goals simp only [LinearMap.coe_comp, Function.comp_apply, Complex.reLm_coe, Complex.imLm_coe, entryL, LinearMap.restrictScalars_apply, ContinuousLinearMap.coe_coe, EuclideanSpace.proj, PiLp.toLp_apply, PiLp.proj_apply, boxEnt, if_true]
+  all_goals rcases lt_trichotomy a b with h2 | rfl | h2
+  all_goals (try simp only [lt_irrefl, if_false])
+  all_goals (try simp only [h2, not_lt_of_gt h2, if_true, if_false])
+  all_goals clear _hd
+  all_goals (split_ifs with e1 e2 <;> (try obtain ⟨rfl, rfl⟩ := h1') <;> (try obtain ⟨rfl, rfl⟩ := e1) <;> (try obtain ⟨rfl, rfl⟩ := e2) <;> (try simp))
+  all_goals (try (simp only [Fin.lt_iff_val_lt_val, Fin.ext_iff, Prod.ext_iff, ne_eq, Prod.mk.injEq] at *; omega))
+  all_goals exact absurd ⟨rfl, rfl⟩ h3
+
+end GlobalTheory.CovTop.VolUp.FrameBox
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewHermitianCoordinateDualBasisVectorStatement
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.CovTop.VolUp GlobalTheory.CovTop.VolUp.FrameBox
+open Classical
+
+
+theorem _root_.GlobalTheory.T.skewHermitianCoordinate_dual_basisVector : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (d : Ψ → Fin r → ℝ) (z : Fin r), (∀ τ a, d τ a = 1 ∨ d τ a = -1) → ∀ j k, boxCoord z j (boxVec d z k) = if j = k then 1 else 0 := by
+  first | exact @GlobalTheory.CovTop.VolUp.FrameBox.boxCoord_boxVec | exact GlobalTheory.CovTop.VolUp.FrameBox.boxCoord_boxVec | (intros; apply GlobalTheory.CovTop.VolUp.FrameBox.boxCoord_boxVec <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianLieMeasureFrameBoxLe
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix GlobalTheory.AdLat GlobalTheory.UCls GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Up GlobalTheory.CovTop.VolUp
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.MainNotions.StandardLattice Formalism.IndefR.Lev Formalism.IndefR.Datum GlobalTheory.AdelicScalar
+open scoped ENNReal
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.CovTop.VolUp.FrameBox
+open Matrix
+
+theorem riemLie_frameBox_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (κ : Type) (p q : κ → ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (σ : κ ≃ Ψ) (A : ∀ ρ, Matrix (Fin (p ρ) ⊕ Fin (q ρ)) (Fin r) ℂ) (e : ∀ ρ, Fin (p ρ) ⊕ Fin (q ρ) ≃ Fin r), 1 ≤ r → IsIdent p q Ψ G x σ A e → ∀ t : ℝ, 0 < t → riemLie Ψ G x {X | ∀ τ a b, ‖((mat x τ)⁻¹ * Matrix.of (X τ) * mat x τ) a b‖ < t} ≤ ENNReal.ofReal ((3 * t) ^ (Ψ.card * (r ^ 2 - 1))) := by
+  classical
+  intro E _ _ _ r κ p q Ψ G x σ A e hr hI t ht
+  set W := (realLie Ψ G).comap (fromFrame x) with hW
+  set z : Fin r := ⟨0, hr⟩ with hz
+  set d := sgnR σ e with hd_def
+  have hd : ∀ τ a, d τ a = 1 ∨ d τ a = -1 := fun τ a => by
+    simp only [d, sgnR]; split_ifs <;> simp
+  have hinv := det_ne_zero_of_isIdent hI
+  have hvW : ∀ k, boxVec d z k ∈ W := fun k =>
+    (GlobalTheory.T.mem_realLie_iff_traceFree_skew_signs E r κ p q Ψ G x σ A e hI _).2 (GlobalTheory.T.skewHermitianBasisVector_traceFreeSkewCond E r Ψ d z hd k)
+  let K := Ψ × {ab : Fin r × Fin r // ab ≠ (z, z)}
+  let w : K → W := fun k => ⟨boxVec d z k, hvW k⟩
+  have hdual := GlobalTheory.T.skewHermitianCoordinate_dual_basisVector E r Ψ d z hd
+  have hcoord : ∀ (g : K → ℝ) j, boxCoord z j ((∑ k, g k • w k : W) : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) = g j := by
+    intro g j
+
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, w, hdual, smul_eq_mul, mul_ite, mul_one, mul_zero]
+    rw [Fintype.sum_eq_single j (fun k hk => by rw [if_neg (Ne.symm hk)])]
+    rw [if_pos rfl]
+  have hli : LinearIndependent ℝ w := by
+    rw [Fintype.linearIndependent_iff]
+    intro g hg j
+    have := hcoord g j
+    rw [hg] at this
+    simpa using this.symm
+  have hcardK : Fintype.card K = Ψ.card * (r ^ 2 - 1) := by
+    simp [K, Fintype.card_prod, Fintype.card_coe, sq]
+  have hfin : Fintype.card K = Module.finrank ℝ W := by
+    refine le_antisymm hli.fintype_card_le_finrank ?_
+    rw [hcardK]
+    rcases Ψ.eq_empty_or_nonempty with h0 | ⟨τ0, hτ0⟩
+    · have hs : Subsingleton W := ⟨fun a b => Subtype.ext (PiLp.ext fun m => by
+        have := m.1.2; simp [h0] at this)⟩
+      rw [Module.finrank_zero_of_subsingleton]; exact Nat.zero_le _
+    · have hG : G.det ≠ 0 := by
+        intro h
+        apply (hinv ⟨τ0, hτ0⟩).2
+        rw [← RingHom.mapMatrix_apply, ← RingHom.map_det, h, map_zero]
+      exact finrank_comap_realLie_le Ψ G x hr hG fun τ => (hinv τ).1
+  have hspan : Submodule.span ℝ (Set.range w) = ⊤ := hli.span_eq_top_of_card_eq_finrank' hfin
+  have hrep : ∀ Y : W, Y = ∑ k, boxCoord z k (Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) • w k := by
+    intro Y
+    have hYs : Y ∈ Submodule.span ℝ (Set.range w) := hspan ▸ Submodule.mem_top
+    obtain ⟨c, hc⟩ := Submodule.mem_span_range_iff_exists_fun ℝ |>.1 hYs
+    have h2 : ∀ j, boxCoord z j (Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) = c j := by
+      intro j
+      rw [← hc]
+      exact hcoord _ j
+    simp_rw [h2]; exact hc.symm
+  set S := {X : Ψ → Fin r → Fin r → ℂ | ∀ τ a b, ‖((mat x τ)⁻¹ * Matrix.of (X τ) * mat x τ) a b‖ < t} with hS_def
+  have hSo : IsOpen S := by
+    simp only [hS_def, Set.setOf_forall]
+    refine isOpen_iInter_of_finite fun τ => isOpen_iInter_of_finite fun a => isOpen_iInter_of_finite fun b => isOpen_lt ?_ continuous_const
+    have : Continuous fun X : Ψ → Fin r → Fin r → ℂ => Matrix.of (X τ) := continuous_apply τ
+    exact (((continuous_const.matrix_mul this).matrix_mul continuous_const).matrix_elem a b).norm
+  have hf : Measurable (fun Y : W => fromFrame x Y.1) :=
+    ((fromFrame x).comp W.subtype).continuous_of_finiteDimensional.measurable
+  unfold riemLie
+  rw [Measure.map_apply hf hSo.measurableSet, OrthonormalBasis.addHaar_eq_volume]
+  have key1 : ∀ τ (M : Matrix (Fin r) (Fin r) ℂ),
+      (mat x τ)⁻¹ * (mat x τ * M * (mat x τ)⁻¹) * mat x τ = M := fun τ M => by
+    rw [Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_right _ _ (hinv τ).1.isUnit,
+      Matrix.nonsing_inv_mul_cancel_left _ _ (hinv τ).1.isUnit]
+  have hsub : (fun Y : W => fromFrame x Y.1) ⁻¹' S ⊆
+      {y : W | ∃ c : K → ℝ, (∀ k, |c k| ≤ t) ∧ y = ∑ k, c k • w k} := by
+    intro Y hY
+    have hY' : ∀ τ a b, ‖(Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) (τ, a, b)‖ < t := by
+      intro τ a b
+      have := hY τ a b
+      have e1 : Matrix.of (fromFrame x Y.1 τ) =
+          mat x τ * Matrix.of (fun a b => (Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) (τ, a, b)) * (mat x τ)⁻¹ := rfl
+      rwa [e1, key1] at this
+    refine ⟨fun k => boxCoord z k (Y : EuclideanSpace ℂ (Ψ × Fin r × Fin r)), fun k => ?_, hrep Y⟩
+    obtain ⟨τ, ⟨⟨a, b⟩, hab⟩⟩ := k
+    simp only [boxCoord]
+    split_ifs
+    · exact (Complex.abs_re_le_norm _).trans (hY' _ _ _).le
+    · exact (Complex.abs_im_le_norm _).trans (hY' _ _ _).le
+    · exact (Complex.abs_im_le_norm _).trans (hY' _ _ _).le
+  refine (measure_mono hsub).trans ((GlobalTheory.T.volume_coordinateBox_le_hadamard W K w t ht.le hfin).trans (ENNReal.ofReal_le_ofReal ?_))
+  have hn : ∀ k, ‖w k‖ = √2 := fun k => GlobalTheory.T.norm_skewHermitianBasisVector_eq_sqrt_two E r Ψ d z hd k
+  simp only [hn, Finset.prod_const, Finset.card_univ]
+  rw [hcardK, ← mul_pow]
+  have h2 : 2 * t * √2 ≤ 3 * t := by
+    have hs : √2 ≤ 3 / 2 := by
+      rw [Real.sqrt_le_left (by norm_num)]; norm_num
+    nlinarith
+  exact pow_le_pow_left₀ (by positivity) h2 _
+
+end GlobalTheory.CovTop.VolUp.FrameBox
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianLieMeasureFrameBoxLeStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +324,5 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.riemannianLieMeasure_frameBox_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (κ : Type) (p q : κ → ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (σ : κ ≃ Ψ) (A : ∀ ρ, Matrix (Fin (p ρ) ⊕ Fin (q ρ)) (Fin r) ℂ) (e : ∀ ρ, Fin (p ρ) ⊕ Fin (q ρ) ≃ Fin r), 1 ≤ r → IsIdent p q Ψ G x σ A e → ∀ t : ℝ, 0 < t → riemLie Ψ G x {X | ∀ τ a b, ‖((mat x τ)⁻¹ * Matrix.of (X τ) * mat x τ) a b‖ < t} ≤ ENNReal.ofReal ((3 * t) ^ (Ψ.card * (r ^ 2 - 1))) := by
   first | exact @GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le | exact GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le | (intros; apply GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le <;> assumption)
+end
+end

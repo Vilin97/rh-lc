@@ -3,19 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.Entire
 public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnramifiedSplitting.FixTr
 public import Development.AutomorphicArithmetic.WhittakerHecke.BaseChangeGL2CongruenceOfLevel
-public import Development.AutomorphicArithmetic.WhittakerHecke.CongruenceElementCommuteInfEmbedding
-public import Development.AutomorphicArithmetic.WhittakerHecke.EventuallyUnramifiedSatakeEigenOfMemCuspRep
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsNatMulIntegralAtAllFinitePlaces
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsPrincipalCongruenceLevelInvariant
-public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerCoeffNeZeroOfAdmissible
-public import Development.AutomorphicArithmetic.WhittakerHecke.FixedAndHeckeEigenOfFinsetLinearCombination
-public import Development.AutomorphicArithmetic.WhittakerHecke.HasLevelOfUnitIdeleCongruentOne
-public import Development.AutomorphicArithmetic.WhittakerHecke.SumRangeRatAdeleCharIotaMulOneSubEqIte
-public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentConjCongruenceOfPowFive
-public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentNatDivMemMaximalCompactOfNotBadPrime
-public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentThetaMemCongruenceOfIntegral
-public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerSumMulEqSumMulWhittaker
-public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerUnipotentTranslateOfInfiniteComponentZe
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.XgDefs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,8 +18,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,9 +37,164 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ConjInv
+public import Development.AutomorphicArithmetic.WhittakerHecke.EventuallyUnramifiedSatakeEigenOfMemCuspRep
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnramifiedSplitting.SplitAt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.GaussianProducts.ExistsRowSec
+import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.XgDefs
+public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsPrincipalCongruenceLevelInvariant
+public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsWhittakerCoeffNeZeroOfAdmissible
+public import Development.AutomorphicArithmetic.WhittakerHecke.FixedAndHeckeEigenOfFinsetLinearCombination
+public import Development.AutomorphicArithmetic.WhittakerHecke.HasLevelOfUnitIdeleCongruentOne
+public import Development.AutomorphicArithmetic.WhittakerHecke.SumRangeRatAdeleCharIotaMulOneSubEqIte
+public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentConjCongruenceOfPowFive
+public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentNatDivMemMaximalCompactOfNotBadPrime
+public import Development.AutomorphicArithmetic.WhittakerHecke.UnipotentThetaMemCongruenceOfIntegral
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.IsotypicQuotients.NormWfLe
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnitaryActions.EqAmOfBarEq
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerUnipotentTranslateOfInfiniteComponentZe
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.XgDefs
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.CongruenceElementCommuteInfEmbedding
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.Xg
+open scoped Classical
+open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
+open UpperTheory.V.Af.Smo (EigAt)
+open scoped ComplexOrder
+
+theorem UpperTheory.congruence_element_commute_inf_embedding :
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (M : ℕ) (κ : GL (Fin 2) (A E)), CongE M κ → ∀ X : GL (Fin 2) (Cinf E), κ * infGL E 2 X = infGL E 2 X * κ := by
+  intro E _ _ _ M κ h X
+  have h0 : ∀ c : A E, c.1 = 0 → pInf E c = 0 := fun c hc => by
+    change (infEq E).symm c.1 = 0
+    rw [hc]
+    exact map_zero _
+  have hk : GeneralLinearGroup.map (pInf E) κ = 1 := by
+    refine Units.ext (Matrix.ext fun i j => ?_)
+    obtain ⟨⟨c, hc, e⟩, _⟩ := h i j
+    have h1 := congrArg (pInf E) e
+    rw [map_sub, map_mul, h0 c hc.1, mul_zero] at h1
+    have h2 : pInf E (κ.val i j) = pInf E ((1 : Matrix (Fin 2) (Fin 2) (A E)) i j) := sub_eq_zero.1 h1
+    change pInf E (κ.val i j) = (1 : Matrix (Fin 2) (Fin 2) (Cinf E)) i j
+    rw [h2]
+    by_cases hij : i = j
+    · subst hij
+      simp
+    · simp [Matrix.one_apply_ne hij]
+  have e := infGL_mul_finGL κ
+  rw [hk, map_one, one_mul] at e
+  rw [← e]
+  exact (infGL_comm X _).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.ExistsNatMulIntegralAtAllFinitePlaces
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.Xg
+open scoped Classical
+open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
+open UpperTheory.V.Af.Smo (EigAt)
+open scoped ComplexOrder
+
+theorem UpperTheory.exists_nat_mul_integral_at_all_finite_places :
+    ∀ (E : Type) [Field E] [NumberField E] (θ : E), ∃ d : ℕ, 0 < d ∧ ∀ e : ℕ, d ∣ e → ∀ w : H.P E, Valued.v (H.cp w (rt ((e : E) * θ))) ≤ 1 := by
+  intro E _ _ θ
+  obtain ⟨y, hy0, hy⟩ := ((IsFractionRing.isAlgebraic_iff ℤ ℚ E).2 (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) θ)).exists_integral_multiple
+  have hy' : IsIntegral ℤ ((y : E) * θ) := by
+    simpa [zsmul_eq_mul] using hy
+  have h1 : IsIntegral ℤ ((y.natAbs : E) * θ) := by
+    rcases Int.natAbs_eq y with h | h
+    · have hc : ((y.natAbs : E)) = (y : E) := by
+        conv_rhs => rw [h]
+        simp
+      rw [hc]
+      exact hy'
+    · have hc : ((y.natAbs : E)) = -(y : E) := by
+        conv_rhs => rw [h]
+        simp
+      rw [hc, neg_mul]
+      exact hy'.neg
+  refine ⟨y.natAbs, Int.natAbs_pos.2 hy0, ?_⟩
+  rintro e ⟨k, rfl⟩ w
+  have hint : IsIntegral ℤ (((y.natAbs * k : ℕ) : E) * θ) := by
+    have he : (((y.natAbs * k : ℕ) : E) * θ) = (k : E) * ((y.natAbs : E) * θ) := by
+      push_cast
+      ring
+    rw [he]
+    have hk : IsIntegral ℤ (k : E) := by
+      simpa using isIntegral_algebraMap (R := ℤ) (A := E) (x := (k : ℤ))
+    exact hk.mul h1
+  have hm := coe_algebraMap_mem_adicCompletionIntegers w (⟨_, hint⟩ : 𝓞 E)
+  exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).mp hm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.WhittakerSumMulEqSumMulWhittaker
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.Xg
+open scoped Classical
+open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
+open UpperTheory.V.Af.Smo (EigAt)
+open scoped ComplexOrder
+
+theorem UpperTheory.whittaker_sum_mul_eq_sum_mul_whittaker :
+    ∀ (E : Type) [Field E] [NumberField E] (D : Dat ℚ E) (ι : Type) (s : Finset ι) (c : ι → ℂ) (φ : ι → GL (Fin 2) (A E) → ℂ), (∀ i, Continuous (φ i)) → (∀ i, ∃ B : ℝ, ∀ g, ‖φ i g‖ ≤ B) → ∀ h : GL (Fin 2) (A E), Wo D (fun g => ∑ i ∈ s, c i * φ i g) h = ∑ i ∈ s, c i * Wo D (φ i) h := by
+  intro E _ _ D ι s c φ hc hb h
+  haveI : IsFiniteMeasure ((adeleMeasurePi (ι := Fin 2) ℚ).restrict (FS2 ℚ)) := ⟨by
+    rw [Measure.restrict_apply_univ]
+    have h1 : adeleMeasurePi (ι := Fin 2) ℚ (FS2 ℚ) = 1 :=
+      GroundTheory.Automorphic.FourierWhittaker.vecMeasure_vecDomain
+    rw [h1]
+    exact ENNReal.one_lt_top⟩
+  have hψ : Continuous (ψ (F := ℚ)) := continuous_subtype_val.comp continuous_adelicChar
+  have hn : Continuous (nE D : (Fin 2 → A ℚ) → GL (Fin 2) (A E)) :=
+    UpperTheory.ConvolutionTheory.R2.Pp.cont_n.comp (D.continuous_mkE' (continuous_apply 0) (continuous_apply 1))
+  have hi : ∀ i, Integrable (fun u : Fin 2 → A ℚ => φ i (nE D u * h) * ψ (u 1))
+      ((adeleMeasurePi (ι := Fin 2) ℚ).restrict (FS2 ℚ)) := by
+    intro i
+    obtain ⟨B, hB⟩ := hb i
+    refine Integrable.of_bound (C := B)
+      (((hc i).comp (hn.mul continuous_const)).mul
+        (hψ.comp (continuous_apply 1))).aestronglyMeasurable ?_
+    refine ae_of_all _ fun u => ?_
+    rw [norm_mul, show ‖ψ (u 1)‖ = 1 from Circle.norm_coe _, mul_one]
+    exact hB _
+  have e : ∀ u : Fin 2 → A ℚ, (∑ i ∈ s, c i * φ i (nE D u * h)) * ψ (u 1) =
+      ∑ i ∈ s, c i * (φ i (nE D u * h) * ψ (u 1)) := fun u => by
+    rw [Finset.sum_mul]
+    exact Finset.sum_congr rfl fun i _ => mul_assoc _ _ _
+  simp only [Wo, e]
+  rw [integral_finsetSum _ fun i _ => (hi i).const_mul (c i)]
+  exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.InfinitePlaceGluing.DvMulIff
+
+section
 
 @[expose] public section
 
@@ -301,3 +442,5 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.exGd_of :
     · exact mul_ne_zero (div_self hnC ▸ one_ne_zero) hz
     · unfold Dv
       simp
+end
+end

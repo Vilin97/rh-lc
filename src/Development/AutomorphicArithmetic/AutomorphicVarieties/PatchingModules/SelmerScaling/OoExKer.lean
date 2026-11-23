@@ -4,12 +4,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTool
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 public import Mathlib.RingTheory.PowerSeries.Basic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplCo
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplDvr
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplEx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplLift
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoEvLow
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoMvps
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,23 +16,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.PowerSeries.Ideal
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -60,8 +45,195 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Mathlib.RingTheory.Filtration
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplEx
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplLift
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoEvLow
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoMvps
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PowerSeries.Ideal
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplCo
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools
+
+theorem UpperTheory.V.AlgebraTools.IsCplAt.isCO :
+    ∀ (R₀ R : Type) [CommRing R₀] [CommRing R] [Algebra R₀ R] (p₀ : Ideal R₀) (p : Ideal R)
+      (O B : Type) [CommRing O] [IsLocalRing O] [CommRing B] [IsLocalRing B] [Algebra R₀ O] [Algebra R B]
+      [Algebra O B] [Algebra R₀ B] [IsScalarTower R₀ R B] [IsScalarTower R₀ O B],
+      IsCplAt R₀ p₀ O → IsCplAt R p B → p.comap (algebraMap R₀ R) = p₀ →
+      (∀ x : R, ∃ a : R₀, x - algebraMap R₀ R a ∈ p) → UpperTheory.V.Alg.IsCO O B := by
+  intro R₀ R _ _ _ p₀ p O B _ _ _ _ _ _ _ _ _ _ hO hB hp hsurj
+  have hRB : ∀ r : R, algebraMap R B r ∈ maximalIdeal B ↔ r ∈ p := by
+    intro r
+    rw [← hB.comap_eq, Ideal.mem_comap]
+  have h0B : ∀ c : R₀, algebraMap R₀ B c ∈ maximalIdeal B ↔ c ∈ p₀ := by
+    intro c
+    rw [IsScalarTower.algebraMap_apply R₀ R B, hRB, ← hp, Ideal.mem_comap]
+  have hmO : Ideal.map (algebraMap O B) (maximalIdeal O) ≤ maximalIdeal B := by
+    have hm := IsCplAt.map_pow_eq R₀ p₀ O hO 1
+    rw [pow_one, pow_one] at hm
+    rw [← hm, Ideal.map_map, ← IsScalarTower.algebraMap_eq R₀ O B, Ideal.map_le_iff_le_comap]
+    intro c hc
+    exact (h0B c).2 hc
+  have hloc : IsLocalHom (algebraMap O B) := by
+    refine ⟨fun o ho => ?_⟩
+    by_contra hn
+    exact (IsLocalRing.mem_maximalIdeal _).1
+      (hmO (Ideal.mem_map_of_mem _ ((IsLocalRing.mem_maximalIdeal _).2 hn))) ho
+  have e : ∀ c : R₀, algebraMap O B (algebraMap R₀ O c) = algebraMap R B (algebraMap R₀ R c) := by
+    intro c
+    rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
+  have hres : ∀ x : B, ∃ o : O, x - algebraMap O B o ∈ maximalIdeal B := by
+    intro x
+    obtain ⟨a, s, hs, hx⟩ := hB.dense 1 x
+    rw [pow_one] at hx
+    obtain ⟨s₀, hs₀⟩ := hsurj s
+    obtain ⟨a₀, ha₀⟩ := hsurj a
+    have h1 : algebraMap R B s - algebraMap O B (algebraMap R₀ O s₀) ∈ maximalIdeal B := by
+      rw [e, ← map_sub]
+      exact (hRB _).2 hs₀
+    have h2 : algebraMap R B a - algebraMap O B (algebraMap R₀ O a₀) ∈ maximalIdeal B := by
+      rw [e, ← map_sub]
+      exact (hRB _).2 ha₀
+    have hsu : IsUnit (algebraMap O B (algebraMap R₀ O s₀)) := by
+      by_contra hn
+      have hm : algebraMap O B (algebraMap R₀ O s₀) ∈ maximalIdeal B :=
+        (IsLocalRing.mem_maximalIdeal _).2 hn
+      have hsum := Ideal.add_mem _ h1 hm
+      rw [sub_add_cancel] at hsum
+      exact hs ((hRB s).1 hsum)
+    obtain ⟨u, hu⟩ := hloc.map_nonunit _ hsu
+    refine ⟨↑u⁻¹ * algebraMap R₀ O a₀, ?_⟩
+    have key : algebraMap O B (algebraMap R₀ O s₀) * x - algebraMap O B (algebraMap R₀ O a₀)
+        ∈ maximalIdeal B := by
+      have hid : algebraMap O B (algebraMap R₀ O s₀) * x - algebraMap O B (algebraMap R₀ O a₀) =
+          (algebraMap R B s * x - algebraMap R B a)
+            - (algebraMap R B s - algebraMap O B (algebraMap R₀ O s₀)) * x
+            + (algebraMap R B a - algebraMap O B (algebraMap R₀ O a₀)) := by ring
+      rw [hid]
+      exact Ideal.add_mem _ (Ideal.sub_mem _ hx (Ideal.mul_mem_right _ _ h1)) h2
+    have hinv : algebraMap O B ↑u⁻¹ * algebraMap O B ↑u = 1 := by
+      rw [← map_mul, Units.inv_mul, map_one]
+    have hid2 : x - algebraMap O B (↑u⁻¹ * algebraMap R₀ O a₀) = algebraMap O B ↑u⁻¹ *
+        (algebraMap O B (algebraMap R₀ O s₀) * x - algebraMap O B (algebraMap R₀ O a₀)) := by
+      rw [← hu, map_mul]
+      linear_combination (-x) * hinv
+    rw [hid2]
+    exact Ideal.mul_mem_left _ _ key
+  haveI := hB.noeth
+  exact UpperTheory.V.Alg.IsCO.mk hB.complete hloc hres
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplDvr
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools
+
+theorem UpperTheory.V.AlgebraTools.IsCplAt.dvr :
+    ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] (π : R), Prime π →
+      ∀ (B : Type) [CommRing B] [IsLocalRing B] [Algebra R B], IsCplAt R (Ideal.span {π}) B →
+      ∃ _ : IsDomain B, IsDiscreteValuationRing B ∧ Irreducible (algebraMap R B π) := by
+  intro R _ _ _ π hπ B _ _ _ h
+  haveI : IsNoetherianRing B := h.noeth
+  set f := algebraMap R B with hf
+  have hm : maximalIdeal B = Ideal.span {f π} := by
+    have h1 := UpperTheory.V.AlgebraTools.IsCplAt.map_pow_eq R _ B h 1
+    simpa [Ideal.map_span] using h1.symm
+  have hpow : ∀ n : ℕ, maximalIdeal B ^ n = Ideal.span {f π ^ n} := by
+    intro n
+    rw [hm, Ideal.span_singleton_pow]
+  have hnil : ∀ n : ℕ, f π ^ n ≠ 0 := by
+    intro n hn
+    have hmem : f (π ^ n) ∈ maximalIdeal B ^ (n + 1) := by
+      rw [map_pow, hn]
+      exact zero_mem _
+    obtain ⟨s, hs, hs'⟩ := h.strict (n + 1) (π ^ n) hmem
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hs'
+    obtain ⟨t, ht⟩ := hs'
+    apply hs
+    rw [Ideal.mem_span_singleton]
+    refine ⟨t, ?_⟩
+    have hπn : π ^ n ≠ 0 := pow_ne_zero _ hπ.ne_zero
+    apply mul_right_cancel₀ hπn
+    rw [ht]
+    ring
+  have hK := Ideal.iInf_pow_eq_bot_of_isLocalRing (maximalIdeal B) (Ideal.IsMaximal.ne_top inferInstance)
+  have hfac : ∀ x : B, x ≠ 0 → ∃ (k : ℕ) (u : B), IsUnit u ∧ x = f π ^ k * u := by
+    intro x hx
+    classical
+    have hex : ∃ n : ℕ, x ∉ maximalIdeal B ^ n := by
+      by_contra hc
+      push_neg at hc
+      apply hx
+      have hin : x ∈ ⨅ i : ℕ, maximalIdeal B ^ i := Submodule.mem_iInf _ |>.mpr hc
+      rw [hK] at hin
+      exact (Submodule.mem_bot _).mp hin
+    have hn : x ∉ maximalIdeal B ^ Nat.find hex := Nat.find_spec hex
+    have n0 : Nat.find hex ≠ 0 := by
+      intro h0
+      apply hn
+      rw [h0, pow_zero, Ideal.one_eq_top]
+      exact Submodule.mem_top
+    obtain ⟨k, hk⟩ : ∃ k : ℕ, Nat.find hex = k + 1 := ⟨Nat.find hex - 1, by omega⟩
+    have hxk : x ∈ maximalIdeal B ^ k := by
+      by_contra hc
+      have := Nat.find_min' hex hc
+      omega
+    rw [hpow, Ideal.mem_span_singleton'] at hxk
+    obtain ⟨u, rfl⟩ := hxk
+    refine ⟨k, u, ?_, by ring⟩
+    by_contra hu
+    apply hn
+    have hum : u ∈ maximalIdeal B := (IsLocalRing.mem_maximalIdeal u).mpr hu
+    rw [hm, Ideal.mem_span_singleton'] at hum
+    obtain ⟨c, rfl⟩ := hum
+    rw [hk, hpow, Ideal.mem_span_singleton']
+    exact ⟨c, by ring⟩
+  haveI : IsDomain B := by
+    have hnzd : NoZeroDivisors B := ⟨fun {a b} hab => by
+      by_contra hc
+      push_neg at hc
+      obtain ⟨i, u, hu, rfl⟩ := hfac a hc.1
+      obtain ⟨j, v, hv, rfl⟩ := hfac b hc.2
+      apply hnil (i + j)
+      have hz : f π ^ (i + j) * (u * v) = 0 := by
+        rw [← hab]
+        ring
+      exact (hu.mul hv).mul_left_eq_zero.mp hz⟩
+    exact NoZeroDivisors.to_isDomain B
+  have hirr : Irreducible (f π) :=
+    IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal (f π) (by simpa using hnil 1) hm
+  refine ⟨inferInstance, ?_, hirr⟩
+  apply IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
+  refine ⟨f π, hirr, fun {x} hx => ?_⟩
+  obtain ⟨n, u, hu, rfl⟩ := hfac x hx
+  exact ⟨n, hu.unit, by simp⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.OoExKer
+
+section
 
 @[expose] public section
 
@@ -254,3 +426,6 @@ theorem UpperTheory.V.Pa.ooEx :
     rw [map_mul, map_units_inv, RingHom.comp_apply, RingHom.comp_apply]
     show rF (ψ (algebraMap _ (CplAt (PowerSeries O) p) cx)) * (rF (ψ ↑u))⁻¹ = _
     rw [hu, hkey, hkey, hcx, hcy, div_eq_mul_inv]
+end
+end
+end

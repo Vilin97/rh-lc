@@ -1,16 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvalBasePtTopMinors
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BigMatConjTransposeMul
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColSubEqDetCharSmulOfMemInv
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDetCharInvariantsLeSpanProdMaximalMinors
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.LocalToGlobal.Columns.PolyFn
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdMinorsMemInv
+public import ReciprocityTheory.DualLattices.FischerAdjointStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnInclusionRenaming
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,16 +21,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,9 +43,23 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.DualLattices.ConstantCoeffRowSubst
+public import ReciprocityTheory.DualLattices.FischerSelfNeZero
+public import Formalism.LocalToGlobal.Columns.PolyFn
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDetCharInvariantsLeSpanProdMaximalMinors
+import Formalism.LocalRingCardinality.DataHost
+import Formalism.LocalToGlobal.Columns.PolyFn
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.UnitCharTriangle
 import Development.AbelianVarietyTheory.Definitions.Divisors.CmHostImaginaryGeneratorNeZero
@@ -69,6 +74,171 @@ import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.LocalToGlobal.IndefiniteReal.LocalNewformFunction
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BigMatConjTransposeMul
+
+section
+
+@[expose] public section
+
+open Classical
+
+noncomputable section
+
+open MvPolynomial Matrix
+
+namespace GlobalTheory.MinorFrame.FockRowSub
+
+variable {ι : Type} [Fintype ι] {a d : ℕ}
+
+def rowEquiv (ι : Type) [Fintype ι] (d : ℕ) : Fin d × ι ≃ Fin (Fintype.card (Fin d × ι)) :=
+  Fintype.equivFin _
+
+def varFlat (ι : Type) [Fintype ι] (d a : ℕ) : Var ι d a → Fin (Fintype.card (Fin d × ι)) × Fin a :=
+  fun y => (rowEquiv ι d (y.2.1, y.1), y.2.2)
+
+theorem varFlat_injective : Function.Injective (varFlat ι d a) := by
+  intro y z h
+  simp only [varFlat, Prod.mk.injEq] at h
+  have h1 := (rowEquiv ι d).injective h.1
+  simp only [Prod.mk.injEq] at h1
+  exact Prod.ext h1.2 (Prod.ext h1.1 h.2)
+
+def bigMat (κ : ι → Matrix (Fin d) (Fin d) ℂ) :
+    Matrix (Fin (Fintype.card (Fin d × ι))) (Fin (Fintype.card (Fin d × ι))) ℂ :=
+  (blockDiagonal κ).submatrix (rowEquiv ι d).symm (rowEquiv ι d).symm
+
+theorem rename_rowSub (κ : ι → Matrix (Fin d) (Fin d) ℂ) (P : Pol ι d a) :
+    rename (varFlat ι d a) (rowSub κ P) = ReciprocityTheory.PGsh.rowSubst (bigMat κ) (rename (varFlat ι d a) P) := by
+  have key : (rename (varFlat ι d a)).comp (rowSub κ) =
+      (ReciprocityTheory.PGsh.rowSubst (bigMat κ)).comp (rename (varFlat ι d a)) := by
+    refine MvPolynomial.algHom_ext fun y => ?_
+    rw [AlgHom.comp_apply, AlgHom.comp_apply, rowSub, aeval_X, rename_X, ReciprocityTheory.PGsh.rowSubst_X,
+      ← (rowEquiv ι d).sum_comp, Fintype.sum_prod_type, Finset.sum_comm, Finset.sum_eq_single y.1]
+
+    · simp only [map_sum, map_mul, rename_C, rename_X, bigMat, submatrix_apply, varFlat, Equiv.symm_apply_apply]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [blockDiagonal_apply_eq]
+    · intro τ _ hτ
+      refine Finset.sum_eq_zero fun i _ => ?_
+      simp [bigMat, varFlat, blockDiagonal_apply_ne _ _ _ hτ]
+    · simp
+  exact congrArg (fun f => f P) key
+
+theorem bigMat_conjTranspose_mul (κ : ι → Matrix.unitaryGroup (Fin d) ℂ) :
+    (bigMat fun τ => (κ τ : Matrix (Fin d) (Fin d) ℂ))ᴴ * bigMat (fun τ => (κ τ : Matrix (Fin d) (Fin d) ℂ)) = 1 := by
+  rw [bigMat, conjTranspose_submatrix, submatrix_mul_equiv, blockDiagonal_conjTranspose, ← blockDiagonal_mul]
+  have h : ∀ τ, (κ τ : Matrix (Fin d) (Fin d) ℂ)ᴴ * (κ τ : Matrix (Fin d) (Fin d) ℂ) = 1 := fun τ => by
+    have := (κ τ).2
+    rw [Matrix.mem_unitaryGroup_iff'] at this
+    simpa [Matrix.star_eq_conjTranspose] using this
+  simp only [h]
+  rw [show (fun _ => (1 : Matrix (Fin d) (Fin d) ℂ)) = (1 : ι → Matrix (Fin d) (Fin d) ℂ) from rfl,
+    blockDiagonal_one, submatrix_one_equiv]
+
+theorem fockS_eq_fischer {ν : ℕ} {κ : Type} (f g : MvPolynomial (Fin ν × κ) ℂ) :
+    Formalism.L2.DIV.fockS f g = ReciprocityTheory.PGsh.fischer g f := by
+  rw [Formalism.L2.DIV.fockS_eq_sum f g (g.support ∪ f.support) Finset.subset_union_right, ReciprocityTheory.PGsh.fischer]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  simp only [Formalism.L2.DIV.mfact, Finsupp.prod, RCLike.star_def]
+  ring
+
+end GlobalTheory.MinorFrame.FockRowSub
+
+namespace GlobalTheory.MinorFrame
+
+open FockRowSub
+
+theorem fockS_rowSub_unitary {ι : Type} [Fintype ι] (a d : ℕ) (κ : ι → Matrix.unitaryGroup (Fin d) ℂ)
+    (P Q : Pol ι d a) :
+    Formalism.L2.DIV.fockS (rowSub (fun τ => (κ τ : Matrix (Fin d) (Fin d) ℂ)) P)
+      (rowSub (fun τ => (κ τ : Matrix (Fin d) (Fin d) ℂ)) Q) = Formalism.L2.DIV.fockS P Q := by
+  rw [← GlobalTheory.Proof.ColumnInclusionRenaming.fockS_rename varFlat_injective, rename_rowSub, rename_rowSub, fockS_eq_fischer,
+    ReciprocityTheory.PGsh.fischer_rowSubst, ReciprocityTheory.PGsh.rowSubst_mul, bigMat_conjTranspose_mul, ReciprocityTheory.PGsh.rowSubst_one,
+    ← fockS_eq_fischer, GlobalTheory.Proof.ColumnInclusionRenaming.fockS_rename varFlat_injective]
+
+end GlobalTheory.MinorFrame
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColSubEqDetCharSmulOfMemInv
+
+section
+
+@[expose] public section
+
+open Classical
+
+noncomputable section
+
+namespace GlobalTheory.MinorFrame
+
+open MvPolynomial
+
+variable {ι : Type} [Fintype ι]
+
+def genColSub (d a : ℕ) : Pol ι d a →ₐ[ℂ] MvPolynomial (Var ι d a) (MvPolynomial (ι × Fin a × Fin a) ℂ) :=
+  aeval fun y => ∑ j' : Fin a, C (X (y.1, j', y.2.2)) * X (y.1, y.2.1, j')
+
+omit [Fintype ι] in
+theorem map_eval_genColSub {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ) (P : Pol ι d a) :
+    map (eval fun x : ι × Fin a × Fin a => g x.1 x.2.1 x.2.2) (genColSub d a P) = colSub g P := by
+  induction P using MvPolynomial.induction_on with
+  | C c => simp [genColSub, colSub, algebraMap_eq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | mul_X p y hp =>
+    simp only [map_mul, hp]
+
+    simp [genColSub, colSub, map_sum]
+
+def genDetChar (a : ℕ) (n : ι → ℕ) : MvPolynomial (ι × Fin a × Fin a) ℂ :=
+  ∏ τ, (Matrix.of fun i j => (X (τ, i, j) : MvPolynomial (ι × Fin a × Fin a) ℂ)).det ^ n τ
+
+theorem eval_genDetChar {a : ℕ} (n : ι → ℕ) (g : ι → Matrix (Fin a) (Fin a) ℂ) :
+    eval (fun x : ι × Fin a × Fin a => g x.1 x.2.1 x.2.2) (genDetChar a n) = detChar n g := by
+  rw [genDetChar, map_prod, detChar]
+  refine Finset.prod_congr rfl fun τ _ => ?_
+  rw [map_pow, RingHom.map_det]
+  congr 2
+  ext i j
+  simp
+
+theorem colSub_eq_detChar_smul_of_mem_inv {a d : ℕ} (n : ι → ℕ) (P : Pol ι d a) (hP : P ∈ inv a d n)
+    (g : ι → Matrix (Fin a) (Fin a) ℂ) : colSub g P = detChar n g • P := by
+  set D : MvPolynomial (Var ι d a) (MvPolynomial (ι × Fin a × Fin a) ℂ) :=
+    genColSub d a P - C (genDetChar a n) * map C P with hDdef
+  have hD : ∀ g : ι → Matrix (Fin a) (Fin a) ℂ,
+      map (eval fun x : ι × Fin a × Fin a => g x.1 x.2.1 x.2.2) D = colSub g P - detChar n g • P := by
+    intro g
+    rw [hDdef, map_sub, map_mul, map_C, map_eval_genColSub, eval_genDetChar, map_map, smul_eq_C_mul]
+    congr 2
+    have : (eval fun x : ι × Fin a × Fin a => g x.1 x.2.1 x.2.2).comp (C : ℂ →+* MvPolynomial (ι × Fin a × Fin a) ℂ) =
+        RingHom.id ℂ := by ext; simp
+    rw [this, map_id]
+  have hD0 : D = 0 := by
+    refine MvPolynomial.ext _ _ fun m => ?_
+    simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
+    refine Formalism.L2.Col.eq_zero_of_forall_unitary (ι := ι) (n := a) (fun _ => 1) (fun _ => by simp) _ fun u hu => ?_
+    simp only [Matrix.one_mul]
+    rw [← coeff_map, hD u]
+    have hu' : ∀ τ, u τ ∈ Matrix.unitaryGroup (Fin a) ℂ := fun τ =>
+      Matrix.mem_unitaryGroup_iff'.mpr (by simpa [Matrix.star_eq_conjTranspose] using hu τ)
+    have := hP (fun τ => ⟨u τ, hu' τ⟩)
+    simp only at this
+    simp only [this, sub_self, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
+  have := hD g
+  rw [hD0, _root_.map_zero] at this
+  exact (sub_eq_zero.mp this.symm)
+
+end GlobalTheory.MinorFrame
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDetCharInvariantsRowSubstitutionIrreducible
+
+section
 
 @[expose] public section
 
@@ -327,3 +497,5 @@ theorem inv_irreducible : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → �
   simp at this
 
 end GlobalTheory.MinorFrame.RowIrr
+end
+end

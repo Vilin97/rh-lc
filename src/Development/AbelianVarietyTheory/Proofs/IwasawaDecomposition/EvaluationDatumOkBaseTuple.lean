@@ -4,29 +4,13 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.JetsInIffStepField
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.IdxMatNF
 public import Formalism.LocalToGlobal.KernelLattices.RatKDeg
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.EvGSDOkOfEqOne
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AbsNormEqOfSplit
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NormOneDetIdealTransportedLattice
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotDvdDifferent
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseFieldsDefiniteLaws
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseFieldsPrimesOk
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KernelsOverOfFamily
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubConjEqNeg
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedNormalForms
-import Formalism.LocalToGlobal.Columns.ChainTwPsi
-import Formalism.LocalToGlobal.Columns.UnfoldingNonvanishingDoubleCosetHolds
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PLinkThIndep
-public import Formalism.LocalToGlobal.KernelLattices.ColumnData.Smooth
-public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColDatK
-public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ExistsIntegralMulOrderElement
-public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LocalProductMeasures
-public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RatKDeg
-public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RkEqcar
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ThEquivPAmbOfTiesD
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ThEquivPStepCIff
+public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeightedNormSquareRows
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -45,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,8 +38,249 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
+import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AbsNormEqOfSplit
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NormOneDetIdealTransportedLattice
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotDvdDifferent
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseFieldsDefiniteLaws
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseFieldsPrimesOk
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KernelsOverOfFamily
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubConjEqNeg
+public import Formalism.LocalToGlobal.Columns.ChainTw
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SandwichNormalForm
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NormalFormAtPrime
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ToLinNfMatEqSumNfGen
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnipotentCharacterArgumentMulStabilizer
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+import Formalism.LocalToGlobal.Columns.ChainTwPsi
+import Formalism.LocalToGlobal.Columns.UnfoldingNonvanishingDoubleCosetHolds
+import Formalism.LocalToGlobal.GlobalTheory.GL3.PLinkThIndep
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.Smooth
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColDatK
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ExistsIntegralMulOrderElement
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LocalProductMeasures
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RatKDeg
+public import Formalism.LocalToGlobal.KernelLattices.ColInst
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData
+public import Formalism.LocalToGlobal.KernelLattices.MuProd
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.AmbOfENeSd
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.ColumnDataEquations.SplitPairOfGen
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RkConj
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RkThindEq
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ThEquivPAmbOfTiesD
+import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ThEquivPStepCIff
+import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ThEquivPAmbOfTiesD
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.EvGSDOkOfEqOne
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.CoreHt
+
+open Module NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Col Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds
+
+theorem evGSD_ok_of_eq_one : ∀ (X : Fields) [_root_.NumberField.IsTotallyComplex X.K] (hX : X.Ok) (Pr : Primes X) (R : Ranks)
+    (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
+    (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (Sg : Set ℕ) (mu : Tup X.F X.E X.K Sg)
+    (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word), Pr.Ok → mu = 1 → (evGSD W Ch sel mu P u).Ok := by
+  intro X _ hX Pr R W Ch sel Sg mu P u hPr hmu
+  subst hmu
+  exact GlobalTheory.IndefiniteRowSideFullHecke.WeightedNormSquareDivisors.evOk W Ch sel Sg hX hPr P u
+
+end GlobalTheory.CoreHt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedNormalForms
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV
+
+noncomputable section
+
+namespace GlobalTheory.Proof.TwistedNormalForms
+
+open GlobalTheory.IndefiniteRowSideFullHecke.SandwichNormalForm GlobalTheory.QNormal
+
+section Lattice
+
+variable {E : Type} [Field E] [NumberField E] [StarRing E]
+
+theorem sum_ite_zero_eq_atN {n c : ℕ} (y : Fin (n + c) → E) :
+    ∑ i : Fin c, (if i.1 = 0 then y (Fin.natAdd n i) else 0) = Loc.atN y n := by
+  cases c with
+  | zero => simp [Loc.atN]
+  | succ c =>
+    rw [Fin.sum_univ_succ]
+    have h0 : ∀ i : Fin c, ¬ ((Fin.succ i).1 = 0) := fun i => by simp
+    simp only [Fin.val_zero, if_true, h0, if_false, Finset.sum_const_zero, add_zero]
+    unfold Loc.atN
+    rw [dite_eq_left (by omega)]
+    congr 1
+
+theorem comb_natAdd (q : ℕ) {n c : ℕ} (e : Fin c → ℤ) (z : Sp E n) (l : Sp E n) (s : Fin c → E) (b : Fin c) :
+    (Loc.inX E n c l + ∑ i, s i • nfGen q n c e z i) (Fin.natAdd n b) = (q : E) ^ e b * s b := by
+  have hx : ∀ w : Sp E n, Loc.inX E n c w (Fin.natAdd n b) = 0 := fun w => by
+    rw [inX_apply, dite_eq_right (by simp)]
+  simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, nfGen, smul_eq_mul, hx, zero_add]
+  rw [Finset.sum_eq_single b]
+  · have : (if b.1 = 0 then Loc.inX E n c z else 0) (Fin.natAdd n b) = 0 := by
+      split_ifs <;> simp [hx]
+    simp [Loc.eN, this]
+    ring
+  · intro i _ hib
+    have hne : ¬ ((Fin.natAdd n b).1 = n + i.1) := by
+      intro h; apply hib; ext; simp at h; omega
+    have : (if i.1 = 0 then Loc.inX E n c z else 0) (Fin.natAdd n b) = 0 := by
+      split_ifs <;> simp [hx]
+    have hne' : ¬ (b.1 = i.1) := fun h => hib (Fin.ext h).symm
+    simp [Loc.eN, hne', this]
+  · simp
+
+theorem comb_castAdd (q : ℕ) {n c : ℕ} (e : Fin c → ℤ) (z : Sp E n) (l : Sp E n) (s : Fin c → E) (a : Fin n) :
+    (Loc.inX E n c l + ∑ i, s i • nfGen q n c e z i) (Fin.castAdd c a) =
+      l a + (∑ i : Fin c, (if i.1 = 0 then (q : E) ^ e i * s i else 0)) * z a := by
+  simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, nfGen, smul_eq_mul, inX_castAdd, Finset.sum_mul]
+  congr 1
+  refine Finset.sum_congr rfl fun i _ => ?_
+  have hne : ¬ (a.1 = n + i.1) := by omega
+  split_ifs with hi
+  · simp [Loc.eN, hne, inX_castAdd]; ring
+  · simp [Loc.eN, hne]
+
+end Lattice
+
+theorem twNF_imp_matNF : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)),
+    P ∉ Pr.vGs → ∀ h : AutY X R j, TwNF (Pr := Pr) j P h → GlobalTheory.QNF.MatNF Pr R j P h := by
+  intro X Pr R j P hP h hT
+  refine (GlobalTheory.QNF.nf_iff_matNF X Pr R j P hP h).1 ?_
+  obtain ⟨n, z, hn, hz, hcrit⟩ := hT
+  refine ⟨fun i => n i.1, z, fun i => hn i.1, hz, ?_⟩
+  have hq := GlobalTheory.Proof.NormalFormAtPrime.qOf_ne_zero P
+  have hzV := (mem_stdAt_iff z).1 hz
+  ext y
+  have hmem : y ∈ h '' (lamYat (Pr := Pr) (R := R) j P : Set _) ↔ h⁻¹ y ∈ lamYat (Pr := Pr) (R := R) j P := by
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      simpa using hx
+    · intro hy
+      exact ⟨h⁻¹ y, hy, by simp⟩
+  rw [hmem, hcrit y]
+  constructor
+  · rintro ⟨hX, hN⟩
+    refine ⟨fun a => y (Fin.castAdd _ a) - Loc.atN y (R.N j) * z a, (mem_stdAt_iff _).2 hX,
+      fun i => ((qOf P : X.E) ^ n i.1)⁻¹ * y (Fin.natAdd _ i), hN, ?_⟩
+    funext p
+    refine Fin.addCases (fun a => ?_) (fun b => ?_) p
+    · rw [comb_castAdd]
+      have : ∀ i : Fin (cOf R j), (if i.1 = 0 then (qOf P : X.E) ^ n i.1 * (((qOf P : X.E) ^ n i.1)⁻¹ * y (Fin.natAdd _ i)) else 0)
+          = (if i.1 = 0 then y (Fin.natAdd _ i) else 0) := fun i => by
+        rw [mul_inv_cancel_left₀ (zpow_ne_zero _ hq)]
+      simp only [this, sum_ite_zero_eq_atN]
+      ring
+    · rw [comb_natAdd, mul_inv_cancel_left₀ (zpow_ne_zero _ hq)]
+  · rintro ⟨l, hl, s, hs, rfl⟩
+    have hlV := (mem_stdAt_iff l).1 hl
+    have hb := comb_natAdd (qOf P) (fun i : Fin (cOf R j) => n i.1) z l s
+    have hat : Loc.atN (Loc.inX X.E (R.N j) (cOf R j) l + ∑ i, s i • nfGen (qOf P) (R.N j) (cOf R j) (fun i => n i.1) z i) (R.N j)
+        = ∑ i : Fin (cOf R j), (if i.1 = 0 then (qOf P : X.E) ^ n i.1 * s i else 0) := by
+      rw [← sum_ite_zero_eq_atN]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [hb i]
+    refine ⟨fun a => ?_, fun i => ?_⟩
+    · rw [comb_castAdd, hat, add_sub_cancel_right]
+      exact hlV a
+    · rw [hb i, inv_mul_cancel_left₀ (zpow_ne_zero _ hq)]
+      exact hs i
+
+end GlobalTheory.Proof.TwistedNormalForms
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.RkEqcar
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+noncomputable section
+
+namespace Formalism.L2.Ker.Cd.CarC
+
+open Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.L2.DIV Formalism.L2.Col Formalism.MainNotions
+
+section Step
+
+variable {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R} {Ch : Chars X Pr R.m}
+  {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ}
+  {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {G : ChGlob X R.m} (u : Pr.Word)
+  {D : Car} (s : Cd.Seam D X) {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Cd.Base D cc δ) (χ : Cd.TaylorLogMetric.IdE D → ℂ) (cD : D.what₂.Tau → ℂ)
+
+theorem thIndEq_ambOf_car (hok : s.Ok) (hcc : Cd.TaylorLogMetric.IsCurveIdeal D cc) (hδ : Cd.TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ) (hχ : Cd.TaylorLogMetric.IsChi D χ)
+    {a b : ℕ} (ha : Even a) (hb : Even b) (Sall : Finset (HeightOneSpectrum (𝓞 X.E))) {D' : ℕ} (hD : 0 < D')
+    (hLa : (Cd.ambOf s B χ cD : Amb X).LaHyp a b Sall) : (Cd.ambOf s B χ cD : Amb X).ThIndEq a b Sall D' :=
+  theta_coset_indicator_natural X _ a b Sall D' (ambOf_conj s B χ cD hok) hD hLa
+    (eqLaw_ambOf_of s B χ cD hok (Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SqG.eqP_car B hcc hδ χ hχ) ha hb)
+
+theorem thEquivP_ambOf_tiesD (hok : s.Ok) (hcc : Cd.TaylorLogMetric.IsCurveIdeal D cc) (hδ : Cd.TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ) (hχ : Cd.TaylorLogMetric.IsChi D χ)
+    (hX : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (hsel : IsSel X sel)
+    (hg : XiOffG Pr (mu : Chr X.F X.E X.K)) (hT : LawTies W Ch sel mu cst G) (hTu : 0 < Pr.T u) {i : ℕ} (hi : i < R.m) (e : X.Tau → ℤ)
+    (he : ∀ τ, (e τ : ℚ) = (W.row τ).e ⟨i, hi⟩)
+    (hLa : (Cd.ambOf s B χ cD : Amb X).LaHyp (R.N i) (R.N (i + 1)) (Sall sel mu u))
+    (hrat : (Cd.ambOf s B χ cD : Amb X).JetsRatDeg (R.N i) (R.N (i + 1)) (Sall sel mu u) (cAof sel mu cst * cBof sel mu cst u) (stepDeg W u i)) :
+    ThEquivP (stepT W Ch sel mu cst (Cd.ambOf s B χ cD) u i (W.lamTrue u (i + 1))) (Sall sel mu u) (cAof sel mu cst * cBof sel mu cst u)
+      (colValF W sel mu u i).rho (colValF W sel mu u (i + 1)).rho := by
+  have he' : ∀ τ, (e τ : ℚ) = (W.hc u τ).e ⟨i, hi⟩ := by
+    intro τ
+    rw [he τ, ← hT.2.2.2 u τ]
+    rfl
+  exact thEquivP_stepT_ofD W Ch sel mu cst (Cd.ambOf s B χ cD) u hi e he' hrat (eOmega_ambOf_of s B χ cD (B.stdOK hcc hδ) _ _)
+    (thIndEq_ambOf_car s B χ cD hok hcc hδ hχ (even_rankN R i) (even_rankN R (i + 1)) _ (modulus_pos sel mu cst u hTu) hLa)
+    (chiLaw_ambOf_of s B χ cD hok hχ (even_rankN R i) (even_rankN R (i + 1)))
+    (muProdLaw_of hX hPr hsel hg hT i hi e he _) (muProdLaw_of hX hPr hsel hg hT i hi e he _)
+
+end Step
+
+section All
+
+variable {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R} {Ch : Chars X Pr R.m}
+  {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ} {u : Pr.Word} {m2 : ℕ}
+  {D : Car} (s : Cd.Seam D X) {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Cd.Base D cc δ) (χ : Cd.TaylorLogMetric.IdE D → ℂ) (cD : D.what₂.Tau → ℂ)
+
+end All
+
+end Formalism.L2.Ker.Cd.CarC
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EvaluationDatumOkBaseTuple
+
+section
 
 @[expose] public section
 
@@ -215,3 +439,6 @@ theorem hyps_of_isTw : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → 
       (chTh_ok_chi I h l Z hJ χ hχ a u) b hY⟩
 
 end GlobalTheory.Mem.Col2.TC.RcHyp
+end
+end
+end

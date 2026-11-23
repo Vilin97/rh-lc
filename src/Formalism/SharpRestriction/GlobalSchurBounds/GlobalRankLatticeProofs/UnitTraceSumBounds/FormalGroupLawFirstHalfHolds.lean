@@ -1,13 +1,16 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.ModelShortOf
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BiaddOfCube
+public import Formalism.PeriodIntegrals.AddIntG
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.FormalGroupLawExists
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.GlueHoldsVar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -39,6 +42,141 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.BiaddOfCube
+public import Mathlib.Analysis.Normed.Field.Instances
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.AddIntGTop
+
+section
+
+@[expose] public section
+
+namespace PI.AddIntG.Wk
+
+theorem addIntG_top : PI.AddIntG.Target := glue_holds_var formalGroupLawExists
+
+end PI.AddIntG.Wk
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
+
+section
+
+@[expose] public section
+
+theorem additive_integral_generation : PI.AddIntG.Target := PI.AddIntG.Wk.addIntG_top
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BiadditiveCubes.ConstantCoeffLogEqZero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Classical
+
+namespace PI.BiaddOfCubeWork
+
+open PI.BiaddOfCube
+
+variable {p : ℕ} [Fact p.Prime]
+
+theorem constantCoeff_log_eq_zero {l ex : PowerSeries ℂ_[p]}
+    (hex : PowerSeries.constantCoeff ex = 0) (h : PowerSeries.subst ex l = PowerSeries.X) :
+    PowerSeries.constantCoeff l = 0 := by
+  have hex' : MvPowerSeries.constantCoeff ex = 0 := hex
+  have hs := PowerSeries.HasSubst.of_constantCoeff_zero hex'
+  have h1 := PowerSeries.constantCoeff_subst (R := ℂ_[p]) hs l
+  rw [h, finsum_eq_single _ 0 (fun d hd => by rw [map_pow, hex', zero_pow hd, smul_zero]),
+    pow_zero, map_one, smul_eq_mul, mul_one] at h1
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, ← h1]
+  exact PowerSeries.constantCoeff_X
+
+variable {σ : Type*}
+
+theorem subst_subst_log {l ex : PowerSeries ℂ_[p]}
+    (hex : PowerSeries.constantCoeff ex = 0) (h : PowerSeries.subst ex l = PowerSeries.X)
+    (y : MvPowerSeries σ ℂ_[p]) (hy : MvPowerSeries.constantCoeff y = 0) :
+    PowerSeries.subst (PowerSeries.subst y ex) l = y := by
+  have hex' : MvPowerSeries.constantCoeff ex = 0 := hex
+  rw [← PowerSeries.subst_comp_subst_apply (PowerSeries.HasSubst.of_constantCoeff_zero hex')
+    (PowerSeries.HasSubst.of_constantCoeff_zero hy), h,
+    PowerSeries.subst_X (PowerSeries.HasSubst.of_constantCoeff_zero hy)]
+
+theorem constantCoeff_subst_zero {f : PowerSeries ℂ_[p]} (hf : PowerSeries.constantCoeff f = 0)
+    (a : MvPowerSeries σ ℂ_[p]) (ha : MvPowerSeries.constantCoeff a = 0) :
+    MvPowerSeries.constantCoeff (PowerSeries.subst a f) = 0 := by
+  exact PowerSeries.constantCoeff_subst_eq_zero ha f hf
+
+theorem add_comm' (l ex : PowerSeries ℂ_[p]) (a b : MvPowerSeries σ ℂ_[p]) :
+    add l ex a b = add l ex b a := by
+  show PowerSeries.subst (PowerSeries.subst a l + PowerSeries.subst b l) ex =
+    PowerSeries.subst (PowerSeries.subst b l + PowerSeries.subst a l) ex
+  rw [add_comm]
+
+theorem add_assoc' {l ex : PowerSeries ℂ_[p]}
+    (hex : PowerSeries.constantCoeff ex = 0) (h : PowerSeries.subst ex l = PowerSeries.X)
+    (a b c : MvPowerSeries σ ℂ_[p]) (ha : MvPowerSeries.constantCoeff a = 0)
+    (hb : MvPowerSeries.constantCoeff b = 0) (hc : MvPowerSeries.constantCoeff c = 0) :
+    add l ex (add l ex a b) c = add l ex a (add l ex b c) := by
+  have hl := constantCoeff_log_eq_zero hex h
+  have hla := constantCoeff_subst_zero hl a ha
+  have hlb := constantCoeff_subst_zero hl b hb
+  have hlc := constantCoeff_subst_zero hl c hc
+  show PowerSeries.subst (PowerSeries.subst (add l ex a b) l + PowerSeries.subst c l) ex =
+    PowerSeries.subst (PowerSeries.subst a l + PowerSeries.subst (add l ex b c) l) ex
+  rw [show add l ex a b = PowerSeries.subst (PowerSeries.subst a l + PowerSeries.subst b l) ex from rfl,
+    subst_subst_log hex h _ (by rw [map_add (f := _), hla, hlb, add_zero]),
+    show add l ex b c = PowerSeries.subst (PowerSeries.subst b l + PowerSeries.subst c l) ex from rfl,
+    subst_subst_log hex h _ (by rw [map_add (f := _), hlb, hlc, add_zero]), add_assoc]
+
+theorem simeq_of_sub_eq {f g f' g' : MvPowerSeries σ ℂ_[p]} (e : f - g = f' - g')
+    (hs : Simeq f' g') : Simeq f g := by
+  show MvPowerSeries.constantCoeff (f - g) = 0 ∧ IntegralMv (expMv (f - g))
+  rw [e]
+  exact hs
+
+theorem cc_Xv (i : Fin 3) : MvPowerSeries.constantCoeff (Xv (p := p) i) = 0 := by
+  exact MvPowerSeries.constantCoeff_X i
+
+end PI.BiaddOfCubeWork
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BiaddOfCube
+
+section
+
+@[expose] public section
+
+theorem biadditiveOfCube_holds : PI.BiaddOfCube.Target := by
+  intro p _ l ex ph hex h hC
+  have hxz : PI.BiaddOfCube.add l ex (PI.BiaddOfCube.Xv (p := p) 0 : MvPowerSeries (Fin 3) ℂ_[p])
+      (PI.BiaddOfCube.Xv 2) = PI.BiaddOfCube.add l ex (PI.BiaddOfCube.Xv 2) (PI.BiaddOfCube.Xv 0) :=
+    PI.BiaddOfCubeWork.add_comm' l ex _ _
+  have has := PI.BiaddOfCubeWork.add_assoc' hex h
+    (PI.BiaddOfCube.Xv (p := p) 0 : MvPowerSeries (Fin 3) ℂ_[p]) (PI.BiaddOfCube.Xv 1) (PI.BiaddOfCube.Xv 2)
+    (PI.BiaddOfCubeWork.cc_Xv 0) (PI.BiaddOfCubeWork.cc_Xv 1) (PI.BiaddOfCubeWork.cc_Xv 2)
+  constructor
+  · refine PI.BiaddOfCubeWork.simeq_of_sub_eq ?_ hC
+    simp only [PI.BiaddOfCube.be, hxz]
+    ring
+  · refine PI.BiaddOfCubeWork.simeq_of_sub_eq ?_ hC
+    simp only [PI.BiaddOfCube.be, hxz, ← has]
+    ring
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.FormalGroupLawFirstHalfHolds
+
+section
 
 @[expose] public section
 
@@ -59,3 +197,5 @@ theorem addInt_holds (D : Formalism.BasicNotions.D7) : Formalism.MainNotions.GL3
   exact addIntG_holds p g hA.2.2.2.2
 
 end Formalism.MainNotions.Ext
+end
+end

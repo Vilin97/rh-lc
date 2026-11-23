@@ -2,7 +2,7 @@ module
 
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullPreserve
 public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TrivFlagMod
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraRest
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,6 +17,7 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
@@ -28,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +44,48 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraRest
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Ydb6.main :
+    ∀ {O Ω V : Type} [inst : CommRing O] [inst_1 : Field Ω] [inst_2 : Algebra O Ω] [inst_3 : AddCommGroup V]
+      [inst_4 : _root_.Module Ω V] (R : Subalgebra O Ω) (A B : AddSubgroup V) (c : Ω),
+      (∀ (v : V), v ∈ B ↔ ∃ e ∈ A, v = c • e) →
+        ∀ (v : V),
+          v ∈ AddSubgroup.closure {v : V | ∃ a ∈ R, ∃ e ∈ B, v = a • e} ↔
+            ∃ e ∈ AddSubgroup.closure {v : V | ∃ a ∈ R, ∃ e ∈ A, v = a • e}, v = c • e := by
+  intro O Ω V _ _ _ _ _ R A B c hB v
+  let f : V →+ V := DistribSMul.toAddMonoidHom V c
+  have hS : {v : V | ∃ a ∈ R, ∃ e ∈ B, v = a • e} =
+      f '' {v : V | ∃ a ∈ R, ∃ e ∈ A, v = a • e} := by
+    ext w
+    simp only [Set.mem_ofPred_eq, Set.mem_image]
+    constructor
+    · rintro ⟨a, ha, e, he, rfl⟩
+      obtain ⟨e', he', rfl⟩ := (hB e).1 he
+      refine ⟨a • e', ⟨a, ha, e', he', rfl⟩, ?_⟩
+      show c • a • e' = a • c • e'
+      rw [smul_smul, smul_smul, mul_comm]
+    · rintro ⟨x, ⟨a, ha, e, he, rfl⟩, rfl⟩
+      refine ⟨a, ha, c • e, (hB _).2 ⟨e, he, rfl⟩, ?_⟩
+      show c • a • e = a • c • e
+      rw [smul_smul, smul_smul, mul_comm]
+  rw [hS, ← AddMonoidHom.map_closure, AddSubgroup.mem_map]
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    exact ⟨x, hx, rfl⟩
+  · rintro ⟨x, hx, rfl⟩
+    exact ⟨x, hx, rfl⟩
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtensionUnique
+
+section
 
 @[expose] public section
 
@@ -106,3 +150,5 @@ theorem pull_preserve : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValu
   apply PositivityTheory.Xgn.t_pull_preserve <;> assumption
 
 end GlobalTheory.CompanionTheory.Ar.Num.PullPreserve
+end
+end

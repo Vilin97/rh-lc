@@ -4,14 +4,8 @@ public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomolo
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.NatCastQb
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PhiAZero
 public import Development.AutomorphicArithmetic.EtaleIdempotents.CrisFrobeniusIterateEvalEtaleFamily
-public import Development.AutomorphicArithmetic.EtaleIdempotents.EvalEtaleFamilyMemLimitOfReduced
-public import Development.AutomorphicArithmetic.EtaleIdempotents.GaloisActionEvalEtaleFamilyExistsDenominator
-public import Development.AutomorphicArithmetic.EtaleIdempotents.GaloisEquivariantTensorDescentOfPrimePowerUnits
-public import Development.AutomorphicArithmetic.EtaleIdempotents.IntegersResidueEqThetaCoeffPowOfTeichmuller
-public import Development.AutomorphicArithmetic.EtaleIdempotents.IntegersResidueEqZeroOfNotIsUnit
-import GroundTheory.PAdicHodge.ACrisPhi
-public import GroundTheory.PAdicHodge.AInfTopology
-public import GroundTheory.PAdicHodge.BCrisGalois
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.VecZero
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.LimAlg
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,7 +43,100 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.EtaleIdempotents.GaloisActionEvalEtaleFamilyExistsDenominator
+public import Development.AutomorphicArithmetic.EtaleIdempotents.GaloisEquivariantTensorDescentOfPrimePowerUnits
+public import Development.AutomorphicArithmetic.EtaleIdempotents.IntegersResidueEqThetaCoeffPowOfTeichmuller
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.NormLtOneOfIrreducible
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Linter.Style
+import GroundTheory.PAdicHodge.ACrisPhi
+public import GroundTheory.PAdicHodge.AInfTopology
+public import GroundTheory.PAdicHodge.BCrisGalois
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.AutomorphicArithmetic.EtaleIdempotents.EvalEtaleFamilyMemLimitOfReduced
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory Limits AlgebraicGeometry GroundTheory.PAdicHodge CrystallineSemistableComparison TensorProduct GlobalTheory.LogCris DividedPowers UpperTheory.Ru.crystallineComparison
+
+theorem UpperTheory.evalEtaleFamily_mem_limit_of_reduced :
+    ∀ {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} (e : E.EtFam l K), e.Red → ∀ (M : Model l K) (j : ℕ) {ι : Type} [Fintype ι] (v : ι → M.T j) (c : ι → Acris l),
+        (fun n => evE e M j n v c) ∈ (M.MS j).lim := by
+  intro l _ K e he M j ι _ v c n
+  have h2 : ∀ k, GlobalTheory.EtC.red (l ^ (n + 1)) (l ^ n) M.spc (j : ℤ) 0 ((v k).lev (n + 1)) = (v k).lev n :=
+    fun k => (show GlobalTheory.EtC.Hl l M.spc j 0 from v k).2 n
+  have h3 : ∀ k, (M.MS j).r n (e M (n + 1) j ((v k).lev (n + 1))) = e M n j ((v k).lev n) :=
+    fun k => (he M n j ((v k).lev (n + 1))).trans (congrArg (e M n j) (h2 k))
+  have hk : ∀ k, (M.MS j).r n (c k • e M (n + 1) j ((v k).lev (n + 1))) = c k • e M n j ((v k).lev n) := by
+    intro k
+    exact (LinearMap.map_smul ((M.MS j).r n) (c k) _).trans (congrArg (fun y => c k • y) (h3 k))
+  exact (map_sum ((M.MS j).r n) _ _).trans (Finset.sum_congr rfl fun k _ => hk k)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.EtaleIdempotents.IntegersResidueEqZeroOfNotIsUnit
+
+section
+
+@[expose] public section
+
+set_option backward.isDefEq.respectTransparency false
+open CategoryTheory Limits AlgebraicGeometry GroundTheory.PAdicHodge CrystallineSemistableComparison TensorProduct GlobalTheory.LogCris DividedPowers UpperTheory.Ru.crystallineComparison
+
+theorem UpperTheory.integersResidue_eq_zero_of_not_isUnit :
+    ∀ {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} (r : Res l K) (ϖ : OK l K), ¬ IsUnit ϖ → gRes r ϖ = 0 := by
+  intro l _ K r ϖ hϖ
+  have hu0 : (PreTilt.untilt (0 : Ob l) : OC l) = 0 := by
+    rw [← WittVector.fontaineTheta_teichmuller, WittVector.teichmuller_zero, map_zero]
+  have hnorm : ∀ x : OK l K, ‖((okToOC l K x : OC l) : ℂ_[l])‖ = ‖((x : K) : PadicAlgCl l)‖ :=
+    fun x => norm_clToC _
+  have hker : ∀ z : OK l K, r.ρ z = 0 → ‖((z : K) : PadicAlgCl l)‖ < 1 := fun z hz => by
+    have h := r.hs z
+    rw [hz, map_zero, hu0, zero_sub] at h
+    have e : ((-(okToOC l K z) : OC l) : ℂ_[l]) = -((okToOC l K z : OC l) : ℂ_[l]) := rfl
+    rw [e, norm_neg, hnorm] at h
+    exact h
+  have hρ : r.ρ ϖ = 0 := by
+    by_contra hne
+    obtain ⟨y, hy⟩ := r.surj (r.ρ ϖ)⁻¹
+    have hz : r.ρ (1 - ϖ * y) = 0 := by
+      rw [map_sub, map_one, map_mul, hy, mul_inv_cancel₀ hne, sub_self]
+    have h1 := hker _ hz
+    have hsum : ((ϖ * y : OK l K) : K) = 1 - ((1 - ϖ * y : OK l K) : K) := by
+      push_cast; ring
+    have hlt : ‖(((ϖ * y : OK l K) : K) : PadicAlgCl l)‖ = 1 := by
+      have e : (((ϖ * y : OK l K) : K) : PadicAlgCl l) = 1 - (((1 - ϖ * y : OK l K) : K) : PadicAlgCl l) := by
+        rw [hsum]; push_cast; rfl
+      refine le_antisymm (by simpa using norm_OK_le (ϖ * y)) ?_
+      have h4 : ‖(1 : PadicAlgCl l)‖ ≤ max ‖(((ϖ * y : OK l K) : K) : PadicAlgCl l)‖ ‖(((1 - ϖ * y : OK l K) : K) : PadicAlgCl l)‖ := by
+        have e' : (1 : PadicAlgCl l) = (((ϖ * y : OK l K) : K) : PadicAlgCl l) + (((1 - ϖ * y : OK l K) : K) : PadicAlgCl l) := by
+          rw [e]; ring
+        conv_lhs => rw [e']
+        exact IsUltrametricDist.norm_add_le_max _ _
+      rw [norm_one] at h4
+      rcases le_max_iff.1 h4 with h5 | h5
+      · exact h5
+      · exact absurd h5 (not_le.2 h1)
+    have hmul : ‖((ϖ : K) : PadicAlgCl l)‖ * ‖((y : K) : PadicAlgCl l)‖ = 1 := by
+      rw [← norm_mul]; simpa using hlt
+    have h2 := norm_OK_le ϖ
+    have h3 := norm_OK_le y
+    apply hϖ
+    rw [isUnit_OK_iff]
+    nlinarith [norm_nonneg ((ϖ : K) : PadicAlgCl l), norm_nonneg ((y : K) : PadicAlgCl l)]
+  show Ideal.Quotient.mk _ (r.s (r.ρ ϖ)) = 0
+  rw [hρ, map_zero, map_zero]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PhiAIter
+
+section
 
 @[expose] public section
 
@@ -223,3 +309,6 @@ theorem UpperTheory.Ru.crystallineComparison.absInvOf :
     (phiA_iter_l _) (phiA_iterate_tA _) hab (F.fac M hM j h) (fun x n => hphi x n) (fun n a x => phi_iter_smul M.P n j _ a x)
     (fun n => UpperTheory.crisFrobenius_iterate_evalEtaleFamily e he.phi M j n _ v c) n
   exact hc.trans (congrArg _ (hx2 n))
+end
+end
+end

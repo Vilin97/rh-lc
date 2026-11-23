@@ -1,10 +1,6 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.LocalIntegralPolynomials.ExistsValuationAdaptedIndex
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
-public import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
-public import Development.AbelianVarietyTheory.Proofs.AlgebraicCurves.PlacesRestrictInjective
+public import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,12 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +39,19 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.MvPolynomial.CommRing
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
+public import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
+public import Development.AbelianVarietyTheory.Proofs.AlgebraicCurves.PlacesRestrictInjective
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Presheaf
@@ -56,6 +59,71 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.IsUnitO
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.WeakApprox
 import ReciprocityTheory.SemistableReduction.AlgAll
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.LocalIntegralPolynomials.ExistsValuationAdaptedIndex
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.Pj.LocAlg
+
+open ReciprocityTheory.ChartRestriction.G.T0 MvPolynomial
+
+variable {Ω : Type} [Field Ω] {D N : ℕ}
+
+variable {jc j0 : Fin (N + 1)} {x : Fin N → Ω}
+
+def intPoly (σ : Type) (W : Subring Ω) : Subring (MvPolynomial σ Ω) where
+  carrier := {P | ∀ e, P.coeff e ∈ W}
+  mul_mem' := by
+    intro P Q hP hQ e
+    classical
+    rw [coeff_mul]
+    exact sum_mem fun d _ => W.mul_mem (hP _) (hQ _)
+  one_mem' := by
+    intro e
+    classical
+    rw [coeff_one]
+    split_ifs
+    exacts [W.one_mem, W.zero_mem]
+  add_mem' := by
+    intro P Q hP hQ e
+    rw [MvPolynomial.coeff_add]
+    exact W.add_mem (hP e) (hQ e)
+  zero_mem' := by
+    intro e
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
+    exact W.zero_mem
+  neg_mem' := by
+    intro P hP e
+    rw [MvPolynomial.coeff_neg]
+    exact W.neg_mem (hP e)
+
+theorem C_mem_intPoly {σ : Type} {W : Subring Ω} {a : Ω} (ha : a ∈ W) : (C a : MvPolynomial σ Ω) ∈ intPoly σ W := by
+  intro e
+  classical
+  rw [coeff_C]
+  split_ifs
+  exacts [ha, W.zero_mem]
+
+theorem X_mem_intPoly {σ : Type} {W : Subring Ω} (s : σ) : (X s : MvPolynomial σ Ω) ∈ intPoly σ W := by
+  intro e
+  classical
+  rw [coeff_X']
+  split_ifs
+  exacts [W.one_mem, W.zero_mem]
+
+end Formalism.L2.Pj.LocAlg
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GenericRegularity.AlgebraMapMemMax
+
+section
 
 @[expose] public section
 
@@ -499,3 +567,6 @@ theorem exists_sep (v v' : AddValuation Ω (WithTop ℤ)) (h : ∃ a, v a = 1) (
 end Both
 
 end GlobalTheory.GenSep
+end
+end
+end

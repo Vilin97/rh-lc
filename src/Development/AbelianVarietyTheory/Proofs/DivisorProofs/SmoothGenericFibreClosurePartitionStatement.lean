@@ -3,7 +3,9 @@ module
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 public import Mathlib.Combinatorics.Quiver.ReflQuiver
 public import Mathlib.Order.CompletePartialOrder
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothGenericFibreClosurePartition
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+public import Mathlib.RingTheory.Smooth.IntegralClosure
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,6 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +46,277 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.CategoryTheory.Monoidal.Cartesian.Basic
+import Mathlib.CategoryTheory.Monoidal.Category
+import Mathlib.CategoryTheory.Monoidal.Mon
+import Mathlib.Topology.Sheaves.Presheaf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RangeComapIncludeRightFieldStatement
+import Mathlib.RingTheory.Smooth.Flat
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralOfIsIdempotentElem
+
+section
+
+@[expose] public section
+
+open TensorProduct
+
+namespace GlobalTheory.IdempotentTensorOne
+
+theorem isIntegral_of_isIdempotentElem {S B : Type} [CommRing S] [CommRing B] [Algebra S B]
+    {e : B} (he : IsIdempotentElem e) : IsIntegral S e := by
+  refine ⟨Polynomial.X ^ 2 - Polynomial.X, Polynomial.monic_X_pow_sub (Polynomial.degree_X_le.trans_lt (by norm_num)), ?_⟩
+  simp [sq, he.eq]
+
+theorem exists_idempotent_tmul_one_eq (R A : Type) [CommRing R] [IsDomain R]
+    [IsIntegrallyClosed R] [CommRing A] [Algebra R A] (hA : Algebra.Smooth R A)
+    (ε : A ⊗[R] FractionRing R) (hε : IsIdempotentElem ε) :
+    ∃ a : A, IsIdempotentElem a ∧ a ⊗ₜ[R] (1 : FractionRing R) = ε := by
+  have : Algebra.Smooth R A := hA
+
+  have hint : ε ∈ integralClosure A (A ⊗[R] FractionRing R) := isIntegral_of_isIdempotentElem hε
+  obtain ⟨t, ht⟩ := (TensorProduct.toIntegralClosure_bijective_of_smooth
+    (R := R) (S := A) (B := FractionRing R)).2 ⟨ε, hint⟩
+  have hε' : Algebra.TensorProduct.map (AlgHom.id A A) (integralClosure R (FractionRing R)).val t = ε :=
+    congrArg Subtype.val ht
+  have hdesc : ∀ u : A ⊗[R] integralClosure R (FractionRing R), ∃ a : A,
+      a ⊗ₜ[R] (1 : FractionRing R) =
+        Algebra.TensorProduct.map (AlgHom.id A A) (integralClosure R (FractionRing R)).val u := by
+    intro u
+    induction u using TensorProduct.induction_on with
+    | zero => exact ⟨0, by simp⟩
+    | tmul x y =>
+      obtain ⟨r, hr⟩ := (IsIntegrallyClosed.isIntegral_iff (R := R) (K := FractionRing R)).1
+        ((mem_integralClosure_iff _ _).1 y.2)
+      refine ⟨r • x, ?_⟩
+      rw [Algebra.TensorProduct.map_tmul, TensorProduct.smul_tmul, ← Algebra.algebraMap_eq_smul_one, hr]
+      rfl
+    | add u w hu hw =>
+      obtain ⟨a, ha⟩ := hu
+      obtain ⟨b, hb⟩ := hw
+      exact ⟨a + b, by rw [TensorProduct.add_tmul, ha, hb, map_add (f := _)]⟩
+  obtain ⟨a, ha⟩ := hdesc t
+  rw [hε'] at ha
+  refine ⟨a, ?_, ha⟩
+
+  have hinj : Function.Injective (Algebra.TensorProduct.includeLeft : A →ₐ[R] A ⊗[R] FractionRing R) :=
+    Algebra.TensorProduct.includeLeft_injective (IsFractionRing.injective R (FractionRing R))
+  apply hinj
+  show (a * a) ⊗ₜ[R] (1 : FractionRing R) = a ⊗ₜ[R] (1 : FractionRing R)
+  rw [← mul_one (1 : FractionRing R), ← Algebra.TensorProduct.tmul_mul_tmul, mul_one, ha, hε.eq]
+
+end GlobalTheory.IdempotentTensorOne
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdempotentTmulOneEqOfSmoothAlgebra
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory
+
+theorem exists_isIdempotentElem_tmul_one_eq_of_smooth :
+    ∀ (R A : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [CommRing A] [Algebra R A],
+      Algebra.Smooth R A → ∀ ε : A ⊗[R] FractionRing R, IsIdempotentElem ε →
+        ∃ a : A, IsIdempotentElem a ∧ a ⊗ₜ[R] (1 : FractionRing R) = ε := by
+  first
+  | exact @_root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq
+  | exact _root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq
+  | (apply _root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq <;> assumption)
+  | (intros; apply _root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.IdempotentTensorOne.exists_idempotent_tmul_one_eq ..)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdempotentTmulOneEqOfSmoothAlgebraStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+theorem _root_.GlobalTheory.T.exists_idempotent_tmul_one_eq_of_smooth_algebra : ∀ (R A : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [CommRing A] [Algebra R A], Algebra.Smooth R A → ∀ ε : A ⊗[R] FractionRing R, IsIdempotentElem ε → ∃ a : A, IsIdempotentElem a ∧ a ⊗ₜ[R] (1 : FractionRing R) = ε := by
+  first | exact @GlobalTheory.exists_isIdempotentElem_tmul_one_eq_of_smooth | exact GlobalTheory.exists_isIdempotentElem_tmul_one_eq_of_smooth | (intros; apply GlobalTheory.exists_isIdempotentElem_tmul_one_eq_of_smooth <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosureGenericFibreClopenSplit
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+theorem GlobalTheory.closure_generic_fibre_clopen_split : ∀ (R A : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [CommRing A] [Algebra R A], Algebra.Smooth R A → ∀ C C' : Set (PrimeSpectrum A), C ∪ C' = {r | r.asIdeal.comap (algebraMap R A) = ⊥} → Disjoint C (closure C') → Disjoint (closure C) C' → Disjoint (closure C) (closure C') ∧ closure C ∪ closure C' = Set.univ := by
+  intro R A _ _ _ _ _ hsm C C' hU hd1 hd2
+  let K := FractionRing R
+  let f : A →+* A ⊗[R] K := (Algebra.TensorProduct.includeLeft : A →ₐ[R] A ⊗[R] K).toRingHom
+  let φ := PrimeSpectrum.comap f
+  have hφc : Continuous φ := PrimeSpectrum.continuous_comap f
+
+  have hF : {r : PrimeSpectrum A | r.asIdeal.comap (algebraMap R A) = ⊥} = Set.range φ := by
+    have h1 := GlobalTheory.T.range_comap_includeRight_eq_comap_eq_ker R A K
+    have hker : RingHom.ker (algebraMap R K) = ⊥ :=
+      (RingHom.injective_iff_ker_eq_bot _).1 (IsFractionRing.injective R K)
+    rw [hker] at h1
+    rw [← h1]
+    let e := (Algebra.TensorProduct.comm R A K).toRingEquiv
+    have hg : (Algebra.TensorProduct.includeRight : A →ₐ[R] K ⊗[R] A).toRingHom = e.toRingHom.comp f := by
+      ext a
+      simp [f, e]
+    rw [hg, PrimeSpectrum.comap_comp, Set.range_comp]
+    have hsurj : Set.range (PrimeSpectrum.comap e.toRingHom) = Set.univ := by
+      refine Set.eq_univ_of_forall fun y => ⟨PrimeSpectrum.comap e.symm.toRingHom y, ?_⟩
+      rw [← PrimeSpectrum.comap_comp_apply, RingEquiv.symm_toRingHom_comp_toRingHom]
+      rfl
+    rw [hsurj, Set.image_univ]
+
+  have hinj : Function.Injective f := by
+    have hl := Module.Flat.lTensor_preserves_injective_linearMap (M := A) (Algebra.linearMap R K)
+      (IsFractionRing.injective R K)
+    intro x y hxy
+    have : (LinearMap.lTensor A (Algebra.linearMap R K)) ((TensorProduct.rid R A).symm x) =
+        (LinearMap.lTensor A (Algebra.linearMap R K)) ((TensorProduct.rid R A).symm y) := by
+      simpa [f] using hxy
+    exact (TensorProduct.rid R A).symm.injective (hl this)
+  have hdense : DenseRange φ :=
+    (PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical f).2
+      (by rw [(RingHom.injective_iff_ker_eq_bot f).1 hinj]; exact bot_le)
+  have hCC' : Disjoint C C' := hd1.mono_right subset_closure
+  have hunion : φ ⁻¹' C ∪ φ ⁻¹' C' = Set.univ := by
+    rw [← Set.preimage_union, hU, hF, Set.preimage_range]
+  have hcompl : IsCompl (φ ⁻¹' C) (φ ⁻¹' C') :=
+    ⟨hCC'.preimage φ, codisjoint_iff.2 hunion⟩
+  have hS1 : φ ⁻¹' closure C = φ ⁻¹' C := by
+    refine Set.Subset.antisymm (fun x hx => ?_) (Set.preimage_mono subset_closure)
+    have hx' : x ∈ φ ⁻¹' C ∪ φ ⁻¹' C' := hunion ▸ Set.mem_univ x
+    rcases hx' with h | h
+    · exact h
+    · exact absurd h (Set.disjoint_left.1 hd2 hx)
+  have hclosed : IsClosed (φ ⁻¹' C) := hS1 ▸ isClosed_closure.preimage hφc
+  have hS2 : φ ⁻¹' closure C' = φ ⁻¹' C' := by
+    refine Set.Subset.antisymm (fun x hx => ?_) (Set.preimage_mono subset_closure)
+    have hx' : x ∈ φ ⁻¹' C ∪ φ ⁻¹' C' := hunion ▸ Set.mem_univ x
+    rcases hx' with h | h
+    · exact absurd hx (Set.disjoint_left.1 hd1 h)
+    · exact h
+  have hclosed' : IsClosed (φ ⁻¹' C') := hS2 ▸ isClosed_closure.preimage hφc
+  have hopen : IsOpen (φ ⁻¹' C) := by
+    rw [← isClosed_compl_iff, hcompl.compl_eq]; exact hclosed'
+  obtain ⟨ε, hε, hεS⟩ := PrimeSpectrum.isClopen_iff.1 ⟨hclosed, hopen⟩
+  obtain ⟨a, ha, haε⟩ := GlobalTheory.T.exists_idempotent_tmul_one_eq_of_smooth_algebra R A hsm ε hε
+  have hfa : f a = ε := by simp [f, haε]
+  have hpre : φ ⁻¹' (PrimeSpectrum.basicOpen a : Set (PrimeSpectrum A)) = φ ⁻¹' C := by
+    rw [hεS, ← hfa]
+    ext x
+    simp [φ, PrimeSpectrum.mem_basicOpen]
+  have hCa : C ⊆ (PrimeSpectrum.basicOpen a : Set (PrimeSpectrum A)) := by
+    intro x hx
+    have hxF : x ∈ Set.range φ := hF ▸ hU ▸ Or.inl hx
+    obtain ⟨y, rfl⟩ := hxF
+    have hy : y ∈ φ ⁻¹' C := hx
+    rw [← hpre] at hy
+    exact hy
+  have hC'a : C' ⊆ (PrimeSpectrum.basicOpen a : Set (PrimeSpectrum A))ᶜ := by
+    intro x hx
+    have hxF : x ∈ Set.range φ := hF ▸ hU ▸ Or.inr hx
+    obtain ⟨y, rfl⟩ := hxF
+    have hy : y ∈ (φ ⁻¹' C)ᶜ := hcompl.compl_eq ▸ hx
+    rw [← hpre] at hy
+    exact hy
+  have hclo : IsClopen (PrimeSpectrum.basicOpen a : Set (PrimeSpectrum A)) :=
+    PrimeSpectrum.isClopen_iff.2 ⟨a, ha, rfl⟩
+  refine ⟨?_, ?_⟩
+  · exact (disjoint_compl_right (a := (PrimeSpectrum.basicOpen a : Set (PrimeSpectrum A)))).mono
+      (closure_minimal hCa hclo.isClosed) (closure_minimal hC'a hclo.isOpen.isClosed_compl)
+  · rw [← closure_union, hU, hF]
+    exact hdense.closure_range
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosureGenericFibreClopenSplitStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+theorem _root_.GlobalTheory.T.closure_generic_fibre_clopen_split_alt : ∀ (R A : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [CommRing A] [Algebra R A], Algebra.Smooth R A → ∀ C C' : Set (PrimeSpectrum A), C ∪ C' = {r | r.asIdeal.comap (algebraMap R A) = ⊥} → Disjoint C (closure C') → Disjoint (closure C) C' → Disjoint (closure C) (closure C') ∧ closure C ∪ closure C' = Set.univ := by
+  first | exact @GlobalTheory.closure_generic_fibre_clopen_split | exact GlobalTheory.closure_generic_fibre_clopen_split | (intros; apply GlobalTheory.closure_generic_fibre_clopen_split <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothGenericFibreClosurePartition
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory
+
+theorem smooth_genericFibre_closure_partition : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)), Smooth f → ∀ C C' : Set X, C ∪ C' = f ⁻¹' {(⊥ : PrimeSpectrum R)} → Disjoint C (closure C') → Disjoint (closure C) C' → Disjoint (closure C) (closure C') ∧ closure C ∪ closure C' = Set.univ := by
+  intro R _ _ _ X f hf C C' hU h1 h2
+  have key : ∀ (A : CommRingCat.{0}) (j : Spec A ⟶ X) [IsOpenImmersion j],
+      Disjoint (j ⁻¹' closure C) (j ⁻¹' closure C') ∧
+        (j ⁻¹' closure C) ∪ (j ⁻¹' closure C') = Set.univ := by
+    intro A j _
+    obtain ⟨φ, hφ⟩ := Spec.map_surjective (j ≫ f)
+    have hs : Smooth (Spec.map φ) := by rw [hφ]; infer_instance
+    have hφs : φ.hom.Smooth := (HasRingHomProperty.Spec_iff (P := @Smooth)).mp hs
+    letI : Algebra R A := φ.hom.toAlgebra
+    have hA : Algebra.Smooth R A := hφs
+    have hcl : ∀ S : Set X, j ⁻¹' closure S = closure (j ⁻¹' S) := fun S =>
+      j.isOpenEmbedding.isOpenMap.preimage_closure_eq_closure_preimage j.continuous S
+    rw [hcl, hcl]
+    refine GlobalTheory.T.closure_generic_fibre_clopen_split_alt R A hA (j ⁻¹' C) (j ⁻¹' C') ?_ ?_ ?_
+    · have : j ⁻¹' C ∪ j ⁻¹' C' = (Spec.map φ) ⁻¹' {(⊥ : PrimeSpectrum R)} := by
+        rw [← Set.preimage_union, hU, hφ, ← Set.preimage_comp, Scheme.Hom.comp_base]
+        rfl
+      refine this.trans ?_
+      ext r
+      exact ⟨fun h => congrArg PrimeSpectrum.asIdeal h, fun h => PrimeSpectrum.ext h⟩
+    · have := h1.preimage j
+      rw [hcl] at this
+      exact this
+    · have := h2.preimage j
+      rw [hcl] at this
+      exact this
+  constructor
+  · rw [Set.disjoint_left]
+    intro x hx hx'
+    obtain ⟨i, y, rfl⟩ := X.affineCover.exists_eq x
+    exact Set.disjoint_left.mp (@key _ (X.affineCover.f i) (X.affineCover.map_prop i)).1 hx hx'
+  · rw [Set.eq_univ_iff_forall]
+    intro x
+    obtain ⟨i, y, rfl⟩ := X.affineCover.exists_eq x
+    exact (Set.eq_univ_iff_forall.mp (@key _ (X.affineCover.f i) (X.affineCover.map_prop i)).2) y
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothGenericFibreClosurePartitionStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +325,5 @@ open scoped CategoryTheory.Obj
 
 theorem _root_.GlobalTheory.T.disjoint_closure_and_union_eq_univ_of_genericFibre_partition : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)), Smooth f → ∀ C C' : Set X, C ∪ C' = f ⁻¹' {(⊥ : PrimeSpectrum R)} → Disjoint C (closure C') → Disjoint (closure C) C' → Disjoint (closure C) (closure C') ∧ closure C ∪ closure C' = Set.univ := by
   first | exact @GlobalTheory.smooth_genericFibre_closure_partition | exact GlobalTheory.smooth_genericFibre_closure_partition | (intros; apply GlobalTheory.smooth_genericFibre_closure_partition <;> assumption)
+end
+end

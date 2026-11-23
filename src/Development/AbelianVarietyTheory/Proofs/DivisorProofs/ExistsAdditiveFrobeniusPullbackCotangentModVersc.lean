@@ -5,9 +5,11 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobTwistBas
 public import Mathlib.RingTheory.HopfAlgebra.Quotient
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AppOneEqZeroOfKernelIdealOfCompEqPrimeSmul
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DUnitMemRangeOfMemKerIdeal
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimitiveWithCotangentOfDualHeightOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowCharEqZeroOfKillsVerschiebung
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigExtMapRelFrobCompRigOfOmega
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqZeroOfCobOneEqZero
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CartierDualHeightOneAdjoinPrimitiveEqTopStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +29,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,6 +49,65 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowCharEqZeroOfKillsVerschiebung
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigExtMapRelFrobCompRigOfOmega
+import Mathlib.RingTheory.RegularLocalRing.Defs
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPrimitiveWithCotangentOfDualHeightOne
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup
+
+namespace GlobalTheory.PDiv
+
+theorem exists_primitive_dUnit_eq : ∀ (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p]
+    [CommRing H] [HopfAlgebra K H] [IsCocomm K H] [Module.Finite K H],
+    (∀ φ ∈ augIdeal K (CartierDual K H), φ ^ p = 0) →
+    ∀ w : Cot K H, ∃ b : H, cobOne K H b = 0 ∧ dUnit (R := K) b = w := by
+  intro p _ K H _ _ _ _ _ _ hnil w
+  have hgen := GlobalTheory.T.cartierDual_height_one_adjoin_primitive_eq_top p K (CartierDual K H) hnil
+  set e := CartierDual.bidual K H
+  have hH : Algebra.adjoin K {b : H | cobOne K H b = 0} = ⊤ := by
+    let f : CartierDual K (CartierDual K H) →ₐ[K] H :=
+      ((e.symm : CartierDual K (CartierDual K H) →ₐc[K] H) : CartierDual K (CartierDual K H) →ₐ[K] H)
+    have himg : f '' {φ | cobOne K (CartierDual K (CartierDual K H)) φ = 0} ⊆
+        {b : H | cobOne K H b = 0} := by
+      rintro _ ⟨φ, hφ, rfl⟩
+      simp only [Set.mem_setOf_eq] at hφ ⊢
+      show cobOne K H ((e.symm : CartierDual K (CartierDual K H) →ₐc[K] H) φ) = 0
+      rw [← pullTwo_cobOne, hφ, map_zero]
+    rw [eq_top_iff]
+    intro x _
+    refine Algebra.adjoin_mono himg ?_
+    rw [Algebra.adjoin_image]
+    refine ⟨e x, ?_, ?_⟩
+    · rw [hgen]; trivial
+    · exact e.symm_apply_apply x
+  let P : Submodule K H := LinearMap.ker (cobOne K H)
+  let S : Submodule K (Cot K H) := P.map (AugCot.d (counitAlgHom K H))
+  have hS : ∀ a ∈ Algebra.adjoin K {b : H | cobOne K H b = 0}, dUnit (R := K) a ∈ S := by
+    intro a ha
+    induction ha using Algebra.adjoin_induction with
+    | mem x hx => exact Submodule.mem_map_of_mem (p := P) hx
+    | algebraMap r => rw [dUnit, AugCot.d_algebraMap]; exact S.zero_mem
+    | add x y _ _ hx hy => rw [dUnit, map_add (f := _)]; exact S.add_mem hx hy
+    | mul x y _ _ hx hy =>
+      rw [dUnit, AugCot.d_mul]
+      exact S.add_mem (S.smul_mem _ hy) (S.smul_mem _ hx)
+  obtain ⟨a, rfl⟩ := AugCot.d_surjective (counitAlgHom K H) w
+  obtain ⟨b, hb, hbd⟩ := hS a (by rw [hH]; trivial)
+  exact ⟨b, hb, hbd⟩
+
+end GlobalTheory.PDiv
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdditiveFrobeniusPullbackCotangentModVersc
+
+section
 
 @[expose] public section
 
@@ -136,3 +196,6 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
       abel
 
 end GlobalTheory.PDivGroup
+end
+end
+end

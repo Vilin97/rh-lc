@@ -1,7 +1,8 @@
 module
 
 public import Formalism.FlagUnipotentLattices.IdealCountLeW
-public import Lemmata.GeneralBFactSecondMore.Imports
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.Imports
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,19 +16,12 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,11 +41,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
+public import Mathlib.RingTheory.DedekindDomain.Different
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Presheaf
 import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
 public import Mathlib.RingTheory.DedekindDomain.Factorization
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+
+-- Source module: Lemmata.GeneralBFactSecondMore.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_second'
+
+theorem goal1 :
+  ∀ {E U : Type} [inst : Field.{0} E] [NumberField.{0} E] [inst_2 : AddCommGroup.{0} U] [inst_3 : Module.{0, 0} E U]
+  [inst_4 : Module.{0, 0} (NumberField.RingOfIntegers.{0} E) U]
+  [IsScalarTower.{0, 0, 0} (NumberField.RingOfIntegers.{0} E) E U]
+  (N : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} E) U),
+  Eq.{1} (Submodule.span.{0, 0} E (SetLike.coe.{0, 0} N)) Top.top.{0} →
+    ∀ (x : U),
+      Exists.{1} fun (d : NumberField.RingOfIntegers.{0} E) ↦
+        And (Ne.{1} d 0) (Membership.mem.{0, 0} N (HSMul.hSMul.{0, 0, 0} d x)) := by
+  apply GlobalTheory.TargetStatementBis.main <;> assumption
+
+end Bl.general_b_fact_second'
+end
+end
+
+-- Source module: Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ColonCountWeighted
+
+section
 
 @[expose] public section
 
@@ -532,3 +561,5 @@ theorem dual_lattice_index : DualIndex := by
   exact DualLatticeIndexBis.relIndex_hermitian_dual_eq h M N hnd hNM hM hN
 
 end Formalism.HermitianLatticeCounting.P
+end
+end

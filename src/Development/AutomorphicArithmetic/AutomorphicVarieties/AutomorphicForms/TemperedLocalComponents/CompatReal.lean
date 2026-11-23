@@ -11,32 +11,15 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.ExBridge
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.ExPlaceIso
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.ExtReal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.PstRes
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.WdRelRes
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RTwist
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.CompatCsd
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.IsoOfFrob
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LocCompC
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.RealExistenceFromPublished
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.CmInertiaRestrictionHolds
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsQuadraticOfInertia
-import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsQuadraticSignCharacter
-import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.FrobeniusEigenvaluesTwist
-import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.FrobeniusSignCompatibility
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.HeckeCharAlgebraicOfSign
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.HeckeCharParallelWeight
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ImaginaryGenerator
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.QuadraticComplexMultiplication
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SemisimpleRestrictionToNormalSubgroup
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.BcAtt0
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.BcDual0
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.QuadBCwOfQuadBC0
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.RecMove
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.UntwistS
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FiniteDimensionalWdSpace
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.FiniteCohomology
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -47,7 +30,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -65,12 +47,213 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivOfRangeEq
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasExponentZeroIff
+import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.TrivialOnInertiaOfUnr
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Newform
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
+import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+import ReciprocityTheory.NeutralLocalFields.Reciprocity
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.WdRelRes
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RTwist
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.CompatCsd
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.IsoOfFrob
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LocCompC
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.RealExistenceFromPublished
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.CmInertiaRestrictionHolds
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsQuadraticOfInertia
+import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsQuadraticSignCharacter
+import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.FrobeniusEigenvaluesTwist
+import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.FrobeniusSignCompatibility
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.HeckeCharAlgebraicOfSign
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.HeckeCharParallelWeight
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RealTransport.RealTransport
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AlmostNormFinDiag
+import Mathlib.RingTheory.PicardGroup
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SemisimpleRestrictionToNormalSubgroup
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.BcAtt0
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.BcDual0
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.ExistenceOfGaloisRepresentationsOfHyp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.SplitOf
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.RecMove
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.UntwistS
+import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
+import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BcDefs
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RealTransport.RealTransport
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.PstRes
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+
+theorem UpperTheory.V.Af.Cq.pstRes :
+    ∀ (F K Ω : Type) [Field F] [NumberField F] [Field K] [NumberField K] [Field Ω] [Algebra F K] [Algebra F Ω] [Algebra K Ω] [IsScalarTower F K Ω] [IsAlgClosure F Ω] [IsAlgClosure K Ω] (l : ℕ) [Fact l.Prime] (A : ValuationSubring Ω) (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O) (Bw' : LocBridge l K Ω (Dec (F := K) A) O),
+        Bw'.Kw = Bw.Kw → Bw'.j = Bw.j → Bw'.LL = Bw.LL → ∀ (n : ℕ) (r : G F Ω →* GL (Fin n) (Qbar l)), IsPstAt (Loc.PP l) Bw (r.comp (Dec (F := F) A).subtype) →
+        IsPstAt (Loc.PP l) Bw' ((r.comp (AlgEquiv.restrictScalarsHom F : G K Ω →* G F Ω)).comp (Dec (F := K) A).subtype) := by
+  intro F K Ω _ _ _ _ _ _ _ _ _ _ _ l _ A O _ _ _ Bw Bw' hK hj hL n r hr
+  obtain ⟨Kw', j', jE', jd', e', ec', esc', ecomm', LL0', hs', eO', h1', h2', h3'⟩ := Bw'
+  dsimp only at hK hj hL
+  subst hK hj hL
+  obtain ⟨LL', r', ⟨hle, hmap⟩, hpst⟩ := hr
+  refine ⟨LL', r'.comp (e'.trans Bw.e.symm).toMonoidHom, ⟨hle, ?_⟩, ?_⟩
+  · refine MonoidHom.ext fun g => ?_
+    have h1 := DFunLike.congr_fun hmap (Bw.e.symm (e' g))
+    have h2 : ((Bw.e.symm (e' g) : ↥(Dec (F := F) A)) : Ω ≃ₐ[F] Ω) =
+        AlgEquiv.restrictScalarsHom F (g : Ω ≃ₐ[K] Ω) := by
+      refine AlgEquiv.ext fun x => Bw.j.injective ?_
+      rw [← Bw.e_comm, MulEquiv.apply_symm_apply, ecomm']
+      rfl
+    refine h1.trans ?_
+    exact congrArg r h2
+  · convert hpst using 1
+    refine MonoidHom.ext fun g => ?_
+    simp [LocBridge.repE]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ImaginaryGenerator
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
+open GlobalTheory.CuspRep GlobalTheory.HeckeGal GlobalTheory.GalOfCusp UpperTheory.V.Published
+open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.Bc
+
+theorem UpperTheory.imaginary_generator :
+    UpperTheory.V.Af.Cr.ImagGen := by
+  intro K _ _ _ h
+  haveI : Algebra.IsQuadraticExtension ℚ K := ⟨h⟩
+  obtain ⟨d, e, -, h0, h1⟩ := GlobalTheory.QuadSymbol.AlmostNorm.exists_basis_sq ℚ K
+  have hy : e 1 ^ 2 = (d : K) := by rw [sq, h1]; simp
+  have hx : ∀ x : K, ∃ a b : ℚ, x = (a : K) + (b : K) * e 1 := fun x => by
+    refine ⟨e.repr x 0, e.repr x 1, ?_⟩
+    conv_lhs => rw [← e.sum_repr x]
+    rw [Fin.sum_univ_two, h0, Rat.smul_def, Rat.smul_def, mul_one]
+  refine ⟨d, e 1, ?_, hy, hx⟩
+  by_contra hd
+  have hd0 : (0 : ℝ) ≤ d := by exact_mod_cast not_lt.1 hd
+  obtain ⟨φ⟩ : Nonempty (K →+* ℂ) := inferInstance
+  apply IsTotallyComplex.complexEmbedding_not_isReal φ
+  have hφ : φ (e 1) ^ 2 = ((Real.sqrt d : ℝ) : ℂ) ^ 2 := by
+    rw [← map_pow, hy, ← Complex.ofReal_pow, Real.sq_sqrt hd0]
+    simp
+  have hc : (starRingEnd ℂ) (φ (e 1)) = φ (e 1) := by
+    rcases sq_eq_sq_iff_eq_or_eq_neg.1 hφ with h2 | h2 <;> simp [h2]
+  rw [ComplexEmbedding.isReal_iff]
+  ext1 x
+  obtain ⟨a, b, rfl⟩ := hx x
+  rw [ComplexEmbedding.conjugate_coe_eq]
+  simp [hc]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.QuadraticComplexMultiplication
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
+open GlobalTheory.CuspRep GlobalTheory.HeckeGal GlobalTheory.GalOfCusp UpperTheory.V.Published
+open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.Bc
+
+theorem UpperTheory.quadratic_complex_multiplication :
+    UpperTheory.V.Af.Cr.QuadCM := by
+  intro F Ω _ _ _ _ _ _ d δ hδ hd
+  have halg : Algebra.IsAlgebraic F Ω := IsAlgClosure.isAlgebraic
+  have hint : IsIntegral F δ := (halg.isAlgebraic δ).isIntegral
+  let K : IntermediateField F Ω := IntermediateField.adjoin F {δ}
+  haveI : FiniteDimensional F K := IntermediateField.adjoin.finiteDimensional hint
+  haveI : NumberField K := NumberField.of_module_finite F K
+  let y : K := IntermediateField.AdjoinSimple.gen F δ
+  have hy : algebraMap K Ω y = δ := rfl
+  have hy2 : y ^ 2 = algebraMap F K d := by
+    apply (algebraMap K Ω).injective
+    rw [map_pow, hy, hδ, ← IsScalarTower.algebraMap_apply]
+  have hle : (minpoly F δ).natDegree ≤ 2 := by
+    have hm : (X ^ 2 - C d : F[X]).Monic := monic_X_pow_sub_C d (by norm_num)
+    have h1 := minpoly.min F δ hm (by simp [hδ])
+    have h2 := natDegree_le_natDegree h1
+    rwa [natDegree_X_pow_sub_C _] at h2
+  have hne : (minpoly F δ).natDegree ≠ 1 := by
+    intro h
+    obtain ⟨c, hc⟩ := (minpoly.natDegree_eq_one_iff).1 h
+    have hcd : c ^ 2 = d := by
+      apply (algebraMap F Ω).injective
+      rw [map_pow, hc, hδ]
+    let v : InfinitePlace F := Classical.arbitrary _
+    have h3 := hd (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal v))
+    rw [← hcd, map_pow] at h3
+    exact absurd h3 (not_lt.2 (sq_nonneg _))
+  have hpos := minpoly.natDegree_pos hint
+  have hdeg : (minpoly F δ).natDegree = 2 := by omega
+  have hrk : Module.finrank F K = 2 := by
+    rw [← hdeg]; exact IntermediateField.adjoin.finrank hint
+  haveI : IsTotallyComplex K := by
+    refine ⟨fun v => ?_⟩
+    rw [← InfinitePlace.not_isReal_iff_isComplex]
+    intro hv
+    have h3 := hd ((InfinitePlace.embedding_of_isReal hv).comp (algebraMap F K))
+    rw [RingHom.comp_apply, ← hy2, map_pow] at h3
+    exact absurd h3 (not_lt.2 (sq_nonneg _))
+  haveI : Algebra.IsQuadraticExtension F K := { finrank_eq_two' := hrk }
+  haveI : IsAlgClosure K Ω :=
+    { isAlgClosed := IsAlgClosure.isAlgClosed F
+      isAlgebraic := Algebra.IsAlgebraic.tower_top (K := F) K }
+  refine ⟨K, inferInstance, inferInstance, IsCMField.ofCMExtension F K, inferInstance, inferInstance,
+    inferInstance, inferInstance, hrk, y, hy, fun x => ?_⟩
+  obtain ⟨f, hf, hx⟩ := (IntermediateField.adjoin.powerBasis hint).exists_eq_aeval x
+  rw [IntermediateField.adjoin.powerBasis_dim, hdeg] at hf
+  refine ⟨f.coeff 0, f.coeff 1, ?_⟩
+  rw [hx, IntermediateField.adjoin.powerBasis_gen]
+  conv_lhs => rw [eq_X_add_C_of_natDegree_le_one (p := f) (by omega)]
+  simp only [map_add (f := _), map_mul, aeval_C, aeval_X]
+  exact add_comm _ _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.QuadBCwOfQuadBC0
+
+section
+
+@[expose] public section
+
+open NumberField Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.CuspRep GlobalTheory.HeckeGal GlobalTheory.GalOfCusp
+open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.Bc UpperTheory.V.Published
+
+namespace UpperTheory.V.Br
+
+theorem quadBCw_of_quadBC0 (hN : GlobalTheory.Mem.LiteralAutomorphy.LitN) (hC : ExC) (hR : ExR) (h : QuadBC0) : QuadBCw := by
+  intro F E _ _ _ _ _ _ _ h2 a _ ha π hr
+  refine (h F E h2 a ha π hr).imp_right fun ⟨P, hP⟩ => ⟨P, hP, fun hreg ⟨χ, hχ⟩ => ?_⟩
+  haveI : Algebra.IsQuadraticExtension F E := { finrank_eq_two' := h2 }
+  haveI : IsCMField E := IsCMField.ofCMExtension F E
+  exact splitOf hN hC hR F E h2 a ha π χ P hreg hχ hP
+
+theorem quadBCw (P : Hypotheses₂) : QuadBCw :=
+  quadBCw_of_quadBC0 P.litN (galoisExistence_from_published P) (realExistence_from_published P) P.bc
+
+end UpperTheory.V.Br
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.CompatReal
+
+section
 
 @[expose] public section
 
@@ -260,4 +443,6 @@ theorem UpperTheory.V.Af.compatReal :
   refine Lev.recMove hL F K Ω A v w h h' _ i hi n σ σ' e he rc rc' hrc hrc' _ _ ?_ c3
   exact Cq.wdRelRes F K Ω l A O Bw Bw' e1 e2 e3 n r hpst ι v w h h' hj hj' i hi
 
+end
+end
 end

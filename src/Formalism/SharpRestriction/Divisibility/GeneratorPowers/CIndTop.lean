@@ -3,11 +3,19 @@ module
 public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
 public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThExprUniqOfChartIndep2
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.GlobalSectionsRankAlgClosed
-public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndAll
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpActOf
-public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGauge
-public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrRatio
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndEnc
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndVerb
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndVerbB
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.EvalSinglePointId
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpActOf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpChartOf
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTiePf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqChart
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniqPf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvPf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.KillAddVal
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LinEigPf
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PsiCover
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,6 +52,47 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpActOf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGauge
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrRatio
+
+-- Source module: Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndAll
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+namespace Formalism.MainNotions.ModuliIntegralCharts.H1
+
+open ReciprocityTheory.ChartRestriction.G.Out NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor
+
+theorem chartIndep2_of_open (hGauge : ExpGaugeOfSt) (hKill : KillAddValSt) (hGlob : GlobalFnsSt)
+    (hFix : FrTruncFixSt) (hInv : HarmInvSt) : ChartIndepSt2 :=
+  chartIndep2_of_fix
+    (chartIndepTrunc_of (expChartOf_of (expActOf_of linEigSt_holds)) hGauge tie_holds ExpUniqChart.expUniqTan
+      (gaugeUniq_of_global hGlob) hKill)
+    hFix germFix_holds hInv
+
+theorem chartIndep2_of_open' (hGauge : ExpGaugeOfSt) (hPsi : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
+    (H : Host E), PsiCoverSt H) (hGlob : GlobalFnsSt) (hFix : FrTruncFixSt) (hInv : HarmInvSt) : ChartIndepSt2 :=
+  chartIndep2_of_open hGauge (killAddVal_of hPsi) hGlob hFix hInv
+
+theorem chartIndep2_of_open'' (hGauge : ExpGaugeOfSt) (hGlob : GlobalFnsSt) (hFix : FrTruncFixSt)
+    (hInv : HarmInvSt) : ChartIndepSt2 :=
+  chartIndep2_of_open' hGauge (fun _ _ _ _ H => psiCover_holds H) hGlob hFix hInv
+
+theorem chartIndep2_of_gauge (hGauge : ExpGaugeOfSt) (hGlob : GlobalFnsSt) (hFix : FrTruncFixSt) : ChartIndepSt2 :=
+  chartIndep2_of_open'' hGauge hGlob hFix (harmInv_of (expActOf_of linEigSt_holds))
+
+end Formalism.MainNotions.ModuliIntegralCharts.H1
+end
+end
+
+-- Source module: Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndTop
+
+section
 
 @[expose] public section
 
@@ -61,3 +110,5 @@ theorem chartIndep2_of_glob (hGlob : ReciprocityTheory.ChartRestriction.G.Out.Gl
 
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1
+end
+end

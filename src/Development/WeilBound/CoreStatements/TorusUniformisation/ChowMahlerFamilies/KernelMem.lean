@@ -8,20 +8,14 @@ public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatBcTors
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.Weilreg
 import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.BtExistsBc
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.CubNMulOfPow
-public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.ExistsDerGen
-public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.FunctionFamilyIdempotent
-public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.TensOfBc
+public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.ValAtSpecMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
-import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
-import Mathlib.AlgebraicGeometry.Sites.Fpqc
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.CategoryTheory.ExtremalEpi
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -32,7 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,8 +46,179 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.FunctionFamilyIdempotent
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsUnitFormLocalizationEtaleNbhd
+public import Mathlib.Basic.NNReal.Defs
+public import Mathlib.RingTheory.Valuation.Integers
+public import Mathlib.Tactic.ENatToNat
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwpairAlg
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwpairGeo
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.AlgebraicGeometry.Sites.Fpqc
+import Mathlib.CategoryTheory.ExtremalEpi
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.WeilfunCore
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.ExistsDerGen
+
+section
+
+@[expose] public section
+
+open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT
+
+noncomputable section
+
+namespace PositivityTheory.Xgn.TestGroupPoint
+
+theorem exists_der_gen {R RC C N L U : Type} [CommRing R] [IsDomain R] [CommRing RC] [IsDomain RC] [Field C]
+    [Algebra RC C] [AddCommGroup N] [Finite N] [AddCommGroup L] [Module R L] [AddCommGroup U] [Module R U]
+    (σ : R →+* RC) (h1 : Function.Injective σ) (h2 : Function.Injective (algebraMap RC C))
+    (φ : R →+* C) (hφ : ∀ r, algebraMap RC C (σ r) = φ r)
+    {A : Subalgebra R (Multiplicative N → R)} (hA : IsHopfOrder A) (p : ℕ) {g : ℕ} (θ : L →ₗ[R] omega A)
+    (hθs : Function.Surjective θ) (hθk : ∀ w, θ w = 0 → ∃ u, w = p • u) (j : L →ₗ[R] U)
+    (io : U →ₛₗ[σ] (Fin g → RC)) (M : Submodule RC (N → C))
+    (hM : M = Submodule.span RC {f | ∃ g ∈ A, f = fun x => φ (g (Multiplicative.ofAdd x))}) :
+    ∃ Dv : M →ₗ[RC] ReciprocityTheory.PGsh.Up.LieDualModP p RC g, IsDerAt0 M Dv ∧
+      ∀ (a : A) (f : M) (w : L), (∀ x, f.1 x = φ (a.1 (Multiplicative.ofAdd x))) → cotMap A a = θ w →
+        Dv f = Submodule.Quotient.mk (io (j w)) := by
+  letI : Algebra R RC := σ.toAlgebra
+  let k₀ : L →ₗ[R] ReciprocityTheory.PGsh.Up.LieDualModP p RC g :=
+    { toFun := fun w => Submodule.Quotient.mk (io (j w))
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _), Submodule.Quotient.mk_add]
+      map_smul' := fun r a => by
+        rw [map_smul, io.map_smulₛₗ, Submodule.Quotient.mk_smul]
+        exact algebraMap_smul RC r _ }
+  have hk : LinearMap.ker θ ≤ LinearMap.ker k₀ := by
+    intro w hw
+    obtain ⟨u, rfl⟩ := hθk w hw
+    change Submodule.Quotient.mk (io (j (p • u))) = 0
+    rw [map_nsmul, map_nsmul, Submodule.Quotient.mk_eq_zero, ← Nat.cast_smul_eq_nsmul RC]
+    exact Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) Submodule.mem_top
+  let d₀ : omega A →ₗ[R] ReciprocityTheory.PGsh.Up.LieDualModP p RC g :=
+    ((LinearMap.ker θ).liftQ k₀ hk) ∘ₗ (θ.quotKerEquivOfSurjective hθs).symm.toLinearMap
+  have hd₀ : ∀ w, d₀ (θ w) = k₀ w := fun w => by
+    have : (θ.quotKerEquivOfSurjective hθs).symm (θ w) = Submodule.Quotient.mk w :=
+      (LinearEquiv.symm_apply_eq _).2 rfl
+    simp only [d₀, LinearMap.comp_apply, LinearEquiv.coe_coe, this, Submodule.liftQ_apply]
+  obtain ⟨Dv, hD1, hD2⟩ := exists_der_ext h1 h2 φ hφ hA (d₀ ∘ₗ cotMap A)
+    (fun a b => by simp only [LinearMap.comp_apply, cotMap_mul, map_add (f := _), map_smul]) M hM
+  refine ⟨Dv, hD1, fun a f w hf hw => ?_⟩
+  rw [hD2 a f hf, LinearMap.comp_apply, hw, hd₀]
+  rfl
+
+theorem cotMap_aug {R T : Type} [CommRing R] [CommGroup T] (A : Subalgebra R (T → R)) (a : augIdeal A) :
+    cotMap A a.1 = (augIdeal A).toCotangent a := by
+  have ha1 : a.1.1 1 = 0 := a.2
+  exact cotMap_apply _ _ a (by rw [ha1, map_zero, sub_zero])
+
+theorem cotMap_char {R T : Type} [CommRing R] [CommGroup T] (A : Subalgebra R (T → R)) (χ : T →* Rˣ)
+    (hm : (fun t => ((χ t : Rˣ) : R)) ∈ A) : cotMap A ⟨_, hm⟩ = dlogChar A χ := by
+  rw [OrderApi.dlogChar_of_mem _ _ hm]
+  refine cotMap_apply _ _ _ ?_
+  simp
+
+end PositivityTheory.Xgn.TestGroupPoint
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.TensOfBc
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory TensorProduct
+open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT
+
+noncomputable section
+
+namespace PositivityTheory.Xgn.TestGroupPoint
+
+theorem bichar_mem {C RC : Type} [Field C] [IsAlgClosed C] [CommRing RC] [IsDomain RC] [Algebra RC C]
+    {v : Valuation C NNReal} (hv : v.Integers RC) {T : Type} [CommGroup T] [Finite T] (Γ : QFGroup RC T)
+    (β : T →* T →* RCˣ) (s : Γ((Γ.G ⊗ Γ.G).left, ⊤))
+    (hs : ∀ a b, valAt (lift (Γ.pt a) (Γ.pt b)).left ⊤ le_top s = algebraMap RC _ ((β a b : RCˣ) : RC)) :
+    (fun z : T × T => ((β z.1 z.2 : RCˣ) : RC)) ∈ prodSpan (Γ.btOrder ⊤) := by
+  haveI : ValuationRing RC := ValuationRing.of_integers v hv
+  exact PositivityTheory.HtPt.Twpair.bichar_mem_prodSpan (PositivityTheory.HtPt.Twpair.henselian hv)
+    (fun P => (PositivityTheory.HtPt.Twpair.prime_eq_bot_or_maximal hv P.asIdeal).imp id fun h => PrimeSpectrum.ext h)
+    Γ β s hs
+
+theorem tens_of_bc {R RC C N : Type} [CommRing R] [CommRing RC] [Field C] [Algebra R RC] [Algebra RC C]
+    [AddCommGroup N] (φ : R →+* C) (hφ : ∀ r, algebraMap RC C (algebraMap R RC r) = φ r)
+    {A : Subalgebra R (Multiplicative N → R)} {A' : Subalgebra RC (Multiplicative N → RC)}
+    (ee : RC ⊗[R] A ≃ₐ[RC] A') (hee : ∀ (a : A) t, (ee (1 ⊗ₜ a)).1 t = algebraMap R RC (a.1 t))
+    (M : Submodule RC (N → C))
+    (hM : M = Submodule.span RC {f | ∃ g ∈ A, f = fun x => φ (g (Multiplicative.ofAdd x))}) :
+    ∀ g ∈ prodSpan A', (fun z : N × N =>
+      algebraMap RC C (g (Multiplicative.ofAdd z.1, Multiplicative.ofAdd z.2))) ∈ GR.tens M M := by
+  have lem : ∀ x : RC ⊗[R] A, (fun y => algebraMap RC C ((ee x).1 (Multiplicative.ofAdd y))) ∈ M := by
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero =>
+      convert M.zero_mem using 1
+      ext y
+      simp
+    | tmul r a =>
+      have e1 : r ⊗ₜ[R] a = r • ((1 : RC) ⊗ₜ[R] a) := by
+        rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+      have e2 : (fun y => algebraMap RC C ((ee (r ⊗ₜ[R] a)).1 (Multiplicative.ofAdd y))) =
+          r • fun y => φ (a.1 (Multiplicative.ofAdd y)) := by
+        funext y
+        rw [e1, map_smul]
+        simp [hee, hφ, Algebra.smul_def]
+      rw [e2, hM]
+      exact Submodule.smul_mem _ r (Submodule.subset_span ⟨a.1, a.2, rfl⟩)
+    | add x y hx hy =>
+      have e2 : (fun t => algebraMap RC C ((ee (x + y)).1 (Multiplicative.ofAdd t))) =
+          (fun t => algebraMap RC C ((ee x).1 (Multiplicative.ofAdd t))) +
+            (fun t => algebraMap RC C ((ee y).1 (Multiplicative.ofAdd t))) := by
+        funext t
+        simp
+      rw [e2]
+      exact M.add_mem hx hy
+  have lem' : ∀ a ∈ A', (fun y => algebraMap RC C (a (Multiplicative.ofAdd y))) ∈ M := by
+    intro a ha
+    obtain ⟨x, hx⟩ := ee.surjective ⟨a, ha⟩
+    have k := lem x
+    rw [hx] at k
+    exact k
+  intro g hg
+  induction hg using Submodule.span_induction with
+  | mem g hg =>
+    obtain ⟨a, ha, b, hb, rfl⟩ := hg
+    refine Submodule.subset_span ⟨_, lem' a ha, _, lem' b hb, ?_⟩
+    funext z
+    simp
+  | zero =>
+    convert (GR.tens M M).zero_mem using 1
+    ext z
+    simp
+  | add g₁ g₂ _ _ h₁ h₂ =>
+    convert (GR.tens M M).add_mem h₁ h₂ using 1
+    ext z
+    simp
+  | smul r g _ h =>
+    convert (GR.tens M M).smul_mem r h using 1
+    funext z
+    simp [Algebra.smul_def]
+
+end PositivityTheory.Xgn.TestGroupPoint
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.KernelMem
+
+section
 
 @[expose] public section
 
@@ -269,3 +433,6 @@ theorem act_mem [Fact p.Prime]
   exact this hf
 
 end PositivityTheory.Xgn.TestGroupPoint
+end
+end
+end

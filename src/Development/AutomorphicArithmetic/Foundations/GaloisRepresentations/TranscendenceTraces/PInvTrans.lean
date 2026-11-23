@@ -1,7 +1,9 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TranscendenceTraces.IsolateSpec
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RootOrbit
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Basic.Finite.Defs
+public import Mathlib.RingTheory.Invariant.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +22,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Invariant.Basic
+import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.Invariant.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
@@ -31,7 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,6 +46,45 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Algebra.Polynomial.Lifts
+import Mathlib.RingTheory.Invariant.Basic
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RootOrbit
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi49.root_orbit :
+    ∀ {A B G Ω : Type} [inst : CommRing A]
+    [inst_1 : CommRing B] [inst_2 : Algebra A B] [inst_3 : Group G] [Finite G] [inst_5 : MulSemiringAction G B]
+    [SMulCommClass G A B] [Algebra.IsInvariant A B G] [inst_8 : Field Ω] (φ ψ : B →+* Ω),
+    φ.comp (Algebra.algebraMap A B) = ψ.comp (Algebra.algebraMap A B) →
+      ∀ (b : B), ∃ (g : G), (ψ : B → Ω) b = (φ : B → Ω) (g • b) := by
+  intro A B G Ω _ _ _ _ _ _ _ _ _ φ ψ h b
+  classical
+  cases nonempty_fintype G
+  obtain ⟨p, hp⟩ := (Polynomial.mem_lifts _).1 (Algebra.IsInvariant.charpoly_mem_lifts A B G b)
+  have hmap : (MulSemiringAction.charpoly G b).map φ = (MulSemiringAction.charpoly G b).map ψ := by
+    rw [← hp, Polynomial.map_map, Polynomial.map_map, h]
+  have hroot : ((MulSemiringAction.charpoly G b).map ψ).eval (ψ b) = 0 := by
+    rw [Polynomial.eval_map, Polynomial.eval₂_at_apply, MulSemiringAction.eval_charpoly, map_zero]
+  rw [← hmap, MulSemiringAction.charpoly_eq, Polynomial.map_prod, Polynomial.eval_prod,
+    Finset.prod_eq_zero_iff] at hroot
+  obtain ⟨g, -, hg⟩ := hroot
+  refine ⟨g, ?_⟩
+  simpa [sub_eq_zero] using hg
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TranscendenceTraces.PInvTrans
+
+section
 
 @[expose] public section
 
@@ -149,3 +190,5 @@ theorem UpperTheory.Gal.TranscendenceTraces.invTrans_of :
   have e := hg (g0⁻¹ • b)
   rw [hψ, smul_inv_smul, ← mul_smul] at e
   exact e
+end
+end

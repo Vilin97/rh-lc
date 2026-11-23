@@ -1,7 +1,6 @@
 module
 
 public import Formalism.RealPlaceAnalysis.Complexify
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndefiniteUnitaryLieAlgebraMemIffEntries
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +41,54 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndefiniteUnitaryLieAlgebraMemIffEntries
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix
+open Formalism.REAL (UJ KG toM toMK muK expG inG Jm Kset)
+
+namespace GlobalTheory
+
+theorem pcLieEntry : ∀ (n : ℕ) (ε : Fin n → Bool) (Z : Matrix (Fin n) (Fin n) ℂ), inG ε Z ↔ ∀ a b, (starRingEnd ℂ) (Z a b) = -((if ε a then (1 : ℂ) else -1) * (if ε b then (1 : ℂ) else -1) * Z b a) := by
+  intro n ε Z
+  have key : ∀ a b, (Zᴴ * Jm ε + Jm ε * Z) a b = (starRingEnd ℂ) (Z b a) * (if ε b then (1 : ℂ) else -1) + (if ε a then (1 : ℂ) else -1) * Z a b := by
+    intro a b
+    simp [Jm, Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.conjTranspose_apply]
+  unfold inG
+  constructor
+  · intro h a b
+    have hb := congrFun (congrFun h b) a
+    rw [key] at hb
+    simp only [Matrix.zero_apply] at hb
+    rcases Bool.eq_false_or_eq_true (ε a) with ha | ha <;>
+      rcases Bool.eq_false_or_eq_true (ε b) with hb' | hb' <;>
+      simp only [ha, hb', if_true, Bool.false_eq_true, if_false] at hb ⊢ <;>
+      first | linear_combination hb | linear_combination -hb
+  · intro h
+    ext a b
+    rw [key]
+    simp only [Matrix.zero_apply]
+    have hb := h b a
+    rcases Bool.eq_false_or_eq_true (ε a) with ha | ha <;>
+      rcases Bool.eq_false_or_eq_true (ε b) with hb' | hb' <;>
+      simp only [ha, hb', if_true, Bool.false_eq_true, if_false] at hb ⊢ <;>
+      first | linear_combination hb | linear_combination -hb
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndefiniteUnitaryLieAlgebraMemIffEntriesStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +97,5 @@ open Formalism.REAL (UJ KG toM toMK muK expG inG Jm Kset)
 
 theorem _root_.GlobalTheory.T.indefiniteUnitaryLieAlgebra_mem_iff_entries : ∀ (n : ℕ) (ε : Fin n → Bool) (Z : Matrix (Fin n) (Fin n) ℂ), inG ε Z ↔ ∀ a b, (starRingEnd ℂ) (Z a b) = -((if ε a then (1 : ℂ) else -1) * (if ε b then (1 : ℂ) else -1) * Z b a) := by
   first | exact @GlobalTheory.pcLieEntry | exact GlobalTheory.pcLieEntry | (intros; apply GlobalTheory.pcLieEntry <;> assumption)
+end
+end

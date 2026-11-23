@@ -24,8 +24,47 @@ public import Development.WeilBound.ThetaLifts.CartanFactorisation.ArchimedeanEv
 public import Development.WeilBound.ThetaLifts.CartanFactorisation.Cartan
 public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsEnlarge
 public import Development.WeilBound.ThetaLifts.CartanFactorisation.FockSecondActionMatrixUnitEq
-public import Development.WeilBound.ThetaLifts.CartanFactorisation.InjPure
-public import Development.WeilBound.ThetaLifts.CartanFactorisation.PolCountFinal
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Factor
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsBeta
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.PolCountDef
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLFock
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.PolCount
 import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
 import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.PolRange
 public import Development.WeilBound.ThetaLifts.FrameEstimates.BlockForm
@@ -36,7 +75,12 @@ public import Development.WeilBound.ThetaLifts.FrameEstimates.IsCompactIntV
 public import Development.WeilBound.ThetaLifts.FrameEstimates.LatCpt
 public import Development.WeilBound.ThetaLifts.FrameEstimates.SiegelAll
 public import Development.WeilBound.ThetaLifts.FrameEstimates.WeilConv
-public import Development.WeilBound.ThetaLifts.LatticeBasics.BadFin
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.LatticeBasics.BadFactor
+public import Development.WeilBound.ThetaLifts.LatticeBasics.NearUnits
+public import Development.WeilBound.ThetaLifts.LatticeBasics.PresDOf
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RatEquiv
+public import Development.WeilBound.ThetaLifts.TowerModels.StabEx
 public import Development.WeilBound.ThetaLifts.LatticeBasics.BotAsm
 public import Development.WeilBound.ThetaLifts.LatticeBasics.BoxSec
 public import Development.WeilBound.ThetaLifts.LatticeBasics.CartanBound2
@@ -61,7 +105,9 @@ public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.MCPu
 public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.MixWClosed
 public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.MixXClosed
 public import Development.WeilBound.ThetaLifts.LeviDeterminants.ThetaBasic
-public import Development.WeilBound.ThetaLifts.LeviDeterminants.ThetaEvaluationZeroCone
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvCone
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvZero
 public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ArchHeisOf
 public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.BumpAFin
 public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.SlicePol
@@ -108,42 +154,9 @@ import Development.WeilBound.ThetaLifts.TowerModels.TowerCodimensionTwoOf
 import Development.WeilBound.ThetaLifts.WeilDomination.DomWeilOf
 public import Development.WeilBound.ThetaLifts.WeilDomination.ExistsUnitChrWNe
 import Development.WeilBound.ThetaLifts.WeilDomination.MatchEx
-public import Development.WeilBound.ThetaLifts.WeilDomination.SwAnisoXOf
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ContinuousFlat
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SecondFromFirstStatement
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SiegelWeilAnisoOf
 public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.LmOfLinBar
 public import Development.WeilBound.ThetaLifts.CTKernel
 public import Development.WeilBound.ThetaLifts.FrameEstimates.HodgeTateFromSandwich
@@ -151,6 +164,87 @@ public import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnr
 public import Development.WeilBound.ThetaLifts.LocalTheory.AdmissiblePureTensorSchwartz
 public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ContinuousFc
 public import Development.WeilBound.ThetaLifts.SmallCones.HodgeTateFromSandwich
+
+-- Source module: Development.WeilBound.ThetaLifts.CartanFactorisation.InjPure
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PositivityTheory.ThKF
+
+open GlobalTheory.ThK
+
+theorem iLeft (hT : ThetaBasic) : ILeft := fun _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hp _ hΦ g =>
+  I_left unimodularity_holds hT hp hΦ g
+
+end PositivityTheory.ThKF
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.CartanFactorisation.PolCountFinal
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.ThKF
+
+theorem polCount_of_derEx (h : GlobalTheory.RealLift.DerEx) : PolCount :=
+  PC.polCount_of (PositivityTheory.RL.fockEx h) (PositivityTheory.RL.vacLine h)
+
+end PositivityTheory.ThKF
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.LatticeBasics.BadFin
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.ThK.Dbl
+
+theorem badFactor : BadFactor := badFactor_of dblX PositivityTheory.ThKG.Tow.stabEx vacFix2 bump
+
+end GlobalTheory.ThK.Dbl
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.LeviDeterminants.ThetaEvaluationZeroCone
+
+section
+
+@[expose] public section
+
+theorem PositivityTheory.ThKF0.evaluation_at_zero_and_cone : GlobalTheory.ThK.EvZero ∧ GlobalTheory.ThK.EvCone := ⟨PositivityTheory.ThKF0.evZero, PositivityTheory.ThKF0.evCone⟩
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.WeilDomination.SwAnisoXOf
+
+section
+
+@[expose] public section
+
+namespace PositivityTheory.ThKClose
+
+open GlobalTheory.ThK.Dbl
+
+theorem swAnisoX_of (h1 : SiegelWeilStd) (h2 : FrameConj) (hL : FinLevel) (hC : Stab2Cpt) : SWAnisoX :=
+  (siegelWeilAniso_of h1 h2 hL hC).2
+
+end PositivityTheory.ThKClose
+end
+end
+
+-- Source module: Development.WeilBound.ThetaLifts.SphericalLattices.SphericalClosure.CloseSph
+
+section
 
 @[expose] public section
 
@@ -320,3 +414,5 @@ theorem PositivityTheory.Sph.Tr.closeSph
   have h_Weil6_ThKG_EndB_ : PositivityTheory.ThKG.EndB' := (PositivityTheory.ThKG.endB'_of h_GlobalTheory_ThK_EndB)
   have h_Weil6_ThKG_Leaves : PositivityTheory.ThKG.Leaves := ⟨h_GlobalTheory_ThK_EvZero, h_GlobalTheory_ThK_EvCone, h_GlobalTheory_ThK_StabEx, h_GlobalTheory_ThK_TowerA, h_GlobalTheory_ThK_TowerB, h_GlobalTheory_ThK_FacNe, h_GlobalTheory_ThK_MatchEx, h_Weil6_ThKG_LeviEx, h_Weil6_ThKG_PolDense, h_GlobalTheory_ThK_WeilConv, h_GlobalTheory_ThK_SoCont, h_GlobalTheory_ThK_SplitEx, h_GlobalTheory_ThK_CTBigZero, h_GlobalTheory_ThK_CTSmallZero, h_GlobalTheory_ThK_CTBigCone, h_GlobalTheory_ThK_CTSmallCone, h_GlobalTheory_ThK_AnAll, h_GlobalTheory_ThK_PolRe, h_GlobalTheory_ThK_NonZeroAn, h_GlobalTheory_ThK_PolZero, h_Weil6_ThKG_LocA_, h_Weil6_ThKG_LocB_, h_Weil6_ThKG_EndA_, h_Weil6_ThKG_EndB_, h_GlobalTheory_ThK_KReal, h_GlobalTheory_ThK_KFin⟩
   exact PositivityTheory.ThKG.agree_of_leaves h_Weil6_ThKG_Leaves h_GlobalTheory_ThK_KDecay h_GlobalTheory_ThK_KCoinv
+end
+end

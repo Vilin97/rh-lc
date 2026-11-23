@@ -3,14 +3,27 @@ module
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsParahoricVec
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HasFiniteLengthOfIsIrreducible
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.BernsteinUnitaryProductIrreducible
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.GlThetaLiftIsClosed
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.ThetaLiftGeneralLinearStatement
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.GlnMixed
+public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsCellOfIsSubquotient
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GeometricLemmaFiltrationUnconditional
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GeometricLemmaOfFiltration
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.MingZel
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEquivProdIrrTw
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.InSupportOfIsSubquotient
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.JhMultSubAddQuot
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.IsComplementaryProductOfIsCuspidal
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.ExistsComplOfAdmissible
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.MCellone
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.MDetjac
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.MNolow
+import Development.AutomorphicSpectrum.Proofs.GlobalProofs.HasSupportOfIsSubquotientProdIrr
+import GroundTheory.LocalFields.PadicLogSeries
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,6 +36,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,6 +57,98 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsCuspidalIffCompositions
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivMultiProdOne
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.CasselmanSuffTemp
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.GeneralLinearGroups.ImportsAlt
+
+section
+
+@[expose] public section
+
+open Filter Topology GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult UpperTheory.Lit.Cas
+
+theorem UpperTheory.Lit.Mix.top :
+    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → GlobalTheory.Published.ZelevinskyPolynomialRing → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (r t : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (σ : Representation ℂ (GL (Fin r) k) V) (χ : kˣ →* ℂˣ), r < t → IsSmooth σ → σ.IsIrreducible → IsUnitarisable σ → IsSmoothChar χ → IsUnitaryChar χ → (prod₂ σ (detRep (Fin t) χ)).IsIrreducible := by
+  intro hG hB hZ k _ _ _ _ r t V _ _ σ χ hrt hs hi hu hχs hχu
+  have hds : IsSmooth (detRep (Fin t) χ) :=
+    (isSmooth_ofChar_iff _).2 (IsSmoothChar.detChar hχs)
+  have hdi : (detRep (Fin t) χ).IsIrreducible := isIrreducible_ofChar _
+  have hdu : IsUnitarisable (detRep (Fin t) χ) :=
+    (isUnitarisable_ofChar_iff _).2 (fun g => hχu _)
+  set x := IrrGL.of σ hs hi with hx
+  set y := IrrGL.of (detRep (Fin t) χ) hds hdi with hy
+  have hd : ∑ a, (![x, y] a).fst = r + t := by simp [hx, hy, IrrGL.of]
+  obtain ⟨e⟩ := nonempty_prod₂_equiv_prodIrr σ hs hi (detRep (Fin t) χ) hds hdi hd
+  refine GlobalTheory.Parabolic.isIrreducible_of_equiv e.symm ?_
+  have hxu : IsUnitarisable x.rep := GlobalTheory.GenericUnitary.isUnitarisable_of_equiv (IrrGL.equivOf σ hs hi) hu
+  have hyu : IsUnitarisable y.rep :=
+    GlobalTheory.GenericUnitary.isUnitarisable_of_equiv (IrrGL.equivOf (detRep (Fin t) χ) hds hdi) hdu
+  refine UpperTheory.Lit.Mix.ss hB k x y (r + t) hd hxu hyu ?_
+  refine UpperTheory.Lit.Mix.cellone hG hB k x y (r + t) hd ?_
+  intro q hq hq0 hjm p hc
+  have hqt : ∑ a, (q a).fst = t := hq
+  have hjm' : jm q hqt (detRep (Fin t) χ) ≠ 0 := by
+    have h1 := (jhMult_ne_zero_iff).1 hjm
+    have hsub : IsSubquotient y.rep (detRep (Fin t) χ) := by
+      have f := (IrrGL.equivOf (detRep (Fin t) χ) hds hdi)
+      exact IsSubquotient.of_surjective f.toIntertwiningMap
+        (fun w => ⟨f.invFun w, f.right_inv w⟩)
+    exact (jhMult_ne_zero_iff).2
+      (IsSubquotient.trans h1 (GlobalTheory.JacquetExact.isSubquotient_jac _ hds hsub))
+  obtain ⟨A, hA, hnu⟩ := UpperTheory.Lit.Mix.detjac k t χ hχs q hqt hq0 hjm'
+  by_contra hne
+  have hsq := (jhMult_ne_zero_iff).1 hne
+  obtain ⟨s, hsp⟩ := GlobalTheory.CompanionTheory.Hypotheses₂.TD.exists_hasSupport hB hG p
+  have hsup := GlobalTheory.CompanionTheory.Hypotheses₂.TD.hasSupport_of_isSubquotient_prodIrr
+    (t := ![s, A]) (fun a => by fin_cases a <;> simpa) x.snd.rep.irr hsq
+  have hmem : (IrrGL.ofChar χ hχs).nu (-(↑t - 1) / 2) ∈ ∑ a, (![s, A] : Fin 2 → _) a := by
+    rw [Fin.sum_univ_two]
+    exact Multiset.mem_add.2 (Or.inr hnu)
+  exact UpperTheory.Lit.Mix.nolow hG hB hZ k r t _ x.rep _ χ hχs hrt hsup hxu hχu hmem
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.ThetaLiftGlOfZelevinskyClassification
+
+section
+
+@[expose] public section
+
+section
+open MeasureTheory GlobalTheory GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.ThetaGL GlobalTheory.Published ValuativeRel PositivityTheory.Tls2.Ming3 PositivityTheory.Rg.Ming
+open scoped TensorProduct
+namespace UpperTheory.Lit.HoweDuality
+theorem thetaLift_gl_of_zelevinsky_classification (hZ : ZelevinskyPolynomialRing) : _root_.GlobalTheory.ThetaLiftGL.ThetaLiftGeneralLinearStatement :=
+  fun hBZ _ k _ _ _ _ r t μ V _ _ W _ _ σ π hrt hμs hμu hσs hσi hσu hπs hπi hθ =>
+    lift_of_irr k r t μ V W σ π hrt hμs hμu hσu hπs hπi
+      (UpperTheory.Lit.Mix.top (GlobalTheory.geometricLemma_of_filtration hBZ GlobalTheory.geometricLemmaFiltration_unconditional) hBZ hZ
+        k r t V σ μ hrt hσs hσi hσu hμs hμu) hθ
+end UpperTheory.Lit.HoweDuality
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.GlThetaLiftIsClosed
+
+section
+
+@[expose] public section
+
+section
+namespace UpperTheory.Lit.Mix
+theorem gl_thetaLift_isClosed : _root_.GlobalTheory.ThetaLiftGL.ThetaLiftGeneralLinearStatement := _root_.UpperTheory.Lit.HoweDuality.thetaLift_gl_of_zelevinsky_classification polynomialRing
+end UpperTheory.Lit.Mix
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.ThetaLiftGeneralLinear
+
+section
 
 @[expose] public section
 
@@ -52,4 +158,6 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.theta_lift_general_linear : BernsteinZelevinskyFiniteness → BernsteinUnitaryProductIrreducible → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (r t : ℕ) (μ : kˣ →* ℂˣ) (V : Type) [AddCommGroup V] [Module ℂ V] (W : Type) [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GL (Fin r) k) V) (π : Representation ℂ (GL (Fin (r + t)) k) W), r < t → IsSmoothChar μ → IsUnitaryChar μ → IsSmooth σ → σ.IsIrreducible → IsUnitarisable σ → IsSmooth π → π.IsIrreducible → ThetaPair μ σ π → Nonempty (π.Equiv (prod₂ σ (detRep (Fin t) μ))) := by
   first | exact @_root_.UpperTheory.Lit.Mix.gl_thetaLift_isClosed | exact _root_.UpperTheory.Lit.Mix.gl_thetaLift_isClosed | (intros; apply _root_.UpperTheory.Lit.Mix.gl_thetaLift_isClosed <;> assumption)
+end
+end
 end

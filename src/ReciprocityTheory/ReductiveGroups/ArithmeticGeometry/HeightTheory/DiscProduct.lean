@@ -46,13 +46,260 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FiniteHeightFractionRepr
+import Mathlib.Algebra.MvPolynomial.Nilpotent
+import Mathlib.Tactic.Linter.HaveILetI
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.GoodPrimesProperties
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HHINDA
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.ValUFD
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HDiscA
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HHINDC
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.LogHeightDivMultihomogeneous
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SphereMeanSubArchimedean
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HintIntOfBounds
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HHINDA
 import ReciprocityTheory.SemistableReduction.LagrangeIdealLiftsFact
 import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FiniteHeightFractionRepr
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.MultiplicativeHeights.Closed MeasureTheory IsDedekindDomain
+  ReciprocityTheory.ChartRestriction.G.T0.HeightMultiplicativity
+
+variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]
+  {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)]
+  {WT : Type} [AddCommGroup WT]
+  {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra K (A c)]
+  [∀ c, Algebra (𝓞 K) (A c)]
+  {𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)}
+
+namespace Data
+
+variable (d : Data K ι Ω WT A)
+
+theorem gen_ne_zero_of_mem_htOne {p : Ideal (KTp K d.D d.N)} (hp : p ∈ d.HtOne) : d.gen p ≠ 0 := by
+  obtain ⟨hpr, hh⟩ := hp
+  haveI := hpr
+  obtain ⟨g, hg, hpg⟩ := ValUFD.heightOne_principal p hh
+  have hPr : p.IsPrincipal := ⟨⟨g, hpg⟩⟩
+  unfold gen
+  rw [dite_eq_left hPr]
+  intro h0
+  have hbot : p = ⊥ := (Submodule.IsPrincipal.eq_bot_iff_generator_eq_zero p).2 h0
+  rw [hbot] at hpg
+  exact hg.ne_zero (Ideal.span_singleton_eq_bot.1 hpg.symm)
+
+theorem finite_height_fraction_repr (hd : d.AxH 𝒜) (h : d.S1) :
+    ∃ U V : KTp K d.D d.N, U ≠ 0 ∧ V ≠ 0 ∧ (∃ eU, IsMultiHomogeneous eU U) ∧
+      (∃ eV, IsMultiHomogeneous eV V) ∧
+      d.fDivE hd h * algebraMap (KTp K d.D d.N) (KTf K d.D d.N) V =
+        algebraMap (KTp K d.D d.N) (KTf K d.D d.N) U ∧
+      d.h0f h d.wF hd.a4.choose = h0 U - h0 V := by
+  classical
+  have hspec : ∀ c, hd.a4.choose c ∈ 𝒜 c d.wF ∧ hd.a4.choose c ≠ 0 := hd.a4.choose_spec.1
+  have hfin : ∀ c, {p | p ∈ d.HtOne ∧ d.nP h c d.wF (hd.a4.choose c) p ≠ 0}.Finite := fun c =>
+    (d.good_primes_properties hd h c).2.2.1 d.wF (hd.a4.choose c) (hspec c).1 (hspec c).2
+  obtain ⟨T, hmemT⟩ : ∃ T : ι → Finset (Ideal (KTp K d.D d.N)),
+      ∀ c p, p ∈ T c ↔ p ∈ d.HtOne ∧ d.nP h c d.wF (hd.a4.choose c) p ≠ 0 :=
+    ⟨fun c => (hfin c).toFinset, fun c p => by simp⟩
+  have hmemS : ∀ x ∈ Finset.univ.sigma T,
+      x.2 ∈ d.HtOne ∧ d.nP h x.1 d.wF (hd.a4.choose x.1) x.2 ≠ 0 := by
+    intro x hx
+    rw [Finset.mem_sigma] at hx
+    exact (hmemT _ _).1 hx.2
+  have hne : ∀ x ∈ Finset.univ.sigma T, d.gen x.2 ≠ 0 := fun x hx => d.gen_ne_zero_of_mem_htOne (hmemS x hx).1
+  have hmh : ∀ x ∈ Finset.univ.sigma T,
+      IsMultiHomogeneous (fun b : Fin (d.D + 1) => if b = 0 then 0 else d.dg (d.gen x.2)) (d.gen x.2) := by
+    intro x hx
+    obtain ⟨hp, hn⟩ := hmemS x hx
+    refine (d.good_primes_properties hd h x.1).2.1 x.2 hp ?_
+    by_contra hw
+    push_neg at hw
+    apply hn
+    simp [nP, hw]
+  have halg : ∀ x ∈ Finset.univ.sigma T,
+      algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (d.gen x.2) ≠ 0 := fun x hx =>
+    (map_ne_zero_iff _ (IsFractionRing.injective (KTp K d.D d.N) (KTf K d.D d.N))).2 (hne x hx)
+  have key : ∀ (a : KTf K d.D d.N), a ≠ 0 → ∀ m : ℤ, a ^ m * a ^ (-m).toNat = a ^ m.toNat := by
+    intro a ha m
+    rw [← zpow_natCast, ← zpow_natCast, ← zpow_add₀ ha]
+    congr 1
+    omega
+  refine ⟨∏ x ∈ Finset.univ.sigma T, d.gen x.2 ^ (d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat,
+    ∏ x ∈ Finset.univ.sigma T, d.gen x.2 ^ (-d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat,
+    Finset.prod_ne_zero_iff.2 fun x hx => pow_ne_zero _ (hne x hx),
+    Finset.prod_ne_zero_iff.2 fun x hx => pow_ne_zero _ (hne x hx),
+    ⟨_, HeightMultiplicativity.multi_prod _ _ _ fun x hx => HeightMultiplicativity.multi_pow (hmh x hx) _⟩,
+    ⟨_, HeightMultiplicativity.multi_prod _ _ _ fun x hx => HeightMultiplicativity.multi_pow (hmh x hx) _⟩, ?_, ?_⟩
+  · have hfac : ∀ c, (∏ᶠ (p : Ideal (KTp K d.D d.N)) (_ : p ∈ d.HtOne),
+        algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (d.gen p) ^ d.nP h c d.wF (hd.a4.choose c) p) =
+        ∏ p ∈ T c, algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (d.gen p) ^
+          d.nP h c d.wF (hd.a4.choose c) p := by
+      intro c
+      apply finprod_mem_eq_prod_of_subset
+      · rintro p ⟨hp, hp1⟩
+        rw [Function.mem_mulSupport] at hp1
+        rw [Finset.mem_coe, hmemT]
+        exact ⟨hp, fun h0' => hp1 (by rw [h0', zpow_zero])⟩
+      · intro p hp
+        exact ((hmemT c p).1 hp).1
+    have hf : d.fDivE hd h = ∏ x ∈ Finset.univ.sigma T,
+        algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (d.gen x.2) ^ d.nP h x.1 d.wF (hd.a4.choose x.1) x.2 := by
+      rw [Finset.prod_sigma]
+      unfold fDivE
+      exact Finset.prod_congr rfl fun c _ => hfac c
+    rw [hf, map_prod, map_prod, ← Finset.prod_mul_distrib]
+    refine Finset.prod_congr rfl fun x hx => ?_
+    rw [map_pow, map_pow]
+    exact key _ (halg x hx) _
+  · have hsum : ∀ c, (∑ᶠ (p : Ideal (KTp K d.D d.N)) (_ : p ∈ d.HtOne),
+        (d.nP h c d.wF (hd.a4.choose c) p : ℝ) * h0 (d.gen p)) =
+        ∑ p ∈ T c, (d.nP h c d.wF (hd.a4.choose c) p : ℝ) * h0 (d.gen p) := by
+      intro c
+      apply finsum_mem_eq_sum_of_subset
+      · rintro p ⟨hp, hp1⟩
+        rw [Function.mem_support] at hp1
+        rw [Finset.mem_coe, hmemT]
+        exact ⟨hp, fun h0' => hp1 (by rw [h0', Int.cast_zero, zero_mul])⟩
+      · intro p hp
+        exact ((hmemT c p).1 hp).1
+    have hn0 : 0 < d.N + 1 := Nat.succ_pos _
+    have hU : h0 (∏ x ∈ Finset.univ.sigma T,
+        d.gen x.2 ^ (d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat) =
+        ∑ x ∈ Finset.univ.sigma T,
+          ((d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat : ℝ) * h0 (d.gen x.2) :=
+      HeightMultiplicativity.logHeight_prod_pow (B := d.D + 1) (n := d.N + 1) hn0 (Finset.univ.sigma T)
+        (fun x b => if b = 0 then 0 else d.dg (d.gen x.2)) (fun x => d.gen x.2) _ hne hmh
+    have hV : h0 (∏ x ∈ Finset.univ.sigma T,
+        d.gen x.2 ^ (-d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat) =
+        ∑ x ∈ Finset.univ.sigma T,
+          ((-d.nP h x.1 d.wF (hd.a4.choose x.1) x.2).toNat : ℝ) * h0 (d.gen x.2) :=
+      HeightMultiplicativity.logHeight_prod_pow (B := d.D + 1) (n := d.N + 1) hn0 (Finset.univ.sigma T)
+        (fun x b => if b = 0 then 0 else d.dg (d.gen x.2)) (fun x => d.gen x.2) _ hne hmh
+    rw [hU, hV, ← Finset.sum_sub_distrib, Finset.sum_sigma]
+    unfold h0f
+    refine Finset.sum_congr rfl fun c _ => ?_
+    rw [hsum c]
+    refine Finset.sum_congr rfl fun p _ => ?_
+    rw [← sub_mul]
+    congr 1
+    exact_mod_cast (Int.toNat_sub_toNat_neg _).symm
+
+end Data
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SphereMeanSubArchimedean
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+open NumberField MvPolynomial ReciprocityTheory.MultiplicativeHeights ReciprocityTheory.MultiplicativeHeights.Closed MeasureTheory IsDedekindDomain
+  ReciprocityTheory.ChartRestriction.G.T0.HeightMultiplicativity
+
+variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]
+  {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)]
+  {WT : Type} [AddCommGroup WT]
+  {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra K (A c)]
+  [∀ c, Algebra (𝓞 K) (A c)]
+  {𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)}
+
+namespace Data
+
+variable (d : Data K ι Ω WT A)
+
+theorem eval_indep_of_first_block (q : KTp K d.D d.N) (m : Fin (d.D + 1) → ℕ) (hm0 : m 0 = 0)
+    (hq : IsMultiHomogeneous m q) (sg : K →+* ℂ) (t0 : Fin (d.N + 1) → ℂ)
+    (t : Fin d.D → Fin (d.N + 1) → ℂ) : d.evT sg t0 t q = d.evT sg 0 t q := by
+  unfold evT
+  rw [MvPolynomial.eval₂_eq', MvPolynomial.eval₂_eq']
+  apply Finset.sum_congr rfl
+  intro s hs
+  congr 1
+  apply Finset.prod_congr rfl
+  rintro ⟨b, j⟩ _
+  have hsum : ∑ j : Fin (d.N + 1), s (0, j) = 0 := by
+    rw [hq s hs 0, hm0]
+  cases b using Fin.cases with
+  | zero =>
+    have h0 : s (0, j) = 0 := (Finset.sum_eq_zero_iff.mp hsum) j (Finset.mem_univ _)
+    simp [h0]
+  | succ i => rfl
+
+theorem sphereMean_sub_archimedean (a b : KTp K d.D d.N) (m : Fin (d.D + 1) → ℕ) (hm0 : m 0 = 0)
+    (ha : a ≠ 0) (hb : b ≠ 0) (hma : IsMultiHomogeneous m a) (hmb : IsMultiHomogeneous m b)
+    (sg : K →+* ℂ) :
+    blockSphereMean (d.D + 1) (d.N + 1) (MvPolynomial.map sg a) -
+      blockSphereMean (d.D + 1) (d.N + 1) (MvPolynomial.map sg b) = d.mSgP sg a b := by
+  have hn : 0 < d.N + 1 := Nat.succ_pos _
+  have hmp := hint_mpTail d.D (d.N + 1) hn
+  have key : ∀ q : KTp K d.D d.N, q ≠ 0 → IsMultiHomogeneous m q →
+      blockSphereMean (d.D + 1) (d.N + 1) (MvPolynomial.map sg q) =
+        ∫ w, Real.log ‖d.evT sg 0 (d.tOf w) q‖ ∂(ReciprocityTheory.MultiplicativeHeights.blockSphereProb d.D (d.N + 1)) ∧
+      Integrable (fun w => Real.log ‖d.evT sg 0 (d.tOf w) q‖)
+        (ReciprocityTheory.MultiplicativeHeights.blockSphereProb d.D (d.N + 1)) := by
+    intro q hq0 hq
+    have hq0' : MvPolynomial.map sg q ≠ 0 := fun h =>
+      hq0 (MvPolynomial.map_injective _ sg.injective (by rw [h, map_zero]))
+    have hq' : IsMultiHomogeneous m (MvPolynomial.map sg q) :=
+      fun s hs => hq s (MvPolynomial.support_map_subset _ _ hs)
+    have hI := hint_logInt_tail hn hq0' hq' hm0 0
+    have heq : ∀ w, d.evT sg 0 (d.tOf w) q =
+        MvPolynomial.eval (hintPt 0 w) (MvPolynomial.map sg q) := by
+      intro w
+      rw [MvPolynomial.eval_map]
+      rfl
+    have hI' : Integrable (fun w => Real.log ‖d.evT sg 0 (d.tOf w) q‖)
+        (ReciprocityTheory.MultiplicativeHeights.blockSphereProb d.D (d.N + 1)) := by
+      simp only [heq]
+      exact hI
+    refine ⟨?_, hI'⟩
+    have hpt : ∀ z : ReciprocityTheory.MultiplicativeHeights.BlockSphere (d.D + 1) (d.N + 1),
+        Real.log ‖MvPolynomial.eval (ReciprocityTheory.MultiplicativeHeights.blockPoint z) (MvPolynomial.map sg q)‖ =
+          Real.log ‖d.evT sg 0 (d.tOf (fun i : Fin d.D => z i.succ)) q‖ := by
+      intro z
+      have h1 : MvPolynomial.eval (ReciprocityTheory.MultiplicativeHeights.blockPoint z) (MvPolynomial.map sg q) =
+          d.evT sg (fun j => ReciprocityTheory.MultiplicativeHeights.spherePoint (z 0) j)
+            (d.tOf (fun i : Fin d.D => z i.succ)) q := by
+        rw [MvPolynomial.eval_map]
+        unfold evT
+        congr 1
+        funext v
+        rcases v with ⟨b, j⟩
+        cases b using Fin.cases with
+        | zero => rfl
+        | succ i => rfl
+      rw [h1, d.eval_indep_of_first_block q m hm0 hq sg]
+    unfold ReciprocityTheory.MultiplicativeHeights.blockSphereMean
+    simp only [hpt]
+    have h2 := MeasureTheory.integral_map (μ := ReciprocityTheory.MultiplicativeHeights.blockSphereProb (d.D + 1) (d.N + 1))
+      hmp.measurable.aemeasurable (f := fun w => Real.log ‖d.evT sg 0 (d.tOf w) q‖)
+      (by rw [hmp.map_eq]; exact hI'.aestronglyMeasurable)
+    rw [hmp.map_eq] at h2
+    exact h2.symm
+  obtain ⟨ha1, ha2⟩ := key a ha hma
+  obtain ⟨hb1, hb2⟩ := key b hb hmb
+  rw [ha1, hb1, ← integral_sub ha2 hb2]
+  rfl
+
+end Data
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.DiscProduct
+
+section
 
 @[expose] public section
 
@@ -186,3 +433,5 @@ theorem disc_product (hd : d.AxH 𝒜) (h : d.S1) (hI2be : d.HeightIntegralBound
 end Data
 
 end ReciprocityTheory.ChartRestriction.G.T0
+end
+end

@@ -2,11 +2,14 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RingTheory.MvPolynomial.Homogeneous
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsAlgebraicIndependentRatiosOfGenericZero
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,9 +26,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,9 +45,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Field
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsAlgebraicIndependentRatiosOfGenericZero
+
+section
+
+@[expose] public section
+
+open NumberField ReciprocityTheory.ChartRestriction.G.T0
+
+namespace GlobalTheory
+
+theorem mem_matroid_closure_of_mem_adjoin {k κ : Type} [Field k] [Field κ] [Algebra k κ]
+    {S : Set κ} {x : κ} (hx : x ∈ Algebra.adjoin k S) :
+    x ∈ (AlgebraicIndependent.matroid k κ).closure S := by
+  rw [AlgebraicIndependent.matroid_closure_eq]
+  exact isAlgebraic_algebraMap (⟨x, hx⟩ : Algebra.adjoin k S)
+
+theorem exists_algebraicIndependent_ratios_of_generic_zero :
+    ∀ (k κ : Type) [Field k] [Field κ] [Algebra k κ] (m N : ℕ) (t : Fin m × Fin (N + 1) → κ)
+    (ζ : Fin (N + 1) → κ) (j0 : Fin (N + 1)), AlgebraicIndependent k t → ζ j0 ≠ 0 →
+    (∀ i, ∑ j, t (i, j) * ζ j = 0) →
+    ∃ J : Fin m → Fin (N + 1), AlgebraicIndependent k (fun a => ζ (J a) / ζ j0) := by
+  intro k κ _ _ _ m N t ζ j0 ht h0 hz
+  classical
+  set M := AlgebraicIndependent.matroid k κ with hM
+  set η : Fin (N + 1) → κ := fun j => ζ j / ζ j0 with hη
+  set t' : Fin m × Fin N → κ := fun p => t (p.1, j0.succAbove p.2) with ht'
+  have hsub : Set.range t ⊆ M.closure (Set.range η ∪ Set.range t') := by
+    rintro _ ⟨⟨i, j⟩, rfl⟩
+    apply mem_matroid_closure_of_mem_adjoin
+    have hmem : ∀ l : Fin N, t (i, j0.succAbove l) ∈
+        Algebra.adjoin k (Set.range η ∪ Set.range t') := fun l =>
+      Algebra.subset_adjoin (Or.inr ⟨(i, l), rfl⟩)
+    rcases Fin.eq_self_or_eq_succAbove j0 j with rfl | ⟨l, rfl⟩
+    · have h1 := hz i
+      rw [Fin.sum_univ_succAbove _ j] at h1
+      have h2 : t (i, j) = -∑ l : Fin N, t (i, j.succAbove l) * η (j.succAbove l) := by
+        simp only [hη, ← mul_div_assoc, ← Finset.sum_div]
+        field_simp
+        linear_combination h1
+      rw [h2]
+      exact neg_mem (sum_mem fun l _ =>
+        mul_mem (hmem l) (Algebra.subset_adjoin (Or.inl ⟨_, rfl⟩)))
+    · exact hmem l
+  have hind : M.Indep (Set.range t) := ht.to_subtype_range
+  have h1 : M.eRk (Set.range t) = ((m * (N + 1) : ℕ) : ℕ∞) := by
+    rw [hind.eRk_eq_encard, ← Set.image_univ, ht.injective.encard_image]
+    simp
+  have h2 : (Set.range t').encard ≤ ((m * N : ℕ) : ℕ∞) := by
+    rw [← Set.image_univ]
+    refine (Set.encard_image_le _ _).trans ?_
+    simp
+  have h3 : ((m * (N + 1) : ℕ) : ℕ∞) ≤ M.eRk (Set.range η) + ((m * N : ℕ) : ℕ∞) := by
+    rw [← h1]
+    refine (M.eRk_mono hsub).trans ?_
+    rw [M.eRk_closure_eq]
+    exact (M.eRk_union_le_eRk_add_encard _ _).trans (by gcongr)
+  have h4 : (m : ℕ∞) ≤ M.eRk (Set.range η) := by
+    have : ((m * (N + 1) : ℕ) : ℕ∞) = (m : ℕ∞) + ((m * N : ℕ) : ℕ∞) := by
+      push_cast; ring
+    rw [this] at h3
+    exact (WithTop.add_le_add_iff_right (ENat.coe_ne_top _)).mp h3
+  obtain ⟨I, hIη, hI, hc⟩ := Matroid.le_eRk_iff.mp h4
+  have hfin : I.Finite := Set.finite_of_encard_eq_coe hc
+  have : Finite I := hfin
+  have hcard : Nat.card I = m := by
+    rw [Nat.card_coe_set_eq, Set.ncard, hc]; simp
+  let e : Fin m ≃ I := (Finite.equivFinOfCardEq hcard).symm
+  choose g hg using fun x : I => hIη x.2
+  refine ⟨fun a => g (e a), ?_⟩
+  have hI' : AlgebraicIndependent k (fun x : I => (x : κ)) := hI
+  have := hI'.comp e e.injective
+  convert this using 1
+  funext a
+  exact hg (e a)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsCoordsNoHomogeneousRelationGenericHyperpla
+
+section
 
 @[expose] public section
 
@@ -137,3 +226,5 @@ theorem exists_coordinates_no_homogeneous_relation_of_generic_zero :
   exact dehomogenise_ne_zero_of_isHomogeneous hQ hQ0 ((algebraicIndependent_iff.mp hJ) _ h)
 
 end GlobalTheory
+end
+end

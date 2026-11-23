@@ -1,9 +1,11 @@
 module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.EtProps
-public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompGood
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompSm
-public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompactSpaceOfIsProjOver
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.EtSide
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SemistableGenericFibreLocalizationStatement
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompSm
+import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.NormLtOneOfIrreducible
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableModel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,6 +17,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -41,6 +44,124 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.SsModelAlgebraMapInjective
+import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompSm
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompactSpaceOfIsProjOver
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.SmoothSndOfIsStrictlySemistable
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
+
+namespace CrystallineSemistableComparison
+
+
+theorem smooth_snd_of_isStrictlySemistable {O K : Type} [CommRing O] [CommRing K] [Algebra O K] (ϖ : O)
+    [IsLocalization.Away ϖ K] {X : Scheme.{0}} (p : X ⟶ Spec (CommRingCat.of O))
+    (hss : GlobalTheory.Et.IsStrictlySemistable ϖ p)
+    (hsm : ∀ m r : ℕ, 1 ≤ r → r ≤ m →
+      (IsLocalization.Away.map K (Localization.Away (algebraMap O (GlobalTheory.Et.ssModel O ϖ m r) ϖ))
+        (algebraMap O (GlobalTheory.Et.ssModel O ϖ m r)) ϖ).Smooth) :
+    Smooth (pullback.snd p (Spec.map (CommRingCat.ofHom (algebraMap O K)))) := by
+  have : IsZariskiLocalAtSource @Smooth.{0} := HasRingHomProperty.instIsZariskiLocalAtSource
+  set j := Spec.map (CommRingCat.ofHom (algebraMap O K))
+  have hgen := IsPullback.of_hasPullback p j
+  choose W hW hxW m r h1 h2 ψ hψe hψ using hss
+  refine IsZariskiLocalAtSource.of_iSup_eq_top (fun x : X ↦ (pullback.fst p j) ⁻¹ᵁ W x) ?_ ?_
+  · rw [eq_top_iff]
+    intro z _
+    rw [TopologicalSpace.Opens.mem_iSup]
+    exact ⟨pullback.fst p j z, hxW _⟩
+  intro x
+  set B := GlobalTheory.Et.ssModel O ϖ (m x) (r x)
+  set s : Spec (CommRingCat.of B) ⟶ Spec (CommRingCat.of O) := Spec.map (CommRingCat.ofHom (algebraMap O B))
+  set φ : (W x).toScheme ⟶ Spec (CommRingCat.of B) := (hW x).isoSpec.hom ≫ Spec.map (CommRingCat.ofHom (ψ x))
+  have hφ : (W x).ι ≫ p = φ ≫ s := by
+    have e1 : (W x).ι = (hW x).isoSpec.hom ≫ (hW x).fromSpec := by
+      rw [← (hW x).isoSpec_inv_ι, Iso.hom_inv_id_assoc]
+    have e2 := IsAffineOpen.SpecMap_appLE_fromSpec p (isAffineOpen_top (Spec (CommRingCat.of O))) (hW x) le_top
+    rw [e1, Category.assoc, ← e2]
+    simp only [φ, s, Category.assoc, ← Spec.map_comp]
+    congr 2
+    rw [IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv, ← Spec.map_comp]
+    congr 1
+    apply CommRingCat.hom_ext
+    exact (hψ x).symm
+  set Bϖ := Localization.Away (algebraMap O B ϖ)
+  set σ : K →+* Bϖ := IsLocalization.Away.map K Bϖ (algebraMap O B) ϖ
+  have hH : σ.comp (algebraMap O K) = (algebraMap B Bϖ).comp (algebraMap O B) := by
+    simp only [σ, IsLocalization.Away.map]
+    exact IsLocalization.map_comp _
+  have : IsLocalization ((Submonoid.powers ϖ).map (algebraMap O B)) Bϖ := by
+    rw [Submonoid.map_powers]; infer_instance
+  have hpush := CommRingCat.isPushout_of_isLocalization (algebraMap O B) σ hH (Submonoid.powers ϖ)
+  have hbot := isPullback_SpecMap_of_isPushout _ _ _ _ hpush
+  have hout := (isPullback_morphismRestrict (pullback.fst p j) (W x)).paste_vert hgen
+  rw [hφ] at hout
+  have hw : ((pullback.fst p j ∣_ W x) ≫ φ) ≫ s =
+      (((pullback.fst p j) ⁻¹ᵁ W x).ι ≫ pullback.snd p j) ≫ j := by
+    rw [Category.assoc]; exact hout.w
+  set t := hbot.lift _ _ hw
+  have ht1 : t ≫ Spec.map (CommRingCat.ofHom (algebraMap B Bϖ)) = (pullback.fst p j ∣_ W x) ≫ φ :=
+    hbot.lift_fst _ _ hw
+  have ht2 : t ≫ Spec.map (CommRingCat.ofHom σ) = ((pullback.fst p j) ⁻¹ᵁ W x).ι ≫ pullback.snd p j :=
+    hbot.lift_snd _ _ hw
+  rw [← ht2] at hout
+  have hleft := IsPullback.of_bot hout ht1.symm hbot
+  have : Etale (Spec.map (CommRingCat.ofHom (ψ x))) := HasRingHomProperty.Spec_iff.mpr (hψe x)
+  have : Etale φ := inferInstance
+  have : Etale t := MorphismProperty.of_isPullback hleft ‹Etale φ›
+  have : Smooth (Spec.map (CommRingCat.ofHom σ)) := HasRingHomProperty.Spec_iff.mpr (hsm _ _ (h1 x) (h2 x))
+  rw [← ht2]
+  infer_instance
+
+end CrystallineSemistableComparison
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.CompGood
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
+
+namespace CrystallineSemistableComparison
+
+variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
+
+theorem Model.smooth_q [FiniteDimensional ℚ_[l] K] (M : Model l K) (hM : M.Good) : Smooth M.q := by
+  obtain ⟨-, ϖ, hϖ, hss⟩ := hM
+  have := OK_away hϖ
+  have := OK_dvr (l := l) (K := K)
+  exact smooth_snd_of_isStrictlySemistable ϖ M.p hss
+    (fun m r h1 h2 ↦ GlobalTheory.T.semistable_generic_fibre_localization (OK l K) ϖ hϖ m r h1 h2 K)
+
+theorem compGood : ∀ (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] K],
+    CompM (Model.Good (l := l) (K := K)) := by
+  intro l _ K _
+  refine compM_of _ isOpenImmersion_gen (fun M hM U hU ↦ M.good_sub hM U hU) (fun M hM ↦ M.noetherianSpace hM) ?_
+  intro M hM
+  have := good_flat M hM
+  exact ⟨good_isNormalScheme M hM, good_isLocallyNoetherian M hM, Flat.generalizingMap M.p, M.smooth_q hM⟩
+
+end CrystallineSemistableComparison
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.SmoothGaloisGeometry.Geo
+
+section
 
 @[expose] public section
 
@@ -53,3 +174,6 @@ theorem comp : ModelComponents := fun l _ K _ ↦ ⟨compSm l K, compGood l K⟩
 theorem geo : GeometricGenericComponents := geoMain
 
 end CrystallineSemistableComparison
+end
+end
+end

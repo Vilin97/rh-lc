@@ -1,7 +1,9 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRatioCover
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPerUnique
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechDeRhamPeriodsLinearStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisationPreimageValueRules
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisedOneFormEvaluationRulesStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +42,192 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisationPreimageValueRulesStatement
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Analysis.Calculus.MeanValue
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHolomorphicPrimitiveOfCechDeRhamPeriods
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.CechPer
+
+theorem exists_prim_of_isPer : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ x q,
+    IsPer u.ex u.Λ x q → ∀ c, Hyp1.mk _ c = x → ∃ h, IsPrim u.ex c h ∧
+      ∀ (U : A.left.affineOpens) (l : u.Λ), ∀ z ∈ pre u.ex U.1, h U (z + l) = h U z + q l := by
+  intro A _ g L u x q hx c hc
+  obtain ⟨hOpen, hDiff, -, hPer, -, -, -, -, hRes, hHom, -, -⟩ := GlobalTheory.CechPer.pre_val_rules A g L u
+  obtain ⟨c₀, h₀, hc₀, ⟨p1, p2, p3⟩, hp⟩ := hx
+  obtain ⟨b, hb⟩ := Hyp1.mk_eq_mk.1 (hc.trans hc₀.symm)
+  have hval_add : ∀ (U : A.left.Opens) (s t : Sec (str A) U), ∀ z ∈ pre u.ex U,
+      val u.ex U (s + t) z = val u.ex U s z + val u.ex U t z := by
+    intro U s t z hz
+    obtain ⟨e, he⟩ := hHom U z hz
+    erw [he, he, he, map_add]
+  have hval_sub : ∀ (U : A.left.Opens) (s t : Sec (str A) U), ∀ z ∈ pre u.ex U,
+      val u.ex U (s - t) z = val u.ex U s z - val u.ex U t z := by
+    intro U s t z hz
+    obtain ⟨e, he⟩ := hHom U z hz
+    erw [he, he, he, map_sub]
+  have hcf : ∀ (U V : A.left.affineOpens) (a : Opposite.op U ⟶ Opposite.op V),
+      c.1.1 (Opposite.op U) (Opposite.op V) a = c₀.1.1 (Opposite.op U) (Opposite.op V) a +
+        (b (Opposite.op V) - Sec.res (str A) (leOfHom a.unop) (b (Opposite.op U))) := by
+    intro U V a
+    have := congrArg (fun y : Tot1 (OAff (str A)) ↦ y.1 (Opposite.op U) (Opposite.op V) a) hb
+    simp only [dTot0_f] at this
+    exact (eq_add_of_sub_eq' this.symm :)
+  have hcω : ∀ U : A.left.affineOpens, c.1.2 (Opposite.op U) =
+      c₀.1.2 (Opposite.op U) + KaehlerDifferential.D ℂ _ (b (Opposite.op U)) := by
+    intro U
+    have := congrArg (fun y : Tot1 (OAff (str A)) ↦ y.2 (Opposite.op U)) hb
+    simp only [dTot0_ω] at this
+    change _ = (c.1 - c₀.1).2 _ at this
+    rw [this]
+    change c.1.2 _ = c₀.1.2 _ + (c.1.2 _ - c₀.1.2 _)
+    abel
+  refine ⟨fun U z ↦ h₀ U z + val u.ex U.1 (b (Opposite.op U)) z, ⟨fun U ↦ ?_, fun U V a z hz ↦ ?_, fun U z hz ↦ ?_⟩,
+    fun U l z hz ↦ ?_⟩
+  · exact (p1 U).add (hDiff U.1 _)
+  · have hle : V.1 ≤ U.1 := leOfHom a.unop
+    have hr : val u.ex V.1 (Sec.res (str A) hle (b (Opposite.op U))) z = val u.ex U.1 (b (Opposite.op U)) z :=
+      hRes U.1 V.1 hle _ z hz
+    simp only
+    rw [p2 U V a z hz, hcf U V a, hval_add _ _ _ z hz, hval_sub _ _ _ z hz, hr]
+    ring
+  · have hd₀ : DifferentiableAt ℂ (h₀ U) z := ((p1 U) z hz).differentiableAt ((hOpen U.1).mem_nhds hz)
+    have hd₁ : DifferentiableAt ℂ (val u.ex U.1 (b (Opposite.op U))) z :=
+      ((hDiff U.1 _) z hz).differentiableAt ((hOpen U.1).mem_nhds hz)
+    obtain ⟨-, -, hD⟩ := GlobalTheory.T.uniformisedOneFormEvaluation_rules A g L u U.1 z hz
+    change fderiv ℂ (h₀ U + val u.ex U.1 (b (Opposite.op U))) z = _
+    rw [fderiv_add hd₀ hd₁, p3 U z hz, hcω U, map_add (f := _), hD]
+  · simp only
+    rw [hp U l z hz]
+    erw [hPer]
+    ring
+
+end GlobalTheory.CechPer
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHolomorphicPrimitiveOfCechDeRhamPeriodsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.exists_holomorphic_primitive_of_cechDeRham_periods : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ x q, IsPer u.ex u.Λ x q → ∀ c, Hyp1.mk _ c = x → ∃ h, IsPrim u.ex c h ∧ ∀ (U : A.left.affineOpens) (l : u.Λ), ∀ z ∈ pre u.ex U.1, h U (z + l) = h U z + q l := by
+  first | exact @GlobalTheory.CechPer.exists_prim_of_isPer | exact GlobalTheory.CechPer.exists_prim_of_isPer | (intros; apply GlobalTheory.CechPer.exists_prim_of_isPer <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasCechDeRhamPeriodsZeroClassEqZero
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.CechPer
+
+theorem zero_periods_eq_zero : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ q, IsPer u.ex u.Λ 0 q → q = 0 := by
+  intro A _ g L u q hq
+  obtain ⟨hopen, -, hadd, -, hinf, -, -, hbasis, -, -, -, htop⟩ := GlobalTheory.T.uniformisation_preimage_value_rules A g L u
+  obtain ⟨h, ⟨hdiff, hres0, hder0⟩, hper⟩ := GlobalTheory.T.exists_holomorphic_primitive_of_cechDeRham_periods A g L u 0 q hq 0 (map_zero _)
+  have hres : ∀ (U V : A.left.affineOpens), V.1 ≤ U.1 → ∀ z ∈ pre u.ex V.1, h V z = h U z := by
+    intro U V hVU z hz
+    have := hres0 U V (homOfLE hVU).op z hz
+    rw [this]
+    change h U z + valAt' _ _ (0 : Γ(A.left, V.1)) = h U z
+    unfold valAt' valAt
+    split_ifs <;> simp
+  have hder : ∀ (U : A.left.affineOpens), ∀ z ∈ pre u.ex U.1, fderiv ℂ (h U) z = 0 := by
+    intro U z hz
+    rw [hder0 U z hz]
+    change evForm u.ex U.1 z 0 = 0
+    simp
+  have hex : ∀ z, ∃ U : A.left.affineOpens, z ∈ pre u.ex U.1 := fun z ↦ by
+    obtain ⟨W, -, hW⟩ := hbasis ⊤ z (htop z)
+    exact ⟨W, hW⟩
+  choose Uz hUz using hex
+  let G : (Fin g → ℂ) → ℂ := fun z ↦ h (Uz z) z
+  have hG : ∀ (U : A.left.affineOpens), ∀ z ∈ pre u.ex U.1, G z = h U z := by
+    intro U z hz
+    obtain ⟨W, hWle, hW⟩ := hbasis (U.1 ⊓ (Uz z).1) z (by rw [hinf]; exact ⟨hz, hUz z⟩)
+    have h1 := hres U W (hWle.trans inf_le_left) z hW
+    have h2 := hres (Uz z) W (hWle.trans inf_le_right) z hW
+    simp only [G]
+    rw [← h1, ← h2]
+  have hloc : ∀ z, G =ᶠ[nhds z] h (Uz z) := fun z ↦ by
+    filter_upwards [(hopen _).mem_nhds (hUz z)] with w hw
+    exact hG _ w hw
+  have hGd : Differentiable ℂ G := fun z ↦
+    (((hdiff (Uz z)).differentiableAt ((hopen _).mem_nhds (hUz z)))).congr_of_eventuallyEq (hloc z)
+  have hGf : ∀ z, fderiv ℂ G z = 0 := fun z ↦ by
+    rw [(hloc z).fderiv_eq]; exact hder _ z (hUz z)
+  funext l
+  have hl : (0 : Fin g → ℂ) + l ∈ pre u.ex (Uz 0).1 := (hadd _ l 0).2 (hUz 0)
+  have e1 := hper (Uz 0) l 0 (hUz 0)
+  have e2 := hG (Uz 0) _ hl
+  have e3 := is_const_of_fderiv_eq_zero hGd hGf ((0 : Fin g → ℂ) + l) 0
+  have e4 := hG (Uz 0) 0 (hUz 0)
+  simp only [Pi.zero_apply]
+  linear_combination -e1 - e2 + e3 + e4
+
+end GlobalTheory.CechPer
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasCechDeRhamPeriodsZeroClassEqZeroStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem _root_.GlobalTheory.T.hasCechDeRhamPeriods_zero_class_eq_zero : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ q, IsPer u.ex u.Λ 0 q → q = 0 := by
+  first | exact @GlobalTheory.CechPer.zero_periods_eq_zero | exact GlobalTheory.CechPer.zero_periods_eq_zero | (intros; apply GlobalTheory.CechPer.zero_periods_eq_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPerUnique
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.CechDR GlobalTheory.CechPer
+attribute [local instance] Over.cartesianMonoidalCategory
+
+theorem GlobalTheory.CechPer.isPer_unique : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ x q q', IsPer u.ex u.Λ x q → IsPer u.ex u.Λ x q' → q = q' := by
+  intro A _ g L u x q q' hq hq'
+  have h := ((GlobalTheory.T.cechDeRhamPeriods_linear A g L u).1 x x q q' hq hq').2
+  rw [sub_self] at h
+  exact sub_eq_zero.mp (GlobalTheory.T.hasCechDeRhamPeriods_zero_class_eq_zero A g L u _ h)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPerUniqueStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +237,5 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.isPer_unique' : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ x q q', IsPer u.ex u.Λ x q → IsPer u.ex u.Λ x q' → q = q' := by
   first | exact @GlobalTheory.CechPer.isPer_unique | exact GlobalTheory.CechPer.isPer_unique | (intros; apply GlobalTheory.CechPer.isPer_unique <;> assumption)
+end
+end

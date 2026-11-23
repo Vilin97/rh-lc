@@ -2,7 +2,9 @@ module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.CoordinateProjectionOfArithSystem
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ArithVarZero
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogRenameCoordPow
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmIUnique
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,9 +44,68 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.PfCoordOfSystem
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4
+
+namespace PositivityTheory.HtPt.Aig
+
+
+open ReciprocityTheory.ChartRestriction.G.AI.I2 in
+theorem pfCoord_of_system :
+    ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PFCoordStatement := by
+  rintro ⟨II, hSys, -, hPF, -⟩
+  intro I hI K _ ι _ K' _ ι' _ κ v Ω _ _ y d L L' hv hP' hP hL hL'
+  have hU : UniqueStatement :=
+    GroundTheory.Heights₂.Heights.Inter.ThmIUnique.proof GroundTheory.Heights₂.Heights.Inter.arithVarZero
+  have hd : 1 ≤ d := by
+    rcases Nat.eq_zero_or_pos d with rfl | h
+    · exact absurd hP (GroundTheory.Heights₂.Heights.Inter.arithVarZero K ι _)
+    · exact h
+  have hL's : ∀ j, IsSmoothHerm (L' j) := fun j =>
+    GroundTheory.Heights₂.Heights.Inter.PushforwardArithIntersection.isSmoothHerm_pull hv (hL j) (hL' j)
+  have e1 : I K' ι' (mCoordIdeal y) d L' = II K' ι' (mCoordIdeal y) d L' :=
+    hU K' ι' (I K' ι') (II K' ι') (IsIntersectionFamily.isRFamily (hI K' ι'))
+      (IsIntersectionFamily.isRFamily (hSys K' ι')) _ d L' hd hP' hL's
+  have e2 : I K ι (imageZ v (mCoordIdeal y)) d L = II K ι (imageZ v (mCoordIdeal y)) d L :=
+    hU K ι (I K ι) (II K ι) (IsIntersectionFamily.isRFamily (hI K ι))
+      (IsIntersectionFamily.isRFamily (hSys K ι)) _ d L hd hP hL
+  rw [e1, e2]
+  exact hPF K ι K' ι' κ v Ω y d L L' hv hP' hP hL hL'
+
+theorem pfCoord : ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PFCoordStatement :=
+  pfCoord_of_system
+
+end PositivityTheory.HtPt.Aig
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.CoordinateProjectionOfArithSystem
+
+section
+
+@[expose] public section
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4
+
+theorem _root_.GlobalTheory.CompanionTheory.Relay.coordinate_projection_of_arith_system : ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PFCoordStatement := by
+  first | exact @PositivityTheory.HtPt.Aig.pfCoord | exact PositivityTheory.HtPt.Aig.pfCoord
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.CoordinateProjectionOfArithSystemStatement
+
+section
+
 @[expose] public section
 
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4
 
 theorem _root_.GlobalTheory.T.coordinate_projection_of_arith_system : ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PFCoordStatement := by
   first | exact @GlobalTheory.CompanionTheory.Relay.coordinate_projection_of_arith_system | exact GlobalTheory.CompanionTheory.Relay.coordinate_projection_of_arith_system | (intros; apply GlobalTheory.CompanionTheory.Relay.coordinate_projection_of_arith_system <;> assumption)
+end
+end

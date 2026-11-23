@@ -2,10 +2,8 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.GlobalUnitaryForms.FibAbs
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberIndexFinite
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberSingle
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberStabilizerFinite
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberSumOverFibers
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SymmetricFiberCovering
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberOfBot
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.TraceFormulaEigenvalues.TraceFibreCardinality.GqIndex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -34,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,6 +48,147 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberSumOverFibers
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SymmetricFiberCovering
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberSingle
+
+section
+
+@[expose] public section
+
+open MulAction in
+theorem UpperTheory.orbitalFiber_single :
+    UpperTheory.V.Z.Sym.Glob.Fib.OneFib := by
+  intro Γ G _ _ ι S U' Γ₁ Γ₀ x Φ hcomm hΓS hN htriv hΦl hΦr hTex hst hrel hcard
+  classical
+  haveI hSn : S.Normal := ⟨fun n hn g => by
+    convert S.mul_mem (hcomm g n) hn using 1
+    group⟩
+  set C := Subgroup.comap ι (S ⊔ U') with hC
+  set f := (orbit ↥S (x : G ⧸ U')).indicator fun y => Φ (Quotient.out y) with hf
+  have hΓC : Γ₁ ≤ C := fun a ha =>
+    Subgroup.mem_comap.mpr ((le_sup_left : S ≤ S ⊔ U') (Subgroup.mem_comap.mp (hΓS ha)))
+  let j : C →* G := ι.comp C.subtype
+  let φ : Γ₁ →* C := Subgroup.inclusion hΓC
+  have hclos : ∀ g ∈ S ⊔ U', ∀ y ∈ orbit ↥S (x : G ⧸ U'), g • y ∈ orbit ↥S (x : G ⧸ U') := by
+    intro g hg y hy
+    obtain ⟨s, hs, u, hu, rfl⟩ := Subgroup.mem_sup_of_normal_left.mp hg
+    obtain ⟨⟨s', hs'⟩, rfl⟩ := hy
+    refine ⟨⟨s * (u * (s' * x) * u⁻¹ * (s' * x)⁻¹) * s', S.mul_mem (S.mul_mem hs (hcomm _ _)) hs'⟩, ?_⟩
+    show ((s * (u * (s' * x) * u⁻¹ * (s' * x)⁻¹) * s' * x : G) : G ⧸ U') = ((s * u * (s' * x) : G) : G ⧸ U')
+    rw [QuotientGroup.eq]
+    have he : (s * (u * (s' * x) * u⁻¹ * (s' * x)⁻¹) * s' * x)⁻¹ * (s * u * (s' * x)) = u := by group
+    rw [he]
+    exact hu
+  have hinv : ∀ (h : C) (y : G ⧸ U'), f (j h • y) = f y := by
+    intro h y
+    have hg : ι h.1 ∈ S ⊔ U' := h.2
+    change f (ι h.1 • y) = f y
+    by_cases hy : y ∈ orbit ↥S (x : G ⧸ U')
+    · have hy' := hclos _ hg y hy
+      rw [hf, Set.indicator_of_mem hy', Set.indicator_of_mem hy]
+      obtain ⟨u, hu⟩ := QuotientGroup.mk_out_eq_mul U' (ι h.1 * Quotient.out y)
+      have hyy : ι h.1 • y = ((ι h.1 * Quotient.out y : G) : G ⧸ U') := by
+        conv_lhs => rw [← QuotientGroup.out_eq' y]
+        rfl
+      rw [hyy, hu, hΦr _ u.2, hΦl]
+    · have hy' : ι h.1 • y ∉ orbit ↥S (x : G ⧸ U') := fun hm => hy (by
+        have := hclos _ (inv_mem hg) _ hm
+        rwa [inv_smul_smul] at this)
+      rw [hf, Set.indicator_apply, if_neg hy', Set.indicator_apply, if_neg hy]
+  have hfin : ∃ T' : Finset (G ⧸ U'), ∀ y, f y ≠ 0 → ∃ h : C, ∃ x' ∈ T', y = j h • x' := by
+    obtain ⟨T, hT⟩ := hTex
+    refine ⟨T.image (QuotientGroup.mk : G → G ⧸ U'), ?_⟩
+    intro y hy
+    obtain ⟨⟨s, hs⟩, rfl⟩ := Set.mem_of_indicator_ne_zero hy
+    obtain ⟨h, hh, t, ht, u, hu, he⟩ := hT s hs
+    refine ⟨⟨h, hΓC hh⟩, (t : G ⧸ U'), Finset.mem_image_of_mem QuotientGroup.mk ht, ?_⟩
+    show ((s * x : G) : G ⧸ U') = ((ι h * t : G) : G ⧸ U')
+    rw [he, QuotientGroup.eq]
+    rw [show (ι h * t * u)⁻¹ * (ι h * t) = u⁻¹ by group]
+    exact inv_mem hu
+  have hsup : φ.range ⊔ Γ₀.subgroupOf C = (Γ₁ ⊔ Γ₀).subgroupOf C := by
+    ext z
+    rw [Subgroup.mem_sup_of_normal_right, Subgroup.mem_subgroupOf, Subgroup.mem_sup_of_normal_right]
+    constructor
+    · rintro ⟨a, ⟨a', rfl⟩, b, hb, rfl⟩
+      exact ⟨a'.1, a'.2, b.1, Subgroup.mem_subgroupOf.mp hb, rfl⟩
+    · rintro ⟨a, ha, b, hb, hab⟩
+      have hbC : b ∈ C := by
+        have hb' : b = a⁻¹ * (z : Γ) := by rw [← hab]; group
+        rw [hb']
+        exact C.mul_mem (C.inv_mem (hΓC ha)) z.2
+      exact ⟨φ ⟨a, ha⟩, ⟨⟨a, ha⟩, rfl⟩, ⟨b, hbC⟩, Subgroup.mem_subgroupOf.mpr hb, Subtype.ext hab⟩
+  have hidx : (φ.range ⊔ Γ₀.subgroupOf C).index = (Γ₁ ⊔ Γ₀).relIndex C := by
+    rw [hsup]
+    rfl
+  have key := UpperTheory.V.Z.Sym.Tf.gqIndex Γ₁ C G φ j (Γ₀.subgroupOf C) U' f
+    inferInstance (fun z hz y => htriv z.1 (Subgroup.mem_subgroupOf.mp hz) y)
+    (by rw [hidx]; exact hrel) hinv hfin
+    (fun y _ => by
+      rw [← Subgroup.comap_comap]
+      exact Subgroup.relIndex_comap_ne_zero _ (hst y))
+  have e1 : UpperTheory.V.Z.Sym.gqOn (ι.comp Γ₁.subtype) (Γ₀.subgroupOf Γ₁) U' f =
+      UpperTheory.V.Z.Sym.gqOn (j.comp φ) (Subgroup.comap φ (Γ₀.subgroupOf C)) U' f := rfl
+  have hb : UpperTheory.V.Z.Sym.gqOn (ι.comp Γ₁.subtype) (Γ₀.subgroupOf Γ₁) U' f =
+      ↑(Nat.card ↥(Γ₀.subgroupOf Γ₁)) * UpperTheory.V.Z.Sym.gqOn (ι.comp Γ₁.subtype) ⊥ U' f := by
+    letI := MulAction.compHom (G ⧸ U') (ι.comp Γ₁.subtype)
+    exact (UpperTheory.orbitalFiber_of_bot Γ₁ (G ⧸ U') (Γ₀.subgroupOf Γ₁) f).2 hcard
+      (fun z hz y => htriv z.1 (Subgroup.mem_subgroupOf.mp hz) y)
+  rw [← hb, e1, key, hidx]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrbitalFiberStabilizerFinite
+
+section
+
+@[expose] public section
+
+namespace UpperTheory
+
+theorem orbitalFiber_stabilizer_finite : UpperTheory.V.Z.Sym.Glob.Fib.StabFin := by
+  intro H G _ _ S U U' ι x hS hidx hfin
+  let ψ : H →* G := (MulAut.conj x⁻¹).toMonoidHom.comp (S.subtype.comp ι)
+  have hψ : ∀ h, ψ h = x⁻¹ * ι h * x := fun h => by simp [ψ]
+  have hB : (U' ⊓ S).comap ψ = U'.comap ψ := by
+    ext h
+    simp only [Subgroup.mem_comap, Subgroup.mem_inf, and_iff_left_iff_imp]
+    intro _
+    rw [hψ]
+    simpa using hS.conj_mem _ (ι h).2 x⁻¹
+  have h1 : (U.comap ψ).relIndex (U'.comap ψ) ≠ 0 := by
+    rw [← hB]
+    exact Subgroup.relIndex_comap_ne_zero ψ hidx
+  have hA : Finite (U.comap ψ) := by
+    have : ((U.comap ψ : Subgroup H) : Set H).Finite := by
+      convert hfin using 1
+      ext h
+      simp [hψ]
+    exact this.to_subtype
+  have hA' : Finite ((U.comap ψ).subgroupOf (U'.comap ψ)) :=
+    Finite.of_injective (fun a => (⟨a.1.1, a.2⟩ : U.comap ψ)) (fun a b hab => by
+      apply Subtype.ext
+      apply Subtype.ext
+      exact congrArg (fun z : U.comap ψ => (z : H)) hab)
+  have hq : Finite ((U'.comap ψ) ⧸ (U.comap ψ).subgroupOf (U'.comap ψ)) :=
+    Nat.finite_of_card_ne_zero h1
+  have hfB : Finite (U'.comap ψ) :=
+    Finite.of_equiv _ (Subgroup.groupEquivQuotientProdSubgroup
+      (s := (U.comap ψ).subgroupOf (U'.comap ψ))).symm
+  have : ((U'.comap ψ : Subgroup H) : Set H).Finite := Set.toFinite _
+  convert this using 1
+  ext h
+  simp [hψ]
+
+end UpperTheory
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SymmetricFiberMasterFormula
+
+section
 
 @[expose] public section
 
@@ -129,3 +269,5 @@ theorem UpperTheory.symmetric_fiber_master_formula :
   rw [hC]
   push_cast
   ring
+end
+end

@@ -2,14 +2,14 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComapBcComp
 public import Mathlib.AlgebraicGeometry.ValuativeCriterion
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFlatIdealValuationRingPullbackStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSubschemeOfQuotientFlatAffineStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafDataComapIdealTopOfIsAffineStatement
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.RingTheory.RingHom.Flat
+public import Mathlib.RingTheory.Valuation.ValuationRing
+public import Mathlib.RingTheory.Flat.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -25,10 +25,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,6 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,6 +46,228 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.Flat.TorsionFree
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafDataComapIdealTopOfIsAffine
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsAlt
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+
+namespace GlobalTheory.ValuativeQuotient
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
+
+theorem main : ∀ (V K B : Type) [CommRing V] [IsDomain V] [ValuationRing V] [Field K]
+    [Algebra V K] [IsFractionRing V K] [CommRing B] [Algebra V B] (JK : Ideal (K ⊗[V] B)),
+    ∃! J : Ideal B, Module.Flat V (B ⧸ J) ∧
+      J.map (Algebra.TensorProduct.includeRight : B →ₐ[V] K ⊗[V] B) = JK := by
+  intro V K B _ _ _ _ _ _ _ _ JK
+  have hloc := IsLocalization.tensorRight (S := B) K (nonZeroDivisors V)
+  set M := Algebra.algebraMapSubmonoid B (nonZeroDivisors V) with hM
+  have hmap : ∀ I : Ideal B,
+      I.map (Algebra.TensorProduct.includeRight : B →ₐ[V] K ⊗[V] B) =
+        I.map (algebraMap B (K ⊗[V] B)) := fun I => rfl
+  have hsmul : ∀ (J : Ideal B) (v : V) (b : B),
+      v • Ideal.Quotient.mk J b = Ideal.Quotient.mk J (algebraMap V B v * b) := by
+    intro J v b
+    rw [← Algebra.smul_def, ← Ideal.Quotient.mkₐ_eq_mk V, map_smul]
+  have hflat : ∀ J : Ideal B, Module.Flat V (B ⧸ J) ↔ ∀ m ∈ M, ∀ b : B, m * b ∈ J → b ∈ J := by
+    intro J
+    rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout, Submodule.eq_bot_iff]
+    constructor
+    · rintro h m ⟨v, hv, rfl⟩ b hb
+      have h0 := h (Ideal.Quotient.mk J b) ((Submodule.mem_torsion_iff _).mpr
+        ⟨⟨v, hv⟩, by
+          show v • Ideal.Quotient.mk J b = 0
+          rw [hsmul, Ideal.Quotient.eq_zero_iff_mem]
+          exact hb⟩)
+      exact Ideal.Quotient.eq_zero_iff_mem.mp h0
+    · intro h x hx
+      obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
+      obtain ⟨⟨v, hv⟩, hvb⟩ := (Submodule.mem_torsion_iff _).mp hx
+      change v • Ideal.Quotient.mk J b = 0 at hvb
+      rw [hsmul, Ideal.Quotient.eq_zero_iff_mem] at hvb
+      exact Ideal.Quotient.eq_zero_iff_mem.mpr (h _ ⟨v, hv, rfl⟩ b hvb)
+  refine ⟨JK.comap (algebraMap B (K ⊗[V] B)), ⟨?_, ?_⟩, ?_⟩
+  · rw [hflat]
+    intro m hm b hb
+    rw [Ideal.mem_comap, map_mul] at hb
+    exact (Ideal.unit_mul_mem_iff_mem JK (IsLocalization.map_units (K ⊗[V] B) ⟨m, hm⟩)).mp hb
+  · rw [hmap]
+    exact IsLocalization.map_under M (K ⊗[V] B) JK
+  · rintro J' ⟨hJ'f, hJ'⟩
+    rw [hmap] at hJ'
+    rw [hflat] at hJ'f
+    apply le_antisymm
+    · rw [← hJ']
+      exact Ideal.le_comap_map
+    · intro b hb
+      rw [Ideal.mem_comap, ← hJ', IsLocalization.mem_map_algebraMap_iff M] at hb
+      obtain ⟨⟨x, m⟩, hxm⟩ := hb
+      rw [← map_mul, IsLocalization.eq_iff_exists M] at hxm
+      obtain ⟨c, hc⟩ := hxm
+      apply hJ'f (c * m) (M.mul_mem c.2 m.2)
+      have : (c : B) * (m : B) * b = c * x.1 := by rw [← hc]; ring
+      rw [this]
+      exact J'.mul_mem_left _ x.2
+
+end GlobalTheory.ValuativeQuotient
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFlatIdealValuationRingPullback
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open scoped TensorProduct
+
+namespace GlobalTheory.FlatHilbAff
+
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
+theorem exists_flat_ideal : ∀ (V K : Type) [CommRing V] [IsDomain V] [ValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] (X X' : Scheme.{0}) [IsAffine X] [IsAffine X'] (p : X ⟶ Spec (CommRingCat.of V)) (p' : X' ⟶ Spec (CommRingCat.of K)) (b : X' ⟶ X), IsPullback b p' p (Spec.map (CommRingCat.ofHom (algebraMap V K))) → ∀ I : Ideal Γ(X', ⊤), ∃ J : Ideal Γ(X, ⊤), ((Ideal.Quotient.mk J).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom)).Flat ∧ Ideal.map b.appTop.hom J = I := by
+  intro V K _ _ _ _ _ _ X X' _ _ p p' b h I
+  set φ : V →+* Γ(X, ⊤) := p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom with hφ
+  letI : Algebra V Γ(X, ⊤) := φ.toAlgebra
+  have H0 := isPushout_appTop_of_isPullback h
+  have H : IsPushout (CommRingCat.ofHom (algebraMap V K)) (CommRingCat.ofHom (algebraMap V Γ(X, ⊤)))
+      ((Scheme.ΓSpecIso (CommRingCat.of K)).inv ≫ p'.appTop) b.appTop := by
+    refine H0.flip.of_iso (Scheme.ΓSpecIso _) (Scheme.ΓSpecIso _) (Iso.refl _) (Iso.refl _)
+      ?_ ?_ ?_ ?_
+    · exact Scheme.ΓSpecIso_naturality _
+    · ext x; simp [φ, RingHom.algebraMap_toAlgebra]
+    · simp
+    · simp
+  let e : K ⊗[V] Γ(X, ⊤) ≃+* Γ(X', ⊤) :=
+    ((CommRingCat.isPushout_tensorProduct V K Γ(X, ⊤)).isoPushout ≪≫
+      H.isoPushout.symm).commRingCatIsoToRingEquiv
+  have he : ∀ x : Γ(X, ⊤), e (Algebra.TensorProduct.includeRight x) = b.appTop.hom x := by
+    intro x
+    have h1 := congr($((CommRingCat.isPushout_tensorProduct V K Γ(X, ⊤)).inr_isoPushout_hom).hom x)
+    have h4 := congr($(H.inr_isoPushout_inv).hom x)
+    simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, CommRingCat.hom_ofHom,
+      AlgHom.toRingHom_eq_coe, RingHom.coe_coe] at h1 h4
+    have : e (Algebra.TensorProduct.includeRight x) = H.isoPushout.inv.hom
+        ((CommRingCat.isPushout_tensorProduct V K Γ(X, ⊤)).isoPushout.hom.hom
+          (Algebra.TensorProduct.includeRight x)) := rfl
+    rw [this]
+    exact (congrArg H.isoPushout.inv.hom h1).trans h4
+  obtain ⟨J, ⟨hJf, hJ⟩, -⟩ := GlobalTheory.ValuativeQuotient.main V K Γ(X, ⊤) (I.comap e.toRingHom)
+  refine ⟨J, ?_, ?_⟩
+  · have : (algebraMap V (Γ(X, ⊤) ⧸ J)) =
+        (Ideal.Quotient.mk J).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom) :=
+      rfl
+    rw [← this, RingHom.flat_algebraMap_iff]
+    exact hJf
+  · have hb : b.appTop.hom = e.toRingHom.comp
+        (Algebra.TensorProduct.includeRight : Γ(X, ⊤) →ₐ[V] K ⊗[V] Γ(X, ⊤)).toRingHom := by
+      ext x; exact (he x).symm
+    rw [hb, ← Ideal.map_map]
+    change Ideal.map e.toRingHom (J.map (Algebra.TensorProduct.includeRight : Γ(X, ⊤) →ₐ[V] K ⊗[V] Γ(X, ⊤))) = I
+    rw [hJ]
+    exact Ideal.map_comap_of_surjective _ e.surjective I
+
+end GlobalTheory.FlatHilbAff
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFlatIdealValuationRingPullbackStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+
+theorem _root_.GlobalTheory.T.exists_flat_ideal_valuationRing_pullback : ∀ (V K : Type) [CommRing V] [IsDomain V] [ValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] (X X' : Scheme.{0}) [IsAffine X] [IsAffine X'] (p : X ⟶ Spec (CommRingCat.of V)) (p' : X' ⟶ Spec (CommRingCat.of K)) (b : X' ⟶ X), IsPullback b p' p (Spec.map (CommRingCat.ofHom (algebraMap V K))) → ∀ I : Ideal Γ(X', ⊤), ∃ J : Ideal Γ(X, ⊤), ((Ideal.Quotient.mk J).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom)).Flat ∧ Ideal.map b.appTop.hom J = I := by
+  first | exact @GlobalTheory.FlatHilbAff.exists_flat_ideal | exact GlobalTheory.FlatHilbAff.exists_flat_ideal | (intros; apply GlobalTheory.FlatHilbAff.exists_flat_ideal <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSubschemeOfQuotientFlatAffine
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+
+namespace GlobalTheory
+
+theorem closedSub_flat_of_quotient_flat : ∀ (V : Type) [CommRing V] (X : Scheme.{0}) [IsAffine X] (p : X ⟶ Spec (CommRingCat.of V)) (J : X.IdealSheafData), ((Ideal.Quotient.mk (J.ideal ⟨⊤, isAffineOpen_top X⟩)).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom)).Flat → Flat (J.subschemeι ≫ p) := by
+  intro V _ X _ p J h
+  have : IsAffine J.subscheme := isAffine_of_isAffineHom J.subschemeι
+  rw [HasRingHomProperty.iff_of_isAffine (P := @Flat)]
+  set U : X.affineOpens := ⟨⊤, isAffineOpen_top X⟩
+  have e : (J.subschemeι ≫ p).appTop.hom =
+      (J.subschemeObjIso U).inv.hom.comp
+        (((Ideal.Quotient.mk (J.ideal U)).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom)).comp
+          (Scheme.ΓSpecIso (CommRingCat.of V)).hom.hom) := by
+    have h2 := J.subschemeι_app U
+    have h3 : J.subschemeι.appTop = CommRingCat.ofHom (Ideal.Quotient.mk (J.ideal U)) ≫ (J.subschemeObjIso U).inv := h2
+    rw [Scheme.Hom.comp_appTop, h3]
+    ext x
+    change (J.subschemeObjIso U).inv.hom (Ideal.Quotient.mk (J.ideal U) (p.appTop.hom x)) =
+      (J.subschemeObjIso U).inv.hom (Ideal.Quotient.mk (J.ideal U) (p.appTop.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of V)).hom.hom x))))
+    rw [Iso.hom_inv_id_apply]
+  rw [e]
+  refine RingHom.Flat.comp ?_ (RingHom.Flat.of_bijective (J.subschemeObjIso U).commRingCatIsoToRingEquiv.symm.bijective)
+  refine RingHom.Flat.comp (RingHom.Flat.of_bijective (Scheme.ΓSpecIso (CommRingCat.of V)).commRingCatIsoToRingEquiv.bijective) h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSubschemeOfQuotientFlatAffineStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+
+theorem _root_.GlobalTheory.T.flat_subscheme_of_quotient_flat_affine : ∀ (V : Type) [CommRing V] (X : Scheme.{0}) [IsAffine X] (p : X ⟶ Spec (CommRingCat.of V)) (J : X.IdealSheafData), ((Ideal.Quotient.mk (J.ideal ⟨⊤, isAffineOpen_top X⟩)).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom)).Flat → Flat (J.subschemeι ≫ p) := by
+  first | (exact @GlobalTheory.closedSub_flat_of_quotient_flat) | (exact GlobalTheory.closedSub_flat_of_quotient_flat) | (intros; apply GlobalTheory.closedSub_flat_of_quotient_flat  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealSheafDataComapIdealTopOfIsAffineStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+
+theorem _root_.GlobalTheory.T.idealSheafData_comap_ideal_top_of_isAffine : ∀ (X Y : Scheme.{0}) [IsAffine X] [IsAffine Y] (f : X ⟶ Y) (J : Y.IdealSheafData), (J.comap f).ideal ⟨⊤, isAffineOpen_top X⟩ = Ideal.map f.appTop.hom (J.ideal ⟨⊤, isAffineOpen_top Y⟩) := by
+  first | exact @GlobalTheory.IdealSheafData.ideal_comap_top_of_isAffine | exact GlobalTheory.IdealSheafData.ideal_comap_top_of_isAffine | (intros; apply GlobalTheory.IdealSheafData.ideal_comap_top_of_isAffine <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AffineHilbertSchemeValuativeCriterionExistence
+
+section
 
 @[expose] public section
 
@@ -146,3 +366,5 @@ theorem valuativeExistence (A B : Type) [CommRing A] [CommRing B] [Algebra A B] 
   · rw [← key, Equiv.apply_symm_apply, hy1]
 
 end GlobalTheory.HilbAff
+end
+end

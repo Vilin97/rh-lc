@@ -2,27 +2,30 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HodgeTateLatticePointFinrankTateModule
 public import Development.AbelianVarietyTheory.Definitions.CMLattices.IsDiffOf
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SumBLieMemHtLatIffOfPointOver
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTorusLeLieSpan
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
-public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.RosatiAdjIffLamEq
-import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllUniformizationLawsHold
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.Basic.NNReal.Defs
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,9 +42,255 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueIsWeilChar
+import Development.AbelianVarietyTheory.Definitions.Divisors.LogAbsVpOfNormalised
+import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteDualNumber
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.QuadTie
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.AlWellDefSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ExistsSplitTorusPointsMulEquiv
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.AlWellDefSt
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsUniqueIsAl
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UnitOfBijectiveMulNatural
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Definitions.Divisors.KerIdealCompOfSurjective
+import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.ExistsIsPowGrpSplitTorus
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.EqOneOfPowEqOneOfCompEqOne
+import Development.AbelianVarietyTheory.Statements.ChartPoints.ChartPt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.RosatiAdjIffLamEq
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllUniformizationLawsHold
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SumBLieMemHtLatIffOfPointOver
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open NumberField IsDedekindDomain
+open scoped CategoryTheory.Obj CategoryTheory.MonObj TensorProduct NNReal
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Pdiv ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open Formalism.L2.Pj GlobalTheory.HTLat GlobalTheory.HTLat.OmegaRank GlobalTheory.EigenSplit GlobalTheory.Frames GlobalTheory.AllWt GlobalTheory.CompHt
+open GlobalTheory.KernelNoTorsion
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.CompHt.IndepPoint
+
+variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] {v : Valuation C ℝ≥0} {O : Type} [CommRing O]
+  [Algebra O C] {Λ : Type} [CommRing Λ] [StarRing Λ] {P P' : Point p v O Λ}
+
+def ptsHom {S : Scheme.{0}} {A B : Over S} [GrpObj A] [GrpObj B] (f : A ⟶ B) [IsMonHom f] (T : Over S) :
+    (T ⟶ A) →* (T ⟶ B) :=
+  MonoidHom.mk' (fun x => x ≫ f) fun x y => MonObj.mul_comp x y _
+
+
+variable [IsAlgClosed C] [CharZero C]
+
+variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [Algebra ℤ_[p] O]
+
+
+variable [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C] (e : P.T ≃ₗ[ℤ_[p]] P'.T)
+
+
+
+
+end GlobalTheory.CompHt.IndepPoint
+
+namespace GlobalTheory.CompHt
+
+open IndepPoint
+
+end GlobalTheory.CompHt
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Counterexamples.JetSurvey.HtCharOfIsUnit
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open scoped CategoryTheory.Obj CategoryTheory.MonObj
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Pdiv
+
+namespace GlobalTheory.HodgeTateTest
+
+open GlobalTheory.TangentPow GlobalTheory.GmPoints GlobalTheory.HodgeTateImage
+
+variable {O : Type} [CommRing O]
+
+noncomputable abbrev GmO (O : Type) [CommRing O] : Over (Spec (CommRingCat.of O)) :=
+  Gm (Spec (CommRingCat.of O))
+
+noncomputable def taut (p : ℕ) : Tv (GmO O) p where
+  χ n := torsion.ι _ _
+  isChar _ _ _ _ _ h := h
+  compat _ _ _ _ h := h
+
+noncomputable def dlogT (x : LieG (GmO O)) : O := (unitOf x.1 : DualNumber O).snd
+
+theorem unitOf_one' {R : Type} [CommRing R] [Algebra O R] :
+    unitOf (1 : specO O R ⟶ GmO O) = 1 := by
+  have h := unitOf_mul (1 : specO O R ⟶ GmO O) 1
+  rw [_root_.mul_one] at h
+  exact left_eq_mul.mp h
+
+theorem lie_iff (w : specO O (DualNumber O) ⟶ GmO O) :
+    ptMap (TrivSqZeroExt.fstHom O O O) ≫ w = toUnit (specO O O) ≫ η[GmO O] ↔
+      (unitOf w : DualNumber O).fst = 1 := by
+  have h4 := unitOf_ptMap (TrivSqZeroExt.fstHom O O O) w
+  constructor
+  · intro h
+    rw [h] at h4
+    have h1 : unitOf (toUnit (specO O O) ≫ η[GmO O]) = 1 := unitOf_one'
+    rw [h1] at h4
+    exact h4.symm
+  · intro h
+    apply (unitOf_bijective (O := O) (R := O)).1
+    have h1 : unitOf (toUnit (specO O O) ≫ η[GmO O]) = 1 := unitOf_one'
+    rw [h1]
+    ext
+    rw [h4]
+    exact h
+
+theorem fst_eq (x : LieG (GmO O)) : (unitOf x.1 : DualNumber O).fst = 1 := (lie_iff _).1 x.2
+
+theorem isAl_taut (p : ℕ) : IsAl (taut (O := O) p) dlogT := by
+  intro n R _ _ _ x w hw
+  have hw' : w ≫ (taut (O := O) p).χ n = _ := hw
+  rw [hw', unitOf_ptMap]
+  ext
+  · simp [dualBC_fst, fst_eq]
+  · rw [dualBC_snd, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add]
+    rfl
+
+theorem dlogT_mem : dlogT ∈ omega (GmO O) := by
+  refine ⟨fun x y h => ?_, fun a x h => ?_⟩
+  · show (unitOf (x.1 * y.1) : DualNumber O).snd = _
+    rw [unitOf_mul, Units.val_mul, DualNumber.snd_mul, fst_eq, fst_eq, dlogT, dlogT]
+    ring
+  · show (unitOf (ptMap (dualScale a) ≫ x.1) : DualNumber O).snd = _
+    rw [unitOf_ptMap]
+    simp [dualScale, dlogT]
+
+theorem dlogT_bijective : Function.Bijective (dlogT (O := O)) := by
+  constructor
+  · intro x y h
+    apply Subtype.ext
+    apply (unitOf_bijective (O := O) (R := DualNumber O)).1
+    ext
+    · rw [fst_eq, fst_eq]
+    · exact h
+  · intro a
+    have hu : IsUnit (TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr a : DualNumber O) := by
+      rw [TrivSqZeroExt.isUnit_iff_isUnit_fst]; simp
+    obtain ⟨w, hw⟩ := (unitOf_bijective (O := O) (R := DualNumber O)).2 hu.unit
+    refine ⟨⟨w, (lie_iff w).2 (by rw [hw]; simp)⟩, ?_⟩
+    show (unitOf w : DualNumber O).snd = a
+    rw [hw]; simp
+
+theorem omega_le_span : omega (GmO O) ≤ Submodule.span O {dlogT} := by
+  intro f hf
+  obtain ⟨e, he⟩ := (dlogT_bijective (O := O)).2 1
+  rw [Submodule.mem_span_singleton]
+  refine ⟨f e, funext fun x => ?_⟩
+  have h1 : (unitOf (ptMap (dualScale (dlogT x)) ≫ e.1) : DualNumber O).fst = 1 := by
+    rw [unitOf_ptMap]; simp [dualScale, fst_eq]
+  have hm := (lie_iff _).2 h1
+  have hx : x = ⟨ptMap (dualScale (dlogT x)) ≫ e.1, hm⟩ := by
+    apply (dlogT_bijective (O := O)).1
+    rw [dlogT_mem.2 _ e hm, he, _root_.mul_one]
+  have := hf.2 (dlogT x) e hm
+  rw [← hx] at this
+  simp [this, mul_comm]
+
+theorem htSpan_gm (p : ℕ) : htSpan (GmO O) p = omega (GmO O) := by
+  apply le_antisymm
+  · exact Submodule.span_le.2 fun f hf => hf.1
+  · exact omega_le_span.trans (Submodule.span_mono (by
+      rintro _ rfl
+      exact ⟨dlogT_mem, taut p, isAl_taut p⟩))
+
+end GlobalTheory.HodgeTateTest
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTorusLeLieSpan
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open scoped CategoryTheory.Obj CategoryTheory.MonObj TensorProduct NNReal
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Pdiv ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.ChTor GlobalTheory.HTLat GlobalTheory.KernelNoTorsion GlobalTheory.HodgeTateTest GlobalTheory.PDiv GlobalTheory.SplitTorusPow
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.TorusTateLie
+
+section Torus
+
+variable (C : Type) [Field C] {O : Type} [CommRing O] [Algebra O C] {X : Type} [AddCommGroup X]
+
+def evalChar (χ : X) : (specO O O ⟶ splitTorus (Sp O) X) →* Cˣ :=
+  (Units.map ((algebraMap O C).comp (Scheme.ΓSpecIso (CommRingCat.of O)).hom.hom).toMonoidHom).comp
+    ((MonoidHom.eval (Multiplicative.ofAdd χ)).comp
+      (splitTorusPointsEquiv (Sp O) X (specO O O)).toMonoidHom)
+
+def lieMap {G G' : Over (Sp O)} [GrpObj G] [GrpObj G'] (φ : G ⟶ G') [IsMonHom φ] (x : LieG G) : LieG G' :=
+  ⟨x.1 ≫ φ, by rw [← Category.assoc, x.2, Category.assoc, IsMonHom.one_hom]⟩
+
+variable {C} {p : ℕ} [Fact p.Prime]
+
+end Torus
+
+section AtPoint
+
+variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [IsAlgClosed C] [CharZero C] {v : Valuation C ℝ≥0}
+  {O : Type} [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
+  {Λ : Type} [CommRing Λ] [StarRing Λ] (P : Point p v O Λ) (φ : GmO O ⟶ P.Gt) [IsMonHom φ]
+  (ζ : Tate p (specO O O ⟶ GmO O)) (hζ : Tate.map p (evalChar C (ULift.up (1 : ℤ))) ζ = P.eps.1)
+
+include hζ
+
+variable [Algebra ℤ_[p] O]
+
+variable [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C]
+
+end AtPoint
+
+end GlobalTheory.TorusTateLie
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PairTAdjTLeft
+
+section
 
 @[expose] public section
 
@@ -212,3 +461,6 @@ abbrev phiVQ [Algebra ℤ_[ℓ] C] (b : Fin q) :
 end Triples
 
 end GlobalTheory.PointMap
+end
+end
+end

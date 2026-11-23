@@ -3,7 +3,6 @@ module
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 public import Mathlib.RingTheory.Length
 public import Mathlib.RingTheory.Localization.FractionRing
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthQuotientSmulLeFinrankOfEmbedding
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +42,181 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittModuleLengthComposition
+import Mathlib.Tactic.Basify
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.LinearAlgebra.Quotient.Pi
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Localization.Module
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthLeOfForallFgSubmoduleLengthLe
+
+section
+
+@[expose] public section
+
+open Pointwise
+
+namespace GlobalTheory
+
+theorem length_le_of_forall_fg_length_le (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] (b : ℕ∞)
+    (h : ∀ N : Submodule O M, N.FG → Module.length O N ≤ b) : Module.length O M ≤ b := by
+  rw [Module.length_eq_height]
+  refine Order.height_le_iff'.2 fun p _ => ?_
+  have hx : ∀ i : Fin p.length, ∃ x ∈ p i.succ, x ∉ p i.castSucc :=
+    fun i => SetLike.exists_of_lt (p.step i)
+  choose x hx1 hx2 using hx
+  set N : Submodule O M := Submodule.span O (Set.range x) with hN
+  have hNfg : N.FG := Submodule.fg_span (Set.finite_range x)
+  have hxN : ∀ i, x i ∈ N := fun i => Submodule.subset_span ⟨i, rfl⟩
+  let q : LTSeries (Submodule O N) :=
+    { length := p.length
+      toFun := fun i => (p i).comap N.subtype
+      step := fun i => by
+        refine lt_of_le_of_ne (Submodule.comap_mono (p.step i).le) ?_
+        intro heq
+        have h1 : (⟨x i, hxN i⟩ : N) ∈ (p i.succ).comap N.subtype := hx1 i
+        rw [← heq] at h1
+        exact hx2 i h1 }
+  have h2 : (q.length : ℕ∞) ≤ Order.height (⊤ : Submodule O N) :=
+    Order.length_le_height le_top
+  calc (p.length : ℕ∞) = q.length := rfl
+    _ ≤ Order.height (⊤ : Submodule O N) := h2
+    _ = Module.length O N := (Module.length_eq_height (R := O) (M := N)).symm
+    _ ≤ b := h N hNfg
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthLeOfForallFgSubmoduleLengthLeStatement
+
+section
+
+@[expose] public section
+
+open Pointwise
+
+theorem _root_.GlobalTheory.T.length_le_of_forall_fg_submodule_length_le : ∀ (O M : Type) [CommRing O] [AddCommGroup M] [Module O M] (b : ℕ∞), (∀ N : Submodule O M, N.FG → Module.length O N ≤ b) → Module.length O M ≤ b := by
+  first | exact @GlobalTheory.length_le_of_forall_fg_length_le | exact GlobalTheory.length_le_of_forall_fg_length_le | (intros; apply GlobalTheory.length_le_of_forall_fg_length_le <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthQuotientScalarMul
+
+section
+
+@[expose] public section
+
+open Pointwise
+
+namespace GlobalTheory
+
+theorem length_quot_smul_range_finite_free : ∀ (O M : Type) [CommRing O] [Nontrivial O] [AddCommGroup M] [Module O M] [Module.Free O M] [Module.Finite O M] (a : O), Module.length O (M ⧸ LinearMap.range (a • (LinearMap.id : M →ₗ[O] M))) = (Module.finrank O M : ℕ∞) * Module.length O (O ⧸ Ideal.span {a}) := by
+  apply GlobalTheory.Dieu.ColengthLemmas.length_quot_smul_range_free <;> assumption
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthQuotientScalarMulStatement
+
+section
+
+@[expose] public section
+
+open Pointwise
+
+theorem _root_.GlobalTheory.T.length_quotient_scalar_mul : ∀ (O M : Type) [CommRing O] [Nontrivial O] [AddCommGroup M] [Module O M] [Module.Free O M] [Module.Finite O M] (a : O), Module.length O (M ⧸ LinearMap.range (a • (LinearMap.id : M →ₗ[O] M))) = (Module.finrank O M : ℕ∞) * Module.length O (O ⧸ Ideal.span {a}) := by
+  first | exact @GlobalTheory.length_quot_smul_range_finite_free | exact GlobalTheory.length_quot_smul_range_finite_free | (intros; apply GlobalTheory.length_quot_smul_range_finite_free <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthQuotientSmulLeFinrankOfEmbedding
+
+section
+
+@[expose] public section
+
+open Pointwise
+
+namespace GlobalTheory
+
+theorem length_quotient_smul_range_le_finrank_mul : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsPrincipalIdealRing O] [Field K] [Algebra O K] [IsFractionRing O K] (W M : Type) [AddCommGroup W] [Module K W] [Module O W] [IsScalarTower O K W] [FiniteDimensional K W] [AddCommGroup M] [Module O M] (f : M →ₗ[O] W), Function.Injective f → ∀ a : O, Module.length O (M ⧸ LinearMap.range (a • (LinearMap.id : M →ₗ[O] M))) ≤ (Module.finrank K W : ℕ∞) * Module.length O (O ⧸ Ideal.span {a}) := by
+  intro O K _ _ _ _ _ _ W M _ _ _ _ _ _ _ f hf a
+  set R := LinearMap.range (a • (LinearMap.id : M →ₗ[O] M)) with hR
+  refine GlobalTheory.T.length_le_of_forall_fg_submodule_length_le O (M ⧸ R) _ ?_
+  intro N hN
+  obtain ⟨s, hs⟩ := hN
+  set g := Function.surjInv (Submodule.mkQ_surjective R) with hg
+  have hgs : ∀ q, R.mkQ (g q) = q := Function.surjInv_eq (Submodule.mkQ_surjective R)
+  let N' : Submodule O M := Submodule.span O (g '' (s : Set (M ⧸ R)))
+  have hmap : N'.map R.mkQ = N := by
+    rw [Submodule.map_span, ← hs, ← Set.image_comp]
+    congr 1
+    ext q
+    simp [hgs]
+  haveI : Module.Finite O N' := Module.Finite.iff_fg.mpr (Submodule.fg_span (s.finite_toSet.image g))
+  let e : N' →ₗ[O] W := f ∘ₗ N'.subtype
+  have he : Function.Injective e := hf.comp N'.injective_subtype
+  haveI : Module.IsTorsionFree K W := inferInstance
+  haveI : Module.IsTorsionFree O W :=
+    Module.IsTorsionFree.comap (S := K) (algebraMap O K)
+      (fun r hr => IsRegular.of_ne_zero (by
+        intro h0
+        have hinj := IsFractionRing.injective O K
+        have : r = 0 := hinj (by simpa using h0)
+        subst this
+        exact (not_isRegular_zero (R := O)) hr))
+      (fun r m => algebraMap_smul K r m)
+  haveI : Module.IsTorsionFree O N' := Function.Injective.moduleIsTorsionFree e he e.map_smul
+  haveI : Module.Free O N' := Module.free_of_finite_type_torsion_free'
+  have hrank : Module.finrank O N' ≤ Module.finrank K W := by
+    let b := Module.finBasis O N'
+    have h1 : LinearIndependent O (e ∘ b) := b.linearIndependent.map' e (LinearMap.ker_eq_bot.mpr he)
+    have h2 : LinearIndependent K (e ∘ b) := (LinearIndependent.iff_fractionRing O K).mp h1
+    simpa using h2.fintype_card_le_finrank
+  let p : N' →ₗ[O] N := (R.mkQ ∘ₗ N'.subtype).codRestrict N (by
+    intro x
+    rw [← hmap]
+    exact ⟨x, x.2, rfl⟩)
+  have hp : Function.Surjective p := by
+    rintro ⟨y, hy⟩
+    rw [← hmap] at hy
+    obtain ⟨x, hx, rfl⟩ := hy
+    exact ⟨⟨x, hx⟩, rfl⟩
+  let R' := LinearMap.range (a • (LinearMap.id : N' →ₗ[O] N'))
+  have hker : R' ≤ LinearMap.ker p := by
+    rintro _ ⟨x, rfl⟩
+    rw [LinearMap.mem_ker]
+    apply Subtype.ext
+    have : R.mkQ (a • (x : M)) = 0 := by
+      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+      exact ⟨x, by simp⟩
+    simpa [p] using this
+  let q : (N' ⧸ R') →ₗ[O] N := R'.liftQ p hker
+  have hq : Function.Surjective q := by
+    intro y
+    obtain ⟨x, rfl⟩ := hp y
+    exact ⟨R'.mkQ x, by simp [q]⟩
+  calc Module.length O N ≤ Module.length O (N' ⧸ R') := Module.length_le_of_surjective q hq
+    _ = (Module.finrank O N' : ℕ∞) * Module.length O (O ⧸ Ideal.span {a}) := GlobalTheory.T.length_quotient_scalar_mul O N' a
+    _ ≤ _ := by
+      gcongr
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LengthQuotientSmulLeFinrankOfEmbeddingStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +224,5 @@ open Pointwise
 
 theorem _root_.GlobalTheory.T.length_quotient_smul_le_finrank_of_embedding : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsPrincipalIdealRing O] [Field K] [Algebra O K] [IsFractionRing O K] (W M : Type) [AddCommGroup W] [Module K W] [Module O W] [IsScalarTower O K W] [FiniteDimensional K W] [AddCommGroup M] [Module O M] (f : M →ₗ[O] W), Function.Injective f → ∀ a : O, Module.length O (M ⧸ LinearMap.range (a • (LinearMap.id : M →ₗ[O] M))) ≤ (Module.finrank K W : ℕ∞) * Module.length O (O ⧸ Ideal.span {a}) := by
   first | exact @GlobalTheory.length_quotient_smul_range_le_finrank_mul | exact GlobalTheory.length_quotient_smul_range_le_finrank_mul | (intros; apply GlobalTheory.length_quotient_smul_range_le_finrank_mul <;> assumption)
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.SetupEig
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiagonalAlgebraHolds
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,6 +15,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -37,9 +37,52 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiagonalAlgebraHolds
+
+section
+
+@[expose] public section
+
+open PositivityTheory.Rg.BcB.F.Eig
+
+namespace GlobalTheory.CompanionTheory.BlockScalars
+
+theorem diagOp_apply {ι : Type} {d : ℕ} (blk : Fin d → ι) (c : ι → ℂ)
+    (x : EuclideanSpace ℂ (Fin d)) (j : Fin d) :
+    (diagOp blk c x) j = c (blk j) * x j := by
+  simp [diagOp, Matrix.toLpLin_apply, Matrix.mulVec_diagonal]
+
+theorem diagAlg : DiagAlg := by
+  intro ι d blk c c' z
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · ext x j
+    simp [diagOp_apply, ContinuousLinearMap.mul_def, mul_assoc]
+  · ext x j
+    simp [diagOp_apply, add_mul]
+  · ext x j
+    simp [diagOp_apply]
+  · rw [ContinuousLinearMap.star_eq_adjoint]
+    symm
+    rw [ContinuousLinearMap.eq_adjoint_iff]
+    intro x y
+    simp only [PiLp.inner_apply, diagOp_apply]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    simp [RCLike.inner_apply]
+    ring
+
+end GlobalTheory.CompanionTheory.BlockScalars
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiagonalAlgebraHoldsStatement
+
+section
+
 @[expose] public section
 
 open PositivityTheory.Rg.BcB.F.Eig
 
 theorem _root_.GlobalTheory.T.diagonal_algebra_holds : DiagAlg := by
   first | exact @GlobalTheory.CompanionTheory.BlockScalars.diagAlg | exact GlobalTheory.CompanionTheory.BlockScalars.diagAlg | (intros; apply GlobalTheory.CompanionTheory.BlockScalars.diagAlg <;> assumption)
+end
+end

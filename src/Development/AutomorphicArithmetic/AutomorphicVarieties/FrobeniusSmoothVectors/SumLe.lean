@@ -6,10 +6,65 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSm
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.DefIso
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpDimb
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpGbox
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpHasobs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.BorelProjectionIsTwoCocycle
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpGlift
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.GrMIff
+import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.LcMatrix
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.PrCocv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.PrSetlift
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ValSubOneMap
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpMazur
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpOddSpanX
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpRels
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.GroupTheory.Nilpotent
+public import Mathlib.RingTheory.MvPowerSeries.Inverse
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoMvps
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpBasis
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SgWeight
+import Mathlib.RingTheory.MvPowerSeries.Equiv
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.RingTheory.Nakayama
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpVars
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ExistsPaddedFamily
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.LieTMem
@@ -25,49 +80,161 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVec
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SgZero
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ZeroOfNeg
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ZpowWNe
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpHasobs
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr
+
+theorem UpperTheory.V.Fr.ep_hasobs :
+    ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] {F : Frame l k} {C₀ : ℕ}, F.Ok C₀ → ∀ (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O], IsUnit (2 : O) → ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (σ : R →ₐ[O] R), (∀ y, σ (σ y) = y) → ∀ (ρ : NRep F 3 R) (B : Box F 3 R) (π : F.V → Fin 3 → ZMod 2), ρ.Univ O → B.Of ρ → B.Cont (maximalIdeal R) → (ρ.bar O).Good → B.Gr σ π → ∀ h : (B.bar O).Ev π, ∀ j, HasObsG O σ j (coneH2 F.loc (h.ad j) ((B.bar O).bp j)) := by
+  intro l _ k _ _ F C₀ hF O _ _ _ _ h2 R _ _ _ σ hσ ρ B π hU hOf hCont hGood hGr h j
+  intro C' _ _ _ p σ' hp hker hσ' hpσ
+  obtain ⟨a⟩ := pr_setlift hF O C' R p B hp hker hCont
+  obtain ⟨D, hD⟩ := ep_glift O h2 C' R p σ' σ hσ' hpσ B π hGr a
+  have hco : ∀ u : ↥(formp σ' (RingHom.ker p) j),
+      (∀ x : F.Γ × F.Γ, (D.co u).1 x ∈ adp (ResidueField O) j) ∧
+        ∀ (v : F.V) (s : F.Gv v), (D.co u).2 v s ∈ adp (ResidueField O) j :=
+    by
+      intro u
+      have hu' : ∀ i, i ≠ j → ∀ y : RingHom.ker p, (y : C') ∈ evp σ' i → (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O) y = 0 := u.2
+      have key : ∀ M : Matrix (Fin 3) (Fin 3) C', GrM σ' pq pq M →
+          M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O)) ∈ adp (ResidueField O) j := by
+        intro M hM
+        change ∀ a b, pw a b ≠ j → M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O)) a b = 0
+        intro a b hab
+        rw [Matrix.map_apply]
+        have hmem := hM a b
+        rw [← pw_eq] at hmem
+        unfold evK
+        split_ifs with hk
+        · exact hu' (pw a b) hab ⟨M a b, hk⟩ hmem
+        · rfl
+      obtain ⟨h1, hsub, hmul, hinv, hsgn⟩ := ep_grm σ'
+      refine ⟨fun x => ?_, fun v s => ?_⟩
+      · refine key (D.om x) ?_
+        unfold SetLift.om
+        rw [Units.val_mul, Units.val_mul]
+        exact hsub _ _ _ _ (hmul _ _ _ _ _ (hmul _ _ _ _ _ (hD.r x.1) (hsgn _ _ (hD.r x.2)))
+          (hinv _ _ _ (hD.r (x.1 * x.2)))) (h1 pq)
+      · have hX : GrM σ' pq pq ↑((D.g v)⁻¹ * D.t v s * D.g v) := by
+          rw [Units.val_mul, Units.val_mul]
+          exact hmul _ _ _ _ _ (hmul _ _ _ _ _ (hinv _ _ _ (hD.g v)) (hD.t v s)) (hD.g v)
+        refine key (D.a v s) ?_
+        unfold SetLift.a
+        rw [Units.val_mul]
+        exact hsub _ _ _ _ (hmul _ _ _ _ _ (hD.r _) (hinv _ _ _ hX)) (h1 pq)
+  have hom := pr_omk hF O C' R p B D hker
+  let Ψ : ↥(formp σ' (RingHom.ker p) j) →ₗ[ResidueField O]
+      ((F.Γ × F.Γ → ↥(adp (ResidueField O) j)) × ((v : F.V) → F.Gv v → ↥(adp (ResidueField O) j))) :=
+    { toFun := fun u => (fun x => ⟨(D.co u).1 x, (hco u).1 x⟩, fun v s => ⟨(D.co u).2 v s, (hco u).2 v s⟩)
+      map_add' := by
+        intro u w
+        refine Prod.ext (funext fun x => Subtype.ext ?_) (funext fun v => funext fun s => Subtype.ext ?_) <;>
+          simp [map_add (f := _)]
+      map_smul' := by
+        intro c u
+        refine Prod.ext (funext fun x => Subtype.ext ?_) (funext fun v => funext fun s => Subtype.ext ?_) <;>
+          simp [map_smul] }
+  have hmem : ∀ u, Ψ u ∈ continuousCocycles2 F.loc (h.ad j) ((Box.bar O B).bp j) := by
+    intro u
+    have k1 : Subtype.val ∘ (Ψ u).1 = (fun M : Matrix (Fin 3) (Fin 3) C' =>
+        M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O))) ∘ D.om := rfl
+    have k2 : ∀ v, Subtype.val ∘ (Ψ u).2 v = (fun M : Matrix (Fin 3) (Fin 3) C' =>
+        M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O))) ∘ D.a v := fun v => rfl
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · refine IsLocallyConstant.desc _ Subtype.val ?_ Subtype.val_injective
+      rw [k1]
+      exact hom.2.2.1.comp _
+    · intro v
+      refine IsLocallyConstant.desc _ Subtype.val ?_ Subtype.val_injective
+      rw [k2 v]
+      exact (hom.2.2.2 v).comp _
+    · intro s t r
+      apply Subtype.ext
+      exact borelProjection_isTwoCocycle hF O C' R p B D (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O) hker s t r
+    · intro v s t
+      exact pr_cocv hF O C' R p B D (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O) hker v s t
+  refine ⟨(Submodule.mkQ _).comp (LinearMap.codRestrict _ Ψ hmem), ?_⟩
+  intro u hu C'' _ _ _ q p'' hcomp hq hy
+  refine pr_obs hF O R ρ B hU hOf hCont hGood C' p D (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O) hker ?_
+    C'' q p'' hcomp hq hy
+  rw [LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hu
+  obtain ⟨β, Y, hβ, h1, h3⟩ := hu
+  refine ⟨fun g => (β g : Matrix (Fin 3) (Fin 3) (ResidueField O)),
+    fun v => (Y v : Matrix (Fin 3) (Fin 3) (ResidueField O)), hβ.comp _, ?_, ?_⟩
+  · funext x
+    exact congrArg (fun f => (f x : Matrix (Fin 3) (Fin 3) (ResidueField O))) h1
+  · intro v s
+    exact h3 v s
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.EpRels
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr
+
+theorem UpperTheory.V.Fr.ep_rels :
+    ∀ (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O], IsUnit (2 : O) → ∀ (ι : Type) [Finite ι] (wt : ι → ZMod 2) (J : Ideal (MvPowerSeries ι O)), IsHomog O wt J → ∃ (κ : Type) (_ : Fintype κ) (f : κ → MvPowerSeries ι O) (wf : κ → ZMod 2), (∀ u, f u ∈ wtPart O wt (wf u)) ∧ J = Ideal.span (Set.range f) ∧ ∀ c : κ → O, ∑ u, c u • f u ∈ maximalIdeal (MvPowerSeries ι O) * J → ∀ u, c u ∈ maximalIdeal O := by
+  intro O _ _ _ _ h2 ι _ wt J hJ
+  haveI : IsCO O (MvPowerSeries ι O) := co_mvps O O ι
+  obtain ⟨τ, hττ, hev, hw⟩ := ep_ps O h2 ι wt
+  have hτJ : ∀ y ∈ J, τ y ∈ J := by
+    intro y hy
+    have e := hw 1 y
+    have hs : sg (MvPowerSeries ι O) 1 = -1 := by
+      simp only [sg]
+      rw [show ZMod.val (1 : ZMod 2) = 1 from rfl, pow_one]
+    rw [hs] at e
+    have : τ y = y - 2 * wcomp O wt 1 y := by linear_combination e
+    rw [this]
+    exact J.sub_mem hy (J.mul_mem_left 2 (hJ y hy 1))
+  have hτm : ∀ y ∈ maximalIdeal (MvPowerSeries ι O), τ y ∈ maximalIdeal (MvPowerSeries ι O) := by
+    intro y hy
+    rw [mem_maximalIdeal, mem_nonunits_iff] at hy ⊢
+    intro hu
+    apply hy
+    rw [← hττ y]
+    exact hu.map τ
+  have hτN : ∀ y ∈ maximalIdeal (MvPowerSeries ι O) * J,
+      τ y ∈ maximalIdeal (MvPowerSeries ι O) * J := by
+    intro y hy
+    refine Submodule.mul_induction_on hy ?_ ?_
+    · intro m hm j hj
+      rw [map_mul]
+      exact Ideal.mul_mem_mul (hτm m hm) (hτJ j hj)
+    · intro a b ha hb
+      rw [map_add (f := _)]
+      exact Ideal.add_mem _ ha hb
+  obtain ⟨a, g, z, hz, hle, hmin⟩ :=
+    ep_basis O h2 (MvPowerSeries ι O) τ hττ J (maximalIdeal (MvPowerSeries ι O) * J) hτJ hτN le_rfl
+  refine ⟨Fin a ⊕ Fin g, inferInstance, z, Space.Loc.par a g, ?_, ?_, hmin⟩
+  · intro s
+    rw [← hev]
+    exact (hz s).2
+  · apply le_antisymm
+    · apply Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian J)
+        (maximalIdeal_le_jacobson _)
+      exact hle
+    · rw [Ideal.span_le]
+      rintro _ ⟨s, rfl⟩
+      exact (hz s).1
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.SumLe
+
+section
 
 @[expose] public section
 
@@ -161,3 +328,5 @@ theorem UpperTheory.V.Fr.epres :
     have t := htan.1 1
     have d1 := hder.2.2
     omega
+end
+end

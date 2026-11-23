@@ -3,11 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.I0M
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentFiniteAdelesIffFrameUnipotentRadiStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentMatrixIffJointlyBijectivePairStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentMatrixPiIffForallEvalStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentRealPlaceIffFrameUnipotentRadicalStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LinearIndependentScaledBasisColumnsMatrixTranspoStatement
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FundamentalEquivalence.FundamentalContinuity.AdelicIsomorphismStatement
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.InHHAlg
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BesselCharacterGenericCharacterLaws
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +19,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,7 +41,170 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentRealPlaceIffFrameUnipotentRadicalStatement
+import Mathlib.Tactic.Polynomial.Basic
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FundamentalEquivalence.FundamentalContinuity.AdelicIsomorphismStatement
+import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.InHHAlg
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentMatrixPiIffForallEval
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory.BesselChar
+
+theorem unip_pi_iff {ι S : Type} [Fintype ι] [DecidableEq ι] [CommRing S] {n ρ : ℕ}
+    (E : Matrix (Fin n) (Fin ρ) (ι → S)) (K : Matrix (Fin ρ) (Fin n) (ι → S))
+    (M : Matrix (Fin n) (Fin n) (ι → S)) :
+    GlobalTheory.BesselChar.Unip E K M ↔ ∀ i, GlobalTheory.BesselChar.Unip (E.map (Pi.evalRingHom (fun _ => S) i))
+      (K.map (Pi.evalRingHom (fun _ => S) i)) (M.map (Pi.evalRingHom (fun _ => S) i)) := by
+  constructor
+  · rintro ⟨⟨T, hT, e⟩, h2⟩ i
+    set φ := Pi.evalRingHom (fun _ => S) i
+    refine ⟨⟨T.map φ, fun j l hjl => by simp [Matrix.map_apply, hT j l hjl], ?_⟩, fun y hy => ?_⟩
+    · have := congrArg (fun X => X.map φ) e
+      simpa only [Matrix.map_mul, Matrix.map_add _ (map_add φ)] using this
+    · let y' : Fin n → ι → S := fun k => Pi.single i (y k)
+      have hy' : K *ᵥ y' = 0 := by
+        funext j i'
+        by_cases hi : i' = i
+        · subst hi
+          have h1 := congr_fun (mulVec_map φ K y') j
+          have h0 : (fun k => φ (y' k)) = y := by
+            funext k; simp [φ, y']
+          rw [h0, hy] at h1
+          simpa [φ] using h1.symm
+        · show (∑ k, K j k * y' k) i' = 0
+          rw [Finset.sum_apply]
+          refine Finset.sum_eq_zero fun k _ => ?_
+          simp [y', Pi.single_apply, hi]
+      obtain ⟨a, ha⟩ := h2 y' hy'
+      refine ⟨fun l => φ (a l), ?_⟩
+      have h0 : (fun k => φ (y' k)) = y := by
+        funext k; simp [φ, y']
+      have h1 := mulVec_map φ M y'
+      have h3 := mulVec_map φ E a
+      rw [h0] at h1
+      rw [h1, h3, ha]
+      funext k
+      simp only [Pi.add_apply, map_add (f := _)]
+      rw [show φ (y' k) = y k from congr_fun h0 k]
+  · intro h
+    choose hc hv using h
+    choose T hT e using hc
+    refine ⟨⟨Matrix.of fun j l i => T i j l, fun j l hjl => by funext i; exact hT i j l hjl, ?_⟩, fun y hy => ?_⟩
+    · ext k l i
+      have h1 := congr_fun (congr_fun (e i) k) l
+      have hT' : (Matrix.of fun j l i => T i j l).map (Pi.evalRingHom (fun _ => S) i) = T i := by
+        ext j l; rfl
+      have h2 : ((M * E).map (Pi.evalRingHom (fun _ => S) i)) k l
+          = ((E + E * Matrix.of fun j l i => T i j l).map (Pi.evalRingHom (fun _ => S) i)) k l := by
+        rw [Matrix.map_mul, Matrix.map_add _ (map_add _), Matrix.map_mul, hT']
+        exact h1
+      simpa using h2
+    · have hyi : ∀ i, K.map (Pi.evalRingHom (fun _ => S) i) *ᵥ (fun k => y k i) = 0 := by
+        intro i
+        have := mulVec_map (Pi.evalRingHom (fun _ => S) i) K y
+        refine this.trans ?_
+        rw [hy]; rfl
+      choose a ha using fun i => hv i _ (hyi i)
+      refine ⟨fun l i => a i l, ?_⟩
+      funext k i
+      have h1 := congr_fun (mulVec_map (Pi.evalRingHom (fun _ => S) i) M y) k
+      have h3 := congr_fun (mulVec_map (Pi.evalRingHom (fun _ => S) i) E (fun l i => a i l)) k
+      have h4 := congr_fun (ha i) k
+      simp only [Pi.evalRingHom_apply] at h1 h3
+      show (M *ᵥ y) k i = y k i + (E *ᵥ fun l i => a i l) k i
+      rw [← h1, ← h3, h4]
+      rfl
+
+end GlobalTheory.BesselChar
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsFlagUnipotentMatrixPiIffForallEvalStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.isFlagUnipotentMatrix_pi_iff_forall_eval : ∀ {ι S : Type} [Fintype ι] [DecidableEq ι] [CommRing S] {n ρ : ℕ} (E : Matrix (Fin n) (Fin ρ) (ι → S)) (K : Matrix (Fin ρ) (Fin n) (ι → S)) (M : Matrix (Fin n) (Fin n) (ι → S)), GlobalTheory.BesselChar.Unip E K M ↔ ∀ i, GlobalTheory.BesselChar.Unip (E.map (Pi.evalRingHom (fun _ => S) i)) (K.map (Pi.evalRingHom (fun _ => S) i)) (M.map (Pi.evalRingHom (fun _ => S) i)) := by
+  first | exact @GlobalTheory.BesselChar.unip_pi_iff | exact GlobalTheory.BesselChar.unip_pi_iff | (intros; apply GlobalTheory.BesselChar.unip_pi_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LinearIndependentScaledBasisColumnsMatrixTranspo
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.AutomorphicEvaluation Formalism.L2.SG.HidaSetting Formalism.L2.SG.PoincareInHH.PoincareSetting Formalism.L2.SG.RowDict Formalism.L2.SG.RowsJoinPinned GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.Core.Rk GlobalTheory.Core.Mi
+open scoped TensorProduct InnerProductSpace Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.Core.SBesEx
+
+theorem linearIndependent_eX_of_dual {D : D7} (X : HidaSetting D) : LinearIndependent D.host.E X.eX := by
+  rw [Fintype.linearIndependent_iff]
+  intro g hg b
+  have h1 := congrArg (fun y => (VS D).hT y (X.fY b)) hg
+
+  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, X.ef, map_zero,
+  LinearMap.zero_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
+  simpa using h1
+
+theorem eM_transpose_linearIndependent : ∀ {D : D7} (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (t lam : D.host.E), t ≠ 0 → lam ≠ 0 → LinearIndependent D.host.E (GlobalTheory.Core.SBesEx.eM X h t lam).transpose := by
+  intro D X h t lam ht hl
+  set b := X.bas.reindex (finCongr (rank_eq X h)).symm with hb
+  have hc : ∀ z, cY X h z = b.equivFun z := by
+    intro z; funext k
+    simp [cY, HidaSetting.crd, crdOf, hb, Module.Basis.repr_reindex]
+  have h0 : LinearIndependent D.host.E (fun a => b.equivFun (X.eX a)) :=
+    (linearIndependent_eX_of_dual X).map' b.equivFun.toLinearMap b.equivFun.ker
+  have hs : ∀ a, scl t lam a ≠ 0 := fun a => mul_ne_zero ht (pow_ne_zero _ hl)
+  have h1 := h0.units_smul (fun a => Units.mk0 (scl t lam a) (hs a))
+  have he : (eM X h t lam).transpose =
+      (fun a => Units.mk0 (scl t lam a) (hs a)) • fun a => b.equivFun (X.eX a) := by
+    funext a k
+    simp [eM, hc, Matrix.transpose_apply, Units.smul_def]
+  rw [he]
+  exact h1
+
+end GlobalTheory.Core.SBesEx
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LinearIndependentScaledBasisColumnsMatrixTranspoStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.AutomorphicEvaluation Formalism.L2.SG.HidaSetting Formalism.L2.SG.PoincareInHH.PoincareSetting Formalism.L2.SG.RowDict Formalism.L2.SG.RowsJoinPinned GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.Core.Rk GlobalTheory.Core.Mi
+open scoped TensorProduct InnerProductSpace Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+
+theorem _root_.GlobalTheory.T.linearIndependent_scaledBasisColumnsMatrix_transpose : ∀ {D : D7} (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (t lam : D.host.E), t ≠ 0 → lam ≠ 0 → LinearIndependent D.host.E (GlobalTheory.Core.SBesEx.eM X h t lam).transpose := by
+  first | exact @GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent | exact GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent | (intros; apply GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemFlagUnipotentRadicalIffSecondModel
+
+section
 
 @[expose] public section
 
@@ -193,3 +354,5 @@ theorem mem_flagN_iff : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.
   exact hcore.trans (and_congr hT.1.symm hT.2.1.symm)
 
 end GlobalTheory.Core.SBesFlagTie
+end
+end

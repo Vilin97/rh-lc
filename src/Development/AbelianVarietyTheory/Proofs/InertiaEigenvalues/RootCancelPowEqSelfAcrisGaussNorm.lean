@@ -9,14 +9,11 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaussNo
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ISupMonomialHolderLogConvex
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsTerFurther
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGaussGCTarget
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormUntiltSubEqOneOfPowFixed
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OrbitClassTrivial
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PHomogeneousDifferenceLinearStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TeichmullerPowEqOfFrobeniusRatioStatement
+public import Formalism.LocalRingCardinality.AdicCompletionLocal.InstIsAdicCompleteOCSpanSingletonSetCast
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UntiltNormUltrametricEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -32,8 +29,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,8 +48,183 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsGauss
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Topology.Connected.TotallyDisconnected
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Topology.Order.IntermediateValue
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PHomogeneousDifferenceLinearStatement
+public import Development.AbelianVarietyTheory.CrystallinePeriods.RingIface
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AcrisToBdRPlusInjective
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AinfIsDomainAndAinfInvPInjective
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AlgebraMapAinfInvPrimeBdRPlusInjective
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCanonicalAcrisToBdRPlus
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormUntiltSubEqOneOfPowFixed
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+namespace GlobalTheory.TiltAbs
+
+theorem norm_untilt_sub_eq_one_of_pow_fixed :
+    ∀ (l : ℕ) [Fact l.Prime] (o : ℕ) (ζ ζ' : Formalism.Per.Fl l), 0 < o → ζ ^ (l ^ o) = ζ →
+      ζ' ^ (l ^ o) = ζ' → ζ ≠ ζ' → ‖(((ζ - ζ').untilt : Formalism.Per.OC l) : ℂ_[l])‖ = 1 := by
+  intro l _ o ζ ζ' ho h1 h2 hne
+  have hl : 1 < l := (Fact.out : l.Prime).one_lt
+  set d : Formalism.Per.Fl l := ζ - ζ' with hd
+  have hdpow : d ^ (l ^ o) = d := by
+    rw [hd, sub_pow_char_pow, h1, h2]
+  have hd0 : d ≠ 0 := sub_ne_zero.2 hne
+  set a : ℝ := ‖((d.untilt : Formalism.Per.OC l) : ℂ_[l])‖ with ha
+  have ha0 : a ≠ 0 := by
+    intro h
+    apply hd0
+    refine (untilt_ultrametric_definite l d 0).2 ?_
+    have : ((d.untilt : Formalism.Per.OC l) : ℂ_[l]) = 0 := norm_eq_zero.1 h
+    exact Subtype.ext this
+  have hapow : a ^ (l ^ o) = a := by
+    have := congrArg (fun x : Formalism.Per.Fl l => ‖((x.untilt : Formalism.Per.OC l) : ℂ_[l])‖) hdpow
+    simp only [map_pow, SubmonoidClass.coe_pow, norm_pow] at this
+    exact this
+  have hlo : 1 ≤ l ^ o := Nat.one_le_pow _ _ (by omega)
+  have hlo' : l ^ o - 1 ≠ 0 := by
+    have : 1 < l ^ o := Nat.one_lt_pow (by omega) hl
+    omega
+  have hsub : a ^ (l ^ o - 1) = 1 := by
+    have : a ^ (l ^ o - 1) * a = 1 * a := by
+      rw [← pow_succ, Nat.sub_add_cancel hlo, hapow, one_mul]
+    exact mul_right_cancel₀ ha0 this
+  exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hlo').1 hsub
+
+end GlobalTheory.TiltAbs
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OrbitClassTrivial
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+namespace GlobalTheory
+
+theorem orbit_class_trivial : ∀ (o : ℕ) (p : ℝ) (f : ℕ → ℝ → ℝ), 0 < o → 1 < p → (∀ i, ContinuousOn (f i) (Set.Ioc 0 1)) → (∀ i, ∀ r ∈ Set.Ioc (0 : ℝ) 1, 0 ≤ f i r) → (∀ i j, ∀ r ∈ Set.Ioc (0 : ℝ) 1, 0 < f i r → 0 < f j r → i % o = j % o) → (∀ r ∈ Set.Ioc (0 : ℝ) 1, ∃ i, 0 < f i r) → (∀ i r, 0 < r → r ≤ 1 / p → 0 < f i r → 0 < f (i + 1) (p * r)) → o = 1 := by
+  intro o p f _ho hp hc _ hcl hcov hsh
+  classical
+  let g : ℝ → ℕ := fun r => if h : ∃ i, 0 < f i r then (Classical.choose h) % o else 0
+  have hg : ∀ r ∈ Set.Ioc (0 : ℝ) 1, ∀ i, 0 < f i r → g r = i % o := by
+    intro r hr i hi
+    have h : ∃ i, 0 < f i r := ⟨i, hi⟩
+    simp only [g, dif_pos h]
+    exact hcl _ _ r hr (Classical.choose_spec h) hi
+  have gcont : ContinuousOn g (Set.Ioc (0 : ℝ) 1) := by
+    intro r hr
+    obtain ⟨i, hi⟩ := hcov r hr
+    rw [ContinuousWithinAt, nhds_discrete, Filter.tendsto_pure]
+    have h1 : ∀ᶠ x in nhdsWithin r (Set.Ioc (0 : ℝ) 1), 0 < f i x :=
+      ((hc i) r hr).eventually (lt_mem_nhds hi)
+    filter_upwards [h1, self_mem_nhdsWithin] with x hx hxs
+    rw [hg x hxs i hx, hg r hr i hi]
+  have hp0 : 0 < p := by linarith
+  have hr1 : 1 / p ∈ Set.Ioc (0 : ℝ) 1 :=
+    ⟨by positivity, by rw [div_le_one hp0]; exact hp.le⟩
+  have h1 : (1 : ℝ) ∈ Set.Ioc (0 : ℝ) 1 := ⟨one_pos, le_rfl⟩
+  have hconst : g (1 / p) = g 1 := isPreconnected_Ioc.constant gcont hr1 h1
+  obtain ⟨i, hi⟩ := hcov (1 / p) hr1
+  have hi1 : 0 < f (i + 1) 1 := by
+    have := hsh i (1 / p) (by positivity) le_rfl hi
+    rwa [mul_one_div_cancel hp0.ne'] at this
+  have hmod : (i + 1) % o = (i + 0) % o := by
+    rw [add_zero, ← hg _ hr1 i hi, ← hg _ h1 (i + 1) hi1, hconst]
+  have h10 : 1 ≡ 0 [MOD o] := Nat.ModEq.add_left_cancel' i hmod
+  exact Nat.dvd_one.mp (Nat.modEq_zero_iff_dvd.mp h10)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TeichmullerPowEqOfFrobeniusRatio
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+namespace GlobalTheory.PMon.Gauss
+
+theorem tc_injective (l : ℕ) [Fact l.Prime] : Function.Injective (tc l) := by
+  intro a b hab
+  obtain ⟨j, hj⟩ := GlobalTheory.MemLoc.exists_isCrisP l
+  have hinj := GlobalTheory.MemLoc.crisP_injective l j hj
+  have key : ∀ y : Formalism.Per.Fl l, j (tc l y) =
+      algebraMap (Formalism.Per.AinfP l) (Formalism.Per.BdRp l)
+        (algebraMap (Formalism.Per.Ainf l) (Formalism.Per.AinfP l) (Formalism.Per.tm y)) := by
+    intro y
+    have := hj.on0 (algebraMap (Formalism.Per.Ainf l) (Formalism.Per.Acris0 l) (Formalism.Per.tm y))
+    rw [Subalgebra.coe_algebraMap, ← GlobalTheory.RingIface.tower] at this
+    exact this
+  have h1 := congrArg j hab
+  rw [key, key] at h1
+  have h2 := (GlobalTheory.MemLoc.ainf_isDomain_and_injective l).2.2
+    (GlobalTheory.MemLoc.algebraMap_AinfP_BdRp_injective l h1)
+  have h3 := congrArg (fun w : Formalism.Per.Ainf l => w.coeff 0) h2
+  simpa using h3
+
+theorem teich_eq_of_phi_ratio : ∀ (l : ℕ) [Fact l.Prime] (w' : Formalism.Per.Acris l) (ζ : Formalism.Per.Fl l), w' ≠ 0 →
+    φc l (tc l ζ * w') * w' = tc l ζ * w' * φc l w' → ζ ^ l = ζ := by
+  intro l _ w' ζ hw h
+  have hφ : φc l w' ≠ 0 := ((GlobalTheory.T.acrisValuation_radius_laws l 1 one_pos le_rfl).2.1 w' hw).1
+  have hprod : w' * φc l w' ≠ 0 := by
+    intro h0
+    rcases GlobalTheory.T.acris_eq_zero_or_eq_zero_of_mul_eq_zero l _ _ h0 with h0 | h0
+    · exact hw h0
+    · exact hφ h0
+  rw [map_mul, frob_teich] at h
+  have h' : (tc l (ζ ^ l) - tc l ζ) * (w' * φc l w') = 0 := by
+    linear_combination h
+  rcases GlobalTheory.T.acris_eq_zero_or_eq_zero_of_mul_eq_zero l _ _ h' with h0 | h0
+  · exact tc_injective l (sub_eq_zero.1 h0)
+  · exact absurd h0 hprod
+
+end GlobalTheory.PMon.Gauss
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TeichmullerPowEqOfFrobeniusRatioStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+theorem _root_.GlobalTheory.T.teichmuller_pow_eq_of_frobenius_ratio : ∀ (l : ℕ) [Fact l.Prime] (w' : Formalism.Per.Acris l) (ζ : Formalism.Per.Fl l), w' ≠ 0 → φc l (tc l ζ * w') * w' = tc l ζ * w' * φc l w' → ζ ^ l = ζ := by
+  first | exact @GlobalTheory.PMon.Gauss.teich_eq_of_phi_ratio | exact GlobalTheory.PMon.Gauss.teich_eq_of_phi_ratio | (intros; apply GlobalTheory.PMon.Gauss.teich_eq_of_phi_ratio <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RootCancelPowEqSelfAcrisGaussNorm
+
+section
 
 @[expose] public section
 
@@ -286,4 +455,6 @@ theorem root_cancel_pow_eq_self : ∀ (l : ℕ) [Fact l.Prime] (h s : ℕ), s < 
 
 end GlobalTheory.PMon.Gauss
 
+end
+end
 end

@@ -2,11 +2,9 @@ module
 
 public import GroundTheory.AutomorphicForms.SatakeNormalized
 public import Mathlib.RepresentationTheory.Irreducible
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsSideLast
-import GroundTheory.AutomorphicForms.HeckeIrreducible
-public import GroundTheory.AutomorphicForms.SatakeTriangular
-public import GroundTheory.AutomorphicForms.Spherical
-import GroundTheory.LocalFields.LocalFourierHaar
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Tactic.Continuity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,7 +43,94 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.EquivFin
+import GroundTheory.AutomorphicForms.HeckeIrreducible
+public import GroundTheory.AutomorphicForms.SatakeTriangular
+public import GroundTheory.AutomorphicForms.SphericalSatake
+public import GroundTheory.AutomorphicForms.SphericalIntegral
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.TypeStar
+import GroundTheory.LocalFields.LocalFourierHaar
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsSideLast
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Yoa3.exists_perm_of_map_eq :
+    ∀ {n : ℕ} {z z' : Fin n → ℂˣ},
+      Multiset.map (fun (i : Fin n) ↦ (↑(z i) : ℂ)) Finset.univ.val =
+          Multiset.map (fun (i : Fin n) ↦ (↑(z' i) : ℂ)) Finset.univ.val →
+        ∃ (σ : Equiv.Perm (Fin n)), z' = z ∘ (⇑σ : Fin n → Fin n) := by
+  classical
+  intro n z z' h
+  have key : ∀ (w : Fin n → ℂˣ) (c : ℂ),
+      Fintype.card {i : Fin n // (w i : ℂ) = c} =
+        Multiset.count c (Multiset.map (fun (i : Fin n) ↦ (↑(w i) : ℂ)) Finset.univ.val) := by
+    intro w c
+    rw [Multiset.count_map, Fintype.card_subtype, Finset.card_def, Finset.filter_val]
+    congr 1
+    exact Multiset.filter_congr (fun _ _ => eq_comm)
+  have hc : ∀ c : ℂ, Fintype.card {i : Fin n // (z' i : ℂ) = c} =
+      Fintype.card {i : Fin n // (z i : ℂ) = c} := by
+    intro c
+    rw [key, key, h]
+  let e : ∀ c : ℂ, {i : Fin n // (z' i : ℂ) = c} ≃ {i : Fin n // (z i : ℂ) = c} :=
+    fun c => Fintype.equivOfCardEq (hc c)
+  refine ⟨Equiv.ofFiberEquiv (f := fun i => (z' i : ℂ)) (g := fun i => (z i : ℂ)) e, ?_⟩
+  funext i
+  apply Units.ext
+  exact (Equiv.ofFiberEquiv_map (f := fun i => (z' i : ℂ)) (g := fun i => (z i : ℂ)) e i).symm
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.Spherical
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GroundTheory.Automorphic
+
+open MeasureTheory GLnLocal Iwasawa Parabolic HeckeAlgebra HeckeAlgebraLevel
+
+namespace Spherical
+
+variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+  {n : ℕ}
+
+section Characters
+
+variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
+  {μ : Measure (GL (Fin n) F)} [μ.IsHaarMeasure]
+
+theorem exists_ker_sphericalCharacter_eq (I : Ideal (SphericalHecke μ (F := F) (n := n)))
+    [I.IsMaximal] : ∃ w : Fin n → ℂˣ,
+      RingHom.ker (sphericalCharacter μ (isUnramified_unramifiedChar (F := F) w)) = I := by
+  haveI := isIntegral_satake (μ := μ) (F := F) (n := n)
+  obtain ⟨w, hw⟩ := exists_ker_evalAt_comp_eq (satakeHom μ) satakeHom_injective I
+  exact ⟨w, by rw [← evalAt_comp_satakeHom]; exact hw⟩
+
+end Characters
+
+end Spherical
+
+end GroundTheory.Automorphic
+end
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.Satake
+
+section
 
 @[expose] public section
 
@@ -290,3 +372,6 @@ end Classification
 end Spherical
 
 end GroundTheory.Automorphic
+end
+end
+end

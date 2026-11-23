@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumOfIsIntegersLattice
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardSqModPrime
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonzeroSquaresSumEquivIcoModFourStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,6 +37,40 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardSqModPrime
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
+open scoped IntermediateField BigOperators Topology
+
+namespace GlobalTheory.CMModel
+
+theorem card_sq_mod_prime : ∀ (p : ℕ), p.Prime → p % 4 = 3 →
+    2 * Fintype.card (Sq p) + 1 = p ∧ Odd (Fintype.card (Sq p)) := by
+  intro p hp h4
+  obtain ⟨e, -⟩ := GlobalTheory.T.nonzeroSquares_sum_equiv_Ico_mod_four p hp h4
+  have hc := Fintype.card_congr e
+  rw [Fintype.card_sum] at hc
+  have h2 : Fintype.card (Finset.Ico 1 p : Finset ℕ) = p - 1 := by
+    simp
+  rw [h2] at hc
+  have hp2 := hp.two_le
+  have hsum : 2 * Fintype.card (Sq p) + 1 = p := by omega
+  refine ⟨hsum, ?_⟩
+  rw [Nat.odd_iff]
+  omega
+
+end GlobalTheory.CMModel
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardSqModPrimeStatement
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain WeierstrassCurve GlobalTheory GlobalTheory.Published GlobalTheory.CMModel Formalism.L2.Th1.F
@@ -44,3 +78,5 @@ open scoped IntermediateField BigOperators Topology
 
 theorem _root_.GlobalTheory.T.two_mul_card_sq_add_one_eq_and_odd_of_mod_four_eq_three : ∀ (p : ℕ), p.Prime → p % 4 = 3 → 2 * Fintype.card (Sq p) + 1 = p ∧ Odd (Fintype.card (Sq p)) := by
   first | exact @GlobalTheory.CMModel.card_sq_mod_prime | exact GlobalTheory.CMModel.card_sq_mod_prime | (intros; apply GlobalTheory.CMModel.card_sq_mod_prime <;> assumption)
+end
+end

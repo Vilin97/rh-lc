@@ -1,11 +1,9 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsChartBounds
-public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsTruncPsh
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -21,9 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,13 +39,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsTruncPsh
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshExt
 public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMoll
 import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMollA
 import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMollB
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsChartBounds
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Regular
+
+open Metric
+open ReciprocityTheory.AnForm.A (Mollifier)
+
+noncomputable section
+
+def ChartMollifiedBounds.Statement : Prop :=
+  ∀ (X : Type) [TopologicalSpace X] [CompactSpace X] [T2Space X] (D : ℕ)
+    (A : ReciprocityTheory.AnForm.M.FinHolAtlas D X) (R : RegChartData A) (ρ : Mollifier D),
+    ∃ C t₀ : ℝ, 0 < t₀ ∧ ∀ t : ℝ, 0 < t → t < t₀ →
+      (∀ j, ∀ x ∈ closure (R.mid j), closedBall (R.chart j x) t ⊆ (R.chart j).target) ∧
+      ∀ K : ℝ, 0 ≤ K → ∀ j : Fin R.N, ∀ x ∈ R.mid j,
+        -K - C ≤ R.phReg ρ K t j x ∧ R.phReg ρ K t j x ≤ C ∧
+          (x ∈ R.Yo → R.ph x ≤ R.phReg ρ K t j x)
+
+end
+
+end GroundTheory.Heights₂.Heights.Regular
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.Regularisation.PChartMollifiedBounds
+
+section
 
 @[expose] public section
 
@@ -160,3 +194,5 @@ theorem ChartMollifiedBounds.proof (h : TruncPsh.Statement) : ChartMollifiedBoun
 end
 
 end GroundTheory.Heights₂.Heights.Regular
+end
+end

@@ -1,7 +1,7 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PfContractedHypothesesExample
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,8 +40,49 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.TypeStar
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PfContractedHypothesesExample
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.FieldNumbers
+
+open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR
+
+noncomputable section
+
+universe u u' v v' w
+
+section Objects
+
+def HasRelDim {F : Type u} [Field F] {K : Type v} [Fintype K] {ι : K → Type w}
+    (I : Ideal (MRing ι F)) (n : ℕ) : Prop :=
+  ringKrullDim (MRing ι F ⧸ I) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞)
+
+
+
+end Objects
+
+
+section Examples
+
+end Examples
+
+end
+
+end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.FieldNumbers
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.HomFracDegZeroEqFunField
+
+section
 
 @[expose] public section
 
@@ -85,3 +126,5 @@ variable [DecidableEq K]
 end
 
 end GroundTheory.Heights₂.Heights.FieldNumbers
+end
+end

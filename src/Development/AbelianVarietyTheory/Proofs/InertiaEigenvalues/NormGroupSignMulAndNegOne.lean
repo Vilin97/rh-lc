@@ -2,10 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsStableGauss
 public import Mathlib.NumberTheory.LocalField.Basic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NegOneMemNormOfValuationEqStatement
-public import GroundTheory.AutomorphicForms.HermitianClassification
-import GroundTheory.AutomorphicForms.HermitianOrthogonal
-import GroundTheory.LocalFields.FiniteExtension
+public import Mathlib.RingTheory.Norm.Defs
+public import GroundTheory.LocalFields.UnramifiedNormSurj
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,16 +17,12 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Charpoly.BaseChange
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,8 +43,137 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.LocalFields.UnramifiedDefs
+import GroundTheory.AutomorphicForms.HermitianOrthogonal
+import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.HerbrandLocal
+import Mathlib.Tactic.TypeStar
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NegOneMemNormOfValuationEq
+
+section
+
+@[expose] public section
+
+open ValuativeRel
+
+namespace GlobalTheory
+
+
+open GroundTheory.LocalField in
+theorem neg_one_mem_norm_of_valuation_eq : ∀ (F E : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E] [Algebra F E] [ValuativeExtension F E] [FiniteDimensional F E], (∀ y : E, ∃ x : F, y ≤ᵥ algebraMap F E x ∧ algebraMap F E x ≤ᵥ y) → ∃ z : E, Algebra.norm F z = -1 := by
+  intro F E _ _ _ _ _ _ _ _ _ _ _ hval
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[E]
+  obtain ⟨x, h1, h2⟩ := hval (ϖ : E)
+  have hv : valuation E (ϖ : E) = valuation E (algebraMap F E x) :=
+    le_antisymm ((Valuation.Compatible.vle_iff_le _ _).1 h1) ((Valuation.Compatible.vle_iff_le _ _).1 h2)
+  have hord : ord (ϖ : E) = ord (algebraMap F E x) := by
+    simp only [ord]
+    rw [(normalizedValuation_eq_iff (K := E)).2 hv]
+  rw [ord_uniformizer hϖ, ord_algebraMap] at hord
+  have he : ramificationIndex F E = 1 := by
+    have hd : ((ramificationIndex F E : ℕ) : ℤ) ∣ 1 := ⟨ord x, hord⟩
+    exact_mod_cast Int.eq_one_of_dvd_one (by positivity) hd
+  haveI : IsUnramified F E := (isUnramified_iff F E).2 he
+  obtain ⟨w, hw⟩ := normIntegerUnits_surjective (K := F) (L := E) (-1)
+  refine ⟨((w : 𝒪[E]) : E), ?_⟩
+  have := congrArg (fun u : 𝒪[F]ˣ => ((u : 𝒪[F]) : F)) hw
+  simp only [coe_normIntegerUnits_eq] at this
+  rw [← coe_norm_integer]
+  simpa using this
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NegOneMemNormOfValuationEqStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel
+
+theorem _root_.GlobalTheory.T.exists_norm_eq_neg_one_of_unramified_values : ∀ (F E : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E] [Algebra F E] [ValuativeExtension F E] [FiniteDimensional F E], (∀ y : E, ∃ x : F, y ≤ᵥ algebraMap F E x ∧ algebraMap F E x ≤ᵥ y) → ∃ z : E, Algebra.norm F z = -1 := by
+  first | exact @GlobalTheory.neg_one_mem_norm_of_valuation_eq | exact GlobalTheory.neg_one_mem_norm_of_valuation_eq | (intros; apply GlobalTheory.neg_one_mem_norm_of_valuation_eq <;> assumption)
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.HermitianClassification
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GroundTheory.Automorphic
+
+open Module GroundTheory.LocalField ValuativeRel IsLocalRing Polynomial
+
+theorem mem_or_mul_inv_mem_of_natCard_eq_two {G : Type*} [CommGroup G] {N : Subgroup G}
+    (hN : Nat.card (G ⧸ N) = 2) {t : G} (ht : t ∉ N) (u : G) : u ∈ N ∨ u * t⁻¹ ∈ N := by
+  by_contra H
+  push Not at H
+  obtain ⟨y, -, hy⟩ := (Nat.card_eq_two_iff' (1 : G ⧸ N)).1 hN
+  have h1 : (QuotientGroup.mk t : G ⧸ N) ≠ 1 := by rwa [Ne, QuotientGroup.eq_one_iff]
+  have h2 : (QuotientGroup.mk u : G ⧸ N) ≠ 1 := by rw [Ne, QuotientGroup.eq_one_iff]; exact H.1
+  have h3 := QuotientGroup.eq.1 ((hy _ h1).trans (hy _ h2).symm)
+  apply H.2
+  rwa [mul_comm]
+
+section General
+
+variable {F E : Type*} [Field F] [Field E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
+
+theorem mem_range_normUnits_iff (u : Fˣ) :
+    u ∈ (normUnits F E).range ↔ ∃ z : E, Algebra.norm F z = u := by
+  constructor
+  · rintro ⟨w, rfl⟩
+    exact ⟨w, (coe_normUnits w).symm⟩
+  · rintro ⟨z, hz⟩
+    have hz0 : z ≠ 0 := by rintro rfl; rw [Algebra.norm_zero] at hz; exact u.ne_zero hz.symm
+    exact ⟨Units.mk0 z hz0, Units.ext (by rw [coe_normUnits, Units.val_mk0, hz])⟩
+
+end General
+
+section Local
+
+variable (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+variable {F}
+variable {E : Type*} [Field E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
+  [Algebra.IsSeparable F E]
+
+theorem natCard_quotient_range_normUnits_eq_two :
+    Nat.card (Fˣ ⧸ (normUnits F E).range) = 2 := by
+  obtain ⟨_, _, _, _⟩ := exists_isNonarchimedeanLocalField_valuativeExtension F E
+  rw [natCard_units_quotient_range_normUnits, Algebra.IsQuadraticExtension.finrank_eq_two]
+
+namespace HermitianForm
+
+variable {V V' : Type*} [AddCommGroup V] [Module E V] [AddCommGroup V'] [Module E V']
+
+end HermitianForm
+
+end Local
+
+end GroundTheory.Automorphic
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormGroupSignMulAndNegOne
+
+section
 
 @[expose] public section
 
@@ -186,3 +309,6 @@ theorem omega_mul_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontri
   · rw [if_neg hs, if_neg ht, if_pos (hprod s t hs ht)]; ring
 
 end GlobalTheory.JR.WeilQuad.NormSign
+end
+end
+end

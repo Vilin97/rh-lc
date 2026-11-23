@@ -2,16 +2,13 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ActAtApply
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHighestWeightLiftModStableSubspaceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsHWOfFd
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitaryPieceBoundedWeightsOfQuadraticStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockUnitaryFiniteSubspaceComapInjectiveIntertStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLocallyBlockUnitaryOfISupIntertwinerRangeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SameBlockIffIsLeft
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemISupInfWeightSubmoduleOfDiagonalStable
+public import Formalism.LocalRingCardinality.DataTheta
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlBlockFiniteDimModuleStructure
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -30,8 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +40,168 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.ActAtApply
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsFockIPOfFockData
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFockMap
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitaryPieceBoundedWeightsOfQuadraticStatement
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLocallyBlockUnitaryOfISupIntertwinerRangeStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemISupInfWeightSubmoduleOfDiagonalStable
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsHWOfFd
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open Formalism.BasicNotions.TH GlobalTheory.FockAlg GlobalTheory.RealLift GlobalTheory.HoweR
+
+namespace GlobalTheory.HoweR
+
+theorem exists_isHW_of_fd : ∀ (p q : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
+    (act : Mat p q →ₗ[ℂ] Module.End ℂ V), IsLieAct act →
+    (∀ v, v ∈ ⨆ μ : Ix p q → ℚ, wtSub act μ) → ∀ U : Submodule ℂ V, U ≠ ⊥ →
+    FiniteDimensional ℂ U → KStable act U → ∃ (μ : Ix p q → ℚ) (v : V), v ∈ U ∧ IsHW act μ v := by
+  intro p q V _ _ act hL hd U hU hfd hK
+  exact GlobalTheory.BlockReps.exists_hw (fun Y Z _ _ => hL Y Z) hK (fun v _ => hd v) hU
+
+end GlobalTheory.HoweR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockUnitaryFiniteSubspaceComapInjectiveIntert
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open Formalism.BasicNotions.TH GlobalTheory.FockAlg GlobalTheory.RealLift GlobalTheory.HoweR
+
+namespace GlobalTheory.HoweR
+
+theorem unitOn_comap_locU (ι M : Type) [Fintype ι] [DecidableEq ι] [AddCommGroup M] [Module ℂ M] (s : ι → Bool)
+    (F : ι → ι → Module.End ℂ M) (M' : Type) [AddCommGroup M'] [Module ℂ M'] (F' : ι → ι → Module.End ℂ M')
+    (f : M →ₗ[ℂ] M') (hf : Function.Injective f) (hF : ∀ a b, s a = s b → ∀ x, f (F a b x) = F' a b (f x)) :
+    (∀ U' : Submodule ℂ M', UnitOn s F' U' → UnitOn s F (U'.comap f)) ∧ (LocU s F' → LocU s F) := by
+  have key : ∀ U' : Submodule ℂ M', UnitOn s F' U' → UnitOn s F (U'.comap f) := by
+    rintro U' ⟨hfin, hst, ip', hs, hp, hadj⟩
+    refine ⟨?_, ?_, ?_⟩
+    · have hinj : Function.Injective (f.restrict (p := U'.comap f) (q := U') (fun x hx => hx)) := by
+        intro x y hxy
+        apply Subtype.ext
+        apply hf
+        have := congrArg Subtype.val hxy
+        simpa using this
+      exact Module.Finite.of_injective _ hinj
+    · intro a b hab u hu
+      show f (F a b u) ∈ U'
+      rw [hF a b hab]
+      exact hst a b hab (f u) hu
+    · refine ⟨(ip'.comp f).compl₂ f, ?_, ?_, ?_⟩
+      · intro x hx y hy
+        simpa using hs (f x) hx (f y) hy
+      · intro x hx hx0
+        have : f x ≠ 0 := fun h => hx0 (hf (by rw [h, map_zero]))
+        simpa using hp (f x) hx this
+      · intro a b hab x hx y hy
+        have hba : s b = s a := hab.symm
+        simp only [LinearMap.compl₂_apply, LinearMap.comp_apply]
+        rw [hF a b hab, hF b a hba]
+        exact hadj a b hab (f x) hx (f y) hy
+  refine ⟨key, ?_⟩
+  intro hL t
+  classical
+  obtain ⟨U', ht, hU'⟩ := hL (t.image f)
+  refine ⟨U'.comap f, ?_, key U' hU'⟩
+  intro x hx
+  exact ht (f x) (Finset.mem_image_of_mem f hx)
+
+end GlobalTheory.HoweR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockUnitaryFiniteSubspaceComapInjectiveIntertStatement
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open Formalism.BasicNotions.TH GlobalTheory.FockAlg GlobalTheory.RealLift GlobalTheory.HoweR
+
+theorem _root_.GlobalTheory.T.isBlockUnitaryFiniteSubspace_comap_injective_intertwiner : ∀ (ι M : Type) [Fintype ι] [DecidableEq ι] [AddCommGroup M] [Module ℂ M] (s : ι → Bool) (F : ι → ι → Module.End ℂ M), ∀ (M' : Type) [AddCommGroup M'] [Module ℂ M'] (F' : ι → ι → Module.End ℂ M') (f : M →ₗ[ℂ] M'), Function.Injective f → (∀ a b, s a = s b → ∀ x, f (F a b x) = F' a b (f x)) → (∀ U' : Submodule ℂ M', UnitOn s F' U' → UnitOn s F (U'.comap f)) ∧ (LocU s F' → LocU s F) := by
+  first | exact @GlobalTheory.HoweR.unitOn_comap_locU | exact GlobalTheory.HoweR.unitOn_comap_locU | (intros; apply GlobalTheory.HoweR.unitOn_comap_locU <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SameBlockIffIsLeft
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct
+open Formalism.BasicNotions.TH GlobalTheory.FockAlg GlobalTheory.RealLift GlobalTheory.HoweR
+
+namespace GlobalTheory.HoweR
+
+theorem eab_mul_eab {p q : ℕ} (a b c d : Ix p q) :
+    Eab a b * Eab c d = if b = c then Eab a d else 0 := by
+  unfold Eab
+  split_ifs with h
+  · subst h; rw [Matrix.single_mul_single_same, mul_one]
+  · exact Matrix.single_mul_single_of_ne _ _ _ _ h _
+
+theorem mat_eq_sum_eab {p q : ℕ} (X : Mat p q) : X = ∑ a, ∑ b, X a b • Eab a b := by
+  conv_lhs => rw [Matrix.matrix_eq_sum_single X]
+  refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+  unfold Eab; rw [Matrix.smul_single, smul_eq_mul, mul_one]
+
+theorem act_eq_sum_units {p q : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
+    (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (X : Mat p q) (v : V) :
+    act X v = ∑ a, ∑ b, X a b • units act a b v := by
+  conv_lhs => rw [mat_eq_sum_eab X]
+
+  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, units]
+
+theorem sameBlock_iff_isLeft {p q : ℕ} (a b : Ix p q) : sameBlock a b ↔ a.isLeft = b.isLeft := by
+  cases a <;> cases b <;> simp [sameBlock]
+
+theorem lie_units_stab : ∀ (p q : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (act : Mat p q →ₗ[ℂ] Module.End ℂ V),
+    (IsLieAct act → IsGl (units act)) ∧
+    (∀ N : Submodule ℂ V, (∀ a b : Ix p q, a.isLeft = b.isLeft → ∀ u ∈ N, units act a b u ∈ N) ↔ KStable act N) ∧
+    ∀ N : Submodule ℂ V, (∀ a b, ∀ u ∈ N, units act a b u ∈ N) → Stab act N := by
+  intro p q V _ _ act
+  refine ⟨fun hL a b c d => ?_, fun N => ⟨fun h X hX w hw => ?_, fun h a b hab u hu => ?_⟩, fun N h Z y hy => ?_⟩
+  · simp only [units]
+    rw [← hL, eab_mul_eab, eab_mul_eab, map_sub]
+    congr 1
+    · split_ifs <;> simp
+    · split_ifs <;> simp
+  · rw [act_eq_sum_units]
+    refine N.sum_mem fun a _ => N.sum_mem fun b _ => ?_
+    by_cases hab : a.isLeft = b.isLeft
+    · exact N.smul_mem _ (h a b hab w hw)
+    · rw [hX a b (fun hs => hab ((sameBlock_iff_isLeft a b).1 hs)), zero_smul]; exact N.zero_mem
+  · refine h (Eab a b) (fun c d hcd => ?_) u hu
+    unfold Eab
+    rw [Matrix.single_apply]
+    split_ifs with h'
+    · obtain ⟨rfl, rfl⟩ := h'; exact absurd ((sameBlock_iff_isLeft _ _).2 hab) hcd
+    · rfl
+  · rw [act_eq_sum_units]
+    exact N.sum_mem fun a _ => N.sum_mem fun b _ => N.smul_mem _ (h a b y hy)
+
+end GlobalTheory.HoweR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBoundedHighestWeightVectorQuadraticSubquot
+
+section
 
 @[expose] public section
 
@@ -289,3 +446,6 @@ theorem exists_hwSub_of_quadMod : ∀ (p q : ℕ) (α β α' β' : ℂ), ∃ B :
   simpa using N.add_mem hxv' hv'N
 
 end GlobalTheory.HoweR
+end
+end
+end

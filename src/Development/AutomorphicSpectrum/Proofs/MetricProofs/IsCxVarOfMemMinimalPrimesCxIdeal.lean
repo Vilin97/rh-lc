@@ -2,7 +2,10 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.CxPosDens
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenNearCover
-public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PConeComplexBaseChange
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.Ideal.MinimalPrime.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,6 +20,7 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
@@ -41,8 +45,69 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeCB
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGoodA
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeCB
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PConeComplexBaseChange
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+noncomputable section
+
+namespace GroundTheory.Heights₂.Heights.Targets
+
+open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
+
+namespace ConeComplexBaseChange
+
+variable {σ : Type} [Fintype σ]
+
+
+omit [Fintype σ] in
+theorem map_int_complex_eq :
+    (MvPolynomial.map (Int.castRingHom ℂ) : MvPolynomial σ ℤ →+* MvPolynomial σ ℂ) =
+      (MvPolynomial.map (algebraMap ℚ ℂ)).comp (MvPolynomial.map (Int.castRingHom ℚ)) := by
+  apply MvPolynomial.ringHom_ext <;> intro <;> simp
+
+theorem comap_of_minimal (P : Ideal (MvPolynomial σ ℤ)) [P.IsPrime]
+    (hP : P.comap (C : ℤ →+* MvPolynomial σ ℤ) = ⊥) (Q : Ideal (MvPolynomial σ ℂ))
+    (hQ : Q ∈ (P.map (MvPolynomial.map (Int.castRingHom ℂ))).minimalPrimes) :
+    Q.comap (MvPolynomial.map (Int.castRingHom ℂ)) = P := by
+  have hP' : ∀ m : ℤ, (C m : MvPolynomial σ ℤ) ∈ P → m = 0 := fun m hm => by
+    have : m ∈ P.comap (C : ℤ →+* MvPolynomial σ ℤ) := hm
+    rw [hP] at this
+    exact this
+  obtain ⟨hpr, hco, -⟩ := ReciprocityTheory.AnForm.R.extQ_spec P hP'
+  have : (P.map (MvPolynomial.map (Int.castRingHom ℚ))).IsPrime := hpr
+  rw [map_int_complex_eq, ← Ideal.map_map] at hQ
+  have h := ReciprocityTheory.AnForm.R.BaseChangeC.comap_of_mem_minimalPrimes_map _ Q hQ
+  rw [map_int_complex_eq, ← Ideal.comap_comap, h]
+  exact hco
+
+theorem dim_cancel_one {d : WithBot ℕ∞} {N : ℕ} (h : d + 1 = ((N + 1 : ℕ) : WithBot ℕ∞)) :
+    d = (N : WithBot ℕ∞) := by
+  refine ReciprocityTheory.AnForm.R.BaseChangeC.withBot_enat_cancel (h := 1) (N := N + 1) ?_ ?_
+  · rw [add_comm]; exact_mod_cast h
+  · push_cast; rw [add_comm]
+
+end ConeComplexBaseChange
+
+
+end GroundTheory.Heights₂.Heights.Targets
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.IsCxVarOfMemMinimalPrimesCxIdeal
+
+section
 
 @[expose] public section
 
@@ -93,3 +158,5 @@ theorem isCxVar_of_mem_minimalPrimes_cxIdeal :
   exact GroundTheory.Heights₂.Heights.Targets.ConeComplexBaseChange.dim_cancel_one hQdim
 
 end GlobalTheory.CompanionTheory.Ar.Pub.CxComp
+end
+end

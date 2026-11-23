@@ -41,7 +41,56 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFrobEqMulField
+import Mathlib.LinearAlgebra.Matrix.Defs
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Foundations.CyclotomicDvdExpandOfCoprime
+import Mathlib.Algebra.CharP.Defs
+import Mathlib.Algebra.Field.Defs
+import Mathlib.Data.Matrix.Basic
+import Mathlib.FieldTheory.IsAlgClosed.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFrobEqMulField
+
+section
+
+section
+
+open GlobalTheory.Col PowerSeries
+
+namespace GlobalTheory.LangWitt
+
+open Matrix
+
+section Field
+
+variable {p : ℕ} [hp : Fact p.Prime] {k : Type} [Field k] [CharP k p] [IsAlgClosed k]
+
+end Field
+
+section Witt
+
+variable {p : ℕ} [hp : Fact p.Prime] {k : Type} [Field k] [CharP k p]
+
+variable [IsAlgClosed k]
+
+theorem map_add' {R S : Type} [Ring R] [Ring S] (f : R →+* S) {d : ℕ}
+    (A B : Matrix (Fin d) (Fin d) R) : (A + B).map f = A.map f + B.map f :=
+  map_add f.mapMatrix A B
+
+end Witt
+
+end GlobalTheory.LangWitt
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.IwahoriReduction.LangPolynomials.PLangR
+
+section
 
 @[expose] public section
 
@@ -521,3 +570,5 @@ theorem UpperTheory.Kd.C7.pLangR :
     · exact hσmem _ _ (hdiff i j)
     · rw [Matrix.smul_apply, smul_eq_mul]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton.mpr (pow_dvd_pow _ (by omega)))
+end
+end

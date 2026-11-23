@@ -1,20 +1,10 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
-public import Development.EtaleCohomology.EtaleTrace.CocEqPf
-public import Development.EtaleCohomology.EtaleTrace.PrimSplitPf
-public import Development.EtaleCohomology.EtaleTrace.PtCovPf
-public import Development.EtaleCohomology.EtaleTrace.PtCoverPf
-public import Development.EtaleCohomology.EtaleTrace.TateTwistSectionConstantOnPointsOfTwLocPtCov
-public import Development.EtaleCohomology.EtaleTrace.TorsionH0PointOfTwistCoverCocycle
-public import Development.EtaleCohomology.EtaleTrace.TwZeroPfSplit
-public import Development.EtaleCohomology.TateTwists.AlgPowPfR
-public import Development.EtaleCohomology.TateTwists.TwTorsPfR
-import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
+public import Development.EtaleCohomology.EtaleTrace.TorsionH0PointOfLocalTwist
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -38,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,9 +40,229 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.TypeStar
+public import Development.EtaleCohomology.EtaleTrace.PrimSplitPf
 public import Development.EtaleCohomology.EtaleTrace.EtaleTateTwistSectionConstantOnPointsOfConnected
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.AlgebraicGeometry.Sites.EtalePoint
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.EtaleCohomology.EtaleTrace.PtCoverPf
+public import Development.EtaleCohomology.EtaleTrace.TateTwistSectionConstantOnPointsOfTwLocPtCov
+public import Development.EtaleCohomology.EtaleTrace.TwZeroPf
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Tactic.Polynomial.Basic
+public import Development.EtaleCohomology.TateTwists.AlgPowPfR
+public import Development.EtaleCohomology.TateTwists.TwTorsPfR
+import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.TypeStar
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.CocEqPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC CochainComplex.HomComplex Opposite
+
+namespace LateralTheory.EtaleTrace
+
+theorem free_ext (R : Type) [CommRing R] (P : PSh) {G : Shv R} (f g : (free R).obj P ⟶ G)
+    (h : ∀ (U : Scheme.{0}) (x : P.obj (op U)),
+      (f.hom.app (op U)).hom (freeGen R P U x) = (g.hom.app (op U)).hom (freeGen R P U x)) : f = g := by
+  apply Sheaf.hom_ext
+  refine sheafify_hom_ext (J := Scheme.etaleTopology) (P := (freeP R).obj P) f.hom g.hom G.property ?_
+  ext U : 2
+  apply ModuleCat.free_hom_ext
+  rintro ⟨x⟩
+  have := h U.unop x
+  simp only [freeGen] at this
+  simp only [freeP, ModuleCat.freeMk] at this
+  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
+  exact this
+
+theorem cocEq : CocEq := by
+  intro R _ F X α β h
+  apply Cocycle.ext
+  apply Cochain.ext₀
+  intro q
+  rcases lt_trichotomy q 0 with hq | rfl | hq
+  · have : (res R F).IsStrictlyGE 0 := by unfold res; infer_instance
+    exact (CochainComplex.isZero_of_isStrictlyGE (res R F) 0 q hq).eq_of_tgt _ _
+  · have key : (chainsXIso R (sch.obj X) 0).inv ≫ α.1.v _ _ (show -((0:ℕ):ℤ) + 0 = 0 by simp) =
+        (chainsXIso R (sch.obj X) 0).inv ≫ β.1.v _ _ (show -((0:ℕ):ℤ) + 0 = 0 by simp) := by
+      apply free_ext
+      intro U x
+      exact h U x
+    have := congrArg (fun φ => (chainsXIso R (sch.obj X) 0).hom ≫ φ) key
+    simpa using this
+  · apply IsZero.eq_of_src
+    apply HomologicalComplex.isZero_extend_X
+    intro i hi
+    change -(i:ℤ) = q at hi
+    omega
+
+theorem CocEq_of : CocEq := cocEq
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.PtCovPf
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite
+
+namespace LateralTheory.EtaleTrace
+
+theorem exists_ratPt_of_etale (k : Type) [Field k] [IsAlgClosed k] {X : Scheme.{0}} (p : X ⟶ S k)
+    (hp : IsProper p) {U : Scheme.{0}} (f : U ⟶ X) [Etale f] (x : U) :
+    ∃ w : S k ⟶ U, w ≫ f ≫ p = 𝟙 _ := by
+  have := hp
+  have : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace p
+  have hopen : IsOpen (Set.range f) := f.isOpenMap.isOpen_range
+  obtain ⟨y, ⟨x', rfl⟩, hy⟩ := nonempty_inter_closedPoints (show (Set.range f).Nonempty from ⟨f x, x, rfl⟩) hopen.isLocallyClosed
+  let s : S k ⟶ X := pointOfClosedPoint p (f x') hy
+  obtain ⟨l, hl, -⟩ := Scheme.exists_fac_of_etale_of_isSepClosed f s x' (pointOfClosedPoint_apply p (f x') hy _).symm
+  exact ⟨l, by rw [reassoc_of% hl]; exact pointOfClosedPoint_comp p (f x') hy⟩
+
+theorem PtCov_of : PtCov := by
+  intro k _ _ X p hp Sv hSv
+  obtain ⟨𝒰, h𝒰⟩ := Scheme.mem_grothendieckTopology_iff.1 hSv
+  let T : Sieve X :=
+    { arrows := fun V g => ∃ (U : Scheme.{0}) (g' : U ⟶ X) (h : V ⟶ U),
+        Sv.arrows g' ∧ h ≫ g' = g ∧ ∃ w : S k ⟶ U, w ≫ g' ≫ p = 𝟙 _
+      downward_closed := by
+        rintro V W g ⟨U, g', h, hg', rfl, w, hw⟩ a
+        exact ⟨U, g', a ≫ h, hg', by simp, w, hw⟩ }
+  refine ⟨T, ?_, fun V g hg => hg⟩
+  have hG : Sieve.generate (Presieve.ofArrows 𝒰.X 𝒰.f) ∈ Scheme.etaleTopology X :=
+    Scheme.mem_grothendieckTopology_iff.2 ⟨𝒰, Sieve.le_generate _⟩
+  refine (Scheme.etaleTopology).transitive hG T ?_
+  rintro Z _ ⟨W, a, b, hb, rfl⟩
+  rw [Sieve.pullback_comp]
+  refine (Scheme.etaleTopology).pullback_stable a ?_
+  obtain ⟨i⟩ := hb
+  by_cases hne : Nonempty (𝒰.X i)
+  · obtain ⟨x⟩ := hne
+    obtain ⟨w, hw⟩ := exists_ratPt_of_etale k p hp (𝒰.f i) x
+    have : T.arrows (𝒰.f i) := ⟨𝒰.X i, 𝒰.f i, 𝟙 _, h𝒰 _ _ (Presieve.ofArrows.mk i), by simp, w, hw⟩
+    rw [Sieve.pullback_eq_top_of_mem T this]
+    exact (Scheme.etaleTopology).top_mem _
+  · have : IsEmpty (𝒰.X i) := not_nonempty_iff.1 hne
+    exact (Scheme.etaleTopology).superset_covering bot_le (Scheme.bot_mem_grothendieckTopology _)
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.TorsionH0PointOfTwistCoverCocycle
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC CochainComplex.HomComplex Opposite
+
+namespace LateralTheory.EtaleTrace
+
+theorem freeGen_nat (R : Type) [CommRing R] (P : PSh) {V U : Scheme.{0}} (g : V ⟶ U) (x : P.obj (op U)) :
+    Sec.res g (freeGen R P U x) = freeGen R P V (P.map g.op x) := by
+  have h := congrArg (fun f => f.hom (ModuleCat.freeMk (ULift.up x : uliftFunctor.{1, 0}.obj (P.obj (op U)))))
+    ((toSheafify Scheme.etaleTopology ((freeP R).obj P)).naturality g.op)
+  simp only [ModuleCat.hom_comp, LinearMap.coe_comp, Function.comp_apply] at h
+  simp only [Sec.res, freeGen]
+  refine h.symm.trans ?_
+  exact congrArg (ModuleCat.Hom.hom ((toSheafify Scheme.etaleTopology ((freeP R).obj P)).app (op V)))
+    (by simp only [freeP, ModuleCat.freeMk, ModuleCat.free, Functor.comp_obj, Functor.whiskeringRight_obj_obj, Functor.comp_map]
+        exact Finsupp.mapDomain_single)
+
+theorem evNat : EvNat := by
+  intro R _ F X U α x
+  have h := freeGen_nat R ((sch.obj X).obj (op (SimplexCategory.mk 0))) x (𝟙 X : Sx (sch.obj X) 0 X)
+  have hx : ((sch.obj X).obj (op (SimplexCategory.mk 0))).map x.op (𝟙 X : Sx (sch.obj X) 0 X) = (x : Sx (sch.obj X) 0 U) :=
+    Category.comp_id x
+  rw [hx] at h
+  simp only [ev]
+  rw [← h]
+  simp only [Sec.res]
+  rw [← ModuleCat.comp_apply, ← ModuleCat.comp_apply, ← NatTrans.naturality]
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.EtaleCohomology.EtaleTrace.TwZeroPfSplit
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC Opposite
+
+namespace LateralTheory.EtaleTrace
+
+theorem tz_isUnit_ι (X : Scheme.{0}) (f : Γ(X, ⊤)) : IsUnit ((X.basicOpen f).ι.appTop.hom f) := by
+  have h := RingedSpace.isUnit_res_basicOpen X.toRingedSpace f
+  rw [Scheme.Opens.ι_appTop]
+  have e1 : (X.basicOpen f).ι ''ᵁ ⊤ = X.basicOpen f := by simp
+  have key : ∀ (W : X.Opens) (_ : W = X.basicOpen f) (hle : W ≤ ⊤), IsUnit ((X.presheaf.map (homOfLE hle).op).hom f) := by
+    rintro W rfl hle
+    exact h
+  exact key _ e1 _
+
+theorem tz_idem_one {A : Type} [CommRing A] {x : A} (h : IsIdempotentElem x) (hu : IsUnit x) : x = 1 := by
+  obtain ⟨u, rfl⟩ := hu
+  have := congrArg (· * ((u⁻¹ : Aˣ) : A)) h.eq
+  simpa [mul_assoc] using this
+
+theorem splitLoc : SplitLoc := by
+  intro U n e he hs
+  let W : Fin n → U.Opens := fun i => U.basicOpen (e i)
+  have hW : TopologicalSpace.IsOpenCover W := by
+    refine TopologicalSpace.IsOpenCover.mk (eq_top_iff.2 fun x _ => ?_)
+    rw [TopologicalSpace.Opens.mem_iSup]
+    by_contra hx
+    push Not at hx
+    have hm : ∀ i, U.presheaf.germ ⊤ x trivial (e i) ∈ IsLocalRing.maximalIdeal (U.presheaf.stalk x) := fun i =>
+      (IsLocalRing.mem_maximalIdeal _).2 (mem_nonunits_iff.2 ((Scheme.mem_basicOpen_top _ _ x).not.1 (hx i)))
+    have hsum := Ideal.sum_mem (IsLocalRing.maximalIdeal _) (t := Finset.univ) (fun i _ => hm i)
+
+    rw [← map_sum, hs, map_one] at hsum
+    exact (IsLocalRing.maximalIdeal.isMaximal _).ne_top ((Ideal.eq_top_iff_one _).2 hsum)
+  let 𝒰 := U.openCoverOfIsOpenCover W hW
+  refine ⟨Sieve.ofArrows 𝒰.X 𝒰.f, ?_, ?_⟩
+  · exact Scheme.zariskiTopology_le_etaleTopology _ (Scheme.Cover.mem_grothendieckTopology 𝒰)
+  · rintro V g ⟨Y, h, f, ⟨i⟩, rfl⟩
+    let j : Fin n := i
+    refine ⟨j, ?_⟩
+    have h1 : (W j).ι.appTop.hom (e i) = 1 := tz_idem_one ((he j).map _) (tz_isUnit_ι U (e j))
+    simp only [Scheme.Hom.comp_appTop, CommRingCat.hom_comp, RingHom.comp_apply]
+    change h.appTop.hom ((W j).ι.appTop.hom (e j)) = 1
+    rw [h1]; exact map_one _
+
+theorem TwZero_of_split (hTw : LateralTheory.EtaleFoundations.CongruenceLocalDecomposition.TwLoc) (hS : PrimSplit) : TwZero :=
+  TwZero_of hTw hS splitLoc
+
+end LateralTheory.EtaleTrace
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.PLowTL
+
+section
 
 @[expose] public section
 
@@ -195,3 +404,6 @@ theorem lowTL_holds : LowTL := by
   · rw [hz, hz, h2 hc y y']
 
 end UpperTheory.Gal.KunnethLefschetz
+end
+end
+end

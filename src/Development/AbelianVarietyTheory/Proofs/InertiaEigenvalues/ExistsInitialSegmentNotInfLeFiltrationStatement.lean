@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.Algebra.Group.Subgroup.Lattice
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsInitialSegmentNotInfLeFiltration
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -40,10 +40,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
+import Mathlib.Topology.Sheaves.Presheaf
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NoTowerQ
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import GroundTheory.LocalFields.Interface
+public import Mathlib.Data.Nat.Find
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsInitialSegmentNotInfLeFiltration
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory.LocalField GlobalTheory.PMon.Ram
+
+namespace GlobalTheory.PMon.Ram
+
+theorem exists_initialSegment_not_inf_le :
+    ∀ (G : Type) [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G), Antitone R →
+      (∃ m, R m = ⊥) → ∃ n : ℕ, ∀ t, t < n ↔ ¬ A ⊓ R t ≤ B := by
+  intro G _ R A B hR hm
+  classical
+  obtain ⟨m, hm⟩ := hm
+  have h : ∃ t, A ⊓ R t ≤ B := ⟨m, by rw [hm]; simp⟩
+  refine ⟨Nat.find h, fun t => ⟨fun ht => Nat.find_min h ht, fun hn => ?_⟩⟩
+  by_contra hc
+  push_neg at hc
+  exact hn (le_trans (inf_le_inf_left A (hR hc)) (Nat.find_spec h))
+
+end GlobalTheory.PMon.Ram
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsInitialSegmentNotInfLeFiltrationStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +83,5 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory
 
 theorem _root_.GlobalTheory.T.exists_initialSegment_not_inf_le_filtration : ∀ (G : Type) [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G), Antitone R → (∃ m, R m = ⊥) → ∃ n : ℕ, ∀ t, t < n ↔ ¬ A ⊓ R t ≤ B := by
   first | exact @GlobalTheory.PMon.Ram.exists_initialSegment_not_inf_le | exact GlobalTheory.PMon.Ram.exists_initialSegment_not_inf_le | (intros; apply GlobalTheory.PMon.Ram.exists_initialSegment_not_inf_le <;> assumption)
+end
+end

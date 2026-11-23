@@ -1,7 +1,11 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.RedSurjective
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtaleDieudonneBaseByCartierDuality
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRedDual
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeAbsFrobeniusApplyFStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeCompStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeEqRigidifiedExtensionPullStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupBaseChangeIsConnIsEtPerfect
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,6 +45,286 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DieudonneBaseChangeBasisStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ToBaseChangePtsBijective
+public import Development.AbelianVarietyTheory.Definitions.Divisors.WittOnFalse
+import Development.AbelianVarietyTheory.Definitions.Divisors.RedSurjective
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigToLieBijectiveAndDualRigOfOmegaBijectiveOfIsE
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeOfHomEqCompDualHom
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu GlobalTheory.Dieu.EtFromConn
+
+namespace GlobalTheory.Dieu.EtFromConn
+
+theorem isTr_ofHom : ∀ (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)) (k : Type) [Field k] [CharP k p] [PerfectRing k p] (G H : PDivGroup p k) (hG : G.IsEt) (hH : H.IsEt) (f : G ⟶ H) (l : Mod B H hH), IsTr B (RingHom.id k) hG hH (SemiHom.ofHom f) l (l ∘ₗ B.map (dual_conn hH) (dual_conn hG) (dualHom G H f)) := by
+  intro p _ B k _ _ _ G H hG hH f l
+  unfold IsTr
+  letI : Algebra k k := (RingHom.id k).toAlgebra
+  have hd := dual_conn hH
+  have hd' := dual_conn hG
+  have hb : (H.dual.baseChange k).IsConn := (baseChange_isConn_isEt p k k H.dual).1 hd
+  let φ : H.dual ⟶ H.dual.baseChange k := SemiHom.lift (SemiHom.ofHom (𝟙 H.dual))
+  have hφ : ∀ x, B.smap hd hb (SemiHom.ofHom φ) (B.smap hb hd (H.dual.toBase k) x) = x := by
+    intro x
+    rw [← B.smap_comp hd hb hd (H.dual.toBase k) (SemiHom.ofHom φ) (SemiHom.ofHom (𝟙 _)), B.smap_id]
+    intro n a
+    exact ((SemiHom.lift_app _ n 1 a).trans (one_smul _ _)).symm
+  refine ⟨hb, l ∘ₗ B.map hd hb φ, fun x => ?_, fun y => ?_⟩
+  · change l (B.smap hd hb (SemiHom.ofHom φ) (B.smap hb hd (H.dual.toBase k) x)) = _
+    rw [hφ, WittVector.map_id, RingHom.id_apply]
+  · have hc : ∀ n a, (SemiHom.ofHom ((PerfdLat.dualBaseChange k H).inv ≫
+        dualHom G (H.baseChange k) (SemiHom.ofHom f).lift)).app n a =
+        (H.dual.toBase k).app n ((SemiHom.ofHom (dualHom G H f)).app n a) := by
+      intro n a
+      change (CartierDual.baseChange k k (H.A n)).symm (CartierDual.map ((SemiHom.ofHom f).lift.app n) a) = (1 : k) ⊗ₜ CartierDual.map (f.app n) a
+      apply EquivLike.injective (CartierDual.baseChange k k (H.A n))
+      rw [BialgEquiv.apply_symm_apply]
+      refine WithConv.ext (TensorProduct.AlgebraTensorModule.ext fun b m => ?_)
+      simp
+      rw [SemiHom.lift_app, SemiHom.ofHom_app, map_smul, smul_eq_mul, mul_comm]
+    have key := B.smap_comp hb hd hd' (SemiHom.ofHom (dualHom G H f)) (H.dual.toBase k) _ hc y
+    change l (B.map hd hd' (dualHom G H f) y) = l (B.smap hd hb (SemiHom.ofHom φ) (B.smap hb hd' _ y))
+    rw [key, hφ]
+    rfl
+
+end GlobalTheory.Dieu.EtFromConn
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeOfHomEqCompDualHomStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu GlobalTheory.Dieu.EtFromConn
+
+theorem _root_.GlobalTheory.T.etaleDieudonneTranspose_ofHom_eq_comp_dualHom : ∀ (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)) (k : Type) [Field k] [CharP k p] [PerfectRing k p] (G H : PDivGroup p k) (hG : G.IsEt) (hH : H.IsEt) (f : G ⟶ H) (l : Mod B H hH), IsTr B (RingHom.id k) hG hH (SemiHom.ofHom f) l (l ∘ₗ B.map (dual_conn hH) (dual_conn hG) (dualHom G H f)) := by
+  first | exact @GlobalTheory.Dieu.EtFromConn.isTr_ofHom | exact GlobalTheory.Dieu.EtFromConn.isTr_ofHom | (intros; apply GlobalTheory.Dieu.EtFromConn.isTr_ofHom <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeSemilinearHomDualGroups
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu
+
+namespace GlobalTheory
+
+theorem semiHom_dual_transpose : ∀ (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)) (k k' : Type) [Field k] [CharP k p] [PerfectRing k p] [Field k'] [CharP k' p] [PerfectRing k' p] [Algebra k k'] (G : PDivGroup p k) (G' : PDivGroup p k') (hd : G.dual.IsConn) (hd' : G'.dual.IsConn) (hb : (G.dual.baseChange k').IsConn) (s : SemiHom (algebraMap k k') G' G) (l : Module.Dual (WittVector p k) (B.M G.dual hd)), ∃! l' : Module.Dual (WittVector p k') (B.M G'.dual hd'), ∃ lb : Module.Dual (WittVector p k') (B.M (G.dual.baseChange k') hb), (∀ x, lb (B.smap hb hd (G.dual.toBase k') x) = WittVector.map (algebraMap k k') (l x)) ∧ ∀ y, l' y = lb (B.map hb hd' ((PerfdLat.dualBaseChange k' G).inv ≫ dualHom G' (G.baseChange k') s.lift) y) := by
+  intro p _ B k k' _ _ _ _ _ _ _ G G' hd hd' hb s l
+  haveI := B.free G.dual hd
+  haveI := B.finite G.dual hd
+  let b := Module.Free.chooseBasis (WittVector p k) (B.M G.dual hd)
+  obtain ⟨b', hb'⟩ := GlobalTheory.T.dieudonne_baseChange_basis p (fun _ _ G => G.IsConn) B k k' G.dual hd hb _ b
+  let lb : Module.Dual (WittVector p k') (B.M (G.dual.baseChange k') hb) :=
+    b'.constr (WittVector p k') (fun i => WittVector.map (algebraMap k k') (l (b i)))
+  have h1 : ∀ x, lb (B.smap hb hd (G.dual.toBase k') x) = WittVector.map (algebraMap k k') (l x) := by
+    intro x
+    conv_lhs => rw [← b.sum_repr x]
+    conv_rhs => rw [← b.sum_repr x]
+
+    simp only [map_sum, B.smap_smul, map_smul, ← hb', lb, Module.Basis.constr_basis, smul_eq_mul, map_mul]
+  refine ⟨lb ∘ₗ B.map hb hd' ((PerfdLat.dualBaseChange k' G).inv ≫ dualHom G' (G.baseChange k') s.lift),
+    ⟨lb, h1, fun y => rfl⟩, fun l'' ⟨lb', h1', h2'⟩ => ?_⟩
+  have hl : lb' = lb := b'.ext fun i => by
+    simp only [lb, Module.Basis.constr_basis]
+    rw [hb', h1']
+  subst hl
+  exact LinearMap.ext fun y => h2' y
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleDieudonneTransposeSemilinearHomDualGroupsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu
+
+theorem _root_.GlobalTheory.T.etaleDieudonneTranspose_semilinearHom_dualGroups : ∀ (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)) (k k' : Type) [Field k] [CharP k p] [PerfectRing k p] [Field k'] [CharP k' p] [PerfectRing k' p] [Algebra k k'] (G : PDivGroup p k) (G' : PDivGroup p k') (hd : G.dual.IsConn) (hd' : G'.dual.IsConn) (hb : (G.dual.baseChange k').IsConn) (s : SemiHom (algebraMap k k') G' G) (l : Module.Dual (WittVector p k) (B.M G.dual hd)), ∃! l' : Module.Dual (WittVector p k') (B.M G'.dual hd'), ∃ lb : Module.Dual (WittVector p k') (B.M (G.dual.baseChange k') hb), (∀ x, lb (B.smap hb hd (G.dual.toBase k') x) = WittVector.map (algebraMap k k') (l x)) ∧ ∀ y, l' y = lb (B.map hb hd' ((PerfdLat.dualBaseChange k' G).inv ≫ dualHom G' (G.baseChange k') s.lift) y) := by
+  first | exact @GlobalTheory.semiHom_dual_transpose | exact GlobalTheory.semiHom_dual_transpose | (intros; apply GlobalTheory.semiHom_dual_transpose <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupBaseChangeIsConnIsEtPerfectStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu
+
+theorem _root_.GlobalTheory.T.pDivGroupBaseChange_isConn_isEt_perfect : ∀ (p : ℕ) [Fact p.Prime] (k k' : Type) [Field k] [CharP k p] [PerfectRing k p] [Field k'] [CharP k' p] [PerfectRing k' p] [Algebra k k'] (G : PDivGroup p k), (G.IsConn → (G.baseChange k').IsConn) ∧ (G.IsEt → (G.baseChange k').IsEt) := by
+  first | exact @GlobalTheory.Dieu.baseChange_isConn_isEt | exact GlobalTheory.Dieu.baseChange_isConn_isEt | (intros; apply GlobalTheory.Dieu.baseChange_isConn_isEt <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtDualOfConn
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.Dieu GlobalTheory.Dieu.EtFromConn
+
+namespace GlobalTheory.Dieu.EtFromConn
+
+variable {p : ℕ} [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn))
+
+section Main
+
+theorem exists_unique_isTr {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
+    [CharP k' p] [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k}
+    (hG' : G'.IsEt) (hG : G.IsEt) (s : SemiHom σ G' G) (l : Mod B G hG) :
+    ∃! l', IsTr B σ hG' hG s l l' := by
+  letI : Algebra k k' := σ.toAlgebra
+  have hb := (GlobalTheory.T.pDivGroupBaseChange_isConn_isEt_perfect p k k' G.dual).1 (dual_conn hG)
+  obtain ⟨l', h1, h2⟩ := GlobalTheory.T.etaleDieudonneTranspose_semilinearHom_dualGroups p B k k' G G' (dual_conn hG) (dual_conn hG') hb s l
+  exact ⟨l', ⟨hb, h1⟩, fun l'' ⟨_, h⟩ => h2 l'' h⟩
+
+theorem isTr_tr {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
+    [CharP k' p] [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k}
+    (hG' : G'.IsEt) (hG : G.IsEt) (s : SemiHom σ G' G) (l : Mod B G hG) :
+    IsTr B σ hG' hG s l (tr B hG' hG s l) :=
+  tr_spec B hG' hG s l (exists_unique_isTr B hG' hG s l).exists
+
+theorem tr_eq {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
+    [CharP k' p] [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k}
+    (hG' : G'.IsEt) (hG : G.IsEt) (s : SemiHom σ G' G) (l : Mod B G hG) (l' : Mod B G' hG')
+    (h : IsTr B σ hG' hG s l l') : tr B hG' hG s l = l' :=
+  (exists_unique_isTr B hG' hG s l).unique (isTr_tr B hG' hG s l) h
+
+theorem tr_add {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
+    [CharP k' p] [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k}
+    (hG' : G'.IsEt) (hG : G.IsEt) (s : SemiHom σ G' G) (l m : Mod B G hG) :
+    tr B hG' hG s (l + m) = tr B hG' hG s l + tr B hG' hG s m := by
+  apply tr_eq
+  have h1 := isTr_tr B hG' hG s l
+  have h2 := isTr_tr B hG' hG s m
+  letI : Algebra k k' := σ.toAlgebra
+  obtain ⟨hb, lb, a1, b1⟩ := h1
+  obtain ⟨_, mb, a2, b2⟩ := h2
+  refine ⟨hb, lb + mb, fun x => ?_, fun y => ?_⟩
+  · rw [LinearMap.add_apply, a1, a2, LinearMap.add_apply, map_add (f := _)]
+  · rw [LinearMap.add_apply, b1, b2, LinearMap.add_apply]
+
+theorem tr_smul {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
+    [CharP k' p] [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k}
+    (hG' : G'.IsEt) (hG : G.IsEt) (s : SemiHom σ G' G) (a : WittVector p k) (l : Mod B G hG) :
+    tr B hG' hG s (a • l) = WittVector.map σ a • tr B hG' hG s l := by
+  apply tr_eq
+  have h1 := isTr_tr B hG' hG s l
+  letI : Algebra k k' := σ.toAlgebra
+  obtain ⟨hb, lb, a1, b1⟩ := h1
+  refine ⟨hb, WittVector.map σ a • lb, fun x => ?_, fun y => ?_⟩
+  · rw [LinearMap.smul_apply, a1, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, map_mul]
+  · rw [LinearMap.smul_apply, b1, LinearMap.smul_apply]
+
+theorem tr_ofHom {k : Type} [Field k] [CharP k p] [PerfectRing k p] {G H : PDivGroup p k}
+    (hG : G.IsEt) (hH : H.IsEt) (f : G ⟶ H) (l : Mod B H hH) :
+    tr B hG hH (SemiHom.ofHom f) l = l ∘ₗ B.map (dual_conn hH) (dual_conn hG) (dualHom G H f) :=
+  tr_eq B hG hH _ l _ (GlobalTheory.T.etaleDieudonneTranspose_ofHom_eq_comp_dualHom p B k G H hG hH f l)
+
+def etBase : Base p (fun _ _ G => G.IsEt) where
+  M G h := ModuleCat.of (WittVector p _) (Mod B G h)
+  smap h' h s :=
+    { toFun := tr B h' h s
+      map_zero' := by simpa using tr_smul B h' h s 0 0
+      map_add' := tr_add B h' h s }
+  red G h := red B G h
+  free G h := by
+    haveI := B.free G.dual (dual_conn h)
+    haveI := B.finite G.dual (dual_conn h)
+    change Module.Free (WittVector p _) (Module.Dual _ (B.M G.dual (dual_conn h)))
+    infer_instance
+  finite G h := by
+    haveI := B.free G.dual (dual_conn h)
+    haveI := B.finite G.dual (dual_conn h)
+    change Module.Finite (WittVector p _) (Module.Dual _ (B.M G.dual (dual_conn h)))
+    infer_instance
+  red_surjective G h := by
+    have hb := PDivGroup.rigToLie_bijective_and_dual_rigOfOmega_bijective_of_isEt p _ (p_eq_zero p _) G h
+    exact (rigLie G h).symm.surjective.comp
+      ((LinearMap.dualMap_surjective_of_injective hb.2.1).comp (redDual_spec B G h).2.1)
+  red_eq_zero G h m := by
+    have hb := PDivGroup.rigToLie_bijective_and_dual_rigOfOmega_bijective_of_isEt p _ (p_eq_zero p _) G h
+    change (rigLie G h).symm _ = 0 ↔ _
+    rw [LinearEquiv.map_eq_zero_iff, ← map_zero G.dual.rigOfOmega.dualMap, LinearMap.comp_apply,
+      (LinearMap.dualMap_injective_of_surjective hb.2.2).eq_iff]
+    exact (redDual_spec B G h).2.2 m
+  smap_smul h' h s a m := tr_smul B h' h s a m
+  smap_id G h m := by
+    change tr B h h _ m = m
+    rw [tr_ofHom]
+    refine LinearMap.ext fun y => ?_
+    rw [LinearMap.comp_apply, dualHom_id]
+    exact congrArg m (B.smap_id _ _ y)
+  smap_add hG hH f g m := by
+    change tr B hG hH _ m = tr B hG hH _ m + tr B hG hH _ m
+    rw [tr_ofHom, tr_ofHom, tr_ofHom]
+    refine LinearMap.ext fun y => ?_
+    rw [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.comp_apply, LinearMap.comp_apply, ← map_add m,
+      map_add (dualHom _ _)]
+    exact congrArg m (B.smap_add _ _ _ _ y)
+  smap_comp h'' h' h s t u hu m :=
+    (tr_eq B h'' h u m _ (GlobalTheory.T.etaleDieudonneTranspose_comp p B _ _ _ _ _ _ _ _ _ h'' h' h s t u hu m _ _
+      (isTr_tr B h' h s m) (isTr_tr B h'' h' t _)))
+  red_smap h' h s m := GlobalTheory.T.etaleDieudonneTranspose_eq_rigidifiedExtensionPullback p B _ _ _ _ _ h' h s m _ (isTr_tr B h' h s m)
+
+end Main
+
+end GlobalTheory.Dieu.EtFromConn
+
+namespace GlobalTheory.Dieu
+
+theorem exists_etDual_of_conn : ∀ (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)),
+    ∃ C : Base p (fun _ _ G => G.IsEt), C.EtDual B := by
+  intro p _ B
+  refine ⟨EtFromConn.etBase B, fun G h hd hG => LinearEquiv.refl _ _, fun G h hd hG => ⟨?_, ?_⟩⟩
+  · intro x y
+    exact GlobalTheory.T.etaleDieudonneTranspose_absFrobenius_apply_F p B _ G h x _ (EtFromConn.isTr_tr B h h _ x) y
+  · intro H h' hd' hH f x y
+    exact LinearMap.congr_fun (EtFromConn.tr_ofHom B h h' f x) y
+
+end GlobalTheory.Dieu
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtaleDieudonneBaseByCartierDuality
+
+section
+
+@[expose] public section
+
+open CategoryTheory GlobalTheory.PDiv GlobalTheory.PDivGroup
+
+theorem GlobalTheory.dieuBase_isEt_of_isConn :
+    ∀ (p : ℕ) [Fact p.Prime] (Bc : GlobalTheory.Dieu.Base p (fun _ _ G => G.IsConn)),
+      ∃ Be : GlobalTheory.Dieu.Base p (fun _ _ G => G.IsEt), Be.EtDual Bc :=
+  fun p _ Bc => GlobalTheory.Dieu.exists_etDual_of_conn p Bc
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtaleDieudonneBaseByCartierDualityStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +332,5 @@ open CategoryTheory GlobalTheory.PDiv GlobalTheory.PDivGroup
 
 theorem _root_.GlobalTheory.T.exists_etaleDieudonneBase_by_cartierDuality : ∀ (p : ℕ) [Fact p.Prime] (Bc : GlobalTheory.Dieu.Base p (fun _ _ G => G.IsConn)), ∃ Be : GlobalTheory.Dieu.Base p (fun _ _ G => G.IsEt), Be.EtDual Bc := by
   first | exact @GlobalTheory.dieuBase_isEt_of_isConn | exact GlobalTheory.dieuBase_isEt_of_isConn | (intros; apply GlobalTheory.dieuBase_isEt_of_isConn <;> assumption)
+end
+end

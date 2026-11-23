@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.RingTheory.Etale.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtaleModelOfDirectedUnion
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,8 +19,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.RingTheory.Extension.Presentation.Core
+import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
-public import Mathlib.RingTheory.RingHom.Etale
+public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,8 +43,58 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Smooth.StandardSmooth
+public import Mathlib.RingTheory.RingHom.Etale
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtaleModelOfDirectedUnion
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory.EtaleDescent
+
+open TensorProduct
+
+theorem exists_etale_model_of_directed_union :
+    ∀ (R : Type) [CommRing R] (ι : Type) [Preorder ι] [IsDirected ι (· ≤ ·)] [Nonempty ι]
+      (Ri : ι → Subring R), Monotone Ri → (∀ x, ∃ i, x ∈ Ri i) →
+      ∀ (A : Type) [CommRing A] [Algebra R A] [Algebra.Etale R A],
+        ∃ (i : ι) (Ai : Type) (_ : CommRing Ai) (_ : Algebra (Ri i) Ai),
+          Algebra.Etale (Ri i) Ai ∧ Nonempty (TensorProduct (Ri i) R Ai ≃ₐ[R] A) := by
+  intro R _ ι _ _ _ Ri hmono hcov A _ _ _
+  obtain ⟨κ, σ, _, _, P, hP⟩ :=
+    (Algebra.Etale.iff_isStandardSmoothOfRelativeDimension_zero (R := R) (S := A)).mp
+      inferInstance |>.out
+
+  have hfin := P.finite_coeffs
+  have hex : ∃ i, P.coeffs ⊆ (Ri i : Set R) := by
+    classical
+    choose j hj using hcov
+    obtain ⟨i, hi⟩ := Finset.exists_le (hfin.toFinset.image j)
+    refine ⟨i, fun x hx ↦ hmono (hi _ (Finset.mem_image_of_mem _ (hfin.mem_toFinset.mpr hx))) (hj x)⟩
+  obtain ⟨i, hi⟩ := hex
+  letI : Algebra (Ri i) A := ((algebraMap R A).comp (algebraMap (Ri i) R)).toAlgebra
+  haveI : IsScalarTower (Ri i) R A := IsScalarTower.of_algebraMap_eq (fun _ ↦ rfl)
+  haveI : P.HasCoeffs (Ri i) := ⟨fun x hx ↦ ⟨⟨x, hi hx⟩, rfl⟩⟩
+  let Q := P.ofHasCoeffs (Ri i)
+  refine ⟨i, P.ModelOfHasCoeffs (Ri i), inferInstance, inferInstance, ?_,
+    ⟨P.tensorModelOfHasCoeffsEquiv (Ri i)⟩⟩
+  haveI : Algebra.IsStandardSmoothOfRelativeDimension 0 (Ri i) (P.ModelOfHasCoeffs (Ri i)) :=
+    Q.isStandardSmoothOfRelativeDimension (by rw [← hP]; rfl)
+  infer_instance
+
+end GlobalTheory.EtaleDescent
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEtalePolynomialModelOfDirectedUnionStatement
+
+section
 
 @[expose] public section
 
@@ -108,3 +160,5 @@ theorem _root_.GlobalTheory.T.exists_etale_polynomial_descent_of_directed_union 
   refine ⟨i, E₀, inferInstance, alg₀, hEt, ⟨?_⟩⟩
   exact (Algebra.TensorProduct.equivOfCompatibleSMul (S i) (Polynomial (𝒜 i)) (Polynomial T)
     (Polynomial T) E₀).trans φ
+end
+end

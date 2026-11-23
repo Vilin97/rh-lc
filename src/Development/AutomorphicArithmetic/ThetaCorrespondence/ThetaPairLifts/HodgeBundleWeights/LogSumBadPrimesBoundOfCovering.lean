@@ -3,14 +3,20 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.MulSmulIdemMem
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEqAtAllEmbeddings
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.HodgeBundleWeights.ToKnownTheoremsOf
-public import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.BadLog
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.ConjEMemHostFIff
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.RadBounds2
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.RamEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -18,7 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,8 +41,14 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
+import Mathlib.Tactic.Basify
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ComponentMassSum
 public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LevelCarrying
 import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
@@ -47,6 +59,53 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsRightActFunPull
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsoOverOfIsOpenImmersion
 public import Development.AbelianVarietyTheory.Definitions.Divisors.MemLevEigenIffTransl
 import Development.AbelianVarietyTheory.Definitions.Divisors.Multiplier
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.BadLog
+
+section
+
+@[expose] public section
+
+open UpperTheory.HF
+open NumberField Formalism.HC
+
+theorem UpperTheory.KR.sum_log_bad_le :
+    ∀ {φ : Frame} (H : HostAx φ) (M : ℕ) (S : Finset ℕ), M ≠ 0 →
+      (∀ p ∈ S, p.Prime ∧ (p = 2 ∨ p = H.d ∨ p ∣ (discr H.E).natAbs ∨ p ∣ M)) →
+        ∑ p ∈ S, Real.log p ≤ 2 * Real.log H.rd + Real.log M := by
+  intro φ H M S hM hS
+  have hD : (discr H.E).natAbs ≠ 0 := Int.natAbs_ne_zero.2 (discr_ne_zero H.E)
+  obtain ⟨hA, hB, -⟩ := UpperTheory.HF.ram_eq H
+  have hsub : S ⊆ H.ram ∪ M.primeFactors := by
+    intro p hp
+    obtain ⟨hpp, h⟩ := hS p hp
+    rw [Finset.mem_union]
+    rcases h with h | h | h | h
+    · exact Or.inl ((hA p).2 (Or.inl (h ▸ hB)))
+    · exact Or.inl ((hA p).2 (Or.inr (Or.inr h)))
+    · exact Or.inl (Nat.mem_primeFactors.2 ⟨hpp, h, hD⟩)
+    · exact Or.inr (Nat.mem_primeFactors.2 ⟨hpp, h, hM⟩)
+  have h1 : ∑ l ∈ H.ram, Real.log l ≤ 2 * Real.log H.rd := by
+    simpa using (UpperTheory.HF.rad_bounds2 H).1 0 1 le_rfl zero_le_one
+  have h2 : ∑ l ∈ M.primeFactors, Real.log l ≤ Real.log M := by
+    have hne : ∀ l ∈ M.primeFactors, (l : ℝ) ≠ 0 := fun l hl =>
+      Nat.cast_ne_zero.2 (Nat.prime_of_mem_primeFactors hl).ne_zero
+    rw [← Real.log_prod hne, ← Nat.cast_prod]
+    refine Real.log_le_log ?_ ?_
+    · exact Nat.cast_pos.2 (Finset.prod_pos fun l hl => (Nat.prime_of_mem_primeFactors hl).pos)
+    · exact Nat.cast_le.2 (Nat.le_of_dvd (Nat.pos_of_ne_zero hM) (Nat.prod_primeFactors_dvd M))
+  have h3 : ∑ p ∈ S, Real.log p ≤ ∑ p ∈ H.ram ∪ M.primeFactors, Real.log p :=
+    Finset.sum_le_sum_of_subset_of_nonneg hsub fun p _ _ => Real.log_natCast_nonneg p
+  have h4 := Finset.sum_union_inter (s₁ := H.ram) (s₂ := M.primeFactors) (f := fun p : ℕ => Real.log p)
+  have h5 : 0 ≤ ∑ p ∈ H.ram ∩ M.primeFactors, Real.log p :=
+    Finset.sum_nonneg fun p _ => Real.log_natCast_nonneg p
+  linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.HodgeBundleWeights.LogSumBadPrimesBoundOfCovering
+
+section
 
 @[expose] public section
 
@@ -114,4 +173,6 @@ open GlobalTheory.FlatLine GlobalTheory.FlatTw GlobalTheory.IndefiniteRowSideFul
 
 theorem _root_.GlobalTheory.T.log_sum_bad_primes_bound_of_covering : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∃ C : ℝ, 0 ≤ C ∧ ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j : ℕ, InR D j → ∀ (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), Y.Good e o → ∀ Lb : ℝ, 1 ≤ Lb → Real.log Y.d.l₂.M ≤ 30 * Lb → fieldSz D.host.E ≤ 3 * Lb → Real.log (D.R.f * D.R.r) ≤ Lb → GlobalTheory.FlatTw.logSum (GlobalTheory.FlatTw.badPrimes T.Q.H Y.d.l₂) ≤ C * ((D.R.f : ℝ) * D.R.r * Lb) ^ 2 := by
   first | exact @_root_.GlobalTheory.BadLogCov.log_sum_bad_primes_le_sq | exact _root_.GlobalTheory.BadLogCov.log_sum_bad_primes_le_sq | (intros; apply _root_.GlobalTheory.BadLogCov.log_sum_bad_primes_le_sq <;> assumption)
+end
+end
 end

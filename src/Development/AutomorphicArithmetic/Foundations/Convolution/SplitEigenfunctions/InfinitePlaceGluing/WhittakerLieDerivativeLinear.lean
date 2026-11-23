@@ -5,11 +5,7 @@ public import Development.AutomorphicArithmetic.WhittakerHecke.ArchimedeanConjug
 public import Development.AutomorphicArithmetic.WhittakerHecke.ConjLieElementEmbedRotationEqTrigMatrix
 public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsSmoothLieActionMemCuspidalTranslates
 public import Development.AutomorphicArithmetic.WhittakerHecke.HasDerivAtWhittakerPeriodOneParameter
-public import Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesFixedAtPlace
-public import Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesRightInvarianceFiniteAdelic
-public import Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesSatakeEigenAtPlace
-public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerCoeffLieDerivUnipotentEqMul
-public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerPeriodAddSmulAndNormLe
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.UnramifiedSplitting.SplitAt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,11 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +39,154 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.GaussianProducts.ExistsRowSec
+import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.ThInf
+import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ConjInv
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ConjInv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.ExistsCombComb
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeTjCosetsFiniteCardLe
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerCoeffLieDerivUnipotentEqMul
+public import Development.AutomorphicArithmetic.WhittakerHecke.WhittakerPeriodAddSmulAndNormLe
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.CharacterNorms.ThInf
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesFixedAtPlace
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.TA
+open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
+open scoped Classical
+
+theorem UpperTheory.lie_action_preserves_fixed_at_place :
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (w : H.P E) (f : Sm E 2) (X : Lie E 2), H.Fix w f.1 → H.Fix w (lie E 2 X f).1 := by
+  intro E _ _ _ w f X hf g k hk
+  have h1 : rt E 2 (finGL E 2 (locGL E 2 w k)) f = f :=
+    Subtype.ext (funext fun x => hf x k hk)
+  have h2 : lie E 2 X (rt E 2 (finGL E 2 (locGL E 2 w k)) f) =
+      rt E 2 (finGL E 2 (locGL E 2 w k)) (lie E 2 X f) :=
+    LinearMap.congr_fun (lie_rt_fin X (locGL E 2 w k)) f
+  rw [h1] at h2
+  exact (congrArg (fun u : Sm E 2 => u.1 g) h2).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesRightInvarianceFiniteAdelic
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.TA
+open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
+open scoped Classical
+
+theorem UpperTheory.lie_action_preserves_right_invariance_finite_adelic :
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : GL (Fin 2) (A ℚ)), (∀ i j, (k.val i j).1 = ((1 : Matrix (Fin 2) (Fin 2) (A ℚ)) i j).1) → ∀ (f : Sm E 2) (X : Lie E 2), (∀ g, f.1 (g * em E k) = f.1 g) → ∀ g, (lie E 2 X f).1 (g * em E k) = (lie E 2 X f).1 g := by
+  intro E _ _ _ k hk f X hf g
+  have hfst : ∀ i j, ((em E k).val i j).1 = ((1 : Matrix (Fin 2) (Fin 2) (A E)) i j).1 := by
+    intro i j
+    have e : (em E k).val i j = AdeleBaseChange.adeleMap ℚ E (k.val i j) := rfl
+    have e1 : (1 : Matrix (Fin 2) (Fin 2) (A E)) i j =
+        AdeleBaseChange.adeleMap ℚ E ((1 : Matrix (Fin 2) (Fin 2) (A ℚ)) i j) := by
+      by_cases h : i = j
+      · subst h; simp
+      · simp [Matrix.one_apply_ne h]
+    rw [e, e1, AdeleBaseChange.adeleMap_apply, AdeleBaseChange.adeleMap_apply, hk i j]
+  have h1 : Matrix.GeneralLinearGroup.map (pInf E) (em E k) = 1 := by
+    have h2 : Matrix.GeneralLinearGroup.map (pInf E) (em E k) =
+        Matrix.GeneralLinearGroup.map (pInf E) (1 : GL (Fin 2) (A E)) := by
+      refine Units.ext (Matrix.ext fun i j => ?_)
+      exact congrArg (fun x => (infEq E).symm x) (hfst i j)
+    rw [h2, map_one]
+  have hm : finGL E 2 (Matrix.GeneralLinearGroup.map (pFin E) (em E k)) = em E k := by
+    have h3 := infGL_mul_finGL (em E k)
+    rwa [h1, map_one, one_mul] at h3
+  have hr : GlobalTheory.CuspRep.rt E 2 (em E k) f = f := Subtype.ext (funext hf)
+  have h4 := LinearMap.congr_fun (lie_rt_fin X (Matrix.GeneralLinearGroup.map (pFin E) (em E k))) f
+  rw [hm, Module.End.mul_apply, Module.End.mul_apply, hr] at h4
+  exact (congrArg (fun φ : Sm E 2 => φ.1 g) h4).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WhittakerHecke.LieActionPreservesSatakeEigenAtPlace
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory Matrix Topology Filter
+open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Published GroundTheory.Global GroundTheory.Automorphic.GJMatrix
+open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDescent UpperTheory.ConvolutionTheory.RankTwoDescent.TA
+open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
+open scoped Classical
+
+theorem UpperTheory.lie_action_preserves_satake_eigen_at_place :
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (w : H.P E) (B : Multiset ℂˣ) (f : Sm E 2) (X : Lie E 2), UpperTheory.V.Af.Smo.EigAt w B f.1 → UpperTheory.V.Af.Smo.EigAt w B (lie E 2 X f).1 := by
+  intro E _ _ _ w B f X hf g
+  have hc : ∀ (k : GL (Fin 2) (Af E)) (φ : Sm E 2) (x : GA E 2),
+      (lie E 2 X φ).1 (x * finGL E 2 k) = (lie E 2 X (GlobalTheory.CuspRep.rt E 2 (finGL E 2 k) φ)).1 x := by
+    intro k φ x
+    have h := LinearMap.congr_fun (lie_rt_fin X k) φ
+    exact (congrArg (fun ψ : Sm E 2 => ψ.1 x) h).symm
+  have hev : ∀ (k : GA E 2) (φ : Sm E 2) (x : GA E 2), (GlobalTheory.CuspRep.rt E 2 k φ).1 x = φ.1 (x * k) :=
+    fun _ _ _ => rfl
+  refine ⟨(hf 1).card, ?_, ?_⟩
+  · intro y k hk
+    have hfix : GlobalTheory.CuspRep.rt E 2 (finGL E 2 (locGL E 2 w k)) f = f := by
+      refine Subtype.ext (funext fun x => ?_)
+      have h := (hf x).inv 1 k hk
+      simp only [one_mul, map_one, mul_one] at h
+      rw [hev]
+      exact h
+    have e1 : g * finGL E 2 (locGL E 2 w (y * k)) =
+        g * finGL E 2 (locGL E 2 w y) * finGL E 2 (locGL E 2 w k) := by
+      simp only [map_mul, mul_assoc]
+    show (lie E 2 X f).1 (g * finGL E 2 (locGL E 2 w (y * k))) = (lie E 2 X f).1 (g * finGL E 2 (locGL E 2 w y))
+    rw [e1, hc, hfix]
+  · intro ϖ hϖ j hj x
+    have hfin := (GlobalTheory.TjCount.tj_cosets_finite_card_le E w 2 ϖ hϖ j hj).1
+    have hsum : ∀ W : GL (Fin 2) (w.adicCompletion E) ⧸ GlobalTheory.LFun.KGL w (n := 2) → ℂ,
+        ∑ᶠ c, Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j c.out * W c =
+          ∑ c ∈ hfin.toFinset, Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j c.out * W c := by
+      intro W
+      refine finsum_eq_sum_of_support_subset _ fun c hc' => ?_
+      rw [Set.Finite.coe_toFinset]
+      exact fun h0 => hc' (by simp [h0])
+    have key : ∑ c ∈ hfin.toFinset, Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j c.out •
+          GlobalTheory.CuspRep.rt E 2 (finGL E 2 (locGL E 2 w c.out)) f =
+        GlobalTheory.LFun.satEig (Formalism.UG.qV E w) 2 B j • f := by
+      refine Subtype.ext (funext fun z => ?_)
+      have h := (hf z).eig ϖ hϖ j hj 1
+      simp only [one_mul, map_one, mul_one] at h
+      rw [hsum fun c => f.1 (z * finGL E 2 (locGL E 2 w c.out))] at h
+      simpa [Submodule.coe_sum, Finset.sum_apply, hev] using h
+    have h2 := congrArg (fun ψ : Sm E 2 => (lie E 2 X ψ).1 (g * finGL E 2 (locGL E 2 w x))) key
+
+    simp only [map_sum, map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply,
+    smul_eq_mul] at h2
+    rw [hsum fun c => (lie E 2 X f).1 (g * finGL E 2 (locGL E 2 w (x * c.out)))]
+    rw [← h2]
+    refine Finset.sum_congr rfl fun c _ => ?_
+    rw [map_mul, map_mul, ← mul_assoc, hc]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.InfinitePlaceGluing.WhittakerLieDerivativeLinear
+
+section
 
 @[expose] public section
 
@@ -202,4 +339,6 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.shift_of :
   push_cast
   ring
 
+end
+end
 end

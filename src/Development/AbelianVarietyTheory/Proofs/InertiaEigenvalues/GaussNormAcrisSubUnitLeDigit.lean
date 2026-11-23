@@ -7,12 +7,10 @@ import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaussNormAcris
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ISupMonomialHolderLogConvex
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsTerFurther
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGaussGCTarget
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RootCancelPowEqSelfAcrisGaussNormStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TeichmullerRootUnityEqUnit
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RootCancelPowEqSelfAcrisGaussNorm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -48,6 +46,100 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RootCancelPowEqSelfAcrisGaussNormStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+theorem _root_.GlobalTheory.T.rootCancel_pow_eq_self_acris_gaussNorm : ∀ (l : ℕ) [Fact l.Prime] (h s : ℕ), s < h → ∀ (w w' : Formalism.Per.Acris l) (ζ : Formalism.Per.Fl l) (o : ℕ) (ρ₀ : ℝ), (φc l)^[h] w' = (l : Formalism.Per.Acris l) ^ s * w' → w' ≠ 0 → φc l w * w' = w * φc l w' → (∀ ρ : ℝ, (l : ℝ)⁻¹ ≤ ρ → ρ < 1 → gC l ρ w = gC l ρ w') → 0 < o → ζ ^ (l ^ o) = ζ → ζ ≠ 0 → (l : ℝ)⁻¹ ≤ ρ₀ → ρ₀ < 1 → gC l ρ₀ (w - tc l ζ * w') < gC l ρ₀ w' → ζ ^ l = ζ := by
+  first | exact @GlobalTheory.PMon.Gauss.root_cancel_pow_eq_self | exact GlobalTheory.PMon.Gauss.root_cancel_pow_eq_self | (intros; apply GlobalTheory.PMon.Gauss.root_cancel_pow_eq_self <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TeichmullerRootUnityEqUnit
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PMon.Gauss
+open scoped Formalism.Per
+
+namespace GlobalTheory.PMon.Gauss
+
+
+open Polynomial in
+theorem exists_zmod_of_pow_eq_self {F : Type} [CommRing F] [IsDomain F] (l : ℕ) [Fact l.Prime] [CharP F l]
+    (ζ : F) (h : ζ ^ l = ζ) : ∃ a : ZMod l, ZMod.castHom (dvd_refl l) F a = ζ := by
+  have hl : 1 < l := (Fact.out : l.Prime).one_lt
+  set P : (ZMod l)[X] := X ^ l - X with hP
+  have hmon : P.Monic := by
+    apply Polynomial.monic_X_pow_sub
+    simp [hl]
+  have hroots : P.roots = Finset.univ.val := by
+    have := FiniteField.roots_X_pow_card_sub_X (ZMod l)
+    rwa [ZMod.card] at this
+  have hdeg : P.natDegree = l := Polynomial.natDegree_X_pow_sub_X (R := (ZMod l)) hl
+  have hprod : (Multiset.map (fun a => X - C a) P.roots).prod = P :=
+    Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmon
+      (by rw [hroots, hdeg]; simp [ZMod.card])
+  have hev := congrArg (fun Q : (ZMod l)[X] => Q.eval₂ (ZMod.castHom (dvd_refl l) F) ζ) hprod
+  simp only [hP, eval₂_sub, eval₂_X_pow, eval₂_X, h, sub_self] at hev
+  rw [Polynomial.eval₂_multiset_prod, Multiset.map_map] at hev
+  obtain ⟨q, hq, hq0⟩ : ∃ q ∈ _, q = (0:F) := ⟨0, Multiset.prod_eq_zero_iff.1 hev, rfl⟩
+  rw [Multiset.mem_map] at hq
+  obtain ⟨a, -, rfl⟩ := hq
+  refine ⟨a, ?_⟩
+  simp only [Function.comp, eval₂_sub, eval₂_X, eval₂_C] at hq0
+  exact (sub_eq_zero.1 hq0).symm
+
+theorem padicInt_ringHom_witt_ext_pt {l : ℕ} [Fact l.Prime] {F : Type} [CommRing F] [CharP F l]
+    (f g : ℤ_[l] →+* WittVector l F) : f = g := by
+  ext x n
+  obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 (PadicInt.appr_spec (n + 1) x)
+  have hx : x = (x.appr (n + 1) : ℤ_[l]) + y * (l : ℤ_[l]) ^ (n + 1) := by rw [hy]; ring
+  have hd : f x = g x + (f y - g y) * (l : WittVector l F) ^ (n + 1) := by
+    conv_lhs => rw [hx]
+    conv_rhs => rw [hx]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
+    ring
+  have ht : WittVector.truncate (n + 1) ((f y - g y) * (l : WittVector l F) ^ (n + 1)) = 0 := by
+    rw [← RingHom.mem_ker, WittVector.mem_ker_truncate]
+    intro i hi
+    exact WittVector.mul_pow_charP_coeff_zero _ hi
+  have he : WittVector.truncate (n + 1) (f x) = WittVector.truncate (n + 1) (g x) := by
+    rw [hd, map_add (f := _), ht, add_zero]
+  have := congrArg (fun z => TruncatedWittVector.coeff (⟨n, Nat.lt_succ_self n⟩ : Fin (n + 1)) z) he
+  simpa only [WittVector.coeff_truncate] using this
+
+theorem teichmuller_root_unity_eq_unit : ∀ (l : ℕ) [Fact l.Prime] (ζ : Formalism.Per.Fl l), ζ ^ l = ζ → ζ ≠ 0 →
+    ∃ c : ℤ_[l], IsUnit c ∧ zc l c = tc l ζ := by
+  intro l _ ζ h hne
+  obtain ⟨a, rfl⟩ := exists_zmod_of_pow_eq_self l ζ h
+  have ha : a ≠ 0 := by rintro rfl; exact hne (map_zero _)
+  refine ⟨WittVector.toPadicInt l (WittVector.teichmuller l a), ?_, ?_⟩
+  · exact ((Ne.isUnit ha).map (WittVector.teichmuller l)).map (WittVector.toPadicInt l)
+  · have hz : Formalism.Per.zA l = (WittVector.map (ZMod.castHom (dvd_refl l) (Formalism.Per.Fl l))).comp
+        (WittVector.fromPadicInt l) := padicInt_ringHom_witt_ext_pt _ _
+    simp only [zc, tc, RingHom.comp_apply, hz, Formalism.Per.tm]
+    have hft : WittVector.fromPadicInt l (WittVector.toPadicInt l (WittVector.teichmuller l a)) =
+        WittVector.teichmuller l a :=
+      RingHom.congr_fun (WittVector.fromPadicInt_comp_toPadicInt (p := l)) _
+    rw [hft, WittVector.map_teichmuller]
+
+end GlobalTheory.PMon.Gauss
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaussNormAcrisSubUnitLeDigit
+
+section
 
 @[expose] public section
 
@@ -132,3 +224,6 @@ theorem GlobalTheory.PMon.Gauss.one_digit : ∀ (l : ℕ) [Fact l.Prime] (h s : 
   have hle : ρ ^ n ≤ ρ ^ (1 : ℤ) := zpow_le_zpow_right_of_le_one₀ hρ h1.le hn1
   rw [zpow_one] at hle
   exact mul_le_mul_of_nonneg_right hle (hN.1 w').1
+end
+end
+end

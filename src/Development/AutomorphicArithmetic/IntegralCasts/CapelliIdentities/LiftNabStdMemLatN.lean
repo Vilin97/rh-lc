@@ -1,18 +1,20 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LamGApply
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormIntegersLeOne
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SemilinearLatticeMem
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WeightedHomogeneousMap
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -20,6 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+public import Mathlib.RingTheory.Valuation.Integral
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,6 +43,103 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous
+public import Mathlib.Algebra.MvPolynomial.Monad
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormIntegersLeOne
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.norm_integers_le_one :
+    ∀ (K : Type) [Field K] [NumberField K] (l : ℕ) [Fact (Nat.Prime l)] (e : K →+* PadicAlgCl l) (x : NumberField.RingOfIntegers K), ‖e (algebraMap (NumberField.RingOfIntegers K) K x)‖ ≤ 1 := by
+  intro K _ _ l _ e x
+  have hx : IsIntegral ℤ (e (algebraMap (NumberField.RingOfIntegers K) K x)) :=
+    (NumberField.RingOfIntegers.isIntegral_coe x).map e.toIntAlgHom
+  generalize e (algebraMap (NumberField.RingOfIntegers K) K x) = y at hx
+  let S : Subring (PadicAlgCl l) := (NormedField.valuation (K := PadicAlgCl l)).integer
+  have hS : IsIntegral S y := hx.tower_top
+  have h := (Valuation.integer.integers (NormedField.valuation (K := PadicAlgCl l))).mem_of_integral hS
+  rw [Valuation.mem_integer_iff, NormedField.valuation_apply] at h
+  exact_mod_cast h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SemilinearLatticeMem
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.semilinear_lattice_mem :
+    ∀ (R K C V W : Type) [CommRing R] [Field K] [Field C] [Algebra R K] [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V] [AddCommGroup W] [Module C W] (e : K →+* C) (U : Submodule K V) (Φ : U →ₛₗ[e] W) (A : Set C) (L : AddSubgroup W) (G : Set V), (∀ a ∈ A, ∀ y ∈ L, a • y ∈ L) → (∀ r : R, e (algebraMap R K r) ∈ A) → (∀ g ∈ G, ∃ h : g ∈ U, Φ ⟨g, h⟩ ∈ L) → ∀ (s : R), algebraMap R K s ≠ 0 → e (algebraMap R K s)⁻¹ ∈ A → ∀ v : U, s • (v : V) ∈ Submodule.span R G → Φ v ∈ L := by
+  intro R K C V W _ _ _ _ _ _ _ _ _ _ e U Φ A L G hA hR hG s hs hsA v hv
+  have key : ∀ x ∈ Submodule.span R G, ∃ h : x ∈ U, Φ ⟨x, h⟩ ∈ L := by
+    intro x hx
+    induction hx using Submodule.span_induction with
+    | mem x hx => exact hG x hx
+    | zero =>
+      refine ⟨U.zero_mem, ?_⟩
+      have h0 : (⟨0, U.zero_mem⟩ : U) = 0 := rfl
+      rw [h0, map_zero]
+      exact L.zero_mem
+    | add x y _ _ hx hy =>
+      obtain ⟨hxU, hx⟩ := hx
+      obtain ⟨hyU, hy⟩ := hy
+      refine ⟨U.add_mem hxU hyU, ?_⟩
+      have h0 : (⟨x + y, U.add_mem hxU hyU⟩ : U) = ⟨x, hxU⟩ + ⟨y, hyU⟩ := rfl
+      rw [h0, map_add (f := _)]
+      exact L.add_mem hx hy
+    | smul r x _ hx =>
+      obtain ⟨hxU, hx⟩ := hx
+      have hm : r • x ∈ U := by
+        rw [← algebraMap_smul K r x]
+        exact U.smul_mem _ hxU
+      refine ⟨hm, ?_⟩
+      have h0 : (⟨r • x, hm⟩ : U) = algebraMap R K r • (⟨x, hxU⟩ : U) :=
+        Subtype.ext (algebraMap_smul K r x).symm
+      rw [h0, LinearMap.map_smulₛₗ]
+      exact hA _ (hR r) _ hx
+  obtain ⟨hU, hL⟩ := key _ hv
+  have h1 : v = (algebraMap R K s)⁻¹ • (⟨s • (v : V), hU⟩ : U) := by
+    apply Subtype.ext
+    change (v : V) = (algebraMap R K s)⁻¹ • (s • (v : V))
+    rw [← algebraMap_smul K s (v : V), inv_smul_smul₀ hs]
+  rw [h1, LinearMap.map_smulₛₗ]
+  exact hA _ hsA _ hL
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WeightedHomogeneousMap
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.aeval_map_eq_rename_map_iff :
+    ∀ (R S : Type) [CommRing R] [CommRing S] (φ : R →+* S), Function.Injective φ → ∀ (σ M : Type) [AddCommMonoid M] (w : σ → M) (ν : M) (f : MvPolynomial σ R), (MvPolynomial.IsWeightedHomogeneous w (MvPolynomial.map φ f) ν ↔ MvPolynomial.IsWeightedHomogeneous w f ν) ∧ ∀ (τ : Type) (gR : σ → MvPolynomial τ R) (gS : σ → MvPolynomial τ S) (ρ : σ → τ), (∀ v, MvPolynomial.map φ (gR v) = gS v) → (MvPolynomial.aeval gS (MvPolynomial.map φ f) = MvPolynomial.rename ρ (MvPolynomial.map φ f) ↔ MvPolynomial.aeval gR f = MvPolynomial.rename ρ f) := by
+  intro R S _ _ φ hφ σ M _ w ν f
+  refine ⟨?_, ?_⟩
+  · unfold MvPolynomial.IsWeightedHomogeneous
+    refine forall_congr' fun d => ?_
+    rw [MvPolynomial.coeff_map, map_ne_zero_iff φ hφ]
+  · intro τ gR gS ρ hg
+    have hgS : gS = fun v => MvPolynomial.map φ (gR v) := funext fun v => (hg v).symm
+    subst hgS
+    rw [MvPolynomial.aeval_eq_bind₁, MvPolynomial.aeval_eq_bind₁, ← MvPolynomial.map_bind₁,
+      ← MvPolynomial.map_rename]
+    exact (MvPolynomial.map_injective φ hφ).eq_iff
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LiftNabStdMemLatN
+
+section
 
 @[expose] public section
 
@@ -135,3 +235,5 @@ theorem UpperTheory.Reformulated.B.Ga11.lift_nabStd_mem_latN :
   · refine hrange _ ?_
     rw [map_inv₀, norm_inv]
     exact inv_le_one_of_one_le₀ hs1
+end
+end

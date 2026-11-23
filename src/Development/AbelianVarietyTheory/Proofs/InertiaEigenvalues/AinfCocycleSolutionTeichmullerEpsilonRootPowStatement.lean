@@ -1,22 +1,28 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PowMulMemLatIff
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AinfCocycleSolutionTeichmullerEpsilonRootPow
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.RingTheory.AdicCompletion.Topology
+public import Mathlib.RingTheory.PowerSeries.Evaluation
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -37,7 +43,198 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CyclotomicActionOnRootTower
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CyclotomicCharacterPadicBasicProperties
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsFontaineThetaOnAinf
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSolFiltered
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NilpotentOfNotIsUnit
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgHomExtOfIsHausdorff
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.PowerSeriesAdicEval
+
+open PowerSeries
+
+theorem exists_algHom_apply_X {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
+    (I : Ideal A) [h : IsAdicComplete I A] {y : A} (hy : y ∈ I) :
+    ∃ ev : PowerSeries R →ₐ[R] A, ev PowerSeries.X = y := by
+  let _ : WithIdeal A := ⟨I⟩
+  let _ : UniformSpace R := ⊥
+  have _ : DiscreteUniformity R := ⟨rfl⟩
+  have hI : IsAdic I := rfl
+  obtain ⟨h1, h2⟩ := hI.isAdicComplete_iff.mp h
+  have ha : PowerSeries.HasEval y := WithIdeal.isTopologicallyNilpotent_of_mem hy
+  have _ : ContinuousSMul R A := DiscreteTopology.instContinuousSMul R A
+  refine ⟨PowerSeries.aeval ha, ?_⟩
+  rw [← Polynomial.coe_X, PowerSeries.aeval_coe, Polynomial.aeval_X]
+
+theorem algHom_coe {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
+    (f : PowerSeries R →ₐ[R] A) (p : Polynomial R) :
+    f (p : PowerSeries R) = Polynomial.aeval (f PowerSeries.X) p := by
+  have : f.comp (Polynomial.coeToPowerSeries.algHom R) = Polynomial.aeval (f PowerSeries.X) := by
+    apply Polynomial.algHom_ext
+    simp
+  have h := DFunLike.congr_fun this p
+  simpa using h
+
+theorem algHom_ext_of_isHausdorff {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
+    (I : Ideal A) [h : IsHausdorff I A] (f f' : PowerSeries R →ₐ[R] A)
+    (hX : f PowerSeries.X = f' PowerSeries.X) (hy : f PowerSeries.X ∈ I) : f = f' := by
+  apply AlgHom.ext
+  intro F
+  rw [← sub_eq_zero]
+  refine IsHausdorff.haus h _ fun n => ?_
+  rw [SModEq.zero, smul_eq_mul, Ideal.mul_top]
+  have e := F.eq_X_pow_mul_shift_add_trunc n
+  set G : PowerSeries R := PowerSeries.mk fun i => PowerSeries.coeff (i + n) F
+  have : f F - f' F = f PowerSeries.X ^ n * (f G - f' G) := by
+    conv_lhs => rw [e]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, algHom_coe, algHom_coe, ← hX]
+    ring
+  rw [this]
+  exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hy n)
+
+theorem exists_eval_and_unique :
+    ∀ (R A : Type) [CommRing R] [CommRing A] [Algebra R A] (y : A),
+      IsAdicComplete (Ideal.span {y}) A →
+        (∃ ev : PowerSeries R →ₐ[R] A, ev PowerSeries.X = y) ∧
+          ∀ f f' : PowerSeries R →ₐ[R] A, f PowerSeries.X = f' PowerSeries.X →
+            y ∣ f PowerSeries.X → f = f' := by
+  intro R A _ _ _ y h
+  exact ⟨exists_algHom_apply_X (Ideal.span {y}) (Ideal.mem_span_singleton_self y),
+    fun f f' h1 h2 => algHom_ext_of_isHausdorff (Ideal.span {y}) f f' h1
+      (Ideal.mem_span_singleton.2 h2)⟩
+
+end GlobalTheory.PowerSeriesAdicEval
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AinfCocycleSolutionTeichmullerEpsilonRootPow
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.ExpImage.EpsSolve
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.MainNotions.LocalSituation GlobalTheory.Cyc GlobalTheory.ExpImage
+
+variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P)
+
+theorem εroot_pow_eq (m : ℕ) : AI.εroot m ^ (l ^ m) = AI.ε := by
+  induction m with
+  | zero => simp [LocAinf.εroot]
+  | succ m ih =>
+    rw [pow_succ', pow_mul, LocAinf.εroot, Function.iterate_succ_apply',
+      frobeniusEquiv_symm_pow_p]
+    exact ih
+
+theorem epsT_pow (s : ℕ) : epsT AI s ^ (l ^ s) = 1 + AI.μ := by
+  rw [epsT, ← map_pow, εroot_pow_eq, LocAinf.μ]
+  ring
+
+theorem epsT_zero : epsT AI 0 = 1 + AI.μ := by simpa using epsT_pow AI 0
+
+theorem μ_not_unit : ¬ IsUnit AI.μ := by
+  obtain ⟨θ, -, -, -, h, -⟩ := GlobalTheory.Cyc.exists_isTheta l P AI
+  intro hu
+  have h0 : θ AI.μ = 0 := (h _).mpr ⟨AI.π₁, by rw [AI.μ_eq, mul_comm]⟩
+  have := hu.map θ
+  rw [h0] at this
+  exact not_isUnit_zero this
+
+theorem actW_epsT (g : GQ l) (u : ℕ) (hu : (P.χQ g : ℚ_[l]) = (u : ℚ_[l])) (j : ℕ) :
+    AI.actW g (epsT AI j) = epsT AI j ^ u := by
+  rw [epsT, LocAinf.actW, WittVector.map_teichmuller, ← map_pow,
+    ← GlobalTheory.ExpImage.actT_εroot_eq_pow l P AI g u hu j]
+  rfl
+
+theorem actW_μ (g : GQ l) (u : ℕ) (hu : (P.χQ g : ℚ_[l]) = (u : ℚ_[l])) :
+    AI.actW g AI.μ = (1 + AI.μ) ^ u - 1 := by
+  have h := actW_epsT AI g u hu 0
+  rw [epsT_zero, map_add (f := _), map_one] at h
+  linear_combination h
+
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ),
+    Lev l s → ∀ g : GQ l, (P.χQ g : ℚ_[l]) = ((1 + l ^ s : ℕ) : ℚ_[l]) → ∀ U : ℤ_[l],
+    (l : ℤ_[l]) ^ s ∣ U - 1 → ∀ m : ℕ, ¬ l ∣ m → Solv AI K s g U (epsT AI s ^ m) := by
+  intro l _ P AI K s hs g hg U hU m hm
+  have hc := (GlobalTheory.Per.AinfComplete.main l AI.μ (μ_not_unit AI)).2
+  obtain ⟨⟨ev, hev⟩, huniq⟩ := GlobalTheory.PowerSeriesAdicEval.exists_eval_and_unique ℤ_[l] (Ainf l) AI.μ hc
+  obtain ⟨v, hv⟩ : (PowerSeries.X : PowerSeries ℤ_[l]) ∣ (1 + PowerSeries.X) ^ (1 + l ^ s) - 1 := by
+    have := sub_dvd_pow_sub_pow (1 + PowerSeries.X : PowerSeries ℤ_[l]) 1 (1 + l ^ s)
+    simpa using this
+  have hsub : PowerSeries.HasSubst (PowerSeries.X * v : PowerSeries ℤ_[l]) :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' (by simp)
+  let γ : PowerSeries ℤ_[l] →ₐ[ℤ_[l]] PowerSeries ℤ_[l] := PowerSeries.substAlgHom hsub
+  have hγ : γ PowerSeries.X = PowerSeries.X * v := PowerSeries.substAlgHom_X hsub
+  have hgμ : AI.actW g AI.μ = AI.μ * ev v := by
+    have := congrArg ev hv
+    simp only [map_sub, map_pow, map_add (f := _), map_one, map_mul, hev] at this
+    rw [actW_μ AI g _ hg, this]
+  have hgev : ∀ f, AI.actW g (ev f) = ev (γ f) := by
+    have := huniq (((AI.actWHom g : Ainf l ≃ₐ[ℤ_[l]] Ainf l) : Ainf l →ₐ[ℤ_[l]] Ainf l).comp ev)
+      (ev.comp γ) (by
+        change AI.actW g (ev PowerSeries.X) = ev (γ PowerSeries.X)
+        rw [hγ, map_mul, hev, hgμ]) (by
+        change AI.μ ∣ AI.actW g (ev PowerSeries.X)
+        rw [hev, hgμ]
+        exact dvd_mul_right _ _)
+    intro f
+    exact DFunLike.congr_fun this f
+  have hχ : ∀ h ∈ Hinf K, (P.χQ h : ℚ_[l]) = ((1 : ℕ) : ℚ_[l]) := by
+    intro h hh
+    have := ((GlobalTheory.Cyc.cyc_basic l P.χQ P.χQ_cyc).2.2 K h (Hinf_le_fix hh)).2.mp hh
+    rw [this]
+    simp
+  have hhev : ∀ h ∈ Hinf K, ∀ f, AI.actW h (ev f) = ev f := by
+    intro h hh
+    have hμ : AI.actW h AI.μ = AI.μ := by
+      rw [actW_μ AI h 1 (hχ h hh)]
+      ring
+    have := huniq (((AI.actWHom h : Ainf l ≃ₐ[ℤ_[l]] Ainf l) : Ainf l →ₐ[ℤ_[l]] Ainf l).comp ev)
+      ev (by
+        change AI.actW h (ev PowerSeries.X) = ev PowerSeries.X
+        rw [hev, hμ]) (by
+        change AI.μ ∣ AI.actW h (ev PowerSeries.X)
+        rw [hev, hμ])
+    intro f
+    exact DFunLike.congr_fun this f
+  have hgE : AI.actW g (epsT AI s) = epsT AI s * (1 + AI.μ) := by
+    rw [actW_epsT AI g _ hg, pow_add, pow_one, epsT_pow]
+  choose pp FF hpF using GlobalTheory.ExpImage.solve_mod_pow l s hs m hm U hU γ v hv.symm hγ
+  let F : ℕ → PowerSeries ℤ_[l] := fun k => Nat.rec 1 (fun k f => FF (k + 1) f) k
+  have hF : ∀ k, F (k + 1) = FF (k + 1) (F k) := fun _ => rfl
+  refine ⟨fun k => epsT AI s ^ m * ev (pp (k + 1) (F k)), fun k => epsT AI s ^ m * ev (F k), ?_,
+    fun k h hh => ?_, fun k => ?_⟩
+  · change epsT AI s ^ m * ev 1 = _
+    rw [map_one, mul_one]
+  · rw [map_mul, map_pow, actW_epsT AI h 1 (hχ h hh), pow_one, hhev h hh]
+  · have h1 := congrArg ev (hpF (k + 1) (F k))
+    have hC : ev (PowerSeries.C U) = algebraMap ℤ_[l] (Ainf l) U := ev.commutes U
+    simp only [map_sub, map_pow, map_add (f := _), map_one, map_mul, hev, hC, map_natCast] at h1
+    unfold Step
+    beta_reduce
+    rw [hF, map_mul, map_pow, hgE, hgev, hgμ, mul_pow, mul_pow]
+    linear_combination (epsT AI s ^ m * AI.μ ^ (k + 1)) * h1
+
+end GlobalTheory.ExpImage.EpsSolve
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AinfCocycleSolutionTeichmullerEpsilonRootPowStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +242,5 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 
 theorem _root_.GlobalTheory.T.ainfCocycleSolution_teichmullerEpsilonRoot_pow : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ), Lev l s → ∀ g : GQ l, (P.χQ g : ℚ_[l]) = ((1 + l ^ s : ℕ) : ℚ_[l]) → ∀ U : ℤ_[l], (l : ℤ_[l]) ^ s ∣ U - 1 → ∀ m : ℕ, ¬ l ∣ m → Solv AI K s g U (epsT AI s ^ m) := by
   first | exact @GlobalTheory.ExpImage.EpsSolve.main | exact GlobalTheory.ExpImage.EpsSolve.main | (intros; apply GlobalTheory.ExpImage.EpsSolve.main <;> assumption)
+end
+end

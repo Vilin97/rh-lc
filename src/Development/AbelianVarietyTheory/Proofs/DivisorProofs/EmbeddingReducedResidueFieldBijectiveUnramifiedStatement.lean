@@ -1,16 +1,19 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueEqZeroIffV
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EmbeddingReducedResidueFieldBijectiveUnramified
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -18,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,6 +41,260 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrTanDirAlg
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace Formalism.MainNotions.ModuliIntegralCharts.H1.FrTanDirAlg
+
+open NumberField Matrix
+
+section Core
+
+variable {E : Type} [Field E] [NumberField E] {κ : Type} [Fintype κ]
+
+theorem hom_basis {R' : Type} [Ring R'] (f : 𝓞 E →+* R') (b : Module.Basis κ ℤ (𝓞 E)) (x : 𝓞 E) :
+    f x = ∑ k, ((b.repr x k : ℤ) : R') * f (b k) := by
+  conv_lhs => rw [← b.sum_repr x]
+
+  rw [map_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [map_zsmul, zsmul_eq_mul]
+
+variable {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] {ι : Type} [Fintype ι] [DecidableEq ι]
+  [DecidableEq κ]
+
+theorem decomp_of_inv (ρ : 𝓞 E →+* Module.End R M) (χ : ι → (𝓞 E →+* R)) (b : Module.Basis κ ℤ (𝓞 E))
+    (Cm : κ → ι → R) (hAC : ∀ σ τ, ∑ i, χ σ (b i) * Cm i τ = if σ = τ then 1 else 0)
+    (hCA : ∀ i j, ∑ τ, Cm i τ * χ τ (b j) = if i = j then 1 else 0) :
+    (∀ m : M, ∃ mσ : ι → M, (∀ σ (a : 𝓞 E), ρ a (mσ σ) = χ σ a • mσ σ) ∧ ∑ σ, mσ σ = m) ∧
+    (∀ mσ : ι → M, (∀ σ (a : 𝓞 E), ρ a (mσ σ) = χ σ a • mσ σ) → ∑ σ, mσ σ = 0 → ∀ σ, mσ σ = 0) := by
+  classical
+  set Q : ι → M → M := fun σ m => ∑ i, Cm i σ • ρ (b i) m with hQ
+  have hcoef : ∀ (a : 𝓞 E) (i : κ), ∑ τ, χ τ a * Cm i τ = ((b.repr a i : ℤ) : R) := by
+    intro a i
+    have h1 : ∀ τ, χ τ a = ∑ k, ((b.repr a k : ℤ) : R) * χ τ (b k) := fun τ => hom_basis (χ τ) b a
+    have hCA' : ∀ k, ∑ τ, χ τ (b k) * Cm i τ = if i = k then 1 else 0 := by
+      intro k
+      rw [← hCA i k]
+      exact Finset.sum_congr rfl fun τ _ => mul_comm _ _
+    simp_rw [h1, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    simp_rw [mul_assoc, ← Finset.mul_sum, hCA']
+    simp
+  have F3 : ∀ (a : 𝓞 E) (m : M), ρ a m = ∑ τ, χ τ a • Q τ m := by
+    intro a m
+    simp only [hQ, Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_smul, hcoef]
+    conv_lhs => rw [hom_basis ρ b a]
+    simp [Module.End.mul_apply, Module.End.intCast_apply, Int.cast_smul_eq_zsmul]
+  have eig : ∀ σ (a : 𝓞 E) (m : M), ρ a (Q σ m) = χ σ a • Q σ m := by
+    intro σ a m
+    have h1 : ρ a (Q σ m) = ∑ i, Cm i σ • ρ (a * b i) m := by
+
+      simp only [hQ, map_sum, map_smul, map_mul, Module.End.mul_apply]
+    rw [h1]
+    simp_rw [F3 _ m, map_mul, Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_smul]
+    have h2 : ∀ τ, ∑ i, Cm i σ * (χ τ a * χ τ (b i)) = χ τ a * (if τ = σ then 1 else 0) := by
+      intro τ
+      rw [← hAC τ σ, Finset.mul_sum]
+      exact Finset.sum_congr rfl fun i _ => by ring
+    simp_rw [h2]
+    simp
+  have hsum1 : ∀ m : M, ∑ σ, Q σ m = m := by
+    intro m
+    have := F3 1 m
+    simp at this
+    exact this.symm
+  have hlin : ∀ σ (f : ι → M), Q σ (∑ σ', f σ') = ∑ σ', Q σ (f σ') := by
+    intro σ f
+
+    simp only [hQ, map_sum, Finset.smul_sum]
+    exact Finset.sum_comm
+  refine ⟨fun m => ⟨fun σ => Q σ m, fun σ a => eig σ a m, hsum1 m⟩, ?_⟩
+  intro mσ hmσ hsum σ
+  have hQe : ∀ τ σ', Q τ (mσ σ') = if σ' = τ then mσ σ' else 0 := by
+    intro τ σ'
+    simp only [hQ, hmσ, smul_smul]
+    rw [← Finset.sum_smul]
+    rw [show ∑ i, Cm i τ * χ σ' (b i) = if σ' = τ then 1 else 0 from by
+      rw [← hAC σ' τ]; exact Finset.sum_congr rfl fun i _ => mul_comm _ _]
+    split_ifs <;> simp
+  have h0 : Q σ (∑ σ', mσ σ') = 0 := by
+    rw [hsum]
+    simp [hQ]
+  rw [hlin] at h0
+  simpa [hQe] using h0
+
+end Core
+
+section NT
+
+variable (E : Type) [Field E] [NumberField E]
+
+theorem isUnit_of_not_dvd {V : Type} [CommRing V] [IsLocalRing V] (g : ℕ) (hg : g.Prime) (hgV : ¬ IsUnit (g : V))
+    (d : ℤ) (hd : ¬ (g : ℤ) ∣ d) : IsUnit (d : V) := by
+  have hp : Prime (g : ℤ) := Nat.prime_iff_prime_int.mp hg
+  obtain ⟨u, v, huv⟩ := (Irreducible.coprime_iff_not_dvd hp.irreducible).2 hd
+  have h1 : (u : V) * (g : V) + (v : V) * (d : V) = 1 := by
+    have := congrArg (Int.cast : ℤ → V) huv
+    push_cast at this
+    exact this
+  rcases IsLocalRing.isUnit_or_isUnit_of_add_one h1 with h | h
+  · exact absurd (isUnit_of_mul_isUnit_right h) hgV
+  · exact isUnit_of_mul_isUnit_right h
+
+end NT
+
+end Formalism.MainNotions.ModuliIntegralCharts.H1.FrTanDirAlg
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EmbeddingReducedResidueFieldBijectiveUnramified
+
+section
+
+@[expose] public section
+
+open NumberField MvPowerSeries IsLocalRing ReciprocityTheory.PGsh ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.FGDepth GlobalTheory.CharDepth GlobalTheory.FactorDepth GlobalTheory.IndefiniteRowSideFullHecke.TypedPartSplitPrimes GlobalTheory.PrimePart
+
+set_option autoImplicit false
+
+noncomputable section
+
+namespace GlobalTheory.PrimePart
+
+open Formalism.MainNotions.ModuliIntegralCharts.H1.FrTanDirAlg
+
+theorem exists_inv_of_not_dvd_discr (E : Type) [Field E] [NumberField E] {V : Type} [CommRing V] [IsDomain V]
+    [IsLocalRing V] {Fr : Type} [Field Fr] [Algebra V Fr]
+    [DecidableEq (E →+* ℂ)] (hinj : Function.Injective (algebraMap V Fr)) {F : Type} [Field F] (j : F →+* ℂ)
+    (io : F →+* Fr)
+    (φ : (E →+* ℂ) → (E →+* F)) (hφ : ∀ σ x, j (φ σ x) = σ x)
+    (χ : (E →+* ℂ) → (𝓞 E →+* V)) (hχ : ∀ σ (a : 𝓞 E), algebraMap V Fr (χ σ a) = io (φ σ (a : E)))
+    (g : ℕ) (hg : g.Prime) (hgV : ¬ IsUnit (g : V)) (hd : ¬ (g : ℤ) ∣ discr E) :
+    ∃ Cm : Module.Free.ChooseBasisIndex ℤ (𝓞 E) → (E →+* ℂ) → V,
+      (∀ σ τ, ∑ i, χ σ (RingOfIntegers.basis E i) * Cm i τ = if σ = τ then 1 else 0) ∧
+      (∀ i i', ∑ τ, Cm i τ * χ τ (RingOfIntegers.basis E i') = if i = i' then 1 else 0) := by
+  classical
+  let bs := RingOfIntegers.basis E
+  have hcard : Fintype.card (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) = Fintype.card (E →ₐ[ℚ] ℂ) := by
+    rw [AlgHom.card, ← RingOfIntegers.rank, Module.finrank_eq_card_chooseBasisIndex]
+  let e : Module.Free.ChooseBasisIndex ℤ (𝓞 E) ≃ (E →ₐ[ℚ] ℂ) := Fintype.equivOfCardEq hcard
+  let e' : Module.Free.ChooseBasisIndex ℤ (𝓞 E) ≃ (E →+* ℂ) := e.trans (RingHom.equivRatAlgHom E ℂ).symm
+  let A : Matrix (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) V :=
+    fun i k => χ (e' k) (bs i)
+  have hAij : ∀ i k, A i k = χ (e' k) (bs i) := fun _ _ => rfl
+  let AF : Matrix (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) F :=
+    fun i k => φ (e' k) (bs i : E)
+  have hAF : AF.map j = Algebra.embeddingsMatrixReindex ℚ ℂ (fun i => (bs i : E)) e := by
+    ext i k
+    simp only [Algebra.embeddingsMatrixReindex, Algebra.embeddingsMatrix,
+      Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.of_apply, Equiv.refl_symm, Equiv.refl_apply,
+      Equiv.symm_symm]
+    show j (φ (e' k) (bs i : E)) = (e k) (bs i : E)
+    rw [hφ]
+    rfl
+  have hdF : AF.det ^ 2 = ((discr E : ℤ) : F) := by
+    apply j.injective
+    rw [map_pow, RingHom.map_det, RingHom.mapMatrix_apply, hAF,
+      ← Algebra.discr_eq_det_embeddingsMatrixReindex_pow_two, map_intCast]
+    have hb : (fun i => (bs i : E)) = ⇑(integralBasis E) := funext fun i => (integralBasis_apply E i).symm
+    rw [hb, ← coe_discr, map_intCast]
+  have hdV : A.det ^ 2 = ((discr E : ℤ) : V) := by
+    apply hinj
+    rw [map_pow, RingHom.map_det, map_intCast]
+    have hA : (algebraMap V Fr).mapMatrix A = io.mapMatrix AF := by
+      ext i k
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, hAij, AF, hχ]
+      rfl
+    rw [hA, ← RingHom.map_det, ← map_pow, hdF, map_intCast]
+  have hu : IsUnit A.det := by
+    have h := isUnit_of_not_dvd g hg hgV _ hd
+    rw [← hdV] at h
+    exact (isUnit_pow_iff two_ne_zero).1 h
+  refine ⟨fun i τ => A⁻¹ (e'.symm τ) i, ?_, ?_⟩
+  · intro σ τ
+    have h1 := congrFun (congrFun (Matrix.nonsing_inv_mul A hu) (e'.symm τ)) (e'.symm σ)
+    rw [Matrix.mul_apply, Matrix.one_apply] at h1
+    simp only [hAij, Equiv.apply_symm_apply] at h1
+    rw [show (∑ i, χ σ (bs i) * A⁻¹ (e'.symm τ) i) = ∑ i, A⁻¹ (e'.symm τ) i * χ σ (bs i) from
+      Finset.sum_congr rfl fun _ _ => mul_comm _ _, h1]
+    by_cases h : σ = τ
+    · subst h; simp
+    · rw [if_neg (fun h' => h (e'.symm.injective h').symm), if_neg h]
+  · intro i i'
+    have h1 := congrFun (congrFun (Matrix.mul_nonsing_inv A hu) i') i
+    rw [Matrix.mul_apply, Matrix.one_apply] at h1
+    simp only [hAij] at h1
+    rw [← Equiv.sum_comp e' (fun τ => A⁻¹ (e'.symm τ) i * χ τ (bs i'))]
+    simp only [Equiv.symm_apply_apply]
+    rw [show (∑ k, A⁻¹ k i * χ (e' k) (bs i')) = ∑ k, χ (e' k) (bs i') * A⁻¹ k i from
+      Finset.sum_congr rfl fun _ _ => mul_comm _ _, h1]
+    by_cases h : i = i'
+    · subst h; simp
+    · rw [if_neg (Ne.symm h), if_neg h]
+
+theorem red_bijective (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (l : Level H)
+    (c : Coeff l) (p : ℕ) [Fact p.Prime] (T : CDVR) (io : c.F →+* T.Fr) (X : ValExt T p)
+    (hp : UnramIn E p) : Function.Bijective (red io X) := by
+  classical
+  haveI : IsDomain X.O := X.ints.hom_inj.isDomain _
+  obtain ⟨Cm, hAC, hCA⟩ := exists_inv_of_not_dvd_discr E (V := X.O) (Fr := X.C) X.ints.hom_inj
+    (c.F.val : c.F →+* ℂ) (X.ιF.comp io) (embF c) (fun σ x => by simp [embF])
+    (embO io X) (fun σ a => algebraMap_embO io X σ a) p Fact.out X.nonunit.out hp
+  set b := RingOfIntegers.basis E
+  let Cr : Module.Free.ChooseBasisIndex ℤ (𝓞 E) → (E →+* ℂ) → ResidueField X.O := fun i τ => residue X.O (Cm i τ)
+  have hAC' : ∀ σ τ, ∑ i, red io X σ (b i) * Cr i τ = if σ = τ then 1 else 0 := by
+    intro σ τ
+    have := congrArg (residue X.O) (hAC σ τ)
+
+    simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
+  have hCA' : ∀ i i', ∑ τ, Cr i τ * red io X τ (b i') = if i = i' then 1 else 0 := by
+    intro i i'
+    have := congrArg (residue X.O) (hCA i i')
+
+    simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
+  refine ⟨fun σ τ hst => ?_, fun χ => ?_⟩
+  · by_contra hne
+    have h1 := hAC' σ τ
+    rw [if_neg hne, hst, hAC' τ τ, if_pos rfl] at h1
+    exact one_ne_zero h1
+  · let ρ : 𝓞 E →+* Module.End (ResidueField X.O) (ResidueField X.O) :=
+      (Algebra.lmul (ResidueField X.O) (ResidueField X.O)).toRingHom.comp χ
+    obtain ⟨mσ, hm, hs⟩ := ((decomp_of_inv ρ (red io X) b Cr hAC' hCA').1 1)
+    obtain ⟨σ, hσ⟩ : ∃ σ, mσ σ ≠ 0 := by
+      by_contra h
+      simp only [not_exists, not_not] at h
+      simp [h] at hs
+    refine ⟨σ, RingHom.ext fun a => ?_⟩
+    have : χ a * mσ σ = red io X σ a * mσ σ := hm σ a
+    exact (mul_right_cancel₀ hσ this).symm
+
+end GlobalTheory.PrimePart
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EmbeddingReducedResidueFieldBijectiveUnramifiedStatement
+
+section
 
 @[expose] public section
 
@@ -44,3 +302,5 @@ open NumberField MvPowerSeries IsLocalRing ReciprocityTheory.PGsh ReciprocityThe
 
 theorem _root_.GlobalTheory.T.embeddingReducedResidueField_bijective_unramified : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (l : Level H) (c : Coeff l) (p : ℕ) [Fact p.Prime] (T : CDVR) (io : c.F →+* T.Fr) (X : ValExt T p), UnramIn E p → Function.Bijective (red io X) := by
   first | exact @GlobalTheory.PrimePart.red_bijective | exact GlobalTheory.PrimePart.red_bijective | (intros; apply GlobalTheory.PrimePart.red_bijective <;> assumption)
+end
+end

@@ -6,12 +6,13 @@ public import GroundTheory.GlobalFields.Adele.Topology
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.AdjInt
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.CommInt
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.Unimod
-public import GroundTheory.AutomorphicForms.CompactFormulaSums
-public import GroundTheory.AutomorphicForms.CuspidalProjection.OrthogonalProjectionOntoCompSubtypeL
+public import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -31,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,7 +44,56 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.AutomorphicForms.QuotientMeasure
+public import GroundTheory.AutomorphicForms.CuspidalProjection.OrthogonalProjectionOntoCompSubtypeL
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: GroundTheory.AutomorphicForms.CompactFormulaSums
+
+section
+
+@[expose] public section
+
+open MeasureTheory Topology Filter Set Function
+open scoped ENNReal Pointwise
+
+namespace GroundTheory.Automorphic
+
+noncomputable section
+
+namespace UnitaryRep
+
+variable {G : Type*} [Group G] [TopologicalSpace G] [MeasurableSpace G] [OpensMeasurableSpace G]
+  (μ : Measure G) [IsFiniteMeasureOnCompacts μ]
+
+theorem ccToL1_add (f g : CompactlySupportedContinuousMap G ℂ) :
+    ccToL1 μ (f + g) = ccToL1 μ f + ccToL1 μ g := by
+  unfold ccToL1
+  rw [← MemLp.toLp_add]
+  rfl
+
+end UnitaryRep
+
+namespace RightCosetSpace
+
+variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
+  [T2Space G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
+  (Γ : Subgroup G) [DiscreteTopology Γ] [CompactSpace (RightCosetSpace Γ)]
+  (μ : Measure G) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
+
+end RightCosetSpace
+
+end
+
+end GroundTheory.Automorphic
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.NormIntLe
+
+section
 
 @[expose] public section
 
@@ -126,3 +175,5 @@ theorem UpperTheory.ConvolutionTheory.Tf.opAlg :
   · exact (Tf.commInt _ _ _ _ (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) (archP K n) continuous_archP
       (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj ν m β e).2 hpq
   · exact int_commute _ (archP K n) continuous_archP ν _ (MultiplicityOne.finProj K n h) fun a => (hpq a h).symm
+end
+end

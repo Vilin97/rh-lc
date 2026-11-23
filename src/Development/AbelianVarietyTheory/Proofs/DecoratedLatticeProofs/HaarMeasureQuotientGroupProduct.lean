@@ -2,16 +2,21 @@ module
 
 public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.FramePositiveSum
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ValLastX
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsEqSumIndicator
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.QuotientIntegralOneDoubleCosetEqMulValue
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Algebra.Notation.Indicator
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -19,8 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,11 +47,197 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsHeightLeTwoMulQuotHeight
+import Aesop.Main
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.FourierJacobiAverage
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ExistsUnitarySupportedAtPlaceOfMulEqIdem
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsOneComb
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ToOneSucc
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsEqSumIndicator
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.DoubleCosetIndicator
+
+def dc {G : Type} [Group G] (R K : Subgroup G) (t : G) : Set G :=
+  {x : G | ∃ r ∈ R, ∃ κ ∈ K, x = r * t * κ}
+
+theorem dc_subset {G : Type} [Group G] (R K : Subgroup G) {s t x : G}
+    (hs : x ∈ dc R K s) (ht : x ∈ dc R K t) : dc R K s ⊆ dc R K t := by
+  rintro y ⟨a, ha, b, hb, rfl⟩
+  obtain ⟨r, hr, κ, hκ, hx⟩ := hs
+  obtain ⟨r', hr', κ', hκ', hx'⟩ := ht
+  have hrs : r * s * κ = r' * t * κ' := hx.symm.trans hx'
+  have hs' : s = r⁻¹ * r' * t * κ' * κ⁻¹ := by
+    calc s = r⁻¹ * (r * s * κ) * κ⁻¹ := by group
+      _ = r⁻¹ * (r' * t * κ') * κ⁻¹ := by rw [hrs]
+      _ = r⁻¹ * r' * t * κ' * κ⁻¹ := by group
+  refine ⟨a * r⁻¹ * r', R.mul_mem (R.mul_mem ha (R.inv_mem hr)) hr', κ' * κ⁻¹ * b,
+    K.mul_mem (K.mul_mem hκ' (K.inv_mem hκ)) hb, ?_⟩
+  rw [hs']
+  group
+
+theorem exists_eq_sum_indicator {G : Type} [Group G] {M : Type} [AddCommMonoid M]
+    (R K : Subgroup G) (T : Finset G) (φ : G → M)
+    (hR : ∀ r ∈ R, ∀ x : G, φ (r * x) = φ x) (hK : ∀ κ ∈ K, ∀ x : G, φ (x * κ) = φ x)
+    (hT : ∀ x : G, φ x ≠ 0 → ∃ t ∈ T, x ∈ dc R K t) :
+    ∃ c : G → M, (∀ t : G, c t = 0 ∨ c t = φ t) ∧
+      ∀ x : G, φ x = ∑ t ∈ T, Set.indicator (dc R K t) (fun _ => c t) x := by
+  classical
+
+  let S : G → Finset G := fun t => T.filter (fun t' => dc R K t' = dc R K t)
+  let rep : G → G := fun t => if h : (S t).Nonempty then h.choose else t
+  let c : G → M := fun t => if t ∈ T ∧ rep t = t then φ t else 0
+  have hdc_eq : ∀ {s t x : G}, x ∈ dc R K s → x ∈ dc R K t → dc R K s = dc R K t := fun hs ht =>
+    Set.Subset.antisymm (dc_subset R K hs ht) (dc_subset R K ht hs)
+  have hinv : ∀ {s x : G}, x ∈ dc R K s → φ x = φ s := by
+    rintro s x ⟨r, hr, κ, hκ, rfl⟩
+    rw [hK κ hκ, hR r hr]
+  refine ⟨c, fun t => ?_, fun x => ?_⟩
+  · simp only [c]
+    split_ifs
+    · exact Or.inr rfl
+    · exact Or.inl rfl
+  by_cases hx : ∃ t ∈ T, x ∈ dc R K t
+  · obtain ⟨t0, ht0, hxt0⟩ := hx
+    have hS : (S t0).Nonempty := ⟨t0, Finset.mem_filter.mpr ⟨ht0, rfl⟩⟩
+    obtain ⟨ht1T, ht1dc⟩ := Finset.mem_filter.mp hS.choose_spec
+    have hrep : ∀ t, dc R K t = dc R K t0 → rep t = hS.choose := by
+      intro t ht
+      have hSt : S t = S t0 := by simp only [S, ht]
+      simp only [rep, hSt, dif_pos hS]
+    have hxt1 : x ∈ dc R K hS.choose := by rw [ht1dc]; exact hxt0
+    rw [Finset.sum_eq_single hS.choose]
+    · have hc1 : c hS.choose = φ hS.choose := by
+        simp only [c]
+        rw [if_pos ⟨ht1T, hrep _ ht1dc⟩]
+      rw [Set.indicator_of_mem hxt1, hc1, hinv hxt1]
+    · intro t _ hne
+      by_cases hxt : x ∈ dc R K t
+      · have hc0 : c t = 0 := by
+          simp only [c]
+          rw [if_neg]
+          rintro ⟨-, h⟩
+          exact hne (h.symm.trans (hrep t (hdc_eq hxt hxt0)))
+        rw [Set.indicator_of_mem hxt, hc0]
+      · rw [Set.indicator_of_notMem hxt]
+    · intro h
+      exact absurd ht1T h
+  · push_neg at hx
+    have hφ : φ x = 0 := by
+      by_contra h
+      obtain ⟨t, ht, hxt⟩ := hT x h
+      exact hx t ht hxt
+    rw [hφ]
+    symm
+    exact Finset.sum_eq_zero fun t ht => Set.indicator_of_notMem (hx t ht) _
+
+theorem main : (let d1 : {G : Type} → [inst : Group G] → Subgroup G → Subgroup G → G → Set G := @(fun {G : Type} [Group G] (R K : Subgroup G) (t : G) ↦ {x : G | ∃ r ∈ R, ∃ κ ∈ K, x = r * t * κ}); ∀ {G : Type} [inst : Group G] {M : Type} [inst_1 : AddCommMonoid M] (R K : Subgroup G) (T : Finset G) (φ : G → M), (∀ r ∈ R, ∀ (x : G), φ (r * x) = φ x) → (∀ κ ∈ K, ∀ (x : G), φ (x * κ) = φ x) → (∀ (x : G), φ x ≠ (0 : M) → ∃ t ∈ T, x ∈ d1 R K t) → ∃ (c : G → M), (∀ (t : G), c t = (0 : M) ∨ c t = φ t) ∧ ∀ (x : G), φ x = ∑ t ∈ T, Set.indicator (d1 R K t) (fun (x : G) ↦ c t) x) := by
+  intro d1 G _ M _ R K T φ hR hK hT
+  exact exists_eq_sum_indicator R K T φ hR hK hT
+
+end GlobalTheory.DoubleCosetIndicator
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.QuotientIntegralOneDoubleCosetEqMulValue
+
+section
+
+@[expose] public section
+
+open MeasureTheory GlobalTheory.Grow
+
+namespace GlobalTheory
+
+theorem quotientIntegral_oneDoubleCoset_eq_mul_value (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G]
+    [LocallyCompactSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G] (R K : Subgroup G)
+    (hR : IsClosed (R : Set G)) (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
+    (ρ : Measure R) (μ : Measure G) (hρ : ρ.IsHaarMeasure) (hρr : ρ.IsMulRightInvariant) (hμ : μ.IsHaarMeasure)
+    (t : G) : ∃ w : ℂ, w ≠ 0 ∧ ∀ f : G → ℂ, (∀ r ∈ R, ∀ g, f (r * g) = f g) → (∀ k ∈ K, ∀ g, f (g * k) = f g) →
+      (∀ g, f g ≠ 0 → ∃ r ∈ R, ∃ k ∈ K, g = r * t * k) → IsQuotIntL1 ρ μ f (w * f t) := by
+
+  set T : Set G := {g | t⁻¹ * g ∈ K} with hT
+  set S : Set R := {r | t⁻¹ * ((r : G) * t) ∈ K} with hS
+  have hemb : Topology.IsClosedEmbedding (Subtype.val : R → G) := hR.isClosedEmbedding_subtypeVal
+
+  have hAo : ∀ h : G, IsOpen {r : R | t⁻¹ * ((r : G) * h) ∈ K} := fun h =>
+    hKo.preimage (continuous_const.mul (continuous_subtype_val.mul continuous_const))
+  have hAc : ∀ h : G, IsCompact {r : R | t⁻¹ * ((r : G) * h) ∈ K} := fun h => by
+    have h1 : IsCompact ((fun g : G => t⁻¹ * (g * h)) ⁻¹' (K : Set G)) := by
+      have e : (fun g : G => t⁻¹ * (g * h)) ⁻¹' (K : Set G) = (fun g => t * g * h⁻¹) '' (K : Set G) := by
+        ext g; constructor
+        · intro hg; exact ⟨t⁻¹ * (g * h), hg, by group⟩
+        · rintro ⟨k, hk, rfl⟩; simpa [mul_assoc] using hk
+      rw [e]; exact hKc.image (by fun_prop)
+    exact hemb.isCompact_preimage h1
+  have hTm : MeasurableSet T := (hKo.preimage (continuous_const.mul continuous_id)).measurableSet
+  have hμT : μ T = μ K := measure_preimage_mul μ t⁻¹ K
+  have hμK0 : μ K ≠ 0 := (hKo.measure_pos μ ⟨1, K.one_mem⟩).ne'
+  have hμKt : μ K ≠ ⊤ := hKc.measure_lt_top.ne
+  have hSo : IsOpen S := by simpa using hAo t
+  have hSc : IsCompact S := by simpa using hAc t
+  have hρS0 : ρ S ≠ 0 := (hSo.measure_pos ρ ⟨1, by simp [hS]⟩).ne'
+  have hρSt : ρ S ≠ ⊤ := hSc.measure_lt_top.ne
+  set c : ℝ := ρ.real S with hc
+  have hc0 : c ≠ 0 := ENNReal.toReal_ne_zero.2 ⟨hρS0, hρSt⟩
+  have hμK : μ.real K ≠ 0 := ENNReal.toReal_ne_zero.2 ⟨hμK0, hμKt⟩
+  refine ⟨(μ.real K : ℂ) / (c : ℂ), div_ne_zero (by exact_mod_cast hμK) (by exact_mod_cast hc0), fun f hfl hfr hfs => ?_⟩
+  set a : ℂ := f t / (c : ℂ) with ha
+  refine ⟨T.indicator fun _ => a, ?_, fun h => ?_, fun h => ?_, ?_⟩
+  · exact (integrable_indicator_iff hTm).2 (integrableOn_const (by rw [hμT]; exact hμKt))
+  · have e : (fun r : R => T.indicator (fun _ => a) ((r : G) * h)) =
+        {r : R | t⁻¹ * ((r : G) * h) ∈ K}.indicator fun _ => a := by
+      rfl
+    rw [e]
+    exact (integrable_indicator_iff (hAo h).measurableSet).2
+      (integrableOn_const (hAc h).measure_lt_top.ne)
+  · have e : (fun r : R => T.indicator (fun _ => a) ((r : G) * h)) =
+        {r : R | t⁻¹ * ((r : G) * h) ∈ K}.indicator fun _ => a := by
+      rfl
+    rw [e, integral_indicator_const _ (hAo h).measurableSet]
+    by_cases hne : ∃ s ∈ R, ∃ k ∈ K, h = s * t * k
+    · obtain ⟨s, hs, k, hk, rfl⟩ := hne
+      have eA : {r : R | t⁻¹ * ((r : G) * (s * t * k)) ∈ K} = (fun r : R => r * ⟨s, hs⟩) ⁻¹' S := by
+        ext r
+        simp only [hS, Set.mem_preimage, Set.mem_ofPred_eq, Subgroup.coe_mul]
+        have : t⁻¹ * ((r : G) * (s * t * k)) = t⁻¹ * ((r : G) * s * t) * k := by group
+        rw [this, Subgroup.mul_mem_cancel_right _ hk]
+      have e1 : ρ.real {r : R | t⁻¹ * ((r : G) * (s * t * k)) ∈ K} = c := by
+        rw [eA, hc, measureReal_def, measureReal_def, measure_preimage_mul_right]
+      have hc' : (c : ℂ) ≠ 0 := by exact_mod_cast hc0
+      rw [e1, ha, mul_assoc, hfl s hs, hfr k hk, Complex.real_smul]
+      field_simp
+    · have hf : f h = 0 := by
+        by_contra hf; exact hne (hfs h hf)
+      have eA : {r : R | t⁻¹ * ((r : G) * h) ∈ K} = ∅ := by
+        ext r
+        simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+        intro hr
+        exact hne ⟨(r : G)⁻¹, inv_mem r.2, t⁻¹ * ((r : G) * h), hr, by group⟩
+      rw [hf, eA]; simp
+  · rw [integral_indicator_const _ hTm]
+    have e2 : μ.real T = μ.real K := by simp only [measureReal_def, hμT]
+    have hc' : (c : ℂ) ≠ 0 := by exact_mod_cast hc0
+    rw [e2, ha, Complex.real_smul]
+    field_simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HaarMeasureQuotientGroupProduct
+
+section
 
 @[expose] public section
 
@@ -315,3 +503,6 @@ theorem iterated_integral_product_groups : ∀ (A₁ : Type) [Group A₁] [Topol
   exact h3
 
 end GlobalTheory.IterPeel
+end
+end
+end

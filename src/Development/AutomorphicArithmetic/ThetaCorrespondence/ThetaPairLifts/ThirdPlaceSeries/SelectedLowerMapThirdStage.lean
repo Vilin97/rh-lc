@@ -12,13 +12,11 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFor
 public import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.FramesExistOfDiagonalTypePlaces
 public import Formalism.LocalToGlobal.IndefiniteReal.IsFDiagIffDiagonal
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LowerMapTie
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SelectedLowerMapHolds
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.StabRatInjective
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LowerMapSharpAmbientTie
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LowerMapTieTw
+public import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -46,8 +44,168 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ConcreteLevelAdelicSubset
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.EtaJUntw
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotBaseCondFalse
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PositionOfIntro
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StrictHenselianAcyclic
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SetUnipotentTranslate
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FunKilled
+import Development.AutomorphicArithmetic.PrimeDiscriminants.Scales
+import Formalism.SharpRestriction.InertJacobiLevels.ExtraGat
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsAbsIrrCharCompIff
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DivisionPairOfAdelicFormsFaceColumnsData
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RowSideDetermined
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LowerMapTieTw
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SelectedLowerMapHolds
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl NumberField IsDedekindDomain
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.HeightCounting.Up GlobalTheory.Mem.SRe GlobalTheory.Mem.R3.Rw
+
+open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx Formalism.IndefR.Lev
+open GlobalTheory.Mem.R3
+
+namespace GlobalTheory.Mem.R3.SelRowPin
+
+theorem amb_of_eq {D : D7} {Gp : Type} [Group Gp] [Fintype Gp] {Pl0 T : Type} {m : ℕ} {A : FamIn D.what₂.LL Gp Pl0 T m}
+    {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE]
+    {X : RowSide D EE} {Fm Fm' : AmbForm D X} {P : Subgroup Gp} {ψ : P →* D.what₂.LLˣ} {tup tup' : T → D.what₂.Tup}
+    {jA : ∀ t, (Fin (rDim D A P ψ t) → D.what₂.LL) →ₛₗ[D.what₂.embLL] X.Amb (tup t)}
+    {jA' : ∀ t, (Fin (rDim D A P ψ t) → D.what₂.LL) →ₛₗ[D.what₂.embLL] X.Amb (tup' t)}
+    (hF : Fm = Fm') (h : tup = tup') (hj : HEq jA jA') :
+    (∃ J, AmbTie D A X Fm' P ψ tup' jA' J) → ∃ J, AmbTie D A X Fm P ψ tup jA J := by
+  subst hF; subst h; cases hj; exact id
+
+
+end GlobalTheory.Mem.R3.SelRowPin
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.StabRatInjective
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Col Formalism.L2.DIV GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Col2.TC
+
+namespace GlobalTheory.Mem.R3.GamDvd
+
+attribute [local instance] starE
+
+section Stab
+
+variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam X.E X.K n SG)
+
+def stabRat (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : MulAction.stabilizer (FormG Λ) d →* autO d.1.N where
+  toFun g := ⟨(g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n), g.1.1.2,
+    congrArg (fun e : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) => e.1.N) ((MulAction.mem_stabilizer_iff).1 g.2)⟩
+  map_one' := rfl
+  map_mul' _ _ := rfl
+
+theorem stabRat_injective (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : Function.Injective (stabRat Λ d) := by
+  rw [injective_iff_map_eq_one]
+  intro g hg
+  have hγ : (g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n) = 1 := congrArg Subtype.val hg
+  have hbe := congrArg (fun e : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) => e.1.be) ((MulAction.mem_stabilizer_iff).1 g.2)
+  have hM : ∀ w : SG, ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) = 1 := by
+    intro w
+    refine Matrix.ext_of_mulVec_single fun i => ?_
+    obtain ⟨x, -, hx⟩ := d.2.be_surj w (Pi.single i 1)
+    have e := congrFun (congrFun hbe w) x
+    change ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) _).mulVec
+      (d.1.be w ((g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n).symm x)) = d.1.be w x at e
+    rw [hγ] at e
+    change ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) _).mulVec (d.1.be w x) = d.1.be w x at e
+    rw [hx] at e
+    rw [e, Matrix.one_mulVec]
+  apply Subtype.ext
+  apply Prod.ext
+  · exact Subtype.ext hγ
+  · exact Subtype.ext (funext fun w => Units.ext (hM w))
+
+theorem card_stab_dvd (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
+    Nat.card (MulAction.stabilizer (FormG Λ) d) ∣ Nat.card (autO d.1.N) :=
+  Subgroup.card_dvd_of_injective (stabRat Λ d) (stabRat_injective Λ d)
+
+end Stab
+
+section Fam
+
+variable {B : Base} {px : PreX B.toPre} (I : TC B px) (hX : B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc B px → B.LL))
+  (tr : TrI B px)
+
+theorem gamDvd_DGam :
+    (∀ (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.R t).S.Cl),
+      Fintype.card (((famC I hX U Xg tr).A.fam.R t).S.Gam c) ∣ DGam B.fields.E B.R) ∧
+    ∀ (j : Fin B.R.m) (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.L j t).S.Cl),
+      Fintype.card (((famC I hX U Xg tr).A.fam.L j t).S.Gam c) ∣ DGam B.fields.E B.R := by
+  refine ⟨fun t c => ?_, fun j t c => ?_⟩
+  · rw [Fintype.card_eq_nat_card]
+    exact (card_stab_dvd _ (Quotient.out c)).trans
+      (dvd_DGam (posStar_of_ok hX) B.R (pred_mem_gamRanks B.R) (Quotient.out c).2.lat (Quotient.out c).2.uni)
+  · rw [Fintype.card_eq_nat_card]
+    exact (card_stab_dvd _ (Quotient.out c)).trans
+      (dvd_DGam (posStar_of_ok hX) B.R (nV_mem_gamRanks B.R) (Quotient.out c).2.lat (Quotient.out c).2.uni)
+
+theorem gamDvd (l : I.Laws) (Z : Later B (I.cols l)) :
+    (∀ (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.R t).S.Cl),
+      Fintype.card (((famC I hX U Xg tr).A.fam.R t).S.Gam c) ∣ ((I.rec7 l Z).mem (I.rec7 l Z).u₀).C.DGam) ∧
+    ∀ (j : Fin B.R.m) (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.L j t).S.Cl),
+      Fintype.card (((famC I hX U Xg tr).A.fam.L j t).S.Gam c) ∣ ((I.rec7 l Z).mem (I.rec7 l Z).u₀).C.DGam :=
+  gamDvd_DGam I hX U Xg tr
+
+end Fam
+
+end GlobalTheory.Mem.R3.GamDvd
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LowerMapSharpAmbientTie
+
+section
+
+@[expose] public section
+
+
+
+section
+open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain
+open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx Formalism.IndefR.Lev
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.Mem GlobalTheory.Mem.R3
+namespace GlobalTheory.Mem.R3
+theorem lower_map_sharp_ambient_tie_alt : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (K : Formalism.MainNotions.G.Consts) (Yd : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl K Yd cX) (x : TwIn ex) (T : _root_.Formalism.L2.TiedDataSKAlt ex), (∀ u, LowerMapTieS (T.cols.forms u)) → (∀ u μ (hμ : μ ≠ D.what₂.mu0) (_ : ∃ w, μ = D.what₂.muAt w) (h1 : 1 ≤ D.R.m), _root_.Formalism.L2.Rows.LowerMapTieTwAlt T u μ hμ h1) → (∃ J, AmbTie D x.A3.A (RowSide.sharp D) ex.amb x.F.P1 x.F.ψ1 x.Y.tup x.Y.jA J) → ((∀ (t : x.T) (c : (x.A3.A.fam.R t).S.Cl), Fintype.card ((x.A3.A.fam.R t).S.Gam c) ∣ (D.mem D.u₀).C.DGam) ∧ ∀ (j : Fin D.R.m) (t : x.T) (c : (x.A3.A.fam.L j t).S.Cl), Fintype.card ((x.A3.A.fam.L j t).S.Gam c) ∣ (D.mem D.u₀).C.DGam) → _root_.Formalism.L2.Rows.RowSideDeterminedAlt T (divisionPairOfAdelicFormsFaceColumnsData x) := by
+  intro D L hT Gi Gl K Yd cX ex x T hL hLt hA hG
+  exact
+    { lowerMap := hL
+      lowerMapTw := hLt
+      buDef := x.Y.bu
+      ambS := hA
+      faces := ⟨x.F.Dc, x.F.Sp, rfl, HEq.rfl⟩
+      gamDvd := hG }
+end GlobalTheory.Mem.R3
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SelectedLowerMapThirdStage
+
+section
 
 @[expose] public section
 
@@ -87,4 +245,6 @@ theorem selected_lower_map_third_stage_alt : GlobalTheory.Published.DiscreteSeri
     cases pack
     exact GlobalTheory.Mem.R3.GamDvd.gamDvd q.w.I q.x.what₂.hX _ _ _ q.w.l q.Z
 end GlobalTheory.Mem.R3.SelRowPin
+end
+end
 end

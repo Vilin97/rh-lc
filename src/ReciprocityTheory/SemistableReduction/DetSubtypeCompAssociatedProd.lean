@@ -2,7 +2,8 @@ module
 
 public import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.GeneralBFactAlt
-public import Lemmata.GeneralBFactTail.Imports
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,16 +17,12 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.OrderOfVanishing.Noetherian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,10 +42,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.TypeStar
 public import Lemmata.GeneralBFactLast.Imports
 public import Mathlib.RingTheory.OrderOfVanishing.Basic
+
+-- Source module: Lemmata.GeneralBFactTail.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_2 u_3
+
+namespace Bl.general_b_fact_tail
+
+theorem goal1 :
+  ∀ {R : Type u_1} {M : Type u_2} [inst : CommRing.{u_1} R] [inst_1 : IsDomain.{u_1} R]
+  [inst_2 : IsPrincipalIdealRing.{u_1} R] [inst_3 : AddCommGroup.{u_2} M] [inst_4 : Module.{u_1, u_2} R M]
+  {ι : Type u_3} [inst_5 : Fintype.{u_3} ι] [DecidableEq.{u_3 + 1} ι] (b : Module.Basis.{u_3, u_1, u_2} ι R M)
+  (N : Submodule.{u_1, u_2} R M)
+  (h :
+    Eq.{1} (Module.finrank.{u_1, u_2} R (Subtype.{u_2 + 1} fun (x : M) ↦ Membership.mem.{u_2, u_2} N x))
+      (Module.finrank.{u_1, u_2} R M))
+  (e :
+    LinearEquiv.{u_1, u_1, u_2, u_2} (RingHom.id.{u_1} R) M
+      (Subtype.{u_2 + 1} fun (x : M) ↦ Membership.mem.{u_2, u_2} N x)),
+  Associated.{u_1}
+    (DFunLike.coe.{max (u_1 + 1) (u_2 + 1), u_2 + 1, u_1 + 1} LinearMap.det.{u_2, u_1}
+      (LinearMap.comp.{u_1, u_1, u_1, u_2, u_2, u_2} (Submodule.subtype.{u_1, u_2} N)
+        (LinearEquiv.toLinearMap.{u_1, u_1, u_2, u_2} e)))
+    (Finset.prod.{u_3, u_1} Finset.univ.{u_3} fun (i : ι) ↦ Submodule.smithNormalFormCoeffs.{u_3, u_1, u_2} b h i) := by
+  intro R M _ _ _ _ _ ι _ _ b N h e
+  have ab_eq := Submodule.smithNormalFormBotBasis_def b h
+  let b' := Submodule.smithNormalFormTopBasis b h
+  let e' : M ≃ₗ[R] N := b'.equiv (Submodule.smithNormalFormBotBasis b h) (Equiv.refl _)
+  refine (LinearMap.associated_det_comp_equiv N.subtype e e').trans (Associated.of_eq ?_)
+  have h1 := Module.Basis.det_comp b' (N.subtype ∘ₗ (e' : M →ₗ[R] N)) b'
+  rw [Module.Basis.det_self, mul_one] at h1
+  rw [← h1]
+  have h2 : (⇑(N.subtype ∘ₗ (e' : M →ₗ[R] N)) ∘ ⇑b') =
+      fun i => Submodule.smithNormalFormCoeffs b h i • b' i := by
+    funext i
+    simp only [Function.comp_apply, LinearMap.coe_comp, LinearEquiv.coe_coe, e',
+      Module.Basis.equiv_apply, Equiv.refl_apply, Submodule.subtype_apply]
+    exact ab_eq i
+  rw [h2, AlternatingMap.map_smul_univ, Module.Basis.det_self, smul_eq_mul, mul_one]
+
+end Bl.general_b_fact_tail
+end
+end
+
+-- Source module: ReciprocityTheory.SemistableReduction.DetSubtypeCompAssociatedProd
+
+section
 
 @[expose] public section
 
@@ -99,3 +150,5 @@ theorem gaugeSplitting_holds : NormLengthStatement := by
   exact Ring.ord_eq_of_associated hdet
 
 end ReciprocityTheory.MultiplicativeHeights
+end
+end

@@ -3,13 +3,14 @@ module
 public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifDefs
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HolomorphicFamilyConjugateStatement
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsExcisionNbhdAway
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugateUniversalFamilyStatement
-public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifConjA
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsFundSet
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugateUniversalFamily
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,6 +41,28 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulusMatrix
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifConjA
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugateUniversalFamilyStatement
+
+section
+
+@[expose] public section
+
+open NumberField Matrix MeasureTheory Filter Topology GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor GroundTheory.Heights₂.Heights.FiniteCovolume
+open scoped ENNReal InnerProductSpace
+
+theorem _root_.GlobalTheory.T.conjugate_universal_family : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Type) [Fintype Ψ] (j j' n g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ] (F : UnivFam E Ψ j j' n g Λ), ∃ F' : UnivFam E Ψ j j' n g Λ, F'.q = F.q ∧ (∀ τ, F'.σ τ = (starRingEnd ℂ).comp (F.σ τ)) ∧ F'.form = -F.form ∧ ∀ t, (∀ x, (F'.R t).P x = star ((F.R (star t)).P x)) ∧ (F'.R t).Hm = (F.R (star t)).Hm.map (starRingEnd ℂ) ∧ ∀ a x, (F'.R t).B a x = star ((F.R (star t)).B a (star x)) := by
+  exact @GlobalTheory.CompanionTheory.Ar.Cusp.exists_conj_univFam
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifConj
+
+section
 
 @[expose] public section
 
@@ -171,3 +193,6 @@ theorem kUnifConj : KUnifConj := by
       rw [star_star, e', Cj.cj_cj]
 
 end SheetDecomposition
+end
+end
+end

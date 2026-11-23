@@ -3,7 +3,8 @@ module
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PolyApproxZeroPadic
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPsCharOne
 public import Mathlib.NumberTheory.Padics.Complex
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPseudoCharacterOfApproximatedByTraces
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +24,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +46,157 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Data.Fintype.Pigeonhole
+import Mathlib.Algebra.Order.Star.Real
 import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DetSuccEqSubSumUpdateRow
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.PsChar
+
+open Matrix
+
+theorem det_succ_eq_sub_sum_updateRow {A : Type*} [CommRing A] {m : ℕ} (N : Matrix (Fin (m + 1)) (Fin (m + 1)) A) :
+    N.det = N 0 0 * (N.submatrix Fin.succ Fin.succ).det -
+      ∑ c : Fin m, N c.succ 0 * ((N.submatrix Fin.succ Fin.succ).updateRow c (fun b => N 0 b.succ)).det := by
+  rw [Matrix.det_apply', Finset.univ_perm_fin_succ, Finset.sum_map, Fintype.sum_prod_type, Fin.sum_univ_succ,
+    sub_eq_add_neg, ← Finset.sum_neg_distrib]
+  congr 1
+  · rw [Matrix.det_apply', Finset.mul_sum]
+    refine Finset.sum_congr rfl fun e _ => ?_
+    simp [Fin.prod_univ_succ, Equiv.Perm.decomposeFin.symm_sign]
+    ring
+  · refine Finset.sum_congr rfl fun c _ => ?_
+    rw [Matrix.det_apply', Finset.mul_sum, ← Finset.sum_neg_distrib]
+    refine Finset.sum_congr rfl fun e _ => ?_
+    have h : ∀ i : Fin m, N (Equiv.swap 0 c.succ (e i).succ) i.succ =
+        (N.submatrix Fin.succ Fin.succ).updateRow c (fun b => N 0 b.succ) (e i) i := by
+      intro i
+      by_cases hc : e i = c
+      · simp [hc]
+      · rw [Matrix.updateRow_ne hc, Equiv.swap_apply_of_ne_of_ne (Fin.succ_ne_zero _)
+          (fun h => hc (Fin.succ_injective _ h))]
+        rfl
+    simp [Fin.prod_univ_succ, Equiv.Perm.decomposeFin.symm_sign, h]
+    ring
+
+theorem alt_trace_eq_sum_det {M A : Type*} [Monoid M] [CommRing A] {n : ℕ} (r : M →* Matrix (Fin n) (Fin n) A) :
+    ∀ (m : ℕ) (x : Fin m → M), alt (fun g => (r g).trace) m x =
+      ∑ i : Fin m → Fin n, (Matrix.of fun a b => r (x a) (i b) (i a)).det
+  | 0, x => by simp [alt]
+  | m + 1, x => by
+    rw [alt, ← (Fin.consEquiv (fun _ : Fin (m + 1) => Fin n)).sum_comp, Fintype.sum_prod_type]
+    simp only [alt_trace_eq_sum_det r m, det_succ_eq_sub_sum_updateRow, Finset.sum_sub_distrib]
+    congr 1
+    · rw [Matrix.trace, Finset.sum_mul_sum]
+      rfl
+    · rw [Finset.sum_comm]
+      conv_rhs => rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      have h1 : (Matrix.of fun a b => r (Function.update (Fin.tail x) c (x 0 * Fin.tail x c) a) (i b) (i a)) =
+          (Matrix.of fun a b => r (x a.succ) (i b) (i a)).updateRow c
+            (∑ j : Fin n, r (x c.succ) j (i c) • fun b => r (x 0) (i b) j) := by
+        ext a b
+        by_cases h : a = c
+        · subst h
+          simp [Fin.tail, Matrix.mul_apply, mul_comm]
+        · simp [Fin.tail, h]
+      rw [h1]
+      have h2 : ∀ (P : Matrix (Fin m) (Fin m) A) (s : Finset (Fin n)) (w : Fin n → A) (v : Fin n → Fin m → A),
+          (P.updateRow c (∑ j ∈ s, w j • v j)).det = ∑ j ∈ s, w j * (P.updateRow c (v j)).det := by
+        intro P s w v
+        induction s using Finset.induction_on with
+        | empty =>
+          simp only [Finset.sum_empty]
+          exact Matrix.det_eq_zero_of_row_eq_zero c (by simp)
+        | insert j s hj ih =>
+          rw [Finset.sum_insert hj, Finset.sum_insert hj, Matrix.det_updateRow_add, ih, Matrix.det_updateRow_smul]
+      rw [h2]
+      rfl
+
+theorem isPsChar_trace (M A : Type) [Monoid M] [CommRing A] (n : ℕ) (r : M →* Matrix (Fin n) (Fin n) A) :
+    IsPsChar n (fun g => (r g).trace) := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp
+  · intro x y
+    simp only [map_mul]
+    exact Matrix.trace_mul_comm _ _
+  · intro x
+    rw [alt_trace_eq_sum_det]
+    refine Finset.sum_eq_zero fun i _ => ?_
+    obtain ⟨b, b', hne, hb⟩ := Fintype.exists_ne_map_eq_of_card_lt i (by simp)
+    exact Matrix.det_zero_of_column_eq hne (fun a => by simp [hb])
+
+end GlobalTheory.PsChar
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPseudoCharacterOfApproximatedByTraces
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.N GlobalTheory.Cong GlobalTheory.PsChar
+
+noncomputable section
+
+namespace GlobalTheory.PsChar
+
+open MvPolynomial
+
+theorem aeval_eq_zero_of_polyApprox {k : Type} [NormedField k] [IsUltrametricDist k] {J : Type} {θ : J → k}
+    {S : Set (J → k)} (h : PolyApprox θ S) (P : MvPolynomial J ℤ) (hP : ∀ η ∈ S, aeval η P = 0) :
+    aeval θ P = 0 := by
+  refine norm_le_zero_iff.1 (le_of_forall_pos_le_add fun ε hε => ?_)
+  obtain ⟨s, c, hs, hb⟩ := h ε hε
+  have hz : ∑ η ∈ s, c η * aeval η P = 0 :=
+    Finset.sum_eq_zero fun η hη => by rw [hP η (hs hη), mul_zero]
+  have := hb P
+  rw [hz, sub_zero] at this
+  simpa using this
+
+theorem isPsChar_trc {Γ A : Type} [Group Γ] [CommRing A] (a : ℕ) (ρ : Γ →* GL (Fin a) A) : IsPsChar a (trc ρ) :=
+  isPsChar_trace Γ A a ((Units.coeHom (Matrix (Fin a) (Fin a) A)).comp ρ)
+
+theorem isPsChar_of_polyApprox_trc : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] (a : ℕ) (T : Γ → PadicAlgCl l)
+    (C : Set (Γ →* GL (Fin a) (PadicAlgCl l))), PolyApprox T (trc '' C) → IsPsChar a T := by
+  intro l _ Γ _ a T C h
+  have key : ∀ P : MvPolynomial Γ ℤ, (∀ ρ ∈ C, aeval (trc ρ) P = 0) → aeval T P = 0 := fun P hP =>
+    aeval_eq_zero_of_polyApprox h P (by rintro η ⟨ρ, hρ, rfl⟩; exact hP ρ hρ)
+  have hm : ∀ (η : Γ → PadicAlgCl l) (x : Fin (a + 1) → Γ),
+      aeval η (alt (fun g => (X g : MvPolynomial Γ ℤ)) (a + 1) x) = alt η (a + 1) x := fun η x => by
+    have := map_alt (aeval η).toRingHom (fun g => (X g : MvPolynomial Γ ℤ)) (a + 1) x
+    simpa using this
+  refine ⟨?_, ?_, ?_⟩
+  · have := key (X 1 - (a : MvPolynomial Γ ℤ)) fun ρ _ => by simp [(isPsChar_trc a ρ).one]
+    simpa [sub_eq_zero] using this
+  · intro x y
+    have := key (X (x * y) - X (y * x)) fun ρ _ => by simp [(isPsChar_trc a ρ).comm x y]
+    simpa [sub_eq_zero] using this
+  · intro x
+    have := key _ fun ρ _ => by rw [hm]; exact (isPsChar_trc a ρ).alt_eq_zero x
+    rwa [hm] at this
+
+end GlobalTheory.PsChar
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPseudoCharacterOfApproximatedByTracesStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +204,5 @@ open Formalism.MainNotions.N GlobalTheory.Cong GlobalTheory.PsChar
 
 theorem _root_.GlobalTheory.T.isPseudoCharacter_of_approximatedByTraces : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] (a : ℕ) (T : Γ → PadicAlgCl l) (C : Set (Γ →* GL (Fin a) (PadicAlgCl l))), PolyApprox T (trc '' C) → IsPsChar a T := by
   first | exact @GlobalTheory.PsChar.isPsChar_of_polyApprox_trc | exact GlobalTheory.PsChar.isPsChar_of_polyApprox_trc | (intros; apply GlobalTheory.PsChar.isPsChar_of_polyApprox_trc <;> assumption)
+end
+end

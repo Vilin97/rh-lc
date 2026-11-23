@@ -2,9 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IndEtOfForallFinset
 public import Mathlib.Tactic.Linter.HaveILetI
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AcycFOfPiShStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyFilteredColimitRingsFinitaryStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSepClosedResidueFieldOfModuleFinite
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AcycFOfPiSh
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,7 +13,6 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.Finset.Functor
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
@@ -44,6 +41,26 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyFilteredColimitRingsFinitaryStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSepClosedResidueFieldOfModuleFinite
+import Mathlib.Data.Finset.Functor
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AcycFOfPiShStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
+
+theorem _root_.GlobalTheory.T.acycF_of_pi_sh' : ∀ (R : Type) [CommRing R] (F : Shv R) (ι : Type) [Finite ι] (T : ι → Type) [∀ i, CommRing (T i)] (B : Type) [CommRing B], Nonempty (B ≃+* (∀ i, T i)) → (∀ i, SH (T i)) → AcycF R (sp B) F := by
+  first | exact @GlobalTheory.EtC.acycF_of_pi_sh | exact GlobalTheory.EtC.acycF_of_pi_sh | (intros; apply GlobalTheory.EtC.acycF_of_pi_sh <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralStrictHenselianAcyclicFinitary
+
+section
 
 @[expose] public section
 
@@ -111,3 +128,5 @@ theorem acycF_of_isIntegral : ∀ (R : Type) [CommRing R] (F : Shv R), Finitary 
   exact map_zero _
 
 end GlobalTheory.EtC.IntAcyc
+end
+end

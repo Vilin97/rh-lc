@@ -2,12 +2,13 @@ module
 
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.ConeSectionRestriction.GeoDefs
 public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.ConeSectionRestriction.SeamDefs
-public import GroundTheory.ArithmeticGeometry.ModularCurves.WeierstrassGenus
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+public import Mathlib.Tactic.ENatToNat
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.PSpaceFinite
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -16,6 +17,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -23,8 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,9 +45,96 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: GroundTheory.ArithmeticGeometry.ModularCurves.WeierstrassGenus
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry Opposite TopologicalSpace GroundTheory.Arith.SchemeCoh
+
+universe u
+
+namespace GroundTheory.Arith.Modular
+
+section Restrict
+
+lemma presheaf_map_map_apply {Y : Scheme.{u}} {A B C : Y.Opens} (f : op C ⟶ op B) (g : op B ⟶ op A)
+    (s : Γ(Y, C)) : Y.presheaf.map g (Y.presheaf.map f s) = Y.presheaf.map (f ≫ g) s := by
+  rw [Functor.map_comp, CommRingCat.comp_apply]
+
+variable {A σ : Type u} [CommRing A] [SetLike σ A] [AddSubgroupClass σ A]
+variable (𝒜 : ℕ → σ) [GradedRing 𝒜]
+
+lemma awayToSection_one_fromZero (z : 𝒜 0) :
+    Proj.awayToSection 𝒜 1 (HomogeneousLocalization.fromZeroRingHom 𝒜 _ z) =
+      (Proj 𝒜).presheaf.map (homOfLE le_top).op
+        ((Proj.toSpecZero 𝒜).appTop ((Scheme.ΓSpecIso _).inv z)) := by
+  have h := congrArg (fun s => (Proj.basicOpen 𝒜 1).topIso.hom s) (ι_appTop_toSpecZero 𝒜 z)
+  simp only [CategoryTheory.Iso.inv_hom_id_apply] at h
+  rw [← h, Scheme.Opens.ι_appTop, Scheme.Opens.topIso_hom]
+  exact presheaf_map_map_apply _ _ _
+
+lemma awayToSection_fromZero {f : A} {m : ℕ} (hf : f ∈ 𝒜 m) (z : 𝒜 0) :
+    Proj.awayToSection 𝒜 f (HomogeneousLocalization.fromZeroRingHom 𝒜 _ z) =
+      (Proj 𝒜).presheaf.map (homOfLE le_top).op
+        ((Proj.toSpecZero 𝒜).appTop ((Scheme.ΓSpecIso _).inv z)) := by
+  have h := congrArg (fun φ => φ.hom (HomogeneousLocalization.fromZeroRingHom 𝒜 _ z))
+    (Proj.awayMap_awayToSection 𝒜 hf (one_mul f).symm)
+  simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, CommRingCat.hom_ofHom,
+    HomogeneousLocalization.awayMap_fromZeroRingHom] at h
+  rw [h, awayToSection_one_fromZero, presheaf_map_map_apply]
+  rfl
+
+end Restrict
+
+namespace Weierstrass
+
+open MvPolynomial HomogeneousLocalization
+
+variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
+
+section Scalars
+
+end Scalars
+
+end Weierstrass
+
+namespace Weierstrass
+
+open MvPolynomial HomogeneousLocalization
+
+variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
+
+section CoverFacts
+
+end CoverFacts
+
+section Genus
+
+variable {K : Type u} [Field K] (W : WeierstrassCurve K)
+
+end Genus
+
+end Weierstrass
+
+end GroundTheory.Arith.Modular
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorusMonomialEvalCompat
+
+section
 
 @[expose] public section
 
@@ -301,3 +388,6 @@ theorem aeval_mem_torusS {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i 
   exact gen _ hp hsum (key _ subset_rfl hp)
 
 end GlobalTheory.CompanionTheory.GeoTorus
+end
+end
+end

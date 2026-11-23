@@ -1,19 +1,14 @@
 module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.MapEvalPsPi
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.AlgHomPowerSeriesCoeEqAeval
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloSimple
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.EqZeroOfBlockSumEqZero
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.MapEvalRingHomOfPiFamily
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PiSeries
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PolynomialCoePowerSeriesEqAevalX
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PsCoprimeDvdSub
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.RhoUnit
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ConstSectionStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,7 +19,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,6 +44,131 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloSimple
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.EqZeroOfBlockSumEqZero
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.MapEvalRingHomOfPiFamily
+import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PiSeries
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PsCycloStatement
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.TypeStar
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Expand
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PsCoprimeDvdSub
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.RhoUnit
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.AlgHomPowerSeriesCoeEqAeval
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace LevelStatements.Lv
+
+open PowerSeries IsLocalRing
+
+theorem algHom_powerSeries_coe_eq_aeval {O S : Type} [CommRing O] [CommRing S] [Algebra O S]
+    (ρ : PowerSeries O →ₐ[O] PowerSeries S) (r : Polynomial O) :
+    ρ (r : PowerSeries O) = Polynomial.aeval (ρ X) r := by
+  have h : ρ.comp (Polynomial.coeToPowerSeries.algHom O) = Polynomial.aeval (ρ X) := by
+    apply Polynomial.algHom_ext
+    simp [Polynomial.coeToPowerSeries.algHom_apply]
+  have h2 := congrArg (fun f => f r) h
+  simpa [Polynomial.coeToPowerSeries.algHom_apply] using h2
+
+theorem exists_pow_mul_add_polynomial {O : Type} [CommRing O] [IsLocalRing O] [IsAdicComplete (maximalIdeal O) O]
+    (P : Polynomial O) (hP : P.IsDistinguishedAt (maximalIdeal O)) (k : ℕ) (a : PowerSeries O) :
+    ∃ (q : PowerSeries O) (r : Polynomial O), a = (P : PowerSeries O) ^ k * q + (r : PowerSeries O) := by
+  have hm : (P ^ k).Monic := hP.monic.pow k
+  have hne : PowerSeries.map (residue O) ((P ^ k : Polynomial O) : PowerSeries O) ≠ 0 := by
+    rw [← Polynomial.polynomial_map_coe, Ne, Polynomial.coe_eq_zero_iff]
+    exact (hm.map (residue O)).ne_zero
+  obtain ⟨q, r, h⟩ := PowerSeries.exists_isWeierstrassDivision a hne
+  refine ⟨q, r, ?_⟩
+  rw [← Polynomial.coe_pow]
+  exact h.2
+
+theorem rhoUnique : RhoUniqueStatement := by
+  intro O S _ _ _ _ _ P hP ρ ρ' hX h0
+  have hpoly : ∀ r : Polynomial O, ρ (r : PowerSeries O) = ρ' (r : PowerSeries O) := by
+    intro r
+    rw [algHom_powerSeries_coe_eq_aeval, algHom_powerSeries_coe_eq_aeval, hX]
+  have hdvd : X ∣ ρ (P : PowerSeries O) := by
+    rw [PowerSeries.X_dvd_iff, algHom_powerSeries_coe_eq_aeval]
+    exact h0
+  apply AlgHom.ext
+  intro a
+  ext n
+  obtain ⟨q, r, hqr⟩ := exists_pow_mul_add_polynomial P hP (n + 1) a
+  have hd : ρ a - ρ' a = ρ (P : PowerSeries O) ^ (n + 1) * (ρ q - ρ' q) := by
+    rw [hqr, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, hpoly r, ← hpoly P]
+    ring
+  have hX' : X ^ (n + 1) ∣ ρ a - ρ' a := by
+    rw [hd]
+    exact Dvd.dvd.mul_right (pow_dvd_pow_of_dvd hdvd _) _
+  have h1 := (PowerSeries.X_pow_dvd_iff.mp hX') n (Nat.lt_succ_self n)
+  rw [map_sub, sub_eq_zero] at h1
+  exact h1
+
+end LevelStatements.Lv
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PolynomialCoePowerSeriesEqAevalX
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace LevelStatements.Lv
+
+open PowerSeries
+
+theorem polynomial_coe_powerSeries_eq_aeval_X {O : Type*} [CommRing O] (P : Polynomial O) :
+    (P : PowerSeries O) = Polynomial.aeval (X : PowerSeries O) P := by
+  rw [Polynomial.aeval_def]
+  exact Polynomial.eval₂_C_X_eq_coe.symm
+
+theorem psCyclo_algHom_coe {O : Type*} [CommRing O] (φ : PowerSeries O →ₐ[O] PowerSeries O)
+    (P : Polynomial O) : φ (P : PowerSeries O) = Polynomial.aeval (φ X) P := by
+  rw [polynomial_coe_powerSeries_eq_aeval_X P]
+  exact (Polynomial.aeval_algHom_apply φ X P).symm
+
+theorem psCyclo_step {O : Type*} [CommRing O] (l : ℕ) (hl : l.Prime)
+    (φ : PowerSeries O →ₐ[O] PowerSeries O) (hφ : φ X = (1 + X) ^ l - 1) (m : ℕ) (hm : l ∣ m) :
+    φ (((Polynomial.cyclotomic m O).comp (Polynomial.X + 1) : Polynomial O) : PowerSeries O) =
+      (((Polynomial.cyclotomic (m * l) O).comp (Polynomial.X + 1) : Polynomial O) :
+        PowerSeries O) := by
+  rw [psCyclo_algHom_coe, polynomial_coe_powerSeries_eq_aeval_X,
+    ← Polynomial.cyclotomic_expand_eq_cyclotomic hl hm]
+  simp only [Polynomial.aeval_comp, Polynomial.expand_aeval, hφ, map_add (f := _), Polynomial.aeval_X,
+    map_one]
+  exact congrArg (fun y => Polynomial.aeval y (Polynomial.cyclotomic m O)) (by ring)
+
+theorem psCyclo : PsCycloStatement := by
+  unfold PsCycloStatement
+  intro O _ l hl φ hφ q w hq s
+  induction s with
+  | zero => exact ⟨w, by rw [Function.iterate_zero_apply, zero_add, pow_one]; exact hq⟩
+  | succ s ih =>
+    obtain ⟨w', hw'⟩ := ih
+    refine ⟨Units.map (φ : PowerSeries O →* PowerSeries O) w', ?_⟩
+    rw [Function.iterate_succ_apply', hw', map_mul,
+      psCyclo_step l hl φ hφ (l ^ (s + 1)) (dvd_pow_self l (Nat.succ_ne_zero s)),
+      ← pow_succ]
+    all_goals simp
+
+end LevelStatements.Lv
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.RingStepsOf
+
+section
 
 @[expose] public section
 
@@ -107,3 +231,6 @@ theorem ringSteps_of [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (m
       rfl)
 
 end Formalism.MainNotions.N.Ln03
+end
+end
+end

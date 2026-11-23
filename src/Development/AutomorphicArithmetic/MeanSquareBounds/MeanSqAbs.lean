@@ -4,14 +4,15 @@ public import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBoun
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqJac
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMain
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMainA
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMainB
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqPairs
+public import Mathlib.Analysis.Complex.Norm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,6 +25,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,7 +45,124 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Basic.Real.Basic
+import Mathlib.RingTheory.PiTensorProduct
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqPairs
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMainA
+
+section
+
+@[expose] public section
+
+open Finset Classical
+
+noncomputable section
+
+namespace Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+
+theorem meansq_expand (PP I : Finset ℕ) (c : ℕ → ℝ) (hc : ∀ n, 0 ≤ c n) (κ : ℕ → ℂ)
+    (hκ : ∀ n, ‖κ n‖ ≤ 1) (J : ℕ → ℕ → ℤ) :
+    (∑ q ∈ PP, ‖∑ n ∈ I, ((c n : ℝ) : ℂ) * κ n * ((J n q : ℤ) : ℂ)‖ ^ 2) ≤
+      ∑ n ∈ I, ∑ n' ∈ I, c n * c n' * |∑ q ∈ PP, ((J n q * J n' q : ℤ) : ℝ)| := by
+  have key : ((∑ q ∈ PP, ‖∑ n ∈ I, ((c n : ℝ) : ℂ) * κ n * ((J n q : ℤ) : ℂ)‖ ^ 2 : ℝ) : ℂ) =
+      ∑ n ∈ I, ∑ n' ∈ I, ((c n : ℝ) : ℂ) * ((c n' : ℝ) : ℂ) * (κ n * (starRingEnd ℂ) (κ n')) *
+        ((∑ q ∈ PP, ((J n q * J n' q : ℤ) : ℝ) : ℝ) : ℂ) := by
+    have h1 : ∀ q, ((‖∑ n ∈ I, ((c n : ℝ) : ℂ) * κ n * ((J n q : ℤ) : ℂ)‖ ^ 2 : ℝ) : ℂ) =
+        ∑ n ∈ I, ∑ n' ∈ I, ((c n : ℝ) : ℂ) * ((c n' : ℝ) : ℂ) * (κ n * (starRingEnd ℂ) (κ n')) *
+          (((J n q * J n' q : ℤ) : ℝ) : ℂ) := by
+      intro q
+
+      rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
+      refine Finset.sum_congr rfl fun n _ => Finset.sum_congr rfl fun n' _ => ?_
+      simp only [map_mul, Complex.conj_ofReal, map_intCast]
+      push_cast
+      ring
+    rw [Complex.ofReal_sum, Finset.sum_congr rfl (fun q _ => h1 q), Finset.sum_comm]
+    refine Finset.sum_congr rfl fun n _ => ?_
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun n' _ => ?_
+    rw [Complex.ofReal_sum, Finset.mul_sum]
+  calc (∑ q ∈ PP, ‖∑ n ∈ I, ((c n : ℝ) : ℂ) * κ n * ((J n q : ℤ) : ℂ)‖ ^ 2)
+      ≤ ‖((∑ q ∈ PP, ‖∑ n ∈ I, ((c n : ℝ) : ℂ) * κ n * ((J n q : ℤ) : ℂ)‖ ^ 2 : ℝ) : ℂ)‖ := by
+        rw [Complex.norm_real]; exact le_abs_self _
+    _ ≤ ∑ n ∈ I, ∑ n' ∈ I, c n * c n' * |∑ q ∈ PP, ((J n q * J n' q : ℤ) : ℝ)| := by
+        rw [key]
+        refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun n _ => ?_)
+        refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun n' _ => ?_)
+        rw [norm_mul, norm_mul, norm_mul, norm_mul, Complex.norm_real, Complex.norm_real, Complex.norm_real,
+          RCLike.norm_conj, Real.norm_eq_abs, Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hc n),
+          abs_of_nonneg (hc n')]
+        have h2 : ‖κ n‖ * ‖κ n'‖ ≤ 1 := by
+          have := mul_le_mul (hκ n) (hκ n') (norm_nonneg _) zero_le_one
+          simpa using this
+        have h3 : 0 ≤ c n * c n' := mul_nonneg (hc n) (hc n')
+        have h4 : c n * c n' * (‖κ n‖ * ‖κ n'‖) ≤ c n * c n' := by
+          simpa using mul_le_mul_of_nonneg_left h2 h3
+        exact mul_le_mul_of_nonneg_right h4 (abs_nonneg _)
+
+end Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+end
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MSqMainB
+
+section
+
+@[expose] public section
+
+open Finset Classical
+
+noncomputable section
+
+namespace Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+
+theorem meansq_split (I : Finset ℕ) (c : ℕ → ℝ) (hc : ∀ n, 0 ≤ c n) (r : ℕ → ℕ → ℕ) (A : ℕ → ℕ → ℝ)
+    (P η : ℝ) (hP : 0 ≤ P) (hη : 0 ≤ η) (nstar : ℕ)
+    (hA : ∀ n ∈ I, ∀ n' ∈ I, A n n' ≤ P)
+    (hA' : ∀ n ∈ I, ∀ n' ∈ I, r n n' ≠ 1 → r n n' ≠ nstar → A n n' ≤ η * P) :
+    ∑ n ∈ I, ∑ n' ∈ I, c n * c n' * A n n' ≤
+      ((∑ n ∈ I, ∑ n' ∈ I, if r n n' = 1 then c n * c n' else 0) +
+        (∑ n ∈ I, ∑ n' ∈ I, if r n n' = nstar then c n * c n' else 0) + η * (∑ n ∈ I, c n) ^ 2) * P := by
+  have hpt : ∀ n ∈ I, ∀ n' ∈ I, c n * c n' * A n n' ≤
+      ((if r n n' = 1 then c n * c n' else 0) + (if r n n' = nstar then c n * c n' else 0) +
+        η * (c n * c n')) * P := by
+    intro n hn n' hn'
+    have hcc : 0 ≤ c n * c n' := mul_nonneg (hc n) (hc n')
+    have hAP := mul_le_mul_of_nonneg_left (hA n hn n' hn') hcc
+    have hηP : 0 ≤ η * (c n * c n') * P := mul_nonneg (mul_nonneg hη hcc) hP
+    have hccP : 0 ≤ c n * c n' * P := mul_nonneg hcc hP
+    split_ifs with h1 h2 h2
+    · linarith
+    · linarith
+    · linarith
+    · have hA2 := mul_le_mul_of_nonneg_left (hA' n hn n' hn' h1 h2) hcc
+      linarith
+  calc ∑ n ∈ I, ∑ n' ∈ I, c n * c n' * A n n'
+      ≤ ∑ n ∈ I, ∑ n' ∈ I, ((if r n n' = 1 then c n * c n' else 0) +
+          (if r n n' = nstar then c n * c n' else 0) + η * (c n * c n')) * P :=
+        Finset.sum_le_sum fun n hn => Finset.sum_le_sum fun n' hn' => hpt n hn n' hn'
+    _ = _ := by
+        rw [sq, Finset.sum_mul_sum]
+        simp only [add_mul, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
+
+end Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.MeanSqAbs
+
+section
 
 @[expose] public section
 
@@ -104,3 +223,5 @@ theorem meanSq_abs :
   linarith
 
 end QH
+end
+end

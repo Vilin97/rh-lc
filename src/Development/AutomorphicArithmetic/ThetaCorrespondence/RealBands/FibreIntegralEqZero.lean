@@ -3,14 +3,14 @@ module
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.DepthPays
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.DecaysZero
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsClosedParabolicSubgroups
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IntegralCoefEqZero
-import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IsCompactBall
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemElt
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicLocalCompactness.T2SpaceTensorProductFiniteExtension
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermitianFormUnitaryOneOne
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.SchurOrthogonalityIndefiniteUnitaryGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -29,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,7 +41,174 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermitianFormUnitaryOneOne
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.Abstract
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.ContinuousAverage
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IsBand
+import Mathlib.Tactic.Linter.Style
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DefClassNum
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsStandardIndModule
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.FlagNW
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.InvMemFlagN
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.RingTheory.PicardGroup
+import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IsCompactBall
+import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemElt
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicLocalCompactness.T2SpaceTensorProductFiniteExtension
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.SchurOrthogonalityIndefiniteUnitaryGroupStatement
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.S Matrix MeasureTheory
+
+theorem _root_.GlobalTheory.T.schur_orthogonality_indefiniteUnitaryGroup : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] [Nontrivial H] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), IsURepOn (UJset ε) σ → IsIrredOn (UJset ε) σ → IsSqIntOn ε σ → ∃ d : ℝ, IsFdeg (Formalism.REAL.muG ε) σ d := by
+  first | exact @GlobalTheory.schur_orthogonality_unitary | exact GlobalTheory.schur_orthogonality_unitary | (intros; apply GlobalTheory.schur_orthogonality_unitary <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.ConvCoef
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Matrix Formalism.REAL Formalism.MainNotions.S GlobalTheory.FlagMeas GlobalTheory.RealInd UpperTheory.Lit.Cusp
+open GlobalTheory.Dec (IsHaarSub IsIsoC NW IsSqIntIrr)
+open scoped Topology InnerProductSpace
+
+theorem UpperTheory.Lit.Cusp.conv_coef :
+    ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+      (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (d : ℝ), IsURepOn (UJset ε) σ → IsFdeg (muG ε) σ d → ∀ v a : H,
+        Continuous (coefOn (ε := ε) σ a v) ∧
+          ∀ x, conv (muG ε) (coefOn σ v v) (coefOn σ a v) x = ((‖v‖ ^ 2 / d : ℝ) : ℂ) * coefOn σ a v x := by
+  intro n ε H _ _ σ d hrep hF v a
+  obtain ⟨⟨_, hmul⟩, hiso, hcont⟩ := hrep
+  have hinner : ∀ g ∈ UJset ε, ∀ x y : H, ⟪σ g x, σ g y⟫_ℂ = ⟪x, y⟫_ℂ := fun g hg x y =>
+    LinearIsometry.inner_map_map ⟨(σ g).toLinearMap, hiso g hg⟩ x y
+  have hmem : ∀ g : UJ ε, umat g ∈ UJset ε := fun g => g.2
+  have hcoef : ∀ w z : H, Continuous (coefOn (ε := ε) σ w z) := by
+    intro w z
+    have hu : Continuous fun g : UJ ε => umat g :=
+      Units.continuous_val.comp continuous_subtype_val
+    have hs : Continuous fun g : UJ ε => σ (umat g) w :=
+      (hcont w).comp_continuous hu hmem
+    exact continuous_const.inner hs
+  refine ⟨hcoef a v, fun x => ?_⟩
+  have hback : ∀ (g : UJ ε) (y : H), σ (umat g) (σ (umat g⁻¹) y) = y := by
+    intro g y
+    have h := hmul _ (hmem g) _ (hmem g⁻¹)
+    have hone : umat g * umat g⁻¹ = 1 := by
+      show ((g * g⁻¹ : UJ ε) : (Matrix (Fin n) (Fin n) ℂ)ˣ).val = 1
+      rw [mul_inv_cancel]
+      rfl
+    rw [hone] at h
+    have h1 : σ 1 = 1 := by assumption
+    rw [h1] at h
+    exact (congrArg (fun f : H →L[ℂ] H => f y) h).symm
+  have key : ∀ g : UJ ε, coefOn σ v v g * coefOn σ a v (g⁻¹ * x) =
+      coefOn σ v v g * star (coefOn σ v (σ (umat x) a) g) := by
+    intro g
+    congr 1
+    simp only [coefOn]
+    have hsplit : σ (umat (g⁻¹ * x)) a = σ (umat g⁻¹) (σ (umat x) a) := by
+      rw [show umat (g⁻¹ * x) = umat g⁻¹ * umat x from rfl, hmul _ (hmem _) _ (hmem _)]
+      rfl
+    rw [hsplit]
+    calc ⟪v, σ (umat g⁻¹) (σ (umat x) a)⟫_ℂ
+        = ⟪σ (umat g) v, σ (umat g) (σ (umat g⁻¹) (σ (umat x) a))⟫_ℂ :=
+          (hinner _ (hmem g) _ _).symm
+      _ = ⟪σ (umat g) v, σ (umat x) a⟫_ℂ := by rw [hback]
+      _ = star ⟪σ (umat x) a, σ (umat g) v⟫_ℂ := by
+          rw [← inner_conj_symm]
+          rfl
+  show ∫ g, coefOn σ v v g * coefOn σ a v (g⁻¹ * x) ∂(muG ε) = _
+  rw [show (fun g => coefOn σ v v g * coefOn σ a v (g⁻¹ * x)) =
+      fun g => coefOn σ v v g * star (coefOn σ v (σ (umat x) a) g) from funext key,
+    (hF.2 v v v (σ (umat x) a)).2, inner_self_eq_norm_sq_to_K]
+  show _ = _ * ⟪v, σ (umat x) a⟫_ℂ
+  push_cast
+  rw [div_eq_mul_inv, div_eq_mul_inv, mul_assoc, mul_comm]
+  rw [mul_comm (_ * _) _, mul_comm ⟪v, σ (umat x) a⟫_ℂ, ← mul_assoc]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IntegralCoefEqZero
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Matrix Formalism.REAL Formalism.MainNotions.S GlobalTheory.FlagMeas GlobalTheory.RealInd UpperTheory.Lit.Cusp
+open GlobalTheory.Dec (IsHaarSub IsIsoC NW IsSqIntIrr)
+open scoped Topology InnerProductSpace
+
+theorem UpperTheory.Lit.Cusp.integral_coef_eq_zero :
+    ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+      (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), IsSqIntIrr ε σ → ∀ v a : H,
+        Decays (coefOn (ε := ε) σ v v) → Decays (coefOn (ε := ε) σ a v) →
+        ∀ W, IsIsoC ε W → ∀ ν : Measure (UJ ε), IsHaarSub (NW ε W) ν → ∀ x y : UJ ε,
+          ∫ m, ⟪v, σ (umat (x * m * y)) a⟫_ℂ ∂ν = 0 := by
+  intro n ε H _ _ σ hσ v a hvv hav W hW ν hν x y
+  obtain ⟨hc, hn, hU, hI, hS⟩ := hσ
+  obtain ⟨d, hd⟩ := GlobalTheory.T.schur_orthogonality_indefiniteUnitaryGroup n ε H σ hU hI hS
+  have hd0 : 0 < d := hd.1
+  by_cases hv : v = 0
+  · subst hv
+    simp
+  have hv2 : (‖v‖ : ℝ) ^ 2 ≠ 0 := by positivity
+  obtain ⟨hcvv, hconvvv⟩ := conv_coef n ε H σ d hU hd v v
+  obtain ⟨hcav, hconvav⟩ := conv_coef n ε H σ d hU hd v a
+  obtain ⟨hivv, -⟩ := continuous_average n ε _ hcvv hvv
+  obtain ⟨hiav, hcontav⟩ := continuous_average n ε _ hcav hav
+  obtain ⟨hν0, hνf, hνN, hνinv⟩ := hν
+  haveI := hνf
+  obtain ⟨hflag, h1, hNeq, S, hS⟩ := flagN_eq_NW n ε W hW
+  obtain ⟨r, Hr, hr⟩ := exists_isRay n ε _ _ hflag (fun i => by fin_cases i; simpa using h1)
+  rw [hNeq] at hr
+  set k : ℂ := ((d / ‖v‖ ^ 2 : ℝ) : ℂ) with hk
+  have hkc : k * ((‖v‖ ^ 2 / d : ℝ) : ℂ) = 1 := by
+    rw [hk, ← Complex.ofReal_mul]
+    rw [div_mul_div_comm, mul_comm d, div_self (mul_ne_zero hv2 hd0.ne')]
+    simp
+  have key := average_eq_zero (UJ ε) (muG ε) (NW ε W) r Hr ν hνN hνinv hr
+    (fun g => k * coefOn σ v v g) (coefOn σ a v)
+    (continuous_const.mul hcvv) (hivv.const_mul k) hcav hiav
+    (by
+      intro z
+      simp only [conv] at hconvvv ⊢
+      have := hconvvv z
+      simp only [mul_assoc]
+      rw [show (fun g => k * (coefOn σ v v g * (k * coefOn σ v v (g⁻¹ * z))))
+          = fun g => (k * k) * (coefOn σ v v g * coefOn σ v v (g⁻¹ * z)) by
+            funext g; ring]
+      rw [MeasureTheory.integral_const_mul, this]
+      linear_combination (k * coefOn σ v v z) * hkc)
+    (by
+      intro z
+      simp only [conv] at hconvav ⊢
+      have := hconvav z
+      simp only [mul_assoc]
+      rw [MeasureTheory.integral_const_mul, this]
+      linear_combination (coefOn σ a v z) * hkc)
+    x (hcontav S ν (by rw [hS]; exact ⟨hν0, hνf, hνN, hνinv⟩) x) y
+  exact key
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.FibreIntegralEqZero
+
+section
 
 @[expose] public section
 
@@ -146,3 +312,6 @@ theorem fibre_integral_eq_zero : ∀ (D : D7) (θ : InfFam D), IsInfFam θ →
   rw [integral_mul_const, ← hint, h0, zero_mul]
 
 end UpperTheory.Lit.Cusp
+end
+end
+end

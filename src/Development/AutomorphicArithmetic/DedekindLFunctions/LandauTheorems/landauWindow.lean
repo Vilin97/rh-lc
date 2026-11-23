@@ -4,17 +4,15 @@ public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauZeroFre
 public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauCauchy
 public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauCoeff
 public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauDichotomy
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauGrowthContra
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauNearest
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauPoleAsym
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauPoleReLe
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.landauTails
-public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.landauWindowIneq
+public import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -27,7 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +44,226 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauNearest
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.landauTails
+public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.landauWindowIneq
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauGrowthContra
+
+section
+
+@[expose] public section
+
+open Complex MeasureTheory Set Filter Topology
+
+noncomputable section
+
+namespace Deduction
+
+theorem landau_growth_contra {c d e C : ℝ} (hc : 0 < c) (hd : 0 < d) (hde : d < e) :
+    ∃ η : ℝ, 0 < η ∧ ∃ U₀ : ℝ, ∀ U ≥ U₀, ∀ k : ℕ, U ≤ k → C * Real.exp (η * U) / e ^ k < c / d ^ k := by
+  have he : 0 < e := hd.trans hde
+  have hL : 0 < Real.log (e / d) := Real.log_pos ((one_lt_div hd).mpr hde)
+  set L := Real.log (e / d) with hLdef
+  refine ⟨L / 2, by positivity, 2 * |C| / (c * L), ?_⟩
+  intro U hU k hk
+  have hdk : 0 < d ^ k := pow_pos hd k
+  have hek : 0 < e ^ k := pow_pos he k
+  have hpow : e ^ k = d ^ k * Real.exp (k * L) := by
+    rw [Real.exp_nat_mul, hLdef, Real.exp_log (div_pos he hd), div_pow, mul_div_cancel₀ _ hdk.ne']
+  rw [div_lt_div_iff₀ hek hdk, hpow]
+  set X := Real.exp (L / 2 * U) with hXdef
+  have hXpos : 0 < X := Real.exp_pos _
+  have hcL : 0 < c * L := mul_pos hc hL
+  rw [ge_iff_le, div_le_iff₀ hcL] at hU
+  have h1 : L / 2 * U + 1 ≤ X := Real.add_one_le_exp _
+  have hX : |C| < c * X := by
+    nlinarith [mul_le_mul_of_nonneg_left h1 hc.le]
+  have hY : X * X ≤ Real.exp (k * L) := by
+    rw [hXdef, ← Real.exp_add]
+    apply Real.exp_le_exp.mpr
+    nlinarith [mul_le_mul_of_nonneg_left hk hL.le]
+  have hCX : C * X * d ^ k ≤ |C| * X * d ^ k := by
+    have := le_abs_self C
+    have hXd : 0 < X * d ^ k := mul_pos hXpos hdk
+    nlinarith
+  have h2 : |C| * X < c * (X * X) := by nlinarith
+  have h3 : c * (X * X) ≤ c * Real.exp (k * L) := mul_le_mul_of_nonneg_left hY hc.le
+  calc C * X * d ^ k ≤ |C| * X * d ^ k := hCX
+    _ < c * Real.exp (k * L) * d ^ k := mul_lt_mul_of_pos_right (h2.trans_le h3) hdk
+    _ = c * (d ^ k * Real.exp (k * L)) := by ring
+
+end Deduction
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauPoleAsym
+
+section
+
+@[expose] public section
+
+open Complex MeasureTheory Set Filter Topology
+
+noncomputable section
+
+namespace Deduction
+
+theorem landau_pole_asym_deriv (c ρ z : ℂ) (k : ℕ) :
+    iteratedDeriv k (fun s : ℂ => c * (s - ρ)⁻¹) z
+      = c * ((-1) ^ k * (k.factorial : ℂ) * ((z - ρ) ^ (k + 1))⁻¹) := by
+  rw [iteratedDeriv_const_mul_field]
+  congr 1
+  have e := congrFun (iteratedDeriv_comp_sub_const k (fun t : ℂ => t⁻¹) ρ) z
+  rw [e, iteratedDeriv_eq_iterate, show (fun t : ℂ => t⁻¹) = Inv.inv from rfl, iter_deriv_inv,
+    show (-1 - k : ℤ) = -((k + 1 : ℕ) : ℤ) by push_cast; ring, zpow_neg, zpow_natCast]
+
+theorem landau_pole_asym {Φ : ℂ → ℂ} {z ρ c : ℂ} {r r' : ℝ} (hρ : ρ ∈ Metric.ball z r) (hne : ρ ≠ z)
+    (hd : DifferentiableOn ℂ Φ (Metric.ball z r \ {ρ}))
+    (hp : ∃ h : ℂ → ℂ, AnalyticAt ℂ h ρ ∧ ∀ᶠ s in 𝓝[≠] ρ, Φ s = c / (s - ρ) + h s)
+    (h0 : 0 < r') (h1 : r' < r) :
+    ∃ M : ℝ, ∀ k : ℕ,
+      ‖(-1) ^ k * iteratedDeriv k Φ z / (k.factorial : ℂ) - c / (z - ρ) ^ (k + 1)‖ ≤ M / r' ^ k := by
+  obtain ⟨hfun, han, hev⟩ := hp
+  have hopen : IsOpen (Metric.ball z r \ {ρ}) := Metric.isOpen_ball.sdiff isClosed_singleton
+  set G : ℂ → ℂ := fun s => if s = ρ then hfun ρ else Φ s - c / (s - ρ) with hG
+  have hGeq : G =ᶠ[𝓝 ρ] hfun := by
+    rw [eventually_nhdsWithin_iff] at hev
+    filter_upwards [hev] with s hs
+    by_cases hsρ : s = ρ
+    · rw [hsρ]
+      simp [G]
+    · simp only [G, if_neg hsρ]
+      rw [hs (Set.mem_compl_singleton_iff.mpr hsρ)]
+      ring
+  have hGd : DifferentiableOn ℂ G (Metric.ball z r) := by
+    intro s hs
+    by_cases hsρ : s = ρ
+    · rw [hsρ]
+      exact ((hGeq.differentiableAt_iff).mpr han.differentiableAt).differentiableWithinAt
+    · have hmem : s ∈ Metric.ball z r \ {ρ} := ⟨hs, hsρ⟩
+      have hΦ : DifferentiableAt ℂ Φ s := (hd s hmem).differentiableAt (hopen.mem_nhds hmem)
+      have hloc : G =ᶠ[𝓝 s] fun t => Φ t - c / (t - ρ) := by
+        filter_upwards [hopen.mem_nhds hmem] with t ht
+        have htρ : t ≠ ρ := ht.2
+        simp only [G, if_neg htρ]
+      have hd' : DifferentiableAt ℂ (fun t => Φ t - c / (t - ρ)) s :=
+        hΦ.sub ((differentiableAt_const c).div
+          (differentiableAt_id.sub (differentiableAt_const ρ)) (sub_ne_zero.mpr hsρ))
+      exact ((hloc.differentiableAt_iff).mpr hd').differentiableWithinAt
+  obtain ⟨M, hM⟩ := landau_cauchy hGd h0 h1
+  refine ⟨M, fun k => ?_⟩
+  have hzρ : z ≠ ρ := Ne.symm hne
+  have hr : 0 < r := lt_trans h0 h1
+  have hmemz : z ∈ Metric.ball z r \ {ρ} := ⟨Metric.mem_ball_self hr, hzρ⟩
+  have hloc : Φ =ᶠ[𝓝 z] G + fun s => c * (s - ρ)⁻¹ := by
+    filter_upwards [hopen.mem_nhds hmemz] with t ht
+    have htρ : t ≠ ρ := ht.2
+    simp only [Pi.add_apply, G, if_neg htρ, div_eq_mul_inv]
+    ring
+  have hGc : ContDiffAt ℂ k G z :=
+    (hGd.contDiffOn Metric.isOpen_ball).contDiffAt
+      (Metric.isOpen_ball.mem_nhds (Metric.mem_ball_self hr))
+  have hPc : ContDiffAt ℂ k (fun s => c * (s - ρ)⁻¹) z := by
+    have hs : ContDiffAt ℂ k (fun s : ℂ => s - ρ) z := contDiffAt_id.sub contDiffAt_const
+    exact contDiffAt_const.mul (hs.inv (sub_ne_zero.mpr hzρ))
+  rw [hloc.iteratedDeriv_eq, iteratedDeriv_add hGc hPc, landau_pole_asym_deriv]
+  have hfac : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast k.factorial_ne_zero
+  have hpow : ((-1 : ℂ)) ^ k * (-1) ^ k = 1 := by rw [← mul_pow]; norm_num
+  set iG := iteratedDeriv k G z
+  set X := (z - ρ) ^ (k + 1)
+  have e : (-1) ^ k * (iG + c * ((-1) ^ k * (k.factorial : ℂ) * X⁻¹)) / (k.factorial : ℂ) - c / X
+      = (-1) ^ k * (iG / k.factorial) := by
+    calc _ = (-1) ^ k * (iG / k.factorial) + ((-1) ^ k * (-1) ^ k) * c *
+          ((k.factorial : ℂ) / k.factorial) * X⁻¹ - c / X := by ring
+      _ = _ := by rw [hpow, div_self hfac, div_eq_mul_inv c]; ring
+  rw [e, norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul]
+  exact hM k
+
+end Deduction
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.LandauPoleReLe
+
+section
+
+@[expose] public section
+
+open Complex MeasureTheory Set Filter Topology
+
+noncomputable section
+
+namespace Deduction
+
+theorem landau_pole_re_le_bound {g : ℝ → ℝ} {Φ : ℂ → ℂ} {Z : Set ℂ} (hP : PoleData g Φ Z) {σ : ℝ}
+    (hσ : 2 < σ) : ∃ M : ℝ, ∀ s : ℂ, σ ≤ s.re → ‖Φ s‖ ≤ M := by
+  obtain ⟨C, hC⟩ := hP.growth
+  refine ⟨∫ u in Ioi (0 : ℝ), C * Real.exp (-(σ - 2) * u), fun s hs => ?_⟩
+  rw [hP.laplace s (lt_of_lt_of_le hσ hs)]
+  refine norm_integral_le_of_norm_le
+    ((exp_neg_integrableOn_Ioi 0 (sub_pos.mpr hσ)).const_mul C) ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+  have hu0 : 0 ≤ u := le_of_lt hu
+  have h1 := hC u hu0
+  have hre : (-s * (u : ℂ)).re = -s.re * u := by simp
+  rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, Complex.norm_exp, hre]
+  have h2 : Real.exp (-s.re * u) ≤ Real.exp (-σ * u) := by
+    apply Real.exp_le_exp.mpr
+    nlinarith
+  calc |g u| * Real.exp (-s.re * u) ≤ (C * Real.exp (2 * u)) * Real.exp (-σ * u) :=
+        mul_le_mul h1 h2 (Real.exp_pos _).le ((abs_nonneg _).trans h1)
+    _ = C * Real.exp (-(σ - 2) * u) := by
+        rw [mul_assoc, ← Real.exp_add]; congr 2; ring
+
+theorem landau_pole_re_le {g : ℝ → ℝ} {Φ : ℂ → ℂ} {Z : Set ℂ} (hP : PoleData g Φ Z) : ∀ ρ ∈ Z, ρ.re ≤ 2 := by
+  intro ρ hρ
+  by_contra hlt
+  have hlt : 2 < ρ.re := not_le.mp hlt
+  obtain ⟨M, hM⟩ := landau_pole_re_le_bound hP (σ := (2 + ρ.re) / 2) (by linarith)
+  obtain ⟨c, hc, -, h, hh, hev⟩ := hP.pole ρ hρ
+  have h0 : Tendsto (fun s : ℂ => s - ρ) (𝓝[≠] ρ) (𝓝 0) := by
+    have : Tendsto (fun s : ℂ => s - ρ) (𝓝 ρ) (𝓝 (ρ - ρ)) := tendsto_id.sub_const ρ
+    rw [sub_self] at this
+    exact this.mono_left nhdsWithin_le_nhds
+  have hb : ∀ᶠ s in 𝓝[≠] ρ, ‖Φ s‖ ≤ M := by
+    have : ∀ᶠ s in 𝓝 ρ, (2 + ρ.re) / 2 < s.re :=
+      Complex.continuous_re.continuousAt.eventually (lt_mem_nhds (by linarith))
+    filter_upwards [this.filter_mono nhdsWithin_le_nhds] with s hs using hM s hs.le
+  have h1 : Tendsto (fun s : ℂ => (s - ρ) * Φ s) (𝓝[≠] ρ) (𝓝 0) :=
+    NormedField.tendsto_zero_smul_of_tendsto_zero_of_bounded h0 ⟨M, eventually_map.mpr hb⟩
+  have h2 : Tendsto (fun s : ℂ => c + (s - ρ) * h s) (𝓝[≠] ρ) (𝓝 (c + 0 * h ρ)) :=
+    (h0.mul (hh.continuousAt.tendsto.mono_left nhdsWithin_le_nhds)).const_add c
+  have h3 : (fun s : ℂ => (s - ρ) * Φ s) =ᶠ[𝓝[≠] ρ] fun s : ℂ => c + (s - ρ) * h s := by
+    filter_upwards [hev, self_mem_nhdsWithin] with s hs hne
+    have : s - ρ ≠ 0 := sub_ne_zero.mpr hne
+    rw [hs]; field_simp
+  have := tendsto_nhds_unique (h1.congr' h3) h2
+  apply hc
+  simpa using this.symm
+
+end Deduction
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.DedekindLFunctions.LandauTheorems.landauWindow
+
+section
 
 @[expose] public section
 
@@ -209,4 +423,6 @@ theorem landau_window {g : ℝ → ℝ} {Φ : ℂ → ℂ} {Z : Set ℂ} (hP : P
 
 end Deduction
 
+end
+end
 end

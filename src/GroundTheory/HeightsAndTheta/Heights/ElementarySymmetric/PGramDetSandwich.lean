@@ -1,13 +1,13 @@
 module
 
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.GramDetSandwich
-public import GroundTheory.HeightsAndTheta.Heights.MatrixCharts.DetIneq
+public import Mathlib.Analysis.Complex.Order
+public import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -20,13 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,9 +40,44 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.MatrixCharts.DetIneq
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.GramDetSandwich
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.NineStatements
+
+open scoped Matrix ComplexOrder
+
+def GramDetSandwich.Statement : Prop :=
+  ∀ {N k : ℕ} (H : Matrix (Fin N) (Fin N) ℂ) (A : Matrix (Fin N) (Fin k) ℂ) (c M : ℝ), 0 < c → H.PosDef →
+    (H⁻¹ - (c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)).PosSemidef →
+    ((M : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ) - H⁻¹).PosSemidef →
+    M⁻¹ ^ k * (Aᴴ * A).det.re ≤ (Aᴴ * H * A).det.re ∧ (Aᴴ * H * A).det.re ≤ c⁻¹ ^ k * (Aᴴ * A).det.re
+
+end GroundTheory.Heights₂.Heights.NineStatements
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PGramDetSandwich
+
+section
 
 @[expose] public section
 
@@ -125,3 +154,5 @@ theorem GramDetSandwich.proof : GramDetSandwich.Statement := by
   exact ⟨k1, k2⟩
 
 end GroundTheory.Heights₂.Heights.NineStatements
+end
+end

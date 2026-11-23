@@ -1,15 +1,23 @@
 module
 
 public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.MemColRangeOfLeEntry
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LeIffLtColH
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Order.Int.ConditionallyCompleteOrder
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+public import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -17,7 +25,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +45,40 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LeIffLtColH
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.Qk46.colH :
+    {n : Nat} → (Fin n → Int) → Int → Nat :=
+    fun {n : Nat} (mu : Fin n → Int) (c : Int) ↦ @Finset.card (Fin n) {m : Fin n | @LE.le Int Int.instLEInt c (mu m)}
+
+theorem UpperTheory.Reformulated.B.Qk46.le_iff_lt_colH :
+    ∀ {r : Nat} {μ : Fin r → Int},
+      @Antitone (Fin r) Int (@PartialOrder.toPreorder (Fin r) (@Fin.instPartialOrder r))
+          (@PartialOrder.toPreorder Int
+            (@ConditionallyCompletePartialOrderSup.toPartialOrder Int
+              (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup Int
+                (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder Int
+                  (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice Int
+                    Int.instConditionallyCompleteLinearOrder)))))
+          μ →
+        ∀ (c : Int) (m : Fin r),
+          Iff (@LE.le Int Int.instLEInt c (μ m)) (@LT.lt Nat instLTNat (@Fin.val r m) (@UpperTheory.Reformulated.B.Qk46.colH r μ c)) := by
+  intro r μ h c m
+  unfold UpperTheory.Reformulated.B.Qk46.colH
+  exact (Tuple.lt_card_ge_iff_apply_ge_of_antitone h).symm
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.SegmentDegree.CardIcutFilter
+
+section
 
 @[expose] public section
 
@@ -229,3 +269,6 @@ theorem path_eq_of_cut [NeZero r] {n0 : ℕ} (hN : n0 + r = N) {be : ℤ} {ν ν
 end Abs3
 
 end Formalism.MainNotions.SelectionLemmas.Pf
+end
+end
+end

@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsAlgClosedEmbeddingsOfFamily
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +19,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,9 +45,71 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.AlgebraicIndependent.Adjoin
+public import Mathlib.RingTheory.AlgebraicIndependent.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsAlgClosedEmbeddingsOfFamily
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open MvPolynomial
+
+theorem exists_isAlgClosed_embeddings_of_family :
+    ∀ (F : Type) [Field F] (I : Type) (k : I → Type) [∀ i, Field (k i)] (f : ∀ i, F →+* k i),
+      ∃ (L : Type) (_ : Field L) (_ : IsAlgClosed L) (g : ∀ i, k i →+* L) (h : F →+* L),
+        ∀ i, (g i).comp (f i) = h := by
+  intro F _ I k _ f
+  let K := FractionRing (MvPolynomial (Σ i, k i) F)
+  let Ω := AlgebraicClosure K
+  have key : ∀ i, ∃ g : k i →+* Ω, g.comp (f i) = algebraMap F Ω := by
+    intro i
+    letI : Algebra F (k i) := (f i).toAlgebra
+    obtain ⟨s, hs⟩ := exists_isTranscendenceBasis F (k i)
+    let x : (Σ i, k i) → Ω := fun j => algebraMap K Ω (algebraMap (MvPolynomial (Σ i, k i) F) K (X j))
+    have hx : AlgebraicIndependent F x := by
+      have h0 := MvPolynomial.algebraicIndependent_X (Σ i, k i) F
+      have h1 : Function.Injective (IsScalarTower.toAlgHom F (MvPolynomial (Σ i, k i) F) K) :=
+        IsFractionRing.injective _ _
+      have h2 : Function.Injective (IsScalarTower.toAlgHom F K Ω) :=
+        (algebraMap K Ω).injective
+      have := (h0.map' h1).map' h2
+      exact this
+    have hv : AlgebraicIndependent F (fun b : s => x ⟨i, b.1⟩) :=
+      hx.comp (fun b : s => (⟨i, b.1⟩ : Σ i, k i)) (by
+        intro a b hab
+        exact Subtype.ext (by simpa using hab))
+    let φ0 : IntermediateField.adjoin F (Set.range ((↑) : s → k i)) →ₐ[F] Ω :=
+      (IntermediateField.val _).comp (hv.aevalEquivField.toAlgHom.comp hs.1.reprField)
+    have halg := hs.isAlgebraic_field
+    obtain ⟨φ, -⟩ := IntermediateField.exists_algHom_of_splits' φ0
+      (fun (y : k i) => ⟨(Algebra.IsAlgebraic.isAlgebraic
+        (R := IntermediateField.adjoin F (Set.range ((↑) : s → k i))) y).isIntegral,
+        IsAlgClosed.splits _⟩)
+    refine ⟨φ.toRingHom, ?_⟩
+    ext y
+    exact φ.commutes y
+  choose g hg using key
+  exact ⟨Ω, inferInstance, inferInstance, g, algebraMap F Ω, hg⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsAlgClosedEmbeddingsOfFamilyStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.exists_isAlgClosed_compatible_embeddings_of_family : ∀ (F : Type) [Field F] (I : Type) (k : I → Type) [∀ i, Field (k i)] (f : ∀ i, F →+* k i), ∃ (L : Type) (_ : Field L) (_ : IsAlgClosed L) (g : ∀ i, k i →+* L) (h : F →+* L), ∀ i, (g i).comp (f i) = h := by
   first | (exact @GlobalTheory.exists_isAlgClosed_embeddings_of_family) | (exact GlobalTheory.exists_isAlgClosed_embeddings_of_family) | (intros; apply GlobalTheory.exists_isAlgClosed_embeddings_of_family  <;> assumption)
+end
+end

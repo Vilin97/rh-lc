@@ -3,15 +3,13 @@ module
 public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsAwayFracOfMemHomLoc
 public import Mathlib.RingTheory.Smooth.Basic
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.DehomogenisingEqZeroIff
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsGradedPresentationSaturating
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsNoetherianSubringHomogeneousMatrixFlatChar
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FiniteGrCechHomology
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FiniteQuotSMulTopXSubOneOfChart
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FlatHomLocOfFlatHomLocSingleton
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsBaseChangeCokerMatrixMvPolynomial
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsHomogeneousRangeMulVecLin
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.NonemptyBaseChangeGrCubeIso
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.NonemptyHomLocSingletonEquivQuotSMulTop
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.IsGradedMapLinearCombination
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.RingTheory.QuotSMulTop
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsHomogeneousFamilySaturating
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsPowSmulEqAddSubOneSmul
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsXPowSmulMemSpanOfFiniteQuot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,8 +28,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -53,6 +49,246 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsNoetherianSubringHomogeneousMatrixFlatChar
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FiniteGrCechHomology
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FiniteQuotSMulTopXSubOneOfChart
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FlatHomLocOfFlatHomLocSingleton
+public import Mathlib.GroupTheory.GroupAction.Ring
+public import Mathlib.RingTheory.IsTensorProduct
+public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+public import Mathlib.RingTheory.TensorProduct.IsBaseChangePi
+public import Mathlib.RingTheory.TensorProduct.IsBaseChangeRightExact
+import Mathlib.Tactic.TypeStar
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.WeightAddLeOfMemSupportDividedContraction
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.RingTheory.TensorProduct.MvPolynomial
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.NonemptyBaseChangeGrCubeIso
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsXPowSmulEqZeroOfEqXSubOneSmul
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Presheaf
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsXPowSmulMemSpanOfFiniteQuotStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits DirectSum MvPolynomial TensorProduct GlobalTheory
+theorem _root_.GlobalTheory.T.exists_X_pow_smul_mem_span_of_finite_quotSMulTop : ∀ (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type) [CommRing R] (M : Type) [AddCommGroup M] [Module R M] [Module (MvPolynomial ι R) M] [IsScalarTower R (MvPolynomial ι R) M] (ℳ : ℤ → Submodule R M) [PolyGradedSMul ι ℳ] [Decomposition ℳ] (i : ι), Module.Finite (MvPolynomial ι R) (QuotSMulTop (X i - 1 : MvPolynomial ι R) M) → ∃ T : Finset M, ∀ y : M, ∃ k : ℕ, (X i : MvPolynomial ι R) ^ k • y ∈ Submodule.span (MvPolynomial ι R) (T : Set M) := by
+  first | exact @GlobalTheory.exists_X_pow_smul_mem_span_of_finite_quot | exact GlobalTheory.exists_X_pow_smul_mem_span_of_finite_quot | (intros; apply GlobalTheory.exists_X_pow_smul_mem_span_of_finite_quot <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsGradedPresentationSaturating
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits DirectSum MvPolynomial TensorProduct GlobalTheory
+
+namespace GlobalTheory
+
+theorem exists_graded_presentation_saturating : ∀ (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type) [CommRing R] (G : Type) [AddCommGroup G] [Module R G] [Module (MvPolynomial ι R) G] [IsScalarTower R (MvPolynomial ι R) G] (𝒢 : ℤ → Submodule R G) [PolyGradedSMul ι 𝒢] [Decomposition 𝒢], (∀ i : ι, Module.FinitePresentation (MvPolynomial ι R) (QuotSMulTop (X i - 1 : MvPolynomial ι R) G)) → ∃ (a b : ℕ) (d : Fin a → ℤ) (e : Fin b → ℤ) (Φ : Matrix (Fin a) (Fin b) (MvPolynomial ι R)) (ψ : ((Fin a → MvPolynomial ι R) ⧸ LinearMap.range Φ.mulVecLin) →ₗ[MvPolynomial ι R] G), (∀ l j, Φ l j ∈ polyGrading ι R (e j - d l)) ∧ IsGradedMap (grQuot (grFree ι R d) (LinearMap.range Φ.mulVecLin)) 𝒢 ψ ∧ ∀ i : ι, (∀ y, ψ y = 0 → ∃ k : ℕ, (X i : MvPolynomial ι R) ^ k • y = 0) ∧ (∀ z : G, ∃ k : ℕ, (X i : MvPolynomial ι R) ^ k • z ∈ LinearMap.range ψ) := by
+  intro ι _ _ R _ G _ _ _ _ 𝒢 _ _ hG
+  obtain ⟨a, d, g, hg, hsat⟩ := exists_homogeneous_family_saturating ι R G 𝒢 fun i =>
+    GlobalTheory.T.exists_X_pow_smul_mem_span_of_finite_quotSMulTop ι R G 𝒢 i (haveI := hG i; inferInstance)
+  set φ := Fintype.linearCombination (MvPolynomial ι R) g with hφdef
+  have hφ : IsGradedMap (grFree ι R d) 𝒢 φ := isGradedMap_linearCombination 𝒢 hg
+  have hsat' : ∀ (i : ι) (z : G), ∃ k : ℕ,
+      (X i : MvPolynomial ι R) ^ k • z ∈ LinearMap.range φ := by
+    intro i z
+    rw [hφdef, Fintype.range_linearCombination]
+    exact hsat i z
+  let _ : Decomposition (grSub (grFree ι R d) (LinearMap.ker φ)) :=
+    grSubDecomposition _ hφ.isHomogeneous_ker
+  obtain ⟨b, e, κ, hκ, hksat⟩ := exists_homogeneous_family_saturating ι R (LinearMap.ker φ)
+    (grSub (grFree ι R d) (LinearMap.ker φ)) fun i =>
+      GlobalTheory.T.exists_X_pow_smul_mem_span_of_finite_quotSMulTop ι R _ (grSub (grFree ι R d) (LinearMap.ker φ)) i
+        (GlobalTheory.finite_quotSMulTop_ker_of_graded ι R _ (grFree ι R d) G 𝒢 φ i hφ inferInstance (hsat' i) (hG i))
+  let Φ : Matrix (Fin a) (Fin b) (MvPolynomial ι R) := Matrix.of fun l j => (κ j).1 l
+  have hrange : LinearMap.range Φ.mulVecLin =
+      (Submodule.span (MvPolynomial ι R) (Set.range κ)).map (LinearMap.ker φ).subtype := by
+    rw [Matrix.range_mulVecLin, Submodule.map_span, ← Set.range_comp]
+    rfl
+  have hle : LinearMap.range Φ.mulVecLin ≤ LinearMap.ker φ := by
+    rw [hrange]
+    exact Submodule.map_subtype_le _ _
+  refine ⟨a, b, d, e, Φ, Submodule.liftQ _ φ hle, fun l j => ?_, hφ.liftQ _ hle,
+    fun i => ⟨fun y hy => ?_, fun z => ?_⟩⟩
+  · have := mem_grPi.1 (mem_grSub.1 (hκ j)) l
+    rw [sub_eq_add_neg]
+    exact this
+  · obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective _ y
+    obtain ⟨k, hk⟩ := hksat i ⟨x, hy⟩
+    refine ⟨k, ?_⟩
+    rw [← map_smul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, hrange]
+    exact ⟨_, hk, rfl⟩
+  · rw [Submodule.range_liftQ]
+    exact hsat' i z
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsBaseChangeCokerMatrixMvPolynomial
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits DirectSum MvPolynomial TensorProduct GlobalTheory
+
+namespace GlobalTheory
+
+theorem exists_isBaseChange_coker {R₀ R A₀ A M₁ M₂ N₁ N₂ : Type*} [CommRing R₀] [CommRing R]
+    [Algebra R₀ R] [Ring A₀] [Ring A] [Algebra R₀ A₀] [Algebra R A] [SMul R₀ A]
+    [AddCommGroup M₁] [AddCommGroup M₂] [AddCommGroup N₁] [AddCommGroup N₂]
+    [Module R₀ M₁] [Module R₀ M₂] [Module A₀ M₁] [Module A₀ M₂]
+    [IsScalarTower R₀ A₀ M₁] [IsScalarTower R₀ A₀ M₂]
+    [Module R₀ N₁] [Module R₀ N₂] [Module R N₁] [Module R N₂] [Module A N₁] [Module A N₂]
+    [IsScalarTower R₀ R N₁] [IsScalarTower R₀ R N₂] [IsScalarTower R A N₁] [IsScalarTower R A N₂]
+    [IsScalarTower R₀ A N₂]
+    (f₀ : M₁ →ₗ[A₀] M₂) (f : N₁ →ₗ[A] N₂) (h₁ : M₁ →ₗ[R₀] N₁) (h₂ : M₂ →ₗ[R₀] N₂)
+    (b₁ : IsBaseChange R h₁) (b₂ : IsBaseChange R h₂) (hcomm : ∀ x, h₂ (f₀ x) = f (h₁ x)) :
+    ∃ ψ : (M₂ ⧸ LinearMap.range f₀) →ₗ[R₀] (N₂ ⧸ LinearMap.range f),
+      IsBaseChange R ψ ∧ ∀ y, ψ (Submodule.Quotient.mk y) = Submodule.Quotient.mk (h₂ y) := by
+  let q₀ : M₂ →ₗ[R₀] (M₂ ⧸ LinearMap.range f₀) := (LinearMap.range f₀).mkQ.restrictScalars R₀
+  let q : N₂ →ₗ[R] (N₂ ⧸ LinearMap.range f) := (LinearMap.range f).mkQ.restrictScalars R
+  have hq₀ : Function.Surjective q₀ := (LinearMap.range f₀).mkQ_surjective
+  have hq : Function.Surjective q := (LinearMap.range f).mkQ_surjective
+  have hex₀ : Function.Exact (f₀.restrictScalars R₀) q₀ := LinearMap.exact_map_mkQ_range f₀
+  have hex : Function.Exact (f.restrictScalars R) q := LinearMap.exact_map_mkQ_range f
+  have hker : LinearMap.ker q₀ ≤ LinearMap.ker ((q.restrictScalars R₀).comp h₂) := by
+    intro y hy
+    obtain ⟨x, rfl⟩ := (hex₀ y).1 hy
+    exact (hex _).2 ⟨h₁ x, (hcomm x).symm⟩
+  let ψ : (M₂ ⧸ LinearMap.range f₀) →ₗ[R₀] (N₂ ⧸ LinearMap.range f) :=
+    ((LinearMap.ker q₀).liftQ _ hker).comp (q₀.quotKerEquivOfSurjective hq₀).symm.toLinearMap
+  have hψ : ∀ y, ψ (q₀ y) = q (h₂ y) := by
+    intro y
+    have : (q₀.quotKerEquivOfSurjective hq₀).symm (q₀ y) = Submodule.Quotient.mk y := by
+      rw [LinearEquiv.symm_apply_eq]
+      rfl
+    simp only [ψ, LinearMap.comp_apply, LinearEquiv.coe_coe, this]
+    rfl
+  exact ⟨ψ, IsBaseChange.of_right_exact R (f := f₀.restrictScalars R₀) (g := q₀)
+    (f' := f.restrictScalars R) (g' := q) h₁ h₂ ψ (LinearMap.ext hcomm) (LinearMap.ext hψ)
+    b₁ b₂ hex₀ hq₀ hex hq, hψ⟩
+
+theorem isBaseChange_coker_matrix_mvPolynomial :
+    ∀ (ι : Type) (R₀ R : Type) [CommRing R₀] [CommRing R] [Algebra R₀ R] (a b : ℕ)
+      (Φ₀ : Matrix (Fin a) (Fin b) (MvPolynomial ι R₀))
+      (Φ : Matrix (Fin a) (Fin b) (MvPolynomial ι R)),
+      Φ₀.map (MvPolynomial.map (algebraMap R₀ R)) = Φ →
+      ∃ ψ : ((Fin a → MvPolynomial ι R₀) ⧸ LinearMap.range Φ₀.mulVecLin) →ₗ[R₀]
+          ((Fin a → MvPolynomial ι R) ⧸ LinearMap.range Φ.mulVecLin),
+        IsBaseChange R ψ ∧ ∀ y : Fin a → MvPolynomial ι R₀,
+          ψ (Submodule.Quotient.mk y) =
+            Submodule.Quotient.mk fun l => MvPolynomial.map (algebraMap R₀ R) (y l) := by
+  intro ι R₀ R _ _ _ a b Φ₀ Φ hΦ
+  have hm : IsBaseChange R (mapAlgHom (σ := ι) (Algebra.ofId R₀ R)).toLinearMap :=
+    IsBaseChange.of_equiv (algebraTensorAlgEquiv R₀ R).toLinearEquiv fun p => by
+      simp [mapAlgHom_apply]
+  refine exists_isBaseChange_coker Φ₀.mulVecLin Φ.mulVecLin _ _
+    (IsBaseChange.finitePow (Fin b) hm) (IsBaseChange.finitePow (Fin a) hm) fun x => ?_
+  funext l
+  rw [← hΦ]
+  exact RingHom.map_mulVec (MvPolynomial.map (algebraMap R₀ R)) Φ₀ x l
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsHomogeneousRangeMulVecLin
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits DirectSum MvPolynomial TensorProduct GlobalTheory
+
+namespace GlobalTheory
+
+theorem isGradedMap_mulVecLin {ι : Type} {R : Type*} [CommRing R] {κ μ : Type*} [Fintype μ]
+    {d : κ → ℤ} {e : μ → ℤ} {Φ : Matrix κ μ (MvPolynomial ι R)}
+    (h : ∀ l j, Φ l j ∈ polyGrading ι R (e j - d l)) :
+    IsGradedMap (grFree ι R e) (grFree ι R d) Φ.mulVecLin := by
+  intro n v hv
+  refine mem_grPi.2 fun l => ?_
+  rw [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, grShift_apply]
+  refine Submodule.sum_mem _ fun j _ => ?_
+  have := grSMul_mem (polyGrading ι R) (h l j) (mem_grPi.1 hv j)
+  rwa [smul_eq_mul, show n + -e j + (e j - d l) = n + -d l by ring] at this
+
+theorem isHomogeneous_range_mulVecLin :
+    ∀ (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type) [CommRing R] (a b : ℕ) (d : Fin a → ℤ)
+      (e : Fin b → ℤ) (Φ : Matrix (Fin a) (Fin b) (MvPolynomial ι R)),
+      (∀ l j, Φ l j ∈ polyGrading ι R (e j - d l)) →
+        (LinearMap.range Φ.mulVecLin).IsHomogeneous (grFree ι R d) :=
+  fun _ _ _ _ _ _ _ _ _ _ h => (isGradedMap_mulVecLin h).isHomogeneous_range
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.NonemptyHomLocSingletonEquivQuotSMulTop
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits DirectSum MvPolynomial TensorProduct GlobalTheory
+open scoped Pointwise
+
+namespace GlobalTheory
+
+theorem nonempty_homLoc_singleton_equiv_quotSMulTop : ∀ (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type) [CommRing R] (M : Type) [AddCommGroup M] [Module R M] [Module (MvPolynomial ι R) M] [IsScalarTower R (MvPolynomial ι R) M] (ℳ : ℤ → Submodule R M) [PolyGradedSMul ι ℳ] [Decomposition ℳ] (i : ι), Nonempty (homLoc ℳ {i} 0 ≃ₗ[R] QuotSMulTop (X i - 1 : MvPolynomial ι R) M) := by
+  intro ι _ _ R _ M _ _ _ _ ℳ _ _ i
+  obtain ⟨-, h2, h3⟩ := GlobalTheory.X_sub_one_smul_graded ι R M ℳ i
+  let K : Submodule (MvPolynomial ι R) M := (X i - 1 : MvPolynomial ι R) • ⊤
+  have hK : ∀ y : M, y ∈ K ↔ ∃ w : M, y = (X i - 1 : MvPolynomial ι R) • w := fun y => by
+    rw [Submodule.mem_smul_pointwise_iff_exists]
+    exact ⟨fun ⟨w, _, h⟩ => ⟨w, h.symm⟩, fun ⟨w, h⟩ => ⟨w, trivial, h.symm⟩⟩
+  let φ : ∀ k : ℕ, ℳ (0 + k * (({i} : Finset ι).card : ℤ)) →ₗ[R]
+      QuotSMulTop (X i - 1 : MvPolynomial ι R) M :=
+    fun k => (K.mkQ.restrictScalars R) ∘ₗ (ℳ _).subtype
+  have hφv : ∀ k m, φ k m = Submodule.Quotient.mk (m : M) := fun _ _ => rfl
+  have hφ : ∀ (k : ℕ) (m : ℳ (0 + k * (({i} : Finset ι).card : ℤ)))
+      (m' : ℳ (0 + (k + 1 : ℕ) * (({i} : Finset ι).card : ℤ))),
+      (m' : M) = xProd R {i} • (m : M) → φ (k + 1) m' = φ k m := by
+    intro k m m' h
+    rw [hφv, hφv, Submodule.Quotient.eq]
+    refine (hK _).2 ⟨m, ?_⟩
+    rw [h, sub_smul, one_smul, xProd, Finset.prod_singleton]
+  refine ⟨LinearEquiv.ofBijective (homLocLift φ hφ) ⟨?_, ?_⟩⟩
+  · rw [homLocLift_injective_iff]
+    intro k m hm
+    rw [hφv, Submodule.Quotient.mk_eq_zero] at hm
+    obtain ⟨w, hw⟩ := (hK _).1 hm
+    obtain ⟨l, hl⟩ := h2 _ _ w m.2 hw
+    exact ⟨l, by rwa [xProd, Finset.prod_singleton]⟩
+  · rw [homLocLift_surjective_iff]
+    intro t
+    obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ t
+    obtain ⟨n₀, hn⟩ := h3 y
+    obtain ⟨y', hy', w, hw⟩ := hn (0 + (n₀.toNat : ℕ) * (({i} : Finset ι).card : ℤ))
+      (by simp)
+    refine ⟨n₀.toNat, ⟨y', hy'⟩, ?_⟩
+    rw [hφv, eq_comm, Submodule.Quotient.eq]
+    exact (hK _).2 ⟨w, by rw [hw, add_sub_cancel_left]⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.DehomogenisingCompOfSaturating
+
+section
 
 @[expose] public section
 
@@ -157,3 +393,6 @@ theorem exists_noetherian_model_grCube (ι : Type) [LinearOrder ι] [Fintype ι]
       (ConcreteCategory.bijective_of_isIso (iso.hom.app I))
 
 end GlobalTheory
+end
+end
+end

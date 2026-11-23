@@ -3,19 +3,9 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Jets.BasicLiftAll
 public import Development.AbelianVarietyTheory.PublishedTheorems.BesselIntegrals.BesselXiIntegrable
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AestronglyMeasurableTopVectorSmoothCoefficient
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CutoffCompExpIteratedDerivBounded
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HsInnerSelfEqNormSq
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IntegrableEmptyWordDensityDecayingCoefficientsStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IteratedDerivBddOfEventuallyConst
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.JdPolyOKPolynomialOperators
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NeZeroOfIsLocPt
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WordBoundSmoothDecayingCoefficientsStatement
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDCCLower
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -30,6 +20,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,7 +41,271 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Presheaf
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HsInnerSelfEqNormSq
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IntegrableEmptyWordDensityDecayingCoefficientsStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IteratedDerivBddOfEventuallyConst
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.JdPolyOKPolynomialOperators
+public import Formalism.HermitianCurvature.StatementTBB
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLemB
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.TriangleInequalityAtPlace
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.VectorVanishesBigCell
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WordBoundSmoothDecayingCoefficientsStatement
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDCCLower
+import Mathlib.Algebra.Order.Star.Real
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CutoffCompExpIteratedDerivBounded
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.HatNF
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.Wd Formalism.FourierDecayAlt.Fr Formalism.REAL Formalism.QuantumDeterminants MeasureTheory Filter Topology
+
+theorem cutoff_comp_exp_iteratedDeriv_bounded (χ : ℝ → ℝ) (hχ : C6.IsCut0 χ) (p : ℕ) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ t, |iteratedDeriv p (fun t => χ (Real.exp t)) t| ≤ C := by
+  obtain ⟨hs, ⟨δ, hδ, h0⟩, h1⟩ := hχ
+  set h : ℝ → ℝ := fun t => χ (Real.exp t) with hh
+  have hc : ∀ k t : ℝ, iteratedDeriv p (fun _ : ℝ => k) t = if p = 0 then k else 0 := by
+    intro k t
+    cases p with
+    | zero => simp
+    | succ n => simp [iteratedDeriv_succ']
+  have hsm : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) h := hs.comp Real.contDiff_exp
+  have hcont : Continuous (iteratedDeriv p h) := hsm.continuous_iteratedDeriv p (by exact_mod_cast le_top)
+  have hlow : ∀ t, t < Real.log δ → iteratedDeriv p h t = 0 := by
+    intro t ht
+    have : h =ᶠ[𝓝 t] fun _ => (0:ℝ) := by
+      filter_upwards [Iio_mem_nhds ht] with s hs
+      have := Real.exp_lt_exp.mpr hs
+      rw [Real.exp_log hδ] at this
+      simp only [hh, h0 _ this]
+    rw [this.iteratedDeriv_eq p, hc]; simp
+  have hhigh : ∀ t, 0 < t → iteratedDeriv p h t = if p = 0 then 1 else 0 := by
+    intro t ht
+    have : h =ᶠ[𝓝 t] fun _ => (1:ℝ) := by
+      filter_upwards [Ioi_mem_nhds ht] with s hs
+      have : 1 ≤ Real.exp s := Real.one_le_exp (le_of_lt hs)
+      simp [hh, h1 _ this]
+    rw [this.iteratedDeriv_eq p, hc]
+  obtain ⟨C0, hC0⟩ := (isCompact_Icc (a := Real.log δ) (b := 0)).exists_bound_of_continuousOn hcont.continuousOn
+  refine ⟨max C0 1, le_trans zero_le_one (le_max_right _ _), fun t => ?_⟩
+  rcases lt_or_ge t (Real.log δ) with h1 | h1
+  · rw [hlow t h1]; simp
+  · rcases lt_or_ge 0 t with h2 | h2
+    · rw [hhigh t h2]; split_ifs <;> simp
+    · exact (hC0 t ⟨h1, h2⟩).trans (le_max_left _ _)
+
+theorem ld_cut_pow_bound (χ : ℝ → ℝ) (hχ : C6.IsCut0 χ) (e j : ℕ) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ ε x : ℝ, 0 < ε → 0 < x → |LE.ld j (fun y => χ (y / ε) * y ^ e) x| ≤ C * x ^ e := by
+  choose B hB0 hB using cutoff_comp_exp_iteratedDeriv_bounded χ hχ
+  refine ⟨∑ i ∈ Finset.range (j + 1), (j.choose i : ℝ) * B i * (e : ℝ) ^ (j - i),
+    Finset.sum_nonneg fun i _ => mul_nonneg (mul_nonneg (by positivity) (hB0 i)) (by positivity), ?_⟩
+  intro ε x hε hx
+  set h : ℝ → ℝ := fun t => χ (Real.exp t) with hh
+  have hsm : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) h := hχ.1.comp Real.contDiff_exp
+  unfold LE.ld
+  have e1 : (fun u : ℝ => χ (Real.exp u / ε) * Real.exp u ^ e) =
+      fun u : ℝ => h (u - Real.log ε) * Real.exp ((e : ℝ) * u) := by
+    funext u
+    simp only [hh]
+    rw [Real.exp_sub, Real.exp_log hε, Real.exp_nat_mul]
+  have c1 : ContDiff ℝ j (fun u : ℝ => h (u - Real.log ε)) :=
+    (hsm.of_le (by exact_mod_cast le_top)).comp (contDiff_id.sub contDiff_const)
+  have c2 : ContDiff ℝ j (fun u : ℝ => Real.exp ((e : ℝ) * u)) :=
+    Real.contDiff_exp.comp (contDiff_const.mul contDiff_id)
+  beta_reduce
+  rw [e1, iteratedDeriv_fun_mul c1.contDiffAt c2.contDiffAt, Finset.sum_mul]
+  refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ => ?_)
+  rw [iteratedDeriv_comp_sub_const, iteratedDeriv_exp_const_mul]
+  beta_reduce
+  rw [Real.exp_nat_mul, Real.exp_log hx, abs_mul, abs_mul, abs_of_nonneg (by positivity : (0:ℝ) ≤ (j.choose i : ℝ)),
+    abs_of_nonneg (by positivity : (0:ℝ) ≤ (e : ℝ) ^ (j - i) * x ^ e), ← mul_assoc]
+  have := hB i (Real.log x - Real.log ε)
+  gcongr
+
+theorem ld_cut_pow : ∀ (χ : ℝ → ℝ) (e J : ℕ), C6.IsCut0 χ →
+    (∀ ε : ℝ, 0 < ε → CutPow e fun y => χ (y / ε) * y ^ e) ∧
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ ε x : ℝ, 0 < ε → 0 < x → ∀ j, j ≤ J →
+        |LE.ld j (fun y => χ (y / ε) * y ^ e) x| ≤ C * x ^ e := by
+  intro χ e J hχ
+  constructor
+  · intro ε hε
+    obtain ⟨hs, ⟨δ, hδ, h0⟩, h1⟩ := hχ
+    refine ⟨(hs.comp (contDiff_id.div_const ε)).mul (contDiff_id.pow e), ⟨δ * ε, by positivity, fun x hx => ?_⟩,
+      1, ε, fun x hx => ?_⟩
+    · have : x / ε < δ := by rwa [div_lt_iff₀ hε]
+      simp [h0 _ this]
+    · have : 1 ≤ x / ε := by rwa [le_div_iff₀ hε, one_mul]
+      simp [h1 _ this]
+  · choose C hC0 hC using ld_cut_pow_bound χ hχ e
+    refine ⟨∑ j ∈ Finset.range (J + 1), C j, Finset.sum_nonneg fun j _ => hC0 j, fun ε x hε hx j hj => ?_⟩
+    refine (hC j ε x hε hx).trans (mul_le_mul_of_nonneg_right ?_ (by positivity))
+    exact Finset.single_le_sum (f := C) (fun i _ => hC0 i) (Finset.mem_range.mpr (by omega))
+
+end GlobalTheory.HatNF
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.NeZeroOfIsLocPt
+
+section
+
+@[expose] public section
+
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.Wd Formalism.REAL Formalism.QuantumDeterminants MeasureTheory
+
+namespace GlobalTheory.TopDensityBound
+
+section aux
+
+variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
+  [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
+
+theorem hsVec_comp_sq_le (E : Wp →L[ℂ] Wp) (X : Wq →L[ℂ] Wp) :
+    ‖B.hsVec (E.comp X)‖ ^ 2 ≤ ‖E‖ ^ 2 * ‖B.hsVec X‖ ^ 2 := by
+  rw [PiLp.norm_sq_eq_of_L2, PiLp.norm_sq_eq_of_L2, Finset.mul_sum]
+  refine Finset.sum_le_sum fun i _ => ?_
+  rw [← mul_pow]
+  refine pow_le_pow_left₀ (norm_nonneg _) ?_ 2
+  exact E.le_opNorm _
+
+variable {P : M.Par}
+
+theorem V_eq_zero (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (γ : C.LPt)
+    (h : ¬ 0 < TBB.Gp p γ) : p.V F γ = 0 := by
+  unfold KB.Pl.V D.vecV
+  rw [dite_eq_right]
+  exact fun h' => h h'.2
+
+theorem RR_cons (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (w : List C.Letter) (hw : w ≠ [])
+    {γ : C.LPt} (hγ : D.IsLocPt γ (P.r + 1)) :
+    p.RR F (P.r + 1) w γ γ = ((∑ e : Ix (Fin w.length), ∑ ρ : M.Ty P,
+      Top.dH P p.l0 (TBB.TTp p) w γ e ρ ^ 2 *
+        ‖B.hsVec ((p.TP.E ρ).comp (p.V (p.Θ.Θ w e F) γ))‖ ^ 2 : ℝ) : ℂ) := by
+  have : p.RR F (P.r + 1) w γ γ = Top.topOf P p.l0 p.T p.ν' p.m₀ p.Θ p.TP F w γ γ := by
+    simp [KB.Pl.RR, D.RRplace, hγ, hw]
+  rw [this]
+  unfold Top.topOf
+  push_cast
+  refine Finset.sum_congr rfl fun e _ => Finset.sum_congr rfl fun ρ _ => ?_
+  rw [Formalism.FourierDecayAlt.P.TBBx2.Tri.hsInner_self]
+  simp only [TBB.TTp, KB.Pl.V]
+  push_cast
+  ring
+
+theorem Ew_eq (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (w : List C.Letter) (γ : C.LPt) :
+    TBB.Ew p (fun _ => 1) F (P.r + 1) w γ =
+      (Real.sqrt (TBB.nPt P.k P.r (TBB.TTp p) γ) * Real.sqrt (TBB.nPt P.k P.r (TBB.TTp p) γ)) *
+        (p.RR F (P.r + 1) w γ γ).re := by
+  unfold TBB.Ew TBB.NP TBB.normC
+  rw [Complex.re_ofReal_mul]
+  simp
+
+theorem ne_zero_of_isLocPt {r : ℕ} (c : Fin (r + 1) → ℂ) (h : D.IsLocPt (TBB.bigPt r c) (r + 1)) (l : Fin (r + 1)) :
+    c l ≠ 0 := by
+  have := h.1 (1, c l) (by unfold TBB.bigPt; exact List.mem_ofFn.2 ⟨l, rfl⟩)
+  exact this.2
+
+theorem wPt_bigPt (p : KB.Pl P Wp Wq) (c : Fin (P.r + 1) → ℂ) :
+    Top.wPt (TBB.TTp p) P.r (TBB.bigPt P.r c) = ‖∏ l, c l‖ ^ 2 / TBB.Gp p (TBB.bigPt P.r c) := by
+  unfold Top.wPt TBB.Gp
+  have h : D.ptMatN (TBB.bigPt P.r c) (P.r + 1) = U.hMat 1 c := Formalism.FourierDecayAlt.P.PBJ.Dens.ptMatN_bigPt c
+  rw [h, Formalism.FourierDecayAlt.P.PBM.hMat_one, Matrix.det_diagonal, Complex.normSq_eq_norm_sq]
+
+end aux
+
+theorem top_density_le : ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (P : M.Par) (p : KB.Pl P Wp Wq) (w : List C.Letter), ∃ C : ℝ, 0 ≤ C ∧ ∀ (H : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (c : Fin (P.r + 1) → ℂ), (¬((∀ l, c l ≠ 0) ∧ 0 < TBB.Gp p (TBB.bigPt P.r c)) → TBB.Ew p (fun _ => 1) H (P.r + 1) w (TBB.bigPt P.r c) = 0) ∧ ((∀ l, c l ≠ 0) → 0 < TBB.Gp p (TBB.bigPt P.r c) → 0 ≤ TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) ∧ TBB.Ew p (fun _ => 1) H (P.r + 1) [] (TBB.bigPt P.r c) = TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) * ‖B.hsVec (p.V H (TBB.bigPt P.r c))‖ ^ 2 ∧ |TBB.Ew p (fun _ => 1) H (P.r + 1) w (TBB.bigPt P.r c)| ≤ C * TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) * (‖∏ l, c l‖ ^ 2 / TBB.Gp p (TBB.bigPt P.r c)) ^ w.length * ∑ e : Ix (Fin w.length), ‖B.hsVec (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c))‖ ^ 2) := by
+  intro Wp Wq _ _ _ _ _ _ P p w
+  set K : Ix (Fin w.length) → ℝ := fun e => ∑ ρ : M.Ty P, |(Top.cW P p.l0 w e ρ).re| * ‖p.TP.E ρ‖ ^ 2 with hK
+  have hK0 : ∀ e, 0 ≤ K e := fun e => Finset.sum_nonneg fun ρ _ => by positivity
+  have hS0 : 0 ≤ ∑ e, K e := Finset.sum_nonneg fun e _ => hK0 e
+  refine ⟨1 + ∑ e, K e, by linarith, fun H c => ⟨fun hn => ?_, fun hc hG => ?_⟩⟩
+  · rw [Ew_eq]
+    by_cases hl : D.IsLocPt (TBB.bigPt P.r c) (P.r + 1)
+    · have hG : ¬ 0 < TBB.Gp p (TBB.bigPt P.r c) := fun h => hn ⟨ne_zero_of_isLocPt c hl, h⟩
+      by_cases hw : w = []
+      · subst hw
+        rw [Formalism.FourierDecayAlt.P.TBBx2.Tri.RR_top p H hl, V_eq_zero p _ _ hG, Formalism.FourierDecayAlt.P.TBBx2.Tri.hsInner_self,
+          Formalism.FourierDecayAlt.P.TBBx2.Tri.hsVec_zero]
+        simp
+      · rw [RR_cons p H w hw hl]
+        simp [V_eq_zero p _ _ hG, Formalism.FourierDecayAlt.P.TBBx2.Tri.hsVec_zero]
+    · have : p.RR H (P.r + 1) w (TBB.bigPt P.r c) (TBB.bigPt P.r c) = 0 := by
+        simp [KB.Pl.RR, D.RRplace, hl]
+      rw [this]; simp
+  · have hl : D.IsLocPt (TBB.bigPt P.r c) (P.r + 1) := Formalism.FourierDecayAlt.P.PBJ.Dens.isLocPt_bigPt c hc
+    have hζ : Tz P.k P.r p.T.base.z * Tz P.k P.r p.T.base.z' < Complex.normSq (c (Fin.last P.r)) :=
+      Formalism.FourierDecayAlt.P.PBM.zeta_big _ c hG
+    have hn : 0 ≤ TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) := by
+      unfold TBB.TTp
+      rw [Formalism.FourierDecayAlt.P.CutBP.nPt_bigPt _ _ _ _ c hζ.le]
+      exact Formalism.FourierDecayAlt.P.CutBP.bcWeight_nonneg0 _ _ _ _ _
+    have hnil : TBB.Ew p (fun _ => 1) H (P.r + 1) [] (TBB.bigPt P.r c) =
+        TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) * ‖B.hsVec (p.V H (TBB.bigPt P.r c))‖ ^ 2 := by
+      rw [Formalism.FourierDecayAlt.P.TBBx2.Tri.Ew_top p H hl, Real.mul_self_sqrt hn]
+    refine ⟨hn, hnil, ?_⟩
+    by_cases hw : w = []
+    · subst hw
+      rw [hnil, abs_of_nonneg (by positivity)]
+      simp only [p.Θ.nil, List.length_nil, pow_zero, mul_one]
+      rw [Finset.sum_const]
+      have hcard : (Finset.univ : Finset (Ix (Fin 0))).card = 1 := by simp [Ix]
+      rw [hcard, one_smul]
+      have : 0 ≤ TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) * ‖B.hsVec (p.V H (TBB.bigPt P.r c))‖ ^ 2 := by
+        positivity
+      rw [mul_assoc]
+      exact le_mul_of_one_le_left this (le_add_of_nonneg_right hS0)
+    · rw [Ew_eq, Real.mul_self_sqrt hn, RR_cons p H w hw hl, Complex.ofReal_re, abs_of_nonneg (by positivity),
+        ← wPt_bigPt]
+      set Wt := Top.wPt (TBB.TTp p) P.r (TBB.bigPt P.r c) with hWt
+      have hW0 : 0 ≤ Wt := by rw [hWt, wPt_bigPt]; positivity
+      have key : (∑ e : Ix (Fin w.length), ∑ ρ : M.Ty P,
+          Top.dH P p.l0 (TBB.TTp p) w (TBB.bigPt P.r c) e ρ ^ 2 *
+            ‖B.hsVec ((p.TP.E ρ).comp (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c)))‖ ^ 2) ≤
+          (1 + ∑ e, K e) * Wt ^ w.length *
+            ∑ e : Ix (Fin w.length), ‖B.hsVec (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c))‖ ^ 2 := by
+        rw [Finset.mul_sum]
+        refine Finset.sum_le_sum fun e _ => ?_
+        set v := ‖B.hsVec (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c))‖ ^ 2 with hv
+        have hv0 : 0 ≤ v := by positivity
+        have hKe : K e ≤ 1 + ∑ e, K e := by
+          have := Finset.single_le_sum (f := K) (fun e _ => hK0 e) (Finset.mem_univ e)
+          linarith
+        calc _ ≤ K e * Wt ^ w.length * v := by
+              simp only [hK]
+              rw [Finset.sum_mul, Finset.sum_mul]
+              refine Finset.sum_le_sum fun ρ _ => ?_
+              have h1 : Top.dH P p.l0 (TBB.TTp p) w (TBB.bigPt P.r c) e ρ ^ 2 ≤
+                  Wt ^ w.length * |(Top.cW P p.l0 w e ρ).re| := by
+                unfold Top.dH
+                rw [← hWt, Real.sq_sqrt']
+                exact max_le (mul_le_mul_of_nonneg_left (le_abs_self _) (by positivity)) (by positivity)
+              have h2 := hsVec_comp_sq_le (p.TP.E ρ) (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c))
+              calc _ ≤ (Wt ^ w.length * |(Top.cW P p.l0 w e ρ).re|) * (‖p.TP.E ρ‖ ^ 2 * v) :=
+                    mul_le_mul h1 h2 (by positivity) (by positivity)
+                _ = _ := by ring
+          _ ≤ _ := by gcongr
+      calc _ ≤ TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c) * ((1 + ∑ e, K e) * Wt ^ w.length *
+            ∑ e : Ix (Fin w.length), ‖B.hsVec (p.V (p.Θ.Θ w e H) (TBB.bigPt P.r c))‖ ^ 2) :=
+            mul_le_mul_of_nonneg_left key hn
+        _ = _ := by ring
+
+end GlobalTheory.TopDensityBound
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.TopDensityDominated
+
+section
 
 @[expose] public section
 
@@ -197,3 +453,5 @@ theorem top_density_dominated : GlobalTheory.HCXi.BesselXiIntegrable → ∀ a :
     rwa [← Fin.sum_univ_fun_getElem] at this
 
 end GlobalTheory.HatNF
+end
+end

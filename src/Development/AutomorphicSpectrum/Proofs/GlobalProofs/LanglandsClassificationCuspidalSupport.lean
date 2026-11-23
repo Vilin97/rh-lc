@@ -9,17 +9,19 @@ import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSubquotientPar
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ParabolicInductionProductBlockRenamingEquivStatement
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ParabolicInductionProductEquivOfNoBlocks
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PiExteriorTensorSmoothIrreducibleIsIrreducibleStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapInjectiveOfInjective
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.LinearAlgebra.PiTensorProduct.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -34,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,6 +49,41 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapInjectiveOfInjective
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.PiTensor
+
+theorem map_injective_of_injective
+    (K : Type) [Field K] (ι : Type) [Fintype ι] [DecidableEq ι] (M N : ι → Type)
+    [∀ i, AddCommGroup (M i)] [∀ i, Module K (M i)]
+    [∀ i, AddCommGroup (N i)] [∀ i, Module K (N i)]
+    (f : ∀ i, M i →ₗ[K] N i) (hf : ∀ i, Function.Injective (f i)) :
+    Function.Injective (PiTensorProduct.map f) := by
+  have hg : ∀ i, ∃ g : N i →ₗ[K] M i, g ∘ₗ f i = LinearMap.id := fun i =>
+    LinearMap.exists_leftInverse_of_injective (f i) (LinearMap.ker_eq_bot.2 (hf i))
+  choose g hg using hg
+  have hcomp : PiTensorProduct.map g ∘ₗ PiTensorProduct.map f = LinearMap.id := by
+    rw [← PiTensorProduct.map_comp]
+    simp only [hg]
+    exact PiTensorProduct.map_id
+  refine Function.LeftInverse.injective (g := PiTensorProduct.map g) fun x => ?_
+  exact LinearMap.congr_fun hcomp x
+
+end GlobalTheory.CompanionTheory.PiTensor
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.LanglandsClassificationCuspidalSupport
+
+section
 
 @[expose] public section
 
@@ -204,3 +240,6 @@ theorem main : GlobalTheory.Published.BernsteinZelevinskyFiniteness → GlobalTh
   fun hBZ hGL _ _ _ _ _ N Q => embeds hBZ hGL N Q
 
 end GlobalTheory.CompanionTheory.CuspEmbed
+end
+end
+end

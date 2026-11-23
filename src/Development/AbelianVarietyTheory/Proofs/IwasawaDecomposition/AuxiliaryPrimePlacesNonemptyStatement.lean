@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwistBaseCoefficientRingResidueFieldFinite
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AuxiliaryPrimePlacesNonempty
+import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,6 +46,42 @@ import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 import ReciprocityTheory.Automorphisms.PlaceA
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTwistRingsCharactersClassGroups
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AuxiliaryPrimePlacesNonempty
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
+open scoped TensorProduct
+
+noncomputable section
+
+namespace GlobalTheory.PdPlace
+
+theorem exists_place_over_prime (E : Type) [Field E] [NumberField E] (p : ℕ) (hp : p.Prime) :
+    (Formalism.BasicNotions.placesOver E p).Nonempty := by
+  apply _root_.GlobalTheory.TwRing.placesOver_nonempty <;> assumption
+
+theorem pD_nonempty : ∀ (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw), (T.pD i).Nonempty := by
+  intro D T i
+  have hp : (if T.l i = D.host.pde then D.host.pde' else D.host.pde).Prime := by
+    split_ifs
+    exacts [D.host.pde'_prime, D.host.pde_prime]
+  obtain ⟨v, hv⟩ := exists_place_over_prime D.host.E _ hp
+  rw [← T.pD_eq i] at hv
+  exact ⟨v, hv⟩
+
+end GlobalTheory.PdPlace
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AuxiliaryPrimePlacesNonemptyStatement
+
+section
 
 @[expose] public section
 
@@ -54,3 +90,5 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.auxiliaryPrimePlaces_nonempty : ∀ (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw), (T.pD i).Nonempty := by
   first | exact @GlobalTheory.PdPlace.pD_nonempty | exact GlobalTheory.PdPlace.pD_nonempty | (intros; apply GlobalTheory.PdPlace.pD_nonempty <;> assumption)
+end
+end

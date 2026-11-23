@@ -13,10 +13,13 @@ public import Formalism.SharpRestriction.LevelLetterCocycles.IsFracOL
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocalClauseOfFrobeniusHyps
 import Formalism.SharpRestriction.LevelLetterCocycles.LocalizationQuotientSeparatedDvd
 public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.FilDimOf
-public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemKD
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.SmulSDivMem
-public import Formalism.SharpRestriction.LevelLetterCocycles.SecondLiftOfHypotheses
-public import Formalism.SharpRestriction.LevelLetterCocycles.TruncationClauseOfLatticeHypotheses
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExpRules
+public import Formalism.SharpRestriction.LevelLetterCocycles.LemmasUnramifiedOfRingCondition
+import Formalism.SharpRestriction.LevelLetterCocycles.AnnihilatorGeneralOfRingCondition
+import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.PtTransRec
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.SmulSZeroSplit
+import Formalism.SharpRestriction.LevelLetterCocycles.WachFrobeniusLatticeUnramifiedFunctor
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -54,9 +57,98 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangePreservesUnitaryOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.ExistsXPowMul
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.IsExpSmulA
+import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.SmulSDivMem
 public import Formalism.SharpRestriction.LevelLetterCocycles.CocyclesToWachVectorsBoundOfExtTool
 public import Formalism.SharpRestriction.LevelLetterCocycles.IsTruncIff
+public import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusDifferenceIdentity
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecondLiftAtSituation
+public import Formalism.SharpRestriction.LevelLetterCocycles.TruncationClauseOfLatticeHypotheses
+public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangePreservesUnitaryOf
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemKD
+
+section
+
+@[expose] public section
+
+noncomputable section
+open Classical
+
+namespace Formalism.MainNotions.N.Pv.LocalLengthBound
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc
+
+
+set_option maxHeartbeats 800000 in
+theorem lemK_D (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
+    (Cm : CmpOf D.loc D.locA HW F) (CR CA CB CK : ℝ) (hA : Formalism.MainNotions.RamifiedCoefficientChains.admitted D HW F Cm CR CA CB CK)
+    (hL : Formalism.MainNotions.UnusedSlot80.LevCoeff D HW F) :
+    Formalism.MainNotions.WachCoordinates.AtCaseA fun l _ K LL h => Formalism.MainNotions.RamifiedCoefficientChains.Sh.LemK ((HW l).W K 1 LL h.2.2) := by
+  intro l _ K LL hA' h5
+  have : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2
+  haveI := Formalism.MainNotions.UnusedSlot80.neZero_finrank_max_unramified K
+  have h1 := hA.1 l K 1 LL hA'.2.2
+  have h11 := hA.2.2.2.2.2.2.2.2.2.2.1 l K LL
+  have hs := (HW l).W_s K 1 LL hA'.2.2
+  have hp : ((D.loc l).PD K).p ≠ 2 := by rw [(D.loc l).PD_p]; exact hA'.2.1
+  have hP9 : Formalism.MainNotions.DeltaInvariantLattices.P9 D HW F := fun l _ K s LL h => (hA.1 l K s LL h).2.2.2.2.2.2.2.2.1
+  have hring : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP ((HW l).W K 1 LL hA'.2.2) :=
+    (((h1.2.2.2.2.2.2.2.2.1 _ (Formalism.MainNotions.LiftingTheory.gen_one_crys ((HW l).W K 1 LL hA'.2.2))) hs hp).2.2
+      (Formalism.MainNotions.UnusedSlot80.finrank_K0_eq_one_of_le_Kur hA'.1)).1
+  have tie := ((Cm l).C K 1 LL hA'.2.2).tie
+  set_option synthInstance.maxHeartbeats 800000 in
+   obtain ⟨hN, hAg⟩ := gam_of_tie _ hs tie
+   exact lemK_of _ inferInstance (Formalism.MainNotions.UnusedSlot80.BCF.isFrac_OL LL) h1.1 h1.2.2.1 (hL l K LL hA' h5)
+    h1.2.2.2.2.1 h11.2.2 hring hN hAg (gamΔ_of_tie _ tie) (ptTrans_rec D HW F hP9 l K LL hA' h5)
+
+end Formalism.MainNotions.N.Pv.LocalLengthBound
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.SecondLiftOfHypotheses
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.RamifiedCoefficientChains.S9.ExtensionLemmaAlt
+
+open Module Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.RamifiedCoefficientChains TensorProduct
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
+    [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
+
+theorem second_lift_of_hypotheses [NeZero n] (W : LocWach PD LL O v n) (hZ : TTool2Z W)
+    (hF : Formalism.MainNotions.CrystallineLiftingInputs.FTool W) (hB : Sh.BasTool W) (hK : Sh.LemK W) (hD : Sh.FilDim W)
+    (hR : Sh.ExpRing W) (hE : Sh.ExpRules W)
+    (h2a : ∀ T : LocLat G Qp LL O, IsCrys PD T.ρ → Formalism.MainNotions.DeltaInvariantLattices.p2aK W T)
+    (h5 : Formalism.MainNotions.DeltaInvariantLattices.P5W W) (h9 : Formalism.MainNotions.DeltaInvariantLattices.P9W W) (hEx : DcrisExactStrict PD LL)
+    (hCs : CrysSubQuot PD LL) (hDq : DdREqDcris PD LL) : Step2 W := by
+  intro d T₁ T₂ F b S η m hS
+  obtain ⟨hDom, hDVR, hFr⟩ := hS.2.2.2.1
+  refine ⟨2 * sigC PD.p (hpar n b S) η, Step2A.sigma_bound_le _ _ _ hS.2.1, ?_⟩
+  intro s₁ FF _ _ _ _ g N y z μ ν hX F₁ ms hO
+  exact second_lift_at_situation W hZ hF hB hK hD hR hE h2a h5 h9 hEx hCs hDq hS s₁ g N y z μ ν hX F₁ ms hO
+
+end Formalism.MainNotions.RamifiedCoefficientChains.S9.ExtensionLemmaAlt
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.UniformizerClauseOfAdmittedAlt
+
+section
 
 @[expose] public section
 
@@ -154,3 +246,6 @@ theorem local_lemmas_of_literature (hA : admitted D HW F Cm CR CA CB CK) (h23 : 
   exact Formalism.MainNotions.RamifiedCoefficientChains.S9.ExtensionLemmaAlt.cocyclesToWachVectorsBound_of_extTool W hExt hS1 hS2 d T₁ T₂ F' b S η m hset
 
 end Formalism.MainNotions.RamifiedCoefficientChains.S9.LocalLemmasFromLiterature
+end
+end
+end

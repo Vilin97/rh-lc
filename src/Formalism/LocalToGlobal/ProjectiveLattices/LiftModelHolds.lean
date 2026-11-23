@@ -2,9 +2,7 @@ module
 
 public import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelPf
 public import Formalism.LocalToGlobal.ProjectiveLattices.LiftInSt
-public import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelSt
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveSec
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftUnit
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftCurveSt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +17,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.LocalProperties.Reduced
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -28,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,8 +37,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.ProjectiveLattices.CurveSec
+import Formalism.LocalToGlobal.ProjectiveLattices.LiftUnit
+import Mathlib.RingTheory.LocalProperties.Reduced
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.LiftModelSt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.Pj
+
+open Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Gaps.EtaleWeightGaps NumberField IsDedekindDomain
+
+variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ} {X : PJ D B P j} {E : PtExt X} {hM : IntAtExt X E}
+  {ka wL wF : WeightFamilies.Wt D j}
+
+def LiftModelSt (G : GlobalFamilyData (xplus X E hM) ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) : Prop :=
+  ∀ (y : PtsG G la → E.Pt' la) (hw : ∀ ζ, FromW ζ (y ζ)) (g0 : B.Cusp j wF) (T : ℕ),
+    Nonempty (CurveModel G la g0) →
+    (∀ ζ, (hw ζ).ev (emb (xplus X E hM) la G.N (X.inc wF g0)) ≠ 0) →
+    Nonempty (LiftModel G la y (fun ζ => (hw ζ).toSecPt) g0 T)
+
+end Formalism.L2.Pj
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.LiftModelHolds
+
+section
 
 @[expose] public section
 
@@ -315,3 +345,6 @@ theorem liftModelSt_of (G : GlobalFamilyData (xplus X E hM) ka wL wF) (la : Heig
     approx := fun r hr => approx_of' hw g0 hsApp (a0 D j T) hr }⟩
 
 end Formalism.L2.Pj
+end
+end
+end

@@ -3,10 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.GenericMulOfProd
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PCountIn
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PCountOut
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.POrdCount
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.POrdDecomp
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PPtOrd
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PTelescope
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.SameNormBasic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,6 +42,51 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.POrdDecomp
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.GenericMulOfProd
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PTelescope
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.POrdCount
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TensorProduct
+open UpperTheory.Gal.crystallineComparison
+
+theorem UpperTheory.Gal.crystallineComparison.ordCount_of :
+    OrdDecomp → Telescope → OrdCount := by
+  intro hD hT q n P F I _ v hR
+  obtain ⟨A, hA, h0, hs⟩ := hD q n P F I v hR
+  have key := hT q n P F (fun j => Multiset.map (v j) Finset.univ.val) A hA h0 hs
+  simp only [Multiset.map_map] at key
+  exact key
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PPtOrd
+
+section
+
+section
+
+open CategoryTheory AlgebraicGeometry TensorProduct
+open UpperTheory.Gal.crystallineComparison
+
+theorem UpperTheory.Gal.crystallineComparison.ptOrd_of :
+    OrdCount → PtIdOfOrd := by
+  intro hC l q n Y π T hO V _ _ _ _ hl y hy φ hφ I _ z hz
+  apply hC
+  obtain ⟨k, H, x, hk, x2, x3, hf, C, A, e, h1, h2, h3, h4⟩ := hO V hl y hy φ hφ
+  exact ⟨k, H, x, hk, x2, x3, hf, C, A, fun j => (Equiv.ofBijective (z j) (hz j)).trans (e j),
+    h1, h2, h3, fun j i => h4 j (z j i)⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.GenericMulOfProdHolds
+
+section
 
 @[expose] public section
 
@@ -54,3 +96,5 @@ theorem ordCount_holds : OrdCount := ordCount_of (ordDecomp_of countIn_of countO
 theorem ptIdOfOrd_holds : PtIdOfOrd := ptOrd_of ordCount_holds
 
 end UpperTheory.Gal.crystallineComparison
+end
+end

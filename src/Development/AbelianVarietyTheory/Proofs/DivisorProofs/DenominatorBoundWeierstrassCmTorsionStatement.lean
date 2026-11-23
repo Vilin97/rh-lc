@@ -2,7 +2,12 @@ module
 
 public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.TranslateProduct
 public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsTransport
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenominatorBoundWeierstrassCmTorsion
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationAtLeastBasicPropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraicValuationBoundAtRamifiedPrimeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralWeierstrassPTorsionNonrealMultiplierStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.EntireEqOfHalfPlane
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.AnalyticIdentityTheorems.MulStableIntegral
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.AnalyticIdentityTheorems.QuasiPeriodConstIsogeny
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +46,287 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationBoundMultiplierSqrtNegDStatement
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasQIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.ZetaActRefl
+import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.SemiChar
+import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModDefs
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsogenyFormulaWeierstrassPIntegral
+
+section
+
+@[expose] public section
+
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate
+open NumberField GlobalTheory.QFam GlobalTheory.WpFam GlobalTheory.LatVal ReciprocityTheory.ChartRestriction.L1 Formalism.L2.Th1.F
+open GlobalTheory.CMVal GlobalTheory.HeckeGal
+open ModularForm (E₄ E₆)
+
+namespace GlobalTheory.IsogFormula
+
+theorem main : ∀ (L : PeriodPair) (α β Ω P : ℂ) (M n : ℕ), MulStable L β → β.im ≠ 0 → Ω ^ 12 = latDisc L → MulStable L α → Complex.normSq α = n → 0 < n → 0 < M → P ∉ L.lattice → (M : ℂ) * P ∈ L.lattice → IsIntegral ℤ (((M * n : ℕ) : ℂ) ^ 2 * ((α ^ 2 - n) * ((s2 L + L.weierstrassP P) / Ω ^ 2) - (α ^ 2 - 1) * (L.weierstrassP P / Ω ^ 2))) := by
+  intro L α β Ω P M n hβ hβim hΩ hα hnorm hn hM hP hMP
+  have hα0 : α ≠ 0 := by
+    rintro rfl
+    rw [map_zero] at hnorm
+    have h0 : n = 0 := by exact_mod_cast hnorm.symm
+    omega
+  obtain ⟨S, hS⟩ := kernel_reps_exist L α hα0 hα
+  have hcard := kernel_reps_card L α S hα0 hα hS
+  have hs2 := quasiPeriodConstIsogeny_thm L α S hα0 hα hS
+  obtain ⟨t, m, ht, hm, -⟩ := mul_stable_integral L α hα
+  have hcardn : S.card + 1 = n := by
+    rw [hnorm] at hcard
+    exact_mod_cast hcard
+  have hVL := (GlobalTheory.T.isIntegral_weierstrassP_torsion_nonreal_multiplier L β Ω (M * n) hβ hβim hΩ (Nat.mul_pos hM hn)).2
+  have hnat : ∀ (k : ℕ) (x : ℂ), x ∈ L.lattice → (k : ℂ) * x ∈ L.lattice := by
+    intro k x hx
+    have := L.lattice.nsmul_mem hx k
+    simpa [nsmul_eq_mul] using this
+  have hconj : ∀ ω ∈ L.lattice, conj α * ω ∈ L.lattice := by
+    intro ω hω
+    have hc : conj α = (t : ℂ) - α := by rw [← ht]; ring
+    rw [hc, sub_mul]
+    refine L.lattice.sub_mem ?_ (hα ω hω)
+    have := L.lattice.smul_mem t hω
+    simpa [zsmul_eq_mul] using this
+  have hnT : ∀ T ∈ S, (n : ℂ) * T ∈ L.lattice := by
+    intro T hT
+    have h1 := hconj _ (hS.1 T hT).1
+    have hn' : (n : ℂ) = conj α * α := by
+      rw [mul_comm, Complex.mul_conj, hnorm]
+      simp
+    rw [hn', mul_assoc]
+    exact h1
+  have hs2' : (α ^ 2 - (n : ℂ)) * s2 L = ∑ T ∈ S, L.weierstrassP T := by
+    rw [← hs2, hnorm]
+    simp
+  have hnc : (n : ℂ) = (S.card : ℂ) + 1 := by exact_mod_cast hcardn.symm
+  have key : ((M * n : ℕ) : ℂ) ^ 2 * ((α ^ 2 - n) * ((s2 L + L.weierstrassP P) / Ω ^ 2)
+      - (α ^ 2 - 1) * (L.weierstrassP P / Ω ^ 2))
+      = ∑ T ∈ S, ((M * n : ℕ) : ℂ) ^ 2 * (L.weierstrassP T - L.weierstrassP P) / Ω ^ 2 := by
+    have e1 : ∑ T ∈ S, ((M * n : ℕ) : ℂ) ^ 2 * (L.weierstrassP T - L.weierstrassP P) / Ω ^ 2
+        = ((M * n : ℕ) : ℂ) ^ 2 * (∑ T ∈ S, L.weierstrassP T - (S.card : ℂ) * L.weierstrassP P) / Ω ^ 2 := by
+      rw [← Finset.sum_div, ← Finset.mul_sum, Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul]
+    rw [e1, ← hs2']
+    rw [show (α ^ 2 - (n : ℂ)) * ((s2 L + L.weierstrassP P) / Ω ^ 2) - (α ^ 2 - 1) * (L.weierstrassP P / Ω ^ 2)
+        = ((α ^ 2 - (n : ℂ)) * s2 L + (1 - (n : ℂ)) * L.weierstrassP P) / Ω ^ 2 by ring]
+    rw [hnc]
+    ring
+  rw [key]
+  refine IsIntegral.sum _ (fun T hT => ?_)
+  refine hVL T P (hS.1 T hT).2 hP ?_ ?_
+  · have h := hnat M _ (hnT T hT)
+    rw [show ((M * n : ℕ) : ℂ) * T = (M : ℂ) * ((n : ℂ) * T) by push_cast; ring]
+    exact h
+  · have h := hnat n _ hMP
+    rw [show ((M * n : ℕ) : ℂ) * P = (n : ℂ) * ((M : ℂ) * P) by push_cast; ring]
+    exact h
+
+end GlobalTheory.IsogFormula
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsogenyFormulaWeierstrassPIntegralStatement
+
+section
+
+@[expose] public section
+
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate
+open NumberField GlobalTheory.QFam GlobalTheory.WpFam GlobalTheory.LatVal ReciprocityTheory.ChartRestriction.L1 Formalism.L2.Th1.F
+open GlobalTheory.CMVal GlobalTheory.HeckeGal
+open ModularForm (E₄ E₆)
+
+theorem _root_.GlobalTheory.T.isogeny_formula_weierstrassP_integral : ∀ (L : PeriodPair) (α β Ω P : ℂ) (M n : ℕ), MulStable L β → β.im ≠ 0 → Ω ^ 12 = latDisc L → MulStable L α → Complex.normSq α = n → 0 < n → 0 < M → P ∉ L.lattice → (M : ℂ) * P ∈ L.lattice → IsIntegral ℤ (((M * n : ℕ) : ℂ) ^ 2 * ((α ^ 2 - n) * ((s2 L + L.weierstrassP P) / Ω ^ 2) - (α ^ 2 - 1) * (L.weierstrassP P / Ω ^ 2))) := by
+  first | exact @GlobalTheory.IsogFormula.main | exact GlobalTheory.IsogFormula.main | (intros; apply GlobalTheory.IsogFormula.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationBoundThreeInert
+
+section
+
+@[expose] public section
+
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate
+open NumberField GlobalTheory.QFam GlobalTheory.WpFam GlobalTheory.LatVal ReciprocityTheory.ChartRestriction.L1 Formalism.L2.Th1.F
+open GlobalTheory.CMVal GlobalTheory.HeckeGal
+open ModularForm (E₄ E₆)
+
+namespace GlobalTheory.ArithThreeInert
+
+theorem main : ∀ [Fact (Nat.Prime 3)] (lam : algebraicClosure ℚ ℂ →+* ℂ_[3]) (d : ℕ) (w σ p : ℂ), d % 3 = 1 → w ^ 2 = -(d : ℂ) → Sz 3 lam 0 (((1 + w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 + w) ^ 2 - 1) * p) → Sz 3 lam 0 (((1 - w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 - w) ^ 2 - 1) * p) → Sz 3 lam 0 σ := by
+  intro _ lam d w σ p hd hw h1 h2
+  obtain ⟨hint, hadd, hmul, -, hneg, -, -⟩ := GlobalTheory.T.algebraicValuationAtLeast_basic_properties 3 lam
+  have hsub : ∀ x y : ℂ, Sz 3 lam 0 x → Sz 3 lam 0 y → Sz 3 lam 0 (x - y) := by
+    intro x y hx hy
+    rw [sub_eq_add_neg]; exact hadd 0 x (-y) hx (hneg 0 y hy)
+  have hI : ∀ x : ℂ, IsIntegral ℤ x → Sz 3 lam 0 x := by
+    intro x hx
+    exact hint 1 x (by norm_num) (by simpa using hx)
+  have hw_int : IsIntegral ℤ w := by
+    refine ⟨Polynomial.X ^ 2 + Polynomial.C (d : ℤ), ?_, ?_⟩
+    · exact Polynomial.Monic.def.mpr (by
+        rw [Polynomial.leadingCoeff_X_pow_add_C (by norm_num)])
+    · simp [hw]
+  have hA : Sz 3 lam 0 ((1 + w) ^ 2 - 1) :=
+    hI _ (((isIntegral_one.add hw_int).pow 2).sub isIntegral_one)
+  have hB : Sz 3 lam 0 ((1 - w) ^ 2 - 1) :=
+    hI _ (((isIntegral_one.sub hw_int).pow 2).sub isIntegral_one)
+  have hW : Sz 3 lam 0 w := hI _ hw_int
+  have hcomb : Sz 3 lam 0 (((((1 - w) ^ 2 - 1) *
+      (((1 + w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 + w) ^ 2 - 1) * p)) -
+      (((1 + w) ^ 2 - 1) * (((1 - w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 - w) ^ 2 - 1) * p))) * w) := by
+    have := hmul 0 0 _ _ (hsub _ _ (by simpa using hmul 0 0 _ _ hB h1) (by simpa using hmul 0 0 _ _ hA h2)) hW
+    simpa using this
+  have heq : ((((1 - w) ^ 2 - 1) *
+      (((1 + w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 + w) ^ 2 - 1) * p)) -
+      (((1 + w) ^ 2 - 1) * (((1 - w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 - w) ^ 2 - 1) * p))) * w
+      = ((4 * d ^ 2 : ℕ) : ℂ) * (-σ) := by
+    push_cast
+    linear_combination (4 * (d : ℂ) * σ) * hw
+  rw [heq] at hcomb
+  have hd0 : ((4 * d ^ 2 : ℕ) : ℂ) ≠ 0 := by
+    have : d ≠ 0 := by rintro rfl; simp at hd
+    exact_mod_cast (by positivity : 0 < 4 * d ^ 2).ne'
+  have h3 : ¬ 3 ∣ 4 * d ^ 2 := by
+    intro h
+    have h0 : (4 * d ^ 2) % 3 = 0 := Nat.mod_eq_zero_of_dvd h
+    rw [Nat.mul_mod, Nat.pow_mod, hd] at h0
+    norm_num at h0
+  have hinv : Sz 3 lam 0 (((4 * d ^ 2 : ℕ) : ℂ))⁻¹ :=
+    hint (4 * d ^ 2) _ h3 (by rw [mul_inv_cancel₀ hd0]; exact isIntegral_one)
+  have hm := hmul 0 0 _ _ hinv hcomb
+  rw [zero_add] at hm
+  have hfin := hneg 0 _ hm
+  rw [← mul_assoc, inv_mul_cancel₀ hd0, one_mul, neg_neg] at hfin
+  exact hfin
+
+end GlobalTheory.ArithThreeInert
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationBoundThreeInertStatement
+
+section
+
+@[expose] public section
+
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate
+open NumberField GlobalTheory.QFam GlobalTheory.WpFam GlobalTheory.LatVal ReciprocityTheory.ChartRestriction.L1 Formalism.L2.Th1.F
+open GlobalTheory.CMVal GlobalTheory.HeckeGal
+open ModularForm (E₄ E₆)
+
+theorem _root_.GlobalTheory.T.valuation_bound_three_inert : ∀ [Fact (Nat.Prime 3)] (lam : algebraicClosure ℚ ℂ →+* ℂ_[3]) (d : ℕ) (w σ p : ℂ), d % 3 = 1 → w ^ 2 = -(d : ℂ) → Sz 3 lam 0 (((1 + w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 + w) ^ 2 - 1) * p) → Sz 3 lam 0 (((1 - w) ^ 2 - (1 + (d : ℂ))) * σ - ((1 - w) ^ 2 - 1) * p) → Sz 3 lam 0 σ := by
+  first | exact @GlobalTheory.ArithThreeInert.main | exact GlobalTheory.ArithThreeInert.main | (intros; apply GlobalTheory.ArithThreeInert.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenominatorBoundWeierstrassCmTorsion
+
+section
+
+@[expose] public section
+
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate
+open NumberField GlobalTheory.QFam GlobalTheory.WpFam GlobalTheory.LatVal ReciprocityTheory.ChartRestriction.L1 Formalism.L2.Th1.F
+open GlobalTheory.CMVal GlobalTheory.HeckeGal
+open ModularForm (E₄ E₆)
+
+namespace GlobalTheory.CMSize
+
+theorem mulStable_one_add {L : PeriodPair} {w : ℂ} (h : MulStable L w) : MulStable L (1 + w) := by
+  intro x hx
+  rw [add_mul, one_mul]
+  exact add_mem hx (h x hx)
+
+theorem mulStable_one_sub {L : PeriodPair} {w : ℂ} (h : MulStable L w) : MulStable L (1 - w) := by
+  intro x hx
+  rw [sub_mul, one_mul]
+  exact sub_mem hx (h x hx)
+
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (d : ℕ) (L : PeriodPair) (Ω P : ℂ) (M : ℕ), d.Prime → 4 < d → MulStable L (Complex.I * (Real.sqrt d : ℝ)) → Ω ^ 12 = latDisc L → ¬ l ∣ M → P ∉ L.lattice → (M : ℂ) * P ∈ L.lattice → Sz l lam (if l = 2 then (if d % 4 = 3 then 1 else 2) else if l = d then 1 / 2 else 0) ((s2 L + L.weierstrassP P) / Ω ^ 2) := by
+  intro l hl lam d L Ω P M hd hd4 hw hΩ hM hP hMP
+  have hlp : l.Prime := hl.out
+  have hM0 : 0 < M := Nat.pos_of_ne_zero (by rintro rfl; exact hM (dvd_zero _))
+  have hs : Real.sqrt d * Real.sqrt d = d := Real.mul_self_sqrt (Nat.cast_nonneg d)
+  have hs0 : Real.sqrt d ≠ 0 := by
+    have : (0 : ℝ) < d := by exact_mod_cast hd.pos
+    exact (Real.sqrt_pos.mpr this).ne'
+  set w : ℂ := Complex.I * (Real.sqrt d : ℝ) with hwdef
+  have hre : w.re = 0 := by simp [hwdef]
+  have him : w.im = Real.sqrt d := by simp [hwdef]
+  have him0 : w.im ≠ 0 := by rw [him]; exact hs0
+  have hw2 : w ^ 2 = -(d : ℂ) := by
+    have h1 : ((Real.sqrt d : ℝ) : ℂ) * ((Real.sqrt d : ℝ) : ℂ) = d := by
+      rw [← Complex.ofReal_mul, hs]; simp
+    rw [hwdef, mul_pow, Complex.I_sq, sq, h1]; ring
+  have hn0 : Complex.normSq w = (d : ℕ) := by
+    rw [Complex.normSq_apply, hre, him, hs]; simp
+  have hn1 : Complex.normSq (1 + w) = ((1 + d : ℕ) : ℝ) := by
+    rw [Complex.normSq_apply]; simp [hre, him, hs]
+  have hn2 : Complex.normSq (1 - w) = ((1 + d : ℕ) : ℝ) := by
+    rw [Complex.normSq_apply]; simp [hre, him, hs]
+  have hsz := (GlobalTheory.T.algebraicValuationAtLeast_basic_properties l lam).1
+  have hp : Sz l lam 0 (12 * (L.weierstrassP P / Ω ^ 2)) := by
+    refine hsz (M ^ 2) _ (fun h => hM (hlp.dvd_of_dvd_pow h)) ?_
+    have := ((GlobalTheory.T.isIntegral_weierstrassP_torsion_nonreal_multiplier L w Ω M hw him0 hΩ hM0).1 P hMP).1
+    convert this using 1
+    push_cast; ring
+  have key : ∀ (α : ℂ) (n : ℕ), MulStable L α → Complex.normSq α = n → ¬ l ∣ n →
+      Sz l lam 0 ((α ^ 2 - n) * ((s2 L + L.weierstrassP P) / Ω ^ 2) -
+        (α ^ 2 - 1) * (L.weierstrassP P / Ω ^ 2)) := by
+    intro α n hα hn hln
+    have hn0 : 0 < n := Nat.pos_of_ne_zero (by rintro rfl; exact hln (dvd_zero _))
+    refine hsz ((M * n) ^ 2) _ (fun h => ?_) ?_
+    · rcases (Nat.Prime.dvd_mul hlp).1 (hlp.dvd_of_dvd_pow h) with h | h
+      · exact hM h
+      · exact hln h
+    · have := GlobalTheory.T.isogeny_formula_weierstrassP_integral L α w Ω P M n hw him0 hΩ hα hn hn0 hM0 hP hMP
+      rwa [Nat.cast_pow]
+  by_cases hld : l = d
+  · subst hld
+    rw [if_neg (by omega), if_pos rfl]
+    have hnd : ¬ l ∣ 1 + l := by
+      intro h
+      have : l ∣ 1 := (Nat.dvd_add_left (dvd_refl l)).1 h
+      exact hlp.one_lt.ne' (Nat.dvd_one.1 this)
+    have h1 := key (1 + w) (1 + l) (mulStable_one_add hw) hn1 hnd
+    refine GlobalTheory.T.algebraicValuation_bound_at_ramified_prime l lam w _ _ hd4 hw2 hp ?_
+    simpa only [Nat.cast_add, Nat.cast_one] using h1
+  · rw [if_neg hld]
+    by_cases h3 : l = 3 ∧ d % 3 = 1
+    · obtain ⟨rfl, h3⟩ := h3
+      rw [if_neg (by omega)]
+      have hnd : ¬ 3 ∣ 1 + d := by omega
+      have h1 := key (1 + w) (1 + d) (mulStable_one_add hw) hn1 hnd
+      have h2 := key (1 - w) (1 + d) (mulStable_one_sub hw) hn2 hnd
+      refine GlobalTheory.T.valuation_bound_three_inert lam d w _ (L.weierstrassP P / Ω ^ 2) h3 hw2 ?_ ?_
+      · simpa only [Nat.cast_add, Nat.cast_one] using h1
+      · simpa only [Nat.cast_add, Nat.cast_one] using h2
+    · have hnd : ¬ l ∣ d := fun h => hld ((Nat.prime_dvd_prime_iff_eq hlp hd).1 h)
+      have h1 := key w d hw hn0 hnd
+      refine GlobalTheory.T.valuation_bound_multiplier_sqrt_neg_d l lam d _ _ hd hd4 hld hp ?_ ?_
+      · convert h1 using 1
+        rw [hw2]; ring
+      · rintro rfl
+        have : ¬ d % 3 = 1 := fun h => h3 ⟨rfl, h⟩
+        omega
+
+end GlobalTheory.CMSize
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenominatorBoundWeierstrassCmTorsionStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +337,5 @@ open ModularForm (E₄ E₆)
 
 theorem _root_.GlobalTheory.T.denominator_bound_weierstrass_cm_torsion : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (d : ℕ) (L : PeriodPair) (Ω P : ℂ) (M : ℕ), d.Prime → 4 < d → MulStable L (Complex.I * (Real.sqrt d : ℝ)) → Ω ^ 12 = latDisc L → ¬ l ∣ M → P ∉ L.lattice → (M : ℂ) * P ∈ L.lattice → Sz l lam (if l = 2 then (if d % 4 = 3 then 1 else 2) else if l = d then 1 / 2 else 0) ((s2 L + L.weierstrassP P) / Ω ^ 2) := by
   first | exact @GlobalTheory.CMSize.main | exact GlobalTheory.CMSize.main | (intros; apply GlobalTheory.CMSize.main <;> assumption)
+end
+end

@@ -2,7 +2,9 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.HasStepCharts
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LinearIndependentMulSelM
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogDetGramSubharmonicStatement
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Analysis.Complex.Order
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,11 +19,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,10 +43,192 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import ReciprocityTheory.AnalyticForms.MaIntEmpty
+import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+import Development.AutomorphicSpectrum.Definitions.MetricPeriods.InFlagDomainOne
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.LocalDensities.Statements
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.FourB
+
+open ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M MeasureTheory
+open scoped ComplexOrder ContDiff
+
+noncomputable section
+
+def HermitianDetMono.Statement : Prop :=
+  ∀ (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℂ), B.PosSemidef → (A - B).PosSemidef →
+    B.det.re ≤ A.det.re
+
+section Examples
+
+end Examples
+
+end
+
+end GroundTheory.Heights₂.Heights.FourB
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.LocalDensities.PHermitianDetMono
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.FourB
+
+open Matrix
+open scoped ComplexOrder MatrixOrder
+
+theorem HermitianDetMono.one_le_det_one_add {n : ℕ} {M : Matrix (Fin n) (Fin n) ℂ}
+    (hM : M.PosSemidef) : 1 ≤ (1 + M).det := by
+  have hH : (1 + M).IsHermitian := isHermitian_one.add hM.isHermitian
+  have hev : ∀ i, (1 : ℝ) ≤ hH.eigenvalues i := by
+    intro i
+    rw [hH.eigenvalues_eq i]
+    have hv : star ⇑(hH.eigenvectorBasis i) ⬝ᵥ ⇑(hH.eigenvectorBasis i) = 1 := by
+      rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K,
+        hH.eigenvectorBasis.orthonormal.1 i]
+      simp
+    rw [add_mulVec, one_mulVec, dotProduct_add, map_add (f := _), hv, RCLike.one_re]
+    linarith [hM.re_dotProduct_nonneg (hH.eigenvectorBasis i)]
+  rw [hH.det_eq_prod_eigenvalues]
+  have hprod : (1 : ℝ) ≤ ∏ i, hH.eigenvalues i := by
+    calc (1 : ℝ) = ∏ _i : Fin n, (1 : ℝ) := by simp
+      _ ≤ ∏ i, hH.eigenvalues i :=
+        Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => hev i)
+  have key : ((1 : ℝ) : ℂ) ≤ ((∏ i, hH.eigenvalues i : ℝ) : ℂ) := Complex.real_le_real.mpr hprod
+  convert key using 1
+  · simp
+
+theorem HermitianDetMono.proof : HermitianDetMono.Statement := by
+  intro n A B hB hAB
+  have hA : A.PosSemidef := by simpa using hB.add hAB
+  suffices h : B.det ≤ A.det from (Complex.le_def.mp h).1
+  by_cases hdet : B.det = 0
+  · rw [hdet]; exact hA.det_nonneg
+  · obtain ⟨y, rfl⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hB.nonneg
+    have hy : IsUnit y.det := by
+      rw [det_mul] at hdet
+      exact isUnit_iff_ne_zero.mpr (right_ne_zero_of_mul hdet)
+    set M := (y⁻¹)ᴴ * (A - star y * y) * y⁻¹ with hMdef
+    have hM : M.PosSemidef := hAB.conjTranspose_mul_mul_same y⁻¹
+    have hfac : A = star y * (1 + M) * y := by
+      have h1 : star y * (y⁻¹)ᴴ = 1 := by
+        rw [star_eq_conjTranspose, ← conjTranspose_mul, nonsing_inv_mul y hy, conjTranspose_one]
+      rw [hMdef, Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, ← Matrix.mul_assoc,
+        ← Matrix.mul_assoc, h1, Matrix.one_mul, Matrix.mul_assoc,
+        nonsing_inv_mul y hy, Matrix.mul_one]
+      abel
+    have hdA : A.det = (1 + M).det * (star y * y).det := by
+      conv_lhs => rw [hfac]
+      rw [det_mul, det_mul, det_mul]; ring
+    rw [hdA]
+    exact le_mul_of_one_le_left hB.det_nonneg (HermitianDetMono.one_le_det_one_add hM)
+
+end GroundTheory.Heights₂.Heights.FourB
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PluriharmonicCharts.XGramSize
+
+section
+
+@[expose] public section
+
+open Matrix GlobalTheory.CompanionTheory.Ar.PB
+open scoped ComplexOrder
+
+namespace PositivityTheory.Xgp.gram_size
+
+theorem one {k : ℕ} (A B : Matrix (Fin k) (Fin k) ℂ) (m : ℝ) (hm : 1 ≤ m) (hA : A.PosDef) (hB : B.PosDef)
+    (h : ((m : ℂ) • B - A).PosSemidef) : Real.log A.det.re - Real.log B.det.re ≤ k * Real.log m := by
+  have h1 : A.det.re ≤ ((m : ℂ) • B).det.re :=
+    GroundTheory.Heights₂.Heights.FourB.HermitianDetMono.proof k ((m : ℂ) • B) A hA.posSemidef h
+  have e : ((m : ℂ) • B).det.re = m ^ k * B.det.re := by
+    rw [det_smul, Fintype.card_fin, ← Complex.ofReal_pow, Complex.re_ofReal_mul]
+  have hA' : 0 < A.det.re := by simpa using (Complex.lt_def.mp hA.det_pos).1
+  have hB' : 0 < B.det.re := by simpa using (Complex.lt_def.mp hB.det_pos).1
+  have hm' : 0 < m := by linarith
+  rw [e] at h1
+  have h2 := Real.log_le_log hA' h1
+  rw [Real.log_mul (by positivity) hB'.ne', Real.log_pow] at h2
+  linarith
+
+end PositivityTheory.Xgp.gram_size
+
+theorem PositivityTheory.Xgp.t_gram_size : ∀ (n k : ℕ) (G G₀ : Matrix (Fin n) (Fin n) ℂ) (V : Matrix (Fin n) (Fin k) ℂ) (m : ℝ), 1 ≤ m → G₀.PosDef → G.PosDef → ((m : ℂ) • G₀ - G).PosSemidef → ((m : ℂ) • G - G₀).PosSemidef → LinearIndependent ℂ Vᵀ → |Real.log (Vᴴ * G * V).det.re - Real.log (Vᴴ * G₀ * V).det.re| ≤ k * Real.log m := by
+  intro n k G G₀ V m hm hG₀ hG h1 h2 hV
+  have hinj : Function.Injective V.mulVec := Matrix.mulVec_injective_iff.mpr hV
+  have hA : (Vᴴ * G * V).PosDef := hG.conjTranspose_mul_mul_same hinj
+  have hB : (Vᴴ * G₀ * V).PosDef := hG₀.conjTranspose_mul_mul_same hinj
+  have e1 : Vᴴ * ((m : ℂ) • G₀ - G) * V = (m : ℂ) • (Vᴴ * G₀ * V) - Vᴴ * G * V := by
+    rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul]
+  have e2 : Vᴴ * ((m : ℂ) • G - G₀) * V = (m : ℂ) • (Vᴴ * G * V) - Vᴴ * G₀ * V := by
+    rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul]
+  have p1 := h1.conjTranspose_mul_mul_same V
+  have p2 := h2.conjTranspose_mul_mul_same V
+  rw [e1] at p1
+  rw [e2] at p2
+  have a1 := PositivityTheory.Xgp.gram_size.one _ _ m hm hA hB p1
+  have a2 := PositivityTheory.Xgp.gram_size.one _ _ m hm hB hA p2
+  rw [abs_sub_le_iff]
+  constructor <;> linarith
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LogDetGramSubharmonic
+
+section
+
+@[expose] public section
+
+open Matrix GlobalTheory.CompanionTheory.Ar.PB
+open scoped ComplexOrder
+
+namespace GlobalTheory.CompanionTheory.Ar.PB
+
+theorem gram_det_log_size : ∀ (n k : ℕ) (G G₀ : Matrix (Fin n) (Fin n) ℂ) (V : Matrix (Fin n) (Fin k) ℂ) (m : ℝ), 1 ≤ m → G₀.PosDef → G.PosDef → ((m : ℂ) • G₀ - G).PosSemidef → ((m : ℂ) • G - G₀).PosSemidef → LinearIndependent ℂ Vᵀ → |Real.log (Vᴴ * G * V).det.re - Real.log (Vᴴ * G₀ * V).det.re| ≤ k * Real.log m :=
+  PositivityTheory.Xgp.t_gram_size
+
+end GlobalTheory.CompanionTheory.Ar.PB
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LogDetGramSubharmonicStatement
+
+section
+
+@[expose] public section
+
+open Matrix GlobalTheory.CompanionTheory.Ar.PB
+open scoped ComplexOrder
+
+theorem _root_.GlobalTheory.T.log_det_comparable_gram_bound : ∀ (n k : ℕ) (G G₀ : Matrix (Fin n) (Fin n) ℂ) (V : Matrix (Fin n) (Fin k) ℂ) (m : ℝ), 1 ≤ m → G₀.PosDef → G.PosDef → ((m : ℂ) • G₀ - G).PosSemidef → ((m : ℂ) • G - G₀).PosSemidef → LinearIndependent ℂ Vᵀ → |Real.log (Vᴴ * G * V).det.re - Real.log (Vᴴ * G₀ * V).det.re| ≤ k * Real.log m := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.PB.gram_det_log_size | exact GlobalTheory.CompanionTheory.Ar.PB.gram_det_log_size | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.gram_det_log_size <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagGapHolomorphicPullbackThird
+
+section
 
 @[expose] public section
 
@@ -214,3 +398,6 @@ theorem stepPh_le_log : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fin
   exact ⟨C, fun x hb => hC x (Set.mem_univ x) hb⟩
 
 end GlobalTheory.CompanionTheory.Ar.PB.StepW.WeightSize
+end
+end
+end

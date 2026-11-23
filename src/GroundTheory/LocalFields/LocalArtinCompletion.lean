@@ -1,8 +1,8 @@
 module
 
 public import GroundTheory.LocalFields.NormCorrespondence
-public import GroundTheory.LocalFields.OpenCompletion
-public import GroundTheory.LocalFields.LocalArtinMap
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,59 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.LocalFields.LocalArtinMap
+
+-- Source module: GroundTheory.LocalFields.OpenCompletion
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.LocalField
+
+section Completion
+
+variable (G : Type*) [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G]
+
+def openFiniteIndex : Set (Subgroup G) :=
+  {H | IsOpen (H : Set G) ∧ H.FiniteIndex}
+
+
+variable {G} in
+def quotientMapOfLE {H H' : Subgroup G} (h : H ≤ H') : G ⧸ H →* G ⧸ H' :=
+  QuotientGroup.map H H' (MonoidHom.id G) h
+
+
+def openCompletion : Subgroup (∀ H : openFiniteIndex G, G ⧸ (H : Subgroup G)) where
+  carrier := {a | ∀ (H H' : openFiniteIndex G) (h : (H : Subgroup G) ≤ H'), quotientMapOfLE h (a H) = a H'}
+  one_mem' := fun H H' h => by simp
+  mul_mem' := fun ha hb H H' h => by simp [map_mul, ha H H' h, hb H H' h]
+  inv_mem' := fun ha H H' h => by simp [map_inv, ha H H' h]
+
+namespace openCompletion
+
+variable {G}
+
+
+
+
+
+
+theorem discreteTopology_quotient (H : openFiniteIndex G) : DiscreteTopology (G ⧸ (H : Subgroup G)) :=
+  QuotientGroup.discreteTopology H.2.1
+
+end openCompletion
+
+end Completion
+
+end GroundTheory.LocalField
+end
+end
+
+-- Source module: GroundTheory.LocalFields.LocalArtinCompletion
+
+section
 
 @[expose] public section
 
@@ -128,3 +181,6 @@ section Completion
 end Completion
 
 end GroundTheory.LocalField
+end
+end
+end

@@ -46,11 +46,44 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.PointwiseNormConstantSection
+import Mathlib.Tactic.TypeStar
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FamilyLeCoords
+import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FlatCalcA
+import ReciprocityTheory.L2DbarEstimates.SkodaWeights.Matrix
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.TaylorExpansionLocalCoordinates
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.ArakelovInstances.IsStrictDom
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.PointwiseNormConstantSection
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.AR
+
+open MeasureTheory Filter Topology Asymptotics ReciprocityTheory.L2DbarEstimates ReciprocityTheory.L2DbarEstimates.Y
+open scoped ENNReal
+
+noncomputable section
+
+variable {n : ℕ} {Y : Type*} [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y]
+  [MeasurableSpace Y] [BorelSpace Y] {ι La : Type*} [AddCommGroup La] (A : WeightedAtlas n Y ι La)
+
+theorem mem_multiIndicesBelow_iff {a0 : ℕ} {α : Fin n → ℕ} : α ∈ multiLt n a0 ↔ ∑ k, α k < a0 := by
+  simp [multiLt, Finset.Nat.mem_antidiagonalTuple]
+
+end
+
+end ReciprocityTheory.ChartRestriction.G.AR
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.SumMultiLtSucc
+
+section
 
 @[expose] public section
 
@@ -226,3 +259,5 @@ theorem _root_.GlobalTheory.JetsPure.main : ∀ (J I : Type) [Fintype I] (D T a 
     ring
 
 end GlobalTheory.JetsPure
+end
+end

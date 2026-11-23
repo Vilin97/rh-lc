@@ -2,24 +2,25 @@ module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
 public import Mathlib.LinearAlgebra.Lagrange
-public import Lemmata.GeneralBFactUpperForm.Imports
-public import Lemmata.GeneralBFactUpperVariant.Imports
+public import Mathlib.Algebra.Polynomial.AlgebraMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -28,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,9 +41,88 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.GeneralBFactUpperForm.Imports
+
+section
+
+@[expose] public section
+
+universe u_3 u_4
+
+namespace Bl.general_b_fact_upper_form
+
+theorem goal1 :
+  ∀ {LL : Type u_3} {M : Type u_4} [inst : Field.{u_3} LL] [inst_1 : AddCommGroup.{u_4} M]
+  [inst_2 : Module.{u_3, u_4} LL M] (T : Module.End.{u_3, u_4} LL M) (W : Submodule.{u_3, u_4} LL M),
+  (∀ (x : M),
+      Membership.mem.{u_4, u_4} W x → Membership.mem.{u_4, u_4} W (DFunLike.coe.{u_4 + 1, u_4 + 1, u_4 + 1} T x)) →
+    ∀ (p : Polynomial.{u_3} LL) (x : M),
+      Membership.mem.{u_4, u_4} W x →
+        Membership.mem.{u_4, u_4} W
+          (DFunLike.coe.{u_4 + 1, u_4 + 1, u_4 + 1}
+            (DFunLike.coe.{max (u_4 + 1) (u_3 + 1), u_3 + 1, u_4 + 1} (Polynomial.aeval.{u_3, u_4} T) p) x) := by
+  intro LL M _ _ _ T W hW p
+  refine Polynomial.induction_on p ?_ ?_ ?_
+  · intro a x hx
+    rw [Polynomial.aeval_C, Module.algebraMap_end_apply]
+    exact W.smul_mem a hx
+  · intro p q hp hq x hx
+    rw [map_add (f := _), LinearMap.add_apply]
+    exact W.add_mem (hp x hx) (hq x hx)
+  · intro n a h x hx
+    rw [pow_succ, ← mul_assoc, map_mul, Polynomial.aeval_X, Module.End.mul_apply]
+    exact h (T x) (hW x hx)
+
+end Bl.general_b_fact_upper_form
+end
+end
+
+-- Source module: Lemmata.GeneralBFactUpperVariant.Imports
+
+section
+
+@[expose] public section
+
+universe u_3 u_4
+
+namespace Bl.general_b_fact_upper_variant
+
+theorem goal1 :
+  ∀ {LL : Type u_3} {M : Type u_4} [inst : Field.{u_3} LL] [inst_1 : AddCommGroup.{u_4} M]
+  [inst_2 : Module.{u_3, u_4} LL M] (T : Module.End.{u_3, u_4} LL M) (a : LL) (y : M),
+  Eq.{u_4 + 1} (DFunLike.coe.{u_4 + 1, u_4 + 1, u_4 + 1} T y) (HSMul.hSMul.{u_3, u_4, u_4} a y) →
+    ∀ (p : Polynomial.{u_3} LL),
+      Eq.{u_4 + 1}
+        (DFunLike.coe.{u_4 + 1, u_4 + 1, u_4 + 1}
+          (DFunLike.coe.{max (u_4 + 1) (u_3 + 1), u_3 + 1, u_4 + 1} (Polynomial.aeval.{u_3, u_4} T) p) y)
+        (HSMul.hSMul.{u_3, u_4, u_4} (Polynomial.eval.{u_3} a p) y) := by
+  intro LL M _ _ _ T a y h p
+  induction p using Polynomial.induction_on with
+  | C c =>
+    simp only [Polynomial.aeval_C, Polynomial.eval_C, Module.algebraMap_end_apply]
+  | add p q hp hq =>
+    simp only [map_add (f := _), LinearMap.add_apply, hp, hq, Polynomial.eval_add, add_smul]
+  | monomial n c ih =>
+    have e : (Polynomial.C c * Polynomial.X ^ (n + 1) : Polynomial LL)
+        = (Polynomial.C c * Polynomial.X ^ n) * Polynomial.X := by ring
+    rw [e, map_mul, Polynomial.aeval_X, Module.End.mul_apply, h, map_smul, ih, smul_smul]
+    congr 1
+    simp only [Polynomial.eval_mul, Polynomial.eval_X]
+    ring
+
+end Bl.general_b_fact_upper_variant
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.JsetEmb
+
+section
 
 @[expose] public section
 
@@ -370,3 +449,8 @@ theorem jsetSplit_all : ∀ (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] 
   exact jump_exists_of_filtration_strict ((D.loc l).PD K) (by rw [Fintype.card_eq_nat_card, hc]) Y.ρ a ha
 
 end Formalism.MainNotions.N.JsetEmb
+end
+end
+end
+end
+end

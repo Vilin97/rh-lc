@@ -5,7 +5,9 @@ public import Mathlib.Basic.Complex.Basic
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
 public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.SplitTorusHomProperTrivialLocal
-public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.EqZeroOfMemPowMaximal
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Mathlib.RingTheory.Spectrum.Maximal.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,9 +27,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +48,52 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Filtration
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBPull
 public import Mathlib.RingTheory.Jacobson.Artinian
 import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ToricGeometry.EqZeroOfMemPowMaximal
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.EqZeroOfMemMaximalPow
+
+theorem eq_zero_of_mem_pow_maximal {R : Type} [CommRing R] [IsNoetherianRing R] (y : R)
+    (h : ∀ i : MaximalSpectrum R × ℕ, y ∈ i.1.asIdeal ^ (i.2 + 1)) : y = 0 := by
+  by_contra hy
+  have hJ : LinearMap.ker (LinearMap.toSpanSingleton R R y) ≠ ⊤ := by
+    intro htop
+    have h1 : (1 : R) ∈ LinearMap.ker (LinearMap.toSpanSingleton R R y) := htop ▸ Submodule.mem_top
+    rw [LinearMap.mem_ker, LinearMap.toSpanSingleton_apply, one_smul] at h1
+    exact hy h1
+  obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hJ
+  have hmem : y ∈ (⨅ i : ℕ, m ^ i • ⊤ : Submodule R R) := by
+    rw [Submodule.mem_iInf]
+    intro i
+    rcases i with _ | i
+    · simp
+    · have hi := h (⟨m, hm⟩, i)
+      simpa [smul_eq_mul, Ideal.mul_top] using hi
+  obtain ⟨⟨r, hr⟩, hry⟩ := (Ideal.mem_iInf_smul_pow_eq_bot_iff m y).mp hmem
+  have hJr : (1 - r) ∈ LinearMap.ker (LinearMap.toSpanSingleton R R y) := by
+    rw [LinearMap.mem_ker, LinearMap.toSpanSingleton_apply, sub_smul, one_smul]
+    exact sub_eq_zero.mpr hry.symm
+  have h1 : (1 : R) ∈ m := by simpa using m.add_mem (hle hJr) hr
+  exact hm.ne_top ((Ideal.eq_top_iff_one _).mpr h1)
+
+end GlobalTheory.EqZeroOfMemMaximalPow
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ToricGeometry.KrullDimLEAndIsLocalRingQuotientPow
+
+section
 
 @[expose] public section
 
@@ -116,3 +160,5 @@ theorem translDiff_triv_of_artin_local :
   exact (h _ h2 h3 _ (exists_isGen_translDiff_comp A L _ x hx)).trans (MonObj.comp_one _).symm
 
 end GlobalTheory
+end
+end

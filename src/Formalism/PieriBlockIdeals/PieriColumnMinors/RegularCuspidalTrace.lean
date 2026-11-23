@@ -1,12 +1,10 @@
 module
 
 public import Formalism.PieriBlockIdeals.LemmaWAssembled
-public import Formalism.PieriBlockIdeals.PieriColumnMinors.MinorValuationBoundHolds
-public import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightExchangeChainHolds
+public import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,12 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
-public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,9 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,8 +42,56 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightExchangeChainHolds
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+
+-- Source module: Formalism.PieriBlockIdeals.PieriColumnMinors.MinorValuationBoundHolds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Polynomial
+
+namespace Formalism.CohomologicalDescent
+
+theorem lw_det_block {R m : Type*} [CommRing R] [DecidableEq m] [Fintype m]
+    (M : Matrix m m R) (b : m → ℕ) (s : m) (hs : ∀ j, b j = b s → j = s) :
+    (M.toSquareBlock b (b s)).det = M s s := by
+  let _ : Unique {a // b a = b s} :=
+    { default := ⟨s, rfl⟩
+      uniq := fun j => Subtype.ext (hs j.1 j.2) }
+  rw [Matrix.det_unique]
+  rfl
+
+theorem lw_det_inj {R m : Type*} [CommRing R] [DecidableEq m] [Fintype m]
+    (M : Matrix m m R) (b : m → ℕ) (hM : M.BlockTriangular b) (hb : Function.Injective b) :
+    M.det = ∏ i, M i i := by
+  rw [Matrix.BlockTriangular.det hM, Finset.prod_image]
+  · exact Finset.prod_congr rfl (fun i _ => lw_det_block M b i (fun j hj => hb hj))
+  · intro x _ y _ hxy
+    exact hb hxy
+
+end Formalism.CohomologicalDescent
+end
+end
+end
+
+-- Source module: Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+
+section
 
 @[expose] public section
 
@@ -192,3 +230,6 @@ theorem weightExchangeFull_holds : WEFull := by
     (hκ τ) (hκ (σ τ)) (h2 τ) (h2 (σ τ)) (by rw [← hcτ]; exact h3 τ)
 
 end Formalism.CohomologicalDescent
+end
+end
+end

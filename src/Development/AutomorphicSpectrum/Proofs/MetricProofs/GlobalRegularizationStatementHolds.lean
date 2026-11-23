@@ -1,17 +1,11 @@
 module
 
 public import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.C2TendstoPullbackThroughChartStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.EpsilonSchedulePropertiesStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.GluedLocalRegularizationsOnAtlasStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LeviNonnegInChartOfPshStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LocalLeviPshRegularizationStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogBoundTransferBetweenRadiiStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.LoglogQuotNonneg
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RefineAdaptedAtlasWithGradientStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularizationGlueBoundsStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularizationGlueC2ExplicitStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SmoothOnOfChartLeviNonnegStatement
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.Topology.OpenPartialHomeomorph.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,10 +45,178 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.FDeriv.Congr
+import ReciprocityTheory.AnalyticForms.AnalyticCharts.NullZero
+import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
+import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.EpsilonSchedulePropertiesStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.GluedLocalRegularizationsOnAtlasStatement
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LocalLeviPshRegularizationStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogBoundTransferBetweenRadiiStatement
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.LoglogQuotNonneg
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RefineAdaptedAtlasWithGradientStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularizationGlueBoundsStatement
+public import ReciprocityTheory.AnalyticForms.LeviForms.RegGlue
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularizationGlueC2Explicit
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SmoothOnOfChartLeviNonnegStatement
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.AnalyticForms.LeviForms.RegChartB
 import ReciprocityTheory.AnalyticForms.LeviForms.TailCut
 import ReciprocityTheory.AnalyticForms.LeviForms.TailCutA
 import ReciprocityTheory.AnalyticForms.PotentialTheory.AtlasIndep
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.C2TendstoPullbackThroughChart
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.Metric.ChartPullBack
+
+theorem comp_symm_eventuallyEq {e : ℕ} {X : Type} [TopologicalSpace X]
+    (c : OpenPartialHomeomorph X (Fin e → ℂ)) (f : (Fin e → ℂ) → ℝ) {z : Fin e → ℂ}
+    (hz : z ∈ c.target) : ((f ∘ c) ∘ c.symm) =ᶠ[𝓝 z] f := by
+  filter_upwards [c.open_target.mem_nhds hz] with y hy
+  simp [Function.comp, c.right_inv hy]
+
+theorem fderiv_comp_symm_eq {e : ℕ} {X : Type} [TopologicalSpace X]
+    (c : OpenPartialHomeomorph X (Fin e → ℂ)) (f : (Fin e → ℂ) → ℝ) {z : Fin e → ℂ}
+    (hz : z ∈ c.target) : fderiv ℝ ((f ∘ c) ∘ c.symm) z = fderiv ℝ f z :=
+  (comp_symm_eventuallyEq c f hz).fderiv_eq
+
+theorem fderiv_comp_symm_eventuallyEq {e : ℕ} {X : Type} [TopologicalSpace X]
+    (c : OpenPartialHomeomorph X (Fin e → ℂ)) (f : (Fin e → ℂ) → ℝ) {z : Fin e → ℂ}
+    (hz : z ∈ c.target) : fderiv ℝ ((f ∘ c) ∘ c.symm) =ᶠ[𝓝 z] fderiv ℝ f := by
+  filter_upwards [c.open_target.mem_nhds hz] with y hy
+  exact fderiv_comp_symm_eq c f hy
+
+theorem fderiv_fderiv_comp_symm_eq {e : ℕ} {X : Type} [TopologicalSpace X]
+    (c : OpenPartialHomeomorph X (Fin e → ℂ)) (f : (Fin e → ℂ) → ℝ) {z : Fin e → ℂ}
+    (hz : z ∈ c.target) :
+    fderiv ℝ (fderiv ℝ ((f ∘ c) ∘ c.symm)) z = fderiv ℝ (fderiv ℝ f) z :=
+  (fderiv_comp_symm_eventuallyEq c f hz).fderiv_eq
+
+theorem C2_tendsto_chart_pullback : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (c : OpenPartialHomeomorph X (Fin e → ℂ)) (g : ℝ → (Fin e → ℂ) → ℝ) (p : (Fin e → ℂ) → ℝ) (K' : Set (Fin e → ℂ)), K' ⊆ c.target → (TendstoUniformlyOn g p (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (g t)) (fderiv ℝ p) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (fderiv ℝ (g t))) (fderiv ℝ (fderiv ℝ p)) (𝓝[>] 0) K' ∧ ∃ M : ℝ, ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ z ∈ K', ‖fderiv ℝ (g t) z - fderiv ℝ p z‖ ≤ M * t) → (TendstoUniformlyOn (fun t => (g t ∘ c) ∘ c.symm) p (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ ((g t ∘ c) ∘ c.symm)) (fderiv ℝ p) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (fderiv ℝ ((g t ∘ c) ∘ c.symm))) (fderiv ℝ (fderiv ℝ p)) (𝓝[>] 0) K' ∧ ∃ M : ℝ, ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ z ∈ K', ‖fderiv ℝ ((g t ∘ c) ∘ c.symm) z - fderiv ℝ p z‖ ≤ M * t) := by
+  intro e X _ c g p K' hK h
+  obtain ⟨h0, h1, h2, M, hM⟩ := h
+  refine ⟨h0.congr (Eventually.of_forall fun t z hz => ?_),
+    h1.congr (Eventually.of_forall fun t z hz => ?_),
+    h2.congr (Eventually.of_forall fun t z hz => ?_),
+    M, hM.mono fun t ht z hz => ?_⟩
+  · exact ((comp_symm_eventuallyEq c (g t) (hK hz)).eq_of_nhds).symm
+  · exact (fderiv_comp_symm_eq c (g t) (hK hz)).symm
+  · exact (fderiv_fderiv_comp_symm_eq c (g t) (hK hz)).symm
+  · rw [fderiv_comp_symm_eq c (g t) (hK hz)]
+    exact ht z hz
+
+end GlobalTheory.CompanionTheory.Metric.ChartPullBack
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.C2TendstoPullbackThroughChartStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.C2_tendsto_pullback_through_chart : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (c : OpenPartialHomeomorph X (Fin e → ℂ)) (g : ℝ → (Fin e → ℂ) → ℝ) (p : (Fin e → ℂ) → ℝ) (K' : Set (Fin e → ℂ)), K' ⊆ c.target → (TendstoUniformlyOn g p (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (g t)) (fderiv ℝ p) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (fderiv ℝ (g t))) (fderiv ℝ (fderiv ℝ p)) (𝓝[>] 0) K' ∧ ∃ M : ℝ, ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ z ∈ K', ‖fderiv ℝ (g t) z - fderiv ℝ p z‖ ≤ M * t) → (TendstoUniformlyOn (fun t => (g t ∘ c) ∘ c.symm) p (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ ((g t ∘ c) ∘ c.symm)) (fderiv ℝ p) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (fderiv ℝ ((g t ∘ c) ∘ c.symm))) (fderiv ℝ (fderiv ℝ p)) (𝓝[>] 0) K' ∧ ∃ M : ℝ, ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ z ∈ K', ‖fderiv ℝ ((g t ∘ c) ∘ c.symm) z - fderiv ℝ p z‖ ≤ M * t) := by
+  first | exact @GlobalTheory.CompanionTheory.Metric.ChartPullBack.C2_tendsto_chart_pullback | exact GlobalTheory.CompanionTheory.Metric.ChartPullBack.C2_tendsto_chart_pullback | (intros; apply GlobalTheory.CompanionTheory.Metric.ChartPullBack.C2_tendsto_chart_pullback <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LeviNonnegInChartOfPsh
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.LeviChart
+
+theorem levi_nonneg_of_compat_fixedBase : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (A B : FinHolAtlas e X)
+    (th : LocPot X) (ph : X → ℝ) (U : Set X) (x₀ : X) (j : Fin B.n), A.Compatible B →
+    IsPotential A th → IsOpen U → A.SmoothOn U ph → IsPshOn A U (th + LocPot.ofFun ph) →
+    (B.chart j).source ⊆ th.U x₀ → ∀ y ∈ (B.chart j).target ∩ (B.chart j).symm ⁻¹' U,
+    ∀ w : Fin e → ℂ,
+    0 ≤ levi (fun z => th.φ x₀ ((B.chart j).symm z) + ph ((B.chart j).symm z)) y w := by
+  intro e X _ A B th ph U x₀ j hAB hth hU hph hpsh hsrc y hy w
+  have hp : (B.chart j).symm y ∈ (B.chart j).source := (B.chart j).map_target hy.1
+  obtain ⟨k, hk⟩ := A.cover ((B.chart j).symm y)
+  have hτ : AnalyticAt ℂ (A.chart k ∘ (B.chart j).symm) y := hAB.2 j k y ⟨hy.1, hk⟩
+  have hsymm : (A.chart k).symm ((A.chart k ∘ (B.chart j).symm) y) = (B.chart j).symm y :=
+    (A.chart k).left_inv hk
+  have htgt : (A.chart k ∘ (B.chart j).symm) y ∈ (A.chart k).target := (A.chart k).map_source hk
+  have hthU : (B.chart j).symm y ∈ th.U x₀ := hsrc hp
+  have hO1 : IsOpen ((A.chart k).target ∩ (A.chart k).symm ⁻¹' th.U x₀) :=
+    (A.chart k).isOpen_inter_preimage_symm (th.isOpen_U x₀)
+  have hO2 : IsOpen ((A.chart k).target ∩ (A.chart k).symm ⁻¹' U) :=
+    (A.chart k).isOpen_inter_preimage_symm hU
+  have hm1 : (A.chart k ∘ (B.chart j).symm) y ∈ (A.chart k).target ∩ (A.chart k).symm ⁻¹' th.U x₀ :=
+    ⟨htgt, by rw [Set.mem_preimage, hsymm]; exact hthU⟩
+  have hm2 : (A.chart k ∘ (B.chart j).symm) y ∈ (A.chart k).target ∩ (A.chart k).symm ⁻¹' U :=
+    ⟨htgt, by rw [Set.mem_preimage, hsymm]; exact hy.2⟩
+  have h2 : ((2 : ℕ∞) : WithTop ℕ∞) ≤ ∞ := WithTop.coe_le_coe.2 (le_top : (2 : ℕ∞) ≤ ⊤)
+  have hC1 : ContDiffAt ℝ 2 (th.φ x₀ ∘ (A.chart k).symm) ((A.chart k ∘ (B.chart j).symm) y) :=
+    ((hth.1 x₀ k).contDiffAt (hO1.mem_nhds hm1)).of_le h2
+  have hC2 : ContDiffAt ℝ 2 (ph ∘ (A.chart k).symm) ((A.chart k ∘ (B.chart j).symm) y) :=
+    ((hph k).contDiffAt (hO2.mem_nhds hm2)).of_le h2
+  have hC : ContDiffAt ℝ 2 (fun z => th.φ x₀ ((A.chart k).symm z) + ph ((A.chart k).symm z))
+      ((A.chart k ∘ (B.chart j).symm) y) := hC1.add hC2
+  have hev : (fun z => th.φ x₀ ((B.chart j).symm z) + ph ((B.chart j).symm z)) =ᶠ[𝓝 y]
+      ((fun z => th.φ x₀ ((A.chart k).symm z) + ph ((A.chart k).symm z)) ∘
+        (A.chart k ∘ (B.chart j).symm)) := by
+    have h1 : ∀ᶠ z in 𝓝 y, (B.chart j).symm z ∈ (A.chart k).source :=
+      ((B.chart j).continuousAt_symm hy.1).eventually ((A.chart k).open_source.mem_nhds hk)
+    filter_upwards [h1] with z hz
+    simp only [Function.comp_apply, (A.chart k).left_inv hz]
+  rw [levi_congr hev w, levi_comp w hτ hC]
+  exact hpsh x₀ k _ ⟨htgt, ⟨hm1.2, Set.mem_univ _⟩, hm2.2⟩ _
+
+end GlobalTheory.CompanionTheory.LeviChart
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.LeviNonnegInChartOfPshStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.levi_nonneg_in_chart_of_psh : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (A B : FinHolAtlas e X) (th : LocPot X) (ph : X → ℝ) (U : Set X) (x₀ : X) (j : Fin B.n), A.Compatible B → IsPotential A th → IsOpen U → A.SmoothOn U ph → IsPshOn A U (th + LocPot.ofFun ph) → (B.chart j).source ⊆ th.U x₀ → ∀ y ∈ (B.chart j).target ∩ (B.chart j).symm ⁻¹' U, ∀ w : Fin e → ℂ, 0 ≤ levi (fun z => th.φ x₀ ((B.chart j).symm z) + ph ((B.chart j).symm z)) y w := by
+  first | exact @GlobalTheory.CompanionTheory.LeviChart.levi_nonneg_of_compat_fixedBase | exact GlobalTheory.CompanionTheory.LeviChart.levi_nonneg_of_compat_fixedBase | (intros; apply GlobalTheory.CompanionTheory.LeviChart.levi_nonneg_of_compat_fixedBase <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.RegularizationGlueC2ExplicitStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.AnForm.M.FinHolAtlas
+open scoped ContDiff
+
+theorem _root_.GlobalTheory.T.regularization_glue_C2_explicit : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X] (A B : FinHolAtlas e X) (Θ th : LocPot X) (s : X → X → ℂ) (ph : X → ℝ), A.Compatible B → (∀ x, ∃ j, x ∈ chartBall B j 1) → (∀ j, closedBall (0 : Fin e → ℂ) 2 ⊆ (B.chart j).target) → IsPotential A Θ → IsPosPot A Θ → IsPotential A th → IsClosed (bdry s) → A.SmoothOn (bdry s)ᶜ ph → ∃ K : ℝ, 0 < K ∧ ∀ (t₀ : ℝ) (δ : ℝ → ℝ) (f : ℝ → Fin B.n → X → ℝ), 0 < t₀ → Tendsto δ (𝓝[>] 0) (𝓝 0) → (∀ t, 0 < t → t ≤ t₀ → t ≤ δ t ∧ δ t ≤ 1 ∧ (∀ j, A.SmoothOn (chartBall B j (5 / 4)) (f t j)) ∧ (∃ Mb : ℝ, ∀ j, ∀ y ∈ chartBall B j (5 / 4), |f t j y| ≤ Mb) ∧ (∀ j, IsPshOn A (chartBall B j (5 / 4)) (th + LocPot.ofFun (f t j))) ∧ ∀ j k, ∀ y ∈ chartBall B j (5 / 4) ∩ chartBall B k (5 / 4), |f t j y - f t k y| ≤ δ t) → (∀ j, ∀ K' ⊆ ball (0 : Fin e → ℂ) (5 / 4) ∩ (B.chart j).symm ⁻¹' (bdry s)ᶜ, IsCompact K' → TendstoUniformlyOn (fun t => f t j ∘ (B.chart j).symm) (ph ∘ (B.chart j).symm) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (f t j ∘ (B.chart j).symm)) (fderiv ℝ (ph ∘ (B.chart j).symm)) (𝓝[>] 0) K' ∧ TendstoUniformlyOn (fun t => fderiv ℝ (fderiv ℝ (f t j ∘ (B.chart j).symm))) (fderiv ℝ (fderiv ℝ (ph ∘ (B.chart j).symm))) (𝓝[>] 0) K' ∧ ∃ M : ℝ, ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ z ∈ K', ‖fderiv ℝ (f t j ∘ (B.chart j).symm) z - fderiv ℝ (ph ∘ (B.chart j).symm) z‖ ≤ M * t) → ∃ F : ℝ → X → ℝ, (∀ t, 0 < t → t ≤ t₀ → A.Smooth (F t) ∧ IsPsh A (th + LocPot.ofFun (F t) + Θ.rsmul (K * δ t)) ∧ ∀ j, ∀ y ∈ chartBall B j (5 / 4), f t j y ≤ F t y ∧ F t y ≤ f t j y + K * δ t) ∧ IsRegFamilyC2 A s ph F := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.regularization_glue_C2 | exact GlobalTheory.CompanionTheory.Ar.Giv.regularization_glue_C2 | (intros; apply GlobalTheory.CompanionTheory.Ar.Giv.regularization_glue_C2 <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.GlobalRegularizationStatementHolds
+
+section
 
 @[expose] public section
 
@@ -232,3 +393,5 @@ theorem regGlobalStatement_holds : RegGlobalStatement := by
   exact ⟨C, t₀, F, hC, hFC2⟩
 
 end GlobalTheory.CompanionTheory.Ar.Giv
+end
+end

@@ -1,8 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.HasPairingOfHerm
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.ExpoChar
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.OneScalar
+public import Development.AbelianVarietyTheory.Definitions.Foundations.AbsCharNotUnitary
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,8 +16,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,6 +35,85 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.AbsPowOneNotIsAlgRat
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsHasCentChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.CapCentral
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.ExpoChar
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix Formalism.L2.Host UpperTheory.V UpperTheory.V.TR UpperTheory.V.Af.Gk
+open GlobalTheory.HeckeGal.Model GlobalTheory.Mem.Chr.CharModel
+open GlobalTheory.CuspRep (Af)
+
+theorem UpperTheory.V.Af.Gk.expoChar :
+    UpperTheory.V.Af.Gk.ExpoChar := by
+  intro F _ _ _ s
+  refine ⟨absChar F s, fun v => ?_⟩
+  classical
+  refine TR.expo_eq_of_exp _ v s fun t => ?_
+  change Complex.exp (s * logNorm F (TR.infId F (TR.expU (Pi.single v t)))) = _
+  have h1 : finPart F (TR.infId F (TR.expU (Pi.single v t))) = 1 := Units.ext (by
+    change (1 : Af F) - 0 + 0 = 1
+    simp)
+  have h2 : ∀ u, ‖(infPart F (TR.infId F (TR.expU (Pi.single v t)))).val u‖ = Real.exp ((Pi.single v t : TR.Rinf F) u) := fun u => by
+    have e : (infPart F (TR.infId F (TR.expU (Pi.single v t)))).val = TR.infEq F (TR.expU (Pi.single v t)).val := by
+      change 1 - TR.infEq F 1 + TR.infEq F _ = _
+      simp
+    rw [e]
+    exact (((InfinitePlace.Completion.isometryEquivRealOfIsReal (IsTotallyReal.isReal u)).symm.isometry.norm_map_of_map_zero
+      (map_zero (InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal u)).symm)) _).trans
+      (Real.norm_of_nonneg (Real.exp_pos _).le)
+  rw [logNorm, h1, logFin_one, logInf]
+  simp [h2, Pi.single_apply, InfinitePlace.mult, IsTotallyReal.isReal]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.OneScalar
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Matrix Formalism.L2.Host UpperTheory.V UpperTheory.V.TR UpperTheory.V.Af.Gk
+
+theorem UpperTheory.V.Af.Gk.oneScalar :
+    UpperTheory.V.Af.Gk.OneScalar := by
+  intro F _ _ _ a π
+  classical
+  refine TR.Cen.exists_scalar π ?_
+  have ht : ∀ v : InfinitePlace F, ∑ i, TR.Eop (a := a) v i i ∈ TR.Zalg F a := fun v =>
+    GlobalTheory.CuspRep.Central.trace_mem (TR.Eop (a := a) v) (Subalgebra.toSubmodule (TR.Zalg F a)) (one_mem (TR.Zalg F a))
+      fun u => by
+        have h : TR.cap (a := a) v (u - ((a : ℂ) - 1) / 2) ∈ TR.Zalg F a := Algebra.subset_adjoin ⟨v, _, rfl⟩
+        have e : TR.cap (a := a) v (u - ((a : ℂ) - 1) / 2) =
+          Formalism.REAL.qdet (TR.Eop (a := a) v) (u - ((a : ℂ) - 1) / 2 + ((a : ℂ) - 1) / 2) := rfl
+        rw [e, sub_add_cancel] at h
+        exact h
+  have hX : TR.lie F a (oneL F a) = ∑ i, TR.lieS F a i i 1 := by
+
+    simp only [TR.lieS_apply, ← map_sum]
+    exact congrArg _ (Matrix.sum_single_one (m := Fin a) (α := TR.Rinf F)).symm
+  have h1 : ∀ i, TR.lieS F a i i 1 = ∑ v, TR.Eop (a := a) v i i := fun i => by
+
+    rw [← Finset.univ_sum_single (1 : TR.Rinf F), map_sum]
+    refine Finset.sum_congr rfl fun v _ => ?_
+    rw [TR.Eop_eq]
+    congr
+  rw [hX, Finset.sum_congr rfl fun i _ => h1 i, Finset.sum_comm]
+  exact sum_mem fun v _ => ht v
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HeckeAdjoints.UnitTwist
+
+section
 
 @[expose] public section
 
@@ -61,3 +137,5 @@ theorem UpperTheory.V.Af.Gk.unitTwist :
     field_simp
   change TR.lie F a (oneL F a) (TR.mulChi a χ φ) = 0
   rw [TR.lie_mulChi, hs φ hφ, hd, ← add_smul, add_neg_cancel, zero_smul, map_zero]
+end
+end

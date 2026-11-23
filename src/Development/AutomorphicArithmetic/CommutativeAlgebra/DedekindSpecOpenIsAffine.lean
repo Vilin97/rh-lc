@@ -2,11 +2,9 @@ module
 
 public import Mathlib.AlgebraicGeometry.AffineScheme
 public import Mathlib.RingTheory.DedekindDomain.Basic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsLocalGenerator
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,8 +41,53 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+import Mathlib.Tactic.Lemma
 import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
 import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsLocalGenerator
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ExistsLocalGenerator.exists_local_generator :
+    ∀ {B : Type} [inst : CommRing B] [IsDedekindDomain B] (I p : Ideal B) [hp : p.IsPrime],
+      ∃ π ∈ I, ∃ s ∉ p, ∀ x ∈ I, s * x ∈ Ideal.span {π} := by
+  intro B _ _ I p hp
+  by_cases hI : I = ⊥
+  · refine ⟨0, I.zero_mem, 1, (Ideal.ne_top_iff_one p).mp hp.ne_top, fun x hx => ?_⟩
+    rw [hI, Ideal.mem_bot] at hx
+    simp [hx]
+  have hne : ¬ I ≤ I * p := by
+    intro h
+    have h1 : I * p = I * 1 := by
+      rw [mul_one]
+      exact le_antisymm Ideal.mul_le_left h
+    have h2 : p = 1 := mul_left_cancel₀ (show I ≠ 0 from hI) h1
+    exact hp.ne_top (by rw [h2, Ideal.one_eq_top])
+  obtain ⟨π, hπ, hπ'⟩ := SetLike.not_le_iff_exists.mp hne
+  have hle : Ideal.span {π} ≤ I := (Ideal.span_singleton_le_iff_mem I).mpr hπ
+  obtain ⟨J, hJ⟩ := Ideal.dvd_iff_le.mpr hle
+  have hJp : ¬ J ≤ p := by
+    intro h
+    apply hπ'
+    have : π ∈ I * J := hJ ▸ Ideal.mem_span_singleton_self π
+    exact Ideal.mul_mono_right h this
+  obtain ⟨s, hs, hs'⟩ := SetLike.not_le_iff_exists.mp hJp
+  refine ⟨π, hπ, s, hs', fun x hx => ?_⟩
+  rw [hJ, mul_comm s x]
+  exact Ideal.mul_mem_mul hx hs
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.DedekindSpecOpenIsAffine
+
+section
 
 @[expose] public section
 
@@ -104,3 +147,5 @@ theorem UpperTheory.dedekind_spec_open_isAffine :
     rwa [e] at h2
   have : IsAffine W.toScheme := isAffine_of_isAffineHom W.ι
   exact this
+end
+end

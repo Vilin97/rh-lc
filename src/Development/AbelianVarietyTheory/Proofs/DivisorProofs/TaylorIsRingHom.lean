@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntDerApply
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDerivationEqIteratePrimeCharP
+public import Mathlib.RingTheory.Derivation.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +41,48 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsEulerContraction
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDerivationEqIteratePrimeCharP
+
+section
+
+@[expose] public section
+
+open GlobalTheory GlobalTheory.LogDR
+
+namespace GlobalTheory
+
+theorem derivation_iterate_leibniz {R : Type} [CommRing R] (D : Derivation ℤ R R) (a b : R) (n : ℕ) :
+    (⇑D)^[n] (a * b) =
+      ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal n, (n.choose ij.1 : R) * ((⇑D)^[ij.1] a * (⇑D)^[ij.2] b) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+
+    rw [Finset.sum_antidiagonal_choose_succ_mul (fun i j => (⇑D)^[i] a * (⇑D)^[j] b) n,
+    Function.iterate_succ_apply', ih, map_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun ij hij => ?_
+    rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
+    have hc : (n.choose ij.2 : R) = (n.choose ij.1 : R) := by
+      rw [← hij, Nat.choose_symm_add]
+    rw [hc, Derivation.leibniz, Derivation.leibniz, Derivation.map_natCast, smul_zero, add_zero,
+      Function.iterate_succ_apply', Function.iterate_succ_apply']
+    simp only [smul_eq_mul]
+    ring
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorIsRingHom
+
+section
 
 @[expose] public section
 
@@ -263,3 +304,6 @@ theorem taylor_isRingHom : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra �
     rw [iterOp_add, map_add (f := _), smul_add]
 
 end GlobalTheory.FormalOrigin
+end
+end
+end

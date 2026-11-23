@@ -2,7 +2,6 @@ module
 
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsDiagonalization
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,14 +15,18 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +46,11 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsNotCongPow
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivOfRangeEq
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasExponentZeroIff
@@ -61,6 +66,51 @@ import Formalism.ConjugateSelfDual.Statement
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 import ReciprocityTheory.GaloisValuations.GlobalA
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsDiagonalization
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ExistsDiagonalization.exists_diag :
+    ∀ {K : Type} [inst : Field K] {n : ℕ}
+    (P : Matrix (Fin n) (Fin n) K) (α : Fin n → K),
+    Function.Injective α →
+      P.charpoly = ∏ i : Fin n, (Polynomial.X - (Polynomial.C : K → Polynomial K) (α i)) →
+        ∃ (V : Matrix (Fin n) (Fin n) K), IsUnit V ∧ P * V = V * Matrix.diagonal α := by
+  intro K _ n P α hα hP
+  have h1 : ∀ i, ∃ v : Fin n → K, v ≠ 0 ∧ P.mulVec v = α i • v := by
+    intro i
+    have h0 : P.charpoly.eval (α i) = 0 := by
+      rw [hP, Polynomial.eval_prod]
+      exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp)
+    rw [Matrix.eval_charpoly] at h0
+    obtain ⟨v, hv, hv0⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr h0
+    refine ⟨v, hv, ?_⟩
+    rw [Matrix.sub_mulVec, sub_eq_zero] at hv0
+    rw [← hv0]
+    ext j
+    simp [Matrix.mulVec_diagonal]
+  choose v hv0 hv using h1
+  have hli : LinearIndependent K v := by
+    refine Module.End.eigenvectors_linearIndependent' (Matrix.toLin' P) α hα v ?_
+    intro i
+    refine ⟨?_, hv0 i⟩
+    rw [Module.End.mem_eigenspace_iff]
+    simpa using hv i
+  refine ⟨(Matrix.of v).transpose, ?_, ?_⟩
+  · exact Matrix.linearIndependent_cols_iff_isUnit.mp hli
+  · ext j i
+    have h := congrFun (hv i) j
+    rw [Matrix.mul_diagonal]
+    simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm] using h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.NilpotentLevelLowering.PairRel
+
+section
 
 @[expose] public section
 
@@ -153,3 +203,5 @@ theorem UpperTheory.V.Pa.Lev.pairRel :
     · simp [hj]
     · rw [Finset.prod_eq_zero (Finset.mem_univ j) (by simp [hj]), zero_mul]
   rw [this, Matrix.diagonal_zero, mul_zero]
+end
+end

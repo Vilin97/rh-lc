@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.LocalUnitReduction.FinRedStatement
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,9 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,8 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,11 +39,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.RingTheory.Ideal.Quotient.Operations
 public import Mathlib.RingTheory.Nilpotent.Defs
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.LocalUnitReduction.FinRedStatement
+
+section
+
+@[expose] public section
+
+namespace Formalism.L2.Pj.LocalUnitReduction
+
+def FinRedStatement : Prop :=
+  ∀ (K' Fr : Type) [Field K'] [CommRing Fr] [Algebra K' Fr] (J : Ideal Fr)
+    (ι : Type) [Fintype ι] (R : ι → Type) [∀ c, CommRing (R c)] [∀ c, Algebra K' (R c)]
+    (φ : ∀ c, Fr →ₐ[K'] R c),
+    (∀ f : Fr, (∀ c, φ c f = 0) → f = 0) →
+    (∀ Q : Ideal Fr, Q.IsPrime → J ≤ Q → ∀ c c', RingHom.ker (φ c) ≤ Q → RingHom.ker (φ c') ≤ Q → c = c') →
+    (∀ c (r : R c), ∃ a p : Fr,
+      (∀ Q : Ideal Fr, Q.IsPrime → J ≤ Q → RingHom.ker (φ c) ≤ Q → p ∉ Q) ∧ φ c p * r = φ c a) →
+    (∀ c, FiniteDimensional K' (R c ⧸ Ideal.map (φ c) J) ∧ IsReduced (R c ⧸ Ideal.map (φ c) J)) →
+    FiniteDimensional K' (Fr ⧸ J) ∧ IsReduced (Fr ⧸ J)
+
+end Formalism.L2.Pj.LocalUnitReduction
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.ProjectiveLattices.LocalUnitReduction.IsUnitMkOfForallPrime
+
+section
 
 @[expose] public section
 
@@ -194,3 +221,5 @@ theorem finRed : FinRedStatement := by
   exact ⟨FiniteDimensional.of_injective Ψ.toLinearMap hinjΨ, isReduced_of_injective Ψ hinjΨ⟩
 
 end Formalism.L2.Pj.LocalUnitReduction
+end
+end

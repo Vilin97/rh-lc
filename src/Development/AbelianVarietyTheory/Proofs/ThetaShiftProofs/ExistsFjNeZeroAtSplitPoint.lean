@@ -54,7 +54,10 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDo
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FlowCoefficientBounds
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FlowDomainCriterionHolds
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FlowMeanContinuity
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.NearSupremumBounds.FdFjNearSup
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.IsotropicCoefficientSplitting
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.IsotropicOutsideLine
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.NearSupremumBounds.FdFjNearSupOf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.OrthonormalFlagTranslateHolds
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.NearSupremumBounds.FdFjNearSupOf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.PointAssembly.FdPointAssembly
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.UnipotentMoves.FdUnipMove
@@ -68,10 +71,112 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDo
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.OrthonormalChartNormControlHolds
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.OrthonormalFlagTranslateHolds
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.OrthonormalShortVectorBoundOf
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SchwarzLemmaBallHolds
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.Complex.Schwarz
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ShortVectorBound
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.UnipotentVectorEqSmulComponent
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.UnitaryComplementMoveOfIsotropic
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.NearSupremumBounds.Inputs
+
+section
+
+@[expose] public section
+
+namespace PI.FdFjNearSup.W
+
+open ReciprocityTheory.ChartRestriction.G.FD NumberField Complex
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem fourierJacobi_holomorphic : FjHolo (E := E) := by
+  intro r X la P ξ ν hP hξ
+  exact ReciprocityTheory.ChartRestriction.G.FD.CuspCoefficientFlow.fj_diffOn X la P hP.1 hξ ν
+
+theorem fourierJacobi_realFlow : FjRealFlow (E := E) := by
+  intro r X la P ξ ν hP hξ x hx s
+  have hP' : X.IsBddSec la P ∧ ∀ ξ', X.IsIso ξ' → ∀ y ∈ X.dom, X.fj la ξ' 0 P y = 0 := hP
+
+  exact X.fj_flow_real la ξ hξ ν P hP'.1.1 hP'.1.2 x hx s
+
+theorem fd_fj_near_sup_full :
+    HolomorphicPeriodicityExtension (E := E) → FlowNormRatio (E := E) → ModerateCoefficientPositivity (E := E) →
+      NearSupremumTransference (E := E) :=
+  fd_fj_near_sup_of flowDomainCriterion_holds fourierJacobi_holomorphic fourierJacobi_realFlow orthonormalFlagTranslate_holds
+
+end PI.FdFjNearSup.W
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainExtension.NearSupremumBounds.FdFjNearSup
+
+section
+
+@[expose] public section
+
+theorem fd_fj_near_sup {E : Type} [Field E] [NumberField E] [NumberField.IsCMField E] : ReciprocityTheory.ChartRestriction.G.FD.HolomorphicPeriodicityExtension (E := E) → ReciprocityTheory.ChartRestriction.G.FD.FlowNormRatio (E := E) → ReciprocityTheory.ChartRestriction.G.FD.ModerateCoefficientPositivity (E := E) → ReciprocityTheory.ChartRestriction.G.FD.NearSupremumTransference (E := E) :=
+  PI.FdFjNearSup.W.fd_fj_near_sup_full
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SchwarzLemmaBallHolds
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.FD
+
+open Metric Set
+
+lemma exp_nine_quarters_lt : Real.exp (9 / 4) < 9.5 := by
+  have h1 := Real.exp_one_lt_d9
+  have h2 : |Real.exp (1 / 4) - ∑ m ∈ Finset.range 4, (1 / 4 : ℝ) ^ m / m.factorial| ≤
+      |(1 / 4 : ℝ)| ^ 4 * ((Nat.succ 4 : ℕ) / ((Nat.factorial 4 : ℕ) * 4)) :=
+    Real.exp_bound (by norm_num [abs_of_pos]) (by norm_num)
+  have h3 : Real.exp (1 / 4) < 1.2841 := by
+    have := (abs_le.mp h2).2
+    norm_num [Finset.sum_range_succ, Nat.factorial] at this
+    linarith
+  have h4 : Real.exp (9 / 4) = Real.exp 1 * Real.exp 1 * Real.exp (1 / 4) := by
+    rw [← Real.exp_add, ← Real.exp_add]; norm_num
+  have he : 0 < Real.exp 1 := Real.exp_pos 1
+  have he4 : 0 < Real.exp (1 / 4) := Real.exp_pos _
+  rw [h4]
+  calc Real.exp 1 * Real.exp 1 * Real.exp (1 / 4) ≤ 2.7182818286 * 2.7182818286 * 1.2841 := by
+        gcongr
+    _ < 9.5 := by norm_num
+
+theorem schwarzLemmaBall_holds : SchwarzLemmaBall := by
+  intro V _ _ γ ρ S hρ hd hb h1 h2 Z hZ
+  have hS : 0 < S := by linarith [norm_nonneg (γ 0)]
+  have hmaps : MapsTo γ (ball 0 ρ) (closedBall (γ 0) ((Real.exp (9 / 4) + 1) * S)) := by
+    intro z hz
+    rw [mem_closedBall, dist_eq_norm]
+    calc ‖γ z - γ 0‖ ≤ ‖γ z‖ + ‖γ 0‖ := norm_sub_le _ _
+      _ ≤ Real.exp (9 / 4) * S + S := add_le_add (hb z (ball_subset_closedBall hz)) h2
+      _ = (Real.exp (9 / 4) + 1) * S := by ring
+  have hZρ : Z ∈ ball (0 : V) ρ := ball_subset_ball (by linarith) hZ
+  have key := Complex.dist_le_div_mul_dist_of_mapsTo_ball (hd.mono ball_subset_closedBall) hmaps hZρ
+  have hZn : ‖Z‖ < ρ / 21 := by simpa using hZ
+  rw [dist_zero_right] at key
+  intro h0
+  rw [h0, dist_comm, dist_zero_right] at key
+  have hexp := exp_nine_quarters_lt
+  have : (Real.exp (9 / 4) + 1) * S / ρ * ‖Z‖ < S / 2 := by
+    calc (Real.exp (9 / 4) + 1) * S / ρ * ‖Z‖ ≤ (Real.exp (9 / 4) + 1) * S / ρ * (ρ / 21) := by
+          gcongr
+      _ = (Real.exp (9 / 4) + 1) * S / 21 := by field_simp
+      _ < S / 2 := by nlinarith
+  linarith
+
+end ReciprocityTheory.ChartRestriction.G.FD
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ExistsFjNeZeroAtSplitPoint
+
+section
 
 @[expose] public section
 
@@ -301,3 +406,5 @@ theorem _root_.GlobalTheory.FJDetect.exists_fj_ne_zero_at_split_point' {r : ℕ}
     (_root_.fd_unip_move _root_.ReciprocityTheory.ChartRestriction.G.FD.shortVectorBound _root_.ReciprocityTheory.ChartRestriction.G.FD.unitaryComplementMove _root_.ReciprocityTheory.ChartRestriction.G.FD.unipotent_majorant_bound _root_.ReciprocityTheory.ChartRestriction.G.FD.isotropicCoefficientSplitting_holds _root_.ReciprocityTheory.ChartRestriction.G.FD.noShortVectorLowerBound_holds)) r X la P ξ ν c1 w z0 hD4 hr
 
 end GlobalTheory.FJDetect
+end
+end

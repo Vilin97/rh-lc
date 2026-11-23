@@ -1,14 +1,13 @@
 module
 
 public import Formalism.UnipotentAdelicQuotients.SWXSDefs
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InfiniteAdeleHaarScalingTotallyReal
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.TensTop
+public import GroundTheory.GlobalFields.TateThesis.AdeleScaling
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -28,6 +27,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,6 +44,79 @@ import Mathlib.Topology.Sheaves.Init
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.MatrixTransvectionDiagonalDecomposition
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OfE
 import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BaseOneSide.PsiSide
+public import GroundTheory.GlobalFields.TateThesis.AdeleMeasurable
+public import GroundTheory.GlobalFields.TateThesis.AdeleMeasure
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InfiniteAdeleHaarScalingTotallyReal
+
+section
+
+@[expose] public section
+
+open HeckeCharacterZeroLocus.SiegelWeilU GlobalTheory.CompanionTheory.SW NumberField IsDedekindDomain MeasureTheory Topology Filter PositivityTheory.Rg.Base1 GroundTheory.Global GlobalTheory.CompanionTheory.SW.RankOneSiegelWeil
+open scoped TensorProduct ENNReal NNReal Matrix Classical
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.SW.HaarUnit
+
+theorem norm_inv_unit (F : Type) [Field F] [NumberField F] (hF : IsTotallyReal F)
+    (n : (InfiniteAdeleRing F)ˣ) :
+    ‖((n⁻¹ : (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F)‖ =
+      ((∏ w : InfinitePlace F, ‖(n : InfiniteAdeleRing F) w‖₊)⁻¹ : ℝ≥0) := by
+  have hmult : ∀ w : InfinitePlace F, w.mult = 1 := fun w => by
+    rw [InfinitePlace.mult, if_pos (hF.isReal w)]
+  have hw : ∀ w : InfinitePlace F,
+      ‖((n⁻¹ : (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F) w‖ =
+        ‖(n : InfiniteAdeleRing F) w‖⁻¹ := fun w => by
+    have h1 : ((n⁻¹ : (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F) w *
+        (n : InfiniteAdeleRing F) w = 1 := congrFun n.inv_mul w
+    have h2 := congrArg norm h1
+    rw [norm_mul, norm_one] at h2
+    exact eq_inv_of_mul_eq_one_left h2
+  rw [InfiniteAdeleRing.norm_def]
+  simp only [hmult, pow_one, hw, NNReal.coe_inv, NNReal.coe_prod, coe_nnnorm]
+  rw [Finset.prod_inv_distrib]
+
+section Borel
+
+attribute [local instance 100000] GroundTheory.Global.measurableSpace_infiniteAdeleRing
+
+theorem infinite_adele_haar_scaling_by_unit (F : Type) [Field F] [NumberField F] (hF : IsTotallyReal F)
+    {m : MeasurableSpace (InfiniteAdeleRing F)} (hm : @BorelSpace _ _ m)
+    (li : Measure (InfiniteAdeleRing F)) (hli : li.IsAddHaarMeasure)
+    (n : (InfiniteAdeleRing F)ˣ) :
+    li.map (fun t => (n : InfiniteAdeleRing F) * t) =
+      (∏ w : InfinitePlace F, ‖(n : InfiniteAdeleRing F) w‖₊)⁻¹ • li := by
+  obtain rfl : m = GroundTheory.Global.measurableSpace_infiniteAdeleRing F :=
+    hm.measurable_eq.trans (GroundTheory.Global.borelSpace_infiniteAdeleRing (K := F)).measurable_eq.symm
+  have h := Measure.isAddLeftInvariant_eq_smul li (infiniteAdeleMeasure F)
+  rw [h, Measure.map_smul, map_mul_left_infiniteAdeleMeasure, smul_comm, norm_inv_unit F hF n,
+    ENNReal.ofReal_coe_nnreal]
+  · rfl
+  · letI := hm
+    exact (continuous_const_mul (n : InfiniteAdeleRing F)).measurable.aemeasurable
+
+end Borel
+
+theorem map_mul_unit : ∀ (F : Type) [Field F] [NumberField F], IsTotallyReal F →
+    ∀ li : Measure (Ainf F), li.IsAddHaarMeasure → ∀ n : (Ainf F)ˣ,
+      li.map (fun t => (n : Ainf F) * t) =
+        (∏ w : InfinitePlace F, ‖(n : Ainf F) w‖₊)⁻¹ • li := by
+  intro F _ _ hF li hli n
+  exact infinite_adele_haar_scaling_by_unit F hF (m := measAinf) ⟨rfl⟩ li hli n
+
+end GlobalTheory.CompanionTheory.SW.HaarUnit
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InfiniteAdeleHaarScalingTotallyRealStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +125,5 @@ open scoped TensorProduct ENNReal NNReal Matrix Classical
 
 theorem _root_.GlobalTheory.T.infinite_adele_haar_scaling_totally_real : ∀ (F : Type) [Field F] [NumberField F], IsTotallyReal F → ∀ li : Measure (Ainf F), li.IsAddHaarMeasure → ∀ n : (Ainf F)ˣ, li.map (fun t => (n : Ainf F) * t) = (∏ w : InfinitePlace F, ‖(n : Ainf F) w‖₊)⁻¹ • li := by
   first | exact @GlobalTheory.CompanionTheory.SW.HaarUnit.map_mul_unit | exact GlobalTheory.CompanionTheory.SW.HaarUnit.map_mul_unit | (intros; apply GlobalTheory.CompanionTheory.SW.HaarUnit.map_mul_unit <;> assumption)
+end
+end

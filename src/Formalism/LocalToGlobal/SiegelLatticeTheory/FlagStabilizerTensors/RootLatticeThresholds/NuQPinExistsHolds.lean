@@ -18,10 +18,9 @@ import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCou
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.NGPinLoc
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RootPatterns
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.DstarIdxPf
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.NGLeaves
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.PairAmpConstWd
-public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MassDataKppVol
-public import Formalism.SharpRestriction.CuspSpanNormBounds.OscillatoryIntegralBounds
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.NGAnalytic
+import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.NormGramAtOrigin
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +36,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,7 +43,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -60,7 +56,55 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.PeriodIntegrals.NormGramAtOrigin
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.PairAmpConstWd
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MassDataKppVol
+public import Formalism.SharpRestriction.CuspSpanNormBounds.OscillatoryIntegralBounds
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.NGLeaves
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped Classical
+
+namespace Formalism.L2.SG.NGLeaves
+
+open Formalism.BasicNotions Formalism.L2.SG.NGCut Formalism.L2.SG.NGAnalytic
+
+theorem nondegenerate_gram_tuple : NondegenerateGramTuple := by
+  intro D X
+  have hn : 2 * D.R.rS + 2 ≤ X.B.I.n := by
+    rw [X.n_eq]
+    have h1 := D.R.rS_two
+    have h2 := D.R.r_eq
+    have h3 := D.R.k_ge
+    omega
+  have hH : ∀ i j, star (X.B.I.J j i) = X.B.I.J i j := fun i j => by
+    have := congrFun (congrFun X.B.I.J_herm i) j
+    simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply] at this
+    exact this
+  obtain ⟨X0, hX⟩ := exists_nondegenerate X.B.I.E X.B.I.n (2 * D.R.rS + 2) hn X.B.I.J hH X.B.I.J_det
+  refine ⟨X0, ?_⟩
+  have e : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.gramE X.B.I.cm.sig X.B.I.J X0 = PI.NormGramAtOrigin.gram (starRingEnd _) X.B.I.J X0 := by
+    ext a b; rfl
+  rw [e]; exact hX
+
+end Formalism.L2.SG.NGLeaves
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.NuQPinExistsHolds
+
+section
 
 @[expose] public section
 
@@ -250,3 +294,6 @@ theorem choicesC_holds : ChoicesC := choicesC_of nuQPinExists_holds locSpExists_
 end Leaves
 
 end Formalism.L2.SG.PoincareAmplitudeLowerBounds
+end
+end
+end

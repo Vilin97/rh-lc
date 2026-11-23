@@ -1,7 +1,8 @@
 module
 
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.PermRepApply
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GammaMatrixInverse
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GGMirabolic
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarConvolutionTrace.SuperdiagSgnConj
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,9 +39,52 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GammaMatrixInverse
+
+section
+
+@[expose] public section
+
+open Finset
+
+open scoped ComplexConjugate
+
+noncomputable section
+
+open Classical
+
+namespace PI.GGMatBoundW
+
+open Formalism.L2.SG.GGMirabolic PI.GGConvScalarW
+
+theorem addChar_inv_eq_conj {F : Type} [Field F] [Fintype F] (ψ₀ : AddChar F ℂ) (a : F) :
+    (ψ₀ a)⁻¹ = conj (ψ₀ a) := by
+  rw [← AddChar.map_neg_eq_inv, AddChar.map_neg_eq_conj]
+
+theorem psiNat_inv {F : Type} [Field F] [Fintype F] {k : ℕ} (ψ₀ : AddChar F ℂ) (u : GL (Fin k) F) :
+    psiNat ψ₀ u⁻¹ = conj (psiNat ψ₀ u) := by
+  unfold psiNat
+  by_cases hu : IsUni k u
+  · rw [if_pos (isUni_inv hu), if_pos hu]
+    rw [eq_inv_of_mul_eq_one_left (psiU_inv_mul ψ₀ hu)]
+    unfold psiU
+    exact addChar_inv_eq_conj ψ₀ _
+  · have hu' : ¬ IsUni k u⁻¹ := fun h => hu (by simpa using isUni_inv h)
+    rw [if_neg hu', if_neg hu, map_zero]
+
+end PI.GGMatBoundW
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.MatrixCoefficientEquation
+
+section
 
 @[expose] public section
 
@@ -163,3 +206,6 @@ theorem matrix_coefficient_equation : MatrixEq := by
     rw [Matrix.of_apply, Matrix.transpose_apply, toMatrix'_totOp_apply, sum_orbit hfree d hd]
 
 end PI.GGMatBoundW
+end
+end
+end

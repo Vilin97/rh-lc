@@ -2,26 +2,9 @@ module
 
 public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
 import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsIsRealEmbeddingEqHom
-public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.Imports
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.CharacterColumnKernelsOfBlockChiCOfBlockChiOne
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.CharpolyFactorCoeffZeroValuationEqProd
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.ClosedSubgroupCutoffExists
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.EllipticCentralizerQuotientCompact
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.ExistsKrylovDetNeZero
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.FirstCohomologyBoundOfBoundaryBound
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.FirstGeometricConditionOfProperties
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GaloisFixedAdelicMatricesDescend
-public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GaloisTwistPreservesSiegelBound
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GinvHWCellLastMulMulVecBvecEI
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.LintegralOfRealToReal
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.MonicPolynomialIsMatrixCharpoly
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.NormMapAndSeparableConjugacy
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.OrbitalIntegralAbsoluteConvergence
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.P2TraceFixed
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.StableTwistedTraceFormulaComparison
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.TwistedGeometricSideUnfolding
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.TwistedTraceFormulaEllipticExpansion
-import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.UnitaryGroupGeometricSideOfQuotientIdentities
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.GalAdEq
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.GalTwistExAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -58,6 +41,48 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.CharacterColumnKernelsOfBlockChiCOfBlockChiOne
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.CharpolyFactorCoeffZeroValuationEqProd
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.ClosedSubgroupCutoffExists
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.EllipticCentralizerQuotientCompact
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.ExistsKrylovDetNeZero
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.FirstCohomologyBoundOfBoundaryBound
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.FirstGeometricConditionOfProperties
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GaloisFixedAdelicMatricesDescend
+public import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GaloisTwistPreservesSiegelBound
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.GinvHWCellLastMulMulVecBvecEI
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.LintegralOfRealToReal
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.MonicPolynomialIsMatrixCharpoly
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.NormMapAndSeparableConjugacy
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.OrbitalIntegralAbsoluteConvergence
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.P2TraceFixed
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.StableTwistedTraceFormulaComparison
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.TwistedGeometricSideUnfolding
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.TwistedTraceFormulaEllipticExpansion
+import Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.UnitaryGroupGeometricSideOfQuotientIdentities
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.Imports
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory.K
+
+theorem UpperTheory.ConvolutionTheory.K.g0 :
+    G0 := by
+  refine ⟨fun F E _ _ _ _ _ _ σ _ n _ μ _ => ?_, fun F _ _ n μ _ g => ?_⟩
+  · obtain ⟨θ, h⟩ := galTwistEx E n μ σ.toRingEquiv
+    exact ⟨θ, fun g => by rw [galAdEq]; exact h g⟩
+  · rw [galAdEq]
+    ext i j : 2
+    exact ((adBasic F).2.1 _).symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.LocalGroupAnalysis.G1St
+
+section
 
 @[expose] public section
 
@@ -72,3 +97,5 @@ theorem g3 : G3 := twisted_trace_formula_elliptic_expansion g2 twistedGeometricS
 theorem g4 : G4 := stable_twisted_trace_formula_comparison isUnit_last_join closedSubgroup_cutoff_exists (orbitalIntegral_absolute_convergence isUnit_last_join closedSubgroup_cutoff_exists) galois_fixed_adelic_matrices_descend character_column_kernels_of_block_chi_c_of_block_chi_one p1_holds (p2_of p1_holds) firstCohomologyBound_of_boundaryBound (ginvH_wCell_last_mul_mulVec_bvec_eI GlobalTheory.CNorm.hasseNorm)
 
 end UpperTheory.ConvolutionTheory.G
+end
+end

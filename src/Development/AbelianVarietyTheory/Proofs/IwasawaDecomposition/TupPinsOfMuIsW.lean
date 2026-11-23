@@ -9,9 +9,9 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Formalism.LocalRingCardinality.SpanPowerMembership.UnitsPowSurjective
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyFiniteTypeIndexOfRowsPos
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CoeffZeroEqZeroIff
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.QpIsQpSet
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TupPinsOfMuIs
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValuationLtOneOfInvNotMem
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TiedColumnData
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinAfMemIntUIff
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InertAtLeCongN
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,7 +45,178 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToIntBijective
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CmQuadraticFormEqAlternatingForm
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsTwistOfIsDelta
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NcardPrimesOverOfStabilizer
+import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.HostPins
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValuationLtOneOfInvNotMem
+import Formalism.LocalToGlobal.HilbertRowConditions.KaTiedIffKapDef
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Tactic.NormNum.Parity
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GeoTiedPGraft
+import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.QpIsQpSet
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl NumberField IsDedekindDomain
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.Mem.Top.Bl.QpIsOf
+
+theorem qpIs_qpSet : ∀ {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T), ColPin w → ∀ (Z : w.Lt) {nch : NChoice (w.D Z)}
+    (tp : TupTied (w.D Z) (TC.cf w.I w.l Z) nch), tp.xi = w.I.xi → GlobalTheory.Mem.HD.TupPins tp →
+    TC.QpIs w.I (GlobalTheory.Mem.HD.ReQ.qpSet tp) := by
+  intro B f T w _ Z nch tp hxi _ a p
+  classical
+  have hr := w.ok.xi_reads a
+  have hsel : Formalism.L2.Col.IsSel B.fields w.I.sel := w.ok.sel_ok
+  have hf := GlobalTheory.OpenChrRam.qprime_finite B.fields.F B.fields.E B.fields.K ((w.I.tup a : Formalism.L2.DIV.Chr _ _ _))
+    (w.I.tup a).2.1.1.1.1.2
+  have hpm : ∀ (v : HeightOneSpectrum (𝓞 B.fields.F)) (P : HeightOneSpectrum (𝓞 B.fields.E)),
+      Ideal.under (𝓞 B.fields.F) P.asIdeal = v.asIdeal → ((p : 𝓞 B.fields.E) ∈ P.asIdeal ↔ (p : 𝓞 B.fields.F) ∈ v.asIdeal) := by
+    intro v P h
+    rw [← h, Ideal.under, Ideal.mem_comap, map_natCast]
+  have hx : ∀ P, (tp.xi a).UnrAt P ↔ (w.I.xi a).UnrAt P := fun P => by rw [congrFun hxi a]; exact Iff.rfl
+  refine (GlobalTheory.Mem.HD.ReQ.mem_qpSet tp a p).trans ?_
+  refine Iff.trans (and_congr_right fun _ => exists_congr fun P => and_congr_right fun _ => not_congr (hx P)) ?_
+  show (p.Prime ∧ ∃ P, (p : 𝓞 B.fields.E) ∈ P.asIdeal ∧ ¬ (w.I.xi a).UnrAt P) ↔
+    p.Prime ∧ ∃ P ∈ Formalism.L2.Col.QE w.I.sel (w.I.tup a : Formalism.L2.DIV.Chr _ _ _), (p : 𝓞 B.fields.E) ∈ P.asIdeal
+  rw [Formalism.L2.Col.QE, dite_eq_left hf]
+  refine and_congr_right fun _ => ⟨?_, ?_⟩
+  · rintro ⟨P, hp, hP⟩
+    refine ⟨w.I.sel (P.under (𝓞 B.fields.F)),
+      Finset.mem_image_of_mem _ (hf.mem_toFinset.2 ((GlobalTheory.Mem.ReadTwist.mem_qprime_iff hr _).2 ⟨P, rfl, hP⟩)), ?_⟩
+    rw [hpm _ _ (hsel _), ← hpm _ P rfl]
+    exact hp
+  · rintro ⟨P, hP, hp⟩
+    obtain ⟨v, hv, rfl⟩ := Finset.mem_image.1 hP
+    obtain ⟨P', hP', hr'⟩ := (GlobalTheory.Mem.ReadTwist.mem_qprime_iff hr v).1 (hf.mem_toFinset.1 hv)
+    refine ⟨P', ?_, hr'⟩
+    rw [hpm v P' (by rw [← hP']; rfl), ← hpm v _ (hsel v)]
+    exact hp
+
+end GlobalTheory.Mem.Top.Bl.QpIsOf
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TupPinsOfMuIs
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.NT GlobalTheory.Published GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Fld GlobalTheory.Mem.HD NumberField IsDedekindDomain
+open scoped nonZeroDivisors IntermediateField
+
+namespace GlobalTheory.Mem.HD.TupPin
+
+theorem isTwist_types (B : Base) (f : Fr B.toPre) (T : TwDat B) :
+    ∀ ξ ∈ T.set f, Chr.IsTwist B.host (Set.range B.host.g) ξ := by
+  have a1 : Chr.IsTwist B.host (Set.range B.host.g) f.del := Chr.isTwist_of_isDelta B.host.pde_prime
+    (GlobalTheory.HostSplit.split_of_one_mod B.R B.host _ B.host.pde_prime B.pde_cond.1).1
+    (fun ⟨i, h⟩ => (B.host.pde_ne_g i).1 h.symm) f.isDel
+  have a2 : Chr.IsTwist B.host (Set.range B.host.g) f.del' := Chr.isTwist_of_isDelta B.host.pde'_prime
+    (GlobalTheory.HostSplit.split_of_one_mod B.R B.host _ B.host.pde'_prime B.pde_cond.2).1
+    (fun ⟨i, h⟩ => (B.host.pde_ne_g i).2 h.symm) f.isDel'
+  rintro ξ ((rfl | rfl | rfl) | ⟨w, rfl⟩)
+  · exact Chr.isTwist_one _ _
+  · exact a1
+  · exact a2
+  · have h := T.psi_tw w
+    have a3 : Chr.IsTwist B.host (Set.range B.host.g) (T.psi w) := ⟨h.1, h.2.1, h.2.2.1, fun v hv =>
+      ⟨(h.2.2.2 v hv).1, (h.2.2.2 v hv).2.1, (h.2.2.2 v hv).2.2.1,
+        fun ⟨i, hi⟩ => (h.2.2.2 v hv).2.2.2 (Or.inr (Or.inl ⟨i, hi.symm⟩))⟩⟩
+    unfold TwDat.xiTw
+    split_ifs
+    exacts [a2.mul_twist a3, a1.mul_twist a3]
+
+theorem xiTw_unr (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : B.places.Pl) (v : HeightOneSpectrum (𝓞 B.host.E))
+    (hv : OverP B.host (B.places.resChar w) v) : (T.xiTw f w).UnrAt v := by
+  have hψ : (T.psi w).UnrAt v := fun x _ => (T.psi_is w).atl v hv x
+  unfold TwDat.xiTw
+  split_ifs with h
+  · refine (f.isDel'.unr v fun hn => B.host.pde_ne ?_).mul hψ
+    rw [h] at hv
+    exact Examples₂.PlacesToy.prime_mem_unique v B.host.pde_prime B.host.pde'_prime hv hn
+  · exact (f.isDel.unr v fun hn => h
+      (Examples₂.PlacesToy.prime_mem_unique v (B.places.resChar_prime w) B.host.pde_prime hv hn)).mul hψ
+
+end GlobalTheory.Mem.HD.TupPin
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToIntBijective
+
+section
+
+section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.L2.Host Formalism.L2.Rows Formalism.L2.Geo GlobalTheory.GeoGraft NumberField
+
+namespace GlobalTheory.GeoModel
+
+variable (D : D7)
+
+def fracO : IntermediateField ℚ D.what₂.LL := IntermediateField.adjoin ℚ (Set.range D.what₂.OtoLL)
+
+theorem otoLL_mem (y : D.what₂.O) : D.what₂.OtoLL y ∈ fracO D :=
+  IntermediateField.subset_adjoin ℚ _ ⟨y, rfl⟩
+
+variable {D} {T : HostTied D} {C : CharFrame D}
+
+def toInt (h : OTied D T C) : D.what₂.O →+* 𝓞 (fracO D) where
+  toFun y := ⟨⟨D.what₂.OtoLL y, otoLL_mem D y⟩, by
+    have hq : IsIntegral ℤ (T.jLL (D.what₂.OtoLL y)) := ((h.range _).1 ⟨y, rfl⟩).2
+    let f : (fracO D) →ₐ[ℤ] Qb := (T.jLL.comp (fracO D).val.toRingHom).toIntAlgHom
+    have hf : Function.Injective f := (T.jLL.comp (fracO D).val.toRingHom).injective
+    exact (isIntegral_algHom_iff f hf).1 hq⟩
+  map_one' := by ext; simp
+  map_mul' a b := by ext; exact map_mul D.what₂.OtoLL a b
+  map_zero' := by ext; simp
+  map_add' a b := by ext; exact map_add D.what₂.OtoLL a b
+
+theorem toInt_val (h : OTied D T C) (y : D.what₂.O) : ((toInt h y : fracO D) : D.what₂.LL) = D.what₂.OtoLL y := rfl
+
+theorem toInt_bijective (h : OTied D T C) : Function.Bijective (toInt h) := by
+  refine ⟨fun a b hab => h.inj ?_, fun z => ?_⟩
+  · have := congrArg (fun w : 𝓞 (fracO D) => ((w : fracO D) : D.what₂.LL)) hab
+    simpa [toInt_val] using this
+  · set x : D.what₂.LL := ((z : fracO D) : D.what₂.LL) with hx
+    have hint : IsIntegral ℤ (T.jLL x) := by
+      let f : (fracO D) →ₐ[ℤ] Qb := (T.jLL.comp (fracO D).val.toRingHom).toIntAlgHom
+      have hf : Function.Injective f := (T.jLL.comp (fracO D).val.toRingHom).injective
+      exact (isIntegral_algHom_iff f hf).2 z.2
+    have hmem : T.jLL x ∈ KsQ D T C h.pieces := by
+      have hx' : x ∈ fracO D := (z : fracO D).2
+      have h1 : T.jLL x ∈ (fracO D).map T.jLL.toRatAlgHom := ⟨x, hx', rfl⟩
+      rw [fracO, IntermediateField.adjoin_map] at h1
+      refine (IntermediateField.adjoin_le_iff.2 ?_) h1
+      rintro _ ⟨_, ⟨y, rfl⟩, rfl⟩
+      exact ((h.range _).1 ⟨y, rfl⟩).1
+    obtain ⟨y, hy⟩ := (h.range _).2 ⟨hmem, hint⟩
+    refine ⟨y, ?_⟩
+    ext
+    exact T.jLL.injective hy
+
+def eO (h : OTied D T C) : 𝓞 (fracO D) ≃+* D.what₂.O := (RingEquiv.ofBijective _ (toInt_bijective h)).symm
+
+end GlobalTheory.GeoModel
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TupPinsOfMuIsW
+
+section
 
 @[expose] public section
 
@@ -240,4 +411,6 @@ theorem divEx_of_ox : GlobalTheory.NT.RayField → GlobalTheory.Published.Princi
 
 end GlobalTheory.Mem.Top.DivRec
 
+end
+end
 end

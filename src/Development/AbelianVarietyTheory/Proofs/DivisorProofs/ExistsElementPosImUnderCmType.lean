@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
 public import Mathlib.NumberTheory.NumberField.CMField
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenseRangeEmbeddingPi
+public import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,9 +19,9 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
+public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,9 +42,45 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+import Mathlib.Tactic.Basify
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.DefiningCoordinates
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.OmegaFactorization
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DifferentiableRisingS
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenseRangeEmbeddingPi
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.DenseEmbeddingProduct
+
+open NumberField NumberField.InfinitePlace
+
+theorem denseRange_embedding_pi {E : Type} [Field E] [NumberField E] [IsCMField E] :
+    DenseRange fun (x : E) (w : InfinitePlace E) ↦ (InfinitePlace.embedding w : E → ℂ) x := by
+  let Φ : InfiniteAdeleRing E → (InfinitePlace E → ℂ) :=
+    fun y w ↦ Completion.extensionEmbedding w (y w)
+  have hc : Continuous Φ := continuous_pi fun w ↦
+    (Completion.isometry_extensionEmbedding w).continuous.comp (continuous_apply w)
+  have hs : Function.Surjective Φ := by
+    intro f
+    choose y hy using fun w : InfinitePlace E ↦
+      Completion.surjective_extensionEmbedding_of_isComplex (IsTotallyComplex.isComplex w) (f w)
+    exact ⟨y, funext hy⟩
+  have h := hs.denseRange.comp (InfiniteAdeleRing.denseRange_algebraMap E) hc
+  convert h using 1
+  funext x w
+  simp [Φ]
+
+end GlobalTheory.DenseEmbeddingProduct
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsElementPosImUnderCmType
+
+section
 
 @[expose] public section
 
@@ -116,3 +152,5 @@ theorem exists_im_pos (E : Type) [Field E] [NumberField E] [IsCMField E] (I : Ty
       linarith
 
 end GlobalTheory.CMTypeImPos
+end
+end

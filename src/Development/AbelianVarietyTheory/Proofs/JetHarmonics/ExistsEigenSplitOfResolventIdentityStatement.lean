@@ -4,7 +4,8 @@ public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 public import Mathlib.Algebra.Module.LinearMap.End
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.Data.Fintype.Basic
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsEigenSplitOfResolventIdentity
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,6 +25,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,8 +46,235 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.RealPlaceAnalysis.StatementA
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Lagrange
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.AevalNegEqZeroOfResolventIdentity
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+namespace GlobalTheory
+
+theorem shift_coeff_of_eval_identity {N : Type} [AddCommGroup N] [Module ℂ N]
+    (Ω : Module.End ℂ N) (M : ℕ) (a : ℕ → N) (ha : ∀ i, M ≤ i → a i = 0) (p : Polynomial ℂ)
+    (w : N) (h : ∀ u : ℂ, u • (∑ i ∈ Finset.range M, u ^ i • a i)
+      + Ω (∑ i ∈ Finset.range M, u ^ i • a i) = p.eval u • w) :
+    Ω (a 0) = p.coeff 0 • w ∧ ∀ k, a k + Ω (a (k + 1)) = p.coeff (k + 1) • w := by
+  have hc : ∀ (f : N →ₗ[ℂ] ℂ) (k : ℕ),
+      (∑ i ∈ Finset.range M, Polynomial.monomial i (f (a i))).coeff k = f (a k) := by
+    intro f k
+    rw [Polynomial.finsetSum_coeff]
+    simp only [Polynomial.coeff_monomial_apply]
+    rw [Finset.sum_ite_eq']
+    split_ifs with hk
+    · rfl
+    · rw [ha k (by simpa using hk), map_zero]
+  have key : ∀ f : N →ₗ[ℂ] ℂ,
+      Polynomial.X * (∑ i ∈ Finset.range M, Polynomial.monomial i (f (a i)))
+        + (∑ i ∈ Finset.range M, Polynomial.monomial i ((f ∘ₗ Ω) (a i)))
+        = p * Polynomial.C (f w) := by
+    intro f
+    apply Polynomial.funext
+    intro u
+    have h1 := congrArg f (h u)
+
+    simp only [map_add (f := _), map_smul, map_sum, smul_eq_mul] at h1
+    simp only [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_X,
+      Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_C,
+      LinearMap.comp_apply]
+    rw [← h1]
+    simp only [mul_comm]
+  refine ⟨?_, fun k => ?_⟩
+  · rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
+    intro f
+    have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P 0) (key f)
+    simp only [Polynomial.coeff_add, Polynomial.coeff_X_mul_zero, hc, Polynomial.coeff_mul_C,
+      zero_add] at h1
+    rw [LinearMap.comp_apply] at h1
+    rw [map_sub, map_smul, smul_eq_mul, h1, sub_self]
+  · rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
+    intro f
+    have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P (k + 1)) (key f)
+    simp only [Polynomial.coeff_add, Polynomial.coeff_X_mul, hc, Polynomial.coeff_mul_C] at h1
+    rw [LinearMap.comp_apply] at h1
+    rw [map_sub, map_add (f := _), map_smul, smul_eq_mul, h1, sub_self]
+
+theorem aeval_neg_eq_zero_and_eigen_of_resolvent_identity :
+    ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (Ω : Module.End ℂ N) (X : ℂ → Module.End ℂ N) (d : ℕ) (c : ℕ → Module.End ℂ N) (p : Polynomial ℂ), (∀ u, X u = ∑ i ∈ Finset.range d, u ^ i • c i) → (∀ (u : ℂ) (w : N), u • X u w + Ω (X u w) = p.eval u • w) → Polynomial.aeval (-Ω) p = 0 ∧ ∀ (α : ℂ) (w : N), Ω w = α • w → ∀ (q : Polynomial ℂ), p = (Polynomial.X + Polynomial.C α) * q → ∀ u : ℂ, X u w = q.eval u • w := by
+  intro N _ _ Ω X d c p hX h
+  let a : N → ℕ → N := fun w i => if i < d then c i w else 0
+  have ha : ∀ w i, d ≤ i → a w i = 0 := fun w i hi => if_neg (by omega)
+  have hXa : ∀ (M : ℕ), d ≤ M → ∀ (u : ℂ) (w : N),
+      X u w = ∑ i ∈ Finset.range M, u ^ i • a w i := by
+    intro M hM u w
+    rw [hX u, LinearMap.sum_apply]
+    rw [← Finset.sum_subset (Finset.range_subset_range.2 hM)]
+    · refine Finset.sum_congr rfl fun i hi => ?_
+      simp only [a, if_pos (Finset.mem_range.1 hi), LinearMap.smul_apply]
+    · intro i _ hi
+      rw [ha w i (by simpa using hi), smul_zero]
+  have hco : ∀ w, Ω (a w 0) = p.coeff 0 • w ∧
+      ∀ k, a w k + Ω (a w (k + 1)) = p.coeff (k + 1) • w := by
+    intro w
+    refine shift_coeff_of_eval_identity Ω d (a w) (ha w) p w fun u => ?_
+    rw [← hXa d le_rfl u w]
+    exact h u w
+  refine ⟨?_, ?_⟩
+  · ext w
+    have tel : ∀ n, ∑ i ∈ Finset.range (n + 1), p.coeff i • ((-Ω) ^ i) w
+        = ((-Ω) ^ n) (Ω (a w n)) := by
+      intro n
+      induction n with
+      | zero => simp [(hco w).1]
+      | succ n ih =>
+        rw [Finset.sum_range_succ, ih, ← map_smul, ← (hco w).2 n, map_add (f := _), ← add_assoc]
+        have : ((-Ω) ^ (n + 1)) (a w n) = - ((-Ω) ^ n) (Ω (a w n)) := by
+          rw [pow_succ, Module.End.mul_apply, LinearMap.neg_apply, map_neg]
+        rw [this, add_neg_cancel, zero_add]
+    rw [Polynomial.aeval_eq_sum_range' (n := d + p.natDegree + 1) (by omega), LinearMap.sum_apply]
+    simp only [LinearMap.smul_apply]
+    rw [tel, ha w _ (by omega), map_zero, map_zero, LinearMap.zero_apply]
+  · intro α w hw q hq u
+    have step : ∀ k, a w (k + 1) = q.coeff (k + 1) • w → a w k = q.coeff k • w := by
+      intro k hk
+      have h1 := (hco w).2 k
+      rw [hk, map_smul, hw, hq, add_mul, Polynomial.coeff_add, Polynomial.coeff_X_mul,
+        Polynomial.coeff_C_mul, add_smul, smul_smul, mul_comm] at h1
+      exact add_right_cancel h1
+    have all : ∀ k, a w k = q.coeff k • w := by
+      intro k
+      have hk : k ≤ k + d + q.natDegree + 1 := by omega
+      refine Nat.decreasingInduction (motive := fun k _ => a w k = q.coeff k • w)
+        (fun j _ hj => step j hj) ?_ hk
+      rw [ha w _ (by omega), Polynomial.coeff_eq_zero_of_natDegree_lt (by omega), zero_smul]
+    rw [hXa (d + q.natDegree + 1) (by omega), Polynomial.eval_eq_sum_range' (n := d + q.natDegree + 1) (by omega), Finset.sum_smul]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [all, smul_smul, mul_comm]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.AevalNegEqZeroOfResolventIdentityStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.aeval_neg_eq_zero_of_resolvent_identity : ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (Ω : Module.End ℂ N) (X : ℂ → Module.End ℂ N) (d : ℕ) (c : ℕ → Module.End ℂ N) (p : Polynomial ℂ), (∀ u, X u = ∑ i ∈ Finset.range d, u ^ i • c i) → (∀ (u : ℂ) (w : N), u • X u w + Ω (X u w) = p.eval u • w) → Polynomial.aeval (-Ω) p = 0 ∧ ∀ (α : ℂ) (w : N), Ω w = α • w → ∀ (q : Polynomial ℂ), p = (Polynomial.X + Polynomial.C α) * q → ∀ u : ℂ, X u w = q.eval u • w := by
+  first | exact @GlobalTheory.aeval_neg_eq_zero_and_eigen_of_resolvent_identity | exact GlobalTheory.aeval_neg_eq_zero_and_eigen_of_resolvent_identity | (intros; apply GlobalTheory.aeval_neg_eq_zero_and_eigen_of_resolvent_identity <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumEigenvectorsOfAevalProdLinearEqZero
+
+section
+
+@[expose] public section
+
+open Finset
+
+namespace GlobalTheory
+
+theorem sum_eigenvectors_of_aeval_prod_linear_eq_zero :
+    ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (n : ℕ) (Ω : Module.End ℂ N) (ν : Fin n → ℂ),
+      Function.Injective ν →
+      Polynomial.aeval (-Ω) (∏ s, (Polynomial.X + Polynomial.C (ν s))) = 0 →
+      ∀ w : N, ∃ v : Fin n → N, (∀ s, Ω (v s) = ν s • v s) ∧ w = ∑ s, v s := by
+  intro N _ _ n Ω ν hν h w
+  classical
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · refine ⟨fun s => s.elim0, fun s => s.elim0, ?_⟩
+    have h1 : (1 : Module.End ℂ N) = 0 := by simpa using h
+    have h2 : w = 0 := by
+      have := congrArg (fun f : Module.End ℂ N => f w) h1
+      simpa using this
+    simp [h2]
+  · have hne : (Finset.univ : Finset (Fin n)).Nonempty := ⟨⟨0, hn⟩, Finset.mem_univ _⟩
+    have hinj : Set.InjOn (fun s => -ν s) (↑(Finset.univ : Finset (Fin n))) := by
+      intro a _ b _ hab
+      exact hν (neg_injective hab)
+    have hsum := Lagrange.sum_basis hinj hne
+    refine ⟨fun s => Polynomial.aeval (-Ω) (Lagrange.basis Finset.univ (fun s => -ν s) s) w, ?_, ?_⟩
+    · intro s
+      have key : (Polynomial.X + Polynomial.C (ν s)) * Lagrange.basis Finset.univ (fun s => -ν s) s
+          = (∏ j ∈ Finset.univ.erase s, Polynomial.C ((-ν s - -ν j)⁻¹)) *
+            ∏ s, (Polynomial.X + Polynomial.C (ν s)) := by
+        rw [← Finset.mul_prod_erase Finset.univ (fun s => Polynomial.X + Polynomial.C (ν s))
+          (Finset.mem_univ s), Lagrange.basis]
+        simp only [Lagrange.basisDivisor, Finset.prod_mul_distrib, map_neg, sub_neg_eq_add]
+        ring
+      have h2 := congrArg (Polynomial.aeval (-Ω)) key
+      rw [map_mul, map_mul, h, mul_zero] at h2
+      have h3 := congrArg (fun f : Module.End ℂ N => f w) h2
+      simp only [map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, Module.End.mul_apply,
+        LinearMap.add_apply, LinearMap.neg_apply, Module.algebraMap_end_apply,
+        LinearMap.zero_apply] at h3
+      exact (neg_add_eq_zero.mp h3)
+    · have h2 := congrArg (fun p => Polynomial.aeval (-Ω) p w) hsum
+
+      simp only [map_sum, map_one, LinearMap.sum_apply, Module.End.one_apply] at h2
+      exact h2.symm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumEigenvectorsOfAevalProdLinearEqZeroStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.exists_eigen_decomp_of_aeval_prod_eq_zero : ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (n : ℕ) (Ω : Module.End ℂ N) (ν : Fin n → ℂ), Function.Injective ν → Polynomial.aeval (-Ω) (∏ s, (Polynomial.X + Polynomial.C (ν s))) = 0 → ∀ w : N, ∃ v : Fin n → N, (∀ s, Ω (v s) = ν s • v s) ∧ w = ∑ s, v s := by
+  first | exact @GlobalTheory.sum_eigenvectors_of_aeval_prod_linear_eq_zero | exact GlobalTheory.sum_eigenvectors_of_aeval_prod_linear_eq_zero | (intros; apply GlobalTheory.sum_eigenvectors_of_aeval_prod_linear_eq_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsEigenSplitOfResolventIdentity
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+namespace GlobalTheory
+
+theorem exists_sum_eigen_split_of_resolvent : ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (n : ℕ) (Ω : Module.End ℂ N) (X : ℂ → Module.End ℂ N) (d : ℕ) (c : ℕ → Module.End ℂ N) (ν : Fin n → ℂ), Function.Injective ν → (∀ u, X u = ∑ i ∈ Finset.range d, u ^ i • c i) → (∀ (u : ℂ) (w : N), u • X u w + Ω (X u w) = (∏ s, (u + ν s)) • w) → ∀ w : N, ∃ v : Fin n → N, w = ∑ s, v s ∧ ∀ s (u : ℂ), X u (v s) = (∏ t ∈ Finset.univ.erase s, (u + ν t)) • v s := by
+  intro N _ _ n Ω X d c ν hν hX hres w
+  have key := GlobalTheory.T.aeval_neg_eq_zero_of_resolvent_identity N Ω X d c (∏ s, (Polynomial.X + Polynomial.C (ν s))) hX (by
+    intro u w
+    rw [hres u w, Polynomial.eval_prod]
+    simp)
+  obtain ⟨v, hv, hw⟩ := GlobalTheory.T.exists_eigen_decomp_of_aeval_prod_eq_zero N n Ω ν hν key.1 w
+  refine ⟨v, hw, fun s u => ?_⟩
+  have h := key.2 (ν s) (v s) (hv s)
+    (∏ t ∈ Finset.univ.erase s, (Polynomial.X + Polynomial.C (ν t)))
+    (Finset.mul_prod_erase Finset.univ (fun t => Polynomial.X + Polynomial.C (ν t))
+      (Finset.mem_univ s)).symm u
+  rw [h, Polynomial.eval_prod]
+  simp
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsEigenSplitOfResolventIdentityStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +282,5 @@ open Formalism.REAL Finset
 
 theorem _root_.GlobalTheory.T.exists_eigenSplit_of_resolventIdentity : ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (n : ℕ) (Ω : Module.End ℂ N) (X : ℂ → Module.End ℂ N) (d : ℕ) (c : ℕ → Module.End ℂ N) (ν : Fin n → ℂ), Function.Injective ν → (∀ u, X u = ∑ i ∈ Finset.range d, u ^ i • c i) → (∀ (u : ℂ) (w : N), u • X u w + Ω (X u w) = (∏ s, (u + ν s)) • w) → ∀ w : N, ∃ v : Fin n → N, w = ∑ s, v s ∧ ∀ s (u : ℂ), X u (v s) = (∏ t ∈ Finset.univ.erase s, (u + ν t)) • v s := by
   first | exact @GlobalTheory.exists_sum_eigen_split_of_resolvent | exact GlobalTheory.exists_sum_eigen_split_of_resolvent | (intros; apply GlobalTheory.exists_sum_eigen_split_of_resolvent <;> assumption)
+end
+end

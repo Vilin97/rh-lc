@@ -10,20 +10,21 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HxOfIsONFr
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLatOfInt
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelsAtRecordCore
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OscillatorModelValuesFifth
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightZeroConstFrameValueMemCoeffRangeStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsCoversOfHalves
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.IdemMulMemCusp
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoverSectionsLinearIndependentAdelicReadings
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.AnalyticFibreUnitFrameUniformisation
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsLetterRowWeightDictionary
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.UniformisationComponentLatticesMarkings
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsAlgebraMapOfSigRFixed
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifDom
+public import Formalism.LocalToGlobal.ProjectiveLattices.PetersonNormSubspace
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsAlgebraicOfNormConst
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.CountableFractionRingMvPolynomial
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.EvaluationLawsGenericFramesAtlasHold
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsBijectiveKappa
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.KapFgTrdeg
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.MemRangeOfIsAlgebraicRatFun
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsRingHomComplexCompEqOfCountable
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.CategoryTheory.Countable
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -33,6 +34,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Algebraic.Cardinality
+import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -41,6 +44,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,12 +57,115 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRankZero
+public import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
+import Mathlib.Algebra.Azumaya.Basic
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsCoversOfHalves
+import Development.AbelianVarietyTheory.Proofs.GenericRegularity.IdemMulMemCusp
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoverSectionsLinearIndependentAdelicReadings
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.AnalyticFibreUnitFrameUniformisation
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsLetterRowWeightDictionary
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.UniformisationComponentLatticesMarkings
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsAlgebraMapOfSigRFixed
+import Formalism.LocalToGlobal.ProjectiveLattices.UnifDom
 import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Divisors.KerDatTuple
 import Development.AbelianVarietyTheory.Definitions.Divisors.RealisedChainTorusEq
 import Development.AbelianVarietyTheory.Definitions.Foundations.ThetaSeriesTies
 import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.DatEqZero
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.KernelSpanOverClasses
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightZeroConstFrameValueMemCoeffRange
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.FlatLine
+
+
+open IntermediateField in
+theorem mem_range_of_embeddings_const {K Ω : Type} [Field K] [CharZero K] [Field Ω] [Countable Ω] [Algebra K Ω]
+    [Algebra K ℂ] (P₀ : Ω →ₐ[K] ℂ) {b : Ω} {a : ℂ} (h : ∀ P : Ω →ₐ[K] ℂ, P b = a) :
+    a ∈ (algebraMap K ℂ).range := by
+  have hb : IsIntegral K b :=
+    (isAlgebraic_of_norm_const P₀ fun P => by rw [h P, h P₀]).isIntegral
+  haveI : FiniteDimensional K K⟮b⟯ := adjoin.finiteDimensional hb
+  have key : ∀ ψ : K⟮b⟯ →ₐ[K] ℂ, ψ (AdjoinSimple.gen K b) = a := fun ψ => by
+    letI : Algebra K⟮b⟯ ℂ := ψ.toRingHom.toAlgebra
+    obtain ⟨Q⟩ := GlobalTheory.nonempty_algHom_complex_of_countable K⟮b⟯ Ω
+    let P : Ω →ₐ[K] ℂ := { Q.toRingHom with
+      commutes' := fun k => (Q.commutes (algebraMap K K⟮b⟯ k)).trans (ψ.commutes k) }
+    rw [← h P]
+    exact (Q.commutes (AdjoinSimple.gen K b)).symm
+  have hsub : Subsingleton (K⟮b⟯ →ₐ[K] ℂ) := ⟨fun ψ χ =>
+    (adjoin.powerBasis hb).algHom_ext (by rw [adjoin.powerBasis_gen, key, key])⟩
+  have h1 : Module.finrank K K⟮b⟯ = 1 := by
+    have h2 := AlgHom.card K K⟮b⟯ ℂ
+    have h3 : Fintype.card (K⟮b⟯ →ₐ[K] ℂ) ≤ 1 := Fintype.card_le_one_iff_subsingleton.2 hsub
+    have h4 : 0 < Module.finrank K K⟮b⟯ := Module.finrank_pos
+    omega
+  obtain ⟨k, hk⟩ := mem_bot.1 (finrank_adjoin_simple_eq_one_iff.1 h1)
+  exact ⟨k, by rw [← h P₀, ← hk, P₀.commutes]⟩
+
+open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj GlobalTheory.AllWt
+
+theorem const_value_mem_range : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
+    (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l)
+    (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → 1 ≤ Dw.p + Dw.q →
+    ∀ f ∈ sec Xo c 0 0, ∀ a : ℂ, (∀ k, ∀ x ∈ (U.X k).dom, rdU U f k x = a) → a ∈ σ.range := by
+  intro E _ _ _ H Dw l Xo c σ r U hσ hU h1 g hg a ha
+  obtain ⟨hL, -, h, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  obtain ⟨Z⟩ := (GlobalTheory.GeomIrr.compNe_and_exists_fnAlgClosed E H Dw l Xo c h1).1
+  obtain ⟨⟨P₀⟩, hP⟩ := GlobalTheory.GenericReading.embedding_read_at_frame E H Dw l Xo c σ r U hσ hU h Z
+  have hi := idem_mem_secZ Z
+  rw [secZ_zero_eq] at hi
+  have key : ∀ P : Om Z →ₐ[c.F] CAt σ, toC (P (evC h Z g)) = a := fun P => by
+    obtain ⟨k, x, y', t, hm, ht⟩ := hP P
+    obtain ⟨w, -, hw⟩ := GlobalTheory.CompBij.rdU_eq_of_reads U h k Z x P y' t hm ht 0 0
+    have hz : (⟨k, x.1⟩ : Σ k, Frame (U.X k).Ψ r) ∈ framesOn U Z :=
+      ⟨x.2, liesOn_frBor ht (liesOn_frMap hm (liesOn_genFr h Z))⟩
+    have h1 := hw _ hi
+    have h2 : rdU U (idem Z) k x = 1 := by
+      simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk, x.2, dif_pos]
+      exact evR_idem (S := CAt σ) hz.2 (haveI : IsReduced (CAt σ) := inferInstanceAs (IsReduced ℂ); hL.test _ _)
+    have h3 : evC h Z (idem Z) = 1 := evR_idem (liesOn_genFr h Z) (hL.test _ _)
+    rw [h2, h3, map_one, mul_one] at h1
+    rw [← hw g hg, h1]
+    exact (one_mul _).trans (ha k x x.2)
+  have hfin : FiniteDimensional ℚ c.F := c.fin
+  have hcF : Countable c.F := Cardinal.mk_le_aleph0_iff.1 (by
+    simpa [Cardinal.mkRat] using Algebra.IsAlgebraic.cardinalMk_le_max ℚ c.F)
+  haveI hk : Countable (kap Z) :=
+    GlobalTheory.GenericReading.countable_of_fg_top ((GlobalTheory.Reg.kap_fg_trdeg E H Dw l Xo c).1 Z)
+  have hO : Countable (Om Z) := GlobalTheory.GenericReading.countable_fractionRing_mvPolynomial _ _
+  letI : Algebra c.F ℂ := σ.toAlgebra
+  exact mem_range_of_embeddings_const (K := c.F) (b := evC h Z g) P₀ key
+
+end GlobalTheory.FlatLine
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightZeroConstFrameValueMemCoeffRangeStatement
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.L2.Pj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Datum Level Moduli Coeff)
+
+theorem _root_.GlobalTheory.T.weightZero_const_frameValue_mem_coeff_range : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → 1 ≤ Dw.p + Dw.q → ∀ f ∈ sec Xo c 0 0, ∀ a : ℂ, (∀ k, ∀ x ∈ (U.X k).dom, rdU U f k x = a) → a ∈ σ.range := by
+  first | exact @GlobalTheory.FlatLine.const_value_mem_range | exact GlobalTheory.FlatLine.const_value_mem_range | (intros; apply GlobalTheory.FlatLine.const_value_mem_range <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CovAtBaseRoot
+
+section
 
 @[expose] public section
 
@@ -174,3 +281,5 @@ theorem covAt_base_root : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 
 end Top
 
 end GlobalTheory.AdTh.CoverRoot
+end
+end

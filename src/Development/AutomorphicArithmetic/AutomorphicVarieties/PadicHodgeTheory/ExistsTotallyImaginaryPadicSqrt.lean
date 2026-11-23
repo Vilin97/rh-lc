@@ -11,11 +11,9 @@ public import Mathlib.RingTheory.Henselian
 public import Mathlib.RingTheory.HopfAlgebra.Basic
 public import Mathlib.RingTheory.SimpleRing.Principal
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.ExistsTotallyRealPrimitiveElementPadicFiniteExt
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsCMOfConjAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,17 +21,19 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.Padics.Hensel
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,8 +53,12 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsNotCongPow
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
@@ -63,6 +67,72 @@ import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.Tr
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
 import Formalism.ConjugateSelfDual.Statement
 import ReciprocityTheory.GaloisValuations.GlobalA
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsCMOfConjAlt
+
+section
+
+@[expose] public section
+
+open NumberField
+
+theorem UpperTheory.Reformulated.B.Qh9.isCM_of_conj :
+    ∀ (K : Type) [inst : Field K] [inst_1 : NumberField K]
+    [NumberField.IsTotallyComplex K],
+    (∀ (x : K), ∃ (y : K), ∀ (φ : K →+* ℂ), (φ : K → ℂ) y = (starRingEnd ℂ : ℂ → ℂ) ((φ : K → ℂ) x)) →
+      NumberField.IsCMField K := by
+  intro K _ _ _ h
+  choose c hc using h
+  let φ₀ : K →+* ℂ := Classical.choice inferInstance
+  have hfix : ∀ x : K, c x = x ↔ x ∈ maximalRealSubfield K := by
+    intro x
+    rw [mem_maximalRealSubfield_iff]
+    constructor
+    · intro hx φ
+      have := hc x φ
+      rw [hx] at this
+      exact this.symm
+    · intro hx
+      apply φ₀.injective
+      rw [hc]
+      exact hx φ₀
+  have hinv : ∀ x : K, c (c x) = x := by
+    intro x
+    apply φ₀.injective
+    simp [hc]
+  let σ : K ≃ₐ[maximalRealSubfield K] K :=
+    { toFun := c
+      invFun := c
+      left_inv := hinv
+      right_inv := hinv
+      map_mul' := fun x y => φ₀.injective (by simp [hc])
+      map_add' := fun x y => φ₀.injective (by simp [hc])
+      commutes' := fun x => (hfix _).mpr x.2 }
+  have hσ : ∀ x, σ x = c x := fun _ => rfl
+  have hne : σ ≠ 1 := by
+    intro h1
+    apply IsTotallyComplex.complexEmbedding_not_isReal φ₀
+    rw [ComplexEmbedding.isReal_iff]
+    ext x
+    have hx : c x = x := by rw [← hσ, h1]; rfl
+    rw [ComplexEmbedding.conjugate_coe_eq, ← hc, hx]
+  have hord : orderOf σ = 2 :=
+    orderOf_eq_prime (by ext x; simp [pow_two, hσ, hinv]) hne
+  have hbot : IntermediateField.fixedField (Subgroup.zpowers σ) = ⊥ := by
+    refine le_antisymm (fun x hx => ?_) bot_le
+    rw [IntermediateField.mem_fixedField_iff] at hx
+    exact IntermediateField.mem_bot.mpr
+      ⟨⟨x, (hfix x).mp (hx σ (Subgroup.mem_zpowers σ))⟩, rfl⟩
+  have hrank := IntermediateField.finrank_fixedField_eq_card (Subgroup.zpowers σ)
+  rw [hbot, IntermediateField.finrank_bot', Nat.card_zpowers, hord] at hrank
+  have : Algebra.IsQuadraticExtension (maximalRealSubfield K) K := ⟨hrank⟩
+  exact ⟨⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.ExistsTotallyImaginaryPadicSqrt
+
+section
 
 @[expose] public section
 
@@ -203,3 +273,5 @@ theorem UpperTheory.exists_totally_imaginary_padic_sqrt :
   · intro h
     have φ : E →+* ℂ := Classical.choice (inferInstance : Nonempty _)
     exact (hre φ).2 (by rw [h]; simp)
+end
+end

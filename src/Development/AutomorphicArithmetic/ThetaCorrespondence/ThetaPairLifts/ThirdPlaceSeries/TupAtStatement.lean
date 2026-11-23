@@ -5,7 +5,12 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFounda
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.AdmissibleDiscreteSeriesOfHasParam
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasDRepIffHasDerivAt
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ConjTwOfOne
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TupAt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealisationExtendsByNewTuplesKeepingLawsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RestrictToBase
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LowAtHolds
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RatHyp0AtPoint
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasTuplesOfLaws
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RowAtOfRatStep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +43,216 @@ import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjIdealEqCP
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeCharacterIdeleCharacterMatchUnique
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ToRatHyp0
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TwLevAt
+
+section
+
+@[expose] public section
+
+
+
+section
+set_option autoImplicit false
+noncomputable section
+open NumberField IsDedekindDomain
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.L2.Pj Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx
+open Formalism.IndefR.FWT GlobalTheory.BigTop GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies GlobalTheory.SeriesTie
+open GlobalTheory.BigOn GlobalTheory.BigOn.Exp Formalism.L2.Theta GlobalTheory.ExportSeries GlobalTheory.ConjTwist Formalism.IndefR.Lev
+open scoped TensorProduct
+
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+namespace GlobalTheory.BigOn.Exp.TwConj
+section Lev
+variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
+  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
+end Lev
+section Laws
+variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
+variable {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F} {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)}
+  {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec} {O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)} {j : Fin D.R.m}
+end Laws
+section Point
+open Classical in
+def TwLevAtAlt : Prop := _root_.GlobalTheory.BigOn.Exp.TwistConditions fun Fm x hx i p w j => ∀ ρ ρ' : Setup (Fm.D x i).ntw, ρ.Good → ρ'.Good → RealPin p.R p.cG ρ →
+  SameBut ρ ρ' → (Adapted p w ρ ∨ Adapted p w ρ') →
+  ∃ (χ χ' : Formalism.L2.Host.HChar (Fm.D x i).host.E) (xiR xiR' : ∀ PP : Pl (Fm.D x i).host.E, (kP PP)ˣ →* ℂˣ),
+    TwLev p.R.toRealDat χ ((baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ).chi)
+      ((baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ).Q) xiR ∧
+    TwLev p.R.toRealDat χ' ((baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ').chi)
+      ((baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ').Q) xiR' ∧
+    χ ≠ 1 ∧ χ' ≠ 1 ∧ (χ ≠ χ' ∨ (baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ).chi =
+      (baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ').chi)
+end Point
+end GlobalTheory.BigOn.Exp.TwConj
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TwLevAtHolds
+
+section
+
+@[expose] public section
+
+
+
+section
+set_option autoImplicit false
+noncomputable section
+open NumberField IsDedekindDomain
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.L2.Pj Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx
+open Formalism.IndefR.FWT GlobalTheory.BigTop GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies GlobalTheory.SeriesTie
+open GlobalTheory.BigOn GlobalTheory.BigOn.Exp Formalism.L2.Theta GlobalTheory.ExportSeries GlobalTheory.ConjTwist Formalism.IndefR.Lev
+open GlobalTheory.BigOn.Exp.TwConj GlobalTheory.IdemSupport
+open Formalism.L2.Host (HChar IsDelta IsPsi)
+
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+namespace GlobalTheory.BigOn.Exp.TwConj.LevAt
+section Places
+variable {D : D7}
+end Places
+section Transfer
+variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
+  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
+end Transfer
+section Chars
+variable {D : D7}
+variable {q l : ℕ} {δ ψ : HChar D.host.E} {Q : Finset (Pl D.host.E)}
+end Chars
+section Point
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
+  {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} {p : PtAt ex Csz} {w : D.what₂.places.Pl}
+end Point
+end GlobalTheory.BigOn.Exp.TwConj.LevAt
+namespace GlobalTheory.BigOn.Exp.TwConj
+open LevAt in
+theorem twLevAt_holds_alt : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter →
+    _root_.GlobalTheory.BigOn.Exp.TwConj.TwLevAtAlt := fun _ _ _ hA hC => by
+  refine _root_.GlobalTheory.BigOn.Exp.TwistConditions.imp (_root_.GlobalTheory.BigOn.Exp.TwistConditions.and hA (_root_.GlobalTheory.BigOn.Exp.TwistConditions.and hC _root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt)) fun Fm x hx i p hr hm w hw j H => ?_
+  obtain ⟨⟨a1, -, -⟩, a2, a3⟩ := H
+  intro ρ ρ' hρ hρ' hp hs hA
+  have hl := ((Fm.D x i).ntw.lPrime ((Fm.ex x hx i).nch.twI w)).out
+  have hlow : ∀ P ∈ (Fm.ex x hx i).nch.Q w,
+      (((Fm.D x i).host.pde * (Fm.D x i).host.pde' : ℕ) : 𝓞 (Fm.D x i).host.E) ∉ P.asIdeal := fun P hP h => by
+    refine Finset.disjoint_left.1 a1.2.1 hP (a3 P ?_)
+    rw [mul_assoc _ (Fm.D x i).host.pde, ← mul_assoc, Nat.cast_mul]
+    exact Ideal.mul_mem_left _ _ h
+  have pw : ∀ σ σ' : Setup (Fm.D x i).ntw, σ.Good → Adapted p w σ → σ'.rc = σ.rc →
+      ∃ a : ℕ, (a + 1).Coprime ((Fm.D x i).ntw.l ((Fm.ex x hx i).nch.twI w)) ∧
+        ChrEq (twW (Fm.ex x hx i) w σ').chi (p.Tp.psi w ^ (a + 1)) := fun σ σ' hσ hσA e => by
+    obtain ⟨a, ha, h⟩ := exists_pow e ((Fm.ex x hx i).nch.sd w) a1
+    rcases a with _ | a
+    · exact absurd (Nat.coprime_zero_left _ |>.1 ha) hl.one_lt.ne'
+    · exact ⟨a, ha, by rw [twW, h]; exact chrEq_pow (a2 σ hσ hσA).1 a⟩
+  obtain ⟨⟨a, ha, hc⟩, a', ha', hc'⟩ : (∃ a : ℕ, (a + 1).Coprime ((Fm.D x i).ntw.l ((Fm.ex x hx i).nch.twI w)) ∧
+        ChrEq (twW (Fm.ex x hx i) w ρ).chi (p.Tp.psi w ^ (a + 1))) ∧
+      ∃ a : ℕ, (a + 1).Coprime ((Fm.D x i).ntw.l ((Fm.ex x hx i).nch.twI w)) ∧
+        ChrEq (twW (Fm.ex x hx i) w ρ').chi (p.Tp.psi w ^ (a + 1)) :=
+    hA.elim (fun h => ⟨pw ρ ρ hρ h rfl, pw ρ ρ' hρ h hs.1⟩) fun h => ⟨pw ρ' ρ hρ' h hs.1.symm, pw ρ' ρ' hρ' h rfl⟩
+  obtain ⟨xiR, h1⟩ := twLev_pow hm.2.2 p.charW.base.fam p.qGuard hw j hlow hρ hp ha hc
+  obtain ⟨xiR', h2⟩ := twLev_pow hm.2.2 p.charW.base.fam p.qGuard hw j hlow hρ hp ha' hc'
+  have hQ : (twW (Fm.ex x hx i) w ρ').Q = half (ρ.ch ((Fm.ex x hx i).nch.twI w)) ((Fm.ex x hx i).nch.Q w) := by
+    simp only [Setup.tw, twistOf, hs.2.1]
+  obtain ⟨q, hq, hδ, -⟩ := exists_delta p.R.C ((Fm.ex x hx i).nch.twI w)
+  obtain ⟨v, hv⟩ := exists_over (D := Fm.D x i) hq
+  have hψ := p.Tp.psi_is w ((p.tw_iff w).1 hw)
+  rw [← (Fm.ex x hx i).nch.twI_l] at hψ
+  have hne : ∀ n : ℕ, p.R.C.delAt ((Fm.D x i).ntw.l ((Fm.ex x hx i).nch.twI w)) * p.Tp.psi w ^ n ≠ 1 := fun n e =>
+    not_unr hδ hψ hl n hv (by rw [e]; exact fun _ _ => rfl)
+  refine ⟨_, _, xiR, xiR', h1, hQ ▸ h2, hne _, hne _, or_iff_not_imp_left.2 fun e => ?_⟩
+  rw [Ne, not_not] at e
+  exact GlobalTheory.ChrEqUnique.idc_unique _ _ _ _ h1.xi (e ▸ h2.xi)
+end GlobalTheory.BigOn.Exp.TwConj
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TupAt
+
+section
+
+@[expose] public section
+
+
+
+section
+set_option autoImplicit false
+noncomputable section
+open NumberField IsDedekindDomain
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.L2.Pj Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx
+open Formalism.IndefR.FWT GlobalTheory.BigTop GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies GlobalTheory.SeriesTie
+open GlobalTheory.BigOn GlobalTheory.BigOn.Exp Formalism.L2.Theta GlobalTheory.ExportSeries GlobalTheory.ConjTwist Formalism.IndefR.Lev
+open scoped TensorProduct
+
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+namespace GlobalTheory.BigOn.Exp.TwConj
+open Classical in
+theorem tupAt_alt (h1 : GlobalTheory.Published.CuspRapidDecay) (h2 : GlobalTheory.Published.GlobalArtinReciprocity) (h3 : GlobalTheory.Published.RayClassFieldSt)
+    (h4 : GlobalTheory.Published.DiscreteSeriesCover) (h5 : GlobalTheory.Published.CasselmanWallach) (hA : _root_.GlobalTheory.BigOn.Exp.TwAdmAlt) (hC : _root_.GlobalTheory.BigOn.Exp.TwistCharacter) : _root_.GlobalTheory.BigOn.Exp.TwConj.TupleCondition := by
+  refine _root_.GlobalTheory.BigOn.Exp.TwistConditions.imp (_root_.GlobalTheory.BigOn.Exp.TwistConditions.and (_root_.GlobalTheory.BigOn.Exp.TwistConditions.and hA _root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt) (_root_.GlobalTheory.BigOn.Exp.TwConj.twLevAt_holds_alt h1 h2 h3 hA hC)) fun Fm x hx i p hr hm w _ j H => ?_
+  obtain ⟨⟨hadm, hlow⟩, hlev⟩ := H
+  intro ρ ρ' hρ hρ' hp hS hAd
+  have H0 := _root_.GlobalTheory.BigOn.Exp.ratHyp0_at_point_alt Fm x hx i p hr hm _ hadm.2.2 hlow j
+  have hB : BaseOf p.R.toRealDat j (baseW (Fm.ex x hx i) w j ρ) := baseOf_of_realPin H0.core.lev hρ hp _ j _
+  have hLaws : Laws p.T p.R.toRealDat (F2 p) p.κ p.v₀ p.O (phs p) j (baseW (Fm.ex x hx i) w j ρ) :=
+    ⟨H0.core, H0.fin, H0.fw, H0.io, H0.guard, H0.pins, H0.phase, hB⟩
+  obtain ⟨χ, χ', xiR, xiR', hT, hT', hne, hne', hd⟩ := hlev ρ ρ' hρ hρ' hp hS hAd
+  obtain ⟨A0, R0, F0, v0, O0, hL0, hE0, hxi0, htr⟩ := GlobalTheory.BaseRestrict.restrict_to_base _ _ _ _ _ _ _ _ _ hLaws
+  have hT0 := htr _ _ _ _ hT
+  have hT0' := htr _ _ _ _ hT'
+  have hQ : (twW (Fm.ex x hx i) w ρ').Q = (twW (Fm.ex x hx i) w ρ).Q := by simp only [Setup.tw, twistOf, hS.2.1]
+  have hQde : ∀ (N : Type) (Qn : N → Finset (Pl (Fm.D x i).host.E)),
+      (∀ n, Qn n = (baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ).Q) →
+      ∀ q ∈ ({(Fm.D x i).host.pde, (Fm.D x i).host.pde'} : Set ℕ), ∃ 𝔭 : HeightOneSpectrum (𝓞 (Fm.D x i).host.K),
+        (∀ t, ∀ PP ∈ R0.Q t, ((q : ℕ) : 𝓞 (Fm.D x i).host.E) ∈ PP.asIdeal → PP.under (𝓞 (Fm.D x i).host.K) = 𝔭) ∧
+          ∀ n, ∀ PP ∈ Qn n, ((q : ℕ) : 𝓞 (Fm.D x i).host.E) ∈ PP.asIdeal → PP.under (𝓞 (Fm.D x i).host.K) = 𝔭 := by
+    intro N Qn hQn q hq
+    obtain ⟨𝔭, h𝔭, h𝔭'⟩ := hT0.Q_de q hq
+    exact ⟨𝔭, h𝔭, fun n => (hQn n).symm ▸ h𝔭'⟩
+  rcases hd with hd | hd
+  · obtain ⟨T', A', R', F', v', O', hL', hE', htup⟩ := GlobalTheory.T.realisation_extends_by_newTuples_keeping_laws h1 h2 h3 h4 h5 p.T R0 F0 p.κ v0 O0 (phs p) j _ p.host hL0 Bool
+      (fun b => if b then χ' else χ)
+      (fun b => if b then (baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ').chi
+        else (baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ).chi)
+      (fun b => if b then (baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ').Q
+        else (baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ).Q)
+      (fun b => if b then xiR' else xiR)
+      (fun b => by cases b <;> assumption)
+      (fun a b hab => by
+        cases a <;> cases b
+        · rfl
+        · exact absurd hab hd
+        · exact absurd hab.symm hd
+        · rfl)
+      (fun b t => by rw [hxi0]; cases b; exacts [hne, hne'])
+      (hQde Bool _ fun b => by cases b <;> simp [hQ])
+    obtain ⟨t, ht1, ht2⟩ := htup false
+    obtain ⟨t', ht1', ht2'⟩ := htup true
+    exact hasTuples_of_laws hL' (hE0.trans hE') (t := t) (t' := t') ⟨ht1, ht2⟩ ⟨ht1', ht2'⟩
+  · obtain ⟨T', A', R', F', v', O', hL', hE', htup⟩ := GlobalTheory.T.realisation_extends_by_newTuples_keeping_laws h1 h2 h3 h4 h5 p.T R0 F0 p.κ v0 O0 (phs p) j _ p.host hL0 Unit
+      (fun _ => χ) (fun _ => (baseW (Fm.ex x hx i) w j ρ).de.chi * (twW (Fm.ex x hx i) w ρ).chi)
+      (fun _ => (baseW (Fm.ex x hx i) w j ρ).de.Q ∪ (twW (Fm.ex x hx i) w ρ).Q) (fun _ => xiR)
+      (fun _ => hT0) (fun _ _ _ => rfl) (fun _ t => by rw [hxi0]; exact hne) (hQde Unit _ fun _ => rfl)
+    obtain ⟨t, ht1, ht2⟩ := htup ()
+    exact hasTuples_of_laws hL' (hE0.trans hE') (t := t) (t' := t) ⟨ht1, ht2⟩ ⟨ht1.trans hd, ht2.trans (by rw [hQ])⟩
+end GlobalTheory.BigOn.Exp.TwConj
+end
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TupAtStatement
+
+section
 
 @[expose] public section
 
@@ -48,4 +263,6 @@ open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twisted_conj_tuple_at' : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.CasselmanWallach → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter → _root_.GlobalTheory.BigOn.Exp.TwConj.TupleCondition := by
   first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt | exact _root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt <;> assumption)
+end
+end
 end

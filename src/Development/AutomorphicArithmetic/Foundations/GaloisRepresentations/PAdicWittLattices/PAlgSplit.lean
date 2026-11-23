@@ -1,8 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.PAdicWittLattices.SplitsBasic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsEvaluation
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TensorHomExt
+public import Mathlib.Algebra.Algebra.Pi
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -14,14 +13,18 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,6 +45,87 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsEvaluation
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ExistsEvaluation.exists_eval :
+    ∀ {C Ω J : Type}
+    [inst : CommRing C] [inst_1 : Field Ω] [Fintype J] (f : (J → C) →+* Ω),
+    ∃ (j : J),
+      ∀ (v : J → C), (f : (J → C) → Ω) v = (f : (J → C) → Ω) ((Algebra.algebraMap C (J → C) : C → J → C) (v j)) := by
+  intro C Ω J _ _ _ f
+  classical
+  have hsum : ∑ j : J, f (Pi.single j 1) = 1 := by
+
+    rw [← map_sum]
+    have h : (∑ j : J, (Pi.single j (1 : C) : J → C)) = 1 := by
+      simpa using Finset.univ_sum_single (1 : J → C)
+    rw [h, map_one]
+  obtain ⟨j, hj⟩ : ∃ j : J, f (Pi.single j 1) ≠ 0 := by
+    by_contra hne
+    push_neg at hne
+    rw [Finset.sum_eq_zero (fun j _ => hne j)] at hsum
+    exact zero_ne_one hsum
+  have hidem : f (Pi.single j 1) * f (Pi.single j 1) = f (Pi.single j 1) := by
+    rw [← map_mul]
+    congr 1
+    funext i
+    by_cases hi : i = j
+    · subst hi; simp
+    · simp [Pi.single_eq_of_ne hi]
+  have hone : f (Pi.single j 1) = 1 := by
+    exact mul_left_cancel₀ hj (by rw [hidem, mul_one])
+  refine ⟨j, fun v => ?_⟩
+  have hmul : v * Pi.single j 1 =
+      (Algebra.algebraMap C (J → C) : C → J → C) (v j) * Pi.single j 1 := by
+    funext i
+    by_cases hi : i = j
+    · subst hi; simp [Algebra.algebraMap_eq_smul_one]
+    · simp [Pi.single_eq_of_ne hi]
+  have h2 := congrArg f hmul
+  simpa [map_mul, hone] using h2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TensorHomExt
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk54.tensor_hom_ext :
+    ∀ {A A' C Ω : Type}
+    [inst : CommRing A] [inst_1 : CommRing A'] [inst_2 : CommRing C] [inst_3 : Algebra A A'] [inst_4 : Algebra A C]
+    [inst_5 : CommRing Ω] {u v : TensorProduct A C A' →+* Ω},
+    (∀ (c : C), (u : TensorProduct A C A' → Ω) (c ⊗ₜ[A] (1 : A')) = (v : TensorProduct A C A' → Ω) (c ⊗ₜ[A] (1 : A'))) →
+      (∀ (b : A'), (u : TensorProduct A C A' → Ω) ((1 : C) ⊗ₜ[A] b) = (v : TensorProduct A C A' → Ω) ((1 : C) ⊗ₜ[A] b)) →
+        u = v := by
+  intro A A' C Ω _ _ _ _ _ _ u v h₁ h₂
+  refine RingHom.ext fun x => ?_
+  induction x using TensorProduct.induction_on with
+  | zero => rw [map_zero, map_zero]
+  | tmul c b =>
+    have e : c ⊗ₜ[A] b = (c ⊗ₜ[A] (1 : A')) * ((1 : C) ⊗ₜ[A] b) := by
+      rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
+    rw [e, map_mul, map_mul, h₁, h₂]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.PAdicWittLattices.PAlgSplit
+
+section
 
 @[expose] public section
 
@@ -127,3 +209,5 @@ theorem UpperTheory.Gal.G3.pAlgSplit :
     subst hjj
     ext v
     simp [hy'e]
+end
+end

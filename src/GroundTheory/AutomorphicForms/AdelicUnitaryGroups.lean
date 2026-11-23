@@ -1,11 +1,6 @@
 module
 
-public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Restricted
-public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.LatticeCompact
-public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Anisotropic
-public import Mathlib.NumberTheory.NumberField.AdeleRing
-import GroundTheory.GlobalFields.Adele.Approximation
-import GroundTheory.GlobalFields.Adele.Topology
+public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,7 +41,53 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.LatticeCompact
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Anisotropic
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+import GroundTheory.GlobalFields.Adele.Approximation
+import GroundTheory.GlobalFields.Adele.Topology
 public import Mathlib.Geometry.Euclidean.Projection
+
+-- Source module: GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Restricted
+
+section
+
+@[expose] public section
+
+set_option linter.unusedSectionVars false
+
+namespace GroundTheory.Automorphic
+
+open Module Matrix TensorProduct Topology Filter IsDedekindDomain NumberField
+open scoped RestrictedProduct
+
+noncomputable section
+
+variable {K E : Type*} [Field K] [NumberField K] [CommRing E] [Algebra K E]
+  [Algebra.IsQuadraticExtension K E]
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι E)
+variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
+
+
+variable (K) in
+def finiteAdeleEval (v : HeightOneSpectrum (𝓞 K)) :
+    FiniteAdeleRing (𝓞 K) K →ₐ[K] v.adicCompletion K where
+  toFun a := a v
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
+
+end
+
+end GroundTheory.Automorphic
+end
+end
+
+-- Source module: GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+
+section
 
 @[expose] public section
 
@@ -183,3 +224,5 @@ end Hermitian
 end
 
 end GroundTheory.Automorphic
+end
+end

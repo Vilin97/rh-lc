@@ -3,7 +3,6 @@ module
 public import Mathlib.Algebra.MvPolynomial.Degrees
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.Data.Matrix.Mul
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TotalDegreeAevalLeOfLinear
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,10 +41,56 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TotalDegreeAevalLeOfLinear
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.AevalTotalDegreeLinear
+
+open MvPolynomial
+
+theorem totalDegree_aeval_le_of_linear {κ : Type} (f : κ → MvPolynomial κ ℂ)
+    (hf : ∀ (i : κ), MvPolynomial.totalDegree (f i) ≤ (1 : ℕ)) (P : MvPolynomial κ ℂ) :
+    MvPolynomial.totalDegree ((MvPolynomial.aeval f : MvPolynomial κ ℂ → MvPolynomial κ ℂ) P)
+      ≤ MvPolynomial.totalDegree P := by
+  classical
+  conv_lhs => rw [P.as_sum]
+
+  rw [map_sum]
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans ?_
+  refine Finset.sup_le fun s hs => ?_
+  rw [aeval_monomial]
+  refine (totalDegree_mul _ _).trans ?_
+  rw [algebraMap_eq, totalDegree_C, zero_add]
+  have hprod : totalDegree (s.prod fun i k => f i ^ k) ≤ s.sum fun _ k => k := by
+    rw [Finsupp.prod, Finsupp.sum]
+    refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
+    refine Finset.sum_le_sum fun i _ => ?_
+    refine (totalDegree_pow _ _).trans ?_
+    calc s i * totalDegree (f i) ≤ s i * 1 := Nat.mul_le_mul_left _ (hf i)
+      _ = s i := mul_one _
+  refine hprod.trans ?_
+  exact Finset.le_sup (f := fun s : κ →₀ ℕ => s.sum fun _ e => e) hs
+
+theorem main : ∀ {κ : Type} (f : κ → MvPolynomial κ ℂ), (∀ (i : κ), MvPolynomial.totalDegree (f i) ≤ (1 : ℕ)) → ∀ (P : MvPolynomial κ ℂ), MvPolynomial.totalDegree ((MvPolynomial.aeval f : MvPolynomial κ ℂ → MvPolynomial κ ℂ) P) ≤ MvPolynomial.totalDegree P :=
+  fun f hf P => totalDegree_aeval_le_of_linear f hf P
+
+end GlobalTheory.AevalTotalDegreeLinear
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TotalDegreeSubstFLe
+
+section
 
 @[expose] public section
 
@@ -115,4 +158,6 @@ theorem subst2_one (P : MvPolynomial (Fin N × Fin n) ℂ) : subst2 1 1 P = P :=
 
 end GlobalTheory.CompactHowe
 
+end
+end
 end

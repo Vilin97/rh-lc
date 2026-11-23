@@ -3,7 +3,7 @@ module
 public import Mathlib.RingTheory.AdicCompletion.Basic
 public import Mathlib.RingTheory.MvPowerSeries.Basic
 public import Mathlib.RingTheory.Noetherian.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MvPowerSeriesIsAdicCompleteMapCOfNoetherian
+public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsPolynomialSubMem
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,9 +45,43 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntDerApply
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MvPowerSeriesIsAdicCompleteMapCOfNoetherian
+
+section
+
+@[expose] public section
+
+open IsLocalRing GlobalTheory.FormalOrigin
+
+namespace GlobalTheory.PowerSeriesComplete
+
+theorem isAdicComplete_map_C : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (I : Ideal R),
+    IsAdicComplete I R → ∀ n : ℕ, IsAdicComplete (I.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R))
+      (MvPowerSeries (Fin n) R) := by
+  intro R _ _ I hI n
+  have hfg : I.FG := IsNoetherian.noetherian I
+  have hC : (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R) = algebraMap R (MvPowerSeries (Fin n) R) := rfl
+  have hP : IsPrecomplete I (MvPowerSeries (Fin n) R) :=
+    GlobalTheory.CompleteBaseChange.isPrecomplete_pi (M := R) (Fin n →₀ ℕ) hfg
+  have hH : IsHausdorff I (MvPowerSeries (Fin n) R) :=
+    GlobalTheory.CompleteBaseChange.isHausdorff_pi (M := R) (Fin n →₀ ℕ) hfg
+  rw [hC]
+  exact { toIsHausdorff := IsHausdorff.map_algebraMap_iff.2 hH
+          toIsPrecomplete := IsPrecomplete.map_algebraMap_iff.2 hP }
+
+end GlobalTheory.PowerSeriesComplete
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MvPowerSeriesIsAdicCompleteMapCOfNoetherianStatement
+
+section
+
 @[expose] public section
 
 open IsLocalRing GlobalTheory.FormalOrigin
 
 theorem _root_.GlobalTheory.T.mvPowerSeries_isAdicComplete_map_C_of_noetherian : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (I : Ideal R), IsAdicComplete I R → ∀ n : ℕ, IsAdicComplete (I.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R)) (MvPowerSeries (Fin n) R) := by
   first | exact @GlobalTheory.PowerSeriesComplete.isAdicComplete_map_C | exact GlobalTheory.PowerSeriesComplete.isAdicComplete_map_C | (intros; apply GlobalTheory.PowerSeriesComplete.isAdicComplete_map_C <;> assumption)
+end
+end

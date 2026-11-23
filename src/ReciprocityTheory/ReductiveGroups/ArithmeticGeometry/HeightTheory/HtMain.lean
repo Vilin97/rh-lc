@@ -56,12 +56,200 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HHINDE
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HSix
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HeightMinMaxFormula
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtArith
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Imports
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtDefs
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HeightIntegralEstimates
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtLeafSt
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.Tactic.Polynomial.Basic
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.Algebra.MvPolynomial.Funext
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.IntNsg
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.LogHeightGeneratorLowerBound
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.NlNonnegFin
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SumLogHeightUpperBound
-import Std.Tactic.BVDecide.Normalize.Prop
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.IrreducibleFactorHeightBound
+import Mathlib.Algebra.Order.Star.Real
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.UpSiegel
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.NormLineSectionPow
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.GaussHeights.GenericPointHeight.GenericPointStatements.GenericPointTheorem.HtGenericPt
+
+section
+
+@[expose] public section
+
+open NumberField
+
+theorem HtGenericPt {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)] {WT : Type} [AddCommGroup WT] {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra K (A c)] [∀ c, Algebra (𝓞 K) (A c)] (𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)) (d : ReciprocityTheory.ChartRestriction.G.T0.Data K ι Ω WT A) : ReciprocityTheory.ChartRestriction.G.T0.LeafSt.exists_generic 𝒜 d := by
+  classical
+  intro hd h
+  refine ⟨?_, ⟨hd.a4.choose, hd.a4.choose_spec.1⟩⟩
+  have hφ : ∀ c, ∃ φ : Module.Dual K (A c), φ (d.w (d.jc c) c) ≠ 0 := by
+    intro c
+    by_contra hcon
+    push_neg at hcon
+    exact hd.w_base c ((Module.forall_dual_apply_eq_zero_iff K _).mp hcon)
+  choose φ hφ using hφ
+  let P : ι → MvPolynomial (Fin (d.N + 1)) K := fun c =>
+    ∑ j, MvPolynomial.C (φ c (d.w j c)) * MvPolynomial.X j
+  have hev : ∀ (x : Fin (d.N + 1) → K) c, MvPolynomial.eval x (P c) = φ c (d.wx x c) := by
+    intro x c
+
+    simp only [P, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X,
+    ReciprocityTheory.ChartRestriction.G.T0.Data.wx, Finset.sum_apply, Pi.smul_apply, map_smul, smul_eq_mul]
+    exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)
+  have hP : ∀ c, P c ≠ 0 := by
+    intro c hc
+    apply hφ c
+    have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (d.jc c) 1)) hc
+    simpa [P, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_X',
+      Finsupp.single_eq_single_iff] using this
+  have hprod : (∏ c, P c) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun c _ => hP c)
+  haveI : Infinite K := Infinite.of_injective (Nat.cast : ℕ → K) Nat.cast_injective
+  by_contra hne
+  push_neg at hne
+  apply hprod
+  apply MvPolynomial.funext
+  intro x
+  obtain ⟨c, hc⟩ := hne x
+  rw [map_prod, map_zero]
+  exact Finset.prod_eq_zero (Finset.mem_univ c) (by rw [hev, hc, map_zero])
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Imports
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+open NumberField
+
+variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]
+  {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)]
+  {WT : Type} [AddCommGroup WT]
+  {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra K (A c)]
+  [∀ c, Algebra (𝓞 K) (A c)]
+  {𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)}
+
+namespace Data
+
+variable (d : Data K ι Ω WT A)
+
+theorem exists_generic (hd : d.AxH 𝒜) (h : d.S1) :
+    (∃ x : Fin (d.N + 1) → K, ∀ c, d.wx x c ≠ 0) ∧
+    (∃ ta' : ∀ c, A c, ∀ c, ta' c ∈ 𝒜 c d.wF ∧ ta' c ≠ 0) :=
+  HtGenericPt 𝒜 d hd h
+
+end Data
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SumLogHeightUpperBound
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+open NumberField
+
+variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]
+  {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)]
+  {WT : Type} [AddCommGroup WT]
+  {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra K (A c)]
+  [∀ c, Algebra (𝓞 K) (A c)]
+  {𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)}
+
+namespace Data
+
+variable (d : Data K ι Ω WT A)
+
+theorem upB_nonneg (hd : d.AxH 𝒜) : 0 ≤ d.upB := by
+  have h1 := hd.P_ge.2.2.2.1
+  have h2 := hd.size_L
+  have h3 : 0 ≤ Real.log (d.N + 1 : ℕ) := Real.log_nonneg (by exact_mod_cast Nat.succ_pos _)
+  have h4 : 0 ≤ max 0 d.laW := le_max_left _ _
+  unfold upB
+  nlinarith
+
+theorem delc_le_del (c : ι) : d.delc c ≤ d.del :=
+  Finset.single_le_sum (f := d.delc) (fun _ _ => Nat.zero_le _) (Finset.mem_univ c)
+
+theorem up_comp (hd : d.AxH 𝒜) (h : d.S1) (hLAM : d.HtLAM) (F : ι → KTp K d.D d.N)
+    (hF : ∀ c, algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (F c) = d.fZ h c) (c : ι) :
+    ReciprocityTheory.MultiplicativeHeights.h0 (F c) ≤ (d.D + 2) * d.delc c * d.upB := by
+  have hB := d.upB_nonneg hd
+  by_cases hpos : ReciprocityTheory.MultiplicativeHeights.h0 (F c) ≤ 0
+  · exact hpos.trans (by positivity)
+  replace hpos := not_le.mp hpos
+  obtain ⟨F1, m, deF, hm, hdeF, hmd, hirr, hx, hu, hle, hker⟩ := d.irreducible_factor_height_bound hd h F hF c hpos
+  have hcd := d.delc_le_del c
+  have hdel : 1 ≤ d.del := by
+    have : 1 ≤ m * deF := Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (by omega) (by omega))
+    omega
+  have hmR : (1 : ℝ) ≤ m := by exact_mod_cast hm
+  have hT0 : 0 < hT F1 := by
+    by_contra hneg
+    replace hneg := not_lt.mp hneg
+    have : (m : ℝ) * hT F1 ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (by linarith) hneg
+    linarith
+  have hu' : UDegLE ((d.D + 1) * d.del) F1 := fun s hs =>
+    (hu s hs).trans (Nat.mul_le_mul_left _ hcd)
+  obtain ⟨Q, hQx, hQu, hQ, hS⟩ := d.up_siegel hd F1 deF hdeF
+    ((Nat.le_mul_of_pos_left deF (by omega)).trans (hmd.trans hcd)) hirr hx hu' hT0
+  obtain ⟨g, hg, hgc, hC⟩ := d.up_cauchy hd hdel c F1 deF hx hker Q hQx hQu hQ
+  have hL := hLAM c g hg hgc
+  have hN := d.up_count hd hdel
+  have hn : (0 : ℝ) < d.n96 := by
+    have : 0 < d.n96 := by
+      unfold n96
+      have : 0 < (d.N + 1) := Nat.succ_pos _
+      positivity
+    exact_mod_cast this
+  have hDF : (0 : ℝ) < (d.D + 2) * deF := by
+    have : (1 : ℝ) ≤ deF := by exact_mod_cast hdeF
+    positivity
+  have hlaw : d.laW ≤ max 0 d.laW := le_max_right _ _
+
+  have key : d.n96 * hT F1 / ((d.D + 2) * deF) ≤ d.n96 * d.upB := by
+    unfold upB
+    nlinarith
+  have key2 : hT F1 ≤ (d.D + 2) * deF * d.upB := by
+    rw [div_le_iff₀ hDF] at key
+    have : d.n96 * hT F1 ≤ d.n96 * ((d.D + 2) * deF * d.upB) := by nlinarith
+    exact le_of_mul_le_mul_left this hn
+  have hmdR : (m : ℝ) * deF ≤ d.delc c := by exact_mod_cast hmd
+  calc ReciprocityTheory.MultiplicativeHeights.h0 (F c) ≤ m * hT F1 := hle
+    _ ≤ m * ((d.D + 2) * deF * d.upB) := by gcongr
+    _ = (d.D + 2) * (m * deF) * d.upB := by ring
+    _ ≤ (d.D + 2) * d.delc c * d.upB := by gcongr
+
+theorem sum_logHeight_upper_bound (hd : d.AxH 𝒜) (h : d.S1) (hLAM : d.HtLAM) (F : ι → KTp K d.D d.N)
+    (hF : ∀ c, algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (F c) = d.fZ h c) :
+    ∑ c, ReciprocityTheory.MultiplicativeHeights.h0 (F c) ≤
+      (d.D + 2) * d.del * (d.PP0' * d.wsize d.wL +
+        max 0 (meanK fun sg => ⨆ j, Real.log (d.supN sg d.wL (d.w j))) +
+        Real.log (d.N + 1 : ℕ) + 1) := by
+  calc ∑ c, ReciprocityTheory.MultiplicativeHeights.h0 (F c) ≤ ∑ c, ((d.D : ℝ) + 2) * d.delc c * d.upB :=
+        Finset.sum_le_sum fun c _ => d.up_comp hd h hLAM F hF c
+    _ = ((d.D : ℝ) + 2) * d.del * d.upB := by
+        rw [← Finset.sum_mul, ← Finset.mul_sum]
+        simp [Data.del, Nat.cast_sum]
+
+end Data
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtMain
+
+section
 
 @[expose] public section
 
@@ -290,3 +478,5 @@ theorem heights (hd : d.AxH 𝒜) (h : d.S1) (hH1 : d.FinitePlaceHyp) (hF1d : d.
 end Data
 
 end ReciprocityTheory.ChartRestriction.G.T0
+end
+end

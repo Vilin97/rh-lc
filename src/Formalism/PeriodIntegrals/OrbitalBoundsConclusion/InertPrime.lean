@@ -1,7 +1,6 @@
 module
 
-public import Formalism.PeriodIntegrals.InertPrime
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.InertPrimeJacobi.NotIsSquareOfJacobi
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +40,125 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Int
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+
+-- Source module: Formalism.PeriodIntegrals.InertPrime
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace PI
+
+def InertPrime : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 → ∀ (b : K) (d p : ℕ), b ^ 2 = -(d : K) → p.Prime →
+    jacobiSym (-(d : ℤ)) p = -1 → (Ideal.span {(p : 𝓞 K)}).IsPrime
+
+end PI
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.InertPrimeJacobi.NotIsSquareOfJacobi
+
+section
+
+@[expose] public section
+
+open NumberField
+
+namespace PI.InertPrimeWork
+
+theorem not_isSquare_of_jacobi {d p : ℕ} (hp : p.Prime) (h : jacobiSym (-(d : ℤ)) p = -1) :
+    ¬ IsSquare (((-(d : ℤ) : ℤ)) : ZMod p) := by
+  haveI := Fact.mk hp
+  rw [← jacobiSym.legendreSym.to_jacobiSym] at h
+  exact (legendreSym.eq_neg_one_iff p).1 h
+
+theorem inert (K : Type) [Field K] [NumberField K] (hK : Module.finrank ℚ K = 2) (b : K) (d p : ℕ)
+    (hb : b ^ 2 = -(d : K)) (hp : p.Prime) (hj : jacobiSym (-(d : ℤ)) p = -1) :
+    (Ideal.span {(p : 𝓞 K)}).IsPrime := by
+  haveI := Fact.mk hp
+  have hsq := not_isSquare_of_jacobi hp hj
+  have hnormI : Ideal.absNorm (Ideal.span {(p : 𝓞 K)}) = p ^ 2 := by
+    rw [Ideal.absNorm_span_singleton]
+    have e : ((p : 𝓞 K)) = algebraMap ℤ (𝓞 K) (p : ℤ) := by simp
+    rw [e, Algebra.norm_algebraMap, NumberField.RingOfIntegers.rank, hK]
+    simp
+  have hp1 : p ^ 2 ≠ 1 := by
+    have := hp.one_lt
+    nlinarith
+  have hIne : Ideal.span {(p : 𝓞 K)} ≠ ⊤ := by
+    intro h
+    rw [h, Ideal.absNorm_top] at hnormI
+    exact hp1 hnormI.symm
+  obtain ⟨P, hPmax, hIP⟩ := Ideal.exists_le_maximal _ hIne
+  have hdvd : Ideal.absNorm P ∣ p ^ 2 := hnormI ▸ Ideal.absNorm_dvd_absNorm_of_le hIP
+  obtain ⟨k, hk, hPk⟩ := (Nat.dvd_prime_pow hp).1 hdvd
+  interval_cases k
+  · rw [pow_zero, Ideal.absNorm_eq_one_iff] at hPk
+    exact absurd hPk hPmax.ne_top
+  · exfalso
+    rw [pow_one] at hPk
+    have hP0 : P ≠ ⊥ := by
+      rintro rfl
+      rw [Ideal.absNorm_bot] at hPk
+      exact hp.ne_zero hPk.symm
+    haveI : Finite (𝓞 K ⧸ P) := Ideal.finiteQuotientOfFreeOfNeBot P hP0
+    letI : Fintype (𝓞 K ⧸ P) := Fintype.ofFinite _
+    letI : Field (𝓞 K ⧸ P) := Ideal.Quotient.field P
+    have hcard : Fintype.card (𝓞 K ⧸ P) = p := by
+      rw [Fintype.card_eq_nat_card, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply, hPk]
+    haveI : CharP (𝓞 K ⧸ P) p := charP_of_card_eq_prime hcard
+    let ψ : ZMod p →+* 𝓞 K ⧸ P := ZMod.castHom (dvd_refl p) _
+    have hψi : Function.Injective ψ := ψ.injective
+    have hψb : Function.Bijective ψ :=
+      (Fintype.bijective_iff_injective_and_card ψ).2 ⟨hψi, by rw [ZMod.card, hcard]⟩
+    have hbi : IsIntegral ℤ b := by
+      refine ⟨Polynomial.X ^ 2 + Polynomial.C (d : ℤ), ?_, ?_⟩
+      · exact Polynomial.monic_X_pow_add_C _ two_ne_zero
+      · simp [Polynomial.eval₂_add, hb]
+    let β : 𝓞 K := ⟨b, hbi⟩
+    have hβ : β ^ 2 = -(d : 𝓞 K) := by
+      apply RingOfIntegers.coe_injective
+      push_cast
+      exact hb
+    obtain ⟨t, ht⟩ := hψb.2 (Ideal.Quotient.mk P β)
+    apply hsq
+    refine ⟨t, ?_⟩
+    apply hψi
+    rw [map_mul, ← sq, ht, ← map_pow, hβ]
+    push_cast
+    simp
+  · rw [← hnormI] at hPk
+    have hPI : P ∣ Ideal.span {(p : 𝓞 K)} := Ideal.dvd_iff_le.2 hIP
+    obtain ⟨J, hJ⟩ := hPI
+    have hJ1 : Ideal.absNorm J = 1 := by
+      have h2 := congrArg Ideal.absNorm hJ
+      rw [map_mul, hPk] at h2
+      have hpos : Ideal.absNorm (Ideal.span {(p : 𝓞 K)}) ≠ 0 := by
+        rw [hnormI]
+        exact pow_ne_zero _ hp.ne_zero
+      exact (Nat.mul_eq_left hpos).1 h2.symm
+    rw [Ideal.absNorm_eq_one_iff] at hJ1
+    rw [hJ, hJ1, Ideal.mul_top]
+    exact hPmax.isPrime
+
+end PI.InertPrimeWork
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.InertPrime
+
+section
 
 @[expose] public section
 
@@ -49,3 +167,5 @@ open NumberField
 theorem isPrime_span_of_jacobi_neg_one : PI.InertPrime := by
   intro K _ _ hK b d p hb hp hj
   exact PI.InertPrimeWork.inert K hK b d p hb hp hj
+end
+end

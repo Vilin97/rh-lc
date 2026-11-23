@@ -1,14 +1,13 @@
 module
 
 public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TsumExpNegAbsIntLtTop
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasSumTupleProdOfSummableNormComplex
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.Order.Real
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-public import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -22,10 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
 import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,9 +43,71 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasSumTupleProdOfSummableNormComplex
+public import Mathlib.Analysis.Normed.Group.Tannery
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 public import Mathlib.Algebra.Order.Group.Indicator
 public import Mathlib.Analysis.Complex.Exponential
 public import Mathlib.Analysis.Normed.Group.Indicator
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TsumExpNegAbsIntLtTop
+
+section
+
+@[expose] public section
+
+open MeasureTheory
+open scoped ENNReal
+
+namespace GlobalTheory.VolBoxMajorant
+
+theorem tsum_pi_prod_ennreal' : ∀ {ι : Type} [Fintype ι] {X : ι → Type} (φ : ∀ i, X i → ℝ≥0∞),
+    ∑' x : ∀ i, X i, ∏ i, φ i (x i) = ∏ i, ∑' y, φ i y := by
+  intro ι _
+  refine Fintype.induction_empty_option
+    (P := fun ι _ => ∀ {X : ι → Type} (φ : ∀ i, X i → ℝ≥0∞),
+      ∑' x : ∀ i, X i, ∏ i, φ i (x i) = ∏ i, ∑' y, φ i y) ?_ ?_ ?_ ι
+  · intro α β _ e h X φ
+    letI : Fintype α := Fintype.ofEquiv β e.symm
+    have h1 := h (X := fun a => X (e a)) (fun a => φ (e a))
+    rw [← (Equiv.piCongrLeft X e).tsum_eq]
+    calc ∑' x : ∀ a, X (e a), ∏ b, φ b (Equiv.piCongrLeft X e x b)
+        = ∑' x : ∀ a, X (e a), ∏ a, φ (e a) (x a) := by
+          congr 1; ext x
+          rw [← Fintype.prod_equiv e (fun a => φ (e a) (Equiv.piCongrLeft X e x (e a)))
+            (fun b => φ b (Equiv.piCongrLeft X e x b)) (fun _ => rfl)]
+          simp only [Equiv.piCongrLeft_apply_apply]
+      _ = ∏ a, ∑' y, φ (e a) y := h1
+      _ = ∏ b, ∑' y, φ b y := Fintype.prod_equiv e _ _ (fun _ => rfl)
+  · intro X φ
+    simp
+  · intro α _ h X φ
+    rw [← (Equiv.piOptionEquivProd (β := X)).symm.tsum_eq, Fintype.prod_option]
+    rw [← h (X := fun a => X (some a)) (fun a => φ (some a))]
+    rw [← ENNReal.tsum_mul_right]
+    simp only [Fintype.prod_option]
+    rw [ENNReal.tsum_prod']
+    congr 1; ext y
+    rw [← ENNReal.tsum_mul_left]
+    rfl
+
+end GlobalTheory.VolBoxMajorant
+
+namespace GlobalTheory.VolBoxMajorant
+
+end GlobalTheory.VolBoxMajorant
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ProdTsumEqTsumIndicatorEnnreal
+
+section
 
 @[expose] public section
 
@@ -244,3 +301,5 @@ theorem euler_product_intVec_ennreal {I : Type} (n : ℕ) (f : I → (Fin n → 
   ⟨hasProd_tsum_finsupp_ennreal f hf0, tsum_finsupp_eq_tprod_ennreal f hf0⟩
 
 end GlobalTheory.EulerSum
+end
+end

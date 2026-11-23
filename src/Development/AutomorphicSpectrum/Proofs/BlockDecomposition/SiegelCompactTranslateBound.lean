@@ -2,15 +2,7 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GoodConstOfAniso
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SumFrameIdem
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdeleSplitSndDiagonal
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompactFiniteAdelicDenominatorStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConeFrameWeightRatioBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EqZeroOfIsIntegralMulOfSmall
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FrameBlockZeroStabilizesFlagStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MinimalParabolicFrameBlockZeroStatement
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorusArchimedeanFrameActionStatement
-public import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
-public import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
+public import Development.AbelianVarietyTheory.Definitions.Foundations.OfInfProjInfMulOfFinProjFin
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,8 +18,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +25,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,9 +37,140 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
+import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
+import GroundTheory.AutomorphicForms.LocallyProfinite
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusIntegral
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompactFiniteAdelicDenominatorStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConeFrameWeightRatioBoundStatement
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.NumberTheory.NumberField.Basic
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyNormFinLeOne
+public import Formalism.SatakeDualWeyl.Statement
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FrameBlockZeroStabilizesFlagStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MinimalParabolicFrameBlockZeroStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorusArchimedeanFrameActionStatement
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdeleSplitSndDiagonal
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet PositivityTheory.ThKR
+open Formalism.UG (cT bc UJ)
+open scoped TensorProduct NNReal ENNReal
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.ClassFin
+
+section Reduction
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+
+theorem projFin_ratEmb_val (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (γ : GRat σ J) :
+    (GlobalTheory.AdelicU.projFin σ J (ratEmb σ J γ)).1 = bc (inclR (Af F)) γ.1 := by
+  refine Units.ext (Matrix.ext fun r s => ?_)
+  change Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) ((1 : AF F) ⊗ₜ[F] (γ.1.1 r s)) =
+    (1 : Af F) ⊗ₜ[F] (γ.1.1 r s)
+  simp
+
+end Reduction
+
+section Lattices
+
+open GroundTheory.Automorphic GroundTheory.Heights₂.Heights.FiniteCovolume Module
+open scoped Pointwise
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+  [Algebra.IsQuadraticExtension F E]
+
+end Lattices
+
+end GlobalTheory.CompanionTheory.ClassFin
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EqZeroOfIsIntegralMulOfSmall
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
+open Formalism.UG (cT)
+open scoped TensorProduct NNReal ENNReal
+
+namespace GlobalTheory.CompanionTheory.SmallIntegral
+
+theorem eq_zero_of_isIntegral_mul_of_small :
+    ∀ (E : Type) [Field E] [NumberField E] (d : ℕ) (y : E), 0 < d →
+      IsIntegral ℤ ((d : E) * y) → ∀ ε : ℝ, (∀ φ : E →+* ℂ, ‖φ y‖ ≤ ε) →
+      ((d : ℝ) * ε) ^ Module.finrank ℚ E < 1 → y = 0 := by
+  intro E _ _ d y hd hint ε hε hlt
+  by_contra hy
+  have hd' : (d : E) ≠ 0 := by exact_mod_cast hd.ne'
+  have hz : (d : E) * y ≠ 0 := mul_ne_zero hd' hy
+
+  obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp
+    (Algebra.isIntegral_norm ℚ hint : IsIntegral ℤ (Algebra.norm ℚ ((d : E) * y)))
+  have hnorm0 : Algebra.norm ℚ ((d : E) * y) ≠ 0 := Algebra.norm_ne_zero_iff.mpr hz
+  have hn0 : n ≠ 0 := by
+    rintro rfl
+    exact hnorm0 (by simpa using hn.symm)
+  have hn1 : (1 : ℝ) ≤ |(n : ℝ)| := by exact_mod_cast Int.one_le_abs hn0
+
+  have hprod : ((Algebra.norm ℚ ((d : E) * y) : ℚ) : ℂ) = ∏ φ : E →+* ℂ, φ ((d : E) * y) := by
+    have h := Algebra.norm_eq_prod_embeddings ℚ ℂ ((d : E) * y)
+    have h2 : ∏ σ : E →ₐ[ℚ] ℂ, σ ((d : E) * y) = ∏ φ : E →+* ℂ, φ ((d : E) * y) :=
+      Fintype.prod_equiv (RingHom.equivRatAlgHom E ℂ).symm _ _ (fun σ => rfl)
+    rw [← h2, ← h]
+    simp
+  have hnC : ((n : ℂ)) = ∏ φ : E →+* ℂ, φ ((d : E) * y) := by
+    rw [← hprod, ← hn]
+    simp
+  have habs : |(n : ℝ)| = ∏ φ : E →+* ℂ, ‖φ ((d : E) * y)‖ := by
+    have := congrArg norm hnC
+    rw [norm_prod] at this
+    simpa using this
+  have hbound : ∏ φ : E →+* ℂ, ‖φ ((d : E) * y)‖ ≤ ((d : ℝ) * ε) ^ Module.finrank ℚ E := by
+    have hle : ∀ φ ∈ (Finset.univ : Finset (E →+* ℂ)), ‖φ ((d : E) * y)‖ ≤ (d : ℝ) * ε := by
+      intro φ _
+      rw [map_mul, map_natCast, norm_mul, Complex.norm_natCast]
+      exact mul_le_mul_of_nonneg_left (hε φ) (Nat.cast_nonneg d)
+    calc ∏ φ : E →+* ℂ, ‖φ ((d : E) * y)‖ ≤ ∏ _φ : E →+* ℂ, (d : ℝ) * ε :=
+          Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) hle
+      _ = ((d : ℝ) * ε) ^ Module.finrank ℚ E := by
+          rw [Finset.prod_const, Finset.card_univ, NumberField.Embeddings.card E ℂ]
+  linarith
+
+end GlobalTheory.CompanionTheory.SmallIntegral
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SiegelCompactTranslateBound
+
+section
 
 @[expose] public section
 
@@ -259,4 +379,6 @@ theorem flag_key : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
 
 end GlobalTheory.CompanionTheory.FlagKey
 
+end
+end
 end

@@ -1,7 +1,32 @@
 module
 
 public import Formalism.UnipotentAdelicQuotients.SiegelWeilUnitaryConvergent
-public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.SiegelWeilOfFormula
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.SecondCountableTopologyArchUnitary
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentCentral
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentHorizontal
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineEigenvalue
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsSemidirectHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusEmbedding
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusModulus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsUnitsInvHaar
+public import Mathlib.Topology.Algebra.Group.Units
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.MainOf
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PComplementArchCocompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PImaginaryLatticeCocompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineEigenvalue
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PRadicalTorusModulus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PRationalUnipotent
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PSemidirectHaar
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerLevi
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTorusEmbedding
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PTorusModulus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipRadicalOfRational
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentCentral
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentCoordProper
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentHorizontal
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnitsInvHaar
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,8 +65,86 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
 import CompanionTheory.SpectralGeometry.CountingDefinitions.AdelicEulerProducts.IsEulerProd
+
+-- Source module: CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.AdelicCovolumeFinite
+
+section
+
+@[expose] public section
+
+namespace CompanionTheory.SWFin
+
+open NumberField GroundTheory.Automorphic Module GroundTheory.Heights₂.Heights.FiniteCovolume
+
+universe u
+
+variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
+
+section steps
+
+variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
+  (h : HermitianForm F E W) (v : Basis ι E W)
+
+theorem te : TorusEmbedding.Statement h v :=
+  TorusEmbedding.proof h v (HermAtPlace.full h v) (GramAtData.full h v)
+
+theorem le : LineEigenvalue.Statement h v := LineEigenvalue.proof h v (VecAtNeZero.full v)
+
+theorem sh : SemidirectHaar.Statement (archUnitary h v) (InfinitePlace E → ℂˣ) := SemidirectHaar.proof _ _
+
+theorem tm : TorusModulus.Statement h v :=
+  TorusModulus.proof h v (HermAtPlace.full h v) (GramAtData.full h v) (ComplementForm.full h)
+    (StabilizerLevi.proof h v) (UnipotentModulus.proof h v) (RadicalTorusModulus.proof h v)
+    fun _ _ _ _ _ => SemidirectHaar.proof _ _
+
+theorem uh : UnipotentHorizontal.Statement h v :=
+  UnipotentHorizontal.proof h v (RationalUnipotent.proof h) (UnipRadicalOfRational.proof h v)
+    (ComplementArchCocompact.proof h v)
+
+theorem uz : UnipotentCentral.Statement h v :=
+  UnipotentCentral.proof h v (RationalUnipotent.proof h) (UnipRadicalOfRational.proof h v)
+    ImaginaryLatticeCocompact.proof
+
+end steps
+
+theorem adelicCovolumeFinite {W : Type u} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (h : HermitianForm F E W) (v : Basis ι E W) : AdelicCovolumeFinite.Statement h v :=
+  AdelicCovolumeFinite.of_remaining (fun _ _ _ _ h _ v => te h v) (fun _ _ _ _ h _ v => le h v)
+    (fun _ _ _ _ h _ v => tm h v) (fun _ _ _ _ h _ v => sh h v) (UnitsInvHaar.proof _)
+    (fun _ _ _ _ h _ v => UnipotentCoordProper.proof h v) (fun _ _ _ _ h _ v => uh h v)
+    (fun _ _ _ _ h _ v => uz h v) h v (te h v) (le h v) (tm h v) (sh h v) (UnipotentCoordProper.proof h v)
+    (uh h v) (uz h v)
+
+end CompanionTheory.SWFin
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.SiegelWeilOfFormula
+
+section
+
+@[expose] public section
+
+namespace CompanionTheory.SWFin
+
+open HeckeCharacterZeroLocus.SiegelWeilU
+
+theorem finVol (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
+    (hσ : IsCMExt F E σ) (M : ℕ) (J : Matrix (Fin M) (Fin M) E) (hJ : IsHermND σ J) : FinVol F E σ M J :=
+  finVol_of (fun _ _ _ _ _ _ _ _ _ _ _ h => adelicCovolumeFinite h _) F E σ hσ M J hJ
+
+end CompanionTheory.SWFin
+end
+end
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.UnitaryGroupFiniteVolume
+
+section
 
 @[expose] public section
 
@@ -54,3 +157,5 @@ theorem finVol_unitaryGroup : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   fun F E _ _ _ _ _ σ hσ M J hJ => CompanionTheory.SWFin.finVol F E σ hσ M J hJ
 
 end GlobalTheory.CompanionTheory.SW
+end
+end

@@ -2,11 +2,10 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.TwoLe
 public import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.LatDet
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.PermDet
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.Places
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.UnitLat
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.ValuationUnitNeZero
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +23,6 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.NumberField.Units.Basic
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
@@ -50,6 +48,148 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.HasVal
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.TwoLe
+import Development.AutomorphicArithmetic.AutomorphicVarieties.TensorHomCubes.StabDirectedSystem
+public import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.PermDet
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.UnitLat
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.HasVal
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.NumberTheory.NumberField.Units.Basic
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.LatDet
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UpperTheory.V UpperTheory.V.ZK UpperTheory.V.ZK.Ct
+
+theorem UpperTheory.V.ZK.Ct.latDet :
+    ∀ (E V : Type) [AddCommGroup E] [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] (lam : E →ₗ[ℤ] V) (δ : Module.End ℤ E) (δV : V →ₗ[ℝ] V), (∀ x, lam (δ x) = δV (lam x)) → LinearMap.ker lam = Submodule.torsion ℤ E → DiscreteTopology (LinearMap.range lam) → Submodule.span ℝ (LinearMap.range lam : Set V) = ⊤ → LinearMap.det δV ≠ 0 → Finite (E ⧸ (LinearMap.range δ ⊔ Submodule.torsion ℤ E)) ∧ (Nat.card (E ⧸ (LinearMap.range δ ⊔ Submodule.torsion ℤ E)) : ℝ) = |LinearMap.det δV| := by
+  intro E V _ _ _ _ lam δ δV hcomm hker hdisc hspan hdet
+  classical
+  set L := LinearMap.range lam with hL
+  haveI : IsZLattice ℝ L := ⟨hspan⟩
+  have hmaps : ∀ x ∈ L, (δV.restrictScalars ℤ) x ∈ L := by
+    rintro _ ⟨y, rfl⟩
+    exact ⟨δ y, by simp [hcomm]⟩
+  set f : L →ₗ[ℤ] L := (δV.restrictScalars ℤ).restrict hmaps with hf
+  have hfv : ∀ y : L, ((f y : L) : V) = δV y := fun y => rfl
+  have hVinj : Function.Injective δV := fun a b h =>
+    (LinearMap.equivOfDetNeZero δV hdet).injective h
+  have hfinj : Function.Injective f := by
+    intro a b h
+    apply Subtype.ext
+    apply hVinj
+    rw [← hfv, ← hfv, h]
+  have hcard : Nat.card (L ⧸ LinearMap.range f) = (LinearMap.det f).natAbs := by
+    rw [← Submodule.natAbs_det_equiv (LinearMap.range f) (LinearEquiv.ofInjective f hfinj)]
+    congr 2
+  have hdetf : ((LinearMap.det f : ℤ) : ℝ) = LinearMap.det δV := by
+    let b := Module.Free.chooseBasis ℤ L
+    let bV := b.ofZLatticeBasis ℝ L
+    have hM : (Int.castRingHom ℝ).mapMatrix (LinearMap.toMatrix b b f) =
+        LinearMap.toMatrix bV bV δV := by
+      ext i j
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, LinearMap.toMatrix_apply, eq_intCast]
+      rw [show bV j = ((b j : L) : V) from b.ofZLatticeBasis_apply ℝ L j, ← hfv,
+        Module.Basis.ofZLatticeBasis_repr_apply]
+    rw [← LinearMap.det_toMatrix b, ← LinearMap.det_toMatrix bV, ← hM, ← RingHom.map_det,
+      eq_intCast]
+  have hne : (LinearMap.det f).natAbs ≠ 0 := by
+    intro h
+    apply hdet
+    rw [← hdetf, Int.natAbs_eq_zero.mp h, Int.cast_zero]
+  let g : E →ₗ[ℤ] L ⧸ LinearMap.range f := (LinearMap.range f).mkQ ∘ₗ lam.rangeRestrict
+  have hgs : Function.Surjective g :=
+    (Submodule.mkQ_surjective _).comp lam.surjective_rangeRestrict
+  have hkerg : LinearMap.ker g = LinearMap.range δ ⊔ Submodule.torsion ℤ E := by
+    ext x
+    simp only [g, LinearMap.mem_ker, LinearMap.comp_apply, Submodule.mkQ_apply,
+      Submodule.Quotient.mk_eq_zero, Submodule.mem_sup, LinearMap.mem_range]
+    constructor
+    · rintro ⟨⟨_, z, rfl⟩, hz⟩
+      refine ⟨δ z, ⟨z, rfl⟩, x - δ z, ?_, by abel⟩
+      rw [← hker, LinearMap.mem_ker, map_sub, sub_eq_zero]
+      have := congrArg Subtype.val hz
+      rw [hfv] at this
+      simpa [hcomm] using this.symm
+    · rintro ⟨_, ⟨z, rfl⟩, t, ht, rfl⟩
+      rw [← hker, LinearMap.mem_ker] at ht
+      refine ⟨lam.rangeRestrict z, Subtype.ext ?_⟩
+      rw [hfv]
+      simp [hcomm, ht]
+  let e2 : (E ⧸ (LinearMap.range δ ⊔ Submodule.torsion ℤ E)) ≃ₗ[ℤ] L ⧸ LinearMap.range f :=
+    (Submodule.quotEquivOfEq _ _ hkerg.symm).trans (g.quotKerEquivOfSurjective hgs)
+  haveI : Finite (L ⧸ LinearMap.range f) := Nat.finite_of_card_ne_zero (hcard ▸ hne)
+  refine ⟨Finite.of_equiv _ e2.toEquiv.symm, ?_⟩
+  rw [Nat.card_congr e2.toEquiv, hcard, Nat.cast_natAbs, Int.cast_abs, hdetf]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.Places
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain UpperTheory.V UpperTheory.V.ZK UpperTheory.V.ZK.Ct
+
+theorem UpperTheory.V.ZK.Ct.places :
+    ∀ (L F : Type) [Field L] [NumberField L] [Field F] [NumberField F] [Algebra L F] (γ : F ≃ₐ[L] F), IsTotallyComplex L → IsGalois L F → (∀ σ : F ≃ₐ[L] F, σ ∈ Subgroup.zpowers γ) → IsTotallyComplex F ∧ Fintype.card (InfinitePlace F) = orderOf γ * InfinitePlace.nrComplexPlaces L ∧ ∀ (k : ℕ) (w : InfinitePlace F), γ ^ k • w = w ↔ orderOf γ ∣ k := by
+  intro L F _ _ _ _ _ γ hL hG hγ
+  haveI := hL
+  haveI : IsTotallyComplex F := isTotallyComplex_of_algebra L F
+  haveI : IsUnramifiedAtInfinitePlaces L F :=
+    ⟨fun w => InfinitePlace.isUnramified_iff.mpr (Or.inr (IsTotallyComplex.isComplex _))⟩
+  have htop : Subgroup.zpowers γ = ⊤ := eq_top_iff.mpr fun σ _ => hγ σ
+  have hcard : Module.finrank L F = orderOf γ := by
+    rw [← IsGalois.card_aut_eq_finrank, ← Nat.card_zpowers, htop, Subgroup.card_top]
+  refine ⟨inferInstance, ?_, ?_⟩
+  · rw [IsUnramifiedAtInfinitePlaces.card_infinitePlace L F, hcard,
+      InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces,
+      IsTotallyComplex.nrRealPlaces_eq_zero, zero_add, mul_comm]
+  · intro k w
+    have hst := (InfinitePlace.isUnramified L w).stabilizer_eq_bot
+    rw [orderOf_dvd_iff_pow_eq_one, ← MulAction.mem_stabilizer_iff, hst, Subgroup.mem_bot]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.ValuationUnitNeZero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain
+
+namespace UpperTheory.V.ZK
+
+variable {L F : Type} [Field L] [NumberField L] [Field F] [NumberField F] [Algebra L F]
+
+theorem valuation_unit_ne_zero (P : HeightOneSpectrum (𝓞 F)) (α : Fˣ) : P.valuation F (α : F) ≠ 0 :=
+  (Valuation.ne_zero_iff _).2 α.ne_zero
+
+theorem valuation_eq_exp_ordP (P : HeightOneSpectrum (𝓞 F)) (α : Fˣ) :
+    P.valuation F (α : F) = WithZero.exp (-ordP P α) := by
+  simp only [ordP, neg_neg]
+  exact (WithZero.exp_log (valuation_unit_ne_zero P α)).symm
+
+end UpperTheory.V.ZK
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ClassCounting.SelmerOrderCounts.CardEQ
+
+section
 
 @[expose] public section
 
@@ -174,3 +314,5 @@ theorem UpperTheory.V.ZK.Ct.cardEQ :
   have h4 : 1 ≤ a ^ orderOf γ := Nat.one_le_pow _ _ (by omega)
   exact_mod_cast f2.trans (by rw [Nat.cast_pow, Nat.cast_sub h4]; push_cast; rfl :
     ((a : ℝ) ^ orderOf γ - 1) ^ InfinitePlace.nrComplexPlaces L = (((a ^ orderOf γ - 1) ^ InfinitePlace.nrComplexPlaces L : ℕ) : ℝ))
+end
+end

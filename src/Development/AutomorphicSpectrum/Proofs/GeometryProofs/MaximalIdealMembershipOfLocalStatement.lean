@@ -2,7 +2,6 @@ module
 
 public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 public import Mathlib.RingTheory.LocalRing.Defs
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MaximalIdealMembershipOfLocal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,7 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,9 +45,71 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Ideal.GoingUp
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.MaximalIdealMembershipOfLocal
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.IntegralClosureLocal
+
+theorem mem_maximal_iff_not_inv_mem {K : Type} [Field K] (R : Subring K) [IsLocalRing R]
+    (P : Ideal (integralClosure R K).toSubring) (hP : P.IsMaximal)
+    (t : (integralClosure R K).toSubring) (htR : (t : K) ∈ R) :
+    t ∈ P ↔ ¬ ((t : K) ≠ 0 ∧ (t : K)⁻¹ ∈ R) := by
+  let f : R →+* (integralClosure R K).toSubring :=
+    (algebraMap R K).codRestrict (integralClosure R K).toSubring
+      (fun r => (integralClosure R K).algebraMap_mem r)
+  letI : Algebra R (integralClosure R K).toSubring := f.toAlgebra
+  haveI : Algebra.IsIntegral R (integralClosure R K).toSubring := by
+    refine ⟨fun x => ?_⟩
+    obtain ⟨p, hp, h⟩ : IsIntegral R (x : K) := x.2
+    refine ⟨p, hp, ?_⟩
+    apply Subtype.ext
+    have key := Polynomial.hom_eval₂ p f (integralClosure R K).toSubring.subtype x
+    exact key.trans h
+  have hm : (P.comap (algebraMap R (integralClosure R K).toSubring)).IsMaximal :=
+    letI := hP
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
+  have hmax : P.comap (algebraMap R (integralClosure R K).toSubring)
+      = IsLocalRing.maximalIdeal R := IsLocalRing.eq_maximalIdeal hm
+  have hrt : algebraMap R (integralClosure R K).toSubring ⟨t, htR⟩ = t := Subtype.ext rfl
+  have h1 : t ∈ P ↔ (⟨t, htR⟩ : R) ∈ IsLocalRing.maximalIdeal R := by
+    rw [← hmax, Ideal.mem_comap, hrt]
+  rw [h1, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, not_iff_not]
+  constructor
+  · intro hu
+    obtain ⟨u, hu⟩ := hu
+    have hne : (t : K) ≠ 0 := by
+      intro h0
+      have : (u : R) = 0 := by rw [hu]; exact Subtype.ext h0
+      exact u.ne_zero this
+    refine ⟨hne, ?_⟩
+    have hmul : ((u : R) : K) * (((u⁻¹ : Rˣ) : R) : K) = 1 := by
+      rw [← Subring.coe_mul, Units.mul_inv, Subring.coe_one]
+    have hut : ((u : R) : K) = (t : K) := by rw [hu]
+    rw [hut] at hmul
+    have : (t : K)⁻¹ = (((u⁻¹ : Rˣ) : R) : K) := inv_eq_of_mul_eq_one_right hmul
+    rw [this]
+    exact Subtype.coe_prop _
+  · rintro ⟨hne, hinv⟩
+    refine IsUnit.of_mul_eq_one (⟨(t : K)⁻¹, hinv⟩ : R) ?_
+    exact Subtype.ext (mul_inv_cancel₀ hne)
+
+end GlobalTheory.CompanionTheory.IntegralClosureLocal
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.MaximalIdealMembershipOfLocalStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.maximal_ideal_membership_of_local : ∀ {K : Type} [Field K] (R : Subring K) [IsLocalRing R] (P : Ideal (integralClosure R K).toSubring), P.IsMaximal → ∀ (t : (integralClosure R K).toSubring), (t : K) ∈ R → (t ∈ P ↔ ¬ ((t : K) ≠ 0 ∧ (t : K)⁻¹ ∈ R)) := by
   first | exact @GlobalTheory.CompanionTheory.IntegralClosureLocal.mem_maximal_iff_not_inv_mem | exact GlobalTheory.CompanionTheory.IntegralClosureLocal.mem_maximal_iff_not_inv_mem | (intros; apply GlobalTheory.CompanionTheory.IntegralClosureLocal.mem_maximal_iff_not_inv_mem <;> assumption)
+end
+end

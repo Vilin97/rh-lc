@@ -1,22 +1,36 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AntiCols
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitPlaceDiagonalStabilizerGeneratedHermitianDo
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledVacuumStabilizerGaussDecompositionBigCellStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAdmissibleUnipotentSplitPlaceHermitianStatement
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.RingTheory.LocalRing.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +50,166 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnipotentDoubledStabilizerAddsDiagonalBlocStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalBlockOfMatrix
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsUnitDetAddMulOfFromBlocksLocalRing
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory.BlockInvertibleLocal
+
+theorem exists_linearMap_injective_add_comp {k V : Type} [Field k] [AddCommGroup V] [Module k V]
+    [FiniteDimensional k V] (a c : V →ₗ[k] V) (h : LinearMap.ker a ⊓ LinearMap.ker c = ⊥) :
+    ∃ x : V →ₗ[k] V, Function.Injective (a + x ∘ₗ c) := by
+  set W := LinearMap.range (c ∘ₗ (LinearMap.ker a).subtype) with hWdef
+  obtain ⟨R, hR⟩ := Submodule.exists_isCompl (LinearMap.range a)
+  obtain ⟨W', hW⟩ := Submodule.exists_isCompl W
+  have hinjK : Function.Injective (c ∘ₗ (LinearMap.ker a).subtype) := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro u hu
+    have hu' : (u : V) ∈ LinearMap.ker a ⊓ LinearMap.ker c :=
+      Submodule.mem_inf.2 ⟨u.2, by simpa using hu⟩
+    rw [h, Submodule.mem_bot] at hu'
+    exact Subtype.ext hu'
+  have h1 := LinearMap.finrank_range_of_inj hinjK
+  have h2 := Submodule.finrank_add_eq_of_isCompl hR
+  have h3 := LinearMap.finrank_range_add_finrank_ker a
+  have hdim : Module.finrank k W = Module.finrank k R := by rw [hWdef, h1]; omega
+  let e : W ≃ₗ[k] R := LinearEquiv.ofFinrankEq W R hdim
+  let x : V →ₗ[k] V := LinearMap.ofIsCompl hW (R.subtype ∘ₗ e.toLinearMap) 0
+  refine ⟨x, ?_⟩
+  rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+  intro v hv
+  obtain ⟨w, hw, w', hw', hsum⟩ := Submodule.mem_sup.1 (hW.sup_eq_top ▸ Submodule.mem_top : c v ∈ W ⊔ W')
+  have hxw : x (c v) = ((e ⟨w, hw⟩ : R) : V) := by
+    rw [← hsum, map_add (f := _)]
+    have hl := LinearMap.ofIsCompl_left_apply (φ := R.subtype ∘ₗ e.toLinearMap) (ψ := (0 : W' →ₗ[k] V)) hW ⟨w, hw⟩
+    have hr := LinearMap.ofIsCompl_right_apply (φ := R.subtype ∘ₗ e.toLinearMap) (ψ := (0 : W' →ₗ[k] V)) hW ⟨w', hw'⟩
+    simp only at hl hr
+    rw [hl, hr]; simp
+  have hv' : a v + ((e ⟨w, hw⟩ : R) : V) = 0 := by
+    rw [← hxw]; simpa using hv
+  have hav : a v = 0 := by
+    refine Submodule.disjoint_def.1 hR.disjoint (a v) (LinearMap.mem_range_self a v) ?_
+    rw [eq_neg_of_add_eq_zero_left hv']
+    exact R.neg_mem (e ⟨w, hw⟩).2
+  have he0 : ((e ⟨w, hw⟩ : R) : V) = 0 := by simpa [hav] using hv'
+  have hw0 : w = 0 := by
+    have : e ⟨w, hw⟩ = 0 := Subtype.ext he0
+    have : (⟨w, hw⟩ : W) = 0 := by simpa using this
+    simpa using congrArg Subtype.val this
+  have hcvW : c v ∈ W := ⟨⟨v, hav⟩, rfl⟩
+  have hcvW' : c v ∈ W' := by rw [← hsum, hw0, zero_add]; exact hw'
+  have hcv : c v = 0 := Submodule.disjoint_def.1 hW.disjoint _ hcvW hcvW'
+  have hmem : v ∈ LinearMap.ker a ⊓ LinearMap.ker c := Submodule.mem_inf.2 ⟨hav, hcv⟩
+  rw [h, Submodule.mem_bot] at hmem
+  exact hmem
+
+theorem exists_isUnit_det_add_mul_of_field {k : Type} [Field k] {n : ℕ}
+    (A B C D : Matrix (Fin n) (Fin n) k) (h : IsUnit (fromBlocks A B C D).det) :
+    ∃ X : Matrix (Fin n) (Fin n) k, IsUnit (A + X * C).det := by
+  have hinj : Function.Injective (fromBlocks A B C D).mulVec :=
+    Matrix.mulVec_injective_iff_isUnit.2 ((Matrix.isUnit_iff_isUnit_det _).2 h)
+  have hker : LinearMap.ker (toLin' A) ⊓ LinearMap.ker (toLin' C) = ⊥ := by
+    rw [eq_bot_iff]
+    intro v hv
+    rw [Submodule.mem_inf, LinearMap.mem_ker, LinearMap.mem_ker, toLin'_apply, toLin'_apply] at hv
+    have hz : (fromBlocks A B C D) *ᵥ (Sum.elim v 0) = (fromBlocks A B C D) *ᵥ 0 := by
+      rw [fromBlocks_mulVec, mulVec_zero]
+      ext i <;> cases i <;> simp [hv.1, hv.2]
+    have h2 := hinj hz
+    rw [Submodule.mem_bot]
+    funext i
+    exact congrFun h2 (Sum.inl i)
+  obtain ⟨x, hx⟩ := exists_linearMap_injective_add_comp _ _ hker
+  refine ⟨LinearMap.toMatrix' x, ?_⟩
+  rw [← Matrix.isUnit_iff_isUnit_det, ← Matrix.mulVec_injective_iff_isUnit]
+  convert hx using 1
+  funext v
+  simp [Matrix.add_mulVec, ← Matrix.mulVec_mulVec]
+
+theorem exists_isUnit_det_add_mul : ∀ {O : Type} [CommRing O] [IsLocalRing O] {n : ℕ}
+    (A B C D : Matrix (Fin n) (Fin n) O),
+    IsUnit (Matrix.fromBlocks A B C D).det → ∃ X : Matrix (Fin n) (Fin n) O, IsUnit (A + X * C).det := by
+  intro O _ _ n A B C D h
+  have h' : IsUnit (fromBlocks (A.map (IsLocalRing.residue O)) (B.map (IsLocalRing.residue O))
+      (C.map (IsLocalRing.residue O)) (D.map (IsLocalRing.residue O))).det := by
+    rw [← fromBlocks_map]
+    have := h.map (IsLocalRing.residue O)
+    rwa [RingHom.map_det] at this
+  obtain ⟨Y, hY⟩ := exists_isUnit_det_add_mul_of_field _ _ _ _ h'
+  obtain ⟨X, hX⟩ : ∃ X : Matrix (Fin n) (Fin n) O, X.map (IsLocalRing.residue O) = Y :=
+    ⟨Y.map (Function.surjInv IsLocalRing.residue_surjective), by
+      ext i j; simp [Function.surjInv_eq]⟩
+  refine ⟨X, ?_⟩
+  rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, RingHom.mapMatrix_apply,
+    Matrix.map_add _ (map_add _), Matrix.map_mul, hX]
+  exact hY.ne_zero
+
+end GlobalTheory.BlockInvertibleLocal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsUnitDetAddMulOfFromBlocksLocalRingStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.exists_isUnit_det_add_mul_of_fromBlocks_localRing : ∀ {O : Type} [CommRing O] [IsLocalRing O] {n : ℕ} (A B C D : Matrix (Fin n) (Fin n) O),
+    IsUnit (Matrix.fromBlocks A B C D).det → ∃ X : Matrix (Fin n) (Fin n) O, IsUnit (A + X * C).det := by
+  first | exact @GlobalTheory.BlockInvertibleLocal.exists_isUnit_det_add_mul | exact GlobalTheory.BlockInvertibleLocal.exists_isUnit_det_add_mul | (intros; apply GlobalTheory.BlockInvertibleLocal.exists_isUnit_det_add_mul <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitPlaceDiagonalStabilizerGeneratedHermitianDo
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
+open scoped TensorProduct Matrix
+
+noncomputable section
+namespace GlobalTheory.DblVac
+
+theorem gen_diag_anti_split_herm : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
+    {d : ℕ} (V : Spc F E d) (r s : ℕ), B.IsGood σ → V.IsHerm σ B r s →
+    ∀ (v : Pl (F := F)), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → PsiUnr B.ψ v → (2 : 𝓞 F) ∉ v.asIdeal →
+    ∀ H : Subgroup (GlobalTheory.DblVac.UD σ V),
+      (∀ p ∈ GlobalTheory.DblVac.KD σ V v, p ∈ GlobalTheory.DblVac.PDiag σ V → p ∈ H) →
+      (∀ p ∈ GlobalTheory.DblVac.KD σ V v, p ∈ GlobalTheory.DblVac.PAnti σ V → p ∈ H) → ∀ g ∈ GlobalTheory.DblVac.KD σ V v, g ∈ H := by
+  intro F E _ _ _ _ _ σ B d V r s hB hV v hv hψ h2 H hD hA g hg
+  obtain ⟨Y, hYat, hYlat, hYadm, M, hM, hMlat⟩ := GlobalTheory.T.exists_admissible_unipotent_at_split_place GlobalTheory.T.exists_isUnit_det_add_mul_of_fromBlocks_localRing σ B V r s hB hV v hv hψ h2 g hg
+  obtain ⟨p, hpK, hpD, hp⟩ := GlobalTheory.T.exists_unipotent_doubledStabilizer_adds_diagonalBlock σ V v h2 Y hYat hYlat hYadm
+  obtain ⟨hpgK, hpg⟩ := hp g hg
+  have hbig : GlobalTheory.DblVac.BigCell V v (p * g) := ⟨M, by rw [hpg]; exact hM, hMlat⟩
+  obtain ⟨q, hqK, hqA, p', hp'K, hp'D, he⟩ := GlobalTheory.T.doubledVacuumStabilizer_gaussDecomposition_bigCell σ V v h2 (p * g) hpgK hbig
+  have hg' : g = p⁻¹ * (q * p') := by rw [← he]; group
+  rw [hg']
+  exact H.mul_mem (H.inv_mem (hD p hpK hpD)) (H.mul_mem (hA q hqK hqA) (hD p' hp'K hp'D))
+
+end GlobalTheory.DblVac
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitPlaceDiagonalStabilizerGeneratedHermitianDoStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +223,5 @@ theorem _root_.GlobalTheory.T.split_place_diagonal_stabilizer_generated_hermitia
       (∀ p ∈ GlobalTheory.DblVac.KD σ V v, p ∈ GlobalTheory.DblVac.PDiag σ V → p ∈ H) →
       (∀ p ∈ GlobalTheory.DblVac.KD σ V v, p ∈ GlobalTheory.DblVac.PAnti σ V → p ∈ H) → ∀ g ∈ GlobalTheory.DblVac.KD σ V v, g ∈ H := by
   first | exact @GlobalTheory.DblVac.gen_diag_anti_split_herm | exact GlobalTheory.DblVac.gen_diag_anti_split_herm | (intros; apply GlobalTheory.DblVac.gen_diag_anti_split_herm <;> assumption)
+end
+end

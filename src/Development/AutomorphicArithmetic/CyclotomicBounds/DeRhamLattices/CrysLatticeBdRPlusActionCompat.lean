@@ -3,7 +3,6 @@ module
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ZAEqAlgebraMapPt
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BdRpToBdR
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsCrisPOfIsCrisDR
-public import Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.ExistsTensorBdRActionOnLatticeBdR
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,7 +18,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -28,6 +26,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,7 +39,76 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.ExistsTensorBdRActionOnLatticeBdR
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations TensorProduct PowerSeries GlobalTheory.Prism GlobalTheory.BK GlobalTheory.BKReal GlobalTheory.BKGal GlobalTheory.Per Matrix
+open scoped Formalism.Per
+open GlobalTheory.BKGal.HatVal
+open scoped GlobalTheory.BKGal.HatVal
+
+
+
+theorem _root_.UpperTheory.KN.exists_tensorBdR_action_on_latticeBdR :
+    ∀ (l : ℕ) [Fact l.Prime] (LL : FinExt l) (T : QLat LL) (Pl : LocPrime l) (AI : LocAinf l Pl) (Td : LocTied l Pl AI), ∃ B : OdR l ↥(OL LL) →+ (T.V ⊗[ℚ_[l]] Pl.R.BdR →+ T.V ⊗[ℚ_[l]] Pl.R.BdR),
+    ∀ (o : ↥(OL LL)) (b : Per.BdR l) (v : T.V) (c : Pl.R.BdR), B (o ⊗ₜ[ℤ_[l]] b) (v ⊗ₜ[ℚ_[l]] c) = ((o : ↥LL.1) • v) ⊗ₜ[ℚ_[l]] (Td.eD.symm b * c) := by
+  intro l _ LL T Pl AI Td
+  have hz : ∀ z : ℤ_[l], Td.eD.symm (algebraMap ℤ_[l] (Per.BdR l) z) = algebraMap ℚ_[l] Pl.R.BdR (z : ℚ_[l]) :=
+    fun z => GlobalTheory.BKGal.JumpDR.cD_algebraMap Td z
+  let φ : ↥(OL LL) → T.V →ₗ[ℚ_[l]] T.V := fun o =>
+    { toFun := fun v => (o : ↥LL.1) • v
+      map_add' := fun v w => smul_add _ v w
+      map_smul' := fun q v => by
+        simp only [RingHom.id_apply]
+        rw [← algebraMap_smul (↥LL.1) q v, ← algebraMap_smul (↥LL.1) q ((o : ↥LL.1) • v), smul_smul, smul_smul,
+          mul_comm] }
+  let F : ↥(OL LL) → Per.BdR l → (T.V ⊗[ℚ_[l]] Pl.R.BdR →ₗ[ℚ_[l]] T.V ⊗[ℚ_[l]] Pl.R.BdR) := fun o b =>
+    TensorProduct.map (φ o) (LinearMap.mulLeft ℚ_[l] (Td.eD.symm b))
+  have hF : ∀ o b v c, F o b (v ⊗ₜ[ℚ_[l]] c) = ((o : ↥LL.1) • v) ⊗ₜ[ℚ_[l]] (Td.eD.symm b * c) := fun o b v c => rfl
+  have hb : ∀ o b b', F o (b + b') = F o b + F o b' := fun o b b' => by
+    apply TensorProduct.ext'
+    intro v c
+    rw [LinearMap.add_apply, hF, hF, hF, map_add (f := _), add_mul, tmul_add]
+  have ho : ∀ o o' b, F (o + o') b = F o b + F o' b := fun o o' b => by
+    apply TensorProduct.ext'
+    intro v c
+    rw [LinearMap.add_apply, hF, hF, hF, Subalgebra.coe_add, add_smul, add_tmul]
+  let f : ↥(OL LL) →+ Per.BdR l →+ (T.V ⊗[ℚ_[l]] Pl.R.BdR →+ T.V ⊗[ℚ_[l]] Pl.R.BdR) :=
+    AddMonoidHom.mk' (fun o => AddMonoidHom.mk' (fun b => (F o b).toAddMonoidHom)
+      (fun b b' => AddMonoidHom.ext fun x => by
+        show F o (b + b') x = F o b x + F o b' x
+        rw [hb]; rfl))
+      (fun o o' => AddMonoidHom.ext fun b => AddMonoidHom.ext fun x => by
+        show F (o + o') b x = F o b x + F o' b x
+        rw [ho]; rfl)
+  have hbal : ∀ (z : ℤ_[l]) (o : ↥(OL LL)) (b : Per.BdR l), f (z • o) b = f o (z • b) := by
+    intro z o b
+    apply AddMonoidHom.ext
+    intro x
+    show F (z • o) b x = F o (z • b) x
+    congr 1
+    apply TensorProduct.ext'
+    intro v c
+    rw [hF, hF, Algebra.smul_def z b, map_mul, hz, mul_assoc, ← Algebra.smul_def,
+      ← TensorProduct.smul_tmul (R := ℚ_[l])]
+    congr 1
+    show ((z : ℚ_[l]) • (o : ↥LL.1)) • v = (z : ℚ_[l]) • ((o : ↥LL.1) • v)
+    rw [smul_assoc]
+  refine ⟨TensorProduct.liftAddHom f hbal, fun o b v c => ?_⟩
+  rw [TensorProduct.liftAddHom_tmul]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.DeRhamLattices.CrysLatticeBdRPlusActionCompat
+
+section
 
 @[expose] public section
 
@@ -144,3 +212,5 @@ theorem _root_.UpperTheory.KN.crysLattice_bdRPlus_action_compat :
   obtain ⟨B, hB⟩ := UpperTheory.KN.exists_tensorBdR_action_on_latticeBdR l LL T Pl AI Td
   exact mainG Td (fun (o : ↥(OL LL)) (v : T.V) => (o : ↥LL.1) • v)
     (fun o o' v => mul_smul (o : ↥LL.1) (o' : ↥LL.1) v) (fun x : ↥T.L.T => (x : T.V)) Y hY act hact B hB C b y hby z
+end
+end

@@ -16,14 +16,55 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ExistsPt
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.FiltrationBoundaryCriterionOfWdBasic
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.FiltrationCocycleLiftCriterionOfWdBasic
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.FixZOf
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ResidueOfTraceIsFiberSum
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.IdJCriterion
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ImgTransInlE
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.IntegralClosureFiniteGenerated
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.IntegralClosureMonoSubset
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KSubOf
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KoszulActionInclusion
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KoszulExactWeaklyRegular
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.LiftFactorization
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RelativeK1Module
+import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KoszulTwoExactOfGl2
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KoszulTwoInjectiveOfGl1
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.MapUnitEq
@@ -65,7 +106,8 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PSysBasic
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PSysOk
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PThMuLat
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PTrLin
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PTrTop
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PTrVal
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PValBasic
@@ -77,7 +119,11 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PYMain
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PoincareLelong
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PowMulMem
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PrBOf
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.DualForm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechDifferentialAdjointCupProductPairingStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KahlerFormsOverSubalgebraClosurePropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueFunctionalVanishesOnOmegaFormsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwistedDualRegularFormsFiniteCoverStatement
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ProductCupOfSystem
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ProjectiveLineTwo
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PullbackKahlerDegree
@@ -97,44 +143,169 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.WeightInverseContinuity
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.YbValTensor
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.ZActionCriterion
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.FixZOf
+
+section
+
+@[expose] public section
+
+open KaehlerDifferential GlobalTheory.CechDR GlobalTheory.PD GlobalTheory.WH GlobalTheory.W1 UpperTheory.Gal.productCup_of_system
+open scoped TensorProduct
+
+theorem UpperTheory.Gal.productCup_of_system.fixZ_of :
+    ValBasic → RYBasic → FixZ := by
+  intro hV hR F K K' _ _ _ _ _ _ _ _ _ _ _ _ _ d x j2 Fx A h e he
+  have hmem : ∀ b ∈ rB ℂ K (xv x) {0}, algebraMap K K' b ∈ rB ℂ K' (xv x) {0} :=
+    fun b hb => ((hR F K K' d x j2 h.toY0).2.2.2.1 {0} b hb).1
+  let ι : rB ℂ K (xv x) {0} →ₐ[ℂ] rB ℂ K' (xv x) {0} :=
+    ((IsScalarTower.toAlgHom ℂ K K').comp (rB ℂ K (xv x) {0}).val).codRestrict _ fun b => hmem b b.2
+  have hι : ∀ (b : K) (hb : b ∈ rB ℂ K (xv x) {0}), (e.1.comp ι) ⟨b, hb⟩ = e.1 ⟨_, hmem b hb⟩ :=
+    fun _ _ => rfl
+  refine ⟨⟨e.1.comp ι, fun j => ?_⟩, ?_⟩
+  · rw [hι]
+    refine Eq.trans ?_ (e.2 j)
+    congr 2
+    exact (IsScalarTower.algebraMap_apply F K K' _).symm
+  rintro v c ⟨b, hb, hbv, hzb, hz⟩
+  rw [hι] at hzb
+  rw [hι, hι] at hz
+  have h1b := hmem b hb
+  have h1bv := hmem _ hbv
+  constructor
+  · have hm : algebraMap K K' b * algebraMap K K' v ∈ rB ℂ K' (xv x) {0} := by
+      rw [← map_mul]; exact h1bv
+    refine ⟨_, h1b, hm, hzb, ?_⟩
+    rw [← hz]
+    congr 2
+    exact (map_mul _ _ _).symm
+  · have fix := (h.fx e).1 he
+    obtain ⟨-, ⟨ev, hev⟩, -, hinv⟩ := hV K' (rB ℂ K' (xv x) {0}) e.1
+    have v1 := fix b hb h1b
+    have v2 := fix _ hbv h1bv
+    obtain ⟨m1, hm1⟩ := (hev _ _).1 v1
+    obtain ⟨m2, hm2⟩ := (hev _ _).1 v2
+    obtain ⟨hne, hi⟩ := hinv _ _ v1 hzb
+    have hv : j2 v = (j2 b)⁻¹ * j2 (b * v) := by
+      rw [map_mul, inv_mul_cancel_left₀ hne]
+    have hl : j2 v ∈ loc (rB ℂ K' (xv x) {0}) e.1 := by
+      rw [hv]; exact mul_mem hi m2
+    refine (hev _ _).2 ⟨hl, ?_⟩
+    have hmul : (⟨j2 b, m1⟩ : loc (rB ℂ K' (xv x) {0}) e.1) * ⟨j2 v, hl⟩ = ⟨j2 (b * v), m2⟩ :=
+      Subtype.ext (map_mul j2 b v).symm
+    have := congrArg ev hmul
+    rw [map_mul, hm1, hm2, hz] at this
+    exact mul_left_cancel₀ hzb this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.KoszulExactWeaklyRegular
+
+section
+
+@[expose] public section
+
+open KaehlerDifferential GlobalTheory.CechDR GlobalTheory.PD GlobalTheory.WH GlobalTheory.W1 UpperTheory.Gal.productCup_of_system
+open scoped TensorProduct Pointwise
+
+section
+variable {σ E : Type} [LinearOrder σ] [AddCommGroup E] [Module ℂ E]
+
+end
+
+section
+variable {R κ : Type} [CommRing R] [Algebra ℂ R] [LinearOrder κ]
+  {N N' : Type} [AddCommGroup N] [Module R N] [Module ℂ N] [IsScalarTower ℂ R N]
+  [AddCommGroup N'] [Module R N'] [Module ℂ N'] [IsScalarTower ℂ R N']
+
+end
+
+section
+variable {R κ : Type} [CommRing R] [Algebra ℂ R] [LinearOrder κ] [Fintype κ]
+
+end
+
+theorem UpperTheory.Gal.productCup_of_system.koszulExactBelowLengthOfWeaklyRegular_of_htpy :
+    Htpy → KoszulExactBelowLengthOfWeaklyRegular :=
+  _root_.UpperTheory.Reformulated.B.KoszulComplexHomotopy.koszulExactBelowLengthOfWeaklyRegular_of_htpy
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PTrLin
+
+section
+
+@[expose] public section
+
+open KaehlerDifferential GlobalTheory.CechDR GlobalTheory.PD GlobalTheory.WH GlobalTheory.W1 UpperTheory.Gal.productCup_of_system
+open scoped TensorProduct
+
+theorem UpperTheory.Gal.productCup_of_system.trLin_of :
+    TrLin := by
+  intro V _ _ ι _ φ v hv
+  have hfin : FiniteDimensional ℂ V := by
+    refine Module.Finite.of_surjective (Fintype.linearCombination ℂ v) ?_
+    intro y
+    exact ⟨fun k => φ k y, by rw [Fintype.linearCombination_apply]; exact (hv y).symm⟩
+  refine ⟨hfin, fun u => ?_⟩
+  have hu : u = ∑ k, dualTensorHom ℂ V V (φ k ⊗ₜ u (v k)) := by
+    ext y
+    rw [LinearMap.sum_apply]
+    simp only [dualTensorHom_apply]
+    conv_lhs => rw [hv y]
+
+    rw [map_sum]
+    simp [map_smul]
+  conv_lhs => rw [hu]
+
+  rw [map_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [LinearMap.trace_eq_contract_apply]
+  simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalMaximality.PrBOf
+
+section
+
+@[expose] public section
+
+open KaehlerDifferential GlobalTheory.CechDR GlobalTheory.PD GlobalTheory.WH GlobalTheory.W1 UpperTheory.Gal.productCup_of_system
+open scoped TensorProduct
+
+theorem UpperTheory.Gal.productCup_of_system.prB_of :
+    GoodZ → PrB := by
+  intro hG F K _ _ _ _ _ _ d x h τ hτ ρ hρ a q had hqd e he y hy
+  have mono : ∀ r : ℕ, ∀ s t : Finset (Fin (d + 1)), s.Nonempty → s ⊆ t →
+      omB ℂ K (rB ℂ K (xv x) s) r ≤ omB ℂ K (rB ℂ K (xv x) t) r :=
+    fun r => (hG F K d x h r).2.2
+  have hvan : ∀ i, (Finset.univ.erase i).Nonempty →
+      ∀ u ∈ omB ℂ K (rB ℂ K (xv x) (Finset.univ.erase i)) (d - a),
+      ∀ v ∈ omB ℂ K (rB ℂ K (xv x) (Finset.univ.erase i)) a,
+      (LinearMap.mul ℂ (DR ℂ K)).compr₂ (trF ℂ τ ρ) u v = 0 := by
+    intro i hi u hu v hv
+    have hvq : v ∈ ⋀[K]^a Ω[K⁄ℂ] := ((GlobalTheory.T.kahlerFormsOverSubalgebra_closure_properties ℂ K _ a 0).2.1 v hv).2.2.1
+    have hmem := (GlobalTheory.T.twistedDual_regularForms_finiteCover ℂ F K d (xv x) h τ hτ (Finset.univ.erase i) hi (d - a) a
+      (by omega) v hvq).2 hv u hu
+    exact GlobalTheory.T.residue_functional_vanishes_on_omega_forms ℂ F d (xv x) h.pd ρ hρ i _ hi (Finset.notMem_erase i _) _ hmem
+  obtain ⟨ε, hε⟩ := GlobalTheory.T.cechDifferential_adjoint_cupProductPairing ℂ d _ _ (fun I => omB ℂ K (rB ℂ K (xv x) I) (d - a))
+    (fun I => omB ℂ K (rB ℂ K (xv x) I) a) ((LinearMap.mul ℂ (DR ℂ K)).compr₂ (trF ℂ τ ρ))
+    (mono _) (mono _) hvan ((d : ℤ) - (q : ℕ))
+  obtain ⟨y', hy', rfl⟩ := hy
+  have key := hε e he.1 y' (by
+    have e1 : (d : ℤ) - ((d : ℤ) - (q : ℕ)) - 1 = (q : ℤ) - 1 := by ring
+    rw [e1]
+    exact hy')
+  have h0 : (cech fun I => omB ℂ K (rB ℂ K (xv x) I) (d - a)).D e = 0 := he.2
+  rw [h0, map_zero, LinearMap.zero_apply] at key
+  exact (smul_eq_zero_iff_eq ε).1 key.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.ExistsChartLiftOfFiniteCover
+
+section
 
 @[expose] public section
 
@@ -264,3 +435,5 @@ theorem UpperTheory.Cb.exists_chart_lift_of_finite_cover :
       ∑ p ∈ Finset.range (d + 1), (-1 : ℂ) ^ p * LinearMap.trace ℂ _ (u p) =
         ∑ e ∈ Fx, (Matrix.det (1 + (Polynomial.X : Polynomial ℂ) • (A e).map Polynomial.C)).coeff a / (1 - A e).det :=
   field0
+end
+end

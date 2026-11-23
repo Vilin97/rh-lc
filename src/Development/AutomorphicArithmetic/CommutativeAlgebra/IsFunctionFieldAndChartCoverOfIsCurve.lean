@@ -3,21 +3,10 @@ module
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
 public import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.BaseChangeAffineSectionsSubalgebraTensor
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.BaseChangeFunctionFieldHomGenericPointComp
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsFiniteNonemptyAffineCoverOfIntegral
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsFunctionFieldHomGermOfSurjective
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsSubalgebraEqRangeGermToFunctionField
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsChartAffineSectionsOfIsCurve
-import Development.AutomorphicArithmetic.CommutativeAlgebra.IsCurvePullbackOfIsCurveBaseChange
-import Development.AutomorphicArithmetic.CommutativeAlgebra.IsDedekindDomainAffineSectionsOfIsCurve
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsFunctionFieldOfDedekindFiniteTypeFractionRing
-import Development.AutomorphicArithmetic.CommutativeAlgebra.SurjectiveOfIsPullbackSpecFieldExt
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.TensorFractionRingExistsMulEqOfDenominator
+public import Mathlib.Tactic.ENatToNat
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -41,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,7 +42,199 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
+import GroundTheory.FunctionField.PlaceDefs
+public import Mathlib.AlgebraicGeometry.Properties
+import Development.AbelianVarietyTheory.Definitions.Divisors.GalMapMul
+import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Stalk
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.CategoryTheory.EffectiveEpi.Comp
+import Mathlib.CategoryTheory.ExtremalEpi
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsChartAffineSectionsOfIsCurve
+import Development.AutomorphicArithmetic.CommutativeAlgebra.IsCurvePullbackOfIsCurveBaseChange
+import Development.AutomorphicArithmetic.CommutativeAlgebra.IsDedekindDomainAffineSectionsOfIsCurve
+public import GroundTheory.FunctionField.PlaceDefs
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveFunctionField
+import Mathlib.RingTheory.SimpleRing.Principal
+import Development.AutomorphicArithmetic.CommutativeAlgebra.SurjectiveOfIsPullbackSpecFieldExt
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.TensorFractionRingExistsMulEqOfDenominator
+import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.BaseChangeFunctionFieldHomGenericPointComp
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GroundTheory.FunctionField UpperTheory.Et.Sel LateralTheory.E.E4
+open scoped TensorProduct
+
+theorem UpperTheory.baseChange_functionField_hom_genericPoint_comp :
+    ∀ (k L : Type) [Field k] [Field L] [Algebra k L] {C X : Scheme.{0}} [IsIntegral C] [IsIntegral X] (c : C ⟶ Sp k) (u : X ⟶ C) (x : X ⟶ Sp L), IsPullback u x c (Spec.map (CommRingCat.ofHom (algebraMap k L))) → ∀ [Algebra k C.functionField], Spec.map (CommRingCat.ofHom (algebraMap k C.functionField)) = (C.fromSpecStalk (genericPoint C)) ≫ c → ∀ φ : C.functionField →+* X.functionField, Spec.map (CommRingCat.ofHom φ) ≫ C.fromSpecStalk (genericPoint C) = X.fromSpecStalk (genericPoint X) ≫ u → ∃ f : L →+* X.functionField, (∀ r : k, f (algebraMap k L r) = φ (algebraMap k C.functionField r)) ∧ ∀ (V : X.Opens) [Nonempty V] (l : L), X.germToFunctionField V (x.appLE ⊤ V le_top ((Scheme.ΓSpecIso (CommRingCat.of L)).inv l)) = f l := by
+  intro k L _ _ _ C X _ _ c u x hpb _ hc φ hφ
+  let F : CommRingCat.of L ⟶ X.functionField :=
+    (Scheme.ΓSpecIso (CommRingCat.of L)).inv ≫ x.appTop ≫ X.presheaf.germ ⊤ (genericPoint X) trivial
+  have hx : X.fromSpecStalk (genericPoint X) ≫ x = Spec.map F := by
+    have h1 := Scheme.toSpecΓ_naturality x
+    have h2 : x = X.toSpecΓ ≫ Spec.map ((Scheme.ΓSpecIso (CommRingCat.of L)).inv ≫ x.appTop) := by
+      rw [Spec.map_comp, ← Category.assoc, ← h1, Category.assoc,
+        toSpecΓ_SpecMap_ΓSpecIso_inv, Category.comp_id]
+    rw [h2, ← Category.assoc, Scheme.fromSpecStalk_toSpecΓ, ← Spec.map_comp]
+    simp only [F, Category.assoc]
+  have key : ∀ (V : X.Opens) (hV : genericPoint X ∈ V),
+      x.appLE ⊤ V le_top ≫ X.presheaf.germ V (genericPoint X) hV =
+        x.appTop ≫ X.presheaf.germ ⊤ (genericPoint X) trivial := by
+    intro V hV
+    rw [← x.appLE_map (V := ⊤) (V' := V) le_top (homOfLE le_top).op, Category.assoc,
+      X.presheaf.germ_res, Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
+    rfl
+  refine ⟨F.hom, ?_, ?_⟩
+  · intro r
+    have hsq : Spec.map (CommRingCat.ofHom (algebraMap k C.functionField) ≫ CommRingCat.ofHom φ) =
+        Spec.map (CommRingCat.ofHom (algebraMap k L) ≫ F) := by
+      rw [Spec.map_comp, Spec.map_comp, hc, ← Category.assoc, hφ, Category.assoc, hpb.w,
+        ← Category.assoc, hx]
+    have := congrArg (fun g => g.hom r) (Spec.map_injective hsq)
+    simpa using this.symm
+  · intro V _ l
+    have hV : genericPoint X ∈ V :=
+      ((genericPoint_spec X).mem_open_set_iff V.isOpen).mpr (by simpa using ‹Nonempty V›)
+    have := congrArg (fun g => g.hom ((Scheme.ΓSpecIso (CommRingCat.of L)).inv.hom l)) (key V hV)
+    simpa [F] using this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsFiniteNonemptyAffineCoverOfIntegral
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GroundTheory.FunctionField UpperTheory.Et.Sel LateralTheory.E.E4
+open scoped TensorProduct
+
+theorem UpperTheory.exists_finite_nonempty_affine_cover_of_integral :
+    ∀ (C : Scheme.{0}) [CompactSpace C] [IsIntegral C], ∃ (n : ℕ) (U : Fin n → C.Opens), (∀ i, IsAffineOpen (U i)) ∧ (∀ i, Nonempty (U i)) ∧ (0 < n) ∧ ∀ y : C, ∃ i, y ∈ U i := by
+  intro C _ _
+  have hex : ∀ y : C, ∃ W : C.Opens, IsAffineOpen W ∧ y ∈ W := fun y => by
+    obtain ⟨W, hW, hy, -⟩ := exists_isAffineOpen_mem_and_subset (U := ⊤) (x := y) trivial
+    exact ⟨W, hW, hy⟩
+  choose W hWa hyW using hex
+  obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover (fun y => (W y : Set C))
+    (fun y => (W y).isOpen) (fun y _ => Set.mem_iUnion.2 ⟨y, hyW y⟩)
+  obtain ⟨y0⟩ := (inferInstance : Nonempty C)
+  have htne : t.Nonempty := by
+    obtain ⟨i, hi, -⟩ := Set.mem_iUnion₂.1 (ht (Set.mem_univ y0))
+    exact ⟨i, hi⟩
+  refine ⟨t.card, fun i => W (t.equivFin.symm i), fun i => hWa _,
+    fun i => ⟨⟨_, hyW _⟩⟩, Finset.card_pos.2 htne, fun y => ?_⟩
+  obtain ⟨i, hi, hy⟩ := Set.mem_iUnion₂.1 (ht (Set.mem_univ y))
+  refine ⟨t.equivFin ⟨i, hi⟩, ?_⟩
+  simpa using hy
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsFunctionFieldHomGermOfSurjective
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GroundTheory.FunctionField UpperTheory.Et.Sel LateralTheory.E.E4
+open scoped TensorProduct
+
+theorem UpperTheory.exists_functionField_hom_germ_of_surjective :
+    ∀ {C X : Scheme.{0}} [IsIntegral C] [IsIntegral X] (u : X ⟶ C), Surjective u → ∃ φ : C.functionField →+* X.functionField, Spec.map (CommRingCat.ofHom φ) ≫ C.fromSpecStalk (genericPoint C) = X.fromSpecStalk (genericPoint X) ≫ u ∧ ∀ (W : C.Opens) [Nonempty W] [Nonempty (u ⁻¹ᵁ W)] (a : Γ(C, W)), φ (C.germToFunctionField W a) = X.germToFunctionField (u ⁻¹ᵁ W) (u.app W a) := by
+  intro C X _ _ u hu
+  have hgX : closure ({genericPoint X} : Set X) = Set.univ := genericPoint_spec X
+  have hcl : closure ({u (genericPoint X)} : Set C) = Set.univ := by
+    apply Set.eq_univ_of_univ_subset
+    have h1 := image_closure_subset_closure_image (s := ({genericPoint X} : Set X)) u.continuous
+    rw [Set.image_singleton, hgX, Set.image_univ,
+      (Surjective.surj (f := u)).range_eq] at h1
+    exact h1
+  have hsp : u (genericPoint X) ⤳ genericPoint C := by
+    rw [specializes_iff_mem_closure, hcl]
+    trivial
+  refine ⟨(C.presheaf.stalkSpecializes hsp ≫ u.stalkMap (genericPoint X)).hom, ?_, ?_⟩
+  · rw [CommRingCat.ofHom_hom, Spec.map_comp, Category.assoc,
+      Scheme.SpecMap_stalkSpecializes_fromSpecStalk, Scheme.SpecMap_stalkMap_fromSpecStalk]
+  · intro W _ _ a
+    have hmem : u (genericPoint X) ∈ W :=
+      ((genericPoint_spec X).mem_open_set_iff (u ⁻¹ᵁ W).isOpen).mpr (by simpa using ‹Nonempty (u ⁻¹ᵁ W)›)
+    change (u.stalkMap (genericPoint X)).hom ((C.presheaf.stalkSpecializes hsp).hom
+      ((C.presheaf.germ W (genericPoint C) _).hom a)) = _
+    rw [TopCat.Presheaf.germ_stalkSpecializes_apply (hy := _) (h := hsp)]
+    exact Scheme.Hom.germ_stalkMap_apply u W (genericPoint X) hmem a
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsSubalgebraEqRangeGermToFunctionField
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GroundTheory.FunctionField UpperTheory.Et.Sel LateralTheory.E.E4
+open scoped TensorProduct
+
+theorem UpperTheory.exists_subalgebra_eq_range_germToFunctionField :
+    ∀ (k : Type) [Field k] {C : Scheme.{0}} [IsIntegral C] (c : C ⟶ Sp k) [Algebra k C.functionField], Spec.map (CommRingCat.ofHom (algebraMap k C.functionField)) = (C.fromSpecStalk (genericPoint C)) ≫ c → ∀ (W : C.Opens) [Nonempty W], ∃ B : Subalgebra k C.functionField, (B : Set C.functionField) = Set.range (C.germToFunctionField W) := by
+  intro k _ C _ c _ h W _
+  have hη : genericPoint C ∈ (⊤ : C.Opens) := trivial
+  have key : CommRingCat.ofHom (algebraMap k C.functionField) =
+      (Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ c.appTop ≫ C.presheaf.germ ⊤ (genericPoint C) hη := by
+    rw [← cancel_epi (Scheme.ΓSpecIso (CommRingCat.of k)).hom, ← Scheme.ΓSpecIso_naturality, h]
+    simp only [Scheme.Hom.comp_appTop, Category.assoc, Iso.hom_inv_id_assoc]
+    congr 1
+    rw [Scheme.fromSpecStalk_appTop]
+    have e1 : (homOfLE (le_top : (⊤ : (Spec (C.presheaf.stalk (genericPoint C))).Opens) ≤ ⊤)) = 𝟙 _ :=
+      Subsingleton.elim _ _
+    rw [e1, op_id, CategoryTheory.Functor.map_id, Category.comp_id, Category.assoc]
+    exact congrArg (C.presheaf.germ ⊤ (genericPoint C) _ ≫ ·) (Iso.inv_hom_id _) |>.trans
+      (Category.comp_id _)
+  refine ⟨{ (C.germToFunctionField W).hom.range with algebraMap_mem' := ?_ }, ?_⟩
+  · intro r
+    refine ⟨C.presheaf.map (homOfLE le_top).op (c.appTop ((Scheme.ΓSpecIso (CommRingCat.of k)).inv r)), ?_⟩
+    have hr := congrArg (fun f => f.hom r) key
+    simp only [CommRingCat.hom_ofHom, CommRingCat.comp_apply] at hr
+    rw [hr]
+    exact C.presheaf.germ_res_apply (homOfLE le_top) _ _ _
+  · rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.IsFunctionFieldOfDedekindFiniteTypeFractionRing
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC GroundTheory.FunctionField UpperTheory.Et.Sel LateralTheory.E.E4
+open scoped TensorProduct
+
+theorem UpperTheory.isFunctionField_of_dedekind_finiteType_fractionRing :
+    ∀ (k K : Type) [Field k] [Field K] [Algebra k K] (B : Subalgebra k K), IsDedekindDomain B → Algebra.FiniteType k B → ¬ IsField B → IsFractionRing B K → IsFunctionField k K := by
+  intro k K _ _ _ B hD hF hB hFr
+  have hdim : ringKrullDim B = 1 := by
+    apply eq_of_le_of_not_lt ?_ fun h' ↦ hB ?_
+    · rw [← Nat.cast_one, ← Ring.krullDimLE_iff]
+      infer_instance
+    · have h'' : ringKrullDim B ≤ 0 := Order.le_of_lt_succ h'
+      rw [← Nat.cast_zero, ← Ring.krullDimLE_iff] at h''
+      exact Ring.KrullDimLE.isField_of_isDomain
+  exact GroundTheory.Arith.SchemeCoh.isFunctionField_of_ringKrullDim_eq_one k B K hdim
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.IsFunctionFieldAndChartCoverOfIsCurve
+
+section
 
 @[expose] public section
 
@@ -183,3 +363,5 @@ theorem UpperTheory.isFunctionField_and_chart_cover_of_isCurve :
   obtain ⟨θ, h1, h2, h3, h4⟩ := core k L c (pullback.fst c g) (pullback.snd c g) hpb hK U hUa hUc hn
     B hB (fun i => (hchart i).2.2.2.1)
   exact ⟨pullback c g, hXint, pullback.fst c g, pullback.snd c g, θ, hpb, hstalk, h1, h2, h3, h4⟩
+end
+end

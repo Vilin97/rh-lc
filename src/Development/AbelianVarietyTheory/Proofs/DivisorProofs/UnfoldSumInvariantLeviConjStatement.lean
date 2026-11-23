@@ -3,7 +3,6 @@ module
 public import Mathlib.Algebra.BigOperators.Finprod
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.GroupTheory.Coset.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnfoldSumInvariantLeviConj
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,10 +42,79 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnfoldSumInvariantLeviConj
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem unfold_sum_conj_invariant : ∀ (P M N : Type) [Group P] [Group M] [Group N] (s : M →* P) (π : P →* M) (u : N →* P), (∀ m, π (s m) = m) → Function.Injective u → (∀ p, π p = 1 ↔ ∃ X, u X = p) → ∀ (KP : Subgroup P) (KM : Subgroup M) (L : Subgroup N), (∀ k ∈ KM, s k ∈ KP) → (∀ k ∈ KP, π k ∈ KM) → (∀ X, u X ∈ KP ↔ X ∈ L) → ∀ F : P → ℂ, (∀ k ∈ KP, ∀ x, F (k⁻¹ * x * k) = F x) → ∀ k ∈ KM, ∀ y : P, (∑ᶠ x : N ⧸ L, F ((u (Quotient.out x))⁻¹ * ((s k)⁻¹ * y * s k) * u (Quotient.out x))) = ∑ᶠ x : N ⧸ L, F ((u (Quotient.out x))⁻¹ * y * u (Quotient.out x)) := by
+  intro P M N _ _ _ s π u hπs hu hker KP KM L hsK hπK hL F hF k hk y
+  set c := s k with hc_def
+  have hc : c ∈ KP := hsK k hk
+  have hπu : ∀ X, π (u X) = 1 := fun X => (hker _).2 ⟨X, rfl⟩
+  have hex : ∀ (d : P), ∀ X, ∃ Y, u Y = d * u X * d⁻¹ := by
+    intro d X
+    exact (hker _).1 (by simp [map_mul, map_inv, hπu])
+  choose φ hφ using hex c
+  choose ψ hψ using hex c⁻¹
+  have h1 : ∀ X, φ (ψ X) = X := fun X => hu (by rw [hφ, hψ]; group)
+  have h2 : ∀ X, ψ (φ X) = X := fun X => hu (by rw [hψ, hφ]; group)
+  have hconj : ∀ z, c * z * c⁻¹ ∈ KP ↔ z ∈ KP := by
+    intro z
+    constructor
+    · intro h
+      have := KP.mul_mem (KP.mul_mem (KP.inv_mem hc) h) hc
+      simpa [mul_assoc] using this
+    · intro h
+      exact KP.mul_mem (KP.mul_mem hc h) (KP.inv_mem hc)
+  let eN : N ≃ N := ⟨φ, ψ, h2, h1⟩
+  let e : N ⧸ L ≃ N ⧸ L := Quotient.congr eN (by
+    intro a b
+    rw [QuotientGroup.leftRel_apply, QuotientGroup.leftRel_apply, ← hL, ← hL]
+    simp only [eN, Equiv.coe_fn_mk, map_mul, map_inv, hφ]
+    rw [← hconj]
+    constructor <;> intro h <;> convert h using 1 <;> group)
+  conv_rhs => rw [← finsum_comp_equiv e]
+  apply finsum_congr
+  intro x
+  set X := Quotient.out x with hX
+  have hex' : e x = (QuotientGroup.mk (φ X) : N ⧸ L) := by
+    conv_lhs => rw [← Quotient.out_eq x]
+    rfl
+  set Z := Quotient.out (e x) with hZ
+  have hZL : Z⁻¹ * φ X ∈ L := by
+    apply QuotientGroup.eq.mp
+    rw [← hex']
+    exact Quotient.out_eq _
+  have hw : u (Z⁻¹ * φ X) ∈ KP := (hL _).2 hZL
+  calc F ((u X)⁻¹ * (c⁻¹ * y * c) * u X) = F (c⁻¹ * ((u (φ X))⁻¹ * y * u (φ X)) * c) := by
+        congr 1; rw [hφ]; group
+    _ = F ((u (φ X))⁻¹ * y * u (φ X)) := hF c hc _
+    _ = F ((u Z * u (Z⁻¹ * φ X))⁻¹ * y * (u Z * u (Z⁻¹ * φ X))) := by
+        rw [← map_mul, mul_inv_cancel_left]
+    _ = F ((u (Z⁻¹ * φ X))⁻¹ * ((u Z)⁻¹ * y * u Z) * u (Z⁻¹ * φ X)) := by
+        congr 1; group
+    _ = F ((u Z)⁻¹ * y * u Z) := hF _ hw _
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnfoldSumInvariantLeviConjStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.unfold_sum_invariant_levi_conj : ∀ (P M N : Type) [Group P] [Group M] [Group N] (s : M →* P) (π : P →* M) (u : N →* P), (∀ m, π (s m) = m) → Function.Injective u → (∀ p, π p = 1 ↔ ∃ X, u X = p) → ∀ (KP : Subgroup P) (KM : Subgroup M) (L : Subgroup N), (∀ k ∈ KM, s k ∈ KP) → (∀ k ∈ KP, π k ∈ KM) → (∀ X, u X ∈ KP ↔ X ∈ L) → ∀ F : P → ℂ, (∀ k ∈ KP, ∀ x, F (k⁻¹ * x * k) = F x) → ∀ k ∈ KM, ∀ y : P, (∑ᶠ x : N ⧸ L, F ((u (Quotient.out x))⁻¹ * ((s k)⁻¹ * y * s k) * u (Quotient.out x))) = ∑ᶠ x : N ⧸ L, F ((u (Quotient.out x))⁻¹ * y * u (Quotient.out x)) := by
   first | exact @GlobalTheory.unfold_sum_conj_invariant | exact GlobalTheory.unfold_sum_conj_invariant | (intros; apply GlobalTheory.unfold_sum_conj_invariant <;> assumption)
+end
+end

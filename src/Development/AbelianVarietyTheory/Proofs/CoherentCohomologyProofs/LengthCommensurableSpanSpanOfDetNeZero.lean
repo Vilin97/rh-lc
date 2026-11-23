@@ -5,11 +5,7 @@ public import Mathlib.LinearAlgebra.Determinant
 public import Mathlib.RingTheory.KrullDimension.PID
 public import Mathlib.RingTheory.OrderOfVanishing.Basic
 public import Mathlib.RingTheory.RegularLocalRing.Defs
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsDualNeZeroCompEqZero
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.Imports
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthQuotientSpanSingleton
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthSelfEqTop
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanMatrix
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,12 +24,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.TotallySplit
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,6 +34,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,8 +47,161 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.TypeStar
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Quotient
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthSelfEqTop
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanMatrix
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsDualNeZeroCompEqZero
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace GlobalTheory.LengthDualFunctional
+
+open Module
+
+theorem exists_dual_ne_zero_comp_eq_zero {R : Type u_1} [CommRing R] [IsDomain R]
+    {M : Type u_2} [AddCommGroup M] [Module R M] [Module.Free R M] [Module.Finite R M]
+    {f : M →ₗ[R] M} (h : LinearMap.det f = 0) :
+    ∃ φ : Module.Dual R M, φ ≠ 0 ∧ φ ∘ₗ f = 0 := by
+  have hd : LinearMap.det f.dualMap = 0 := by
+    rw [LinearMap.det_dualMap]; exact h
+  obtain ⟨φ, hφ, hφ0⟩ := (Submodule.ne_bot_iff _).mp (LinearMap.bot_lt_ker_of_det_eq_zero hd).ne'
+  exact ⟨φ, hφ0, by simpa [LinearMap.dualMap_apply'] using hφ⟩
+
+theorem length_self_eq_top (R : Type u_1) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] :
+    Module.length R R = ⊤ := by
+  by_contra hne
+  rw [← ne_eq, Module.length_ne_top_iff, isFiniteLength_iff_isNoetherian_isArtinian] at hne
+  obtain ⟨_, hA⟩ := hne
+  haveI : IsArtinianRing R := hA
+  exact IsDiscreteValuationRing.not_isField R (IsArtinianRing.isField_of_isDomain R)
+
+theorem main : ∀ {R : Type u_1} [inst : CommRing R] [inst_1 : IsDomain R] [IsDiscreteValuationRing R] {M : Type u_2} [inst_3 : AddCommGroup M] [inst_4 : Module R M] [Module.Free R M] [Module.Finite R M] {f : M →ₗ[R] M}, (LinearMap.det : (M →ₗ[R] M) → R) f = (0 : R) → Module.length R (M ⧸ LinearMap.range f) = ⊤ := by
+  intro R _ _ _ M _ _ _ _ f h
+  obtain ⟨φ, hφ0, hφ⟩ := exists_dual_ne_zero_comp_eq_zero h
+  obtain ⟨m, hm⟩ : ∃ m, φ m ≠ 0 := by
+    by_contra hc; push_neg at hc; exact hφ0 (LinearMap.ext hc)
+  have hle : LinearMap.range f ≤ LinearMap.ker φ := by
+    rintro _ ⟨x, rfl⟩
+    simpa using congrArg (fun g => g x) hφ
+  let ψ := (LinearMap.range f).liftQ φ hle
+  let g : R →ₗ[R] M ⧸ LinearMap.range f := LinearMap.toSpanSingleton R _ (Submodule.Quotient.mk m)
+  have hg : Function.Injective g := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro r hr
+    have := congrArg ψ hr
+    simp [g, ψ] at this
+    tauto
+  have := Module.length_le_of_injective g hg
+  rw [length_self_eq_top] at this
+  exact top_le_iff.mp this
+
+end GlobalTheory.LengthDualFunctional
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.Imports
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace GlobalTheory.AdditiveValuationProduct
+
+theorem addVal_prod : ∀ {R : Type u_1} [inst : CommRing R] [inst_1 : IsDomain R] [inst_2 : IsDiscreteValuationRing R] {ι : Type u_2} (s : Finset ι) (a : ι → R), (IsDiscreteValuationRing.addVal R : R → ℕ∞) (∏ i ∈ s, a i) = ∑ i ∈ s, (IsDiscreteValuationRing.addVal R : R → ℕ∞) (a i) := by
+  intro R _ _ _ ι s a
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert j t hj ih =>
+    rw [Finset.prod_insert hj, Finset.sum_insert hj, AddValuation.map_mul, ih]
+
+end GlobalTheory.AdditiveValuationProduct
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthQuotientSpanSingleton
+
+section
+
+@[expose] public section
+
+universe u_1 u_2
+
+namespace GlobalTheory.LengthQuotientValuationDet
+
+open Module IsDiscreteValuationRing
+
+variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+
+theorem addVal_prod {ι : Type*} (s : Finset ι) (f : ι → R) :
+    addVal R (∏ i ∈ s, f i) = ∑ i ∈ s, addVal R (f i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert j s hj ih => rw [Finset.prod_insert hj, Finset.sum_insert hj, AddValuation.map_mul, ih]
+
+theorem length_quotient_span_singleton {x : R} (hx : x ≠ 0) :
+    Module.length R (R ⧸ Ideal.span ({x} : Set R)) = addVal R x := by
+  obtain ⟨ϖ, hϖ⟩ := exists_irreducible R
+  obtain ⟨n, u, rfl⟩ := eq_unit_mul_pow_irreducible hx hϖ
+  rw [Ideal.span_singleton_mul_left_unit u.isUnit, ← Ideal.span_singleton_pow,
+    ← hϖ.maximalIdeal_eq, length_quotient_pow_maximalIdeal, addVal_def' u hϖ]
+
+theorem length_quotient_eq_addVal_det {R : Type u_1} [CommRing R] [IsDomain R]
+    [IsDiscreteValuationRing R] {M : Type u_2} [AddCommGroup M] [Module R M]
+    [Module.Free R M] [Module.Finite R M] (N : Submodule R M) (e : M ≃ₗ[R] N) :
+    Module.length R (M ⧸ N) =
+      (addVal R : R → ℕ∞) (LinearMap.det (N.subtype ∘ₗ (e : M →ₗ[R] N))) := by
+  classical
+  let b := Module.Free.chooseBasis R M
+  have h : Module.finrank R N = Module.finrank R M := e.symm.finrank_eq
+  let a := Submodule.smithNormalFormCoeffs b h
+  let b' := Submodule.smithNormalFormTopBasis b h
+  let ab := Submodule.smithNormalFormBotBasis b h
+  have ab_eq := Submodule.smithNormalFormBotBasis_def b h
+  let e' : M ≃ₗ[R] N := b'.equiv ab (Equiv.refl _)
+  let f : M →ₗ[R] M := N.subtype ∘ₗ (e' : M →ₗ[R] N)
+  have hassoc : Associated (LinearMap.det (N.subtype ∘ₗ (e : M →ₗ[R] N))) (LinearMap.det f) :=
+    LinearMap.associated_det_comp_equiv _ _ _
+  rw [(addVal_eq_iff_associated _ _).mpr hassoc]
+  have ha : ∀ i, f (b' i) = a i • b' i := by
+    intro i
+    change ((b'.equiv ab (Equiv.refl _)) (b' i) : M) = _
+    rw [b'.equiv_apply, Equiv.refl_apply]
+    exact ab_eq i
+  have hdet : LinearMap.det f = ∏ i, a i := by
+    rw [← LinearMap.det_toMatrix b', ← Matrix.det_diagonal]
+    congr 1
+    ext i j
+    rw [LinearMap.toMatrix_apply, ha, map_smul, Basis.repr_self, Finsupp.smul_single,
+      smul_eq_mul, mul_one]
+    by_cases hij : i = j
+    · subst hij; rw [Matrix.diagonal_apply_eq, Finsupp.single_eq_same]
+    · rw [Matrix.diagonal_apply_ne _ hij, Finsupp.single_eq_of_ne hij]
+  rw [hdet, addVal_prod, (N.quotientEquivPiSpan b h).length_eq, Module.length_pi_of_fintype]
+  exact Finset.sum_congr rfl fun i _ =>
+    length_quotient_span_singleton (Submodule.smithNormalFormCoeffs_ne_zero b h i)
+
+end GlobalTheory.LengthQuotientValuationDet
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthCommensurableSpanSpanOfDetNeZero
+
+section
 
 @[expose] public section
 
@@ -184,3 +331,5 @@ private theorem span_range_coe_basis {A : Submodule R V} (a : Basis ι R A) :
 end Lattice
 
 end GlobalTheory
+end
+end

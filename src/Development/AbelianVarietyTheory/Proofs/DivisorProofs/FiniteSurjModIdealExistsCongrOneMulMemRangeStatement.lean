@@ -3,7 +3,6 @@ module
 public import Mathlib.RingTheory.Finiteness.Defs
 public import Mathlib.RingTheory.Ideal.Maps
 public import Mathlib.RingTheory.Ideal.Quotient.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSurjModIdealExistsCongrOneMulMemRange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,8 +45,59 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.AbelianSchemeLaws.FirstCohomologyVanishesSpecOfIsLocalRing
 import Development.AbelianVarietyTheory.Definitions.Divisors.BaseIdealIdeal
+public import Mathlib.RingTheory.Finiteness.Nakayama
 import Mathlib.Topology.Sheaves.Presheaf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSurjModIdealExistsCongrOneMulMemRange
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.AbLaw GlobalTheory.FormalAlg
+
+namespace GlobalTheory
+
+theorem finite_surj_mod_ideal_exists_congr_one_mul_mem_range :
+    ∀ (B C : Type) [CommRing B] [CommRing C] (f : B →+* C), f.Finite → ∀ J : Ideal B,
+      Function.Surjective ((Ideal.Quotient.mk (J.map f)).comp f) →
+      ∃ r : B, r - 1 ∈ J ∧ ∀ c : C, ∃ b : B, f r * c = f b := by
+  intro B C _ _ f hf J hs
+  letI := f.toAlgebra
+  haveI : Module.Finite B C := hf
+  set P : Submodule B C := LinearMap.range (Algebra.linearMap B C) with hP
+  have hle : (⊤ : Submodule B (C ⧸ P)) ≤ J • ⊤ := by
+    rintro m -
+    obtain ⟨c, rfl⟩ := P.mkQ_surjective m
+    obtain ⟨b, hb⟩ := hs (Ideal.Quotient.mk _ c)
+    have hy : c - f b ∈ J • (⊤ : Submodule B C) := by
+      rw [Ideal.smul_top_eq_map]
+      exact Ideal.Quotient.eq.mp hb.symm
+    have hfb : P.mkQ (f b) = 0 := (Submodule.Quotient.mk_eq_zero _).mpr ⟨b, rfl⟩
+    have hc : P.mkQ c = P.mkQ (c - f b) := by rw [map_sub, hfb, sub_zero]
+    rw [hc]
+    have h1 : P.mkQ (c - f b) ∈ (J • (⊤ : Submodule B C)).map P.mkQ := Submodule.mem_map_of_mem hy
+    rw [Submodule.map_smul''] at h1
+    exact Submodule.smul_mono le_rfl le_top h1
+  obtain ⟨r, hr1, hr⟩ := Submodule.exists_sub_one_mem_and_smul_eq_zero_of_fg_of_le_smul J ⊤
+    Module.Finite.fg_top hle
+  refine ⟨r, hr1, fun c => ?_⟩
+  have h := hr (P.mkQ c) trivial
+  rw [← map_smul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h
+  obtain ⟨b, hb⟩ := h
+  refine ⟨b, ?_⟩
+  rw [Algebra.smul_def] at hb
+  exact hb.symm
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSurjModIdealExistsCongrOneMulMemRangeStatement
+
+section
 
 @[expose] public section
 
@@ -55,3 +106,5 @@ open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.AbLaw GlobalTheory.Fo
 
 theorem _root_.GlobalTheory.T.exists_sub_one_mem_mul_mem_range_of_finite_surj_mod : ∀ (B C : Type) [CommRing B] [CommRing C] (f : B →+* C), f.Finite → ∀ J : Ideal B, Function.Surjective ((Ideal.Quotient.mk (J.map f)).comp f) → ∃ r : B, r - 1 ∈ J ∧ ∀ c : C, ∃ b : B, f r * c = f b := by
   first | exact @GlobalTheory.finite_surj_mod_ideal_exists_congr_one_mul_mem_range | exact GlobalTheory.finite_surj_mod_ideal_exists_congr_one_mul_mem_range | (intros; apply GlobalTheory.finite_surj_mod_ideal_exists_congr_one_mul_mem_range <;> assumption)
+end
+end

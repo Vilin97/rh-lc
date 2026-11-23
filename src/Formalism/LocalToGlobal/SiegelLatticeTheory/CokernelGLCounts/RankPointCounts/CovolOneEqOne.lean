@@ -1,11 +1,10 @@
 module
 
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.EmbSInjective
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.SwapMp
+public import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -29,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +41,79 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Lemmata.GeneralBFactThirdBisForm.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_third_bis_form
+
+theorem goal1 :
+  ∀ {ι P β : Type} [inst : Fintype.{0} ι] [inst_1 : Fintype.{0} P] [inst_2 : MeasurableSpace.{0} β]
+  (μ0 : MeasureTheory.Measure.{0} β) [MeasureTheory.SigmaFinite.{0} μ0],
+  MeasureTheory.MeasurePreserving.{0, 0} (fun (x : ι → P → β) (p : P) (v : ι) ↦ x v p)
+    (MeasureTheory.Measure.pi.{0, 0} fun (x : ι) ↦ MeasureTheory.Measure.pi.{0, 0} fun (x : P) ↦ μ0)
+    (MeasureTheory.Measure.pi.{0, 0} fun (x : P) ↦ MeasureTheory.Measure.pi.{0, 0} fun (x : ι) ↦ μ0) := by
+  intro ι P β _ _ _ μ0 _
+  have hf : Measurable (fun (x : ι → P → β) (p : P) (v : ι) ↦ x v p) := by
+    refine measurable_pi_iff.mpr fun p => measurable_pi_iff.mpr fun v => ?_
+    exact (measurable_pi_apply p).comp (measurable_pi_apply v)
+  refine ⟨hf, ?_⟩
+  refine (MeasureTheory.Measure.pi_eq_generateFrom
+    (C := fun _ => Set.pi Set.univ '' Set.pi Set.univ fun _ => {s : Set β | MeasurableSet s})
+    (fun _ => generateFrom_pi) (fun _ => isPiSystem_pi)
+    (fun _ => MeasureTheory.Measure.FiniteSpanningSetsIn.pi fun _ => μ0.toFiniteSpanningSetsIn)
+    ?_).symm
+  intro s hs
+  choose t ht hts using hs
+  have hmt : ∀ p v, MeasurableSet (t p v) := fun p v => ht p v (Set.mem_univ v)
+  have hs' : s = fun p => Set.pi Set.univ (t p) := funext fun p => (hts p).symm
+  subst hs'
+  have hpre : (fun (x : ι → P → β) (p : P) (v : ι) ↦ x v p) ⁻¹'
+      Set.pi Set.univ (fun p => Set.pi Set.univ (t p)) =
+      Set.pi Set.univ (fun v => Set.pi Set.univ (fun p => t p v)) := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_univ_pi]
+    exact forall_comm
+  have hmeas : MeasurableSet (Set.pi Set.univ (fun p => Set.pi Set.univ (t p))) :=
+    MeasurableSet.univ_pi fun p => MeasurableSet.univ_pi fun v => hmt p v
+  rw [MeasureTheory.Measure.map_apply hf hmeas, hpre, MeasureTheory.Measure.pi_pi]
+  simp only [MeasureTheory.Measure.pi_pi]
+  exact Finset.prod_comm
+
+end Bl.general_b_fact_third_bis_form
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.SwapMp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MeasureTheory MeasurableSpace Set
+
+namespace Formalism.L2.SG.NGCut.SplitEmbedding
+
+theorem swap_mp {ι P β : Type} [Fintype ι] [Fintype P] [MeasurableSpace β] (μ0 : Measure β) [SigmaFinite μ0] :
+    MeasurePreserving (fun (x : ι → P → β) (p : P) (v : ι) => x v p)
+      (Measure.pi fun _ : ι => Measure.pi fun _ : P => μ0) (Measure.pi fun _ : P => Measure.pi fun _ : ι => μ0) := by
+  first | exact Bl.general_b_fact_third_bis_form.goal1 .. | (apply Bl.general_b_fact_third_bis_form.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_third_bis_form.goal1 <;> assumption)
+
+end Formalism.L2.SG.NGCut.SplitEmbedding
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.CovolOneEqOne
+
+section
 
 @[expose] public section
 
@@ -169,3 +240,6 @@ theorem covol_one_eq_one (K : Type) [Field K] [NumberField K] [IsEmpty {w : Infi
   positivity
 
 end Formalism.L2.SG.NGCut.SplitEmbedding
+end
+end
+end

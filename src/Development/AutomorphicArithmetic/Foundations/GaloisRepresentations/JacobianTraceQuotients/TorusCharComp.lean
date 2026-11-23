@@ -3,16 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ElemPairJ
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.CharDom
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ExistsCommonEigenvector
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ExpLev
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ExpSub
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ImStab
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.SubPerm
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.SubQuot
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.TraceExp
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.JacSemi
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.OfSupportHolds
-import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.IrreducibleAdmissibleGL
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Irreducible
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.TraceQuot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,6 +39,84 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ExpSub
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ImStab
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.LocDescOf
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.SubQuot
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.TraceExp
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.JacSemi
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.OfSupportHolds
+import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.IrreducibleAdmissibleGL
+import GroundTheory.AutomorphicForms.TensorProductTheorem.Irreducible
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.ExpLev
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter ValuativeRel
+open GroundTheory.Global GroundTheory.Global.SemiLocal
+open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Loc GlobalTheory.PRep GlobalTheory.CuspRep GlobalTheory.SmGL GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets
+open UpperTheory.Gal.LocD UpperTheory.Gal.InertialTypesAlt.G UpperTheory.Gal.Join
+open scoped Classical
+
+theorem UpperTheory.Gal.Join.expLev :
+    UpperTheory.Gal.Join.ExpLev := by
+  intro k _ _ _ _ n V _ _ π hs y
+  obtain ⟨v, rfl⟩ := Submodule.mkQ_surjective _ y
+  let U : Subgroup (GL (Fin n) k) :=
+    { carrier := {g | π g v = v}
+      mul_mem' := by
+        intro a b ha hb
+        simp only [Set.mem_setOf_eq] at ha hb ⊢
+        rw [map_mul, Module.End.mul_apply, hb, ha]
+      one_mem' := by simp
+      inv_mem' := by
+        intro a ha
+        simp only [Set.mem_setOf_eq] at ha ⊢
+        conv_lhs => rw [← ha]
+        rw [← Module.End.mul_apply, ← map_mul]
+        simp }
+  refine ⟨U, hs v, fun K hK => ?_⟩
+  refine Submodule.mem_map_of_mem (p := fixed π K) ?_
+  intro h
+  have hv : π (h : GL (Fin n) k) v = v := hK h.2
+  simpa using hv
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.SubPerm
+
+section
+
+@[expose] public section
+
+open MeasureTheory NumberField IsDedekindDomain Filter ValuativeRel
+open GroundTheory.Global GroundTheory.Global.SemiLocal
+open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Loc GlobalTheory.PRep GlobalTheory.CuspRep GlobalTheory.SmGL GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets GlobalTheory.LocGL
+open UpperTheory.Gal.LocD UpperTheory.Gal.InertialTypesAlt.G UpperTheory.Gal.Join
+open scoped Classical
+
+theorem UpperTheory.Gal.Join.subPerm :
+    UpperTheory.Gal.Join.SubPerm := by
+  intro k _ _ _ _ n V _ _ π hi ω hω w h
+  have hw : ∀ i, IsSmoothChar ((ω ∘ w) i) := fun i => hω (w i)
+  have h1 := (UpperTheory.Gal.LocD.ofSupport k n V π ω hω).2 ⟨hi, h⟩
+  have e : (Finset.univ.val.map fun i => IrrGL.ofChar ((ω ∘ w) i) (hw i)) =
+      Finset.univ.val.map fun i => IrrGL.ofChar (ω i) (hω i) := by
+    have e' := congrArg (Multiset.map fun i => IrrGL.ofChar (ω i) (hω i)) (Multiset.map_univ_val_equiv w)
+    rw [Multiset.map_map] at e'
+    exact e'
+  rw [← e] at h1
+  exact ((UpperTheory.Gal.LocD.ofSupport k n V π (ω ∘ w) hw).1 h1).2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.JacobianTraceQuotients.TorusCharComp
+
+section
 
 @[expose] public section
 
@@ -159,3 +227,5 @@ theorem liftGood (h : CoreId) : LiftGood := by
   rwa [h3] at h2
 
 end UpperTheory.Gal.Join
+end
+end

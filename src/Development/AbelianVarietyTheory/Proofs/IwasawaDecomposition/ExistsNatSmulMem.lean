@@ -1,13 +1,15 @@
 module
 
 public import Formalism.LocalToGlobal.HermitianColumns.InLocalDiscriminantKernel
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNatMulIntegral
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AlgebraicDirectionScaledEmbedding
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -21,8 +23,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,7 +45,49 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNatMulIntegral
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NatMulIntegralExists
+
+open NumberField
+
+theorem exists_nat_mul_integral {E : Type} [Field E] [NumberField E] (a : E) :
+    ∃ d : ℕ, 0 < d ∧ IsIntegral ℤ ((d : E) * a) := by
+  have hz : IsAlgebraic ℤ a := IsFractionRing.isAlgebraic_iff ℤ ℚ E |>.mpr (.of_finite ℚ a)
+  obtain ⟨y, hy, hint⟩ := hz.exists_integral_multiple
+  refine ⟨y.natAbs, Int.natAbs_pos.mpr hy, ?_⟩
+  rw [zsmul_eq_mul] at hint
+  rcases Int.natAbs_eq y with h | h
+  · have : ((y.natAbs : ℕ) : E) = (y : E) := by
+      conv_rhs => rw [h]
+      simp
+    rw [this]; exact hint
+  · have : ((y.natAbs : ℕ) : E) = -(y : E) := by
+      conv_rhs => rw [h]
+      simp
+    rw [this, neg_mul]; exact hint.neg
+
+theorem main : ∀ {E : Type} [inst : Field E] [NumberField E] {r : ℕ}
+    (Λ : Submodule (NumberField.RingOfIntegers E) (Fin r → E)),
+    Submodule.span E (↑Λ : Set (Fin r → E)) = ⊤ →
+    ∀ (w : Fin r → E), ∃ (k : ℕ), (0 : ℕ) < k ∧ (↑k : E) • w ∈ Λ := by
+  apply GlobalTheory.AlgDirMom.exists_nat_smul_mem <;> assumption
+
+end GlobalTheory.NatMulIntegralExists
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNatSmulMem
+
+section
 
 @[expose] public section
 
@@ -177,3 +219,6 @@ theorem princ_lat : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
   ring
 
 end GlobalTheory.PrincLat
+end
+end
+end

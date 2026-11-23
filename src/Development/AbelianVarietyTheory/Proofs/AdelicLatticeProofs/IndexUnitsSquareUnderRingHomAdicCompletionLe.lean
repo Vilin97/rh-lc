@@ -3,10 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.SqSubLeNormSub
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsGlobalUniformizerResidueRepresentativesStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.HigherUnitsLeSquaresHigherUnitsStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexSquaresLeTwoMulUnitsSquaresStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexHigherUnitsSuccLeCardStatement
-public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexSquaresLeTwoMulOfSubgroupStatement
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.HigherUnitsLeSquaresHigherUnits
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,8 +42,223 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexHigherUnitsSuccLeCard
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.HigherUnitsLeSquaresHigherUnitsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.higherUnits_le_squares_higherUnits : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (e : ℕ), Valued.v (2 : v.adicCompletion F) = WithZero.exp (-(e : ℤ)) → hiUnits (Valued.v : Valuation (v.adicCompletion F) ℤᵐ⁰) (2 * e + 1) ≤ sqs (hiUnits (Valued.v : Valuation (v.adicCompletion F) ℤᵐ⁰) (e + 1)) := by
+  first | exact @GlobalTheory.QNorm.hiUnits_le_sqs_hiUnits | exact GlobalTheory.QNorm.hiUnits_le_sqs_hiUnits | (intros; apply GlobalTheory.QNorm.hiUnits_le_sqs_hiUnits <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexSquaresLeTwoMulUnitsSquares
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+namespace GlobalTheory.QNorm
+
+theorem mem_hiUnits_sup_sqs_of_even {K : Type} [Field K] (w : Valuation K ℤᵐ⁰) (p : Kˣ)
+    (hp : w (p : K) = WithZero.exp (-1)) (x : Kˣ) (m : ℤ)
+    (hx : w (x : K) = WithZero.exp (2 * m)) :
+    x ∈ hiUnits w 0 ⊔ sqs (⊤ : Subgroup Kˣ) := by
+  have h1 : w ((x * (p ^ m) ^ 2 : Kˣ) : K) = 1 := by
+    rw [Units.val_mul, Units.val_pow_eq_pow_val, Units.val_zpow_eq_zpow_val, map_mul, map_pow,
+      map_zpow₀, hx, hp, ← WithZero.exp_zsmul, ← WithZero.exp_nsmul, ← WithZero.exp_add,
+      ← WithZero.exp_zero]
+    congr 1
+    simp
+  have hU : x * (p ^ m) ^ 2 ∈ hiUnits w 0 := by
+    refine ⟨h1, ?_⟩
+    refine le_trans (w.map_sub _ _) (max_le ?_ ?_)
+    · rw [h1]; simp
+    · simp
+  have hS : ((p ^ m)⁻¹) ^ 2 ∈ sqs (⊤ : Subgroup Kˣ) := ⟨(p ^ m)⁻¹, trivial, rfl⟩
+  have : x = (x * (p ^ m) ^ 2) * ((p ^ m)⁻¹) ^ 2 := by
+    rw [mul_assoc, ← mul_pow, mul_inv_cancel, one_pow, mul_one]
+  rw [this]
+  exact Subgroup.mul_mem_sup hU hS
+
+theorem index_sqs_top_le : ∀ (K : Type) [Field K] (w : Valuation K ℤᵐ⁰) (π : K),
+    w π = WithZero.exp (-1) → (sqs (hiUnits w 0)).relIndex (hiUnits w 0) ≠ 0 →
+    (sqs (⊤ : Subgroup Kˣ)).index ≠ 0 ∧
+      (sqs (⊤ : Subgroup Kˣ)).index ≤ 2 * (sqs (hiUnits w 0)).relIndex (hiUnits w 0) := by
+  intro K _ w π hπ h0
+  have hπ0 : π ≠ 0 := by
+    rintro rfl
+    rw [map_zero] at hπ
+    exact WithZero.exp_ne_zero hπ.symm
+  have hdvd : (hiUnits w 0 ⊔ sqs (⊤ : Subgroup Kˣ)).index ∣ 2 := by
+    rw [Subgroup.index_dvd_two_iff]
+    refine ⟨Units.mk0 π hπ0, fun b => ?_⟩
+    have hb : w (b : K) ≠ 0 := by simp
+    have hb' : w (b : K) = WithZero.exp (WithZero.log (w (b : K))) := (WithZero.exp_log hb).symm
+    obtain ⟨m, hm | hm⟩ := Int.even_or_odd' (WithZero.log (w (b : K)))
+    · right
+      exact mem_hiUnits_sup_sqs_of_even w (Units.mk0 π hπ0) hπ b m (by rw [hb', hm])
+    · left
+      refine mem_hiUnits_sup_sqs_of_even w (Units.mk0 π hπ0) hπ _ m ?_
+      rw [Units.val_mul, map_mul, hb', hm, Units.val_mk0, hπ, ← WithZero.exp_add]
+      congr 1
+      ring
+  have hmul := Subgroup.relIndex_mul_index
+    (le_sup_right : sqs (⊤ : Subgroup Kˣ) ≤ hiUnits w 0 ⊔ sqs (⊤ : Subgroup Kˣ))
+  rw [Subgroup.relIndex_sup_right] at hmul
+  have hle : sqs (hiUnits w 0) ≤ sqs (⊤ : Subgroup Kˣ) := Subgroup.map_mono le_top
+  have hd2 := Subgroup.relIndex_dvd_of_le_left (hiUnits w 0) hle
+  have hd : (sqs (⊤ : Subgroup Kˣ)).index ∣ 2 * (sqs (hiUnits w 0)).relIndex (hiUnits w 0) := by
+    rw [← hmul, mul_comm]
+    exact Nat.mul_dvd_mul hdvd hd2
+  have hpos : 2 * (sqs (hiUnits w 0)).relIndex (hiUnits w 0) ≠ 0 := mul_ne_zero two_ne_zero h0
+  exact ⟨ne_zero_of_dvd_ne_zero hpos hd, Nat.le_of_dvd (Nat.pos_of_ne_zero hpos) hd⟩
+
+end GlobalTheory.QNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexSquaresLeTwoMulUnitsSquaresStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.index_squares_le_two_mul_units_squares : ∀ (K : Type) [Field K] (w : Valuation K ℤᵐ⁰) (π : K), w π = WithZero.exp (-1) → (sqs (hiUnits w 0)).relIndex (hiUnits w 0) ≠ 0 → (sqs (⊤ : Subgroup Kˣ)).index ≠ 0 ∧ (sqs (⊤ : Subgroup Kˣ)).index ≤ 2 * (sqs (hiUnits w 0)).relIndex (hiUnits w 0) := by
+  first | exact @GlobalTheory.QNorm.index_sqs_top_le | exact GlobalTheory.QNorm.index_sqs_top_le | (intros; apply GlobalTheory.QNorm.index_sqs_top_le <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexHigherUnitsSuccLeCardStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.relIndex_higherUnits_succ_le_card : ∀ (K : Type) [Field K] (w : Valuation K ℤᵐ⁰) (π : K) (R : Finset K) (n : ℕ), w π = WithZero.exp (-1) → (∀ x : K, w x ≤ 1 → ∃ r ∈ R, w (x - r) < 1) → (hiUnits w (n + 1)).relIndex (hiUnits w n) ≠ 0 ∧ (hiUnits w (n + 1)).relIndex (hiUnits w n) ≤ R.card := by
+  first | exact @GlobalTheory.QNorm.relIndex_hiUnits_succ_le | exact GlobalTheory.QNorm.relIndex_hiUnits_succ_le | (intros; apply GlobalTheory.QNorm.relIndex_hiUnits_succ_le <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexSquaresLeTwoMulOfSubgroup
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+namespace GlobalTheory.QNorm
+
+theorem relIndex_le_two_of_coset {G : Type} [CommGroup G] (H K : Subgroup G) (ε : G)
+    (h : ∀ x ∈ K, x ∈ H ∨ x * ε⁻¹ ∈ H) : H.relIndex K ≤ 2 := by
+  by_cases hK : K ≤ H
+  · rw [Subgroup.relIndex_eq_one.mpr hK]; norm_num
+  · obtain ⟨a, haK, haH⟩ := SetLike.not_le_iff_exists.mp hK
+    have ha := (h a haK).resolve_left haH
+    apply le_of_eq
+    unfold Subgroup.relIndex
+    rw [Subgroup.index_eq_two_iff]
+    refine ⟨⟨a⁻¹, K.inv_mem haK⟩, fun b => ?_⟩
+    simp only [Subgroup.mem_subgroupOf, Subgroup.coe_mul]
+    by_cases hb : (b : G) ∈ H
+    · right
+      refine ⟨hb, fun hba => haH ?_⟩
+      have := H.mul_mem hb (H.inv_mem hba)
+      simpa using this
+    · left
+      refine ⟨?_, hb⟩
+      have := H.mul_mem ((h b b.2).resolve_left hb) (H.inv_mem ha)
+      have e : (b : G) * ε⁻¹ * (a * ε⁻¹)⁻¹ = b * a⁻¹ := by
+        rw [mul_inv_rev, inv_inv, mul_assoc, inv_mul_cancel_left]
+      rwa [e] at this
+
+theorem relIndex_sqs_le_two_mul :
+    ∀ (G : Type) [CommGroup G] (U H : Subgroup G) (ε : G), H ≤ U → H.relIndex U ≠ 0 →
+      (∀ a : G, a ^ 2 = 1 → a = 1 ∨ a = ε) → (sqs H).relIndex H ≠ 0 →
+      (sqs U).relIndex U ≠ 0 ∧ (sqs U).relIndex U ≤ 2 * (sqs H).relIndex H := by
+  intro G _ U H ε hHU hfin hε hsq
+  have hle : ∀ V : Subgroup G, sqs V ≤ V := by
+    rintro V x ⟨y, hy, rfl⟩
+    exact V.pow_mem hy 2
+  have hmono : sqs H ≤ sqs U := Subgroup.map_mono hHU
+  have h1 := Subgroup.relIndex_mul_relIndex (sqs H) H U (hle H) hHU
+  have h2 := Subgroup.relIndex_mul_relIndex (sqs H) (sqs U) U hmono (hle U)
+  set H' : Subgroup G := (sqs H).comap (powMonoidHom 2) with hH'
+  have h3 : H'.relIndex U = (sqs H).relIndex (sqs U) := by
+    rw [hH', Subgroup.relIndex_comap]; rfl
+  have hHH' : H ≤ H' ⊓ U := le_inf (Subgroup.le_comap_map _ _) hHU
+  have h4 := Subgroup.relIndex_mul_relIndex H (H' ⊓ U) U hHH' inf_le_right
+  rw [Subgroup.inf_relIndex_right, h3] at h4
+  have h5 : H.relIndex (H' ⊓ U) ≤ 2 := by
+    apply relIndex_le_two_of_coset H _ ε
+    rintro x ⟨⟨y, hy, hxy⟩, -⟩
+    simp only [powMonoidHom_apply] at hxy
+    have : (x * y⁻¹) ^ 2 = 1 := by rw [mul_pow, ← hxy, inv_pow, mul_inv_cancel]
+    rcases hε _ this with h | h
+    · left
+      rw [mul_inv_eq_one] at h
+      rw [h]; exact hy
+    · right
+      have e : x * ε⁻¹ = y := by
+        rw [← h, mul_inv_rev, inv_inv, mul_comm y, mul_inv_cancel_left]
+      rw [e]; exact hy
+  have hne : (sqs H).relIndex (sqs U) * (sqs U).relIndex U ≠ 0 := by
+    rw [h2, ← h1]; exact mul_ne_zero hsq hfin
+  obtain ⟨hb, ha⟩ := mul_ne_zero_iff.mp hne
+  refine ⟨ha, ?_⟩
+  apply Nat.le_of_mul_le_mul_left _ (Nat.pos_of_ne_zero hb)
+  rw [h2, ← h1, ← h4]
+  calc (sqs H).relIndex H * (H.relIndex (H' ⊓ U) * (sqs H).relIndex (sqs U))
+      ≤ (sqs H).relIndex H * (2 * (sqs H).relIndex (sqs U)) := by gcongr
+    _ = _ := by ring
+
+end GlobalTheory.QNorm
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.RelIndexSquaresLeTwoMulOfSubgroupStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.QNorm
+open scoped WithZero
+
+theorem _root_.GlobalTheory.T.relIndex_squares_le_two_mul_of_subgroup : ∀ (G : Type) [CommGroup G] (U H : Subgroup G) (ε : G), H ≤ U → H.relIndex U ≠ 0 → (∀ a : G, a ^ 2 = 1 → a = 1 ∨ a = ε) → (sqs H).relIndex H ≠ 0 → (sqs U).relIndex U ≠ 0 ∧ (sqs U).relIndex U ≤ 2 * (sqs H).relIndex H := by
+  first | exact @GlobalTheory.QNorm.relIndex_sqs_le_two_mul | exact GlobalTheory.QNorm.relIndex_sqs_le_two_mul | (intros; apply GlobalTheory.QNorm.relIndex_sqs_le_two_mul <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IndexUnitsSquareUnderRingHomAdicCompletionLe
+
+section
 
 @[expose] public section
 
@@ -134,3 +340,5 @@ theorem index_sqSub_adicCompletion_le : ∀ (F : Type) [Field F] [NumberField F]
   omega
 
 end GlobalTheory.QNorm
+end
+end

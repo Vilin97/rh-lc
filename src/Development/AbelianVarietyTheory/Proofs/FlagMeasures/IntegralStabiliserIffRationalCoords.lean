@@ -9,9 +9,10 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BasisOfIsComp
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FramesCommonStabiliserEqPairingMatrixStabiliser
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GlobalFrameStabilizerActsUnitriangularStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianFramesPairingStabilizerBlockDiagonal
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemInvPowDifferentIffLocalStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemStabilizerSpanIffUnitriangularIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.RationalExtend
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsIntegralOfQuad
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.LocFacts
+import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +29,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -51,12 +49,226 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.RationalExtend
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.NGData
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RowsConc
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemInvPowDifferentIffLocal
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.TermLoc GlobalTheory.HL
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+open Formalism.L2.SG.Pf Formalism.L2.SG.Pf.BBTie
+
+namespace GlobalTheory.DiffLoc
+
+theorem ddS_ne (D : D7) : ddS D ≠ 0 := by
+  unfold ddS
+  rw [Ne, FractionalIdeal.coeIdeal_eq_zero, Ideal.map_eq_bot_iff_of_injective]
+  · exact differentIdeal_ne_bot
+  · exact FaithfulSMul.algebraMap_injective _ _
+
+theorem mem_ddPow_neg_iff : ∀ (D : D7) (Z : LocDat D) (n : ℕ), n ≤ D.R.rS → ∀ y : D.host.E,
+    y ∈ (ddS D ^ (-(n : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ↔
+      ∀ p : PlF D, (D.s.atP p).ιE y * (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (Z.δ p) *
+        (D.s.atP p).ιE (uP p : D.host.E)) ^ n ∈ (Z.M p).L.O := by
+  intro D Z n hn y
+  let a : Fin (D.R.rS + 1) := ⟨D.R.rS - n, by omega⟩
+  have he : ((D.R.rS : ℤ) - ((a : ℕ) : ℤ)) = n := by
+    show ((D.R.rS : ℤ) - ((D.R.rS - n : ℕ) : ℤ)) = n
+    rw [Nat.cast_sub hn]; ring
+  have hspan : ∀ p : PlF D, Submodule.span (Z.M p).L.O ((D.s.atP p).ιE ''
+      ((ddS D ^ (-(n : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) : Set D.host.E)) =
+      Submodule.span (Z.M p).L.O {frFac Z.δ p a} := by
+    intro p
+    have h := locDiffC_holds D Z p a
+    rw [he] at h
+    exact h
+  have hf : ∀ p : PlF D, frFac Z.δ p a * btT Z p ^ n = 1 := by
+    intro p
+    rw [bt_frFac_eq Z p a]
+    have hk : D.R.rS - a.val = n := by show D.R.rS - (D.R.rS - n) = n; omega
+    rw [hk]
+    set U := (bt_T_unit Z p).unit
+    have hU : (U : (D.s.atP p).Ep) = btT Z p := IsUnit.unit_spec _
+    rw [← hU, ← Units.val_pow_eq_pow_val, ← Units.val_mul, inv_pow, inv_mul_cancel, Units.val_one]
+  have hinv : ∀ z : D.host.E, z ∈ (ddS D ^ (-(n : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ↔
+      ∀ d ∈ ddS D ^ n, z * d ∈ (1 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) := by
+    intro z
+    rw [zpow_neg, zpow_natCast, FractionalIdeal.mem_inv_iff (pow_ne_zero n (ddS_ne D))]
+  constructor
+  · intro hy p
+    have hm : (D.s.atP p).ιE y ∈ Submodule.span (Z.M p).L.O {frFac Z.δ p a} := by
+      rw [← hspan p]; exact Submodule.subset_span ⟨y, hy, rfl⟩
+    obtain ⟨o, ho⟩ := Submodule.mem_span_singleton.1 hm
+    change (D.s.atP p).ιE y * btT Z p ^ n ∈ (Z.M p).L.O
+    rw [← ho, Subring.smul_def, smul_eq_mul, mul_assoc, hf p, mul_one]
+    exact o.2
+  · intro h
+    rw [hinv]
+    intro d hd
+    rw [FractionalIdeal.mem_one_iff]
+    have hloc : ∀ p : PlF D, (D.s.atP p).ιE (y * d) ∈ (Z.M p).L.O := by
+      intro p
+      have hmem : ∀ x ∈ Submodule.span (Z.M p).L.O ((D.s.atP p).ιE ''
+          ((ddS D ^ (-(n : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) : Set D.host.E)),
+          (D.s.atP p).ιE d * x ∈ (Z.M p).L.O := by
+        intro x hx
+        induction hx using Submodule.span_induction with
+        | mem x hx =>
+          obtain ⟨z, hz, rfl⟩ := hx
+          obtain ⟨o, ho⟩ := (FractionalIdeal.mem_one_iff _).1 ((hinv z).1 hz d hd)
+          rw [← map_mul, mul_comm, ← ho]
+          exact bt_iota_int Z p o
+        | zero => rw [mul_zero]; exact Subring.zero_mem _
+        | add x z _ _ hx hz => rw [mul_add]; exact add_mem hx hz
+        | smul o x _ hx => rw [Subring.smul_def, smul_eq_mul, mul_left_comm]; exact mul_mem o.2 hx
+      have hdf : (D.s.atP p).ιE d * frFac Z.δ p a ∈ (Z.M p).L.O :=
+        hmem _ (by rw [hspan p]; exact Submodule.subset_span (Set.mem_singleton _))
+      have hyp : (D.s.atP p).ιE y * btT Z p ^ n ∈ (Z.M p).L.O := h p
+      have e : (D.s.atP p).ιE (y * d) =
+          ((D.s.atP p).ιE y * btT Z p ^ n) * ((D.s.atP p).ιE d * frFac Z.δ p a) := by
+        calc (D.s.atP p).ιE (y * d) = (D.s.atP p).ιE y * (D.s.atP p).ιE d * (frFac Z.δ p a * btT Z p ^ n) := by
+              rw [hf p, mul_one, map_mul]
+          _ = _ := by ring
+      rw [e]
+      exact mul_mem hyp hdf
+    obtain ⟨o, ho⟩ := ((GlobalTheory.HL.PlacesInt.integers_local (placesOf Z)).1 (y * d)).1 hloc
+    exact ⟨o, ho⟩
+
+end GlobalTheory.DiffLoc
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemInvPowDifferentIffLocalStatement
+
+section
+
+@[expose] public section
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.TermLoc GlobalTheory.HL
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.mem_inv_pow_different_iff_local : ∀ (D : D7) (Z : LocDat D) (n : ℕ), n ≤ D.R.rS → ∀ y : D.host.E, y ∈ (ddS D ^ (-(n : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ↔ ∀ p : PlF D, (D.s.atP p).ιE y * (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (Z.δ p) * (D.s.atP p).ιE (uP p : D.host.E)) ^ n ∈ (Z.M p).L.O := by
+  first | exact @GlobalTheory.DiffLoc.mem_ddPow_neg_iff | exact GlobalTheory.DiffLoc.mem_ddPow_neg_iff | (intros; apply GlobalTheory.DiffLoc.mem_ddPow_neg_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemStabilizerSpanIffUnitriangularIntegral
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.S.Loc GlobalTheory.HL
+open scoped Pointwise
+
+namespace GlobalTheory.HL
+
+theorem span_pointwise_le_of_int {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [CommRing E]
+    [Algebra F E] [TopologicalSpace E] (L : LocE F E) {N m : ℕ} (v : Fin m → Fin N → E)
+    (h : (Fin N → E) ≃ₗ[E] (Fin N → E)) (M : Matrix (Fin m) (Fin m) E) (hM : IsIntM L M)
+    (hv : ∀ b, h (v b) = ∑ a, M a b • v a) :
+    h • Submodule.span L.O (Set.range v) ≤ Submodule.span L.O (Set.range v) := by
+  rw [Submodule.smul_span, Submodule.span_le]
+  rintro _ ⟨_, ⟨b, rfl⟩, rfl⟩
+  show h (v b) ∈ _
+  rw [hv b]
+  refine Submodule.sum_mem _ fun a _ => ?_
+  have : M a b • v a = (⟨M a b, hM a b⟩ : L.O) • v a := rfl
+  rw [this]
+  exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
+
+theorem unistab_iff : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E) {N m : ℕ} (v : Fin m → Fin N → E), LinearIndependent E v → ∀ (g : (Fin N → E) ≃ₗ[E] (Fin N → E)) (M : Matrix (Fin m) (Fin m) E), IsUni M → (∀ b, g (v b) = ∑ a, M a b • v a) → (g ∈ MulAction.stabilizer ((Fin N → E) ≃ₗ[E] (Fin N → E)) (Submodule.span L.O (Set.range v)) ↔ IsIntM L M) := by
+  intro F _ _ _ E _ _ _ L N m v hli g M hU hg
+  rw [MulAction.mem_stabilizer_iff]
+  constructor
+  · intro hst a b
+    have hmem : g (v b) ∈ Submodule.span L.O (Set.range v) := by
+      rw [← hst]
+      exact Submodule.smul_mem_pointwise_smul (v b) g _ (Submodule.subset_span ⟨b, rfl⟩)
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun L.O).1 hmem
+    rw [hg b] at hc
+    have h0 : ∑ i, (M i b - (c i : E)) • v i = 0 := by
+      simp only [sub_smul, Finset.sum_sub_distrib]
+      rw [← hc]
+      simp [Subring.smul_def]
+    have := (Fintype.linearIndependent_iff.1 hli) _ h0 a
+    rw [sub_eq_zero] at this
+    rw [this]
+    exact (c a).2
+  · intro hM
+    have hdet : M.det = 1 := by
+      rw [Matrix.det_of_upperTriangular (fun i j hij => hU.1 i j hij)]
+      simp [hU.2]
+    let M₀ : Matrix (Fin m) (Fin m) L.O := fun i j => ⟨M i j, hM i j⟩
+    have hM₀ : M₀.map L.O.subtype = M := by ext i j; rfl
+    have hadj : IsIntM L M.adjugate := by
+      intro i j
+      have e := congrFun (congrFun (RingHom.map_adjugate L.O.subtype M₀) i) j
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply] at e
+      rw [hM₀] at e
+      rw [← e]
+      exact (M₀.adjugate i j).2
+    have hinv : ∀ b, g⁻¹ (v b) = ∑ a, M.adjugate a b • v a := by
+      intro b
+      have key : g (∑ a, M.adjugate a b • v a) = v b := by
+
+        simp only [map_sum, map_smul, hg, Finset.smul_sum, smul_smul]
+        rw [Finset.sum_comm]
+        have : ∀ c, ∑ a, (M.adjugate a b * M c a) • v c = (M * M.adjugate) c b • v c := by
+          intro c
+          rw [← Finset.sum_smul, Matrix.mul_apply]
+          congr 1
+          exact Finset.sum_congr rfl fun a _ => mul_comm _ _
+        simp only [this, Matrix.mul_adjugate, hdet, one_smul]
+        simp [Matrix.one_apply]
+      rw [← key]
+      exact g.symm_apply_apply _
+    apply le_antisymm
+    · exact span_pointwise_le_of_int L v g M hM hg
+    · intro x hx
+      have hx' : g⁻¹ • x ∈ Submodule.span L.O (Set.range v) :=
+        span_pointwise_le_of_int L v g⁻¹ M.adjugate hadj hinv
+          (Submodule.smul_mem_pointwise_smul x g⁻¹ _ hx)
+      have := Submodule.smul_mem_pointwise_smul (g⁻¹ • x) g _ hx'
+      rwa [smul_inv_smul] at this
+
+end GlobalTheory.HL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemStabilizerSpanIffUnitriangularIntegralStatement
+
+section
+
+@[expose] public section
+
+open Formalism.MainNotions.S.Loc GlobalTheory.HL
+open scoped Pointwise
+
+theorem _root_.GlobalTheory.T.mem_stabilizer_span_iff_unitriangular_integral : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E) {N m : ℕ} (v : Fin m → Fin N → E), LinearIndependent E v → ∀ (g : (Fin N → E) ≃ₗ[E] (Fin N → E)) (M : Matrix (Fin m) (Fin m) E), IsUni M → (∀ b, g (v b) = ∑ a, M a b • v a) → (g ∈ MulAction.stabilizer ((Fin N → E) ≃ₗ[E] (Fin N → E)) (Submodule.span L.O (Set.range v)) ↔ IsIntM L M) := by
+  first | exact @GlobalTheory.HL.unistab_iff | exact GlobalTheory.HL.unistab_iff | (intros; apply GlobalTheory.HL.unistab_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.IntegralStabiliserIffRationalCoords
+
+section
 
 @[expose] public section
 
@@ -212,3 +424,5 @@ theorem integralStabiliser_iff_rational_coords_alt : ∀ (D : D7) (X : HidaSetti
     exact (hI a b hab).1 (h a b hab) p
 
 end GlobalTheory.HL.StabIntCoord
+end
+end

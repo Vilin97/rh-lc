@@ -6,14 +6,17 @@ public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCountE
 public import Formalism.LocalToGlobal.GlobalTheory.IrreducibleOfCountSizes
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsEtOne
 public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.JCount
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsCountBase
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsLab
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsPCount
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsRedKer
-import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.AllRowsOf
+public import Formalism.SharpRestriction.CuspSpanNormBounds.AdmissibleBoundsFromSource
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.ThmSOwn
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.NcardPrimesOverOfSplitsCompl
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SmoothBigCellSectionsExist
+import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.UnitaryPointsRankZeroSubsingleton
+import Mathlib.Algebra.AffineMonoid.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -32,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,7 +48,243 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.RowsGoodRed
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsAdd
+import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedVolumeStatements.LevelSubgroupProperties
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.EvalTRph
+import Formalism.LocalToGlobal.SiegelLatticeTheory.WeightedGaugeFactors.FactsDS
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsClosed
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsPCount
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsRedKer
+import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+import Mathlib.Tactic.Linter.HaveILetI
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsCountBase
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.AllRowsCountBase
+
+open Finset Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.AllRowsOf
+
+variable {D : D7} (X : HidaSetting D)
+
+open Formalism.MainNotions.BridgeLemma NumberField in
+theorem splits_X (k : Fin 2) : SplitsCompl X.B.I.E (D.host.g k) := by
+  have hp := D.host.g_prime k
+  have := span_isMaximal hp
+  have hspl := splitsCompl_of_ncard D.host.E (D.host.g k) hp (by
+    rw [← IsDedekindDomain.coe_primesOverFinset (span_ne_bot hp) (𝓞 D.host.E), ← image_plOver _ hp,
+      (injOn_asIdeal _ _).ncard_image]
+    exact D.nd.g_split k)
+  exact Formalism.L2.SG.ThmSOwn.splitsCompl_of_equiv X.ιE hspl
+
+theorem hc_X (hT : AutTie D X.B X.pl) (v : NumberField.InfinitePlace X.B.I.F) : Formalism.QuantumDeterminants.IsHCParam (X.B.lam v) := by
+  exact Inh.aut_isHCParam_of_autTie hT v
+
+theorem countBase_of (hT : AutTie D X.B X.pl) {large₂ : SizeData₂ D} {n0 : ℕ} {A C cb : ℝ}
+    (hp : AdmissibleBoundsFromSource.CountTheoremHypotheses D large₂ n0 A C cb) (hg1 : 4 * D.R.r < D.host.g 1) : CountBase X n0 A C cb := by
+  obtain ⟨-, p2, p3, p4, p5, p6, p7, -, p9, p10, p11, p12⟩ := hp
+  have hn := hT.n_eq
+  have hf := hT.f_eq
+  have hrd := hT.rd_eq
+  have tg := X.g_eq
+  have hq : ∀ v, X.B.I.pAt v = (univ.filter fun a : Fin D.R.r => epsS D.R a = true).card ∧
+      X.B.I.qAt v = (univ.filter fun a : Fin D.R.r => epsS D.R a = false).card := by
+    intro v
+    have he := hT.eps_eq v
+    constructor
+    · simp only [AutInst.pAt, he]
+      exact card_cast hn (fun a => epsS D.R a = true)
+    · simp only [AutInst.qAt, he]
+      exact card_cast hn (fun a => epsS D.R a = false)
+  refine ⟨large₂.sc.b, C * (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 * Real.log (large₂.sc.b * D.host.rdE), fun k => ?_,
+    fun v a c hac => ?_, ?_, ?_, ?_, ?_⟩
+  · refine ⟨by rw [hn]; exact p2, ⟨_, _, hq, ?_⟩, p11, ?_, hc_X X hT, ?_, ?_, ?_, D.host.g_prime _, ?_, splits_X X _⟩
+    · rw [hn]
+      exact le_trans (Nat.pow_le_pow_left card_epsS_false 2) p3
+    · rw [hrd, hn]; exact p4
+    · intro v a
+      rw [hT.lam_eq v a]; exact p5 _ _
+    · rw [tg]
+      exact Nat.mul_pos (D.host.g_prime 0).pos (D.host.g_prime 1).pos
+    · rw [tg]
+      have : gg D = ((D.host.g 0 * D.host.g 1 : ℕ) : ℝ) := by unfold gg; push_cast; ring
+      rw [← this]; exact p6
+    · rw [hn]
+      fin_cases k
+      · exact hg1
+      · exact p7
+  · rw [hT.lam_eq v a, hT.lam_eq v c]
+    exact p9 _ _ _ (by rw [← hT.eps_eq v a, ← hT.eps_eq v c]; exact hac)
+  · rw [hn, hf, hrd]
+  · rw [hf, hn]; exact p10
+  · rw [hf, hn]; exact p12
+  · have h := Formalism.MainNotions.BridgeLemma.Dstar_pos D
+    rw [hT.Dstar_eq] at h
+    exact h
+
+section Fam
+
+open Formalism.MainNotions.S.CountE Formalism.MainNotions.PlaceDegreeData Formalism.L2.SG.ThmSOwn
+
+variable {eps : ℝ} (Fm : FamP eps)
+
+end Fam
+
+end Formalism.L2.SG.Pf.AllRowsCountBase
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsAddFin
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.AllRowsAddFin
+
+open Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.AllRowsOf
+
+variable {D : D7} (X : HidaSetting D)
+
+theorem eHom_fin (hHC : Formalism.L2.SG.RowsDef.RowsFinDim) (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) :
+    FiniteDimensional ℂ (X.B.I.eHom X.B.σs X.B.μf X.B.fund X.B.R X.B.Re) := by
+  have hint := Formalism.L2.SG.Pf.RowDictPf.hint_of_gap X hG
+  have hB := Formalism.L2.SG.Closed.RowsBij_holds X.B.I X.B.μf X.B.fund X.B.fund_spec X.B.R X.B.R_spec X.B.e X.B.Re
+    X.B.Re_spec X.B.H X.B.σ X.dv X.B.w (fun v => (X.ds v).2.2.1) (fun v => (X.ds v).2.2.2.1)
+    (Formalism.L2.SG.EvalTRph.isFdeg_dv X) (fun v => (X.low v).1) hint X.Rph X.Rph_spec X.B.Hs X.B.σs X.B.tens
+    X.B.tens_spec
+  have : FiniteDimensional ℂ (Formalism.L2.SG.PoincareInHH.PoincareSetting.HHX X) :=
+    Formalism.L2.SG.Pf.RowDictPf.finiteDimensional_HHX_of_gap X hHC hG
+  exact Formalism.L2.SG.RowsDef.finiteDimensional_eHom hB.1 hB.2
+
+theorem rowsAdd_holds (hHC : Formalism.L2.SG.RowsDef.RowsFinDim) (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) : RowsAdd X :=
+  Formalism.L2.SG.Pf.AllRowsAdd.rowsAdd_of X (eHom_fin X hHC hG)
+
+end Formalism.L2.SG.Pf.AllRowsAddFin
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsDcount
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open scoped InnerProductSpace
+
+namespace Formalism.L2.SG.Pf.AllRowsDcount
+
+open Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.ArithmeticCylinders Formalism.L2.SG.HidaSetting Formalism.L2.SG.AllRowsOf Formalism.L2.SG.Pf.AllRowsAdd
+
+variable {D : D7} (X : HidaSetting D)
+
+theorem reT_rph (S : Set (Tup2 D)) : (ReT X S).comp X.Rph = X.Rph.comp (ReT X S) := by
+  refine ContinuousLinearMap.ext fun y => ext_inner_left ℂ fun x => ?_
+  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply, ← ContinuousLinearMap.adjoint_inner_left,
+    X.Rph_spec, X.Rph_spec]
+  congr 1
+  funext g
+  rw [ContinuousLinearMap.adjoint_inner_left, ← ContinuousLinearMap.comp_apply, ← ContinuousLinearMap.comp_apply,
+    reT_comm]
+
+theorem HH_eq_VT (t : Tup2 D) :
+    Formalism.L2.SG.RowsDef.HH X.B.I X.B.μf X.B.fund (ReT X {t}) X.Rph = Formalism.L2.SG.Pf.RowsGoodRed.VT X t := by
+  have hPE : (ReT X {t}).comp X.B.Re = ReT X {t} := by
+    rw [← reT_univ' X, reT_inter, Set.inter_univ]
+  have hEP : X.B.Re.comp (ReT X {t}) = ReT X {t} := by
+    rw [← reT_univ' X, reT_inter, Set.univ_inter]
+  have hPP : (ReT X {t}).comp (ReT X {t}) = ReT X {t} := by
+    rw [reT_inter, Set.inter_self]
+  have hR := reT_rph X {t}
+  apply le_antisymm
+  · rintro v ⟨y, rfl⟩
+    refine ⟨⟨ReT X {t} y, ?_⟩, ?_⟩
+    · show X.B.Re (X.Rph (ReT X {t} y)) = ReT X {t} (X.Rph y)
+      have := congrArg (fun L => L y) hR
+      simp only [ContinuousLinearMap.comp_apply] at this
+      rw [← this]
+      have := congrArg (fun L => L (X.Rph y)) hEP
+      simpa only [ContinuousLinearMap.comp_apply] using this
+    · show ReT X {t} (ReT X {t} (X.Rph y)) - ReT X {t} (X.Rph y) = 0
+      have := congrArg (fun L => L (X.Rph y)) hPP
+      simp only [ContinuousLinearMap.comp_apply] at this
+      rw [this, sub_self]
+  · rintro v ⟨⟨y, hy⟩, hv⟩
+    have hv' : ReT X {t} v = v := by
+      have : ReT X {t} v - v = 0 := hv
+      exact sub_eq_zero.1 this
+    refine ⟨y, ?_⟩
+    show ReT X {t} (X.Rph y) = v
+    have hy' : X.B.Re (X.Rph y) = v := hy
+    rw [← hv', ← hy']
+    have := congrArg (fun L => L (X.Rph y)) hPE
+    simp only [ContinuousLinearMap.comp_apply] at this
+    exact this.symm
+
+theorem dcountEq_holds (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) : Formalism.L2.SG.Pf.RowsGoodRed.DcountEq X := by
+  intro t _ _
+  have hint := Formalism.L2.SG.Pf.RowDictPf.hint_of_gap X hG
+  have hB := Formalism.L2.SG.Closed.RowsBij_holds X.B.I X.B.μf X.B.fund X.B.fund_spec X.B.R X.B.R_spec (eT X {t})
+    (ReT X {t}) (reT_spec X (etInt_holds X) {t}) X.B.H X.B.σ X.dv X.B.w (fun v => (X.ds v).2.2.1)
+    (fun v => (X.ds v).2.2.2.1) (Formalism.L2.SG.EvalTRph.isFdeg_dv X) (fun v => (X.low v).1) hint X.Rph X.Rph_spec
+    X.B.Hs X.B.σs X.B.tens X.B.tens_spec
+  delta dimX
+  rw [← Formalism.L2.SG.RowsDef.finrank_HH_eq_Dcount hB.1 hB.2, HH_eq_VT]
+
+end Formalism.L2.SG.Pf.AllRowsDcount
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsLab
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.AllRowsLab
+
+open Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.ArithmeticCylinders Formalism.L2.SG.HidaSetting Formalism.L2.SG.AllRowsOf
+
+variable {D : D7} (X : HidaSetting D)
+
+theorem rowsGood_holds (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (G : Formalism.L2.SG.RowDict.GoodOp X)
+    (ι : D.s.HH ≃ₗᵢ[ℂ] Formalism.L2.SG.PoincareInHH.PoincareSetting.HHX X) (hT : Formalism.L2.SG.RowDict.RowDictTie X G ι)
+    (hL : Formalism.L2.SG.Pf.RowsGoodRed.LabTie X ι) : RowsGood X :=
+  Formalism.L2.SG.Pf.RowsGoodRed.rowsGood_of X G ι hT hL (Formalism.L2.SG.Pf.AllRowsAdd.projT_holds X G)
+    (Formalism.L2.SG.Pf.AllRowsDcount.dcountEq_holds X hG)
+
+theorem rowsLab_holds (hHC : Formalism.L2.SG.RowsDef.RowsFinDim) (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D)
+    (G : Formalism.L2.SG.RowDict.GoodOp X) (ι : D.s.HH ≃ₗᵢ[ℂ] Formalism.L2.SG.PoincareInHH.PoincareSetting.HHX X)
+    (hT : Formalism.L2.SG.RowDict.RowDictTie X G ι) (hL : Formalism.L2.SG.Pf.RowsGoodRed.LabTie X ι)
+    (hAT : AutTie D X.B X.pl) : RowsLab X :=
+  rowsLab_of X (Formalism.L2.SG.Pf.AllRowsAddFin.rowsAdd_holds X hHC hG) (rowsGood_holds X hG G ι hT hL)
+    (Formalism.L2.SG.Pf.AllRowsClosed.etUniv_holds X) hAT
+
+end Formalism.L2.SG.Pf.AllRowsLab
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.AllRowsAtRecord
+
+section
 
 @[expose] public section
 
@@ -132,3 +370,6 @@ theorem allRows_at_record : Formalism.L2.SG.RowsDef.RowsFinDim → ∀ (D : D7) 
     exact countAllRows_of _ hc hcc hN hf hC hpos
 
 end GlobalTheory.AllRowsAtRecord
+end
+end
+end

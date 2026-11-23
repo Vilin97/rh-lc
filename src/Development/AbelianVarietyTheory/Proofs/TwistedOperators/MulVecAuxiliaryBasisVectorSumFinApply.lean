@@ -4,11 +4,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBas
 public import Mathlib.CategoryTheory.Category.Basic
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PadicIsNonarchimedeanLocalField
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqActStdLat
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsRepsOfFg
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnipotent
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeChainLatAndComap
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeStdLatAndAct
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.StabiliserFiniteCosetsMod
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.ExponentTerms
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,9 +24,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,10 +45,175 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBasisMemChainLattice
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnipotent
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeChainLatAndComap
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsRepsOfFg
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix
+open scoped Pointwise
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms GlobalTheory.RootEx.UnfoldShape
+
+namespace GlobalTheory.RootEx.UnfoldShape
+
+theorem exists_isReps_of_fg (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
+    [IsNonarchimedeanLocalField k] (ι : Type) [Fintype ι] [DecidableEq ι] (ϖ : 𝒪[k])
+    (hϖ : Irreducible ϖ) (M : Submodule 𝒪[k] (ι → k)) (hM : M.FG) :
+    ∃ T : Finset (ι → k), IsReps ϖ M T := by
+  classical
+  have h1 : Finite (𝒪[k] ⧸ Ideal.span {ϖ}) := by
+    rw [← hϖ.maximalIdeal_eq]
+    exact (inferInstance : Finite 𝓀[k])
+  have hfin : Module.Finite 𝒪[k] M := Module.Finite.iff_fg.mpr hM
+  set N : Submodule 𝒪[k] M := Ideal.span {ϖ} • ⊤ with hN
+  have h2 : Finite (M ⧸ N) := by
+    have : Finite (M ⧸ (⊤ : Submodule 𝒪[k] M)) := by
+      have : Subsingleton (M ⧸ (⊤ : Submodule 𝒪[k] M)) :=
+        Submodule.Quotient.subsingleton_iff.mpr rfl
+      infer_instance
+    exact Submodule.finite_quotient_smul _ Module.Finite.fg_top
+  have hmem : ∀ x : M, x ∈ N ↔ (x : ι → k) ∈ ϖ • M := by
+    intro x
+    rw [hN, Submodule.ideal_span_singleton_smul, Submodule.mem_smul_pointwise_iff_exists,
+      Submodule.mem_smul_pointwise_iff_exists]
+    constructor
+    · rintro ⟨b, -, rfl⟩
+      exact ⟨b, b.2, rfl⟩
+    · rintro ⟨b, hb, h⟩
+      exact ⟨⟨b, hb⟩, trivial, Subtype.ext h⟩
+  have := Fintype.ofFinite (M ⧸ N)
+  choose s hs using Submodule.Quotient.mk_surjective N
+  refine ⟨Finset.univ.image fun q => (s q : ι → k), ?_, ?_⟩
+  · intro t ht
+    obtain ⟨q, -, rfl⟩ := Finset.mem_image.mp ht
+    exact (s q).2
+  · intro v hv
+    have key : ∀ q, v - (s q : ι → k) ∈ ϖ • M ↔ Submodule.Quotient.mk (⟨v, hv⟩ : M) = q := by
+      intro q
+      conv_rhs => rw [← hs q, Submodule.Quotient.eq, hmem]
+      rfl
+    refine ⟨s (Submodule.Quotient.mk ⟨v, hv⟩), ⟨Finset.mem_image.mpr ⟨_, Finset.mem_univ _, rfl⟩,
+      (key _).mpr rfl⟩, ?_⟩
+    rintro t ⟨ht, h⟩
+    obtain ⟨q, -, rfl⟩ := Finset.mem_image.mp ht
+    rw [(key q).mp h]
+
+end GlobalTheory.RootEx.UnfoldShape
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeStdLatAndAct
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix
+open scoped Pointwise
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms GlobalTheory.RootEx.UnfoldShape
+
+namespace GlobalTheory.RootEx.UnfoldShape
+
+theorem isLattice_stdLat_and_act : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type) [Fintype ι] [DecidableEq ι], Submodule.IsLattice k (stdLat k ι) ∧ ∀ (g : GL ι k) (L : Submodule 𝒪[k] (ι → k)), Submodule.IsLattice k L → Submodule.IsLattice k (act g L) := by
+  intro k _ _ _ _ ι _ _
+  refine ⟨⟨?_, ?_⟩, fun g L hL => ⟨?_, ?_⟩⟩
+  · unfold stdLat
+    refine Submodule.fg_pi fun _ => ?_
+    rw [Submodule.one_eq_span]
+    exact Submodule.fg_span_singleton _
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · exact hL.fg.map _
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+
+end GlobalTheory.RootEx.UnfoldShape
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StabiliserFiniteCosetsMod
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix
+open scoped Pointwise
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms GlobalTheory.RootEx.UnfoldShape
+
+namespace GlobalTheory.RootEx.UnfoldShape
+
+theorem stabiliser_finite_cosets_mod (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
+    [IsNonarchimedeanLocalField k] (ι : Type) [Fintype ι] [DecidableEq ι] (ϖ : 𝒪[k])
+    (M : Submodule 𝒪[k] (ι → k)) (S : Finset (ι → k)) (hM : M.FG) (hS : IsReps ϖ M S) :
+    ∃ T : Finset (GL ι k), (∀ t ∈ T, act t M = M) ∧ ∀ t : GL ι k, act t M = M →
+      ∃ t₀ ∈ T, ∃ j : GL ι k, act j M = M ∧ MapsInto (j.val - 1) M (ϖ • M) ∧ t = t₀ * j := by
+  classical
+  obtain ⟨s, hs⟩ := hM
+  have hmem : ∀ t : GL ι k, act t M = M → ∀ x ∈ M, t.val *ᵥ x ∈ M := fun t ht x hx => by
+    have h : t.val *ᵥ x ∈ act t M := mem_act.2 ⟨x, hx, rfl⟩
+    rwa [ht] at h
+  have hsM : ∀ x : s, x.1 ∈ M := fun x => hs ▸ Submodule.subset_span x.2
+  have hex : ∀ (t : {t : GL ι k // act t M = M}) (x : s), ∃ r : S, t.1.val *ᵥ x.1 - r.1 ∈ ϖ • M := by
+    intro t x
+    obtain ⟨r, hr, -⟩ := hS.2 _ (hmem t.1 t.2 x.1 (hsM x))
+    exact ⟨⟨r, hr.1⟩, hr.2⟩
+  choose f hf using hex
+  have hsec : ∀ y : Set.range f, ∃ t, f t = y.1 := fun y => y.2
+  choose g hg using hsec
+  have : Fintype (Set.range f) := Fintype.ofFinite _
+  refine ⟨Finset.univ.image fun y => (g y).1, ?_, fun t ht => ?_⟩
+  · intro t ht
+    obtain ⟨y, -, rfl⟩ := Finset.mem_image.1 ht
+    exact (g y).2
+  · set t₀ := g ⟨f ⟨t, ht⟩, ⟨_, rfl⟩⟩ with ht₀
+    have hft : f t₀ = f ⟨t, ht⟩ := hg _
+    have hinv : act (t₀.1)⁻¹ M = M := by
+      have h := act_mul (t₀.1)⁻¹ t₀.1 M
+      rw [inv_mul_cancel, act_one, t₀.2] at h
+      exact h.symm
+    refine ⟨t₀.1, Finset.mem_image.2 ⟨_, Finset.mem_univ _, rfl⟩, (t₀.1)⁻¹ * t, ?_, ?_, ?_⟩
+    · rw [act_mul, ht, hinv]
+    · intro v hv
+      rw [← hs] at hv
+      induction hv using Submodule.span_induction with
+      | mem x hx =>
+        have h1 := hf ⟨t, ht⟩ ⟨x, hx⟩
+        have h2 := hf t₀ ⟨x, hx⟩
+        rw [hft] at h2
+        have h3 := sub_mem h1 h2
+        rw [sub_sub_sub_cancel_right] at h3
+        obtain ⟨w, hw, hw'⟩ := mem_smul_iff.1 h3
+        refine mem_smul_iff.2 ⟨_, hmem _ hinv w hw, ?_⟩
+        rw [← Matrix.mulVec_smul, hw', Matrix.mulVec_sub, Matrix.sub_mulVec, Matrix.mulVec_mulVec,
+          Matrix.mulVec_mulVec, Units.inv_mul, Units.val_mul]
+      | zero => rw [Matrix.mulVec_zero]; exact zero_mem _
+      | add x y _ _ hx hy => rw [Matrix.mulVec_add]; exact add_mem hx hy
+      | smul a x _ hx =>
+        rw [Matrix.mulVec_smul]
+        exact Submodule.smul_mem _ a hx
+    · rw [mul_inv_cancel_left]
+
+end GlobalTheory.RootEx.UnfoldShape
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MulVecAuxiliaryBasisVectorSumFinApply
+
+section
 
 @[expose] public section
 
@@ -260,3 +419,6 @@ theorem oneCoset (hc : 1 ≤ c) {ϖ : 𝒪[k]} (hϖ : Irreducible ϖ) {ψ : AddC
       exact ⟨r, hr, t * j, by rw [act_mul, hJ j hj, hT t ht], mul_assoc _ _ _⟩
 
 end GlobalTheory.RootEx.UnfoldShape
+end
+end
+end

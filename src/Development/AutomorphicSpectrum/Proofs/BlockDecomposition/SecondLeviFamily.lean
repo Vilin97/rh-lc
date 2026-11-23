@@ -5,19 +5,18 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Injectiv
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.Bdy
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CenterActionCommutesLeviDifference
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.StandardBlocksLevelSum
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CommuteLeviBoundaryAndLift
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ScalarOnWeightSpace
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SuccAboveCastSuccCastSucc
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKMultOneP
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -25,8 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,11 +43,82 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ScalarOnWeightSpace
+public import Formalism.RealPlaceAnalysis.StatementE
+import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.CapelliDeterminantBlockProduct
+import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.RootOfNe
+import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.BitVec
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CommuteLeviBoundaryAndLift
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset
+
+namespace GlobalTheory.CompanionTheory.PairMult.CapProdProof
+
+open Formalism.REAL (GlRel qdet)
+open CompanionTheory.D.LK (Pos)
+open GlobalTheory.CompanionTheory.RgCOBlock (fa fb sz)
+
+variable {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
+
+theorem commute_ev (T : Module.End ℂ W) (E : Fin n → Fin n → Module.End ℂ W) (h : ∀ p q, Commute T (E p q))
+    (z : FreeAlgebra ℂ (Fin n × Fin n)) : Commute T (CompanionTheory.D.LK.ev E z) := by
+  induction z using FreeAlgebra.induction with
+  | grade0 r => rw [AlgHom.commutes]; exact (Algebra.commutes r T).symm
+  | grade1 p => simpa [CompanionTheory.D.LK.ev] using h p.1 p.2
+  | mul a b ha hb => rw [map_mul]; exact ha.mul_right hb
+  | add a b ha hb => rw [map_add (f := _)]; exact ha.add_right hb
+
+end GlobalTheory.CompanionTheory.PairMult.CapProdProof
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SuccAboveCastSuccCastSucc
+
+section
+
+@[expose] public section
+
+open Finset
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.RgHeSM
+
+open Formalism.REAL Formalism.MainNotions.S PositivityTheory.UnitaryDecomposition Formalism.FourierDecayAlt.P.CapelliAbstractCharacter CompanionTheory.D.DSIC
+
+variable {V : Type} [AddCommGroup V] [Module ℂ V]
+
+theorem qminor_restrict {n m t : ℕ} (E : Fin n → Fin n → Module.End ℂ V) (ι : Fin m → Fin n)
+    (hι : Function.Injective ι) (a b : Fin t → Fin m) (w : ℂ) :
+    qminor (fun a b => E (ι a) (ι b)) a b w = qminor E (ι ∘ a) (ι ∘ b) w := by
+  unfold qminor Tm
+  simp only [Function.comp, hι.eq_iff]
+
+end GlobalTheory.CompanionTheory.RgHeSM
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SecondLeviFamily
+
+section
 
 @[expose] public section
 
@@ -355,3 +422,6 @@ theorem capCls_of (hAct : ActUU) (hC : GlobalTheory.CompanionTheory.PairMult.Cap
   · simpa using (bdSub lev E1 E2).neg_mem c2
 
 end GlobalTheory.CompanionTheory.CapClsProof
+end
+end
+end

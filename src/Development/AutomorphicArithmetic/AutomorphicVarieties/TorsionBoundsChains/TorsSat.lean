@@ -1,7 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.TorsionBoundsChains.FaceDSingle
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TorsSatMult
+public import Mathlib.LinearAlgebra.Span.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,6 +41,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TorsSatMult
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qi35.torsSat_mult :
+    ∀ {M : Type} [inst : AddCommGroup M] (L : Set M)
+    (N : Submodule ℤ M),
+    (∀ x ∈ L, ∃ (n : ℤ), n ≠ (0 : ℤ) ∧ n • x ∈ N) → ∀ x ∈ Submodule.span ℤ L, ∃ (n : ℤ), n ≠ (0 : ℤ) ∧ n • x ∈ N := by
+  intro M _ L N h x hx
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact h y hy
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact N.zero_mem⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨a, ha, hay⟩ := hy
+    obtain ⟨b, hb, hbz⟩ := hz
+    refine ⟨a * b, mul_ne_zero ha hb, ?_⟩
+    rw [smul_add]
+    refine N.add_mem ?_ ?_
+    · rw [mul_comm, mul_smul]
+      exact N.smul_mem b hay
+    · rw [mul_smul]
+      exact N.smul_mem a hbz
+  | smul c y _ hy =>
+    obtain ⟨a, ha, hay⟩ := hy
+    refine ⟨a, ha, ?_⟩
+    rw [smul_comm]
+    exact N.smul_mem c hay
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TorsionBoundsChains.TorsSat
+
+section
 
 @[expose] public section
 
@@ -111,3 +147,5 @@ theorem UpperTheory.V.KH.torsSat :
     rw [← hlift t.1, ← hlift s.1]
     exact (Submodule.Quotient.eq _).2 h4
   exact ⟨Finite.of_injective f hf, (Nat.card_le_card_of_injective f hf).trans hB⟩
+end
+end

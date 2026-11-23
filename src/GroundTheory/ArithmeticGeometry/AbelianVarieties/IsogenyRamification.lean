@@ -6,13 +6,10 @@ import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsPullback
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsValuation
 public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogenyExists
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.KernelCard
-public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsPic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
-import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Degree
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -30,9 +27,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.LocalProperties.Reduced
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,8 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -54,10 +46,68 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Degree
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.Arith.Abelian
+
+open Polynomial WeierstrassCurve WeierstrassCurve.Affine AddSubgroup
+
+universe u
+
+variable {F : Type u} [Field F] [DecidableEq F] [IsAlgClosed F] (W : WeierstrassCurve F)
+  [W.IsElliptic]
+
+theorem divisorOf_pow {f : W.toAffine.FunctionField} (hf : f ≠ 0) (k : ℕ) :
+    divisorOf W (f ^ k) = k • divisorOf W f := by
+  induction k with
+  | zero => rw [pow_zero, divisorOf_one, zero_smul]
+  | succ k ih => rw [pow_succ, divisorOf_mul W (pow_ne_zero k hf) hf, ih, succ_nsmul]
+
+theorem divisorOf_prod {ι' : Type*} (s : Finset ι') (φ : ι' → W.toAffine.FunctionField)
+    (hφ : ∀ i ∈ s, φ i ≠ 0) : divisorOf W (∏ i ∈ s, φ i) = ∑ i ∈ s, divisorOf W (φ i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => rw [Finset.prod_empty, Finset.sum_empty, divisorOf_one]
+  | insert a s ha ih =>
+    rw [Finset.prod_insert ha, Finset.sum_insert ha,
+      divisorOf_mul W (hφ a (Finset.mem_insert_self a s))
+        (Finset.prod_ne_zero_iff.mpr fun i hi => hφ i (Finset.mem_insert_of_mem hi)),
+      ih fun i hi => hφ i (Finset.mem_insert_of_mem hi)]
+
+
+
+variable {W}
+
+variable (W)
+
+variable {W}
+
+
+end GroundTheory.Arith.Abelian
+end
+end
+
+-- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyRamification
+
+section
 
 @[expose] public section
 
@@ -387,3 +437,5 @@ end Isogeny
 end Degree
 
 end GroundTheory.Arith.Abelian
+end
+end

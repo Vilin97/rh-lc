@@ -2,7 +2,9 @@ module
 
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsPowSubMemSpanOfIsUnitModOfIsAlgClosed
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionFamilyFlatTwist
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComplexPointExistsUniqueEmbeddingStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FlatHermUnitSectionAvoidStatement
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.RationalSections.IsRatSectionOn
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,6 +44,252 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.RationalSections.ThmISt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PConsequences
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsPowSubMemSpanOfIsUnitModOfIsAlgClosed
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDerived
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.UnitSectionDivisorEqStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial NumberField ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem _root_.GlobalTheory.T.unit_section_divisor_eq : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (f g : MRing ι), IsUnitSec P f g → divSupp P f = divSupp P g ∧ (∀ W ∈ divSupp P f, multAt (P ⊔ Ideal.span {f}) W = multAt (P ⊔ Ideal.span {g}) W) ∧ ∀ (n : ℕ) (L : Fin n → HermLine ι), vertR P L f = vertR P L g := by
+  intro K _ ι _ P f g h
+  have length_localizedModule_quot_eq {R : Type} [CommRing R] (W : Ideal R) [W.IsPrime] {J₁ J₂ : Ideal R}
+      (h₁ : ∀ x ∈ J₁, ∃ s, s ∉ W ∧ s * x ∈ J₂) (h₂ : ∀ x ∈ J₂, ∃ s, s ∉ W ∧ s * x ∈ J₁) :
+      Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J₁)) =
+        Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J₂)) := by
+    have key : ∀ {A B : Ideal R}, (∀ x ∈ A, ∃ s, s ∉ W ∧ s * x ∈ B) →
+        Submodule.localized W.primeCompl (M := R) A ≤ Submodule.localized W.primeCompl (M := R) B := by
+      intro A B h y hy
+      obtain ⟨m, hm, s, rfl⟩ := hy
+      obtain ⟨t, ht, htm⟩ := h m hm
+      refine ⟨t * m, htm, ⟨t, ht⟩ * s, ?_⟩
+      exact IsLocalizedModule.mk'_cancel_left _ _ _ _
+    have heq : Submodule.localized W.primeCompl (M := R) J₁ = Submodule.localized W.primeCompl (M := R) J₂ :=
+      le_antisymm (key h₁) (key h₂)
+    have e₁ := (localizedQuotientEquiv W.primeCompl (M := R) J₁).length_eq
+    have e₂ := (localizedQuotientEquiv W.primeCompl (M := R) J₂).length_eq
+    have e₃ := (Submodule.quotEquivOfEq _ _ heq).length_eq
+    exact e₁.symm.trans (e₃.trans e₂)
+
+  have unitSec_symm {P : Ideal (MRing ι)} {f g : MRing ι} (h : IsUnitSec P f g) : IsUnitSec P g f := by
+    intro W hW hP hR
+    obtain ⟨u, v, hu, hv, hm⟩ := h W hW hP hR
+    refine ⟨v, u, hv, hu, ?_⟩
+    have := P.neg_mem hm
+    rwa [neg_sub] at this
+
+  have divSupp_subset_of_isUnitSec {P : Ideal (MRing ι)} {f g : MRing ι} (h : IsUnitSec P f g) :
+      divSupp P f ⊆ divSupp P g := by
+    rintro W ⟨hmin, hrel⟩
+    have hWp : W.IsPrime := hmin.1.1
+    have hP : P ≤ W := le_sup_left.trans hmin.1.2
+    have hf : f ∈ W := hmin.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self f))
+    obtain ⟨u, v, hu, hv, hm⟩ := h W hWp hP hrel
+    have hvg : v * g ∈ W := by
+      have e : v * g = u * f - (u * f - v * g) := by ring
+      rw [e]
+      exact W.sub_mem (W.mul_mem_left u hf) (hP hm)
+    have hg : g ∈ W := (hWp.mem_or_mem hvg).resolve_left hv
+    refine ⟨⟨⟨hWp, sup_le hP ((Ideal.span_singleton_le_iff_mem _).mpr hg)⟩, ?_⟩, hrel⟩
+    rintro W' ⟨hW'p, hW'le⟩ hW'W
+    have hP' : P ≤ W' := le_sup_left.trans hW'le
+    have hg' : g ∈ W' := hW'le (Ideal.mem_sup_right (Ideal.mem_span_singleton_self g))
+    have huf : u * f ∈ W' := by
+      have e : u * f = (u * f - v * g) + v * g := by ring
+      rw [e]
+      exact W'.add_mem (hP' hm) (W'.mul_mem_left v hg')
+    have hf' : f ∈ W' := (hW'p.mem_or_mem huf).resolve_left fun hu' => hu (hW'W hu')
+    exact hmin.2 ⟨hW'p, sup_le hP' ((Ideal.span_singleton_le_iff_mem _).mpr hf')⟩ hW'W
+
+  have mul_mem_sup_span_of_sub_mem {R : Type} [CommRing R] {P : Ideal R} {f g u v x : R}
+      (hm : u * f - v * g ∈ P) (hx : x ∈ P ⊔ Ideal.span {f}) : u * x ∈ P ⊔ Ideal.span {g} := by
+    obtain ⟨p, hp, y, hy, rfl⟩ := Submodule.mem_sup.mp hx
+    obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.mp hy
+    have e : u * (p + a * f) = (u * p + a * (u * f - v * g)) + (a * v) * g := by ring
+    rw [e]
+    exact Ideal.add_mem _
+      (Ideal.mem_sup_left (P.add_mem (P.mul_mem_left u hp) (P.mul_mem_left a hm)))
+      (Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self g)))
+
+  have multAt_sup_span_eq_of_sub_mem {P W : Ideal (MRing ι)} (hW : W.IsPrime) {f g u v : MRing ι}
+      (hu : u ∉ W) (hv : v ∉ W) (hm : u * f - v * g ∈ P) :
+      multAt (P ⊔ Ideal.span {f}) W = multAt (P ⊔ Ideal.span {g}) W := by
+    have hm' : v * g - u * f ∈ P := by
+      have := P.neg_mem hm
+      rwa [neg_sub] at this
+    haveI := hW
+    unfold multAt
+    rw [dite_eq_left hW, dite_eq_left hW,
+      length_localizedModule_quot_eq W (J₁ := P ⊔ Ideal.span {f}) (J₂ := P ⊔ Ideal.span {g})
+        (fun x hx => ⟨u, hu, mul_mem_sup_span_of_sub_mem hm hx⟩)
+        (fun x hx => ⟨v, hv, mul_mem_sup_span_of_sub_mem hm' hx⟩)]
+
+  have hsupp : divSupp P f = divSupp P g :=
+    Set.Subset.antisymm (divSupp_subset_of_isUnitSec h) (divSupp_subset_of_isUnitSec (unitSec_symm h))
+  have hmult : ∀ W ∈ divSupp P f, multAt (P ⊔ Ideal.span {f}) W = multAt (P ⊔ Ideal.span {g}) W := by
+    rintro W ⟨hmin, hrel⟩
+    have hWp : W.IsPrime := hmin.1.1
+    obtain ⟨u, v, hu, hv, hm⟩ := h W hWp (le_sup_left.trans hmin.1.2) hrel
+    exact multAt_sup_span_eq_of_sub_mem hWp hu hv hm
+  refine ⟨hsupp, hmult, fun n L => ?_⟩
+  unfold vertR
+  rw [← hsupp]
+  refine finsum_mem_congr rfl fun W hW => ?_
+  rw [hmult W hW]
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.VerticalStatementHolds
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Ar.Flat
+
+open ReciprocityTheory.ChartRestriction.G.AI.I2
+
+theorem vertical_holds : VerticalStatement := GroundTheory.Heights₂.Heights.Inter.InductiveIntersectionFormula.proof
+
+end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.VerticalStatementHoldsStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial NumberField ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem _root_.GlobalTheory.T.vertical_statement_holds : VerticalStatement := by
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.vertical_holds | exact GlobalTheory.CompanionTheory.Ar.Flat.vertical_holds | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.vertical_holds <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionFamilyFlatTwist
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open MvPolynomial NumberField ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2
+
+namespace GlobalTheory.CompanionTheory.Ar.Flat
+
+theorem hermLine_eq_of_a_h {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {A B : HermLine ι}
+    (ha : A.a = B.a) (hh : A.h = B.h) : A = B := by
+  cases A
+  cases B
+  simp_all
+
+theorem exists_tensorPow_last {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+    {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ} (hI : IsIntersectionFamily I)
+    {W : Ideal (MRing ι)} {n : ℕ} {L : Fin n → HermLine ι} (hW : IsArithVar W (n + 1))
+    (hL : ∀ j, IsSmoothHerm (L j)) {B : HermLine ι} (hB : IsSmoothHerm B) {m : ℕ} (hm : 1 ≤ m) :
+    ∃ C : HermLine ι, IsSmoothHerm C ∧ (∀ k, C.a k = m * B.a k) ∧ (∀ z, C.h z = B.h z ^ m) ∧
+      I W (n + 1) (Fin.snoc L C) = m * I W (n + 1) (Fin.snoc L B) := by
+  induction m, hm using Nat.le_induction with
+  | base => exact ⟨B, hB, by simp, by simp, by simp⟩
+  | succ m hm ih =>
+    obtain ⟨C, hC, ha, hh, hi⟩ := ih
+    refine ⟨C.tensor B, ContDiffOn.mul hC hB, fun k => ?_, fun z => ?_, ?_⟩
+    · simp only [HermLine.tensor, Pi.add_apply, ha]
+      push_cast
+      ring
+    · simp only [HermLine.tensor, hh, pow_succ]
+    · rw [hI.2.1 W n L C B hW hL hC hB, hi]
+      push_cast
+      ring
+
+theorem IsUnitSec.mono {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P W : Ideal (MRing ι)}
+    {f g : MRing ι} (h : IsUnitSec P f g) (hPW : P ≤ W) : IsUnitSec W f g := by
+  intro W' h1 h2 h3
+  obtain ⟨a, b, ha, hb, hab⟩ := h W' h1 (hPW.trans h2) h3
+  exact ⟨a, b, ha, hb, hPW hab⟩
+
+theorem FlatHerm.inter_eq_neg_integral : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type)
+    [Field Ω] (F : Type) [Field F] [NumberField F] (y : (Σ k, ι k) → Ω) (φ : F →+* Ω)
+    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (W : Ideal (MRing ι)) (n : ℕ)
+    (L : Fin n → HermLine ι) (A : HermLine ι) (S : FlatHerm y φ A) (d : ℕ) (u : ((Σ k, ι k) → ℂ) → ℝ),
+    IsIntersectionFamily I → IsArithVar (mCoordIdeal y) d → OverInt y φ → mCoordIdeal y ≤ W →
+    IsArithVar W (n + 1) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A →
+    IsPlaceWeight y φ (fun σ => Real.log (S.κ σ)) u →
+    I W (n + 1) (Fin.snoc L A) = -ptsIntegral W (pot L) u := by
+  intro K _ ι _ Ω _ F _ _ y φ I W n L A S d u hI hP hY hPW hW hL hA hu
+  have hnu : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → (fun z => -u z) (fun p => c p.1 * z p) = (fun z => -u z) z :=
+    fun c z hc => by simp only [hu.inv c z hc]
+
+  set B : HermLine ι := A.tensor (HermLine.ofWeight (fun z => -u z) hnu) with hBdef
+  have hBh : ∀ z, B.h z = A.h z * Real.exp (u z) := fun z => by
+    simp [hBdef, HermLine.tensor, HermLine.ofWeight]
+  have hBa : ∀ k, B.a k = A.a k := fun k => by
+    simp [hBdef, HermLine.tensor, HermLine.ofWeight]
+  have hexp : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => Real.exp (u z)) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} :=
+    Real.contDiff_exp.comp_contDiffOn hu.smooth
+  have hB : IsSmoothHerm B := by
+    have e : B.h = fun z => A.h z * Real.exp (u z) := funext hBh
+    unfold IsSmoothHerm
+    rw [e]
+    exact ContDiffOn.mul hA hexp
+  have hBA : B.tensor (HermLine.ofWeight u hu.inv) = A := by
+    refine hermLine_eq_of_a_h ?_ ?_
+    · funext k
+      simp [HermLine.tensor, HermLine.ofWeight, hBa]
+    · funext z
+      have : (B.tensor (HermLine.ofWeight u hu.inv)).h z = B.h z * Real.exp (-u z) := rfl
+      rw [this, hBh, mul_assoc, ← Real.exp_add]
+      simp
+  have hchange : I W (n + 1) (Fin.snoc L A) = I W (n + 1) (Fin.snoc L B) - ptsIntegral W (pot L) u := by
+    have := metricChange K ι I hI W n L B u hu.inv hW hL hB hu.smooth
+    rwa [hBA] at this
+
+  obtain ⟨C, hC, hCa, hCh, hCI⟩ := exists_tensorPow_last hI hW hL hB (m := S.M) S.M_pos
+  obtain ⟨f', g', df', dg', hf', hg', hdeg, hfW, hgW, -, hun, hnorm⟩ :=
+    GlobalTheory.T.flat_herm_unit_section_avoid K ι Ω F y φ A S d W hY hP hA hW.2.1 hPW
+  have hunW := IsUnitSec.mono hun hPW
+  obtain ⟨c1, c2, c3⟩ := GlobalTheory.T.unit_section_divisor_eq K ι W f' g' hunW
+  have hvert := GlobalTheory.T.vertical_statement_holds K ι I hI W n L C f' g' hW hL hC
+    ⟨df', dg', hf', hg', hfW, hgW, fun k => by rw [hdeg k, hCa k, hBa k]⟩
+    (fun W' _ => by rw [c1]) (fun W' _ hm => c2 W' hm) (fun z hz => by
+      have hzP : z ∈ mcPts (mCoordIdeal y) := ⟨hz.1, fun f hf => hz.2 f (hPW hf)⟩
+      obtain ⟨σ, hσ, -⟩ := GlobalTheory.T.complex_point_existsUnique_embedding K ι Ω F y φ hY z hzP
+      have hz1 : u z = Real.log (S.κ σ) := (hu.near σ z hσ).self_of_nhds
+      have hn := hnorm σ z hσ
+      have hCz : C.h z = (S.κ σ * A.h z) ^ S.M := by
+        rw [hCh, hBh, hz1, Real.exp_log (S.κ_pos σ), mul_comm]
+      rw [hCz, mul_comm]
+      exact hn)
+  have hzero : I W (n + 1) (Fin.snoc L B) = 0 := by
+    have h0 : (S.M : ℝ) * I W (n + 1) (Fin.snoc L B) = 0 := by
+      rw [← hCI, hvert, c3 n L, sub_self]
+    have hM : (S.M : ℝ) ≠ 0 := by exact_mod_cast S.M_pos.ne'
+    exact (mul_eq_zero.mp h0).resolve_left hM
+  rw [hchange, hzero, zero_sub]
+
+end GlobalTheory.CompanionTheory.Ar.Flat
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionFamilyFlatTwistStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +297,5 @@ open MvPolynomial NumberField ReciprocityTheory.ChartRestriction.G.Geo Reciproci
 
 theorem _root_.GlobalTheory.T.intersection_family_flat_twist : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (F : Type) [Field F] [NumberField F] (y : (Σ k, ι k) → Ω) (φ : F →+* Ω) (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (W : Ideal (MRing ι)) (n : ℕ) (L : Fin n → HermLine ι) (A : HermLine ι) (S : FlatHerm y φ A) (d : ℕ) (u : ((Σ k, ι k) → ℂ) → ℝ), IsIntersectionFamily I → IsArithVar (mCoordIdeal y) d → OverInt y φ → mCoordIdeal y ≤ W → IsArithVar W (n + 1) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A → IsPlaceWeight y φ (fun σ => Real.log (S.κ σ)) u → I W (n + 1) (Fin.snoc L A) = -ptsIntegral W (pot L) u := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Flat.FlatHerm.inter_eq_neg_integral | exact GlobalTheory.CompanionTheory.Ar.Flat.FlatHerm.inter_eq_neg_integral | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.FlatHerm.inter_eq_neg_integral <;> assumption)
+end
+end

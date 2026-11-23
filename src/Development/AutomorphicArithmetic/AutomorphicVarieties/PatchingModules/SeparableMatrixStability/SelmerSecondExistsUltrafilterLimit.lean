@@ -3,13 +3,8 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.MapEta
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ProfDefs
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SubgroupQuot
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.UltraFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.AmFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CocFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.RhoHom
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SecondSelmerSpanBoundAtAllLevels
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelRed
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelmerSecondClosedUnderLimits
+public import Mathlib.Basic.Finite.Defs
+public import Mathlib.Order.Filter.Ultrafilter.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -49,6 +44,44 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ProfDefs
+public import Mathlib.Order.Filter.Ultrafilter.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.AmFin
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CocFin
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.RhoHom
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SecondSelmerSpanBoundAtAllLevels
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelRed
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelmerSecondClosedUnderLimits
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.UltraFin
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.ultra_fin :
+    ∀ (ι Z : Type) (U : Ultrafilter ι) (a : ι → Z) (s : Set Z), s.Finite → (∀ᶠ i in (U : Filter ι), a i ∈ s) →
+      ∃! z, z ∈ s ∧ ∀ᶠ i in (U : Filter ι), a i = z := by
+  intro ι Z U a s hs h
+  have hsub : {i | a i ∈ s} ⊆ ⋃ z ∈ s, {i | a i = z} := by
+    intro i hi
+    simp only [Set.mem_iUnion, Set.mem_setOf_eq]
+    exact ⟨a i, hi, rfl⟩
+  have hmem : (⋃ z ∈ s, {i | a i = z}) ∈ U := U.1.sets_of_superset h hsub
+  obtain ⟨z, hz, hzU⟩ := (Ultrafilter.finite_biUnion_mem_iff hs).1 hmem
+  refine ⟨z, ⟨hz, hzU⟩, ?_⟩
+  rintro w ⟨-, hw⟩
+  obtain ⟨i, hi1, hi2⟩ := (hw.and hzU).exists
+  exact hi1.symm.trans hi2
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelmerSecondExistsUltrafilterLimit
+
+section
 
 @[expose] public section
 
@@ -133,3 +166,5 @@ theorem UpperTheory.V.Pa.selmer_second_exists_ultrafilter_limit :
   obtain ⟨m, hm1, hm2⟩ := ((hΨ j).and (hred j)).exists
   rw [funext hm1]
   exact hm2
+end
+end

@@ -1,8 +1,8 @@
 module
 
 public import Formalism.DropLevelBounds.Statement
-public import Formalism.IncomingBounds.LevelTail
-public import Mathlib.RingTheory.Binomial
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,29 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Binomial
+
+-- Source module: Formalism.IncomingBounds.LevelTail
+
+section
+
+@[expose] public section
+
+noncomputable section
+open scoped BigOperators
+
+namespace Formalism.IncomingBounds
+
+def capNat (n0 y : ℕ) : ℕ := ∏ a ∈ Finset.range n0, (y + a).factorial / a.factorial
+
+end Formalism.IncomingBounds
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.CharacterGerms.BiadditiveInSingleVariables
+
+section
 
 @[expose] public section
 
@@ -220,3 +243,6 @@ def BiWindow : Prop :=
             WithTop ℝ)
 
 end Formalism.L2.FormalSeriesBounds
+end
+end
+end

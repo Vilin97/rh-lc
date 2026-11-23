@@ -1,6 +1,8 @@
 module
 
-public import ReciprocityTheory.DualLattices.SubgroupFreenessStatement
+public import ReciprocityTheory.DualLattices.TensorSpan
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Valuation.Integers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,8 +42,47 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.HaveILetI
 public import ReciprocityTheory.DualLattices.HasColengthEqPowMulPow
 import ReciprocityTheory.DualLattices.MemSupOfRestrictToSubgroupMemSq
+
+-- Source module: ReciprocityTheory.DualLattices.SubgroupFreenessStatement
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace ReciprocityTheory.PGsh.L2
+
+variable {C : Type} [Field C] {R : Type} [CommRing R] [Algebra R C]
+
+def SubgroupFreenessStatement : Prop :=
+  IsAlgClosed C → CharZero C →
+  ∀ (v : Valuation C NNReal), v.Integers R →
+  ∀ (N : Type) [AddCommGroup N] [Fintype N] [DecidableEq N] (K : AddSubgroup N)
+    [DecidablePred (· ∈ K)] [DecidableEq (N ⧸ K)] [Fintype (N ⧸ K)]
+    (AA : HopfOrder (C := C) R N),
+    let B := AA.carrier.comap (pullQ (R := R) K)
+    let AK := AA.carrier.map (resK (R := R) K)
+    let IK := (augIdeal B).map (pullQ K)
+    (∃ f : K → N → C, (∀ j, f j ∈ AA.carrier) ∧ ∀ g ∈ AA.carrier,
+      ∃! b : K → N → C, (∀ j, b j ∈ B.map (pullQ K)) ∧ g = ∑ j, b j * f j) ∧
+    (∀ g ∈ AA.carrier, resK (R := R) K g = 0 → g ∈ IK * AA.carrier) ∧
+    (∀ c cB cK, HasColen R v AA.carrier c → HasColen R v B cB → HasColen R v AK cK →
+      c = cB ^ Fintype.card K * cK ^ Fintype.card (N ⧸ K)) ∧
+    (∀ g ∈ augIdeal AA.carrier, resK (R := R) K g ∈ augIdeal AK * augIdeal AK →
+      g ∈ IK ⊔ augIdeal AA.carrier * augIdeal AA.carrier)
+
+end ReciprocityTheory.PGsh.L2
+end
+end
+end
+
+-- Source module: ReciprocityTheory.DualLattices.ImportsBis
+
+section
 
 @[expose] public section
 
@@ -56,3 +96,5 @@ theorem h3 (C R : Type) [Field C] [CommRing R] [Algebra R C] :
   exact ⟨exists_coset_basis hv AA K, mem_of_restrictToSubgroup_eq_zero hv AA K, hasColength_eq_pow_mul_pow hv AA K, mem_sup_of_restrictToSubgroup_mem_sq hv AA K⟩
 
 end ReciprocityTheory.PGsh.L2
+end
+end

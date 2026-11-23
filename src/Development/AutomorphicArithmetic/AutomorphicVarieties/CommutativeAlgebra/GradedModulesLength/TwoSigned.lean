@@ -11,13 +11,11 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.LocalizedLengthLeOfSurjective
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.SignHolds
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.TspHolds
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ValuationNonnegApplyDegreeZeroOfOnS
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleFin
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleGr
-public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.UZGen
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.OrbitVanishingLocal
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -33,9 +31,15 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,7 +47,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -58,6 +61,164 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ToDegInjective
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.EulerVanishingBelowDimension
+import Mathlib.Tactic.Linter.HaveILetI
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleFin
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.NoetherianQuotientCalc.RuleGr
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwists.QuotientShiftIrreducible.UZGen
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.IntHolds
+
+section
+
+@[expose] public section
+
+open IsLocalRing Filter Formalism.MainNotions.V.Pf.V2.Calc UpperTheory.V.Alg UpperTheory.V.Alg.M
+
+theorem UpperTheory.V.Alg.M.int_holds :
+    ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O]
+      (K : Type) [Field K] [Algebra O K] [IsAlgClosed K] [FaithfulSMul O K] (v : K → ℝ), IsNVal O K v → ∀ y : K, IsIntegral O y → y ≠ 0 → 0 ≤ v y := by
+  intro O _ _ _ _ _ K _ _ _ _ v hv y hy hy0
+  have v1 : v 1 = 0 := by
+    have h := hv.mul 1 1 one_ne_zero one_ne_zero
+    rw [one_mul] at h
+    linarith
+  have vneg : ∀ z : K, z ≠ 0 → v (-z) = v z := by
+    intro z hz
+    have h1 := hv.mul (-1) (-1) (neg_ne_zero.mpr one_ne_zero) (neg_ne_zero.mpr one_ne_zero)
+    rw [neg_one_mul, neg_neg, v1] at h1
+    have h2 := hv.mul (-1) z (neg_ne_zero.mpr one_ne_zero) hz
+    rw [neg_one_mul] at h2
+    linarith
+  have vpow : ∀ k : ℕ, v (y ^ k) = k * v y := by
+    intro k
+    induction k with
+    | zero => simp [v1]
+    | succ k ih =>
+      rw [pow_succ, hv.mul _ _ (pow_ne_zero _ hy0) hy0, ih]
+      push_cast
+      ring
+  have vsum : ∀ (s : Finset ℕ) (f : ℕ → K) (c : ℝ), (∀ i ∈ s, f i ≠ 0 → c ≤ v (f i)) →
+      (∑ i ∈ s, f i) ≠ 0 → c ≤ v (∑ i ∈ s, f i) := by
+    intro s f c
+    induction s using Finset.induction_on with
+    | empty => intro _ h; simp at h
+    | insert a s ha ih =>
+      intro hf hs
+      rw [Finset.sum_insert ha] at hs ⊢
+      by_cases hfa : f a = 0
+      · rw [hfa, zero_add] at hs ⊢
+        exact ih (fun i hi => hf i (Finset.mem_insert_of_mem hi)) hs
+      by_cases hS : (∑ i ∈ s, f i) = 0
+      · rw [hS, add_zero]
+        exact hf a (Finset.mem_insert_self a s) hfa
+      have h1 := hv.add _ _ hfa hS hs
+      have h2 := hf a (Finset.mem_insert_self a s) hfa
+      have h3 := ih (fun i hi => hf i (Finset.mem_insert_of_mem hi)) hS
+      exact le_trans (le_min h2 h3) h1
+  by_contra hneg
+  push_neg at hneg
+  obtain ⟨p, hpm, hp⟩ := hy
+  have hsum := hp
+  rw [Polynomial.eval₂_eq_sum_range, Finset.sum_range_succ, hpm.coeff_natDegree, map_one, one_mul] at hsum
+  have hS : (∑ i ∈ Finset.range p.natDegree, algebraMap O K (p.coeff i) * y ^ i) = -(y ^ p.natDegree) :=
+    eq_neg_of_add_eq_zero_left hsum
+  have hyn : y ^ p.natDegree ≠ 0 := pow_ne_zero _ hy0
+  have hS0 : (∑ i ∈ Finset.range p.natDegree, algebraMap O K (p.coeff i) * y ^ i) ≠ 0 := by
+    rw [hS]
+    exact neg_ne_zero.mpr hyn
+  have hnpos : 0 < p.natDegree := by
+    rcases Nat.eq_zero_or_pos p.natDegree with h | h
+    · exfalso
+      rw [h, Finset.sum_range_zero, pow_zero] at hS
+      exact one_ne_zero (neg_eq_zero.mp hS.symm)
+    · exact h
+  have hterm : ∀ i ∈ Finset.range p.natDegree, algebraMap O K (p.coeff i) * y ^ i ≠ 0 →
+      ((p.natDegree - 1 : ℕ) : ℝ) * v y ≤ v (algebraMap O K (p.coeff i) * y ^ i) := by
+    intro i hi hne
+    have hc : p.coeff i ≠ 0 := by
+      intro h
+      apply hne
+      simp [h]
+    have hmc : algebraMap O K (p.coeff i) ≠ 0 := by
+      intro h
+      apply hc
+      exact (FaithfulSMul.algebraMap_injective O K) (by rw [h, map_zero])
+    rw [hv.mul _ _ hmc (pow_ne_zero _ hy0), hv.base _ hc, vpow]
+    have hi' : i ≤ p.natDegree - 1 := by
+      have := Finset.mem_range.mp hi
+      omega
+    have hle : ((p.natDegree - 1 : ℕ) : ℝ) * v y ≤ (i : ℝ) * v y := by
+      apply mul_le_mul_of_nonpos_right _ hneg.le
+      exact_mod_cast hi'
+    have h0 : (0 : ℝ) ≤ ((IsDiscreteValuationRing.addVal O (p.coeff i)).toNat : ℝ) := Nat.cast_nonneg _
+    linarith
+  have hbound : ((p.natDegree - 1 : ℕ) : ℝ) * v y ≤
+      v (∑ i ∈ Finset.range p.natDegree, algebraMap O K (p.coeff i) * y ^ i) :=
+    vsum (Finset.range p.natDegree) (fun i => algebraMap O K (p.coeff i) * y ^ i) _ hterm hS0
+  rw [hS, vneg _ hyn, vpow, Nat.cast_pred hnpos] at hbound
+  linarith
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ValuationNonnegApplyDegreeZeroOfOnS
+
+section
+
+@[expose] public section
+
+open IsLocalRing Filter Formalism.MainNotions.V.Pf.V2.Calc UpperTheory.V.Alg UpperTheory.V.Alg.M
+
+theorem UpperTheory.V.Alg.M.valuation_nonneg_apply_degreeZero_of_onS :
+    ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O]
+      (K : Type) [Field K] [Algebra O K] [IsAlgClosed K] [FaithfulSMul O K] (v : K → ℝ), IsNVal O K v →
+    ∀ (A : Type) [CommRing A] [Algebra O A] (𝒜 : ℤ → Submodule O A) [GradedAlgebra 𝒜] [IsCO O (𝒜 0)] (x : A →ₐ[O] O) (I : Ideal A), M2 𝒜 I → ∀ ξ : A →ₐ[O] K, OnS I ξ → ∀ b ∈ 𝒜 0, ξ b ≠ 0 → 0 ≤ v (ξ b) := by
+  intro O _ _ _ _ _ K _ _ _ _ v hv A _ _ 𝒜 _ _ x I hI ξ hξ b hb hne
+  classical
+  set M : Submodule O K := Submodule.map ξ.toLinearMap (𝒜 0) with hMdef
+  have hker : ∀ f ∈ I, ξ f = 0 := hξ
+  let ξ' : (A ⧸ I) →ₐ[O] K := Ideal.Quotient.liftₐ I ξ hker
+  have hcomp : ξ.toLinearMap = ξ'.toLinearMap.comp (Ideal.Quotient.mkₐ O I).toLinearMap := by
+    apply LinearMap.ext
+    intro a
+    rfl
+  have hMfg : M.FG := by
+    rw [hMdef, hcomp, Submodule.map_comp]
+    exact Submodule.FG.map _ hI
+  haveI : IsNoetherian O M := isNoetherian_of_fg_of_noetherian M hMfg
+  have hle : Subalgebra.toSubmodule (Algebra.adjoin O {ξ b}) ≤ M := by
+    intro z hz
+    have hz' : z ∈ Algebra.adjoin O {ξ b} := hz
+    clear hz
+    rw [hMdef, Submodule.mem_map]
+    induction hz' using Algebra.adjoin_induction with
+    | mem w hw =>
+      rw [Set.mem_singleton_iff] at hw
+      exact ⟨b, hb, hw.symm⟩
+    | algebraMap r =>
+      exact ⟨algebraMap O A r, SetLike.algebraMap_mem_graded 𝒜 r, by simp⟩
+    | add w₁ w₂ _ _ h₁ h₂ =>
+      obtain ⟨c₁, hc₁, e₁⟩ := h₁
+      obtain ⟨c₂, hc₂, e₂⟩ := h₂
+      exact ⟨c₁ + c₂, add_mem hc₁ hc₂, by simp [← e₁, ← e₂]⟩
+    | mul w₁ w₂ _ _ h₁ h₂ =>
+      obtain ⟨c₁, hc₁, e₁⟩ := h₁
+      obtain ⟨c₂, hc₂, e₂⟩ := h₂
+      have hm : c₁ * c₂ ∈ 𝒜 (0 + 0) := SetLike.mul_mem_graded hc₁ hc₂
+      rw [add_zero] at hm
+      exact ⟨c₁ * c₂, hm, by simp [← e₁, ← e₂]⟩
+  haveI : IsNoetherian O (Subalgebra.toSubmodule (Algebra.adjoin O {ξ b})) := isNoetherian_of_le hle
+  have hint : IsIntegral O (ξ b) :=
+    isIntegral_of_submodule_noetherian (Algebra.adjoin O {ξ b}) inferInstance (ξ b)
+      (Algebra.subset_adjoin (Set.mem_singleton _))
+  exact int_holds O K v hv (ξ b) hint hne
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.TwoSigned
+
+section
 
 @[expose] public section
 
@@ -142,3 +303,5 @@ theorem UpperTheory.V.Alg.M.up_holds :
     show ξ' (b : A) = act 𝒜 (tz t) ξ' (b : A)
     rw [act_of_mem 𝒜 _ _ b.2]
     simp
+end
+end

@@ -5,8 +5,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticG
 import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.KummerTheory.Mk0IdMapCongr
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.Places
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.GysCore
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.MapRep
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.PlacesQ
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.NearSplit
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.LMemMax
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,8 +41,43 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.PlacesQ
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.MapRep
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
+
+theorem UpperTheory.V.Ws.Gys.unrS :
+    ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c) (T : Tower D), D.Good → ∀ A : ValuationSubring Ω, Raw.Away D.S A → ∀ g ∈ Ine (F := T.F) A, D.rbar (resQ T.F g) = 1 := by
+  intro Ω _ _ _ l _ c D T hG A hA g hg
+  obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, hine⟩ := UpperTheory.V.GradeZeroInterpolatingElement.facts D hG
+  have hq : resQ T.F g ∈ Ine (F := ℚ) A := hg
+  have hps : ∀ i, D.ps i (resQ T.F g) = 1 := fun i => hine i A hA hq
+  have hd : diagRep D.ps (resQ T.F g) = 1 := by
+    unfold UpperTheory.V.GradeZeroInterpolatingElement.diagRep
+    simp [hps]
+    funext i
+    have h : D.ps i (AlgEquiv.restrictScalars ℚ g) = 1 := hps i
+    rw [h]
+    rfl
+  unfold UpperTheory.V.GradeZeroInterpolatingElement.Raw.rbar UpperTheory.V.GradeZeroInterpolatingElement.Raw.r0
+  ext i j
+  rw [mapRep_apply, hd]
+  simp [Matrix.one_apply]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RamifiedLineCharacters.OpenKer
+
+section
 
 @[expose] public section
 
@@ -140,3 +173,5 @@ theorem UpperTheory.V.Ws.Gys.gysT :
   · obtain ⟨p1, p2, -⟩ := UpperTheory.V.Base.places T.F Ω l (T.pl u)
     obtain ⟨v, hv⟩ := p1 fun ht => (p2 ht).2 (T.ovl u)
     exact hloc v (hl₀ v ((val_nat hv l).1 (T.ovl u))) _ hv
+end
+end

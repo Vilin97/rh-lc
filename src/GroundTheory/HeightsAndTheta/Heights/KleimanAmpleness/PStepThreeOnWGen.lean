@@ -12,12 +12,10 @@ public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PPrimeFiltra
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PRestrictTwist
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepDataJProper
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSubvarDrop
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmpleNefPlusAmple
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsStepTwo
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -32,10 +30,7 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.GradedAlgebra.Radical
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -56,6 +51,53 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmpleNefPlusAmple
+import Mathlib.Algebra.Order.Star.Rat
+public import Mathlib.RingTheory.GradedAlgebra.Radical
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Kleiman
+
+open MvPolynomial
+
+noncomputable section
+
+universe u w
+
+theorem twistMul_twist_twistMul {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ}
+    {x : Fin (N + 1) → Ω} (M : SubSystem S x Ω) (a a' : ℕ) (c c' : ℤ) :
+    (twistMul M a c).twist (twistMul M a' c') = twistMul M (a + a') (c + c') := by
+  refine SubSystem.ext_sub fun I => ?_
+  rw [SubSystem.twist_sub_eq_mul_of_line, twistMul_sub, twistMul_sub, twistMul_sub, pow_add,
+    ← twistSys_sub_mul]
+  ring
+
+theorem TwistAlg.proof : TwistAlg.Statement.{u, w} := by
+  intro S _ Ω _ _ N x M p q m m' b₁ b₂ h
+  rw [pow_twistMul, pow_twistMul, pow_twistMul, twistMul_twist_twistMul]
+  congr 1
+  · ring
+  · push_cast
+    linear_combination (b₁ : ℤ) * h
+
+end
+
+end GroundTheory.Heights₂.Heights.Kleiman
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepThreeOnWGen
+
+section
 
 @[expose] public section
 
@@ -264,3 +306,5 @@ theorem StepThree.OnW.Gen.proof (hRL : RestrLenRestrict.Statement.{u, w})
 end
 
 end GroundTheory.Heights₂.Heights.Kleiman
+end
+end

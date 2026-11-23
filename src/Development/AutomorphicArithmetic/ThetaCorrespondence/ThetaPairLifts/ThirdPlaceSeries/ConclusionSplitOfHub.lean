@@ -13,21 +13,15 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Residua
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitCaseBoundAtPointOfAdmittedItemsStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateFinitenessAllOfLocalTateDualityStatement
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HodgeTateJumpWindowOfJumpSetsStatement
-public import Development.AutomorphicArithmetic.ResidueCharacters.AmbOfSetPt
-public import Development.AutomorphicArithmetic.ResidueCharacters.BlockConditionAtPlacesOfJumpWindow
-public import Development.AutomorphicArithmetic.ResidueCharacters.ConclusionSplitOfHub
-public import Development.AutomorphicArithmetic.ResidueCharacters.InvariantsLengthAdmissibleOfNonzeroJumps
-public import Development.AutomorphicArithmetic.ResidueCharacters.LiftExponentAdmissibleColsRowsOfCrystalline
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.AmbAllGoodPointsStatement
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ClosingFamilyX
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HoldsAll
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ImportsFurtherTerStatement
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.MainAltAltBisStatement
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RestPtOfStatement
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SetPointGood
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BoundAtTwoAndThreeForFamily
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TwistedDualContinuousIntegralOverEnlargedCoeff
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseFont
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.LiftingConditionOfWindows
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -46,7 +40,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -59,6 +52,240 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.BoundAtTwoThreeFamily
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.JumpWindow
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FinrankMaxUnramifiedSubfieldPadicFinExtPos
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FinrankLeOfSubsetClosureRange
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValuationLtOneIffNorm
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Tactic.Linter.HaveILetI
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CommutingEndomorphismCondition
+public import Development.AutomorphicArithmetic.ResidueCharacters.InvariantsLengthAdmissibleOfNonzeroJumps
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
+public import Formalism.SharpRestriction.LevelLetterCocycles.AdmissibleParameterJ
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LiftColumnRowSetup
+import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseFont
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CoefficientCompatibilityOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrystallineLatticeOfJumpPoints
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.AmbAllGoodPointsStatement
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ClosingFamilyX
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HoldsAll
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ImportsFurtherTerStatement
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.MainAltAltBisStatement
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RestPtOfStatement
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SetPointGood
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.AmbOfSetPt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
+open GlobalTheory.NLink.AmbSub
+
+namespace UpperTheory.N
+
+theorem amb_of_setPt {D : D7} (i : D.nd.Loc) (X : KillingConditions.HubData D) (π : D.nd.X i) (dc : TruncatedSeriesCountingIdentities.Decl D i)
+    (hS : SetPt i (X.r i) (X.ρ i) π)
+    (hρ : Continuous fun g => ((X.ρ i π g : GL (Fin D.R.r) (D.nd.O i)) : Matrix (Fin D.R.r) (Fin D.R.r) (D.nd.O i))) :
+    EmbeddingTypes.ambSub i (X.r i) π dc ∧ EmbeddingTypes.ambCont i (X.r i) (X.ρ i) π ∧ EmbeddingTypes.ColumnH0Vanishing i (X.ρ i) π dc := by
+  obtain ⟨_, hG2, _, _, _, _, _, _, hCont, _, _, _, _, _, hFont, _, _⟩ := hS
+  have hcx : ∀ (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i))
+      (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (x : D.nd.X i) (v : Fin D.R.nV → ↥C.LL.1),
+      Continuous fun g => (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x) g).mulVec v :=
+    fun w hw C x v => locC_cont D i _ (rTwO_cont D i (X.r i) hCont x) w hw C v
+  have hcr : ∀ (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i))
+      (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (x : D.nd.X i),
+      IsCrys (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x))) := by
+    intro w hw C x
+    rw [locC_rTwO]
+    exact (hG2 w hw C).2 x
+  refine ⟨?_, ?_, ?_⟩
+  · intro _ _ w hw _ C A hA
+    have hJ : ∀ x τ, JumpsInV (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x))) τ
+        {a | IsJumpV (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) π))) τ a} := by
+      intro x τ
+      refine jumps_of_multV_eq (O := ↥(OL C.LL)) (fun x => TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x)) (hcx w hw C)
+        (hFont w hw C) x π (hcr w hw C x) (hcr w hw C π) τ (fun a => ?_)
+      rw [locC_rTwO, locC_rTwO]
+      exact (hG2 w hw C).1.2.1 τ x π a
+    exact subsum_crys (fun x => TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x)) (hcx w hw C) (hFont w hw C)
+      (hcr w hw C) hJ A hA
+  · intro w hw C
+    refine ⟨fun x v => hcx w hw C x v, fun _ => ⟨fun v => ?_, fun v => ?_⟩⟩
+    · exact locC_cont D i _ (WpO_cont i (X.ρ i) π hρ) w hw C v
+    · exact locC_cont D i _ (GlobalTheory.TwistedDualLoc.continuous_T2O D i (X.ρ i) π hρ) w hw C v
+  · intro _ w hw _ C
+    exact (hG2 w hw C).1.2.2.2.2.2.1
+
+end UpperTheory.N
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.BlockConditionAtPlacesOfJumpWindow
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations
+
+namespace UpperTheory.N
+
+variable {D : D7}
+
+theorem block_condition_at_places_of_jump_window (i : D.nd.Loc) (N : ℕ) (hK : TBK (D.loc (D.nd.l i))) (hC : CycAt N i)
+    (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (h : ℕ) (ht : D.R.t ≤ h)
+    (hJ : GlobalTheory.BlockWindow.JumpWindow D i r π h) :
+    TruncatedSeriesCountingIdentities.admTB i r π (cBL (D.nd.l i) N h (4 * D.R.n * D.R.nV) D.R.t) := by
+  intro w hw C _
+  have hcard : Nat.card (↥(D.nbr i w hw).Kw.1 →ₐ[ℚ_[D.nd.l i]] ↥C.LL.1) ≤ 4 * D.R.n := by
+    rw [GlobalTheory.HubLoc.card_emb _ _ fun τ x => C.le ((D.nbr i w hw).LL_split τ x)]
+    exact GlobalTheory.bridge_finrank_le D i w hw
+  haveI : Finite (↥(D.nbr i w hw).Kw.1 →ₐ[ℚ_[D.nd.l i]] ↥C.LL.1) := by
+    haveI := (D.nbr i w hw).Kw.2
+    infer_instance
+  obtain ⟨U, h1, h2, h3⟩ := exists_union (4 * D.R.n) D.R.nV h hcard
+    (fun τ a => IsJumpV (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i r π))) τ a) (fun τ => by
+      obtain ⟨U, a, b, c⟩ := hJ w hw C.LL C.le τ
+      exact ⟨U, a, fun u hu => ⟨(b u hu).1, by have := (b u hu).2; omega⟩, c⟩)
+  rw [GlobalTheory.BridgeInertia.inertEq D i w hw]
+  exact hK N h _ D.R.t (D.nbr i w hw).Kw C.LL (hC w hw C) ht _ U h1 h2 (fun τ a ha => h3 τ a ha)
+
+end UpperTheory.N
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.ConclusionSplitOfHub
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
+
+namespace UpperTheory.N
+
+
+open Classical in
+def withDc {D : D7} (X : KillingConditions.HubData D) (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D i) : KillingConditions.HubData D :=
+  { X with dc := Function.update X.dc i dc }
+
+open Classical in
+theorem withDc_dc {D : D7} (X : KillingConditions.HubData D) (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D i) : (withDc X i dc).dc i = dc := by
+  simp only [withDc, Function.update_self]
+
+end UpperTheory.N
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.LiftExponentAdmissibleColsRowsOfCrystalline
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
+open Module GlobalTheory.LiftExpSplit
+
+namespace UpperTheory.N
+
+variable {D : D7}
+
+theorem liftAt_of_liftK (i : D.nd.Loc) (N : ℕ) (hK : LiftK (D.loc (D.nd.l i))) (hC : CycAt N i)
+    (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i)) (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw)
+    {ι : Type} {k : ℕ} (Ms : ι → Br.G D.nbr i w hw →* Matrix (Fin k) (Fin k) ↥C.LL.1)
+    (hc : ∀ x v, Continuous fun g => (Ms x g).mulVec v)
+    (hF : TruncatedSeriesCountingIdentities.FontaineAt (Br.PD D.loc D.nbr i w hw) ↥C.LL.1 ↥(OL C.LL)) (h : ℕ)
+    (hcr : ∀ x, IsCrys (Br.PD D.loc D.nbr i w hw) (matRep (Ms x)))
+    (hS : ∀ x τ, JumpsInV (Br.PD D.loc D.nbr i w hw) (matRep (Ms x)) τ (Set.Icc (-(h : ℤ)) h)) :
+    LiftAt (Br.PD D.loc D.nbr i w hw) (O := ↥(OL C.LL)) (fun x : ι => ⇑(Ms x)) (eL (D.nd.l i) N h) := by
+  intro V1 _ _ _ _ _ _ _ _ _ _ _ ρ1 L1 hc1 hs1 V2 _ _ _ _ _ _ _ _ _ _ _ ρ2 L2 hc2 hs2 F hF'
+  let T₁ : LocLat (Br.G D.nbr i w hw) ℚ_[D.nd.l i] ↥C.LL.1 ↥(OL C.LL) :=
+    { V := V1, ρ := ρ1, cont := hc1, L := L1 }
+  let T₂ : LocLat (Br.G D.nbr i w hw) ℚ_[D.nd.l i] ↥C.LL.1 ↥(OL C.LL) :=
+    { V := V2, ρ := ρ2, cont := hc2, L := L2 }
+  obtain ⟨hcr1, hj1⟩ := subquot_crys (PD := Br.PD D.loc D.nbr i w hw) Ms hc hF
+    (S := fun _ => Set.Icc (-(h : ℤ)) h) hcr hS T₁ hs1
+  obtain ⟨hcr2, -⟩ := subquot_crys (PD := Br.PD D.loc D.nbr i w hw) Ms hc hF
+    (S := fun _ => Set.Icc (-(h : ℤ)) h) hcr hS T₂ hs2
+  exact hK N h (D.nbr i w hw).Kw C.LL (hC w hw C) T₁ T₂ F hcr1 hcr2 hF' hj1
+
+theorem lift_exponent_admissible_cols_rows_of_crystalline (L : SizeData₂ D) (i : D.nd.Loc) (N : ℕ) (hK : LiftK (D.loc (D.nd.l i))) (hC : CycAt N i)
+    (X : KillingConditions.HubData D) (dc : TruncatedSeriesCountingIdentities.Decl D i) (hgood : ∀ i, GoodR D.nd i (X.r i)) (ep : Bool) (hA : AdmissibleParameterJ.hodgeTateJumpsAtModulesForSign D ep)
+    (he : AdmissibleParameterJ.JumpAbsoluteBound L) (hFont : TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL (D := D) i)
+    (hT : ∀ w (hw : w ∈ placesOver D.host.E (D.nd.l i)) (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) x,
+      IsCrys (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x))))
+    (hD : ∀ w (hw : w ∈ placesOver D.host.E (D.nd.l i)) (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) x,
+      IsCrys (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rDuO D.nd i (X.r i) x)))) :
+    EmbeddingTypes.LiftExponentColumn i (X.r i) dc (eL (D.nd.l i) N (Formalism.MainNotions.N.hN L)) ∧
+      EmbeddingTypes.LiftExponentDualPlaces i (X.r i) dc (eL (D.nd.l i) N (Formalism.MainNotions.N.hN L)) := by
+  have hcont : TruncatedSeriesCountingIdentities.FamilyContinuous (D := D) i (X.r i) := continuous_family_of D i (X.r i) (hgood i)
+  have hj := D.nd.j_range i
+  have hhB : AdmissibleParameterJ.hJ L + 2 = Formalism.MainNotions.TwistedPlaces.hB L := by
+    unfold AdmissibleParameterJ.hJ Formalism.MainNotions.TwistedPlaces.hB; ring
+
+  have hwinT : ∀ w (hw : w ∈ placesOver D.host.E (D.nd.l i)) (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (x : D.nd.X i) τ,
+      JumpsInV (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x))) τ
+        (Set.Icc (-(Formalism.MainNotions.N.hN L : ℤ)) (Formalism.MainNotions.N.hN L)) := by
+    intro w hw C x τ a ha
+    obtain ⟨g, ρ, -, hx, -⟩ := hA i (X.r i) (hgood i) w hw C τ
+    have hq := (hx x a).1.mp ha
+    have hb := he.1 (D.nd.j i) hj.1 hj.2 ρ _ _ hq
+    have hb2 := he.2.1
+    apply mem_window L a
+    have hc : (((a : ℚ) : ℝ)) = (a : ℝ) := by push_cast; rfl
+    rw [hc] at hb
+    linarith
+  have hwinD : ∀ w (hw : w ∈ placesOver D.host.E (D.nd.l i)) (C : TruncatedSeriesCountingIdentities.CoefExt D i w hw) (x : D.nd.X i) τ,
+      JumpsInV (Br.PD D.loc D.nbr i w hw) (matRep (TruncatedSeriesCountingIdentities.locC C (rDuO D.nd i (X.r i) x))) τ
+        (Set.Icc (-(Formalism.MainNotions.N.hN L : ℤ)) (Formalism.MainNotions.N.hN L)) := by
+    intro w hw C x τ a ha
+    obtain ⟨g, ρ, -, hx, -⟩ := hA i (X.r i) (hgood i) w hw C τ
+    have hq := (hx x a).2.2.1.mp ha
+    have hb := he.1 (D.nd.j i) hj.1 hj.2 ρ _ _ hq
+    have hb2 := he.2.1
+    apply mem_window L a
+    have hc : (((-(a : ℚ) - 1 : ℚ)) : ℝ) = -(a : ℝ) - 1 := by push_cast; rfl
+    rw [hc] at hb
+    rw [abs_le] at hb ⊢
+    constructor <;> linarith [hb.1, hb.2]
+  refine ⟨?_, ?_⟩
+  · intro w hw _ C _
+    exact liftAt_of_liftK i N hK hC w hw C (fun x => TruncatedSeriesCountingIdentities.locC C (rTwO D.nd i (X.r i) x))
+      (fun x v => locC_cont D i _ (rTwO_cont D i (X.r i) hcont x) w hw C v) (hFont w hw C)
+      (Formalism.MainNotions.N.hN L) (hT w hw C) (fun x => hwinT w hw C x)
+  · intro w hw _ C _
+    exact liftAt_of_liftK i N hK hC w hw C (fun x => TruncatedSeriesCountingIdentities.locC C (rDuO D.nd i (X.r i) x))
+      (fun x v => locC_cont D i _ (rDuO_cont i (X.r i) hcont x) w hw C v) (hFont w hw C)
+      (Formalism.MainNotions.N.hN L) (hD w hw C) (fun x => hwinD w hw C x)
+
+end UpperTheory.N
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ConclusionSplitOfHub
+
+section
 
 @[expose] public section
 
@@ -131,5 +358,7 @@ theorem conclusion_split_alt (Pr : Hypotheses₂) (D : D7) (L : SizeData₂ D) (
   exact ⟨hB, fun u hu => length_invariants_Wprime_divisible_le_of_nonzero_jumps i N hK.2.1 hC (X.ρ i) π _ (GlobalTheory.NLink.AmbSub.WpO_cont i (X.ρ i) π hρ) hW u
     ((dc.cover u).1 (Or.inr hu)), fun v hv => (g5x v (Or.inr hv)).2.2.1 hv⟩
 end UpperTheory.N
+end
+end
 end
 end

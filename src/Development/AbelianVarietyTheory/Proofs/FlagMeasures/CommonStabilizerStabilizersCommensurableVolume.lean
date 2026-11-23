@@ -2,13 +2,8 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ComplementReferenceCompactSubgroup
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.CongruenceSubgroupLatticeStabilizerStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsLatticeStabilizerNormalisingSubgroupStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarInvVolumeConjModularCharacterStatement
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InvVolMulPosLeConj
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LatticeStabilizerCommensurableUnramifiedHermitiaStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LatticeStabilizerInfLeConjNormalisingSubgroupStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PowEqZeroOfMemHermitianFrameUnipotentStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnipotentStabilizesSomeLatticeStatement
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermLat
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsLatticeStabilizerNormalisingSubgroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,10 +42,214 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.HermLat
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarInvVolumeConjModularCharacterStatement
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InvVolMulPosLeConj
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LatticeStabilizerCommensurableUnramifiedHermitiaStatement
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LatticeStabilizerInfLeConjNormalisingSubgroupStatement
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsLatticeStabilizerNormalisingSubgroupStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+theorem _root_.GlobalTheory.T.exists_lattice_stabilizer_normalising_subgroup : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (r k : ℕ) (S : Frames L r k), ∀ n ∈ S.N, ∀ n' ∈ S.N', ∃ Λ : Submodule L.O S.V, IsLat L Λ ∧ S.St ⊓ stabL L Λ = S.St ⊓ stabL L (Submodule.span L.O (Set.range fun b => n (S.f b))) ⊓ stabL L (Submodule.span L.O (Set.range fun b => n' (S.f' b))) ∧ S.St ⊓ MulAction.stabilizer S.GLV (S.frameCls (fun b => n (S.f b)) fun b => n' (S.f' b)) ≤ S.St ⊓ stabL L Λ ∧ ∀ h ∈ S.St ⊓ stabL L Λ, CongId L S.ϖ Λ 1 h → h ∈ MulAction.stabilizer S.GLV (S.frameCls (fun b => n (S.f b)) fun b => n' (S.f' b)) := by
+  first | exact @GlobalTheory.HL.FrameStabLat.main | exact GlobalTheory.HL.FrameStabLat.main | (intros; apply GlobalTheory.HL.FrameStabLat.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.PowEqZeroOfMemHermitianFrameUnipotent
+
+section
+
+@[expose] public section
+
+noncomputable section
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+namespace GlobalTheory.FlagUnipotent
+
+variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
+variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
+
+theorem hf_sub_left (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (a b y : Fin n → E) :
+    hf L H (a - b) y = hf L H a y - hf L H b y := by
+  simp [hf, sub_mul, Finset.sum_sub_distrib]
+
+theorem hf_sub_right (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (x a b : Fin n → E) :
+    hf L H x (a - b) = hf L H x a - hf L H x b := by
+  simp [hf, mul_sub, Finset.sum_sub_distrib]
+
+theorem pow_eq_zero_of_mem_Nof {L : LocE F E} {r k : ℕ} (S : Frames L r k)
+    (f : Fin (r + 1) → S.V) (g : S.GLV) (hg : g ∈ S.Nof f) :
+    ((g : S.V →ₗ[E] S.V) - 1) ^ (2 * r + 1) = 0 := by
+  obtain ⟨⟨hiso, hfl⟩, hmid⟩ := hg
+  have hfl' : ∀ j, j < r → g ∈ unipOn (S.spanTo f (j + 1)) (S.spanTo f j) := fun j hj =>
+    (Subgroup.mem_iInf.1 hfl) ⟨j, hj⟩
+  set A : S.V →ₗ[E] S.V := (g : S.V →ₗ[E] S.V) - 1 with hA
+  have hAv : ∀ v, A v = g v - v := fun v => rfl
+  have h0 : S.spanTo f 0 = ⊥ := by simp [Frames.spanTo]
+  have ha : ∀ j, j ≤ r → ∀ v, (A ^ j) v ∈ perp L S.Hm (S.spanTo f j) := by
+    intro j
+    induction j with
+    | zero =>
+      intro _ v y hy
+      rw [h0, Submodule.mem_bot] at hy
+      simp [hy, hf]
+    | succ j ih =>
+      intro hj v x hx
+      obtain ⟨h1, h2⟩ := hfl' j hj
+      have hw := ih (by omega) v
+      rw [pow_succ', Module.End.mul_apply, hAv]
+      generalize (A ^ j) v = w at hw
+      obtain ⟨y, rfl⟩ := g.surjective x
+      have h3 : hf L S.Hm w (g y - y) = 0 := hw _ (h2 y ((h1 y).1 hx))
+      have h4 : hf L S.Hm (g w) (g y) = hf L S.Hm w y := hiso w y
+      rw [hf_sub_right] at h3
+      rw [hf_sub_left, h4]
+      linear_combination -h3
+  have hc : ∀ j, j ≤ r → ∀ v ∈ S.spanTo f j, (A ^ j) v = 0 := by
+    intro j
+    induction j with
+    | zero =>
+      intro _ v hv
+      rw [h0, Submodule.mem_bot] at hv
+      simp [hv]
+    | succ j ih =>
+      intro hj v hv
+      rw [pow_succ, Module.End.mul_apply, hAv]
+      exact ih (by omega) _ ((hfl' j hj).2 v hv)
+  refine LinearMap.ext fun v => ?_
+  have e : 2 * r + 1 = r + (1 + r) := by omega
+  rw [e, pow_add, pow_add, pow_one, Module.End.mul_apply, Module.End.mul_apply, hAv]
+  exact hc r le_rfl _ (hmid.2 _ (ha r le_rfl v))
+
+theorem main : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (r k : ℕ) (S : Frames L r k), ∀ g ∈ S.N, ((g : S.V →ₗ[E] S.V) - 1) ^ (2 * r + 1) = 0 :=
+  fun _ _ _ S g hg => pow_eq_zero_of_mem_Nof S S.f g hg
+
+end GlobalTheory.FlagUnipotent
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.PowEqZeroOfMemHermitianFrameUnipotentStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+theorem _root_.GlobalTheory.T.pow_eq_zero_of_mem_hermitianFrameUnipotent : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (r k : ℕ) (S : Frames L r k), ∀ g ∈ S.N, ((g : S.V →ₗ[E] S.V) - 1) ^ (2 * r + 1) = 0 := by
+  first | exact @GlobalTheory.FlagUnipotent.main | exact GlobalTheory.FlagUnipotent.main | (intros; apply GlobalTheory.FlagUnipotent.main <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnipotentStabilizesSomeLattice
+
+section
+
+@[expose] public section
+
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+namespace GlobalTheory.HL
+
+theorem exists_fg_span_stable_of_unipotent {E : Type} [CommRing E] (O : Subring E) {n : ℕ}
+    (g : (Fin n → E) →ₗ[E] (Fin n → E)) (e : ℕ) (hg : (g - 1) ^ e = 0) :
+    ∃ Λ : Submodule O (Fin n → E), Λ.FG ∧ Submodule.span E (Λ : Set (Fin n → E)) = ⊤ ∧
+      (∀ v ∈ Λ, g v ∈ Λ) ∧ ∀ v ∈ Λ, ∃ w ∈ Λ, g w = v := by
+  set x : (Fin n → E) →ₗ[E] (Fin n → E) := 1 - g with hx
+  have hxe : x ^ e = 0 := by
+    have : x = -(g - 1) := by rw [hx, neg_sub]
+    rw [this, neg_pow, hg, mul_zero]
+  let s : Set (Fin n → E) :=
+    Set.range fun p : Fin (e + 1) × Fin n => (x ^ (p.1 : ℕ)) (Pi.single p.2 1)
+  have hall : ∀ (i : ℕ) (j : Fin n), (x ^ i) (Pi.single j 1) ∈ Submodule.span O s := by
+    intro i j
+    by_cases hi : i < e + 1
+    · exact Submodule.subset_span ⟨(⟨i, hi⟩, j), rfl⟩
+    · have : x ^ i = 0 := pow_eq_zero_of_le (by omega) hxe
+      rw [this]
+      exact Submodule.zero_mem _
+  have hpow : ∀ (k : ℕ), ∀ v ∈ Submodule.span O s, (x ^ k) v ∈ Submodule.span O s := by
+    intro k v hv
+    induction hv using Submodule.span_induction with
+    | mem y hy =>
+      obtain ⟨p, rfl⟩ := hy
+      have := hall (k + p.1) p.2
+      rwa [pow_add, Module.End.mul_apply] at this
+    | zero => rw [map_zero]; exact Submodule.zero_mem _
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
+    | smul c a _ ha =>
+      have : (x ^ k) (c • a) = c • (x ^ k) a := (x ^ k).map_smul (c : E) a
+      rw [this]
+      exact Submodule.smul_mem _ c ha
+  refine ⟨Submodule.span O s, Submodule.fg_span (Set.finite_range _), ?_, ?_, ?_⟩
+  · rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
+    refine Submodule.span_mono ?_
+    rintro _ ⟨j, rfl⟩
+    have := hall 0 j
+    simpa using this
+  · intro v hv
+    have h1 := hpow 1 v hv
+    have h2 : g v = v - (x ^ 1) v := by simp [hx]
+    rw [h2]
+    exact Submodule.sub_mem _ hv h1
+  · intro v hv
+    refine ⟨(∑ i ∈ Finset.range e, x ^ i) v, ?_, ?_⟩
+    · rw [LinearMap.sum_apply]
+      exact Submodule.sum_mem _ fun i _ => hpow i v hv
+    · have h := mul_neg_geom_sum x e
+      have h1 : 1 - x = g := by rw [hx, sub_sub_cancel]
+      rw [h1, hxe, sub_zero] at h
+      rw [← Module.End.mul_apply, h, Module.End.one_apply]
+
+theorem exists_isLat_stabL_of_unipotent : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ {n : ℕ} (g : ((Fin n → E) ≃ₗ[E] (Fin n → E))) (e : ℕ), (((g : (Fin n → E) →ₗ[E] (Fin n → E)) - 1) ^ e = 0) → ∃ Λ : Submodule L.O (Fin n → E), IsLat L Λ ∧ g ∈ stabL L Λ := by
+  intro F _ _ _ _ _ E _ _ _ L n g e hg
+  obtain ⟨Λ, h1, h2, h3, h4⟩ := exists_fg_span_stable_of_unipotent L.O _ e hg
+  refine ⟨Λ, ⟨h1, h2⟩, ?_⟩
+  rw [MulAction.mem_stabilizer_iff]
+  ext v
+  rw [Submodule.mem_smul_pointwise_iff_exists]
+  constructor
+  · rintro ⟨w, hw, rfl⟩
+    exact h3 w hw
+  · intro hv
+    obtain ⟨w, hw, h⟩ := h4 v hv
+    exact ⟨w, hw, h⟩
+
+end GlobalTheory.HL
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnipotentStabilizesSomeLatticeStatement
+
+section
+
+@[expose] public section
+
+open ValuativeRel Formalism.MainNotions.S.Loc GlobalTheory.HL MeasureTheory
+open scoped Pointwise ENNReal Classical
+
+theorem _root_.GlobalTheory.T.unipotent_stabilizes_some_lattice : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ {n : ℕ} (g : ((Fin n → E) ≃ₗ[E] (Fin n → E))) (e : ℕ), (((g : (Fin n → E) →ₗ[E] (Fin n → E)) - 1) ^ e = 0) → ∃ Λ : Submodule L.O (Fin n → E), IsLat L Λ ∧ g ∈ stabL L Λ := by
+  first | exact @GlobalTheory.HL.exists_isLat_stabL_of_unipotent | exact GlobalTheory.HL.exists_isLat_stabL_of_unipotent | (intros; apply GlobalTheory.HL.exists_isLat_stabL_of_unipotent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.CommonStabilizerStabilizersCommensurableVolume
+
+section
 
 @[expose] public section
 
@@ -149,3 +347,5 @@ theorem volSt {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNona
     exact hinv _ a1 a2 h hh
 
 end GlobalTheory.HL
+end
+end

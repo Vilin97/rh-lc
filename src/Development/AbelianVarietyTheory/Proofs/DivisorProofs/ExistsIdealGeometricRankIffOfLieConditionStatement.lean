@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatActApply
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdealGeometricRankIffOfLieCondition
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitTwoMulRhoSubTr
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +20,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,6 +41,302 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Std.Tactic.BVDecide.Normalize.Prop
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatActApply
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRangeMapIdempotentEqRankAtStalkStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapMulEigenPartProjectionMatrixEqScalarStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenPartProjectionMatrixMapMulVecOfEigenvector
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.UPel.HT GlobalTheory.UPel.HT.LieLin GlobalTheory.UPel.HT.LieLin.RankIdeal
+
+namespace GlobalTheory.UPel.HT.LieLin.RankIdeal
+
+section Scal
+
+variable {B K : Type} [CommRing B] [CommRing K] {n : ℕ} (g : B →+* K) (v : Fin n → K)
+
+theorem algebraMap_map_mulVec (x : B) :
+    (algebraMap B (Matrix (Fin n) (Fin n) B) x).map g *ᵥ v = g x • v := by
+  ext k
+  simp [Matrix.algebraMap_eq_diagonal, Matrix.mulVec_diagonal]
+
+theorem map_mul_mulVec_of_scal {X Y : Matrix (Fin n) (Fin n) B} {c d : K}
+    (hX : X.map g *ᵥ v = c • v) (hY : Y.map g *ᵥ v = d • v) : (X * Y).map g *ᵥ v = (c * d) • v := by
+  rw [Matrix.map_mul, ← Matrix.mulVec_mulVec, hY, Matrix.mulVec_smul, hX, smul_smul, mul_comm]
+
+theorem map_sub_mulVec_of_scal {X Y : Matrix (Fin n) (Fin n) B} {c d : K}
+    (hX : X.map g *ᵥ v = c • v) (hY : Y.map g *ᵥ v = d • v) : (X - Y).map g *ᵥ v = (c - d) • v := by
+  rw [Matrix.map_sub _ (map_sub g), Matrix.sub_mulVec, hX, hY, sub_smul]
+
+theorem map_sum_mulVec_of_scal {ι : Type*} (s : Finset ι) (X : ι → Matrix (Fin n) (Fin n) B) (c : ι → K)
+    (h : ∀ x ∈ s, (X x).map g *ᵥ v = c x • v) : (∑ x ∈ s, X x).map g *ᵥ v = (∑ x ∈ s, c x) • v := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert a s ha ih =>
+    rw [Finset.sum_insert ha, Finset.sum_insert ha, Matrix.map_add _ (map_add g), Matrix.add_mulVec,
+      h a (Finset.mem_insert_self _ _), ih (fun x hx => h x (Finset.mem_insert_of_mem hx)), add_smul]
+
+theorem map_list_prod_mulVec_of_fix (L : List (Matrix (Fin n) (Fin n) B))
+    (h : ∀ X ∈ L, X.map g *ᵥ v = v) : L.prod.map g *ᵥ v = v := by
+  induction L with
+  | nil => rw [List.prod_nil, Matrix.map_one _ (map_zero g) (map_one g), Matrix.one_mulVec]
+  | cons X L ih =>
+    rw [List.prod_cons, Matrix.map_mul, ← Matrix.mulVec_mulVec,
+      ih (fun Y hY => h Y (List.mem_cons_of_mem _ hY)), h X (by simp)]
+
+end Scal
+
+theorem projMat_map_mulVec_of_eig : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (B : Type) [CommRing B]
+    (βB : R →+* B) (n : ℕ) (M : 𝓞 D.F →+* Matrix (Fin n) (Fin n) B) (K : Type) [CommRing K] (g : B →+* K)
+    (i : Fin D.a) (v : Fin n → K), (∀ c : 𝓞 D.F, (M c).map g *ᵥ v = g (βB (b.t i c)) • v) →
+      (projMat b βB M i).map g *ᵥ v = v := by
+  intro p _ D R _ b B _ βB n M K _ g i v hv
+  have hα : ∀ j, j ≠ i → (alphaMat b βB M i j).map g *ᵥ v = v := by
+    intro j hj
+    have hij : i ≠ j := fun h => hj h.symm
+    unfold alphaMat
+    rw [Finsupp.sum, map_sum_mulVec_of_scal g v _ _
+      (fun x => g (βB (comaxC b i j x)) * (g (βB (b.t i x)) - g (βB (b.t j x))))
+      (fun x _ => map_mul_mulVec_of_scal g v (algebraMap_map_mulVec g v _)
+        (map_sub_mulVec_of_scal g v (hv x) (algebraMap_map_mulVec g v _)))]
+    have hs := congrArg (fun y => g (βB y)) (comaxC_spec b hij)
+
+    simp only [Finsupp.sum, map_sum, map_mul, map_sub, map_one] at hs
+    rw [hs, one_smul]
+  have hlast := map_mul_mulVec_of_scal g v (algebraMap_map_mulVec g v (βB (uInv b)))
+    (map_sub_mulVec_of_scal g v (hv D.ω) (algebraMap_map_mulVec g v (βB ((D.tr : R) - b.ρ))))
+  have h1 : g (βB (uInv b)) * (g (βB (b.t i D.ω)) - g (βB ((D.tr : R) - b.ρ))) = 1 := by
+    have hu := congrArg (fun y => g (βB y)) (uInv_mul b)
+    simp only [map_mul, map_sub, map_one, map_intCast, map_ofNat] at hu ⊢
+    rw [b.t_ω]
+    linear_combination hu
+  rw [h1, one_smul] at hlast
+  unfold projMat
+  rw [Matrix.map_mul, ← Matrix.mulVec_mulVec, hlast]
+  refine map_list_prod_mulVec_of_fix g v _ ?_
+  intro X hX
+  rw [List.mem_ofFn] at hX
+  obtain ⟨j, rfl⟩ := hX
+  split_ifs with h
+  · rw [Matrix.map_one _ (map_zero g) (map_one g), Matrix.one_mulVec]
+  · exact hα j h
+
+end GlobalTheory.UPel.HT.LieLin.RankIdeal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenPartProjectionMatrixMapMulVecOfEigenvectorStatement
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.UPel.HT GlobalTheory.UPel.HT.LieLin GlobalTheory.UPel.HT.LieLin.RankIdeal
+
+theorem _root_.GlobalTheory.T.eigenPartProjectionMatrix_map_mulVec_of_eigenvector : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (B : Type) [CommRing B]
+    (βB : R →+* B) (n : ℕ) (M : 𝓞 D.F →+* Matrix (Fin n) (Fin n) B) (K : Type) [CommRing K] (g : B →+* K)
+    (i : Fin D.a) (v : Fin n → K), (∀ c : 𝓞 D.F, (M c).map g *ᵥ v = g (βB (b.t i c)) • v) →
+      (projMat b βB M i).map g *ᵥ v = v := by
+  first | (exact @GlobalTheory.UPel.HT.LieLin.RankIdeal.projMat_map_mulVec_of_eig) | (exact GlobalTheory.UPel.HT.LieLin.RankIdeal.projMat_map_mulVec_of_eig) | (intros; apply GlobalTheory.UPel.HT.LieLin.RankIdeal.projMat_map_mulVec_of_eig  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRankIdealOfIdempotent
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory
+
+theorem range_idempotent_projective {A : Type} [CommRing A] (n : ℕ) (P : Matrix (Fin n) (Fin n) A)
+    (hP : P * P = P) : Module.Projective A (LinearMap.range P.mulVecLin) := by
+  refine Module.Projective.of_split (LinearMap.range P.mulVecLin).subtype P.mulVecLin.rangeRestrict ?_
+  ext ⟨v, w, rfl⟩ j
+  simp [Matrix.mulVec_mulVec, hP]
+
+theorem exists_rank_ideal_of_idempotent : ∀ (A : Type) [CommRing A] (I : Type) [Fintype I] (n : ℕ) (P : I → Matrix (Fin n) (Fin n) A),
+    (∀ i, P i * P i = P i) → ∀ (m : ℕ), ∃ x : A, ∀ (T : Type) [CommRing T] (f : A →+* T),
+      ((∀ (k : Type) [Field k] [IsAlgClosed k] (h : T →+* k) (i : I),
+          Module.rankAtStalk (LinearMap.range (P i).mulVecLin)
+            (⟨RingHom.ker (h.comp f), RingHom.ker_isPrime _⟩ : PrimeSpectrum A) = m) ↔ f x = 0) := by
+  intro A _ I _ n P hP m
+  let V : Set (PrimeSpectrum A) :=
+    ⋂ i, {q | Module.rankAtStalk (LinearMap.range (P i).mulVecLin) q = m}
+  have hV : IsClopen V := by
+    refine isClopen_iInter_of_finite fun i => ?_
+    have := range_idempotent_projective n (P i) (hP i)
+    have := Module.finitePresentation_of_projective A (LinearMap.range (P i).mulVecLin)
+    exact (Module.isLocallyConstant_rankAtStalk (R := A)
+      (M := LinearMap.range (P i).mulVecLin)).isClopen_fiber m
+  obtain ⟨e, x, hmul, hadd, hVe⟩ := PrimeSpectrum.isClopen_iff_mul_add.mp hV
+  refine ⟨x, fun T _ f => ?_⟩
+  have hmem : ∀ q : PrimeSpectrum A, q ∈ V ↔ e ∉ q.asIdeal := by
+    intro q; rw [hVe]; rfl
+  have hmem' : ∀ q : PrimeSpectrum A, q ∈ V ↔ ∀ i, Module.rankAtStalk (LinearMap.range (P i).mulVecLin) q = m := by
+    intro q; simp [V]
+  constructor
+  · intro H
+    have hxx : f x * f x = f x := by
+      have : x * x = x := by
+        have h1 : x = x * (e + x) := by rw [hadd, mul_one]
+        calc x * x = x * (e + x) - x * e := by ring
+          _ = x := by rw [← h1, mul_comm x e, hmul, sub_zero]
+      rw [← map_mul, this]
+    have hnil : IsNilpotent (f x) := by
+      rw [← mem_nilradical, nilradical_eq_sInf, Submodule.mem_sInf]
+      intro (Q : Ideal T) hQ
+      haveI : Q.IsPrime := hQ
+      let k := AlgebraicClosure (FractionRing (T ⧸ Q))
+      let h : T →+* k := (algebraMap (FractionRing (T ⧸ Q)) k).comp
+        ((algebraMap (T ⧸ Q) (FractionRing (T ⧸ Q))).comp (Ideal.Quotient.mk Q))
+      have hker : RingHom.ker h = Q := by
+        ext t
+        simp only [h, RingHom.mem_ker, RingHom.comp_apply]
+        rw [map_eq_zero_iff _ (algebraMap (FractionRing (T ⧸ Q)) k).injective,
+          IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
+      have hq := (hmem _).mp ((hmem' _).mpr (H k h))
+      have : e * x ∈ RingHom.ker (h.comp f) := by rw [hmul]; exact Ideal.zero_mem _
+      rcases (RingHom.ker_isPrime (h.comp f)).mem_or_mem this with he | hx
+      · exact absurd he hq
+      · rw [RingHom.mem_ker, RingHom.comp_apply, ← RingHom.mem_ker, hker] at hx
+        exact hx
+    obtain ⟨N, hN⟩ := hnil
+    have : ∀ j : ℕ, f x ^ (j + 1) = f x := by
+      intro j; induction j with
+      | zero => simp
+      | succ j ih => rw [pow_succ, ih, hxx]
+    rcases N with _ | N
+    · simp at hN; exact (subsingleton_of_zero_eq_one hN.symm).elim _ _
+    · rw [this] at hN; exact hN
+  · intro hx k _ _ h i
+    refine ((hmem' _).mp ?_) i
+    rw [hmem]
+    show e ∉ RingHom.ker (h.comp f)
+    rw [RingHom.mem_ker, RingHom.comp_apply]
+    have : f e = 1 := by
+      have := congrArg f hadd
+      rw [map_add (f := _), hx, add_zero, map_one] at this; exact this
+    rw [this, map_one]; exact one_ne_zero
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRankIdealOfIdempotentStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.exists_rank_ideal_of_idempotent' : ∀ (A : Type) [CommRing A] (I : Type) [Fintype I] (n : ℕ) (P : I → Matrix (Fin n) (Fin n) A),
+    (∀ i, P i * P i = P i) → ∀ (m : ℕ), ∃ x : A, ∀ (T : Type) [CommRing T] (f : A →+* T),
+      ((∀ (k : Type) [Field k] [IsAlgClosed k] (h : T →+* k) (i : I),
+          Module.rankAtStalk (LinearMap.range (P i).mulVecLin)
+            (⟨RingHom.ker (h.comp f), RingHom.ker_isPrime _⟩ : PrimeSpectrum A) = m) ↔ f x = 0) := by
+  first | (exact @GlobalTheory.exists_rank_ideal_of_idempotent) | (exact GlobalTheory.exists_rank_ideal_of_idempotent) | (intros; apply GlobalTheory.exists_rank_ideal_of_idempotent  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdealGeometricRankIffOfLieCondition
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.UPel.HT.LieLin.RankIdeal
+
+open Matrix
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.LieLin
+
+theorem exists_ideal_rank_iff : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (B : Type) [CommRing B]
+  (βB : R →+* B) (n : ℕ) (M : 𝓞 D.F →+* Matrix (Fin n) (Fin n) B),
+    ∃ K₂ : Ideal B, ∀ (T : Type) [CommRing T] (f : B →+* T), lieIdeal b βB M ≤ RingHom.ker f →
+      ((∀ (k : Type) [Field k] [IsAlgClosed k] (h : T →+* k) (i : Fin D.a),
+          Module.finrank k (eigSub (matAct M (h.comp f)) ((h.comp (f.comp βB)).comp (b.t i))) = D.m) ↔
+        K₂ ≤ RingHom.ker f) := by
+  intro p _ D R _ b B _ βB n M
+  set J := lieIdeal b βB M with hJdef
+  let P : Fin D.a → Matrix (Fin n) (Fin n) (B ⧸ J) := fun i => (projMat b βB M i).map (Ideal.Quotient.mk J)
+  have hJmk : J ≤ RingHom.ker (Ideal.Quotient.mk J) := fun a ha => by
+    rw [RingHom.mem_ker]; exact Ideal.Quotient.eq_zero_iff_mem.2 ha
+
+  have hrange : ∀ (K : Type) [CommRing K] (g : B →+* K), J ≤ RingHom.ker g → ∀ i : Fin D.a,
+      (eigSub (matAct M g) ((g.comp βB).comp (b.t i)) : Set (Fin n → K)) =
+        LinearMap.range ((projMat b βB M i).map g).mulVecLin := by
+    intro K _ g hg i
+    ext v
+    simp only [SetLike.mem_coe, mem_eigSub, matAct_apply, LinearMap.mem_range, Matrix.mulVecLin_apply,
+      RingHom.coe_comp, Function.comp_apply]
+    constructor
+    · intro hv
+      exact ⟨v, GlobalTheory.T.eigenPartProjectionMatrix_map_mulVec_of_eigenvector p D R b B βB n M K g i v hv⟩
+    · rintro ⟨w, rfl⟩ c
+      rw [Matrix.mulVec_mulVec, GlobalTheory.T.map_mul_eigenPartProjectionMatrix_eq_scalar p D R b B βB n M K g hg i c, Matrix.smul_mulVec]
+  have hidem : ∀ i, P i * P i = P i := by
+    intro i
+    apply (Matrix.toLin' (R := B ⧸ J) (m := Fin n) (n := Fin n)).injective
+    apply LinearMap.ext
+    intro v
+    simp only [Matrix.toLin'_apply]
+    rw [← Matrix.mulVec_mulVec]
+    apply GlobalTheory.T.eigenPartProjectionMatrix_map_mulVec_of_eigenvector p D R b B βB n M _ (Ideal.Quotient.mk J) i
+    intro c
+    rw [Matrix.mulVec_mulVec, GlobalTheory.T.map_mul_eigenPartProjectionMatrix_eq_scalar p D R b B βB n M _ _ hJmk i c, Matrix.smul_mulVec]
+  obtain ⟨x, hx⟩ := GlobalTheory.T.exists_rank_ideal_of_idempotent' (B ⧸ J) (Fin D.a) n P hidem D.m
+  obtain ⟨x', rfl⟩ := Ideal.Quotient.mk_surjective x
+  refine ⟨Ideal.span {x'}, fun T _ f hf => ?_⟩
+  have hfa : ∀ a ∈ J, f a = 0 := fun a ha => RingHom.mem_ker.1 (hf ha)
+  let fb : B ⧸ J →+* T := Ideal.Quotient.lift J f hfa
+  have hfb : fb.comp (Ideal.Quotient.mk J) = f := Ideal.Quotient.lift_comp_mk _ _ _
+  rw [Ideal.span_singleton_le_iff_mem, RingHom.mem_ker]
+  have hx' := hx T fb
+  rw [show fb (Ideal.Quotient.mk J x') = f x' from Ideal.Quotient.lift_mk _ _ _] at hx'
+  rw [← hx']
+  refine forall_congr' fun k => forall_congr' fun _ => forall_congr' fun _ => forall_congr' fun h => forall_congr' fun i => ?_
+  have e1 : eigSub (matAct M (h.comp f)) ((h.comp (f.comp βB)).comp (b.t i)) =
+      LinearMap.range ((P i).map (h.comp fb)).mulVecLin := by
+    apply SetLike.coe_injective
+    show (eigSub (matAct M (h.comp f)) (((h.comp f).comp βB).comp (b.t i)) : Set (Fin n → k)) = _
+    rw [hrange k (h.comp f) (fun a ha => by simp [hfa a ha]) i]
+    congr 3
+  rw [e1, GlobalTheory.T.finrank_range_map_idempotent_eq_rankAtStalk (B ⧸ J) n (P i) (hidem i) k (h.comp fb)]
+
+end GlobalTheory.UPel.HT.LieLin.RankIdeal
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIdealGeometricRankIffOfLieConditionStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +350,5 @@ theorem _root_.GlobalTheory.T.exists_ideal_geometric_rank_iff_of_lie_condition :
           Module.finrank k (eigSub (matAct M (h.comp f)) ((h.comp (f.comp βB)).comp (b.t i))) = D.m) ↔
         K₂ ≤ RingHom.ker f) := by
   first | (exact @GlobalTheory.UPel.HT.LieLin.RankIdeal.exists_ideal_rank_iff) | (exact GlobalTheory.UPel.HT.LieLin.RankIdeal.exists_ideal_rank_iff) | (intros; apply GlobalTheory.UPel.HT.LieLin.RankIdeal.exists_ideal_rank_iff  <;> assumption)
+end
+end

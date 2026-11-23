@@ -41,7 +41,31 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.SobolevGaussianKernels.StatementEI
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Module.LinearMap.Star
+
+-- Source module: Formalism.SobolevGaussianKernels.StatementEI
+
+section
+
+@[expose] public section
+
+namespace Formalism.SL.IwahoriBlocks
+
+variable {E : Type*} [CommRing E] [StarRing E] {V : Type*} [AddCommGroup V] [Module E V]
+
+def IsHerm (h : V →ₗ[E] V →ₗ⋆[E] E) : Prop := ∀ v w, h w v = star (h v w)
+
+def eich (h : V →ₗ[E] V →ₗ⋆[E] E) (x u : V) (s : E) (v : V) : V :=
+  v + h v u • x - h v x • (u + s • x)
+
+end Formalism.SL.IwahoriBlocks
+end
+end
+
+-- Source module: Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
+
+section
 
 @[expose] public section
 
@@ -94,3 +118,5 @@ def Step4 : Prop :=
       ≤ (4 : ℝ) ^ Om.card * (∏ p, H p) ^ (2 * c) * ((2 : ℝ) ^ κ)⁻¹ * ∏ p, ngen p
 
 end Formalism.HermitianLatticeCounting.S4
+end
+end

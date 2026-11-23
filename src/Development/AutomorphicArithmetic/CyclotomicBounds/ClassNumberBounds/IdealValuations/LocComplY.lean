@@ -1,12 +1,9 @@
 module
 
-public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.IdealValuations.LocDefY
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemOfAdjoinTop
+public import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -21,16 +18,8 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-public import Mathlib.RingTheory.Valuation.Integral
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -51,12 +40,79 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.LeNuIffPowMemPrinc
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Valuation.Integral
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Separation.CompletelyRegular
-import Mathlib.Topology.Sheaves.Init
-import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.LeNuIffPowMemPrinc
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.IdealValuations.LocDefY
+
+section
+
+@[expose] public section
+
+open KStar.TotallyRealRoots
+
+namespace KStar.IdealValuations
+
+variable (l : ℕ) [Fact l.Prime]
+
+def IsResTrivial (g : Gal(PadicAlgCl l/ℚ_[l])) : Prop :=
+  ∀ x : PadicAlgCl l, ‖x‖ ≤ 1 → ‖g x - x‖ < 1
+
+
+variable {l} in
+noncomputable def complField {E : Type*} [Field E] (j : E →+* PadicAlgCl l) :
+    IntermediateField ℚ_[l] (PadicAlgCl l) :=
+  IntermediateField.adjoin ℚ_[l] (Set.range j)
+
+end KStar.IdealValuations
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemOfAdjoinTop
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qj1.mem_of_adjoin_top.{u_2} :
+    ∀ {l : ℕ}
+    [inst : Fact (Nat.Prime l)] {K : Type u_2} [inst_1 : Field K] [inst_2 : CharZero K] {S : Set K},
+    Algebra.adjoin ℚ S = ⊤ →
+      ∀ (j : K →+* PadicAlgCl l) (F : IntermediateField ℚ_[l] (PadicAlgCl l)),
+        (∀ s ∈ S, (j : K → PadicAlgCl l) s ∈ F) → ∀ (x : K), (j : K → PadicAlgCl l) x ∈ F := by
+  intro l _ K _ _ S hS j F hF x
+  have hx : x ∈ Algebra.adjoin ℚ S := hS ▸ Algebra.mem_top
+  induction hx using Algebra.adjoin_induction with
+  | mem y hy => exact hF y hy
+  | algebraMap q =>
+    rw [eq_ratCast, map_ratCast]
+    exact SubfieldClass.ratCast_mem F q
+  | add y z _ _ hy hz =>
+    rw [map_add (f := _)]
+    exact add_mem hy hz
+  | mul y z _ _ hy hz =>
+    rw [map_mul]
+    exact mul_mem hy hz
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.IdealValuations.LocComplY
+
+section
 
 @[expose] public section
 
@@ -254,3 +310,5 @@ theorem exists_completion_map (v : HeightOneSpectrum (𝓞 E)) (j : E →+* Padi
     · exact ⟨_, hJj x⟩
 
 end KStar.IdealValuations
+end
+end

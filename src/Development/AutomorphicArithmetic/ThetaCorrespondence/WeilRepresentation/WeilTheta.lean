@@ -2,9 +2,10 @@ module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.WeilThetaConvergence
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilThetaConvergenceOfSiegelSet
-public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.PublishedTheoremStatements.SiegelSetUnitaryHolds
-import Development.WeilBound.ThetaLifts.Reductions.SiegelOfCore
+import Aesop.Main
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsSchwartzBruhatAdelicMatrixOfMemAdelicSchwartz
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatAdelicMatrixContinuousLeMajorant
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AdelicUnitaryTopology
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,7 +40,31 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaConvergenceOfSiegelSet
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.PublishedTheoremStatements.SiegelSetUnitaryHolds
+import Development.WeilBound.ThetaLifts.Reductions.SiegelOfCore
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilThetaConvergenceOfSiegelSet
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.WeilThetaConv
+
+theorem weilThetaConvergence_of_siegelSet (hRT : GlobalTheory.Published.SiegelSetUnitary) :
+    GlobalTheory.Published.WeilThetaConvergence :=
+  GlobalTheory.CompanionTheory.WeilTheta.weilThetaConvergence_of_siegelSet hRT
+
+end GlobalTheory.WeilThetaConv
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.WeilRepresentation.WeilTheta
+
+section
 
 @[expose] public section
 
@@ -51,3 +76,5 @@ theorem weilThetaConvergence : GlobalTheory.Published.WeilThetaConvergence :=
   GlobalTheory.WeilThetaConv.weilThetaConvergence_of_siegelSet siegelSetUnitary_of_core
 
 end UpperTheory.Lit
+end
+end

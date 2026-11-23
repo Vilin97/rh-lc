@@ -1,7 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.CoefficientRepTrivialOnUnramified
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsoSeparation
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IrreducibleProjectionExists
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,6 +37,35 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsoSeparation
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.IsoSeparation.isoSep :
+    ∀ {H M : Type} [inst : Group H] [inst_1 : TopologicalSpace H] [inst_2 : IsTopologicalGroup H] [inst_3 : AddCommGroup M]
+      [inst_4 : _root_.Module ℂ M] {ρ : Representation ℂ H M} {Y : Submodule ℂ M} {σ : GlobalTheory.CuspRep.SmIrr H},
+      UpperTheory.V.Hi.IsoSum ρ Y σ →
+        ∀ {F : M},
+          F ∈ Y →
+            F ≠ (0 : M) →
+              ∃ (p : M →ₗ[ℂ] σ.V),
+                (∀ (g : H),
+                    ∀ y ∈ Y,
+                      (p : M → σ.V) (((ρ : H → M →ₗ[ℂ] M) g : M → M) y) =
+                        ((σ.ρ : H → σ.V →ₗ[ℂ] σ.V) g : σ.V → σ.V) ((p : M → σ.V) y)) ∧
+                  (p : M → σ.V) F ≠ (0 : σ.V) := by
+  intro H M _ _ _ _ _ ρ Y σ h F hF h0
+  cases σ with
+  | mk V ρ' hs hi => exact UpperTheory.irreducible_projection_exists ρ' ρ hi Y h hF h0
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.OrdinaryHeckeCharacters.IsoSep
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.LocGL GlobalTheory.GalOfCusp GlobalTheory.SmGL GlobalTheory.SplitWeil UpperTheory.V UpperTheory.V.Hi
@@ -46,3 +75,5 @@ theorem UpperTheory.V.Hi.isoSep :
         {ρ : Representation ℂ H M} {Y : Submodule ℂ M} {σ : SmIrr H}, IsoSum ρ Y σ → ∀ {F : M}, F ∈ Y → F ≠ 0 →
         ∃ p : M →ₗ[ℂ] σ.V, (∀ g, ∀ y ∈ Y, p (ρ g y) = σ.ρ g (p y)) ∧ p F ≠ 0 :=
   _root_.UpperTheory.Reformulated.B.IsoSeparation.isoSep
+end
+end

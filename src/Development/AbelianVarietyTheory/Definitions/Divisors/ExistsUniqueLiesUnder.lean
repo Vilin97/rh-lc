@@ -3,12 +3,7 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsAlgAtlasAtlasOf
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LinearIndependentOfCutSec
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MSmoothOfWeightIffIsCInf
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NormDetAtConstOfPlacewise
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DegFrame
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToShimXEqShimXOfPkg
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormsOver
-public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.ExistsSmulOfPreservesFrameOrbits
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PreimageConnectedComponentMem
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AmpleOnAbelianBase
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,8 +38,166 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DegFrame
+public import Formalism.LocalToGlobal.LatticeGeometry.AmpleOnAbelianBase
+public import Formalism.LocalToGlobal.LatticeGeometry.ArVolEqOfNef
+public import Formalism.LocalToGlobal.LatticeGeometry.NormDetInf
+public import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CmHostRootComplexEqPmSqrt
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FnAlgClosedOfFixedPoints
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormsOver
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RingKrullDimIntegers
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.ExistsSmulOfPreservesFrameOrbits
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PreimageConnectedComponentMem
+import Mathlib.Tactic.Basify
 import Development.AbelianVarietyTheory.Definitions.Divisors.SlopeTestRemainingChoices
 import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NormDetAtConstOfPlacewise
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.Geo GlobalTheory.Toroidal
+
+namespace GlobalTheory.ShFam.Pad
+
+def inclQb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {l : Level H}
+    (c : Coeff l) : c.F →+* Qb :=
+  c.F.val.toRingHom.codRestrict (algebraicClosure ℚ ℂ) fun a =>
+    haveI := c.fin
+    mem_algebraicClosure_iff.2 ((Algebra.IsAlgebraic.isAlgebraic (R := ℚ) a).algHom c.F.val)
+
+
+open Classical in
+def carry {F : Type} [Field F] (f g : F →+* Qb) : Qb →+* Qb :=
+  haveI : Nonempty (Qb →+* Qb) := ⟨RingHom.id Qb⟩
+  if f = g then RingHom.id Qb else Classical.epsilon fun σ => σ.comp f = g
+
+variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} (s : FinalTheorems S κ)
+
+def ioAt (p : ℕ) [Fact p.Prime] (y : Pt s) : Qb →+* ℂ_[p] := (iotaP p).comp (carry y.fK (inclQb κ.c))
+
+def normDetIo (p : ℕ) [Fact p.Prime] (b : Bool) (τ : D.what₂.Tau) (y : Pt s) (io : Qb →+* ℂ_[p]) (a : Qb) : ℝ :=
+  ‖io a‖ * Real.exp (∑ i : Fin N, y.lnRoot io p b (DV.tauEmb D τ) i)
+
+
+open Classical in
+def normDetAt (p : ℕ) (b : Bool) (τ : D.what₂.Tau) (y : Pt s) (a : Qb) : ℝ :=
+  if h : p.Prime then (haveI := Fact.mk h; normDetIo s p b τ y (ioAt s p y) a) else 1
+
+def padAt {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D p → (DV.KW p →+* ℂ)} {ng : NgPkg} (L : LocSt D N j ng)
+    (G : GlobSt fun p => (L.loc p).Mdl) (M : AdmSt D N j jC) (F : FlatSt s)
+    (I : ArIn D.what₂.Tau N (D.R.f * N) s.Comp) : PadPkg D N j s.Comp jC ng :=
+  { padOf s L G M F I with
+    normDetT := fun p τ (y : Pt s) => normDetAt s p true τ y (F.sv τ y)
+    normDetH := fun p τ (y : Pt s) => normDetAt s p false τ y (F.sv τ y) }
+
+section Unfold
+
+variable {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D p → (DV.KW p →+* ℂ)} {ng : NgPkg} (L : LocSt D N j ng)
+  (G : GlobSt fun p => (L.loc p).Mdl) (M : AdmSt D N j jC) (F : FlatSt s) (I : ArIn D.what₂.Tau N (D.R.f * N) s.Comp)
+
+end Unfold
+
+end GlobalTheory.ShFam.Pad
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToShimXEqShimXOfPkg
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.Geo GlobalTheory.Toroidal GlobalTheory.TrueGeo GlobalTheory.ShFam
+
+namespace GlobalTheory.ShFam
+
+def shimXOfPkg {D : D7} {G : DV.Geo D.what₂.LL} {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D p → (DV.KW p →+* ℂ)} {ng : NgPkg}
+    {N j : ℕ} {Comp : Type} [Fintype Comp] [Nonempty Comp] (cx : CxPkg D.what₂.Tau N j Comp)
+    (alg : AlgPkg G D.what₂.Tau N Comp) (pad : PadPkg D N j Comp jC ng) (h : 1 ≤ j ∧ j < N) (lev : Finset ℕ)
+    (hlev : ∀ p ∈ lev, p.Prime) : DV.ShimX D.what₂.Tau where
+  N := N
+  j := j
+  j_pos := h.1
+  j_lt := h.2
+  lev := lev
+  lev_prime := hlev
+  Comp := Comp
+  vol := cx.vol
+  chern := cx.chern
+  chern_homog := fun P d hd hP => chernOf_homog D.what₂.Tau N cx.vol P d hd hP
+  arDeg := pad.arDeg
+  arDeg_homog := pad.arDeg_homog
+  arMix := pad.arMix
+  arMix_HT := pad.arMix_HT
+  arMix_DR := pad.arMix_DR
+  CurveHT := pad.CurveHT
+  degHT := pad.degHT
+  CurveDR := pad.CurveDR
+  degDR := pad.degDR
+  FibComp := pad.FibComp
+  fibInBd := pad.fibInBd
+  Pt := pad.Pt
+  phiDR := pad.phiDR
+  phiMod := pad.phiMod
+  phiFr := pad.phiFr
+  XC := cx.XC
+  rfn := cx.rfn
+  rfn_ge := cx.rfn_ge
+  hLo := cx.hLo
+  hUp := cx.hUp
+  hLo_le := cx.hLo_le
+  connN := cx.connN
+  curvN := cx.curvN
+  compOf := cx.compOf
+  normDetInf := cx.normDetInf
+  compPt := pad.compPt
+  normDetT := pad.normDetT
+  normDetH := pad.normDetH
+  htDetT := pad.htDetT
+  ALB := alg.ALB
+  arSelf := fun L => ∑ c, alg.arSelfC L c
+  arSelfC := alg.arSelfC
+  arSelf_sum := fun _ => rfl
+  geo := fun L => ∑ c, alg.geoC L c
+  geoC := alg.geoC
+  geo_sum := fun _ => rfl
+  arVol := alg.arVol
+  semipos := alg.semipos
+  nefFib := alg.nefFib
+  arNef := alg.arNef
+  Mbar := alg.Mbar
+
+section
+variable {D : D7} {A : Amb D} {F : SrcFam A} {L : CmList A} {C : CxSt D.what₂.LL} (K : CutSt C) (R : ResSt C)
+  {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D p → (DV.KW p →+* ℂ)} {ng : NgPkg} (k : Kits F L C jC ng)
+
+end
+
+end GlobalTheory.ShFam
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueLiesUnder
+
+section
 
 @[expose] public section
 
@@ -224,3 +376,6 @@ end LatModel
 end Setup
 
 end GlobalTheory.Mean4O
+end
+end
+end

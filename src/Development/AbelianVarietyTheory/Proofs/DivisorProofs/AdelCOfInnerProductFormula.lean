@@ -7,15 +7,20 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormOfClassSums
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ToNatFloorLe
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VolEqIndexMulMass
 public import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.HostTorsionOrderLe
-public import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.MassNumeric
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -42,6 +47,198 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LamLowNumericalEnd
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem lamLow_numerical_end : ∀ (f n r : ℕ) (L' dmax mass Lq lam : ℝ) (H dt dk dD : Fin f → ℝ), 8 ≤ n → 2 * r ≤ n → 1 ≤ r → 1 ≤ f → (5.5 : ℝ) ≤ L' → Real.log n ≤ L' → 0 ≤ dmax → Real.log (dmax + 2) ≤ 2 * L' → 1 / ((2 : ℝ) ^ n * (n.factorial : ℝ)) ≤ mass → 0 < Lq → |Real.log Lq| ≤ f * r / 4 → (∀ ρ, 0 < H ρ ∧ 1 ≤ dt ρ ∧ 1 ≤ dk ρ ∧ 0 < dD ρ ∧ Real.log (dD ρ) ≤ 2 + (r : ℝ) ^ 2 * Real.log (3 * (r : ℝ) ^ 2 * n * (dmax + 2))) → lam = mass * Lq * ∏ ρ, (H ρ * dt ρ * dk ρ / dD ρ) → ∑ ρ, Real.log (H ρ) - 2 * f * (n : ℝ) ^ 2 * L' ≤ Real.log lam := by
+  intro f n r L' dmax mass Lq lam H dt dk dD hn hr hr1 hf hL' hlogn hdmax hlogd hmass hLq hlogLq hρ hlam
+  have hn8 : (8 : ℝ) ≤ n := by exact_mod_cast hn
+  have hr1' : (1 : ℝ) ≤ r := by exact_mod_cast hr1
+  have hr2 : 2 * (r : ℝ) ≤ n := by exact_mod_cast hr
+  have hf1 : (1 : ℝ) ≤ f := by exact_mod_cast hf
+  have hnpos : (0 : ℝ) < n := by linarith
+  have hrpos : (0 : ℝ) < r := by linarith
+  have hmpos : 0 < mass := lt_of_lt_of_le (by positivity) hmass
+  have hlogmass : -((n : ℝ) * Real.log 2 + (n : ℝ) * Real.log n) ≤ Real.log mass := by
+    have h1 := Real.log_le_log (by positivity) hmass
+    rw [one_div, Real.log_inv, Real.log_mul (by positivity) (by positivity), Real.log_pow] at h1
+    have hfac : Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n := by
+      rw [← Real.log_pow]
+      apply Real.log_le_log (by positivity)
+      exact_mod_cast Nat.factorial_le_pow n
+    linarith
+  have hX : Real.log (3 * (r : ℝ) ^ 2 * n * (dmax + 2)) ≤ 5 * L' := by
+    have hd : (0 : ℝ) < dmax + 2 := by linarith
+    have h3 : 3 * (r : ℝ) ^ 2 ≤ (n : ℝ) ^ 2 := by nlinarith
+    have hle : 3 * (r : ℝ) ^ 2 * n * (dmax + 2) ≤ (n : ℝ) ^ 3 * (dmax + 2) := by
+      calc 3 * (r : ℝ) ^ 2 * n * (dmax + 2) ≤ (n : ℝ) ^ 2 * n * (dmax + 2) := by gcongr
+        _ = (n : ℝ) ^ 3 * (dmax + 2) := by ring
+    have hpos : 0 < 3 * (r : ℝ) ^ 2 * n * (dmax + 2) :=
+      mul_pos (mul_pos (mul_pos (by norm_num) (pow_pos hrpos 2)) hnpos) hd
+    have h4 := Real.log_le_log hpos hle
+    rw [Real.log_mul (pow_pos hnpos 3).ne' hd.ne', Real.log_pow] at h4
+    push_cast at h4
+    linarith
+  have hsq : (r : ℝ) ^ 2 ≤ (n : ℝ) ^ 2 / 4 := by nlinarith
+  have hdD : (r : ℝ) ^ 2 * Real.log (3 * (r : ℝ) ^ 2 * n * (dmax + 2)) ≤ 5 / 4 * (n : ℝ) ^ 2 * L' := by
+    calc (r : ℝ) ^ 2 * Real.log (3 * (r : ℝ) ^ 2 * n * (dmax + 2)) ≤ (r : ℝ) ^ 2 * (5 * L') :=
+          mul_le_mul_of_nonneg_left hX (by positivity)
+      _ ≤ (n : ℝ) ^ 2 / 4 * (5 * L') := mul_le_mul_of_nonneg_right hsq (by linarith)
+      _ = 5 / 4 * (n : ℝ) ^ 2 * L' := by ring
+  have hfac_pos : ∀ ρ, 0 < H ρ * dt ρ * dk ρ / dD ρ := fun ρ => by
+    obtain ⟨h1, h2, h3, h4, -⟩ := hρ ρ
+    have ht : 0 < dt ρ := by linarith
+    have hk : 0 < dk ρ := by linarith
+    exact div_pos (mul_pos (mul_pos h1 ht) hk) h4
+  have hprodpos : 0 < ∏ ρ, (H ρ * dt ρ * dk ρ / dD ρ) := Finset.prod_pos (fun ρ _ => hfac_pos ρ)
+  have e1 : Real.log lam = Real.log mass + Real.log Lq + ∑ ρ, Real.log (H ρ * dt ρ * dk ρ / dD ρ) := by
+    rw [hlam, Real.log_mul (mul_pos hmpos hLq).ne' hprodpos.ne', Real.log_mul hmpos.ne' hLq.ne',
+      Real.log_prod (fun ρ _ => (hfac_pos ρ).ne')]
+  have e2 : ∀ ρ, Real.log (H ρ) - (2 + 5 / 4 * (n : ℝ) ^ 2 * L') ≤ Real.log (H ρ * dt ρ * dk ρ / dD ρ) := by
+    intro ρ
+    obtain ⟨h1, h2, h3, h4, h5⟩ := hρ ρ
+    have ht : 0 < dt ρ := by linarith
+    have hk : 0 < dk ρ := by linarith
+    rw [Real.log_div (mul_pos (mul_pos h1 ht) hk).ne' h4.ne', Real.log_mul (mul_pos h1 ht).ne' hk.ne',
+      Real.log_mul h1.ne' ht.ne']
+    have := Real.log_nonneg h2
+    have := Real.log_nonneg h3
+    linarith
+  have hsum : ∑ ρ, Real.log (H ρ) - (f : ℝ) * (2 + 5 / 4 * (n : ℝ) ^ 2 * L') ≤
+      ∑ ρ, Real.log (H ρ * dt ρ * dk ρ / dD ρ) := by
+    have := Finset.sum_le_sum (fun ρ (_ : ρ ∈ Finset.univ) => e2 ρ)
+    rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at this
+    exact this
+  have hLqlow : -((f : ℝ) * r / 4) ≤ Real.log Lq := by
+    have := neg_abs_le (Real.log Lq)
+    linarith
+  have hlog2 : Real.log 2 ≤ 1 := by
+    have := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hfL : 1 ≤ (f : ℝ) * L' := by nlinarith
+  have hP1 : (n : ℝ) ≤ f * n * L' := by linarith [mul_le_mul_of_nonneg_left hfL hnpos.le]
+  have hnL : 0 ≤ (n : ℝ) * L' := by positivity
+  have hP2 : (n : ℝ) * L' ≤ f * n * L' := by linarith [mul_le_mul_of_nonneg_right hf1 hnL]
+  have hP3 : (f : ℝ) * r / 4 ≤ f * n * L' := by
+    have hrn : (r : ℝ) / 4 ≤ n * L' := by nlinarith
+    linarith [mul_le_mul_of_nonneg_left hrn (by linarith : (0 : ℝ) ≤ f)]
+  have hnL2 : (2 : ℝ) ≤ n * L' := by nlinarith [mul_le_mul hn8 hL' (by norm_num) hnpos.le]
+  have hP4 : 2 * (f : ℝ) ≤ f * n * L' := by linarith [mul_le_mul_of_nonneg_left hnL2 (by linarith : (0 : ℝ) ≤ f)]
+  have hbig : 8 * ((f : ℝ) * n * L') ≤ f * (n : ℝ) ^ 2 * L' := by
+    have h0 : 0 ≤ (f : ℝ) * n * L' := by positivity
+    linarith [mul_le_mul_of_nonneg_right hn8 h0]
+  have hm1 := mul_le_mul_of_nonneg_left hlog2 hnpos.le
+  have hm2 := mul_le_mul_of_nonneg_left hlogn hnpos.le
+  rw [e1]
+  linarith
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.MassNumeric
+
+section
+
+@[expose] public section
+
+namespace UpperTheory.Mu
+
+theorem numeric_bound {ι : Type} [Fintype ι] {w : ℕ} (f n r : ℕ) (hcard : Fintype.card ι = f) (L' dmax mass dim idx nrm E dO dS : ℝ)
+    (H dk J deg : ι → ℝ) (h8 : 8 ≤ n) (h2 : 2 * r ≤ n) (h1 : 1 ≤ r) (hf : 1 ≤ f) (hL : (5.5 : ℝ) ≤ L') (hn : Real.log n ≤ L')
+    (hd0 : 0 ≤ dmax) (hd : Real.log (dmax + 2) ≤ 2 * L') (hw0 : 0 < w) (hw : w ≤ 8 * f ^ 2)
+    (hm : 1 / ((w : ℝ) ^ n * (n.factorial : ℝ)) ≤ mass) (hdim : 1 ≤ dim)
+    (hidx : idx * nrm = dS⁻¹) (hE : Real.exp (-(r * (2 * f))) ≤ E) (hO : 0 < dO ∧ dO ≤ Real.exp (2 * (r * (2 * f))))
+    (hS : 0 < dS ∧ dS ≤ Real.exp (2 * (r * (2 * f)))) (hH : ∀ ρ, 0 < H ρ) (hk : ∀ ρ, 1 ≤ dk ρ) (hJ : ∀ ρ, 0 < J ρ)
+    (hdeg : ∀ ρ, 0 ≤ deg ρ ∧ deg ρ ≤ dmax)
+    (hJb : ∀ ρ, Real.log (J ρ)⁻¹ ≤ 2 + (r : ℝ) ^ 2 * Real.log (2 * Real.sqrt 2 * (r : ℝ) ^ 2 * n * (deg ρ + 2))) :
+    0 < (∏ ρ, dk ρ) * dim * (idx * mass) * (∏ ρ, H ρ) * nrm / dO * (∏ ρ, J ρ) * E ∧
+      ∑ ρ, Real.log (H ρ) - 8 * f * (n : ℝ) ^ 2 * L' ≤
+        Real.log ((∏ ρ, dk ρ) * dim * (idx * mass) * (∏ ρ, H ρ) * nrm / dO * (∏ ρ, J ρ) * E) := by
+  obtain ⟨e⟩ : Nonempty (Fin f ≃ ι) := ⟨(Fintype.equivFinOfCardEq hcard).symm⟩
+  have hw1 : (0 : ℝ) < w := by exact_mod_cast hw0
+  have hc : 0 < ((w : ℝ) / 2) ^ n := by positivity
+  have hm' : 1 / ((2 : ℝ) ^ n * (n.factorial : ℝ)) ≤ ((w : ℝ) / 2) ^ n * mass := by
+    refine le_trans (le_of_eq ?_) (mul_le_mul_of_nonneg_left hm hc.le)
+    have : (0 : ℝ) < n.factorial := by exact_mod_cast n.factorial_pos
+    rw [div_pow]
+    field_simp
+  have hm0 : 0 < mass := lt_of_lt_of_le (by positivity) hm
+  have hE0 : 0 < E := lt_of_lt_of_le (Real.exp_pos _) hE
+  have hr : (1 : ℝ) ≤ r := by exact_mod_cast h1
+  have hn8 : (8 : ℝ) ≤ n := by exact_mod_cast h8
+  have hrn : 2 * (r : ℝ) ≤ n := by exact_mod_cast h2
+  have hf1 : (1 : ℝ) ≤ f := by exact_mod_cast hf
+  have hs : Real.sqrt 2 ≤ 3 / 2 := Real.sqrt_le_iff.2 ⟨by norm_num, by norm_num⟩
+  have key := GlobalTheory.lamLow_numerical_end f n r L' dmax (((w : ℝ) / 2) ^ n * mass * dim) 1 _ (fun a => H (e a)) (fun _ => 1) (fun a => dk (e a))
+    (fun a => (J (e a))⁻¹) h8 h2 h1 hf hL hn hd0 hd (hm'.trans (le_mul_of_one_le_right (mul_pos hc hm0).le hdim)) one_pos
+    (by rw [Real.log_one, abs_zero]; positivity)
+    (fun a => ⟨hH _, le_rfl, hk _, inv_pos.2 (hJ _), (hJb _).trans (by
+      have := (hdeg (e a)).1
+      have := (hdeg (e a)).2
+      gcongr
+      linarith)⟩) rfl
+  rw [e.sum_comp fun ρ => Real.log (H ρ), e.prod_comp fun ρ => H ρ * 1 * dk ρ / (J ρ)⁻¹] at key
+  have hP : 0 < mass * dim * 1 * ∏ ρ, H ρ * 1 * dk ρ / (J ρ)⁻¹ := by
+    refine mul_pos (by positivity) (Finset.prod_pos fun ρ _ => ?_)
+    have := hH ρ; have := hk ρ; have := hJ ρ
+    positivity
+  have hlw : Real.log (((w : ℝ) / 2) ^ n) ≤ 4 * (n * f) := by
+    have b0 : (w : ℝ) / 2 ≤ (2 * f) ^ 2 := by
+      have : (w : ℝ) ≤ 8 * (f : ℝ) ^ 2 := by exact_mod_cast hw
+      linarith
+    have b1 := Real.log_le_log (by positivity) b0
+    have b2 := Real.log_le_sub_one_of_pos (x := 2 * (f : ℝ)) (by positivity)
+    rw [Real.log_pow] at b1 ⊢
+    push_cast at b1
+    have : Real.log ((w : ℝ) / 2) ≤ 4 * f := by linarith only [b1, b2]
+    linarith only [mul_le_mul_of_nonneg_left this (Nat.cast_nonneg (α := ℝ) n)]
+  rw [show ((w : ℝ) / 2) ^ n * mass * dim * 1 * ∏ ρ, H ρ * 1 * dk ρ / (J ρ)⁻¹ =
+    ((w : ℝ) / 2) ^ n * (mass * dim * 1 * ∏ ρ, H ρ * 1 * dk ρ / (J ρ)⁻¹) by ring, Real.log_mul hc.ne' hP.ne'] at key
+  have e1 : (∏ ρ, dk ρ) * dim * (idx * mass) * (∏ ρ, H ρ) * nrm / dO * (∏ ρ, J ρ) * E =
+      (mass * dim * 1 * ∏ ρ, H ρ * 1 * dk ρ / (J ρ)⁻¹) * (E / (dO * dS)) := by
+    simp only [div_inv_eq_mul, mul_one, Finset.prod_mul_distrib]
+    have : idx * nrm * dS = 1 := by rw [hidx, inv_mul_cancel₀ hS.1.ne']
+    have h3 := hO.1.ne'
+    have h4 := hS.1.ne'
+    field_simp
+    linear_combination ((∏ ρ, dk ρ) * (∏ ρ, H ρ) * (∏ ρ, J ρ)) * this
+  have hq : 0 < E / (dO * dS) := div_pos hE0 (mul_pos hO.1 hS.1)
+  rw [e1]
+  refine ⟨mul_pos hP hq, ?_⟩
+  rw [Real.log_mul hP.ne' hq.ne', Real.log_div hE0.ne' (mul_pos hO.1 hS.1).ne', Real.log_mul hO.1.ne' hS.1.ne']
+  have a1 := (Real.le_log_iff_exp_le hE0).2 hE
+  have a2 := (Real.log_le_iff_le_exp hO.1).2 hO.2
+  have a3 := (Real.log_le_iff_le_exp hS.1).2 hS.2
+  have a4 : 10 * ((r : ℝ) * f) + 4 * (n * f) ≤ 6 * (f * (n : ℝ) ^ 2 * L') := by
+    have b0 : (0 : ℝ) ≤ f := Nat.cast_nonneg _
+    have b1 : (r : ℝ) * f ≤ n * f := mul_le_mul_of_nonneg_right (by linarith only [hrn, hr]) b0
+    have b2 : (n : ℝ) ≤ (n : ℝ) ^ 2 := by nlinarith only [hn8]
+    have b3 : (n : ℝ) * f ≤ (n : ℝ) ^ 2 * f := mul_le_mul_of_nonneg_right b2 b0
+    have b4 : (n : ℝ) ^ 2 * f * 5.5 ≤ (n : ℝ) ^ 2 * f * L' := mul_le_mul_of_nonneg_left hL (by positivity)
+    have b5 : (0 : ℝ) ≤ (n : ℝ) ^ 2 * f := by positivity
+    linarith only [b1, b3, b4, b5]
+  linarith only [key, hlw, a1, a2, a3, a4]
+
+end UpperTheory.Mu
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelCOfInnerProductFormula
+
+section
 
 @[expose] public section
 
@@ -299,3 +496,6 @@ theorem adelC_of_innerProductFormula (R : RealDat D A Ks) (F : Face D A) :
       form_key_lowC hd hν HV hV hy h2 h3 th hth v hv U₁ U₂ b hμ hFr hmR⟩
 
 end GlobalTheory.LowRow
+end
+end
+end

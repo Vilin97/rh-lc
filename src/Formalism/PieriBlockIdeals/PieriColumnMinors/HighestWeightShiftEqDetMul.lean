@@ -1,9 +1,6 @@
 module
 
-public import Formalism.PieriBlockIdeals.ExZTranslate
-public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
-import Mathlib.Algebra.AffineMonoid.Basic
-import Mathlib.Algebra.AffineMonoid.UniqueSums
+public import Formalism.PieriBlockIdeals.StatementLA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,7 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,10 +38,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+import Mathlib.Algebra.AffineMonoid.Basic
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Data.Nat.Prime.Int
+
+-- Source module: Formalism.PieriBlockIdeals.ExZTranslate
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.CohomologicalDescent.LA
+
+def InclZTwist : Prop :=
+  ∀ (r : ℕ) (ν : Fin r → ℕ) (c l e : ℕ), Antitone ν → l.Prime →
+    (InclZ r r le_rfl (fun a => ν a + c) l e ↔ InclZ r r le_rfl ν l e)
+
+def ExZTwist : Prop :=
+  ∀ (r : ℕ) (ν : Fin r → ℕ) (c l : ℕ), Antitone ν → l.Prime →
+    exZ r r le_rfl (fun a => ν a + c) l = exZ r r le_rfl ν l
+
+end Formalism.CohomologicalDescent.LA
+end
+end
+end
+
+-- Source module: Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightShiftEqDetMul
+
+section
 
 @[expose] public section
 
@@ -496,3 +523,6 @@ theorem exact_z_twist_by_det : ExZTwist := by
   simp only [h]
 
 end Formalism.CohomologicalDescent.LA
+end
+end
+end

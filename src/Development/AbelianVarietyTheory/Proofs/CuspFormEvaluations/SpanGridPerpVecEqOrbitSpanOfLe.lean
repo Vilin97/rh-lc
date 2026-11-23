@@ -50,8 +50,78 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantTheorems.FormPartialDerivatives
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.PerpendicularDeterminants.PerpVecOfPerp
+
+section
+
+@[expose] public section
+
+namespace PI.UnitaryGroupMassFormula.FormPartialDerivatives
+
+open ReciprocityTheory.ChartRestriction.G.TB
+
+theorem perpVec_perp (R : Type) [CommRing R] (V : Type) [AddCommGroup V] [Module R V] (p : ℕ)
+    (h : V →ₗ[R] (V → R)) (e e' : Fin p → V) (g : V) (c : Fin p) :
+    h (perpVec h e e' g) (e c) = 0 := by
+  have hentry : ∀ a', hMat h e e' a' c = h (e' a') (e c) := fun _ => rfl
+  have key : ∀ a, ∑ a', (hMat h e e').adjugate a a' * h (e' a') (e c) =
+      if a = c then (hMat h e e').det else 0 := by
+    intro a
+    have hk := congrFun (congrFun (Matrix.adjugate_mul (hMat h e e')) a) c
+    rw [Matrix.mul_apply] at hk
+    simp only [hentry] at hk
+    rw [hk, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
+    split_ifs <;> simp
+
+  simp only [perpVec, map_sub, map_smul, map_sum, Pi.sub_apply, Pi.smul_apply, Finset.sum_apply,
+  smul_eq_mul]
+  have hsum : ∑ a, ∑ a', (hMat h e e').adjugate a a' * h g (e a) * h (e' a') (e c) =
+      (hMat h e e').det * h g (e c) := by
+    calc ∑ a, ∑ a', (hMat h e e').adjugate a a' * h g (e a) * h (e' a') (e c)
+        = ∑ a, h g (e a) * ∑ a', (hMat h e e').adjugate a a' * h (e' a') (e c) := by
+          refine Finset.sum_congr rfl fun a _ => ?_
+          rw [Finset.mul_sum]
+          refine Finset.sum_congr rfl fun a' _ => ?_
+          ring
+      _ = (hMat h e e').det * h g (e c) := by
+          simp only [key, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+          ring
+  rw [hsum]
+  ring
+
+theorem perpVec_of_perp (R : Type) [CommRing R] (V : Type) [AddCommGroup V] [Module R V] (p : ℕ)
+    (h : V →ₗ[R] (V → R)) (e e' : Fin p → V) (g : V) (hg : ∀ a, h g (e a) = 0) :
+    perpVec h e e' g = (hMat h e e').det • g := by
+  simp [perpVec, hg]
+
+end PI.UnitaryGroupMassFormula.FormPartialDerivatives
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantTheorems.FormPartialDerivatives
+
+section
+
+@[expose] public section
+
+theorem perpendicular_vector_exists : ReciprocityTheory.ChartRestriction.G.TB.PerpVecSt := by
+  unfold ReciprocityTheory.ChartRestriction.G.TB.PerpVecSt
+  intro R _ V _ _ p h e e' g c
+  exact PI.UnitaryGroupMassFormula.FormPartialDerivatives.perpVec_perp R V p h e e' g c
+
+theorem perpendicular_vector_perp : ReciprocityTheory.ChartRestriction.G.TB.PerpVecPerpSt := by
+  unfold ReciprocityTheory.ChartRestriction.G.TB.PerpVecPerpSt
+  intro R _ V _ _ p h e e' g hg
+  exact PI.UnitaryGroupMassFormula.FormPartialDerivatives.perpVec_of_perp R V p h e e' g hg
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.SpanGridPerpVecEqOrbitSpanOfLe
+
+section
 
 @[expose] public section
 
@@ -396,3 +466,5 @@ theorem span_grid_perpVec_eq_orbitSpan (τ : T → E →+* K)
 end CM
 
 end GlobalTheory.Harm
+end
+end

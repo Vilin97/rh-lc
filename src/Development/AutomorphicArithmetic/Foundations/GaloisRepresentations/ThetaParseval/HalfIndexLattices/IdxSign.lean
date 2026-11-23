@@ -3,18 +3,10 @@ module
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.HalfIndexLattices.SplitStab
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.MemRangeOfOneTmulMem
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeIntertwinerRepSplitPlacePositiveScalar
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.EqZeroOfSplitIdempotentEvalPlaceEqZero
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLatticeIndexOfInjectiveEndomorphism
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLinearMapDetMulMulEqPow
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLocalLatticeOfGlobalLattice
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsPlaceOfSplitIdempotentCmExt
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsSignHeckeCharAtNonfixedPlace
-public import Development.AutomorphicArithmetic.IdeleLatticeFacts.LatticeDeterminantComparisonAtSplitPlace
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRepBI
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaB
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -47,7 +39,134 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsTopologicalRingAE
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.HalfIndexLattices.SplitStab
+import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaA
+import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.GoodLat
+public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLatticeIndexOfInjectiveEndomorphism
+public import Mathlib.LinearAlgebra.Determinant
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
+import Development.AbelianVarietyTheory.Definitions.Foundations.NormEulerPolySubOneLe
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntAFSmulMemLatOF
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsHeisTrivial
+import Formalism.LocalToGlobal.IndefiniteReal.DatumF
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLocalLatticeOfGlobalLattice
+public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsPlaceOfSplitIdempotentCmExt
+public import Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsSignHeckeCharAtNonfixedPlace
+public import Development.AutomorphicArithmetic.IdeleLatticeFacts.LatticeDeterminantComparisonAtSplitPlace
+import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRepBI
+import Mathlib.Algebra.Order.Star.Int
+
+-- Source module: Development.AutomorphicArithmetic.IdeleLatticeFacts.EqZeroOfSplitIdempotentEvalPlaceEqZero
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct Matrix Topology Kronecker ComplexOrder Classical
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Matrix
+open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
+open Formalism.IndefR.DatumF MeasureTheory GlobalTheory.FinWeil GlobalTheory.FinLatF GlobalTheory.RealWeilF GlobalTheory.WeilPartsF
+open PositivityTheory.ThKW PositivityTheory.ThKW.AutEtaA
+open UpperTheory.TP.W
+
+theorem UpperTheory.eq_zero_of_splitIdempotent_eval_place_eq_zero :
+    ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
+        IsCMExt F E σ → ∀ e, IsSplitIdemF σ e → ∀ P : HeightOneSpectrum (𝓞 E), (∀ Q, Q ≠ P → ev F E Q e = 0) →
+        ∀ a : AEF F E, e * a = a → ev F E P a = 0 → a = 0 := by
+  intro F E _ _ _ _ _ σ hσ e he P hP a hea haP
+  obtain ⟨hee, hec, v, ε, hε, hsum⟩ := he
+  obtain ⟨α, rfl, -, -⟩ := hε
+  have h1 : e * algebraMap (AF F) (AEF F E) (pairA F 0 α) = e := by
+    rw [← hsum, mul_add, hee, hec, add_zero]
+  have h2 : a = algebraMap (AF F) (AEF F E) (pairA F 0 α) * a := by
+    calc a = e * a := hea.symm
+      _ = (e * algebraMap (AF F) (AEF F E) (pairA F 0 α)) * a := by rw [h1]
+      _ = _ := by rw [mul_comm e, mul_assoc, hea]
+  have h3 : ∀ Q, ev F E Q a = 0 := by
+    intro Q
+    by_cases hQ : Q = P
+    · subst hQ
+      exact haP
+    · rw [← hea, map_mul, hP Q hQ, zero_mul]
+  have h4 : finPartF F E a = 0 := by
+    apply (finAdEquiv F E).injective
+    rw [map_zero]
+    apply RestrictedProduct.ext
+    intro Q
+    exact h3 Q
+  let g : Af F →ₗ[F] AF F := (LinearMap.inr F (Ainf F) (Af F) : Af F →ₗ[F] AF F) ∘ₗ LinearMap.mulLeft F α
+  have h5 : ∀ b : AEF F E, algebraMap (AF F) (AEF F E) (pairA F 0 α) * b =
+      TensorProduct.map g LinearMap.id (finPartF F E b) := by
+    intro b
+    induction b using TensorProduct.induction_on with
+    | zero => simp
+    | tmul x y =>
+      rw [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
+      show _ = TensorProduct.map g LinearMap.id ((sndA F x) ⊗ₜ[F] y)
+      rw [TensorProduct.map_tmul]
+      congr 1
+      exact Prod.ext (zero_mul x.1) rfl
+    | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), map_add (f := _)]
+  rw [h2, h5, h4, map_zero]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IdeleLatticeFacts.ExistsLinearMapDetMulMulEqPow
+
+section
+
+@[expose] public section
+
+open scoped TensorProduct Matrix Topology Kronecker ComplexOrder Classical
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Matrix
+open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
+open Formalism.IndefR.DatumF MeasureTheory GlobalTheory.FinWeil GlobalTheory.FinLatF GlobalTheory.RealWeilF GlobalTheory.WeilPartsF
+open PositivityTheory.ThKW PositivityTheory.ThKW.AutEtaA
+open UpperTheory.TP.W
+
+theorem UpperTheory.exists_linearMap_det_mul_mul_eq_pow :
+    ∀ {K : Type} [Field K] {m n : ℕ} (H : Matrix (Fin m) (Fin m) K) (G : Matrix (Fin n) (Fin n) K),
+        ∃ T : Matrix (Fin m) (Fin n) K →ₗ[K] Matrix (Fin m) (Fin n) K, (∀ u, T u = H * u * G) ∧
+          LinearMap.det T = H.det ^ n * G.det ^ m := by
+  intro K _ m n H G
+  let T : Matrix (Fin m) (Fin n) K →ₗ[K] Matrix (Fin m) (Fin n) K :=
+    { toFun := fun u => H * u * G
+      map_add' := by
+        intro u v
+        simp [Matrix.mul_add, Matrix.add_mul]
+      map_smul' := by
+        intro c u
+        simp [Matrix.mul_smul, Matrix.smul_mul] }
+  refine ⟨T, fun u => rfl, ?_⟩
+  have hrepr : ∀ (M : Matrix (Fin m) (Fin n) K) (i : Fin m) (j : Fin n),
+      (Matrix.stdBasis K (Fin m) (Fin n)).repr M (i, j) = M i j := by
+    intro M i j
+    simp [Matrix.stdBasis]
+  have hmat : LinearMap.toMatrix (Matrix.stdBasis K (Fin m) (Fin n)) (Matrix.stdBasis K (Fin m) (Fin n)) T
+      = H ⊗ₖ Gᵀ := by
+    ext ⟨i, j⟩ ⟨k, l⟩
+    rw [LinearMap.toMatrix_apply, Matrix.stdBasis_eq_single, hrepr]
+    simp [T, Matrix.kroneckerMap_apply, Matrix.mul_apply, Matrix.single_apply, ite_and,
+      Finset.sum_ite_eq', Finset.sum_ite_eq, ite_mul]
+  rw [← LinearMap.det_toMatrix (Matrix.stdBasis K (Fin m) (Fin n)), hmat, Matrix.det_kronecker,
+    Matrix.det_transpose, Fintype.card_fin, Fintype.card_fin]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.HalfIndexLattices.IdxSign
+
+section
 
 @[expose] public section
 
@@ -187,3 +306,5 @@ theorem UpperTheory.TP.W.idxSign :
   rw [hz, zpow_natCast]
   push_cast
   rfl
+end
+end

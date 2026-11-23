@@ -4,20 +4,16 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinPt
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.SplitPart
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicVacuumStandardLatticesReadsThetaStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BottomPairsExistEveryTupleOfCmThetaHypotheses
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BottomTriangleUnitConstant
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBottomPairBigMemberTwistedTuple
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockVacuumRealRestrictionGaussianEntire
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridConductorIdealCMIsCoprimeHalfDifferentStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharacterFiniteIdeleValueEqStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsVacuumConjOfNegHermitianSpace
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormPeriodSq
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerModelComplexConjugateNegFormStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareNuConductorExponentsPosProdEqModulusStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCongLevelIntG
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockVacuumRealRestrictionGaussianEntire
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsVacuumMovedThetaVacuum
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormPeriodSq
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaEqZeroOfReal
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitVacuumEntireFactorIsThetaMovedLattices
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -30,6 +26,7 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,8 +43,261 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Definitions.Divisors.FinitePrimesUnder
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsApprox
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrT
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BottomPairsExistEveryTupleOfCmThetaHypotheses
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BottomTriangleUnitConstant
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBottomPairBigMemberTwistedTuple
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockVacuumRealRestrictionGaussianEntire
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridConductorIdealCMIsCoprimeHalfDifferentStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharacterFiniteIdeleValueEqStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsVacuumConjOfNegHermitianSpace
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormPeriodSq
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.HermitianOrthogonalExtensionData
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CmHostImaginaryGeneratorNeZero
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaHeisenbergConjugationNegHermitianSpace
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DepthLatticeGridCoreIffFirstRowExtByZero
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.UnitCharTriangle
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareNuConductorExponentsPosProdEqModulusStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicVacuumStandardLatticesReadsTheta
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open scoped Classical Pointwise
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links
+open Formalism.MainNotions.TaylorLogMetric (VC embT tor0 lamOf Th La Iop Qbar lamC)
+open Formalism.MainNotions.StandardLatticesGL3 (TT stdL pt oddE0 Wd La0 Crv inc OhE IntU)
+open GlobalTheory.NormSum (Pair intG)
+open GlobalTheory.FunObj.SqNum (hatId CongOne skewLat unitBlock cosetVec)
+open GlobalTheory.NormExact (Reads Setup IsFinIdl HasFinPart finPt)
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (InId IsUnitDet unitChar stdFst)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.StdRead
+
+namespace GlobalTheory.VacRead
+
+theorem vacuum_reads_theta : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d) (δ : ℂ),
+  D.host.ccK = ⊤ → Setup ψ θ S T ⊤ δ 1 → ∀ v : WO S T → ℂ, IsVacO ψ θ S T (fun _ => 1) (fun _ => 1) (stdL D S.rank : Set (Fin S.rank → D.host.E)) (stdL D T.rank : Set (Fin T.rank → D.host.E)) v →
+  ∃ G ∈ Th D (tor0 D ⊤ δ) (stdL D a) (stdL D d), G ≠ 0 ∧ Reads ψ θ hS hT ⊤ δ 1 G v := by
+  intro D ψ θ S T a d hS hT δ hcc hSet v hv
+  subst hS hT
+  have hδ : δ ≠ 0 := GlobalTheory.NormExact.delta_ne_zero hSet.crv
+  have h1 : ∀ {k : ℕ} (M : Matrix (Fin k) (Fin k) D.host.E), M = 1 →
+      Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) ((1 : GL (Fin k) D.host.E) : Matrix (Fin k) (Fin k) D.host.E) * M *
+        ((1 : GL (Fin k) D.host.E) : Matrix (Fin k) (Fin k) D.host.E) = 1 := by
+    intro k M hM
+    subst hM
+    simp [Formalism.UG.cT]
+  obtain ⟨Φ, hΦd, hΦ⟩ := GlobalTheory.FockPos.vacuum_real_entire ψ θ S T 1 1 _ _ (h1 _ hSet.gS) (h1 _ hSet.gT) v hv
+  have hinV : ∀ {k : ℕ} (L : Submodule (𝓞 D.host.E) (Fin k → D.host.E)),
+      GlobalTheory.MovedDict.inV (D := D) 1 L = (L : Set (Fin k → D.host.E)) := by
+    intro k L
+    simp [GlobalTheory.MovedDict.inV]
+  have hv' := hv
+  rw [← hinV (stdL D S.rank), ← hinV (stdL D T.rank)] at hv'
+  have hC : Formalism.MainNotions.StandardLatticesGL3.Crv D D.host.ccK δ := by rw [hcc]; exact hSet.crv
+  have hTh := GlobalTheory.ThetaLawMoved.theta_of_vacuum_moved ψ θ S T 1 1 (h1 _ hSet.gS) (h1 _ hSet.gT) δ hC hδ
+    (stdL D S.rank) (stdL D T.rank) (GlobalTheory.MovedVacuum.sd_stdL D _) (GlobalTheory.MovedVacuum.sd_stdL D _) v hv' Φ hΦd hΦ
+  rw [hcc] at hTh
+  refine ⟨fun Y => Φ (δ⁻¹ • Y), hTh, ?_, ?_⟩
+  · intro hG
+    have h0 : v = 0 := GlobalTheory.TwistFactorCompare.theta_eq_zero_of_real hv.2.theta (fun w hw => by
+      rw [hΦ w hw]
+      have e := congrFun hG (δ • GlobalTheory.FockPos.zCo θ 1 1 w)
+      simp only [smul_smul, inv_mul_cancel₀ hδ, one_smul, Pi.zero_apply] at e
+      rw [e, mul_zero])
+    obtain ⟨⟨p, hp⟩, hq⟩ := hv.2.norm
+    have e := hq p hp
+    rw [h0] at e
+    simp [nrm2] at e
+  · rw [GlobalTheory.NormExact.reads_iff hSet.crv hSet.scale]
+    refine ⟨hv.2.theta, fun w hw => ?_⟩
+    rw [hΦ w hw]
+    congr 2
+    funext τ i j
+    simp [smul_eq_mul, map_one, mul_one, inv_mul_cancel_left₀ hδ]
+
+end GlobalTheory.VacRead
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicVacuumStandardLatticesReadsThetaStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open scoped Classical Pointwise
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links
+open Formalism.MainNotions.TaylorLogMetric (VC embT tor0 lamOf Th La Iop Qbar lamC)
+open Formalism.MainNotions.StandardLatticesGL3 (TT stdL pt oddE0 Wd La0 Crv inc OhE IntU)
+open GlobalTheory.NormSum (Pair intG)
+open GlobalTheory.FunObj.SqNum (hatId CongOne skewLat unitBlock cosetVec)
+open GlobalTheory.NormExact (Reads Setup IsFinIdl HasFinPart finPt)
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (InId IsUnitDet unitChar stdFst)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.StdRead
+
+
+theorem _root_.GlobalTheory.T.adelicVacuum_standardLattices_readsTheta : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d) (δ : ℂ),
+  D.host.ccK = ⊤ → Setup ψ θ S T ⊤ δ 1 → ∀ v : WO S T → ℂ, IsVacO ψ θ S T (fun _ => 1) (fun _ => 1) (stdL D S.rank : Set (Fin S.rank → D.host.E)) (stdL D T.rank : Set (Fin T.rank → D.host.E)) v →
+  ∃ G ∈ Th D (tor0 D ⊤ δ) (stdL D a) (stdL D d), G ≠ 0 ∧ Reads ψ θ hS hT ⊤ δ 1 G v := by
+  first | exact @GlobalTheory.VacRead.vacuum_reads_theta | exact GlobalTheory.VacRead.vacuum_reads_theta | (intros; apply GlobalTheory.VacRead.vacuum_reads_theta <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerModelComplexConjugateNegForm
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open scoped Classical Pointwise
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links
+open Formalism.MainNotions.TaylorLogMetric (VC embT tor0 lamOf Th La Iop Qbar lamC)
+open Formalism.MainNotions.StandardLatticesGL3 (TT stdL pt oddE0 Wd La0 Crv inc OhE IntU)
+open GlobalTheory.NormSum (Pair intG)
+open GlobalTheory.FunObj.SqNum (hatId CongOne skewLat unitBlock cosetVec)
+open GlobalTheory.NormExact (Reads Setup IsFinIdl HasFinPart finPt)
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (InId IsUnitDet unitChar stdFst)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.StdRead
+
+noncomputable section
+
+namespace GlobalTheory.ConjSchr
+
+variable {D : D7}
+
+theorem symplO_negS (S T : HSp D) (x y : WO S T) :
+    symplO (GlobalTheory.ChiGrid.negSp S) T x y = -symplO S T x y := by
+  simp only [symplO, hO, GlobalTheory.ChiGrid.negSp_gram, GlobalTheory.CjNeg.inv_neg_mat, Matrix.neg_apply, map_neg, neg_mul, mul_neg,
+    Finset.sum_neg_distrib]
+
+def cjF {X : Type} (g : X → ℂ) : X → ℂ := fun w => starRingEnd ℂ (g w)
+
+theorem heisO_conj {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (S T : HSp D) (x : WO S T)
+    (g : WO S T → ℂ) :
+    heisO ψ S T x (cjF g) = cjF (heisO ψ (GlobalTheory.ChiGrid.negSp S) T x g) := by
+  funext w
+  simp only [cjF, heisO, map_mul, GlobalTheory.CjNeg.conj_psi hψ, GlobalTheory.CjNeg.symplOH_negS, neg_neg]
+
+theorem cjF_cjF {X : Type} (g : X → ℂ) : cjF (cjF g) = g := by
+  funext w; simp [cjF]
+
+def conjLin {X : Type} (T : (X → ℂ) →ₗ[ℂ] (X → ℂ)) : (X → ℂ) →ₗ[ℂ] (X → ℂ) where
+  toFun g := cjF (T (cjF g))
+  map_add' g h := by
+    have : cjF (g + h) = cjF g + cjF h := by funext w; simp [cjF]
+    funext w; simp [this, cjF]
+  map_smul' c g := by
+    have : cjF (c • g) = starRingEnd ℂ c • cjF g := by funext w; simp [cjF]
+    funext w; simp [this, cjF]
+
+theorem conjLin_apply {X : Type} (T : (X → ℂ) →ₗ[ℂ] (X → ℂ)) (g : X → ℂ) :
+    conjLin T g = cjF (T (cjF g)) := rfl
+
+theorem isSBHalf_cjF {m n : ℕ} {e : AE D} {Λ : AddSubgroup (Mx D m n)} {Φ : Mx D m n → ℂ}
+    (h : IsSBHalf e Λ Φ) : IsSBHalf e Λ (cjF Φ) := by
+  obtain ⟨hs, k, hk, hinv, hsupp⟩ := h
+  refine ⟨fun t ht => hs t ?_, k, hk, fun u hu hue t => ?_, fun t ht => hsupp t ?_⟩
+  · intro h0; apply ht; simp [cjF, h0]
+  · simp only [cjF, hinv u hu hue t]
+  · intro h0; apply ht; simp [cjF, h0]
+
+theorem isPlaceModel_conjLin {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {e : AE D}
+    {Λ : AddSubgroup (WO S T)} {f₀ : WO S T → ℂ} {T₀ : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)}
+    (h : IsPlaceModel ψ (symplO (GlobalTheory.ChiGrid.negSp S) T) (heisO ψ (GlobalTheory.ChiGrid.negSp S) T) e Λ 1 f₀ T₀) :
+    IsPlaceModel ψ (symplO S T) (heisO ψ S T) e Λ 1 (cjF f₀) (conjLin T₀) := by
+  constructor
+  · intro Φ hΦ x hx
+    have e1 := h.trans _ (isSBHalf_cjF hΦ) x hx
+    rw [conjLin_apply, conjLin_apply, heisO_conj hψ]
+    have e2 : cjF (fun t => Φ (t + x)) = fun t => cjF Φ (t + x) := rfl
+    rw [e2, e1]
+  · intro Φ hΦ y hy
+    have e1 := h.modul _ (isSBHalf_cjF hΦ) y hy
+    rw [conjLin_apply, conjLin_apply, heisO_conj hψ]
+    have e2 : cjF (fun t => ψ (symplO S T t y) * Φ t) =
+        fun t => ψ (symplO (GlobalTheory.ChiGrid.negSp S) T t y) * cjF Φ t := by
+      funext t; simp only [cjF, map_mul, GlobalTheory.CjNeg.conj_psi hψ, symplO_negS]
+    rw [e2, e1]
+  · have e2 : cjF ((1 : ℂ) • halfInd e Λ) = (1 : ℂ) • halfInd e Λ := by
+      funext t; simp only [cjF, one_smul, halfInd]; split_ifs <;> simp
+    rw [conjLin_apply, e2, h.vac]
+
+end GlobalTheory.ConjSchr
+
+open GlobalTheory.ConjSchr in
+theorem GlobalTheory.ConjSchr.conj_schroedinger_neg : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (A WW : HSp D) (e : AE D) (ΛA : Set (Fin A.rank → D.host.E))
+  (ΛW : Set (Fin WW.rank → D.host.E)) (vac Φ f : WO A WW → ℂ),
+  IsThetaAt ψ (symplO (GlobalTheory.Grid.neg A) WW) (heisO ψ (GlobalTheory.Grid.neg A) WW) e (latO (GlobalTheory.Grid.neg A) WW ΛA ΛW fun _ => True) 1 vac Φ f →
+  ∃ Tm : (WO A WW → ℂ) →ₗ[ℂ] (WO A WW → ℂ),
+    IsPlaceModel ψ (symplO A WW) (heisO ψ A WW) e (latO A WW ΛA ΛW fun _ => True) 1 (fun w => starRingEnd ℂ (vac w)) Tm ∧
+      (fun w => starRingEnd ℂ (f w)) = Tm (fun w => starRingEnd ℂ (Φ w)) := by
+  intro D ψ hψ A WW e ΛA ΛW vac Φ f hT
+  have hL : latO (GlobalTheory.Grid.neg A) WW ΛA ΛW (fun _ => True) = latO A WW ΛA ΛW (fun _ => True) :=
+    GlobalTheory.CoreRowLat.latO_negSp A WW ΛA ΛW _
+  obtain ⟨⟨T₀, h0⟩, hall⟩ := hT
+  have hf : f = T₀ Φ := hall T₀ h0
+  rw [hL] at h0
+  refine ⟨conjLin T₀, isPlaceModel_conjLin hψ h0, ?_⟩
+  show cjF f = conjLin T₀ (cjF Φ)
+  rw [conjLin_apply, cjF_cjF, hf]
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerModelComplexConjugateNegFormStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+open scoped Classical Pointwise
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links
+open Formalism.MainNotions.TaylorLogMetric (VC embT tor0 lamOf Th La Iop Qbar lamC)
+open Formalism.MainNotions.StandardLatticesGL3 (TT stdL pt oddE0 Wd La0 Crv inc OhE IntU)
+open GlobalTheory.NormSum (Pair intG)
+open GlobalTheory.FunObj.SqNum (hatId CongOne skewLat unitBlock cosetVec)
+open GlobalTheory.NormExact (Reads Setup IsFinIdl HasFinPart finPt)
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (InId IsUnitDet unitChar stdFst)
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open GlobalTheory.StdRead
+
+
+theorem _root_.GlobalTheory.T.schrodingerModel_complexConjugate_negForm : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (A WW : HSp D) (e : AE D) (ΛA : Set (Fin A.rank → D.host.E))
+  (ΛW : Set (Fin WW.rank → D.host.E)) (vac Φ f : WO A WW → ℂ),
+  IsThetaAt ψ (symplO (GlobalTheory.Grid.neg A) WW) (heisO ψ (GlobalTheory.Grid.neg A) WW) e (latO (GlobalTheory.Grid.neg A) WW ΛA ΛW fun _ => True) 1 vac Φ f →
+  ∃ Tm : (WO A WW → ℂ) →ₗ[ℂ] (WO A WW → ℂ),
+    IsPlaceModel ψ (symplO A WW) (heisO ψ A WW) e (latO A WW ΛA ΛW fun _ => True) 1 (fun w => starRingEnd ℂ (vac w)) Tm ∧
+      (fun w => starRingEnd ℂ (f w)) = Tm (fun w => starRingEnd ℂ (Φ w)) := by
+  first | exact @GlobalTheory.ConjSchr.conj_schroedinger_neg | exact GlobalTheory.ConjSchr.conj_schroedinger_neg | (intros; apply GlobalTheory.ConjSchr.conj_schroedinger_neg <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.StandardModuleBottomDatumExists
+
+section
 
 @[expose] public section
 
@@ -198,4 +448,6 @@ theorem _root_.GlobalTheory.T.standard_module_bottom_datum_exists : _root_.Globa
           ∀ (ea : P.a = A.rank) (ed : P.d = WW.rank),
             GlobalTheory.AdForm.xiN W.θ A WW ea.symm ed.symm r rc (fun w => starRingEnd ℂ (X.f s w)) = (κ * starRingEnd ℂ u) • P.F := by
   first | exact @_root_.GlobalTheory.StdRead.standard_module_bottom_datum | exact _root_.GlobalTheory.StdRead.standard_module_bottom_datum | (intros; apply _root_.GlobalTheory.StdRead.standard_module_bottom_datum <;> assumption)
+end
+end
 end

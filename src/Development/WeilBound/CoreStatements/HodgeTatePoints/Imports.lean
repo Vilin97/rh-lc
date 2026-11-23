@@ -5,16 +5,8 @@ public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.InterNumRest
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrLenRestrictSt
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.Statements
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsTildeVanish
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PGradedCech
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PRestrictQuotX
-public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PVanishingCechResidue
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsBisAltMore
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PExtension
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PIdealTwistFamily
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PInterNumRestrict
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PRestrLenRestrict
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSurjectiveClosed
-public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTildeVanish
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsBisAltBis
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwinEqCech
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -53,6 +45,66 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PRestrictQuotX
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CoordIdealXgen
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsBisAltMore
+import GroundTheory.HeightsAndTheta.Heights.ThetaKeyFormula.RigSymFormTauINontrivial
+import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsBisAltMore
+import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PExtension
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PIdealTwistFamily
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PInterNumRestrict
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PRestrLenRestrict
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSurjectiveClosed
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTildeVanish
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PGradedCech
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.Swarm
+
+theorem GradedCech.proof : GroundTheory.Heights₂.Heights.Kleiman.TranslateEq.GradedCech.Statement :=
+  GroundTheory.Heights₂.Heights.Kleiman.TranslateEq.GradedCech.proof
+
+end GroundTheory.Heights₂.Heights.Swarm
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PVanishingCechResidue
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.KeyFormula
+
+open Complex Matrix
+
+noncomputable section
+
+open RigSymForm
+
+theorem serreVanishing_graded_holds : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman.SerreVanish.Statement :=
+  (GroundTheory.Heights₂.Heights.Kleiman.TranslateEq.SerreVanish.equiv
+    GroundTheory.Heights₂.Heights.Kleiman.TranslateEq.GradedCech.proof).1
+    GroundTheory.Heights₂.Heights.Kleiman.SerreVanish.full.{0, 0}
+
+end
+
+end GroundTheory.Heights₂.Heights.KeyFormula
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.HodgeTatePoints.Imports
+
+section
 
 @[expose] public section
 
@@ -84,3 +136,5 @@ theorem a5 :
   GroundTheory.Heights₂.Heights.Kleiman.InterNumRestrict.proof a4
 
 end PositivityTheory.HtPt.Ktw
+end
+end

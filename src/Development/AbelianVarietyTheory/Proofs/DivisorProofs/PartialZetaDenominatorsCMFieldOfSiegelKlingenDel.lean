@@ -4,17 +4,9 @@ public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaValue
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateWideInd
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePrimesOverPrimeCoprimalityEquivStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNarrowRayClassLFunctionMulPrimeWideIndicatorStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNarrowRayClassLFunctionTopWideIndicatorIffStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRatInPadicIntegersOfTwistedDifferenceStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinPadicValPowSubOneCoprimeEqClosedFormulaStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenomSumBoundOfLocalBoundsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenominatorExponentLeOfIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CmValuesExponentLogSumLeStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CmValuesMinPadicValBoundStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -27,8 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +26,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,8 +38,193 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SiegelKlingenDeligneRibet
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaValueIdeals
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateWideInd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinPadicValPowSubOneCoprimeEqClosedFormulaStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenomSumBoundOfLocalBoundsStatement
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CmValuesExponentLogSumLeStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CmValuesMinPadicValBoundStatement
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Linter.HaveILetI
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNarrowRayClassLFunctionTopWideIndicatorIff
+
+section
+
+@[expose] public section
+
+noncomputable section
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+namespace GlobalTheory.ZetaDenom
+
+theorem isRayL_top_wideInd_iff : ∀ {F : Type} [Field F] [NumberField F] (C : ClassGroup (𝓞 F)) (Z : ℂ → ℂ),
+    IsRayL (⊤ : Ideal (𝓞 F)) (wideInd C) Z ↔ IsClassZeta C Z := by
+  intro F _ _ C Z
+  refine and_congr_right fun _ => forall₂_congr fun s _ => ?_
+  let g : IdealsIn C → {I : Ideal (𝓞 F) // CoprimeTo F ⊤ I} :=
+    fun I => ⟨I.1.1, nonZeroDivisors.coe_ne_zero I.1, sup_top_eq _⟩
+  have hg : Function.Injective g := fun I J h =>
+    Subtype.ext (Subtype.ext (congrArg (fun x : {I : Ideal (𝓞 F) // CoprimeTo F ⊤ I} => x.1) h))
+  rw [← hg.hasSum_iff (f := fun I : {I : Ideal (𝓞 F) // CoprimeTo F ⊤ I} =>
+    (wideInd C I.1 : ℂ) * ((Ideal.absNorm I.1 : ℕ) : ℂ) ^ (-s)) fun I hI => by
+      have : cls I.1 ≠ C := fun h => hI ⟨⟨⟨I.1, mem_nonZeroDivisors_of_ne_zero I.2.1⟩,
+        by rw [← h, cls_of_ne_bot I.2.1]⟩, rfl⟩
+      simp [wideInd, this]]
+  refine iff_of_eq (congrArg (HasSum · (Z s)) (funext fun I => ?_))
+  have h1 : cls (I.1 : Ideal (𝓞 F)) = C := by
+    rw [cls_of_ne_bot (nonZeroDivisors.coe_ne_zero I.1)]
+    exact I.2
+  simp [g, wideInd, h1]
+
+end GlobalTheory.ZetaDenom
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsNarrowRayClassLFunctionTopWideIndicatorIffStatement
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+theorem _root_.GlobalTheory.T.isNarrowRayClassLFunction_top_wideIndicator_iff : ∀ {F : Type} [Field F] [NumberField F] (C : ClassGroup (𝓞 F)) (Z : ℂ → ℂ), IsRayL (⊤ : Ideal (𝓞 F)) (wideInd C) Z ↔ IsClassZeta C Z := by
+  first | exact @GlobalTheory.ZetaDenom.isRayL_top_wideInd_iff | exact GlobalTheory.ZetaDenom.isRayL_top_wideInd_iff | (intros; apply GlobalTheory.ZetaDenom.isRayL_top_wideInd_iff <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRatInPadicIntegersOfTwistedDifference
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+namespace GlobalTheory
+
+theorem inZl_of_twisted_difference {G : Type} [CommGroup G] [Finite G] (l : ℕ) [Fact l.Prime]
+    (g : G) (q : ℕ) (hq : l ∣ q) (x : G → ℚ)
+    (hx : ∀ C, InZl l (x C - (q : ℚ) * x (C * g))) : ∀ C, InZl l (x C) := by
+  by_contra h
+  push_neg at h
+  obtain ⟨C0, hC0⟩ := h
+  obtain ⟨C, hC⟩ := Finite.exists_max (fun C => ‖((x C : ℚ) : ℚ_[l])‖)
+  have h0 : 1 < ‖((x C0 : ℚ) : ℚ_[l])‖ := by
+    unfold InZl at hC0; push_neg at hC0; exact hC0
+  have h1 : 1 < ‖((x C : ℚ) : ℚ_[l])‖ := lt_of_lt_of_le h0 (hC C0)
+  have hqn : ‖((q : ℚ) : ℚ_[l])‖ < 1 := by
+    rw [Rat.cast_natCast]
+    exact Padic.norm_natCast_lt_one_iff.2 hq
+  have hy : ‖(((x C - (q : ℚ) * x (C * g) : ℚ)) : ℚ_[l])‖ ≤ 1 := hx C
+  have hsplit : ((x C : ℚ) : ℚ_[l]) =
+      (((x C - (q : ℚ) * x (C * g) : ℚ)) : ℚ_[l]) + ((q : ℚ) : ℚ_[l]) * ((x (C * g) : ℚ) : ℚ_[l]) := by
+    push_cast; ring
+  have hprod : ‖((q : ℚ) : ℚ_[l]) * ((x (C * g) : ℚ) : ℚ_[l])‖ < ‖((x C : ℚ) : ℚ_[l])‖ := by
+    rw [norm_mul]
+    have hle : ‖((x (C * g) : ℚ) : ℚ_[l])‖ ≤ ‖((x C : ℚ) : ℚ_[l])‖ := hC (C * g)
+    calc ‖((q : ℚ) : ℚ_[l])‖ * ‖((x (C * g) : ℚ) : ℚ_[l])‖
+        ≤ ‖((q : ℚ) : ℚ_[l])‖ * ‖((x C : ℚ) : ℚ_[l])‖ :=
+          mul_le_mul_of_nonneg_left hle (norm_nonneg _)
+      _ < 1 * ‖((x C : ℚ) : ℚ_[l])‖ :=
+          mul_lt_mul_of_pos_right hqn (by linarith)
+      _ = ‖((x C : ℚ) : ℚ_[l])‖ := one_mul _
+  have hna := Padic.nonarchimedean (p := l)
+    (((x C - (q : ℚ) * x (C * g) : ℚ)) : ℚ_[l]) (((q : ℚ) : ℚ_[l]) * ((x (C * g) : ℚ) : ℚ_[l]))
+  rw [← hsplit] at hna
+  rcases le_max_iff.1 hna with h2 | h2
+  · linarith
+  · linarith
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRatInPadicIntegersOfTwistedDifferenceStatement
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+theorem _root_.GlobalTheory.T.isRatInPadicIntegers_of_twisted_difference : ∀ {G : Type} [CommGroup G] [Finite G] (l : ℕ) [Fact l.Prime] (g : G) (q : ℕ), l ∣ q →
+    ∀ x : G → ℚ, (∀ C, InZl l (x C - (q : ℚ) * x (C * g))) → ∀ C, InZl l (x C) := by
+  first | exact @GlobalTheory.inZl_of_twisted_difference | exact GlobalTheory.inZl_of_twisted_difference | (intros; apply GlobalTheory.inZl_of_twisted_difference <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenominatorExponentLeOfIntegral
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+namespace GlobalTheory.DenomBound
+
+theorem cE_le_of_inZl : ∀ {F : Type} [Field F] [NumberField F] (z : ClassGroup (𝓞 F) → ℚ) (l a n : ℕ) [Fact l.Prime], 2 ≤ a → 1 ≤ n →
+    (∀ C, InZl l (((a ^ n - 1 : ℕ) : ℚ) * z C)) → cE z l ≤ finrank ℚ F * padicValNat l 2 + padicValNat l (a ^ n - 1) := by
+  intro F _ _ z l a n _ ha hn h
+  unfold cE
+  apply Finset.sup_le
+  intro C _
+  unfold denomExp
+  by_cases hz : z C = 0
+  · simp [hz]
+  have hpow : 2 ≤ a ^ n := le_trans ha (Nat.le_self_pow (by omega) a)
+  have hA : (a ^ n - 1 : ℕ) ≠ 0 := by omega
+  have hAq : ((a ^ n - 1 : ℕ) : ℚ) ≠ 0 := by exact_mod_cast hA
+  have h1 := h C
+  rw [inZl_iff, padicValRat.mul hAq hz, padicValRat.of_nat] at h1
+  rw [← Nat.padicValNat_def] at h1
+  have h2 : (2 : ℚ) ^ finrank ℚ F ≠ 0 := pow_ne_zero _ two_ne_zero
+  have h3 : padicValRat l (z C / 2 ^ finrank ℚ F) = padicValRat l (z C) - (finrank ℚ F : ℤ) * (padicValNat l 2 : ℤ) := by
+    rw [padicValRat.div hz h2, padicValRat.pow (q := (2:ℚ))]
+    have : padicValRat l (2 : ℚ) = padicValNat l 2 := by
+      have := padicValRat.of_nat (p := l) (n := 2)
+      simpa [Nat.padicValNat_def] using this
+    rw [this]
+  rw [h3]
+  omega
+
+end GlobalTheory.DenomBound
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenominatorExponentLeOfIntegralStatement
+
+section
+
+@[expose] public section
+
+open NumberField Module Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals GlobalTheory.ZetaDenom
+open scoped nonZeroDivisors
+
+theorem _root_.GlobalTheory.T.partialZetaDenominatorExponent_le_of_integral : ∀ {F : Type} [Field F] [NumberField F] (z : ClassGroup (𝓞 F) → ℚ) (l a n : ℕ) [Fact l.Prime], 2 ≤ a → 1 ≤ n →
+    (∀ C, InZl l (((a ^ n - 1 : ℕ) : ℚ) * z C)) → cE z l ≤ finrank ℚ F * padicValNat l 2 + padicValNat l (a ^ n - 1) := by
+  first | exact @GlobalTheory.DenomBound.cE_le_of_inZl | exact GlobalTheory.DenomBound.cE_le_of_inZl | (intros; apply GlobalTheory.DenomBound.cE_le_of_inZl <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialZetaDenominatorsCMFieldOfSiegelKlingenDel
+
+section
 
 @[expose] public section
 
@@ -206,3 +380,6 @@ theorem zetaDenominators (h : GlobalTheory.Published.SiegelKlingenDeligneRibet) 
   rwa [h1.mMin_eq] at h2
 
 end GlobalTheory.ZetaDenom
+end
+end
+end

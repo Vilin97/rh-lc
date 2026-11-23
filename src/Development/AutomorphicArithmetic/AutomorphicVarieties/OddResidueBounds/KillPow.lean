@@ -5,14 +5,12 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.LengthEqAdd
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActConj
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActEx
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.AdjKill
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.BdxLog
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.DetVal
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZKill
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerCharacterEval.MemZpowersIff
+public import Mathlib.RepresentationTheory.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerCharacterEval.MemSpanOrderTwoRelationIffCoordsEqZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -27,8 +25,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -49,8 +45,155 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerCharacterEval.Mulvec
+import Mathlib.Tactic.Basify
+import Std.Tactic.BVDecide.Normalize.Prop
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.LevelInertiaLeLevelDec
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.KummerTheory.Mk0IdMapCongr
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
+import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZeroMemUnrHom
+import Formalism.ConjugateSelfDual.Statement
+import Formalism.GaloisCohomology.Statement
+import ReciprocityTheory.GaloisValuations.GlobalA
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.BdxLog
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.DetVal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZKill
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerCharacterEval.ExistsLinearEquivQuotientByOrderTwoCoords
+
+section
+
+@[expose] public section
+
+open Finset UpperTheory.V.Bern UpperTheory.V.B4 UpperTheory.V.B5
+
+theorem UpperTheory.V.B5.exists_linearEquiv_quotientByOrderTwo_coords :
+    ∀ {A : Type} [CommRing A] {Γ : Type} [CommGroup Γ] [Finite Γ] (c : Γ) (ε : ℤ), c * c = 1 → c ≠ 1 → ε * ε = 1 → ∃ e : Rq A c ε ≃ₗ[A] (Qc c → A), ∀ w : MonoidAlgebra A Γ, e (cls A c ε w) = coord c ε w := by
+  intro A _ Γ _ _ c ε hc hc1 hε
+  classical
+  haveI : Fintype (Qc c) := Fintype.ofFinite (Qc c)
+  let f : MonoidAlgebra A Γ →ₗ[A] (Qc c → A) :=
+    { toFun := coord c ε
+      map_add' := by
+        intro x y
+        funext i
+        simp only [coord, MonoidAlgebra.coeff_add, Finsupp.add_apply, Pi.add_apply]
+        ring
+      map_smul' := by
+        intro a x
+        funext i
+        simp only [coord, MonoidAlgebra.coeff_smul, Finsupp.smul_apply, smul_eq_mul,
+          RingHom.id_apply, Pi.smul_apply]
+        ring }
+  have hf : ∀ w, f w = coord c ε w := fun w => rfl
+  have hker : LinearMap.ker f = (Ideal.span {rel A c ε}).restrictScalars A := by
+    ext w
+    rw [LinearMap.mem_ker, Submodule.restrictScalars_mem, mem_span_orderTwoRelation_iff_coords_eq_zero c ε hc hc1 hε, hf]
+  have hrepinj : ∀ i i' : Qc c, rep i = rep i' → i = i' := by
+    intro i i' h
+    rw [← mk_rep i, ← mk_rep i', h]
+  have hcrep : ∀ i i' : Qc c, rep i' ≠ c * rep i := by
+    intro i i' h
+    have e1 : i' = i := by
+      rw [← mk_rep i', ← mk_rep i, h]
+      exact ((mk_eq_mk hc (rep i) (c * rep i)).mpr (Or.inr rfl)).symm
+    subst e1
+    have e2 : c * rep i' = 1 * rep i' := by rw [← h, one_mul]
+    exact hc1 (mul_right_cancel e2)
+  have hsurj : Function.Surjective f := by
+    intro v
+    refine ⟨∑ i, MonoidAlgebra.single (rep i) (v i), ?_⟩
+    funext i0
+    rw [hf, coord]
+    simp only [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply,
+      Finsupp.single_apply]
+    rw [Finset.sum_eq_single i0, Finset.sum_eq_zero]
+    · simp
+    · intro i _
+      rw [if_neg (hcrep i0 i)]
+    · intro i _ hi
+      rw [if_neg (fun h => hi (hrepinj i i0 h))]
+    · intro h
+      exact absurd (Finset.mem_univ i0) h
+  let e : Rq A c ε ≃ₗ[A] (Qc c → A) :=
+    (Submodule.Quotient.restrictScalarsEquiv A (Ideal.span {rel A c ε})).symm ≪≫ₗ
+      Submodule.quotEquivOfEq _ _ hker.symm ≪≫ₗ f.quotKerEquivOfSurjective hsurj
+  exact ⟨e, fun w => rfl⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerCharacterEval.AlgebraMapSignedInvolutionQuotientDetMemSpan
+
+section
+
+@[expose] public section
+
+open Finset UpperTheory.V.Bern UpperTheory.V.B4 UpperTheory.V.B5
+
+theorem UpperTheory.V.B5.algebraMap_signedInvolutionQuotientDet_mem_span :
+    ∀ {A : Type} [CommRing A] {Γ : Type} [CommGroup Γ] [Finite Γ] (c : Γ) (ε : ℤ), c * c = 1 → c ≠ 1 → ε * ε = 1 → ∀ z : MonoidAlgebra A Γ, algebraMap A (MonoidAlgebra A Γ) (detR c ε z) ∈ Ideal.span {rel A c ε, z} := by
+  intro A _ Γ _ _ c ε h1 h2 h3 z
+  obtain ⟨e, he⟩ := UpperTheory.V.B5.exists_linearEquiv_quotientByOrderTwo_coords (A := A) c ε h1 h2 h3
+  have hsc : ∀ (d : A) (w : MonoidAlgebra A Γ),
+      coord c ε (algebraMap A (MonoidAlgebra A Γ) d * w) = d • coord c ε w := by
+    intro d w
+    funext i
+    simp [coord, Algebra.algebraMap_eq_smul_one]
+    ring
+  obtain ⟨y, hy⟩ := e.surjective ((mat c ε z).adjugate.mulVec (coord c ε 1))
+  obtain ⟨u, rfl⟩ := Ideal.Quotient.mk_surjective y
+  have hu : coord c ε u = (mat c ε z).adjugate.mulVec (coord c ε 1) := by
+    rw [← he]
+    exact hy
+  have hcoord : coord c ε (z * u) = coord c ε (algebraMap A _ (detR c ε z) * 1) := by
+    rw [UpperTheory.V.B5.coords_mul_eq_quotientMatrix_mulVec c ε h1 h2 h3, hu, Matrix.mulVec_mulVec, Matrix.mul_adjugate, hsc,
+      Matrix.smul_mulVec, Matrix.one_mulVec]
+    rfl
+  rw [mul_one] at hcoord
+  have hcls : cls A c ε (algebraMap A _ (detR c ε z)) = cls A c ε (z * u) := by
+    apply e.injective
+    rw [he, he, hcoord]
+  have hmem : algebraMap A _ (detR c ε z) - z * u ∈ Ideal.span {rel A c ε} :=
+    Ideal.Quotient.eq.mp hcls
+  have hsub : Ideal.span {rel A c ε} ≤ Ideal.span {rel A c ε, z} :=
+    Ideal.span_mono (by simp)
+  have hz : z * u ∈ Ideal.span {rel A c ε, z} :=
+    Ideal.mul_mem_right u _ (Ideal.subset_span (by simp))
+  have := Ideal.add_mem _ (hsub hmem) hz
+  simpa using this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.AdjKill
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.LDataCardLeFinrank UpperTheory.V.Base UpperTheory.V.Kum UpperTheory.V.Bern UpperTheory.V.B4 UpperTheory.V.B5 UpperTheory.V.Odd
+
+theorem UpperTheory.V.Odd.adjKill :
+    ∀ (A Γ X : Type) [CommRing A] [CommGroup Γ] [Finite Γ] [AddCommGroup X] [Module A X] (π : Representation A Γ X) (c : Γ) (ε : ℤ), c * c = 1 → c ≠ 1 → ε * ε = 1 → ∀ (z : MonoidAlgebra A Γ) (x : X), π c x = (ε : A) • x → π.asAlgebraHom z x = 0 → detR c ε z • x = 0 := by
+  intro A Γ X _ _ _ _ _ π c ε hc hc1 hε z x hx hz
+  obtain ⟨a, b, hab⟩ := Ideal.mem_span_pair.1 (algebraMap_signedInvolutionQuotientDet_mem_span (A := A) c ε hc hc1 hε z)
+  have hrel : π.asAlgebraHom (rel A c ε) x = 0 := by
+    simp [rel, hx, Int.cast_smul_eq_zsmul]
+  have key := congrArg (fun w => π.asAlgebraHom w x) hab
+  simp only [map_add (f := _), map_mul, LinearMap.add_apply, Module.End.mul_apply, hrel, hz, map_zero,
+    add_zero] at key
+  rw [AlgHom.commutes, Module.algebraMap_end_apply] at key
+  exact key.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.KillPow
+
+section
 
 @[expose] public section
 
@@ -149,3 +292,5 @@ theorem UpperTheory.V.Odd.killPow :
           congr 1
           ring
       _ = 0 := by rw [hkill, smul_zero]
+end
+end

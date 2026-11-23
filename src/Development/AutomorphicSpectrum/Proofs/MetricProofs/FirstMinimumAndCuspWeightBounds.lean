@@ -6,16 +6,14 @@ public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.LinearIndep
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicEigencomponentConjugateFormStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicSublatticeCovolumePositiveStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsotropicSublatticeGramDeterminantStatement
-public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PCuspWeightBound
-public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMinkowskiCovolumeBound
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.Statements
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -23,17 +21,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,8 +33,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,8 +45,86 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMinkowskiCovolumeBound
+import Mathlib.Algebra.Order.Archimedean.Real.Hom
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PCuspWeightBound
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.LowerBound
+
+open Real
+
+theorem CuspWeightBound.proof : CuspWeightBound.Statement := by
+  intro f j' ρ rd lam NI covol h
+  have hf : (1 : ℝ) ≤ f := by exact_mod_cast h.one_le_f
+  have hj : (1 : ℝ) ≤ j' := by exact_mod_cast h.one_le_j'
+  have hρ : (1 : ℝ) ≤ ρ := by exact_mod_cast h.one_le_ρ
+  have hρj : (ρ : ℝ) ≤ j' := by exact_mod_cast h.ρ_le_j'
+  have hrd := h.one_le_rd
+  have hlam := h.lam_pos
+  have hNI := h.NI_pos
+  have h2fρ : (0 : ℝ) < 2 * f * ρ := by positivity
+  have hsq : 0 < √(2 * f * ρ : ℝ) := Real.sqrt_pos.mpr h2fρ
+
+  have hmk : (lam / √(2 * f * ρ : ℝ)) ^ (2 * f * ρ) ≤ NI * rd ^ (f * ρ) :=
+    h.covol_eq ▸ h.minkowski
+  have hrdp : (0 : ℝ) < rd ^ (f * ρ) := by positivity
+  have hlog := Real.log_le_log (by positivity) hmk
+  rw [Real.log_pow, Real.log_mul hNI.ne' hrdp.ne', Real.log_pow,
+    Real.log_div hlam.ne' hsq.ne', Real.log_sqrt h2fρ.le] at hlog
+  push_cast at hlog
+
+  have hρbound : -log NI ≤ f * ρ * (2 * log (1 / lam) + log (2 * f * ρ * rd)) := by
+    have hrd0 : rd ≠ 0 := by positivity
+    rw [one_div, Real.log_inv, Real.log_mul h2fρ.ne' hrd0]
+    nlinarith
+
+  have hB : 0 ≤ 2 * max 0 (log (1 / lam)) + log (2 * f * j' * rd) := by
+    have : 0 ≤ log (2 * f * j' * rd) := by
+      have h1 : (1 : ℝ) ≤ f * j' := one_le_mul_of_one_le_of_one_le hf hj
+      have h2 : (1 : ℝ) ≤ f * j' * rd := one_le_mul_of_one_le_of_one_le h1 hrd
+      exact Real.log_nonneg (by linarith)
+    have : 0 ≤ max 0 (log (1 / lam)) := le_max_left _ _
+    linarith
+  have hin : 2 * log (1 / lam) + log (2 * f * ρ * rd) ≤
+      2 * max 0 (log (1 / lam)) + log (2 * f * j' * rd) := by
+    have h1 : log (1 / lam) ≤ max 0 (log (1 / lam)) := le_max_right _ _
+    have h2 : log (2 * f * ρ * rd) ≤ log (2 * f * j' * rd) :=
+      Real.log_le_log (by positivity) (by gcongr)
+    linarith
+  calc -log NI ≤ f * ρ * (2 * log (1 / lam) + log (2 * f * ρ * rd)) := hρbound
+    _ ≤ f * ρ * (2 * max 0 (log (1 / lam)) + log (2 * f * j' * rd)) := by
+        gcongr
+    _ ≤ f * j' * (2 * max 0 (log (1 / lam)) + log (2 * f * j' * rd)) := by
+        gcongr
+
+end GroundTheory.Heights₂.Heights.LowerBound
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.FirstMinimumAndCuspWeightBounds
+
+section
 
 @[expose] public section
 
@@ -397,3 +465,6 @@ theorem cuspW_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (g : �
       exact hb0
 
 end GlobalTheory.CompanionTheory.Ar.Cusp
+end
+end
+end

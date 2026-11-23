@@ -4,11 +4,8 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForm
 public import GroundTheory.GlobalFields.GlobalArtinMap.ArtinMap
 public import Mathlib.RingTheory.PicardGroup
 public import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinA
-public import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinKer
-public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
-public import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
-import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
-import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
+import Development.WeilBound.CoreStatements.PlaceConnectedComponents.ArtinKer
+public import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,6 +33,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -51,6 +49,48 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
+public import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
+import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
+import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
+
+-- Source module: CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinKer
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Topology GroundTheory.Global GroundTheory.Global.IdeleGroup
+
+namespace CompanionTheory.FamInh
+
+theorem isOpen_connInf (E : Type) [Field E] [NumberField E] :
+    IsOpen ((Subgroup.connectedComponentOfOne (InfiniteAdeleRing E)ˣ : Subgroup (InfiniteAdeleRing E)ˣ) :
+      Set (InfiniteAdeleRing E)ˣ) := by
+  apply PositivityTheory.FamInh.isOpen_connInf <;> assumption
+
+theorem ofInfinite_eq_map (E : Type) [Field E] [NumberField E] (y : (InfiniteAdeleRing E)ˣ) :
+    (ofInfinite y : IdeleGroup E) =
+      Units.map (MonoidHom.inl (InfiniteAdeleRing E) (FiniteAdeleRing (𝓞 E) E)) y := by
+  apply PositivityTheory.FamInh.ofInfinite_eq_map <;> assumption
+
+theorem comap_connectedComponent (E : Type) [Field E] [NumberField E] :
+    (Subgroup.connectedComponentOfOne (GroundTheory.Global.IdeleClassGroup E)).comap (GroundTheory.Global.IdeleClassGroup.mk E) =
+      ((Neutral.B1.diagUnits E).range ⊔ GlobalTheory.HeckeGal.infConn E).topologicalClosure := by
+  apply PositivityTheory.FamInh.comap_connectedComponent <;> assumption
+
+end CompanionTheory.FamInh
+
+end
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.PlaceSeparation.IsOpenQuotientMapArt0
+
+section
 
 @[expose] public section
 
@@ -282,4 +322,6 @@ theorem globalArtin : GlobalTheory.Published.GlobalArtinReciprocity := fun E Ω 
 
 end CompanionTheory.FamInh
 
+end
+end
 end

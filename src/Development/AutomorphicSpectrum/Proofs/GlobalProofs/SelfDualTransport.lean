@@ -3,13 +3,10 @@ module
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.TupOfCv
 public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
 public import GroundTheory.AutomorphicForms.GL2.GJMatrixAdelic
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsSchwartzBruhatCompactSupportNonzeroStatement
-import GroundTheory.AutomorphicForms.ReductionMeasure
-public import GroundTheory.HeightsAndTheta.Theta.AdelicFourierCoord
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsSelfDualForm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -24,6 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,9 +43,64 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.HeightsAndTheta.Theta.AdelicFourierCoord
+import GroundTheory.AutomorphicForms.ReductionMeasure
+public import GroundTheory.HeightsAndTheta.Theta.AdelicFourierCoord
+import Mathlib.Algebra.Order.Star.Real
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.GaussQ
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.TraceGramDetNeZero
 import Development.AbelianVarietyTheory.PublishedTheorems.GlobalTheta.IsSchwartzBruhatOfProd
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsSchwartzBruhatCompactSupportNonzero
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.CompactTest
+
+open NumberField IsDedekindDomain MeasureTheory
+open GroundTheory.Global GroundTheory.Automorphic.GJMatrix GroundTheory.Heights₂.Theta
+open scoped TensorProduct ENNReal Matrix NumberField.AdeleRing
+
+theorem exists_compactSupport_ne_zero :
+    ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι] [DecidableEq ι],
+      ∃ f ∈ schwartzBruhatPi (K := F) (ι := ι), HasCompactSupport f ∧ f 0 ≠ 0 := by
+  intro F _ _ ι _ _
+  obtain ⟨U, hUc, hU⟩ := exists_compact_mem_nhds (0 : ι → 𝔸[F])
+  obtain ⟨r, -, -, hr0, hrU, hrS⟩ := GlobalTheory.CompanionTheory.Hypotheses₂.SdExist.exists_bump (K := F) 0 U hU
+  refine ⟨_, hrS, HasCompactSupport.intro hUc fun x hx => ?_, ?_⟩
+  · have : r x = 0 := by
+      by_contra h
+      exact hx (hrU x h)
+    simp [this]
+  · exact_mod_cast hr0.ne'
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.CompactTest
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsSchwartzBruhatCompactSupportNonzeroStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain MeasureTheory
+open GroundTheory.Global GroundTheory.Automorphic.GJMatrix GroundTheory.Heights₂.Theta
+open scoped TensorProduct ENNReal Matrix NumberField.AdeleRing
+
+theorem _root_.GlobalTheory.T.exists_schwartzBruhat_compact_support_nonzero : ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι] [DecidableEq ι], ∃ f ∈ schwartzBruhatPi (K := F) (ι := ι), HasCompactSupport f ∧ f 0 ≠ 0 := by
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.CompactTest.exists_compactSupport_ne_zero | exact GlobalTheory.CompanionTheory.Hypotheses₂.CompactTest.exists_compactSupport_ne_zero | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.CompactTest.exists_compactSupport_ne_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.SelfDualTransport
+
+section
 
 @[expose] public section
 
@@ -151,3 +205,6 @@ open scoped TensorProduct ENNReal
 
 end Main
 end GlobalTheory.CompanionTheory.Hypotheses₂.OneV.Fth
+end
+end
+end

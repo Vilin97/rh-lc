@@ -1,11 +1,7 @@
 module
 
 public import Formalism.RealPlaceAnalysis.StatementE
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliDetMulVectorTypeStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliLeftComatrixStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsEigenSplitOfResolventIdentityStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorIntertwiningApplyStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorPolyMapStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliLeftComatrixStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,9 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,8 +39,150 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliLeftComatrixStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsEigenSplitOfResolventIdentityStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorIntertwiningApply
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorPolyMap
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorCommOfCommColumns
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+namespace GlobalTheory
+
+theorem qminor_comm_of_comm_columns (A : Type) [Ring A] [Algebra ℂ A] (n t : ℕ)
+    (E : Fin n → Fin n → A) (x : A) (a b : Fin t → Fin n) (u : ℂ)
+    (h : ∀ (c : Fin n) (i : Fin t), E c (b i) * x = x * E c (b i)) :
+    qminor E a b u * x = x * qminor E a b u := by
+  have hT : ∀ (v : ℂ) (c : Fin n) (i : Fin t), Commute (Tm E v c (b i)) x := by
+    intro v c i
+    have h1 : Commute (E c (b i)) x := h c i
+    unfold Tm
+    refine Commute.add_left ?_ h1
+    split_ifs
+    · exact Algebra.commutes v x
+    · exact Commute.zero_left x
+  change Commute (qminor E a b u) x
+  unfold qminor
+  refine Commute.sum_left _ _ _ fun σ _ => ?_
+  have hp : ∀ f : Fin t → A, (∀ i, Commute (f i) x) → Commute (List.ofFn f).prod x := by
+    intro f hf
+    refine Commute.list_prod_left _ _ fun y hy => ?_
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hy
+    exact hf i
+  exact (Int.cast_commute _ x).mul_left (hp _ fun i => hT _ _ i)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorCommOfCommColumnsStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.qminor_commute_of_commute_columns : ∀ (A : Type) [Ring A] [Algebra ℂ A] (n t : ℕ) (E : Fin n → Fin n → A) (x : A) (a b : Fin t → Fin n) (u : ℂ), (∀ (c : Fin n) (i : Fin t), E c (b i) * x = x * E c (b i)) → qminor E a b u * x = x * qminor E a b u := by
+  first | exact @GlobalTheory.qminor_comm_of_comm_columns | exact GlobalTheory.qminor_comm_of_comm_columns | (intros; apply GlobalTheory.qminor_comm_of_comm_columns <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliDetMulVectorType
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+namespace GlobalTheory
+
+theorem qdet_mul_vector (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ)
+    (E : Fin (m + 1) → Fin (m + 1) → A) (x : Fin (m + 1) → A) (hE : GlRel E)
+    (hx : ∀ a b j, E a b * x j = x j * E a b + if b = j then x a else 0)
+    (u : ℂ) (j : Fin (m + 1)) :
+    qdet E u * x j = x j * qdet E u + ∑ a : Fin (m + 1), ((-1 : ℂ) ^ ((a : ℕ) + (j : ℕ))) •
+      (x a * qminor E (Fin.succAbove a) (Fin.succAbove j) (u - 1)) := by
+  have h1 := GlobalTheory.T.capelli_left_comatrix_qminor_eq A m E hE u j j
+  rw [if_pos rfl] at h1
+  have h2 : ∀ a : Fin (m + 1), qminor E (Fin.succAbove a) (Fin.succAbove j) (u - 1) * x j
+      = x j * qminor E (Fin.succAbove a) (Fin.succAbove j) (u - 1) := by
+    intro a
+    refine GlobalTheory.T.qminor_commute_of_commute_columns A (m + 1) m E (x j) _ _ _ ?_
+    intro c i
+    rw [hx, if_neg (Fin.succAbove_ne j i), add_zero]
+  have h3 : ∀ a : Fin (m + 1), Tm E u a j * x j = x j * Tm E u a j + x a := by
+    intro a
+    have h := hx a j j
+    rw [if_pos rfl] at h
+    unfold Tm
+    by_cases haj : a = j
+    · simp only [if_pos haj, add_mul, mul_add, h, Algebra.commutes]
+      abel
+    · simp only [if_neg haj, zero_add, h]
+  rw [← h1, Finset.sum_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [smul_mul_assoc, mul_smul_comm, ← smul_add, mul_assoc, h2, ← mul_assoc, h3, add_mul,
+    mul_assoc]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliDetMulVectorTypeStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.capelliDet_mul_vectorType : ∀ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (E : Fin (m + 1) → Fin (m + 1) → A) (x : Fin (m + 1) → A), GlRel E → (∀ a b j, E a b * x j = x j * E a b + if b = j then x a else 0) → ∀ (u : ℂ) (j : Fin (m + 1)), qdet E u * x j = x j * qdet E u + ∑ a : Fin (m + 1), ((-1 : ℂ) ^ ((a : ℕ) + (j : ℕ))) • (x a * qminor E (Fin.succAbove a) (Fin.succAbove j) (u - 1)) := by
+  first | exact @GlobalTheory.qdet_mul_vector | exact GlobalTheory.qdet_mul_vector | (intros; apply GlobalTheory.qdet_mul_vector <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorIntertwiningApplyStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.qminor_intertwining_apply : ∀ (V W : Type) [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] (n t : ℕ) (E : Fin n → Fin n → Module.End ℂ V) (E' : Fin n → Fin n → Module.End ℂ W) (ι : W →ₗ[ℂ] V), (∀ a b w, ι (E' a b w) = E a b (ι w)) → ∀ (a b : Fin t → Fin n) (u : ℂ) (w : W), ι (qminor E' a b u w) = qminor E a b u (ι w) := by
+  first | exact @GlobalTheory.qminor_intertwine | exact GlobalTheory.qminor_intertwine | (intros; apply GlobalTheory.qminor_intertwine <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.QminorPolyMapStatement
+
+section
+
+@[expose] public section
+
+open Formalism.REAL Finset
+
+theorem _root_.GlobalTheory.T.exists_qminor_sub_eq_polynomial : ∀ (A : Type) [Ring A] [Algebra ℂ A] (n t : ℕ) (E : Fin n → Fin n → A) (a b : Fin t → Fin n) (s : ℂ), ∃ c : ℕ → A, ∀ u : ℂ, qminor E a b (u - s) = ∑ i ∈ Finset.range (t + 1), u ^ i • c i := by
+  first | exact @GlobalTheory.qminor_polyMap | exact GlobalTheory.qminor_polyMap | (intros; apply GlobalTheory.qminor_polyMap <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuantumDetVectorMultiplierShiftPlus
+
+section
 
 @[expose] public section
 
@@ -149,3 +284,5 @@ theorem qdet_vector_multiplier_shift_plus : ∀ (V W : Type) [AddCommGroup V] [M
     simp only [Pi.smul_apply, map_smul, Finset.smul_sum]
 
 end GlobalTheory
+end
+end

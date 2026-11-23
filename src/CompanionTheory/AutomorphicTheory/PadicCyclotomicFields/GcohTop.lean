@@ -3,9 +3,8 @@ module
 public import Formalism.GaloisCohomology.LocalTateDualityK
 public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohCmp
 public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohField
-public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohFin
-public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohMu
-public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohTate
+public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohDefs
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.TensorHomDualRepRootsOfUnityIsoCartierPairing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,7 +43,98 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.InjectiveCohomologyMapKummerSeqOpenFTwo
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohTate
 import Mathlib.Topology.Sheaves.Init
+
+-- Source module: CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohFin
+
+section
+
+@[expose] public section
+
+open CategoryTheory GroundTheory.ProfCoh ReciprocityTheory.Gal ValuativeRel Formalism.GaloisCohomology
+
+namespace CompanionTheory.LocalTateOrthogonality.Gcoh
+
+theorem locfin_of (hF : SgcField) : Formalism.GaloisCohomology.LocalFinitenessK := by
+  intro l _ K hK r M _ _ _ _ _ rho hr hc
+  obtain ⟨hsep, v, t, hloc, -⟩ := hF l K hK
+  let : ValuativeRel ↥K := v
+  let : TopologicalSpace ↥K := t
+  have : IsNonarchimedeanLocalField ↥K := hloc
+  have : IsSepClosure ↥K (PadicAlgCl l) := hsep
+  obtain ⟨A, hA, e, he⟩ := gcRep (Formalism.GaloisCohomology.GK l K) (ZMod (l ^ r)) M rho hc
+  have : IsDiscreteRep A := hA
+  have : Finite A := Finite.of_equiv M e.toEquiv
+  have hcard : Nat.card A = Nat.card M := (Nat.card_congr e.toEquiv).symm
+  have hM : (Nat.card A : ↥K) ≠ 0 := by
+    rw [hcard]
+    exact Nat.cast_ne_zero.mpr Nat.card_pos.ne'
+  obtain ⟨e0, -⟩ := gc0 (Formalism.GaloisCohomology.GK l K) (ZMod (l ^ r)) M rho A e he
+  obtain ⟨e1, -⟩ := gc1 (Formalism.GaloisCohomology.GK l K) (ZMod (l ^ r)) M rho A e he
+  obtain ⟨e2, -⟩ := gc2 (Formalism.GaloisCohomology.GK l K) (ZMod (l ^ r)) M rho A e he
+  refine ⟨?_, ?_, ?_, fun n hn => ?_⟩
+  · have := finite_cohomology_localField A hM 0
+    exact Finite.of_equiv _ e0.symm.toEquiv
+  · have := finite_cohomology_localField A hM 1
+    exact Finite.of_equiv _ e1.symm.toEquiv
+  · have := finite_cohomology_localField A hM 2
+    exact Finite.of_equiv _ e2.symm.toEquiv
+  · obtain ⟨en⟩ := gcn (Formalism.GaloisCohomology.GK l K) (ZMod (l ^ r)) M rho A e he n
+    have := subsingleton_cohomology_localField A hM n hn
+    exact en.toEquiv.subsingleton
+
+end CompanionTheory.LocalTateOrthogonality.Gcoh
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohMu
+
+section
+
+@[expose] public section
+
+open CategoryTheory GroundTheory.ProfCoh ReciprocityTheory.Gal ValuativeRel
+
+namespace CompanionTheory.LocalTateOrthogonality.Gcoh
+
+theorem cycKSpec : Formalism.GaloisCohomology.CycKSpec := by
+  intro l _ K r σ ζ hζ
+  exact cyclotomicCharacter.spec l (MulSemiringAction.toRingAut _ (PadicAlgCl l) σ) ζ hζ
+
+theorem gcMu : SgcMu := by
+  intro l hl K r
+  have : IsSepClosure ↥K (PadicAlgCl l) :=
+    ⟨inferInstance, Algebra.isSeparable_tower_top_of_isSeparable ℚ_[l] K _⟩
+  have hn : ((l ^ r : ℕ) : K) ≠ 0 := Nat.cast_ne_zero.2 (pow_ne_zero _ hl.out.ne_zero)
+  have : NeZero (l ^ r) := ⟨pow_ne_zero _ hl.out.ne_zero⟩
+  obtain ⟨e⟩ := nonempty_addEquiv_galRootsOfUnity (K := K) (Ksep := PadicAlgCl l) hn
+  refine ⟨e.symm, fun g m => ?_⟩
+  have key : ∀ x : Additive (rootsOfUnity (l ^ r) (PadicAlgCl l)),
+      (galRootsOfUnity.{0} ↥K (PadicAlgCl l) (l ^ r)).ρ g x =
+        (Formalism.GaloisCohomology.cycK l K r g : ZMod (l ^ r)).val • x := by
+    intro x
+    rw [galRootsOfUnity_ρ_apply]
+    apply Additive.toMul.injective
+    rw [toMul_ofMul, toMul_nsmul]
+    apply Subtype.ext
+    apply Units.ext
+    rw [coe_galRootsOfUnityHom_apply, SubmonoidClass.coe_pow, Units.val_pow_eq_pow_val]
+    refine cycKSpec l K r g _ ?_
+    rw [← Units.val_pow_eq_pow_val, (mem_rootsOfUnity _ _).1 x.toMul.2, Units.val_one]
+  refine Eq.trans ?_ (key _).symm
+  refine Eq.trans ?_ (map_nsmul e.symm _ m)
+  rw [nsmul_eq_mul, ZMod.natCast_zmod_val]
+
+end CompanionTheory.LocalTateOrthogonality.Gcoh
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohTop
+
+section
 
 @[expose] public section
 
@@ -57,3 +147,5 @@ theorem top_tate : Formalism.GaloisCohomology.LocalTateDualityK := tate_of gcRep
 theorem top_locfin : Formalism.GaloisCohomology.LocalFinitenessK := locfin_of gcField
 
 end CompanionTheory.LocalTateOrthogonality.Gcoh
+end
+end

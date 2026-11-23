@@ -3,11 +3,12 @@ module
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.InnerProductSpace.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialGrowthOfPeriodicIntegralSpans
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -23,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,6 +32,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,7 +46,299 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Matrix.Adjugate
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.Topology.Instances.Matrix
+import Mathlib.Tactic.Polynomial.Basic
+public import Mathlib.Analysis.Complex.Convex
+import Mathlib.Tactic.Basify
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousOnCoordsOfLinearIndependent
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory
+
+open Matrix
+
+noncomputable def realDotC {g : ℕ} (u w : Fin g → ℂ) : ℝ :=
+  ∑ k, ((u k).re * (w k).re + (u k).im * (w k).im)
+
+lemma realDotC_comm {g : ℕ} (u w : Fin g → ℂ) : realDotC u w = realDotC w u := by
+  unfold realDotC; refine Finset.sum_congr rfl (fun k _ => ?_); ring
+
+lemma realDotC_sum_right {g m : ℕ} (u : Fin g → ℂ) (x : Fin m → ℝ) (μ : Fin m → Fin g → ℂ) :
+    realDotC u (∑ i, x i • μ i) = ∑ i, x i * realDotC u (μ i) := by
+  unfold realDotC
+  simp only [Finset.sum_apply, Pi.smul_apply, Complex.re_sum, Complex.im_sum, Complex.smul_re,
+    Complex.smul_im, smul_eq_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun k _ => ?_)); ring
+
+lemma realDotC_self_eq_zero {g : ℕ} (u : Fin g → ℂ) (h : realDotC u u = 0) : u = 0 := by
+  unfold realDotC at h
+  have hn : ∀ k ∈ Finset.univ, 0 ≤ (u k).re * (u k).re + (u k).im * (u k).im :=
+    fun k _ => by nlinarith [sq_nonneg (u k).re, sq_nonneg (u k).im]
+  rw [Finset.sum_eq_zero_iff_of_nonneg hn] at h
+  funext k
+  have hk := h k (Finset.mem_univ _)
+  apply Complex.ext <;> simp <;> nlinarith [sq_nonneg (u k).re, sq_nonneg (u k).im]
+
+theorem continuousOn_coords_of_linearIndependent :
+    ∀ (g m : ℕ) (U : Set ℂ) (μ : ℂ → Fin m → Fin g → ℂ) (v : ℂ → Fin g → ℂ) (c : ℂ → Fin m → ℝ),
+      ContinuousOn μ U → ContinuousOn v U → (∀ s ∈ U, LinearIndependent ℝ (μ s)) →
+      (∀ s ∈ U, v s = ∑ i, c s i • μ s i) → ContinuousOn c U := by
+  intro g m U μ v c hμ hv hli hc
+  rw [continuousOn_iff_continuous_restrict] at hμ hv ⊢
+  let G : U → Matrix (Fin m) (Fin m) ℝ := fun s a b => realDotC (μ s a) (μ s b)
+  let b : U → Fin m → ℝ := fun s a => realDotC (μ s a) (v s)
+  have hdot : Continuous (fun p : (Fin g → ℂ) × (Fin g → ℂ) => realDotC p.1 p.2) := by
+    unfold realDotC; fun_prop
+  have hμa : ∀ a, Continuous (fun s : U => μ s a) := fun a => (continuous_apply a).comp hμ
+  have hGc : Continuous G :=
+    continuous_pi (fun a => continuous_pi (fun b' => hdot.comp ((hμa a).prodMk (hμa b'))))
+  have hbc : Continuous b := continuous_pi (fun a => hdot.comp ((hμa a).prodMk hv))
+  have hGc_eq : ∀ s : U, G s *ᵥ (c s) = b s := by
+    intro s; funext a
+    simp only [G, b, Matrix.mulVec, dotProduct]
+    rw [hc s s.2, realDotC_sum_right]; refine Finset.sum_congr rfl (fun i _ => ?_); ring
+  have hdet : ∀ s : U, (G s).det ≠ 0 := by
+    intro s hd
+    obtain ⟨x, hx0, hx⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hd
+    apply hx0
+    have hw : ∑ i, x i • μ s i = 0 := by
+      apply realDotC_self_eq_zero
+      rw [realDotC_sum_right]
+      have key : ∀ i, realDotC (μ s i) (∑ j, x j • μ s j) = (G s *ᵥ x) i := by
+        intro i; rw [realDotC_sum_right]; simp only [G, Matrix.mulVec, dotProduct]
+        refine Finset.sum_congr rfl (fun j _ => ?_); ring
+      simp_rw [realDotC_comm _ (μ s _), key, hx]; simp
+    funext i
+    exact Fintype.linearIndependent_iff.mp (hli s s.2) x hw i
+  have hceq : U.domRestrict c = fun s => ((G s).det)⁻¹ • ((G s).adjugate *ᵥ b s) := by
+    funext s
+    have h1 : c s = (G s)⁻¹ *ᵥ b s := by
+      rw [← hGc_eq s, Matrix.mulVec_mulVec,
+        Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.mpr (hdet s)), Matrix.one_mulVec]
+    show c s = _
+    rw [h1, Matrix.inv_def, Ring.inverse_eq_inv']
+    ext a; simp [Matrix.mulVec, dotProduct, Matrix.smul_apply, Finset.mul_sum, mul_assoc]
+  rw [hceq]
+  exact (hGc.matrix_det.inv₀ hdet).smul (hGc.matrix_adjugate.matrix_mulVec hbc)
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousOnCoordsOfLinearIndependentStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+theorem _root_.GlobalTheory.T.continuousOn_coords_of_linearIndependent' : ∀ (g m : ℕ) (U : Set ℂ) (μ : ℂ → Fin m → Fin g → ℂ) (v : ℂ → Fin g → ℂ) (c : ℂ → Fin m → ℝ), ContinuousOn μ U → ContinuousOn v U → (∀ s ∈ U, LinearIndependent ℝ (μ s)) → (∀ s ∈ U, v s = ∑ i, c s i • μ s i) → ContinuousOn c U := by
+  first | exact @GlobalTheory.continuousOn_coords_of_linearIndependent | exact GlobalTheory.continuousOn_coords_of_linearIndependent | (intros; apply GlobalTheory.continuousOn_coords_of_linearIndependent <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolyGrowthSpreadOfIntegralMonodromy
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory
+
+lemma intMatrix_smul_sum_norm_le {m g : ℕ} (M : Fin m → Fin m → ℤ) (x y : Fin m → Fin g → ℂ)
+    (h : ∀ j, y j = ∑ i, M j i • x i) :
+    ‖y‖ ≤ (∑ j, ∑ i, ‖M j i‖) * ‖x‖ := by
+  have hS : 0 ≤ ∑ j, ∑ i, ‖M j i‖ :=
+    Finset.sum_nonneg fun j _ => Finset.sum_nonneg fun i _ => norm_nonneg _
+  refine (pi_norm_le_iff_of_nonneg (mul_nonneg hS (norm_nonneg x))).2 fun j => ?_
+  rw [h j]
+  calc ‖∑ i, M j i • x i‖ ≤ ∑ i, ‖M j i • x i‖ := norm_sum_le _ _
+    _ ≤ ∑ i, ‖M j i‖ * ‖x‖ := Finset.sum_le_sum fun i _ =>
+        (norm_zsmul_le _ _).trans (mul_le_mul_of_nonneg_left (norm_le_pi_norm x i) (norm_nonneg _))
+    _ = (∑ i, ‖M j i‖) * ‖x‖ := (Finset.sum_mul _ _ _).symm
+    _ ≤ (∑ j, ∑ i, ‖M j i‖) * ‖x‖ := mul_le_mul_of_nonneg_right
+        (Finset.single_le_sum (f := fun j => ∑ i, ‖M j i‖)
+          (fun j _ => Finset.sum_nonneg fun i _ => norm_nonneg _) (Finset.mem_univ j)) (norm_nonneg x)
+
+theorem polyGrowth_spread_of_integral_monodromy : ∀ (g m : ℕ) (lam : ℂ → Fin m → Fin g → ℂ) (C : ℝ) (k : ℕ) (P Q : Fin m → Fin m → ℤ), (∀ s : ℂ, s.re < 0 → ∀ j, lam (s + 2 * Real.pi * Complex.I) j = ∑ i, P j i • lam s i) → (∀ s : ℂ, s.re < 0 → ∀ j, lam s j = ∑ i, Q j i • lam (s + 2 * Real.pi * Complex.I) i) → (∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ Real.pi → ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k) → ∀ R : ℝ, ∃ C' : ℝ, ∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ R → ‖lam s‖ ≤ C' * (1 + ‖s‖) ^ k := by
+  intro g m lam C k P Q h1 h2 h3 R
+  set τ : ℂ := 2 * Real.pi * Complex.I with hτ
+  have hτre : τ.re = 0 := by simp [hτ]
+  have hτim : τ.im = 2 * Real.pi := by simp [hτ]
+  have hτn : ‖τ‖ = 2 * Real.pi := by simp [hτ, abs_of_pos Real.pi_pos]
+  have hexp : ∀ s, Complex.exp (s + τ) = Complex.exp s := by
+    intro s; rw [Complex.exp_add, hτ, Complex.exp_two_pi_mul_I, mul_one]
+  have hSP : 0 ≤ ∑ j, ∑ i, ‖P j i‖ :=
+    Finset.sum_nonneg fun j _ => Finset.sum_nonneg fun i _ => norm_nonneg _
+  have hSQ : 0 ≤ ∑ j, ∑ i, ‖Q j i‖ :=
+    Finset.sum_nonneg fun j _ => Finset.sum_nonneg fun i _ => norm_nonneg _
+  set A : ℝ := 1 + ∑ j, ∑ i, ‖P j i‖ + ∑ j, ∑ i, ‖Q j i‖ with hA
+  have hA1 : 1 ≤ A := by linarith
+  have hPA : ∀ s : ℂ, s.re < 0 → ‖lam (s + τ)‖ ≤ A * ‖lam s‖ := fun s hs =>
+    (intMatrix_smul_sum_norm_le P _ _ (h1 s hs)).trans
+      (mul_le_mul_of_nonneg_right (by linarith) (norm_nonneg _))
+  have hQA : ∀ s : ℂ, s.re < 0 → ‖lam s‖ ≤ A * ‖lam (s + τ)‖ := fun s hs =>
+    (intMatrix_smul_sum_norm_le Q _ _ (h2 s hs)).trans
+      (mul_le_mul_of_nonneg_right (by linarith) (norm_nonneg _))
+  set B : ℝ := A * (1 + 2 * Real.pi) ^ k with hB
+  have hB1 : 1 ≤ B := one_le_mul_of_one_le_of_one_le hA1 (one_le_pow₀ (by linarith [Real.pi_pos]))
+  have hgrow : ∀ s t : ℂ, ‖t‖ ≤ ‖s‖ + 2 * Real.pi →
+      (1 + ‖t‖) ^ k ≤ (1 + 2 * Real.pi) ^ k * (1 + ‖s‖) ^ k := by
+    intro s t h
+    rw [← mul_pow]
+    apply pow_le_pow_left₀ (by positivity)
+    nlinarith [norm_nonneg s, Real.pi_pos]
+  have hM : 0 ≤ max C 0 := le_max_right _ _
+  have key : ∀ n : ℕ, ∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 →
+      |s.im| ≤ Real.pi + 2 * Real.pi * n → ‖lam s‖ ≤ max C 0 * B ^ n * (1 + ‖s‖) ^ k := by
+    intro n
+    induction n with
+    | zero =>
+      intro s hs he hi
+      have hX : 0 ≤ (1 + ‖s‖) ^ k := by positivity
+      calc ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k := h3 s hs he (by simpa using hi)
+        _ ≤ max C 0 * B ^ 0 * (1 + ‖s‖) ^ k := by
+          rw [pow_zero, mul_one]; exact mul_le_mul_of_nonneg_right (le_max_left _ _) hX
+    | succ n ih =>
+      intro s hs he hi
+      have hX : 0 ≤ (1 + ‖s‖) ^ k := by positivity
+      have hBn : 1 ≤ B ^ (n + 1) := one_le_pow₀ hB1
+      by_cases hsm : |s.im| ≤ Real.pi
+      · calc ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k := h3 s hs he hsm
+          _ ≤ max C 0 * B ^ (n + 1) * (1 + ‖s‖) ^ k := by
+            apply mul_le_mul_of_nonneg_right _ hX
+            calc C ≤ max C 0 := le_max_left _ _
+              _ = max C 0 * 1 := (mul_one _).symm
+              _ ≤ max C 0 * B ^ (n + 1) := mul_le_mul_of_nonneg_left hBn hM
+      · push_neg at hsm
+        have hn0 : (0 : ℝ) ≤ 2 * Real.pi * n := by positivity
+        have hcast : ((n + 1 : ℕ) : ℝ) = (n : ℝ) + 1 := by push_cast; ring
+        rw [hcast] at hi
+        obtain ⟨hi1, hi2⟩ := abs_le.mp hi
+        obtain ⟨t, hlt, htre, hte, htn, hti⟩ : ∃ t : ℂ, ‖lam s‖ ≤ A * ‖lam t‖ ∧ t.re = s.re ∧
+            Complex.exp t = Complex.exp s ∧ ‖t‖ ≤ ‖s‖ + 2 * Real.pi ∧
+            |t.im| ≤ Real.pi + 2 * Real.pi * n := by
+          rcases lt_abs.mp hsm with hpos | hneg
+          · refine ⟨s - τ, ?_, ?_, ?_, ?_, ?_⟩
+            · have := hPA (s - τ) (by simp [Complex.sub_re, hτre, hs])
+              rwa [sub_add_cancel] at this
+            · simp [hτre]
+            · have := hexp (s - τ); rw [sub_add_cancel] at this; exact this.symm
+            · calc ‖s - τ‖ ≤ ‖s‖ + ‖τ‖ := norm_sub_le _ _
+                _ = ‖s‖ + 2 * Real.pi := by rw [hτn]
+            · rw [Complex.sub_im, hτim, abs_le]; constructor <;> nlinarith [Real.pi_pos]
+          · refine ⟨s + τ, hQA s hs, ?_, hexp s, ?_, ?_⟩
+            · simp [hτre]
+            · calc ‖s + τ‖ ≤ ‖s‖ + ‖τ‖ := norm_add_le _ _
+                _ = ‖s‖ + 2 * Real.pi := by rw [hτn]
+            · rw [Complex.add_im, hτim, abs_le]; constructor <;> nlinarith [Real.pi_pos]
+        have hIH := ih t (by rw [htre]; exact hs) (by rw [hte]; exact he) hti
+        calc ‖lam s‖ ≤ A * ‖lam t‖ := hlt
+          _ ≤ A * (max C 0 * B ^ n * (1 + ‖t‖) ^ k) :=
+            mul_le_mul_of_nonneg_left hIH (by linarith)
+          _ ≤ A * (max C 0 * B ^ n * ((1 + 2 * Real.pi) ^ k * (1 + ‖s‖) ^ k)) :=
+            mul_le_mul_of_nonneg_left
+              (mul_le_mul_of_nonneg_left (hgrow s t htn)
+                (mul_nonneg hM (pow_nonneg (by linarith) n))) (by linarith)
+          _ = max C 0 * B ^ (n + 1) * (1 + ‖s‖) ^ k := by rw [hB]; ring
+  refine ⟨max C 0 * B ^ ⌈R / (2 * Real.pi)⌉₊, fun s hs he hi => key _ s hs he (hi.trans ?_)⟩
+  have hc : R / (2 * Real.pi) ≤ (⌈R / (2 * Real.pi)⌉₊ : ℝ) := Nat.le_ceil _
+  rw [div_le_iff₀ (by positivity)] at hc
+  linarith [Real.pi_pos]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolyGrowthSpreadOfIntegralMonodromyStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+theorem _root_.GlobalTheory.T.polyGrowth_strip_of_integral_monodromy : ∀ (g m : ℕ) (lam : ℂ → Fin m → Fin g → ℂ) (C : ℝ) (k : ℕ) (P Q : Fin m → Fin m → ℤ), (∀ s : ℂ, s.re < 0 → ∀ j, lam (s + 2 * Real.pi * Complex.I) j = ∑ i, P j i • lam s i) → (∀ s : ℂ, s.re < 0 → ∀ j, lam s j = ∑ i, Q j i • lam (s + 2 * Real.pi * Complex.I) i) → (∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ Real.pi → ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k) → ∀ R : ℝ, ∃ C' : ℝ, ∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ R → ‖lam s‖ ≤ C' * (1 + ‖s‖) ^ k := by
+  first | exact @GlobalTheory.polyGrowth_spread_of_integral_monodromy | exact GlobalTheory.polyGrowth_spread_of_integral_monodromy | (intros; apply GlobalTheory.polyGrowth_spread_of_integral_monodromy <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialGrowthOfPeriodicIntegralSpans
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.StripGrowth
+
+theorem int_coord_const (g m : ℕ) (U : Set ℂ) (hU : IsPreconnected U) (μ ν : ℂ → Fin m → Fin g → ℂ)
+    (hμ : ContinuousOn μ U) (hν : ContinuousOn ν U) (hli : ∀ s ∈ U, LinearIndependent ℝ (μ s))
+    (hn : ∀ s ∈ U, ∀ j, ∃ n : Fin m → ℤ, ν s j = ∑ i, n i • μ s i) :
+    ∃ P : Fin m → Fin m → ℤ, ∀ s ∈ U, ∀ j, ν s j = ∑ i, P j i • μ s i := by
+  classical
+  rcases U.eq_empty_or_nonempty with rfl | ⟨s₀, hs₀⟩
+  · exact ⟨0, by simp⟩
+  choose! n hnE using hn
+  have key : ∀ j, ∀ s ∈ U, n s j = n s₀ j := by
+    intro j
+    have hcont : ContinuousOn (fun s i => ((n s j i : ℤ) : ℝ)) U := by
+      refine GlobalTheory.T.continuousOn_coords_of_linearIndependent' g m U μ (fun s => ν s j) (fun s i => (n s j i : ℝ)) hμ ?_ hli ?_
+      · exact (continuous_apply j).comp_continuousOn hν
+      · intro s hs
+        rw [hnE s hs j]
+        simp [Int.cast_smul_eq_zsmul]
+    have hcz : ContinuousOn (fun s => n s j) U := by
+      rw [continuousOn_pi] at hcont ⊢
+      intro i
+      exact (Int.isUniformEmbedding_coe_real.isEmbedding.continuousOn_iff).2 (hcont i)
+    intro s hs
+    exact hU.constant hcz hs hs₀
+  exact ⟨n s₀, fun s hs j => by rw [hnE s hs j, key j s hs]⟩
+
+theorem strip_growth : ∀ (g m : ℕ) (lam : ℂ → Fin m → Fin g → ℂ) (C : ℝ) (k : ℕ), ContinuousOn lam {s : ℂ | s.re < 0} → (∀ s : ℂ, s.re < 0 → LinearIndependent ℝ (lam s)) → (∀ s : ℂ, s.re < 0 → ∀ z : Fin g → ℂ, (∃ n : Fin m → ℤ, z = ∑ j, n j • lam (s + 2 * Real.pi * Complex.I) j) ↔ ∃ n : Fin m → ℤ, z = ∑ j, n j • lam s j) → (∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ Real.pi → ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k) → ∀ R : ℝ, ∃ C' : ℝ, ∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ R → ‖lam s‖ ≤ C' * (1 + ‖s‖) ^ k := by
+  intro g m lam C k hcont hli hspan hB
+  have hU : IsPreconnected {s : ℂ | s.re < 0} := (convex_halfSpace_re_lt 0).isPreconnected
+  have hre : ∀ s : ℂ, (s + 2 * Real.pi * Complex.I).re = s.re := by intro s; simp
+  have hshift : ContinuousOn (fun s => lam (s + 2 * Real.pi * Complex.I)) {s : ℂ | s.re < 0} :=
+    hcont.comp (continuousOn_id.add continuousOn_const) (fun s hs => by
+      simpa [Set.mem_setOf_eq, hre] using hs)
+  have hli' : ∀ s ∈ {s : ℂ | s.re < 0}, LinearIndependent ℝ (lam (s + 2 * Real.pi * Complex.I)) :=
+    fun s hs => hli _ (by simpa [hre] using hs)
+  have hsingle : ∀ (v : Fin m → Fin g → ℂ) (j : Fin m), v j = ∑ i, (Pi.single j 1 : Fin m → ℤ) i • v i := by
+    intro v j
+    classical
+    simp [Pi.single_apply]
+  obtain ⟨P, hP⟩ := int_coord_const g m _ hU lam (fun s => lam (s + 2 * Real.pi * Complex.I)) hcont hshift
+    (fun s hs => hli s hs) (fun s hs j => (hspan s hs _).1 ⟨Pi.single j 1, hsingle _ j⟩)
+  obtain ⟨Q, hQ⟩ := int_coord_const g m _ hU (fun s => lam (s + 2 * Real.pi * Complex.I)) lam hshift hcont
+    hli' (fun s hs j => (hspan s hs _).2 ⟨Pi.single j 1, hsingle _ j⟩)
+  exact GlobalTheory.T.polyGrowth_strip_of_integral_monodromy g m lam C k P Q (fun s hs j => hP s hs j) (fun s hs j => hQ s hs j) hB
+
+end GlobalTheory.StripGrowth
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialGrowthOfPeriodicIntegralSpansStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +347,5 @@ open Filter Topology
 
 theorem _root_.GlobalTheory.T.polynomial_growth_of_periodic_integral_spans : ∀ (g m : ℕ) (lam : ℂ → Fin m → Fin g → ℂ) (C : ℝ) (k : ℕ), ContinuousOn lam {s : ℂ | s.re < 0} → (∀ s : ℂ, s.re < 0 → LinearIndependent ℝ (lam s)) → (∀ s : ℂ, s.re < 0 → ∀ z : Fin g → ℂ, (∃ n : Fin m → ℤ, z = ∑ j, n j • lam (s + 2 * Real.pi * Complex.I) j) ↔ ∃ n : Fin m → ℤ, z = ∑ j, n j • lam s j) → (∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ Real.pi → ‖lam s‖ ≤ C * (1 + ‖s‖) ^ k) → ∀ R : ℝ, ∃ C' : ℝ, ∀ s : ℂ, s.re < 0 → ‖Complex.exp s‖ ≤ 1 / 2 → |s.im| ≤ R → ‖lam s‖ ≤ C' * (1 + ‖s‖) ^ k := by
   first | exact @GlobalTheory.StripGrowth.strip_growth | exact GlobalTheory.StripGrowth.strip_growth | (intros; apply GlobalTheory.StripGrowth.strip_growth <;> assumption)
+end
+end

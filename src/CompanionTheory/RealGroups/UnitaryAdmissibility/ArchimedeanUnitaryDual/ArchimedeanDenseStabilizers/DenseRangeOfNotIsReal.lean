@@ -3,13 +3,14 @@ module
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.IsHermForm
 public import Formalism.PeriodIntegrals.UJClassFin
 public import Mathlib.Analysis.CStarAlgebra.Classes
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.NefEffectiveCones.ExistsNsmulMulVecMemHat
+import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsNsmulMem
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-public import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -23,9 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,10 +44,62 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.IsHermForm
+import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.Hat1
+public import Mathlib.Analysis.Matrix.Order
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 public import Mathlib.Analysis.Matrix.Hermitian
+
+-- Source module: CompanionTheory.SpectralGeometry.LocalGlobalProofs.NefEffectiveCones.ExistsNsmulMulVecMemHat
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain GlobalTheory.AdLat GlobalTheory.UnRep
+open scoped TensorProduct Matrix
+
+namespace GlobalTheory.CompanionTheory.HatBound
+
+theorem exists_nat_mul_integer (K : Type) [Field K] [NumberField K] (x : K) :
+    ∃ m : ℕ, 0 < m ∧ ∃ r : 𝓞 K, (r : K) = m * x := by
+  have hx : IsAlgebraic ℤ x :=
+    (IsFractionRing.isAlgebraic_iff ℤ ℚ K).2 (Algebra.IsAlgebraic.isAlgebraic x)
+  obtain ⟨y, hy, h⟩ := hx.exists_integral_multiple
+  refine ⟨y.natAbs, Int.natAbs_pos.2 hy, ?_⟩
+  rcases Int.natAbs_eq y with h1 | h1
+  · refine ⟨⟨y • x, h⟩, ?_⟩
+    change y • x = _
+    rw [zsmul_eq_mul]
+    congr 1
+    conv_lhs => rw [h1]
+    simp only [Int.cast_natCast]
+  · refine ⟨⟨-(y • x), h.neg⟩, ?_⟩
+    change -(y • x) = _
+    rw [zsmul_eq_mul, ← neg_mul]
+    congr 1
+    conv_lhs => rw [h1]
+    simp only [Int.cast_neg, Int.cast_natCast, neg_neg]
+
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ}
+
+theorem exists_nsmul_mem_lattice [NumberField E] (L : Submodule (𝓞 E) (Fin n → E))
+    (hL : Submodule.span E (L : Set (Fin n → E)) = ⊤) (x : Fin n → E) :
+    ∃ m : ℕ, 0 < m ∧ m • x ∈ L := by
+  apply GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mem <;> assumption
+
+end GlobalTheory.CompanionTheory.HatBound
+end
+end
+
+-- Source module: CompanionTheory.RealGroups.UnitaryAdmissibility.ArchimedeanUnitaryDual.ArchimedeanDenseStabilizers.DenseRangeOfNotIsReal
+
+section
 
 @[expose] public section
 
@@ -206,3 +257,5 @@ theorem exists_single_mem (L : Submodule (𝓞 E) (Fin n → E))
   exact h1
 
 end CompanionTheory.Rg.FlCls
+end
+end

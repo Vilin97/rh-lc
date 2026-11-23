@@ -1,19 +1,22 @@
 module
 
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LvlDimGen
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestSumSpan
-import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
-import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiSmulRight
-public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.SumFinrankLeOfIndep
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestRankLProved
+import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiSmulRight
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+import Mathlib.Algebra.AffineMonoid.UniqueSums
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -21,8 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,6 +46,173 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.TotallySplit
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestSumSpan
+import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiSmulRight
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.SumFinrankLeOfIndep
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LiRenameMon
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.G.SymmetricFormBlocks
+
+open MvPolynomial Finset Formalism.GM.M.SSD
+
+section LI
+
+variable {σ τ K : Type} [Field K] [DecidableEq σ] (e : τ → σ) (he : Function.Injective e)
+
+def decode (M : Finset (σ →₀ ℕ)) : MvPolynomial σ K →ₗ[K] (M → MvPolynomial τ K) where
+  toFun Q := fun β => kap _ (F_inj e he 0 (β : σ →₀ ℕ)) Q
+  map_add' Q Q' := by funext β; exact kap_add _ _ Q Q'
+  map_smul' c Q := by funext β; exact kap_smul _ _ c Q
+
+theorem decode_gen (M : Finset (σ →₀ ℕ)) (hM : ∀ β ∈ M, ∀ x, β (e x) = 0) (y : MvPolynomial τ K) (β : M) :
+    decode e he M (rename e y * monomial (β : σ →₀ ℕ) 1) = Pi.single β y := by
+  funext γ
+  have h1 : rename e y * monomial (β : σ →₀ ℕ) (1 : K) = monomial 0 1 * rename e y * monomial (β : σ →₀ ℕ) 1 := by
+    rw [← MvPolynomial.C_apply, MvPolynomial.C_1, one_mul]
+  have hg : ∀ w ∈ (monomial (β : σ →₀ ℕ) (1 : K)).support, ∀ x, w (e x) = 0 := by
+    intro w hw x
+    rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_monomial] at hw
+    split_ifs at hw with h
+    · rw [← h]
+      exact hM _ β.2 x
+    · exact absurd rfl hw
+  show kap _ (F_inj e he 0 (γ : σ →₀ ℕ)) (rename e y * monomial (β : σ →₀ ℕ) 1) = (Pi.single β y : M → MvPolynomial τ K) γ
+  rw [h1, kap_gen e he 0 (γ : σ →₀ ℕ) (hM _ γ.2) y _ hg, MvPolynomial.coeff_monomial, Pi.single_apply]
+  by_cases h : γ = β
+  · subst h
+    simp
+  · rw [if_neg h, if_neg (fun h' => h (Subtype.ext h'.symm))]
+    exact zero_smul K y
+
+include he in
+theorem li_rename_mon (M : Finset (σ →₀ ℕ)) (hM : ∀ β ∈ M, ∀ x, β (e x) = 0) {ι : Type} (b : ι → MvPolynomial τ K)
+    (hb : LinearIndependent K b) :
+    LinearIndependent K (fun q : (Σ _ : M, ι) => rename e (b q.2) * monomial ((q.1 : σ →₀ ℕ)) 1) := by
+  apply LinearIndependent.of_comp (decode e he M)
+  have h1 : (decode e he M) ∘ (fun q : (Σ _ : M, ι) => rename e (b q.2) * monomial ((q.1 : σ →₀ ℕ)) 1) =
+      (Finsupp.linearEquivFunOnFinite K (MvPolynomial τ K) M) ∘
+        (fun q : (Σ _ : M, ι) => Finsupp.single q.1 (b q.2)) := by
+    funext q
+    simp only [Function.comp_apply, Finsupp.linearEquivFunOnFinite_single]
+    exact decode_gen e he M hM (b q.2) q.1
+  rw [h1]
+  first
+  | exact (Finsupp.linearIndependent_single (fun _ : M => b) (fun _ => hb)).map' _ (LinearEquiv.ker _)
+  | exact (Finsupp.linearIndependent_single (f := fun _ : M => b) (fun _ => hb)).map' _ (LinearEquiv.ker _)
+  | exact (Finsupp.linearIndependent_single (v := fun _ : M => b) (fun _ => hb)).map' _ (LinearEquiv.ker _)
+
+
+
+theorem li_mul_left {ι : Type} (F : MvPolynomial σ K) (hF : F ≠ 0) (v : ι → MvPolynomial σ K) (hv : LinearIndependent K v) :
+    LinearIndependent K (fun i => F * v i) := by
+  have hinj : Function.Injective (LinearMap.mulLeft K F) := by
+    intro a c h
+    rw [LinearMap.mulLeft_apply, LinearMap.mulLeft_apply] at h
+    exact mul_left_cancel₀ hF h
+  have hfun : (fun i => F * v i) = (LinearMap.mulLeft K F) ∘ v := by
+    funext i
+    rw [Function.comp_apply, LinearMap.mulLeft_apply]
+  rw [hfun]
+  exact hv.map' _ (LinearMap.ker_eq_bot.mpr hinj)
+
+end LI
+
+end Formalism.MainNotions.G.SymmetricFormBlocks
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LvlDimGen
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.G.SymmetricFormBlocks
+
+open MvPolynomial Finset
+
+section Gen
+
+variable {p : ℕ} [Fact p.Prime] {N r : ℕ} [NeZero r] (G : Formalism.GM.M.BlockData N)
+
+def preF (j : Fin G.T.t → ℕ) (jp : ℕ) : MvPolynomial (Formalism.GM.M.BVar N r G.T.t) ℚ_[p] :=
+  (∏ i, G.Ehat p (r := r) i ^ j i) * G.Eplus p (r := r) ^ jp *
+    (∏ i, X (Formalism.GM.M.scalZ N r G.T.t (Fin.castSucc i)) ^ G.T.z i) * X (Formalism.GM.M.scalZ N r G.T.t (Fin.last G.T.t)) ^ G.zPlus
+
+theorem lvlDim_gen (j : Fin G.T.t → ℕ) (jp : ℕ) (hpre : preF (p := p) (r := r) G j jp ≠ 0)
+    (hden : ∀ y ∈ Formalism.GM.M.Y p (r := r) (G.lettersAt j jp) G.T.J G.T.thr, ∃ c : ℤ_[p], c ≠ 0 ∧
+      ((c : ℚ_[p]) • y) ∈ Formalism.GM.M.YZ p (r := r) (G.lettersAt j jp) G.T.J G.T.thr)
+    (hfd : FiniteDimensional ℚ_[p] (Submodule.span ℚ_[p] (G.gens p (r := r) j jp)))
+    (hM : ∀ β ∈ xiMons (r := r) G (G.B - jp), ∀ x, β (Formalism.GM.M.chainEmb N r G.T.t x) = 0)
+    (hxi : ∀ β ∈ xiMons (r := r) G (G.B - jp), (monomial β (1 : ℚ_[p])) ∈ Formalism.GM.M.XiPolZ p N r G.T.t (G.B - jp)) :
+    dimY p (r := r) G j jp * dXi r (G.B - jp) ≤
+      Module.finrank ℚ_[p] (Submodule.span ℚ_[p] (G.gens p (r := r) j jp)) := by
+  classical
+  set Yq := Formalism.GM.M.Y p (r := r) (G.lettersAt j jp) G.T.J G.T.thr with hYq
+  have : FiniteDimensional ℚ_[p] (Formalism.GM.M.Pol p r (G.lettersAt j jp)) :=
+    Formalism.CountingSumsFrames.pol_finiteDimensional (p := p) (G.lettersAt j jp)
+  have : FiniteDimensional ℚ_[p] Yq := Submodule.finiteDimensional_of_le (inf_le_left)
+  let b := Module.finBasis ℚ_[p] Yq
+  choose c hc0 hcY using fun a => hden (b a) (b a).2
+  have hc0' : ∀ a, (c a : ℚ_[p]) ≠ 0 := fun a h => hc0 a (PadicInt.coe_eq_zero.1 h)
+  let w : Fin (Module.finrank ℚ_[p] Yq) → ℚ_[p]ˣ := fun a => Units.mk0 _ (hc0' a)
+  have hb0 : LinearIndependent ℚ_[p] (fun a => ((b a : Yq) : MvPolynomial (Fin N × Fin r) ℚ_[p])) :=
+    b.linearIndependent.map' Yq.subtype (Submodule.ker_subtype _)
+  have hb' : LinearIndependent ℚ_[p] (fun a => (c a : ℚ_[p]) • ((b a : Yq) : MvPolynomial (Fin N × Fin r) ℚ_[p])) :=
+    hb0.units_smul w
+  have hinj : Function.Injective (Formalism.GM.M.chainEmb N r G.T.t) := by
+    intro x y h
+    simp only [Formalism.GM.M.chainEmb, Sum.inl.injEq, Prod.mk.injEq] at h
+    exact Prod.ext (Fin.castSucc_injective _ h.1) h.2
+  have hli := li_mul_left (preF (p := p) (r := r) G j jp) hpre _
+    (li_rename_mon (Formalism.GM.M.chainEmb N r G.T.t) hinj (xiMons (r := r) G (G.B - jp)) hM _ hb')
+  have hmem : ∀ q : (Σ _ : xiMons (r := r) G (G.B - jp), Fin (Module.finrank ℚ_[p] Yq)),
+      preF (p := p) (r := r) G j jp * (rename (Formalism.GM.M.chainEmb N r G.T.t)
+        ((c q.2 : ℚ_[p]) • ((b q.2 : Yq) : MvPolynomial (Fin N × Fin r) ℚ_[p])) * monomial (q.1 : _ →₀ ℕ) 1) ∈
+        G.gens p (r := r) j jp := by
+    intro q
+    refine ⟨_, hcY q.2, monomial (q.1 : _ →₀ ℕ) 1, hxi _ q.1.2, ?_⟩
+    unfold preF
+    ring
+  let v : (Σ _ : xiMons (r := r) G (G.B - jp), Fin (Module.finrank ℚ_[p] Yq)) →
+      Submodule.span ℚ_[p] (G.gens p (r := r) j jp) := fun q => ⟨_, Submodule.subset_span (hmem q)⟩
+  have hv : LinearIndependent ℚ_[p] v := LinearIndependent.of_comp (Submodule.subtype _) hli
+  have hcard := hv.fintype_card_le_finrank
+  rw [Fintype.card_sigma] at hcard
+  simp only [Fintype.card_fin, Finset.sum_const, Finset.card_univ, smul_eq_mul, Fintype.card_coe] at hcard
+  rw [card_xiMons_eq] at hcard
+  unfold dimY
+  rw [mul_comm]
+  exact hcard
+
+end Gen
+
+end Formalism.MainNotions.G.SymmetricFormBlocks
+
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LvlDimCondition
+
+section
 
 @[expose] public section
 
@@ -133,4 +302,6 @@ theorem lvlDimCondition : RestLvlDim C0 CE1 CE2 X := by
 
 end Formalism.MainNotions.G.SymmetricFormBlocks
 
+end
+end
 end

@@ -2,23 +2,20 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.EFam
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Edge1
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechIsCxOfMono
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KahlerFormsOverSubalgebraClosureProperties
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DeRhamPullbackAlongSecondMapSmulIotaMultiKaehler
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FiniteEtaleFunctionFieldIntegralClosureDifferentStatement
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.OmegaPullId
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCorrespondenceFunctionFieldStatementOne
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCorrespondenceFunctionFieldStatementTwo
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.ExistsComparisonFamilyNatural
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CupPair
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechAndTotalDifferentialAdditiveSquareZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -26,7 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,8 +43,166 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.OneFormMapEqKaehlerDifferentialMap
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KahlerFormsOverSubalgebraClosureProperties
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FiniteEtaleFunctionFieldIntegralClosureDifferentStatement
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.OmegaPullId
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCorrespondenceFunctionFieldStatementOne
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCorrespondenceFunctionFieldStatementTwo
+public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.ExistsComparisonFamilyNatural
+import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GermCompatId
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechIsCxOfMono
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
+
+namespace GlobalTheory.PD
+
+theorem cech_isCx_of_mono : ∀ (k : Type) [Field k] (ι : Type) [LinearOrder ι] (E : Type) [AddCommGroup E] [Module k E]
+    (A : Finset ι → Submodule k E), (∀ s t, s.Nonempty → s ⊆ t → A s ≤ A t) → (cech A).IsCx := by
+  intro k _ ι _ E _ _ A hA n a ha
+  have ha' : ∀ s, a s ∈ (if s.Nonempty ∧ (s.card : ℤ) = n + 1 then A s else ⊥) :=
+    fun s => (Submodule.mem_pi.1 ha) s (Set.mem_univ _)
+  refine ⟨?_, ?_⟩
+  · show GlobalTheory.DI.delta a ∈ cechC A (n + 1)
+    refine Submodule.mem_pi.2 fun t _ => ?_
+    show ∑ i ∈ t, GlobalTheory.cubeSign t i • a (t.erase i) ∈ _
+    split_ifs with ht
+    · refine Submodule.sum_mem _ fun i _ => zsmul_mem ?_ _
+      have h := ha' (t.erase i)
+      split_ifs at h with h2
+      · exact hA _ _ h2.1 (Finset.erase_subset _ _) h
+      · rw [Submodule.mem_bot] at h; rw [h]; exact zero_mem _
+    · rw [Submodule.mem_bot]
+      refine Finset.sum_eq_zero fun i hi => ?_
+      have h := ha' (t.erase i)
+      split_ifs at h with h2
+      · exfalso
+        apply ht
+        refine ⟨⟨i, hi⟩, ?_⟩
+        have h3 := Finset.card_erase_add_one hi
+        have h4 := h2.2
+        omega
+      · rw [Submodule.mem_bot] at h; rw [h, smul_zero]
+  · exact GlobalTheory.DI.delta_delta a
+
+end GlobalTheory.PD
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.DeRhamPullbackAlongSecondMapSmulIotaMultiKaehler
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open GlobalTheory.WH GlobalTheory.PD GlobalTheory.W1 GlobalTheory.CechDR KaehlerDifferential
+open scoped TensorProduct
+
+namespace GlobalTheory.WH.PullCoc
+
+section Gen
+
+variable {k : Type} [Field k] {ι : Type} [LinearOrder ι] {E E' : Type} [AddCommGroup E] [Module k E]
+  [AddCommGroup E'] [Module k E']
+
+end Gen
+
+end GlobalTheory.WH.PullCoc
+
+namespace GlobalTheory.WH.PullCoc
+
+section J2
+
+variable {K K' : Type} [Field K] [Field K'] [Algebra ℂ K] [Algebra ℂ K']
+
+theorem mapDR_smul_ιMulti {L : Type} [Field L] [Algebra ℂ L] [Algebra K L] [IsScalarTower ℂ K L] (b : K) (q : ℕ) (v : Fin q → K) :
+    mapDR ℂ K L (b • ExteriorAlgebra.ιMulti K q fun j => D ℂ K (v j)) =
+      algebraMap K L b • ExteriorAlgebra.ιMulti L q fun j => D ℂ L (algebraMap K L (v j)) := by
+  rw [map_smul, algebraMap_smul]
+  congr 1
+  simp [ExteriorAlgebra.ιMulti_apply, map_list_prod, List.map_ofFn, mapDR, map1, Function.comp_def,
+    KaehlerDifferential.map_D]
+
+theorem deRhamPullbackAlongSecondMap_smul_iotaMulti_kaehlerD (j2 : K →ₐ[ℂ] K') (b : K) (q : ℕ) (v : Fin q → K) :
+    pr2L j2 (b • ExteriorAlgebra.ιMulti K q fun j => D ℂ K (v j)) =
+      j2 b • ExteriorAlgebra.ιMulti K' q fun j => D ℂ K' (j2 (v j)) := by
+  letI : Algebra K K' := j2.toRingHom.toAlgebra
+  haveI : IsScalarTower ℂ K K' := IsScalarTower.of_algebraMap_eq fun c => (j2.commutes c).symm
+  exact mapDR_smul_ιMulti (L := K') b q v
+
+end J2
+
+end GlobalTheory.WH.PullCoc
+
+namespace GlobalTheory.WH.PullCoc
+
+section Y
+
+variable {F K K' : Type} [Field F] [Field K] [Field K'] [Algebra ℂ F] [Algebra ℂ K] [Algebra ℂ K'] [Algebra F K]
+  [IsScalarTower ℂ F K] [Algebra K K'] [IsScalarTower ℂ K K'] [Algebra F K'] [IsScalarTower F K K'] [IsScalarTower ℂ F K']
+  {d : ℕ} (x : Fin (d + 1) → F)
+
+end Y
+
+end GlobalTheory.WH.PullCoc
+
+namespace GlobalTheory.WH.PullCoc
+
+section Y
+
+variable {F K K' : Type} [Field F] [Field K] [Field K'] [Algebra ℂ F] [Algebra ℂ K] [Algebra ℂ K'] [Algebra F K]
+  [IsScalarTower ℂ F K] [Algebra K K'] [IsScalarTower ℂ K K'] [Algebra F K'] [IsScalarTower F K K'] [IsScalarTower ℂ F K']
+  {d : ℕ} (x : Fin (d + 1) → F)
+
+end Y
+
+end GlobalTheory.WH.PullCoc
+
+namespace GlobalTheory.WH.PullCoc
+
+section Y
+
+variable {F K K' : Type} [Field F] [Field K] [Field K'] [Algebra ℂ F] [Algebra ℂ K] [Algebra ℂ K'] [Algebra F K]
+  [IsScalarTower ℂ F K] [Algebra K K'] [IsScalarTower ℂ K K'] [Algebra F K'] [IsScalarTower F K K'] [IsScalarTower ℂ F K']
+  {d : ℕ} (x : Fin (d + 1) → F)
+
+end Y
+
+end GlobalTheory.WH.PullCoc
+
+namespace GlobalTheory.WH.PullCoc
+
+section Y
+
+variable {F K K' : Type} [Field F] [Field K] [Field K'] [Algebra ℂ F] [Algebra ℂ K] [Algebra ℂ K'] [Algebra F K]
+  [IsScalarTower ℂ F K] [Algebra K K'] [IsScalarTower ℂ K K'] [Algebra F K'] [IsScalarTower F K K'] [IsScalarTower ℂ F K']
+  {d : ℕ} (x : Fin (d + 1) → F)
+
+end Y
+
+end GlobalTheory.WH.PullCoc
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCorrespondenceFamilyStatement
+
+section
 
 @[expose] public section
 
@@ -283,3 +437,5 @@ theorem UpperTheory.etaleCorrespondence_family_statement :
   rw [hm2]
   congr 1
   exact Subtype.ext (hm1.trans hval.symm)
+end
+end

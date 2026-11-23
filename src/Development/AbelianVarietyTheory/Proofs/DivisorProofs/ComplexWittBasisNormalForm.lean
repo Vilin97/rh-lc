@@ -2,16 +2,9 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTransposeMulMulSelfOfUnitaryConjStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLeviElementIsotropicOrthogonalComplexStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFlagComplementPosDefFactorizationStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFlagUnipotentMatrixExistsSparseStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PosDefExistsConjTransposeMulMulEqOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RadicalEltMovingDualToMajorantStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -28,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -35,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -48,7 +41,219 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLeviElementIsotropicOrthogonalComplexStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFlagComplementPosDefFactorizationStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFlagUnipotentMatrixExistsSparseStatement
+public import Mathlib.Analysis.Complex.Order
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+public import Mathlib.Algebra.Star.UnitaryStarAlgAut
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RadicalEltMovingDualToMajorantStatement
+import Mathlib.Analysis.CStarAlgebra.Classes
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTransposeMulMulSelfOfUnitaryConj
+
+section
+
+@[expose] public section
+
+open scoped ComplexOrder
+open Matrix
+
+namespace GlobalTheory
+
+
+open scoped ComplexOrder in
+open Matrix in
+theorem _root_.GlobalTheory.conjTranspose_mul_mul_self_of_unitary_conj :
+    ∀ (n d : ℕ) (J P : Matrix (Fin n) (Fin n) ℂ) (Xb Yb : Matrix (Fin n) (Fin d) ℂ) (y₀ : GL (Fin d) ℂ),
+    J.conjTranspose = J → P.conjTranspose = P → Xb.conjTranspose * J * Xb = 0 → Yb.conjTranspose * J * Yb = 0 →
+    Xb.conjTranspose * J * Yb = 1 →
+    P * Xb = J * Yb * ((y₀⁻¹).1.conjTranspose * (y₀⁻¹).1) → P * Yb = J * Xb * (y₀.1 * (y₀.1).conjTranspose) →
+    ∀ k : GL (Fin d) ℂ, (k.1).conjTranspose * k.1 = 1 →
+      let m : GL (Fin d) ℂ := y₀ * k * y₀⁻¹
+      let G : Matrix (Fin n) (Fin n) ℂ := 1 + Xb * (m.1 - 1) * (Yb.conjTranspose * J) + Yb * ((m⁻¹).1.conjTranspose - 1) * (Xb.conjTranspose * J)
+      G.conjTranspose * P * G = P := by
+  intro n d J P X Y y₀ hJ hP hXX hYY hXY hPX hPY k hk m G
+  have hki : (k⁻¹).1 = k.1ᴴ := by
+    calc (k⁻¹).1 = (k.1ᴴ * k.1) * (k⁻¹).1 := by rw [hk, Matrix.one_mul]
+      _ = k.1ᴴ := by rw [Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one]
+  have hm : m.1 = y₀.1 * k.1 * (y₀⁻¹).1 := by simp [m]
+  have hmi : (m⁻¹).1 = y₀.1 * k.1ᴴ * (y₀⁻¹).1 := by
+    simp only [m, _root_.mul_inv_rev, inv_inv, Units.val_mul, hki, Matrix.mul_assoc]
+  have hab : y₀.1ᴴ * (y₀⁻¹).1ᴴ = 1 := by
+    rw [← conjTranspose_mul, Units.inv_mul, conjTranspose_one]
+  have hAm : m.1ᴴ * ((y₀⁻¹).1ᴴ * (y₀⁻¹).1) * m.1 = (y₀⁻¹).1ᴴ * (y₀⁻¹).1 := by
+    rw [hm]
+    simp only [conjTranspose_mul, Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc y₀.1ᴴ, hab, Matrix.one_mul, ← Matrix.mul_assoc (y₀⁻¹).1 y₀.1, Units.inv_mul,
+      Matrix.one_mul, ← Matrix.mul_assoc k.1ᴴ k.1, hk, Matrix.one_mul]
+  have hBm : (m⁻¹).1 * (y₀.1 * y₀.1ᴴ) * (m⁻¹).1ᴴ = y₀.1 * y₀.1ᴴ := by
+    rw [hmi]
+    simp only [conjTranspose_mul, conjTranspose_conjTranspose, Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc (y₀⁻¹).1 y₀.1, Units.inv_mul, Matrix.one_mul, ← Matrix.mul_assoc y₀.1ᴴ, hab,
+      Matrix.one_mul, ← Matrix.mul_assoc k.1ᴴ k.1, hk, Matrix.one_mul]
+  have hAh : ((y₀⁻¹).1ᴴ * (y₀⁻¹).1)ᴴ = (y₀⁻¹).1ᴴ * (y₀⁻¹).1 := by
+    rw [conjTranspose_mul, conjTranspose_conjTranspose]
+  have hBh : (y₀.1 * y₀.1ᴴ)ᴴ = y₀.1 * y₀.1ᴴ := by
+    rw [conjTranspose_mul, conjTranspose_conjTranspose]
+  simp only [G]
+  generalize (y₀⁻¹).1ᴴ * (y₀⁻¹).1 = A at hPX hAm hAh
+  generalize y₀.1 * y₀.1ᴴ = B at hPY hBm hBh
+  generalize m.1 = m₁ at hAm
+  generalize (m⁻¹).1 = m₂ at hBm
+  have hYX : Yᴴ * J * X = 1 := by
+    have h := congrArg conjTranspose hXY
+    simpa [conjTranspose_mul, hJ, Matrix.mul_assoc] using h
+  have hXP : Xᴴ * P = A * (Yᴴ * J) := by
+    have h := congrArg conjTranspose hPX
+    simpa [conjTranspose_mul, hJ, hP, hAh, Matrix.mul_assoc] using h
+  have hYP : Yᴴ * P = B * (Xᴴ * J) := by
+    have h := congrArg conjTranspose hPY
+    simpa [conjTranspose_mul, hJ, hP, hBh, Matrix.mul_assoc] using h
+  have r1 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), Xᴴ * (J * (X * Z)) = 0 := fun Z => by
+    simp only [← Matrix.mul_assoc, hXX, Matrix.zero_mul]
+  have r2 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), Yᴴ * (J * (Y * Z)) = 0 := fun Z => by
+    simp only [← Matrix.mul_assoc, hYY, Matrix.zero_mul]
+  have r3 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), Xᴴ * (J * (Y * Z)) = Z := fun Z => by
+    simp only [← Matrix.mul_assoc, hXY, Matrix.one_mul]
+  have r4 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), Yᴴ * (J * (X * Z)) = Z := fun Z => by
+    simp only [← Matrix.mul_assoc, hYX, Matrix.one_mul]
+  have r5 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), P * (X * Z) = J * (Y * (A * Z)) := fun Z => by
+    simp only [← Matrix.mul_assoc, hPX]
+  have r6 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), P * (Y * Z) = J * (X * (B * Z)) := fun Z => by
+    simp only [← Matrix.mul_assoc, hPY]
+  have r7 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin n) c ℂ), Xᴴ * (P * Z) = A * (Yᴴ * (J * Z)) := fun Z => by
+    simp only [← Matrix.mul_assoc, hXP]
+  have r8 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin n) c ℂ), Yᴴ * (P * Z) = B * (Xᴴ * (J * Z)) := fun Z => by
+    simp only [← Matrix.mul_assoc, hYP]
+  have r9 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), m₁ᴴ * (A * (m₁ * Z)) = A * Z := fun Z => by
+    simp only [← Matrix.mul_assoc, hAm]
+  have r10 : ∀ {c : Type} [Fintype c] (Z : Matrix (Fin d) c ℂ), m₂ * (B * (m₂ᴴ * Z)) = B * Z := fun Z => by
+    simp only [← Matrix.mul_assoc, hBm]
+  simp only [conjTranspose_add, conjTranspose_mul, conjTranspose_sub, conjTranspose_one,
+    conjTranspose_conjTranspose, hJ, Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+    Matrix.one_mul, Matrix.mul_one, Matrix.mul_assoc, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, hXP, hYP,
+    Matrix.mul_zero, Matrix.zero_mul, sub_zero, add_zero, zero_add]
+  abel
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTransposeMulMulSelfOfUnitaryConjStatement
+
+section
+
+@[expose] public section
+
+open scoped ComplexOrder
+
+theorem _root_.GlobalTheory.T.conjTranspose_mul_self_of_witt_frame_unitary : ∀ (n d : ℕ) (J P : Matrix (Fin n) (Fin n) ℂ) (Xb Yb : Matrix (Fin n) (Fin d) ℂ) (y₀ : GL (Fin d) ℂ),
+    J.conjTranspose = J → P.conjTranspose = P → Xb.conjTranspose * J * Xb = 0 → Yb.conjTranspose * J * Yb = 0 →
+    Xb.conjTranspose * J * Yb = 1 →
+    P * Xb = J * Yb * ((y₀⁻¹).1.conjTranspose * (y₀⁻¹).1) → P * Yb = J * Xb * (y₀.1 * (y₀.1).conjTranspose) →
+    ∀ k : GL (Fin d) ℂ, (k.1).conjTranspose * k.1 = 1 →
+      let m : GL (Fin d) ℂ := y₀ * k * y₀⁻¹
+      let G : Matrix (Fin n) (Fin n) ℂ := 1 + Xb * (m.1 - 1) * (Yb.conjTranspose * J) + Yb * ((m⁻¹).1.conjTranspose - 1) * (Xb.conjTranspose * J)
+      G.conjTranspose * P * G = P := by
+  first | exact @GlobalTheory.conjTranspose_mul_mul_self_of_unitary_conj | exact GlobalTheory.conjTranspose_mul_mul_self_of_unitary_conj | (intros; apply GlobalTheory.conjTranspose_mul_mul_self_of_unitary_conj <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PosDefExistsConjTransposeMulMulEqOne
+
+section
+
+@[expose] public section
+
+open scoped ComplexOrder
+
+noncomputable section
+
+namespace GlobalTheory
+
+open Matrix
+
+theorem posDef_exists_conjTranspose_mul_mul_eq_one :
+    ∀ (d : ℕ) (H : Matrix (Fin d) (Fin d) ℂ), H.PosDef →
+      ∃ y₀ : GL (Fin d) ℂ, (y₀.1).conjTranspose * H * y₀.1 = 1 := by
+  intro d H hP
+  have hH : H.IsHermitian := hP.isHermitian
+  set U : Matrix (Fin d) (Fin d) ℂ := (hH.eigenvectorUnitary : Matrix (Fin d) (Fin d) ℂ) with hUdef
+  have hU1 : Uᴴ * U = 1 := hH.eigenvectorUnitary.2.1
+  have hU2 : U * Uᴴ = 1 := hH.eigenvectorUnitary.2.2
+  have hspec : H = U * diagonal (fun i => ((hH.eigenvalues i : ℝ) : ℂ)) * Uᴴ := by
+    have h := hH.spectral_theorem
+    rw [Unitary.conjStarAlgAut_apply] at h
+    simpa [Matrix.star_eq_conjTranspose, Function.comp_def] using h
+  have hpos : ∀ i, 0 < hH.eigenvalues i := fun i => hP.eigenvalues_pos i
+  let r : Fin d → ℝ := fun i => Real.sqrt (hH.eigenvalues i)
+  have hr : ∀ i, 0 < r i := fun i => Real.sqrt_pos.2 (hpos i)
+  have hrr : ∀ i, r i * r i = hH.eigenvalues i := fun i => Real.mul_self_sqrt (hpos i).le
+  let s : Fin d → ℂ := fun i => (((r i)⁻¹ : ℝ) : ℂ)
+  let t : Fin d → ℂ := fun i => ((r i : ℝ) : ℂ)
+  have hst : diagonal s * diagonal t = 1 := by
+    rw [diagonal_mul_diagonal, ← diagonal_one]
+    congr 1; funext i
+    simp only [s, t, ← Complex.ofReal_mul, inv_mul_cancel₀ (hr i).ne', Complex.ofReal_one]
+  have hts : diagonal t * diagonal s = 1 := by
+    rw [diagonal_mul_diagonal, ← diagonal_one]
+    congr 1; funext i
+    simp only [s, t, ← Complex.ofReal_mul, mul_inv_cancel₀ (hr i).ne', Complex.ofReal_one]
+  let Y : Matrix (Fin d) (Fin d) ℂ := U * diagonal s
+  let Z : Matrix (Fin d) (Fin d) ℂ := diagonal t * Uᴴ
+  have hYZ : Y * Z = 1 := by
+    simp only [Y, Z]
+    rw [Matrix.mul_assoc, ← Matrix.mul_assoc (diagonal s), hst, Matrix.one_mul, hU2]
+  have hZY : Z * Y = 1 := by
+    simp only [Y, Z]
+    rw [Matrix.mul_assoc, ← Matrix.mul_assoc Uᴴ, hU1, Matrix.one_mul, hts]
+  refine ⟨⟨Y, Z, hYZ, hZY⟩, ?_⟩
+  show Yᴴ * H * Y = 1
+  have hsH : (diagonal s)ᴴ = diagonal s := by
+    rw [diagonal_conjTranspose]
+    congr 1; funext i
+    simp [s]
+  have hdiag : diagonal s * diagonal (fun i => ((hH.eigenvalues i : ℝ) : ℂ)) * diagonal s = 1 := by
+    rw [diagonal_mul_diagonal, diagonal_mul_diagonal, ← diagonal_one]
+    congr 1; funext i
+    simp only [s, ← hrr i, ← Complex.ofReal_mul]
+    rw [show (r i)⁻¹ * (r i * r i) * (r i)⁻¹ = ((r i)⁻¹ * r i) * (r i * (r i)⁻¹) by ring,
+      inv_mul_cancel₀ (hr i).ne', mul_inv_cancel₀ (hr i).ne']
+    simp
+  simp only [Y]
+  rw [conjTranspose_mul, hsH, hspec]
+  calc diagonal s * Uᴴ * (U * diagonal (fun i => ((hH.eigenvalues i : ℝ) : ℂ)) * Uᴴ) * (U * diagonal s)
+      = diagonal s * (Uᴴ * U) * diagonal (fun i => ((hH.eigenvalues i : ℝ) : ℂ)) * (Uᴴ * U) * diagonal s := by
+        simp only [Matrix.mul_assoc]
+    _ = 1 := by rw [hU1, Matrix.mul_one, Matrix.mul_one, hdiag]
+
+end GlobalTheory
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PosDefExistsConjTransposeMulMulEqOneStatement
+
+section
+
+@[expose] public section
+
+open scoped ComplexOrder
+
+theorem _root_.GlobalTheory.T.posDef_exists_conjTranspose_mul_mul_eq_one' : ∀ (d : ℕ) (H : Matrix (Fin d) (Fin d) ℂ), H.PosDef → ∃ y₀ : GL (Fin d) ℂ, (y₀.1).conjTranspose * H * y₀.1 = 1 := by
+  first | exact @GlobalTheory.posDef_exists_conjTranspose_mul_mul_eq_one | exact GlobalTheory.posDef_exists_conjTranspose_mul_mul_eq_one | (intros; apply GlobalTheory.posDef_exists_conjTranspose_mul_mul_eq_one <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComplexWittBasisNormalForm
+
+section
 
 @[expose] public section
 
@@ -218,3 +423,5 @@ theorem exists_unip_conj_unitary : ∀ (n r : ℕ) (J : Matrix (Fin n) (Fin n) �
   rw [e3, hcc', Matrix.conjTranspose_one, Matrix.one_mul]
 
 end GlobalTheory.MajPosCpx
+end
+end

@@ -1,13 +1,15 @@
 module
 
 public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleClassGroupCardPos
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocTheoryTied
-public import Formalism.LocalRingCardinality.SpanPowerMembership
+public import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLocalPrimeAinf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -39,6 +41,96 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
+import Formalism.LocalRingCardinality.SpanPowerMembership.Primes
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocTheoryTied
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions
+namespace GlobalTheory.MemLoc
+
+theorem exists_locTheory_tied : ∃ (L : LocTheory) (A : ∀ (l : ℕ) [Fact l.Prime], LocAinf l (L l)),
+    Nonempty (∀ (l : ℕ) [Fact l.Prime], LocTied l (L l) (A l)) := by
+  choose P A h using exists_locPrime_tied
+  exact ⟨fun l _ => P l, fun l _ => A l, ⟨fun l _ => (h l).some⟩⟩
+end GlobalTheory.MemLoc
+end
+end
+
+-- Source module: Formalism.LocalRingCardinality.SpanPowerMembership.SizeData₂
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.BasicNotions.Examples₂
+
+open Formalism.BasicNotions
+
+end Formalism.BasicNotions.Examples₂
+end
+end
+end
+
+-- Source module: Formalism.LocalRingCardinality.SpanPowerMembership
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.BasicNotions.Examples₂
+
+open NumberField IsDedekindDomain
+
+instance instFactExamplePrime : Fact T0.Prime := ⟨examplePrime_prime⟩
+
+theorem exampleHost_type_primes_split : ∀ k, (placesOver H0.E (H0.g k)).ncard = Module.finrank ℚ H0.E := by
+  refine g_split_of H0 (fun k => ?_)
+  fin_cases k
+  · show 413718278401 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+  · show 603339156001 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+
+theorem exampleHost_typeHypothesis : THyp H0 :=
+  { cond := fun k => by
+      fin_cases k
+      · show 413718278401 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+      · show 603339156001 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+    bb := BB_disj0
+    jac := fun k => by
+      fin_cases k
+      · exact ⟨by show (413718278401 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 413718278401 = 1; norm_num⟩
+      · exact ⟨by show (603339156001 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 603339156001 = 1; norm_num⟩ }
+
+theorem examplePrime_ne_split_primes : T0 ≠ H0.pde ∧ T0 ≠ H0.pde' :=
+  ⟨by show T0 ≠ 751; norm_num [T0], by show T0 ≠ 991; norm_num [T0]⟩
+
+def exampleRecord (G : LocalGap H0) : D7 :=
+  exampleRecordOfData H0 T0 exampleHost_type_primes_split exampleHost_typeHypothesis examplePrime_mem_levelPrimes examplePrime_ne_split_primes π0O π0_mem_K π0_norm π0_cong G
+
+theorem nonempty_D7_of_localGap (G : LocalGap H0) : Nonempty D7 := ⟨exampleRecord G⟩
+
+theorem record_nonempty_of_localGap : Nonempty (LocalGap H0) → Nonempty D7 := fun ⟨G⟩ => nonempty_D7_of_localGap G
+
+end Formalism.BasicNotions.Examples₂
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalGapNonemptyAndRecordNonempty
+
+section
 
 @[expose] public section
 
@@ -55,3 +147,5 @@ theorem record_nonempty : Nonempty Formalism.BasicNotions.D7 :=
   Formalism.BasicNotions.Examples₂.record_nonempty_of_localGap (localGap_nonempty _)
 
 end GlobalTheory.MemLoc
+end
+end

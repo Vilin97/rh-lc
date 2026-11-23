@@ -6,15 +6,11 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTranspos
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousDen
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedDerivScale
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PBConjTranspose
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StConstHolds
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StExpDeriv
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StR
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.CategoryTheory.Countable
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -34,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,10 +42,108 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Topology.UniformSpace.Uniformizable
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StExpDeriv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCompactPseudoUnitaryOffDiagNormSublevelStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OffDiagBlockNormContInvStatement
+public import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PseudoUnitaryOffDiagNormSqZeroIffMemMaxCompact
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.CategoryTheory.Countable
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StConstHolds
+
+section
+
+@[expose] public section
+
+open MeasureTheory MvPolynomial GlobalTheory.PsCo.Pc1
+
+namespace GlobalTheory.PsCo.Pc3
+
+theorem stConst_holds : StConst := by
+  intro ι _ G hG
+  obtain ⟨hsmooth, hzero, hnonneg, hpos⟩ := hG
+  set N := Fintype.card ι
+  set f : ℝ → ℝ := iteratedDeriv N G with hf
+
+  have hf0 : ∀ x : ℝ, 1 < x → f x = 0 := by
+    intro x hx
+    have hev : G =ᶠ[nhds x] (fun _ => (0 : ℝ)) := by
+      filter_upwards [Ioi_mem_nhds hx] with y hy
+      exact hzero y (le_of_lt hy)
+    rw [hf, Filter.EventuallyEq.iteratedDeriv_eq N hev]
+    simp
+  have hfc : Continuous f := hsmooth.continuous_iteratedDeriv N (by exact_mod_cast le_top)
+  set F : (ι → ℂ) → ℝ := fun w => f (∑ x, ‖w x‖ ^ 2) with hF
+  have hFc : Continuous F := by
+    apply hfc.comp
+    fun_prop
+  have hFs : HasCompactSupport F := by
+    apply HasCompactSupport.intro (isCompact_closedBall (0 : ι → ℂ) 1)
+    intro w hw
+    rw [Metric.mem_closedBall, dist_zero_right, not_le] at hw
+    have : ∃ x, 1 < ‖w x‖ := by
+      by_contra h
+      push_neg at h
+      exact absurd ((pi_norm_le_iff_of_nonneg zero_le_one).2 h) (not_le.2 hw)
+    obtain ⟨x, hx⟩ := this
+    apply hf0
+    calc (1 : ℝ) < ‖w x‖ ^ 2 := by nlinarith
+      _ ≤ ∑ y, ‖w y‖ ^ 2 :=
+        Finset.single_le_sum (f := fun y => ‖w y‖ ^ 2) (fun y _ => by positivity) (Finset.mem_univ x)
+  have hFn : 0 ≤ F := fun w => hnonneg _
+  have hF0 : F 0 ≠ 0 := by
+    simp only [hF, Pi.zero_apply, norm_zero]
+    simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, Finset.sum_const_zero]
+    exact ne_of_gt hpos
+  exact ne_of_gt (hFc.integral_pos_of_hasCompactSupport_nonneg_nonzero hFs hFn hF0)
+
+end GlobalTheory.PsCo.Pc3
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PseudoUnitaryOffDiagNormSqZeroIffMemMaxCompactStatement
+
+section
+
+@[expose] public section
+
+open MeasureTheory Matrix
+open Formalism.REAL (UJ KG toM toMK muK expG inG Jm Kset)
+
+theorem _root_.GlobalTheory.T.pseudoUnitary_offDiag_norm_sq_zero_iff_mem_maxCompact : ∀ (n : ℕ) (ε : Fin n → Bool) (g : UJ ε), ∑ z : {z : Fin n × Fin n // ε z.1 = true ∧ ε z.2 = false}, ‖(toM g) z.1.1 z.1.2‖ ^ 2 = 0 ↔ g ∈ KG ε := by
+  first | exact @GlobalTheory.offDiag_zero_iff_mem_K | exact GlobalTheory.offDiag_zero_iff_mem_K | (intros; apply GlobalTheory.offDiag_zero_iff_mem_K <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StR
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.PsCo.Pc3
+
+theorem stR : StR := by
+  intro n ε
+  obtain ⟨hcont, hinv⟩ := GlobalTheory.T.offDiagBlockNorm_mul_invariant n ε
+  exact ⟨hcont, hinv, GlobalTheory.T.pseudoUnitary_offDiag_norm_sq_zero_iff_mem_maxCompact n ε, GlobalTheory.T.isCompact_pseudoUnitary_offDiag_norm_sublevel n ε⟩
+
+end GlobalTheory.PsCo.Pc3
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousFamF
+
+section
 
 @[expose] public section
 
@@ -395,3 +488,5 @@ theorem stLim : GlobalTheory.PsCo.Pc1.StLim :=
   stLim_of GlobalTheory.PsCo.Pc3.stEB GlobalTheory.PsCo.Pc3.stR GlobalTheory.PsCo.Pc3.stPolar GlobalTheory.PsCo.Pc3.stExpLow GlobalTheory.PsCo.Pc3.stExpDeriv GlobalTheory.PsCo.Pcd.stConjLow GlobalTheory.PsCo.Pcd.stFamBlow GlobalTheory.PsCo.Pc3.stConst_holds
 
 end GlobalTheory.PsCo.Pcd
+end
+end

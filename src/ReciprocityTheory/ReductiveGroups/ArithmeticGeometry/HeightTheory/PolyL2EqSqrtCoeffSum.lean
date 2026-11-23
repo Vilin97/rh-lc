@@ -1,8 +1,9 @@
 module
 
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HupsTwCoeffCoeff
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Qdist
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.UpMkApplyInl
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Algebra.Polynomial.Basic
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.Algebra.MvPolynomial.Division
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,9 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,11 +43,228 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Qdist
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.NormLineSectionPow
+import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HupsTwCoeffCoeff
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+
+open Polynomial in
+noncomputable def hupsTw {σ R : Type*} [CommRing R] (w : σ → ℕ) :
+    MvPolynomial σ R →ₐ[R] Polynomial (MvPolynomial σ R) :=
+  MvPolynomial.aeval fun v => Polynomial.C (MvPolynomial.X v) * Polynomial.X ^ (w v)
+
+def hupsWt {σ : Type*} (w : σ → ℕ) (s : σ →₀ ℕ) : ℕ := s.sum fun v k => k * w v
+
+theorem hupsTw_monomial {σ R : Type*} [CommRing R] (w : σ → ℕ) (s : σ →₀ ℕ) (a : R) :
+    hupsTw w (MvPolynomial.monomial s a) =
+      Polynomial.C (MvPolynomial.monomial s a) * Polynomial.X ^ hupsWt w s := by
+  rw [hupsTw, MvPolynomial.aeval_monomial, MvPolynomial.monomial_eq]
+  simp only [mul_pow, Finsupp.prod_mul, hupsWt, Finsupp.prod, Finsupp.sum, ← pow_mul,
+    Finset.prod_pow_eq_pow_sum, map_mul, map_prod, map_pow, Polynomial.algebraMap_apply,
+    MvPolynomial.algebraMap_eq]
+  simp only [mul_comm (w _) _]
+  rw [Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum]
+  ring
+
+theorem hupsTw_eq {σ R : Type*} [CommRing R] (w : σ → ℕ) (p : MvPolynomial σ R) :
+    hupsTw w p = ∑ s ∈ p.support,
+      Polynomial.C (MvPolynomial.monomial s (p.coeff s)) * Polynomial.X ^ hupsWt w s := by
+  conv_lhs => rw [p.as_sum]
+
+  rw [map_sum]
+  simp only [hupsTw_monomial]
+
+theorem hupsTw_coeff_coeff {σ R : Type*} [CommRing R] (w : σ → ℕ) (p : MvPolynomial σ R)
+    (j : ℕ) (s : σ →₀ ℕ) :
+    ((hupsTw w p).coeff j).coeff s = if hupsWt w s = j then p.coeff s else 0 := by
+  classical
+  rw [hupsTw_eq, Polynomial.finsetSum_coeff]
+  simp only [Polynomial.coeff_C_mul_X_pow]
+  rw [MvPolynomial.coeff_sum]
+  simp only [apply_ite (AddMonoidAlgebra.coeff · s), MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero]
+  rw [Finset.sum_eq_single s]
+  · by_cases h : hupsWt w s = j
+    · rw [if_pos h.symm, if_pos h, if_pos rfl]
+    · simp [h, Ne.symm h]
+  · intro t _ hts
+    simp [hts, MvPolynomial.coeff_monomial]
+  · intro hs
+    rw [MvPolynomial.mem_support_iff, not_not] at hs
+    simp [hs]
+
+theorem hupsTw_ne_zero {σ R : Type*} [CommRing R] (w : σ → ℕ) {p : MvPolynomial σ R}
+    {s : σ →₀ ℕ} (hs : s ∈ p.support) : (hupsTw w p).coeff (hupsWt w s) ≠ 0 := by
+  intro h
+  have e := hupsTw_coeff_coeff w p (hupsWt w s) s
+  rw [h, MvPolynomial.coeff_zero, if_pos rfl] at e
+  exact (MvPolynomial.mem_support_iff.mp hs) e.symm
+
+theorem hupsTw_hom {σ R : Type*} [CommRing R] (w : σ → ℕ) {p : MvPolynomial σ R} {a : ℕ}
+    (hp : ∀ s ∈ p.support, hupsWt w s = a) :
+    hupsTw w p = Polynomial.C p * Polynomial.X ^ a := by
+  ext j s
+  rw [hupsTw_coeff_coeff, Polynomial.coeff_C_mul_X_pow]
+  by_cases hs : s ∈ p.support
+  · rw [hp s hs]
+    by_cases hj : j = a
+    · subst hj
+      simp
+    · simp [hj, Ne.symm hj]
+  · rw [MvPolynomial.mem_support_iff, not_not] at hs
+    split_ifs <;> simp [hs]
+
+theorem hups_hom_of_mul {σ R : Type*} [CommRing R] [IsDomain R] (w : σ → ℕ)
+    {F P : MvPolynomial σ R} (hF : F ≠ 0) {a n : ℕ} (hFa : ∀ s ∈ F.support, hupsWt w s = a)
+    (hFP : ∀ s ∈ (F * P).support, hupsWt w s = n) {s0 : σ →₀ ℕ} (hs0 : s0 ∈ P.support) :
+    hupsWt w s0 + a = n := by
+  have h1 : hupsTw w (F * P) = Polynomial.C (F * P) * Polynomial.X ^ n := hupsTw_hom w hFP
+  have h2 : hupsTw w F = Polynomial.C F * Polynomial.X ^ a := hupsTw_hom w hFa
+  rw [map_mul, h2, map_mul] at h1
+  have hCF : (Polynomial.C F : Polynomial (MvPolynomial σ R)) ≠ 0 := Polynomial.C_ne_zero.mpr hF
+  have h3 : Polynomial.X ^ a * hupsTw w P = Polynomial.C P * Polynomial.X ^ n := by
+    apply mul_left_cancel₀ hCF
+    rw [← mul_assoc, ← mul_assoc]
+    exact h1
+  have h4 := congrArg (fun q => q.coeff (hupsWt w s0 + a)) h3
+  simp only [Polynomial.coeff_X_pow_mul, Polynomial.coeff_C_mul_X_pow] at h4
+  by_contra hne
+  rw [if_neg hne] at h4
+  exact hupsTw_ne_zero w hs0 h4
+
+theorem hups_deg_of_mul {σ R : Type*} [CommRing R] [IsDomain R] (w : σ → ℕ)
+    {F P : MvPolynomial σ R} {u n : ℕ} {sF : σ →₀ ℕ} (hsF : sF ∈ F.support)
+    (hFu : hupsWt w sF = u)
+    (hFP : ∀ s ∈ (F * P).support, hupsWt w s ≤ n) {s0 : σ →₀ ℕ} (hs0 : s0 ∈ P.support) :
+    hupsWt w s0 + u ≤ n := by
+  have hTF : (hupsTw w F).coeff u ≠ 0 := by
+    rw [← hFu]
+    exact hupsTw_ne_zero w hsF
+  have hTP : (hupsTw w P).coeff (hupsWt w s0) ≠ 0 := hupsTw_ne_zero w hs0
+  have hF0 : hupsTw w F ≠ 0 := fun h => hTF (by rw [h, Polynomial.coeff_zero])
+  have hP0 : hupsTw w P ≠ 0 := fun h => hTP (by rw [h, Polynomial.coeff_zero])
+  have hdeg : (hupsTw w (F * P)).natDegree ≤ n := by
+    rw [Polynomial.natDegree_le_iff_coeff_eq_zero]
+    intro j hj
+    ext s
+    rw [hupsTw_coeff_coeff, MvPolynomial.coeff_zero]
+    split_ifs with h
+    · by_contra hc
+      have := hFP s (MvPolynomial.mem_support_iff.mpr hc)
+      omega
+    · rfl
+  rw [map_mul, Polynomial.natDegree_mul hF0 hP0] at hdeg
+  have h1 := Polynomial.le_natDegree_of_ne_zero hTF
+  have h2 := Polynomial.le_natDegree_of_ne_zero hTP
+  omega
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.UpMkApplyInl
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.T0
+
+noncomputable def upMk {D N : ℕ} (ab : (Fin (D + 2) →₀ ℕ) × (Option (Fin (D + 2) × Fin (N + 1)) →₀ ℕ)) :
+    UXVar D N →₀ ℕ :=
+  Finsupp.equivFunOnFinite.symm (Sum.elim (fun p => ab.2 (some p)) (fun i => ab.1 i))
+
+noncomputable def upMono (D N n n' : ℕ) : Finset (UXVar D N →₀ ℕ) :=
+  ((Finset.univ : Finset (Fin (D + 2))).finsuppAntidiag n ×ˢ
+    (Finset.univ : Finset (Option (Fin (D + 2) × Fin (N + 1)))).finsuppAntidiag n').image upMk
+
+theorem upMk_apply_inl {D N : ℕ} (ab : (Fin (D + 2) →₀ ℕ) × (Option (Fin (D + 2) × Fin (N + 1)) →₀ ℕ))
+    (p : Fin (D + 2) × Fin (N + 1)) : upMk ab (Sum.inl p) = ab.2 (some p) := rfl
+
+theorem upMk_apply_inr {D N : ℕ} (ab : (Fin (D + 2) →₀ ℕ) × (Option (Fin (D + 2) × Fin (N + 1)) →₀ ℕ))
+    (i : Fin (D + 2)) : upMk ab (Sum.inr i) = ab.1 i := rfl
+
+theorem mem_upMono {D N n n' : ℕ} {s : UXVar D N →₀ ℕ} :
+    s ∈ upMono D N n n' ↔ xDeg s = n ∧ uDeg s ≤ n' := by
+  classical
+  unfold upMono
+  rw [Finset.mem_image]
+  constructor
+  · rintro ⟨⟨a, b⟩, hab, rfl⟩
+    rw [Finset.mem_product, Finset.mem_finsuppAntidiag, Finset.mem_finsuppAntidiag] at hab
+    obtain ⟨⟨ha, -⟩, ⟨hb, -⟩⟩ := hab
+    try dsimp only at ha hb
+    rw [Fintype.sum_option] at hb
+    constructor
+    · unfold xDeg
+      simpa only [upMk_apply_inr] using ha
+    · unfold uDeg
+      simp only [upMk_apply_inl]
+      omega
+  · rintro ⟨hx, hu⟩
+    refine ⟨(Finsupp.equivFunOnFinite.symm (fun i => s (Sum.inr i)),
+      Finsupp.equivFunOnFinite.symm (fun o => Option.elim o (n' - uDeg s) (fun p => s (Sum.inl p)))), ?_, ?_⟩
+    · rw [Finset.mem_product, Finset.mem_finsuppAntidiag, Finset.mem_finsuppAntidiag]
+      refine ⟨⟨?_, Finset.subset_univ _⟩, ⟨?_, Finset.subset_univ _⟩⟩
+      · simpa [xDeg] using hx
+      · rw [Fintype.sum_option]
+        simp only [Finsupp.coe_equivFunOnFinite_symm, Option.elim]
+        unfold uDeg at hu ⊢
+        omega
+    · ext x
+      cases x <;> simp [upMk]
+
+theorem card_upMono (D N n n' : ℕ) : (upMono D N n n').card = cardUX D N n n' := by
+  classical
+  unfold upMono cardUX
+  rw [Finset.card_image_of_injOn, Finset.card_product, Finset.card_finsuppAntidiag_nat_eq_choose,
+    Finset.card_finsuppAntidiag_nat_eq_choose, Finset.card_univ, Finset.card_univ, Fintype.card_fin,
+    Fintype.card_option, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin]
+  · congr 1
+    · rw [show D + 2 + n - 1 = n + (D + 1) by omega, Nat.choose_symm_add, Nat.add_assoc]
+    · rw [show (D + 2) * (N + 1) + 1 + n' - 1 = n' + (D + 2) * (N + 1) by omega, Nat.choose_symm_add]
+  · rintro ⟨a, b⟩ hab ⟨a', b'⟩ hab' h
+    simp only [Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_finsuppAntidiag] at hab hab'
+    have h1 : ∀ i, a i = a' i := fun i => by
+      have := congrArg (fun s => s (Sum.inr i)) h
+      simpa [upMk] using this
+    have h2 : ∀ p, b (some p) = b' (some p) := fun p => by
+      have := congrArg (fun s => s (Sum.inl p)) h
+      simpa [upMk] using this
+    have hb := hab.2.1
+    have hb' := hab'.2.1
+    rw [Fintype.sum_option] at hb hb'
+    have hs : ∑ p, b (some p) = ∑ p, b' (some p) := Finset.sum_congr rfl fun p _ => h2 p
+    have h3 : b none = b' none := by omega
+    refine Prod.ext (Finsupp.ext h1) (Finsupp.ext fun o => ?_)
+    cases o
+    · exact h3
+    · exact h2 _
+
+end ReciprocityTheory.ChartRestriction.G.T0
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.PolyL2EqSqrtCoeffSum
+
+section
 
 @[expose] public section
 
@@ -268,3 +483,5 @@ theorem hups_qnorm_eq {K : Type} [Field K] [NumberField K] {D N : ℕ} (σ : K �
     rw [hz i]
 
 end ReciprocityTheory.ChartRestriction.G.T0
+end
+end

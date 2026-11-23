@@ -1,9 +1,7 @@
 module
 
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PowerSeriesNormUnits.Development
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTerBis
-public import Mathlib.Analysis.Normed.Field.Instances
-public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -15,17 +13,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,11 +41,56 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Normed.Field.Instances
+public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTerBis
+
+section
+
+@[expose] public section
+
+noncomputable def UpperTheory.Reformulated.B.PadicComplexRingOfIntegers.intRing :
+    (p : ℕ) → [inst : Fact (Nat.Prime p)] → Subring ℂ_[p] :=
+  fun p _ =>
+    { carrier := {x : ℂ_[p] | ‖x‖ ≤ 1}
+      mul_mem' := fun {a b} ha hb => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        have hb' : ‖b‖ ≤ 1 := hb
+        show ‖a * b‖ ≤ 1
+        rw [norm_mul]
+        exact mul_le_one₀ ha' (norm_nonneg b) hb'
+      one_mem' := by
+        show ‖(1 : ℂ_[p])‖ ≤ 1
+        exact norm_one.le
+      add_mem' := fun {a b} ha hb => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        have hb' : ‖b‖ ≤ 1 := hb
+        show ‖a + b‖ ≤ 1
+        exact (IsUltrametricDist.norm_add_le_max a b).trans (max_le ha' hb')
+      zero_mem' := by
+        show ‖(0 : ℂ_[p])‖ ≤ 1
+        rw [norm_zero]
+        exact zero_le_one
+      neg_mem' := fun {a} ha => by
+        have ha' : ‖a‖ ≤ 1 := ha
+        show ‖-a‖ ≤ 1
+        rwa [norm_neg] }
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PowerSeriesNormUnits.NormUnitsSubstitution
+
+section
 
 @[expose] public section
 
@@ -362,3 +402,6 @@ theorem norm_units_zp_scaling : CalcZpScale := by
   exact hlim
 
 end PI.PhNormUnits.UnitaryGroupMassFormula
+end
+end
+end

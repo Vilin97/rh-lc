@@ -2,15 +2,17 @@ module
 
 public import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatDefs
 public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsDecompositionGroupEquivPadicGaloisStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalInertiaIffMemPlaceInertiaStatement
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalAdjoinRange
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.ExistsDen
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.IsEquivAdicAbvNormAbv
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.MemIntegralClosureIffMemBall
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.MemSpanLIff
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.NormLeOneOfInteger
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.SpanLIsMaximal
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.Padics.Complex
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FixingSubgroupEquivBicontinuous
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalAdjoinRange
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,8 +30,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +37,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,10 +49,202 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalInertiaIffMemPlaceInertiaStatement
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalAdjoinRange
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.ExistsDen
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.IsEquivAdicAbvNormAbv
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.MemIntegralClosureIffMemBall
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.DenseSurj
+import Mathlib.Tactic.Linter.Style
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.NormLeOneOfInteger
+public import Mathlib.NumberTheory.RamificationInertia.Inertia
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
 import ReciprocityTheory.GaloisValuations.GlobalB
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsDecompositionGroupEquivPadicGalois
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+namespace GlobalTheory.DecGalois
+
+theorem exists_continuousMulEquiv : ∀ (p : ℕ) [Fact p.Prime] (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
+    [IsAlgClosure F Ω] (A : ValuationSubring Ω) (j : Ω →+* PadicAlgCl p), (∀ x, x ∈ A ↔ ‖j x‖ ≤ 1) →
+    ∃ i : ↥(A.decompositionSubgroup F) ≃ₜ*
+      (PadicAlgCl p ≃ₐ[↥(IntermediateField.adjoin ℚ_[p] (Set.range fun x : F => j (algebraMap F Ω x)))] PadicAlgCl p),
+      ∀ (g : ↥(A.decompositionSubgroup F)) (x : Ω), i g (j x) = j ((g : Ω ≃ₐ[F] Ω) x) := by
+  intro p _ F Ω _ _ _ _ _ A j hj
+  let K : Formalism.BasicNotions.Loc.FinExt p :=
+    ⟨IntermediateField.adjoin ℚ_[p] (Set.range fun x : F => j (algebraMap F Ω x)),
+      GlobalTheory.PlaceBridge.finiteDimensional_adjoin_range (j.comp (algebraMap F Ω))⟩
+  have hK := K.2
+  obtain ⟨e, he, he', hec⟩ := GlobalTheory.PlaceBridge.exists_mulEquiv (E := F) hj K rfl
+  obtain ⟨hf, hf'⟩ := GlobalTheory.fixingSubgroupEquiv_bicontinuous ℚ_[p] (PadicAlgCl p) K.1
+  let e2 : ↥(A.decompositionSubgroup F) ≃* (PadicAlgCl p ≃ₐ[↥K.1] PadicAlgCl p) :=
+    e.trans (IntermediateField.fixingSubgroupEquiv K.1)
+  refine ⟨{ e2 with continuous_toFun := hf.comp he, continuous_invFun := he'.comp hf' }, fun g x => ?_⟩
+  exact hec g x
+
+end GlobalTheory.DecGalois
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsDecompositionGroupEquivPadicGaloisStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+
+theorem _root_.GlobalTheory.T.exists_decompositionGroup_equiv_padicGalois : ∀ (p : ℕ) [Fact p.Prime] (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
+    [IsAlgClosure F Ω] (A : ValuationSubring Ω) (j : Ω →+* PadicAlgCl p), (∀ x, x ∈ A ↔ ‖j x‖ ≤ 1) →
+    ∃ i : ↥(A.decompositionSubgroup F) ≃ₜ*
+      (PadicAlgCl p ≃ₐ[↥(IntermediateField.adjoin ℚ_[p] (Set.range fun x : F => j (algebraMap F Ω x)))] PadicAlgCl p),
+      ∀ (g : ↥(A.decompositionSubgroup F)) (x : Ω), i g (j x) = j ((g : Ω ≃ₐ[F] Ω) x) := by
+  first | exact @GlobalTheory.DecGalois.exists_continuousMulEquiv | exact GlobalTheory.DecGalois.exists_continuousMulEquiv | (intros; apply GlobalTheory.DecGalois.exists_continuousMulEquiv <;> assumption)
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.MemSpanLIff
+
+section
+
+@[expose] public section
+
+namespace PI.CompDegEF
+
+open IsDedekindDomain NumberField Module Formalism.BasicNotions Formalism.BasicNotions.Loc
+
+theorem mem_span_l_iff {l : ℕ} [hl : Fact l.Prime] (K : FinExt l) (y : ↥(ball K)) :
+    y ∈ Ideal.span {((l : ℕ) : ↥(ball K))} ↔
+      ‖((y : ↥K.1) : Om l)‖ ≤ ‖((l : ℕ) : Om l)‖ := by
+  have hl0' : ((l : ℕ) : Om l) ≠ 0 := by
+    rw [← map_natCast (algebraMap ℚ_[l] (Om l))]
+    exact (map_ne_zero _).mpr (Nat.cast_ne_zero.mpr hl.out.ne_zero)
+  have hl0 : ((l : ℕ) : ↥K.1) ≠ 0 := by
+    intro h
+    apply hl0'
+    have h' : (((l : ℕ) : ↥K.1) : Om l) = 0 := by rw [h]; rfl
+    simpa using h'
+  rw [Ideal.mem_span_singleton']
+  constructor
+  · rintro ⟨z, rfl⟩
+    have hz : ‖((z : ↥K.1) : Om l)‖ ≤ 1 := z.2
+    have hc : (((z * ((l : ℕ) : ↥(ball K)) : ↥(ball K)) : ↥K.1) : Om l) =
+        ((z : ↥K.1) : Om l) * ((l : ℕ) : Om l) := by simp
+    rw [hc, norm_mul]
+    exact mul_le_of_le_one_left (norm_nonneg _) hz
+  · intro h
+    have hmem : ‖(((y : ↥K.1) / ((l : ℕ) : ↥K.1) : ↥K.1) : Om l)‖ ≤ 1 := by
+      have hc : (((y : ↥K.1) / ((l : ℕ) : ↥K.1) : ↥K.1) : Om l) =
+          ((y : ↥K.1) : Om l) / ((l : ℕ) : Om l) := by simp
+      rw [hc, norm_div, div_le_one (norm_pos_iff.mpr hl0')]
+      exact h
+    refine ⟨⟨(y : ↥K.1) / ((l : ℕ) : ↥K.1), hmem⟩, ?_⟩
+    apply Subtype.ext
+    simp only [MulMemClass.coe_mul]
+    push_cast
+    exact div_mul_cancel₀ _ hl0
+
+theorem locDegOf_of (hB : BallCard) (hD : DenseSurj) (hK : KerProp) (hN : NormCard) :
+    LocDegOf := by
+  intro l hl E _ _ φ K hφK hdense v hv hφv
+  let ψ : 𝓞 E →+* ↥(ball K) :=
+    { toFun := fun x => ⟨⟨φ (x : E), hφK _⟩, (hφv x).1⟩
+      map_one' := Subtype.ext <| Subtype.ext <| by simp
+      map_mul' := fun a b => Subtype.ext <| Subtype.ext <| by simp
+      map_zero' := Subtype.ext <| Subtype.ext <| by simp
+      map_add' := fun a b => Subtype.ext <| Subtype.ext <| by simp }
+  let q := (Ideal.Quotient.mk (Ideal.span {((l : ℕ) : ↥(ball K))})).comp ψ
+  have hsurj : Function.Surjective q := by
+    intro w
+    obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective w
+    obtain ⟨x, hx⟩ := hD l E φ K hφK hdense ((y : ↥K.1) : Om l) (y : ↥K.1).2 y.2
+    refine ⟨x, ?_⟩
+    show Ideal.Quotient.mk _ (ψ x) = Ideal.Quotient.mk _ y
+    rw [Ideal.Quotient.eq, mem_span_l_iff]
+    have hc : (((ψ x - y : ↥(ball K)) : ↥K.1) : Om l) = φ (x : E) - ((y : ↥K.1) : Om l) := rfl
+    rw [hc, norm_sub_rev]
+    exact hx
+  have hker : RingHom.ker q = v.asIdeal ^ v.asIdeal.ramificationIdx ℤ := by
+    ext x
+    rw [RingHom.mem_ker]
+    show Ideal.Quotient.mk _ (ψ x) = 0 ↔ _
+    rw [Ideal.Quotient.eq_zero_iff_mem]
+    exact (mem_span_l_iff K (ψ x)).trans (hK l E φ v hv hφv x)
+  have hcard : Nat.card (𝓞 E ⧸ v.asIdeal ^ v.asIdeal.ramificationIdx ℤ) =
+      Nat.card (↥(ball K) ⧸ Ideal.span {((l : ℕ) : ↥(ball K))}) := by
+    rw [← hker]
+    exact Nat.card_congr (RingHom.quotientKerEquivOfSurjective hsurj).toEquiv
+  rw [hN l E v hv, hB l K] at hcard
+  exact (Nat.pow_right_injective hl.out.two_le hcard).symm
+
+end PI.CompDegEF
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompletionDegrees.SpanLIsMaximal
+
+section
+
+@[expose] public section
+
+namespace PI.CompDegEF
+
+open IsDedekindDomain NumberField Module Formalism.BasicNotions Formalism.BasicNotions.Loc
+
+theorem span_l_isMaximal (l : ℕ) [hl : Fact l.Prime] : (Ideal.span {((l : ℕ) : ℤ)}).IsMaximal := by
+  refine Ideal.IsPrime.isMaximal ?_ ?_
+  · exact (Ideal.span_singleton_prime (by exact_mod_cast hl.out.ne_zero)).mpr
+      (Nat.prime_iff_prime_int.mp hl.out)
+  · simp [hl.out.ne_zero]
+
+theorem liesOver_of_mem {l : ℕ} [hl : Fact l.Prime] {E : Type} [Field E] [NumberField E]
+    {v : HeightOneSpectrum (𝓞 E)} (hv : v ∈ placesOver E l) :
+    v.asIdeal.LiesOver (Ideal.span {((l : ℕ) : ℤ)}) := by
+  constructor
+  refine (span_l_isMaximal l).eq_of_le ?_ ?_
+  · intro h
+    rw [Ideal.comap_eq_top_iff] at h
+    exact v.isPrime.ne_top h
+  · rw [Ideal.span_le]
+    intro x hx
+    rw [Set.mem_singleton_iff] at hx
+    subst hx
+    change algebraMap ℤ (𝓞 E) ((l : ℕ) : ℤ) ∈ v.asIdeal
+    simpa using (show ((l : ℕ) : 𝓞 E) ∈ v.asIdeal from hv)
+
+theorem normCard : NormCard := by
+  intro l _ E _ _ v hv
+  have := liesOver_of_mem hv
+  have hmax := span_l_isMaximal l
+  have hvmax : v.asIdeal.IsMaximal := v.isPrime.isMaximal v.ne_bot
+  have h1 : Nat.card (𝓞 E ⧸ v.asIdeal ^ v.asIdeal.ramificationIdx ℤ) =
+      Ideal.absNorm (v.asIdeal ^ v.asIdeal.ramificationIdx ℤ) := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  rw [h1, map_pow, Ideal.absNorm_eq_pow_inertiaDeg'_of_liesOver v.asIdeal
+    (Ideal.span {((l : ℕ) : ℤ)}) hmax.isPrime (by simp [(Fact.out : l.Prime).ne_zero]),
+    Ideal.absNorm_span_natCast, Module.finrank_self, pow_one,
+    Ideal.inertiaDeg'_eq_inertiaDeg, Formalism.MainNotions.N.locDeg, ← pow_mul, mul_comm]
+
+end PI.CompDegEF
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DecompositionGroupEquivLocalGaloisGroup
+
+section
 
 @[expose] public section
 
@@ -148,3 +339,6 @@ theorem decEquiv : ReciprocityTheory.ChartRestriction.T2.DecEquiv := by
   rw [e, ha, map_pow]
 
 end GlobalTheory.DecLocal
+end
+end
+end

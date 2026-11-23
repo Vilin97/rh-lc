@@ -4,10 +4,8 @@ public import Development.AutomorphicSpectrum.PublishedTheorems.Algebra₂.Fargu
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.InjectiveOfSmulMemRange
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConvEqOneOfForallPairing
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTatePairingSandwich
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSandwichOfPrismaticDieudonneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegrallyClosedInOfIntegers
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupOmegaFiniteFreeAndPSqMemDlogSpanStatement
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsCobOneOfIntegral
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSandwichOfPrismaticDieudonne
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,9 +24,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,8 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,8 +44,120 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegrallyClosedInOfIntegers
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupOmegaFiniteFreeAndPSqMemDlogSpan
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueIsWeilChar
+import Development.AbelianVarietyTheory.Proofs.HermitianTraceForms.IsLocallyConstantRankAtStalkEigenSub
+import Development.AbelianVarietyTheory.Definitions.Divisors.LogAbsVpOfNormalised
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsCobOneOfIntegral
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.DualLattices.ExistsPrimitiveRoot
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSandwichOfPrismaticDieudonneStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.Sandwich
+
+theorem _root_.GlobalTheory.T.hodgeTateSandwich_of_prismaticDieudonne : GlobalTheory.Published.PrismaticDieudonneHodge → ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O], v.Integers O → ∀ [IsDomain O] (ε : PreTilt O p) (hε : GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta.IsPrimitiveSystem ε), GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta.HodgeTateSandwichAt hε := by
+  first | exact @GlobalTheory.DieudonneSandwich.hodgeTateSandwich_of_prismaticDieudonne₂ | exact GlobalTheory.DieudonneSandwich.hodgeTateSandwich_of_prismaticDieudonne₂ | (intros; apply GlobalTheory.DieudonneSandwich.hodgeTateSandwich_of_prismaticDieudonne₂ <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HodgeTateKernel
+
+section
+
+section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open scoped CategoryTheory.Obj CategoryTheory.MonObj TensorProduct NNReal
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Pdiv ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory.ChTor GlobalTheory.EigenSplit GlobalTheory.HTLat
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel
+
+section AtPoint
+
+variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [IsAlgClosed C] [CharZero C]
+  {v : Valuation C ℝ≥0} {O : Type} [CommRing O] [Algebra O C]
+  [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
+  {Λ : Type} [CommRing Λ] [StarRing Λ]
+
+def IsOpenFiniteFlatSubgroup (G : Over (Sp O)) [GrpObj G] (N : ℕ) {H : Over (Sp O)}
+    (j : H ⟶ torsion G N) : Prop :=
+  IsOpenImmersion j.left ∧ IsFinite H.hom ∧ Flat H.hom ∧
+    (∀ S : Over (Sp O), ∃ z : S ⟶ H, z ≫ j ≫ torsion.ι G N = 1) ∧
+    (∀ (S : Over (Sp O)) (x y : S ⟶ H), ∃ z : S ⟶ H,
+      z ≫ j ≫ torsion.ι G N = (x ≫ j ≫ torsion.ι G N) * (y ≫ j ≫ torsion.ι G N)) ∧
+    (∀ (S : Over (Sp O)) (x : S ⟶ H), ∃ z : S ⟶ H,
+      z ≫ j ≫ torsion.ι G N = (x ≫ j ≫ torsion.ι G N)⁻¹)
+
+def IsCharacter (G : Over (Sp O)) [GrpObj G] (N : ℕ) {H : Over (Sp O)} (j : H ⟶ torsion G N)
+    (χ : H ⟶ Gm (Sp O)) : Prop :=
+  ∀ (S : Over (Sp O)) (x y z : S ⟶ H),
+    z ≫ j ≫ torsion.ι G N = (x ≫ j ≫ torsion.ι G N) * (y ≫ j ≫ torsion.ι G N) →
+      z ≫ χ = (x ≫ χ) * (y ≫ χ)
+
+omit [Fact p.Prime] in
+theorem isNilpotent_dual {R : Type} [CommRing R] {n : ℕ} (h : (p : R) ^ n = 0) :
+    IsNilpotent (p : DualNumber R) :=
+  ⟨n, by rw [← map_natCast (algebraMap R (DualNumber R)), ← map_pow, h, map_zero]⟩
+
+variable [Algebra ℤ_[p] O] (P : Point p v O Λ)
+
+def alLeft : P.T →ₗ[ℤ_[p]] omega P.Gt := -P.al₀
+
+def LevelReduction : Prop :=
+  ∀ (n : ℕ) (H : Over (Sp O)) (j : H ⟶ torsion P.G (p ^ n)),
+    IsOpenFiniteFlatSubgroup P.G (p ^ n) j →
+    ∀ (t : P.T) (χ : H ⟶ Gm (Sp O)), IsCharacter P.G (p ^ n) j χ →
+      (∀ (w : specO O O ⟶ H) (z : Pts P.A.A),
+        z.left ≫ P.gen = spMap (algebraMap O C) ≫ (w ≫ j ≫ torsion.ι P.G (p ^ n)).left →
+          algebraMap O C (unitOf (w ≫ χ) : O) = (weil P.A (p ^ n) (t.lev n) z : C)) →
+      ∀ (R : Type) [CommRing R] [Algebra O R] (hR : (p : R) ^ n = 0) (x : LieG P.Gt)
+        (w : specO O (DualNumber R) ⟶ H),
+        w ≫ j ≫ torsion.ι P.G (p ^ n) =
+          P.cmp (DualNumber R) (isNilpotent_dual hR) (ptMap (dualBC (Algebra.ofId O R)) ≫ x.1) →
+        (unitOf (w ≫ χ) : DualNumber R) =
+          TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (algebraMap O R ((alLeft P t).1 x))
+
+
+variable [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C]
+
+end AtPoint
+
+end GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupOmegaFiniteFreeAndPSqMemDlogSpanStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory GlobalTheory.HTLat GlobalTheory.PDivGroup GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel TensorProduct CategoryTheory ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Pdiv ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.ChTor CategoryTheory.MonObj
+
+theorem _root_.GlobalTheory.T.pDivGroup_omega_finite_free_and_p_sq_mem_dlog_span : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O] (ε : PreTilt O p) (hε : GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta.IsPrimitiveSystem ε), v.Integers O → GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta.HodgeTateSandwichAt hε → ∀ G : PDivGroup p O, Module.Finite O G.omega ∧ Module.Free O G.omega ∧ ∀ w : G.omega, (p : O) ^ 2 • w ∈ Submodule.span O (Set.range (dlog (G := G))) := by
+  first | exact @GlobalTheory.DlogSpan.finite_free_and_sq_smul_mem_span | exact GlobalTheory.DlogSpan.finite_free_and_sq_smul_mem_span | (intros; apply GlobalTheory.DlogSpan.finite_free_and_sq_smul_mem_span <;> assumption)
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TemperedRepresentationTheory.FarguesExactness.FarguesExactOfPrismatic
+
+section
 
 @[expose] public section
 
@@ -155,3 +261,6 @@ theorem farguesExact_of_hodge (hP : GlobalTheory.Published.PrismaticDieudonneHod
     exact ⟨(p : O) ^ 2, l, pow_ne_zero _ hp0, fun χ => by rw [hl, dlogLinear_tmul, one_smul]⟩
 
 end PositivityTheory.Tls2.Jfarg
+end
+end
+end

@@ -1,7 +1,9 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.SelmerSpannedByKappaLaurent
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.AdjoinNilFinite
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.LocalRing.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,12 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.PowerSeries.Ideal
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,8 +43,88 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.LocalRing.Basic
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PowerSeries.Ideal
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
 public import Mathlib.Algebra.Algebra.Subalgebra.Pointwise
 public import Mathlib.RingTheory.PowerSeries.Inverse
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.AdjoinNilFinite
+
+section
+
+@[expose] public section
+
+open Polynomial Matrix IsLocalRing TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.adjoin_nil_finite :
+    ∀ {A G : Type} [CommRing A] [IsLocalRing A] [CommRing G] [Algebra A G] [Nontrivial G] (P : Submodule A G), P.FG → (∀ y ∈ P, ∃ a : A, IsNilpotent (y - algebraMap A G a)) → Module.Finite A (Algebra.adjoin A (P : Set G)) ∧ IsLocalRing (Algebra.adjoin A (P : Set G)) ∧ ∀ y ∈ Algebra.adjoin A (P : Set G), ∃ a : A, IsNilpotent (y - algebraMap A G a) := by
+  intro A G _ _ _ _ _ P hP hnil
+  let N : Subalgebra A G :=
+    { carrier := {y | ∃ a : A, IsNilpotent (y - algebraMap A G a)}
+      mul_mem' := by
+        rintro x y ⟨a, ha⟩ ⟨b, hb⟩
+        refine ⟨a * b, ?_⟩
+        have e : x * y - algebraMap A G (a * b) =
+            (x - algebraMap A G a) * y + algebraMap A G a * (y - algebraMap A G b) := by
+          rw [map_mul]; ring
+        rw [e]
+        obtain ⟨k, hk⟩ := ha
+        obtain ⟨m, hm⟩ := hb
+        exact (Commute.all _ _).isNilpotent_add ⟨k, by rw [mul_pow, hk, zero_mul]⟩
+          ⟨m, by rw [mul_pow, hm, mul_zero]⟩
+      add_mem' := by
+        rintro x y ⟨a, ha⟩ ⟨b, hb⟩
+        refine ⟨a + b, ?_⟩
+        have e : x + y - algebraMap A G (a + b) =
+            (x - algebraMap A G a) + (y - algebraMap A G b) := by
+          rw [map_add (f := _)]; ring
+        rw [e]
+        exact (Commute.all _ _).isNilpotent_add ha hb
+      algebraMap_mem' := fun r => ⟨r, by simp⟩ }
+  have hS : Algebra.adjoin A (P : Set G) ≤ N := Algebra.adjoin_le (fun y hy => hnil y hy)
+  have hint : ∀ y, (∃ a : A, IsNilpotent (y - algebraMap A G a)) → IsIntegral A y := by
+    rintro y ⟨a, k, hk⟩
+    have hn : IsIntegral A (y - algebraMap A G a) :=
+      ⟨X ^ k, monic_X_pow k, by simp [hk]⟩
+    have := hn.add (isIntegral_algebraMap (x := a))
+    simpa using this
+  refine ⟨?_, ?_, fun y hy => hS hy⟩
+  · obtain ⟨s, hs⟩ := hP
+    rw [← hs, Algebra.adjoin_span]
+    exact Algebra.finite_adjoin_of_finite_of_isIntegral s.finite_toSet
+      (fun y hy => hint y (hnil y (hs ▸ Submodule.subset_span hy)))
+  · apply IsLocalRing.of_isUnit_or_isUnit_one_sub_self
+    intro y
+    obtain ⟨a, ha⟩ := hS y.2
+    let n : Algebra.adjoin A (P : Set G) :=
+      ⟨(y : G) - algebraMap A G a, Subalgebra.sub_mem _ y.2 (Subalgebra.algebraMap_mem _ a)⟩
+    have hn : IsNilpotent n := by
+      obtain ⟨k, hk⟩ := ha
+      exact ⟨k, Subtype.ext (by simpa [n] using hk)⟩
+    have hy : y = algebraMap A _ a + n := Subtype.ext (by simp [n])
+    rcases IsLocalRing.isUnit_or_isUnit_one_sub_self a with hu | hu
+    · left
+      rw [hy, add_comm]
+      exact hn.isUnit_add_right_of_commute (hu.map _) (Commute.all _ _)
+    · right
+      have e : 1 - y = algebraMap A _ (1 - a) + (-n) := by
+        rw [hy, map_sub, map_one]; ring
+      rw [e, add_comm]
+      exact hn.neg.isUnit_add_right_of_commute (hu.map _) (Commute.all _ _)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.TrLatRange
+
+section
 
 @[expose] public section
 
@@ -215,3 +291,5 @@ theorem UpperTheory.V.Pa.trLat :
     rw [RingHom.mem_ker, map_sub, heA, T.res, hvr, sub_eq_zero]
   · exact trLat_pow S.x.t PowerSeries.maximalIdeal_eq_span_X.le φ S.P.f.toRingHom (RingHom.ker e) N hN
       (fun a => (h1 a).imp fun _ h => h.2) h2 _ hB j
+end
+end

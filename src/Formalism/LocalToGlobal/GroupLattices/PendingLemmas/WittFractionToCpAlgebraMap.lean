@@ -11,11 +11,9 @@ public import Mathlib.RingTheory.WittVector.Domain
 public import Mathlib.RingTheory.WittVector.Teichmuller
 public import Mathlib.Tactic.Linter.HaveILetI
 public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
-public import Lemmata.FirstBlockLemmaF.Imports
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -31,12 +29,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.LocalProperties.Reduced
 import Mathlib.RingTheory.Radical.NatInt
-public import Mathlib.RingTheory.WittVector.DiscreteValuationRing
-public import Mathlib.RingTheory.WittVector.TeichmullerSeries
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -56,9 +49,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.LocalProperties.Reduced
+public import Mathlib.RingTheory.WittVector.DiscreteValuationRing
+public import Mathlib.RingTheory.WittVector.TeichmullerSeries
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Algebra.Nonarchimedean.Completion
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Lemmata.FirstBlockLemmaF.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.FirstBlockLemmaF
+
+theorem goal1 :
+  ∀ (p : Nat) [hp : Fact (Nat.Prime p)] {a b : PadicComplex p} {c : Real},
+  LE.le.{0} (Norm.norm.{0} a) c → LE.le.{0} (Norm.norm.{0} b) c → LE.le.{0} (Norm.norm.{0} (HSub.hSub.{0, 0, 0} a b)) c := by
+  intro p hp a b c ha hb
+  rw [sub_eq_add_neg]
+  refine (IsUltrametricDist.norm_add_le_max a (-b)).trans (max_le ha ?_)
+  rw [norm_neg]
+  exact hb
+
+end Bl.FirstBlockLemmaF
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCpAlgebraMap
+
+section
 
 @[expose] public section
 
@@ -439,3 +463,6 @@ theorem norm_k0ToC_le_iff (x : K0 p) : ‖k0ToC p x‖ ≤ 1 ↔ x ∈ Set.range
     exact norm_wToC_le p y
 
 end Formalism.L2.G.Pend
+end
+end
+end

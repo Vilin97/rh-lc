@@ -38,9 +38,298 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.BesselVectors.BesselNVGOfNv
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiGelfand
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsOfFormula
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.BesselIntegralSquareIntegrable
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Tactic.Linter.Style
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ExpInPPosDef
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.FormulaF
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.IsDSSigLam
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroCayley
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroDecay
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.ReproducingKernels.ReproCoreStatement
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+import Mathlib.Tactic.TypeStar
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.Groups
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.HaarMap
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.HaarUniq
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.SchurB
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroTopA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.GapBigLap
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumEmbeddingMemHlam
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.Imports
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.NVHTop
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.ReproducingKernels.IntSOfSIntFin
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.HermitianMeasures.JSIntFin
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.InHolds
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroFdeg
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix MeasureTheory
+open scoped InnerProductSpace NNReal
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+theorem fdegB_of_isDS {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r + k + 1) → ℝ}
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    {σ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → (H →L[ℂ] H)}
+    {P : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
+    (hP : Formalism.MainNotions.S.IsCayleyU k r ε P) (hDS : Formalism.MainNotions.S.IsDS ε lam σ) :
+    ∀ μG : Measure (Formalism.QuantumDeterminants.Mt k r), Formalism.MainNotions.S.IsHaarOn (Formalism.QuantumDeterminants.UH (Formalism.QuantumDeterminants.Hpk k r)) μG →
+      ∃ d : ℝ, Lap.S0.IsFdegB μG (fun g => σ (P * g * P⁻¹)) d := by
+  intro μG hH
+  have hCay := hP.1
+  have hd : IsUnit P.det := (Matrix.isUnit_iff_isUnit_det P).mp hCay.1
+  obtain ⟨d, hd0, hF⟩ := Formalism.MainNotions.BridgeCSchur.fdeg_of_DS lam σ hDS
+  have hmap := Lap.haarMap k r ε P hCay
+  obtain ⟨c, hc, hμ⟩ := Lap.haarUniq2 k r _ _ μG (Lap.closedSubgroups k r 0).1 hmap hH
+  have hemb := Lap.SchurBAux.measEmb ε hd
+  refine ⟨d / (c : ℝ), div_pos hd0 (by exact_mod_cast hc), fun v w v' w' => ?_⟩
+  have hint := (hF v w v' w').1
+  have hval := (hF v w v' w').2
+  have hcomp : (fun x : Formalism.QuantumDeterminants.Mt k r =>
+        ⟪w, σ (P * Matrix.of x * P⁻¹) v⟫_ℂ * star ⟪w', σ (P * Matrix.of x * P⁻¹) v'⟫_ℂ) ∘
+      (fun g : Formalism.REAL.UJ ε =>
+        ((P⁻¹ * Formalism.MainNotions.S.umat g * P : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
+          Formalism.QuantumDeterminants.Mt k r)) =
+      fun g => Formalism.MainNotions.S.coefOn σ v w g * star (Formalism.MainNotions.S.coefOn σ v' w' g) := by
+    funext g
+    show ⟪w, σ (P * (P⁻¹ * Formalism.MainNotions.S.umat g * P) * P⁻¹) v⟫_ℂ *
+        star ⟪w', σ (P * (P⁻¹ * Formalism.MainNotions.S.umat g * P) * P⁻¹) v'⟫_ℂ =
+      ⟪w, σ (Formalism.MainNotions.S.umat g) v⟫_ℂ * star ⟪w', σ (Formalism.MainNotions.S.umat g) v'⟫_ℂ
+    rw [Lap.SchurBAux.conj_cancel' hd]
+  have hI : ∫ x : Formalism.QuantumDeterminants.Mt k r,
+        ⟪w, σ (P * Matrix.of x * P⁻¹) v⟫_ℂ * star ⟪w', σ (P * Matrix.of x * P⁻¹) v'⟫_ℂ
+          ∂(Measure.map (β := Formalism.QuantumDeterminants.Mt k r) (fun g : Formalism.REAL.UJ ε =>
+            ((P⁻¹ * Formalism.MainNotions.S.umat g * P : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
+              Formalism.QuantumDeterminants.Mt k r)) (Formalism.REAL.muG ε)) =
+      ⟪v', v⟫_ℂ * ⟪w, w'⟫_ℂ / (d : ℂ) := by
+    rw [hemb.integral_map, ← hval]
+    exact congrArg (fun f => ∫ g, f g ∂(Formalism.REAL.muG ε)) hcomp
+  have hIi : Integrable (fun x : Formalism.QuantumDeterminants.Mt k r =>
+        ⟪w, σ (P * Matrix.of x * P⁻¹) v⟫_ℂ * star ⟪w', σ (P * Matrix.of x * P⁻¹) v'⟫_ℂ)
+      (Measure.map (β := Formalism.QuantumDeterminants.Mt k r) (fun g : Formalism.REAL.UJ ε =>
+        ((P⁻¹ * Formalism.MainNotions.S.umat g * P : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
+          Formalism.QuantumDeterminants.Mt k r)) (Formalism.REAL.muG ε)) := by
+    rw [hemb.integrable_map_iff, hcomp]
+    exact hint
+  rw [hμ]
+  refine ⟨hIi.smul_measure_nnreal, ?_⟩
+  calc _ = c • (⟪v', v⟫_ℂ * ⟪w, w'⟫_ℂ / (d : ℂ)) := by
+        rw [integral_smul_nnreal_measure]; exact congrArg (c • ·) hI
+    _ = _ := by
+        rw [NNReal.smul_def, Complex.real_smul]; push_cast; rw [div_div_eq_mul_div]; ring
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroTop
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset Matrix
+
+namespace ReciprocityTheory.ChartRestriction.DS
+
+variable {n : ℕ}
+
+theorem psi_eq_PsiM {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (lowK ε lam)}
+    {Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)}
+    (hK : ∀ (k₁ k₂ : S7.KG ε) (g : Matrix (Fin n) (Fin n) ℂ), inUJ ε g →
+      Ψ (S7.toMK k₁ * g * S7.toMK k₂) = T.op k₁ * Ψ g * T.op k₂)
+    {μ : Fin n → ℤ} (hμ : S7.IsMu lam μ)
+    (hF : ∀ X : Matrix (Fin n) (Fin n) ℂ, inP ε X →
+      Ψ (NormedSpace.exp X) =
+        ((Module.finrank ℂ T.V : ℂ) / ((S7.muK ε Set.univ).toReal : ℂ)) •
+          ∫ k, S7.PhiM μ (S7.toMK k⁻¹ * NormedSpace.exp X * S7.toMK k)⁻¹ •
+            (T.op k * S7.projW T * T.op k⁻¹) ∂(S7.muK ε)) :
+    ∀ g ∈ UJset ε, Ψ g = S7.PsiM T μ g := by
+  intro g hg
+  have hex : ∃ (k : S7.KG ε) (X : Matrix (Fin n) (Fin n) ℂ), inP ε X ∧ g = S7.toMK k * NormedSpace.exp X :=
+    S7.polar_exists hg
+  have key : ∀ (kc : S7.KG ε) (Xc : Matrix (Fin n) (Fin n) ℂ), inP ε Xc → g = S7.toMK kc * NormedSpace.exp Xc →
+      Ψ g = T.op kc * S7.psM T μ (NormedSpace.exp Xc) := by
+    intro kc Xc hXc hgc
+    have hu : inUJ ε (NormedSpace.exp Xc) := by
+      have := S7.inUJ_kexp (1 : S7.KG ε) hXc
+      rwa [pdA_toMK_one, Matrix.one_mul] at this
+    have h1 := hK kc 1 (NormedSpace.exp Xc) hu
+    rw [pdA_toMK_one, Matrix.mul_one, pdA_op_one, mul_one] at h1
+    have hps : Ψ (NormedSpace.exp Xc) = S7.psM T μ (NormedSpace.exp Xc) := by
+      rw [hF Xc hXc]
+      simp only [szt_phiM_inv_conj μ hXc]
+      rfl
+    rw [hgc, h1, hps]
+  unfold S7.PsiM
+  rw [dite_eq_left hex]
+  exact key _ _ hex.choose_spec.choose_spec.1 hex.choose_spec.choose_spec.2
+
+theorem sigZero (hAll : ∀ m : ℕ, S7.PsiAllStatement m) : Lap.SigZeroStatement := by
+  intro k r z c u v b h hS
+  obtain ⟨hk, -, -, -, -, -, hlamR, -, -, -, hGL⟩ := hS
+  have hqOf : qOf (Formalism.MainNotions.CayleySignature.eps48 k r) = r + 1 := Lap.noncompactCount_parabolicSign k r hk
+  have hpOf : pOf (Formalism.MainNotions.CayleySignature.eps48 k r) = k + r := by
+    rw [Lap.compactCount_parabolicSign k r hk]; omega
+  obtain ⟨P, hPc⟩ := exists_cayley_unitary k r hk
+  generalize Formalism.MainNotions.CayleySignature.lam48 k r v b = lam at hlamR hGL ⊢
+  generalize Formalism.MainNotions.CayleySignature.eps48 k r = ε at hqOf hpOf hPc hGL ⊢
+  have hlam : S7.IsHCParam lam := (mir_isHCParam_iff lam).1 hlamR
+  obtain ⟨hanti, hgapAt, hN⟩ := hGL
+
+  have hq0 : S7.q0 ε = min (k + r) (r + 1) := by unfold S7.q0; rw [hpOf, hqOf]
+  have hq1 : 1 ≤ S7.q0 ε := by rw [hq0]; exact le_min (by omega) (by omega)
+  have hQ1 : (1 : ℝ) ≤ (S7.q0 ε : ℝ) := by exact_mod_cast hq1
+  have hp' : (pOf ε : ℝ) = (k : ℝ) + r := by rw [hpOf, Nat.cast_add]
+  have hq' : (qOf ε : ℝ) = (r : ℝ) + 1 := by rw [hqOf, Nat.cast_add, Nat.cast_one]
+  have hmin : min (pOf ε : ℝ) (qOf ε : ℝ) = (S7.q0 ε : ℝ) := by unfold S7.q0; rw [Nat.cast_min]
+  unfold Lap.hNeed at hN
+  try simp only [Nat.cast_min] at hN
+  rw [hmin, hp', hq'] at hN
+  obtain ⟨hN1, hN2⟩ := max_lt_iff.1 hN
+  obtain ⟨hN2a, hN2b⟩ := max_lt_iff.1 hN2
+  have hN1' := lt_of_le_of_lt (le_add_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 2)) hN1
+  obtain ⟨-, hNpq⟩ := max_lt_iff.1 hN1'
+  have hNn : (0 : ℝ) ≤ ((2 * r + k + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hgap : StdGap ε lam := ⟨hanti, h, hgapAt, by rw [hp', hq']; linarith⟩
+  have hNQ : (0 : ℝ) ≤ ((2 * r + k + 1 : ℕ) : ℝ) * (S7.q0 ε : ℝ) := mul_nonneg hNn (by linarith)
+  have hsq0 : (0 : ℝ) ≤ Real.sqrt (2 * (S7.q0 ε : ℝ)) := Real.sqrt_nonneg _
+  have h8 : 8 * ((2 * r + k + 1 : ℕ) : ℝ) * (S7.q0 ε : ℝ) < h := by linarith
+  have hthr : 4 * max (Lap.S0.bG k r) (Lap.S0.bS k r) < h / (8 * Real.sqrt (2 * (S7.q0 ε : ℝ))) - 1 := by
+    have hbG : Lap.S0.bG k r = 2 * ((2 * r + k + 1 : ℕ) : ℝ) * (S7.q0 ε : ℝ) := by
+      unfold Lap.S0.bG Lap.S0.nS Lap.S0.q0S; rw [← hq0]
+    have hbS : Lap.S0.bS k r = 2 * ((r : ℝ) + 1 - 1) * ((2 * r + k + 1 : ℕ) : ℝ) ^ 2 := by
+      unfold Lap.S0.bS Lap.S0.nS; ring
+    rw [hbG, hbS]
+    have hs : 0 < Real.sqrt (2 * (S7.q0 ε : ℝ)) := Real.sqrt_pos.2 (by linarith)
+    rw [lt_sub_iff_add_lt, lt_div_iff₀ (by positivity)]
+    nlinarith [hN2b]
+
+  have hint := hlam.2
+  choose mm hmm using hint
+  let μ : Fin (2 * r + k + 1) → ℤ := fun a => mm a + ((2 * r + k + 1 : ℕ) : ℤ) - 1 - ((a : ℕ) : ℤ)
+  have hμ : S7.IsMu lam μ := by
+    unfold S7.IsMu
+    intro a
+    have ha := hmm a
+    simp only [μ]
+    unfold rho
+    push_cast at ha ⊢
+    linarith
+
+  obtain ⟨T⟩ := HW.kType_exists ε lam hlam
+  obtain ⟨Ψ, ha, hb, hc, hd, hdec, he, -, hF⟩ := hAll (2 * r + k + 1) ε lam h T hlam hgapAt hq1
+  have hP : IsPsiFor ε lam T Ψ := ⟨ha, hb, hc, hd, fun μ' hμ' => (he μ' hμ').2.1 h8⟩
+  have hv₀ : T.w ≠ 0 := by
+    intro h0
+    have h1 := T.w_norm
+    rw [h0, norm_zero] at h1
+    exact zero_ne_one h1
+  have hPsi := psi_eq_PsiM ha hμ (hF μ hμ)
+  have hDS := isDS_sigLam hgap hP hv₀
+  refine ⟨↥(Hlam ε Ψ T.w), inferInstance, inferInstance, inferInstance,
+    fun g => sigLam ε Ψ T.w (P * g * P⁻¹), isDSHpk_of_isDS hPc hDS, isURepOn_UH_of hPc hDS.2.2.1, ?_⟩
+  intro w₀ hw₀
+  have hlow := isLowUnit_of_isLowUnitH hPc hDS hw₀
+  have hlowK : Formalism.MainNotions.S.lowKSub ε lam (sigLam ε Ψ T.w) = lowKSubLam ε Ψ T.w := by
+    obtain ⟨h1, h2⟩ := sigLam_lowK hgap hP hv₀
+    unfold Formalism.MainNotions.S.lowKSub
+    have hset : {S | Formalism.MainNotions.S.IsKTypeOf ε (sigLam ε Ψ T.w) (Formalism.QuantumDeterminants.lowK ε lam) S} =
+        {lowKSubLam ε Ψ T.w} :=
+      Set.ext fun S => ⟨fun hS => h2 S hS, fun hS => by rw [Set.mem_singleton_iff.1 hS]; exact h1⟩
+    rw [hset, sSup_singleton]
+  have hmem : w₀ ∈ lowKSubLam ε Ψ T.w := hlowK ▸ hlow.2
+  unfold lowKSubLam at hmem
+  rw [Submodule.mem_comap, Submodule.mem_map] at hmem
+  obtain ⟨x, hx, hxw⟩ := hmem
+  obtain ⟨v₁, hv₁⟩ := (mem_datumV_iff hP T.w x).1 hx
+  have hxw' : (x : L2 ε) = (w₀ : L2 ε) := hxw
+  have hw0L : (w₀ : L2 ε) = uniformisationL2 ε Ψ T.w v₁ := by rw [← hv₁, hxw']
+  have hw0 : w₀ = ⟨uniformisationL2 ε Ψ T.w v₁, datumEmbedding_mem_Hlam hP v₁⟩ := Subtype.ext hw0L
+  have hv1 : v₁ ≠ 0 := by
+    intro h0
+    have hj0 : uniformisationL2 ε Ψ T.w 0 = 0 := by simpa using datumEmbedding_smul hP T.w 0 0
+    have hz : w₀ = 0 := Subtype.ext (by rw [hw0L, h0, hj0]; rfl)
+    have h1 := hlow.1
+    rw [hz, norm_zero] at h1
+    exact zero_ne_one h1
+  have hc1 : ((‖uniformisationL2 ε Ψ T.w T.w‖ ^ 2 : ℝ) : ℂ) ≠ 0 :=
+    Complex.ofReal_ne_zero.2 (pow_ne_zero 2 (norm_ne_zero_iff.2 (datumEmbedding_highest_ne_zero hgap hP hv₀)))
+  obtain ⟨C, hC⟩ := dec_gN_sigLam hgap hP hv₀ hq1 hdec v₁ v₁
+  refine ⟨fun μG hμG => fdegB_of_isDS hPc hDS μG hμG,
+    ⟨h / (8 * Real.sqrt (2 * (S7.q0 ε : ℝ))), C, hthr, fun g hg => ?_⟩,
+    T, μ, P, v₁, _, hv1, hc1, hμ, hPc.1, fun g hg => ?_⟩
+  · have hgJ := szt_conj_mem hPc hg
+    show ‖inner ℂ w₀ (sigLam ε Ψ T.w (P * g * P⁻¹) w₀)‖ ≤ _
+    rw [Submodule.coe_inner, sigLam_coe hgap hP hv₀ hgJ, hw0L]
+    calc _ ≤ C * Real.sqrt (S7.hs (P * g * P⁻¹)) ^ (-(h / (8 * Real.sqrt (2 * (S7.q0 ε : ℝ))))) :=
+          hC _ hgJ
+      _ = _ := by rw [szt_hs_conj hPc, szt_gN_eq]
+  · have hgJ := szt_conj_mem hPc hg
+    show inner ℂ w₀ (sigLam ε Ψ T.w (P * g * P⁻¹) w₀) = _
+    rw [hw0, formulaF_sigLam hgap hP hv₀ hgJ v₁ v₁]
+    unfold Lap.psiCoef
+    rw [hPsi _ hgJ]
+    rfl
+
+end ReciprocityTheory.ChartRestriction.DS
+end
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.BesselVectors.BesselNVGOfNv
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.DS.Lap.TopFinal
+
+open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS.Lap
+
+theorem bAtTarget_of (hNV : NVStatement) : BAtTargetStatement := by
+  intro k r z c u v b h hS
+  obtain ⟨hk, -, -, -, -, -, hHC, hI, hH, hL, hG⟩ := hS
+  exact hNV k r u v b h hk hHC hI hH hL hG
+
+theorem besselNVG_of_nv (hNV : NVStatement) : TopNV.BesselNVG :=
+  TopNV.besselNVG_of (bAtTarget_of hNV) (sigZero fun m => S7.psiAll (n := m))
+
+end ReciprocityTheory.ChartRestriction.DS.Lap.TopFinal
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.SpectralGap.NVHTop
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.DS.Lap.NVHTop
+
+theorem intS : S0.IntSStatement :=
+  S0.IntS.intS_of_sIntFin (Mult1.S0.sIntFin Mult1.multiplicity_one_hypotheses_hold)
+
+end ReciprocityTheory.ChartRestriction.DS.Lap.NVHTop
+end
+end
+
+-- Source module: ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.BesselVectors.Closed
+
+section
 
 @[expose] public section
 
@@ -51,3 +340,5 @@ theorem nvAll : NVStatement := nv NVHTop.intS
 theorem besselNVG : TopNV.BesselNVG := TopFinal.besselNVG_of_nv nvAll
 
 end ReciprocityTheory.ChartRestriction.DS.Lap.TopClosed
+end
+end

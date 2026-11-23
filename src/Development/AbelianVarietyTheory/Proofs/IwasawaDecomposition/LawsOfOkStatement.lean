@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PredMemGamRanks
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LawsOfOkAlt
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +37,235 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelFunctionalDilatedClass
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelFunctionalLevelVectorLaws
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiamondActionOnHermitianChartClasses
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+namespace GlobalTheory.Mem.Col2.DiaCl
+
+variable {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {S : GStep E K n}
+  {ST : Finset (HeightOneSpectrum (𝓞 E))} {A : TDat S ST} {T : ℕ}
+
+theorem cl_smul_eq (b : S.β) (g : S.G b) (d : S.D b) : S.cl b (g • d) = S.cl b d :=
+  congrArg (Sigma.mk b) (Quotient.sound (show (MulAction.orbitRel (S.G b) (S.D b)).r (g • d) d from ⟨g, rfl⟩))
+
+theorem cl_rep_eq (c : S.Cl) : S.cl c.1 (S.rep c) = c := by
+  obtain ⟨b, q⟩ := c
+  exact congrArg (Sigma.mk b) (S.rp_spec b q)
+
+theorem exists_move (b : S.β) (d : S.D b) : ∃ g : S.G b, g • S.rep (S.cl b d) = d :=
+  (MulAction.orbitRel (S.G b) (S.D b)).symm (Quotient.exact (S.rp_spec b (Quotient.mk _ d)))
+
+theorem dia_inj (h : A.Ok T) (b : S.β) (P : ST) (a : (Res P.1)ˣ) : Function.Injective (A.dia b P a) := by
+  intro d d' hd
+  have := congrArg (A.dia b P a⁻¹) hd
+  rwa [← h.dia_mul, ← h.dia_mul, inv_mul_cancel, h.dia_one, h.dia_one] at this
+
+theorem stab_dia (h : A.Ok T) (b : S.β) (P : ST) (a : (Res P.1)ˣ) (d : S.D b) :
+    MulAction.stabilizer (S.G b) (A.dia b P a d) = MulAction.stabilizer (S.G b) d := by
+  ext g
+  rw [MulAction.mem_stabilizer_iff, MulAction.mem_stabilizer_iff, ← h.dia_act]
+  exact (dia_inj h b P a).eq_iff
+
+theorem card_stab_cl (b : S.β) (d : S.D b) :
+    Nat.card (S.Stab (S.cl b d)) = Nat.card (MulAction.stabilizer (S.G b) d) := by
+  obtain ⟨g, hg⟩ := exists_move (S := S) b d
+  exact Nat.card_congr (MulAction.stabilizerEquivStabilizer hg.symm).toEquiv
+
+end GlobalTheory.Mem.Col2.DiaCl
+
+namespace GlobalTheory.Mem.Col2
+
+open DiaCl
+
+theorem diamond_action_on_classes : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ}
+    {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T →
+    (∀ P c, S.cl c.1 (A.diaPt P 1 c) = c) ∧
+    (∀ P a b c, S.cl c.1 (A.diaPt P (a * b) c) = S.cl c.1 (A.diaPt P a (S.cl c.1 (A.diaPt P b c)))) ∧
+    ∀ P a c, Nat.card (S.Stab (S.cl c.1 (A.diaPt P a c))) = Nat.card (S.Stab c) := by
+  intro E K _ _ _ _ n S ST A T _ h
+  refine ⟨fun P c => ?_, fun P a b c => ?_, fun P a c => ?_⟩
+  · unfold TDat.diaPt
+    rw [h.dia_one, cl_rep_eq]
+  · unfold TDat.diaPt
+    obtain ⟨g, hg⟩ := exists_move (S := S) c.1 (A.dia c.1 P b (S.rep c))
+    rw [← cl_smul_eq c.1 g (A.dia c.1 P a _), ← h.dia_act, hg, h.dia_mul]
+  · rw [card_stab_cl]
+    unfold TDat.diaPt
+    rw [stab_dia h]
+
+end GlobalTheory.Mem.Col2
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DiamondActionOnHermitianChartClassesStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+theorem _root_.GlobalTheory.T.diamond_action_on_hermitianChartClasses : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → (∀ P c, S.cl c.1 (A.diaPt P 1 c) = c) ∧ (∀ P a b c, S.cl c.1 (A.diaPt P (a * b) c) = S.cl c.1 (A.diaPt P a (S.cl c.1 (A.diaPt P b c)))) ∧ ∀ P a c, Nat.card (S.Stab (S.cl c.1 (A.diaPt P a c))) = Nat.card (S.Stab c) := by
+  first | exact @GlobalTheory.Mem.Col2.diamond_action_on_classes | exact GlobalTheory.Mem.Col2.diamond_action_on_classes | (intros; apply GlobalTheory.Mem.Col2.diamond_action_on_classes <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelFunctionalDilatedClassStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+theorem _root_.GlobalTheory.T.levelFunctional_dilated_class : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → ∀ P a c, ∃ e : A.lv P (S.cl c.1 (A.diaPt P a c)) ≃ₗ[Res P.1] A.lv P c, ∀ x, A.fv P (S.cl c.1 (A.diaPt P a c)) x = (a : Res P.1) * A.fv P c (e x) := by
+  first | exact @GlobalTheory.Mem.Col2.DilFv.dil_fv | exact GlobalTheory.Mem.Col2.DilFv.dil_fv | (intros; apply GlobalTheory.Mem.Col2.DilFv.dil_fv <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelFunctionalLevelVectorLawsStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+theorem _root_.GlobalTheory.T.levelFunctional_levelVector_laws : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → (∀ P c (x : A.N c.1 (S.rep c)), A.fv P c (Submodule.Quotient.mk x) = A.f c.1 (S.rep c) P x) ∧ (∀ P c, A.fv P c ≠ 0) ∧ ∀ P c, A.te T P c ≠ 0 := by
+  first | exact @GlobalTheory.Mem.Col2.fv_te_laws | exact GlobalTheory.Mem.Col2.fv_te_laws | (intros; apply GlobalTheory.Mem.Col2.fv_te_laws <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PrimeLevelStructureDataRanksModPrime
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+namespace GlobalTheory.Mem.Col2.LRank
+
+
+open scoped TensorProduct in
+theorem natCard_quot {R N : Type} [CommRing R] [IsDomain R] [AddCommGroup N] [Module R N]
+    [Module.Finite R N] [Module.Projective R N] (I : Ideal R) [Finite (R ⧸ I)] :
+    Nat.card (N ⧸ (I • ⊤ : Submodule R N)) = Nat.card (R ⧸ I) ^ Module.finrank R N := by
+  have : IsArtinianRing (R ⧸ I) := isArtinian_of_finite
+  obtain ⟨b⟩ := Module.nonempty_basis_of_flat_of_finrank_eq (R ⧸ I) ((R ⧸ I) ⊗[R] N) (Module.finrank R N)
+    (fun P => by
+      have := P.isMaximal
+      let : Field ((R ⧸ I) ⧸ P.asIdeal) := Ideal.Quotient.field _
+      rw [(TensorProduct.AlgebraTensorModule.cancelBaseChange R (R ⧸ I) ((R ⧸ I) ⧸ P.asIdeal)
+        ((R ⧸ I) ⧸ P.asIdeal) N).finrank_eq]
+      have h1 := Module.rankAtStalk_baseChange (R := R) (M := N) (S := (R ⧸ I) ⧸ P.asIdeal) ⊥
+      rw [Module.rankAtStalk_eq_finrank_of_free, Module.rankAtStalk_eq, Ideal.finrank_fiber_eq_finrank] at h1
+      exact h1)
+  rw [← Nat.card_congr (TensorProduct.quotTensorEquivQuotSMul N I).toEquiv, Nat.card_congr b.equivFun.toEquiv,
+    Nat.card_fun, Nat.card_eq_fintype_card (α := Fin _), Fintype.card_fin]
+
+theorem finrank_of_span_top {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
+    [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (p : Submodule (𝓞 K) V)
+    (h : Submodule.span K (p : Set V) = ⊤) : Module.finrank (𝓞 K) p = Module.finrank K V := by
+  have : IsLocalizedModule (nonZeroDivisors (𝓞 K)) p.subtype := by
+    refine ⟨fun s => ?_, fun y => ?_, fun {a b} hab => ⟨1, by simpa using hab⟩⟩
+    · have := isLocalizedModule_id (nonZeroDivisors (𝓞 K)) V K
+      exact IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 K)) (LinearMap.id : V →ₗ[𝓞 K] V) s
+    · have hy : y ∈ Submodule.span K (p : Set V) := h ▸ Submodule.mem_top
+      obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ y hy
+      rw [Submodule.span_eq] at ht
+      exact ⟨(⟨_, ht⟩, t), rfl⟩
+  rw [← IsLocalizedModule.finrank_eq (nonZeroDivisors (𝓞 K)) p.subtype le_rfl,
+    IsFractionRing.finrank_right_eq (𝓞 K) K V]
+
+theorem finrank_of_card {F V : Type} [Field F] [Finite F] [AddCommGroup V] [Module F V] {n : ℕ}
+    (h : Nat.card V = Nat.card F ^ n) : Module.finrank F V = n := by
+  have h1 : 1 < Nat.card F := Finite.one_lt_card
+  have : Finite V := Nat.finite_of_card_ne_zero (by rw [h]; positivity)
+  have : Module.Finite F V := Module.Finite.of_finite
+  have h2 := Module.natCard_eq_pow_finrank (K := F) (V := V)
+  rw [h] at h2
+  exact (Nat.pow_right_injective h1 h2).symm
+
+
+
+theorem finrank_red {E : Type} [Field E] [NumberField E] {n : ℕ} (N : Submodule (𝓞 E) (Fin n → E))
+    (hN : Submodule.IsFullLattice E N) (P : HeightOneSpectrum (𝓞 E)) :
+    Module.finrank (Res P) (TDat.Red N P) = n := by
+  let : Submodule.IsFullLattice E N := hN
+  have : Module.Finite (𝓞 E) N := Submodule.IsLattice.finite E N
+  have : Module.FinitePresentation (𝓞 E) N := Module.finitePresentation_of_finite _ _
+  have : Module.Flat (𝓞 E) N := inferInstance
+  have : Module.Projective (𝓞 E) N := Module.Flat.projective_of_finitePresentation
+  have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
+  have hr : Module.finrank (𝓞 E) N = n := by
+    exact (Submodule.IsFullLattice.finrank_eq E N).trans (Module.finrank_fin_fun E)
+  have h := natCard_quot (R := 𝓞 E) (N := N) P.asIdeal
+  rw [hr] at h
+  exact finrank_of_card (F := Res P) h
+
+
+
+theorem ranks : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → (∀ P c, Module.finrank (Res P.1) (A.lv P c) = n) ∧ ∀ P c, Module.finrank (Res P.1) (A.lk P c) = n := by
+  intro E K _ _ _ _ n S ST A T _ h
+  exact ⟨fun P c => finrank_red _ (h.N_lat c.1 (S.rep c)) P.1,
+    fun P c => finrank_red _ (h.dnN_lat c.1 (S.rep c) P) P.1⟩
+
+end GlobalTheory.Mem.Col2.LRank
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PrimeLevelStructureDataRanksModPrimeStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+theorem _root_.GlobalTheory.T.primeLevelStructureData_ranks_mod_prime : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → (∀ P c, Module.finrank (Res P.1) (A.lv P c) = n) ∧ ∀ P c, Module.finrank (Res P.1) (A.lk P c) = n := by
+  first | exact @GlobalTheory.Mem.Col2.LRank.ranks | exact GlobalTheory.Mem.Col2.LRank.ranks | (intros; apply GlobalTheory.Mem.Col2.LRank.ranks <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LawsOfOkAlt
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
+
+namespace GlobalTheory.Mem.Col2
+
+
+
+theorem TDat.laws_of_ok : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n}
+    {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → A.Laws T := by
+  intro E K _ _ _ _ n S ST A T hS hA
+  have h1 := GlobalTheory.T.primeLevelStructureData_ranks_mod_prime A T hS hA
+  have h2 := GlobalTheory.T.levelFunctional_levelVector_laws A T hS hA
+  have h3 := GlobalTheory.T.diamond_action_on_hermitianChartClasses A T hS hA
+  have h4 := GlobalTheory.T.levelFunctional_dilated_class A T hS hA
+  exact ⟨h1.1, h1.2, h2.2.1, h2.2.2, h3.1, h3.2.1, h4, h3.2.2⟩
+
+end GlobalTheory.Mem.Col2
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LawsOfOkStatement
+
+section
 
 @[expose] public section
 
@@ -45,3 +273,5 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formal
 
 theorem _root_.GlobalTheory.T.tDat_laws_of_ok : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → A.Laws T := by
   first | exact @GlobalTheory.Mem.Col2.TDat.laws_of_ok | exact GlobalTheory.Mem.Col2.TDat.laws_of_ok | (intros; apply GlobalTheory.Mem.Col2.TDat.laws_of_ok <;> assumption)
+end
+end

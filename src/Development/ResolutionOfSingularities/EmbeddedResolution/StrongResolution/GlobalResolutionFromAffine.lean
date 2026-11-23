@@ -15,17 +15,10 @@ import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionDescen
 import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionDescent.PullbackBlowupSequenceIsomorphism
 public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionCenters
 public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionDense
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionProper
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionSmooth
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionStrictNormalCrossings
-import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.SequenceIsomorphism
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.SmoothLocusIsomorphism
-import Development.ResolutionOfSingularities.Foundations.Schemes.SchemeMorphismProperties
+public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionData
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
-import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -42,7 +35,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -62,7 +54,71 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionSmooth
+public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionStrictNormalCrossings
+import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.SequenceIsomorphism
+public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.SmoothLocusIsomorphism
+import Development.ResolutionOfSingularities.Foundations.Schemes.SchemeMorphismProperties
+import Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale
+import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.LocalResolutionProper
+
+section
+
+@[expose] public section
+
+universe u
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+noncomputable section
+
+namespace FunctorialResolution.EmbeddedResolution
+
+namespace LocalResolutionData
+
+variable {k : Type u} [Field k] {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of k)}
+  [LocallyOfFiniteType f] {s : SequenceOfBlowups X}
+
+def pullbackIsoLastObj (d : LocalResolutionData k f s) (i : d.cover.I₀) :
+    ((pullback s.lastStructMap (d.cover.f i) : Scheme.{u}) ≅ (d.seq i).lastObj) :=
+  (pullbackSymmetry s.lastStructMap (d.cover.f i)).trans (d.lastObjIsoPullback i).symm
+
+theorem pullbackIsoLastObj_hom_lastStructMap (d : LocalResolutionData k f s) (i : d.cover.I₀) :
+    (d.pullbackIsoLastObj i).hom ≫ (d.seq i).lastStructMap = pullback.snd s.lastStructMap (d.cover.f i) := by
+  rw [pullbackIsoLastObj]
+  simp only [Iso.trans_hom, Iso.symm_hom, Category.assoc]
+  rw [← d.lastObjIsoPullback_hom_fst i, Iso.inv_hom_id_assoc]
+  exact pullbackSymmetry_hom_comp_fst _ _
+
+theorem isProper_lastStructMap (d : LocalResolutionData k f s) : IsProper s.lastStructMap := by
+  have key : ∀ i : d.cover.I₀, IsProper (d.seq i).lastStructMap := by
+    intro i
+    obtain ⟨-, h, -⟩ := d.isResolution i
+    exact h
+  obtain ⟨-, h2⟩ := (inferInstance :
+    MorphismProperty.IsLocalAtTarget (@IsProper) Scheme.zariskiPrecoverage)
+  refine h2 (R := d.cover.presieve₀) d.cover.mem₀ ?_
+  intro U g _inst hg
+  obtain ⟨i⟩ := hg
+  rw [← d.pullbackIsoLastObj_hom_lastStructMap i]
+  have := key i
+  infer_instance
+
+end LocalResolutionData
+
+end FunctorialResolution.EmbeddedResolution
+
+end
+end
+end
+
+-- Source module: Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.GlobalResolutionFromAffine
+
+section
 
 @[expose] public section
 
@@ -440,4 +496,6 @@ theorem strongResolutionOfSingularitiesCharZero_of_principalizationAlgorithm (A 
 
 end FunctorialResolution.EmbeddedResolution
 
+end
+end
 end

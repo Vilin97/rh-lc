@@ -1,7 +1,9 @@
 module
 
-public import Formalism.LogVandermondeBounds.MultinomialPowerBound
-public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +43,36 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+-- Source module: Formalism.LogVandermondeBounds.MultinomialPowerBound
+
+section
+
+@[expose] public section
+
+namespace Formalism.LogVandermondeBounds.flipTwoThree
+
+open Finset
+
+def Interlace {n : ℕ} (lam : Fin (n + 1) → ℤ) (nu : Fin n → ℤ) : Prop :=
+  Antitone lam ∧ ∀ i : Fin n, lam i.succ ≤ nu i ∧ nu i ≤ lam i.castSucc
+
+def B0 {n : ℕ} (lam : Fin (n + 1) → ℤ) (nu : Fin n → ℤ) : ℤ := ∑ i, (nu i - lam i.succ)
+
+def len {n : ℕ} (lam : Fin (n + 1) → ℤ) (i : Fin n) : ℤ := lam i.castSucc - lam i.succ
+
+noncomputable def hookF {N : ℕ} (nu : Fin N → ℕ) : ℝ :=
+  (∏ i : Fin N, ((nu i + N - 1 - i : ℕ).factorial : ℝ)) /
+    ∏ i : Fin N, ∏ j ∈ univ.filter (fun j => i < j), (((nu i : ℤ) - nu j + j - i : ℤ) : ℝ)
+
+end Formalism.LogVandermondeBounds.flipTwoThree
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.ConcavityEquidistribution
+
+section
 
 @[expose] public section
 
@@ -154,3 +186,5 @@ def PropZ_iii : Prop :=
         + C * Fintype.card ι * ((κ : ℝ) + 1) ^ 2 * L
 
 end Formalism.HermitianLattices.TraceIntegrality
+end
+end

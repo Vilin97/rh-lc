@@ -4,10 +4,7 @@ public import Development.AutomorphicArithmetic.CommutativeAlgebra.BconeDefs
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BigEtaleModuleSheafMonoEpiIffSectionsStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleSheafSectionsExtAndGlueStatement
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.AcyMiddleOfShortExact
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.AcyRightOfShortExact
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsLiftFreeToKernelOfShortExactVanishingSecti
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsLiftFreeToMiddleOfShortExactAcy
-import Development.AutomorphicArithmetic.CommutativeAlgebra.SubsingletonHypercohomologyFreeOfSuppOfSectionsV
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleCohomologyCoefficientLongExactSequenceStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -34,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,6 +44,107 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.BijectiveClHypercohomologySingletonZero
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.SubsingletonHypercohomologyFreeOfSuppOfSectionsV
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChosenInjectiveResolutionEtaleSheafPropertiesStatement
+import Mathlib.Algebra.Order.Star.Int
+import Development.AutomorphicArithmetic.CommutativeAlgebra.SubsingletonHypercohomologyFreeOfSuppOfSectionsV
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.AcyRightOfShortExact
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Bc
+
+theorem UpperTheory.acy_right_of_shortExact :
+    ∀ (Q : Scheme.{0} → Prop) (S : ShortComplex (Shv ℤ)), S.ShortExact → Acy Q S.X₁ → Acy Q S.X₂ → Acy Q S.X₃ := by
+  intro Q S hS h1 h2 P hP n hn
+  obtain ⟨z, hz⟩ := GlobalTheory.T.etaleCohomology_coefficient_longExactSequence ℤ S hS
+  have e := (hz (sgl ((free ℤ).obj P)) n).2.1
+  haveI := h1 P hP (n + 1) (by omega)
+  haveI := h2 P hP n hn
+  refine ⟨fun y y' => ?_⟩
+  have hy : ∀ u : HK ℤ (sgl ((free ℤ).obj P)) S.X₃ n, u = 0 := by
+    intro u
+    obtain ⟨v, hv⟩ := (e u).1 (Subsingleton.elim _ _)
+    rw [← hv, Subsingleton.elim v 0, map_zero]
+  rw [hy y, hy y']
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsLiftFreeToKernelOfShortExactVanishingSecti
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Bc
+
+theorem UpperTheory.exists_lift_free_to_kernel_of_shortExact_vanishing_sections :
+    ∀ (Q : Scheme.{0} → Prop) (S : ShortComplex (Shv ℤ)), S.ShortExact → (∀ U : Scheme.{0}, Q U → Subsingleton (Sec S.X₃ U)) → ∀ P : PSh, Supp Q P → ∀ f : (free ℤ).obj P ⟶ S.X₂, ∃ h : (free ℤ).obj P ⟶ S.X₁, h ≫ S.f = f := by
+  intro Q S hS hQ P hP f
+  have hsub := UpperTheory.subsingleton_hypercohomology_free_of_supp_of_sections_vanish Q S.X₃ hQ P hP 0
+  have hz : f ≫ S.g = 0 := by
+    apply (UpperTheory.bijective_cl_hypercohomology_singleton_zero _ _).1
+    exact Subsingleton.elim _ _
+  haveI := hS.mono_f
+  exact ⟨hS.exact.lift f hz, hS.exact.lift_f f hz⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.HypercohomologyPostClEqClComp
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Bc
+
+set_option backward.isDefEq.respectTransparency false in
+theorem UpperTheory.hypercohomology_post_cl_eq_cl_comp :
+    ∀ {M F G : Shv ℤ} (f : M ⟶ F) (g : F ⟶ G), HK.post ℤ (sgl M) g 0 (cl f) = cl (f ≫ g) := by
+  intro M F G f g
+  have hg : resAug F ≫ resMap ℤ g = (CochainComplex.singleFunctor (Shv ℤ) 0).map g ≫ resAug G :=
+    ((GlobalTheory.T.chosenInjectiveResolution_etaleSheaf_properties ℤ F).2.2.2.2.2.2.2 G g).1
+  have key : ((CochainComplex.singleFunctor (Shv ℤ) 0).map f ≫ resAug F) ≫ resMap ℤ g =
+      (CochainComplex.singleFunctor (Shv ℤ) 0).map (f ≫ g) ≫ resAug G := by
+    rw [Category.assoc, hg, Functor.map_comp, Category.assoc]
+  change CohomologyClass.mk (zcomp (Cocycle.ofHom ((CochainComplex.singleFunctor (Shv ℤ) 0).map f ≫ resAug F))
+    (Cocycle.ofHom (resMap ℤ g)) (add_zero 0)) = CohomologyClass.mk (Cocycle.ofHom ((CochainComplex.singleFunctor (Shv ℤ) 0).map (f ≫ g) ≫ resAug G))
+  refine congrArg CohomologyClass.mk (Cocycle.ext ?_)
+  rw [← key]
+  simp [zcomp, Cochain.ofHom_comp]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsLiftFreeToMiddleOfShortExactAcy
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Bc
+
+theorem UpperTheory.exists_lift_free_to_middle_of_shortExact_acy :
+    ∀ (Q : Scheme.{0} → Prop) (S : ShortComplex (Shv ℤ)), S.ShortExact → Acy Q S.X₁ → ∀ P : PSh, Supp Q P → ∀ f : (free ℤ).obj P ⟶ S.X₃, ∃ h : (free ℤ).obj P ⟶ S.X₂, h ≫ S.g = f := by
+  intro Q S hS hA P hP f
+  obtain ⟨z, hz⟩ := GlobalTheory.T.etaleCohomology_coefficient_longExactSequence ℤ S hS
+  have e := (hz (sgl ((free ℤ).obj P)) 0).2.1
+  have hsub := hA P hP (0 + 1) (by norm_num)
+  have h0 : HK.ext ℤ (sgl ((free ℤ).obj P)) z 0 (0 + 1) rfl (cl f) = 0 := Subsingleton.elim _ _
+  obtain ⟨y, hy⟩ := (e (cl f)).1 h0
+  obtain ⟨h, rfl⟩ := (UpperTheory.bijective_cl_hypercohomology_singleton_zero _ _).2 y
+  refine ⟨h, (UpperTheory.bijective_cl_hypercohomology_singleton_zero _ _).1 ?_⟩
+  rw [← UpperTheory.hypercohomology_post_cl_eq_cl_comp]
+  exact hy
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.AcyAndLiftOfLocallySurjectiveExact
+
+section
 
 @[expose] public section
 
@@ -121,3 +220,5 @@ theorem UpperTheory.acy_and_lift_of_locally_surjective_exact :
   refine ⟨h2, ?_⟩
   dsimp [S1, S2] at hh1 hh2
   rw [← hfac, ← Category.assoc, hh2, hh1]
+end
+end

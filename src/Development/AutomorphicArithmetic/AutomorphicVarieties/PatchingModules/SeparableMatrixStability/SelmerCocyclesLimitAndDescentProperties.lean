@@ -4,13 +4,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingMod
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LimKer
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LimOut
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.QuotProf
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CloseMap
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CommLim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EltLim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.InLim
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.Loc_fin
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.PlProps
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SysCover
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ThetaCoefficientMapEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,6 +26,7 @@ import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,8 +34,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -55,9 +48,174 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Topology.Algebra.ClopenNhdofOne
+import Mathlib.Topology.Compactness.Paracompact
 import Mathlib.Topology.Separation.Connected
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ProfDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CommLim
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.ProfDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.InLim
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.HomlDesc
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.PlGen
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.PlMap
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.PlProps
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SysCover
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Topology.Sheaves.Presheaf
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CloseMap
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.close_map :
+    ∀ (Ph B Z : Type) [Group Ph] [TopologicalSpace Ph] [IsTopologicalGroup Ph] [CompactSpace Ph] [TotallyDisconnectedSpace Ph] [Group B] [Group Z] [TopologicalSpace Z] [IsTopologicalGroup Z] [CompactSpace Z] [TotallyDisconnectedSpace Z] (Γ : ℕ → Type) [∀ N, Group (Γ N)] (π : ∀ N, Ph →* Γ N) (πo : Ph →* B) (p : ∀ N, Γ N →* Z) (po : B →* Z) (U : Ultrafilter ℕ) (a : ∀ N, Γ N) (b : B) (z : Z), Continuous (po.comp πo) → (∀ W : OpenNormalSubgroup Z, ∀ᶠ N in (U : Filter ℕ), ∀ g, p N (π N g) * (po (πo g))⁻¹ ∈ W) → (∀ V : OpenNormalSubgroup Ph, ∀ᶠ N in (U : Filter ℕ), Close (π N) πo V.toSubgroup (a N) b) → (∀ W : OpenNormalSubgroup Z, ∀ᶠ N in (U : Filter ℕ), p N (a N) * z⁻¹ ∈ W) → po b = z := by
+  intro Ph B Z _ _ _ _ _ _ _ _ _ _ _ Γ _ π πo p po U a b z hf hp hclose ha
+  set f : Ph →* Z := po.comp πo with hfdef
+  have key : ∀ W : OpenNormalSubgroup Z, po b * z⁻¹ ∈ W := by
+    intro W
+    let V : OpenNormalSubgroup Ph :=
+      { toOpenSubgroup := ⟨W.toSubgroup.comap f, W.isOpen.preimage hf⟩
+        isNormal' := Subgroup.Normal.comap W.isNormal' f }
+    obtain ⟨N, h1, h2, h3⟩ := ((hp W).and ((hclose V).and (ha W))).exists
+    obtain ⟨g, g', hg, hg', hV⟩ := h2
+    have hV' : f (g⁻¹ * g') ∈ W := hV
+    have e1 := h1 g
+    rw [hg] at e1
+    have hb : po b = f g' := by simp [hfdef, hg']
+    have hn : f g' * (f g)⁻¹ ∈ W := by
+      have hc := W.isNormal'.conj_mem _ hV' (f g)
+      have he : f g * f (g⁻¹ * g') * (f g)⁻¹ = f g' * (f g)⁻¹ := by
+        simp [map_mul, map_inv, mul_assoc]
+      rw [he] at hc
+      exact hc
+    have hx : po b * z⁻¹ = (f g' * (f g)⁻¹) * (p N (a N) * (f g)⁻¹)⁻¹ * (p N (a N) * z⁻¹) := by
+      rw [hb]; group
+    rw [hx]
+    exact W.mul_mem (W.mul_mem hn (W.inv_mem e1)) h3
+  by_contra hne
+  have hx1 : po b * z⁻¹ ≠ 1 := fun h => hne (mul_inv_eq_one.mp h)
+  obtain ⟨H, hH⟩ := ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one
+    (isOpen_compl_singleton (x := po b * z⁻¹)) (by simpa [eq_comm] using hx1)
+  exact hH (key H) rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LimElt
+
+section
+
+@[expose] public section
+
+open Filter UpperTheory.V.AlgebraTools
+open scoped TensorProduct
+
+theorem UpperTheory.V.AlgebraTools.exists_lim_elt :
+    ∀ (G ι : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] (U : Ultrafilter ι) (K : ι → Subgroup G) [∀ i, (K i).Normal],
+      (∀ a : ι → G, ∃ b : G, ∀ O : OpenNormalSubgroup G, ∀ᶠ i in (U : Filter ι), b⁻¹ * a i ∈ O.toSubgroup) ∧
+      (∀ (a : ι → G) (b b' : G), (∀ O : OpenNormalSubgroup G, ∀ᶠ i in (U : Filter ι), b⁻¹ * a i ∈ K i ⊔ O.toSubgroup) →
+        (∀ O : OpenNormalSubgroup G, ∀ᶠ i in (U : Filter ι), b'⁻¹ * a i ∈ K i ⊔ O.toSubgroup) → b⁻¹ * b' ∈ limKer (U : Filter ι) K) := by
+  intro G ι _ _ _ _ _ U K _
+  refine ⟨fun a => ?_, fun a b b' hb hb' => ?_⟩
+  · obtain ⟨b, hl⟩ : ∃ b : G, Tendsto a (U : Filter ι) (nhds b) := by
+      refine ⟨(U.map a).lim, ?_⟩
+      have h' := (U.map a).le_nhds_lim
+      rw [Ultrafilter.coe_map] at h'
+      exact h'
+    refine ⟨b, fun O => ?_⟩
+    have hopen : IsOpen {y : G | b⁻¹ * y ∈ O.toSubgroup} :=
+      O.toOpenSubgroup.isOpen.preimage (continuous_const_mul _)
+    exact hl.eventually (hopen.mem_nhds (by simp))
+  · rw [mem_limKer]
+    intro O
+    filter_upwards [hb O, hb' O] with i h1 h2
+    have heq : b⁻¹ * b' = (b⁻¹ * a i) * (b'⁻¹ * a i)⁻¹ := by group
+    rw [heq]
+    exact Subgroup.mul_mem _ h1 (Subgroup.inv_mem _ h2)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EltLim
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.elt_lim :
+    ∀ (Ph B : Type) [Group Ph] [TopologicalSpace Ph] [IsTopologicalGroup Ph] [CompactSpace Ph] [TotallyDisconnectedSpace Ph] [Group B] (Γ : ℕ → Type) [∀ N, Group (Γ N)] (π : ∀ N, Ph →* Γ N) (πo : Ph →* B) (U : Ultrafilter ℕ) (a : ∀ N, Γ N), (∀ N, Function.Surjective (π N)) → ∃ b : B, ∀ V : OpenNormalSubgroup Ph, ∀ᶠ N in (U : Filter ℕ), Close (π N) πo V.toSubgroup (a N) b := by
+  intro Ph B _ _ _ _ _ _ Γ _ π πo U a hπ
+  choose g hg using fun N => hπ N (a N)
+  obtain ⟨b, hb⟩ := (exists_lim_elt Ph ℕ U fun N => (π N).ker).1 g
+  refine ⟨πo b, fun V => (hb V).mono fun N h => ⟨g N, b, hg N, rfl, ?_⟩⟩
+  simpa using V.toSubgroup.inv_mem h
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.Loc_fin
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.Pa
+
+theorem UpperTheory.V.Pa.loc_fin :
+    ∀ (l : ℕ) [Fact l.Prime] (Y : Type) [Group Y] [TopologicalSpace Y] [IsTopologicalGroup Y] [CompactSpace Y] [TotallyDisconnectedSpace Y] (H : Subgroup Y) [H.Normal], IsOpen (H : Set Y) → PhiCond Y l → ∃ (P : Subgroup Y) (_ : P.Normal), TopFG (Y ⧸ P) ∧ ∀ (Z : Type) [Group Z] [TopologicalSpace Z] [IsTopologicalGroup Z] [CompactSpace Z] [TotallyDisconnectedSpace Z] (f : Y →* Z) (H' : Subgroup Z), Continuous f → PL l H' = ⊥ → H ≤ H'.comap f → P ≤ f.ker := by
+  intro l _ Y _ _ _ _ _ H _ hH hphi
+  obtain ⟨hPn, hPc, hPH, -, -, -⟩ := pl_props l Y H hH
+  refine ⟨PL l H, hPn, ?_, ?_⟩
+  · let P := PL l H
+    let m : Y →* Y ⧸ P := QuotientGroup.mk' P
+    have hmc : Continuous m := continuous_quot_mk
+    have hms : Function.Surjective m := QuotientGroup.mk'_surjective P
+    haveI : TotallyDisconnectedSpace (Y ⧸ P) := (totallyDisconnected_quot Y P hPc).1
+    let H' : Subgroup (Y ⧸ P) := H.map m
+    haveI : H'.Normal := Subgroup.Normal.map inferInstance m hms
+    have hcm : H'.comap m = H := by
+      rw [Subgroup.comap_map_eq, QuotientGroup.ker_mk']
+      exact sup_eq_left.mpr hPH
+    have hH'open : IsOpen (H' : Set (Y ⧸ P)) := by
+      have : (H' : Set (Y ⧸ P)) = m '' (H : Set Y) := by simp [H']
+      rw [this]
+      exact QuotientGroup.isOpenMap_coe _ hH
+    have hPL' : PL l H' = ⊥ := by
+      rw [← pl_map l Y (Y ⧸ P) m H' hH'open hmc hms, hcm]
+      rw [Subgroup.map_eq_bot_iff, QuotientGroup.ker_mk']
+    have hfin : Finite (HomL l (H'.comap m)) := by
+      rw [hcm]
+      exact hphi H hH
+    exact (pl_gen l (Y ⧸ P) H' hH'open hPL' (homl_desc l Y (Y ⧸ P) m H' hmc hms hfin).1).1
+  · intro Z _ _ _ _ _ f H' hf hPL hle g hg
+    rw [MonoidHom.mem_ker]
+    have hmem : f g ∈ PL l H' := by
+      simp only [PL, Subgroup.mem_iInf] at hg ⊢
+      intro U hU
+      let V : OpenNormalSubgroup Y :=
+        { toOpenSubgroup := U.toOpenSubgroup.comap f hf
+          isNormal' := Subgroup.Normal.comap U.isNormal' f }
+      have hV : ∀ y : Y, y ∈ V ↔ f y ∈ U := fun y => Iff.rfl
+      have := hg V (by
+        intro h hh
+        obtain ⟨e, he⟩ := hU (f h) (hle hh)
+        exact ⟨e, (hV _).mpr (by simpa using he)⟩)
+      exact (hV g).mp this
+    rw [hPL] at hmem
+    exact (Subgroup.mem_bot).mp hmem
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.SelmerCocyclesLimitAndDescentProperties
+
+section
 
 @[expose] public section
 
@@ -260,3 +418,5 @@ theorem UpperTheory.V.Pa.selmer_cocycles_limit_and_descent_properties :
       comm := fun j => Subtype.ext (hcomm j)
       p_ph := fun j => Subtype.ext (hbphp j)
       p_ta := fun j => Subtype.ext (hbtap j) }⟩
+end
+end

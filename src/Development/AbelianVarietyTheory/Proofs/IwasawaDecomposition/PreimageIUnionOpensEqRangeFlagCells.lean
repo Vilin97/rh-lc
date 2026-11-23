@@ -1,12 +1,11 @@
 module
 
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFrameCover
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlagCellValuativeExistenceOverUnionOfOpensStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PreimageOpensEqRangeOfValuative
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CauchyBinetPluckerAndCellCoordinatesStatement
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsIntegralPivotDecomposition
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -20,10 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,7 +27,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,7 +43,295 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AmpleOnAbelianBase
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsNatDiagIffIsDiag
 import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
+public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlagCellPointEqOfTriangularFramesStatement
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Valuation.ValuationRing
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.Linter.HaveILetI
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFrameCover
+import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.Algebra.Azumaya.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIntegralFlagCellOfValuedField
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.ShFam.Pad GlobalTheory.ProjSpace GlobalTheory.FlagEmb
+open Formalism.MainNotions.DIV.Cons (intO)
+
+namespace GlobalTheory.FlagEmb
+
+theorem exists_integral_cell : ∀ (T : Type) (m : T → ℕ) (K : Type) [Field K] (A : ValuationSubring K) (M : ℕ)
+    (c u : Let m → Fin (M + 1) → K), InBlock c u → (∀ τ, LinearIndependent K fun j : Fin (m τ) => u ⟨τ, j⟩) →
+    ∃ (w : Pm m) (x : CellVar m → K) (d : Let m → K), (∀ v, x v ∈ A) ∧ (∀ z, d z ≠ 0) ∧
+      Tri (cellVec c w x) u d := by
+  intro T m K _ A M c u hin hli
+  have hg : ∀ z : Let m, ∃ a : Fin (m z.1) → K, ∑ i, a i • c ⟨z.1, i⟩ = u z := fun z =>
+    (Submodule.mem_span_range_iff_exists_fun K).1 (hin z)
+  choose a ha using hg
+  let g : ∀ τ, Matrix (Fin (m τ)) (Fin (m τ)) K := fun τ i j => a ⟨τ, j⟩ i
+  have hu : ∀ τ j, u ⟨τ, j⟩ = ∑ i, g τ i j • c ⟨τ, i⟩ := fun τ j => (ha ⟨τ, j⟩).symm
+  have hgli : ∀ τ, LinearIndependent K (g τ).transpose := by
+    intro τ
+    refine Fintype.linearIndependent_iff.2 fun s hs => ?_
+    have hs' : ∀ i, ∑ j, s j * g τ i j = 0 := fun i => by
+      have := congrFun hs i
+      simpa [Finset.sum_apply, Matrix.transpose_apply] using this
+    have h0 : ∑ j, s j • u ⟨τ, j⟩ = 0 := by
+      simp_rw [hu, Finset.smul_sum, smul_smul]
+      rw [Finset.sum_comm]
+      simp_rw [← Finset.sum_smul]
+      simp [hs']
+    exact Fintype.linearIndependent_iff.1 (hli τ) s h0
+  have hdec := fun τ => GlobalTheory.exists_integral_pivot_decomposition K A _ _ (g τ) (hgli τ)
+  choose ι u0 b huA hu0 hu1 hbt hbd hgub using hdec
+  have hbij : ∀ τ, Function.Bijective (ι τ) := fun τ => Finite.injective_iff_bijective.1 (ι τ).injective
+  let w : Pm m := fun τ => Equiv.ofBijective _ (hbij τ)
+  let x : CellVar m → K := fun v => u0 v.1 (ι v.1 v.2.1.1) v.2.1.2
+  refine ⟨w, x, fun z => b z.1 z.2 z.2, fun v => huA _ _ _, fun z => hbd _ _, ?_⟩
+  have hcell : ∀ τ i j, cell x τ i j = u0 τ (ι τ i) j := by
+    intro τ i j
+    unfold cell
+    split_ifs with h1 h2
+    · rfl
+    · subst h2; exact (hu1 τ i).symm
+    · have : i < j := lt_of_le_of_ne (not_lt.1 h1) h2
+      exact (hu0 τ i j this).symm
+  have hv : ∀ τ j, cellVec c w x ⟨τ, j⟩ = ∑ k, u0 τ k j • c ⟨τ, k⟩ := by
+    intro τ j
+    simp only [cellVec, hcell]
+    exact Equiv.sum_comp (w τ) (fun k => u0 τ k j • c ⟨τ, k⟩)
+  have hexp : ∀ τ j, u ⟨τ, j⟩ = ∑ l, b τ l j • cellVec c w x ⟨τ, l⟩ := by
+    intro τ j
+    rw [hu]
+    simp_rw [hv, Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [← Finset.sum_smul]
+    congr 1
+    rw [show g τ i j = (u0 τ * b τ) i j from by rw [← hgub τ], Matrix.mul_apply]
+    exact Finset.sum_congr rfl fun l _ => mul_comm _ _
+  rintro ⟨τ, j⟩
+  show u ⟨τ, j⟩ - b τ j j • cellVec c w x ⟨τ, j⟩ ∈ _
+  rw [hexp, ← Finset.add_sum_erase _ _ (Finset.mem_univ j), add_sub_cancel_left]
+  refine Submodule.sum_mem _ fun l hl => ?_
+  rcases lt_or_gt_of_ne (Finset.ne_of_mem_erase hl) with h | h
+  · exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, h, rfl⟩)
+  · rw [hbt τ h, zero_smul]
+    exact Submodule.zero_mem _
+
+end GlobalTheory.FlagEmb
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIntegralFlagCellOfValuedFieldStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.ShFam.Pad GlobalTheory.ProjSpace GlobalTheory.FlagEmb
+open Formalism.MainNotions.DIV.Cons (intO)
+
+theorem _root_.GlobalTheory.T.exists_integral_flagCell_of_valuedField : ∀ (T : Type) (m : T → ℕ) (K : Type) [Field K] (A : ValuationSubring K) (M : ℕ) (c u : Let m → Fin (M + 1) → K), InBlock c u → (∀ τ, LinearIndependent K fun j : Fin (m τ) => u ⟨τ, j⟩) → ∃ (w : Pm m) (x : CellVar m → K) (d : Let m → K), (∀ v, x v ∈ A) ∧ (∀ z, d z ≠ 0) ∧ Tri (cellVec c w x) u d := by
+  first | exact @GlobalTheory.FlagEmb.exists_integral_cell | exact GlobalTheory.FlagEmb.exists_integral_cell | (intros; apply GlobalTheory.FlagEmb.exists_integral_cell <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlagCellValuativeExistenceOverUnionOfOpens
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.ShFam.Pad GlobalTheory.ProjSpace GlobalTheory.FlagEmb
+open Formalism.MainNotions.DIV.Cons (intO)
+
+namespace GlobalTheory.FlagEmb.Valu
+
+theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
+    spMap g ≫ spMap f = spMap (g.comp f) :=
+  (Spec.map_comp (CommRingCat.ofHom f) (CommRingCat.ofHom g)).symm
+
+theorem sp_surj {k B : Type} [CommRing k] [CommRing B] (x : Sp k ⟶ Sp B) : ∃ β : B →+* k, x = spMap β :=
+  ⟨(Spec.preimage x).hom, (Spec.map_preimage x).symm⟩
+
+theorem exists_of_closedPoint {A : Type} [CommRing A] [IsLocalRing A] {X : Scheme.{0}} (x : Sp A ⟶ X)
+    (U : X.affineOpens) (hx : x (IsLocalRing.closedPoint A) ∈ (U.1 : Set X)) :
+    ∃ φ : Γ(X, U.1) →+* A, x = spMap φ ≫ U.2.fromSpec := by
+  have htop : x ⁻¹ᵁ U.1 = ⊤ := Scheme.preimage_eq_top_of_closedPoint_mem x hx
+  have hr : Set.range x ⊆ Set.range U.2.fromSpec := by
+    rw [U.2.range_fromSpec]
+    rintro _ ⟨y, rfl⟩
+    have : y ∈ x ⁻¹ᵁ U.1 := by rw [htop]; trivial
+    exact this
+  have hi : IsOpenImmersion U.2.fromSpec := IsAffineOpen.isOpenImmersion_fromSpec U.2
+  obtain ⟨φ, hφ⟩ := sp_surj (B := Γ(X, U.1)) (@IsOpenImmersion.lift _ _ _ U.2.fromSpec x hi hr)
+  exact ⟨φ, (@IsOpenImmersion.lift_fac _ _ _ U.2.fromSpec x hi hr).symm.trans (congrArg (· ≫ U.2.fromSpec) hφ)⟩
+
+theorem indep_cellVec {T : Type} {m : T → ℕ} {k : Type} [Field k] {M : ℕ} (D c : Let m → Fin (M + 1) → k) (w : Pm m)
+    (x : CellVar m → k) (h : LeftInv D c) (τ : T) :
+    LinearIndependent k fun j : Fin (m τ) => cellVec c w x ⟨τ, j⟩ := by
+  have h1 := (GlobalTheory.T.cauchyBinet_plucker_and_cellCoordinates.2 T m k M D c w x h).1 _ _ (down_std τ (m τ) le_rfl)
+  rw [GlobalTheory.T.cauchyBinet_plucker_and_cellCoordinates.1] at h1
+  have h2 := Matrix.linearIndependent_rows_of_det_ne_zero (h1.trans_ne one_ne_zero)
+  let L : (Fin (M + 1) → k) →ₗ[k] (Fin (m τ) → k) :=
+    Matrix.toLin' (Matrix.of fun l' r => D ((wLet w ∘ std τ (m τ) le_rfl) l') r)
+  exact LinearIndependent.of_comp L h2
+
+theorem inBlock_cellVec {T : Type} {m : T → ℕ} {S ι : Type} [CommRing S] {c c' : Let m → ι → S} (h : InBlock c c')
+    (w : Pm m) (x : CellVar m → S) : InBlock c (cellVec c' w x) := fun z =>
+  Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (h ⟨z.1, w z.1 i⟩)
+
+theorem map_uvec {X : Scheme.{0}} {T : Type} {m : T → ℕ} {M : ℕ} {U : X.affineOpens} {S : Type} [CommRing S]
+    (c : Let m → Fin (M + 1) → Γ(X, U.1)) (w : Pm m) (ψ : CR m U →+* S) :
+    (fun z => ψ ∘ uvec c w z) =
+      cellVec (fun z => (ψ.comp (MvPolynomial.C : Γ(X, U.1) →+* CR m U)) ∘ c z) w (ψ ∘ MvPolynomial.X) :=
+  funext fun z => map_cellVec ψ _ w _ z
+
+theorem sp_cbase {X : Scheme.{0}} {T : Type} {m : T → ℕ} {U : X.affineOpens} {S : Type} [CommRing S]
+    (ψ : CR m U →+* S) :
+    spMap ψ ≫ cbase m U = spMap (ψ.comp (MvPolynomial.C : Γ(X, U.1) →+* CR m U)) ≫ U.2.fromSpec := by
+  rw [cbase, ← Category.assoc, sp_comp]
+
+theorem exists_integral_cell : ∀ (O K : Type) [CommRing O] [Field K] (β : O →+* K) (X : Scheme.{0}) (s : X ⟶ Sp O) (T : Type) [Finite T] (m : T → ℕ) (M : ℕ) (B : Type) (V : B → X.affineOpens) (α : ∀ b, K →+* Γ(X, (V b).1)) (c D : ∀ b, Let m → Fin (M + 1) → Γ(X, (V b).1)) (P : Scheme.{0}) (p0 : P ⟶ X) (p : ∀ en : En m, P ⟶ PSpace O (plN M en.1)) (h : ∀ b, Pm m → (Sp (CR m (V b)) ⟶ P)), IsCover β s V α c D → IsPlk β s V α c p0 p h → ∀ (A k : Type) [CommRing A] [IsDomain A] [ValuationRing A] [Field k] [Algebra A k] [IsFractionRing A k] b' w' (a : Sp k ⟶ Sp (CR m (V b'))) (x : Sp A ⟶ X), Set.range x ⊆ ⋃ b, ((V b).1 : Set X) → a ≫ cbase m (V b') = spMap (algebraMap A k) ≫ x → ∃ b w, ∃ l : Sp A ⟶ Sp (CR m (V b)), l ≫ cbase m (V b) = x ∧ spMap (algebraMap A k) ≫ l ≫ h b w = a ≫ h b' w' := by
+  intro O K _ _ β X s T _ m M B V α c D P p0 p h hC hP A k _ _ _ _ _ _ b' w' a x hx ha
+  obtain ⟨ψ', rfl⟩ := sp_surj a
+  obtain ⟨b, hb⟩ := Set.mem_iUnion.1 (hx ⟨IsLocalRing.closedPoint A, rfl⟩)
+  obtain ⟨φ, rfl⟩ := exists_of_closedPoint x (V b) hb
+  have ha' : spMap ((algebraMap A k).comp φ) ≫ (V b).2.fromSpec =
+      spMap (ψ'.comp (MvPolynomial.C : Γ(X, (V b').1) →+* CR m (V b'))) ≫ (V b').2.fromSpec := by
+    rw [← sp_cbase, ha, ← Category.assoc, sp_comp]
+  obtain ⟨w, y, d, hy, hd, ht⟩ := GlobalTheory.T.exists_integral_flagCell_of_valuedField T m k (ValuationRing.valuation A k).valuationSubring M _ _
+    (inBlock_cellVec (hC.compat k b b' _ _ ha') w' (ψ' ∘ MvPolynomial.X))
+    (indep_cellVec _ _ w' _ ((hC.inv b').map _))
+  have hy' : ∀ v, ∃ t : A, algebraMap A k t = y v := fun v => (ValuationRing.mem_integer_iff A k (y v)).1 (hy v)
+  choose t hyt using hy'
+  let χ : CR m (V b) →+* A := MvPolynomial.eval₂Hom φ t
+  have hχ : χ.comp (MvPolynomial.C : Γ(X, (V b).1) →+* CR m (V b)) = φ := MvPolynomial.eval₂Hom_comp_C φ t
+  have hχ' : ((algebraMap A k).comp χ).comp (MvPolynomial.C : Γ(X, (V b).1) →+* CR m (V b)) =
+      (algebraMap A k).comp φ := by rw [RingHom.comp_assoc, hχ]
+  refine ⟨b, w, spMap χ, by rw [sp_cbase, hχ], ?_⟩
+  rw [← Category.assoc, sp_comp]
+  refine GlobalTheory.T.flagCell_point_eq_of_triangular_frames O K β X s T m M B V α c D P p0 p h hC hP k b b' w w' _ ψ' d ?_ hd ?_
+  · rw [sp_cbase, sp_cbase, hχ', ha']
+  · have e : ((algebraMap A k).comp χ) ∘ MvPolynomial.X = y := funext fun v => by
+      rw [← hyt]
+      exact congrArg (algebraMap A k) (MvPolynomial.eval₂Hom_X' φ t v)
+    rw [map_uvec, map_uvec, hχ', e]
+    exact ht
+
+end GlobalTheory.FlagEmb.Valu
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlagCellValuativeExistenceOverUnionOfOpensStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.ShFam.Pad GlobalTheory.ProjSpace GlobalTheory.FlagEmb
+open Formalism.MainNotions.DIV.Cons (intO)
+
+theorem _root_.GlobalTheory.T.flagCell_valuativeExistence_over_union_of_opens : ∀ (O K : Type) [CommRing O] [Field K] (β : O →+* K) (X : Scheme.{0}) (s : X ⟶ Sp O) (T : Type) [Finite T] (m : T → ℕ) (M : ℕ) (B : Type) (V : B → X.affineOpens) (α : ∀ b, K →+* Γ(X, (V b).1)) (c D : ∀ b, Let m → Fin (M + 1) → Γ(X, (V b).1)) (P : Scheme.{0}) (p0 : P ⟶ X) (p : ∀ en : En m, P ⟶ PSpace O (plN M en.1)) (h : ∀ b, Pm m → (Sp (CR m (V b)) ⟶ P)), IsCover β s V α c D → IsPlk β s V α c p0 p h → ∀ (A k : Type) [CommRing A] [IsDomain A] [ValuationRing A] [Field k] [Algebra A k] [IsFractionRing A k] b' w' (a : Sp k ⟶ Sp (CR m (V b'))) (x : Sp A ⟶ X), Set.range x ⊆ ⋃ b, ((V b).1 : Set X) → a ≫ cbase m (V b') = spMap (algebraMap A k) ≫ x → ∃ b w, ∃ l : Sp A ⟶ Sp (CR m (V b)), l ≫ cbase m (V b) = x ∧ spMap (algebraMap A k) ≫ l ≫ h b w = a ≫ h b' w' := by
+  first | exact @GlobalTheory.FlagEmb.Valu.exists_integral_cell | exact GlobalTheory.FlagEmb.Valu.exists_integral_cell | (intros; apply GlobalTheory.FlagEmb.Valu.exists_integral_cell <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PreimageOpensEqRangeOfValuative
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits NumberField
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.ShFam.Pad GlobalTheory.ProjSpace GlobalTheory.FlagEmb
+open Formalism.MainNotions.DIV.Cons (intO)
+namespace GlobalTheory
+
+theorem preimage_opens_eq_range_of_valuative (F Z X : Scheme.{0}) (j : F ⟶ Z) (π : Z ⟶ X) (U : X.Opens)
+    (hj : IsOpenImmersion j) (hd : Dense (Set.range j)) (hπ : IsSeparated π)
+    (hF : TopologicalSpace.NoetherianSpace F) (hU : Set.range (j ≫ π) ⊆ (U : Set X))
+    (hv : ∀ (A K : Type) [CommRing A] [IsDomain A] [ValuationRing A] [Field K] [Algebra A K]
+      [IsFractionRing A K] (a : Sp K ⟶ F) (b : Sp A ⟶ X), Set.range b ⊆ (U : Set X) →
+      a ≫ j ≫ π = spMap (algebraMap A K) ≫ b →
+      ∃ l : Sp A ⟶ F, spMap (algebraMap A K) ≫ l = a ∧ l ≫ j ≫ π = b) :
+    π ⁻¹' (U : Set X) = Set.range j := by
+  have hg : Set.range (j ≫ π).base ⊆ Set.range U.ι.base := by
+    rw [Scheme.Opens.range_ι]; exact hU
+  let g : F ⟶ U := IsOpenImmersion.lift U.ι (j ≫ π) hg
+  have hgfac : g ≫ U.ι = j ≫ π := IsOpenImmersion.lift_fac _ _ _
+  have hj' : Set.range j.base ⊆ Set.range (π ⁻¹ᵁ U).ι.base := by
+    rw [Scheme.Opens.range_ι]
+    rintro _ ⟨x, rfl⟩
+    exact hU ⟨x, rfl⟩
+  let j' : F ⟶ (π ⁻¹ᵁ U : Z.Opens) := IsOpenImmersion.lift (π ⁻¹ᵁ U).ι j hj'
+  have hj'fac : j' ≫ (π ⁻¹ᵁ U).ι = j := IsOpenImmersion.lift_fac _ _ _
+  have hcomp : j' ≫ (π ∣_ U) = g := by
+    rw [← cancel_mono U.ι, hgfac, Category.assoc, morphismRestrict_ι, ← Category.assoc, hj'fac]
+  haveI : QuasiCompact g := ⟨fun V _ _ ↦ TopologicalSpace.NoetherianSpace.isCompact _⟩
+  haveI : UniversallyClosed g := by
+    apply UniversallyClosed.of_valuativeCriterion
+    intro S
+    obtain ⟨l, hl1, hl2⟩ := hv S.R S.K S.i₁ (S.i₂ ≫ U.ι)
+      (by
+        rintro _ ⟨x, rfl⟩
+        rw [← Scheme.Opens.range_ι, Scheme.Hom.comp_apply]
+        exact ⟨_, rfl⟩)
+      (by rw [← hgfac, ← Category.assoc, S.commSq.w, Category.assoc])
+    have hl3 : l ≫ g = S.i₂ := by
+      rw [← cancel_mono U.ι, Category.assoc, hgfac, hl2]
+    exact ⟨⟨{ l := l, fac_left := hl1, fac_right := hl3 }⟩⟩
+  haveI : UniversallyClosed (j' ≫ (π ∣_ U)) := by rw [hcomp]; infer_instance
+  haveI : IsSeparated ((π ⁻¹ᵁ U).ι ≫ π) := inferInstance
+  haveI : IsSeparated ((π ∣_ U) ≫ U.ι) := by rw [morphismRestrict_ι]; infer_instance
+  haveI : IsSeparated (π ∣_ U) := IsSeparated.of_comp (π ∣_ U) U.ι
+  haveI : UniversallyClosed j' := UniversallyClosed.of_comp_of_isSeparated j' (π ∣_ U)
+  have hclosed : IsClosed (Set.range j'.base) := j'.isClosedMap.isClosed_range
+  have hrange : Set.range j' = (π ⁻¹ᵁ U).ι ⁻¹' Set.range j := by
+    ext w; constructor
+    · rintro ⟨x, rfl⟩; exact ⟨x, by rw [← hj'fac, Scheme.Hom.comp_apply]⟩
+    · rintro ⟨x, hx⟩
+      refine ⟨x, (π ⁻¹ᵁ U).ι.isOpenEmbedding.injective ?_⟩
+      rw [← Scheme.Hom.comp_apply, hj'fac, hx]
+  have hdense : Dense (Set.range j') := by
+    rw [hrange]; exact hd.preimage (π ⁻¹ᵁ U).ι.isOpenEmbedding.isOpenMap
+  have huniv : Set.range j' = Set.univ := by
+    rw [← hclosed.closure_eq]; exact hdense.closure_eq
+  ext z; constructor
+  · intro hz
+    have hz' : z ∈ Set.range (π ⁻¹ᵁ U).ι := by rw [Scheme.Opens.range_ι]; exact hz
+    obtain ⟨w, rfl⟩ := hz'
+    obtain ⟨x, rfl⟩ : w ∈ Set.range j' := huniv ▸ Set.mem_univ w
+    exact ⟨x, by rw [← hj'fac, Scheme.Hom.comp_apply]⟩
+  · rintro ⟨x, rfl⟩; exact hU ⟨x, rfl⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PreimageIUnionOpensEqRangeFlagCells
+
+section
 
 @[expose] public section
 
@@ -95,3 +379,5 @@ theorem preimage_iUnion_eq_range_cells : ∀ (O K : Type) [CommRing O] [Field K]
     · rw [hjf, Category.assoc, hcb b w, hl]
 
 end GlobalTheory.FlagEmb
+end
+end

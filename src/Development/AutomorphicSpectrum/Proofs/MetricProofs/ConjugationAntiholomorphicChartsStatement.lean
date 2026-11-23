@@ -1,10 +1,15 @@
 module
 
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SameOrbitRefl
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugationAntiholomorphicCharts
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.DifferentiableOnOfTendstoLocallyUniformlyOn
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -16,10 +21,13 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,9 +48,210 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Analytic.Composition
+public import Mathlib.Analysis.Analytic.Linear
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.RCLike
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.SameOrbitRefl
 import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.PermFinTwoUniv
 import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
+import ReciprocityTheory.AnalyticForms.MaIntEmpty
+import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
+public import Mathlib.Analysis.Calculus.FDeriv.Star
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticOfImmersionComposition
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Metric.Rigid
+
+theorem analyticAt_of_comp_immersion {e : ℕ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [FiniteDimensional ℂ V] (F : (Fin e → ℂ) → Fin e → ℂ) (ψ : (Fin e → ℂ) → V)
+    (H : (Fin e → ℂ) → V) (y₀ : Fin e → ℂ) (hψ : AnalyticAt ℂ ψ (F y₀))
+    (hker : (fderiv ℂ ψ (F y₀)).ker = ⊥) (hH : AnalyticAt ℂ H y₀) (hF : ContinuousAt F y₀)
+    (hEq : ∀ᶠ y in nhds y₀, ψ (F y) = H y) : AnalyticAt ℂ F y₀ := by
+  classical
+  obtain ⟨P₀, hP₀⟩ := ((fderiv ℂ ψ (F y₀) : (Fin e → ℂ) →L[ℂ] V) :
+    (Fin e → ℂ) →ₗ[ℂ] V).exists_leftInverse_of_injective hker
+  let P : V →L[ℂ] (Fin e → ℂ) := LinearMap.toContinuousLinearMap P₀
+  have hPL : P.comp (fderiv ℂ ψ (F y₀)) = ContinuousLinearMap.id ℂ _ := by
+    ext1 v
+    exact LinearMap.congr_fun hP₀ v
+  have hψd : HasFDerivAt ψ (fderiv ℂ ψ (F y₀)) (F y₀) := hψ.differentiableAt.hasFDerivAt
+  have hgd : HasFDerivAt (fun x => P (ψ x))
+      ((ContinuousLinearEquiv.refl ℂ (Fin e → ℂ) : (Fin e → ℂ) →L[ℂ] (Fin e → ℂ))) (F y₀) := by
+    have h1 := P.hasFDerivAt.comp (F y₀) hψd
+    rw [hPL] at h1
+    simpa using h1
+  have hga : AnalyticAt ℂ (fun x => P (ψ x)) (F y₀) := (P.analyticAt _).comp hψ
+  have hgc : ContDiffAt ℂ (⊤ : WithTop ℕ∞) (fun x => P (ψ x)) (F y₀) := hga.contDiffAt
+  have hn : (⊤ : WithTop ℕ∞) ≠ 0 := by simp
+  have hφa := (hgc.to_localInverse hgd hn).analyticAt
+  have hleft := (hgc.hasStrictFDerivAt' hgd hn).eventually_left_inverse
+  have hH0 : ψ (F y₀) = H y₀ := hEq.self_of_nhds
+  have hev : (fun y => hgc.localInverse hgd hn (P (H y))) =ᶠ[nhds y₀] F := by
+    filter_upwards [hF.tendsto.eventually hleft, hEq] with y h1 h2
+    rw [← h2]
+    exact h1
+  have hcomp : AnalyticAt ℂ (fun y => hgc.localInverse hgd hn (P (H y))) y₀ := by
+    have h0 : AnalyticAt ℂ (hgc.localInverse hgd hn) (P (H y₀)) := by
+      rw [← hH0]
+      exact hφa
+    have hPH : AnalyticAt ℂ (fun y => P (H y)) y₀ := (P.analyticAt (H y₀)).comp hH
+    exact h0.comp_of_eq hPH rfl
+  exact hcomp.congr hev
+
+end GlobalTheory.CompanionTheory.Metric.Rigid
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticOfImmersionCompositionStatement
+
+section
+
+@[expose] public section
+
+open MvPolynomial Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo GlobalTheory.CompanionTheory.Ar.PB GlobalTheory.CompanionTheory.Ar.PB.Cj GroundTheory.Heights₂.Heights.LowerBoundFree
+open scoped ComplexOrder
+
+theorem _root_.GlobalTheory.T.analytic_of_immersion_composition : ∀ {e : ℕ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimensional ℂ V] (F : (Fin e → ℂ) → Fin e → ℂ) (ψ : (Fin e → ℂ) → V) (H : (Fin e → ℂ) → V) (y₀ : Fin e → ℂ), AnalyticAt ℂ ψ (F y₀) → (fderiv ℂ ψ (F y₀)).ker = ⊥ → AnalyticAt ℂ H y₀ → ContinuousAt F y₀ → (∀ᶠ y in nhds y₀, ψ (F y) = H y) → AnalyticAt ℂ F y₀ := by
+  first | exact @GlobalTheory.CompanionTheory.Metric.Rigid.analyticAt_of_comp_immersion | exact GlobalTheory.CompanionTheory.Metric.Rigid.analyticAt_of_comp_immersion | (intros; apply GlobalTheory.CompanionTheory.Metric.Rigid.analyticAt_of_comp_immersion <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugationAntiholomorphicCharts
+
+section
+
+@[expose] public section
+
+open MvPolynomial Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo GlobalTheory.CompanionTheory.Ar.PB GlobalTheory.CompanionTheory.Ar.PB.Cj GroundTheory.Heights₂.Heights.LowerBoundFree
+open scoped ComplexOrder Topology
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.PB.Cj
+
+section Helpers
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+theorem affCoord_eq_of_orbit (p : (k : K) → ι k) {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
+    affCoord p z = affCoord p z' := by
+  obtain ⟨c, hc, rfl⟩ := h
+  funext q
+  simp only [affCoord]
+  exact mul_div_mul_left _ _ (hc q.1)
+
+theorem affCoord_cj (p : (k : K) → ι k) (z : (Σ k, ι k) → ℂ) :
+    affCoord p (cj z) = cj (affCoord p z) := by
+  funext q
+  simp [affCoord, cj, map_div₀]
+
+theorem ne_zero_of_orbit_cj {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z (cj z')) {q : Σ k, ι k}
+    (hq : z q ≠ 0) : z' q ≠ 0 := by
+  obtain ⟨c, -, rfl⟩ := h
+  intro h0
+  exact hq (by simp [cj, h0])
+
+theorem analyticAt_affCoord {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    {f : E → (Σ k, ι k) → ℂ} {a : E} (p : (k : K) → ι k)
+    (hf : ∀ q, AnalyticAt ℂ (fun y => f y q) a) (h0 : ∀ k, f a ⟨k, p k⟩ ≠ 0) :
+    AnalyticAt ℂ (fun y => affCoord p (f y)) a := by
+  rw [analyticAt_pi_iff]
+  intro q
+  exact (hf q).div (hf ⟨q.1, p q.1⟩) (h0 q.1)
+
+theorem analyticAt_star_comp {e : ℕ} {ψ : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {w : Fin e → ℂ}
+    (h : AnalyticAt ℂ ψ w) : AnalyticAt ℂ (star ∘ ψ ∘ star) (star w) := by
+  refine GlobalTheory.SCV.analyticAt_iff_eventually_differentiableAt.2 ?_
+  have hs : Filter.Tendsto (star : (Fin e → ℂ) → Fin e → ℂ) (𝓝 (star w)) (𝓝 w) := by
+    simpa using (continuous_star.tendsto (star w))
+  filter_upwards [hs.eventually h.eventually_analyticAt] with v hv
+  simpa using hv.differentiableAt.star_star
+
+theorem ker_fderiv_star_comp {e : ℕ} {ψ : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {w : Fin e → ℂ}
+    (h : DifferentiableAt ℂ ψ w) (hk : (fderiv ℂ ψ w).ker = ⊥) :
+    (fderiv ℂ (star ∘ ψ ∘ star) (star w)).ker = ⊥ := by
+  rw [h.hasFDerivAt.star_star.fderiv, eq_bot_iff]
+  intro v hv
+  have hv' : star (fderiv ℂ ψ w (star v)) = 0 := by simpa using hv
+  have h1 : fderiv ℂ ψ w (star v) = 0 := by simpa using hv'
+  have h2 : star v ∈ (fderiv ℂ ψ w).ker := by simpa using h1
+  rw [hk] at h2
+  have h3 : star v = 0 := by simpa using h2
+  simpa using h3
+
+end Helpers
+
+theorem conj_analytic : ∀ {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : ℕ} {X : Type} [TopologicalSpace X] {A : FinHolAtlas e X} {P : Ideal (MRing ι)} {U : X → Set X} {lift : X → X → (Σ k, ι k) → ℂ}, IsLiftSys A P U lift → ∀ (c : X → X), (∀ x, SameOrbit (lift (c x) (c x)) (cj (lift x x))) → Continuous c → ∀ j k, AnalyticOnNhd ℂ (fun z => star (A.chart k (c ((A.chart j).symm z)))) ((A.chart j).target ∩ (A.chart j).symm ⁻¹' (c ⁻¹' (A.chart k).source)) := by
+  intro K _ ι _ e X _ A P U lift hL c hc hcc j k w hw
+  obtain ⟨hUo, hUm, hH, hM, hCp, -, -, hIm⟩ := hL
+  obtain ⟨hw1, hw2⟩ := hw
+  have hw2' : c ((A.chart j).symm w) ∈ (A.chart k).source := hw2
+  generalize hx₀ : (A.chart j).symm w = x₀ at hw2'
+  generalize hx₁ : c x₀ = x₁ at hw2'
+  choose p hp using (hM x₁ x₁ (hUm x₁)).1
+  have hp0 : ∀ b, lift x₀ x₀ ⟨b, p b⟩ ≠ 0 := fun b =>
+    ne_zero_of_orbit_cj (hx₁ ▸ hc x₀) (by subst hx₁; exact hp b)
+  have hsym₁ : (A.chart k).symm (A.chart k x₁) = x₁ := (A.chart k).left_inv hw2'
+  have hψ : AnalyticAt ℂ (fun w' => affCoord p (lift x₁ ((A.chart k).symm w'))) (A.chart k x₁) := by
+    refine analyticAt_affCoord p (fun q => ?_) (fun b => ?_)
+    · exact hH x₁ q k (A.chart k x₁) ⟨(A.chart k).map_source hw2', by simpa [hsym₁] using hUm x₁⟩
+    · simpa [hsym₁] using hp b
+  have hker := hIm x₁ p hp k hw2'
+  have hHa : AnalyticAt ℂ (fun y => affCoord p (lift x₀ ((A.chart j).symm y))) w := by
+    refine analyticAt_affCoord p (fun q => ?_) (fun b => ?_)
+    · exact hH x₀ q j w ⟨hw1, by simpa [Set.mem_preimage, hx₀] using hUm x₀⟩
+    · simpa [hx₀] using hp0 b
+  have hsc : ContinuousAt (A.chart j).symm w := (A.chart j).continuousAt_symm hw1
+  have hcs : ContinuousAt (fun y => c ((A.chart j).symm y)) w := hcc.continuousAt.comp hsc
+  have hFc : ContinuousAt (fun z => star (A.chart k (c ((A.chart j).symm z)))) w := by
+    have h1 : ContinuousAt (A.chart k) (c ((A.chart j).symm w)) := by
+      rw [hx₀, hx₁]; exact (A.chart k).continuousAt hw2'
+    exact continuous_star.continuousAt.comp (ContinuousAt.comp (f := fun y => c ((A.chart j).symm y)) h1 hcs)
+  have hFw : star (A.chart k (c ((A.chart j).symm w))) = star (A.chart k x₁) := by
+    rw [hx₀, hx₁]
+  have e1 : ∀ᶠ y in 𝓝 w, (A.chart j).symm y ∈ U x₀ :=
+    hsc ((hUo x₀).mem_nhds (by rw [hx₀]; exact hUm x₀))
+  have e2 : ∀ᶠ y in 𝓝 w, c ((A.chart j).symm y) ∈ (A.chart k).source ∩ U x₁ :=
+    hcs (((A.chart k).open_source.inter (hUo x₁)).mem_nhds (by
+      change c ((A.chart j).symm w) ∈ _
+      rw [hx₀, hx₁]; exact ⟨hw2', hUm x₁⟩))
+  refine GlobalTheory.T.analytic_of_immersion_composition (fun z => star (A.chart k (c ((A.chart j).symm z))))
+    (star ∘ (fun w' => affCoord p (lift x₁ ((A.chart k).symm w'))) ∘ star)
+    (fun y => affCoord p (lift x₀ ((A.chart j).symm y))) w ?_ ?_ hHa hFc ?_
+  · rw [hFw]; exact analyticAt_star_comp hψ
+  · rw [hFw]; exact ker_fderiv_star_comp hψ.differentiableAt hker
+  · filter_upwards [e1, e2] with y h1 h2
+    obtain ⟨h2s, h2u⟩ := h2
+    generalize hy' : (A.chart j).symm y = y' at h1 h2s h2u
+    have ho1 : SameOrbit (lift x₁ (c y')) (lift (c y') (c y')) := hCp _ _ _ ⟨h2u, hUm _⟩
+    have ho2 : SameOrbit (lift y' y') (lift x₀ y') := hCp _ _ _ ⟨hUm _, h1⟩
+    have ho : SameOrbit (lift x₁ (c y')) (cj (lift x₀ y')) :=
+      sameOrbit_trans ho1 (sameOrbit_trans (hc y') (sameOrbit_cj ho2))
+    have hst : (star : ((Σ k, ι k) → ℂ) → _) (cj (affCoord p (lift x₀ y'))) = affCoord p (lift x₀ y') := by
+      funext q; simp [cj]
+    simp only [Function.comp, star_star, hy', (A.chart k).left_inv h2s]
+    rw [affCoord_eq_of_orbit p ho, affCoord_cj, hst]
+
+end GlobalTheory.CompanionTheory.Ar.PB.Cj
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.ConjugationAntiholomorphicChartsStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +260,5 @@ open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.T.conjugation_antiholomorphic_charts : ∀ {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : ℕ} {X : Type} [TopologicalSpace X] {A : FinHolAtlas e X} {P : Ideal (MRing ι)} {U : X → Set X} {lift : X → X → (Σ k, ι k) → ℂ}, IsLiftSys A P U lift → ∀ (c : X → X), (∀ x, SameOrbit (lift (c x) (c x)) (cj (lift x x))) → Continuous c → ∀ j k, AnalyticOnNhd ℂ (fun z => star (A.chart k (c ((A.chart j).symm z)))) ((A.chart j).target ∩ (A.chart j).symm ⁻¹' (c ⁻¹' (A.chart k).source)) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.PB.Cj.conj_analytic | exact GlobalTheory.CompanionTheory.Ar.PB.Cj.conj_analytic | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.Cj.conj_analytic <;> assumption)
+end
+end

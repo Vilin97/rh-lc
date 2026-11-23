@@ -2,7 +2,6 @@ module
 
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsFiniteNormalAdjoinAlgebraic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -11,7 +10,6 @@ import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -22,7 +20,10 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,6 +31,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,6 +45,8 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Development.AbelianVarietyTheory.Definitions.Degenerations.SepticCharacterInjective
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsRigidificationPullbackCompatibleIso
 import Development.AbelianVarietyTheory.Proofs.ThetaFamilyOrigin.IsThetaPtOverMove
@@ -51,6 +55,93 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.T
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.QuadTie
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsFiniteNormalAdjoinAlgebraic
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem exists_extend_of_ringEquiv_of_isAlgebraic {K L M F : Type} [Field K] [Field L] [Field M] [Field F]
+    [IsAlgClosed F] [Algebra L M] [Algebra.IsAlgebraic L M] (φ : K ≃+* L) (g : K →+* F) :
+    ∃ g' : M →+* F, g'.comp ((algebraMap L M).comp φ.toRingHom) = g := by
+  letI : Algebra L F := (g.comp φ.symm.toRingHom).toAlgebra
+  let g' : M →ₐ[L] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  refine ⟨g'.toRingHom, RingHom.ext fun x => ?_⟩
+  change g' (algebraMap L _ (φ x)) = g x
+  rw [g'.commutes]
+  change g (φ.symm (φ x)) = g x
+  rw [φ.symm_apply_apply]
+
+theorem exists_finite_normal_adjoin_algebraic :
+    ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] [CharZero R]
+      (s : AlgebraicClosure (FractionRing R)),
+      ∃ (R₂ : Type) (_ : CommRing R₂) (_ : IsDomain R₂) (h : R →+* R₂)
+        (h' : FractionRing R →+* FractionRing R₂)
+        (e : FractionRing R₂ →+* AlgebraicClosure (FractionRing R)),
+        Function.Injective h ∧ h.Finite ∧ IsIntegrallyClosed R₂ ∧
+        (∀ r, h' (algebraMap R _ r) = algebraMap R₂ _ (h r)) ∧ e.comp h' = algebraMap _ _ ∧
+        (∃ s₂, e s₂ = s) ∧
+        ∀ (F : Type) [Field F] [IsAlgClosed F] (g : FractionRing R₂ →+* F),
+          ∃ g' : AlgebraicClosure (FractionRing R) →+* F, g'.comp e = g := by
+  intro R _ _ _ _ _ s
+  have : CharZero (FractionRing R) := IsFractionRing.charZero_of_isFractionRing R
+  let L : IntermediateField (FractionRing R) (AlgebraicClosure (FractionRing R)) :=
+    IntermediateField.adjoin (FractionRing R) {s}
+  have : FiniteDimensional (FractionRing R) L :=
+    IntermediateField.adjoin.finiteDimensional (Algebra.IsIntegral.isIntegral s)
+  have : Algebra.IsSeparable (FractionRing R) L := inferInstance
+  have hfin : Module.Finite R (integralClosure R L) :=
+    IsIntegralClosure.finite R (FractionRing R) L (integralClosure R L)
+  have hfr : IsFractionRing (integralClosure R L) L :=
+    integralClosure.isFractionRing_of_finite_extension (FractionRing R) L
+  let φ : FractionRing (integralClosure R L) ≃+* L :=
+    (FractionRing.algEquiv (integralClosure R L) L).toRingEquiv
+  have hφ : ∀ x : integralClosure R L,
+      φ (algebraMap (integralClosure R L) _ x) = algebraMap (integralClosure R L) L x :=
+    fun x => (FractionRing.algEquiv (integralClosure R L) L).commutes x
+  refine ⟨integralClosure R L, inferInstance, inferInstance, algebraMap R _,
+    φ.symm.toRingHom.comp (algebraMap (FractionRing R) L),
+    (algebraMap L (AlgebraicClosure (FractionRing R))).comp φ.toRingHom, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro a b hab
+    have h1 : algebraMap R L a = algebraMap R L b := by
+      rw [IsScalarTower.algebraMap_apply R (integralClosure R L) L,
+        IsScalarTower.algebraMap_apply R (integralClosure R L) L b, hab]
+    rw [IsScalarTower.algebraMap_apply R (FractionRing R) L,
+      IsScalarTower.algebraMap_apply R (FractionRing R) L b] at h1
+    exact IsFractionRing.injective R (FractionRing R) ((algebraMap (FractionRing R) L).injective h1)
+  · exact RingHom.finite_algebraMap.2 hfin
+  · exact (isIntegrallyClosed_iff_isIntegrallyClosedIn L).2 inferInstance
+  · intro r
+    apply φ.injective
+    rw [hφ, ← IsScalarTower.algebraMap_apply R (integralClosure R L) L,
+      IsScalarTower.algebraMap_apply R (FractionRing R) L]
+    exact φ.apply_symm_apply _
+  · refine RingHom.ext fun x => ?_
+    change algebraMap L _ (φ (φ.symm (algebraMap (FractionRing R) L x))) = _
+    rw [φ.apply_symm_apply, ← IsScalarTower.algebraMap_apply]
+  · refine ⟨φ.symm ⟨s, IntermediateField.mem_adjoin_simple_self _ s⟩, ?_⟩
+    change algebraMap L _ (φ (φ.symm _)) = _
+    rw [φ.apply_symm_apply]
+    rfl
+  · intro F _ _ g
+    have : Algebra.IsAlgebraic L (AlgebraicClosure (FractionRing R)) :=
+      Algebra.IsAlgebraic.tower_top (K := FractionRing R) L
+    exact exists_extend_of_ringEquiv_of_isAlgebraic φ g
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsFiniteNormalAdjoinAlgebraicStatement
+
+section
 
 @[expose] public section
 
@@ -64,3 +155,5 @@ open GlobalTheory.Ex.OneGen GlobalTheory.UT
 
 theorem _root_.GlobalTheory.T.exists_integrally_closed_extension_of_adjoin : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] [CharZero R] (s : AlgebraicClosure (FractionRing R)), ∃ (R₂ : Type) (_ : CommRing R₂) (_ : IsDomain R₂) (h : R →+* R₂) (h' : FractionRing R →+* FractionRing R₂) (e : FractionRing R₂ →+* AlgebraicClosure (FractionRing R)), Function.Injective h ∧ h.Finite ∧ IsIntegrallyClosed R₂ ∧ (∀ r, h' (algebraMap R _ r) = algebraMap R₂ _ (h r)) ∧ e.comp h' = algebraMap _ _ ∧ (∃ s₂, e s₂ = s) ∧ ∀ (F : Type) [Field F] [IsAlgClosed F] (g : FractionRing R₂ →+* F), ∃ g' : AlgebraicClosure (FractionRing R) →+* F, g'.comp e = g := by
   first | exact @GlobalTheory.exists_finite_normal_adjoin_algebraic | exact GlobalTheory.exists_finite_normal_adjoin_algebraic | (intros; apply GlobalTheory.exists_finite_normal_adjoin_algebraic <;> assumption)
+end
+end

@@ -3,7 +3,6 @@ module
 public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 public import Mathlib.Basic.Real.Basic
 public import Mathlib.Data.Fintype.Basic
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TelescopingCoordinateDifference
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,9 +42,38 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.BigOperators.Fin
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TelescopingCoordinateDifference
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Telescope
+
+theorem telescope_fin_positions (α : Type) (n : ℕ) (F : (Fin n → α) → ℝ) (a b : Fin n → α) :
+    F a - F b = ∑ i : Fin n, (F (fun j => if j < i then b j else a j) - F (fun j => if j ≤ i then b j else a j)) := by
+  classical
+  set G : ℕ → ℝ := fun m => F (fun j => if (j : ℕ) < m then b j else a j) with hG
+  have h0 : G 0 = F a := by simp [hG]
+  have hn : G n = F b := by simp [hG]
+  rw [← h0, ← hn, ← Finset.sum_range_sub' G n, Finset.sum_range]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  simp only [hG, Nat.lt_succ_iff, Fin.lt_def, Fin.le_def]
+
+end GlobalTheory.CompanionTheory.Telescope
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TelescopingCoordinateDifferenceStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.telescoping_coordinate_difference : ∀ (α : Type) (n : ℕ) (F : (Fin n → α) → ℝ) (a b : Fin n → α), F a - F b = ∑ i : Fin n, (F (fun j => if j < i then b j else a j) - F (fun j => if j ≤ i then b j else a j)) := by
   first | exact @GlobalTheory.CompanionTheory.Telescope.telescope_fin_positions | exact GlobalTheory.CompanionTheory.Telescope.telescope_fin_positions | (intros; apply GlobalTheory.CompanionTheory.Telescope.telescope_fin_positions <;> assumption)
+end
+end

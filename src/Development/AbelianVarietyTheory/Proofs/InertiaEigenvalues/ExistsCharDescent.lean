@@ -3,8 +3,8 @@ module
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrExtensionEmbedding
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,15 +22,9 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-public import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,6 +46,90 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalRingCardinality.Params
+import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+import Formalism.SharpRestriction.GrowthBounds.UnramifiedQuadraticSetting
+import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrExtensionEmbedding
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.MainNotions.G Formalism.L2.Col Formalism.BasicNotions
+
+namespace GlobalTheory
+
+theorem exists_finite_ext_numberField_sqrt (Qq E K : Type) [Field Qq] [Field E] [Field K]
+    [NumberField K] (i : E →+* Qq) (e : E →+* K) (a : Qq) :
+    ∃ (Kf : IntermediateField Qq (AlgebraicClosure Qq)) (s : Kf) (eK : K →+* Kf),
+      FiniteDimensional Qq Kf ∧ s ^ 2 = algebraMap Qq Kf a ∧
+        ∀ x : E, eK (e x) = algebraMap Qq Kf (i x) := by
+  classical
+  let Ω := AlgebraicClosure Qq
+  letI : Algebra E K := e.toAlgebra
+  letI : Algebra E Ω := ((algebraMap Qq Ω).comp i).toAlgebra
+  haveI : CharZero E := RingHom.charZero e
+  haveI : Module.Finite E K := Module.Finite.of_restrictScalars_finite ℚ E K
+  let f : K →ₐ[E] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  obtain ⟨s, hs⟩ := IsAlgClosed.exists_pow_nat_eq (algebraMap Qq Ω a) (n := 2) two_pos
+  obtain ⟨T, hT⟩ := Module.Finite.fg_top (R := E) (M := K)
+  let S : Set Ω := insert s (f '' (T : Set K))
+  haveI : Finite S := ((T.finite_toSet.image f).insert s).to_subtype
+  let Kf : IntermediateField Qq Ω := IntermediateField.adjoin Qq S
+  have hfin : FiniteDimensional Qq Kf :=
+    IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
+  have hmem : ∀ x : K, f x ∈ Kf := by
+    intro x
+    have hx : x ∈ Submodule.span E (T : Set K) := hT ▸ Submodule.mem_top
+    induction hx using Submodule.span_induction with
+    | mem y hy =>
+      exact IntermediateField.subset_adjoin Qq S (Set.mem_insert_of_mem _ ⟨y, hy, rfl⟩)
+    | zero => rw [map_zero]; exact zero_mem _
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | smul c y _ hy =>
+      rw [map_smul, Algebra.smul_def]
+      exact mul_mem (Kf.algebraMap_mem (i c)) hy
+  refine ⟨Kf, ⟨s, IntermediateField.subset_adjoin Qq S (Set.mem_insert _ _)⟩,
+    (f : K →+* Ω).codRestrict Kf hmem, hfin, Subtype.ext hs, fun x => Subtype.ext ?_⟩
+  exact f.commutes x
+
+theorem exists_complete_dvr_ext_numberField_sqrt : ∀ (W Qq E K : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq] [Algebra W Qq] [IsFractionRing W Qq] [IsAdicComplete (IsLocalRing.maximalIdeal W) W] [Field E] [Field K] [NumberField K] (i : E →+* Qq) (e : E →+* K) (a : W), ∃ (O Kf : Type) (_ : CommRing O) (_ : IsDomain O) (_ : IsDiscreteValuationRing O) (_ : Field Kf) (_ : Algebra O Kf) (ι : Qq →+* Kf) (j : W →+* O) (w : O) (eK : K →+* Kf), IsFractionRing O Kf ∧ (∀ x : W, ι (algebraMap W Qq x) = algebraMap O Kf (j x)) ∧ j.Finite ∧ IsAdicComplete (IsLocalRing.maximalIdeal O) O ∧ w ^ 2 = j a ∧ ∀ x : E, eK (e x) = ι (i x) := by
+  intro W Qq E K _ _ _ _ _ _ _ _ _ _ i e a
+  obtain ⟨Kf, s, eK, hfin, hs, he⟩ :=
+    exists_finite_ext_numberField_sqrt Qq E K i e (algebraMap W Qq a)
+  letI : Algebra W Kf := ((algebraMap Qq Kf).comp (algebraMap W Qq)).toAlgebra
+  haveI : IsScalarTower W Qq Kf := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  haveI h1 := FormalIsogeny.finite_integralClosure W Qq Kf
+  haveI h2 := FormalIsogeny.isDiscreteValuationRing_integralClosure W Qq Kf
+  have h3 := FormalIsogeny.isAdicComplete_maximalIdeal_of_finite W (integralClosure W Kf)
+  have h4 := integralClosure.isFractionRing_of_finite_extension (A := W) Qq Kf
+  have hs' : s ^ 2 = algebraMap W Kf a := hs
+  have hint : IsIntegral W s :=
+    IsIntegral.of_pow two_pos (hs' ▸ isIntegral_algebraMap)
+  exact ⟨integralClosure W Kf, Kf, inferInstance, inferInstance, h2, inferInstance, inferInstance,
+    algebraMap Qq Kf, algebraMap W _, ⟨s, hint⟩, eK, h4, fun _ => rfl,
+    RingHom.finite_algebraMap.2 h1, h3, Subtype.ext hs', he⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCharDescent
+
+section
 
 @[expose] public section
 
@@ -312,4 +390,6 @@ theorem exists_char_descent {L K G : Type} [Field L] [Field K] [Group G] (e : L 
 
 end GlobalTheory.TwistChoice
 
+end
+end
 end

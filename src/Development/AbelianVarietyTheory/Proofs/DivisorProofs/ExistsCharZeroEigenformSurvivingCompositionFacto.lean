@@ -1,22 +1,19 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.LiftFrameEmbeddingBase
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylEqBotOfNotAntitoneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralHeckeEigensystemDeligneSerreStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitNatCastFrameCoeffRingNotDvdStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.JKInvOfTriv
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelMapExists
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftFormsToLatticeOfFiniteInvertibleStabilisersStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearIndependentFrameFormsBaseChangeStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModuleFiniteFrameLatticeFormsStatement
+public import Formalism.GradedWeylDivisibility.StatementA
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylNonDom
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -31,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,10 +37,111 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralHeckeEigensystemDeligneSerreStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasBlockOfOccurs
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.JKInvOfTriv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelMapExists
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftFormsToLatticeOfFiniteInvertibleStabilisersStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearIndependentFrameFormsBaseChangeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModuleFiniteFrameLatticeFormsStatement
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylEqBotOfNotAntitone
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.NonDomZero
+
+theorem exists_lt_lt_of_not_antitone {N : ℕ} {ν : Fin N → ℕ} (hν : ¬ Antitone ν) :
+    ∃ a b : Fin N, a < b ∧ ν a < ν b := by
+  simp only [Antitone, not_forall] at hν
+  obtain ⟨a, b, hab, hlt⟩ := hν
+  refine ⟨a, b, lt_of_le_of_ne hab ?_, lt_of_not_ge hlt⟩
+  rintro rfl
+  exact hlt le_rfl
+
+theorem dualWeyl_eq_bot_of_not_antitone :
+    ∀ (O : Type) [CommRing O] [IsDomain O] [CharZero O] (N : ℕ) (ν : Fin N → ℕ),
+      ¬ Antitone ν → Formalism.GradedWeylDivisibility.dualWeyl O N N ν = ⊥ := by
+  intro O _ _ _ N ν hν
+  exact Formalism.GradedWeylDivisibility.dualWeylModuleNonDominant O N N ν (exists_lt_lt_of_not_antitone hν)
+
+end GlobalTheory.NonDomZero
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualWeylEqBotOfNotAntitoneStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.dualWeyl_eq_bot_of_not_antitone' : ∀ (O : Type) [CommRing O] [IsDomain O] [CharZero O] (N : ℕ) (ν : Fin N → ℕ), ¬ Antitone ν → Formalism.GradedWeylDivisibility.dualWeyl O N N ν = ⊥ := by
+  first | exact @GlobalTheory.NonDomZero.dualWeyl_eq_bot_of_not_antitone | exact GlobalTheory.NonDomZero.dualWeyl_eq_bot_of_not_antitone | (intros; apply GlobalTheory.NonDomZero.dualWeyl_eq_bot_of_not_antitone <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitNatCastFrameCoeffRingNotDvd
+
+section
+
+@[expose] public section
+
+open GlobalTheory.ExpFrame Formalism.CohomologicalDescent.DepthNonnegative
+
+namespace GlobalTheory.ExpFrame.Frame
+
+theorem isUnit_natCast_of_not_dvd : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [DecidableEq ι] (N : ℕ) (F : Frame l ι N), F.Ok →
+    ∀ n : ℕ, ¬ l ∣ n → IsUnit (n : F.O) := by
+  intro l _ ι _ N F hF n hn
+  obtain ⟨hinj, L, _, hrange⟩ := hF.ring
+  have hnorm : ‖(n : PadicAlgCl l)‖ = 1 := by
+    rw [← map_natCast (algebraMap ℚ_[l] (PadicAlgCl l)) n, PadicAlgCl.norm_extends,
+      Padic.norm_natCast_eq_one_iff]
+    exact (Nat.Prime.coprime_iff_not_dvd (Fact.out : l.Prime)).2 hn
+  have hne : (n : PadicAlgCl l) ≠ 0 := by
+    intro h; rw [h, norm_zero] at hnorm; exact zero_ne_one hnorm
+  have hmem : (n : PadicAlgCl l)⁻¹ ∈ Set.range F.emb := by
+    rw [hrange]
+    refine ⟨?_, ?_⟩
+    · exact L.inv_mem (L.natCast_mem n)
+    · rw [norm_inv, hnorm, inv_one]
+  obtain ⟨y, hy⟩ := hmem
+  have h1 : (n : F.O) * y = 1 := by
+    apply hinj
+    rw [map_mul, map_natCast, hy, map_one, mul_inv_cancel₀ hne]
+  exact IsUnit.of_mul_eq_one y h1
+
+end GlobalTheory.ExpFrame.Frame
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitNatCastFrameCoeffRingNotDvdStatement
+
+section
+
+@[expose] public section
+
+open GlobalTheory.ExpFrame Formalism.CohomologicalDescent.DepthNonnegative
+
+theorem _root_.GlobalTheory.T.isUnit_natCast_frameCoeffRing_not_dvd : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [DecidableEq ι] (N : ℕ) (F : Frame l ι N), F.Ok → ∀ n : ℕ, ¬ l ∣ n → IsUnit (n : F.O) := by
+  first | exact @GlobalTheory.ExpFrame.Frame.isUnit_natCast_of_not_dvd | exact GlobalTheory.ExpFrame.Frame.isUnit_natCast_of_not_dvd | (intros; apply GlobalTheory.ExpFrame.Frame.isUnit_natCast_of_not_dvd <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCharZeroEigenformSurvivingCompositionFacto
+
+section
 
 @[expose] public section
 
@@ -284,4 +381,6 @@ theorem eigenform_of_surviving : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Finty
 
 end GlobalTheory.ExpFrame.Eigenform
 
+end
+end
 end

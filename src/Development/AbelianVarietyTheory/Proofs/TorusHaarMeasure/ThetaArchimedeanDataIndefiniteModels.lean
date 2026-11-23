@@ -2,25 +2,25 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.HeightFunctions.GrowthConstantBoundGcR
 public import Development.AbelianVarietyTheory.Definitions.ThetaValues.Generic
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ConjCmHalfIntegralGeneratorEqOneSub
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.FinrankHost
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.GamAtOfLawsCore
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.SizePageRowsOfSizePageAt
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ValAtAlgebraMap
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.WeightsBelow
-public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsCuspFormNonzeroEveryComponentStatement
-public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.GenFrExAndGenFromTest
-public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExpLeOfNegLogSqrtLe
-public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.PageRows
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LiftIndexPowFourLeDegree
+public import Development.AbelianVarietyTheory.Definitions.ThetaValues.GamAt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SupBoundPageRows
+public import Formalism.LocalToGlobal.ProjectiveLattices.HasDataCondition
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.InterpolationModelInequalities
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainPointBound
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.TwoWeightEqOneAddRoot
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -28,7 +28,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -48,7 +48,249 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsRankOneCuspDataLogBounds
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NonemptyTorusAt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchyStatement
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.ExtAllInputs
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.GreedySplittingPrincipalTorusExistsStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.LemmaS
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.PerFactor
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.DimStatement
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Parity
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatTheta
+import Mathlib.RingTheory.Etale.Weakly
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.Linter.Style
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.Generic
+import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LevelsQDesc
+import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.QuotientParamNonneg
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.FinrankHost
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.GamAtOfLawsCore
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.SizePageRowsOfSizePageAt
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ValAtAlgebraMap
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.WeightsBelow
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsCuspFormNonzeroEveryComponentStatement
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.GenFrExAndGenFromTest
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExpLeOfNegLogSqrtLe
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.PageRows
+import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LiftIndexPowFourLeDegree
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ConjHalfIntegralGenerator
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CMConjugationOfSquareRoot
+
+open NumberField Complex
+open scoped ComplexConjugate
+
+theorem conj_eq_neg_of_sq_eq_neg {z : ℂ} {d : ℝ} (hd : 0 < d) (h : z ^ 2 = -(d : ℂ)) :
+    conj z = -z := by
+  have hre := congrArg Complex.re h
+  have him := congrArg Complex.im h
+  simp [pow_two] at hre him
+  have hre0 : z.re = 0 := by
+    rcases mul_eq_zero.mp (show z.re * z.im = 0 by linarith) with h0 | h0
+    · exact h0
+    · rw [h0] at hre; nlinarith [mul_self_nonneg z.re]
+  apply Complex.ext <;> simp [hre0]
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E]
+
+theorem complexConj_rt (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) :
+    IsCMField.complexConj E ((H.rt : 𝓞 E) : E) = -((H.rt : 𝓞 E) : E) := by
+  obtain ⟨φ⟩ : Nonempty (E →+* ℂ) := inferInstance
+  apply φ.injective
+  rw [IsCMField.complexEmbedding_complexConj, map_neg]
+  apply conj_eq_neg_of_sq_eq_neg (d := (H.d : ℝ)) (by exact_mod_cast H.d_prime.pos)
+  have h := congrArg (fun x : 𝓞 E => φ (x : E)) H.rt_sq
+  simpa using h
+
+theorem conj_halfIntegralGenerator (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) :
+    ReciprocityTheory.ChartRestriction.G.FD.cc ((H.w0 : 𝓞 E) : E) = (1 : E) - ((H.w0 : 𝓞 E) : E) := by
+  have h2 : (2 : E) * (H.w0 : E) = 1 + (H.rt : E) := by
+    have := congrArg (fun x : 𝓞 E => (x : E)) H.two_weight_eq_one_add_root
+    push_cast at this
+    exact this
+  have h3 : (2 : E) * IsCMField.complexConj E (H.w0 : E) = 1 - (H.rt : E) := by
+    have := congrArg (IsCMField.complexConj E) h2
+    rw [map_mul, map_add (f := _), map_one, complexConj_rt] at this
+    have h22 : IsCMField.complexConj E (2 : E) = 2 := map_ofNat _ 2
+    rw [h22] at this
+    rw [this]; ring
+  unfold ReciprocityTheory.ChartRestriction.G.FD.cc
+  apply mul_left_cancel₀ (two_ne_zero : (2 : E) ≠ 0)
+  rw [h3, mul_sub, h2]; ring
+
+theorem main : ∀ {E : Type} [inst : Field E] [inst_1 : NumberField E] [inst_2 : NumberField.IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E), ReciprocityTheory.ChartRestriction.G.FD.cc (↑(ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host.w0 H) : E) = (1 : E) - (↑(ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host.w0 H) : E) := fun H => conj_halfIntegralGenerator H
+
+end GlobalTheory.CMConjugationOfSquareRoot
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsSmulMemLattice
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.SmulMemOfSpan
+
+open NumberField
+
+theorem exists_smul_mem_of_span {E : Type} [Field E] [NumberField E] {r : ℕ}
+    (L : Submodule (RingOfIntegers E) (Fin r → E)) (v : Fin r → E)
+    (hv : v ∈ Submodule.span E (L : Set (Fin r → E))) :
+    ∃ c : RingOfIntegers E, c ≠ 0 ∧ (c : E) • v ∈ L := by
+  have hL : ∀ (n : RingOfIntegers E) (w : Fin r → E), w ∈ L → (n : E) • w ∈ L := by
+    intro n w hw
+    rw [RingOfIntegers.coe_eq_algebraMap, algebraMap_smul]
+    exact L.smul_mem n hw
+  induction hv using Submodule.span_induction with
+  | mem x hx =>
+    refine ⟨1, one_ne_zero, ?_⟩
+    rw [RingOfIntegers.coe_eq_algebraMap, map_one, one_smul]
+    exact hx
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact L.zero_mem⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨c, hc, hcx⟩ := hx
+    obtain ⟨d, hd, hdy⟩ := hy
+    refine ⟨c * d, mul_ne_zero hc hd, ?_⟩
+    have e : ((c * d : RingOfIntegers E) : E) • (x + y) =
+        (d : E) • ((c : E) • x) + (c : E) • ((d : E) • y) := by
+      ext i
+      simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, RingOfIntegers.coe_eq_algebraMap, map_mul]
+      ring
+    rw [e]
+    exact L.add_mem (hL d _ hcx) (hL c _ hdy)
+  | smul a x _ hx =>
+    obtain ⟨c, hc, hcx⟩ := hx
+    obtain ⟨n, y, hy, rfl⟩ := IsFractionRing.div_surjective (A := RingOfIntegers E) a
+    have hy0 : algebraMap (RingOfIntegers E) E y ≠ 0 :=
+      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hy
+    refine ⟨y * c, mul_ne_zero (nonZeroDivisors.ne_zero hy) hc, ?_⟩
+    have e : ((y * c : RingOfIntegers E) : E) •
+        ((algebraMap (RingOfIntegers E) E n / algebraMap (RingOfIntegers E) E y) • x) =
+        (n : E) • ((c : E) • x) := by
+      ext i
+      simp only [Pi.smul_apply, smul_eq_mul, RingOfIntegers.coe_eq_algebraMap, map_mul]
+      field_simp
+    rw [e]
+    exact hL n _ hcx
+
+theorem exists_smul_mem_lattice : ∀ {E : Type} [inst : Field E] [inst_1 : NumberField E] [inst_2 : NumberField.IsCMField E] {r : ℕ} (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (v : Fin r → E), ∃ (c : NumberField.RingOfIntegers E), c ≠ (0 : NumberField.RingOfIntegers E) ∧ (↑c : E) • v ∈ ReciprocityTheory.ChartRestriction.G.FD.Data.Λ X := by
+  intro E _ _ _ r X v
+  refine exists_smul_mem_of_span X.Λ v ?_
+  rw [X.Λ_span]
+  exact Submodule.mem_top
+
+end GlobalTheory.SmulMemOfSpan
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusSplitting.ThetaBound
+
+section
+
+@[expose] public section
+
+open ReciprocityTheory.ChartRestriction.G.I2
+
+namespace GlobalTheory
+
+theorem theta_bound_tStatement : TStatement :=
+  tOf ext_all_inputs GlobalTheory.T.greedy_splitting_principal_torus_exists (gSup ext_all_inputs.1) dim
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ConjCmHalfIntegralGeneratorEqOneSub
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.MainNotions.Gaps Formalism.MainNotions.Gaps.EtaleWeightGaps Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up GlobalTheory.RunIn GlobalTheory.Shares
+
+namespace GlobalTheory.ExtraWeight
+
+section General
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
+
+theorem exists_multiple_mem (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (v : Fin r → E) :
+    ∃ c : 𝓞 E, c ≠ 0 ∧ (c : E) • v ∈ X.Λ :=
+  _root_.GlobalTheory.SmulMemOfSpan.exists_smul_mem_lattice X v
+
+theorem herm_smul_smul (G : Matrix (Fin r) (Fin r) E) (a b : E) (x y : Fin r → E) :
+    herm G (a • x) (b • y) = a * ReciprocityTheory.ChartRestriction.G.FD.cc b * herm G x y := by
+  simp only [herm, ReciprocityTheory.ChartRestriction.G.FD.cc, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
+
+theorem exists_isIso (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) {ρ : ℕ} (cu : FJ.CuspFD X ρ) (hρ : 0 < ρ) :
+    ∃ ξ : Fin r → E, X.IsIso ξ := by
+  obtain ⟨c, hc, hm⟩ := exists_multiple_mem X (cu.e ⟨0, hρ⟩)
+  refine ⟨_, hm, by rw [herm_smul_smul, cu.iso, mul_zero], ?_⟩
+  exact smul_ne_zero (by simpa using hc) (cu.ind.ne_zero _)
+
+theorem conj_cmHalfIntegralGenerator_eq_one_sub (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) : ReciprocityTheory.ChartRestriction.G.FD.cc (H.w0 : E) = 1 - (H.w0 : E) :=
+  _root_.GlobalTheory.CMConjugationOfSquareRoot.main H
+
+theorem even_im_hermitian_sub (X : DataX E r) (w0 : 𝓞 E) (hw : ReciprocityTheory.ChartRestriction.G.FD.cc (w0 : E) = 1 - (w0 : E)) :
+    ∀ u ∈ X.Λ, ∀ v ∈ X.Λ, ∃ k : ℤ,
+      Algebra.trace ℚ E (X.ξ0 * herm X.Gm u (((w0 : E) - ReciprocityTheory.ChartRestriction.G.FD.cc (w0 : E)) • v)) -
+        Algebra.trace ℚ E (X.ξ0 * herm X.Gm u v) = 2 * k :=
+  _root_.UpperTheory.Reformulated.B.Ue6.even_im_hermitian_sub X w0 hw
+
+end General
+
+theorem extra_weight_exists : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (large₂ : SizeData₂ D) (w : WeightFamilies.Wt D j), GamAt T.toCore → ReciprocityTheory.ChartRestriction.G.PullbackSections.SupBoundPageRows D large₂ w → 2 ≤ large₂.sc.L → D.R.r ≤ w.n → j < D.R.m → (D.R.f : ℝ) ^ 2 ≤ D.host.rdE → 16 ≤ D.host.rdE → D.R.m ^ 4 ≤ D.R.f → ∀ k : (T.U j T.σ₀).Comp, BasePotentialExistence ((T.U j T.σ₀).X k) (de2W ((T.U j T.σ₀).X k)) D.R.r (1 / (2 * (5 : ℝ) ^ 4 * |(NumberField.discr D.host.E : ℝ)| ^ ((1 : ℝ) / D.R.f))) := by
+  intro D T h j hj large₂ w hG hP hL hrn hjm hf2 hrd hm4 k
+  obtain ⟨e, -⟩ := GlobalTheory.CuspDataBounds.cusp_data_bounds D T h hG large₂ j hj w hP hL hrn T.σ₀ T.good_σ₀
+  have hfr : Module.finrank ℚ D.host.E = 2 * D.R.f := by
+    rw [D.host.finrank_cmField, Formalism.BasicNotions.Ranks.f, Formalism.BasicNotions.Ranks.n]
+    ring
+  have hcard : ((T.U j T.σ₀).X k).Ψ.card = D.R.f := by
+    have h2c := Formalism.L2.Pj.DatLin.two_card ((T.U j T.σ₀).X k).cmType
+    rw [hfr] at h2c
+    omega
+  have hPf : ReciprocityTheory.ChartRestriction.G.I2.PT.f D.host.E = D.R.f := by
+    unfold ReciprocityTheory.ChartRestriction.G.I2.PT.f
+    omega
+  have hPr : ReciprocityTheory.ChartRestriction.G.I2.PT.rd D.host.E = D.host.rdE := rfl
+  have hp0 : ((T.U j T.σ₀).X k).p0 = D.R.m - j :=
+    ((h.unf j hj T.σ₀ T.good_σ₀).2.1 k).1.trans (h.pins.2.2.2 j hj).2.1
+  have hf1 : (1 : ℝ) ≤ D.R.f := by
+    have : 0 < D.R.f := by
+      have hp : 0 < Module.finrank ℚ D.host.E := Module.finrank_pos
+      omega
+    exact_mod_cast this
+  obtain ⟨cu⟩ := h.cuNe j hj k
+  have hρ : 0 < WeightFamilies.rho D j := by
+    show 0 < D.R.m - j
+    omega
+  have key := GlobalTheory.ThetaWeight.exists_weight GlobalTheory.theta_bound_tStatement D.host.E D.R.r (e k).toX
+    (exists_isIso _ cu hρ)
+    ⟨⟨T.Q.H.w0, even_im_hermitian_sub _ _ (conj_cmHalfIntegralGenerator_eq_one_sub T.Q.H)⟩, by rw [hPf, hPr]; nlinarith, by rw [hPf, hPr]; exact hf2,
+      by rw [hPr]; exact hrd, D.R.m, by omega, by rw [hPf]; exact hm4,
+      Or.inl (by show ((T.U j T.σ₀).X k).p0 ≤ _; omega)⟩
+  rw [← hcard]
+  exact key
+
+end GlobalTheory.ExtraWeight
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ThetaArchimedeanDataIndefiniteModels
+
+section
 
 @[expose] public section
 
@@ -127,3 +369,5 @@ theorem archAt_of_run : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : I
       Real.rpow_nonneg (norm_nonneg _) _)
 
 end GlobalTheory.RunJoin
+end
+end

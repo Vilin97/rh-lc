@@ -3,21 +3,11 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsNormalFr
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.VacOfShape
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.BesselCharacterLocalElementEqSimpleEntrySum
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.BeszPairings
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSplitPointWeilCharConductorOneOfUnits
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsJacFramePairing
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsTameFinitePlaceHermitianAll
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LineMemLatVIff
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MonoAtOfJacFrame
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MonoAtOfSplitW
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualLatticeAtPlaceSplitsHyperbolicPlusCore
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualSplitComponentIsLatticeStabilizerEq
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SliceColMem
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SumPrStar
-import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ExistsUnitarySupportedAtPlaceOfMulEqIdem
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -29,8 +19,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,9 +38,215 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.JointSmooth
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.MiStarOfMid
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PairForm
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.UnitRatio
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FunKilled
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSplitPointWeilCharConductorOneOfUnits
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.MiStarOfMid
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsTameFinitePlaceHermitianAll
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LineMemLatVIff
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MonoAtOfJacFrame
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MonoAtOfSplitW
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualLatticeAtPlaceSplitsHyperbolicPlusCore
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualSplitComponentIsLatticeStabilizerEq
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SliceColMem
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SumPrStar
+import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.BeszPairings
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.RootEx GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.SplitWeil GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.SeeSaw GlobalTheory.StepData GlobalTheory.SymChain GlobalTheory.LocMod GlobalTheory.MiS GlobalTheory.MiTop GlobalTheory.Fam ValuativeRel
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.BesPair
+
+theorem besz_pairings : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+    (p : Place D k) (ρ : ℕ) (B : BesLev D ρ) (s : k) (n : Type) [Fintype n] [DecidableEq n] (c : ℕ)
+    (FA : Frame k B.A.rank n) (F : Frame k B.V.rank (n ⊕ Fin c)),
+    p.IsBesFrame B s FA F → valuation k s = 1 → valuation k (p.hz B) = 1 →
+    ∃ m₀ : n ⊕ Fin c, (∀ r, s * p.pr ((B.d.i₀ *ᵥ vecB B.o B.ζ) r) = F.β r m₀) ∧
+      (∀ m, ∑ r, F.β r m * p.pr (star ((B.V.gram *ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ)) r)) ∈ 𝒪[k]) ∧
+      ∃ m, valuation k (∑ r, F.β r m * p.pr (star ((B.V.gram *ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ)) r))) = 1 := by
+  intro D k _ _ _ _ p ρ B s n _ _ c FA F hF hs hz
+  obtain ⟨rfl, h1, h2, h3, h4⟩ := hF
+  have hG := GlobalTheory.MixModel.gram_conjTranspose (S := B.V)
+  have hp0 : p.pr 0 = 0 := map_zero (GlobalTheory.LocMod.Witness.prH p)
+  have hl : ∀ r, p.pr (star ((B.V.gram *ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ)) r)) =
+      p.pr ((star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram) r) := fun r => by
+    conv_rhs => rw [← hG, ← Matrix.star_mulVec]
+    rfl
+  have hM : ∀ {ι : Type} [Fintype ι] (M : Matrix (Fin B.V.rank) ι D.host.E),
+      star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* M = star (vecB B.o B.ζ) ᵥ* (B.d.i₀ᴴ * B.V.gram * M) := fun M => by
+    rw [Matrix.star_mulVec, Matrix.vecMul_vecMul, Matrix.vecMul_vecMul, Matrix.mul_assoc]
+  have hsum : ∀ (t : k) {ι : Type} [Fintype ι] (M : Matrix (Fin B.V.rank) ι D.host.E) (i : ι),
+      ∑ r, t * p.pr (M r i) * p.pr ((star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram) r) =
+        t * p.pr ((star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* M) i) := by
+    intro t ι _ M i
+    change _ = t * GlobalTheory.LocMod.Witness.prH p _
+
+    rw [Matrix.vecMul, dotProduct, map_sum, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun r _ => ?_
+    rw [map_mul]
+    change t * GlobalTheory.LocMod.Witness.prH p (M r i) * GlobalTheory.LocMod.Witness.prH p _ =
+      t * (GlobalTheory.LocMod.Witness.prH p _ * GlobalTheory.LocMod.Witness.prH p (M r i))
+    ring
+  have hE : star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* B.d.e = 0 := by
+    rw [hM, B.d.i₀e, Matrix.vecMul_zero]
+  have hE' : star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* B.d.e' = 0 := by
+    rw [hM, B.d.i₀e', Matrix.vecMul_zero]
+  have hA : star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* (B.d.i₀ * B.o.iA) = 0 := by
+    rw [hM, ← Matrix.mul_assoc, B.d.iso, vecB, Matrix.star_mulVec, Matrix.vecMul_vecMul, ← Matrix.mul_assoc, B.o.orth,
+      Matrix.vecMul_zero]
+  have hdot : (star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram) ⬝ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ) = star B.ζ ⬝ᵥ B.L.gram *ᵥ B.ζ := by
+    rw [Matrix.dotProduct_mulVec, hM, B.d.iso, vecB, Matrix.dotProduct_mulVec, Matrix.star_mulVec]
+    simp only [Matrix.vecMul_vecMul]
+    rw [B.o.isoB, ← Matrix.dotProduct_mulVec]
+  have hcore : ∀ a, ∑ r, F.β r (Sum.inl a) * p.pr (star ((B.V.gram *ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ)) r)) = 0 := by
+    intro a
+    simp_rw [h1, hl, Matrix.mul_apply, Matrix.map_apply, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_eq_zero fun b _ => ?_
+    have := hsum (FA.β b a) (B.d.i₀ * B.o.iA) b
+    rw [hA, Pi.zero_apply, hp0, mul_zero] at this
+    rw [← this]
+    exact Finset.sum_congr rfl fun r _ => by ring
+  have hval : ∀ j : Fin (2 * ρ + 1), j.val = ρ →
+      ∑ r, F.β r (Sum.inr j) * p.pr (star ((B.V.gram *ᵥ (B.d.i₀ *ᵥ vecB B.o B.ζ)) r)) = s * p.hz B := by
+    intro j hj
+    simp_rw [h3 j hj, hl]
+    change _ = s * GlobalTheory.LocMod.Witness.prH p _
+
+    rw [← hdot, dotProduct, map_sum, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun r _ => ?_
+    rw [map_mul]
+    change s * GlobalTheory.LocMod.Witness.prH p _ * GlobalTheory.LocMod.Witness.prH p _ =
+      s * (GlobalTheory.LocMod.Witness.prH p _ * GlobalTheory.LocMod.Witness.prH p _)
+    ring
+  have hunit : valuation k (s * p.hz B) = 1 := by rw [map_mul, hs, hz, one_mul]
+  refine ⟨Sum.inr ⟨ρ, by omega⟩, fun r => (h3 _ rfl r).symm, fun m => ?_, Sum.inr ⟨ρ, by omega⟩, by rw [hval _ rfl, hunit]⟩
+  rcases m with a | j
+  · rw [hcore a]; exact zero_mem _
+  rcases lt_trichotomy j.val ρ with hj | hj | hj
+  · simp_rw [h2 ⟨j.val, hj⟩ j rfl, hl]
+    rw [hsum, hE, Pi.zero_apply, hp0, mul_zero]; exact zero_mem _
+  · rw [hval j hj]
+    exact (Valuation.mem_integer_iff _ _).2 (le_of_eq hunit)
+  · have hj2 := j.isLt
+    simp_rw [h4 ⟨2 * ρ - j.val, by omega⟩ j (by simp only; omega), hl]
+    rw [hsum, hE', Pi.zero_apply, hp0, mul_zero]; exact zero_mem _
+end GlobalTheory.BesPair
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsJacFramePairing
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.RootEx GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.SplitWeil GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.SeeSaw GlobalTheory.StepData GlobalTheory.SymChain GlobalTheory.LocMod GlobalTheory.MiS GlobalTheory.MiTop GlobalTheory.Fam ValuativeRel
+open scoped TensorProduct Classical
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+namespace GlobalTheory.JacFramePair
+
+variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+theorem pair_col (p : Place D k) {N ρ : ℕ} {κ : Type} [Fintype κ] (G : Matrix (Fin N) (Fin N) D.host.E)
+    (X : Matrix (Fin N) κ D.host.E) (e : Matrix (Fin N) (Fin ρ) D.host.E) (j : κ) (i : Fin ρ) :
+    ∑ r, p.pr (X r j) * p.pr (star ((G *ᵥ fun r => e r i) r)) = p.pr (star ((Xᴴ * G * e) j i)) := by
+  have h : star ((Xᴴ * G * e) j i) = ∑ r, X r j * star ((G *ᵥ fun r => e r i) r) := by
+    rw [Matrix.mul_assoc, Matrix.mul_apply, star_sum]
+    refine Finset.sum_congr rfl fun r _ => ?_
+    have hv : (G * e) r i = (G *ᵥ fun r => e r i) r := by simp [Matrix.mul_apply, Matrix.mulVec, dotProduct]
+    rw [star_mul', Matrix.conjTranspose_apply, star_star, hv, mul_comm]
+  rw [h]
+  change _ = Witness.prH p _
+
+  rw [map_sum]
+  exact Finset.sum_congr rfl fun r _ => (map_mul (Witness.prH p) _ _).symm
+
+theorem pair_scaled (p : Place D k) {N ρ : ℕ} {κ Z : Type} [Fintype κ] (G : Matrix (Fin N) (Fin N) D.host.E)
+    (X : Matrix (Fin N) κ D.host.E) (e : Matrix (Fin N) (Fin ρ) D.host.E) (β : Matrix (Fin N) Z k) (m : Z) (j : κ)
+    (t : k) (h : ∀ r, β r m = t * p.pr (X r j)) (i : Fin ρ) :
+    ∑ r, β r m * p.pr (star ((G *ᵥ fun r => e r i) r)) = t * p.pr (star ((Xᴴ * G * e) j i)) := by
+  simp_rw [h, mul_assoc, ← Finset.mul_sum, pair_col]
+
+theorem pr_zero (p : Place D k) : p.pr 0 = 0 := map_zero (Witness.prH p)
+
+theorem pr_one (p : Place D k) : p.pr 1 = 1 := map_one (Witness.prH p)
+
+theorem pr_star_one (p : Place D k) {ρ : ℕ} (i' i : Fin ρ) :
+    p.pr (star ((1 : Matrix (Fin ρ) (Fin ρ) D.host.E) i' i)) = if i' = i then 1 else 0 := by
+  rw [Matrix.one_apply]
+  split_ifs <;> simp [pr_zero, pr_one]
+
+theorem isJacFrame_pairing : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+    (p : Place D k) (ρ : ℕ) (J : JacLev D ρ) (s hh : k) (n : Type) [Fintype n] [DecidableEq n] (c : ℕ)
+    (F₀ : Frame k J.W₀.rank n) (F : Frame k J.W.rank (n ⊕ Fin c)),
+    p.IsJacFrame J s hh F₀ F → valuation k s = 1 → valuation k hh = 1 → valuation k p.xi = 1 → ∀ i : Fin ρ,
+    ∃ (b : k) (m₀ : n ⊕ Fin c), valuation k b = 1 ∧ (∀ r, b * p.pr (J.d.e r i) = F.β r m₀) ∧
+      (∀ m, ∑ r, F.β r m * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r)) ∈ 𝒪[k]) ∧
+      ∃ m, valuation k (∑ r, F.β r m * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r))) = 1 := by
+  intro D k _ _ _ _ p ρ J s hh n _ _ c F₀ F hJ hs hhh hx i
+  obtain ⟨hc, h1, h2, h3⟩ := hJ
+  subst hc
+  have vt : ∀ l : ℕ, valuation k (s * (hh / p.xi) * (-1 / p.xi) ^ l) = 1 := fun l => by
+    simp [map_mul, map_div₀, map_pow, Valuation.map_neg, hs, hhh, hx]
+  have inrLo : ∀ (j : Fin (2 * ρ)) (hj : j.val < ρ),
+      ∑ r, F.β r (Sum.inr j) * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r)) = 0 := fun j hj => by
+    rw [pair_scaled p J.W.gram J.d.e J.d.e F.β (Sum.inr j) (⟨j.val, hj⟩ : Fin ρ) _ (h2 ⟨j.val, hj⟩ j rfl), J.d.ee]
+    simp [pr_zero]
+  have inrHi : ∀ (j : Fin (2 * ρ)) (hj : ρ ≤ j.val),
+      ∑ r, F.β r (Sum.inr j) * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r)) =
+        s * (hh / p.xi) * (-1 / p.xi) ^ (ρ - 1 - (2 * ρ - 1 - j.val)) *
+          (if (⟨2 * ρ - 1 - j.val, by omega⟩ : Fin ρ) = i then 1 else 0) := fun j hj => by
+    rw [pair_scaled p J.W.gram J.d.e' J.d.e F.β (Sum.inr j) (⟨2 * ρ - 1 - j.val, by omega⟩ : Fin ρ) _
+      (h3 ⟨2 * ρ - 1 - j.val, by omega⟩ j (by simp only; omega)), J.d.e'e, pr_star_one]
+  refine ⟨s * p.xi ^ (ρ - i.val), Sum.inr ⟨i.val, by omega⟩, by simp [map_mul, map_pow, hs, hx],
+    fun r => (h2 i _ rfl r).symm, ?_, Sum.inr ⟨2 * ρ - 1 - i.val, by omega⟩, ?_⟩
+  · rintro (a | j)
+    · have e0 : ∑ r, F.β r (Sum.inl a) * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r)) = 0 := by
+        simp_rw [h1, Matrix.mul_apply, Matrix.map_apply, Finset.sum_mul]
+        rw [Finset.sum_comm]
+        refine Finset.sum_eq_zero fun b _ => ?_
+        have := pair_col p J.W.gram J.d.i₀ J.d.e b i
+        rw [J.d.i₀e, Matrix.zero_apply, star_zero, pr_zero] at this
+        calc ∑ r, p.pr (J.d.i₀ r b) * F₀.β b a * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r))
+            = F₀.β b a * ∑ r, p.pr (J.d.i₀ r b) * p.pr (star ((J.W.gram *ᵥ fun r => J.d.e r i) r)) := by
+              rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun r _ => by ring
+          _ = 0 := by rw [this, mul_zero]
+      rw [e0]
+      exact zero_mem _
+    · by_cases hj : j.val < ρ
+      · rw [inrLo j hj]
+        exact zero_mem _
+      · rw [inrHi j (by omega), Valuation.mem_integer_iff, map_mul, vt, one_mul]
+        split_ifs <;> simp
+  · rw [inrHi _ (by simp only; omega), map_mul, vt, one_mul, if_pos (Fin.ext (by simp only; omega)), map_one]
+
+end GlobalTheory.JacFramePair
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LocalComponentMeasureScalar
+
+section
 
 @[expose] public section
 
@@ -202,4 +396,6 @@ theorem GlobalTheory.Fam.adaptFB_of_normalFrames : ∀ {D : D7} {L : SizeData₂
     rw [hU.2, hLJ i b hb]
     exact (hLB i b hb).symm
 
+end
+end
 end

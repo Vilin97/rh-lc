@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.CsdSsOfFull
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoSymm
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.SsMoveP
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,42 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Newform
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.GelfandKazhdanReal
 
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.SsMoveP
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal
+open GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
+
+theorem UpperTheory.V.Lev.ssMove :
+    UpperTheory.V.Lev.SsMove := by
+  intro F K Ω _ _ _ _ _ _ _ _ _ A v w h h' j i hP x y x' y' hx hy H
+  obtain ⟨c, hc, -⟩ := GlobalTheory.T.place_over_transport_ring_iso F Ω A v h K Ω A w h' _ _ i hP
+  have key : ∀ (z : WD h) (z' : WD h'), WDRel (RingEquiv.refl Ω) z z' →
+      (∀ s, z.charPol s = z'.charPol (c s)) ∧ z.lpDim = z'.lpDim := by
+    rintro _ _ ⟨n, b, b', rfl, rfl, -, hρ⟩
+    refine ⟨fun s => ?_, ?_⟩
+    · rw [WD.charPol_mk, WD.charPol_mk, hρ s (c s) ((hc s (c s)).mpr rfl)]
+    · rw [WD.lpDim_mk, WD.lpDim_mk]
+  have ab : ∀ (z : WD h) (z' : WD h'), WDRel (RingEquiv.refl Ω) z z' →
+      UpperTheory.V.Lev.AbW z → UpperTheory.V.Lev.AbW z' := by
+    intro z z' hz a g g'
+    obtain ⟨h1, h2⟩ := key z z' hz
+    obtain ⟨g, rfl⟩ := c.surjective g
+    obtain ⟨g', rfl⟩ := c.surjective g'
+    rw [← h2, ← a g g', h1, map_mul, map_mul, map_mul, map_inv, map_inv]
+  intro hab s
+  rw [(key x x' hx).1, (key y y' hy).1]
+  exact H (hab.imp (ab x x' hx) (ab y y' hy)) (c s)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.RecMove
+
+section
+
 @[expose] public section
 
 open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
@@ -63,3 +99,5 @@ theorem UpperTheory.V.Lev.recMove :
     (hS _ _).1 ⟨n, hF⟩
   refine Lev.ssMove F K Ω A v w h h' j i P _ _ _ _ hy ((hS _ _).2 ?_) hc
   rw [rec_algNorm hrc, rec_algNorm hrc', hSt, h1]
+end
+end

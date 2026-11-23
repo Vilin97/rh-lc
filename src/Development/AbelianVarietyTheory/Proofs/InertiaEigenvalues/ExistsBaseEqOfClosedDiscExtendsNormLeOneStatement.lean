@@ -1,10 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsStratHom
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBaseEqOfClosedDiscExtendsNormLeOne
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClosedDiscCoefficientsTopologicallyFreeStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClosedDiscGaugeCompletionBasicPropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClosedDiscToDiscInjectiveOfAdicBasisStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClosedDiscGaugeCompletionBasicPropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClosedDiscGaugeCompletionZeroOnePropertiesStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsGaussNormCoeffWittDiscStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -39,7 +45,173 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsClosedDiscExtensionOfPowDvdStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TopologicalBasisBasicFactsStatement
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscBoundedFunctionIsPowerSeries
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations TensorProduct PowerSeries GlobalTheory.Prism GlobalTheory.BKReal GlobalTheory.Per GlobalTheory.BSP
+open scoped Formalism.Per NNReal
+
+namespace GlobalTheory.BSP
+
+theorem le_one_of_mul_pow_le_one (c : ℝ) (n : ℕ) (h : ∀ t : ℝ≥0, t < 1 → c * (t : ℝ) ^ n ≤ 1) : c ≤ 1 := by
+  have ht : Filter.Tendsto (fun t : ℝ≥0 => c * (t : ℝ) ^ n) (nhdsWithin (1 : ℝ≥0) (Set.Iio 1)) (nhds (c * ((1 : ℝ≥0) : ℝ) ^ n)) :=
+    ((continuous_const.mul ((NNReal.continuous_coe).pow n)).tendsto 1).mono_left nhdsWithin_le_nhds
+  have : (nhdsWithin (1 : ℝ≥0) (Set.Iio 1)).NeBot := nhdsLT_neBot_of_exists_lt ⟨0, zero_lt_one⟩
+  have h2 := le_of_tendsto ht (eventually_nhdsWithin_of_forall fun t (hti : t ∈ Set.Iio 1) => h t hti)
+  simpa using h2
+
+theorem disc_bdd_isSeries : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (ρ : ℝ≥0), 0 < ρ → ρ < 1 → ∀ y : bk.DS ρ, (∀ ρ₁ : ℝ≥0, ρ₁ < 1 → ∃ (ρ' : ℝ≥0) (R : bk.DS ρ' →+* bk.DS ρ) (y' : bk.DS ρ'), ρ₁ ≤ ρ' ∧ ρ ≤ ρ' ∧ ρ' < 1 ∧ IsDiscMap (l := _) (u := _) (ρ := _) (RingHom.id bk.S) R ∧ R y' = y ∧ ‖y'‖ ≤ 1) → ∃ a, toDisc l (X : bk.S) ρ a = y := by
+  intro l _ K bk ρ hρ hρ1 y hy
+  have hl0 : (0 : ℝ) < l := Nat.cast_pos.2 (Fact.out : l.Prime).pos
+  obtain ⟨a, ha1, ha2, ha3, -⟩ := GlobalTheory.T.exists_gaussNorm_coeff_wittDisc l K bk ρ hρ hρ1
+  obtain ⟨-, hk2, -, -⟩ := GlobalTheory.T.closedDiscGaugeCompletion_zero_one_properties l K bk
+
+  have hcont : ∀ (r : ℝ≥0), 0 < r → ∀ (b : ℕ → (bk.DS r →+ Disc l (0 : Wq l bk.a) 1)),
+      (∀ n z, ‖b n z‖ * (r : ℝ) ^ n ≤ ‖z‖) → ∀ n, Continuous (b n) := by
+    intro r hr b hb n
+    refine AddMonoidHomClass.continuous_of_bound (b n) (((r : ℝ) ^ n)⁻¹) fun z => ?_
+    have hp : (0 : ℝ) < (r : ℝ) ^ n := pow_pos (by exact_mod_cast hr) n
+    rw [inv_mul_eq_div, le_div_iff₀ hp]
+    exact hb n z
+
+  have htor : ∀ z : Disc l (0 : Wq l bk.a) 1, l • z = 0 → z = 0 := by
+    intro z hz
+    have h := (GlobalTheory.T.closedDiscGaugeCompletion_basic_properties l (Wq l bk.a) (0 : Wq l bk.a) 1).2.1 z
+    rw [← nsmul_eq_mul, hz, norm_zero] at h
+    exact norm_eq_zero.1 (by
+      have := (div_eq_zero_iff.1 h.symm).resolve_right hl0.ne'
+      exact this)
+
+  have hle : ∀ n, ‖a n y‖ ≤ 1 := by
+    intro n
+    refine le_one_of_mul_pow_le_one _ n fun t ht => ?_
+    obtain ⟨ρ', R, y', h1, h2, h3, hR, hRy, hy'⟩ := hy t ht
+    have hρ' : 0 < ρ' := hρ.trans_le h2
+    obtain ⟨a', ha1', ha2', -, -⟩ := GlobalTheory.T.exists_gaussNorm_coeff_wittDisc l K bk ρ' hρ' h3
+    have hRc : Continuous R := AddMonoidHomClass.continuous_of_bound R 1 fun z => (hR.norm_le z).trans (one_mul _).ge
+    have e : ((a n).comp (R : bk.DS ρ' →+ bk.DS ρ)) = a' n :=
+      (GlobalTheory.T.closedDiscGaugeCompletion_basic_properties l bk.S (X : bk.S) ρ').2.2.1 _ htor _ _ ((hcont ρ hρ a ha2 n).comp hRc)
+        (hcont ρ' hρ' a' ha2' n) fun x => by
+          simp only [AddMonoidHom.coe_comp, AddMonoidHom.coe_ofClass, Function.comp_apply]
+          rw [hR.ext x, RingHom.id_apply, ha1, ha1']
+    have e2 : a n y = a' n y' := by rw [← hRy, ← e]; rfl
+    rw [e2]
+    calc ‖a' n y'‖ * (t : ℝ) ^ n ≤ ‖a' n y'‖ * (ρ' : ℝ) ^ n :=
+          mul_le_mul_of_nonneg_left (pow_le_pow_left₀ t.2 (by exact_mod_cast h1) n) (norm_nonneg _)
+      _ ≤ ‖y'‖ := ha2' n y'
+      _ ≤ 1 := hy'
+  choose w hw using fun n => hk2 (a n y) (hle n)
+  refine ⟨PowerSeries.mk w, ?_⟩
+  have h0 : ‖y - toDisc l (X : bk.S) ρ (PowerSeries.mk w)‖ ≤ 0 :=
+    ha3 _ 0 le_rfl fun n => by
+      rw [map_sub, ha1, coeff_mk, ← hw, sub_self, norm_zero, zero_mul]
+  exact (sub_eq_zero.1 (norm_le_zero_iff.1 h0)).symm
+
+end GlobalTheory.BSP
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DiscBoundedFunctionIsPowerSeriesStatement
+
+section
+
+@[expose] public section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations TensorProduct PowerSeries GlobalTheory.Prism GlobalTheory.BKReal GlobalTheory.Per GlobalTheory.BSP
+open scoped Formalism.Per NNReal
+
+theorem _root_.GlobalTheory.T.disc_bounded_function_isPowerSeries : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (ρ : ℝ≥0), 0 < ρ → ρ < 1 → ∀ y : bk.DS ρ, (∀ ρ₁ : ℝ≥0, ρ₁ < 1 → ∃ (ρ' : ℝ≥0) (R : bk.DS ρ' →+* bk.DS ρ) (y' : bk.DS ρ'), ρ₁ ≤ ρ' ∧ ρ ≤ ρ' ∧ ρ' < 1 ∧ IsDiscMap (l := _) (u := _) (ρ := _) (RingHom.id bk.S) R ∧ R y' = y ∧ ‖y'‖ ≤ 1) → ∃ a, toDisc l (X : bk.S) ρ a = y := by
+  first | exact @GlobalTheory.BSP.disc_bdd_isSeries | exact GlobalTheory.BSP.disc_bdd_isSeries | (intros; apply GlobalTheory.BSP.disc_bdd_isSeries <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBaseEqOfClosedDiscExtendsNormLeOne
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations TensorProduct PowerSeries GlobalTheory.Prism GlobalTheory.BKReal GlobalTheory.Per GlobalTheory.BSP
+open scoped Formalism.Per NNReal
+
+namespace GlobalTheory.BSP
+
+theorem exists_toDisc_eq_of_extends_norm_le_one : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Type)
+    [CommRing A] (s : bk.S →+* A) (ι : Type), TopBasis s bk.J ι → ∀ ρ : ℝ≥0, 0 < ρ → ρ < 1 →
+    ∀ y : Disc l (s X) ρ, (∀ ρ₁ : ℝ≥0, ρ₁ < 1 → ∃ (ρ' : ℝ≥0) (R : Disc l (s X) ρ' →+* Disc l (s X) ρ)
+      (y' : Disc l (s X) ρ'), ρ₁ ≤ ρ' ∧ ρ ≤ ρ' ∧ ρ' < 1 ∧ IsDiscMap (l := _) (u := _) (ρ := _) (RingHom.id A) R ∧ R y' = y ∧ ‖y'‖ ≤ 1) →
+    ∃ a, toDisc l (s X) ρ a = y := by
+  intro l _ K bk A _ s ι TB ρ hρ hρ1 y hy
+  have hj : ∀ ρ' : ℝ≥0, 0 < ρ' → ∃ j : bk.DS ρ' →+* Disc l (s X) ρ', IsDiscMap (l := _) (u := _) (ρ := _) s j := fun ρ' h =>
+    GlobalTheory.T.exists_closedDiscExtension_of_pow_dvd l bk.S A s X (s X) ρ' ρ' 1 h (by rw [pow_one]) (by rw [pow_one])
+  obtain ⟨j, hjd⟩ := hj ρ hρ
+  obtain ⟨cD, hc1, -, hc3, hc4, -, hc6, -, -⟩ := GlobalTheory.T.closedDisc_coefficients_topologicallyFree l K bk A s ι TB ρ hρ hρ1 j hjd
+
+  have hz : ∀ i, ∃ z : bk.S, toDisc l (X : bk.S) ρ z = cD i y := by
+    intro i
+    apply GlobalTheory.T.disc_bounded_function_isPowerSeries l K bk ρ hρ hρ1
+    intro ρ₁ hρ₁
+    obtain ⟨ρ', R, y', h1, h2, h3, hR, hRy, hy'⟩ := hy ρ₁ hρ₁
+    have hρ' : 0 < ρ' := hρ.trans_le h2
+    obtain ⟨j', hj'd⟩ := hj ρ' hρ'
+    obtain ⟨cD', hc1', -, hc3', -⟩ := GlobalTheory.T.closedDisc_coefficients_topologicallyFree l K bk A s ι TB ρ' hρ' h3 j' hj'd
+    obtain ⟨RS, hRS⟩ := GlobalTheory.T.exists_closedDiscExtension_of_pow_dvd l bk.S bk.S (RingHom.id _) X X ρ' ρ 1 hρ (by simp) (by simpa using h2)
+    refine ⟨ρ', RS, cD' i y', h1, h2, h3, hRS, ?_, (hc3' i y').trans hy'⟩
+
+    have htor : ∀ z : bk.DS ρ, l • z = 0 → z = 0 := fun z hz => by
+      rw [nsmul_eq_mul] at hz
+      exact (isUnit_l_disc l (X : bk.S) ρ).mul_right_eq_zero.1 hz
+    have hF : Continuous ((RS : bk.DS ρ' →+ bk.DS ρ).comp (cD' i)) :=
+      AddMonoidHomClass.continuous_of_bound _ 1 fun x => by
+        show ‖RS (cD' i x)‖ ≤ 1 * ‖x‖
+        rw [one_mul]; exact (hRS.norm_le _).trans (hc3' i x)
+    have hG : Continuous ((cD i).comp (R : Disc l (s X) ρ' →+ Disc l (s X) ρ)) :=
+      AddMonoidHomClass.continuous_of_bound _ 1 fun x => by
+        show ‖cD i (R x)‖ ≤ 1 * ‖x‖
+        rw [one_mul]; exact (hc3 i _).trans (hR.norm_le x)
+    have key := (GlobalTheory.T.closedDiscGaugeCompletion_basic_properties l A (s X) ρ').2.2.1 (bk.DS ρ) htor _ _ hF hG fun a => by
+      show RS (cD' i (toDisc l (s X) ρ' a)) = cD i (R (toDisc l (s X) ρ' a))
+      rw [hc1', hRS.ext, hR.ext, hc1]; rfl
+    rw [← hRy]
+    exact DFunLike.congr_fun key y'
+  choose z hz using hz
+
+  haveI : IsAdicComplete bk.J bk.S := bk.complete
+  have hfin : ∀ n : ℕ, {i | z i ∉ bk.J ^ n}.Finite := by
+    intro n
+    obtain ⟨r, hr, hr'⟩ := (GlobalTheory.T.closedDisc_toDisc_injective_of_adicBasis l K bk bk.S (RingHom.id _) Unit (TopBasis.self bk.J) ρ hρ hρ1).2.1 n
+    refine (Filter.mem_cofinite.1 (hc4 y (Metric.closedBall_mem_nhds 0 hr))).subset fun i hi h => hi ?_
+    have h' : ‖toDisc l (X : bk.S) ρ (z i)‖ ≤ r := by
+      rw [hz i]; simpa using h
+    have := hr' (z i) h'
+    rwa [Ideal.map_id] at this
+  obtain ⟨a, ha⟩ := (GlobalTheory.T.topologicalBasis_basic_facts bk.S A s bk.J ι TB bk.complete.toIsHausdorff).2.2.2.1 z hfin
+  refine ⟨a, ?_⟩
+  have h0 : ‖y - toDisc l (s X) ρ a‖ ≤ 0 := hc6 _ 0 le_rfl fun i => by
+    rw [map_sub, hc1, ha, hz, sub_self, norm_zero]
+  exact (sub_eq_zero.1 (norm_le_zero_iff.1 h0)).symm
+
+end GlobalTheory.BSP
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBaseEqOfClosedDiscExtendsNormLeOneStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +220,5 @@ open scoped Formalism.Per NNReal
 
 theorem _root_.GlobalTheory.T.exists_base_eq_of_closedDisc_extends_norm_le_one : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Type) [CommRing A] (s : bk.S →+* A) (ι : Type), TopBasis s bk.J ι → ∀ ρ : ℝ≥0, 0 < ρ → ρ < 1 → ∀ y : Disc l (s X) ρ, (∀ ρ₁ : ℝ≥0, ρ₁ < 1 → ∃ (ρ' : ℝ≥0) (R : Disc l (s X) ρ' →+* Disc l (s X) ρ) (y' : Disc l (s X) ρ'), ρ₁ ≤ ρ' ∧ ρ ≤ ρ' ∧ ρ' < 1 ∧ IsDiscMap (l := _) (u := _) (ρ := _) (RingHom.id A) R ∧ R y' = y ∧ ‖y'‖ ≤ 1) → ∃ a, toDisc l (s X) ρ a = y := by
   first | exact @GlobalTheory.BSP.exists_toDisc_eq_of_extends_norm_le_one | exact GlobalTheory.BSP.exists_toDisc_eq_of_extends_norm_le_one | (intros; apply GlobalTheory.BSP.exists_toDisc_eq_of_extends_norm_le_one <;> assumption)
+end
+end

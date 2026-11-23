@@ -4,18 +4,23 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuL
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DGmap
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DToDet
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DTrCoeff
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.Imports
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.LiftSmul
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.TpSingle
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.SpectralEigenvalues.EigChp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.SpectralEigenvalues.FElMap
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Ideal.Maps
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -23,7 +28,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,6 +37,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +52,137 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.RingTheory.LocalRing.Module
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.LiftSmul
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.TpSingle
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.Tactic.Basify
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Lam0
+
+section
+
+@[expose] public section
+
+open TensorProduct in
+theorem UpperTheory.Reformulated.B.Qf1.lam0 :
+    ∀ (O B M : Type) [inst : CommRing O] [IsDomain O] [inst_2 : CommRing B] [inst_3 : Algebra O B]
+    [inst_4 : AddCommGroup M] [inst_5 : _root_.Module B M] [Module.Finite B M] (x : B →ₐ[O] O),
+    Module.annihilator B M ≤ RingHom.ker x →
+      ∃ (lam : M →+ O) (m₀ : M),
+        (∀ (a : B) (m : M), (lam : M → O) (a • m) = (x : B → O) a * (lam : M → O) m) ∧ (lam : M → O) m₀ ≠ (0 : O) := by
+  intro O B M _ _ _ _ _ _ _ x hx
+  classical
+  set p : Ideal B := RingHom.ker x with hp
+  haveI hpp : p.IsPrime := RingHom.ker_isPrime x
+  have hs : (⟨p, hpp⟩ : PrimeSpectrum B) ∈ Module.support B M :=
+    Module.mem_support_iff_of_finite.mpr hx
+  have hnt : Nontrivial (p.ResidueField ⊗[B] M) :=
+    (Module.mem_support_iff_nontrivial_residueField_tensorProduct (⟨p, hpp⟩ : PrimeSpectrum B)).mp hs
+  obtain ⟨v, hv⟩ := exists_ne (0 : p.ResidueField ⊗[B] M)
+  obtain ⟨f, hf⟩ := Module.Projective.exists_dual_ne_zero p.ResidueField hv
+  let g : M →ₗ[B] p.ResidueField :=
+    (f.restrictScalars B) ∘ₗ (TensorProduct.mk B p.ResidueField M 1)
+  have hg : ∃ m₀, g m₀ ≠ 0 := by
+    by_contra h
+    push Not at h
+    apply hf
+    have : ∀ w, f w = 0 := by
+      intro w
+      induction w using TensorProduct.induction_on with
+      | zero => simp
+      | add a b ha hb => simp [ha, hb]
+      | tmul k m =>
+        have h1 : k ⊗ₜ[B] m = k • ((1 : p.ResidueField) ⊗ₜ[B] m) := by
+          simp [TensorProduct.smul_tmul']
+        have h2 : f ((1 : p.ResidueField) ⊗ₜ[B] m) = 0 := h m
+        rw [h1, map_smul, h2, smul_zero]
+    exact this v
+  obtain ⟨m₀, hm₀⟩ := hg
+  obtain ⟨S, hS⟩ := Module.Finite.fg_top (R := B) (M := M)
+  obtain ⟨b, hb⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (B ⧸ p)) S
+    (fun m => g m)
+  let i : (B ⧸ p) →ₗ[B] p.ResidueField := (IsScalarTower.toAlgHom B (B ⧸ p) p.ResidueField).toLinearMap
+  have hi : Function.Injective i := IsFractionRing.injective (B ⧸ p) p.ResidueField
+  let c : p.ResidueField := algebraMap (B ⧸ p) p.ResidueField b
+  have hc : c ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors b.2
+  let g' : M →ₗ[B] p.ResidueField := c • g
+  have hr : ∀ m, g' m ∈ LinearMap.range i := by
+    intro m
+    have hm : m ∈ Submodule.span B (S : Set M) := hS ▸ Submodule.mem_top
+    have : Submodule.span B (S : Set M) ≤ (LinearMap.range i).comap g' := by
+      rw [Submodule.span_le]
+      intro y hy
+      obtain ⟨z, hz⟩ := hb y hy
+      refine ⟨z, ?_⟩
+      change algebraMap _ _ z = c * g y
+      rw [hz, Algebra.smul_def]
+    exact this hm
+  let h : M →ₗ[B] (B ⧸ p) := LinearMap.codRestrictOfInjective g' i hi hr
+  have hh : ∀ m, i (h m) = g' m := fun m =>
+    LinearMap.codRestrictOfInjective_comp_apply g' i hi hr m
+  let e : (B ⧸ p) →+* O := RingHom.kerLift (x : B →+* O)
+  have he : Function.Injective e := RingHom.kerLift_injective (x : B →+* O)
+  refine ⟨e.toAddMonoidHom.comp h.toAddMonoidHom, m₀, ?_, ?_⟩
+  · intro a m
+    change e (h (a • m)) = x a * e (h m)
+    rw [map_smul, Algebra.smul_def, map_mul]
+    rfl
+  · change e (h m₀) ≠ 0
+    intro h0
+    have h1 : h m₀ = 0 := he (by rw [h0, map_zero])
+    have h2 := hh m₀
+    rw [h1, map_zero] at h2
+    exact mul_ne_zero hc hm₀ h2.symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.SpectralEigenvalues.Lam0
+
+section
+
+@[expose] public section
+
+open IsLocalRing Polynomial
+
+theorem UpperTheory.V.Th.Sp.lam0 :
+    ∀ (O B M : Type) [CommRing O] [IsDomain O] [CommRing B] [Algebra O B] [AddCommGroup M] [Module B M] [Module.Finite B M] (x : B →ₐ[O] O), Module.annihilator B M ≤ RingHom.ker x → ∃ (lam : M →+ O) (m₀ : M), (∀ (a : B) m, lam (a • m) = x a * lam m) ∧ lam m₀ ≠ 0 :=
+  _root_.UpperTheory.Reformulated.B.Qf1.lam0
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.Imports
+
+section
+
+@[expose] public section
+
+open UpperTheory.V UpperTheory.V.Th
+open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa UpperTheory.V.Pa.Lev
+
+theorem UpperTheory.V.Th.split :
+    Split := by
+  intro l _ L G0 T n O _ _ _ _ _ r B _ _ _ u J D b y x al E hn hgen hmap hJ ⟨t₀, ht₀, hEt⟩ hPL heig
+  haveI : Module.Finite B b.M := by
+    letI : Algebra (abelian₂ O Empty D) B := b.lam.toRingHom.toAlgebra
+    haveI : IsScalarTower (abelian₂ O Empty D) B b.M := ⟨fun a c m => by
+      rw [b.smul_lam, ← mul_smul]; rfl⟩
+    haveI := b.fin
+    exact Module.Finite.of_restrictScalars_finite (abelian₂ O Empty D) B b.M
+  obtain ⟨lam, m₀, hlam, hm₀⟩ := Sp.lam0 O B b.M x ((b.supp _ (RingHom.ker_isPrime x)).2 hJ)
+  obtain ⟨F, hF, hev⟩ := Sp.eig l L G0 T n O y al hPL heig
+  refine ⟨x t₀ ^ 2 * lam m₀ * F ^ (3 * E + 6), mul_ne_zero (mul_ne_zero (pow_ne_zero _ ht₀) hm₀) (pow_ne_zero _ hF), fun m => ?_⟩
+  filter_upwards [hev, eventually_ge_atTop m] with N ⟨α, hα, hd⟩ hN A hA
+  exact ⟨α, Sp.one l L G0 _ (T.h N) n O r B u J D b T.q N A y x _ _ _ E α t₀ lam m₀ m _ hn hgen hmap hEt hlam
+    (fun j => Subtype.ext (T.ta_ker N j)) hα hA hN (mul_dvd_mul_left _ (pow_dvd_pow_of_dvd hd _))⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.MapRingHomSingleMulPartialCharpoly
+
+section
 
 @[expose] public section
 
@@ -289,3 +427,5 @@ theorem UpperTheory.V.Th.count :
   · rw [← hmem]
     have : c1 * c2 * c3 * d * t (some a) = d * (c1 * c2 * c3 * t (some a)) := by ring
     rw [this, mul_smul, hsome, smul_zero]
+end
+end

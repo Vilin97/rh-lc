@@ -4,8 +4,10 @@ public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankP
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameOO1FrameValPiIso
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RealDecompL
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameMoveH
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameSDecomp
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ScalarAgreeRatCOfScalT
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameOO3FrameValTrans
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.HermitianCombinationZ
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.SpanPreservation
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.StepPtRepPf
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,9 +45,86 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ScalarAgreeRatCOfScalT
+import Mathlib.Tactic.TypeStar
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DecompPhaseCOf
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameSDecomp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Matrix Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.RealObj
+
+namespace Formalism.L2.SG.Pf.RowForm
+
+namespace LocalFrameDecomposition
+
+variable {D : Formalism.BasicNotions.D7} (X : HidaSetting D)
+
+theorem frameLoc (w : D.what₂.Word) (v : NumberField.InfinitePlace X.B.I.F) :
+    PI.SchurPlaces.LeviLA.Frame (X.B.I.ε v) (fun a => rv X.B.I v (X.eR a)) (fun a => rv X.B.I v (X.fR a))
+      (rv X.B.I v (X.zR w)) (X.wfr w v) := by
+  let fr := Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v
+  exact
+    { ee := fr.ee
+      ef := fr.ef
+      ff := fr.ff
+      ez := fr.ez
+      fz := fr.fz
+      ew := fr.ew
+      fw := fr.fw
+      zw := fr.zw
+      ww := fr.ww
+      zz := fun h0 => fr.T_ne (neg_eq_zero.1 (fr.zz.symm.trans h0))
+      card := by
+        have h := fr.card
+        omega }
+
+end LocalFrameDecomposition
+
+variable {D : Formalism.BasicNotions.D7} (X : HidaSetting D)
+
+theorem sDecompC_holds (w : D.what₂.Word) : SDecompC X w := by
+  intro g hg
+  have hgi : g⁻¹ ∈ X.SinfU w := Formalism.L2.SG.RealObj.InfCut.sinfU_inv X w hg
+  have hS : ∀ v, InS (fun a => rv X.B.I v (X.eR a)) (rv X.B.I v (X.zR w)) (uMat (g⁻¹ v)) := hgi
+  choose V hVu hVe hVf hVz _ hVN using fun v =>
+    PI.SchurPlaces.LeviLA.levi_place (LocalFrameDecomposition.frameLoc X w v)
+      ((g⁻¹ v : Formalism.REAL.UJ (X.B.I.ε v)) : (Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ)ˣ) (g⁻¹ v).2 (hS v)
+  let s0 : X.B.I.Ginf := fun v => ⟨V v, hVu v⟩
+  have hs0 : ∀ v, uMat (s0 v) = (V v : Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ) := fun v => rfl
+  have hs0H : s0 ∈ HsetU X w := by
+    intro v p hp
+    rw [hs0]
+    rcases hp with (⟨a, rfl⟩ | ⟨a, rfl⟩) | hp
+    · exact hVe v a
+    · exact hVf v a
+    · rw [Set.mem_singleton_iff] at hp
+      subst hp
+      exact hVz v
+  have hN : s0⁻¹ * g⁻¹ ∈ X.NinfU w := fun v => by
+    have e : uMat ((s0⁻¹ * g⁻¹) v) =
+        (((V v)⁻¹ : (Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ)ˣ) : Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ) *
+          uMat (g⁻¹ v) := rfl
+    rw [e]
+    exact hVN v
+  have hN' := Formalism.L2.SG.RealObj.SpanPreservation.ninfU_inv X w hN
+  rw [_root_.mul_inv_rev, inv_inv, inv_inv] at hN'
+  exact ⟨g * s0, hN', s0⁻¹, Formalism.L2.SG.RealObj.InfCut.hsetU_inv X w hs0H, by group⟩
+
+end Formalism.L2.SG.Pf.RowForm
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RowFrameCoherence.ClassFrameAll
+
+section
 
 @[expose] public section
 
@@ -210,3 +289,6 @@ theorem classFrameC_all
     (classFrameOO_all X Y u u' vR i0 i0' νq κ hAtS hTP hCU hDF hPT hFT hVA hSc hV hAt) hVol hc
 
 end Formalism.L2.SG.Pf.RowForm
+end
+end
+end

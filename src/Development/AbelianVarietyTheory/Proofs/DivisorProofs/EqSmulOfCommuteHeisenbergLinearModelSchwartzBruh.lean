@@ -3,8 +3,6 @@ module
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddCharNegEqOne
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterTrivialMatrixLatticeOpenCompactBasisStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetEqSumAddCosetIndicatorStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenSubgroupPeriodicStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,13 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,9 +41,171 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetEqSumAddCosetIndicator
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.LinSchur
+
+
+open Classical in
+theorem exists_finset_eq_sum_cind {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X]
+    (L : AddSubgroup X) (hL : IsOpen (L : Set X)) (f : X → ℂ) (hf : f ∈ GlobalTheory.WeilM.SB X)
+    (hper : ∀ Y, ∀ C ∈ L, f (Y + C) = f Y) :
+    ∃ F : Finset X, f = ∑ y ∈ F, f y • GlobalTheory.LinSchur.cind L y := by
+  have hK : IsCompact (tsupport f) := hf.2
+  obtain ⟨F0, -, hcov⟩ := hK.elim_nhds_subcover (fun x => {Y | Y - x ∈ L}) (fun x _ =>
+    (hL.preimage (continuous_id.sub continuous_const)).mem_nhds (by simp))
+  refine ⟨(F0.image (QuotientAddGroup.mk (s := L))).image Quotient.out, ?_⟩
+  have hmk : ∀ y ∈ (F0.image (QuotientAddGroup.mk (s := L))).image Quotient.out, ∀ Y : X,
+      Y - y ∈ L ↔ (QuotientAddGroup.mk Y : X ⧸ L) = QuotientAddGroup.mk y := by
+    intro y _ Y
+    rw [QuotientAddGroup.eq, ← neg_mem_iff]
+    simp [sub_eq_add_neg, add_comm]
+  funext Y
+  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, GlobalTheory.LinSchur.cind]
+  by_cases hex : ∃ y ∈ (F0.image (QuotientAddGroup.mk (s := L))).image Quotient.out, Y - y ∈ L
+  · obtain ⟨y, hy, hYy⟩ := hex
+    rw [Finset.sum_eq_single y]
+    · rw [if_pos hYy, mul_one]
+      have := hper y (Y - y) hYy
+      rw [add_sub_cancel] at this
+      exact this
+    · intro y' hy' hne
+      rw [if_neg, mul_zero]
+      intro hY'
+      apply hne
+      obtain ⟨q', -, rfl⟩ := Finset.mem_image.mp hy'
+      obtain ⟨q, -, rfl⟩ := Finset.mem_image.mp hy
+      have e1 := (hmk _ hy' Y).mp hY'
+      have e2 := (hmk _ hy Y).mp hYy
+      simp only [QuotientAddGroup.out_eq'] at e1 e2
+      rw [← e1, ← e2]
+    · intro h; exact absurd hy h
+  · push_neg at hex
+    rw [Finset.sum_eq_zero (fun y hy => by rw [if_neg (hex y hy), mul_zero])]
+    apply image_eq_zero_of_notMem_tsupport
+    intro hY
+    have := hcov hY
+    simp only [Set.mem_iUnion, Set.mem_setOf_eq, exists_prop] at this
+    obtain ⟨y0, hy0, hYy0⟩ := this
+    have hmem : (QuotientAddGroup.mk y0 : X ⧸ L).out ∈
+        (F0.image (QuotientAddGroup.mk (s := L))).image Quotient.out :=
+      Finset.mem_image.mpr ⟨_, Finset.mem_image.mpr ⟨y0, hy0, rfl⟩, rfl⟩
+    apply hex _ hmem
+    rw [hmk _ hmem, QuotientAddGroup.out_eq']
+    rw [← QuotientAddGroup.eq_iff_sub_mem.mpr hYy0]
+
+end GlobalTheory.LinSchur
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinsetEqSumAddCosetIndicatorStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+
+theorem _root_.GlobalTheory.T.exists_finset_eq_sum_addCosetIndicator : ∀ {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] (L : AddSubgroup X), IsOpen (L : Set X) → ∀ f ∈ GlobalTheory.WeilM.SB X, (∀ Y, ∀ C ∈ L, f (Y + C) = f Y) → ∃ F : Finset X, f = ∑ y ∈ F, f y • GlobalTheory.LinSchur.cind L y := by
+  first | exact @GlobalTheory.LinSchur.exists_finset_eq_sum_cind | exact GlobalTheory.LinSchur.exists_finset_eq_sum_cind | (intros; apply GlobalTheory.LinSchur.exists_finset_eq_sum_cind <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenSubgroupPeriodic
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+namespace GlobalTheory.WeilM
+
+theorem SB.exists_periodic {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] {ι : Type}
+    (L : ι → AddSubgroup X) (hL : ∀ i, IsOpen (L i : Set X)) (hb : ∀ W ∈ 𝓝 (0 : X), ∃ i, (L i : Set X) ⊆ W) :
+    ∀ f ∈ GlobalTheory.WeilM.SB X, ∃ i, ∀ Y, ∀ C ∈ L i, f (Y + C) = f Y := by
+  intro f hf
+  obtain ⟨hlc, hcs⟩ := hf
+  have key : ∀ Y : X, ∃ i, ∀ C ∈ L i, f (Y + C) = f Y := by
+    intro Y
+    have h1 : f ⁻¹' {f Y} ∈ 𝓝 (Y + 0) := by rw [add_zero]; exact (hlc.isOpen_fiber _).mem_nhds rfl
+    have h2 : {C : X | f (Y + C) = f Y} ∈ 𝓝 (0 : X) := (continuous_const_add Y).continuousAt.preimage_mem_nhds h1
+    obtain ⟨i, hi⟩ := hb _ h2
+    exact ⟨i, fun C hC => hi hC⟩
+  choose g hg using key
+  obtain ⟨t, ht⟩ := hcs.isCompact.elim_finite_subcover (fun Y => {Z : X | Z - Y ∈ L (g Y)})
+    (fun Y => (hL _).preimage (continuous_sub_right Y))
+    (fun Z _ => Set.mem_iUnion.2 ⟨Z, by simp⟩)
+  have hW : (⋂ Y ∈ t, (L (g Y) : Set X)) ∈ 𝓝 (0 : X) :=
+    (Filter.biInter_finset_mem t).2 fun Y _ => (hL _).mem_nhds (L (g Y)).zero_mem
+  obtain ⟨j, hj⟩ := hb _ hW
+  refine ⟨j, fun Y C hC => ?_⟩
+  have hCt : ∀ Y0 ∈ t, C ∈ L (g Y0) := fun Y0 h0 => by
+    have := hj hC
+    simp only [Set.mem_iInter] at this
+    exact this Y0 h0
+  by_cases h : ∃ Y0 ∈ t, Y - Y0 ∈ L (g Y0)
+  · obtain ⟨Y0, h0, hY⟩ := h
+    have e1 := hg Y0 _ hY
+    have e2 := hg Y0 _ (add_mem hY (hCt Y0 h0))
+    rw [show Y0 + (Y - Y0) = Y by abel] at e1
+    rw [show Y0 + (Y - Y0 + C) = Y + C by abel] at e2
+    rw [e1, e2]
+  · push_neg at h
+    have hn : ∀ Z, Z ∈ tsupport f → ∃ Y0 ∈ t, Z - Y0 ∈ L (g Y0) := fun Z hZ => by
+      have := ht hZ
+      simp only [Set.mem_iUnion, Set.mem_setOf_eq] at this
+      obtain ⟨Y0, h0, h1⟩ := this
+      exact ⟨Y0, h0, h1⟩
+    have hY : Y ∉ tsupport f := fun hZ => by
+      obtain ⟨Y0, h0, h1⟩ := hn Y hZ
+      exact h Y0 h0 h1
+    have hYC : Y + C ∉ tsupport f := fun hZ => by
+      obtain ⟨Y0, h0, h1⟩ := hn _ hZ
+      apply h Y0 h0
+      have := sub_mem h1 (hCt Y0 h0)
+      rwa [show Y + C - Y0 - C = Y - Y0 by abel] at this
+    rw [image_eq_zero_of_notMem_tsupport hY, image_eq_zero_of_notMem_tsupport hYC]
+
+end GlobalTheory.WeilM
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenSubgroupPeriodicStatement
+
+section
+
+@[expose] public section
+
+open Filter Topology
+
+
+theorem _root_.GlobalTheory.T.exists_openSubgroup_periodic : ∀ {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] {ι : Type} (L : ι → AddSubgroup X), (∀ i, IsOpen (L i : Set X)) → (∀ W ∈ 𝓝 (0 : X), ∃ i, (L i : Set X) ⊆ W) → ∀ f ∈ GlobalTheory.WeilM.SB X, ∃ i, ∀ Y, ∀ C ∈ L i, f (Y + C) = f Y := by
+  first | exact @GlobalTheory.WeilM.SB.exists_periodic | exact GlobalTheory.WeilM.SB.exists_periodic | (intros; apply GlobalTheory.WeilM.SB.exists_periodic <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqSmulOfCommuteHeisenbergLinearModelSchwartzBruh
+
+section
 
 @[expose] public section
 
@@ -241,3 +394,6 @@ theorem GlobalTheory.LinSchur.eq_smul_of_commute : ∀ {k : Type} [Field k] [Val
   obtain ⟨s'', hs'', hsub⟩ := hBasis ((latt ψ0 n d s : Set (Matrix (Fin n) (Fin d) k)) ∩ latt ψ0 n d 1)
     (inter_mem ((hLoc s hs).1.mem_nhds (latt ψ0 n d s).zero_mem) ((hLoc 1 one_ne_zero).1.mem_nhds (latt ψ0 n d 1).zero_mem))
   rw [stepF s hs s'' hs'' (fun z hz => (hsub hz).1), stepF 1 one_ne_zero s'' hs'' (fun z hz => (hsub hz).2)]
+end
+end
+end

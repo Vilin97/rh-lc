@@ -5,12 +5,14 @@ public import GroundTheory.HeightsAndTheta.Heights.ArithDegree
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LogIndexOfOrthogonalFamily
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemEig
 public import GroundTheory.HeightsAndTheta.Heights.ArithDegreeIdeal
-public import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PLocalChange
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -18,11 +20,11 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,8 +44,83 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.Dimension.Localization
+public import Mathlib.NumberTheory.NumberField.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.ReduceModChar
 public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PLocalChange
+
+section
+
+@[expose] public section
+
+set_option maxSynthPendingDepth 1
+
+namespace GroundTheory.Heights₂.Heights.LatticeLemmas
+
+open NumberField IsDedekindDomain TensorProduct ComplexAt
+open GroundTheory.Heights₂.Heights
+
+universe u v
+
+noncomputable section
+
+section Congr
+
+variable {K : Type*} [Field K] [NumberField K]
+variable {E E' : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
+  [Module.Projective (𝓞 K) E] [AddCommGroup E'] [Module (𝓞 K) E'] [Module.Finite (𝓞 K) E']
+  [Module.Projective (𝓞 K) E']
+
+end Congr
+
+section Lattices
+
+variable {K : Type*} [Field K] [NumberField K]
+variable {V : Type*} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+
+end Lattices
+
+theorem finrank_submodule_eq {R M : Type*} [CommRing R] [IsDomain R] [AddCommGroup M] [Module R M]
+    (F : Submodule R M) (hF : ∀ x : M, ∃ a : R, a ≠ 0 ∧ a • x ∈ F) :
+    Module.finrank R F = Module.finrank R M := by
+  have h0 : Module.rank R (M ⧸ F) = 0 := by
+    rw [rank_eq_zero_iff]
+    intro x
+    obtain ⟨x, rfl⟩ := F.mkQ_surjective x
+    obtain ⟨a, ha, hax⟩ := hF x
+    refine ⟨a, ha, ?_⟩
+    rw [← map_smul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+    exact hax
+  have h := rank_quotient_add_rank_of_isDomain F
+  rw [h0, zero_add] at h
+  simp only [Module.finrank, h]
+
+section Local
+
+variable {K : Type*} [Field K] [NumberField K]
+variable {V : Type*} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+
+
+end Local
+
+end
+
+end GroundTheory.Heights₂.Heights.LatticeLemmas
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PlurisubharmonicCones.LinearIndependentImg
+
+section
 
 @[expose] public section
 
@@ -299,3 +375,6 @@ theorem rank_img (hli : LinearIndependent (𝓞 L) fun c => A.f (q c)) (hq : ∀
   rfl
 
 end LevelTowerAlt
+end
+end
+end

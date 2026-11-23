@@ -5,16 +5,12 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureR
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.AltSmulRightComp
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.BfDep
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.EvEqLc
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.ExtDerivCongrNhds
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.ExtDerivDelG
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.IntegrableOnSimp
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.PosDefOfSphere
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.SkipSuccAbove
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.Smooth
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.PSmooth
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -30,7 +26,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +35,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,9 +47,178 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.SkipSuccAbove
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.Smooth
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.IntegrableOnSimp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.PosDefOfSphere
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.SkipSuccAbove
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.Smooth
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.ExtDerivCongrNhds
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Set Filter Topology
+
+namespace PositivityTheory.KB.WhittakerCocycle
+
+variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {Γ : Type} [Group Γ]
+
+theorem cons_mul (a γ : Γ) (σ : ℕ → Γ) :
+    (fun n => a * cons γ σ n) = cons (a * γ) (fun n => a * σ n) := by
+  funext n; cases n <;> rfl
+
+theorem extDeriv_congr_nhds {n : ℕ} {ω₁ ω₂ : V → V [⋀^Fin n]→L[ℝ] ℝ} {x : V} (h : ω₁ =ᶠ[𝓝 x] ω₂) :
+    extDeriv ω₁ x = extDeriv ω₂ x := by
+  simp only [extDeriv, h.fderiv_eq]
+
+theorem kf_equiv {U : Set V} {A : Γ →* (V →L[ℝ] V)} {φ : V → ℝ} (hL : PLoc U A φ) (H : Hyp U A φ)
+    {q : ℕ} (β : (ℕ → Γ) → V → V [⋀^Fin q]→L[ℝ] ℝ) (B : V →L[ℝ] V) (a : Γ)
+    (hB : ∀ h ∈ U, B h ∈ U) (hψ : ∀ γ, ∀ h ∈ U, psi A φ γ (B h) = psi A φ (a * γ) h)
+    (hβ : ∀ σ, ∀ h ∈ U, (β σ (B h)).compContinuousLinearMap B = β (fun n => a * σ n) h)
+    (σ : ℕ → Γ) {h : V} (hh : h ∈ U) :
+    (Kf A φ β σ (B h)).compContinuousLinearMap B = Kf A φ β (fun n => a * σ n) h := by
+  obtain ⟨s, W, hW, -, hs⟩ := hL H (B h) (hB h hh)
+  have hfin : Function.HasFiniteSupport
+      (fun γ => psi A φ γ (B h) • β (cons γ σ) (B h)) := by
+    refine s.finite_toSet.subset ?_
+    intro γ hγ
+    by_contra hγs
+    apply hγ
+    simp [hs γ hγs (B h) (mem_of_mem_nhds hW)]
+  have key : ∀ γ, ContinuousAlternatingMap.compContinuousLinearMapCLM B
+      (psi A φ γ (B h) • β (cons γ σ) (B h))
+        = psi A φ (a * γ) h • β (cons (a * γ) (fun n => a * σ n)) h := by
+    intro γ
+    rw [map_smul, ← cons_mul, ← hβ _ h hh, ← hψ γ h hh]
+    rfl
+  calc (Kf A φ β σ (B h)).compContinuousLinearMap B
+      = ContinuousAlternatingMap.compContinuousLinearMapCLM B
+          (∑ᶠ γ, psi A φ γ (B h) • β (cons γ σ) (B h)) := rfl
+    _ = ∑ᶠ γ, ContinuousAlternatingMap.compContinuousLinearMapCLM B
+          (psi A φ γ (B h) • β (cons γ σ) (B h)) := map_finsum _ hfin
+    _ = ∑ᶠ γ, psi A φ (a * γ) h • β (cons (a * γ) (fun n => a * σ n)) h := finsum_congr key
+    _ = Kf A φ β (fun n => a * σ n) h :=
+      finsum_comp_equiv (Equiv.mulLeft a)
+        (f := fun γ => psi A φ γ h • β (cons γ (fun n => a * σ n)) h)
+
+theorem pEquiv (U : Set V) (A : Γ →* (V →L[ℝ] V)) (φ : V → ℝ) (hL : PLoc U A φ)
+    (hS : PSmooth U A φ) : PEquiv U A φ := by
+  intro H k c hc B a hB hψ
+  have hfd : ∀ x, fderiv ℝ B x = B := fun x => B.fderiv
+  have he : ∀ j σ, ∀ h ∈ U, (eta A φ c j σ (B h)).compContinuousLinearMap B
+      = eta A φ c j (fun n => a * σ n) h := by
+    intro j
+    induction j with
+    | zero =>
+      intro σ h hh
+      rw [eta.eq_1, eta.eq_1]
+      ext m
+      simp [hc a (fun i => σ i)]
+    | succ j ih =>
+      intro σ h hh
+      have hK : ∀ x ∈ U, (Kf A φ (eta A φ c j) σ (B x)).compContinuousLinearMap B
+          = Kf A φ (eta A φ c j) (fun n => a * σ n) x :=
+        fun x hx => kf_equiv hL H (eta A φ c j) B a hB hψ ih σ hx
+      have hdiff : DifferentiableAt ℝ (Kf A φ (eta A φ c j) σ) (B h) :=
+        ((hS H k c j σ).2.contDiffAt (H.isOpen.mem_nhds (hB h hh))).differentiableAt (by simp)
+      have hpb := extDeriv_pullback (f := B) (x := h) (r := ⊤) hdiff B.contDiff.contDiffAt le_top
+      simp only [hfd] at hpb
+      rw [eta.eq_2, eta.eq_2, ← hpb]
+      apply extDeriv_congr_nhds
+      filter_upwards [H.isOpen.mem_nhds hh] with x hx
+      exact hK x hx
+  intro j σ h hh
+  exact ⟨he j σ h hh, kf_equiv hL H (eta A φ c j) B a hB hψ (he j) σ hh⟩
+
+end PositivityTheory.KB.WhittakerCocycle
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.ExtDerivDelG
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Set Filter Topology
+
+namespace PositivityTheory.KB.WhittakerCocycle
+
+set_option linter.unusedSectionVars false
+
+variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {Γ : Type} [Group Γ]
+
+variable (U : Set V) (A : Γ →* (V →L[ℝ] V)) (φ : V → ℝ)
+
+theorem extDeriv_delG (n : ℕ) {q : ℕ} (β : (ℕ → Γ) → V → V [⋀^Fin q]→L[ℝ] ℝ) (σ : ℕ → Γ) (h : V)
+    (hd : ∀ i, DifferentiableAt ℝ (β (skip i σ)) h) :
+    delG n (fun τ => extDeriv (β τ)) σ h = extDeriv (delG n β σ) h := by
+  have e : delG n β σ = fun x => ∑ i ∈ Finset.range (n + 2), (-1 : ℝ) ^ i • β (skip i σ) x := by
+    funext x; simp [delG, Finset.sum_apply]
+  rw [e, extDeriv, fderiv_fun_sum (A := fun i y => (-1 : ℝ) ^ i • β (skip i σ) y)
+    (fun i _ => (hd i).const_smul ((-1 : ℝ) ^ i))]
+
+  simp only [fderiv_fun_const_smul (hd _), delG, Finset.sum_apply, Pi.smul_apply, extDeriv,
+  ← ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply, map_sum, map_smul]
+
+theorem pCoc (hH : PHom U A φ) (hS : PSmooth U A φ) (hC : PClosed U A φ) :
+    PCoc U A φ := by
+  intro H k c hc j
+  induction j with
+  | zero =>
+    intro _ σ h _
+    ext v
+    simp only [delG, Finset.sum_apply, Pi.smul_apply, eta_zero, ContinuousAlternatingMap.sum_apply,
+      ContinuousAlternatingMap.smul_apply, ContinuousAlternatingMap.constOfIsEmpty_apply,
+      ContinuousAlternatingMap.coe_zero, Pi.zero_apply, smul_eq_mul, Nat.sub_zero]
+    rw [Finset.sum_range]
+    refine (Finset.sum_congr rfl fun i _ => ?_).trans (hc.coc fun l => σ l)
+    congr 2
+    funext l
+    exact skip_succAbove σ i l
+  | succ j ih =>
+    intro hj σ h hh
+    have hj' : j ≤ k + 1 := by omega
+    have e1 : k + 1 - (j + 1) = k - j := by omega
+    rw [e1]
+    have e2 : delG (k - j) (eta A φ c (j + 1)) σ h =
+        delG (k - j) (fun τ => extDeriv (Kf A φ (eta A φ c j) τ)) σ h := rfl
+    rw [e2, extDeriv_delG (k - j) (Kf A φ (eta A φ c j)) σ h (fun i =>
+      ((hS H k c j _).2.contDiffAt (H.isOpen.mem_nhds hh)).differentiableAt (by simp))]
+    have hev : delG (k - j) (Kf A φ (eta A φ c j)) σ =ᶠ[𝓝 h] eta A φ c j σ := by
+      filter_upwards [H.isOpen.mem_nhds hh] with x hx
+      rw [hH H j (k - j) (eta A φ c j) σ x hx]
+      have h0 : Kf A φ (delG (k - j + 1) (eta A φ c j)) σ x = 0 := by
+        unfold Kf
+        have e3 : k - j + 1 = k + 1 - j := by omega
+        simp only [e3, ih hj' _ x hx, smul_zero, finsum_zero]
+      rw [h0, sub_zero]
+    rw [hev.extDeriv_eq]
+    exact hC H k c j σ h hh
+
+end PositivityTheory.KB.WhittakerCocycle
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.WhittakerSmoothForms.ActHomApply
+
+section
 
 @[expose] public section
 
@@ -232,4 +397,6 @@ theorem sWhit_of (_hEv : SEv) (hSt : SStokes) : SWhit := by
 
 end PositivityTheory.KB
 
+end
+end
 end

@@ -1,7 +1,10 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.DegreeHermitianFormula
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PtRetr
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PfChiOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PfLevInv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PfPtInv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PullRetrFacts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -36,6 +39,35 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PairDefs
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.PtRetr
+
+section
+
+@[expose] public section
+
+open UpperTheory.V.Lit.Geo
+
+theorem UpperTheory.V.Lit.Geo.ptRetr :
+    PtRetr := by
+  intro E _ _ _ a ha U hU Ξ r χ G n e hD q α β hα hβ g
+  have hv := Pf.levInv E a ha U hU Ξ r χ hD.one hD.tw
+  obtain ⟨t, ht⟩ := (retrFacts E a).1 g
+  obtain ⟨s, hs⟩ := hD.tw.1
+  have h1 := Pf.chiOne E a χ s hs (GroundTheory.Automorphic.CuspidalSpectrum.retractOne g)
+  rw [Pf.ptIp_eq]
+  refine Finset.sum_congr rfl fun I _ => ?_
+  have hc := ((Pf.ptInv E a χ _ G _ _).2.1 (hv q α hα fun i => e (I i)) (hv q β hβ fun i => e (I i))).centre t g
+  rw [← hc, ← ht, Pf.pt, h1]
+  simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.LieGeometryGrowth.FormBd
+
+section
 
 @[expose] public section
 
@@ -69,3 +101,5 @@ theorem UpperTheory.V.Lit.Geo.ptBd :
   refine (mul_le_mul (mul_le_mul_of_nonneg_left b1 hS) b2 (norm_nonneg _)
     (mul_nonneg hS (mul_nonneg hM hP))).trans_eq ?_
   ring
+end
+end

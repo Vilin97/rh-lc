@@ -2,26 +2,31 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ContinuousExptPY
 public import Mathlib.Analysis.Matrix.Normed
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasDerivAtExpAddSmulDuhamel
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralExpOneSubTwoMulSmul
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.KroneckerTransposeMulVecVecM
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,7 +47,176 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ContinuousExptPY
+import Formalism.LocalRingCardinality.DataTheta
+import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralExpOneSubTwoMulSmul
+import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasDerivAtExpAddSmulDuhamel
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheory.PolarU Matrix MeasureTheory
+
+namespace GlobalTheory
+
+theorem hasDerivAt_exp_add_smul_duhamel (A : Type) [NormedRing A] [NormedAlgebra ℝ A]
+    [CompleteSpace A] (X V : A) :
+    HasDerivAt (fun t : ℝ => NormedSpace.exp (X + t • V))
+      (∫ s in (0 : ℝ)..1, NormedSpace.exp ((1 - s) • X) * V * NormedSpace.exp (s • X)) 0 := by
+  letI : NormedAlgebra ℚ A := NormedAlgebra.restrictScalars ℚ ℝ A
+  have hc : Continuous (NormedSpace.exp : A → A) := NormedSpace.exp_continuous
+  set f : ℝ → ℝ → A := fun t s =>
+    NormedSpace.exp ((1 - s) • X) * V * NormedSpace.exp (s • (X + t • V)) with hf
+  have hfc : Continuous (Function.uncurry f) := by
+    simp only [hf, Function.uncurry_def]
+    exact ((hc.comp (by fun_prop)).mul continuous_const).mul (hc.comp (by fun_prop))
+  set F : ℝ → A := fun t => ∫ s in (0 : ℝ)..1, f t s with hF
+  have hFc : Continuous F :=
+    intervalIntegral.continuous_parametric_intervalIntegral_of_continuous' hfc 0 1
+  have key : ∀ t : ℝ, NormedSpace.exp (X + t • V) = NormedSpace.exp X + t • F t := by
+    intro t
+    have hd : ∀ s : ℝ, HasDerivAt
+        (fun s : ℝ => NormedSpace.exp ((1 - s) • X) * NormedSpace.exp (s • (X + t • V)))
+        (t • f t s) s := by
+      intro s
+      have h0 : HasDerivAt (fun s : ℝ => 1 - s) (-1) s := by
+        simpa using (hasDerivAt_id s).const_sub 1
+      have h1 := (hasDerivAt_exp_smul_const (𝕂 := ℝ) X (1 - s)).scomp s h0
+      have h2 := hasDerivAt_exp_smul_const' (𝕂 := ℝ) (X + t • V) s
+      have h3 := h1.mul h2
+      refine h3.congr_deriv ?_
+      simp only [hf, Function.comp_apply, neg_smul, one_smul, add_mul, mul_add, mul_assoc,
+        neg_mul, smul_mul_assoc, mul_smul_comm]
+      abel
+    have hi : IntervalIntegrable (fun s => t • f t s) volume 0 1 :=
+      ((hfc.comp (Continuous.prodMk_right t)).const_smul t).intervalIntegrable 0 1
+    have h := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s _ => hd s) hi
+    rw [intervalIntegral.integral_smul] at h
+    simp only [sub_self, zero_smul, NormedSpace.exp_zero, one_mul, one_smul, sub_zero,
+      mul_one] at h
+    simp only [hF]
+    rw [h]
+    abel
+  have hF0 : F 0 = ∫ s in (0 : ℝ)..1,
+      NormedSpace.exp ((1 - s) • X) * V * NormedSpace.exp (s • X) := by
+    simp [hF, hf]
+  rw [← hF0, hasDerivAt_iff_tendsto_slope_zero]
+  have ht : Filter.Tendsto F (nhdsWithin 0 {0}ᶜ) (nhds (F 0)) :=
+    hFc.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+  refine ht.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht0
+  have ht0' : t ≠ 0 := ht0
+  rw [key (0 + t), key 0]
+  simp [smul_smul, inv_mul_cancel₀ ht0']
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.KroneckerTransposeMulVecVecM
+
+section
+
+@[expose] public section
+
+noncomputable section
+namespace GlobalTheory.PolarU
+open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheory.PolarU Matrix MeasureTheory
+open scoped Kronecker
+
+section general
+variable {m n : Type} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
+
+def kronLeftHom (m n : Type) [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n] :
+    Matrix m m ℂ →+* Matrix (m × n) (m × n) ℂ where
+  toFun Y := Y ⊗ₖ (1 : Matrix n n ℂ)
+  map_one' := Matrix.one_kronecker_one
+  map_mul' A B := by rw [← Matrix.mul_kronecker_mul, Matrix.mul_one]
+  map_zero' := Matrix.zero_kronecker _
+  map_add' A B := Matrix.add_kronecker _ _ _
+
+def kronRightHom (m n : Type) [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n] :
+    Matrix n n ℂ →+* Matrix (m × n) (m × n) ℂ where
+  toFun Z := (1 : Matrix m m ℂ) ⊗ₖ Z
+  map_one' := Matrix.one_kronecker_one
+  map_mul' A B := by rw [← Matrix.mul_kronecker_mul, Matrix.mul_one]
+  map_zero' := Matrix.kronecker_zero _
+  map_add' A B := Matrix.kronecker_add _ _ _
+
+theorem continuous_kronLeftHom : Continuous (kronLeftHom m n) := by
+  refine continuous_pi fun i => continuous_pi fun j => ?_
+  show Continuous fun Y : Matrix m m ℂ => Y i.1 j.1 * (1 : Matrix n n ℂ) i.2 j.2
+  exact (continuous_apply_apply i.1 j.1).mul continuous_const
+
+theorem continuous_kronRightHom : Continuous (kronRightHom m n) := by
+  refine continuous_pi fun i => continuous_pi fun j => ?_
+  show Continuous fun Z : Matrix n n ℂ => (1 : Matrix m m ℂ) i.1 j.1 * Z i.2 j.2
+  exact continuous_const.mul (continuous_apply_apply i.2 j.2)
+
+theorem exp_kronecker_one (Y : Matrix m m ℂ) :
+    NormedSpace.exp (Y ⊗ₖ (1 : Matrix n n ℂ)) = NormedSpace.exp Y ⊗ₖ (1 : Matrix n n ℂ) := by
+
+  open Norms.Operator in
+  exact (NormedSpace.map_exp (kronLeftHom m n) continuous_kronLeftHom Y).symm
+
+theorem exp_one_kronecker (Z : Matrix n n ℂ) :
+    NormedSpace.exp ((1 : Matrix m m ℂ) ⊗ₖ Z) = (1 : Matrix m m ℂ) ⊗ₖ NormedSpace.exp Z := by
+  open Norms.Operator in
+  exact (NormedSpace.map_exp (kronRightHom m n) continuous_kronRightHom Z).symm
+
+end general
+
+theorem kronecker_transpose_mulVec_vecM {p q : ℕ} (A B V : Mat p q) :
+    (A ⊗ₖ Bᵀ) *ᵥ vecM V = vecM (A * V * B) := by
+  funext ab
+  obtain ⟨a, b⟩ := ab
+  simp only [vecM, Matrix.mulVec, dotProduct, Matrix.kronecker_apply, Matrix.transpose_apply,
+    Matrix.mul_apply, Fintype.sum_prod_type, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun c _ => ?_
+  ring
+
+theorem exp_adMat_mulVec (p q : ℕ) (Y V : Mat p q) :
+    NormedSpace.exp (adMat Y) *ᵥ vecM V =
+      vecM (NormedSpace.exp Y * V * NormedSpace.exp (-Y)) := by
+
+  have hsplit : adMat Y = Y ⊗ₖ (1 : Mat p q) + (1 : Mat p q) ⊗ₖ (-Yᵀ) := by
+    rw [adMat, sub_eq_add_neg]
+    congr 1
+    ext i j
+    simp [Matrix.kronecker_apply, Matrix.kroneckerMap_apply]
+  have hcomm : Commute (Y ⊗ₖ (1 : Mat p q)) ((1 : Mat p q) ⊗ₖ (-Yᵀ)) := by
+    show _ * _ = _ * _
+    simp only [← Matrix.mul_kronecker_mul, one_mul, mul_one]
+  rw [hsplit, Matrix.exp_add_of_commute _ _ hcomm, exp_kronecker_one, exp_one_kronecker,
+    ← Matrix.mul_kronecker_mul, mul_one, one_mul, ← Matrix.transpose_neg, Matrix.exp_transpose]
+  exact kronecker_transpose_mulVec_vecM _ _ _
+
+end GlobalTheory.PolarU
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasDerivAtExpTwoAddSmulSinhcAdjoint
+
+section
 
 @[expose] public section
 
@@ -138,3 +312,6 @@ theorem hasDerivAt_exp_two_add_smul (p q : ℕ) (Y V : Mat p q) (a b : Ix p q) :
   exact (LinearMap.toContinuousLinearMap e).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hD
 
 end GlobalTheory.PolarU
+end
+end
+end

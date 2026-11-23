@@ -1,7 +1,6 @@
 module
 
-public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.ResidualLatticeSetting
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaloisTwistedSelmerAuxprimesOfMatrixAndBounds
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTameInertiaElementAtTwistPrime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,8 +16,6 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -39,7 +36,60 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GaloisTwistedSelmerAuxprimesOfMatrixAndBounds
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.ResidualLatticeSetting
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen GlobalTheory.TwSys
+
+namespace GlobalTheory.IndefiniteRowSideFullHecke.ResidualLatticeSetting
+
+variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} (X : NTw D.R D.host D.what₂ D.LL0 N)
+
+def maxLam (i : X.Tw) (M : ℕ) (ι : Type) : Ideal (abelian₂ X i M ι) :=
+  (IsLocalRing.maximalIdeal (X.O0 i)).map (algebraMap (X.O0 i) (abelian₂ X i M ι)) ⊔
+    Ideal.span (Set.range fun q : ι => toLam X i M ι (MvPolynomial.X q))
+
+theorem maxLam_ne_top (i : X.Tw) (M : ℕ) (ι : Type) : maxLam X i M ι ≠ ⊤ := by
+  classical
+  let ε : abelian₂ X i M ι →ₐ[X.O0 i] X.O0 i := MonoidAlgebra.lift (X.O0 i) (X.O0 i) (Del X i M ι) 1
+  let φ : abelian₂ X i M ι →+* IsLocalRing.ResidueField (X.O0 i) :=
+    (IsLocalRing.residue (X.O0 i)).comp ε.toRingHom
+  have hle : maxLam X i M ι ≤ RingHom.ker φ := by
+    unfold maxLam
+    refine sup_le ?_ ?_
+    · rw [Ideal.map_le_iff_le_comap]
+      intro c hc
+      rw [Ideal.mem_comap, RingHom.mem_ker]
+      simpa [φ, ε, IsLocalRing.residue_eq_zero_iff] using hc
+    · rw [Ideal.span_le]
+      rintro _ ⟨q, rfl⟩
+      simp [φ, ε, toLam]
+  exact ne_top_of_le_ne_top (RingHom.ker_ne_top φ) hle
+
+variable {X} (bkP : BKPh X)
+
+
+end GlobalTheory.IndefiniteRowSideFullHecke.ResidualLatticeSetting
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SelmerIffSelmerMatrixAtPrimes
+
+section
 
 @[expose] public section
 
@@ -135,4 +185,6 @@ variable {X} (bkP : BKPh X)
 
 end GlobalTheory.SelMatrixCompare
 
+end
+end
 end

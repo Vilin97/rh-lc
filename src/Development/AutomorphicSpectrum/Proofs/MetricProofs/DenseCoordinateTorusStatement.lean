@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DenseCoordinateTorus
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,6 +44,33 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AutomorphicSpectrum.Proofs.MetricProofs.IntegralAngMeas
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.DenseCoordinateTorus
+
+section
+
+@[expose] public section
+
+open MeasureTheory Filter Topology GlobalTheory.CompanionTheory.Ar.PB.Flat
+open scoped ContDiff
+
+namespace GlobalTheory.CompanionTheory.Ar.PB.Flat
+
+theorem dense_forall_coord_ne_zero : ∀ n : ℕ, Dense {z : Fin n → ℂ | ∀ i, z i ≠ 0} := by
+  intro n
+  have h : {z : Fin n → ℂ | ∀ i, z i ≠ 0} = Set.pi Set.univ (fun _ => ({0}ᶜ : Set ℂ)) := by
+    ext z
+    simp
+  rw [h]
+  exact dense_pi Set.univ (fun _ _ => dense_compl_singleton 0)
+
+end GlobalTheory.CompanionTheory.Ar.PB.Flat
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.DenseCoordinateTorusStatement
+
+section
+
 @[expose] public section
 
 open MeasureTheory Filter Topology GlobalTheory.CompanionTheory.Ar.PB.Flat
@@ -50,3 +78,5 @@ open scoped ContDiff
 
 theorem _root_.GlobalTheory.T.dense_coordinate_torus : ∀ n : ℕ, Dense {z : Fin n → ℂ | ∀ i, z i ≠ 0} := by
   first | exact @GlobalTheory.CompanionTheory.Ar.PB.Flat.dense_forall_coord_ne_zero | exact GlobalTheory.CompanionTheory.Ar.PB.Flat.dense_forall_coord_ne_zero | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.Flat.dense_forall_coord_ne_zero <;> assumption)
+end
+end

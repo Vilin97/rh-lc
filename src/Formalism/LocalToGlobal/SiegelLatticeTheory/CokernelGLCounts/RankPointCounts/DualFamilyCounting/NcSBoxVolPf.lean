@@ -1,17 +1,19 @@
 module
 
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSFinVolSk
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSBoxSteps
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -19,8 +21,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,9 +40,197 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.Measures
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.Volumes
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FundamentalEquivalence.LevelIntersectParabolic
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicLocalCompactness.AdeleLC
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicLocalCompactness.T2SpaceTensorProductFiniteExtension
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.AdmCpt
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.RestrProdG
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.TensAll
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.TensTop
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.TopoAF
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.TopoMeas
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSBoxVolSk
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.NcS.BoxVolSk
+
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub Formalism.L2.SG.Measures Formalism.L2.SG.Volumes Formalism.L2.SG.LocVol
+  NumberField IsDedekindDomain MeasureTheory
+open scoped TensorProduct
+
+def GramMeas : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (a : ℕ) (T : Matrix (Fin a) (Fin a) E),
+    MeasurableSet {x : Fin a → Fin n → Af F ⊗[F] E | gramR (Af F) σ J x ≠ T.map (inclR (Af F))} ∧
+    (∀ y : Fin a → Fin n → AF F ⊗[F] E, gramR (AF F) σ J y = T.map (inclR (AF F)) →
+      gramR (Af F) σ J (projFin y) = T.map (inclR (Af F))) ∧
+    (∀ x : Fin a → Fin n → Af F ⊗[F] E, gramR (Af F) σ J x = T.map (inclR (Af F)) →
+      ∀ v, gramR (Fv F v) σ J (projV v x) = T.map (inclR (Fv F v)))
+
+def PosTest : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (a : ℕ)
+    (μ : Measure (Fin a → Fin n → Ainf F ⊗[F] E)) (ν : Measure (HermR (Ainf F) σ a))
+    (fib : HermR (Ainf F) σ a → Measure (Fin a → Fin n → Ainf F ⊗[F] E)) (t : HermR (Ainf F) σ a),
+    IsFibreFamily μ (gramR (Ainf F) σ J) Subtype.val {X | LinearIndependent (Ainf F ⊗[F] E) X} ν Set.univ fib →
+    fib t ≠ 0 →
+    ∃ Φ : (Fin a → Fin n → Ainf F ⊗[F] E) → ℝ, Continuous Φ ∧ HasCompactSupport Φ ∧ (∀ x, 0 ≤ Φ x) ∧
+      Integrable Φ (fib t) ∧ 0 < ∫ x, Φ x ∂(fib t)
+
+def FinInt : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (n a d : ℕ) (b : Module.Basis (Fin d) F E) (x : Fin a → Fin n → Af F ⊗[F] E),
+    ∀ᶠ v in Filter.cofinite, projV v x ∈ latV b v
+
+def BoxMeas : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+    (n a : ℕ) (C : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fin a → Fin n → Fv F v ⊗[F] E)),
+    (∀ v, MeasurableSet (C v)) → MeasurableSet {x : Fin a → Fin n → Af F ⊗[F] E | ∀ v, projV v x ∈ C v}
+
+theorem BoxVolSk_tprod_ofReal {ι : Type} (r : ι → ℝ) (hm : Multipliable (fun i => (r i : ℂ))) :
+    ∏' i, (r i : ℂ) = ((∏' i, r i : ℝ) : ℂ) := by
+  obtain ⟨L, hL⟩ := hm
+  have hclosed : IsClosed (Set.range ((↑) : ℝ → ℂ)) := Complex.isometry_ofReal.isClosedEmbedding.isClosed_range
+  have hmem : L ∈ Set.range ((↑) : ℝ → ℂ) :=
+    hclosed.mem_of_tendsto hL (Filter.Eventually.of_forall fun s => ⟨∏ i ∈ s, r i, by rw [Complex.ofReal_prod]⟩)
+  obtain ⟨l, rfl⟩ := hmem
+  have hr : HasProd r l :=
+    (Complex.isometry_ofReal.isEmbedding.isInducing.hasProd_iff (g := Complex.ofRealHom) (f := r) (a := l)).mp hL
+  rw [hL.tprod_eq, hr.tprod_eq]
+
+end Formalism.L2.SG.Pf.NcS.BoxVolSk
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSBoxSteps
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.L2.SG.Pf.NcS.BoxSteps
+
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub NumberField IsDedekindDomain MeasureTheory
+open Formalism.L2.SG.Pf.NcS.BoxVolSk
+open scoped TensorProduct
+
+theorem finite_integral_holds : FinInt := by
+  intro F E _ _ _ _ _ n a d b x
+  have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  exact PI.VolStabS.AdmissibleCompactSupport.eventually_mem_latV b x
+
+theorem box_measurable_holds : BoxMeas := by
+  intro F E _ _ _ _ _ n a C hC
+  have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  let b := Module.finBasis F E
+  have e : {x : Fin a → Fin n → Af F ⊗[F] E | ∀ v, projV v x ∈ C v} = ⋂ v, projV v ⁻¹' C v := by
+    ext x; simp
+  rw [e]
+  exact MeasurableSet.iInter fun v =>
+    (PI.VolStabS.TopoMeas.continuous_projV b v).measurable (hC v)
+
+theorem gram_measurable_holds : GramMeas := by
+  intro F E _ _ _ _ _ σ n J a T
+  have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  refine ⟨?_, fun y hy => ?_, fun x hx v => ?_⟩
+  · have : T2Space (Af F ⊗[F] E) := PI.VolStabS.RestrProdG.t2_tensor_product (Af F)
+    have : T2Space (Matrix (Fin a) (Fin a) (Af F ⊗[F] E)) :=
+      inferInstanceAs (T2Space (Fin a → Fin a → Af F ⊗[F] E))
+    exact (isClosed_singleton.preimage
+      (PI.VolStabS.continuous_gramR (Af F) σ J)).isOpen_compl.measurableSet
+  · funext i j
+    have h := congrArg (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E))
+      (congrFun (congrFun hy i) j)
+    rw [PI.VolStabS.RestrProdG.map_gramR, Matrix.map_apply,
+      PI.VolStabS.RestrProdG.map_inclR] at h
+    rw [Matrix.map_apply]
+    exact h
+  · funext i j
+    have h := congrArg (Algebra.TensorProduct.map (evalV F v) (AlgHom.id F E))
+      (congrFun (congrFun hx i) j)
+    rw [PI.VolStabS.RestrProdG.map_gramR, Matrix.map_apply,
+      PI.VolStabS.RestrProdG.map_inclR] at h
+    rw [Matrix.map_apply]
+    exact h
+
+theorem positivity_test_holds : PosTest := by
+  intro F E _ _ _ _ _ σ n J a μ ν fib t hfib hne
+  classical
+  have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  let b := Module.finBasis F E
+  set V := Fin a → Fin n → Ainf F ⊗[F] E
+  set U : Set V := {X | LinearIndependent (Ainf F ⊗[F] E) X} with hUdef
+  have hUo : IsOpen U := PI.VolStabS.TensAllW.isOpen_linIndep b (Ainf F)
+    (PI.VolStabS.isOpen_units_Ainf F) (PI.VolStabS.lip_ainf F)
+  have : LocallyCompactSpace (Ainf F ⊗[F] E) := PI.AdicCompletionValuation.locallyCompactSpace_tens (Ainf F)
+  have : T2Space (Ainf F ⊗[F] E) := PI.VolStabS.RestrProdG.t2_tensor_product (Ainf F)
+  have : SecondCountableTopology (Ainf F ⊗[F] E) := PI.VolStabS.secondCountable_tens (Ainf F)
+
+  have hcU : fib t Uᶜ = 0 := measure_mono_null
+    (Set.compl_subset_compl.2 Set.inter_subset_right) (hfib.1 t)
+  have hUpos : 0 < fib t U := by
+    rcases eq_or_ne (fib t U) 0 with h | h
+    · exfalso; apply hne
+      rw [← Measure.measure_univ_eq_zero]
+      have := measure_union_null h hcU
+      rwa [Set.union_compl_self] at this
+    · exact pos_iff_ne_zero.2 h
+
+  have : LocallyCompactSpace U := hUo.locallyCompactSpace
+  have : SigmaCompactSpace U := sigmaCompactSpace_of_locallyCompact_secondCountable
+  have hUeq : U = ⋃ m, Subtype.val '' compactCovering U m := by
+    ext x; constructor
+    · intro hx
+      obtain ⟨m, hm⟩ := Set.mem_iUnion.1 ((iUnion_compactCovering U).symm ▸ Set.mem_univ (⟨x, hx⟩ : U))
+      exact Set.mem_iUnion.2 ⟨m, ⟨⟨x, hx⟩, hm, rfl⟩⟩
+    · intro hx
+      obtain ⟨m, y, _, rfl⟩ := Set.mem_iUnion.1 hx
+      exact y.2
+  obtain ⟨m, hm⟩ : ∃ m, 0 < fib t (Subtype.val '' compactCovering U m) := by
+    by_contra hcon
+    simp only [not_exists, not_lt] at hcon
+    have : fib t U = 0 := by
+      rw [hUeq]
+      exact measure_iUnion_null fun m => nonpos_iff_eq_zero.1 (hcon m)
+    exact hUpos.ne' this
+  set K : Set V := Subtype.val '' compactCovering U m
+  have hK : IsCompact K := (isCompact_compactCovering U m).image continuous_subtype_val
+  have hKU : K ⊆ U := by rintro _ ⟨y, _, rfl⟩; exact y.2
+  obtain ⟨f, hf1, hfc, hfU, hf01⟩ := exists_continuousMap_one_of_isCompact_subset_isOpen hK hUo hKU
+  have hint : Integrable f (fib t) :=
+    ((hfib.2.2 f f.continuous hfc hfU).1 t (Set.mem_univ _))
+  refine ⟨f, f.continuous, hfc, fun x => (hf01 x).1, hint, ?_⟩
+  rw [integral_pos_iff_support_of_nonneg (fun x => (hf01 x).1) hint]
+  refine lt_of_lt_of_le hm (measure_mono fun x hx => ?_)
+  rw [Function.mem_support, hf1 hx]
+  exact one_ne_zero
+
+end Formalism.L2.SG.Pf.NcS.BoxSteps
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.NcSBoxVolPf
+
+section
 
 @[expose] public section
 
@@ -219,3 +407,6 @@ theorem box_volume_holds : BoxVol := by
     rw [← hB, ENNReal.ofReal_toReal hωT]
 
 end Formalism.L2.SG.Pf.NcS.BoxVolPf
+end
+end
+end

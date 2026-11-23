@@ -3,7 +3,8 @@ module
 public import Formalism.HermitianCurvature.ArchimedeanUniformConstantsCompactSupport
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSETopFinal
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferSmoothAtBuiltPlace
-public import Formalism.HermitianCurvature.JcRadialModuleFormOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEXMkTop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PbBuiltBounds2CptOfMkTop
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +43,38 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.BuiltBoundsCompact
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.P
+
+theorem built_bounds_compact : Formalism.FourierDecayAlt.KB.BuiltBounds2Cpt := pb_builtBounds2Cpt_of_mkTop top_truncation_of_averages
+
+end Formalism.FourierDecayAlt.P
+end
+end
+
+-- Source module: Formalism.HermitianCurvature.JcRadialModuleFormOfParts
+
+section
+
+@[expose] public section
+
+namespace Formalism.FourierDecayAlt.Final
+
+theorem pb_builtBounds2Cpt : Formalism.FourierDecayAlt.KB.BuiltBounds2Cpt := Formalism.FourierDecayAlt.P.built_bounds_compact
+
+end Formalism.FourierDecayAlt.Final
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.CarrierNeedsFromD
+
+section
+
 @[expose] public section
 
 namespace GlobalTheory
@@ -52,3 +85,5 @@ theorem carrierNeedsFromD :
     Formalism.FourierDecayAlt.Final.pb_builtBounds2Cpt⟩
 
 end GlobalTheory
+end
+end

@@ -1,13 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsLogMult
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SncChartSingleEquation
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.FinalTheorems
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+public import Mathlib.AlgebraicGeometry.FunctionField
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -19,6 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.RingTheory.KrullDimension.Field
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -40,6 +43,266 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.CentreAtOfIsAt
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsAlgHomOfIsBaseChange
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsRegularFnIffOfIsAffineOpen
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsAddEquivOfSurjectiveOfKerIff
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsQuasicoherentOfForallExistsAffine
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.FlatBCSec
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.CanonGenIsGen
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+import Mathlib.SetTheory.ZFC.PSet
+public import Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.ExistsSncChartStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericPointNotInSncBoundary
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+namespace GlobalTheory.PairStep
+
+theorem genericPoint_notMem_of_snc (Y : Scheme.{0}) [IsIntegral Y] (B : Closeds Y)
+    (h : FinalTheorems.Snc (Scheme.IdealSheafData.vanishingIdeal B)) : genericPoint Y ∉ B := by
+  obtain ⟨-, U, hy, n, f, J, ⟨-, hn⟩, hI⟩ := h (genericPoint Y)
+  have hdim : ringKrullDim (Y.presheaf.stalk (genericPoint Y)) = 0 :=
+    ringKrullDim_eq_zero_of_field Y.functionField
+  rw [hdim] at hn
+  have hn0 : n = 0 := by exact_mod_cast hn
+  subst hn0
+  have hJ : J = ∅ := Finset.eq_empty_of_isEmpty J
+  subst hJ
+  intro hB
+  have hs : genericPoint Y ∈ (Scheme.IdealSheafData.vanishingIdeal B).support := by
+    rw [← SetLike.mem_coe, Scheme.IdealSheafData.coe_support_vanishingIdeal]
+    exact hB
+  rw [Scheme.IdealSheafData.mem_support_iff_of_mem hy, hI, Scheme.mem_zeroLocus_iff] at hs
+  refine hs 1 (Ideal.subset_span (by simp)) ?_
+  simpa using hy
+
+end GlobalTheory.PairStep
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSncAdaptedCoordinatesOfMemNhds
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+namespace GlobalTheory.PairStep
+
+theorem exists_nbhd_specializes_of_isClosed {Y : Scheme.{0}} [IsIntegral Y] [IsLocallyNoetherian Y]
+    (F : Set Y) (hF : IsClosed F) (hη : genericPoint Y ∉ F) {y : Y} {O : Y.Opens} (hy : y ∈ O) :
+    ∃ V : Y.Opens, y ∈ V ∧ V ≤ O ∧
+      ∀ y' ∈ V, ∀ v, v ⤳ y' → Order.coheight v = 1 → v ∈ F → v ⤳ y := by
+  classical
+  obtain ⟨W, hW, hyW, hWO⟩ := exists_isAffineOpen_mem_and_subset hy
+  haveI := IsLocallyNoetherian.component_noetherian ⟨W, hW⟩
+  have hN : NoetherianSpace W := by
+    have := NoetherianSpace.range hW.fromSpec hW.fromSpec.continuous
+    rw [hW.range_fromSpec] at this
+    exact this
+  have hC : IsClosed ((Subtype.val : W → Y) ⁻¹' F) := hF.preimage continuous_subtype_val
+  obtain ⟨S, hS, hc, hi, hU⟩ := @NoetherianSpace.exists_finite_set_isClosed_irreducible _ _ hN _ hC
+  let y₀ : W := ⟨y, hyW⟩
+  let bad : Set W := ⋃₀ {T ∈ S | y₀ ∉ T}
+  have hS' : {T ∈ S | y₀ ∉ T}.Finite := hS.subset fun T hT => hT.1
+  have hbad : IsClosed bad := by
+    change IsClosed (⋃₀ {T ∈ S | y₀ ∉ T})
+    rw [Set.sUnion_eq_biUnion]
+    exact hS'.isClosed_biUnion fun T hT => hc T hT.1
+  refine ⟨⟨Subtype.val '' badᶜ, W.isOpen.isOpenMap_subtype_val _ hbad.isOpen_compl⟩,
+    ⟨y₀, ?_, rfl⟩, ?_, ?_⟩
+  · rintro ⟨T, ⟨-, hyT⟩, hyT'⟩
+    exact hyT hyT'
+  · rintro _ ⟨x, -, rfl⟩
+    exact hWO x.2
+  · rintro _ ⟨x, hx, rfl⟩ v hv hcv hvF
+    have hvW : v ∈ W := hv.mem_open W.isOpen x.2
+    let v' : W := ⟨v, hvW⟩
+    have hv' : v' ⤳ x := Topology.IsInducing.subtypeVal.specializes_iff.1 hv
+    have hvS : v' ∈ ⋃₀ S := hU ▸ hvF
+    obtain ⟨T, hT, hvT⟩ := hvS
+    have hxT : x ∈ T := hv'.mem_closed (hc T hT) hvT
+    have hyT : y₀ ∈ T := by
+      by_contra h
+      exact hx ⟨T, ⟨hT, h⟩, hxT⟩
+    obtain ⟨g, hg⟩ := QuasiSober.sober (hi T hT) (hc T hT)
+    have hgF : g.1 ∈ F := by
+      have : g ∈ ⋃₀ S := ⟨T, hT, hg.mem⟩
+      rw [← hU] at this
+      exact this
+    have hgv : g.1 ⤳ v := Topology.IsInducing.subtypeVal.specializes_iff.2 (hg.specializes hvT)
+    have hgy : g.1 ⤳ y := Topology.IsInducing.subtypeVal.specializes_iff.2 (hg.specializes hyT)
+    have hgη : g.1 < genericPoint Y := by
+      refine lt_of_le_not_ge (genericPoint_specializes _) fun e => ?_
+      have e' : g.1 = genericPoint Y := (Specializes.antisymm e (genericPoint_specializes _)).eq
+      exact hη (e' ▸ hgF)
+    have hvg : v = g.1 := by
+      by_contra hne
+      have h₃ := Order.coheight_add_one_le (show v < g.1 from lt_of_le_not_ge hgv fun e =>
+        hne (Specializes.antisymm e hgv).eq)
+      have h₄ := Order.coheight_add_one_le hgη
+      rw [hcv] at h₃
+      have h₅ : (1 : ℕ∞) + 1 ≤ 1 := (add_le_add_left (le_add_self.trans h₄) 1).trans h₃
+      exact absurd h₅ (by decide)
+    rw [hvg]
+    exact hgy
+
+theorem isSncChart_spread : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp ℂ)
+    (n : ℕ) [SmoothOfRelativeDimension n q], ∀ (B : Closeds Y) (y : Y) (U : Y.Opens) (hy : y ∈ U)
+    (z : Fin n → Γ(Y, U)) (J : Finset (Fin n)) (w : Fin n → Y) (u : Fin n → Y.functionFieldˣ),
+    genericPoint Y ∉ B → IsSncChart q n B y U hy z J w u → ∃ V : Y.Opens, y ∈ V ∧ ∀ y' ∈ V,
+      ∃ (hy' : y' ∈ U) (J' : Finset (Fin n)), J' ⊆ J ∧ IsSncChart q n B y' U hy' z J' w u ∧
+        ∀ j ∈ J', y' ∉ Y.basicOpen (z j) := by
+  intro Y _ _ q n _ B y U hy z J w u hη hc
+  classical
+  have hηb : ∀ j ∈ J, genericPoint Y ∈ Y.basicOpen (z j) := fun j hj =>
+    (Y.mem_basicOpen (z j) _ (gen_mem hy)).2 (by
+      have : IsUnit (u j : Y.functionField) := (u j).isUnit
+      rw [hc.val j hj] at this
+      exact this)
+  have hord0 : ∀ j ∈ J, ∀ v ∈ Y.basicOpen (z j), Scheme.ord (u j : Y.functionField) v = 0 := by
+    intro j hj v hv
+    haveI : Nonempty (Y.basicOpen (z j)) := ⟨⟨v, hv⟩⟩
+    have h1 := Scheme.ord_of_isUnit (U := Y.basicOpen (z j))
+      (Y.toRingedSpace.isUnit_res_basicOpen (z j)) hv
+    rw [hc.val j hj, ← h1]
+    congr 1
+    exact (Y.presheaf.germ_res_apply (homOfLE (Y.basicOpen_le (z j))) _ _ (z j)).symm
+  let F : Set Y := (B : Set Y) ∪ ⋃ j ∈ J, ((Y.basicOpen (z j) : Set Y))ᶜ
+  have hF : IsClosed F := B.isClosed.union
+    (isClosed_biUnion_finset fun j _ => (Y.basicOpen (z j)).isOpen.isClosed_compl)
+  have hηF : genericPoint Y ∉ F := by
+    rintro (h | h)
+    · exact hη h
+    · obtain ⟨j, hj, h⟩ := Set.mem_iUnion₂.1 h
+      exact h (hηb j hj)
+  obtain ⟨V, hyV, hVU, hV⟩ := exists_nbhd_specializes_of_isClosed F hF hηF hy
+  refine ⟨V, hyV, fun y' hy' => ?_⟩
+  have hy'U : y' ∈ U := hVU hy'
+  refine ⟨hy'U, J.filter (fun j => w j ⤳ y'), Finset.filter_subset _ _,
+    ⟨hc.frame, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩, ?_⟩
+  · intro j hj
+    exact hc.val j (Finset.mem_filter.1 hj).1
+  · intro j hj
+    exact (Finset.mem_filter.1 hj).2
+  · intro j hj
+    exact hc.coheight j (Finset.mem_filter.1 hj).1
+  · exact hc.inj.mono fun j hj => (Finset.mem_filter.1 hj).1
+  · intro j hj
+    exact hc.ord_self j (Finset.mem_filter.1 hj).1
+  · intro j hj v hv hne
+    have hjJ := (Finset.mem_filter.1 hj).1
+    by_cases hb : v ∈ Y.basicOpen (z j)
+    · exact hord0 j hjJ v hb
+    by_cases hcv : Order.coheight v = 1
+    · exact hc.ord_other j hjJ v (hV y' hy' v hv hcv (Or.inr (Set.mem_iUnion₂.2 ⟨j, hjJ, hb⟩))) hne
+    · exact Scheme.ord_eq_zero_of_coheight_neq_one hcv _
+  · intro v hv hcv
+    constructor
+    · intro hvB
+      obtain ⟨j, hj, rfl⟩ := (hc.mem v (hV y' hy' v hv hcv (Or.inl hvB)) hcv).1 hvB
+      exact ⟨j, Finset.mem_filter.2 ⟨hj, hv⟩, rfl⟩
+    · rintro ⟨j, hj, rfl⟩
+      have hjJ := (Finset.mem_filter.1 hj).1
+      exact (hc.mem _ (hc.spec j hjJ) hcv).2 ⟨j, hjJ, rfl⟩
+  · intro j hj hb
+    have hjJ := (Finset.mem_filter.1 hj).1
+    have h0 := hord0 j hjJ (w j) ((Finset.mem_filter.1 hj).2.mem_open (Y.basicOpen (z j)).isOpen hb)
+    rw [hc.ord_self j hjJ] at h0
+    exact one_ne_zero h0
+
+end GlobalTheory.PairStep
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSncAdaptedCoordinatesOfMemNhdsStatement
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+theorem _root_.GlobalTheory.T.isSncAdaptedCoordinates_of_mem_nhds : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp ℂ) (n : ℕ) [SmoothOfRelativeDimension n q], ∀ (B : Closeds Y) (y : Y) (U : Y.Opens) (hy : y ∈ U) (z : Fin n → Γ(Y, U)) (J : Finset (Fin n)) (w : Fin n → Y) (u : Fin n → Y.functionFieldˣ), genericPoint Y ∉ B → IsSncChart q n B y U hy z J w u → ∃ V : Y.Opens, y ∈ V ∧ ∀ y' ∈ V, ∃ (hy' : y' ∈ U) (J' : Finset (Fin n)), J' ⊆ J ∧ IsSncChart q n B y' U hy' z J' w u ∧ ∀ j ∈ J', y' ∉ Y.basicOpen (z j) := by
+  first | exact @GlobalTheory.PairStep.isSncChart_spread | exact GlobalTheory.PairStep.isSncChart_spread | (intros; apply GlobalTheory.PairStep.isSncChart_spread <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SncChartSingleEquation
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
+open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.PairStep
+
+set_option autoImplicit false
+
+namespace GlobalTheory.PairStep
+
+theorem exists_sncChart_isEqn_affine : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp ℂ) (n : ℕ) [SmoothOfRelativeDimension n q] (B : Closeds Y), FinalTheorems.Snc (Scheme.IdealSheafData.vanishingIdeal B) → ∀ (A : CartierDiv Y) (ι : Type) (s : ι → Y.functionField), (∀ i, s i ∈ A.sections) → ∀ y₀ : Y, ∃ (W : Y.Opens) (hW : y₀ ∈ W) (z : Fin n → Γ(Y, W)) (w : Fin n → Y) (u : Fin n → Y.functionFieldˣ) (e : Y.functionFieldˣ) (f : ι → Γ(Y, W)), IsFrame (dOn q z) ∧ (∀ y ∈ W, A.IsEqn y e) ∧ (∀ i, fnOf W (gen_mem hW) (f i) = s i * e) ∧ ∀ (y : Y) (hy : y ∈ W), ∃ J : Finset (Fin n), IsSncChart q n B y W hy z J w u ∧ ∀ j ∈ J, y ∉ Y.basicOpen (z j) := by
+  intro Y _ _ q n _ B hB A ι s hs y₀
+  obtain ⟨U, hy₀, z, J, w, u, hc⟩ := GlobalTheory.T.exists_snc_chart ℂ Y q n B hB y₀
+  have hgen : genericPoint Y ∉ B := GlobalTheory.PairStep.genericPoint_notMem_of_snc Y B hB
+  obtain ⟨V, hyV, hV⟩ := GlobalTheory.T.isSncAdaptedCoordinates_of_mem_nhds Y q n B y₀ U hy₀ z J w u hgen hc
+  obtain ⟨N, hyN, e, he⟩ := A.exists_isEqn_nhds y₀
+  obtain ⟨W, hWa, hyW, hWle⟩ := Opens.isBasis_iff_nbhd.1 Y.isBasis_affineOpens
+    (show y₀ ∈ U ⊓ V ⊓ N from ⟨⟨hy₀, hyV⟩, hyN⟩)
+  have hWU : W ≤ U := hWle.trans (inf_le_left.trans inf_le_left)
+  have hWV : W ≤ V := hWle.trans (inf_le_left.trans inf_le_right)
+  have hWN : W ≤ N := hWle.trans inf_le_right
+  have hf : ∀ i, ∃ a : Γ(Y, W), fnOf W (gen_mem hyW) a = s i * e := fun i =>
+    exists_fnOf_eq (gen_mem hyW) fun x hx =>
+      (he x (hWN hx)).regularAt_iff.1 (CartierDiv.mem_sections.1 (hs i) x)
+  choose f hf using hf
+  have hfr : IsFrame (dOn q fun j => resG Y hWU (z j)) := by
+    have := hc.frame.res hWa hWU
+    rwa [resForm_dOn] at this
+  refine ⟨W, hyW, fun j => resG Y hWU (z j), w, u, e, f, hfr, fun y hy => he y (hWN hy), hf, ?_⟩
+  intro y hy
+  obtain ⟨hyU, J', -, hc', hJ'⟩ := hV y (hWV hy)
+  refine ⟨J', ⟨hfr, ?_, hc'.spec, hc'.coheight, hc'.inj, hc'.ord_self, hc'.ord_other, hc'.mem⟩, ?_⟩
+  · intro j hj
+    rw [hc'.val j hj, fnOf_resG]
+  · intro j hj hmem
+    have hb : Y.basicOpen (resG Y hWU (z j)) = W ⊓ Y.basicOpen (z j) :=
+      Y.basicOpen_res (z j) (homOfLE hWU).op
+    rw [hb] at hmem
+    exact hJ' j hj hmem.2
+
+end GlobalTheory.PairStep
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SncChartSingleEquationStatement
+
+section
 
 @[expose] public section
 
@@ -51,3 +314,5 @@ open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.TopForm
 
 theorem _root_.GlobalTheory.T.exists_affine_snc_chart_cartier_single_equation : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp ℂ) (n : ℕ) [SmoothOfRelativeDimension n q] (B : Closeds Y), FinalTheorems.Snc (Scheme.IdealSheafData.vanishingIdeal B) → ∀ (A : CartierDiv Y) (ι : Type) (s : ι → Y.functionField), (∀ i, s i ∈ A.sections) → ∀ y₀ : Y, ∃ (W : Y.Opens) (hW : y₀ ∈ W) (z : Fin n → Γ(Y, W)) (w : Fin n → Y) (u : Fin n → Y.functionFieldˣ) (e : Y.functionFieldˣ) (f : ι → Γ(Y, W)), IsFrame (dOn q z) ∧ (∀ y ∈ W, A.IsEqn y e) ∧ (∀ i, fnOf W (gen_mem hW) (f i) = s i * e) ∧ ∀ (y : Y) (hy : y ∈ W), ∃ J : Finset (Fin n), IsSncChart q n B y W hy z J w u ∧ ∀ j ∈ J, y ∉ Y.basicOpen (z j) := by
   first | exact @GlobalTheory.PairStep.exists_sncChart_isEqn_affine | exact GlobalTheory.PairStep.exists_sncChart_isEqn_affine | (intros; apply GlobalTheory.PairStep.exists_sncChart_isEqn_affine <;> assumption)
+end
+end

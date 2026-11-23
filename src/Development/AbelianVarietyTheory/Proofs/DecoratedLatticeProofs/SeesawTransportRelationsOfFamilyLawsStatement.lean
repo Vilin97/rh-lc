@@ -2,7 +2,9 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ValLastX
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HarishChandraModulesOn
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeesawTransportRelationsOfFamilyLaws
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.BesselPeriodDoubleStepUnfoldingOfDescentStatement
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RapidVal
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CentralEigenThetaIsFockVectorBoundedDegree
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,6 +40,243 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LevOfMem
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.OmZeroRat
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PeriodSumHolds
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffDerivSnoc
+public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.UnifModGrowthOfIsUnifModerate
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeeSawDoubleLiftCombinationOfLawsStatement
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsQuasiFam
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeeSawDoubleStepLinearRelationsPeriods
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeeSawLastTwoStepsTransportLinearRelationsStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeeSawWeilBiActionCommutesStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilDatumDescendsToWittCore
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CentralEigenThetaIsFockVectorBoundedDegreeStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.SeeSaw
+open scoped TensorProduct
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.centralEigenTheta_isFockVector_bounded_degree : ∀ D : D7, CenFock D := by
+  first | exact @GlobalTheory.SeeSaw.CenFockPf.cenFock | exact GlobalTheory.SeeSaw.CenFockPf.cenFock | (intros; apply GlobalTheory.SeeSaw.CenFockPf.cenFock <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MainXOfStepXLastX
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.SeeSaw
+open scoped TensorProduct
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+noncomputable section
+
+namespace GlobalTheory.SeeSaw.DoubleInd
+
+variable {D : D7} {c : Comm D}
+
+def W (t : Tup c) (k : ℕ) : ℂ :=
+  ∏ l ∈ Finset.range k, t.cV (2 * l) * t.cK (2 * l) * t.cK (2 * l + 1)
+
+theorem up_succ (t : Tup c) (k : ℕ) (ψ : t.Col 0) :
+    t.up (k + 1) ψ = t.K (2 * k + 1) (t.K (2 * k) (t.S (2 * k) (t.up k ψ))) := rfl
+
+theorem up_mem (t : Tup c) (ht : t.Is) (ψ : t.Col 0) (hψ : ψ ∈ t.Ram 0) :
+    ∀ k, 2 * k ≤ D.R.m → t.up k ψ ∈ t.Ram (2 * k) := by
+  intro k
+  induction k with
+  | zero => intro _; exact hψ
+  | succ k ih =>
+    intro hk
+    rw [up_succ]
+    have h0 := ih (by omega)
+    have h1 := ht.stabS (2 * k) (by omega) _ h0
+    have h2 := ht.stabK (2 * k) (by omega) _ h1
+    exact ht.stabK (2 * k + 1) (by omega) _ h2
+
+theorem up_ind {𝒯 : Type} (t : 𝒯 → Tup c) (ht : ∀ s, (t s).Is) (hS : StepX t) :
+    ∀ k ρ (h : 2 * k + 2 * ρ + 2 = D.R.m) (I : Type) [Fintype I] (s : I → 𝒯) (β : I → ℂ) (ψ : ∀ i, (t (s i)).Col 0)
+      (G : ∀ i, (t (s i)).CC (2 * k)), (∀ i, ψ i ∈ (t (s i)).Ram 0) →
+      (∀ y v, ∑ i, β i * W (t (s i)) k * (t (s i)).per (2 * k) ρ h ((t (s i)).up k (ψ i)) (G i) y v = 0) →
+      ∀ ρ₀ (h₀ : 0 + 2 * ρ₀ + 2 = D.R.m) y v,
+        ∑ i, β i * (∏ j ∈ Finset.range (2 * k), (t (s i)).cI j) *
+          (t (s i)).per 0 ρ₀ h₀ (ψ i) ((t (s i)).dn (2 * k) (G i)) y v = 0 := by
+  intro k
+  induction k with
+  | zero =>
+    intro ρ h I _ s β ψ G hψ hyp ρ₀ h₀ y v
+    have hρ : ρ₀ = ρ := by omega
+    subst hρ
+    refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (hyp y v)
+    rw [show (∏ j ∈ Finset.range (2 * 0), (t (s i)).cI j) = (1 : ℂ) by simp,
+      show W (t (s i)) 0 = 1 by simp [W]]
+    rfl
+  | succ k ih =>
+    intro ρ h I _ s β ψ G hψ hyp ρ₀ h₀ y v
+    have h' : 2 * k + 2 * (ρ + 1) + 2 = D.R.m := by omega
+    have hmem : ∀ i, (t (s i)).up k (ψ i) ∈ (t (s i)).Ram (2 * k) :=
+      fun i => up_mem _ (ht _) _ (hψ i) k (by omega)
+    have hst := hS (2 * k) ρ h' I s (fun i => β i * W (t (s i)) k) (fun i => (t (s i)).up k (ψ i)) G hmem (by
+      intro y v
+      refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (hyp y v)
+      have hp : (t (s i)).per (2 * k + 1 + 1) ρ (idx_step h')
+          ((t (s i)).K (2 * k + 1) ((t (s i)).K (2 * k) ((t (s i)).S (2 * k) ((t (s i)).up k (ψ i))))) (G i) y v =
+          (t (s i)).per (2 * (k + 1)) ρ h ((t (s i)).up (k + 1) (ψ i)) (G i) y v := rfl
+      rw [hp]
+      simp only [W, Finset.prod_range_succ]
+      ring)
+    have hi := ih (ρ + 1) h' I s (fun i => β i * ((t (s i)).cI (2 * k) * (t (s i)).cI (2 * k + 1))) ψ
+      (fun i => (t (s i)).io (2 * k) ((t (s i)).io (2 * k + 1) (G i))) hψ (by
+        intro y v
+        refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (hst y v)
+        ring) ρ₀ h₀ y v
+    refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) hi
+    have hp : ∏ j ∈ Finset.range (2 * (k + 1)), (t (s i)).cI j =
+        (∏ j ∈ Finset.range (2 * k), (t (s i)).cI j) * ((t (s i)).cI (2 * k) * (t (s i)).cI (2 * k + 1)) := by
+      rw [show 2 * (k + 1) = 2 * k + 1 + 1 by ring, Finset.prod_range_succ, Finset.prod_range_succ]
+      ring
+    have hd : (t (s i)).per 0 ρ₀ h₀ (ψ i) ((t (s i)).dn (2 * (k + 1)) (G i)) y v =
+        (t (s i)).per 0 ρ₀ h₀ (ψ i) ((t (s i)).dn (2 * k) ((t (s i)).io (2 * k) ((t (s i)).io (2 * k + 1) (G i)))) y v := rfl
+    rw [hp, hd]
+    ring
+
+end GlobalTheory.SeeSaw.DoubleInd
+
+namespace GlobalTheory.SeeSaw
+
+
+open GlobalTheory.SeeSaw.DoubleInd in
+theorem mainX_of_stepX_lastX : ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → Tup c), (∀ s, (t s).Is) → StepX t → LastX t → MainX t := by
+  intro D c 𝒯 t ht hS hL
+  intro n h h₀ I _ s α ψ F hψ hyp y v
+  have hmem : ∀ i, (t (s i)).up n (ψ i) ∈ (t (s i)).Ram (2 * n) :=
+    fun i => up_mem _ (ht _) _ (hψ i) n (by omega)
+  have hL' := hL (2 * n) h I s (fun i => α i * W (t (s i)) n) (fun i => (t (s i)).up n (ψ i)) F hmem (by
+    refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) hyp
+    have hp : (t (s i)).tail (2 * n + 1 + 1) h
+        ((t (s i)).K (2 * n + 1) ((t (s i)).K (2 * n) ((t (s i)).S (2 * n) ((t (s i)).up n (ψ i))))) (F i) =
+        (t (s i)).tail (2 * (n + 1)) h ((t (s i)).up (n + 1) (ψ i)) (F i) := rfl
+    rw [hp]
+    simp only [Tup.cTop, W, Finset.prod_range_succ]
+    ring)
+  have hu := up_ind t ht hS n 0 h I s (fun i => α i * ((t (s i)).cI (2 * n) * (t (s i)).cI (2 * n + 1))) ψ
+    (fun i => (t (s i)).io (2 * n) ((t (s i)).ioT (2 * n) h (F i))) hψ (by
+      intro y v
+      refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (hL' y v)
+      ring) n h₀ y v
+  refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) hu
+  have hc : (t (s i)).cBot =
+      (∏ j ∈ Finset.range (2 * n), (t (s i)).cI j) * ((t (s i)).cI (2 * n) * (t (s i)).cI (2 * n + 1)) := by
+    unfold Tup.cBot
+    rw [show D.R.m = 2 * n + 1 + 1 by omega, Finset.prod_range_succ, Finset.prod_range_succ]
+    ring
+  have hd : (t (s i)).per 0 n h₀ (ψ i) ((t (s i)).dn (2 * n + 1) ((t (s i)).ioT (2 * n) h (F i))) y v =
+      (t (s i)).per 0 n h₀ (ψ i) ((t (s i)).dn (2 * n) ((t (s i)).io (2 * n) ((t (s i)).ioT (2 * n) h (F i)))) y v := rfl
+  rw [hc, hd]
+  ring
+
+end GlobalTheory.SeeSaw
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RapidValOfCuspRapidDecay
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.SeeSaw
+open scoped TensorProduct
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.SeeSaw
+
+theorem rapidVal_of_cuspRapidDecay : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, RapidVal D := by
+  intro hP D θ hθ V S M J χ G hG v
+  have hM := (GlobalTheory.MultMem.mem_mult_iff _ _ _ _ _ _ _ _).1 ((mem_multT _ _ _ _ _).1 hG)
+  induction v using PiTensorProduct.induction_on with
+  | smul_tprod r w =>
+    have h1 := GlobalTheory.Grow.rapidDec_of_cuspForm hP hθ (hM.aut w) (hM.cusp w)
+    have h2 : G (r • PiTensorProduct.tprod ℂ w) = r • PiTensorProduct.lift.symm G w := by
+      simp [PiTensorProduct.lift_symm]
+    rw [h2]
+    exact GlobalTheory.Grow.RapidDec.smul r h1
+  | add x y hx hy =>
+    rw [map_add (f := _)]
+    exact hx.add hy
+
+end GlobalTheory.SeeSaw
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeeSawDoubleStepLinearRelationsPeriodsStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.SeeSaw
+open scoped TensorProduct
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+theorem _root_.GlobalTheory.T.seeSaw_doubleStep_linearRelations_periods : GlobalTheory.Published.HarishChandraModules → ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → Tup c), DoubleStep D → RapidVal D → ValMove D → PerSum D → c.Is → (∀ s, (t s).Is) → (∀ s, (t s).LocFin) → ValX t → TwoX t → RdX t → StepX t := by
+  first | exact @GlobalTheory.SeeSawStep.stepX_of_laws | exact GlobalTheory.SeeSawStep.stepX_of_laws | (intros; apply GlobalTheory.SeeSawStep.stepX_of_laws <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeesawTransportRelationsOfFamilyLaws
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
+open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.SeeSaw
+open scoped TensorProduct
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+namespace GlobalTheory.SeeSaw
+
+theorem mainX_of_lawsX (hR : GlobalTheory.Published.CuspRapidDecay) (hH : GlobalTheory.Published.HarishChandraModules) :
+    ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → Tup c), LawsX t → MainX t := by
+  intro D c 𝒯 t L
+  have hTwo : TwoX t :=
+    GlobalTheory.T.seeSawDoubleLiftCombination_of_laws D c 𝒯 t (GlobalTheory.T.seeSawWeilBiAction_commutes D) (GlobalTheory.T.centralEigenTheta_isFockVector_bounded_degree D) (GlobalTheory.SeeSaw.LiftSumProof.liftSum D)
+      L.com L.tup L.real L.ker L.rd
+  have hRap : RapidVal D := GlobalTheory.SeeSaw.rapidVal_of_cuspRapidDecay hR D
+  have hStep : StepX t :=
+    GlobalTheory.T.seeSaw_doubleStep_linearRelations_periods hH D c 𝒯 t (GlobalTheory.T.besselPeriod_double_step_unfolding_of_descent D (GlobalTheory.Desc.weil_data_descend D)) hRap
+      (GlobalTheory.ValMoveProof.valMove D) (GlobalTheory.SeeSaw.perSum_all D) L.com L.tup L.loc L.val hTwo L.rd
+  have hLast : LastX t :=
+    GlobalTheory.T.seeSaw_lastTwoSteps_transport_linear_relations hH D c 𝒯 t hRap L.com L.tup L.last hTwo L.per L.rd
+  exact GlobalTheory.SeeSaw.mainX_of_stepX_lastX D c 𝒯 t L.tup hStep hLast
+
+end GlobalTheory.SeeSaw
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SeesawTransportRelationsOfFamilyLawsStatement
+
+section
 
 @[expose] public section
 
@@ -48,3 +287,5 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.seesawTransportRelations_of_familyLaws : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.HarishChandraModules → ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → Tup c), LawsX t → MainX t := by
   first | exact @GlobalTheory.SeeSaw.mainX_of_lawsX | exact GlobalTheory.SeeSaw.mainX_of_lawsX | (intros; apply GlobalTheory.SeeSaw.mainX_of_lawsX <;> assumption)
+end
+end

@@ -2,9 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds
 public import Development.AutomorphicArithmetic.MeanSquareBounds.ExistsCoprimePrimePairSetSecondEqPPset
-public import Development.AutomorphicArithmetic.MeanSquareBounds.LogOddM
-public import Development.AutomorphicArithmetic.MeanSquareBounds.StagePow
-import Development.AutomorphicArithmetic.MeanSquareBounds.TwistPrim
+public import Formalism.GL3MeanSquares.SecondEstimateOfIntervalHypothesis
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,11 +19,8 @@ import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
-import Mathlib.NumberTheory.MulChar.Duality
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,7 +28,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,8 +40,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff
+public import Mathlib.NumberTheory.Primorial
+public import Development.AutomorphicArithmetic.MeanSquareBounds.StagePow
+import Development.AutomorphicArithmetic.MeanSquareBounds.TwistPrim
+import Mathlib.NumberTheory.MulChar.Duality
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.LogOddM
+
+section
+
+@[expose] public section
+
+open Finset Formalism.HermitianLattices.ZeroFreeRegionGL2 Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
+
+namespace QH
+
+theorem log_oddM :
+    ∀ (z : ℝ) (q : ℕ), 0 ≤ z → 0 < q → Real.log ((16 * oddM z q : ℕ) : ℝ) ≤ Real.log 16 + Real.log q + z * Real.log 4 := by
+  intro z q hz hq
+  have hPle : (∏ p ∈ Icc 3 ⌊z⌋₊ with Nat.Prime p, p) ≤ 4 ^ ⌊z⌋₊ := by
+    refine le_trans ?_ (primorial_le_four_pow ⌊z⌋₊)
+    unfold primorial
+    apply Finset.prod_le_prod_of_subset_of_one_le'
+    · intro p hp
+      simp only [Finset.mem_filter, Finset.mem_Icc, Finset.mem_range] at hp ⊢
+      exact ⟨by omega, hp.2⟩
+    · intro p hp _
+      simp only [Finset.mem_filter] at hp
+      exact hp.2.one_lt.le
+  have hPpos : 0 < (∏ p ∈ Icc 3 ⌊z⌋₊ with Nat.Prime p, p) :=
+    Finset.prod_pos (fun p hp => (Finset.mem_filter.mp hp).2.pos)
+  have hoddM : oddM z q = q * (∏ p ∈ Icc 3 ⌊z⌋₊ with Nat.Prime p, p) := rfl
+  generalize (∏ p ∈ Icc 3 ⌊z⌋₊ with Nat.Prime p, p) = P at hPle hPpos hoddM
+  rw [hoddM]
+  have hPR : (0 : ℝ) < P := by exact_mod_cast hPpos
+  have hqR : (0 : ℝ) < q := by exact_mod_cast hq
+  have hPle' : (P : ℝ) ≤ 4 ^ ⌊z⌋₊ := by exact_mod_cast hPle
+  rw [Nat.cast_mul, Nat.cast_mul, Nat.cast_ofNat]
+  rw [Real.log_mul (by positivity) (by positivity), Real.log_mul (by positivity) (by positivity)]
+  have h1 : Real.log P ≤ (⌊z⌋₊ : ℝ) * Real.log 4 := by
+    calc Real.log P ≤ Real.log ((4 : ℝ) ^ ⌊z⌋₊) := Real.log_le_log hPR hPle'
+      _ = (⌊z⌋₊ : ℝ) * Real.log 4 := by rw [Real.log_pow]
+  have h2 : (⌊z⌋₊ : ℝ) ≤ z := Nat.floor_le hz
+  have h3 : 0 < Real.log 4 := Real.log_pos (by norm_num)
+  nlinarith
+
+end QH
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.MeanSquareBounds.CharOf
+
+section
 
 @[expose] public section
 
@@ -264,3 +314,5 @@ theorem stage2 :
     rw [(hg (ξ, a)).2.2 ha n hn0]
 
 end QH
+end
+end

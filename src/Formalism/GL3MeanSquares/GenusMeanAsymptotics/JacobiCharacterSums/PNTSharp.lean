@@ -1,14 +1,16 @@
 module
 
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.DeuringHeilbronnM
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTSharpA
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTSharpB
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,8 +24,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,6 +46,243 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Inv
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Formalism.LandauZeroFreeBounds.LogDerivRegionChiOf
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTSharpA
+
+section
+
+@[expose] public section
+
+open Finset Complex
+
+noncomputable section
+
+namespace Formalism.HermitianLattices.Ext.PrimesInProgressions
+
+lemma sharp_cpow_sub_one {ρ : ℂ} (hρ0 : ρ ≠ 0) (hre : ρ.re ≤ 1) {t : ℝ} (ht : 1 ≤ t) :
+    ‖(t : ℂ) ^ ρ - 1‖ ≤ ‖ρ‖ * (t - 1) := by
+  have hd : ∀ x ∈ Set.Icc (1 : ℝ) t,
+      HasDerivWithinAt (fun y : ℝ => (y : ℂ) ^ ρ) (ρ * (x : ℂ) ^ (ρ - 1)) (Set.Icc 1 t) x := by
+    intro x hx
+    have hx0 : (0 : ℝ) < x := by linarith [hx.1]
+    exact ((Complex.hasStrictDerivAt_cpow_const (Complex.ofReal_mem_slitPlane.2 hx0)).hasDerivAt.comp_ofReal).hasDerivWithinAt
+  have hb : ∀ x ∈ Set.Ico (1 : ℝ) t, ‖ρ * (x : ℂ) ^ (ρ - 1)‖ ≤ ‖ρ‖ := by
+    intro x hx
+    have hx0 : (0 : ℝ) < x := by linarith [hx.1]
+    rw [norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hx0]
+    have h1 : x ^ (ρ - 1).re ≤ 1 := Real.rpow_le_one_of_one_le_of_nonpos hx.1 (by simp; linarith)
+    calc ‖ρ‖ * x ^ (ρ - 1).re ≤ ‖ρ‖ * 1 := by gcongr
+      _ = ‖ρ‖ := mul_one _
+  have h := norm_image_sub_le_of_norm_deriv_le_segment' hd hb t ⟨ht, le_rfl⟩
+  simpa using h
+
+lemma differenced_kernel_bound {ρ : ℂ} (hρ0 : ρ ≠ 0) (hρ1 : ρ ≠ 1) (hre : ρ.re ≤ 1) {δ : ℝ} (hδ : 0 < δ) :
+    ‖(((1 + δ : ℝ) : ℂ) ^ (ρ - 1) - 1) / (ρ - 1) + (((1 + δ)⁻¹ - 1 : ℝ) : ℂ)‖ ≤ ‖ρ‖ * δ * δ := by
+  have hρ1' : ρ - 1 ≠ 0 := sub_ne_zero.2 hρ1
+  let f : ℝ → ℂ := fun u => (((u : ℂ) ^ (ρ - 1) - 1) / (ρ - 1)) + (((u⁻¹ - 1 : ℝ)) : ℂ)
+  let f' : ℝ → ℂ := fun u => ((u : ℂ) ^ ρ - 1) / (u : ℂ) ^ 2
+  have hd : ∀ x ∈ Set.Icc (1 : ℝ) (1 + δ), HasDerivWithinAt f (f' x) (Set.Icc 1 (1 + δ)) x := by
+    intro x hx
+    have hx0 : (0 : ℝ) < x := by linarith [hx.1]
+    have hxc : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.2 hx0.ne'
+    have h1 := (((Complex.hasStrictDerivAt_cpow_const (c := ρ - 1)
+      (Complex.ofReal_mem_slitPlane.2 hx0)).hasDerivAt.comp_ofReal).sub_const 1).div_const (ρ - 1)
+    have h2 := ((hasDerivAt_inv hx0.ne').sub_const 1).ofReal_comp
+    refine (h1.add h2).hasDerivWithinAt.congr_deriv ?_
+    simp only [f']
+    have e1 : (x : ℂ) ^ (ρ - 1 - 1) = (x : ℂ) ^ ρ / (x : ℂ) ^ 2 := by
+      rw [show ρ - 1 - 1 = ρ - 2 by ring, Complex.cpow_sub _ _ hxc,
+        show (2 : ℂ) = ((2 : ℕ) : ℂ) by norm_num, Complex.cpow_natCast]
+    rw [e1]
+    push_cast
+    field_simp
+    ring
+  have hb : ∀ x ∈ Set.Ico (1 : ℝ) (1 + δ), ‖f' x‖ ≤ ‖ρ‖ * δ := by
+    intro x hx
+    have hx0 : (0 : ℝ) < x := by linarith [hx.1]
+    have hk := sharp_cpow_sub_one hρ0 hre hx.1
+    simp only [f']
+    rw [norm_div, norm_pow, Complex.norm_real, Real.norm_of_nonneg hx0.le]
+    have hx1 : 1 ≤ x ^ 2 := one_le_pow₀ hx.1
+    calc ‖(x : ℂ) ^ ρ - 1‖ / x ^ 2 ≤ ‖(x : ℂ) ^ ρ - 1‖ := div_le_self (norm_nonneg _) hx1
+      _ ≤ ‖ρ‖ * (x - 1) := hk
+      _ ≤ ‖ρ‖ * δ := by gcongr; linarith [hx.2]
+  have h := norm_image_sub_le_of_norm_deriv_le_segment' hd hb (1 + δ) ⟨by linarith, le_rfl⟩
+  have hf1 : f 1 = 0 := by simp [f]
+  rw [hf1, sub_zero, show 1 + δ - 1 = δ by ring] at h
+  exact h
+
+lemma sharp_kernel {ρ : ℂ} (hρ0 : ρ ≠ 0) (hρ1 : ρ ≠ 1) (hre : ρ.re ≤ 1) {δ : ℝ} (hδ : 0 < δ)
+    (hδ2 : δ ≤ 1 / 2) :
+    ‖(((1 + δ) / δ : ℝ) : ℂ) * ((((1 + δ : ℝ) : ℂ) ^ (ρ - 1) - 1) / (ρ - 1)) - 1‖ ≤ 2 * δ * ‖ρ‖ := by
+  set g : ℂ := (((1 + δ : ℝ) : ℂ) ^ (ρ - 1) - 1) / (ρ - 1) with hg
+  set e : ℂ := g + (((1 + δ)⁻¹ - 1 : ℝ) : ℂ) with he
+  have hae := differenced_kernel_bound hρ0 hρ1 hre hδ
+  rw [← hg, ← he] at hae
+  have hr : (1 + δ) / δ * ((1 + δ)⁻¹ - 1) = -1 := by
+    field_simp
+    ring
+  have hid : (((1 + δ) / δ : ℝ) : ℂ) * g - 1 = (((1 + δ) / δ : ℝ) : ℂ) * e := by
+    rw [he, mul_add, ← Complex.ofReal_mul, hr]
+    push_cast
+    ring
+  have hq : 0 < (1 + δ) / δ := by positivity
+  rw [hid, norm_mul, Complex.norm_real, Real.norm_of_nonneg hq.le]
+  calc (1 + δ) / δ * ‖e‖ ≤ (1 + δ) / δ * (‖ρ‖ * δ * δ) := by gcongr
+    _ = (1 + δ) * (δ * ‖ρ‖) := by field_simp
+    _ ≤ 2 * (δ * ‖ρ‖) := by gcongr; linarith
+    _ = 2 * δ * ‖ρ‖ := by ring
+
+end Formalism.HermitianLattices.Ext.PrimesInProgressions
+end
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTSharpB
+
+section
+
+@[expose] public section
+
+open Finset Complex ArithmeticFunction
+
+noncomputable section
+
+namespace Formalism.HermitianLattices.Ext.PrimesInProgressions
+
+open Formalism.ZeroFreeDirichlet
+
+lemma sharp_split (g : ℕ → ℂ) {a b : ℕ} (hab : a ≤ b) :
+    ∑ n ∈ Icc 1 b, g n = ∑ n ∈ Icc 1 a, g n + ∑ n ∈ Ioc a b, g n := by
+  have hd : Disjoint (Icc 1 a) (Ioc a b) := by
+    rw [Finset.disjoint_left]
+    intro x hx hx'
+    simp only [Finset.mem_Icc, Finset.mem_Ioc] at hx hx'
+    omega
+  have hu : Icc 1 b = Icc 1 a ∪ Ioc a b := by
+    ext x
+    simp only [Finset.mem_Icc, Finset.mem_Ioc, Finset.mem_union]
+    omega
+  rw [hu, Finset.sum_union hd]
+
+lemma sharp_schi_div {N : ℕ} (χ : DirichletCharacter ℂ N) {v : ℝ} (hv : 0 < v) :
+    Formalism.ZeroFreeDirichlet.Schi χ v / (v : ℂ) =
+      ∑ n ∈ Icc 1 ⌊v⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) * ((1 / n - 1 / v : ℝ) : ℂ) := by
+  rw [Formalism.ZeroFreeDirichlet.Schi.eq_1, Finset.sum_div]
+  refine Finset.sum_congr rfl (fun n hn => ?_)
+  have hn1 : (1:ℝ) ≤ n := by exact_mod_cast (Finset.mem_Icc.mp hn).1
+  have hn0 : (n:ℝ) ≠ 0 := by positivity
+  have hv0 : v ≠ 0 := hv.ne'
+  rw [mul_div_assoc]
+  congr 1
+  rw [← Complex.ofReal_div]
+  congr 1
+  field_simp
+
+lemma sharp_identity {N : ℕ} (χ : DirichletCharacter ℂ N) {y u : ℝ} (hy : 1 ≤ y) (hu : y < u) :
+    ((y * u / (u - y) : ℝ) : ℂ) * (Formalism.ZeroFreeDirichlet.Schi χ u / (u : ℂ) - Formalism.ZeroFreeDirichlet.Schi χ y / (y : ℂ)) - psiChi χ y =
+      ∑ n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) *
+        ((y * u / (u - y) * (1 / n - 1 / u) : ℝ) : ℂ) := by
+  have hy0 : 0 < y := by linarith
+  have hu0 : 0 < u := by linarith
+  have huy : u - y ≠ 0 := (sub_pos.mpr hu).ne'
+  have hfl : ⌊y⌋₊ ≤ ⌊u⌋₊ := Nat.floor_mono hu.le
+  rw [sharp_schi_div χ hu0, sharp_schi_div χ hy0, sharp_split _ hfl, Formalism.ZeroFreeDirichlet.psiChi.eq_1]
+  have hc1 : y * u / (u - y) * (1 / y - 1 / u) = 1 := by
+    field_simp
+  have hAC : (∑ n ∈ Icc 1 ⌊y⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) * ((1 / n - 1 / u : ℝ) : ℂ)) -
+      ∑ n ∈ Icc 1 ⌊y⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) * ((1 / n - 1 / y : ℝ) : ℂ) =
+      ((1 / y - 1 / u : ℝ) : ℂ) * ∑ n ∈ Icc 1 ⌊y⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) := by
+    rw [← Finset.sum_sub_distrib, Finset.mul_sum]
+    refine Finset.sum_congr rfl (fun n _ => ?_)
+    push_cast
+    ring
+  have hE : ∑ n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) *
+        ((y * u / (u - y) * (1 / n - 1 / u) : ℝ) : ℂ) =
+      ((y * u / (u - y) : ℝ) : ℂ) *
+        ∑ n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N) * ((1 / n - 1 / u : ℝ) : ℂ) := by
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl (fun n _ => ?_)
+    push_cast
+    ring
+  have hc1' : ((y * u / (u - y) : ℝ) : ℂ) * ((1 / y - 1 / u : ℝ) : ℂ) = 1 := by
+    rw [← Complex.ofReal_mul, hc1, Complex.ofReal_one]
+  rw [hE]
+  linear_combination ((y * u / (u - y) : ℝ) : ℂ) * hAC +
+    (∑ n ∈ Icc 1 ⌊y⌋₊, ((Λ n : ℝ) : ℂ) * χ (n : ZMod N)) * hc1'
+
+lemma sharp_term {N : ℕ} (χ : DirichletCharacter ℂ N) {y u : ℝ} (hy : 1 ≤ y) (hu : y < u)
+    {n : ℕ} (hn : n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊) :
+    ‖((Λ n : ℝ) : ℂ) * χ (n : ZMod N) * ((y * u / (u - y) * (1 / n - 1 / u) : ℝ) : ℂ)‖ ≤
+      Real.log u := by
+  have hy0 : 0 < y := by linarith
+  have hu0 : 0 < u := by linarith
+  obtain ⟨hn1, hn2⟩ := Finset.mem_Ioc.mp hn
+  have hyn : y < n := (Nat.floor_lt hy0.le).mp hn1
+  have hnu : (n : ℝ) ≤ u := (Nat.le_floor_iff hu0.le).mp hn2
+  have hnpos : (0:ℝ) < n := by linarith
+  have huy : 0 < u - y := by linarith
+  have hf0 : 0 ≤ y * u / (u - y) * (1 / n - 1 / u) := by
+    apply mul_nonneg (div_nonneg (by positivity) huy.le)
+    rw [sub_nonneg]
+    exact one_div_le_one_div_of_le hnpos hnu
+  have hf1 : y * u / (u - y) * (1 / n - 1 / u) ≤ 1 := by
+    rw [div_mul_eq_mul_div, div_le_one huy]
+    have h1 : y * u * (1 / n - 1 / u) = y * u / n - y := by
+      rw [mul_sub, mul_one_div, mul_one_div, mul_div_cancel_right₀ y hu0.ne']
+    rw [h1]
+    have h2 : y * u / n ≤ u := by
+      rw [div_le_iff₀ hnpos]
+      nlinarith
+    linarith
+  have hΛ0 : 0 ≤ Λ n := ArithmeticFunction.vonMangoldt_nonneg
+  have hΛ : Λ n ≤ Real.log u :=
+    ArithmeticFunction.vonMangoldt_le_log.trans (Real.log_le_log hnpos hnu)
+  have hχ : ‖χ (n : ZMod N)‖ ≤ 1 := DirichletCharacter.norm_le_one χ (n : ZMod N)
+  simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs]
+  rw [abs_of_nonneg hΛ0, ← abs_mul, abs_of_nonneg hf0]
+  calc Λ n * ‖χ (n : ZMod N)‖ * (y * u / (u - y) * (1 / n - 1 / u)) ≤ Λ n * 1 * 1 :=
+        mul_le_mul (mul_le_mul_of_nonneg_left hχ hΛ0) hf1 hf0 (mul_nonneg hΛ0 zero_le_one)
+    _ = Λ n := by ring
+    _ ≤ Real.log u := hΛ
+
+theorem sharp_arith {N : ℕ} (χ : DirichletCharacter ℂ N) {y u : ℝ} (hy : 1 ≤ y) (hu : y < u) :
+    ‖((y * u / (u - y) : ℝ) : ℂ) * (Formalism.ZeroFreeDirichlet.Schi χ u / (u : ℂ) - Formalism.ZeroFreeDirichlet.Schi χ y / (y : ℂ)) - psiChi χ y‖ ≤
+      (u - y + 1) * Real.log u := by
+  rw [sharp_identity χ hy hu]
+  have hu1 : 1 ≤ u := by linarith
+  have hlog : 0 ≤ Real.log u := Real.log_nonneg hu1
+  calc _ ≤ ∑ n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊, ‖((Λ n : ℝ) : ℂ) * χ (n : ZMod N) *
+          ((y * u / (u - y) * (1 / n - 1 / u) : ℝ) : ℂ)‖ := norm_sum_le _ _
+    _ ≤ ∑ _n ∈ Ioc ⌊y⌋₊ ⌊u⌋₊, Real.log u := Finset.sum_le_sum (fun n hn => sharp_term χ hy hu hn)
+    _ = ((⌊u⌋₊ - ⌊y⌋₊ : ℕ) : ℝ) * Real.log u := by
+        rw [Finset.sum_const, Nat.card_Ioc, nsmul_eq_mul]
+    _ ≤ (u - y + 1) * Real.log u := by
+        apply mul_le_mul_of_nonneg_right _ hlog
+        have h1 : (⌊u⌋₊ : ℝ) ≤ u := Nat.floor_le (by linarith)
+        have h2 : y < ⌊y⌋₊ + 1 := Nat.lt_floor_add_one y
+        have h3 : ⌊y⌋₊ ≤ ⌊u⌋₊ := Nat.floor_mono hu.le
+        rw [Nat.cast_sub h3]
+        linarith
+
+end Formalism.HermitianLattices.Ext.PrimesInProgressions
+end
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTSharp
+
+section
 
 @[expose] public section
 
@@ -203,3 +440,6 @@ theorem differenced_explicit_formula : SharpenS := by
   linarith
 
 end Formalism.HermitianLattices.Ext.PrimesInProgressions
+end
+end
+end

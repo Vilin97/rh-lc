@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsCellOfIsSubquotient
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.InducedCellSemisimplificationStatement
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.JacquetOfInducedFiltration
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetOfInducedFiltrationStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,6 +43,20 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.JacquetOfInducedFiltration
+
+section
+
+@[expose] public section
+
+theorem _root_.GlobalTheory.T.jacquetOfInducedFiltration' : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.JacquetOfInducedFiltration k := GlobalTheory.T.jacquet_of_induced_filtration
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeometricLemma
+
+section
+
 @[expose] public section
 
 namespace GlobalTheory.CompanionTheory.GeoLink
@@ -61,3 +75,5 @@ theorem geometricLemma : GlobalTheory.Published.GeometricLemma := by
     | exact hloc
 
 end GlobalTheory.CompanionTheory.GeoLink
+end
+end

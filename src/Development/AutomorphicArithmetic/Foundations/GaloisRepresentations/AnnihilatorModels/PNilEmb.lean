@@ -1,7 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.DinvExact
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalComm
+public import Mathlib.Algebra.Polynomial.AlgebraMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +40,40 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalComm
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk66.aeval_comm :
+    ∀ {L M N : Type} [inst : Field L]
+    [inst_1 : AddCommGroup M] [inst_2 : _root_.Module L M] [inst_3 : AddCommGroup N] [inst_4 : _root_.Module L N]
+    (φ : M →ₗ[L] N) (A : Module.End L M) (A' : Module.End L N),
+    (∀ (y : M), (φ : M → N) ((A : M → M) y) = (A' : N → N) ((φ : M → N) y)) →
+      ∀ (Q : Polynomial L) (y : M),
+        (φ : M → N) (((Polynomial.aeval A : Polynomial L → Module.End L M) Q : M → M) y) =
+          ((Polynomial.aeval A' : Polynomial L → Module.End L N) Q : N → N) ((φ : M → N) y) := by
+  intro L M N _ _ _ _ _ φ A A' h Q
+  induction Q using Polynomial.induction_on with
+  | C a =>
+    intro y
+    simp [Module.algebraMap_end_apply]
+  | add p q hp hq =>
+    intro y
+    simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
+  | monomial n a ih =>
+    intro y
+    rw [pow_succ, ← mul_assoc, map_mul (Polynomial.aeval A), map_mul (Polynomial.aeval A'),
+      Polynomial.aeval_X, Polynomial.aeval_X, Module.End.mul_apply, Module.End.mul_apply, ih, h]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PNilEmb
+
+section
 
 @[expose] public section
 
@@ -123,3 +157,6 @@ theorem nilEmb_of : NilEmb := by
   rw [← scalar_extension_basis_coord, hzero i, map_zero, Finsupp.zero_apply]
 
 end UpperTheory.Gal.crystallineComparison
+end
+end
+end

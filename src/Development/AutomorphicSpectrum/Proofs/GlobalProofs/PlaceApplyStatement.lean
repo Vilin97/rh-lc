@@ -1,7 +1,6 @@
 module
 
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AbelContinuation
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.PlaceApply
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -11,12 +10,15 @@ import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Geometry.Euclidean.Volume.Basic
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -24,6 +26,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,6 +41,252 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.CongSubgroup
+public import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Multinomial
+import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AbelContinuation
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitPowerInCongruence
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open NumberField NumberField.Units NumberField.Units.dirichletUnitTheorem GlobalTheory.CompanionTheory.Hypotheses₂.Shintani GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+theorem exists_pow_mem_congUnits : ∀ (F : Type) [Field F] [NumberField F] (𝔣 : Ideal (𝓞 F)), 𝔣 ≠ ⊥ →
+    ∃ e : ℕ, 0 < e ∧ ∀ u : (𝓞 F)ˣ, u ^ e ∈ congUnits 𝔣 := by
+  intro F _ _ 𝔣 h𝔣
+  haveI : Finite (𝓞 F ⧸ 𝔣) := Ideal.finiteQuotientOfFreeOfNeBot 𝔣 h𝔣
+  have hpos : 0 < Nat.card (𝓞 F ⧸ 𝔣)ˣ := Nat.card_pos
+  refine ⟨2 * Nat.card (𝓞 F ⧸ 𝔣)ˣ, by omega, fun u => ⟨?_, fun σ => ?_⟩⟩
+  · have h1 : (Units.map (Ideal.Quotient.mk 𝔣 : 𝓞 F →* 𝓞 F ⧸ 𝔣) u) ^ (2 * Nat.card (𝓞 F ⧸ 𝔣)ˣ) = 1 := by
+      rw [mul_comm, pow_mul, pow_card_eq_one', one_pow]
+    have h2 : Ideal.Quotient.mk 𝔣 ((u ^ (2 * Nat.card (𝓞 F ⧸ 𝔣)ˣ) : (𝓞 F)ˣ) : 𝓞 F) = Ideal.Quotient.mk 𝔣 1 := by
+      have h3 := congrArg (fun z : (𝓞 F ⧸ 𝔣)ˣ => (z : 𝓞 F ⧸ 𝔣)) h1
+      simpa using h3
+    exact Ideal.Quotient.eq.mp h2
+  · have hne : σ (((u : 𝓞 F)) : F) ≠ 0 := by
+      rw [Ne, map_eq_zero]
+      simp
+    have h : (((u ^ (2 * Nat.card (𝓞 F ⧸ 𝔣)ˣ) : (𝓞 F)ˣ) : 𝓞 F) : F) = (((u : 𝓞 F)) : F) ^ (2 * Nat.card (𝓞 F ⧸ 𝔣)ˣ) := by
+      simp
+    rw [h, map_pow, pow_mul]
+    exact pow_pos (by positivity) _
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitPowerInCongruenceStatement
+
+section
+
+@[expose] public section
+
+open NumberField NumberField.Units NumberField.Units.dirichletUnitTheorem GlobalTheory.CompanionTheory.Hypotheses₂.Shintani GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+theorem _root_.GlobalTheory.T.exists_unit_power_in_congruence : ∀ (F : Type) [Field F] [NumberField F] (𝔣 : Ideal (𝓞 F)), 𝔣 ≠ ⊥ → ∃ e : ℕ, 0 < e ∧ ∀ u : (𝓞 F)ˣ, u ^ e ∈ congUnits 𝔣 := by
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones.exists_pow_mem_congUnits | exact GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones.exists_pow_mem_congUnits | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones.exists_pow_mem_congUnits <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.UnitLogLatticeBoundedTranslate
+
+section
+
+@[expose] public section
+
+open NumberField NumberField.Units NumberField.Units.dirichletUnitTheorem GlobalTheory.CompanionTheory.Hypotheses₂.Shintani GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.UnitLattice
+
+theorem multiples_relativelyDense (F : Type) [Field F] [NumberField F] (e : ℕ) (he : 0 < e) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ y : logSpace F, ∃ u : (𝓞 F)ˣ,
+      ∀ w, |y w + (e : ℝ) * logEmbedding F (Additive.ofMul u) w| ≤ C := by
+  classical
+  let b := (basisUnitLattice F).ofZLatticeBasis ℝ (unitLattice F)
+  let R : ℝ := ∑ i, ‖b i‖
+  have hR0 : 0 ≤ R := Finset.sum_nonneg fun _ _ => norm_nonneg _
+  have he0 : (0 : ℝ) < e := by exact_mod_cast he
+  refine ⟨(e : ℝ) * R, by positivity, fun y => ?_⟩
+  let v : logSpace F := fun w => -(y w) / (e : ℝ)
+  have hfl : ((ZSpan.floor b v : _) : logSpace F) ∈ unitLattice F := by
+    rw [← (basisUnitLattice F).ofZLatticeBasis_span ℝ (unitLattice F)]
+    exact (ZSpan.floor b v).2
+  obtain ⟨x, -, hx⟩ := Submodule.mem_map.mp hfl
+  refine ⟨Additive.toMul x, fun w => ?_⟩
+  have hfr : ‖v - (ZSpan.floor b v : logSpace F)‖ ≤ R := by
+    simpa [ZSpan.fract_apply] using ZSpan.norm_fract_le b v
+  have h1 := norm_le_pi_norm (v - (ZSpan.floor b v : logSpace F)) w
+  rw [← hx] at h1 hfr
+  have h2 : (logEmbedding F).toIntLinearMap x w
+      = logEmbedding F (Additive.ofMul (Additive.toMul x)) w := rfl
+  rw [Pi.sub_apply, h2, Real.norm_eq_abs] at h1
+  have h3 : y w + (e : ℝ) * logEmbedding F (Additive.ofMul (Additive.toMul x)) w
+      = -((e : ℝ) * (v w - logEmbedding F (Additive.ofMul (Additive.toMul x)) w)) := by
+    simp only [v]; field_simp; ring
+  rw [h3, abs_neg, abs_mul, abs_of_pos he0]
+  exact mul_le_mul_of_nonneg_left (h1.trans hfr) he0.le
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.UnitLattice
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.UnitLogLatticeBoundedTranslateStatement
+
+section
+
+@[expose] public section
+
+open NumberField NumberField.Units NumberField.Units.dirichletUnitTheorem GlobalTheory.CompanionTheory.Hypotheses₂.Shintani GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+theorem _root_.GlobalTheory.T.unit_log_lattice_bounded_translate : ∀ (F : Type) [Field F] [NumberField F] (e : ℕ), 0 < e → ∃ C : ℝ, 0 ≤ C ∧ ∀ y : logSpace F, ∃ u : (𝓞 F)ˣ,
+    ∀ w, |y w + (e : ℝ) * logEmbedding F (Additive.ofMul u) w| ≤ C := by
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.UnitLattice.multiples_relativelyDense | exact GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.UnitLattice.multiples_relativelyDense | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.UnitLattice.multiples_relativelyDense <;> assumption)
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.PlaceApply
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open NumberField NumberField.Units NumberField.Units.dirichletUnitTheorem GlobalTheory.CompanionTheory.Hypotheses₂.Shintani GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Cones
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance
+
+theorem abs_le_of_sum_eq_zero {F : Type} [Field F] [NumberField F] (f : InfinitePlace F → ℝ) (C : ℝ) (hC : 0 ≤ C)
+    (hs : ∑ w, f w = 0) (hf : ∀ w, w ≠ w₀ → |f w| ≤ C) (w : InfinitePlace F) :
+    |f w| ≤ (Fintype.card (InfinitePlace F) : ℝ) * C := by
+  classical
+  have hcard : (1 : ℝ) ≤ Fintype.card (InfinitePlace F) := by
+    exact_mod_cast Fintype.card_pos_iff.mpr ⟨w⟩
+  by_cases hw : w = w₀
+  · subst hw
+    have h1 : f w₀ = -∑ v ∈ Finset.univ.erase w₀, f v := by
+      rw [← Finset.add_sum_erase _ _ (Finset.mem_univ w₀)] at hs
+      linarith
+    rw [h1, abs_neg]
+    calc |∑ v ∈ Finset.univ.erase w₀, f v| ≤ ∑ v ∈ Finset.univ.erase w₀, |f v| :=
+          Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _v ∈ Finset.univ.erase w₀, C :=
+          Finset.sum_le_sum fun v hv => hf v (Finset.ne_of_mem_erase hv)
+      _ = ((Finset.univ.erase w₀).card : ℝ) * C := by rw [Finset.sum_const, nsmul_eq_mul]
+      _ ≤ (Fintype.card (InfinitePlace F) : ℝ) * C := by
+          refine mul_le_mul_of_nonneg_right ?_ hC
+          exact_mod_cast (Finset.card_erase_le).trans (Finset.card_le_univ _)
+  · calc |f w| ≤ C := hf w hw
+      _ = 1 * C := (one_mul C).symm
+      _ ≤ (Fintype.card (InfinitePlace F) : ℝ) * C := mul_le_mul_of_nonneg_right hcard hC
+
+theorem place_apply {F : Type} [Field F] [NumberField F] (σ : F →+* ℝ) (y : F) :
+    (InfinitePlace.mk (Complex.ofRealHom.comp σ)) y = |σ y| := by
+  rw [InfinitePlace.apply]
+  simp
+
+theorem balance : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (𝔣 : Ideal (𝓞 F)), 𝔣 ≠ ⊥ →
+    ∃ M : ℝ, ∀ x : F, TotPos F x → ∃ u : (𝓞 F)ˣ, u ∈ congUnits 𝔣 ∧
+      ∀ σ τ : F →+* ℝ, σ (((u : 𝓞 F) : F) * x) ≤ M * τ (((u : 𝓞 F) : F) * x) := by
+  intro F _ _ _ 𝔣 h𝔣
+  obtain ⟨e, he, hpow⟩ := GlobalTheory.T.exists_unit_power_in_congruence F 𝔣 h𝔣
+  obtain ⟨C, hC, hbound⟩ := GlobalTheory.T.unit_log_lattice_bounded_translate F e he
+  obtain ⟨n, hn⟩ : ∃ n : ℝ, n = (Fintype.card (InfinitePlace F) : ℝ) := ⟨_, rfl⟩
+  refine ⟨Real.exp (2 * (n * C)), fun x hx => ?_⟩
+  have hx0 : x ≠ 0 := by
+    intro h0
+    have h := hx (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal (w₀ : InfinitePlace F)))
+    rw [h0, map_zero] at h
+    exact lt_irrefl _ h
+  have hwx : ∀ w : InfinitePlace F, 0 < w x := fun w => InfinitePlace.pos_iff.mpr hx0
+  have hn0 : n ≠ 0 := by
+    rw [hn]
+    exact_mod_cast (Fintype.card_pos_iff.mpr ⟨(w₀ : InfinitePlace F)⟩).ne'
+  obtain ⟨s, hs⟩ : ∃ s : ℝ, s = ∑ w : InfinitePlace F, Real.log (w x) := ⟨_, rfl⟩
+  obtain ⟨u, hu⟩ := hbound (fun w => Real.log (w.1 x) - s / n)
+  have hv := hpow u
+  refine ⟨u ^ e, hv, fun σ τ => ?_⟩
+  obtain ⟨-, hvpos⟩ := hv
+  have hpowc : (((u ^ e : (𝓞 F)ˣ) : 𝓞 F) : F) = (algebraMap (𝓞 F) F (u : 𝓞 F)) ^ e := by
+    rw [Units.val_pow_eq_pow_val]
+    exact map_pow (algebraMap (𝓞 F) F) _ _
+  have hξpos : ∀ ρ : F →+* ℝ, 0 < ρ ((((u ^ e : (𝓞 F)ˣ) : 𝓞 F) : F) * x) := by
+    intro ρ
+    rw [map_mul]
+    exact mul_pos (hvpos ρ) (hx ρ)
+  generalize hξ : (((u ^ e : (𝓞 F)ˣ) : 𝓞 F) : F) * x = ξ at hξpos ⊢
+  have hlog : ∀ w : InfinitePlace F,
+      Real.log (w ξ) = e * Real.log (w (algebraMap (𝓞 F) F (u : 𝓞 F))) + Real.log (w x) := by
+    intro w
+    have hwu : w (algebraMap (𝓞 F) F (u : 𝓞 F)) ≠ 0 :=
+      (InfinitePlace.pos_iff.mpr (NumberField.Units.coe_ne_zero u)).ne'
+    rw [← hξ, hpowc, map_mul, map_pow, Real.log_mul (pow_ne_zero _ hwu) (hwx w).ne', Real.log_pow]
+  set f : InfinitePlace F → ℝ := fun w => Real.log (w ξ) - s / n with hf
+  have hsumu : ∑ w : InfinitePlace F, Real.log (w (algebraMap (𝓞 F) F (u : 𝓞 F))) = 0 := by
+    have h := NumberField.Units.sum_mult_mul_log u
+    simpa only [IsTotallyReal.mult_eq, Nat.cast_one, one_mul] using h
+  have hsum : ∑ w, f w = 0 := by
+    have h1 : ∀ w, f w = (e : ℝ) * Real.log (w (algebraMap (𝓞 F) F (u : 𝓞 F))) + Real.log (w x) - s / n :=
+      fun w => by
+        show Real.log (w ξ) - s / n = _
+        rw [hlog w]
+    rw [Finset.sum_congr rfl (fun w _ => h1 w), Finset.sum_sub_distrib, Finset.sum_add_distrib,
+      ← Finset.mul_sum, hsumu, ← hs, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hn]
+    have h2 : n * (s / n) = s := by field_simp
+    rw [h2]
+    ring
+  have hfC : ∀ w, w ≠ w₀ → |f w| ≤ C := by
+    intro w hw
+    have h := hu ⟨w, hw⟩
+    simp only [logEmbedding_component, IsTotallyReal.mult_eq, Nat.cast_one, one_mul] at h
+    have h2 : f w = Real.log (w x) - s / n + e * Real.log (w (algebraMap (𝓞 F) F (u : 𝓞 F))) := by
+      show Real.log (w ξ) - s / n = _
+      rw [hlog w]
+      ring
+    rw [h2]
+    exact h
+  have hbd : ∀ w, |f w| ≤ n * C := fun w => by
+    rw [hn]
+    exact GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance.abs_le_of_sum_eq_zero f C hC hsum hfC w
+  have hρ : ∀ ρ : F →+* ℝ, Real.log (ρ ξ) = f (InfinitePlace.mk (Complex.ofRealHom.comp ρ)) + s / n := by
+    intro ρ
+    rw [hf]
+    simp only []
+    rw [GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance.place_apply, abs_of_pos (hξpos ρ)]
+    ring
+  have key : Real.log (σ ξ) ≤ 2 * (n * C) + Real.log (τ ξ) := by
+    rw [hρ σ, hρ τ]
+    have h1 := abs_le.mp (hbd (InfinitePlace.mk (Complex.ofRealHom.comp σ)))
+    have h2 := abs_le.mp (hbd (InfinitePlace.mk (Complex.ofRealHom.comp τ)))
+    linarith [h1.2, h2.1]
+  calc σ ξ = Real.exp (Real.log (σ ξ)) := (Real.exp_log (hξpos σ)).symm
+    _ ≤ Real.exp (2 * (n * C) + Real.log (τ ξ)) := Real.exp_le_exp.mpr key
+    _ = Real.exp (2 * (n * C)) * τ ξ := by rw [Real.exp_add, Real.exp_log (hξpos τ)]
+
+end GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.PlaceApplyStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +296,5 @@ theorem _root_.GlobalTheory.T.exists_congruence_unit_balancing_embeddings : ∀ 
     ∃ M : ℝ, ∀ x : F, TotPos F x → ∃ u : (𝓞 F)ˣ, u ∈ congUnits 𝔣 ∧
       ∀ σ τ : F →+* ℝ, σ (((u : 𝓞 F) : F) * x) ≤ M * τ (((u : 𝓞 F) : F) * x) := by
   first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance.balance | exact GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance.balance | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Balance.balance <;> assumption)
+end
+end

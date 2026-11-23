@@ -2,7 +2,7 @@ module
 
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 public import Mathlib.Basic.Complex.Basic
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MultihomogRatioInduction
+public import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +22,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,6 +43,188 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Noetherian.Defs
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.FiniteNonvanishingSelection
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+theorem PositivityTheory.Xgn.finite_nonvanishing_selection : ∀ (σ : Type) [Finite σ] (F : Set (MvPolynomial σ ℤ)), ∃ T : Finset (MvPolynomial σ ℤ), (T : Set (MvPolynomial σ ℤ)) ⊆ F ∧ ∀ z : σ → ℂ, (∃ s ∈ F, eval z (MvPolynomial.map (Int.castRingHom ℂ) s) ≠ 0) → ∃ s ∈ T, eval z (MvPolynomial.map (Int.castRingHom ℂ) s) ≠ 0 := by
+  intro σ _ F
+  have hfg : (Submodule.span (MvPolynomial σ ℤ) F).FG := IsNoetherian.noetherian _
+  obtain ⟨T, hTF, hT⟩ := (Submodule.fg_span_iff_fg_span_finset_subset F).1 hfg
+  refine ⟨T, hTF, fun z hz => ?_⟩
+  obtain ⟨s, hsF, hs⟩ := hz
+  by_contra hall
+  push_neg at hall
+  let φ : MvPolynomial σ ℤ →+* ℂ := (eval z).comp (MvPolynomial.map (Int.castRingHom ℂ))
+  have hle : Ideal.span (T : Set (MvPolynomial σ ℤ)) ≤ RingHom.ker φ := by
+    rw [Ideal.span_le]
+    intro t ht
+    exact RingHom.mem_ker.2 (hall t ht)
+  have hsT : s ∈ Submodule.span (MvPolynomial σ ℤ) (T : Set (MvPolynomial σ ℤ)) := by
+    rw [← hT]
+    exact Submodule.subset_span hsF
+  exact hs (RingHom.mem_ker.1 (hle hsT))
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.MultihomogeneousTwistFinite
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace PositivityTheory.Xgn.MultihomogeneousTwistFinite
+open GroundTheory.Heights₂.Heights.NumbersDVR
+
+theorem homog_prod {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} (c : ∀ k, ι k)
+    (d : K → ℕ) :
+    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ d k) d := by
+  have h := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
+    (fun k => (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ d k)
+    (fun k => d k • blockWeight ι ⟨k, c k⟩)
+    (fun k _ => (isWeightedHomogeneous_X ℤ (blockWeight ι) ⟨k, c k⟩).pow (d k))
+  have e : ∑ k, d k • blockWeight ι ⟨k, c k⟩ = d := by
+    funext j
+    simp [blockWeight, Finset.sum_apply, Pi.single_apply]
+  rw [e] at h
+  exact h
+
+theorem eval_mul_ne {K : Type} [Fintype K] {ι : K → Type} (c : ∀ k, ι k)
+    (d : K → ℕ) (z : (Σ k, ι k) → ℂ) (hc : ∀ k, z ⟨k, c k⟩ ≠ 0) (u : MvPolynomial (Σ k, ι k) ℤ)
+    (hu : eval z (MvPolynomial.map (Int.castRingHom ℂ) u) ≠ 0) :
+    eval z (MvPolynomial.map (Int.castRingHom ℂ)
+      (u * ∏ k, (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ d k)) ≠ 0 := by
+  rw [map_mul, map_mul]
+  refine mul_ne_zero hu ?_
+  simp only [map_prod, map_pow, MvPolynomial.map_X, MvPolynomial.eval_X]
+  exact Finset.prod_ne_zero_iff.2 (fun k _ => pow_ne_zero _ (hc k))
+
+end PositivityTheory.Xgn.MultihomogeneousTwistFinite
+
+theorem PositivityTheory.Xgn.multihomogeneous_twist_finite : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Q : (K → ℕ) → (K → ℕ) → MvPolynomial (Σ k, ι k) ℤ → MvPolynomial (Σ k, ι k) ℤ → Prop) (bf bg : K → ℕ), (∀ (a b d : K → ℕ) (u v m : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog m d → Q (a + d) (b + d) (u * m) (v * m)) → (∀ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog u a ∧ GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog v b ∧ a + bf = b + bg) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) u) ≠ 0) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) v) ≠ 0) → ∃ (A B : K → ℕ) (n : ℕ) (u v : Fin n → MvPolynomial (Σ k, ι k) ℤ), A + bf = B + bg ∧ (∀ j, Q A B (u j) (v j)) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (u j)) ≠ 0) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (v j)) ≠ 0) := by
+  intro K _ _ ι _ Q bf bg hQmul hQ hU hV
+  obtain ⟨TU, hTU, hselU⟩ :=
+    PositivityTheory.Xgn.finite_nonvanishing_selection (Σ k, ι k) {u | ∃ a b v, Q a b u v}
+  obtain ⟨TV, hTV, hselV⟩ :=
+    PositivityTheory.Xgn.finite_nonvanishing_selection (Σ k, ι k) {v | ∃ a b u, Q a b u v}
+  have wU : ∀ t : TU, ∃ a b v, Q a b t.1 v := fun t => hTU t.2
+  have wV : ∀ t : TV, ∃ a b u, Q a b u t.1 := fun t => hTV t.2
+  choose aU bU vU hqU using wU
+  choose aV bV uV hqV using wV
+  obtain ⟨A, hA⟩ : ∃ A : K → ℕ, A = bg + (∑ t, aU t + ∑ t, aV t) := ⟨_, rfl⟩
+  have leU : ∀ t k, aU t k ≤ A k := by
+    intro t k
+    rw [hA]
+    simp only [Pi.add_apply, Finset.sum_apply]
+    have := Finset.single_le_sum (f := fun t => aU t k) (fun _ _ => Nat.zero_le _)
+      (Finset.mem_univ t)
+    omega
+  have leV : ∀ t k, aV t k ≤ A k := by
+    intro t k
+    rw [hA]
+    simp only [Pi.add_apply, Finset.sum_apply]
+    have := Finset.single_le_sum (f := fun t => aV t k) (fun _ _ => Nat.zero_le _)
+      (Finset.mem_univ t)
+    omega
+  have hbgA : ∀ k, bg k ≤ A k := by
+    intro k
+    rw [hA]
+    simp only [Pi.add_apply]
+    omega
+  obtain ⟨B, hB⟩ : ∃ B : K → ℕ, B = A + bf - bg := ⟨_, rfl⟩
+  have hAB : A + bf = B + bg := by
+    funext k
+    rw [hB]
+    simp only [Pi.add_apply, Pi.sub_apply]
+    have := hbgA k
+    omega
+  have lift : ∀ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ) (c : ∀ k, ι k), Q a b u v →
+      (∀ k, a k ≤ A k) →
+      Q A B (u * ∏ k, (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - a) k)
+        (v * ∏ k, (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - a) k) := by
+    intro a b u v c hq hle
+    have h := hQmul a b (A - a) u v _ hq (MultihomogeneousTwistFinite.homog_prod c (A - a))
+    obtain ⟨_, _, hab⟩ := hQ a b u v hq
+    have e1 : a + (A - a) = A := by
+      funext k
+      simp only [Pi.add_apply, Pi.sub_apply]
+      have := hle k
+      omega
+    have e2 : b + (A - a) = B := by
+      funext k
+      have h1 := congrFun hab k
+      have h2 := congrFun hAB k
+      simp only [Pi.add_apply, Pi.sub_apply] at h1 h2 ⊢
+      have := hle k
+      omega
+    rw [e1, e2] at h
+    exact h
+  let e := Fintype.equivFin ((TU × (∀ k, ι k)) ⊕ (TV × (∀ k, ι k)))
+  let uu : (TU × (∀ k, ι k)) ⊕ (TV × (∀ k, ι k)) → MvPolynomial (Σ k, ι k) ℤ :=
+    Sum.elim (fun p => p.1.1 * ∏ k, (X ⟨k, p.2 k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - aU p.1) k)
+      (fun p => uV p.1 * ∏ k, (X ⟨k, p.2 k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - aV p.1) k)
+  let vv : (TU × (∀ k, ι k)) ⊕ (TV × (∀ k, ι k)) → MvPolynomial (Σ k, ι k) ℤ :=
+    Sum.elim (fun p => vU p.1 * ∏ k, (X ⟨k, p.2 k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - aU p.1) k)
+      (fun p => p.1.1 * ∏ k, (X ⟨k, p.2 k⟩ : MvPolynomial (Σ k, ι k) ℤ) ^ (A - aV p.1) k)
+  refine ⟨A, B, _, fun j => uu (e.symm j), fun j => vv (e.symm j), hAB, ?_, ?_, ?_⟩
+  · intro j
+    show Q A B (uu (e.symm j)) (vv (e.symm j))
+    generalize e.symm j = w
+    rcases w with ⟨t, c⟩ | ⟨t, c⟩
+    · exact lift _ _ _ _ c (hqU t) (leU t)
+    · exact lift _ _ _ _ c (hqV t) (leV t)
+  · intro z hz
+    obtain ⟨a, b, u, v, hq, hu⟩ := hU z hz
+    choose c hc using hz
+    obtain ⟨t, ht, htne⟩ := hselU z ⟨u, ⟨a, b, v, hq⟩, hu⟩
+    refine ⟨e (Sum.inl (⟨t, ht⟩, c)), ?_⟩
+    simp only [uu, Equiv.symm_apply_apply, Sum.elim_inl]
+    exact MultihomogeneousTwistFinite.eval_mul_ne c _ z hc _ htne
+  · intro z hz
+    obtain ⟨a, b, u, v, hq, hv⟩ := hV z hz
+    choose c hc using hz
+    obtain ⟨t, ht, htne⟩ := hselV z ⟨v, ⟨a, b, u, hq⟩, hv⟩
+    refine ⟨e (Sum.inr (⟨t, ht⟩, c)), ?_⟩
+    simp only [vv, Equiv.symm_apply_apply, Sum.elim_inr]
+    exact MultihomogeneousTwistFinite.eval_mul_ne c _ z hc _ htne
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.MultihomogRatioInduction
+
+section
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace GlobalTheory.CompanionTheory.Ar.TwistLine
+
+theorem finite_pairs_common_bidegree : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Q : (K → ℕ) → (K → ℕ) → MvPolynomial (Σ k, ι k) ℤ → MvPolynomial (Σ k, ι k) ℤ → Prop) (bf bg : K → ℕ), (∀ (a b d : K → ℕ) (u v m : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog m d → Q (a + d) (b + d) (u * m) (v * m)) → (∀ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog u a ∧ GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog v b ∧ a + bf = b + bg) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) u) ≠ 0) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) v) ≠ 0) → ∃ (A B : K → ℕ) (n : ℕ) (u v : Fin n → MvPolynomial (Σ k, ι k) ℤ), A + bf = B + bg ∧ (∀ j, Q A B (u j) (v j)) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (u j)) ≠ 0) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (v j)) ≠ 0) :=
+  @PositivityTheory.Xgn.multihomogeneous_twist_finite
+
+end GlobalTheory.CompanionTheory.Ar.TwistLine
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.GeometryProofs.MultihomogRatioInductionStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +232,5 @@ open MvPolynomial
 
 theorem _root_.GlobalTheory.T.multihomog_ratio_induction : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Q : (K → ℕ) → (K → ℕ) → MvPolynomial (Σ k, ι k) ℤ → MvPolynomial (Σ k, ι k) ℤ → Prop) (bf bg : K → ℕ), (∀ (a b d : K → ℕ) (u v m : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog m d → Q (a + d) (b + d) (u * m) (v * m)) → (∀ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v → GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog u a ∧ GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog v b ∧ a + bf = b + bg) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) u) ≠ 0) → (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ (a b : K → ℕ) (u v : MvPolynomial (Σ k, ι k) ℤ), Q a b u v ∧ eval z (MvPolynomial.map (Int.castRingHom ℂ) v) ≠ 0) → ∃ (A B : K → ℕ) (n : ℕ) (u v : Fin n → MvPolynomial (Σ k, ι k) ℤ), A + bf = B + bg ∧ (∀ j, Q A B (u j) (v j)) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (u j)) ≠ 0) ∧ (∀ z : ((Σ k, ι k) → ℂ), (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∃ j, eval z (MvPolynomial.map (Int.castRingHom ℂ) (v j)) ≠ 0) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.TwistLine.finite_pairs_common_bidegree | exact GlobalTheory.CompanionTheory.Ar.TwistLine.finite_pairs_common_bidegree | (intros; apply GlobalTheory.CompanionTheory.Ar.TwistLine.finite_pairs_common_bidegree <;> assumption)
+end
+end

@@ -6,9 +6,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KottwitzIsog
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinpolyOfRegAfOfFixL
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalIntegralTestFunctionFirst
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalIntegralTestFunctionSecond
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermIntegralExpression
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermPointSum
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermRealTrivialisation
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,6 +43,105 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianTripleFrobeniusTwistOrderFixedPoints
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KottwitzPairTermEqPointSumAnyTrivialisationStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwistedNormConjNormalizeAndDegreeOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermRealTrivialisation
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermIntegralExpression
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
+open scoped TensorProduct Classical
+
+namespace GlobalTheory.LKCx.Regroup
+
+variable {p : ℕ} [Fact p.Prime]
+
+noncomputable def centEquiv (G : HTGroup p) (P : Pair G) (hpos : ∀ y ∈ P.cent, 0 < ((y.2 : ℚˣ) : ℚ))
+    (r : grp G P.β) (hr : (r : G.Cˣ × ℚˣ) = (P.γ, P.c)) :
+    Subgroup.centralizer ({r} : Set (grp G P.β)) ≃* P.cent where
+  toFun y := ⟨y.1.1, by
+    have h := congrArg (fun a : grp G P.β => (a : G.Cˣ × ℚˣ).1)
+      (Subgroup.mem_centralizer_singleton_iff.1 y.2)
+    simp only [Subgroup.coe_mul, hr, Prod.fst_mul] at h
+    exact h, y.1.2.1⟩
+  invFun y := ⟨⟨y.1, y.2.2, hpos y.1 y.2⟩, by
+    rw [Subgroup.mem_centralizer_singleton_iff]
+    apply Subtype.ext
+    simp only [Subgroup.coe_mul, hr]
+    exact Prod.ext y.2.1 (mul_comm _ _)⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_mul' _ _ := rfl
+
+theorem fix_iff_mark (G : HTGroup p) (hG : G.a = 1) (v : InfinitePlace G.F) (hv : sigPosH (G.gram_herm v) = 1)
+    (P : Pair G) (r : grp G P.β) (hr : (r : G.Cˣ × ℚˣ) = (P.γ, P.c)) :
+    (∃ z : Fin G.n → ℂ, 0 < (star z ⬝ᵥ (herm G v P.β *ᵥ z)).re ∧ FixL G v P.β r z) ↔ ∃ μ, P.Mark μ := by
+  have hV : (toV G v P.β r : Matrix (Fin G.n) (Fin G.n) ℂ) = G.psi v (P.γ : G.C) := by
+    show G.psi v (((r : G.Cˣ × ℚˣ).1 : G.Cˣ) : G.C) = _
+    rw [hr]
+  constructor
+  · rintro ⟨z, hz, c, hc⟩
+    rw [hV] at hc
+    exact ⟨c, v, hv, z, hc, hz⟩
+  · rintro ⟨μ, w, hw, z, hz, hpos⟩
+    have h1 : Fintype.card {v : InfinitePlace G.F // sigPosH (G.gram_herm v) = 1} ≤ 1 := hG.le
+    have hvv : w = v := congrArg Subtype.val (Fintype.card_le_one_iff.1 h1 ⟨w, hw⟩ ⟨v, hv⟩)
+    subst hvv
+    exact ⟨z, hpos, μ, by rw [hV]; exact hz⟩
+
+end GlobalTheory.LKCx.Regroup
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AnnihilatorOfAnnihilatorLe
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
+open scoped TensorProduct Classical
+
+namespace GlobalTheory
+
+theorem LKMid.Pair.term_one_eq_pointSum : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (Kf : Subgroup G.GAf) (f : G.GAf → ℂ) (K' : Subgroup (Gr G 1)) (f' : Gr G 1 → ℂ), (∀ k ∈ Kf, ∀ g, f (k⁻¹ * g * k) = f g) → (∀ k ∈ K', ∀ g, f' (k⁻¹ * g * sigG G 1 k) = f' g) → ∀ (x : (AfP p ⊗[ℚ] G.C)ˣ) (t : (AfP p)ˣ) (hx : Triv G (AfP p) P.β x t), P.term Kf f 1 K' f' = pointSum (P.toAf x t hx) (P.toQr 1 1) (MonoidHom.id (Gr G 1)) Kf K' (P.toAf x t hx P.self) (inclG G 1 P.atP) f f' := by
+  intro p _ G P Kf f K' f' hf hf' x t hx
+  have hN : IsNrm G 1 P.atP (inclG G 1 P.atP) 1 := (GlobalTheory.nrm_exact p G).2 P.atP
+  have hsig : sigG G 1 = MonoidHom.id (Gr G 1) := by
+    ext1 g
+    exact (GlobalTheory.LKMid.SigIter.main p G 1 Nat.one_pos).1 g
+  rw [GlobalTheory.T.kottwitzPair_term_eq_pointSum_any_trivialisation p G P Kf f 1 K' f' Nat.one_pos hf hf' x t hx (inclG G 1 P.atP) 1 hN]
+  unfold Pair.termAt
+  rw [hsig]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitalTermPointSum
+
+section
+
+@[expose] public section
+
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
+open scoped TensorProduct Classical
+
+theorem _root_.GlobalTheory.T.orbital_term_point_sum : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (Kf : Subgroup G.GAf) (f : G.GAf → ℂ) (K' : Subgroup (Gr G 1)) (f' : Gr G 1 → ℂ), (∀ k ∈ Kf, ∀ g, f (k⁻¹ * g * k) = f g) → (∀ k ∈ K', ∀ g, f' (k⁻¹ * g * sigG G 1 k) = f' g) → ∀ (x : (AfP p ⊗[ℚ] G.C)ˣ) (t : (AfP p)ˣ) (hx : Triv G (AfP p) P.β x t), P.term Kf f 1 K' f' = pointSum (P.toAf x t hx) (P.toQr 1 1) (MonoidHom.id (Gr G 1)) Kf K' (P.toAf x t hx P.self) (inclG G 1 P.atP) f f' := by
+  first | (exact @GlobalTheory.LKMid.Pair.term_one_eq_pointSum) | (exact GlobalTheory.LKMid.Pair.term_one_eq_pointSum) | (intros; apply GlobalTheory.LKMid.Pair.term_one_eq_pointSum <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClassSummandEqTermOfAOne
+
+section
 
 @[expose] public section
 
@@ -119,3 +215,6 @@ end GlobalTheory.LKCx.CxReg
 namespace GlobalTheory.LKCx
 
 end GlobalTheory.LKCx
+end
+end
+end

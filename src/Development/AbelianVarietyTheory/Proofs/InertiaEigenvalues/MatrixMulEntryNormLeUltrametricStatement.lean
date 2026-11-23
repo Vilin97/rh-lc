@@ -3,7 +3,6 @@ module
 public import Mathlib.Analysis.Normed.Field.Basic
 public import Mathlib.Data.Matrix.Mul
 public import Mathlib.Topology.MetricSpace.Ultra.Basic
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MatrixMulEntryNormLeUltrametric
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -43,9 +42,39 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Normed.Group.Ultra
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MatrixMulEntryNormLeUltrametric
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+theorem matrix_mul_entry_norm_le_ultrametric :
+    ∀ (E : Type) [NormedField E] [IsUltrametricDist E] (n : Type) [Fintype n] [DecidableEq n]
+      (A B : Matrix n n E) (a b : ℝ), 0 ≤ a → 0 ≤ b → (∀ i j, ‖A i j‖ ≤ a) → (∀ i j, ‖B i j‖ ≤ b) →
+      ∀ i j, ‖(A * B) i j‖ ≤ a * b := by
+  intro E _ _ n _ _ A B a b ha hb hA hB i j
+  rw [Matrix.mul_apply]
+  apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (mul_nonneg ha hb)
+  intro k _
+  rw [norm_mul]
+  exact mul_le_mul (hA i k) (hB k j) (norm_nonneg _) ha
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MatrixMulEntryNormLeUltrametricStatement
+
+section
 
 @[expose] public section
 
 
 theorem _root_.GlobalTheory.T.norm_mul_apply_le_of_ultrametric : ∀ (E : Type) [NormedField E] [IsUltrametricDist E] (n : Type) [Fintype n] [DecidableEq n] (A B : Matrix n n E) (a b : ℝ), 0 ≤ a → 0 ≤ b → (∀ i j, ‖A i j‖ ≤ a) → (∀ i j, ‖B i j‖ ≤ b) → ∀ i j, ‖(A * B) i j‖ ≤ a * b := by
   first | exact @GlobalTheory.matrix_mul_entry_norm_le_ultrametric | exact GlobalTheory.matrix_mul_entry_norm_le_ultrametric | (intros; apply GlobalTheory.matrix_mul_entry_norm_le_ultrametric <;> assumption)
+end
+end

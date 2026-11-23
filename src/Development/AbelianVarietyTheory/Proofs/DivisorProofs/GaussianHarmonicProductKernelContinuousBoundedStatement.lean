@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussZero
 public import Mathlib.Analysis.InnerProductSpace.PiL2
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussianHarmonicProductKernelContinuousBounded
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegrableWeightedHeckeThetaKernelHalfSpace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,6 +44,42 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Mathlib.Analysis.Fourier.Notation
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussianHarmonicProductKernelContinuousBounded
+
+section
+
+@[expose] public section
+
+open NumberField MeasureTheory
+open scoped RealInnerProductSpace FourierTransform
+
+noncomputable section
+
+namespace GlobalTheory.HeckeTheta.GaussBound
+
+open GlobalTheory.HeckeTheta
+
+theorem gauss_cont_bound : ∀ (I : Type) [Fintype I] (n : I → ℤ), Continuous (fun w : EuclideanSpace ℂ I => GlobalTheory.HeckeTheta.gauss n (WithLp.ofLp w)) ∧ ∃ C : ℝ, ∀ w : EuclideanSpace ℂ I, ‖GlobalTheory.HeckeTheta.gauss n (WithLp.ofLp w)‖ ≤ C * Real.exp (-Real.pi * ‖w‖ ^ 2) := by
+  intro I _ n
+  refine ⟨?_, ⟨Decay.gC n, fun w => ?_⟩⟩
+  · unfold gauss
+    refine continuous_finsetProd _ fun i _ => ?_
+    have hc : Continuous fun w : EuclideanSpace ℂ I => (WithLp.ofLp w) i :=
+      (continuous_apply i).comp (PiLp.continuous_ofLp 2 _)
+    exact ((Decay.continuous_hmon _).comp hc).mul (by fun_prop)
+  · have h := Decay.norm_gauss_le n (WithLp.ofLp w)
+    have e : ‖w‖ ^ 2 = ∑ i, ‖(WithLp.ofLp w) i‖ ^ 2 := EuclideanSpace.norm_sq_eq w
+    rw [e]; exact h
+
+end GlobalTheory.HeckeTheta.GaussBound
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussianHarmonicProductKernelContinuousBoundedStatement
+
+section
+
 @[expose] public section
 
 open NumberField MeasureTheory
@@ -51,3 +87,5 @@ open scoped RealInnerProductSpace FourierTransform
 
 theorem _root_.GlobalTheory.T.gaussianHarmonicProductKernel_continuous_bounded : ∀ (I : Type) [Fintype I] (n : I → ℤ), Continuous (fun w : EuclideanSpace ℂ I => GlobalTheory.HeckeTheta.gauss n (WithLp.ofLp w)) ∧ ∃ C : ℝ, ∀ w : EuclideanSpace ℂ I, ‖GlobalTheory.HeckeTheta.gauss n (WithLp.ofLp w)‖ ≤ C * Real.exp (-Real.pi * ‖w‖ ^ 2) := by
   first | exact @GlobalTheory.HeckeTheta.GaussBound.gauss_cont_bound | exact GlobalTheory.HeckeTheta.GaussBound.gauss_cont_bound | (intros; apply GlobalTheory.HeckeTheta.GaussBound.gauss_cont_bound <;> assumption)
+end
+end

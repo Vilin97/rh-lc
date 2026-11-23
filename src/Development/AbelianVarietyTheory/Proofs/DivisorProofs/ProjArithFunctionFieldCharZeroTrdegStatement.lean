@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsClosedImmersionGenericPoint
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjArithFunctionFieldCharZeroTrdeg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsTranscendenceBasisFunctionFieldArithmeticVarie
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,6 +42,38 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.CharZeroFunctionField
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsRatioOfWeight
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjArithFunctionFieldCharZeroTrdeg
+
+section
+
+@[expose] public section
+
+open CategoryTheory AlgebraicGeometry TopologicalSpace Filter Topology MeasureTheory
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open GlobalTheory GlobalTheory.ArInt GlobalTheory.CxPts GlobalTheory.Cartier GlobalTheory.VolBr GlobalTheory.HSAmp
+
+set_option autoImplicit false
+noncomputable section
+
+namespace GlobalTheory.ArithFnField
+
+theorem charZero_and_trdeg_functionField : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X]
+    (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D →
+    CharZero X.functionField ∧ Algebra.trdeg ℤ X.functionField = D := by
+  intro k _ X _ p D h
+  refine ⟨?_, ArithTrdeg.trdeg_functionField_eq h⟩
+  have hc0 : CharZero Γ(X, ⊤) := (flat_int_iff_charZero _).1 h.flat
+  exact ((X.germToFunctionField ⊤).hom.charZero_iff (X.germToFunctionField_injective ⊤)).1 hc0
+
+end GlobalTheory.ArithFnField
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjArithFunctionFieldCharZeroTrdegStatement
+
+section
+
 @[expose] public section
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace Filter Topology MeasureTheory
@@ -50,3 +82,5 @@ open GlobalTheory GlobalTheory.ArInt GlobalTheory.CxPts GlobalTheory.Cartier Glo
 
 theorem _root_.GlobalTheory.T.projArith_functionField_charZero_trdeg : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D → CharZero X.functionField ∧ Algebra.trdeg ℤ X.functionField = D := by
   first | exact @GlobalTheory.ArithFnField.charZero_and_trdeg_functionField | exact GlobalTheory.ArithFnField.charZero_and_trdeg_functionField | (intros; apply GlobalTheory.ArithFnField.charZero_and_trdeg_functionField <;> assumption)
+end
+end

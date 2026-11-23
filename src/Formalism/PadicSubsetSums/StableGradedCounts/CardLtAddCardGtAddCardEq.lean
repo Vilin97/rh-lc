@@ -1,15 +1,6 @@
 module
 
-public import Formalism.PadicSubsetSums.CentralIdempotents.FactorOverLocalSubalgebraMonic
-public import Formalism.PadicSubsetSums.StableGradedCounts.ZBrauerNesbittAlg
-public import Mathlib.LinearAlgebra.FreeModule.PID
-public import Mathlib.RingTheory.Flat.TorsionFree
-public import Mathlib.RingTheory.SimpleRing.Principal
-public import Formalism.PadicSubsetSums.StableGradedCounts.CharpolyFactorAnnihilator
-public import Formalism.PadicSubsetSums.StableGradedCounts.FactorOverLocalSubalgebra
-public import Formalism.PadicSubsetSums.StableGradedCounts.ZGoodCuspidal
-public import Formalism.PadicSubsetSums.StableGradedCounts.ZReuse
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Formalism.PadicSubsetSums.CentralIdempotents.PrimitiveRootFifteenSubOneUnit
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,18 +14,13 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.LinearAlgebra.Charpoly.ToMatrix
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -54,9 +40,206 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.PadicSubsetSums.StableGradedCounts.ZBrauerNesbittAlg
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Formalism.PadicSubsetSums.StableGradedCounts.CharpolyFactorAnnihilator
+import Mathlib.RingTheory.WittVector.IsPoly
+public import Mathlib.RingTheory.LocalRing.RingHom.Basic
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
+public import Formalism.PadicSubsetSums.StableGradedCounts.ZReuse
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.LinearAlgebra.Charpoly.ToMatrix
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PadicSubsetSums.CentralIdempotents.FactorOverLocalSubalgebraMonic
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Polynomial
+
+namespace Formalism.IrreducibleCountingLemmas.Z
+
+def ResidueCharpolyEq : Prop :=
+  ∀ (O : Type) [CommRing O] [IsLocalRing O] (X' : Type) [Fintype X'] (T : Subalgebra O (X' → O)),
+    IsLocalRing T → ∀ (G : Type) (n : ℕ) (r : X' → G → Matrix (Fin n) (Fin n) O),
+    (∀ (g : G) (j : ℕ), (fun x => (Matrix.charpolyRev (r x g)).coeff j) ∈ T) →
+    ∀ (x y : X') (g : G),
+      Matrix.charpolyRev ((r x g).map (IsLocalRing.residue O)) =
+        Matrix.charpolyRev ((r y g).map (IsLocalRing.residue O)) ∧
+      ((r x g).map (IsLocalRing.residue O)).charpoly =
+        ((r y g).map (IsLocalRing.residue O)).charpoly
+
+def GoodCuspidalOne : Prop :=
+  ∀ (k : Type) [Field k] (P : Type) [Nonempty P] (r : ℕ) (f : P → k[X]) (I : Type) [Fintype I]
+    (n d : I → ℕ) (h : P → I → k[X]), 1 ≤ r →
+    (∀ v, (f v).natDegree = r) → (∀ v, Squarefree (f v)) → (∀ v, f v = ∏ i, h v i ^ d i) →
+    (∀ v i, (h v i).natDegree = n i) → (∀ i, 1 ≤ n i) → (∀ i, 1 ≤ d i) →
+    (¬ ∃ a : ℕ, 1 ≤ a ∧ 2 * a ≤ r ∧ ∀ v, ∃ g : k[X], g ∣ f v ∧ g.natDegree = a) →
+    Fintype.card I = 1 ∧ ∀ i, d i = 1 ∧ n i = r
+
+def CharpolyOverSubalgebra : Prop :=
+  ∀ (O : Type) [CommRing O] [IsLocalRing O] (X' : Type) [Fintype X'] (T : Subalgebra O (X' → O))
+    (n : ℕ) (M : X' → Matrix (Fin n) (Fin n) O),
+    (∀ j : ℕ, (fun x => (Matrix.charpolyRev (M x)).coeff j) ∈ T) →
+    ∃ F : T[X], F.Monic ∧ ∀ x, F.map (ev T x) = (M x).charpoly
+
+def FactorOverLocalSubalgebraMonic : Prop :=
+  ∀ (O : Type) [CommRing O] [IsLocalRing O] (X' : Type) [Fintype X'] (T : Subalgebra O (X' → O)),
+    IsLocalRing T → ∀ (t : ℕ) (c : O) (F : T[X]) (s : X' → O[X]), F.Monic →
+    (∀ x, F.map (ev T x) = s x * (X - C c) ^ t) → (∀ x, IsUnit ((s x).eval c)) →
+    ∃ P : T[X], P.Monic ∧ F = P * (X - C (algebraMap O T c)) ^ t ∧
+      IsUnit (P.eval (algebraMap O T c)) ∧ ∀ x, P.map (ev T x) = s x
+
+def FactorAnnihilatorFamily : Prop :=
+  ∀ (O K : Type) [CommRing O] [IsLocalRing O] [Field K] [Algebra O K],
+    Function.Injective (algebraMap O K) →
+    ∀ (X' : Type) [Fintype X'] (T : Subalgebra O (X' → O)), IsLocalRing T →
+    ∀ (V : X' → Type) [∀ x, AddCommGroup (V x)] [∀ x, Module K (V x)]
+      [∀ x, FiniteDimensional K (V x)] (A B : ∀ x, Submodule K (V x))
+      (γ₀ γ : ∀ x, Module.End K (V x)) (c cγ : O) (t : ℕ) (F : T[X]),
+    (∀ x, (F.map (ev T x)).map (algebraMap O K) = (γ₀ x).charpoly) →
+    (∀ x, IsCompl (A x) (B x)) → (∀ x, ∀ v ∈ A x, γ₀ x v ∈ A x) → (∀ x, ∀ v ∈ A x, γ x v ∈ A x) →
+    (∀ x, ∀ v ∈ B x, γ₀ x v = algebraMap O K c • v) →
+    (∀ x, ∀ v ∈ B x, γ x v = algebraMap O K cγ • v) →
+    (∀ x, Module.finrank K (B x) = t) →
+    (∀ x, ((F.map (ev T x)).map (IsLocalRing.residue O)).rootMultiplicity
+      (IsLocalRing.residue O c) = t) →
+    ∃ P : T[X], P.Monic ∧ F = P * (X - C (algebraMap O T c)) ^ t ∧
+      IsUnit (P.eval (algebraMap O T c)) ∧
+      ∀ x, (aeval (γ₀ x) ((P.map (ev T x)).map (algebraMap O K))) *
+        (γ x - algebraMap K (Module.End K (V x)) (algebraMap O K cγ)) = 0
+
+end Formalism.IrreducibleCountingLemmas.Z
+end
+end
+end
+
+-- Source module: Formalism.PadicSubsetSums.StableGradedCounts.FactorOverLocalSubalgebra
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace Formalism.IrreducibleCountingLemmas.Z
+
+theorem factorOverLocalSubalgebra : FactorOverLocalSubalgebra := by
+  intro O _ _ X' _ T hT t c F s hF hs
+  have := hT
+  let c' : T := algebraMap O T c
+  have hev_c : ∀ x, ev T x c' = c := fun x => by simp [ev, c']
+  have hq : ((X - C c') ^ t : T[X]).Monic := (monic_X_sub_C c').pow t
+  have hqO : ((X - C c) ^ t : O[X]).Monic := (monic_X_sub_C c).pow t
+  have hqmap : ∀ x, ((X - C c') ^ t : T[X]).map (ev T x) = (X - C c) ^ t := by
+    intro x
+    rw [Polynomial.map_pow, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, hev_c]
+  have hR : F %ₘ (X - C c') ^ t = 0 := by
+    ext n x
+    have h1 : (F %ₘ (X - C c') ^ t).map (ev T x) = 0 := by
+      rw [map_modByMonic _ hq, hqmap, hF, (modByMonic_eq_zero_iff_dvd hqO).mpr (dvd_mul_left _ _)]
+    have h2 := congrArg (fun p => p.coeff n) h1
+    simpa [Polynomial.coeff_map, ev] using h2
+  have hmapP : ∀ x, (F /ₘ (X - C c') ^ t).map (ev T x) = s x := by
+    intro x
+    rw [map_divByMonic _ hq, hqmap, hF, mul_comm, mul_divByMonic_cancel_left _ hqO]
+  refine ⟨F /ₘ (X - C c') ^ t, ?_, ?_, hmapP⟩
+  · have h := modByMonic_add_div F ((X - C c') ^ t)
+    rw [hR, zero_add] at h
+    rw [mul_comm]
+    exact h.symm
+  · obtain ⟨x⟩ : Nonempty X' := by
+      by_contra h
+      rw [not_nonempty_iff] at h
+      have hsub : Subsingleton T := ⟨fun a b => Subtype.ext (funext fun x => (IsEmpty.false x).elim)⟩
+      exact not_subsingleton T hsub
+    have := IsLocalHom.of_surjective (ev T x) (fun o => ⟨algebraMap O T o, by simp [ev]⟩)
+    apply isUnit_of_map_unit (ev T x)
+    rw [← Polynomial.eval₂_hom, ← Polynomial.eval_map, hmapP, hev_c]
+    exact hs x
+
+end Formalism.IrreducibleCountingLemmas.Z
+end
+end
+
+-- Source module: Formalism.PadicSubsetSums.StableGradedCounts.ZGoodCuspidal
+
+section
+
+@[expose] public section
+
+open Polynomial
+
+namespace Formalism.IrreducibleCountingLemmas.Z
+
+theorem goodCuspidal_holds : GoodCuspidal := by
+  intro k _ P _ r f I _ n d h hdeg hsq hprod hhdeg hn hd hno
+  obtain ⟨v0⟩ := ‹Nonempty P›
+
+  have hdvd : ∀ v i, h v i ∣ f v := by
+    intro v i
+    rw [hprod v]
+    exact (dvd_pow_self (h v i) (by have := hd i; omega)).trans
+      (Finset.dvd_prod_of_mem (fun j => h v j ^ d j) (Finset.mem_univ i))
+
+  have hd1 : ∀ i, d i = 1 := by
+    intro i
+    by_contra hne
+    have h2 : 2 ≤ d i := by have := hd i; omega
+    have hsq' : h v0 i * h v0 i ∣ f v0 := by
+      rw [hprod v0]
+      refine (?_ : h v0 i * h v0 i ∣ h v0 i ^ d i).trans
+        (Finset.dvd_prod_of_mem (fun j => h v0 j ^ d j) (Finset.mem_univ i))
+      rw [← pow_two]
+      exact pow_dvd_pow _ h2
+    have hu := hsq v0 _ hsq'
+    have e1 := Polynomial.natDegree_eq_zero_of_isUnit hu
+    have e2 := hhdeg v0 i
+    have e3 := hn i
+    omega
+  refine ⟨hd1, ?_⟩
+  by_contra hcard
+  push_neg at hcard
+  haveI : Nontrivial I := Fintype.one_lt_card_iff_nontrivial.mp hcard
+  obtain ⟨i, j, hij⟩ := exists_pair_ne I
+  have hf0 : f v0 ≠ 0 := (hsq v0).ne_zero
+  have hne : ∀ l, h v0 l ≠ 0 := by
+    intro l hl
+    have := hdvd v0 l
+    rw [hl, zero_dvd_iff] at this
+    exact hf0 this
+
+  have hr : r = ∑ l, n l := by
+    rw [← hdeg v0, hprod v0, Polynomial.natDegree_prod _ _ (fun l _ => pow_ne_zero _ (hne l))]
+    simp [Polynomial.natDegree_pow, hd1, hhdeg]
+  have hle : n i + n j ≤ ∑ l, n l := by
+    classical
+    rw [← Finset.sum_pair hij]
+    exact Finset.sum_le_sum_of_subset (Finset.subset_univ _)
+  rcases le_total (n i) (n j) with hij' | hji'
+  · exact hno ⟨n i, hn i, by omega, fun v => ⟨h v i, hdvd v i, hhdeg v i⟩⟩
+  · exact hno ⟨n j, hn j, by omega, fun v => ⟨h v j, hdvd v j, hhdeg v j⟩⟩
+
+end Formalism.IrreducibleCountingLemmas.Z
+end
+end
+
+-- Source module: Formalism.PadicSubsetSums.StableGradedCounts.CardLtAddCardGtAddCardEq
+
+section
 
 @[expose] public section
 
@@ -253,3 +436,5 @@ theorem first_charpoly_in_T : CharpolyOverSubalgebra := by
       exact (coeff_eq_zero_of_natDegree_lt (by rw [hdeg]; omega)).symm
 
 end Formalism.IrreducibleCountingLemmas.Z
+end
+end

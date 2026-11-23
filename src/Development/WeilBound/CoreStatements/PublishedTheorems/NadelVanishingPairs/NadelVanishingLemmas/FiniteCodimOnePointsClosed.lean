@@ -2,7 +2,6 @@ module
 
 public import Mathlib.AlgebraicGeometry.Noetherian
 public import Mathlib.AlgebraicGeometry.Properties
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCodimOnePointsClosed
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +20,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -50,6 +50,57 @@ import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChartA
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.CanonGenIsGen
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SymplecticGenerators.StTransl
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCodimOnePointsClosed
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R
+open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
+
+namespace GlobalTheory.Cartier
+
+theorem finite_coheight_one_of_ne_top : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsNoetherian Y]
+    (B : Closeds Y), B ≠ ⊤ → {v : Y | Order.coheight v = 1 ∧ v ∈ B}.Finite := by
+  intro Y _ _ B hB
+  classical
+  have hgen : genericPoint Y ∉ (B : Set Y) := fun h =>
+    hB (eq_top_iff.2 fun x _ => (genericPoint_specializes x).mem_closed B.isClosed h)
+  obtain ⟨S, hS, hc, hi, hU⟩ := NoetherianSpace.exists_finite_set_isClosed_irreducible B.isClosed
+  refine (hS.image fun T => if h : IsIrreducible T then h.genericPoint else genericPoint Y).subset
+    fun z hz => ?_
+  obtain ⟨T, hT, hzT⟩ := Set.mem_sUnion.1 (hU.le hz.2)
+  refine ⟨T, hT, ?_⟩
+  simp only [dif_pos (hi T hT)]
+  have hg := (hi T hT).isGenericPoint_genericPoint (hc T hT)
+  have h₁ : z ≤ (hi T hT).genericPoint := hg.specializes hzT
+  have h₂ : (hi T hT).genericPoint < genericPoint Y := by
+    refine lt_of_le_not_ge (genericPoint_specializes _) fun e => ?_
+    have e' : _ = genericPoint Y := (Specializes.antisymm e (genericPoint_specializes _)).eq
+    exact hgen (e' ▸ hU.ge (Set.mem_sUnion.2 ⟨T, hT, hg.mem⟩))
+  by_contra hne
+  have h₃ := Order.coheight_add_one_le (lt_of_le_not_ge h₁ fun e =>
+    hne (Specializes.antisymm h₁ e).eq)
+  have h₄ := Order.coheight_add_one_le h₂
+  rw [hz.1] at h₃
+  have h₅ : (1 : ℕ∞) + 1 ≤ 1 := (add_le_add_left (le_add_self.trans h₄) 1).trans h₃
+  exact absurd h₅ (by decide)
+
+end GlobalTheory.Cartier
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.PublishedTheorems.NadelVanishingPairs.NadelVanishingLemmas.FiniteCodimOnePointsClosed
+
+section
 
 @[expose] public section
 
@@ -59,3 +110,5 @@ open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
 open GlobalTheory GlobalTheory.Cartier GlobalTheory.TopForm GlobalTheory.CechPic GlobalTheory.QCoh GlobalTheory.Discrepancy GlobalTheory.LogPair
 theorem _root_.GlobalTheory.T.finite_codim_one_points_closed : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsNoetherian Y] (B : Closeds Y), B ≠ ⊤ → {v : Y | Order.coheight v = 1 ∧ v ∈ B}.Finite := by
   first | exact @_root_.GlobalTheory.Cartier.finite_coheight_one_of_ne_top | exact _root_.GlobalTheory.Cartier.finite_coheight_one_of_ne_top | (intros; apply _root_.GlobalTheory.Cartier.finite_coheight_one_of_ne_top <;> assumption)
+end
+end

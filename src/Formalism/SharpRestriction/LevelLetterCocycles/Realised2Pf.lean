@@ -2,15 +2,15 @@ module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingEveryOrdering
 public import Formalism.SharpRestriction.LevelLetterCocycles.MapEvalPsPi
-public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicFrobeniusPowerSeriesX
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfArcChoices
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfAssemble
-public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfTeichOnto
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ConstSectionStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,6 +22,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,6 +45,230 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExponentWindowSubsetShort
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfAssemble
+public import Formalism.SharpRestriction.LevelLetterCocycles.TeichOnto
+import Mathlib.GroupTheory.Nilpotent
+public import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ExpRescaleCoeff
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace LevelStatements.Lv
+
+open PowerSeries IsLocalRing
+
+theorem expRescale_coeff (S : Type) [CommRing S] [Algebra ℚ S] (E : PowerSeries S)
+    (h0 : constantCoeff E = 1) (hd : PowerSeries.derivative E = E) (n : ℕ) :
+    coeff n E = algebraMap ℚ S (1 / (n.factorial : ℚ)) := by
+  induction n with
+  | zero => simp [h0]
+  | succ n ih =>
+    have h := congrArg (coeff n) hd
+    rw [PowerSeries.coeff_derivative, ih] at h
+    have hn : ((n : S) + 1) = algebraMap ℚ S ((n : ℚ) + 1) := by simp
+    rw [hn] at h
+    have hu : coeff (n + 1) E =
+        coeff (n + 1) E * algebraMap ℚ S ((n : ℚ) + 1) * algebraMap ℚ S (1 / ((n : ℚ) + 1)) := by
+      rw [mul_assoc, ← map_mul, mul_one_div_cancel (by positivity), map_one, mul_one]
+    rw [hu, h, ← map_mul, Nat.factorial_succ]
+    congr 1
+    push_cast
+    field_simp
+
+theorem expRescale : ExpRescaleStatement := by
+  intro S _ _ E h0 hd
+  have hE : E = PowerSeries.exp S := by
+    ext n
+    rw [expRescale_coeff S E h0 hd n, PowerSeries.coeff_exp]
+  refine ⟨hE, fun a => ?_⟩
+  rw [hE, PowerSeries.exp_pow_eq_rescale_exp]
+
+end LevelStatements.Lv
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicFrobeniusPowerSeriesX
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03
+
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.MainNotions.WachCoordinates Formalism.MainNotions.WachCoordinates.Br Formalism.ExponentWindows PowerSeries
+
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : PeriodData G Qp K₀ K B BdR} {LL : Type} [Field LL] [Algebra Qp LL]
+    {O : Type} [CommRing O] [Algebra O LL] [TopologicalSpace LL]
+    {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
+
+theorem cyclotomicFrobeniusPowerSeries_X (W : LocWach PD LL O v n) : W.φ₀ X = (1 + X) ^ PD.p - 1 := by
+  rw [W.φ₀_X, W.q₀_def]
+
+theorem cyclo_comp_mul_X {R : Type} [CommRing R] (p : ℕ) [hp : Fact p.Prime] :
+    (Polynomial.cyclotomic p R).comp (Polynomial.X + 1) * Polynomial.X =
+      (Polynomial.X + 1) ^ p - 1 := by
+  rw [Polynomial.cyclotomic_prime]
+  have hc : (∑ i ∈ Finset.range p, (Polynomial.X : Polynomial R) ^ i).comp (Polynomial.X + 1) =
+      ∑ i ∈ Finset.range p, (Polynomial.X + 1) ^ i := by
+    simp [Polynomial.comp, Polynomial.eval₂_finsetSum]
+  have h := geom_sum_mul (Polynomial.X + 1 : Polynomial R) p
+  rw [add_sub_cancel_right] at h
+  rw [hc, h]
+
+theorem glue2 [IsDomain O] (hR : Ring9 W) :
+    ∃ w : (PowerSeries O)ˣ, (baseIdOf hR).ι (baseIdOf hR).Bs.q = (w : PowerSeries O) *
+      (((Polynomial.cyclotomic PD.p O).comp (Polynomial.X + 1) : Polynomial O) : PowerSeries O) := by
+  obtain ⟨w, hw⟩ := hR.2.2.2.2.1
+  have h0 := congrFun hw 0
+  have hq : (baseIdOf hR).ι (baseIdOf hR).Bs.q = W.π₀₁ + PowerSeries.C ((PD.p : ℕ) : O) := by
+    change (baseIdOf hR).ι (PowerSeries.X + PowerSeries.C ((PD.p : ℕ) : O)) = _
+    rw [map_add (f := _), (baseIdOf hR).ι_X]
+    congr 1
+    exact (baseIdOf hR).ι.commutes _
+  have hcyc : (W.q₀ : PowerSeries O) =
+      (((Polynomial.cyclotomic PD.p O).comp (Polynomial.X + 1) : Polynomial O) : PowerSeries O) := by
+    have hX : (PowerSeries.X : PowerSeries O) ≠ 0 := PowerSeries.X_ne_zero
+    apply mul_left_cancel₀ hX
+    rw [W.q₀_def]
+    have := congrArg (fun f : Polynomial O => (f : PowerSeries O)) (cyclo_comp_mul_X (R := O) PD.p)
+    simp only [Polynomial.coe_mul, Polynomial.coe_X, Polynomial.coe_sub, Polynomial.coe_pow,
+      Polynomial.coe_add, Polynomial.coe_one] at this
+    rw [mul_comm, this, add_comm]
+  have h0' : W.q₀ = (w : LetA O n) 0 * (W.π₀₁ + PowerSeries.C ((PD.p : ℕ) : O)) := by
+    simpa [LocWach.q, Formalism.MainNotions.DeltaInvariantLattices.Eat, LocWach.π₀, Polynomial.aeval_add, Polynomial.aeval_X,
+      Polynomial.aeval_C] using h0
+  let w0 : (PowerSeries O)ˣ := Units.map (Pi.evalMonoidHom (fun _ : ZMod n => PowerSeries O) 0) w
+  refine ⟨w0⁻¹, ?_⟩
+  rw [hq, ← hcyc, h0']
+  change _ = ((w0⁻¹ : (PowerSeries O)ˣ) : PowerSeries O) * ((w0 : PowerSeries O) * _)
+  rw [← mul_assoc, Units.inv_mul, one_mul]
+
+theorem rhoZ_exp [CharZero LL] (c : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) :
+    1 + rhoZ W c ζ X = PowerSeries.C ζ * exp LL := by
+  obtain ⟨E, h0, h1, h2⟩ := W.lev_π c ζ hζ
+  have hE := (LevelStatements.Lv.expRescale LL E h0 h1).1
+  rw [← hE, ← h2]
+  rfl
+
+end Formalism.MainNotions.N.Ln03
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfArcChoices
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03.Pf
+
+open Formalism.MainNotions.WachCoordinates
+
+theorem hn_of {n j : ℕ} {ty : ZMod n → LT} {cuts : Finset (ZMod n)} {arcLen : ZMod n → ℕ}
+    (hCu : CutsOK n j ty cuts arcLen) {c : ZMod n} (hc : c ∈ (cutsOf hCu).cuts) :
+    (cutsOf hCu).ell c ≤ n :=
+  (cutsOf hCu).ell_le c hc
+
+theorem hj_of {n j : ℕ} {ty : ZMod n → LT} {cuts : Finset (ZMod n)} {arcLen : ZMod n → ℕ}
+    (hCu : CutsOK n j ty cuts arcLen) {c : ZMod n} (hc : c ∈ (cutsOf hCu).cuts) :
+    j ≤ (cutsOf hCu).ell c := by
+  simp only [Formalism.MainNotions.WachCoordinates.cutsOf_cuts] at hc
+  simp only [Formalism.MainNotions.WachCoordinates.cutsOf_ell]
+  exact hCu.2.2.2.1 c hc
+
+theorem three_g_le_parameter_bound {l : ℕ} (hl : 2 ≤ l) {G S η h : ℕ} (hg : gPar G S η ≤ h) :
+    3 * gPar G S η ≤ (l - 1) * Formalism.ExponentWindows.E.parM l h (gPar G S η) := by
+  unfold Formalism.ExponentWindows.E.parM
+  have hd : 0 < l - 1 := by omega
+  have h1 := Nat.lt_mul_div_succ (h + 2 * gPar G S η) hd
+  exact le_of_lt (lt_of_le_of_lt (by omega) h1)
+
+end Formalism.MainNotions.N.Ln03.Pf
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfTeichOnto
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.MainNotions.N.Ln03.Pf
+
+open Formalism.MainNotions.N.Ln03 Polynomial
+
+theorem teichOnto_toZMod_eq_zero_iff {p : ℕ} [Fact p.Prime] (x : ℤ_[p]) :
+    PadicInt.toZMod x = 0 ↔ ‖x‖ < 1 := by
+  rw [← RingHom.mem_ker, PadicInt.ker_toZMod, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
+    ← PadicInt.mem_nonunits, mem_nonunits_iff]
+
+theorem teichOnto_norm_eq_one {p : ℕ} [Fact p.Prime] (x : ℤ_[p]) (h : PadicInt.toZMod x ≠ 0) :
+    ‖x‖ = 1 :=
+  le_antisymm (PadicInt.norm_le_one x) (not_lt.mp fun h' => h ((teichOnto_toZMod_eq_zero_iff x).mpr h'))
+
+theorem teichOnto_holds (p : ℕ) [Fact p.Prime] : TeichOnto p := by
+  intro a ha
+  have hp : p.Prime := Fact.out
+  set a₀ : ℤ_[p] := ((a.val : ℕ) : ℤ_[p]) with ha₀
+  have hres : PadicInt.toZMod a₀ = a := by rw [ha₀, map_natCast, ZMod.natCast_zmod_val]
+  set F : Polynomial ℤ_[p] := X ^ (p - 1) - 1 with hF
+  have hFa : F.aeval a₀ = a₀ ^ (p - 1) - 1 := by simp [hF]
+  have hF'a : F.derivative.aeval a₀ = ((p - 1 : ℕ) : ℤ_[p]) * a₀ ^ (p - 1 - 1) := by
+    simp [hF, Polynomial.derivative_X_pow]
+  have h1 : ‖F.aeval a₀‖ < 1 := by
+    rw [← teichOnto_toZMod_eq_zero_iff, hFa, map_sub, map_pow, hres, map_one,
+      ZMod.pow_card_sub_one_eq_one ha, sub_self]
+  have h2 : ‖F.derivative.aeval a₀‖ = 1 := by
+    apply teichOnto_norm_eq_one
+    rw [hF'a, map_mul, map_pow, hres, map_natCast]
+    refine mul_ne_zero ?_ (pow_ne_zero _ ha)
+    rw [Nat.cast_sub hp.one_le, ZMod.natCast_self, Nat.cast_one, zero_sub, neg_ne_zero]
+    exact one_ne_zero
+  obtain ⟨z, hz, hza, -, -⟩ := hensels_lemma (F := F) (a := a₀) (by rw [h2, one_pow]; exact h1)
+  rw [h2] at hza
+  have hzp : z ^ (p - 1) = 1 := by
+    have : F.aeval z = z ^ (p - 1) - 1 := by simp [hF]
+    rw [this, sub_eq_zero] at hz
+    exact hz
+  have hzz : z * z ^ (p - 2) = 1 := by
+    have h2p := hp.two_le
+    rw [← pow_succ', show p - 2 + 1 = p - 1 by omega, hzp]
+  let u : ℤ_[p]ˣ := ⟨z, z ^ (p - 2), hzz, by rw [mul_comm]; exact hzz⟩
+  refine ⟨⟨u, Units.ext (by rw [Units.val_pow_eq_pow_val, Units.val_one]; exact hzp)⟩, ?_⟩
+  show PadicInt.toZMod z = a
+  have h3 : PadicInt.toZMod (z - a₀) = 0 := (teichOnto_toZMod_eq_zero_iff _).mpr hza
+  rw [map_sub, sub_eq_zero, hres] at h3
+  exact h3
+
+end Formalism.MainNotions.N.Ln03.Pf
+end
+end
+end
+
+-- Source module: Formalism.SharpRestriction.LevelLetterCocycles.Realised2Pf
+
+section
 
 @[expose] public section
 
@@ -138,3 +365,6 @@ theorem realised2_pf (Lb : LevB W) (hR : Ring9 W) (e : W.DD W.one) (uZ : ℤ_[PD
     (Formalism.MainNotions.N.Ln03.Pf.hj_of hCu hc) (Formalism.MainNotions.N.Ln03.Pf.three_g_le_parameter_bound PD.hp.two_le hg)
 
 end Formalism.MainNotions.N.Ln03
+end
+end
+end

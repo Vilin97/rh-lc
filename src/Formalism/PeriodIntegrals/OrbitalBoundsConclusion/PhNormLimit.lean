@@ -1,6 +1,7 @@
 module
 
-public import Formalism.PeriodIntegrals.PhNormLimit
+public import Mathlib.NumberTheory.Padics.Complex
+public import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,9 +20,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,11 +39,70 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Algebra.Nonarchimedean.Completion
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Formalism.PeriodIntegrals.PhNormLimit
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Classical
+
+namespace PI.PhNormLimit
+
+def IsIntP {p : ℕ} [Fact p.Prime] (x : ℂ_[p]) : Prop := ‖x‖ ≤ 1
+
+def IntegralMv {σ : Type*} {p : ℕ} [Fact p.Prime] (F : MvPowerSeries σ ℂ_[p]) : Prop :=
+  ∀ n, IsIntP (MvPowerSeries.coeff n F)
+
+def expMv {σ : Type*} {p : ℕ} [Fact p.Prime] (F : MvPowerSeries σ ℂ_[p]) : MvPowerSeries σ ℂ_[p] :=
+  fun α => ∑ n ∈ Finset.range ((α.sum fun _ k => k) + 1),
+    MvPowerSeries.coeff α (F ^ n) / (n.factorial : ℂ_[p])
+
+def Simeq {σ : Type*} {p : ℕ} [Fact p.Prime] (f g : MvPowerSeries σ ℂ_[p]) : Prop :=
+  MvPowerSeries.constantCoeff (f - g) = 0 ∧ IntegralMv (expMv (f - g))
+
+abbrev Xv {p : ℕ} [Fact p.Prime] {σ : Type*} (i : σ) : MvPowerSeries σ ℂ_[p] := MvPowerSeries.X i
+
+section Ops
+
+variable {p : ℕ} [Fact p.Prime] {σ : Type*}
+
+def mulBy (l ex : PowerSeries ℂ_[p]) (c : ℂ_[p]) (a : MvPowerSeries σ ℂ_[p]) : MvPowerSeries σ ℂ_[p] :=
+  PowerSeries.subst (MvPowerSeries.C c * PowerSeries.subst a l) ex
+
+def phAt (ph : PowerSeries ℂ_[p]) (a : MvPowerSeries σ ℂ_[p]) : MvPowerSeries σ ℂ_[p] :=
+  PowerSeries.subst a ph
+
+end Ops
+
+def Target : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (l ex ph : PowerSeries ℂ_[p]) (T : Set (ℂ_[p] × ℂ_[p])),
+    PowerSeries.constantCoeff ex = 0 → PowerSeries.subst ex l = PowerSeries.X →
+    (∀ α ∈ T, IntegralMv (mulBy l ex α.1 (Xv ()) : MvPowerSeries Unit ℂ_[p])) →
+    (∀ α ∈ T, Simeq (phAt ph (mulBy l ex α.1 (Xv ())) : MvPowerSeries Unit ℂ_[p])
+        (MvPowerSeries.C (α.1 * α.2) * phAt ph (Xv ()))) →
+    ∀ α ∈ closure T, Simeq (phAt ph (mulBy l ex α.1 (Xv ())) : MvPowerSeries Unit ℂ_[p])
+        (MvPowerSeries.C (α.1 * α.2) * phAt ph (Xv ()))
+
+end PI.PhNormLimit
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PhNormLimit
+
+section
 
 @[expose] public section
 
@@ -171,3 +228,5 @@ theorem phase_norm_limit_target : PI.PhNormLimit.Target := by
     exact continuous_coeff_subst_subst_C_mul_subst l ex ph hl h0 _ continuous_fst e
   · intro n y
     rfl
+end
+end

@@ -3,7 +3,8 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.Integral
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.Imports
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.LocRho
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpanOfVariable
+public import Mathlib.RingTheory.Ideal.Defs
+public import Mathlib.RingTheory.MvPowerSeries.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,17 +23,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Mathlib.RingTheory.MvPowerSeries.Derivative
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,11 +44,75 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.MvPowerSeries.Derivative
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpanOfVariable
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.SpanOfVariable.span_X :
+    ∀ {O σ : Type} [inst : CommRing O] (I : Ideal (MvPowerSeries σ O))
+    (s : Finset σ),
+    (∀ i ∈ s, MvPowerSeries.X i ∈ I) →
+      ∀ (f : MvPowerSeries σ O),
+        (∀ (n : σ →₀ ℕ),
+            (∀ i ∈ s, (n : σ → ℕ) i = (0 : ℕ)) → (MvPowerSeries.coeff n : MvPowerSeries σ O → O) f = (0 : O)) →
+          f ∈ I := by
+  intro O σ inst I s
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+    intro _ f hf
+    have h0 : f = 0 := by
+      ext n
+      rw [hf n (by simp), map_zero]
+    rw [h0]
+    exact I.zero_mem
+  | insert a s ha ih =>
+    intro hX f hf
+    let g : MvPowerSeries σ O := fun n => if n a = 0 then MvPowerSeries.coeff n f else 0
+    have hg : ∀ n : σ →₀ ℕ, MvPowerSeries.coeff n g =
+        if n a = 0 then MvPowerSeries.coeff n f else 0 := fun n => rfl
+    have hgI : g ∈ I := by
+      refine ih (fun i hi => hX i (Finset.mem_insert_of_mem hi)) g ?_
+      intro n hn
+      rw [hg]
+      split_ifs with h
+      · refine hf n ?_
+        intro i hi
+        rcases Finset.mem_insert.1 hi with rfl | hi
+        · exact h
+        · exact hn i hi
+      · rfl
+    have hd : MvPowerSeries.X a ∣ f - g := by
+      rw [MvPowerSeries.X_dvd_iff]
+      intro n hn
+      rw [map_sub, hg, if_pos hn, sub_self]
+    have hfg : f - g ∈ I := I.mem_of_dvd hd (hX a (Finset.mem_insert_self a s))
+    have := I.add_mem hfg hgI
+    rwa [sub_add_cancel] at this
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVectors.ThickOfDer
+
+section
 
 @[expose] public section
 
@@ -309,3 +364,5 @@ theorem UpperTheory.V.Fr.thick :
       | add y z _ _ hy hz => rw [map_add (f := _), hy, hz, add_zero]
       | smul c y hy h' => rw [smul_eq_mul, hD, h', Ideal.Quotient.eq_zero_iff_mem.2 (hT.2.2 hy)]; simp
     exact key _ (hm j)
+end
+end

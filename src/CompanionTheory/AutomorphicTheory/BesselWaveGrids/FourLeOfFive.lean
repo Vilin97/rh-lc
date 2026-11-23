@@ -2,13 +2,15 @@ module
 
 public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.Bridge
 public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NqMovedExample
-public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.ProgYInjective
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Finset.Card
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -21,8 +23,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -30,7 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,9 +45,67 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.ProgYInjective
+
+section
+
+@[expose] public section
+
+namespace GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+
+open Finset
+
+noncomputable def progY (y0 : ℝ) (M : ℕ) : Finset ℝ := (range M).image fun i : ℕ => y0 + 5 * (i : ℝ)
+
+lemma progY_injective (y0 : ℝ) : Function.Injective fun i : ℕ => y0 + 5 * (i : ℝ) := by
+  intro i j h
+  have : (i : ℝ) = j := by simpa using h
+  exact_mod_cast this
+
+theorem progY_card (y0 : ℝ) (M : ℕ) : (progY y0 M).card = M := by
+  unfold progY
+  rw [card_image_of_injective _ (progY_injective y0), card_range]
+
+theorem progY_sep (y0 : ℝ) (M : ℕ) : ∀ y ∈ progY y0 M, ∀ y' ∈ progY y0 M, y ≠ y' → 5 ≤ |y - y'| := by
+  intro y hy y' hy' hne
+  simp only [progY, mem_image, mem_range] at hy hy'
+  obtain ⟨i, -, rfl⟩ := hy
+  obtain ⟨j, -, rfl⟩ := hy'
+  have hij : i ≠ j := by
+    rintro rfl
+    exact hne rfl
+  have hsub : y0 + 5 * (i : ℝ) - (y0 + 5 * (j : ℝ)) = 5 * ((i : ℤ) - (j : ℤ) : ℤ) := by
+    push_cast; ring
+  rw [hsub, abs_mul, abs_of_pos (by norm_num : (0:ℝ) < 5)]
+  have h1 : (1 : ℝ) ≤ |(((i : ℤ) - (j : ℤ) : ℤ) : ℝ)| := by
+    rw [← Int.cast_abs]
+    have : (1 : ℤ) ≤ |(i : ℤ) - (j : ℤ)| := by
+      exact Int.one_le_abs (sub_ne_zero.mpr (by exact_mod_cast hij))
+    exact_mod_cast this
+  linarith
+
+theorem progY_cut (lo hi : ℝ) (M : ℕ) (hlen : 5 * (M : ℝ) ≤ hi - lo) :
+    ∀ y ∈ progY (2 - hi) M, (lo + 2 ≤ -y ∧ -y ≤ hi - 2) ∧ (lo + 2 ≤ -(y + 1) ∧ -(y + 1) ≤ hi - 2) := by
+  intro y hy
+  simp only [progY, mem_image, mem_range] at hy
+  obtain ⟨i, hi', rfl⟩ := hy
+  have hiM : (i : ℝ) + 1 ≤ M := by exact_mod_cast hi'
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩ <;> linarith
+
+end GroundTheory.BlockD.FourierDecayAlt.WaveGridLiftGrid
+end
+end
+
+-- Source module: CompanionTheory.AutomorphicTheory.BesselWaveGrids.FourLeOfFive
+
+section
 
 @[expose] public section
 
@@ -268,3 +328,5 @@ theorem grids_text (p : KB.Pl P Wp Wq) (K N : ℕ) (hKN : K ≤ N) (lam : ℕ �
 end grid
 
 end CompanionTheory.WaveGrid
+end
+end

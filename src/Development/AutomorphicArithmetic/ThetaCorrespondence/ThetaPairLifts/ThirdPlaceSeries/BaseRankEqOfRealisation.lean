@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.IndefRRealT
 public import Formalism.LocalToGlobal.Divisibility.TupUsed
-public import Formalism.LocalToGlobal.BaseRankEqOfRealisation
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +24,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,6 +36,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Formalism.LocalToGlobal.ClassRec
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.LocalToGlobal.BaseRankEqOfRealisation
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain Module
+open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR.Links Formalism.IndefR.Cx
+
+namespace Formalism.IndefR.LevelRealisationRankEquality
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
+  {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}
+
+variable {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {Dcf : ∀ Zs : DefSub P.A3.fam3.amb3, DefCols (P.A3.side3 P.Ps P.ψs Zs)}
+  {Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)} {Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3}
+  {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
+
+theorem base_rank_eq_of_tied_level (P : RowSideFamily ex) : D.what₂.D0 = P.S0.D := by
+  have h1 : finrank D.what₂.LL (Fin P.S0.D → D.what₂.LL) = finrank D.what₂.LL ex.p0.s.RR.V := P.I.eRR0.finrank_eq
+  have h2 : finrank D.what₂.LL ex.p0.s.RR.V = Fintype.card ex.p0.s.RR.ι := finrank_eq_card_basis ex.p0.s.RR.b
+  have h3 : finrank ℂ D.what₂.EE0 = Fintype.card ex.p0.s.RR.ι :=
+    finrank_eq_card_basis (Basis.mk ex.p0.s.jEE_basis.1 (le_of_eq ex.p0.s.jEE_basis.2.symm))
+  have h4 : finrank ℂ D.what₂.EE0 = D.what₂.D0 := by
+    simpa using finrank_eq_card_basis D.what₂.onb0.toBasis
+  rw [finrank_fin_fun] at h1
+  omega
+
+theorem D_of_heq {Bs : DefBase D.what₂.LL} {Df Df' : DefSide Bs} (h : Df = Df') {S0 : IndefData Df} {S1 : IndefData Df'}
+    (hS : HEq S0 S1) : S0.D = S1.D := by
+  subst h
+  cases hS
+  rfl
+
+theorem mu_of_heq {Bs : DefBase D.what₂.LL} {Df Df' : DefSide Bs} (h : Df = Df') {S0 : IndefData Df} {S1 : IndefData Df'}
+    (hS : HEq S0 S1) : S0.μ = S1.μ := by
+  subst h
+  cases hS
+  rfl
+
+end Formalism.IndefR.LevelRealisationRankEquality
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.BaseRankEqOfRealisation
+
+section
 
 @[expose] public section
 
@@ -72,5 +129,7 @@ theorem tup_all_used_of_realisation (Q : _root_.Formalism.IndefR.IndefiniteReali
     rw [← _root_.Formalism.IndefR.LevelRealisationRankEquality.indefinite_realisation_mu_eq Q, Equiv.apply_symm_apply]
     exact h.symm
 end Formalism.IndefR.LevelRealisationRankEquality
+end
+end
 end
 end

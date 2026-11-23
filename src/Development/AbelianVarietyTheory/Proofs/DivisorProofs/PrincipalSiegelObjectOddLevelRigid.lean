@@ -5,12 +5,8 @@ public import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.GoodClas
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteOrderSt
 public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.AbelianSchemeLawsWithoutCohomology
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidConstant
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidCube
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidFiniteOrder
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidLevelRigid
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidSeparated
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidSerreAmple
-public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.FixTorsionOfForallGeometric
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsGenThetaOfIsAbelianScheme
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CubeTheoremPicardGroup
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,10 +24,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -52,10 +44,299 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidFiniteOrder
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidLevelRigid
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsEffectivePicClassAddIntegral
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsEffectivePicClassPullbackVeryAmple
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SiegelExtensionOverDvr
+public import Development.AbelianVarietyTheory.Proofs.ThetaFamilyOrigin.IsIntegralOfIsAbelianSchemeField
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.RelAmpleIffVeryAmpleBy
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.EqOneOfPowEqOneOfCongrOne
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.FlatAndSurjectiveOfIsFiniteAbelianEnd
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ForallGeometricallyIntegralOfSmoothOfGeometrical
+public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.MulAFiniteFlatSurjectiveEtale
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsFiniteMulByNatAbelianVarietyAlgClosed
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.AbelianVarietyTorsionFiniteEndomorphismDivisible
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.FixTorsionOfForallGeometric
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.Style
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AmplePt
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
 import Mathlib.Algebra.Azumaya.Basic
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidCube
+
+section
+
+@[expose] public section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.AmpleRigid
+attribute [local instance] Over.cartesianMonoidalCategory
+
+noncomputable section
+namespace GlobalTheory.AmpleCube
+
+open GlobalTheory.AbLaw GlobalTheory.UU GlobalTheory.CubeThm
+
+section
+attribute [local instance] CategoryTheory.Hom.group
+
+variable {S : Scheme.{0}} (B : Over S) [GrpObj B] [IsCommMonObj B]
+
+theorem cube_pic_of_gen (L : LB B.left) (hL : L.IsLB) (hΘ : ∃ t : LB.Gen (Theta B L), t.IsGen)
+    (x y z : B ⟶ B) :
+    GlobalTheory.CechPic.pull (x * y * z).left (GlobalTheory.CechPic.cls L hL) +
+                 GlobalTheory.CechPic.pull x.left (GlobalTheory.CechPic.cls L hL) +
+                 GlobalTheory.CechPic.pull y.left (GlobalTheory.CechPic.cls L hL) +
+                 GlobalTheory.CechPic.pull z.left (GlobalTheory.CechPic.cls L hL) =
+      GlobalTheory.CechPic.pull (x * y).left (GlobalTheory.CechPic.cls L hL) +
+        GlobalTheory.CechPic.pull (x * z).left (GlobalTheory.CechPic.cls L hL) +
+        GlobalTheory.CechPic.pull (y * z).left (GlobalTheory.CechPic.cls L hL) +
+        GlobalTheory.CechPic.pull (1 : B ⟶ B).left (GlobalTheory.CechPic.cls L hL) := by
+  set c := GlobalTheory.CechPic.cls L hL
+  have hT : (Theta B L).IsLB := LB.isLB_linComb hL _ _
+  have h0 : GlobalTheory.CechPic.cls (Theta B L) hT = 0 := (GlobalTheory.CechPic.cls_eq_zero_iff hT).2 hΘ
+  have h1 : (∑ I : ULift.{0} (Finset (Fin 3)),
+      ((-1 : ℤ) ^ (3 - I.down.card)) • GlobalTheory.CechPic.pull (psum B (x3 B) I.down).left c) = 0 :=
+    (GlobalTheory.CechPic.cls_linComb hL (fun I : ULift.{0} (Finset (Fin 3)) => (psum B (x3 B) I.down).left)
+      (fun I => (-1 : ℤ) ^ (3 - I.down.card)) hT).symm.trans h0
+  have h2 := congrArg (GlobalTheory.CechPic.pull (lift x (lift y z)).left) h1
+
+  rw [map_sum, map_zero] at h2
+  simp only [map_zsmul, ← GlobalTheory.CechPic.pull_comp, ← Over.comp_left, comp_psum, lift_comp_cubeCoordinates] at h2
+  rw [← Equiv.ulift.symm.sum_comp] at h2
+  simp only [Equiv.ulift_symm_down] at h2
+  rw [show (Finset.univ : Finset (Finset (Fin 3))) =
+      {∅, {0}, {1}, {2}, {0, 1}, {0, 2}, {1, 2}, {0, 1, 2}} by decide] at h2
+  rw [Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton] at h2
+  have e0 : psum B ![x, y, z] ∅ = 1 := rfl
+  have e1 : psum B ![x, y, z] {0} = x := (show _ = x * 1 from rfl).trans (mul_one x)
+  have e2 : psum B ![x, y, z] {1} = y := (show _ = y * 1 from rfl).trans (mul_one y)
+  have e3 : psum B ![x, y, z] {2} = z := (show _ = z * 1 from rfl).trans (mul_one z)
+  have e4 : psum B ![x, y, z] {0, 1} = x * y :=
+    (show _ = x * (y * 1) from rfl).trans (congrArg (x * ·) (mul_one y))
+  have e5 : psum B ![x, y, z] {0, 2} = x * z :=
+    (show _ = x * (z * 1) from rfl).trans (congrArg (x * ·) (mul_one z))
+  have e6 : psum B ![x, y, z] {1, 2} = y * z :=
+    (show _ = y * (z * 1) from rfl).trans (congrArg (y * ·) (mul_one z))
+  have e7 : psum B ![x, y, z] {0, 1, 2} = x * y * z :=
+    (show _ = x * (y * (z * 1)) from rfl).trans
+      ((congrArg (x * ·) (congrArg (y * ·) (mul_one z))).trans (mul_assoc x y z).symm)
+  rw [e0, e1, e2, e3, e4, e5, e6, e7] at h2
+  have c0 : (∅ : Finset (Fin 3)).card = 0 := rfl
+  have c1 : ({0} : Finset (Fin 3)).card = 1 := rfl
+  have c2 : ({1} : Finset (Fin 3)).card = 1 := rfl
+  have c3 : ({2} : Finset (Fin 3)).card = 1 := rfl
+  have c4 : ({0, 1} : Finset (Fin 3)).card = 2 := rfl
+  have c5 : ({0, 2} : Finset (Fin 3)).card = 2 := rfl
+  have c6 : ({1, 2} : Finset (Fin 3)).card = 2 := rfl
+  have c7 : ({0, 1, 2} : Finset (Fin 3)).card = 3 := rfl
+  rw [c0, c1, c2, c3, c4, c5, c6, c7] at h2
+  norm_num at h2
+  rw [← sub_eq_zero]
+  rw [← h2]
+  abel
+
+end
+
+theorem cubeSt : CubeSt := by
+  intro K _ _ A _ _ hA L hL hamp c x y z
+  obtain ⟨M, hM, rfl⟩ := GlobalTheory.CechPic.cls_surj c
+  exact cube_pic_of_gen A M hM (GlobalTheory.exists_gen_theta_of_isAbelianScheme K A hA M hM) x y z
+
+end GlobalTheory.AmpleCube
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidSeparated
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+  TensorProduct NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
+
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.AmpleRigid
+
+open GlobalTheory.CechPic GlobalTheory.EffBound
+
+theorem pull_one_left_eq_zero {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] (c : Pic A.left) :
+    pull (1 : A ⟶ A).left c = 0 := by
+  have h : pull (η[A] : 𝟙_ (Over (Sp K)) ⟶ A).left c = 0 := GlobalTheory.ThetaExtend.pic_local (R := K) _
+  rw [Hom.one_def, Over.comp_left, pull_comp, h, map_zero]
+
+theorem choose_two_succ (n : ℕ) : (n + 1).choose 2 = n + n.choose 2 := by
+  rw [Nat.choose_succ_succ', Nat.choose_one_right]
+
+theorem pull_pow_left (hcube : CubeSt) {K : Type} [Field K] [IsAlgClosed K] {A : Over (Sp K)} [GrpObj A]
+    [IsCommMonObj A] (hA : IsAbelianScheme A) (L : LB A.left) (hL : L.IsLB) (hamp : Out.RelAmple A L)
+    (c : Pic A.left) (ψ : A ⟶ A) (n : ℕ) :
+    pull (ψ ^ n).left c = (((n + 1).choose 2 : ℕ) : ℤ) • pull ψ.left c + ((n.choose 2 : ℕ) : ℤ) • pull ψ⁻¹.left c := by
+  have hrec : ∀ n : ℕ, pull (ψ ^ (n + 2)).left c + pull (ψ ^ n).left c =
+      2 • pull (ψ ^ (n + 1)).left c + pull ψ.left c + pull ψ⁻¹.left c := by
+    intro n
+    have h := hcube K A hA L hL hamp c (ψ ^ (n + 1)) ψ ψ⁻¹
+    have e1 : ψ ^ (n + 1) * ψ * ψ⁻¹ = ψ ^ (n + 1) := mul_inv_cancel_right _ _
+    have e2 : ψ ^ (n + 1) * ψ = ψ ^ (n + 2) := (pow_succ _ _).symm
+    have e3 : ψ ^ (n + 1) * ψ⁻¹ = ψ ^ n := by rw [pow_succ, mul_inv_cancel_right]
+    have e4 : ψ * ψ⁻¹ = 1 := mul_inv_cancel _
+    rw [e1, e2, e3, e4, pull_one_left_eq_zero, add_zero, add_zero] at h
+    rw [two_nsmul]
+    exact h.symm
+  have key : ∀ n : ℕ, (pull (ψ ^ n).left c = (((n + 1).choose 2 : ℕ) : ℤ) • pull ψ.left c +
+      ((n.choose 2 : ℕ) : ℤ) • pull ψ⁻¹.left c) ∧ (pull (ψ ^ (n + 1)).left c =
+      (((n + 1 + 1).choose 2 : ℕ) : ℤ) • pull ψ.left c + (((n + 1).choose 2 : ℕ) : ℤ) • pull ψ⁻¹.left c) := by
+    intro n
+    induction n with
+    | zero =>
+      refine ⟨?_, ?_⟩
+      · rw [pow_zero, pull_one_left_eq_zero]; simp
+      · rw [pow_one]; simp
+    | succ n ih =>
+      refine ⟨ih.2, ?_⟩
+      have h := eq_sub_of_add_eq (hrec n)
+      rw [show n + 1 + 1 = n + 2 from rfl, h, ih.1, ih.2]
+      rw [show n + 2 + 1 = n + 1 + 1 + 1 from rfl, choose_two_succ (n + 1 + 1), choose_two_succ (n + 1),
+        choose_two_succ n]
+      push_cast
+      module
+  exact (key n).1
+
+theorem separatedSt_of_const_cube : ConstSt → CubeSt → SeparatedSt := by
+  intro hconst hcube K _ _ A _ _ hA L hL hamp Q hQ u hu
+  haveI := GlobalTheory.isIntegral_of_isAbelianScheme_field K A hA
+  obtain ⟨d, hd, n0, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy K A L hL).1 hamp
+  have heff : ∀ φ : A.left ⟶ A.left, Eff (pull φ ((d : ℤ) • cls L hL)) := by
+    intro φ
+    rw [← cls_pw hL (d : ℤ)]
+    exact eff_pull_of_veryAmpleBy K A.hom _ n0 s _ hs φ inferInstance
+  have heffn : ∀ (φ : A.left ⟶ A.left) (j : ℕ), 1 ≤ j → Eff ((j : ℤ) • pull φ ((d : ℤ) • cls L hL)) := by
+    intro φ j hj
+    induction j, hj using Nat.le_induction with
+    | base => simpa using heff φ
+    | succ j hj ih =>
+      push_cast
+      rw [add_zsmul, one_zsmul]
+      exact eff_add _ _ ih (heff φ)
+  obtain ⟨t₀, ht₀⟩ := hconst K A hA L hL hamp ((d : ℤ) • pull u.left (cls L hL))
+  have hN : t₀ + 2 < Q ^ (t₀ + 2) := Nat.lt_pow_self (by omega)
+  obtain ⟨ψ, hψ, rfl⟩ := hu (t₀ + 2)
+  have hpow := pull_pow_left hcube hA L hL hamp (cls L hL) ψ (Q ^ (t₀ + 2))
+  have hψ1 : ψ = 1 := by
+    refine ht₀ (d * (Q ^ (t₀ + 2) + 1).choose 2) ?_ ψ hψ ?_
+    · have h1 : Q ^ (t₀ + 2) ≤ (Q ^ (t₀ + 2) + 1).choose 2 := by
+        rw [choose_two_succ]; omega
+      have h2 : (Q ^ (t₀ + 2) + 1).choose 2 ≤ d * (Q ^ (t₀ + 2) + 1).choose 2 :=
+        Nat.le_mul_of_pos_left _ hd
+      omega
+    · have hb : 1 ≤ (Q ^ (t₀ + 2)).choose 2 := Nat.choose_pos (by omega)
+      have e : (d : ℤ) • pull (ψ ^ (Q ^ (t₀ + 2))).left (cls L hL) -
+          (d * (Q ^ (t₀ + 2) + 1).choose 2) • pull ψ.left (cls L hL) =
+          (((Q ^ (t₀ + 2)).choose 2 : ℕ) : ℤ) • pull ψ⁻¹.left ((d : ℤ) • cls L hL) := by
+        rw [hpow, map_zsmul, ← natCast_zsmul]
+        push_cast
+        module
+      rw [e]
+      exact heffn _ _ hb
+  rw [hψ1, one_pow]
+
+end GlobalTheory.AmpleRigid
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AmpleRigidSerreAmple
+
+section
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+  TensorProduct NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.AmpleRigid
+attribute [local instance] Over.cartesianMonoidalCategory
+
+namespace GlobalTheory.AmpleRigid
+
+
+open GlobalTheory.SerreField in
+theorem serreAmple_of_finiteOrder_of_separated :
+    FiniteOrderSt → SeparatedSt → SerreAmpleSt := by
+  intro hfin hsep K _ _ A _ _ hA L hL hamp N hN3 hNK σ hσ hpull hfix
+  haveI := hσ
+  obtain ⟨m, hm0, hord⟩ := hfin K A hA L hL hamp σ hσ hpull
+  have hFS : ∀ n : ℕ, 1 ≤ n → Flat (Out.mulA A n).left ∧ Surjective (Out.mulA A n).left :=
+    fun n hn => flat_and_surjective_of_isFinite_abelianEnd
+      forall_geometricallyIntegral_of_smooth_of_geometricallyConnected K A hA _
+      (GlobalTheory.AbLaw.MulN.isMonHom_mulA A n) (GlobalTheory.MulFiniteAny.isFinite_mulA K A hA n hn)
+  have hu : IsMonHom (σ.hom * (𝟙 A)⁻¹) := by
+    rw [Hom.mul_def, Hom.inv_def]; infer_instance
+  obtain ⟨-, hdiv⟩ := GlobalTheory.TorsionDivisible.finite_torsion_and_divisible K A hA N hNK
+  obtain ⟨φ, hφ, e⟩ := hdiv (σ.hom * (𝟙 A)⁻¹) hu (fun x hx => by
+    rw [MonObj.comp_mul, GrpObj.comp_inv, hfix K (𝟙 _) x hx, Category.comp_id, mul_inv_cancel])
+  haveI := hφ
+  have key : toRing σ.hom = 1 := by
+    refine GlobalTheory.eq_one_of_pow_eq_one_of_congr_one (homRing A) N hN3 ?_ ?_ (toRing σ.hom) (toRing φ) m
+      hm0 ?_ ?_
+    · rintro k ⟨f, u, hu, hf⟩ hk h
+      have h1 := congrArg (fun g : homRing A => g.1 (Additive.ofMul (𝟙 A))) h
+      simp only [natCast_mul_apply, hf, Category.id_comp] at h1
+      have h2 : u ^ k = 1 := h1
+      have h3 : u = 1 := by
+        obtain ⟨_, _⟩ := hFS k (by omega)
+        haveI : Epi (Out.mulA A k).left := Flat.epi_of_flat_of_surjective _
+        refine Over.OverMorphism.ext ((cancel_epi (Out.mulA A k).left).1 ?_)
+        rw [← Over.comp_left, ← Over.comp_left, MonObj.comp_one, Out.mulA, MonObj.pow_comp,
+          Category.id_comp, h2]
+      exact homRing_ext (by rw [hf, h3, Category.id_comp]; rfl)
+    · rintro q ⟨f, u, hu, hf⟩ hq h
+      have h3 : u = 1 := hsep K A hA L hL hamp q hq u fun k => by
+        obtain ⟨⟨g, v, hv, hg⟩, e⟩ := h k
+        refine ⟨v, hv, ?_⟩
+        have h1 := congrArg (fun g : homRing A => g.1 (Additive.ofMul (𝟙 A))) e
+        simp only [← Nat.cast_pow, natCast_mul_apply, hf, hg, Category.id_comp] at h1
+        exact h1
+      exact homRing_ext (by rw [hf, h3, Category.id_comp]; rfl)
+    · refine homRing_ext ?_
+      change _ = Additive.ofMul (𝟙 A) + ((N : homRing A) * toRing φ).1 _
+      rw [natCast_mul_apply, toRing_apply, toRing_apply, Category.id_comp, Category.id_comp,
+        ← ofMul_pow, ← e, ← ofMul_mul, mul_comm, inv_mul_cancel_right]
+    · rw [toRing_pow]
+      exact homRing_ext (by rw [toRing_apply, hord, Category.id_comp]; rfl)
+  have h1 := congrArg (fun g : homRing A => g.1 (Additive.ofMul (𝟙 A))) key
+  simp only [toRing_apply, Category.id_comp] at h1
+  exact h1
+
+end GlobalTheory.AmpleRigid
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrincipalSiegelObjectOddLevelRigid
+
+section
 
 @[expose] public section
 
@@ -191,3 +472,5 @@ theorem eq_of_sRelBy : ∀ (h n n' d' : ℕ) (B B' : Type) [CommRing B] [CommRin
   rw [← e, key, Over.id_left, Category.id_comp]
 
 end GlobalTheory.SiegRigid
+end
+end

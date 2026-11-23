@@ -3,7 +3,7 @@ module
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsAdapted
 public import GroundTheory.HeightsAndTheta.Heights.Slopes.PCanonicalFiltration
 public import Mathlib.LinearAlgebra.Eigenspace.Basic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClearDenominatorsLattice
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,13 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,7 +30,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -49,8 +42,60 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClearDenominatorsLattice
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.ClearDenominatorsLattice.exists_integer_smul_mem_of_span_top :
+    ∀ {K V : Type} [inst : Field K] [NumberField K] [inst_2 : AddCommGroup V]
+    [inst_3 : _root_.Module K V] [inst_4 : _root_.Module (NumberField.RingOfIntegers K) V]
+    [IsScalarTower (NumberField.RingOfIntegers K) K V] (L : Submodule (NumberField.RingOfIntegers K) V),
+    Submodule.span K (↑L : Set V) = ⊤ →
+      ∀ (x : V), ∃ (r : NumberField.RingOfIntegers K), r ≠ (0 : NumberField.RingOfIntegers K) ∧ r • x ∈ L := by
+  intro K V _ _ _ _ _ _ L hL x
+  have hx : x ∈ Submodule.span K (↑L : Set V) := hL ▸ Submodule.mem_top
+  induction hx using Submodule.span_induction with
+  | mem y hy => exact ⟨1, one_ne_zero, by rwa [one_smul]⟩
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact L.zero_mem⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨r, hr, hry⟩ := hy
+    obtain ⟨s, hs, hsz⟩ := hz
+    refine ⟨r * s, mul_ne_zero hr hs, ?_⟩
+    rw [smul_add]
+    refine L.add_mem ?_ ?_
+    · rw [mul_comm, mul_smul]
+      exact L.smul_mem _ hry
+    · rw [mul_smul]
+      exact L.smul_mem _ hsz
+  | smul a y _ hy =>
+    obtain ⟨r, hr, hry⟩ := hy
+    obtain ⟨⟨n, d⟩, hnd⟩ :=
+      IsLocalization.surj (nonZeroDivisors (NumberField.RingOfIntegers K)) a
+    refine ⟨r * d, mul_ne_zero hr (nonZeroDivisors.ne_zero d.2), ?_⟩
+    have h1 : (d : NumberField.RingOfIntegers K) • (a • y) = n • y := by
+      rw [← algebraMap_smul K (d : NumberField.RingOfIntegers K) (a • y), ← mul_smul, mul_comm,
+        hnd, algebraMap_smul]
+    rw [mul_smul, h1, ← mul_smul, mul_comm, mul_smul]
+    exact L.smul_mem _ hry
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.AbelianPartHeightLinear
+
+section
 
 @[expose] public section
 
@@ -250,3 +295,6 @@ theorem saturation_iSup_img (hcard : 2 * Fintype.card Ψ = Module.finrank ℚ E)
 end LinPt
 
 end GlobalTheory.CompanionTheory.Ar.Cusp
+end
+end
+end

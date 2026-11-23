@@ -2,7 +2,12 @@ module
 
 public import Formalism.SharpRestriction.GrowthBounds.CovariantDegrees
 public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DescendingProdEqFactorialChoose
-public import Formalism.SharpRestriction.GrowthBounds.RootWeights.GeneratedWeightLemmaOfFormulas
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.StableSubspaceCompleteReducibility
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.HighestWeightModuleBounds
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.IsotypicProjectionCommutesOperators
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.MonomialsAreWeightVectors
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.PolynomialOperatorsGlRelations
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.V2repResIsGLRep
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -40,6 +45,28 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Formalism.SharpRestriction.GrowthBounds.RootWeights.GeneratedWeightLemmaOfFormulas
+
+section
+
+@[expose] public section
+
+namespace Formalism.MainNotions.G.GLWeightTheory
+
+open Formalism.MainNotions.G Formalism.MainNotions.CovariantDegrees
+
+theorem generated_weight_lemma_of_formulas (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (hV1 : ValuationsAdditive D) (hDP : DividedPowerFormulaCharZero) (hBin : BinomialFormulaCharZero) :
+    ShaLengthVersionTwo D :=
+  generated_weight_lemma_char_zero D hV1 (stable_subspace_complete_reducibility D h2) highest_weight_module_bounds polynomial_operators_gl_relations monomials_are_weight_vectors polynomial_locally_finite hDP hBin
+
+end Formalism.MainNotions.G.GLWeightTheory
+end
+end
+
+-- Source module: Formalism.SharpRestriction.GrowthBounds.RootWeights.GeneratedWeightLemmaOfReducibility
+
+section
+
 @[expose] public section
 
 namespace Formalism.MainNotions.G.GLWeightTheory
@@ -50,3 +77,5 @@ theorem generated_weight_lemma_of_reducibility (D : Formalism.BasicNotions.D7) (
   generated_weight_lemma_of_formulas D h2 hV1 dividedPower_formula_char_zero binomial_formula_char_zero
 
 end Formalism.MainNotions.G.GLWeightTheory
+end
+end

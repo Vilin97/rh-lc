@@ -1,12 +1,9 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NotCompactOfMEqOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjIdempotentModPrimePowStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearEquivOfAdjointSkewPairingsStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -16,7 +13,6 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
@@ -24,8 +20,6 @@ import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,8 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,8 +39,220 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsGDatumOneOneOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtPlace
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.GroupTheory.FiniteAbelian.Duality
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.NotCompactOfMEqOne
+import Mathlib.CategoryTheory.Monoidal.Cartesian.Basic
+import Mathlib.CategoryTheory.Monoidal.Category
+import Mathlib.CategoryTheory.Monoidal.Mon
+import Mathlib.Topology.Sheaves.Presheaf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Mathlib.Algebra.Order.Star.Int
+import Mathlib.GroupTheory.FiniteAbelian.Basic
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjIdempotentModPrimePow
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.UPel.HT.EtLev
+
+namespace GlobalTheory.UPel.HT.SplitIdem
+
+theorem isCoprime_deriv {p : ℕ} (hp : p.Prime) {t n ρ : ℤ} (hd : ¬ (p : ℤ) ∣ t ^ 2 - 4 * n)
+    (h : (p : ℤ) ∣ ρ ^ 2 - t * ρ + n) : IsCoprime (2 * ρ - t) (p : ℤ) := by
+  have hp' : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
+  refine ((hp'.irreducible.coprime_iff_not_dvd).mpr ?_).symm
+  intro h2
+  apply hd
+  have : t ^ 2 - 4 * n = (2 * ρ - t) * (2 * ρ - t) - 4 * (ρ ^ 2 - t * ρ + n) := by ring
+  rw [this]
+  exact dvd_sub (h2.mul_right _) (h.mul_left _)
+
+theorem exists_root_pow {p : ℕ} (hp : p.Prime) {t n : ℤ} (hd : ¬ (p : ℤ) ∣ t ^ 2 - 4 * n)
+    (h : ∃ ρ : ℤ, (p : ℤ) ∣ ρ ^ 2 - t * ρ + n) (k : ℕ) :
+    ∃ ρ : ℤ, (p : ℤ) ^ (k + 1) ∣ ρ ^ 2 - t * ρ + n := by
+  induction k with
+  | zero => simpa using h
+  | succ k ih =>
+    obtain ⟨ρ, c, hc⟩ := ih
+    have h1 : (p : ℤ) ∣ ρ ^ 2 - t * ρ + n := by
+      rw [hc]; exact (dvd_pow_self _ (Nat.succ_ne_zero k)).mul_right _
+    obtain ⟨a, b, hab⟩ := isCoprime_deriv hp hd h1
+    refine ⟨ρ - (p : ℤ) ^ (k + 1) * c * a, c * b + (p : ℤ) ^ k * c ^ 2 * a ^ 2, ?_⟩
+    linear_combination hc - (p : ℤ) ^ (k + 1) * c * hab
+
+theorem exists_conj_idem : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (r : ℕ), ∃ ε u v : 𝓞 D.F,
+    ε + D.bar ε = 1 + (p : 𝓞 D.F) ^ r * u ∧ ε * D.bar ε = (p : 𝓞 D.F) ^ r * v := by
+  intro p hp D r
+  obtain ⟨ρ, c, hc⟩ := exists_root_pow hp.out D.disc_p D.split r
+  have h1 : (p : ℤ) ∣ ρ ^ 2 - D.tr * ρ + D.nm := by
+    rw [hc]; exact (dvd_pow_self _ (Nat.succ_ne_zero r)).mul_right _
+  obtain ⟨s, b, hsb⟩ := (isCoprime_deriv hp.out D.disc_p h1).pow_right (n := r)
+  have hc' := congrArg (Int.cast : ℤ → 𝓞 D.F) hc
+  have hsb' := congrArg (Int.cast : ℤ → 𝓞 D.F) hsb
+  push_cast at hc' hsb'
+  have ht := D.tr_eq
+  have hn := D.nm_eq
+  refine ⟨(s : 𝓞 D.F) * ((ρ : 𝓞 D.F) - D.ω), -(b : 𝓞 D.F), (s : 𝓞 D.F) ^ 2 * (p : 𝓞 D.F) * (c : 𝓞 D.F), ?_, ?_⟩
+  · rw [map_mul, map_sub, map_intCast, map_intCast]
+    linear_combination hsb' - (s : 𝓞 D.F) * ht
+  · rw [map_mul, map_sub, map_intCast, map_intCast]
+    linear_combination (s : 𝓞 D.F) ^ 2 * hc' - (s : 𝓞 D.F) ^ 2 * (ρ : 𝓞 D.F) * ht + (s : 𝓞 D.F) ^ 2 * hn
+
+end GlobalTheory.UPel.HT.SplitIdem
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjIdempotentModPrimePowStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.UPel.HT.EtLev
+
+theorem _root_.GlobalTheory.T.exists_conj_idempotent_mod_prime_pow : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (r : ℕ), ∃ ε u v : 𝓞 D.F, ε + D.bar ε = 1 + (p : 𝓞 D.F) ^ r * u ∧ ε * D.bar ε = (p : 𝓞 D.F) ^ r * v := by
+  first | (exact @GlobalTheory.UPel.HT.SplitIdem.exists_conj_idem) | (exact GlobalTheory.UPel.HT.SplitIdem.exists_conj_idem) | (intros; apply GlobalTheory.UPel.HT.SplitIdem.exists_conj_idem  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearEquivOfAdjointSkewPairings
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.UPel.HT.EtLev
+
+namespace GlobalTheory.SkewPairingCmp
+
+theorem map_add_right {M : Type} [AddCommGroup M] {G : Type} [CommGroup G] (B : M → M → G)
+    (hadd : ∀ x x' y, B (x + x') y = B x y * B x' y) (hsk : ∀ x y, B x y * B y x = 1)
+    (x y y' : M) : B x (y + y') = B x y * B x y' := by
+  have h : ∀ a b, B a b = (B b a)⁻¹ := fun a b => eq_inv_of_mul_eq_one_left (hsk a b)
+  rw [h x (y + y'), hadd, mul_inv, ← h, ← h]
+
+theorem map_zero_left {M : Type} [AddCommGroup M] {G : Type} [CommGroup G] (B : M → M → G)
+    (hadd : ∀ x x' y, B (x + x') y = B x y * B x' y) (y : M) : B 0 y = 1 := by
+  have h := hadd 0 0 y
+  rw [add_zero] at h
+  exact left_eq_mul.mp h
+
+theorem map_zero_right {M : Type} [AddCommGroup M] {G : Type} [CommGroup G] (B : M → M → G)
+    (hadd : ∀ x x' y, B (x + x') y = B x y * B x' y) (hsk : ∀ x y, B x y * B y x = 1)
+    (x : M) : B x 0 = 1 := by
+  have h := hsk x 0
+  rwa [map_zero_left B hadd, _root_.mul_one] at h
+
+theorem ext_right {M : Type} [AddCommGroup M] {G : Type} [CommGroup G] (B : M → M → G)
+    (hadd : ∀ x x' y, B (x + x') y = B x y * B x' y) (hsk : ∀ x y, B x y * B y x = 1)
+    (hnd : ∀ x, (∀ y, B x y = 1) → x = 0) {y y' : M} (h : ∀ x, B x y = B x y') : y = y' := by
+  have h' : ∀ a b, B a b = (B b a)⁻¹ := fun a b => eq_inv_of_mul_eq_one_left (hsk a b)
+  refine sub_eq_zero.mp (hnd _ fun x => ?_)
+  have h1 := hadd (y - y') y' x
+  rw [sub_add_cancel, h' y x, h x, ← h'] at h1
+  exact (right_eq_mul.mp h1)
+
+theorem exists_repr {M : Type} [AddCommGroup M] [Finite M] {k : Type} [Field k] [IsAlgClosed k]
+    [CharZero k] (B : M → M → kˣ)
+    (hadd : ∀ x x' y, B (x + x') y = B x y * B x' y) (hsk : ∀ x y, B x y * B y x = 1)
+    (hnd : ∀ x, (∀ y, B x y = 1) → x = 0) (f : M → kˣ) (hf : ∀ x x', f (x + x') = f x * f x') :
+    ∃ z, ∀ x, f x = B x z := by
+  let φ : M → (Multiplicative M →* kˣ) := fun y =>
+    MonoidHom.mk' (fun x => B x.toAdd y) (fun a b => hadd _ _ _)
+  have hinj : Function.Injective φ := fun y y' h =>
+    ext_right B hadd hsk hnd fun x => DFunLike.congr_fun h (Multiplicative.ofAdd x)
+  haveI : NeZero (Monoid.exponent (Multiplicative M)) := ⟨Monoid.exponent_ne_zero_of_finite⟩
+  have hcard : Nat.card (Multiplicative M →* kˣ) = Nat.card (Multiplicative M) :=
+    CommGroup.card_monoidHom_of_hasEnoughRootsOfUnity (Multiplicative M) k
+  have hpos : 0 < Nat.card (Multiplicative M) := Nat.card_pos
+  haveI : Finite (Multiplicative M →* kˣ) := Nat.finite_of_card_ne_zero (by omega)
+  have hbij : Function.Bijective φ :=
+    hinj.bijective_of_nat_card_le (by rw [hcard]; exact le_of_eq rfl)
+  obtain ⟨z, hz⟩ := hbij.2 (MonoidHom.mk' (fun x => f x.toAdd) (fun a b => hf _ _))
+  exact ⟨z, fun x => (DFunLike.congr_fun hz (Multiplicative.ofAdd x)).symm⟩
+
+theorem exists_linearEquiv : ∀ (O : Type) [Ring O] (st : O → O) (M : Type) [AddCommGroup M] [Module O M] [Finite M] (k : Type) [Field k] [IsAlgClosed k] [CharZero k] (B E : M → M → kˣ) (e : O), (∀ c, st (st c) = c) → (∀ c, e * c = c * e) → (∀ c, st e * c = c * st e) → (∀ x : M, e • x + st e • x = x) → (∀ x : M, e • st e • x = 0) → (∀ x x' y, B (x + x') y = B x y * B x' y) → (∀ x y, B x y * B y x = 1) → (∀ (c : O) x y, B (c • x) y = B x (st c • y)) → (∀ x, (∀ y, B x y = 1) → x = 0) → (∀ x x' y, E (x + x') y = E x y * E x' y) → (∀ x y, E x y * E y x = 1) → (∀ (c : O) x y, E (c • x) y = E x (st c • y)) → (∀ x, (∀ y, E x y = 1) → x = 0) → ∃ g : M ≃ₗ[O] M, ∀ x y, B (g x) (g y) = E x y := by
+  intro O _ st M _ _ _ k _ _ _ B E e hst hce hcs hsum hzero Badd Bsk Badj Bnd Eadd Esk Eadj End
+  choose h hh using fun y => exists_repr B Badd Bsk Bnd (fun x => E x y) (fun x x' => Eadd x x' y)
+  have hh : ∀ x y, E x y = B x (h y) := fun x y => hh y x
+  have hadd : ∀ y y', h (y + y') = h y + h y' := fun y y' =>
+    ext_right B Badd Bsk Bnd fun x => by
+      rw [← hh, map_add_right B Badd Bsk, map_add_right E Eadd Esk, hh, hh]
+  have hsmul : ∀ (c : O) y, h (c • y) = c • h y := fun c y =>
+    ext_right B Badd Bsk Bnd fun x => by
+      have h1 := Eadj (st c) x y
+      have h2 := Badj (st c) x (h y)
+      rw [hst] at h1 h2
+      rw [← hh, ← h1, ← h2, hh]
+  have hzero' : ∀ x : M, st e • e • x = 0 := fun x => by
+    rw [smul_smul, ← hce, ← smul_smul, hzero]
+  have hss : ∀ x : M, st e • st e • x = st e • x := fun x => by
+    have := hsum (st e • x)
+    rwa [hzero, zero_add] at this
+  have hee : ∀ x : M, e • e • x = e • x := fun x => by
+    have := hsum (e • x)
+    rwa [hzero', add_zero] at this
+  let g : M →ₗ[O] M :=
+    { toFun := fun x => e • x + st e • h x
+      map_add' := fun x y => by rw [hadd, smul_add, smul_add]; abel
+      map_smul' := fun c x => by
+        simp only [RingHom.id_apply, hsmul, smul_add, smul_smul, hce c, hcs c] }
+  have hg : ∀ x y, B (g x) (g y) = E x y := fun x y => by
+    change B (e • x + st e • h x) (e • y + st e • h y) = E x y
+    have h1 : B (e • x) (e • y) = 1 := by rw [Badj, hzero', map_zero_right B Badd Bsk]
+    have h4 : B (st e • h x) (st e • h y) = 1 := by
+      rw [Badj, hst, hzero, map_zero_right B Badd Bsk]
+    have h2 : B (e • x) (st e • h y) = E x (st e • y) := by
+      rw [Badj, hss, ← hsmul, ← hh]
+    have h3 : B (st e • h x) (e • y) = E x (e • y) := by
+      have a1 := Bsk (e • y) (st e • h x)
+      have a2 := Esk (e • y) (st e • x)
+      rw [Eadj (st e), hst, hee, hh (e • y), hsmul] at a2
+      exact mul_left_cancel (a1.trans a2.symm)
+    rw [Badd, map_add_right B Badd Bsk, map_add_right B Badd Bsk, h1, h2, h3, h4, _root_.one_mul,
+      _root_.mul_one, _root_.mul_comm, ← map_add_right E Eadd Esk, hsum]
+  have hinj : Function.Injective g := (injective_iff_map_eq_zero g).mpr fun x hx =>
+    End x fun y => by rw [← hg, hx, map_zero_left B Badd]
+  exact ⟨LinearEquiv.ofBijective g ⟨hinj, Finite.injective_iff_surjective.mp hinj⟩, hg⟩
+
+end GlobalTheory.SkewPairingCmp
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearEquivOfAdjointSkewPairingsStatement
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.UPel.HT.EtLev
+
+theorem _root_.GlobalTheory.T.exists_linearEquiv_of_adjoint_skewPairings : ∀ (O : Type) [Ring O] (st : O → O) (M : Type) [AddCommGroup M] [Module O M] [Finite M] (k : Type) [Field k] [IsAlgClosed k] [CharZero k] (B E : M → M → kˣ) (e : O), (∀ c, st (st c) = c) → (∀ c, e * c = c * e) → (∀ c, st e * c = c * st e) → (∀ x : M, e • x + st e • x = x) → (∀ x : M, e • st e • x = 0) → (∀ x x' y, B (x + x') y = B x y * B x' y) → (∀ x y, B x y * B y x = 1) → (∀ (c : O) x y, B (c • x) y = B x (st c • y)) → (∀ x, (∀ y, B x y = 1) → x = 0) → (∀ x x' y, E (x + x') y = E x y * E x' y) → (∀ x y, E x y * E y x = 1) → (∀ (c : O) x y, E (c • x) y = E x (st c • y)) → (∀ x, (∀ y, E x y = 1) → x = 0) → ∃ g : M ≃ₗ[O] M, ∀ x y, B (g x) (g y) = E x y := by
+  first | (exact @GlobalTheory.SkewPairingCmp.exists_linearEquiv) | (exact GlobalTheory.SkewPairingCmp.exists_linearEquiv) | (intros; apply GlobalTheory.SkewPairingCmp.exists_linearEquiv  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLevelPairingEq
+
+section
 
 @[expose] public section
 
@@ -236,3 +440,6 @@ theorem exists_level_pairing_eq : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (k 
   · exact (hg _ _).trans (hE x y)
 
 end GlobalTheory.UPel.HT.FinLevSim
+end
+end
+end

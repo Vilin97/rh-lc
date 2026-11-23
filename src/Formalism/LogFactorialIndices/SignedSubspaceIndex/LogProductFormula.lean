@@ -1,10 +1,11 @@
 module
 
-public import Formalism.LogFactorialIndices.StatementNorm
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -20,10 +21,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.FractionalIdeal.Norm
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +41,42 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
 public import Mathlib.RingTheory.Norm.Transitivity
+
+-- Source module: Formalism.LogFactorialIndices.StatementNorm
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace Formalism.LatticeIndexTer
+
+open scoped ComplexConjugate
+
+def LogProductFormula : Prop :=
+  ∀ (L : Type) [Field L] [NumberField L] (x : L), x ≠ 0 →
+    ∑ σ : L →+* ℂ, Real.log ‖σ x‖ =
+      ∑ᶠ 𝔭 : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers L),
+        (FractionalIdeal.count L 𝔭
+            (FractionalIdeal.spanSingleton (nonZeroDivisors (NumberField.RingOfIntegers L)) x) : ℝ) *
+          Real.log (Ideal.absNorm 𝔭.asIdeal : ℝ)
+
+end Formalism.LatticeIndexTer
+end
+end
+end
+
+-- Source module: Formalism.LogFactorialIndices.SignedSubspaceIndex.LogProductFormula
+
+section
 
 @[expose] public section
 
@@ -121,3 +152,6 @@ theorem log_product_formula : LogProductFormula := by
   rw [Real.log_zpow]
 
 end Formalism.LatticeIndexTer
+end
+end
+end

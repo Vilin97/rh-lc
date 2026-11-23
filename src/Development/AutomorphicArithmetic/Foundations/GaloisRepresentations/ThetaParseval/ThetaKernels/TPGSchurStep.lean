@@ -1,22 +1,22 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.GalTPDefs
-public import Development.AutomorphicArithmetic.AdelicQuotients.InnerProductIntegralFundamentalDomainOfCompact
-public import Development.AutomorphicArithmetic.AdelicQuotients.InvariantSesquilinearFormEqSmulOfIrreducible
-public import Development.AutomorphicArithmetic.AdelicQuotients.IrreducibleHermitianFormUnique
-public import Development.AutomorphicArithmetic.AdelicQuotients.MeasurableOfSeparatingFunctionals
-public import Development.AutomorphicArithmetic.AdelicQuotients.RieszRepresentationSesquilinear
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.TPGDecomp
-public import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
-public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ArchHeisOf
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Group.FundamentalDomain
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -24,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,7 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,8 +45,149 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+public import Development.AutomorphicArithmetic.AdelicQuotients.InvariantSesquilinearFormEqSmulOfIrreducible
+public import Development.AutomorphicArithmetic.AdelicQuotients.IrreducibleHermitianFormUnique
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Development.AutomorphicArithmetic.AdelicQuotients.RieszRepresentationSesquilinear
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.TPGDecomp
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ArchHeisOf
+import Mathlib.Tactic.Linter.Style
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProductFunctionOnSumCoordsMemAdelicSchwartzSpace
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.InnerProductIntegralFundamentalDomainOfCompact
+
+section
+
+@[expose] public section
+
+open MeasureTheory
+
+theorem UpperTheory.innerProduct_integral_fundamentalDomain_of_compact :
+    ∀ {H : Type} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [MeasurableSpace H] [BorelSpace H] (μ : Measure H) [μ.IsMulLeftInvariant] [μ.IsMulRightInvariant] [μ.IsOpenPosMeasure] (Γ : Subgroup H) [Countable Γ] (𝓕 : Set H), IsFundamentalDomain Γ 𝓕 μ → μ 𝓕 < ⊤ → ∀ Ω : Set H, IsCompact Ω → (∀ g, ∃ γ ∈ Γ, γ * g ∈ Ω) → ∀ f g : H → ℂ, Continuous f → Continuous g → (∀ γ ∈ Γ, ∀ h, f (γ * h) = f h) → (∀ γ ∈ Γ, ∀ h, g (γ * h) = g h) → IntegrableOn (fun h => f h * starRingEnd ℂ (g h)) 𝓕 μ ∧ (∀ y, ∫ h in 𝓕, f (h * y) * starRingEnd ℂ (g (h * y)) ∂μ = ∫ h in 𝓕, f h * starRingEnd ℂ (g h) ∂μ) ∧ (f ≠ 0 → 0 < (∫ h in 𝓕, f h * starRingEnd ℂ (f h) ∂μ).re) := by
+  intro H _ _ _ _ _ μ _ _ _ Γ _ 𝓕 h𝓕 hfin Ω hΩ hcov f g hf hg hfi hgi
+  have bdd : ∀ u : H → ℂ, Continuous u → (∀ γ ∈ Γ, ∀ h, u (γ * h) = u h) → ∃ C, ∀ h, ‖u h‖ ≤ C := by
+    intro u hu hinv
+    obtain ⟨C, hC⟩ := hΩ.exists_bound_of_continuousOn hu.continuousOn
+    refine ⟨C, fun h => ?_⟩
+    obtain ⟨γ, hγ, hmem⟩ := hcov h
+    rw [← hinv γ hγ h]
+    exact hC _ hmem
+  haveI : IsFiniteMeasure (μ.restrict 𝓕) := isFiniteMeasure_restrict.mpr hfin.ne
+  have intg : ∀ u : H → ℂ, Continuous u → (∀ γ ∈ Γ, ∀ h, u (γ * h) = u h) → IntegrableOn u 𝓕 μ := by
+    intro u hu hinv
+    obtain ⟨C, hC⟩ := bdd u hu hinv
+    exact Integrable.of_bound hu.aestronglyMeasurable C (Filter.Eventually.of_forall hC)
+  set u : H → ℂ := fun h => f h * starRingEnd ℂ (g h) with hu_def
+  have hu : Continuous u := hf.mul (Complex.continuous_conj.comp hg)
+  have hui : ∀ γ ∈ Γ, ∀ h, u (γ * h) = u h := by
+    intro γ hγ h
+    simp [u, hfi γ hγ, hgi γ hγ]
+  refine ⟨intg u hu hui, ?_, ?_⟩
+  · intro y
+    let t := (fun h => h * y⁻¹) ⁻¹' 𝓕
+    have ht : IsFundamentalDomain Γ t μ :=
+      h𝓕.preimage_of_equiv (measurePreserving_mul_right μ y⁻¹).quasiMeasurePreserving
+        (e := id) Function.bijective_id (fun γ x => by
+          simp only [id, Subgroup.smul_def, smul_eq_mul, mul_assoc])
+    have hset : 𝓕 = (fun h => h * y) ⁻¹' t := by
+      ext h
+      simp [t]
+    have h1 : ∫ h in 𝓕, u (h * y) ∂μ = ∫ h in t, u h ∂μ := by
+      rw [hset]
+      exact (measurePreserving_mul_right μ y).setIntegral_preimage_emb
+        (MeasurableEquiv.mulRight y).measurableEmbedding u t
+    have h2 : ∫ h in t, u h ∂μ = ∫ h in 𝓕, u h ∂μ :=
+      ht.setIntegral_eq h𝓕 (fun γ x => by
+        simp only [Subgroup.smul_def, smul_eq_mul]
+        exact hui γ γ.2 x)
+    exact h1.trans h2
+  · intro hne
+    have hff : ∀ h, f h * starRingEnd ℂ (f h) = ((Complex.normSq (f h) : ℝ) : ℂ) :=
+      fun h => Complex.mul_conj _
+    simp_rw [hff]
+    rw [integral_complex_ofReal, Complex.ofReal_re]
+    have hnn : 0 ≤ fun h => Complex.normSq (f h) := fun h => Complex.normSq_nonneg _
+    have hint : IntegrableOn (fun h => Complex.normSq (f h)) 𝓕 μ := by
+      have := (intg (fun h => f h * starRingEnd ℂ (f h)) (hf.mul (Complex.continuous_conj.comp hf))
+        (fun γ hγ h => by simp [hfi γ hγ])).re
+      simp only [hff, Complex.ofReal_re] at this
+      exact this
+    refine lt_of_le_of_ne (integral_nonneg hnn) (fun h0 => hne ?_)
+    have hae := (integral_eq_zero_iff_of_nonneg hnn hint).mp h0.symm
+    have hae' : (fun h => ‖f h‖ₑ) =ᵐ[μ.restrict 𝓕] 0 := by
+      filter_upwards [hae] with h hh
+      simp only [Pi.zero_apply, Complex.normSq_eq_zero] at hh
+      simp [hh]
+    have hl𝓕 : ∫⁻ h in 𝓕, ‖f h‖ₑ ∂μ = 0 := by
+      rw [lintegral_congr_ae hae']
+      simp
+    have hlall : ∫⁻ h, ‖f h‖ₑ ∂μ = 0 := by
+      rw [h𝓕.lintegral_eq_tsum'']
+      have : ∀ γ : Γ, ∫⁻ x in 𝓕, ‖f (γ • x)‖ₑ ∂μ = 0 := by
+        intro γ
+        simp only [Subgroup.smul_def, smul_eq_mul, hfi γ γ.2]
+        exact hl𝓕
+      simp [this]
+    have hz := (lintegral_eq_zero_iff' hf.enorm.aemeasurable).mp hlall
+    have hz' : f =ᵐ[μ] fun _ => (0 : ℂ) := by
+      filter_upwards [hz] with h hh
+      simpa using hh
+    exact (Continuous.ae_eq_iff_eq μ hf continuous_const).mp hz'
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MeasurableOfSeparatingFunctionals
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk65.measurable_of_separating_functionals :
+    ∀ {G V ι : Type} [inst : MeasurableSpace G] [inst_1 : AddCommGroup V] [inst_2 : _root_.Module ℂ V]
+    [FiniteDimensional ℂ V] (l : ι → V →ₗ[ℂ] ℂ),
+    (∀ (a : V), (∀ (y : ι), (l y : V → ℂ) a = (0 : ℂ)) → a = (0 : V)) →
+      ∀ (T : G → V),
+        (∀ (y : ι), Measurable fun (g : G) ↦ (l y : V → ℂ) (T g)) →
+          ∀ (L : V →ₗ[ℂ] ℂ), Measurable fun (g : G) ↦ (L : V → ℂ) (T g) := by
+  intro G V ι _ _ _ _ l hl T hT L
+  have hL : L ∈ Submodule.span ℂ (Set.range l) := by
+    apply FiniteDimensional.mem_span_of_iInf_ker_le_ker
+    intro a ha
+    have h0 : a = 0 := hl a fun y => LinearMap.mem_ker.mp ((Submodule.mem_iInf _).mp ha y)
+    rw [h0]
+    exact Submodule.zero_mem _
+  induction hL using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨y, rfl⟩ := hx
+    exact hT y
+  | zero => exact measurable_const
+  | add x y _ _ hx hy => exact hx.add hy
+  | smul c x _ hx => exact hx.const_mul c
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AdelicQuotients.MeasurableOfSeparatingFunctionals
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.measurable_of_separating_functionals :
+    ∀ {G V ι : Type} [MeasurableSpace G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] (l : ι → V →ₗ[ℂ] ℂ), (∀ a, (∀ y, l y a = 0) → a = 0) → ∀ T : G → V, (∀ y, Measurable fun g => l y (T g)) → ∀ L : V →ₗ[ℂ] ℂ, Measurable fun g => L (T g) :=
+  _root_.UpperTheory.Reformulated.B.Qk65.measurable_of_separating_functionals
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.ThetaKernels.TPGSchurStep
+
+section
 
 @[expose] public section
 
@@ -264,5 +406,7 @@ theorem UpperTheory.TP.schurStep_k : _root_.UpperTheory.TP.Tools_k → _root_.Up
   have e2 : UpperTheory.TP.mc M (φ ∘ e.symm) cc = pet M.μ M.dom (fun y => φ (e.symm (y * cc))) (φ ∘ e.symm) := rfl
   rw [e2]
   ring
+end
+end
 end
 end

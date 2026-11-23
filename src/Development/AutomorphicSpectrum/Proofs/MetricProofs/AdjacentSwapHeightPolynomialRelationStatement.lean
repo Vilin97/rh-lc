@@ -4,7 +4,9 @@ public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.Geometri
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.CompRightEqZero
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaSt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AdjacentSwapHeightPolynomialRelation
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.Tactic.Continuity
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -19,10 +21,14 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,7 +48,97 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.HeightPolynomialReflectionSumStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.KillNoneFormPoly
+import GroundTheory.HeightsAndTheta.Heights.Intersections.PFibreLocal
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.EtaleAwayOfIsEtaleAtOffSubmonoid
+
+section
+
+@[expose] public section
+
+open MvPolynomial GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights
+
+namespace GlobalTheory.CompanionTheory.Ar.PB
+
+theorem gap_eq_weight_sub_next {Ψ : Type} {N : ℕ} (lam : Ψ × Fin N → ℝ) (p : Ψ × Fin N) :
+    gap lam p = lam p - if h : (p.2 : ℕ) + 1 < N then lam (p.1, ⟨(p.2 : ℕ) + 1, h⟩) else 0 := by
+  unfold gap gapX
+  split_ifs <;> simp
+
+theorem gap_comp_swap {Ψ : Type} [DecidableEq Ψ] {N : ℕ} (τ : Ψ) (a b : Fin N) (hb : (b : ℕ) = a + 1)
+    (lam : Ψ × Fin N → ℝ) (p : Ψ × Fin N) :
+    gap (lam ∘ Equiv.swap (τ, a) (τ, b)) p = gap lam p + gap lam (τ, a) * (xiCoef τ a p : ℝ) := by
+  have hab : (a : ℕ) + 1 < N := hb ▸ b.2
+  have hbe : (⟨(a : ℕ) + 1, hab⟩ : Fin N) = b := Fin.ext hb.symm
+  have hu : gap lam (τ, a) = lam (τ, a) - lam (τ, b) := by
+    rw [gap_eq_weight_sub_next]; simp only [hab, dif_pos, hbe]
+  have hsw : ∀ q : Ψ × Fin N, (lam ∘ Equiv.swap (τ, a) (τ, b)) q =
+      lam q + (if q.1 = τ then (if (q.2 : ℕ) = a + 1 then 1 else 0) - (if (q.2 : ℕ) = a then 1 else 0) else 0)
+        * (lam (τ, a) - lam (τ, b)) := by
+    rintro ⟨σ, i⟩
+    by_cases h1 : (σ, i) = (τ, a)
+    · obtain ⟨rfl, rfl⟩ := Prod.mk.inj h1
+      simp
+    by_cases h2 : (σ, i) = (τ, b)
+    · obtain ⟨rfl, rfl⟩ := Prod.mk.inj h2
+      simp [hb]
+    rw [Function.comp_apply, Equiv.swap_apply_of_ne_of_ne h1 h2]
+    by_cases hσ : σ = τ
+    · subst hσ
+      have e1 : (i : ℕ) ≠ a := fun h => h1 (by rw [Fin.ext h])
+      have e2 : (i : ℕ) ≠ a + 1 := fun h => h2 (by rw [Fin.ext (h.trans hb.symm)])
+      simp [e1, e2]
+    · simp [hσ]
+  obtain ⟨σ, i⟩ := p
+  rw [hu, gap_eq_weight_sub_next, gap_eq_weight_sub_next]
+  simp only [hsw, xiCoef, Fin.ext_iff]
+  have hi := i.2
+  split_ifs <;> first | omega | (push_cast; ring)
+
+theorem gap_swap_decomp : ∀ (Ψ : Type) [DecidableEq Ψ] (N : ℕ) (τ : Ψ) (a b : Fin N), (b : ℕ) = a + 1 → ∀ lam : Ψ × Fin N → ℝ, let u := gap lam (τ, a); let c := fun p => gap lam p + u / 2 * (xiCoef τ a p : ℝ); c (τ, a) = 0 ∧ (∀ p, gap lam p = c p - u / 2 * (xiCoef τ a p : ℝ)) ∧ ∀ p, gap (lam ∘ Equiv.swap (τ, a) (τ, b)) p = c p + u / 2 * (xiCoef τ a p : ℝ) := by
+  intro Ψ _ N τ a b hb lam u c
+  refine ⟨?_, fun p => ?_, fun p => ?_⟩
+  · simp only [c, u, xiCoef]
+    simp
+  · simp only [c]; ring
+  · rw [gap_comp_swap τ a b hb]
+    simp only [c, u]; ring
+
+end GlobalTheory.CompanionTheory.Ar.PB
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.AdjacentSwapHeightPolynomialRelation
+
+section
+
+@[expose] public section
+
+open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
+
+namespace GlobalTheory.CompanionTheory.Ar.PB
+
+theorem thmA_swap : Inputs → ∀ (II : IntersectionSystem), IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N d : ℕ) (S : AnSys (d + 1) (Ψ × Fin N)) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (Re : Realis S P) (τ : Ψ) (a b : Fin N), (b : ℕ) = a + 1 → SqSys Re (τ, a) (xiCoef τ a) → ∀ lam : Ψ × Fin N → ℝ, eval lam (toWt (Re.PB II)) + eval (lam ∘ Equiv.swap (τ, a) (τ, b)) (toWt (Re.PB II)) = (tsgPoly (d + 1) kappa (linePoly (fun p => gap lam p + gap lam (τ, a) / 2 * (xiCoef τ a p : ℝ)) (xiCoef τ a) S.degPoly)).eval (gap lam (τ, a)) := by
+  intro hI II hII Ψ _ _ N d S K _ ι _ P Re τ a b hb Q lam
+  obtain ⟨h0, h1, h2⟩ := gap_swap_decomp Ψ N τ a b hb lam
+  have key := GlobalTheory.T.height_polynomial_reflection_sum hI GroundTheory.Heights₂.Heights.Inter.FibreLocal.proof II hII K ι d (Ψ × Fin N) S P Re (τ, a) (xiCoef τ a) Q
+    (fun p => gap lam p + gap lam (τ, a) / 2 * (xiCoef τ a p : ℝ)) h0 (gap lam (τ, a))
+  rw [eval_toWt_gap, eval_toWt_gap, ← key]
+  exact congrArg₂ (· + ·) (congrArg (fun f => eval f (Re.PB II)) (_root_.funext h1))
+    (congrArg (fun f => eval f (Re.PB II)) (_root_.funext h2))
+
+end GlobalTheory.CompanionTheory.Ar.PB
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.MetricProofs.AdjacentSwapHeightPolynomialRelationStatement
+
+section
 
 @[expose] public section
 
@@ -50,3 +146,5 @@ open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm Recipro
 
 theorem _root_.GlobalTheory.T.adjacent_swap_height_polynomial_relation : Inputs → ∀ (II : IntersectionSystem), IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N d : ℕ) (S : AnSys (d + 1) (Ψ × Fin N)) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (Re : Realis S P) (τ : Ψ) (a b : Fin N), (b : ℕ) = a + 1 → SqSys Re (τ, a) (xiCoef τ a) → ∀ lam : Ψ × Fin N → ℝ, eval lam (toWt (Re.PB II)) + eval (lam ∘ Equiv.swap (τ, a) (τ, b)) (toWt (Re.PB II)) = (tsgPoly (d + 1) kappa (linePoly (fun p => gap lam p + gap lam (τ, a) / 2 * (xiCoef τ a p : ℝ)) (xiCoef τ a) S.degPoly)).eval (gap lam (τ, a)) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.PB.thmA_swap | exact GlobalTheory.CompanionTheory.Ar.PB.thmA_swap | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.thmA_swap <;> assumption)
+end
+end

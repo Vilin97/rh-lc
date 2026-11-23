@@ -1,10 +1,6 @@
 module
 
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullbackPbMap
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLinearCombinationOfRankAtStalkStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeModuleComplementSupportCompact
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportQuotientSpanIffOfIsPushoutStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SectionsFiniteFlatRankOfFiniteFlat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComapBcComp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,7 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-public import Mathlib.RingTheory.Spectrum.Prime.Module
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -33,8 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,7 +41,193 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeModuleComplementSupportCompact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportQuotientSpanIffOfIsPushoutStatement
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.Tactic.Linter.HaveILetI
+public import Mathlib.RingTheory.Spectrum.Prime.Module
+import Mathlib.Tactic.Linter.Style
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.Affine
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullbackPbMap
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Opposite
+
+namespace GlobalTheory.HilbAff
+
+variable {A B : Type} [CommRing A] [CommRing B] [Algebra A B] {r : ℕ}
+
+abbrev proj {T : Scheme.{0}} (y : (functor A B r).obj (op T)) : y.2.1.subscheme ⟶ T :=
+  y.2.1.subschemeι ≫ pullback.snd _ y.1
+
+def gens {N : ℕ} (e : Module.Basis (Fin N) A B) (σ : Fin r ↪ Fin N) {T : Scheme.{0}}
+    (y : (functor A B r).obj (op T)) (U : T.Opens) : Fin r → Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) :=
+  fun k => ((y.2.1.subschemeι ≫ pullback.fst _ y.1).appLE ⊤ (proj y ⁻¹ᵁ U) (by simp)).hom
+    ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom (e (σ k)))
+
+def bad {N : ℕ} (e : Module.Basis (Fin N) A B) (σ : Fin r ↪ Fin N) {T : Scheme.{0}}
+    (y : (functor A B r).obj (op T)) (U : T.Opens) : Set (PrimeSpectrum Γ(T, U)) :=
+  letI := ((proj y).app U).hom.toAlgebra
+  Module.support Γ(T, U)
+    (Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) ⧸ Submodule.span Γ(T, U) (Set.range (gens e σ y U)))
+
+def goodSet {N : ℕ} (e : Module.Basis (Fin N) A B) (σ : Fin r ↪ Fin N) {T : Scheme.{0}}
+    (y : (functor A B r).obj (op T)) : Set T :=
+  ⋃ U : T.affineOpens, U.2.fromSpec '' (bad e σ y U)ᶜ
+
+def pbMap {T T' : Scheme.{0}} (a : T' ⟶ T) (y : (functor A B r).obj (op T)) :
+    ((functor A B r).map a.op y).2.1.subscheme ⟶ y.2.1.subscheme :=
+  (y.2.1.comapIso (bc A B y.1 a)).hom ≫ pullback.snd _ _
+
+theorem isPullback_pbMap {T T' : Scheme.{0}} (a : T' ⟶ T) (y : (functor A B r).obj (op T)) :
+    IsPullback (pbMap a y) (proj ((functor A B r).map a.op y)) (proj y) a := by
+  have H : IsPullback (pullback.snd (bc A B y.1 a) y.2.1.subschemeι)
+      (pullback.fst (bc A B y.1 a) y.2.1.subschemeι ≫ pullback.snd _ (a ≫ y.1))
+      (y.2.1.subschemeι ≫ pullback.snd _ y.1) a :=
+    (IsPullback.of_hasPullback (bc A B y.1 a) y.2.1.subschemeι).flip.paste_vert
+      (isPullback_bc A B y.1 a)
+  refine IsPullback.of_iso H (y.2.1.comapIso (bc A B y.1 a)).symm (Iso.refl _) (Iso.refl _)
+    (Iso.refl _) ?_ ?_ ?_ ?_
+  · simp only [pbMap, Iso.symm_hom, Iso.refl_hom, Category.comp_id, Category.id_comp]
+    exact (Iso.inv_hom_id_assoc _ _).symm
+  · change _ = (y.2.1.comapIso (bc A B y.1 a)).inv ≫
+      (y.2.1.comap (bc A B y.1 a)).subschemeι ≫ pullback.snd _ (a ≫ y.1)
+    rw [Scheme.IdealSheafData.comapIso_inv_subschemeι_assoc]
+    simp
+  · simp
+  · simp
+
+theorem pbMap_fst {T T' : Scheme.{0}} (a : T' ⟶ T) (y : (functor A B r).obj (op T)) :
+    pbMap a y ≫ y.2.1.subschemeι ≫ pullback.fst _ y.1 =
+      ((functor A B r).map a.op y).2.1.subschemeι ≫ pullback.fst _ ((functor A B r).map a.op y).1 := by
+  change (y.2.1.comapIso (bc A B y.1 a)).hom ≫ pullback.snd _ _ ≫
+      y.2.1.subschemeι ≫ pullback.fst _ y.1 =
+    (y.2.1.comap (bc A B y.1 a)).subschemeι ≫ pullback.fst _ (a ≫ y.1)
+  rw [← pullback.condition_assoc, Scheme.IdealSheafData.comapIso_hom_fst_assoc]
+  congr 1
+  exact (pullback.lift_fst _ _ _).trans (Category.comp_id _)
+
+end GlobalTheory.HilbAff
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLinearCombinationOfRankAtStalk
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+
+open Module in
+theorem bijective_linearCombination_of_rankAtStalk :
+    ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Flat R M] (r : ℕ),
+      (∀ p : PrimeSpectrum R, Module.rankAtStalk M p = r) → ∀ s : Fin r → M,
+      Module.support R (M ⧸ Submodule.span R (Set.range s)) = ∅ →
+      Function.Bijective (Fintype.linearCombination R s) := by
+  intro R M _ _ _ _ _ r hr s hs
+  have hspan : Submodule.span R (Set.range s) = ⊤ := by
+    have : Subsingleton (M ⧸ Submodule.span R (Set.range s)) := Module.support_eq_empty_iff.1 hs
+    exact Submodule.Quotient.subsingleton_iff.1 this
+  refine ⟨?_, ?_⟩
+  · rw [← linearIndependent_iff_injective_fintypeLinearCombination]
+    refine LinearIndependent.of_isLocalized_maximal (fun P _ => Localization.AtPrime P)
+      (fun P _ => LocalizedModule P.primeCompl M) (fun P _ => LocalizedModule.mkLinearMap P.primeCompl M)
+      s fun P hP => ?_
+    have hfree : Module.Free (Localization.AtPrime P) (LocalizedModule P.primeCompl M) :=
+      Module.free_of_flat_of_isLocalRing
+    have hrk : Module.finrank (Localization.AtPrime P) (LocalizedModule P.primeCompl M) = r :=
+      hr ⟨P, hP.isPrime⟩
+    have hsp : Submodule.span (Localization.AtPrime P)
+        (Set.range (LocalizedModule.mkLinearMap P.primeCompl M ∘ s)) = ⊤ := by
+      rw [Set.range_comp]
+      exact span_eq_top_of_isLocalizedModule (Localization.AtPrime P) P.primeCompl
+        (LocalizedModule.mkLinearMap P.primeCompl M) hspan
+    have hsurj : Function.Surjective (Fintype.linearCombination (Localization.AtPrime P)
+        (LocalizedModule.mkLinearMap P.primeCompl M ∘ s)) := by
+      rw [← LinearMap.range_eq_top, Fintype.range_linearCombination, hsp]
+    let b := Module.finBasisOfFinrankEq (Localization.AtPrime P) (LocalizedModule P.primeCompl M) hrk
+    have hinj := OrzechProperty.injective_of_surjective_endomorphism
+      (b.equivFun.toLinearMap ∘ₗ Fintype.linearCombination (Localization.AtPrime P)
+        (LocalizedModule.mkLinearMap P.primeCompl M ∘ s)) (b.equivFun.surjective.comp hsurj)
+    rw [linearIndependent_iff_injective_fintypeLinearCombination]
+    exact Function.Injective.of_comp (f := ⇑b.equivFun) hinj
+  · rw [← LinearMap.range_eq_top, Fintype.range_linearCombination, hspan]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLinearCombinationOfRankAtStalkStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.linearCombination_bijective_of_rankAtStalk_eq : ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Flat R M] (r : ℕ), (∀ p : PrimeSpectrum R, Module.rankAtStalk M p = r) → ∀ s : Fin r → M, Module.support R (M ⧸ Submodule.span R (Set.range s)) = ∅ → Function.Bijective (Fintype.linearCombination R s) := by
+  first | (exact @GlobalTheory.bijective_linearCombination_of_rankAtStalk) | (exact GlobalTheory.bijective_linearCombination_of_rankAtStalk) | (intros; apply GlobalTheory.bijective_linearCombination_of_rankAtStalk  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SectionsFiniteFlatRankOfFiniteFlat
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+
+namespace GlobalTheory
+
+theorem isPullback_fromSpec_app_preimage_of_affine {X T : Scheme.{0}} (p : X ⟶ T) {U : T.Opens}
+    (hU : IsAffineOpen U) (hV : IsAffineOpen (p ⁻¹ᵁ U)) :
+    IsPullback hV.fromSpec (Spec.map (p.app U)) p hU.fromSpec :=
+  (IsOpenImmersion.isPullback _ _ _ _ (by
+    rw [Scheme.Hom.app_eq_appLE, IsAffineOpen.SpecMap_appLE_fromSpec p hU hV]) (by simp)).flip
+
+theorem sections_finite_flat_rank_of_finite_flat :
+    ∀ (X T : Scheme.{0}) (p : X ⟶ T) [IsFinite p] [Flat p] (r : ℕ), (∀ t, p.finrank t = r) →
+      ∀ (U : T.Opens), IsAffineOpen U →
+        letI := (p.app U).hom.toAlgebra;
+        Module.Finite Γ(T, U) Γ(X, p ⁻¹ᵁ U) ∧ Module.Flat Γ(T, U) Γ(X, p ⁻¹ᵁ U) ∧
+          ∀ q : PrimeSpectrum Γ(T, U), Module.rankAtStalk Γ(X, p ⁻¹ᵁ U) q = r := by
+  intro X T p _ _ r hr U hU
+  have hV : IsAffineOpen (p ⁻¹ᵁ U) := hU.preimage p
+  have hpb := isPullback_fromSpec_app_preimage_of_affine p hU hV
+  have hfin : IsFinite (Spec.map (p.app U)) := MorphismProperty.of_isPullback hpb ‹_›
+  have hflat : Flat (Spec.map (p.app U)) := MorphismProperty.of_isPullback hpb ‹_›
+  have h1 : (p.app U).hom.Finite := (IsFinite.SpecMap_iff _).1 hfin
+  have h2 : (p.app U).hom.Flat := Flat.SpecMap_iff.1 hflat
+  letI := (p.app U).hom.toAlgebra
+  haveI : Module.Finite Γ(T, U) Γ(X, p ⁻¹ᵁ U) := h1
+  haveI : Module.Flat Γ(T, U) Γ(X, p ⁻¹ᵁ U) := h2
+  refine ⟨inferInstance, inferInstance, fun q ↦ ?_⟩
+  have e := Scheme.Hom.finrank_of_isPullback _ _ _ _ hpb q
+  rw [hr] at e
+  rw [← Scheme.Hom.finrank_SpecMap_algebraMap]
+  exact e
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenAffineHilbertChartBasicLocus
+
+section
 
 @[expose] public section
 
@@ -251,3 +431,6 @@ theorem exists_basic_locus : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra
       (isCompact_bad_compl e σ y U U.2).image U.2.fromSpec.continuous
 
 end GlobalTheory.HilbAff.Locus
+end
+end
+end

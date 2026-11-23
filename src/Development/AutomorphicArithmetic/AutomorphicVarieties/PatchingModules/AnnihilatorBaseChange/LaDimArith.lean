@@ -4,11 +4,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTool
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.ThetaCoefficientMapEq
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplEx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplReg
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaMvpsCot
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaRegPrime
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoMvps
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoSurj
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsRegularLocalRingAdicCompletion
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplUniq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,12 +23,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,7 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -53,7 +44,71 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaMvpsCot
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCotLoc
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCotOfQuot
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCotQuot
+import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoMvps
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.CoSurj
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.SpecializationMapCompUniversalSection
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplReg
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools
+
+theorem UpperTheory.V.AlgebraTools.IsCplAt.regular :
+    ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (p : Ideal R) [p.IsPrime] (B : Type) [CommRing B] [IsLocalRing B]
+      [Algebra R B], IsCplAt R p B → IsRegularLocalRing (Localization.AtPrime p) →
+      IsRegularLocalRing B ∧ ringKrullDim B = ringKrullDim (Localization.AtPrime p) := by
+  intro R _ _ p _ B _ _ _ hB hT
+  obtain ⟨e⟩ := IsCplAt.nonempty_algEquiv R p B (CplAt R p) hB (isCplAt_cplAt R p)
+  have hC : IsRegularLocalRing (CplAt R p) :=
+    GlobalTheory.RegularCompletion.isRegularLocalRing_adicCompletion (Localization.AtPrime p)
+  refine ⟨IsRegularLocalRing.of_ringEquiv e.toRingEquiv.symm, ?_⟩
+  rw [ringKrullDim_eq_of_ringEquiv e.toRingEquiv, ← hC.spanFinrank_maximalIdeal,
+    ← hT.spanFinrank_maximalIdeal]
+  exact congrArg _ (AdicCompletion.spanFinrank_maximalIdeal_eq (R := Localization.AtPrime p))
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaRegPrime
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.AlgebraTools
+
+theorem UpperTheory.V.AlgebraTools.regular_localization_of_regular_quotient :
+    ∀ (R : Type) [CommRing R] [IsRegularLocalRing R] (p : Ideal R) [p.IsPrime] [IsRegularLocalRing (R ⧸ p)],
+      IsRegularLocalRing (Localization.AtPrime p) ∧
+      ringKrullDim (Localization.AtPrime p) + ringKrullDim (R ⧸ p) = ringKrullDim R := by
+  intro R _ _ p _ _
+  obtain ⟨r, x, hx, hsp⟩ := exists_cotInd_of_regular_quotient R p
+  obtain ⟨-, hdim, -⟩ := regular_quotient_cotInd R _ x hx
+  obtain ⟨hh, hreg⟩ := regular_localization_cotInd R _ x hx p hsp.symm
+  refine ⟨hreg, ?_⟩
+  rw [IsLocalization.AtPrime.ringKrullDim_eq_height p (Localization.AtPrime p), hh, add_comm]
+  rw [hsp] at hdim
+  rw [← hdim]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.AnnihilatorBaseChange.LaDimArith
+
+section
 
 @[expose] public section
 
@@ -120,3 +175,5 @@ theorem UpperTheory.V.Pa.Core.laDim :
   refine laDim_gen (abelian₂ O Unit D) (PowerSeries K) (RingHom.ker g)
     (Ideal.quotientKerAlgEquivOfSurjective hs).toRingEquiv (1 + D) ?_
   rw [hdim, Fintype.card_sum, Fintype.card_unit, Fintype.card_fin]
+end
+end

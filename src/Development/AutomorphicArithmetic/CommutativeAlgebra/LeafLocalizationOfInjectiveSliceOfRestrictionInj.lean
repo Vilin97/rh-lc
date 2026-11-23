@@ -4,13 +4,8 @@ public import Development.EtaleCohomology.KummerTheory.InjSlice
 public import Development.EtaleCohomology.WeilConjectures.AcycPf
 public import Development.EtaleCohomology.EtaleSheaves.LeafConsPf
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChosenInjectiveResolutionEtaleSheafPropertiesStatement
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsCohomologyClassToDerivedHomBijectiveOfKInj
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicFreePullbackYonedaOfInjectiveRestricti
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicMappingConeChainsOfHomAcyclicFree
-import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicOfIsoOfIsZeroOfBiproduct
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.NonemptyIsoRelativeEtaleFamilyBaseChange
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.TotalHomComplexIsKInjectiveOfBoundedInjective
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.TotalHomPresheafIsSheafInjectiveOfHomAcyclic
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.CompLeft
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExtFreeEtaleSheafYoneda
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -49,7 +44,109 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.CompLeft
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicFreePullbackYonedaOfInjectiveRestricti
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicMappingConeChainsOfHomAcyclicFree
+import Development.AutomorphicArithmetic.CommutativeAlgebra.HomAcyclicOfIsoOfIsZeroOfBiproduct
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.NonemptyIsoRelativeEtaleFamilyBaseChange
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.TotalHomPresheafIsSheafInjectiveOfHomAcyclic
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsCohomologyClassToDerivedHomBijectiveOfKInj
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex CochainComplex.HomComplex
+open LateralTheory.E.EtaleTopologySheaves LateralTheory.E.LeafGhostCut UpperTheory.Et.Loc
+
+theorem UpperTheory.exists_cohomologyClass_to_derivedHom_bijective_of_kInjective :
+    ∀ (q : ℕ) (B : Scheme.{0}) (I : Cx (ZMod q)), ∃ l : ∀ (C : B.Etale ⥤ Cx (ZMod q)) (h : ∀ n, Presheaf.IsSheaf (EtTop B) (TP C I n)) (U : B.Etale) (n : ℤ), CohomologyClass (C.obj U) I n → ((OU B q).obj U ⟶ (CategoryTheory.shiftFunctor _ n).obj (DerivedCategory.Q.obj (TC C I h))), (∀ C h, (TC C I h).IsKInjective → ∀ U n, Function.Bijective (l C h U n)) ∧ (∀ C h (U U' : B.Etale) (a : U' ⟶ U) n x, l C h U' n (cpre (Cocycle.ofHom (C.map a)) I n n (zero_add n) x) = (OU B q).map a ≫ l C h U n x) ∧ ∀ (C C' : B.Etale ⥤ Cx (ZMod q)) h h' (φ : C' ⟶ C) U n x, l C' h' U n (cpre (Cocycle.ofHom (φ.app U)) I n n (zero_add n) x) = l C h U n x ≫ (CategoryTheory.shiftFunctor _ n).map (DerivedCategory.Q.map (TM φ I h h')) := by
+  intro q B I
+  obtain ⟨y, hwd, hK, hU, hT⟩ := UpperTheory.ext_free_etale_sheaf_yoneda B q
+  have cz : ∀ (C : B.Etale ⥤ Cx (ZMod q)) (h : ∀ n, Presheaf.IsSheaf (EtTop B) (TP C I n)) (U : B.Etale) (n : ℤ)
+      (z : Cocycle (C.obj U) I n), dS (TC C I h) n (n + 1) U (z : Cochain (C.obj U) I n) = 0 :=
+    fun C h U n z => Cocycle.δ_eq_zero z (n + 1)
+  have wd : ∀ (C : B.Etale ⥤ Cx (ZMod q)) (h : ∀ n, Presheaf.IsSheaf (EtTop B) (TP C I n)) (U : B.Etale) (n : ℤ)
+      (z z' : Cocycle (C.obj U) I n), CohomologyClass.mk z = CohomologyClass.mk z' →
+      y (TC C I h) U n (z : Cochain (C.obj U) I n) (cz C h U n z) =
+        y (TC C I h) U n (z' : Cochain (C.obj U) I n) (cz C h U n z') := by
+    intro C h U n z z' hzz
+    apply hwd
+    have h0 : CohomologyClass.mk (z - z') = 0 := by
+      rw [CohomologyClass.mk_sub, hzz, sub_self]
+    rw [CohomologyClass.mk_eq_zero_iff, mem_coboundaries_iff _ (n - 1) (by omega)] at h0
+    obtain ⟨β, hβ⟩ := h0
+    exact ⟨β, hβ⟩
+  have lmk : ∀ (C : B.Etale ⥤ Cx (ZMod q)) (h : ∀ n, Presheaf.IsSheaf (EtTop B) (TP C I n)) (U : B.Etale) (n : ℤ)
+      (z : Cocycle (C.obj U) I n),
+      y (TC C I h) U n ((CohomologyClass.mk_surjective (CohomologyClass.mk z)).choose : Cochain (C.obj U) I n)
+        (cz C h U n _) = y (TC C I h) U n (z : Cochain (C.obj U) I n) (cz C h U n z) :=
+    fun C h U n z => wd C h U n _ _ (CohomologyClass.mk_surjective _).choose_spec
+  refine ⟨fun C h U n x => y (TC C I h) U n ((CohomologyClass.mk_surjective x).choose : Cochain (C.obj U) I n)
+    (cz C h U n _), ?_, ?_, ?_⟩
+  · intro C h hKI U n
+    constructor
+    · intro x x' hxx
+      obtain ⟨z, rfl⟩ := CohomologyClass.mk_surjective x
+      obtain ⟨z', rfl⟩ := CohomologyClass.mk_surjective x'
+      dsimp only at hxx
+      rw [lmk, lmk] at hxx
+      obtain ⟨b, hb⟩ := (hK (TC C I h) hKI U n).1 _ _ _ _ hxx
+      rw [← sub_eq_zero, ← CohomologyClass.mk_sub, CohomologyClass.mk_eq_zero_iff,
+        mem_coboundaries_iff _ (n - 1) (by omega)]
+      exact ⟨b, hb⟩
+    · intro x
+      obtain ⟨s, hs, hsx⟩ := (hK (TC C I h) hKI U n).2 x
+      refine ⟨CohomologyClass.mk (Cocycle.mk s (n + 1) rfl hs), ?_⟩
+      dsimp only
+      rw [lmk]
+      exact hsx
+  · intro C h U U' a n x
+    obtain ⟨z, rfl⟩ := CohomologyClass.mk_surjective x
+    dsimp only
+    rw [cpre_mk, lmk, lmk]
+    exact hU (TC C I h) U U' a n (z : Cochain (C.obj U) I n) (cz C h U n z) _
+  · intro C C' h h' φ U n x
+    obtain ⟨z, rfl⟩ := CohomologyClass.mk_surjective x
+    dsimp only
+    rw [cpre_mk, lmk, lmk]
+    exact hT (TC C I h) (TC C' I h') (TM φ I h h') U n (z : Cochain (C.obj U) I n) (cz C h U n z) _
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.TotalHomComplexIsKInjectiveOfBoundedInjective
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex CochainComplex.HomComplex
+open LateralTheory.E.EtaleTopologySheaves LateralTheory.E.LeafGhostCut UpperTheory.Et.Loc
+
+theorem UpperTheory.totalHomComplex_isKInjective_of_bounded_injective :
+    ∀ (q : ℕ) {B : Scheme.{0}} (C : B.Etale ⥤ Cx (ZMod q)) (I : Cx (ZMod q)) (h : ∀ n, Presheaf.IsSheaf (EtTop B) (TP C I n)), (∀ n, Injective (⟨TP C I n, h n⟩ : SShv B q)) → (∀ (U : B.Etale) (n : ℤ), 0 < n → IsZero ((C.obj U).X n)) → (∀ n : ℤ, n < 0 → IsZero (I.X n)) → (TC C I h).IsKInjective := by
+  intro q B C I h hinj hC hI
+  have hcoch : ∀ (U : B.Etale) (n : ℤ), n < 0 → ∀ α : Cochain (C.obj U) I n, α = 0 := by
+    intro U n hn α
+    refine Cochain.ext _ _ fun p r hpr => ?_
+    rcases lt_or_ge 0 p with hp | hp
+    · exact (hC U p hp).eq_of_src _ _
+    · exact (hI r (by omega)).eq_of_tgt _ _
+  haveI : (TC C I h).IsStrictlyGE 0 := by
+    rw [CochainComplex.isStrictlyGE_iff]
+    intro n hn
+    rw [IsZero.iff_id_eq_zero]
+    refine Sheaf.hom_ext (NatTrans.ext (funext fun U => ModuleCat.hom_ext (LinearMap.ext fun α => ?_)))
+    exact (hcoch U.unop n hn α).trans (hcoch U.unop n hn _).symm
+  haveI : ∀ n, Injective ((TC C I h).X n) := hinj
+  exact CochainComplex.isKInjective_of_injective _ 0
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.LeafLocalizationOfInjectiveSliceOfRestrictionInj
+
+section
 
 @[expose] public section
 
@@ -180,4 +277,6 @@ theorem UpperTheory.leafLocalization_of_injective_slice_of_restriction_injective
     fun U n y => lm _ _ h1 h2 (coneM _ _ w2 q) U n y,
     fun U n y => lm _ _ hL h2 (coneM _ _ w3 q) U n y⟩
 
+end
+end
 end

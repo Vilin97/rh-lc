@@ -3,13 +3,9 @@ module
 public import Development.EtaleCohomology.EtaleSheaves.H0TwistOverClosedField
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.DedekindSpecOpenIsAffine
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.IsDedekindDomainAffineSectionsOfIsCurve
-public import Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.CurveMayerVietorisOfDegreeZero
-public import Development.EtaleCohomology.EtaleSheaves.LeafAffCoverVanishPfEmpty
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -26,7 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -34,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +41,108 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMayerVietorisConnectingExact
+import Development.EtaleCohomology.EtaleTrace.LDblPf
+public import Development.EtaleCohomology.EtaleTrace.LocalSplitting.Cover2
+import Mathlib.CategoryTheory.Limits.Types.Pushouts
+import Mathlib.CategoryTheory.Presentable.Type
+import Mathlib.Tactic.Linter.HaveILetI
+public import Development.EtaleCohomology.EtaleSheaves.LeafAffCoverVanishPfEmpty
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Development.EtaleCohomology.EtaleSheaves.LeafCurveCut
+
+section
+
+@[expose] public section
+
+noncomputable section
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
+
+namespace LateralTheory.E.E4.CurveCut
+
+open LateralTheory.E.E4
+
+def LeafMV : Prop := Hyps → ∀ (R : Type) [CommRing R] (F : Shv R) (X : Scheme.{0}) (U V : X.Opens), U ⊔ V = ⊤ →
+  ∀ n : ℤ, ∃ δ : H R (sch.obj (U ⊓ V).toScheme) F n →+ H R (sch.obj X) F (n + 1),
+    ∀ x : H R (sch.obj X) F (n + 1),
+      (pull R (sch.map U.ι) F (n + 1) x = 0 ∧ pull R (sch.map V.ι) F (n + 1) x = 0) ↔ x ∈ δ.range
+
+def isoH (R : Type) [CommRing R] (F : Shv R) {X Y : Scheme.{0}} (e : X ≅ Y) (n : ℤ) :
+    H R (sch.obj Y) F n ≃ H R (sch.obj X) F n where
+  toFun := pull R (sch.map e.hom) F n
+  invFun := pull R (sch.map e.inv) F n
+  left_inv x := by
+    rw [← pull_comp, ← Functor.map_comp, e.inv_hom_id, CategoryTheory.Functor.map_id, pull_id]
+  right_inv x := by
+    rw [← pull_comp, ← Functor.map_comp, e.hom_inv_id, CategoryTheory.Functor.map_id, pull_id]
+
+theorem finite_of_mv (hMV : LeafMV) (hH : Hyps) (R : Type) [CommRing R] (F : Shv R) (X : Scheme.{0}) (U V : X.Opens)
+    (hUV : U ⊔ V = ⊤) (n : ℤ) (h0 : Finite (H R (sch.obj (U ⊓ V).toScheme) F n))
+    (h1 : Finite (H R (sch.obj U.toScheme) F (n + 1))) (h2 : Finite (H R (sch.obj V.toScheme) F (n + 1))) :
+    Finite (H R (sch.obj X) F (n + 1)) := by
+  obtain ⟨δ, hδ⟩ := hMV hH R F X U V hUV n
+  let φ := (pull R (sch.map U.ι) F (n + 1)).prod (pull R (sch.map V.ι) F (n + 1))
+  have hker : φ.ker = δ.range := by
+    ext x
+    rw [← hδ x, AddMonoidHom.mem_ker]
+    simp [φ, Prod.ext_iff]
+  have : Finite φ.ker := by
+    rw [hker]
+    exact Set.finite_range δ |>.to_subtype
+  have : Finite (H R (sch.obj X) F (n + 1) ⧸ φ.ker) :=
+    Finite.of_equiv _ (QuotientAddGroup.quotientKerEquivRange φ).toEquiv.symm
+  exact Finite.of_addSubgroup_quotient φ.ker
+
+theorem subsingleton_of_mv (hMV : LeafMV) (hH : Hyps) (R : Type) [CommRing R] (F : Shv R) (X : Scheme.{0})
+    (U V : X.Opens) (hUV : U ⊔ V = ⊤) (n : ℤ) (h0 : Subsingleton (H R (sch.obj (U ⊓ V).toScheme) F n))
+    (h1 : Subsingleton (H R (sch.obj U.toScheme) F (n + 1))) (h2 : Subsingleton (H R (sch.obj V.toScheme) F (n + 1))) :
+    Subsingleton (H R (sch.obj X) F (n + 1)) := by
+  obtain ⟨δ, hδ⟩ := hMV hH R F X U V hUV n
+  refine ⟨fun x y => ?_⟩
+  have hx : ∀ z : H R (sch.obj X) F (n + 1), z = 0 := by
+    intro z
+    obtain ⟨w, hw⟩ := (hδ z).1 ⟨Subsingleton.elim _ _, Subsingleton.elim _ _⟩
+    rw [← hw, Subsingleton.elim w 0, map_zero]
+  rw [hx x, hx y]
+
+end LateralTheory.E.E4.CurveCut
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.EtaleClopenDescent.CurveMayerVietorisOfDegreeZero
+
+section
+
+@[expose] public section
+
+open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC
+
+theorem UpperTheory.Cb.curve_mayer_vietoris_of_degree_zero :
+    LateralTheory.E.E4.H0TwistOverClosedField → LateralTheory.E.E4.CurveCut.LeafMV := by
+  intro _ _ R _ F X U V hUV n
+  obtain ⟨d, hd, -⟩ := mayerVietoris R F
+  have hc := LateralTheory.EtaleTrace.LSplitPf.Sch.cover2 R U V hUV
+  haveI : PreservesLimitsOfShape WalkingCospan sch := by
+    unfold sch; infer_instance
+  have P := (isPullback_opens_inf U V).map sch
+  refine ⟨(d _ _ hc n).comp (pull R P.isoPullback.inv F n), fun x => ?_⟩
+  rw [(hd _ _ hc n).2.2 x]
+  constructor
+  · rintro ⟨c, rfl⟩
+    refine ⟨pull R P.isoPullback.hom F n c, ?_⟩
+    rw [AddMonoidHom.comp_apply, ← pull_comp, Iso.inv_hom_id, pull_id]
+  · rintro ⟨y, rfl⟩
+    exact ⟨_, rfl⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.LeafCurveOfLeafH0
+
+section
 
 @[expose] public section
 
@@ -164,3 +260,5 @@ theorem UpperTheory.leafCurve_of_leafH0 :
           (sA (n + 1) hm) (sB (n + 1) (by omega))
   obtain ⟨h1, h2⟩ := key C (𝟙 C) le_top
   exact ⟨h1 1, h1 2, h2⟩
+end
+end

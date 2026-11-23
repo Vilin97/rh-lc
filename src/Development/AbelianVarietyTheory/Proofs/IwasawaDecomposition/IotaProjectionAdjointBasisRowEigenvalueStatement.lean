@@ -7,7 +7,9 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFor
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StableIffCarrierEq
 public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IotaProjectionAdjointBasisRowEigenvalue
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AdjointCompositeLiftRowMemSpanGoodRationalFormsStatement
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.LevelCuspCharacters
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BasisRowMemDefiniteFamilyTypePart
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +43,398 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CompositeIntertwinerEqThetaLiftGoodProjectorStatement
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GoodProjectorSmallestSpaceForms
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HilbertInnerRowFormsEqLevelClassSumStatement
+public import Formalism.LocalToGlobal.IndefiniteReal.IsMultMapUnivZero
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIsAdelicChain
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffSetIntegralNat
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RePosOfIsMultIP
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StableIffCarrierEq
+import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Formalism.LocalRingCardinality.DataHost
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+public import Formalism.LocalRingCardinality.DataRows
+import Formalism.LocalRingCardinality.DataTheta
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
+import Formalism.LocalToGlobal.Columns.CoefficientsModP.WeTransposeWordTransposeWord
+public import Formalism.LocalToGlobal.Divisibility.LiftLat
+import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteWeightData
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BasisRowMemDefiniteFamilyTypePartStatement
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
+open scoped TensorProduct InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3
+
+theorem _root_.GlobalTheory.T.basisRow_mem_definiteFamily_type_part : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧ GlobalTheory.Published.CuspRapidDecay) → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) (Z : ReadL R F X0 Y), Pins R F cG → Holds R F → Lam3 Z → (∀ σ (i : Fin D.R.m), D.what₂.isot ((i : ℕ) + 1) (D.what₂.ft σ) ≠ ⊥) → ∀ (uE : D.what₂.EE →ₗ[ℂ] R.HE.H), (∀ y, (Y.Ish.jE y).1 = PiTensorProduct.lift (R.HE.e (uE y))) → ∀ σ, ∃ p, uE (D.what₂.onb σ) ∈ R.EEp3 p ∧ ∏ j ∈ Finset.Icc 1 D.R.m, R.lamN A3.A.μ0 j p = ∏ j ∈ Finset.Icc 1 D.R.m, D.what₂.lamP D.what₂.mu0 j (D.what₂.ft σ) := by
+  first | exact @GlobalTheory.Mem.RowType.row_type | exact GlobalTheory.Mem.RowType.row_type | (intros; apply GlobalTheory.Mem.RowType.row_type <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelRowsReadingEmbeddingGoodRowsModelWithNorm
+
+section
+
+@[expose] public section
+
+namespace MultiplicativeInnerProducts
+section
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
+open scoped TensorProduct InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3
+
+namespace CompanionTheory.Member.InnerProductScaling
+
+theorem isMultiplicityInner_smul_measure {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (μ : Measure (GA D V))
+    (𝓕 : Set (GA D V)) (T T' : MMap M) (c : ℝ) (hc : 0 ≤ c) (a : ℂ) (h : IsMultIP M μ 𝓕 T T' a) :
+    IsMultIP M (ENNReal.ofReal c • μ) 𝓕 T T' ((c : ℂ) * a) := by
+  intro v v'
+  obtain ⟨h1, h2⟩ := h v v'
+  refine ⟨?_, ?_⟩
+  · unfold IntegrableOn at h1 ⊢
+    rw [Measure.restrict_smul]
+    exact h1.smul_measure ENNReal.ofReal_ne_top
+  · rw [Measure.restrict_smul, integral_smul_measure, h2, ENNReal.toReal_ofReal hc, Complex.real_smul, mul_assoc]
+
+theorem ipM_smul {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (μ : Measure (GA D V))
+    (𝓕 : Set (GA D V)) (T T' : MMap M) (c : ℝ) (hc : 0 ≤ c) (a : ℂ) (h : IsMultIP M μ 𝓕 T T' a) :
+    ipM M (ENNReal.ofReal c • μ) 𝓕 T T' = (c : ℂ) * a := by
+  obtain ⟨v, hv⟩ := GlobalTheory.SchurConst.exists_vec M (GlobalTheory.GardingVec.sm_ne_bot D V S M)
+  have h' := isMultiplicityInner_smul_measure M μ 𝓕 T T' c hc a h
+  exact hasPeterssonInner_unique M _ 𝓕 T T' v hv (ipM_spec M _ 𝓕 T T' ⟨_, h'⟩) h'
+
+theorem main {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (μ : Measure (GA D V))
+    (𝓕 : Set (GA D V)) (H : HMod (MMap M)) (W W0 : Submodule ℂ (MMap M)) (hW : W ≤ W0)
+    (hH : H.Is W0 (ipM M μ 𝓕)) (n : ℝ) (hn : 0 < n)
+    {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE]
+    (j : EE ≃ₗ[ℂ] (W.map (PiTensorProduct.lift : MMap M ≃ₗ[ℂ] AmbT M).toLinearMap))
+    (hj : HilbTie (W.map (PiTensorProduct.lift : MMap M ≃ₗ[ℂ] AmbT M).toLinearMap)
+      (ipMT M (ENNReal.ofReal n⁻¹ • μ) 𝓕) j) :
+    ∃ eE : EE →ₗ[ℂ] H.H, LinearMap.range eE = W.comap H.e ∧ (∀ x, ‖eE x‖ ^ 2 = n * ‖x‖ ^ 2) ∧
+      ∀ x, ((j x : W.map (PiTensorProduct.lift : MMap M ≃ₗ[ℂ] AmbT M).toLinearMap) : AmbT M) =
+        PiTensorProduct.lift (H.e (eE x)) := by
+  let L : MMap M ≃ₗ[ℂ] AmbT M := PiTensorProduct.lift
+  let f : EE →ₗ[ℂ] MMap M := L.symm.toLinearMap ∘ₗ (W.map L.toLinearMap).subtype ∘ₗ j.toLinearMap
+  have hf : ∀ x, f x = L.symm (j x : AmbT M) := fun _ => rfl
+  have hfW : ∀ x, f x ∈ W := fun x => by
+    obtain ⟨y, hy, e⟩ := (j x).2
+    have e' : L y = (j x : AmbT M) := e
+    rw [hf, ← e', L.symm_apply_apply]
+    exact hy
+  obtain ⟨g, hg⟩ := GlobalTheory.Mem.Th.exists_factor H.e hH.1 f fun x => by
+    rw [hH.2.1]; exact hW (hfW x)
+  refine ⟨g, ?_, fun x => ?_, fun x => ?_⟩
+  · ext u
+    constructor
+    · rintro ⟨x, rfl⟩
+      show H.e (g x) ∈ W
+      rw [hg]; exact hfW x
+    · intro hu
+      refine ⟨j.symm ⟨L (H.e u), Submodule.mem_map_of_mem hu⟩, hH.1 ?_⟩
+      rw [hg, hf, j.apply_symm_apply]
+      exact L.symm_apply_apply _
+  · have h1 : IsMultIP M μ 𝓕 (H.e (g x)) (H.e (g x)) (1 * ⟪g x, g x⟫_ℂ) :=
+      GlobalTheory.Mem.Th.isMultiplicityInner_mul_inner H.e one_ne_zero (fun a b => by rw [one_mul]; exact (hH.2.2 a b).symm) _ _
+    have h2 := ipM_smul M μ 𝓕 _ _ n⁻¹ (inv_pos.2 hn).le _ h1
+    have h3 : ⟪x, x⟫_ℂ = ipM M (ENNReal.ofReal n⁻¹ • μ) 𝓕 (f x) (f x) := hj x x
+    rw [← hg, h2, one_mul, inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at h3
+    have h4 : ‖x‖ ^ 2 = n⁻¹ * ‖g x‖ ^ 2 := by
+      have h5 : ((‖x‖ ^ 2 : ℝ) : ℂ) = ((n⁻¹ * ‖g x‖ ^ 2 : ℝ) : ℂ) := by
+        rw [Complex.ofReal_mul, Complex.ofReal_pow, Complex.ofReal_pow]
+        exact h3
+      exact Complex.ofReal_injective h5
+    rw [h4, ← mul_assoc, mul_inv_cancel₀ hn.ne', one_mul]
+  · rw [hg, hf]
+    exact (L.apply_symm_apply _).symm
+
+end CompanionTheory.Member.InnerProductScaling
+
+theorem CompanionTheory.Member.levelRowsReading_hilbert_embedding_goodRows : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m) (hTop : TopMultH R) (b : Bool) (EE : Type) [NormedAddCommGroup EE] [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] (X : RowSide D EE) (I : RowIds X (toChainReal R F tupT hm hTop) b), R.models_HE → HilbTie ((toChainReal R F tupT hm hTop).EEc b) ((toChainReal R F tupT hm hTop).ipE b) I.jE → ∃ eE : EE →ₗ[ℂ] R.HE.H, LinearMap.range eE = (R.EEat (R.levR F b)).comap R.HE.e ∧ (∀ x, ‖eE x‖ ^ 2 = RealDat.nP F b * ‖x‖ ^ 2) ∧ ∀ x, ((I.jE x : (toChainReal R F tupT hm hTop).EEc b) : (toChainReal R F tupT hm hTop).Amb 0) = PiTensorProduct.lift (R.HE.e (eE x)) := by
+  intro D G _ _ Pl0 T A Ks _ _ _ R F tupT hm hTop b EE _ _ _ X I hE hj
+  exact CompanionTheory.Member.InnerProductScaling.main (R.MY 0) R.ν0 R.fd0 R.HE (R.EEat (R.levR F b)) (R.EEat R.triv)
+    (GlobalTheory.Mem.Th.EEat_le_triv R _) hE (RealDat.nP F b) (RealDat.nP_pos b) I.jE hj
+
+end
+
+end MultiplicativeInnerProducts
+section
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
+open scoped TensorProduct InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3
+theorem _root_.GlobalTheory.Adopt.levelRowsReading_embedding_goodRowsModel_with_norm : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m) (hTop : TopMultH R) (b : Bool) (EE : Type) [NormedAddCommGroup EE] [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] (X : RowSide D EE) (I : RowIds X (toChainReal R F tupT hm hTop) b), R.models_HE → HilbTie ((toChainReal R F tupT hm hTop).EEc b) ((toChainReal R F tupT hm hTop).ipE b) I.jE → ∃ eE : EE →ₗ[ℂ] R.HE.H, LinearMap.range eE = (R.EEat (R.levR F b)).comap R.HE.e ∧ (∀ x, ‖eE x‖ ^ 2 = RealDat.nP F b * ‖x‖ ^ 2) ∧ ∀ x, ((I.jE x : (toChainReal R F tupT hm hTop).EEc b) : (toChainReal R F tupT hm hTop).Amb 0) = PiTensorProduct.lift (R.HE.e (eE x)) := by
+  first | exact @MultiplicativeInnerProducts.CompanionTheory.Member.levelRowsReading_hilbert_embedding_goodRows | exact MultiplicativeInnerProducts.CompanionTheory.Member.levelRowsReading_hilbert_embedding_goodRows | (intros; apply MultiplicativeInnerProducts.CompanionTheory.Member.levelRowsReading_hilbert_embedding_goodRows <;> assumption)
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConclOfDownIntertwines
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField
+open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.DivisionValues
+open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult
+open scoped TensorProduct InnerProductSpace
+
+namespace GlobalTheory.KappaLevels
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+section Abstract
+
+variable {E H : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E]
+  [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H]
+
+
+omit [FiniteDimensional ℂ E] [FiniteDimensional ℂ H] in
+theorem inner_of_normSq (u : E →ₗ[ℂ] H) (n : ℝ) (h : ∀ x, ‖u x‖ ^ 2 = n * ‖x‖ ^ 2) (x y : E) :
+    ⟪u x, u y⟫_ℂ = (n : ℂ) * ⟪x, y⟫_ℂ := by
+  have h' : ∀ z, ((‖u z‖ : ℝ) : ℂ) ^ 2 = (n : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2 := fun z => by exact_mod_cast h z
+  have e1 := inner_eq_sum_norm_sq_div_four (𝕜 := ℂ) (u x) (u y)
+  have e2 := inner_eq_sum_norm_sq_div_four (𝕜 := ℂ) x y
+  rw [← map_smul, ← map_add (f := _), ← map_add (f := _), ← map_sub, ← map_sub] at e1
+  rw [e1, e2]
+  have h1 := h' (x + y)
+  have h2 := h' (x - y)
+  have h3 := h' (x - (RCLike.I : ℂ) • y)
+  have h4 := h' (x + (RCLike.I : ℂ) • y)
+  simp only [Complex.coe_algebraMap]
+  rw [h1, h2, h3, h4]
+  ring
+
+theorem iota_adjoint_transport {E' H' : Type} [NormedAddCommGroup E'] [InnerProductSpace ℂ E'] [FiniteDimensional ℂ E']
+    [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] [FiniteDimensional ℂ H'] (Θ : E →ₗ[ℂ] H) (ι : E' →ₗ[ℂ] H')
+    (V : Submodule ℂ E') (uA : E' →ₗ[ℂ] E) (uE : H' →ₗ[ℂ] H) {n : ℝ} (hn : 0 < n) (nA : ∀ x, ‖uA x‖ ^ 2 = n * ‖x‖ ^ 2)
+    (nE : ∀ x, ‖uE x‖ ^ 2 = n * ‖x‖ ^ 2) (hι : ∀ x ∈ V, uE (ι x) = Θ (uA x)) (y : H')
+    (hy : LinearMap.adjoint Θ (uE y) ∈ V.map uA) {a : ℂ} (ha : Θ (LinearMap.adjoint Θ (uE y)) = a • uE y) :
+    (ι.domRestrict (V ⊓ (V ⊓ LinearMap.ker ι)ᗮ) ∘ₗ LinearMap.adjoint (ι.domRestrict (V ⊓ (V ⊓ LinearMap.ker ι)ᗮ))) y = a • y := by
+  have hne : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  obtain ⟨z, hz, hzw⟩ := hy
+  have key : ∀ u ∈ V, ⟪u, z⟫_ℂ = ⟪ι u, y⟫_ℂ := fun u hu => by
+    apply mul_left_cancel₀ hne
+    rw [← inner_of_normSq uA _ nA, ← inner_of_normSq uE _ nE, hzw, hι u hu, LinearMap.adjoint_inner_right]
+  have hQ : z ∈ V ⊓ (V ⊓ LinearMap.ker ι)ᗮ := by
+    refine ⟨hz, (Submodule.mem_orthogonal _ _).2 fun u hu => ?_⟩
+    rw [key u hu.1, LinearMap.mem_ker.1 hu.2, inner_zero_left]
+  have hb : LinearMap.adjoint (ι.domRestrict (V ⊓ (V ⊓ LinearMap.ker ι)ᗮ)) y = ⟨z, hQ⟩ := by
+    refine ext_inner_left ℂ fun u => ?_
+    rw [LinearMap.adjoint_inner_right, Submodule.coe_inner]
+    exact (key u u.2.1).symm
+  have hinj : Function.Injective uE := (injective_iff_map_eq_zero uE).2 fun y hy => by
+    have := nE y
+    rw [hy, norm_zero, zero_pow two_ne_zero] at this
+    exact norm_eq_zero.1 (pow_eq_zero_iff two_ne_zero |>.1 ((mul_eq_zero.1 this.symm).resolve_left hn.ne'))
+  apply hinj
+  rw [LinearMap.comp_apply, hb, map_smul, ← ha, ← hzw]
+  exact hι z hz
+
+end Abstract
+
+variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
+  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A)
+
+variable {R F}
+
+end GlobalTheory.KappaLevels
+
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IotaProjectionAdjointBasisRowEigenvalue
+
+section
+
+@[expose] public section
+
+open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
+open scoped TensorProduct InnerProductSpace
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3
+
+noncomputable section
+namespace GlobalTheory.KapRec.Eigen
+
+theorem exists_scaled_ext {K : Type} [Field K] (σ : K →+* ℂ) {n : ℕ} {W H : Type} [NormedAddCommGroup W] [InnerProductSpace ℂ W]
+    [NormedAddCommGroup H] [InnerProductSpace ℂ H] (j : (Fin n → K) →ₛₗ[σ] W) (hli : LinearIndependent ℂ fun i => j (Pi.single i 1))
+    (hsp : Submodule.span ℂ (Set.range fun i => j (Pi.single i 1)) = ⊤) (k : (Fin n → K) →ₛₗ[σ] H) {c : ℝ}
+    (hc : ∀ x y, ⟪k x, k y⟫_ℂ = (c : ℂ) * ⟪j x, j y⟫_ℂ) :
+    ∃ u : W →ₗ[ℂ] H, (∀ w, ‖u w‖ ^ 2 = c * ‖w‖ ^ 2) ∧ ∀ x, u (j x) = k x := by
+  let b : Module.Basis (Fin n) ℂ W := Module.Basis.mk hli (le_of_eq hsp.symm)
+  let u := b.constr ℂ (fun i => k (Pi.single i 1))
+  have hb : ∀ i, b i = j (Pi.single i 1) := fun i => Module.Basis.mk_apply _ _ _
+  have hu : ∀ i, u (b i) = k (Pi.single i 1) := fun i => Module.Basis.constr_basis _ _ _ _
+  have hdec : ∀ x : Fin n → K, x = ∑ i, x i • Pi.single i 1 := fun x => by
+    ext l
+    simp [Finset.sum_apply, Pi.single_apply]
+  have hj : ∀ x, j x = ∑ i, σ (x i) • b i := fun x => by
+    conv_lhs => rw [hdec x]
+
+    rw [map_sum]
+    exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, hb]
+  have hk : ∀ x, k x = ∑ i, σ (x i) • k (Pi.single i 1) := fun x => by
+    conv_lhs => rw [hdec x]
+
+    rw [map_sum]
+    exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ]
+  have hA : ∀ x, u (j x) = k x := fun x => by
+
+    rw [hj, map_sum, hk]
+    exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hu]
+  have hbas : ∀ i l, ⟪u (b i), u (b l)⟫_ℂ = (c : ℂ) * ⟪b i, b l⟫_ℂ := fun i l => by
+    rw [hu, hu, hb, hb, hc]
+  have key : ∀ z w, ⟪u z, u w⟫_ℂ = (c : ℂ) * ⟪z, w⟫_ℂ := fun z w => by
+    rw [← b.sum_repr z, ← b.sum_repr w]
+
+    simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right, hbas, Finset.mul_sum]
+    exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => by ring
+  refine ⟨u, fun w => ?_, hA⟩
+  have h := key w w
+  rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at h
+  exact Complex.ofReal_injective (by push_cast; exact h)
+
+
+
+theorem topMap_exists : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0), Pins R F cG → Holds R F → ∃ uA : D.what₂.Amb (Y.tup A3.A.μ0) →ₗ[ℂ] (R.HX A3.A.μ0).H, (∀ x, ‖uA x‖ ^ 2 = RealDat.nP F.lv2 true * ‖x‖ ^ 2) ∧ ∀ x, uA (Y.jA A3.A.μ0 x) = R.jX A3.A.μ0 (rowForm A3.A F.P1 F.ψ1 A3.A.μ0 x) := by
+  intro D G _ _ Pl0 I0 T A3 Ks _ _ _ R F cG X0 Y hP hH
+  have hFT := Y.formsA A3.A.μ0
+  have hpos : (0 : ℝ) < RealDat.nP F.lv2 true := by
+    unfold RealDat.nP
+    exact_mod_cast Nat.card_pos
+  let rf : (Fin (rDim D A3.A F.P1 F.ψ1 A3.A.μ0) → D.what₂.LL) →ₗ[D.what₂.LL] A3.A.fam.amb.FR A3.A.μ0 :=
+    { toFun := rowForm A3.A F.P1 F.ψ1 A3.A.μ0
+      map_add' := DatApi.rowForm_add A3.A F.P1 F.ψ1 A3.A.μ0
+      map_smul' := DatApi.rowForm_smul A3.A F.P1 F.ψ1 A3.A.μ0 }
+  refine exists_scaled_ext D.what₂.embLL (Y.jA A3.A.μ0) hFT.li hFT.span ((R.jX A3.A.μ0).comp rf) fun x y => ?_
+  have h1 : (((RealDat.nP F.lv2 true)⁻¹ : ℝ) : ℂ) * ⟪R.jX A3.A.μ0 (rowForm A3.A F.P1 F.ψ1 A3.A.μ0 x), R.jX A3.A.μ0 (rowForm A3.A F.P1 F.ψ1 A3.A.μ0 y)⟫_ℂ = D.what₂.embLL (Formalism.DivisionValues.hform (rH D A3.A F.P1 F.ψ1 A3.A.μ0) x y) :=
+    GlobalTheory.T.hilbert_inner_rowForms_eq_level_class_sum D G Pl0 T A3.A Ks R.toRealDat F.lv2 hP.char.base true A3.A.μ0 x y
+  have alg : ∀ a : ℂ, a = ((RealDat.nP F.lv2 true : ℝ) : ℂ) * ((((RealDat.nP F.lv2 true)⁻¹ : ℝ) : ℂ) * a) := fun a => by
+    rw [← mul_assoc, ← Complex.ofReal_mul, mul_inv_cancel₀ hpos.ne', Complex.ofReal_one, one_mul]
+  rw [hFT.inner x y]
+  refine Eq.trans ?_ (congrArg (fun z => ((RealDat.nP F.lv2 true : ℝ) : ℂ) * z) h1)
+  exact alg ⟪R.jX A3.A.μ0 (rowForm A3.A F.P1 F.ψ1 A3.A.μ0 x), R.jX A3.A.μ0 (rowForm A3.A F.P1 F.ψ1 A3.A.μ0 y)⟫_ℂ
+
+theorem iiStar_apply_eq {D : D7} {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE]
+    (S : RowSide D EE) (μ : D.what₂.Tup) (y : EE) :
+    (S.iotaQ μ ∘ₗ LinearMap.adjoint (S.iotaQ μ)) y = S.iota μ (S.eOp μ (LinearMap.adjoint (S.iota μ) y)) := by
+  set w := LinearMap.adjoint (S.iotaQ μ) y with hw
+  set z := LinearMap.adjoint (S.iota μ) y with hz
+  have hQ : ∀ q : S.Qsp μ, ⟪(q : S.Amb μ), (w : S.Amb μ)⟫_ℂ = ⟪(q : S.Amb μ), z⟫_ℂ := by
+    intro q
+    rw [← Submodule.coe_inner, hw, hz, LinearMap.adjoint_inner_right, LinearMap.adjoint_inner_right]
+    rfl
+  have heV : ∀ x ∈ S.V0 μ, S.eOp μ x = x := by
+    rintro _ ⟨a, rfl⟩
+    exact congrArg (fun f : S.Amb μ →ₗ[ℂ] S.Amb μ => f a) (S.eOp_idem μ)
+  set d := S.eOp μ z - (w : S.Amb μ) with hd
+  have hdV : d ∈ S.V0 μ := sub_mem (LinearMap.mem_range_self _ _) w.2.1
+  have hdQ : ∀ q : S.Qsp μ, ⟪(q : S.Amb μ), d⟫_ℂ = 0 := by
+    intro q
+    rw [hd, inner_sub_right, hQ, ← S.eOp_sa μ, heV _ q.2.1, sub_self]
+  have hdU : d ∈ S.Usp μ := by
+    set r := d - (S.Usp μ).starProjection d with hr0
+    have hUV : S.Usp μ ≤ S.V0 μ := inf_le_left
+    have hr : r ∈ S.Qsp μ :=
+      ⟨sub_mem hdV (hUV (Submodule.starProjection_apply_mem _ _)), Submodule.sub_starProjection_mem_orthogonal d⟩
+    have h1 : ⟪r, d⟫_ℂ = 0 := hdQ ⟨r, hr⟩
+    have h2 : ⟪r, (S.Usp μ).starProjection d⟫_ℂ = 0 :=
+      Submodule.inner_left_of_mem_orthogonal (Submodule.starProjection_apply_mem _ _) hr.2
+    have h3 : ⟪r, r⟫_ℂ = 0 := by
+      conv_lhs => rw [hr0]
+      rw [inner_sub_right, ← hr0, h1, h2, sub_zero]
+    have h4 : r = 0 := inner_self_eq_zero.1 h3
+    rw [hr0, sub_eq_zero] at h4
+    rw [h4]
+    exact Submodule.starProjection_apply_mem _ _
+  have hk : S.iota μ d = 0 := hdU.2
+  rw [hd, map_sub, sub_eq_zero] at hk
+  exact hk.symm
+
+theorem transport_eig {D : D7} {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE]
+    (S : RowSide D EE) {E H : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E]
+    [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H] (Θ : E →ₗ[ℂ] H) {μ μ' : D.what₂.Tup}
+    (hμ : μ = μ') (uA : S.Amb μ →ₗ[ℂ] E) (uE : EE →ₗ[ℂ] H) {n : ℝ} (hn : 0 < n) (nA : ∀ x, ‖uA x‖ ^ 2 = n * ‖x‖ ^ 2)
+    (nE : ∀ y, ‖uE y‖ ^ 2 = n * ‖y‖ ^ 2) (hι : ∀ x, uE (S.iota μ x) = Θ (uA x)) (y : EE)
+    (hy : LinearMap.adjoint Θ (uE y) ∈ (S.V0 μ).map uA) {a : ℂ} (ha : Θ (LinearMap.adjoint Θ (uE y)) = a • uE y) :
+    S.iota μ' (S.eOp μ' (LinearMap.adjoint (S.iota μ') y)) = a • y := by
+  subst hμ
+  rw [← iiStar_apply_eq]
+  exact GlobalTheory.KappaLevels.iota_adjoint_transport Θ (S.iota μ) (S.V0 μ) uA uE hn nA nE (fun x _ => hι x) y hy ha
+
+
+
+theorem eigen : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧ GlobalTheory.Published.CuspRapidDecay) → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) (Z : ReadL R F X0 Y), Pins R F cG → Holds R F → Lam3 Z → (∀ σ (i : Fin D.R.m), D.what₂.isot ((i : ℕ) + 1) (D.what₂.ft σ) ≠ ⊥) → ∀ σ, (RowSide.sharp D).iota D.what₂.mu0 ((RowSide.sharp D).eOp D.what₂.mu0 (LinearMap.adjoint ((RowSide.sharp D).iota D.what₂.mu0) (D.what₂.onb σ))) = ((R.kap * ∏ j ∈ Finset.Icc 1 D.R.m, D.what₂.lamP D.what₂.mu0 j (D.what₂.ft σ) : ℝ) : ℂ) • D.what₂.onb σ := by
+  intro hCRD D G _ _ Pl0 I0 T A3 Ks _ _ _ R F cG X0 Y Z hP hH hL hI σ
+  obtain ⟨uE, -, nE, hE⟩ := GlobalTheory.Adopt.levelRowsReading_embedding_goodRowsModel_with_norm D G Pl0 T A3.A Ks R.toRealDat F.lv2 Y.tupT Y.hm Y.hTop true D.what₂.EE
+    (RowSide.sharp D) Y.Ish hP.char.base.models.HE Y.tied.sharp.ee
+  obtain ⟨uA, nA, hA⟩ := topMap_exists D G Pl0 I0 T A3 Ks R F cG X0 Y hP hH
+  obtain ⟨p, hp, hl⟩ := GlobalTheory.T.basisRow_mem_definiteFamily_type_part hCRD D G Pl0 I0 T A3 Ks R F cG X0 Y Z hP hH hL hI uE hE σ
+  have hup := GlobalTheory.T.adjoint_compositeLift_row_mem_span_goodRationalForms hCRD.2.2.2.2 D G Pl0 I0 T A3 Ks R F cG X0 Y hP hH uE hE (D.what₂.onb σ)
+  have hdt := (GlobalTheory.T.compositeIntertwiner_eq_thetaLift_goodProjector hCRD D G Pl0 I0 T A3 Ks R F cG X0 Y hP hH).1 A3.A.μ0
+  have ha : R.Th A3.A.μ0 (LinearMap.adjoint (R.Th A3.A.μ0) (uE (D.what₂.onb σ))) =
+      ((R.kap * ∏ j ∈ Finset.Icc 1 D.R.m, D.what₂.lamP D.what₂.mu0 j (D.what₂.ft σ) : ℝ) : ℂ) • uE (D.what₂.onb σ) := by
+    refine (hH.prim.thmB A3.A.μ0 p (uE (D.what₂.onb σ)) hp).trans ?_
+    rw [hl]
+  have hpos : (0 : ℝ) < RealDat.nP F.lv2 true := by
+    unfold RealDat.nP
+    exact_mod_cast Nat.card_pos
+  have hFT := Y.formsA A3.A.μ0
+  have hι : ∀ a, uE ((RowSide.sharp D).iota (Y.tup A3.A.μ0) a) = R.Th A3.A.μ0 (uA a) := by
+    have key : uE ∘ₗ (RowSide.sharp D).iota (Y.tup A3.A.μ0) = R.Th A3.A.μ0 ∘ₗ uA := by
+      refine LinearMap.ext_on_range hFT.span fun i => ?_
+      show uE ((RowSide.sharp D).iota (Y.tup A3.A.μ0) (Y.jA A3.A.μ0 (Pi.single i 1))) =
+        R.Th A3.A.μ0 (uA (Y.jA A3.A.μ0 (Pi.single i 1)))
+      rw [← GlobalTheory.Mem.R3.DTheta.iota_sharp, hA]
+      have h1 := hdt (Pi.single i 1)
+      rw [hE] at h1
+      exact hP.char.base.models.HE.1 (PiTensorProduct.lift.injective h1)
+    exact fun a => LinearMap.congr_fun key a
+  have hy : LinearMap.adjoint (R.Th A3.A.μ0) (uE (D.what₂.onb σ)) ∈
+      ((RowSide.sharp D).V0 (Y.tup A3.A.μ0)).map uA := by
+    refine (Submodule.span_le.2 ?_) hup
+    rintro _ ⟨x, rfl⟩
+    exact ⟨Y.jA A3.A.μ0 ((rE D A3.A F.P1 F.ψ1 A3.A.μ0).mulVec x), ⟨Y.jA A3.A.μ0 x, hFT.op_eq x⟩, hA _⟩
+  exact transport_eig (RowSide.sharp D) (R.Th A3.A.μ0) Y.tup0 uA uE hpos nA nE hι (D.what₂.onb σ) hy ha
+
+end GlobalTheory.KapRec.Eigen
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IotaProjectionAdjointBasisRowEigenvalueStatement
+
+section
 
 @[expose] public section
 
@@ -52,3 +446,5 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 
 theorem _root_.GlobalTheory.T.iotaProjectionAdjoint_basisRow_eigenvalue : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧ GlobalTheory.Published.CuspRapidDecay) → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) (Z : ReadL R F X0 Y), Pins R F cG → Holds R F → Lam3 Z → (∀ σ (i : Fin D.R.m), D.what₂.isot ((i : ℕ) + 1) (D.what₂.ft σ) ≠ ⊥) → ∀ σ, (RowSide.sharp D).iota D.what₂.mu0 ((RowSide.sharp D).eOp D.what₂.mu0 (LinearMap.adjoint ((RowSide.sharp D).iota D.what₂.mu0) (D.what₂.onb σ))) = ((R.kap * ∏ j ∈ Finset.Icc 1 D.R.m, D.what₂.lamP D.what₂.mu0 j (D.what₂.ft σ) : ℝ) : ℂ) • D.what₂.onb σ := by
   first | exact @GlobalTheory.KapRec.Eigen.eigen | exact GlobalTheory.KapRec.Eigen.eigen | (intros; apply GlobalTheory.KapRec.Eigen.eigen <;> assumption)
+end
+end

@@ -1,7 +1,9 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.Inertia
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocConstOfKer
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.LocallyConstant.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,9 +23,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -43,9 +42,39 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocConstOfKer
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.LocallyConstantOfKernelCapelliIdentities.locConst_of_ker :
+    ∀ {G M : Type} [inst : Group G]
+    [inst_1 : TopologicalSpace G] [IsTopologicalGroup G] [inst_3 : Group M] (χ : G →* M),
+    IsOpen (↑χ.ker : Set G) → IsLocallyConstant (⇑χ : G → M) := by
+  intro G M _ _ _ _ χ h
+  rw [IsLocallyConstant.iff_exists_open]
+  intro x
+  refine ⟨(fun y => x⁻¹ * y) ⁻¹' (↑χ.ker : Set G),
+    h.preimage (continuous_const.mul continuous_id), ?_, ?_⟩
+  · simp [MonoidHom.mem_ker]
+  · intro y hy
+    have hy' : χ (x⁻¹ * y) = 1 := MonoidHom.mem_ker.mp hy
+    rw [map_mul, map_inv] at hy'
+    exact (inv_mul_eq_one.mp hy').symm
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.ResidualDiagonalDeterminantIsPolar
+
+section
 
 @[expose] public section
 
@@ -136,3 +165,5 @@ theorem UpperTheory.V.W.residual_diagonal_determinant_isPolar :
     simp only [GDet.tr, Resid.Dbar, GDet.lam, chi_ofRep, h4, sub_zero]
     have h5 : n - 1 ≠ n := by omega
     simp [Matrix.scalar_apply, coeff_X_pow, h5]
+end
+end

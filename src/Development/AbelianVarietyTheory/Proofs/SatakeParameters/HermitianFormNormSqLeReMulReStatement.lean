@@ -3,7 +3,6 @@ module
 public import Mathlib.Algebra.Algebra.Basic
 public import Mathlib.Algebra.Module.LinearMap.Star
 public import Mathlib.Analysis.Complex.Norm
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HermitianFormNormSqLeReMulRe
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -47,6 +47,52 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurable
 import Development.AbelianVarietyTheory.Definitions.Foundations.SmoothPartStable
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.LeviEmbMemNormalizerLower
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LeviRep
+public import Mathlib.Analysis.InnerProductSpace.Defs
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.HermitianFormNormSqLeReMulRe
+
+section
+
+@[expose] public section
+
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.GodementJacquet MeasureTheory
+
+namespace GlobalTheory
+
+theorem hermitianForm_norm_sq_le_re_mul_re :
+    ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (Bf : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ),
+    (∀ v w, Bf w v = starRingEnd ℂ (Bf v w)) → (∀ v, v ≠ 0 → 0 < (Bf v v).re) →
+    ∀ v w, ‖Bf v w‖ ^ 2 ≤ (Bf v v).re * (Bf w w).re := by
+  intro V _ _ Bf hsymm hpos v w
+  let c : PreInnerProductSpace.Core ℂ V :=
+    { inner := fun x y => Bf y x
+      conj_inner_symm := fun x y => by
+        show starRingEnd ℂ (Bf x y) = Bf y x
+        rw [hsymm x y]
+      re_inner_nonneg := fun x => by
+        show 0 ≤ RCLike.re (Bf x x)
+        by_cases hx : x = 0
+        · subst hx; simp
+        · exact (hpos x hx).le
+      add_left := fun x y z => by
+        show Bf z (x + y) = Bf z x + Bf z y
+        exact map_add _ _ _
+      smul_left := fun x y r => by
+        show Bf y (r • x) = starRingEnd ℂ r * Bf y x
+        rw [LinearMap.map_smulₛₗ, smul_eq_mul] }
+  have h := @InnerProductSpace.Core.inner_mul_inner_self_le ℂ V _ _ _ c v w
+  change ‖Bf w v‖ * ‖Bf v w‖ ≤ RCLike.re (Bf v v) * RCLike.re (Bf w w) at h
+  rw [hsymm v w, RCLike.norm_conj] at h
+  rw [sq]
+  exact h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.HermitianFormNormSqLeReMulReStatement
+
+section
 
 @[expose] public section
 
@@ -56,3 +102,5 @@ theorem _root_.GlobalTheory.T.hermitian_norm_sq_le_re_mul_re_of_posDef : ∀ (V 
     (∀ v w, Bf w v = starRingEnd ℂ (Bf v w)) → (∀ v, v ≠ 0 → 0 < (Bf v v).re) →
     ∀ v w, ‖Bf v w‖ ^ 2 ≤ (Bf v v).re * (Bf w w).re := by
   first | exact @GlobalTheory.hermitianForm_norm_sq_le_re_mul_re | exact GlobalTheory.hermitianForm_norm_sq_le_re_mul_re | (intros; apply GlobalTheory.hermitianForm_norm_sq_le_re_mul_re <;> assumption)
+end
+end

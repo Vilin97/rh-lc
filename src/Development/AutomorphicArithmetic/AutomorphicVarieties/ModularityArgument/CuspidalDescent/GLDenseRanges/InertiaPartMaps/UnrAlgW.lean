@@ -3,14 +3,7 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.CuspidalDescent.GLDenseRanges.MuRange
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.CmpPrime
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.DerZero
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.FactEx
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.IntMod
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.LeJoint
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.LyOver
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.MinPol
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.MuLe
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.PrimEx
-import Mathlib.Algebra.AffineMonoid.UniqueSums
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.CmpPrime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,15 +22,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,8 +31,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -59,10 +43,108 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.IntMod
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.LeJoint
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.LyOver
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.MinPol
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+public import Mathlib.LinearAlgebra.Eigenspace.Zero
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.PrimEx
+import Mathlib.Algebra.AffineMonoid.UniqueSums
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.FactEx
+
+section
+
+@[expose] public section
+
+open Polynomial UniqueFactorizationMonoid in
+theorem UpperTheory.V.J.factEx :
+    UpperTheory.V.J.FactEx := by
+  intro Λ _ _ _ χ hχ
+  classical
+  have hinjK : Function.Injective (algebraMap Λ (FractionRing Λ)) :=
+    IsFractionRing.injective Λ (FractionRing Λ)
+  have hinj : Function.Injective (Polynomial.map (algebraMap Λ (FractionRing Λ))) :=
+    Polynomial.map_injective _ hinjK
+  set P := χ.map (algebraMap Λ (FractionRing Λ)) with hPdef
+  have hP : P ≠ 0 := (hχ.map _).ne_zero
+  have hmon : ∀ f ∈ normalizedFactors P, f.Monic := by
+    intro f hf
+    rw [← normalize_normalized_factor f hf]
+    exact Polynomial.monic_normalize (prime_of_normalized_factor f hf).ne_zero
+  have hlift : ∀ f ∈ normalizedFactors P,
+      ∃ g : Λ[X], g.Monic ∧ g.map (algebraMap Λ (FractionRing Λ)) = f := by
+    intro f hf
+    obtain ⟨g, hg⟩ := IsIntegrallyClosed.eq_map_mul_C_of_dvd (FractionRing Λ) hχ
+      (dvd_of_mem_normalizedFactors hf)
+    rw [(hmon f hf).leadingCoeff, C_1, mul_one] at hg
+    refine ⟨g, Polynomial.monic_of_injective hinjK ?_, hg⟩
+    rw [hg]
+    exact hmon f hf
+  choose! L hLm hLmap using hlift
+  have hprod : χ = ((normalizedFactors P).map L).prod := by
+    apply hinj
+    rw [Polynomial.map_multiset_prod, Multiset.map_map]
+    have h1 : (normalizedFactors P).map
+        ((Polynomial.map (algebraMap Λ (FractionRing Λ))) ∘ L) = normalizedFactors P := by
+      conv_rhs => rw [← Multiset.map_id (normalizedFactors P)]
+      exact Multiset.map_congr rfl (fun f hf => hLmap f hf)
+    rw [h1]
+    refine eq_of_monic_of_associated (hχ.map _) ?_ (prod_normalizedFactors hP).symm
+    exact Multiset.prod_induction _ _ (fun a b ha hb => ha.mul hb) monic_one hmon
+  have memG : ∀ x ∈ (normalizedFactors P).map L,
+      x.Monic ∧ Irreducible (x.map (algebraMap Λ (FractionRing Λ))) := by
+    intro x hx
+    obtain ⟨f, hf, rfl⟩ := Multiset.mem_map.1 hx
+    exact ⟨hLm f hf, by rw [hLmap f hf]; exact irreducible_of_normalized_factor f hf⟩
+  let e := ((normalizedFactors P).map L).toFinset.equivFin
+  refine ⟨_, fun i => (e.symm i).1, fun i => ((normalizedFactors P).map L).count (e.symm i).1,
+    ⟨fun i => (memG _ (Multiset.mem_toFinset.1 (e.symm i).2)).1,
+     fun i => (memG _ (Multiset.mem_toFinset.1 (e.symm i).2)).2,
+     fun i j h => e.symm.injective (Subtype.ext h),
+     fun i => Multiset.count_pos.2 (Multiset.mem_toFinset.1 (e.symm i).2), ?_⟩⟩
+  refine hprod.trans ?_
+  rw [Finset.prod_multiset_count, ← Finset.prod_coe_sort]
+  exact Fintype.prod_equiv e _ _ (fun x => by simp)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.MuLe
+
+section
+
+@[expose] public section
+
+open Polynomial TensorProduct
+
+theorem UpperTheory.V.J.muLe :
+    UpperTheory.V.J.MuLe := by
+  intro O Λ B K _ _ _ _ _ _ _ _ lam M _ _ _ _ _ hs y t
+  unfold UpperTheory.V.J.mu
+  refine (Submodule.finrank_mono (iInf_le _ t)).trans ?_
+  rw [LinearMap.finrank_maxGenEigenspace_eq, LinearMap.charpoly_baseChange]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.CuspidalDescent.GLDenseRanges.InertiaPartMaps.UnrAlgW
+
+section
 
 @[expose] public section
 
@@ -260,4 +342,6 @@ theorem UpperTheory.V.Z.Desc.V0.unrAlgW :
   exact UpperTheory.V.J.derZero O Λ B K lam J t s g hC x i (UpperTheory.V.J.comp_bound lam J t g hC x hS i hi) hprod1
     δ hδ hδJ hδl
 
+end
+end
 end

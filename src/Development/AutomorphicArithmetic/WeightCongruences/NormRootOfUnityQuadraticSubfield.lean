@@ -1,12 +1,10 @@
 module
 
 public import Mathlib.NumberTheory.NumberField.Basic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ReprMem
-import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Rat
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -23,13 +21,10 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.PicardGroup
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -37,7 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,14 +44,67 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+import Mathlib.Geometry.Manifold.StructureGroupoid
+import Mathlib.Algebra.Module.StablyFree.Basic
+import Mathlib.Algebra.Order.Star.Rat
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.RingTheory.Norm.Basic
 public import Mathlib.RingTheory.Norm.Transitivity
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ReprMem
+
+section
+
+@[expose] public section
+
+open scoped IntermediateField TensorProduct Matrix Pointwise NumberField Topology ContDiff NNReal ENNReal Polynomial DirectSum BigOperators InnerProductSpace Manifold
+
+theorem UpperTheory.Reformulated.B.ReprMem.repr_mem :
+    ∀ {F E : Type} [inst : Field F] [inst_1 : Field E]
+    [inst_2 : Algebra F E] (t : E) (c : F),
+    t ^ (2 : ℕ) = (Algebra.algebraMap F E : F → E) c →
+      ∀ x ∈ F⟮t⟯, ∃ (a : F) (b : F), x = (Algebra.algebraMap F E : F → E) a + (Algebra.algebraMap F E : F → E) b * t := by
+  intro F E _ _ _ t c h x hx
+  have hint : IsIntegral F t := by
+    apply IsIntegral.of_pow (n := 2) (by norm_num)
+    rw [h]
+    exact isIntegral_algebraMap
+  have hx' : x ∈ Algebra.adjoin F {t} := by
+    rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hint.isAlgebraic]
+    exact hx
+  clear hx
+  induction hx' using Algebra.adjoin_induction with
+  | mem y hy =>
+    rw [Set.mem_singleton_iff] at hy
+    exact ⟨0, 1, by simp [hy]⟩
+  | algebraMap r => exact ⟨r, 0, by simp⟩
+  | add y z _ _ hy hz =>
+    obtain ⟨a, b, rfl⟩ := hy
+    obtain ⟨a', b', rfl⟩ := hz
+    exact ⟨a + a', b + b', by rw [map_add (f := _), map_add (f := _)]; ring⟩
+  | mul y z _ _ hy hz =>
+    obtain ⟨a, b, rfl⟩ := hy
+    obtain ⟨a', b', rfl⟩ := hz
+    refine ⟨a * a' + b * b' * c, a * b' + b * a', ?_⟩
+    simp only [map_add (f := _), map_mul]
+    rw [← h]
+    ring
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.WeightCongruences.NormRootOfUnityQuadraticSubfield
+
+section
 
 @[expose] public section
 
@@ -279,3 +326,5 @@ theorem UpperTheory.norm_root_of_unity_quadratic_subfield :
   apply UpperTheory.RootOfUnityNormQuadraticSubfield.odd_root s d hd h3 hs _ o ho
   rw [← map_pow]
   exact UpperTheory.RootOfUnityNormQuadraticSubfield.two_pow_norm s d hd h3 hs h4 _ a (by rw [← pow_mul, mul_comm, hz])
+end
+end

@@ -1,13 +1,16 @@
 module
 
 public import Formalism.LocalRingCardinality.DataSpaces
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsPrimitiveVectorNormNegHyperbolicPair
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Basic
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsMemFractionalIdealPrimitiveLocalGeneratorA
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -40,6 +43,287 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LeMapComapOfLeConjMaximalCmData
+import Mathlib.Tactic.Linter.Style
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsMemFractionalIdealPrimitiveLocalGeneratorAStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem _root_.GlobalTheory.T.exists_mem_fractionalIdeal_primitive_local_generator' : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], Module.finrank F E = 2 → ∀ (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E), c ≠ 0 → ∀ N : 𝓞 E, N ≠ 0 → ∃ a : E, a ∈ c ∧ (∀ Q : Ideal (𝓞 E), Q.IsMaximal → N ∈ Q → a ∉ (Q : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c) ∧ ∀ p : Ideal (𝓞 F), p.IsMaximal → a ∉ ((Ideal.map (algebraMap (𝓞 F) (𝓞 E)) p : Ideal (𝓞 E)) : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c := by
+  first | exact @GlobalTheory.exists_mem_fractionalIdeal_primitive_local_generator | exact GlobalTheory.exists_mem_fractionalIdeal_primitive_local_generator | (intros; apply GlobalTheory.exists_mem_fractionalIdeal_primitive_local_generator <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.LeMapComapOfLeConjMaximalCmDataStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem _root_.GlobalTheory.T.le_map_comap_of_le_conj_maximal_cmData : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E], Formalism.BasicNotions.CMData F E → ∀ (P Q : Ideal (𝓞 E)), Q.IsMaximal → P ≤ Q → P ≤ Q.comap (RingOfIntegers.mapRingHom (starRingEnd E)) → P ≤ Ideal.map (algebraMap (𝓞 F) (𝓞 E)) (Q.comap (algebraMap (𝓞 F) (𝓞 E))) := by
+  first | exact @GlobalTheory.UnramifiedConj.le_map_comap_of_le_conj | exact GlobalTheory.UnramifiedConj.le_map_comap_of_le_conj | (intros; apply GlobalTheory.UnramifiedConj.le_map_comap_of_le_conj <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIdealCoprimeConjMulEqSpanSingleton
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+namespace GlobalTheory
+
+theorem exists_ideal_coprime_conj_mul_eq_spanSingleton :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E],
+      Formalism.BasicNotions.CMData F E → ∀ (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E), c ≠ 0 →
+      ∀ N : 𝓞 E, N ≠ 0 → ∃ P : Ideal (𝓞 E), P ≠ ⊥ ∧
+        P ⊔ P.comap (RingOfIntegers.mapRingHom (starRingEnd E)) = ⊤ ∧
+        (∃ t : 𝓞 E, ∃ p ∈ P, t * N + p = 1) ∧
+        ∃ α : E, (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c =
+          FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 E)) α := by
+  intro F E _ _ _ _ _ _ hcm c hc N hN
+  obtain ⟨a, hac, hQ, hp⟩ := GlobalTheory.T.exists_mem_fractionalIdeal_primitive_local_generator' F E hcm.deg2 c hc N hN
+
+  have ha : a ≠ 0 := by
+    rintro rfl
+    obtain ⟨p, hpm⟩ := Ideal.exists_maximal (𝓞 F)
+    exact hp p hpm (Submodule.zero_mem _)
+
+  have hle : FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 E)) a * c⁻¹ ≤ 1 := by
+    rw [← mul_inv_cancel₀ hc]
+    exact mul_le_mul' (FractionalIdeal.spanSingleton_le_iff_mem.mpr hac) le_rfl
+  obtain ⟨P, hP⟩ := FractionalIdeal.le_one_iff_exists_coeIdeal.mp hle
+  have hPc : (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c =
+      FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 E)) a := by
+    rw [hP, mul_assoc, inv_mul_cancel₀ hc, mul_one]
+
+  have key : ∀ Q : Ideal (𝓞 E), P ≤ Q → a ∈ (Q : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c := by
+    intro Q hPQ
+    rw [← FractionalIdeal.spanSingleton_le_iff_mem, ← hPc]
+    exact mul_le_mul' ((FractionalIdeal.coeIdeal_le_coeIdeal E).mpr hPQ) le_rfl
+  have hσσ : ∀ x : 𝓞 E, RingOfIntegers.mapRingHom (starRingEnd E)
+      (RingOfIntegers.mapRingHom (starRingEnd E) x) = x := by
+    intro x
+    ext
+    simp
+  refine ⟨P, ?_, ?_, ?_, a, hPc⟩
+  · rintro rfl
+    apply ha
+    rw [FractionalIdeal.coeIdeal_bot, zero_mul, eq_comm,
+      FractionalIdeal.spanSingleton_eq_zero_iff] at hPc
+    exact hPc
+  · by_contra htop
+    obtain ⟨Q, hQm, hPQ⟩ := Ideal.exists_le_maximal _ htop
+    have h1 : P ≤ Q := le_sup_left.trans hPQ
+    have h2 : P ≤ Q.comap (RingOfIntegers.mapRingHom (starRingEnd E)) := by
+      intro x hx
+      apply hPQ (Ideal.mem_sup_right _)
+      show RingOfIntegers.mapRingHom (starRingEnd E) (RingOfIntegers.mapRingHom (starRingEnd E) x) ∈ P
+      rw [hσσ]
+      exact hx
+    have h3 := GlobalTheory.T.le_map_comap_of_le_conj_maximal_cmData F E hcm P Q hQm h1 h2
+    have hpm : (Q.comap (algebraMap (𝓞 F) (𝓞 E))).IsMaximal :=
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) Q
+    exact hp _ hpm (key _ h3)
+  · have htop : P ⊔ Ideal.span {N} = ⊤ := by
+      by_contra htop
+      obtain ⟨Q, hQm, hPQ⟩ := Ideal.exists_le_maximal _ htop
+      exact hQ Q hQm (hPQ (Ideal.mem_sup_right (Ideal.mem_span_singleton_self N)))
+        (key Q (le_sup_left.trans hPQ))
+    have h1 : (1 : 𝓞 E) ∈ P ⊔ Ideal.span {N} := htop ▸ Submodule.mem_top
+    obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp h1
+    obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.mp hz
+    exact ⟨t, y, hy, by rw [add_comm]; exact hyz⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIdealCoprimeConjMulEqSpanSingletonStatement
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain
+
+theorem _root_.GlobalTheory.T.exists_ideal_coprime_conj_mul_eq_spanSingleton' : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E], Formalism.BasicNotions.CMData F E → ∀ (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E), c ≠ 0 → ∀ N : 𝓞 E, N ≠ 0 → ∃ P : Ideal (𝓞 E), P ≠ ⊥ ∧ P ⊔ P.comap (RingOfIntegers.mapRingHom (starRingEnd E)) = ⊤ ∧ (∃ t : 𝓞 E, ∃ p ∈ P, t * N + p = 1) ∧ ∃ α : E, (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c = FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 E)) α := by
+  first | exact @GlobalTheory.exists_ideal_coprime_conj_mul_eq_spanSingleton | exact GlobalTheory.exists_ideal_coprime_conj_mul_eq_spanSingleton | (intros; apply GlobalTheory.exists_ideal_coprime_conj_mul_eq_spanSingleton <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsPrimitiveVectorNormNegHyperbolicPair
+
+section
+
+@[expose] public section
+
+open NumberField IsDedekindDomain Formalism.BasicNotions
+
+namespace GlobalTheory.HypPrimVec
+
+section
+variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E}
+
+theorem hconj (x y : S.V) : star (S.hT x y) = S.hT y x :=
+  LinearMap.isSymm_def.mp S.herm x y
+
+theorem mem_dual_iff (Λ : Submodule (𝓞 E) S.V) (x : S.V) :
+    x ∈ Formalism.HermitianLatticesTheory.dual S.hT Λ ↔ ∀ y ∈ Λ, ∃ o : 𝓞 E, algebraMap (𝓞 E) E o = S.hT y x := by
+  simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
+    LinearMap.restrictScalars_apply, Submodule.mem_one]
+
+theorem mem_of_dual {Λ : Submodule (𝓞 E) S.V} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) {x : S.V}
+    (h : ∀ y ∈ Λ, ∃ o : 𝓞 E, algebraMap (𝓞 E) E o = S.hT y x) : x ∈ Λ := by
+  have hx : x ∈ Formalism.HermitianLatticesTheory.dual S.hT Λ := (mem_dual_iff Λ x).2 h
+  rwa [hU] at hx
+
+theorem pair_mem {Λ : Submodule (𝓞 E) S.V} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) {x y : S.V}
+    (hx : x ∈ Λ) (hy : y ∈ Λ) : ∃ o : 𝓞 E, algebraMap (𝓞 E) E o = S.hT y x := by
+  have hx' : x ∈ Formalism.HermitianLatticesTheory.dual S.hT Λ := by rw [hU]; exact hx
+  exact (mem_dual_iff Λ x).1 hx' y hy
+
+end
+
+theorem exists_primitive_norm_neg : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E], CMData F E → ∀ (S : HSpace E) (Λ : Submodule (𝓞 E) S.V), Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ → (∃ x : 𝓞 E, (x : E) + star (x : E) = 1) → ∀ (e f : S.V) (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E), c ≠ 0 → S.hT e e = 0 → S.hT f f = 0 → S.hT e f = 1 → (∀ x ∈ c, x • e ∈ Λ) → (∀ y ∈ Λ, S.hT f y ∈ c) → ∀ T : ℕ, T ≠ 0 → ∃ z : S.V, z ∈ Submodule.span E {e, f} ∧ z ∈ Λ ∧ S.hT z z = -((T : ℕ) : E) ∧ ∀ γ : E, γ • z ∈ Λ → ∃ o : 𝓞 E, (o : E) = γ := by
+  intro F E _ _ _ _ _ _ hcm S Λ hU hx e f c hc hee hff hef hce hfc T hT
+  obtain ⟨x, hx⟩ := hx
+
+  have hσ : ∀ r : 𝓞 E, ((RingOfIntegers.mapRingHom (starRingEnd E) r : 𝓞 E) : E) = star (r : E) :=
+    fun r => rfl
+  have hTne : (T : 𝓞 E) ≠ 0 := by
+    intro h
+    apply hT
+    have h' := congrArg (fun r : 𝓞 E => (r : E)) h
+    simpa using h'
+
+  obtain ⟨P, hP0, hPP, ⟨t, p0, hp0, htp⟩, α, hα⟩ := GlobalTheory.T.exists_ideal_coprime_conj_mul_eq_spanSingleton' F E hcm c hc (T : 𝓞 E) hTne
+  have htpE : (t : E) * (T : E) + (p0 : E) = 1 := by
+    have h' := congrArg (fun r : 𝓞 E => (r : E)) htp
+    simpa using h'
+
+  obtain ⟨p, hp, q, hq, hpq⟩ := Submodule.mem_sup.1
+    (show (1 : 𝓞 E) ∈ P ⊔ P.comap (RingOfIntegers.mapRingHom (starRingEnd E)) by
+      rw [hPP]; exact Submodule.mem_top)
+  have hq' : RingOfIntegers.mapRingHom (starRingEnd E) q ∈ P := Ideal.mem_comap.1 hq
+  have hpqE : (p : E) + (q : E) = 1 := by
+    have h' := congrArg (fun r : 𝓞 E => (r : E)) hpq
+    simpa using h'
+  set w : 𝓞 E := p * x + RingOfIntegers.mapRingHom (starRingEnd E) q *
+    RingOfIntegers.mapRingHom (starRingEnd E) x with hw
+  have hwP : w ∈ P := P.add_mem (P.mul_mem_right _ hp) (P.mul_mem_right _ hq')
+  have hwE : (w : E) + star (w : E) = 1 := by
+    have e1 : (w : E) = (p : E) * x + star (q : E) * star (x : E) := by
+      rw [hw]; push_cast; rfl
+    have hs : star (p : E) + star (q : E) = 1 := by rw [← star_add, hpqE, star_one]
+    rw [e1, star_add, star_mul', star_mul', star_star, star_star]
+    linear_combination (x : E) * hpqE + star (x : E) * hs + hx
+
+  have hPc : ∀ r ∈ P, ∀ s ∈ c, ∃ o : 𝓞 E, (o : E) * α = (r : E) * s := by
+    intro r hr s hs
+    have hm : (r : E) * s ∈ (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c :=
+      FractionalIdeal.mul_mem_mul ((FractionalIdeal.mem_coeIdeal _).2 ⟨r, hr, rfl⟩) hs
+    rw [hα, FractionalIdeal.mem_spanSingleton] at hm
+    obtain ⟨o, ho⟩ := hm
+    exact ⟨o, by rw [← ho, Algebra.smul_def]⟩
+  have hαc : α ∈ c := by
+    have h1 : α ∈ (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c := by
+      rw [hα]; exact FractionalIdeal.mem_spanSingleton_self _ _
+    have hle : (P : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) * c ≤ c :=
+      FractionalIdeal.mul_le.2 fun i hi j hj => by
+        obtain ⟨r, -, rfl⟩ := (FractionalIdeal.mem_coeIdeal _).1 hi
+        rw [← Algebra.smul_def]
+        exact (c : Submodule (𝓞 E) E).smul_mem r hj
+    exact hle h1
+  have hα0 : α ≠ 0 := by
+    obtain ⟨r, hr, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hP0
+    obtain ⟨s, hs, hs0⟩ : ∃ s ∈ c, s ≠ 0 := by
+      by_contra h
+      push_neg at h
+      apply hc
+      ext y
+      simp only [FractionalIdeal.mem_zero_iff]
+      exact ⟨h y, fun hy => hy ▸ (c : Submodule (𝓞 E) E).zero_mem⟩
+    obtain ⟨o, ho⟩ := hPc r hr s hs
+    intro h0
+    rw [h0, mul_zero] at ho
+    have hr0' : (r : E) ≠ 0 := by exact_mod_cast hr0
+    exact mul_ne_zero hr0' hs0 ho.symm
+  have hfe : S.hT f e = 1 := by rw [← hconj e f, hef, star_one]
+
+  set b : E := star (-(T : E) * (w : E) / α) with hb
+  have h1 : star α * b = -(T : E) * star (w : E) := by
+    rw [hb, ← star_mul', show α * (-(T : E) * (w : E) / α) = -(T : E) * w by field_simp,
+      star_mul', star_neg, star_natCast]
+  have h2 : star b * α = -(T : E) * (w : E) := by
+    rw [hb, star_star]; field_simp
+  refine ⟨α • e + b • f, ?_, ?_, ?_, ?_⟩
+  · exact Submodule.add_mem _ (Submodule.smul_mem _ _ (Submodule.subset_span (by simp)))
+      (Submodule.smul_mem _ _ (Submodule.subset_span (by simp)))
+  · refine Λ.add_mem (hce α hαc) (mem_of_dual hU fun y hy => ?_)
+    obtain ⟨o, ho⟩ := hPc w hwP (S.hT f y) (hfc y hy)
+    refine ⟨-(T : 𝓞 E) * RingOfIntegers.mapRingHom (starRingEnd E) o, ?_⟩
+    have key : -(T : E) * w / α * S.hT f y = -(T : E) * o := by
+      calc -(T : E) * w / α * S.hT f y = -(T : E) * ((w : E) * S.hT f y) / α := by ring
+        _ = -(T : E) * ((o : E) * α) / α := by rw [ho]
+        _ = -(T : E) * o := by field_simp
+    rw [LinearMap.map_smul, ← hconj f y, smul_eq_mul, hb, ← star_mul', key, star_mul', star_neg,
+      star_natCast]
+    show ((-(T : 𝓞 E) * RingOfIntegers.mapRingHom (starRingEnd E) o : 𝓞 E) : E) = _
+    push_cast
+    rfl
+  · simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+      LinearMap.map_smul, smul_eq_mul, hee, hff, hef, hfe, mul_zero, mul_one, zero_add, add_zero,
+      starRingEnd_apply]
+    linear_combination h1 + h2 - (T : E) * hwE
+  · intro γ hγ
+    have hfz : S.hT f (γ • (α • e + b • f)) = γ * α := by
+      simp only [map_add (f := _), LinearMap.map_smul, smul_eq_mul, hff, hfe, RingHom.id_apply]; ring
+    have hγα : γ * α ∈ c := hfz ▸ hfc _ hγ
+    obtain ⟨o1, ho1⟩ := hPc p0 hp0 _ hγα
+    obtain ⟨o2, ho2⟩ := hPc w hwP _ hγα
+    obtain ⟨o3, ho3⟩ := pair_mem hU hγ (hce α hαc)
+    have E1 : (o1 : E) = p0 * γ := mul_right_cancel₀ hα0 (by rw [ho1]; ring)
+    have E2 : (o2 : E) = w * γ := mul_right_cancel₀ hα0 (by rw [ho2]; ring)
+    have E3 : (o3 : E) = -(T : E) * γ * star (w : E) := by
+      have hez : S.hT (α • e) (γ • (α • e + b • f)) = γ * (star α * b) := by
+        simp only [map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.smul_apply, LinearMap.map_smul,
+          smul_eq_mul, hee, hef, starRingEnd_apply, RingHom.id_apply]; ring
+      rw [hez, h1] at ho3
+      change (o3 : E) = _ at ho3
+      rw [ho3]; ring
+    refine ⟨o2 + (-t * o3 + RingOfIntegers.mapRingHom (starRingEnd E) w * o1), ?_⟩
+    have hcast : ((o2 + (-t * o3 + RingOfIntegers.mapRingHom (starRingEnd E) w * o1) : 𝓞 E) : E) =
+        (o2 : E) + (-(t : E) * o3 + star (w : E) * o1) := by
+      push_cast; rfl
+    rw [hcast]
+    linear_combination E2 - (t : E) * E3 + star (w : E) * E1 + γ * star (w : E) * htpE + γ * hwE
+
+end GlobalTheory.HypPrimVec
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsPrimitiveVectorNormNegHyperbolicPairStatement
+
+section
 
 @[expose] public section
 
@@ -47,3 +331,5 @@ open NumberField IsDedekindDomain Formalism.BasicNotions
 
 theorem _root_.GlobalTheory.T.exists_primitive_vector_norm_neg_hyperbolicPair : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E], CMData F E → ∀ (S : HSpace E) (Λ : Submodule (𝓞 E) S.V), Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ → (∃ x : 𝓞 E, (x : E) + star (x : E) = 1) → ∀ (e f : S.V) (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E), c ≠ 0 → S.hT e e = 0 → S.hT f f = 0 → S.hT e f = 1 → (∀ x ∈ c, x • e ∈ Λ) → (∀ y ∈ Λ, S.hT f y ∈ c) → ∀ T : ℕ, T ≠ 0 → ∃ z : S.V, z ∈ Submodule.span E {e, f} ∧ z ∈ Λ ∧ S.hT z z = -((T : ℕ) : E) ∧ ∀ γ : E, γ • z ∈ Λ → ∃ o : 𝓞 E, (o : E) = γ := by
   first | exact @GlobalTheory.HypPrimVec.exists_primitive_norm_neg | exact GlobalTheory.HypPrimVec.exists_primitive_norm_neg | (intros; apply GlobalTheory.HypPrimVec.exists_primitive_norm_neg <;> assumption)
+end
+end

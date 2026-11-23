@@ -4,10 +4,15 @@ public import Development.AbelianVarietyTheory.Definitions.Jets.SupWOfSup
 public import Development.AbelianVarietyTheory.PublishedTheorems.BesselIntegrals.BesselXiIntegrable
 public import Formalism.HermitianCurvature.HerGenC
 public import Formalism.HermitianCurvature.StatementTBB
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PointwiseBoundCapelliEigenfunction
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimENF
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenfunctionBoundThreePlacesStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GridsAtPlaceLongCutNormaliserPositiveStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WignerMapsThreePlacesExists
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WithRightAction
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -22,6 +27,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,7 +48,158 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenfunctionPointwiseBoundOfEqualTypesStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TopDensityCutoffDominatedOfHCXiStatement
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenfunctionPointwiseBoundOfDifferentTyp
+
+section
+
+@[expose] public section
+
+open BpJoin Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP2 Formalism.FourierDecayAlt.P.CutBPEq Formalism.QuantumDeterminants
+
+namespace GlobalTheory.capelliEigenfunction_pointwiseBound_of_differentTypes
+
+theorem decay_le (c₃ Cc r n N A e : ℝ) (hc : c₃ ≤ Cc) (h0 : 0 ≤ Cc) (hr : 0 ≤ r) (hn : r + 1 ≤ n) (hN : 0 ≤ N)
+    (he : 0 ≤ e) (h : Cc * (r + 1) ^ 4 * (N * n ^ 2 + n ^ 3) ≤ A - e) :
+    c₃ * (r + 1) ^ 2 * (r * n + 1) ≤ A := by
+  have h1 : (1 : ℝ) ≤ r + 1 := by linarith
+  have hn1 : (1 : ℝ) ≤ n := by linarith
+  have h2 : (r + 1) ^ 2 ≤ (r + 1) ^ 4 := pow_le_pow_right₀ h1 (by norm_num)
+  have h3 : r * n + 1 ≤ N * n ^ 2 + n ^ 3 := by
+    have a1 : r * n + 1 ≤ n ^ 2 := by nlinarith
+    have a2 : n ^ 2 ≤ n ^ 3 := pow_le_pow_right₀ hn1 (by norm_num)
+    have a3 : 0 ≤ N * n ^ 2 := by positivity
+    linarith
+  have h4 : 0 ≤ r * n + 1 := by positivity
+  calc c₃ * (r + 1) ^ 2 * (r * n + 1) ≤ Cc * (r + 1) ^ 2 * (r * n + 1) := by gcongr
+    _ ≤ Cc * (r + 1) ^ 4 * (N * n ^ 2 + n ^ 3) := by gcongr
+    _ ≤ A := by linarith
+
+theorem thmBp_eigen_different_types : GlobalTheory.HCXi.BesselXiIntegrable → P5.ThmPActualCpt → NFTopDomAll → ∀ C C₃ C₀ : ℝ, 0 ≤ C → 0 ≤ C₃ → 0 ≤ C₀ → ∃ C₄ Cc : ℝ, ∀ (P : M.Par) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (p : KB.Pl P Wp Wq) (f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (b c A₀ : ℝ) (n₀ p₀ : ℕ) (lam lam' : Fin (2 * P.r + P.k + 1) → ℝ), StdNum C b c P lam → (n₀ = 0 ∧ ∃ l ∈ Finset.Icc 1 P.k, ((30 * (P.r + 1) ^ 2 + 6 : ℕ) : ℝ) ≤ |P.u l - P.u' l|) → 3 * (P.r + 1) ≤ 2 * p₀ → (p₀ : ℝ) ≤ C₀ * ((P.r : ℝ) + 1) ^ 2 → EigDec f A₀ lam' → Cc * ((P.r : ℝ) + 1) ^ 4 * (((3 * (P.r + 1) : ℕ) : ℝ) * (2 * (P.r : ℝ) + P.k + 1) ^ 2 + (2 * (P.r : ℝ) + P.k + 1) ^ 3) ≤ A₀ - (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) → (∀ s, |lam' s - lam s| + (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) ≤ c - 1) → TBB.RegularityBoundBigCell p f b C₃ (2 * p₀ + n₀) → TBB.ThmBpAt p f b C₄ n₀ p₀ := by
+  intro hX hP5 hNF C C₃ C₀ hC hC₃ hC₀
+  obtain ⟨Cb, -, hsh⟩ := GlobalTheory.WithRightAction.exists_place_other_right_type
+  obtain ⟨c₃, hA⟩ := GlobalTheory.WigSh.amapsShExists
+  obtain ⟨C₄, Cc, hreg⟩ := GlobalTheory.T.capelli_eigenfunction_bound_three_places hX hP5 hNF Cb C₃ (7 + C) C₀ hC₃ (by linarith) hC₀
+  refine ⟨C₄, max (max Cc c₃) 0, ?_⟩
+  intro P Wp Wq _ _ _ _ _ _ p f b c A₀ n₀ p₀ lam lam' hS hcase hN hp₀ hE hdec hlam h92
+  obtain ⟨rfl, l, hl, hgap⟩ := hcase
+  have hl' := Finset.mem_Icc.1 hl
+  obtain ⟨q, hq0, hz, hz', hπ, hπ', hν, hm, hD⟩ :=
+    hsh P Wp Wq Wq p P.u P.u' p.T.base.π' l p.hP hl'.1 hl'.2
+  have hG := hS.1 l hl
+  have hc1 : 1 ≤ c := hG.1
+  have hcb : c + 2 ≤ b := hG.2.1
+  have hk : 2 ≤ P.k := p.hl.2.2
+  have hposition : 2 * ((0 : ℕ) : ℝ) + 1 ≤ P.u' 1 - P.u' (1 + 1) := by
+    have hg := p.hP.1.gap 1 (Finset.mem_Icc.2 ⟨le_rfl, by omega⟩)
+    unfold M.Par.lo M.Par.hi at hg
+    have a1 := le_max_right (P.u (1 + 1)) (P.u' (1 + 1))
+    have a2 := min_le_right (P.u 1) (P.u' 1)
+    push_cast
+    linarith
+  obtain ⟨Ap, Am, ApPt, AmPt, hAp, hAm, -, hmaps⟩ :=
+    hA P Wp Wq Wq Wq P.u P.u' P.u P.u' p q q 1 0 b hz hz' hz hz' (fun h _ => congrFun hπ h) (fun h _ => congrFun hπ h)
+      hν hm hν hm le_rfl (by omega) hposition (fun i hi => (hS.1 i hi).2.2.2.2.1) (by push_cast; linarith) (by linarith)
+      (fun i _ => by simp) (fun i _ => by simp)
+  have hr0 : (0 : ℝ) ≤ P.r := Nat.cast_nonneg _
+  have hk0 : (0 : ℝ) ≤ P.k := Nat.cast_nonneg _
+  have hm1 := hmaps A₀ f (by
+    have := decay_le c₃ _ P.r (2 * (P.r : ℝ) + P.k + 1) _ A₀ _ ((le_max_right Cc c₃).trans (le_max_left _ 0))
+      (le_max_right _ _) hr0 (by linarith) (Nat.cast_nonneg _) (Nat.cast_nonneg _) hdec
+    push_cast
+    exact this) (hE.2.1 1)
+  obtain ⟨hpos, hone, Y, hW, hL⟩ := GlobalTheory.T.grids_at_place_longCut_normaliserPositive C b c (shP P P.u P.u') Wp Wq q lam hC
+    (by subst hq0; exact hG) (by subst hq0; exact hgap)
+  refine hreg P Wp Wq Wq Wq P.u P.u' P.u P.u' p q q f Ap Am ApPt AmPt b
+    (b ^ ((7 + C) * ((2 * P.r + 2 : ℕ) : ℝ))) A₀ 0 p₀ (0 * (P.r + 1)) (Pst lam c) (Pst lam c) Y Y 3 (3 * (P.r + 1))
+    (by linarith) hone le_rfl (Nat.zero_le _) hp₀ hz hz' hz hz' le_rfl (by omega) hpos hpos hD hD hE.1 hE.2.1
+    hAp hAm ?_ hm1 h92 hW hL hW hL hN lam lam' c hE.2.2 ?_ hlam (fun y => le_rfl) (fun y => le_rfl)
+  · have hle : Cc ≤ max (max Cc c₃) 0 := (le_max_left Cc c₃).trans (le_max_left _ 0)
+    refine le_trans ?_ (hdec.trans (le_of_eq ?_))
+    · gcongr
+    · push_cast; ring
+  · intro s t hst
+    have hd := hG.2.2.2.2.2.2.1
+    rcases lt_or_gt_of_ne hst with h | h
+    · have := hd s t h
+      exact le_trans (by linarith) (le_abs_self _)
+    · have := hd t s h
+      exact le_trans (by linarith) (neg_le_abs _)
+
+end GlobalTheory.capelliEigenfunction_pointwiseBound_of_differentTypes
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenfunctionPointwiseBoundOfDifferentTypStatement
+
+section
+
+@[expose] public section
+
+open BpJoin Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP2 Formalism.FourierDecayAlt.P.CutBPEq Formalism.QuantumDeterminants
+
+theorem _root_.GlobalTheory.T.capelliEigenfunction_pointwiseBound_of_differentTypes : GlobalTheory.HCXi.BesselXiIntegrable → P5.ThmPActualCpt → NFTopDomAll → ∀ C C₃ C₀ : ℝ, 0 ≤ C → 0 ≤ C₃ → 0 ≤ C₀ → ∃ C₄ Cc : ℝ, ∀ (P : M.Par) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (p : KB.Pl P Wp Wq) (f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (b c A₀ : ℝ) (n₀ p₀ : ℕ) (lam lam' : Fin (2 * P.r + P.k + 1) → ℝ), StdNum C b c P lam → (n₀ = 0 ∧ ∃ l ∈ Finset.Icc 1 P.k, ((30 * (P.r + 1) ^ 2 + 6 : ℕ) : ℝ) ≤ |P.u l - P.u' l|) → 3 * (P.r + 1) ≤ 2 * p₀ → (p₀ : ℝ) ≤ C₀ * ((P.r : ℝ) + 1) ^ 2 → EigDec f A₀ lam' → Cc * ((P.r : ℝ) + 1) ^ 4 * (((3 * (P.r + 1) : ℕ) : ℝ) * (2 * (P.r : ℝ) + P.k + 1) ^ 2 + (2 * (P.r : ℝ) + P.k + 1) ^ 3) ≤ A₀ - (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) → (∀ s, |lam' s - lam s| + (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) ≤ c - 1) → TBB.RegularityBoundBigCell p f b C₃ (2 * p₀ + n₀) → TBB.ThmBpAt p f b C₄ n₀ p₀ := by
+  first | exact @GlobalTheory.capelliEigenfunction_pointwiseBound_of_differentTypes.thmBp_eigen_different_types | exact GlobalTheory.capelliEigenfunction_pointwiseBound_of_differentTypes.thmBp_eigen_different_types | (intros; apply GlobalTheory.capelliEigenfunction_pointwiseBound_of_differentTypes.thmBp_eigen_different_types <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.PointwiseBoundCapelliEigenfunction
+
+section
+
+@[expose] public section
+
+open BpJoin Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP2 Formalism.FourierDecayAlt.P.CutBPEq Formalism.QuantumDeterminants
+
+namespace GlobalTheory.BpEigen
+
+theorem pointwise_bound_mono {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
+    [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
+    {p : KB.Pl P Wp Wq} {f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)} {b C C' : ℝ} {n₀ p₀ : ℕ}
+    (hb : 1 ≤ b) (hC : C ≤ C') (h : TBB.ThmBpAt p f b C n₀ p₀) : TBB.ThmBpAt p f b C' n₀ p₀ := by
+  intro γ hγ hG
+  refine (h γ hγ hG).trans ?_
+  refine mul_le_mul' (ENNReal.ofReal_le_ofReal ?_) le_rfl
+  refine mul_le_mul_of_nonneg_right ?_ (pow_nonneg (inv_nonneg.2 hG.le) _)
+  refine Real.rpow_le_rpow_of_exponent_le hb ?_
+  exact mul_le_mul_of_nonneg_right hC (by positivity)
+
+theorem pointwise_bound_eigenfunction : GlobalTheory.HCXi.BesselXiIntegrable → P5.ThmPActualCpt → ∀ C C₃ C₀ : ℝ, 0 ≤ C → 0 ≤ C₃ → 0 ≤ C₀ → ∃ C₄ Cc : ℝ, ∀ (P : M.Par) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (p : KB.Pl P Wp Wq) (f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (b c A₀ : ℝ) (n₀ p₀ : ℕ) (lam lam' : Fin (2 * P.r + P.k + 1) → ℝ), StdNum C b c P lam → Cases P n₀ → 3 * (P.r + 1) ≤ 2 * p₀ → (p₀ : ℝ) ≤ C₀ * ((P.r : ℝ) + 1) ^ 2 → EigDec f A₀ lam' → Cc * ((P.r : ℝ) + 1) ^ 4 * (((3 * (P.r + 1) : ℕ) : ℝ) * (2 * (P.r : ℝ) + P.k + 1) ^ 2 + (2 * (P.r : ℝ) + P.k + 1) ^ 3) ≤ A₀ - (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) → (∀ s, |lam' s - lam s| + (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) ≤ c - 1) → TBB.RegularityBoundBigCell p f b C₃ (2 * p₀ + n₀) → TBB.ThmBpAt p f b C₄ n₀ p₀ := by
+  intro hX hP C C₃ C₀ hC hC₃ hC₀
+  have hN := GlobalTheory.T.topDensity_cutoff_dominated_of_HC_xi hX
+  obtain ⟨D₁, E₁, h₁⟩ := GlobalTheory.T.capelliEigenfunction_pointwiseBound_of_differentTypes hX hP hN C C₃ C₀ hC hC₃ hC₀
+  obtain ⟨D₂, E₂, h₂⟩ := GlobalTheory.T.capelliEigenfunction_pointwiseBound_of_equalTypes hX hP hN C C₃ C₀ hC hC₃ hC₀
+  refine ⟨max D₁ D₂, max E₁ E₂, ?_⟩
+  intro P Wp Wq _ _ _ _ _ _ p f b c A₀ n₀ p₀ lam lam' hS hc h3 hp hE hA hl hR
+  have key : ∀ E : ℝ, E ≤ max E₁ E₂ → E * ((P.r : ℝ) + 1) ^ 4 * (((3 * (P.r + 1) : ℕ) : ℝ) * (2 * (P.r : ℝ) + P.k + 1) ^ 2 + (2 * (P.r : ℝ) + P.k + 1) ^ 3) ≤ A₀ - (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) := by
+    intro E hE'
+    refine le_trans ?_ hA
+    exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hE' (by positivity)) (by positivity)
+  rcases hc with hc | hc
+  · have hb : 1 ≤ b := by
+      obtain ⟨-, l, hl', -⟩ := hc
+      obtain ⟨a1, a2, -⟩ := hS.1 l hl'
+      linarith
+    exact pointwise_bound_mono hb (le_max_left _ _)
+      (h₁ P Wp Wq p f b c A₀ n₀ p₀ lam lam' hS hc h3 hp hE (key _ (le_max_left _ _)) hl hR)
+  · have hb : 1 ≤ b := by
+      obtain ⟨-, -, l, hl1, hl2, -⟩ := hc
+      obtain ⟨a1, a2, -⟩ := hS.1 l (Finset.mem_Icc.2 ⟨hl1, hl2.le⟩)
+      linarith
+    exact pointwise_bound_mono hb (le_max_right _ _)
+      (h₂ P Wp Wq p f b c A₀ n₀ p₀ lam lam' hS hc h3 hp hE (key _ (le_max_right _ _)) hl hR)
+
+end GlobalTheory.BpEigen
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.JetHarmonics.PointwiseBoundCapelliEigenfunctionStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +207,5 @@ open BpJoin Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.Four
 
 theorem _root_.GlobalTheory.T.pointwiseBound_capelli_eigenfunction : GlobalTheory.HCXi.BesselXiIntegrable → P5.ThmPActualCpt → ∀ C C₃ C₀ : ℝ, 0 ≤ C → 0 ≤ C₃ → 0 ≤ C₀ → ∃ C₄ Cc : ℝ, ∀ (P : M.Par) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (p : KB.Pl P Wp Wq) (f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (b c A₀ : ℝ) (n₀ p₀ : ℕ) (lam lam' : Fin (2 * P.r + P.k + 1) → ℝ), StdNum C b c P lam → Cases P n₀ → 3 * (P.r + 1) ≤ 2 * p₀ → (p₀ : ℝ) ≤ C₀ * ((P.r : ℝ) + 1) ^ 2 → EigDec f A₀ lam' → Cc * ((P.r : ℝ) + 1) ^ 4 * (((3 * (P.r + 1) : ℕ) : ℝ) * (2 * (P.r : ℝ) + P.k + 1) ^ 2 + (2 * (P.r : ℝ) + P.k + 1) ^ 3) ≤ A₀ - (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) → (∀ s, |lam' s - lam s| + (((2 * P.r + 2) * p₀ + n₀ * (P.r + 1) : ℕ) : ℝ) ≤ c - 1) → TBB.RegularityBoundBigCell p f b C₃ (2 * p₀ + n₀) → TBB.ThmBpAt p f b C₄ n₀ p₀ := by
   first | exact @GlobalTheory.BpEigen.pointwise_bound_eigenfunction | exact GlobalTheory.BpEigen.pointwise_bound_eigenfunction | (intros; apply GlobalTheory.BpEigen.pointwise_bound_eigenfunction <;> assumption)
+end
+end

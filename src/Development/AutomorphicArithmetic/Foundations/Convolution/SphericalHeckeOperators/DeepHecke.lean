@@ -3,14 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SymSum
 public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.Match
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.QuotFubiniHolds
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.TwistedOrbitalIntegrals.ConvTest
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.TwistedOrbitalIntegrals.HeckeRepresentationSatake
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DcoShape
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DeepAbs
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DefBridge
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SigInv
-public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.ThMatch
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.UnrQ
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.QuotFubini
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -29,9 +22,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -39,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,8 +43,49 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Compactness.Paracompact
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.TwistedOrbitalIntegrals.HeckeRepresentationSatake
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DcoShape
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DeepAbs
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DefBridge
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SigInv
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.ThMatch
+import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.UnrQ
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.OrbitalIntegrals.TwistedOrbitalIntegrals.ConvTest
+
+section
+
+@[expose] public section
+
+open MeasureTheory Topology PositivityTheory.Rg.Tf.Loc UpperTheory.V.Z.Tf.Orb
+
+theorem UpperTheory.V.Z.Tf.Orb.convTest :
+    UpperTheory.V.Z.Tf.Orb.ConvTest := by
+  intro G _ _ _ _ _ _ _ _ μ hμ a b a1 a2 b1 b2
+  constructor
+  · have h : conv μ a b = fun x => ∫ y in tsupport a, a y * b (y⁻¹ * x) ∂μ := by
+      funext x
+      refine (setIntegral_eq_integral_of_forall_compl_eq_zero fun y hy => ?_).symm
+      rw [image_eq_zero_of_notMem_tsupport hy, zero_mul]
+    rw [h]
+    haveI : FirstCountableTopology G := inferInstance
+    exact continuous_parametric_integral_of_continuous (by fun_prop) a2
+  · refine HasCompactSupport.intro (a2.isCompact.mul b2.isCompact) fun x hx => ?_
+    refine integral_eq_zero_of_ae (Filter.Eventually.of_forall fun y => ?_)
+    by_contra hne
+    exact hx ⟨y, subset_tsupport _ (left_ne_zero_of_mul hne), y⁻¹ * x, subset_tsupport _ (right_ne_zero_of_mul hne), by simp⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.DeepHecke
+
+section
 
 @[expose] public section
 
@@ -182,3 +215,5 @@ theorem UpperTheory.ConvolutionTheory.H.deepHecke :
     exact (hg4 p hp h f hh hf (fun _ => 0) (PositivityTheory.Rg.Tf.Loc.orbIntegralC μk γ μγ)
       (fun _ _ _ _ _ => by simp) (fun _ _ => rfl) (hlk γ μγ hr hγ) (hck γ μγ hr hγ)
       fun a ha => ((UpperTheory.ConvolutionTheory.H.thMatch k E hu σ hσ n μE μk a ha).2 γ μγ hr hnot hγ).symm).symm
+end
+end

@@ -1,12 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.FixedPointCriteria.Cond
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsUnitSmulOrderOfMemGs
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.IsFixPOrderPowIffLeAndAssocPow
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.NcardUnitTranslatesOrderEqRelIndex
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrderLevelInjectiveOfSmulEq
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.CintIdx
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.IrreducibleParity.NotEvenIrr
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,8 +25,6 @@ import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -54,7 +47,164 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.IsFixPOrderPowIffLeAndAssocPow
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.IrreducibleParity.NotEvenIrr
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.OrderLevelInjectiveOfSmulEq
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.IrreducibleParity.NotEvenIrr
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ExistsUnitSmulOrderOfMemGs
+
+section
+
+@[expose] public section
+
+open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Loc.PK
+
+theorem UpperTheory.exists_unit_smul_order_of_mem_gs :
+    ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] (Δ τ : K), IsLoc O Δ → τ ^ 2 - 4 ≠ 0 → ∀ (π : O) (n : ℕ) (e : Oˣ) (h : O) (x : Etau K τ), Cond π n e h x → ∀ (t : Kˣ) (S : Set (Etau K τ)), S ∈ PS.Gs O τ t 1 → ∃ (m : ℕ) (r : Kˣ) (u : (Etau K τ)ˣ), u ∈ Gu O τ ∧ S = PS.ml (PS.sc τ r * u) (Ord O (yy π m x)) := by
+  intro O K _ _ _ _ _ Δ τ hL hτ π n e h x hC t S hS
+  obtain ⟨hfix, c, hc, hgen⟩ := hS
+  rw [one_mul] at hgen
+  obtain ⟨r, u, hu1, hu2, hcu⟩ := hC.gen.cint hL hc
+  obtain ⟨s0, hs0⟩ := hfix.fg
+  subst hs0
+  set N : Submodule O (Etau K τ) := Submodule.span O (s0 : Set (Etau K τ)) with hN
+  have hcS : (c : Etau K τ) ∈ N := hgen.1
+  have hint : ∀ w ∈ N, ∃ a b : O, ((c⁻¹ : (Etau K τ)ˣ) : Etau K τ) * w
+      = algebraMap O (Etau K τ) a + algebraMap O (Etau K τ) b * x :=
+    fun w hw => (hC.gen.int_iff hL _).1 (hgen.2 w hw)
+  let B : Ideal O :=
+    { carrier := {b | ∃ a : O,
+        (c : Etau K τ) * (algebraMap O (Etau K τ) a + algebraMap O (Etau K τ) b * x) ∈ N}
+      add_mem' := by
+        rintro b1 b2 ⟨a1, h1⟩ ⟨a2, h2⟩
+        refine ⟨a1 + a2, ?_⟩
+        have key : (c : Etau K τ) * (algebraMap O (Etau K τ) (a1 + a2) + algebraMap O (Etau K τ) (b1 + b2) * x)
+            = (c : Etau K τ) * (algebraMap O (Etau K τ) a1 + algebraMap O (Etau K τ) b1 * x)
+              + (c : Etau K τ) * (algebraMap O (Etau K τ) a2 + algebraMap O (Etau K τ) b2 * x) := by
+          simp only [map_add (f := _)]
+          ring
+        rw [key]
+        exact N.add_mem h1 h2
+      zero_mem' := by
+        refine ⟨0, ?_⟩
+        simp only [map_zero, zero_mul, add_zero, mul_zero]
+        exact N.zero_mem
+      smul_mem' := by
+        rintro k b ⟨a, hab⟩
+        refine ⟨k * a, ?_⟩
+        have key : (c : Etau K τ) * (algebraMap O (Etau K τ) (k * a) + algebraMap O (Etau K τ) (k • b) * x)
+            = k • ((c : Etau K τ) * (algebraMap O (Etau K τ) a + algebraMap O (Etau K τ) b * x)) := by
+          rw [smul_eq_mul, Algebra.smul_def, map_mul, map_mul]
+          ring
+        rw [key]
+        exact N.smul_mem k hab }
+  have hB : B ≠ ⊥ := by
+    have hωc : ω * (c : Etau K τ) ∈ N := hfix.stab _ hcS
+    obtain ⟨a, b, hab⟩ := hint _ hωc
+    have hω : (ω : Etau K τ) = algebraMap O (Etau K τ) a + algebraMap O (Etau K τ) b * x := by
+      rw [← hab, mul_left_comm, Units.inv_mul, mul_one]
+    have hb : b ∈ B := ⟨a, by rw [← hω, mul_comm]; exact hωc⟩
+    intro hbot
+    rw [hbot] at hb
+    have hb0 : b = 0 := (Submodule.mem_bot O).1 hb
+    rw [hb0, map_zero, zero_mul, add_zero] at hω
+    have him := congrArg QuadraticAlgebra.im hω
+    rw [algebraMap_etau, QuadraticAlgebra.algebraMap_im] at him
+    exact one_ne_zero him
+  obtain ⟨m, hm⟩ := IsDiscreteValuationRing.ideal_eq_span_pow_irreducible hB hC.irr
+  have hyy : yy π m x = algebraMap O (Etau K τ) (π ^ m) * x := by
+    rw [yy, Algebra.smul_def, algebraMap_etau (O := O) (π ^ m)]
+  have hpm : π ^ m ∈ B := by
+    rw [hm]
+    exact Ideal.mem_span_singleton_self _
+  obtain ⟨a0, ha0⟩ := hpm
+  refine ⟨m, r, u, ⟨hu1, hu2⟩, ?_⟩
+  rw [← hcu]
+  ext w
+  rw [PS.mem_ml]
+  show w ∈ N ↔ _ ∈ Submodule.span O {1, yy π m x}
+  rw [Submodule.mem_span_pair]
+  constructor
+  · intro hw
+    obtain ⟨a, b, hab⟩ := hint w hw
+    have hbB : b ∈ B := ⟨a, by rw [← hab, ← mul_assoc, Units.mul_inv, one_mul]; exact hw⟩
+    rw [hm, Ideal.mem_span_singleton'] at hbB
+    obtain ⟨k, rfl⟩ := hbB
+    refine ⟨a, k, ?_⟩
+    rw [hab, hyy, Algebra.smul_def, Algebra.smul_def, map_mul]
+    ring
+  · rintro ⟨a, k, hak⟩
+    have hw : w = (c : Etau K τ) * (a • 1 + k • yy π m x) := by
+      rw [hak, ← mul_assoc, Units.mul_inv, one_mul]
+    rw [hw, mul_add, hyy]
+    apply N.add_mem
+    · rw [mul_smul_comm, mul_one]
+      exact N.smul_mem a hcS
+    · rw [mul_smul_comm]
+      apply N.smul_mem
+      have key : (c : Etau K τ) * (algebraMap O (Etau K τ) (π ^ m) * x)
+          = (c : Etau K τ) * (algebraMap O (Etau K τ) a0 + algebraMap O (Etau K τ) (π ^ m) * x)
+            - a0 • (c : Etau K τ) := by
+        rw [Algebra.smul_def]
+        ring
+      rw [key]
+      exact N.sub_mem ha0 (N.smul_mem a0 hcS)
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.NcardUnitTranslatesOrderEqRelIndex
+
+section
+
+@[expose] public section
+
+open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Loc.PK
+
+theorem UpperTheory.ncard_unit_translates_order_eq_relIndex :
+    ∀ (O K : Type) [CommRing O] [Field K] [Algebra O K] (τ : K) (a : (Etau K τ)ˣ) (y : Etau K τ), {S : Set (Etau K τ) | ∃ u ∈ Gu O τ, S = PS.ml (a * u) (Ord O y)}.ncard = (Hu O y).relIndex (Gu O τ) := by
+  intro O K _ _ _ τ a y
+  set G := Gu O τ
+  set H := (Hu O y).subgroupOf G
+  have key : ∀ g₁ g₂ : G, PS.ml (a * (g₁ : (Etau K τ)ˣ)) (PK.Ord O y) =
+      PS.ml (a * (g₂ : (Etau K τ)ˣ)) (PK.Ord O y) ↔ g₁⁻¹ * g₂ ∈ H := by
+    intro g₁ g₂
+    rw [Subgroup.mem_subgroupOf]
+    show _ ↔ PS.ml (((g₁⁻¹ * g₂ : G)) : (Etau K τ)ˣ) (PK.Ord O y) = PK.Ord O y
+    rw [PS.ml_mul, PS.ml_mul, (PS.ml_inj a).eq_iff, Subgroup.coe_mul, Subgroup.coe_inv, PS.ml_mul]
+    constructor
+    · intro h
+      rw [← h, ← PS.ml_mul, inv_mul_cancel, PS.ml_one]
+    · intro h
+      conv_lhs => rw [← h]
+      rw [← PS.ml_mul, mul_inv_cancel, PS.ml_one]
+  let f : G ⧸ H → Set (Etau K τ) :=
+    Quotient.lift (fun g : G => PS.ml (a * (g : (Etau K τ)ˣ)) (PK.Ord O y))
+      (fun g₁ g₂ hg => (key g₁ g₂).2 (QuotientGroup.leftRel_apply.1 hg))
+  have hf : Function.Injective f := by
+    intro q₁ q₂ hq
+    obtain ⟨g₁, rfl⟩ := QuotientGroup.mk_surjective q₁
+    obtain ⟨g₂, rfl⟩ := QuotientGroup.mk_surjective q₂
+    exact QuotientGroup.eq.2 ((key _ _).1 hq)
+  have hrange : {S : Set (Etau K τ) | ∃ u ∈ G, S = PS.ml (a * u) (PK.Ord O y)} = Set.range f := by
+    ext S
+    constructor
+    · rintro ⟨u, hu, rfl⟩
+      exact ⟨((⟨u, hu⟩ : G) : G ⧸ H), rfl⟩
+    · rintro ⟨q, rfl⟩
+      obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective q
+      exact ⟨g, g.2, rfl⟩
+  rw [hrange, Set.ncard_range_of_injective hf]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.FixedPointCriteria.FixMlIff
+
+section
 
 @[expose] public section
 
@@ -271,3 +421,6 @@ theorem gs_count (L : IsLoc O Δ) (hτ : τ ^ 2 - 4 ≠ 0) {π : O} {n : ℕ} {e
     exact hab (eq_of_ml_ord_yy_eq L hτ C (ha.symm.trans hb))
 
 end UpperTheory.V.Z.Sym.Loc.PK
+end
+end
+end

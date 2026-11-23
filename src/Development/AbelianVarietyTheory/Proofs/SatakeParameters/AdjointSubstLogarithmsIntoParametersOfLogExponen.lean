@@ -9,19 +9,15 @@ public import Formalism.SharpRestriction.Divisibility.ProductZerothFirstParts
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DatumCurveIntegralUnitDiscModel
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExpMvNegLogMvMul
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIntegralOrbitSeries
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IntegralWOfMulEqOne
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StandardSeriesBConditionsLargePrime
-import Formalism.GaussJetBounds.GaussJetProofs.Transfer
-public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCpAlgebraMap
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.BiextensionHypothesesOfLevelOne
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.BiextensionOfExpSpec
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.SubstFirstCoboundaryThree
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KurComplete
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementK
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KurComplete
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -33,8 +29,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -56,8 +49,157 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NatCastMemPrimeOf
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TauPlBijective
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataKerP
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StandardSeriesBConditionsLargePrime
+import Formalism.GaussJetBounds.GaussJetProofs.Transfer
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCpAlgebraMap
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.BiextensionHypothesesOfLevelOne
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.BiextensionOfExpSpec
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.SubstFirstCoboundaryThree
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KurComplete
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Linter.Style
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.BeData
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IntegralWOfMulEqOne
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Classical
+
+namespace GlobalTheory.CompareInert
+
+section Letters
+
+variable (D : D7) (p : ℕ) [Fact p.Prime]
+
+variable {D p}
+
+end Letters
+
+section Rings
+
+open Formalism.MainNotions.GL3Theta
+
+variable {l : ℕ} [Fact l.Prime]
+
+theorem mem_Wp_of_kur {x : ℂ_[l]} (hx : x ∈ Formalism.L2.Th1.CM.MaximalUnramifiedExtension l) (h1 : ‖x‖ ≤ 1) : x ∈ Wp l := by
+  have hp : l.Prime := Fact.out
+  have hB := ((Formalism.L2.Th1.D.kurIntegers l).1 x).2 ⟨hx, h1⟩
+  have hS : Formalism.L2.Th1.D.muPrime l = {ζ : ℂ_[l] | ∃ n : ℕ, 0 < n ∧ Nat.Coprime n l ∧ ζ ^ n = 1} := by
+    ext ζ
+    simp only [Formalism.L2.Th1.D.muPrime, Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨n, h0, hn, h⟩
+      exact ⟨n, h0, Nat.coprime_comm.mp ((Nat.Prime.coprime_iff_not_dvd hp).mpr hn), h⟩
+    · rintro ⟨n, h0, hn, h⟩
+      exact ⟨n, h0, (Nat.Prime.coprime_iff_not_dvd hp).mp (Nat.coprime_comm.mp hn), h⟩
+  unfold Formalism.L2.Th1.D.ringB Formalism.L2.Th1.D.ringA at hB
+  rw [hS] at hB
+  exact hB
+
+theorem Wp_subset_Kur {x : ℂ_[l]} (hx : x ∈ Wp l) : x ∈ Formalism.L2.Th1.CM.MaximalUnramifiedExtension l := by
+  refine closure_mono (s := ((Subring.closure {ζ : ℂ_[l] | ∃ n : ℕ, 0 < n ∧ Nat.Coprime n l ∧ ζ ^ n = 1} : Subring ℂ_[l]) : Set ℂ_[l])) ?_ hx
+  intro y hy
+  have hle : Subring.closure {ζ : ℂ_[l] | ∃ n : ℕ, 0 < n ∧ Nat.Coprime n l ∧ ζ ^ n = 1} ≤
+      (Subfield.closure {ζ : ℂ_[l] | ∃ n : ℕ, 0 < n ∧ ¬ l ∣ n ∧ ζ ^ n = 1}).toSubring := by
+    refine Subring.closure_le.2 ?_
+    rintro ζ ⟨n, h0, hn, h⟩
+    exact Subfield.subset_closure ⟨n, h0, (Nat.Prime.coprime_iff_not_dvd Fact.out).mp (Nat.coprime_comm.mp hn), h⟩
+  exact hle hy
+
+theorem exists_pow_norm_le {K : Type*} [NormedField K] {a : K} (ha : ‖a‖ < 1) (x : K) : ∃ k : ℕ, ‖a ^ k * x‖ ≤ 1 := by
+  by_cases hr : x = 0
+  · exact ⟨0, by simp [hr]⟩
+  obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one (inv_pos.2 (norm_pos_iff.2 hr)) ha
+  refine ⟨k, ?_⟩
+  rw [norm_mul, norm_pow]
+  have h0 : 0 < ‖x‖ := norm_pos_iff.2 hr
+  calc ‖a‖ ^ k * ‖x‖ ≤ ‖x‖⁻¹ * ‖x‖ := by gcongr
+    _ = 1 := inv_mul_cancel₀ h0.ne'
+
+theorem norm_l_lt : ‖(l : ℂ_[l])‖ < 1 := by
+  have h : ‖(l : ℂ_[l])‖ = ‖(l : ℚ_[l])‖ := by
+    rw [← map_natCast (algebraMap ℚ_[l] ℂ_[l]) l]
+    exact norm_algebraMap' ℂ_[l] _
+  rw [h]
+  exact Padic.norm_p_lt_one
+
+end Rings
+
+section Props
+
+open Formalism.MainNotions.GL3Theta MvPowerSeries
+
+variable {l d : ℕ} [Fact l.Prime] [NeZero d]
+
+end Props
+
+section Sign
+
+open Formalism.MainNotions.GL3Theta MvPowerSeries
+
+variable {l d : ℕ} [Fact l.Prime] [NeZero d]
+
+end Sign
+
+section Reps
+
+variable (D : D7) (p : ℕ)
+
+end Reps
+
+section Hyp
+
+end Hyp
+
+section Statements
+
+variable {D : D7} {Dx : DivX D} {Tw : TwForms D}
+
+end Statements
+
+section Units
+
+open MvPowerSeries
+
+variable {D : D7} {p : ℕ} [Fact p.Prime]
+
+end Units
+
+section Direction
+
+open GlobalTheory.InertCompare GlobalTheory.Proof.IdempotentLatticeSequence
+
+variable (D : D7) {l : ℕ} [Fact l.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_[l])
+
+end Direction
+
+section Main
+
+variable (D : D7) {Dx : DivX D} {Tw : TwForms D}
+
+end Main
+
+end GlobalTheory.CompareInert
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.AdjointSubstLogarithmsIntoParametersOfLogExponen
+
+section
 
 @[expose] public section
 
@@ -390,4 +532,6 @@ theorem exists_coords_and_series (h5 : 5 ≤ l) {σ : ℂ_[l] →+* ℂ_[l]} (h�
 
 end GlobalTheory.OnePlace.Unr
 
+end
+end
 end

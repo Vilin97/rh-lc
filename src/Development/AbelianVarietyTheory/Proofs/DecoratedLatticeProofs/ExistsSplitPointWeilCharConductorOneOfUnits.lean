@@ -1,25 +1,29 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsCombAt
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CoreIffCollapsesWith
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceCharacterConductorIntegers
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilCharacterSplitPlaceExistsContinuousNontrivia
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.EmbeddingXiZeroNeZero
+public import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -42,6 +46,149 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SimpleSum
+import Development.AbelianVarietyTheory.Definitions.Foundations.SimpleSum
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ValuationDetOfMemKO
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceCharacterConductorIntegers
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilCharacterSplitPlaceExistsContinuousNontrivia
+import Development.AbelianVarietyTheory.Proofs.HeightProofs.EmbeddingXiZeroNeZero
+
+-- Source module: Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HalfPowerSpherical
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix
+open GlobalTheory.SplitWeil GlobalTheory.RootEx
+
+noncomputable section
+namespace GlobalTheory.IndefiniteRowSideFullHecke.HalfPowerSpherical
+
+section Defs
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+
+
+
+def chainGen (α α' : kˣ) (m j i : ℕ) : kˣ :=
+  α ^ (-(j : ℤ)) * (α / α') ^ (m / 2) * (α * α') ^ (((m / 2 : ℕ) : ℤ) - (i : ℤ))
+
+def frame (n : Type) [Fintype n] [DecidableEq n] (c : ℕ) (b : ℕ → kˣ) : GL (n ⊕ Fin c) k :=
+  embA n ⟨Matrix.diagonal fun i : Fin c => (b (i.val + 1) : k),
+    Matrix.diagonal fun i : Fin c => ((b (i.val + 1))⁻¹ : kˣ),
+    by simp [Matrix.diagonal_mul_diagonal], by simp [Matrix.diagonal_mul_diagonal]⟩
+
+variable [MeasurableSpace k] [BorelSpace k]
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
+
+end Defs
+
+section Statements
+variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  [MeasurableSpace k] [BorelSpace k]
+
+end Statements
+
+section Chain
+variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  [MeasurableSpace k] [BorelSpace k]
+
+end Chain
+
+section Basic₂
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+
+end Basic₂
+
+end GlobalTheory.IndefiniteRowSideFullHecke.HalfPowerSpherical
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CoreIffCollapsesWith
+
+section
+
+@[expose] public section
+
+open MeasureTheory ValuativeRel Matrix
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData
+open scoped NNReal ENNReal
+
+noncomputable section
+namespace GlobalTheory.CollapseCompare
+
+section Average
+variable {G V : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [AddCommGroup V] [Module ℂ V]
+
+end Average
+
+section Pointwise
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
+
+variable [MeasurableSpace k] [BorelSpace k]
+
+variable {ν : Measure k} {μX : Measure (GL n k)} {μG : Measure (GL (n ⊕ Fin c) k)}
+  {J : Subgroup (GL (n ⊕ Fin c) k)} {bas : GL (n ⊕ Fin c) k} {ψ : AddChar k Circle} {μ : kˣ →* ℂˣ}
+  {lam : J →* ℂˣ} {κ : ℝ}
+
+
+
+
+
+
+end Pointwise
+
+section Transport
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
+
+
+
+
+
+variable [MeasurableSpace k] [BorelSpace k]
+
+end Transport
+
+section Normalise
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
+open GlobalTheory.IndefiniteRowSideFullHecke.HalfPowerSpherical (frame)
+
+
+
+
+theorem hasConductor_mulShift {ψ : AddChar k Circle} {β : kˣ} (h : HasConductor ψ β) :
+    HasConductor (ψ.mulShift (β : k)) 1 := by
+  have hβ : 0 < valuation k (β : k) := by simp [zero_lt_iff]
+  intro x
+  have h1 := h (β * x)
+  rw [map_mul, mul_le_iff_le_one_right hβ] at h1
+  rw [Units.val_one, map_one, ← h1]
+  simp only [AddChar.mulShift_apply]
+  refine ⟨fun H y hy => ?_, fun H y hy => H _ (by rw [map_mul]; exact mul_le_mul_right hy _)⟩
+  have := H ((β⁻¹ : kˣ) * y) (by rwa [map_mul, Units.val_inv_eq_inv_val, map_inv₀, inv_mul_le_iff₀ hβ])
+  simpa using this
+
+variable [MeasurableSpace k] [BorelSpace k]
+
+end Normalise
+
+section Main
+
+end Main
+
+end GlobalTheory.CollapseCompare
+end
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSplitPointWeilCharConductorOneOfUnits
+
+section
 
 @[expose] public section
 
@@ -115,4 +262,6 @@ theorem weil_char_conductor_one : ∀ (D : D7) (k : Type) [Field k] [ValuativeRe
   exact GlobalTheory.CollapseCompare.hasConductor_mulShift hcu
 
 end GlobalTheory.SplitWeilChar
+end
+end
 end

@@ -1,7 +1,8 @@
 module
 
 public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
-public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PtGComp
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.JPMemAwayP
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.IdemMulCompl
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,6 +40,46 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PtGComp
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Formalism.BasicNotions NumberField IsDedekindDomain Matrix Formalism.UG Formalism.MainNotions.G
+open scoped TensorProduct
+
+namespace Formalism.L2.G
+
+variable {R : Ranks} {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
+    [StarRing E] [Algebra F E] {sp : Spaces R F E} {gp : Fin 2 → ℕ}
+    {ι' : Type} [Fintype ι'] {hc : ι' → HCParam R} {C : ColumnChain R ι' hc} {A : ColumnsAtT R C}
+    {clsLat : ∀ i, C.cls i → Submodule (𝓞 E) (sp.X i).V}
+    {L : ColLevel R F E sp gp C A clsLat} {p nV : ℕ} {W Qq : Type} [CommRing W] [Field Qq] [Algebra W Qq]
+
+def ptG (I : LocId L p nV W Qq) (hdet : IsUnit sp.gram0.det) (i : compL L p)
+    (g : ∀ v : Fin nV, GL (Fin R.k) ((I.plc v).adicCompletion F)) : UPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F) :=
+  repP L p i * jP I hdet g
+
+def clsG (I : LocId L p nV W Qq) (hdet : IsUnit sp.gram0.det) (i : compL L p)
+    (g : ∀ v : Fin nV, GL (Fin R.k) ((I.plc v).adicCompletion F)) :
+    ClassSet ((ratPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F)).subgroupOf
+        (UPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F)))
+      (L.U.subgroupOf (UPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F))) :=
+  Quotient.mk'' (ptG I hdet i g)
+
+end Formalism.L2.G
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsMain
+
+section
 
 @[expose] public section
 
@@ -151,3 +191,6 @@ theorem level_action_lattice_eq (y : GL (Fin R.k) (E ⊗[F] FiniteAdeleRing (�
 end Main
 
 end Formalism.L2.G.Cmp
+end
+end
+end

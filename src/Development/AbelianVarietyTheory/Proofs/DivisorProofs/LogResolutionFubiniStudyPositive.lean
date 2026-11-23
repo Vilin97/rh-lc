@@ -2,27 +2,30 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPosDefMajorantOfPositiveIndexOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianSimilitudeEntrySqBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NegDefOfHermitianMatrixPositiveIndexEqZero
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairGramInvCongruent
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SylvesterInertiaInvariance
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -44,8 +47,109 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Separation.CompletelyRegular
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Normed.Group.Constructions
+public import Mathlib.Analysis.Normed.Module.RCLike.Real
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NegDefOfHermitianMatrixPositiveIndexEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairGramInvCongruent
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SylvesterInertiaInvariance
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Polynomial.Basic
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianSimilitudeEntrySqBound
+
+section
+
+@[expose] public section
+
+open Matrix
+
+namespace GlobalTheory
+
+theorem herm_scale_entry_bound : ∀ {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ), P.IsHermitian → (∀ x : Fin n → ℂ, x ≠ 0 → 0 < (star x ⬝ᵥ P *ᵥ x).re) → ∃ K : ℝ, ∀ (Y : Matrix (Fin n) (Fin n) ℂ) (s : ℝ), 0 < s → Yᴴ * P * Y = (s : ℂ) • P → ∀ i j, ‖Y i j‖ ^ 2 ≤ K * s := by
+  intro n P _hP hpos
+  cases n with
+  | zero => exact ⟨0, fun _ _ _ _ i => i.elim0⟩
+  | succ k =>
+  set q : (Fin (k+1) → ℂ) → ℝ := fun x => (star x ⬝ᵥ P *ᵥ x).re with hq
+  have hcont : Continuous q := by
+    simp only [hq, dotProduct, mulVec, Pi.star_apply]
+    fun_prop
+  have hsmul : ∀ (t : ℝ) (x : Fin (k+1) → ℂ), q ((t : ℂ) • x) = t ^ 2 * q x := by
+    intro t x
+    simp only [hq, star_smul, Complex.star_def, Complex.conj_ofReal, mulVec_smul, dotProduct_smul,
+      smul_dotProduct, smul_eq_mul]
+    rw [← mul_assoc, ← Complex.ofReal_mul, Complex.re_ofReal_mul]
+    ring
+  obtain ⟨x0, hx0S, hmin⟩ := (isCompact_sphere (0 : Fin (k+1) → ℂ) 1).exists_isMinOn
+    (NormedSpace.sphere_nonempty.mpr zero_le_one) hcont.continuousOn
+  set m := q x0 with hm_def
+  have hx0 : x0 ≠ 0 := by
+    intro h; rw [h] at hx0S; simp at hx0S
+  have hm : 0 < m := hpos x0 hx0
+  have hlow : ∀ x, m * ‖x‖ ^ 2 ≤ q x := by
+    intro x
+    by_cases hx : x = 0
+    · subst hx; simp [hq]
+    have hn : 0 < ‖x‖ := norm_pos_iff.mpr hx
+    set u : Fin (k+1) → ℂ := ((‖x‖⁻¹ : ℝ) : ℂ) • x with hu
+    have huS : u ∈ Metric.sphere (0 : Fin (k+1) → ℂ) 1 := by
+      rw [mem_sphere_zero_iff_norm, hu, norm_smul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos (inv_pos.mpr hn), inv_mul_cancel₀ hn.ne']
+    have hxu : x = ((‖x‖ : ℝ) : ℂ) • u := by
+      rw [hu, smul_smul, ← Complex.ofReal_mul, mul_inv_cancel₀ hn.ne', Complex.ofReal_one, one_smul]
+    have h1 : m ≤ q u := hmin huS
+    have hqx : q x = ‖x‖ ^ 2 * q u := by
+      conv_lhs => rw [hxu]
+      exact hsmul _ _
+    rw [hqx]
+    nlinarith [sq_nonneg ‖x‖]
+  have hY : ∀ (Y : Matrix (Fin (k+1)) (Fin (k+1)) ℂ) (s : ℝ), Yᴴ * P * Y = (s : ℂ) • P →
+      ∀ x, q (Y *ᵥ x) = s * q x := by
+    intro Y s h x
+    simp only [hq]
+    rw [star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, mulVec_mulVec, h,
+      Matrix.smul_mulVec, dotProduct_smul, smul_eq_mul, Complex.re_ofReal_mul]
+  set C : ℝ := ∑ j, ‖P j j‖ with hC
+  refine ⟨C / m, fun Y s hs h i j => ?_⟩
+  set e : Fin (k+1) → ℂ := Pi.single j 1 with he
+  have hYe : Y *ᵥ e = fun i => Y i j := by
+    rw [he, mulVec_single_one]; rfl
+  have hqe : q e = (P j j).re := by
+    simp [hq, he, mulVec_single_one]
+  have hle : ‖Y i j‖ ≤ ‖Y *ᵥ e‖ := by
+    rw [hYe]; exact norm_le_pi_norm (fun i => Y i j) i
+  have hPjj : (P j j).re ≤ C :=
+    (Complex.re_le_norm _).trans (Finset.single_le_sum (f := fun j => ‖P j j‖)
+      (fun _ _ => norm_nonneg _) (Finset.mem_univ j))
+  have key : m * ‖Y *ᵥ e‖ ^ 2 ≤ s * (P j j).re := by
+    rw [← hqe, ← hY Y s h e]; exact hlow _
+  have h2 : ‖Y i j‖ ^ 2 ≤ ‖Y *ᵥ e‖ ^ 2 := pow_le_pow_left₀ (norm_nonneg _) hle 2
+  rw [div_mul_eq_mul_div, le_div_iff₀ hm]
+  nlinarith [mul_le_mul_of_nonneg_left hPjj hs.le]
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianSimilitudeEntrySqBoundStatement
+
+section
+
+@[expose] public section
+
+open Matrix
+
+theorem _root_.GlobalTheory.T.hermitian_similitude_entry_sq_bound : ∀ {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ), P.IsHermitian → (∀ x : Fin n → ℂ, x ≠ 0 → 0 < (star x ⬝ᵥ P *ᵥ x).re) → ∃ K : ℝ, ∀ (Y : Matrix (Fin n) (Fin n) ℂ) (s : ℝ), 0 < s → Yᴴ * P * Y = (s : ℂ) • P → ∀ i j, ‖Y i j‖ ^ 2 ≤ K * s := by
+  first | (exact @GlobalTheory.herm_scale_entry_bound) | (exact GlobalTheory.herm_scale_entry_bound) | (intros; apply GlobalTheory.herm_scale_entry_bound  <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogResolutionFubiniStudyPositive
+
+section
 
 @[expose] public section
 
@@ -204,3 +308,6 @@ theorem GlobalTheory.LKCx.entries_sq_le_of_fixL : ∀ (p : ℕ) [Fact p.Prime] (
   refine (hK w _ _ hs (hPs w y hy) i j).trans ?_
   refine mul_le_mul_of_nonneg_right ((le_abs_self _).trans ?_) hs.le
   exact Finset.single_le_sum (f := fun w => |K w|) (fun _ _ => abs_nonneg _) (Finset.mem_univ w)
+end
+end
+end

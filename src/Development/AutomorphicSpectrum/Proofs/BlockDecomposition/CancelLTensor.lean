@@ -4,8 +4,6 @@ public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCoh
 public import Mathlib.Data.Nat.Prime.Defs
 public import Mathlib.LinearAlgebra.DFinsupp
 public import Mathlib.LinearAlgebra.TensorProduct.Tower
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GoodBaseChange
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PerfectTensorProduct
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -32,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,6 +44,66 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PerfectTensorProduct
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GoodBaseChange
+
+section
+
+@[expose] public section
+
+open TensorProduct CrystallineSemistableComparison.D
+open scoped LaurentPolynomial
+
+namespace GlobalTheory.CompanionTheory.GoodBaseChange
+
+theorem good_baseChange : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B : Type) [CommRing B] [Algebra A B] (r : ℕ → A) (K₁ K₀ : Type) [AddCommGroup K₁] [Module A K₁] [AddCommGroup K₀] [Module A K₀] (d : K₁ →ₗ[A] K₀), Good p r d → Good p (fun k => algebraMap A B (r k)) (d.baseChange B) := by
+  intro p _ A _ B _ _ r K₁ K₀ _ _ _ _ d hd
+  intro C _ _ hC w hw k
+  letI : Algebra A C := Algebra.compHom C (algebraMap A B)
+  haveI : IsScalarTower A B C := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let e₁ := AlgebraTensorModule.cancelBaseChange A B C C K₁
+  let e₀ := AlgebraTensorModule.cancelBaseChange A B C C K₀
+  have hnat : ∀ v, e₀ ((d.baseChange B).lTensor C v) = d.lTensor C (e₁ v) := by
+    intro v
+    induction v using TensorProduct.induction_on with
+    | zero => simp
+    | tmul c y =>
+      induction y using TensorProduct.induction_on with
+      | zero => simp
+      | tmul b x =>
+        simp [e₀, e₁, LinearMap.baseChange_tmul, AlgebraTensorModule.cancelBaseChange_tmul]
+      | add y y' h h' => simp only [tmul_add, map_add (f := _), h, h']
+    | add v v' h h' => simp only [map_add (f := _), h, h']
+  have hw' : d.lTensor C (e₁ w) = 0 := by rw [← hnat, hw, map_zero]
+  have hmem := hd C hC (e₁ w) hw' k
+  have hsmul : r k • e₁ w = e₁ (algebraMap A B (r k) • w) := by
+    rw [← algebraMap_smul C (algebraMap A B (r k)) w, map_smul, algebraMap_smul]
+    rfl
+  have key : ∀ u : C ⊗[A] LinearMap.ker d,
+      e₁.symm ((LinearMap.ker d).subtype.lTensor C u) ∈
+        LinearMap.range ((LinearMap.ker (d.baseChange B)).subtype.lTensor C) := by
+    intro u
+    induction u using TensorProduct.induction_on with
+    | zero => simp
+    | tmul c x =>
+      have hx : (1 : B) ⊗ₜ[A] (x : K₁) ∈ LinearMap.ker (d.baseChange B) := by
+        simp [LinearMap.baseChange_tmul, x.2]
+      refine ⟨c ⊗ₜ ⟨_, hx⟩, ?_⟩
+      simp [e₁, AlgebraTensorModule.cancelBaseChange_symm_tmul]
+    | add u u' h h' => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ h h'
+  obtain ⟨u, hu⟩ := hmem
+  have := key u
+  rw [hu, hsmul, LinearEquiv.symm_apply_apply] at this
+  exact this
+
+end GlobalTheory.CompanionTheory.GoodBaseChange
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CancelLTensor
+
+section
 
 @[expose] public section
 
@@ -94,3 +153,5 @@ theorem cov_comp : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B : Type
   exact Submodule.smul_mem _ _ h4
 
 end GlobalTheory.CompanionTheory.CovComp
+end
+end

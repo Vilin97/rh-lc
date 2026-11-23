@@ -1,7 +1,7 @@
 module
 
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsSchur
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AddGapLe
+public import Mathlib.Order.Fin.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,7 +41,41 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.Linter.Style
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AddGapLe
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Yoa4.add_gap_le :
+    ∀ {r : ℕ} {d : Fin r → ℕ}, StrictAnti d → ∀ (k : ℕ) (i j : Fin r), (↑j : ℕ) = (↑i : ℕ) + k → d j + k ≤ d i := by
+  intro r d hd k
+  induction k with
+  | zero =>
+    intro i j h
+    have hij : j = i := Fin.ext (by simpa using h)
+    subst hij
+    simp
+  | succ k ih =>
+    intro i j h
+    have hj := j.isLt
+    have hm : (i : ℕ) + k < r := by omega
+    have h1 := ih i ⟨(i : ℕ) + k, hm⟩ rfl
+    have h2 : d j < d ⟨(i : ℕ) + k, hm⟩ := hd (by
+      rw [Fin.lt_def]
+      simp only
+      omega)
+    omega
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PSchStrictAntiSplit
+
+section
 
 @[expose] public section
 
@@ -87,3 +121,5 @@ theorem SchStrictAntiSplit.proof : SchStrictAntiSplit.Statement := by
     omega
 
 end GroundTheory.Heights₂.Heights.RestTerms
+end
+end

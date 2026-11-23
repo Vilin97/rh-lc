@@ -3,11 +3,8 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.SinfRel
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.DGmap
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.ExistsFiniteSpanningTaylorWilesTensor
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.ExistsSemilinearEquivBaseChangeTensor
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.QuotBc
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.SpFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.TilSp
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.XmapsBc
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -27,7 +24,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -50,6 +46,198 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.RingTheory.Ideal.Maps
+import Mathlib.RingTheory.Coalgebra.CoassocSimps
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Lift
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.SpFin
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.TilSp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.AlgebraMapEq
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.TilMod
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.ExistsSemilinearEquivBaseChangeTensor
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+open scoped TensorProduct
+
+theorem UpperTheory.V.Pa.BC.exists_semilinear_equiv_baseChange_tensor :
+    ∀ (B P B' P₁ P' : Type) [CommRing B] [CommRing P] [CommRing B'] [CommRing P₁] [CommRing P'] [Algebra B P] [Algebra B B'] [Algebra P P₁] [Algebra B' P'] (τ : P₁ ≃+* P') (M M' : Type) [AddCommGroup M] [Module B M] [AddCommGroup M'] [Module B' M'] (_μ : B' ⊗[B] M ≃ₗ[B'] M'), (∀ b, τ (algebraMap P P₁ (algebraMap B P b)) = algebraMap B' P' (algebraMap B B' b)) → ∃ e : P₁ ⊗[P] (P ⊗[B] M) ≃+ P' ⊗[B'] M', ∀ z w, e (z • w) = τ z • e w := by
+  intro B P B' P₁ P' _ _ _ _ _ _ _ _ _ τ M M' _ _ _ _ μ h
+  letI : Algebra P₁ P' := τ.toRingHom.toAlgebra
+  letI : Algebra P P' := (τ.toRingHom.comp (algebraMap P P₁)).toAlgebra
+  letI : Algebra B P' := ((algebraMap B' P').comp (algebraMap B B')).toAlgebra
+  haveI : IsScalarTower P P₁ P' := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI : IsScalarTower B B' P' := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI : IsScalarTower B P P' := IsScalarTower.of_algebraMap_eq (fun b => (h b).symm)
+  let t : P₁ ≃ₗ[P₁] P' :=
+    { τ.toAddEquiv with
+      map_smul' := fun a b => by
+        show τ (a * b) = τ a * τ b
+        exact map_mul τ a b }
+  let e1 : P₁ ⊗[P] (P ⊗[B] M) ≃ₗ[P₁] P' ⊗[P] (P ⊗[B] M) :=
+    TensorProduct.AlgebraTensorModule.congr t (LinearEquiv.refl P _)
+  let e2 : P' ⊗[P] (P ⊗[B] M) ≃ₗ[P'] P' ⊗[B] M :=
+    TensorProduct.AlgebraTensorModule.cancelBaseChange B P P' P' M
+  let e3 : P' ⊗[B'] (B' ⊗[B] M) ≃ₗ[P'] P' ⊗[B] M :=
+    TensorProduct.AlgebraTensorModule.cancelBaseChange B B' P' P' M
+  let e4 : P' ⊗[B'] (B' ⊗[B] M) ≃ₗ[P'] P' ⊗[B'] M' :=
+    TensorProduct.AlgebraTensorModule.congr (LinearEquiv.refl P' P') μ
+  let f := e2.trans (e3.symm.trans e4)
+  refine ⟨e1.toAddEquiv.trans f.toAddEquiv, fun z w => ?_⟩
+  show f (e1 (z • w)) = τ z • f (e1 w)
+  rw [map_smul, ← map_smul f]
+  rfl
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.QuotBc
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+open scoped TensorProduct
+
+theorem UpperTheory.V.Pa.BC.quot_bc :
+    ∀ (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (M : Type) [AddCommGroup M] [Module R M] (I : Ideal R) (I' : Ideal R'), I' = I.map (algebraMap R R') → Nonempty (R' ⊗[R] (M ⧸ (I • ⊤ : Submodule R M)) ≃ₗ[R'] (R' ⊗[R] M) ⧸ (I' • ⊤ : Submodule R' (R' ⊗[R] M))) := by
+  intro R R' _ _ _ M _ _ I I' hI
+  subst hI
+  have hker : ∀ i ∈ I, ∀ y : R' ⊗[R] (M ⧸ (I • ⊤ : Submodule R M)), i • y = 0 := by
+    intro i hi y
+    induction y using TensorProduct.induction_on with
+    | zero => exact smul_zero _
+    | tmul a q =>
+      induction q using Submodule.Quotient.induction_on with
+      | H m =>
+        rw [← TensorProduct.tmul_smul, ← Submodule.Quotient.mk_smul,
+          (Submodule.Quotient.mk_eq_zero _).2 (Submodule.smul_mem_smul hi Submodule.mem_top),
+          TensorProduct.tmul_zero]
+    | add y z hy hz => rw [smul_add, hy, hz, add_zero]
+  have hann : I.map (algebraMap R R') ≤ Module.annihilator R' (R' ⊗[R] (M ⧸ (I • ⊤ : Submodule R M))) :=
+    Ideal.map_le_iff_le_comap.2 fun i hi => Module.mem_annihilator.2 fun y => by
+      rw [algebraMap_smul]
+      exact hker i hi y
+  let ψ : M ⧸ (I • ⊤ : Submodule R M) →ₗ[R]
+      (R' ⊗[R] M) ⧸ (I.map (algebraMap R R') • ⊤ : Submodule R' (R' ⊗[R] M)) :=
+    (I • ⊤ : Submodule R M).liftQ
+      (((I.map (algebraMap R R') • ⊤ : Submodule R' (R' ⊗[R] M)).mkQ.restrictScalars R) ∘ₗ
+        TensorProduct.mk R R' M 1) (by
+      rw [Submodule.smul_le]
+      intro i hi m _
+      rw [LinearMap.mem_ker, LinearMap.comp_apply, TensorProduct.mk_apply, LinearMap.restrictScalars_apply,
+        Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, TensorProduct.tmul_smul,
+        ← algebraMap_smul R' i ((1 : R') ⊗ₜ[R] m)]
+      exact Submodule.smul_mem_smul (Ideal.mem_map_of_mem _ hi) Submodule.mem_top)
+  let φ := ψ.liftBaseChange R'
+  let χ := (I.map (algebraMap R R') • ⊤ : Submodule R' (R' ⊗[R] M)).liftQ
+    (LinearMap.baseChange R' (I • ⊤ : Submodule R M).mkQ) (by
+      rw [Submodule.smul_le]
+      intro r hr x _
+      rw [LinearMap.mem_ker, map_smul]
+      exact Module.mem_annihilator.1 (hann hr) _)
+  refine ⟨LinearEquiv.ofLinear φ χ ?_ ?_⟩
+  · apply Submodule.linearMap_qext
+    apply TensorProduct.AlgebraTensorModule.ext
+    intro a m
+    simp [φ, χ, ψ]
+    rw [← Submodule.Quotient.mk_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+  · apply TensorProduct.AlgebraTensorModule.ext
+    intro a q
+    induction q using Submodule.Quotient.induction_on with
+    | H m => simp [φ, χ, ψ, TensorProduct.smul_tmul']
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.XmapsBc
+
+section
+
+@[expose] public section
+
+open IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
+open scoped TensorProduct
+
+theorem UpperTheory.V.Pa.BC.xmaps_bc :
+    ∀ (O O' : Type) [CommRing O] [CommRing O'] [Algebra O O'] [Module.Finite O O'] (R P : Type) [CommRing R] [Algebra O R] [IsNoetherianRing R] [CommRing P] [Algebra O P] [IsNoetherianRing P] (θ : R →ₐ[O] P) (X X0 : Type) [AddCommGroup X] [Module R X] [AddCommGroup X0] [Module P X0] (f : R) (φ : X0 →+ X) (ψ : X →+ X0), (∃ s : Finset X0, ∀ z, ∃ c : X0 → R, z = ∑ g ∈ s, θ (c g) • g) → (∀ (t : R) z, φ (θ t • z) = t • φ z) → (∀ (t : R) z, ψ (t • z) = θ t • ψ z) → (∀ z, φ (ψ z) = f • z) → (∀ z, ψ (φ z) = θ f • z) → ∃ (φ' : Til O O' P ⊗[P] X0 →+ Til O O' R ⊗[R] X) (ψ' : Til O O' R ⊗[R] X →+ Til O O' P ⊗[P] X0), (∀ t z, φ' (Til.map O' θ t • z) = t • φ' z) ∧ (∀ t z, ψ' (t • z) = Til.map O' θ t • ψ' z) ∧ (∀ z, φ' (ψ' z) = Til.ι O O' R f • z) ∧ ∀ z, ψ' (φ' z) = Til.map O' θ (Til.ι O O' R f) • z := by
+  intro O O' _ _ _ _ R P _ _ _ _ _ _ θ X X0 _ _ _ _ f φ ψ hgen hφ hψ hφψ hψφ
+  letI : Module R X0 := Module.compHom X0 θ.toRingHom
+  haveI : Module.Finite R X0 := by
+    refine ⟨?_⟩
+    obtain ⟨s, hs⟩ := hgen
+    refine ⟨s, ?_⟩
+    rw [eq_top_iff]
+    intro z _
+    obtain ⟨c, hc⟩ := hs z
+    rw [hc]
+    refine Submodule.sum_mem _ (fun g hg => ?_)
+    exact Submodule.smul_mem _ (c g) (Submodule.subset_span hg)
+  obtain ⟨e, he1, he2⟩ := BC.til_mod O O' R P θ X0 (fun a m => rfl)
+  let φL : X0 →ₗ[R] X :=
+    { toFun := φ
+      map_add' := φ.map_add
+      map_smul' := fun t z => hφ t z }
+  let ψL : X →ₗ[R] X0 :=
+    { toFun := ψ
+      map_add' := ψ.map_add
+      map_smul' := fun t z => hψ t z }
+  let A := Til O O' R
+  let Φ := LinearMap.baseChange A φL
+  let Ψ := LinearMap.baseChange A ψL
+  have hsc : ∀ (M : Type) [AddCommGroup M] [Module R M] (g : M →ₗ[R] M) (r : R), (∀ m, g m = r • m) →
+      ∀ w : A ⊗[R] M, LinearMap.baseChange A g w = Til.ι O O' R r • w := by
+    intro M _ _ g r hg w
+    induction w using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a m =>
+      rw [LinearMap.baseChange_tmul, hg, ← Til.algebraMap_eq, ← TensorProduct.smul_tmul,
+        TensorProduct.smul_tmul', smul_eq_mul, Algebra.smul_def]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
+  have heinv : ∀ (t : A) (z : Til O O' P ⊗[P] X0), e.symm (Til.map O' θ t • z) = t • e.symm z := by
+    intro t z
+    apply e.injective
+    rw [he2, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply]
+  refine ⟨Φ.toAddMonoidHom.comp e.symm.toAddMonoidHom, e.toAddMonoidHom.comp Ψ.toAddMonoidHom, ?_, ?_, ?_, ?_⟩
+  · intro t z
+    simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddEquiv.coe_toAddMonoidHom,
+      LinearMap.toAddMonoidHom_coe]
+    rw [heinv, LinearMap.map_smul]
+  · intro t z
+    simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddEquiv.coe_toAddMonoidHom,
+      LinearMap.toAddMonoidHom_coe]
+    rw [LinearMap.map_smul, he2]
+  · intro z
+    simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddEquiv.coe_toAddMonoidHom,
+      LinearMap.toAddMonoidHom_coe, AddEquiv.symm_apply_apply]
+    have := hsc X (φL ∘ₗ ψL) f (fun m => hφψ m) z
+    rw [LinearMap.baseChange_comp] at this
+    exact this
+  · intro z
+    simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddEquiv.coe_toAddMonoidHom,
+      LinearMap.toAddMonoidHom_coe]
+    have := hsc X0 (ψL ∘ₗ φL) f (fun m => hψφ m) (e.symm z)
+    rw [LinearMap.baseChange_comp] at this
+    change e (Ψ (Φ (e.symm z))) = _
+    rw [show Ψ (Φ (e.symm z)) = Til.ι O O' R f • e.symm z from this, he2, AddEquiv.apply_symm_apply]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PatchingBaseChange.MapsBc
+
+section
 
 @[expose] public section
 
@@ -251,3 +439,5 @@ theorem UpperTheory.V.Pa.BC.maps_bc :
     exact hkill _ (m.rel1 j g) z
   · rw [hf, hD, hX, hU, map_quadratic_element_two, mb_tr, ← map_mul, ← map_pow]
     exact hkill _ (m.rel2 j i g) z
+end
+end

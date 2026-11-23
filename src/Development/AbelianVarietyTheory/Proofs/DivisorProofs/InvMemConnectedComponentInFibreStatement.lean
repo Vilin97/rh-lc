@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.AlgebraicGeometry.Pullbacks
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemConnectedComponentInFibre
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -10,6 +9,7 @@ import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
@@ -41,6 +41,50 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemConnectedComponentInFibre
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
+open scoped CategoryTheory.Obj
+
+namespace GlobalTheory
+
+theorem inv_mem_connectedComponentIn_fibre (S : Scheme.{0}) (G : Over S) [GrpObj G] (y : G.left)
+    (hy : y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))}) :
+    (ι[G]).left y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} := by
+  simp only [Set.mem_setOf_eq] at hy ⊢
+  have hw : ∀ z : G.left, G.hom ((ι[G]).left z) = G.hom z := by
+    intro z
+    have h := Over.w (ι[G])
+    rw [← Scheme.Hom.comp_apply, h]
+  have hη : ∀ s : S, (ι[G]).left ((η[G]).left s) = (η[G]).left s := by
+    intro s
+    have h : (η[G] ≫ ι[G]).left = (η[G]).left := by rw [GrpObj.one_inv]
+    rw [← Scheme.Hom.comp_apply, ← Over.comp_left, h]
+  rw [hw]
+  set F := G.hom ⁻¹' {G.hom y}
+  set e := (η[G]).left (G.hom y)
+  have heF : e ∈ F := (connectedComponentIn_nonempty_iff.mp ⟨y, hy⟩)
+  have hsub : (ι[G]).left '' connectedComponentIn F e ⊆ connectedComponentIn F e := by
+    refine (isPreconnected_connectedComponentIn.image _ (ι[G]).left.continuous.continuousOn).subset_connectedComponentIn
+      ⟨e, mem_connectedComponentIn heF, hη _⟩ ?_
+    rintro _ ⟨z, hz, rfl⟩
+    have hzF : z ∈ F := connectedComponentIn_subset _ _ hz
+    simp only [F, Set.mem_preimage, Set.mem_singleton_iff] at hzF ⊢
+    rw [hw, hzF]
+  exact hsub ⟨y, hy, rfl⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemConnectedComponentInFibreStatement
+
+section
+
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
@@ -48,3 +92,5 @@ open scoped CategoryTheory.Obj
 
 theorem _root_.GlobalTheory.T.inv_mem_identity_component_fibre : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] (y : G.left), y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} → (ι[G]).left y ∈ {x : G.left | x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x}) ((η[G]).left (G.hom x))} := by
   first | exact @GlobalTheory.inv_mem_connectedComponentIn_fibre | exact GlobalTheory.inv_mem_connectedComponentIn_fibre | (intros; apply GlobalTheory.inv_mem_connectedComponentIn_fibre <;> assumption)
+end
+end

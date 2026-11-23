@@ -2,12 +2,10 @@ module
 
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.TwentyFiveMulSmallConstant
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.ExistsPowerSumLowerBound
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTDHFinishB
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.UbTerms
+public import Mathlib.Analysis.Complex.Norm
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,8 +22,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -46,6 +42,54 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.UbTerms
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTDHFinishB
+
+section
+
+@[expose] public section
+
+open Finset Complex
+
+noncomputable section
+
+namespace Formalism.HermitianLattices.Ext.PrimesInProgressions.DHF
+
+theorem u_disc (η : ℝ) (hη : 0 < η) (w : ℂ) (hw : η ≤ w.re) :
+    ‖(η : ℂ) / w‖ ^ 2 ≤ ((η : ℂ) / w).re := by
+  have hw0 : w ≠ 0 := by
+    intro h
+    rw [h, Complex.zero_re] at hw
+    linarith
+  have hn : 0 < Complex.normSq w := Complex.normSq_pos.2 hw0
+  rw [norm_div, div_pow, Complex.sq_norm, Complex.sq_norm, Complex.div_re, Complex.normSq_ofReal,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, zero_div, add_zero]
+  have h1 : η * η ≤ η * w.re := mul_le_mul_of_nonneg_left hw hη.le
+  simp only [div_eq_mul_inv]
+  exact mul_le_mul_of_nonneg_right h1 (inv_nonneg.2 hn.le)
+
+theorem u_sum_re (η : ℝ) {N : ℕ} (w : Fin N → ℂ) (j : ℕ) :
+    (∑ i, ((η : ℂ) / w i) ^ j).re = η ^ j * (∑ i, 1 / (w i) ^ j).re := by
+  have h : ∑ i, ((η : ℂ) / w i) ^ j = ((η ^ j : ℝ) : ℂ) * ∑ i, 1 / (w i) ^ j := by
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl (fun i _ => ?_)
+    rw [div_pow, div_eq_mul_one_div, Complex.ofReal_pow]
+  rw [h, Complex.re_ofReal_mul]
+
+
+end Formalism.HermitianLattices.Ext.PrimesInProgressions.DHF
+end
+end
+end
+
+-- Source module: Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.NormUSum
+
+section
 
 @[expose] public section
 
@@ -208,3 +252,6 @@ theorem core2 (CT : ℝ) (a : ℕ) (hCT : 0 < CT) (ha : 1 ≤ a)
   exact final_step a (E0 a D) (GG a CP cZ cS c₁) hE0 hG j (by linarith only [hthK, hjr]) htot
 
 end Formalism.HermitianLattices.Ext.PrimesInProgressions.TuranPowerSumBounds
+end
+end
+end

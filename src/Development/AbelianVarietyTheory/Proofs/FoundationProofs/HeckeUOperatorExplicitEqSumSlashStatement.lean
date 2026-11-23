@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HeckeUOperatorExplicitEqSumSlash
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -45,6 +44,43 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.HeckeUOperatorExplicitEqSumSlash
+
+section
+
+@[expose] public section
+
+open UpperHalfPlane ModularForm CongruenceSubgroup MeasureTheory
+open scoped MatrixGroups ModularForm Manifold
+
+namespace GlobalTheory.Hk
+
+theorem uOp_eq_sum_slash (q : ℕ) (k : ℤ) (f : ℍ → ℂ) (hq : 0 < q) : GlobalTheory.Hk.uOp q f = ∑ j ∈ Finset.range q, f ∣[k] (Matrix.GeneralLinearGroup.map (Rat.castHom ℝ) (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(1 : ℚ), (j : ℚ); 0, (q : ℚ)] (by simp [Matrix.det_fin_two_of]; exact_mod_cast hq.ne'))) := by
+  funext z
+  rw [Finset.sum_apply, uOp, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  set g := Matrix.GeneralLinearGroup.map (Rat.castHom ℝ) (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(1 : ℚ), (j : ℚ); 0, (q : ℚ)] (by simp [Matrix.det_fin_two_of]; exact_mod_cast hq.ne')) with hg
+  have hval : g.1 = !![(1 : ℝ), (j : ℝ); 0, (q : ℝ)] := by
+    ext a b
+    fin_cases a <;> fin_cases b <;> simp [hg]
+  have hdet : g.det.val = (q : ℝ) := by
+    rw [Matrix.GeneralLinearGroup.val_det_apply, hval]; simp
+  have hpos : 0 < g.det.val := by rw [hdet]; exact_mod_cast hq
+  have hq0 : (q : ℂ) ≠ 0 := by exact_mod_cast hq.ne'
+  rw [slash_apply, σ, ite_eq_left hpos, abs_of_pos hpos, hdet, ← ofComplex_apply (g • z),
+    coe_smul_of_det_pos hpos]
+  simp [num, denom, hval]
+  rw [mul_assoc, ← zpow_neg (q : ℂ) k, ← zpow_add₀ hq0,
+    show k - 1 + -k = -1 by omega, zpow_neg_one, mul_comm]
+
+end GlobalTheory.Hk
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.HeckeUOperatorExplicitEqSumSlashStatement
+
+section
+
 @[expose] public section
 
 open UpperHalfPlane ModularForm CongruenceSubgroup MeasureTheory
@@ -52,3 +88,5 @@ open scoped MatrixGroups ModularForm Manifold
 
 theorem _root_.GlobalTheory.T.heckeUOperatorExplicit_eq_sum_slash : ∀ (q : ℕ) (k : ℤ) (f : ℍ → ℂ) (hq : 0 < q), GlobalTheory.Hk.uOp q f = ∑ j ∈ Finset.range q, f ∣[k] (Matrix.GeneralLinearGroup.map (Rat.castHom ℝ) (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(1 : ℚ), (j : ℚ); 0, (q : ℚ)] (by simp [Matrix.det_fin_two_of]; exact_mod_cast hq.ne'))) := by
   first | exact @GlobalTheory.Hk.uOp_eq_sum_slash | exact GlobalTheory.Hk.uOp_eq_sum_slash | (intros; apply GlobalTheory.Hk.uOp_eq_sum_slash <;> assumption)
+end
+end

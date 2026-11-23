@@ -1,10 +1,10 @@
 module
 
-public import Development.AutomorphicArithmetic.ResidueCharacters.RowThreeC
-public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.BoundAtTwoThreeFamilyFon
+public import Development.AutomorphicArithmetic.ResidueCharacters.RowDef
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -35,6 +35,33 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.BoundAtTwoThreeFamilyFon
+
+-- Source module: Development.AutomorphicArithmetic.ResidueCharacters.RowThreeC
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
+
+namespace UpperTheory.N
+
+def RowOnAt {D : D7} (L : SizeData₂ D) (ρ : FamilyRepresentationConstants.RhoFam D) (Q : ℕ → Prop) (A B : ℝ) : Prop :=
+  ∀ k, TwistedPlaces.TwLoc D k → Q (D.nd.l k) → ∀ π ∈ D.nd.Zgood k, Bd ρ k π (costC L A B (D.nd.l k))
+
+end UpperTheory.N
+
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.NRowOn
+
+section
 
 @[expose] public section
 
@@ -53,5 +80,7 @@ def RowOnAlt (Q : D7 → ℕ → Prop) (A B : ℝ) : Prop := ∀ {eps : ℝ} (Fm
 def SecondBoundCondition (A B : ℝ) : Prop := _root_.UpperTheory.N.RowOnAlt (fun _ l => l = 2) A B
 def ThirdBoundCondition (A B : ℝ) : Prop := _root_.UpperTheory.N.RowOnAlt (fun D l => l = 3 ∧ l ∉ D.host.small) A B
 end UpperTheory.N
+end
+end
 end
 end

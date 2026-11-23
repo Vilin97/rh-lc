@@ -1,16 +1,20 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ProjectiveAutomorphicHecke.CharConj
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AgreeOfAdjoin
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjEqNegOfSq
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,6 +41,64 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Mathlib.Geometry.Manifold.StructureGroupoid
+import Mathlib.Algebra.Order.Star.Real
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AgreeOfAdjoin
+
+section
+
+@[expose] public section
+
+open scoped IntermediateField TensorProduct Matrix Pointwise NumberField Topology ContDiff NNReal ENNReal Polynomial DirectSum BigOperators InnerProductSpace Manifold
+
+theorem UpperTheory.Reformulated.B.Qk58.agree_of_adjoin :
+    ∀ {E : Type} [inst : Field E]
+    [inst_1 : NumberField E] (φ ψ : E →+* ℂ) {a b : E},
+    (φ : E → ℂ) a = (ψ : E → ℂ) a → b ∈ ℚ⟮a⟯ → (φ : E → ℂ) b = (ψ : E → ℂ) b := by
+  intro E _ _ φ ψ a b ha hb
+  induction hb using IntermediateField.adjoin_induction with
+  | mem x hx =>
+    rw [Set.mem_singleton_iff.mp hx]
+    exact ha
+  | algebraMap q => simp
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  | inv x _ hx => rw [map_inv₀, map_inv₀, hx]
+  | mul x y _ _ hx hy => rw [map_mul, map_mul, hx, hy]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjEqNegOfSq
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Reformulated.B.Qk60.conj_eq_neg_of_sq :
+    ∀ {z : ℂ} {d : ℕ},
+    (0 : ℕ) < d → z ^ (2 : ℕ) = -(↑d : ℂ) → (starRingEnd ℂ : ℂ → ℂ) z = -z := by
+  intro z d hd h
+  have hd' : (0 : ℝ) < d := Nat.cast_pos.mpr hd
+  have hre : z.re * z.re - z.im * z.im = -(d : ℝ) := by
+    simpa [pow_two] using congrArg Complex.re h
+  have him : z.re * z.im + z.im * z.re = 0 := by
+    simpa [pow_two] using congrArg Complex.im h
+  have h0 : z.re = 0 := by
+    have hmul : z.re * z.im = 0 := by linarith
+    rcases mul_eq_zero.mp hmul with h1 | h1
+    · exact h1
+    · rw [h1] at hre
+      nlinarith [mul_self_nonneg z.re]
+  apply Complex.ext
+  · simp [h0]
+  · simp
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ProjectiveAutomorphicHecke.PEpsIff
+
+section
 
 @[expose] public section
 
@@ -73,4 +135,6 @@ theorem pEpsIff_of : EpsIff := by
 
 end UpperTheory.Gal.CertificateRingHomMap
 
+end
+end
 end

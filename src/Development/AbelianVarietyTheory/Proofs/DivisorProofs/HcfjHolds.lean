@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsEqOfNatCastMulMem
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.HilbertClassFieldJ
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ComplexMultiplicationJacquetShalika
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,6 +37,25 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
+-- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.HilbertClassFieldJ
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory.CompanionTheory.Hypotheses₂
+
+theorem hilbertClassFieldJ : GlobalTheory.Published.HilbertClassFieldJ :=
+  GlobalTheory.Published.ComplexMultiplicationJSt.hilbertClassFieldJ GlobalTheory.CompanionTheory.Published.complexMultiplicationJ
+
+end GlobalTheory.CompanionTheory.Hypotheses₂
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HcfjHolds
+
+section
+
 @[expose] public section
 
 namespace GlobalTheory.Laid
@@ -44,3 +63,5 @@ namespace GlobalTheory.Laid
 theorem hcfj_holds : GlobalTheory.Published.HilbertClassFieldJ := GlobalTheory.CompanionTheory.Hypotheses₂.hilbertClassFieldJ
 
 end GlobalTheory.Laid
+end
+end

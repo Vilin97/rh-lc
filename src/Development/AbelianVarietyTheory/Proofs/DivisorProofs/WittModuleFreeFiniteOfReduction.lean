@@ -2,8 +2,6 @@ module
 
 public import Mathlib.RingTheory.AdicCompletion.Basic
 public import Mathlib.RingTheory.WittVector.Basic
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WittFrobeniusPowEqOne
-import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,15 +20,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.AdicCompletion.Functoriality
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.Complete
-public import Mathlib.RingTheory.WittVector.DiscreteValuationRing
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -38,7 +29,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -51,13 +41,89 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.FieldTheory.Perfect
+import Mathlib.Algebra.Module.StablyFree.Basic
+public import Mathlib.RingTheory.AdicCompletion.Functoriality
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.Complete
+public import Mathlib.RingTheory.WittVector.DiscreteValuationRing
+import Mathlib.Tactic.Linter.HaveILetI
 import Development.AbelianVarietyTheory.Definitions.Divisors.FormalCoboundarySmul
 import Development.AbelianVarietyTheory.Definitions.Divisors.KerIdealCompOfSurjective
 import Development.AbelianVarietyTheory.Definitions.Divisors.ToSpanSingletonConstGenInjective
 public import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.RingTheory.MvPowerSeries.Basic
 public import Mathlib.RingTheory.WittVector.Teichmuller
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.WittFrobeniusPowEqOne
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open WittVector
+
+theorem isPrecomplete_pi {R : Type*} [CommRing R] (I : Ideal R) [IsPrecomplete I R]
+    (ι : Type*) [Finite ι] : IsPrecomplete I (ι → R) := by
+  classical
+  cases nonempty_fintype ι
+  have coord : ∀ (J : Ideal R) (x : ι → R),
+      x ∈ (J • ⊤ : Submodule R (ι → R)) ↔ ∀ i, x i ∈ (J • ⊤ : Submodule R R) := by
+    intro J x
+    constructor
+    · intro hx i
+      have h1 := Submodule.mem_map_of_mem (f := (LinearMap.proj i : (ι → R) →ₗ[R] R)) hx
+      rw [Submodule.map_smul''] at h1
+      exact Submodule.smul_mono le_rfl le_top h1
+    · intro hx
+      have hsum : x = ∑ i, (x i) • (Pi.single i (1 : R) : ι → R) := by
+        ext j
+        simp [Finset.sum_apply, Pi.single_apply]
+      rw [hsum]
+      refine Submodule.sum_mem _ fun i _ => ?_
+      have hi : x i ∈ J := by simpa using hx i
+      exact Submodule.smul_mem_smul hi Submodule.mem_top
+  refine ⟨fun f hf => ?_⟩
+  have hc : ∀ i, ∃ L : R, ∀ n, f n i ≡ L [SMOD (I ^ n • ⊤ : Submodule R R)] := by
+    intro i
+    refine IsPrecomplete.prec inferInstance (f := fun n => f n i) ?_
+    intro m n hmn
+    have := hf hmn
+    rw [SModEq.sub_mem, coord] at this
+    rw [SModEq.sub_mem]
+    exact this i
+  choose L hL using hc
+  refine ⟨L, fun n => ?_⟩
+  rw [SModEq.sub_mem, coord]
+  intro i
+  have := hL i n
+  rwa [SModEq.sub_mem] at this
+
+section
+
+variable {p : ℕ} [Fact p.Prime] {k k' : Type} [Field k] [CharP k p] [PerfectRing k p]
+  [Field k'] [CharP k' p] [PerfectRing k' p]
+
+end
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittModuleFreeFiniteOfReduction
+
+section
 
 @[expose] public section
 
@@ -116,3 +182,5 @@ theorem wittModule_free_finite_of_reduction : ∀ (p : ℕ) [Fact p.Prime] (k : 
   exact ⟨Module.free_of_finite_type_torsion_free', inferInstance⟩
 
 end GlobalTheory
+end
+end

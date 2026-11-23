@@ -13,17 +13,19 @@ public import Development.AutomorphicArithmetic.CommutativeAlgebra.QuotientUniqu
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.TraceEtaIdentity
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.TracePullbackIdentity
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.TraceUnitOfPullbackMultiplier
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.ODownEx
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.OEpsEx
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.LiftUnit
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelPosOfCoprime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -50,9 +52,154 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelPosOfCoprime
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.LiftUnit
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsEtPlace
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompEqOneOfTransl
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarrisTaylorLevelForgettingFiniteEtaleSurjectiveStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocallyOfFinitePresentationOfIsQProjOver
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.OLevDown
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.IsEtIdealOfPlace
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtModelForgetFiniteEtale
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Hecke GlobalTheory.UPel.HT.EtLev
+
+noncomputable section
+
+namespace GlobalTheory.UPel.HT.EtLev.LevForget
+
+variable {p : ℕ} [Fact p.Prime] {D : Datum p} {R : Type} [CommRing R]
+
+def forgetMap {b : Base D R} {N' : ℕ} {S S' : Scheme.{0}} {s : S ⟶ Sp R} {s' : S' ⟶ Sp R} {o' : Obj b N' s'}
+    {o : Obj b N' s} {f : S' ⟶ S} (m : ObjMap o' o f) (N : ℕ) (hd : N ∣ N') (hc : N'.Coprime p) :
+    ObjMap (o'.forget N hd hc) (o.forget N hd hc) f :=
+  ⟨m.φ, m.φ₂, m.cart, m.sq, m.act, m.pol, fun y => m.eta _⟩
+
+end GlobalTheory.UPel.HT.EtLev.LevForget
+end
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.ODownEx
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.UPel.HT.EtLev GlobalTheory.LKTrip GlobalTheory.LKGeo
+open UpperTheory.Gal.Int.Geo UpperTheory.Gal.FiniteEtaleModels
+
+theorem UpperTheory.Gal.FiniteEtaleModels.O.downEx :
+    UpperTheory.Gal.FiniteEtaleModels.O.DownEx := by
+  intro p _ D hm _ E _ _ gb w q _ r 𝔴 𝔫 S N₀ κ 𝔟₁ 𝔟₂ X₁ X₂ ε h
+  obtain ⟨h3, -, -, -, -⟩ := X₂.lev
+  obtain ⟨-, hcq₁, -, -, e₁, he₁⟩ := X₁.lev
+  have hd : N₀ ∣ N₀ * κ := dvd_mul_right N₀ κ
+  have hne : 𝔟₁ ≠ ⊥ := by
+    intro h0
+    have hq : ((q : 𝓞 D.F)) ∈ uId D q r := Ideal.subset_span (Set.mem_insert _ _)
+    have hmem : ((q : 𝓞 D.F)) ^ e₁ ∈ 𝔟₁ := he₁ (Ideal.pow_mem_pow hq e₁)
+    rw [h0, Ideal.mem_bot] at hmem
+    have hq0 : ((q : 𝓞 D.F)) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : q.Prime).ne_zero
+    exact pow_ne_zero e₁ hq0 hmem
+  have hL := UpperTheory.Gal.FiniteEtaleModels.O.levDown q (datAt S.atq S.sp) hm (Ow w) S.b (N₀ * κ) X₁.Y.X X₁.Y.s
+    X₁.Y.univ 𝔟₁ 𝔟₂ ε hne h X₁.Y.lv X₁.Y.isLev
+  obtain ⟨t, ⟨ht, m, hmt⟩, -⟩ := X₂.Y.rep X₁.Y.X X₁.Y.s (X₁.Y.univ.forget N₀ hd hcq₁)
+    (fun y => X₁.Y.lv ((algebraMap (𝓞 D.F) D.O) ε • y)) hL
+  obtain ⟨u, ⟨hu, ⟨mu⟩⟩, -⟩ := X₂.M.rep X₁.M.X X₁.M.s (X₁.M.univ.forget N₀ hd hcq₁)
+  obtain ⟨hfu, heu, -⟩ := GlobalTheory.T.harrisTaylor_levelForgetting_finite_etale_surjective q (datAt S.atq S.sp) (Ow w) S.b N₀ (N₀ * κ) hd hcq₁ h3
+    X₂.M X₁.M u hu ⟨mu⟩
+  have hsq : t ≫ X₂.π = X₁.π ≫ u := by
+    obtain ⟨v, -, huniq⟩ := X₂.M.rep X₁.Y.X X₁.Y.s (X₁.Y.univ.forget N₀ hd hcq₁)
+    have e1 := huniq (t ≫ X₂.π) ⟨by rw [Category.assoc, X₂.ov, ht], ⟨m.comp X₂.mπ⟩⟩
+    have e2 := huniq (X₁.π ≫ u)
+      ⟨by rw [Category.assoc, hu, X₁.ov], ⟨(LevForget.forgetMap X₁.mπ N₀ hd hcq₁).comp mu⟩⟩
+    rw [e1, e2]
+  haveI := X₁.fin
+  haveI := X₁.et
+  haveI := X₂.fin
+  haveI := X₂.et
+  haveI : IsFinite (t ≫ X₂.π) := by rw [hsq]; infer_instance
+  haveI : Etale (t ≫ X₂.π) := by rw [hsq]; infer_instance
+  exact ⟨t, m, ht, IsFinite.of_comp t X₂.π, Etale.of_comp t X₂.π, hmt⟩
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.OEpsEx
+
+section
+
+@[expose] public section
+
+theorem UpperTheory.Gal.FiniteEtaleModels.O.epsEx :
+    UpperTheory.Gal.FiniteEtaleModels.O.EpsEx := by
+  intro A _ _ _ 𝔟₁ 𝔟₂ a₁ a₂ M₁ M₂ t hpos hM hle h₁ h₂
+  unfold UpperTheory.Gal.Int.Geo.IsGen at h₁ h₂
+  have hM1 : (M₁ : A) ≠ 0 := Nat.cast_ne_zero.mpr hpos.ne'
+  have hMc : (M₁ : A) = (t : A) * (M₂ : A) := by rw [hM]; push_cast; ring
+  set I₁ := Ideal.span {a₁} ⊔ Ideal.span {(M₁ : A)} with hI₁
+  have hI₁0 : I₁ ≠ ⊥ := by
+    intro h
+    have hmem : (M₁ : A) ∈ I₁ := Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
+    rw [h, Ideal.mem_bot] at hmem
+    exact hM1 hmem
+  have h𝔟0 : 𝔟₁ ≠ ⊥ := by
+    intro h
+    rw [h, Ideal.mul_bot, eq_comm, Ideal.span_singleton_eq_bot] at h₁
+    exact hM1 h₁
+  have hkey : ∀ {J : Ideal A}, J * 𝔟₂ ≤ Ideal.span {(M₁ : A)} → J ≤ I₁ := by
+    intro J hJ
+    have h3 : J * 𝔟₁ ≤ I₁ * 𝔟₁ := by
+      rw [h₁]
+      exact le_trans (Ideal.mul_mono_right hle) hJ
+    rw [← Ideal.dvd_iff_le] at h3 ⊢
+    exact (mul_dvd_mul_iff_right h𝔟0).mp h3
+  have hta : (t : A) * a₂ ∈ I₁ := by
+    have hsp : Ideal.span {(t : A) * a₂} ≤ I₁ := by
+      apply hkey
+      rw [← Ideal.span_singleton_mul_span_singleton, mul_assoc, hMc,
+        ← Ideal.span_singleton_mul_span_singleton, ← h₂]
+      exact Ideal.mul_mono_right (Ideal.mul_mono_left le_sup_left)
+    exact hsp (Ideal.mem_span_singleton_self _)
+  obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp hta
+  obtain ⟨ε, rfl⟩ := Ideal.mem_span_singleton'.mp hy
+  obtain ⟨d, rfl⟩ := Ideal.mem_span_singleton'.mp hz
+  refine ⟨ε, ⟨-d, by rw [← hyz]; ring⟩, ?_⟩
+  have hJK : I₁ * Ideal.span {ε} ⊔ Ideal.span {(M₁ : A)} =
+      Ideal.span {(t : A)} * (Ideal.span {a₂} ⊔ Ideal.span {(M₂ : A)}) := by
+    rw [Ideal.mul_sup, Ideal.span_singleton_mul_span_singleton,
+      Ideal.span_singleton_mul_span_singleton, ← hMc, hI₁, Ideal.sup_mul,
+      Ideal.span_singleton_mul_span_singleton, Ideal.span_singleton_mul_span_singleton]
+    apply le_antisymm
+    · refine sup_le (sup_le ?_ ?_) le_sup_right
+      · rw [Ideal.span_singleton_le_iff_mem]
+        have hae : a₁ * ε = (t : A) * a₂ - d * M₁ := by rw [← hyz]; ring
+        rw [hae]
+        exact Ideal.sub_mem _ (Ideal.mem_sup_left (Ideal.mem_span_singleton_self _))
+          (Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _)))
+      · rw [Ideal.span_singleton_le_iff_mem]
+        exact Ideal.mem_sup_right (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))
+    · refine sup_le ?_ le_sup_right
+      rw [Ideal.span_singleton_le_iff_mem, ← hyz]
+      refine Ideal.add_mem _ (Ideal.mem_sup_left (Ideal.mem_sup_left ?_))
+        (Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _)))
+      rw [mul_comm]
+      exact Ideal.mem_span_singleton_self _
+  apply mul_left_cancel₀ hI₁0
+  rw [h₁, ← mul_assoc, Ideal.mul_sup, h₁, hJK, mul_assoc, h₂,
+    Ideal.span_singleton_mul_span_singleton, ← hMc]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.FiniteEtaleModels.OStepF
+
+section
 
 @[expose] public section
 
@@ -169,3 +316,6 @@ theorem stepF : UpperTheory.Gal.FiniteEtaleModels.StepF :=
     UpperTheory.trace_eta_identity (UpperTheory.trace_unit_of_pullback_multiplier UpperTheory.trace_pullback_identity UpperTheory.multiplier_is_unit) epsEx downEx
 
 end UpperTheory.Gal.FiniteEtaleModels.O
+end
+end
+end

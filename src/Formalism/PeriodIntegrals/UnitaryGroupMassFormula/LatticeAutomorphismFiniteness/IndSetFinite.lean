@@ -1,13 +1,9 @@
 module
 
 public import Formalism.LocalRingCardinality.DataSpaces
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.FiniteOfIntegralBound
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MjSmulRight
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MulVecMapInjective
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -22,12 +18,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -47,9 +40,263 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.SimpleRing.Principal
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MulVecMapInjective
+import Mathlib.RingTheory.WittVector.IsPoly
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MulVecMapInjective
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
+
+-- Source module: Lemmata.GeneralBFactThirdExtra.Imports
+
+section
+
+@[expose] public section
+
+namespace Bl.general_b_fact_third_extra
+
+theorem goal1 :
+  ∀ {E : Type} [inst : Field.{0} E] [inst_1 : NumberField.{0} E] [inst_2 : StarRing.{0} E] {S : Formalism.BasicNotions.HSpace E}
+  (Λ : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} E) S.V),
+  Eq.{1} (Submodule.span.{0, 0} E (SetLike.coe.{0, 0} Λ)) Top.top.{0} →
+    ∀ (v : S.V),
+      Exists.{1} fun (d : NumberField.RingOfIntegers.{0} E) ↦
+        And (Ne.{1} d 0) (Membership.mem.{0, 0} Λ (HSMul.hSMul.{0, 0, 0} d v)) := by
+  intro E _ _ _ S Λ hspan v
+  have hv : v ∈ Submodule.span E (SetLike.coe Λ) := by
+    rw [hspan]; exact Submodule.mem_top
+  induction hv using Submodule.span_induction with
+  | mem x hx => exact ⟨1, one_ne_zero, by rw [one_smul]; exact hx⟩
+  | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact Λ.zero_mem⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨d₁, hd₁, h₁⟩ := hx
+    obtain ⟨d₂, hd₂, h₂⟩ := hy
+    refine ⟨d₁ * d₂, mul_ne_zero hd₁ hd₂, ?_⟩
+    have e1 : (d₁ * d₂) • x = d₂ • (d₁ • x) := by rw [mul_comm, mul_smul]
+    have e2 : (d₁ * d₂) • y = d₁ • (d₂ • y) := by rw [mul_smul]
+    rw [smul_add, e1, e2]
+    exact Λ.add_mem (Λ.smul_mem _ h₁) (Λ.smul_mem _ h₂)
+  | smul a x _ hx =>
+    obtain ⟨d, hd, h⟩ := hx
+    obtain ⟨n, m, hm, hnm⟩ := IsFractionRing.div_surjective (A := NumberField.RingOfIntegers E) a
+    have hm0 : m ≠ 0 := nonZeroDivisors.ne_zero hm
+    have hm' : algebraMap (NumberField.RingOfIntegers E) E m ≠ 0 :=
+      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hm
+    refine ⟨m * d, mul_ne_zero hm0 hd, ?_⟩
+    have key : (m * d) • (a • x) = n • (d • x) := by
+      rw [← algebraMap_smul E (m * d), ← algebraMap_smul E n, ← algebraMap_smul E d,
+        smul_smul, smul_smul, ← hnm]
+      congr 1
+      rw [map_mul]
+      field_simp
+    rw [key]
+    exact Λ.smul_mem n h
+
+end Bl.general_b_fact_third_extra
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.FiniteOfIntegralBound
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.AutLzFinite.SlopeTestRemainingChoices
+
+open Formalism.BasicNotions NumberField
+
+variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E}
+
+theorem exists_smul_mem (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.span E (Λ : Set S.V) = ⊤) (v : S.V) :
+    ∃ d : 𝓞 E, d ≠ 0 ∧ d • v ∈ Λ := by
+  first | exact Bl.general_b_fact_third_extra.goal1 .. | (apply Bl.general_b_fact_third_extra.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_third_extra.goal1 <;> assumption) | (apply @Bl.general_b_fact_third_extra.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_third_extra.goal1 <;> assumption) | (apply @Bl.general_b_fact_third_extra.goal1 <;> first | assumption | infer_instance)
+
+theorem finite_of_integral_bound (t : E) (ht : t ≠ 0) (C : ℝ) :
+    {a : E | IsIntegral ℤ (t * a) ∧ ∀ τ : E →+* ℂ, ‖τ a‖ ≤ C}.Finite := by
+  set K : ℝ := ∑ τ : E →+* ℂ, ‖τ t‖
+  apply Set.Finite.of_finite_image (f := fun a => t * a)
+  · apply (Embeddings.finite_of_norm_le E ℂ (K * C)).subset
+    rintro _ ⟨a, ⟨ha1, ha2⟩, rfl⟩
+    refine ⟨ha1, fun τ => ?_⟩
+    rw [map_mul, norm_mul]
+    have h1 : ‖τ t‖ ≤ K := Finset.single_le_sum (f := fun τ : E →+* ℂ => ‖τ t‖)
+      (fun _ _ => norm_nonneg _) (Finset.mem_univ τ)
+    have h2 := ha2 τ
+    have h3 : 0 ≤ ‖τ a‖ := norm_nonneg _
+    nlinarith [norm_nonneg (τ t)]
+  · intro a _ b _ hab
+    exact mul_left_cancel₀ ht hab
+
+end PI.AutLzFinite.SlopeTestRemainingChoices
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.MjSmulRight
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+namespace PI.AutLzFinite.SlopeTestRemainingChoices
+
+open Formalism.BasicNotions
+
+variable {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E)
+
+def mj (z x y : S.V) : E := S.hT x y - 2 / S.hT z z * (S.hT x z * S.hT z y)
+
+variable {S}
+
+theorem mj_add_left (z x x' y : S.V) : mj S z (x + x') y = mj S z x y + mj S z x' y := by
+  simp only [mj, map_add (f := _), LinearMap.add_apply]
+  ring
+
+theorem mj_smul_left (z : S.V) (c : E) (x y : S.V) : mj S z (c • x) y = star c * mj S z x y := by
+  simp only [mj, LinearMap.map_smulₛₗ₂, smul_eq_mul, starRingEnd_apply]
+  ring
+
+theorem mj_add_right (z x y y' : S.V) : mj S z x (y + y') = mj S z x y + mj S z x y' := by
+  simp only [mj, map_add (f := _)]
+  ring
+
+theorem mj_smul_right (z : S.V) (c : E) (x y : S.V) : mj S z x (c • y) = c * mj S z x y := by
+  simp only [mj, map_smul, smul_eq_mul]
+  ring
+
+theorem mj_swap (z x y : S.V) : mj S z y x = star (mj S z x y) := by
+  have hs : ∀ a b : S.V, star (S.hT a b) = S.hT b a := fun a b => by
+    have h := S.herm.eq a b
+    rwa [starRingEnd_apply] at h
+  simp only [mj, star_sub, star_mul', star_div₀, hs, star_ofNat]
+  ring
+
+theorem mj_self_star (z x : S.V) : star (mj S z x x) = mj S z x x := (mj_swap z x x).symm
+
+theorem tau_real {τ : E →+* ℂ} (hstar : ∀ a : E, τ (star a) = starRingEnd ℂ (τ a)) {a : E}
+    (ha : star a = a) : τ a = ((τ a).re : ℂ) := by
+  have h := hstar a
+  rw [ha] at h
+  exact (Complex.conj_eq_iff_re.1 h.symm).symm
+
+theorem tau_normSq {τ : E →+* ℂ} (hstar : ∀ a : E, τ (star a) = starRingEnd ℂ (τ a)) (c : E) :
+    τ (star c * c) = (Complex.normSq (τ c) : ℂ) := by
+  rw [map_mul, hstar, Complex.normSq_eq_conj_mul_self]
+
+section Pos
+
+variable (hstar : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) (τ : E →+* ℂ)
+  (X P : Submodule E S.V) (hPX : ∀ x ∈ X, ∀ y ∈ P, S.hT x y = 0) (z : S.V) (hzP : z ∈ P)
+  (hzz : (τ (S.hT z z)).re < 0)
+  (hpos : ∀ y ∈ P, S.hT z y = 0 → y ∉ X → 0 < (τ (S.hT y y)).re)
+include hstar hPX hzP hzz hpos
+
+theorem mj_pos (y : S.V) (hy : y ∈ P) :
+    0 ≤ (τ (mj S z y y)).re ∧ ((τ (mj S z y y)).re = 0 → y ∈ X) := by
+  have hzz0 : S.hT z z ≠ 0 := by
+    intro h; rw [h, map_zero] at hzz; simp at hzz
+  set c := S.hT z y / S.hT z z with hc
+  set y0 := y - c • z with hy0def
+  have h1 : S.hT z y0 = 0 := by
+    simp only [y0, map_sub, LinearMap.map_smul, smul_eq_mul, c]
+    field_simp; ring
+  have hy0 : y0 ∈ P := P.sub_mem hy (P.smul_mem c hzP)
+  have h2 : S.hT y0 z = 0 := by rw [herm_swap, h1, star_zero]
+  have hm : mj S z y y = S.hT y0 y0 - star c * c * S.hT z z := by
+    have hyy : y = y0 + c • z := by simp [y0]
+    rw [hyy]
+    simp only [mj, map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+      smul_eq_mul, h1, h2, starRingEnd_apply, RingHom.id_apply]
+    field_simp
+    ring
+  have hq : 0 ≤ (τ (S.hT y0 y0)).re ∧ ((τ (S.hT y0 y0)).re = 0 → y0 ∈ X) := by
+    by_cases hX : y0 ∈ X
+    · have : S.hT y0 y0 = 0 := hPX y0 hX y0 hy0
+      simp [this, hX]
+    · have := hpos y0 hy0 h1 hX
+      exact ⟨this.le, fun h => absurd h this.ne'⟩
+  have hτ : (τ (mj S z y y)).re = (τ (S.hT y0 y0)).re - Complex.normSq (τ c) * (τ (S.hT z z)).re := by
+    rw [hm, map_sub, map_mul, tau_normSq (hstar τ), Complex.sub_re, Complex.re_ofReal_mul]
+  have hns := Complex.normSq_nonneg (τ c)
+  refine ⟨by rw [hτ]; nlinarith, fun h0 => ?_⟩
+  rw [hτ] at h0
+  have hA : Complex.normSq (τ c) * (τ (S.hT z z)).re = 0 := by nlinarith
+  have hB : (τ (S.hT y0 y0)).re = 0 := by nlinarith
+  have hc0 : c = 0 := by
+    rcases mul_eq_zero.mp hA with h | h
+    · exact τ.injective (by rw [Complex.normSq_eq_zero.mp h, map_zero])
+    · exact absurd h hzz.ne
+  have : y = y0 := by simp [y0, hc0]
+  rw [this]; exact hq.2 hB
+
+theorem mj_cs (x y : S.V) (hx : x ∈ P) (hy : y ∈ P) :
+    Complex.normSq (τ (mj S z x y)) ≤ (τ (mj S z x x)).re * (τ (mj S z y y)).re := by
+  have hnn : ∀ s : E, 0 ≤ (τ (mj S z (s • x + y) (s • x + y))).re := fun s =>
+    (mj_pos hstar τ X P hPX z hzP hzz hpos _ (P.add_mem (P.smul_mem s hx) hy)).1
+  have hexp : ∀ s : E, mj S z (s • x + y) (s • x + y) =
+      star s * s * mj S z x x + star s * mj S z x y + s * star (mj S z x y) + mj S z y y := by
+    intro s
+    rw [mj_add_left, mj_add_right, mj_add_right, mj_smul_left, mj_smul_left, mj_smul_right,
+      mj_smul_right, mj_swap z x y]
+    ring
+  have hareal := tau_real (hstar τ) (mj_self_star z x)
+  have ha0 := (mj_pos hstar τ X P hPX z hzP hzz hpos x hx).1
+  rcases ha0.lt_or_eq with hapos | hazero
+  · have hane : mj S z x x ≠ 0 := by
+      intro h; rw [h, map_zero] at hapos; simp at hapos
+    have h := hnn (-(mj S z x y) / mj S z x x)
+    rw [hexp] at h
+    have hval : star (-(mj S z x y) / mj S z x x) * (-(mj S z x y) / mj S z x x) * mj S z x x +
+        star (-(mj S z x y) / mj S z x x) * mj S z x y +
+        (-(mj S z x y) / mj S z x x) * star (mj S z x y) + mj S z y y =
+        mj S z y y - (star (mj S z x y) * mj S z x y) / mj S z x x := by
+      rw [star_div₀, star_neg, mj_self_star]
+      field_simp
+      ring
+    rw [hval, map_sub, map_div₀, tau_normSq (hstar τ), hareal, Complex.sub_re] at h
+    rw [← Complex.ofReal_div, Complex.ofReal_re] at h
+    rw [sub_nonneg, div_le_iff₀ hapos] at h
+    linarith
+  · have hτa : τ (mj S z x x) = 0 := by rw [hareal, ← hazero]; simp
+    have ha : mj S z x x = 0 := τ.injective (by rw [hτa, map_zero])
+    rw [← hazero, zero_mul]
+    by_contra hlt
+    have hpos' : 0 < Complex.normSq (τ (mj S z x y)) := lt_of_not_ge hlt
+    obtain ⟨N, hN⟩ := exists_nat_gt ((τ (mj S z y y)).re / (2 * Complex.normSq (τ (mj S z x y))))
+    have h := hnn (-(N : E) * mj S z x y)
+    rw [hexp, ha] at h
+    have hval : star (-(N : E) * mj S z x y) * (-(N : E) * mj S z x y) * 0 +
+        star (-(N : E) * mj S z x y) * mj S z x y +
+        (-(N : E) * mj S z x y) * star (mj S z x y) + mj S z y y =
+        mj S z y y - (2 * (N : E)) * (star (mj S z x y) * mj S z x y) := by
+      rw [star_mul, star_neg, star_natCast]
+      ring
+    rw [hval, map_sub, map_mul, tau_normSq (hstar τ), Complex.sub_re] at h
+    have h2 : (τ (2 * (N : E))) = ((2 * (N : ℝ) : ℝ) : ℂ) := by
+      rw [map_mul, map_natCast, map_ofNat]; push_cast; ring
+    rw [h2, ← Complex.ofReal_mul, Complex.ofReal_re] at h
+    rw [div_lt_iff₀ (by positivity)] at hN
+    nlinarith
+
+end Pos
+
+end PI.AutLzFinite.SlopeTestRemainingChoices
+end
+end
+end
+
+-- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.IndSetFinite
+
+section
 
 @[expose] public section
 
@@ -202,3 +449,6 @@ theorem indSet_finite (hstar : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = sta
     rw [hψ, hψ', hψψ]
 
 end PI.AutLzFinite.SlopeTestRemainingChoices
+end
+end
+end

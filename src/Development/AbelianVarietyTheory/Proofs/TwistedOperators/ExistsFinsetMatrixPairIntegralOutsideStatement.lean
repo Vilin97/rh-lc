@@ -1,7 +1,6 @@
 module
 
 public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFinsetMatrixPairIntegralOutside
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -44,6 +43,42 @@ import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.T2SpaceNumberFieldInfiniteAdeles
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MulVecCEApply
 
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFinsetMatrixPairIntegralOutside
+
+section
+
+@[expose] public section
+
+open MeasureTheory Topology Matrix NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.GaugeEx GlobalTheory.ModuLR
+open scoped NNReal ENNReal TensorProduct
+
+namespace GlobalTheory
+
+theorem matrixPair_integral_cofinite (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ]
+    (M N : Matrix κ κ (Af F)) :
+    ∃ S : Finset (HeightOneSpectrum (𝓞 F)), ∀ v ∉ S, ∀ i j,
+      evalV F v (M i j) ∈ v.adicCompletionIntegers F ∧
+      evalV F v (N i j) ∈ v.adicCompletionIntegers F := by
+  have hM : ∀ᶠ v in Filter.cofinite, ∀ p : κ × κ,
+      (M p.1 p.2).1 v ∈ (v : HeightOneSpectrum (𝓞 F)).adicCompletionIntegers F :=
+    Filter.eventually_all.2 fun p => (M p.1 p.2).2
+  have hN : ∀ᶠ v in Filter.cofinite, ∀ p : κ × κ,
+      (N p.1 p.2).1 v ∈ (v : HeightOneSpectrum (𝓞 F)).adicCompletionIntegers F :=
+    Filter.eventually_all.2 fun p => (N p.1 p.2).2
+  have h := hM.and hN
+  rw [Filter.eventually_cofinite] at h
+  refine ⟨h.toFinset, fun v hv i j => ?_⟩
+  rw [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, not_not] at hv
+  exact ⟨hv.1 (i, j), hv.2 (i, j)⟩
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFinsetMatrixPairIntegralOutsideStatement
+
+section
+
 @[expose] public section
 
 open MeasureTheory Topology Matrix NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.GaugeEx GlobalTheory.ModuLR
@@ -51,3 +86,5 @@ open scoped NNReal ENNReal TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_finset_matrixPair_integral_outside : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (M N : Matrix κ κ (Af F)), ∃ S : Finset (HeightOneSpectrum (𝓞 F)), ∀ v ∉ S, ∀ i j, evalV F v (M i j) ∈ v.adicCompletionIntegers F ∧ evalV F v (N i j) ∈ v.adicCompletionIntegers F := by
   first | exact @GlobalTheory.matrixPair_integral_cofinite | exact GlobalTheory.matrixPair_integral_cofinite | (intros; apply GlobalTheory.matrixPair_integral_cofinite <;> assumption)
+end
+end

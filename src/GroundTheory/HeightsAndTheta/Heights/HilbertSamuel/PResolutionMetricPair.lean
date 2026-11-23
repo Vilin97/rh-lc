@@ -57,9 +57,35 @@ import ReciprocityTheory.AnalyticForms.PotentialTheory.Partition
 public import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ABridgeStA
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ADensStC
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.AInterpSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.IsBergDensity
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.IsSmoothPts
+import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanDefs
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.AMixSt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.AParamStA
+
+-- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.AInterpSt
+
+section
+
+@[expose] public section
+
+namespace ReciprocityTheory.ChartRestriction.G.ArakelovGeometry
+
+open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.GeometryOfNumbersTheory MvPolynomial MeasureTheory Module Filter Asymptotics
+open scoped ComplexOrder Topology
+
+variable {Ω : Type} [Field Ω] [CharZero Ω] {κ : Type} [Fintype κ] {D : ℕ}
+
+theorem interp_rho (m₀ m₁ : ConeMetric (C := ℂ) (ι := Ix κ)) (t : ℝ) (z : Ix κ → ℂ) :
+    (interp m₀ m₁ t).ρ z = m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t := rfl
+
+end ReciprocityTheory.ChartRestriction.G.ArakelovGeometry
+end
+end
+
+-- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PResolutionMetricPair
+
+section
 
 @[expose] public section
 
@@ -459,3 +485,5 @@ theorem ResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : Resolut
 end
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel
+end
+end

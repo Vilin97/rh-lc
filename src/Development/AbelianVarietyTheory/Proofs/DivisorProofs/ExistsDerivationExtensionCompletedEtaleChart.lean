@@ -1,30 +1,31 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsRest
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChartRingFormallyUnramified
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPrimitiveElementUnramified
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HenselRootsCompatible
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PolynomialApproxPowMaximal
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PolynomialApproxUniqueness
-public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.MvPowerSeriesSubstConstTermsLocalAlgHomSpec
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.AdicCompletion.Noetherian
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.MvPowerSeries.Equiv
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -33,6 +34,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
@@ -46,6 +48,20 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChartRingFormallyUnramified
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPrimitiveElementUnramified
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.Algebra.Polynomial.Eval.Degree
+public import Mathlib.RingTheory.Ideal.BigOperators
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.LocalRing.RingHom.Basic
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PolynomialApproxUniqueness
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.MvPowerSeriesSubstConstTermsLocalAlgHomSpec
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.MvPowerSeries.Equiv
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsLinearHomPull
@@ -55,6 +71,155 @@ public import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.IsInvDer
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.DenseInterior
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.LieBridgeA
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsRest
+
+section
+
+@[expose] public section
+
+open IsLocalRing Matrix
+
+namespace GlobalTheory.DualNumberLocal
+
+theorem main : ∀ (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O], ∃ _ : IsLocalRing (DualNumber O), IsNoetherianRing (DualNumber O) ∧ IsAdicComplete (maximalIdeal (DualNumber O)) (DualNumber O) ∧ IsLocalHom (algebraMap O (DualNumber O)) ∧ Function.Surjective (fun x : O => residue (DualNumber O) (algebraMap O (DualNumber O) x)) ∧ ∀ z : DualNumber O, z ∈ maximalIdeal (DualNumber O) ↔ z.fst ∈ maximalIdeal O := by
+  intro O _ _ _ _
+  haveI hloc : IsLocalRing (DualNumber O) :=
+    IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun a => by
+      simp only [TrivSqZeroExt.isUnit_iff_isUnit_fst, TrivSqZeroExt.fst_sub, TrivSqZeroExt.fst_one]
+      exact isUnit_or_isUnit_one_sub_self _
+  haveI : Module.Finite O (DualNumber O) := inferInstanceAs (Module.Finite O (O × O))
+  have hmem : ∀ z : DualNumber O, z ∈ maximalIdeal (DualNumber O) ↔ z.fst ∈ maximalIdeal O := by
+    intro z
+    rw [IsLocalRing.mem_maximalIdeal, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
+      mem_nonunits_iff, TrivSqZeroExt.isUnit_iff_isUnit_fst]
+  refine ⟨hloc, IsNoetherianRing.of_finite O (DualNumber O),
+    GlobalTheory.FormalIsogeny.isAdicComplete_maximalIdeal_of_finite O (DualNumber O), ?_, ?_, hmem⟩
+  · refine ⟨fun a h => ?_⟩
+    rw [TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.isUnit_iff_isUnit_fst,
+      TrivSqZeroExt.fst_inl] at h
+    exact h
+  · intro y
+    obtain ⟨z, rfl⟩ := IsLocalRing.residue_surjective y
+    refine ⟨z.fst, ?_⟩
+    show residue (DualNumber O) (algebraMap O (DualNumber O) z.fst) = residue (DualNumber O) z
+    rw [← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff, hmem,
+      TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.fst_sub, TrivSqZeroExt.fst_inl, sub_self]
+    exact Ideal.zero_mem _
+
+end GlobalTheory.DualNumberLocal
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HenselRootsCompatible
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+theorem mem_ideal_smul_top_iff_mem {V : Type} [CommRing V] (I : Ideal V) (x : V) :
+    x ∈ I • (⊤ : Submodule V V) ↔ x ∈ I := by
+  rw [smul_eq_mul, Ideal.mul_top]
+
+theorem localHom_map_mem_maximalIdeal_pow {A V : Type} [CommRing A] [IsLocalRing A] [CommRing V]
+    [IsLocalRing V] (α : A →+* V) [IsLocalHom α] (n : ℕ) {x : A}
+    (hx : x ∈ maximalIdeal A ^ n) : α x ∈ maximalIdeal V ^ n := by
+  have h1 : (maximalIdeal A).map α ≤ maximalIdeal V := by
+    rw [Ideal.map_le_iff_le_comap]
+    intro y hy
+    exact map_nonunit α y hy
+  have := Ideal.mem_map_of_mem α hx
+  rw [Ideal.map_pow] at this
+  exact Ideal.pow_right_mono h1 n this
+
+theorem eval_map_mem_maximalIdeal_pow_of_coeff_mem {A V : Type} [CommRing A] [IsLocalRing A] [CommRing V]
+    [IsLocalRing V] (α : A →+* V) [IsLocalHom α] (n : ℕ) (D : Polynomial A)
+    (hD : ∀ i, D.coeff i ∈ maximalIdeal A ^ n) (η : V) :
+    (D.map α).eval η ∈ maximalIdeal V ^ n := by
+  rw [Polynomial.eval_map, Polynomial.eval₂_eq_sum_range]
+  exact Ideal.sum_mem _ fun i _ => Ideal.mul_mem_right _ _ (localHom_map_mem_maximalIdeal_pow α n (hD i))
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PolynomialApproxPowMaximal
+
+section
+
+@[expose] public section
+
+open IsLocalRing
+
+namespace GlobalTheory
+
+theorem exists_eval₂_approx_maximalIdeal_pow_succ {A R : Type} [CommRing A] [IsLocalRing A]
+    [CommRing R] [IsLocalRing R]
+    (φ : A →+* R) (hm : (maximalIdeal A).map φ = maximalIdeal R) (θ : R)
+    (h1 : ∀ r : R, ∃ P : Polynomial A, r - Polynomial.eval₂ φ θ P ∈ maximalIdeal R)
+    (n : ℕ) (x : R) (hx : x ∈ maximalIdeal R ^ n) :
+    ∃ P : Polynomial A, Polynomial.eval₂ φ θ P ∈ maximalIdeal R ^ n ∧
+      x - Polynomial.eval₂ φ θ P ∈ maximalIdeal R ^ (n + 1) := by
+  have hpow : maximalIdeal R ^ n = (maximalIdeal A ^ n).map φ := by
+    rw [Ideal.map_pow, hm]
+  rw [hpow] at hx
+  unfold Ideal.map at hx
+  refine Submodule.span_induction (p := fun x _ => ∃ P : Polynomial A,
+      Polynomial.eval₂ φ θ P ∈ maximalIdeal R ^ n ∧
+      x - Polynomial.eval₂ φ θ P ∈ maximalIdeal R ^ (n + 1)) ?_ ?_ ?_ ?_ hx
+  · rintro _ ⟨a, ha, rfl⟩
+    refine ⟨Polynomial.C a, ?_, ?_⟩
+    · rw [Polynomial.eval₂_C, hpow]; exact Ideal.mem_map_of_mem φ ha
+    · simp
+  · exact ⟨0, by simp, by simp⟩
+  · rintro x y _ _ ⟨P, hP, hxP⟩ ⟨Q, hQ, hyQ⟩
+    refine ⟨P + Q, ?_, ?_⟩
+    · rw [Polynomial.eval₂_add]; exact add_mem hP hQ
+    · have : x + y - Polynomial.eval₂ φ θ (P + Q) =
+          (x - Polynomial.eval₂ φ θ P) + (y - Polynomial.eval₂ φ θ Q) := by
+        rw [Polynomial.eval₂_add]; ring
+      rw [this]; exact add_mem hxP hyQ
+  · rintro r x _ ⟨P, hP, hxP⟩
+    obtain ⟨Q, hQ⟩ := h1 r
+    refine ⟨Q * P, ?_, ?_⟩
+    · rw [Polynomial.eval₂_mul]; exact Ideal.mul_mem_left _ _ hP
+    · have : r • x - Polynomial.eval₂ φ θ (Q * P) =
+          r * (x - Polynomial.eval₂ φ θ P) +
+            (r - Polynomial.eval₂ φ θ Q) * Polynomial.eval₂ φ θ P := by
+        rw [Polynomial.eval₂_mul, smul_eq_mul]; ring
+      rw [this]
+      refine add_mem (Ideal.mul_mem_left _ _ hxP) ?_
+      rw [pow_succ']
+      exact Ideal.mul_mem_mul hQ hP
+
+theorem exists_poly_sub_mem_maximalIdeal_pow : ∀ {A R : Type} [CommRing A] [IsLocalRing A]
+    [CommRing R] [IsLocalRing R] (φ : A →+* R), (maximalIdeal A).map φ = maximalIdeal R →
+    ∀ θ : R, (∀ r : R, ∃ P : Polynomial A, r - (P.map φ).eval θ ∈ maximalIdeal R) →
+    ∀ (n : ℕ) (r : R), ∃ P : Polynomial A, r - (P.map φ).eval θ ∈ maximalIdeal R ^ n := by
+  intro A R _ _ _ _ φ hm θ h1 n r
+  simp only [Polynomial.eval_map] at h1 ⊢
+  induction n with
+  | zero => exact ⟨0, by simp⟩
+  | succ n ih =>
+    obtain ⟨P, hP⟩ := ih
+    obtain ⟨Q, -, hQ⟩ := exists_eval₂_approx_maximalIdeal_pow_succ φ hm θ h1 n _ hP
+    refine ⟨P + Q, ?_⟩
+    have : r - Polynomial.eval₂ φ θ (P + Q) =
+        r - Polynomial.eval₂ φ θ P - Polynomial.eval₂ φ θ Q := by
+      rw [Polynomial.eval₂_add]; ring
+    rw [this]; exact hQ
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDerivationExtensionCompletedEtaleChart
+
+section
 
 @[expose] public section
 
@@ -306,3 +471,5 @@ theorem main : ∀ (A : Type) [CommRing A] [IsLocalRing A] (k : Type) [Field k] 
   rw [← RingHom.comp_apply, hΨ, hαsnd]
 
 end GlobalTheory.ChartDerivation
+end
+end

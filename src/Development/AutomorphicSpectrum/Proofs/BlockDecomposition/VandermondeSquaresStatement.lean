@@ -2,7 +2,6 @@ module
 
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TZero
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VandermondeSquares
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -22,6 +21,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +29,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,6 +43,57 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Std.Tactic.BVDecide.Normalize.Prop
+public import Mathlib.LinearAlgebra.Vandermonde
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VandermondeSquares
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open Finset
+
+namespace GlobalTheory.CompanionTheory.CoefId
+
+lemma prod_prs_eq_iter {n : ℕ} (f : Fin n × Fin n → ℂ) :
+    ∏ p ∈ prs n, f p = ∏ i : Fin n, ∏ j ∈ Ioi i, f (i, j) := by
+  apply Finset.prod_finset_product
+  intro p
+  simp [prs]
+
+lemma det_rev_vandermonde {n : ℕ} (v : Fin n → ℂ) :
+    (Matrix.of fun i j : Fin n => v i ^ (n - 1 - (j : ℕ))).det =
+      ((Equiv.Perm.sign (Fin.revPerm : Equiv.Perm (Fin n)) : ℤ) : ℂ) *
+        ∏ p ∈ prs n, (v p.2 - v p.1) := by
+  have h : (Matrix.of fun i j : Fin n => v i ^ (n - 1 - (j : ℕ))) =
+      (Matrix.vandermonde v).submatrix id (Fin.revPerm : Equiv.Perm (Fin n)) := by
+    ext i j
+    have : n - 1 - (j : ℕ) = n - (j + 1) := by omega
+    simp [Matrix.vandermonde_apply, Fin.val_rev, this]
+  rw [h, Matrix.det_permute', Matrix.det_vandermonde, prod_prs_eq_iter]
+
+theorem det_vandermonde_sq {n : ℕ} (z : Fin n → ℂ) :
+    (Matrix.of fun i j : Fin n => (z i ^ 2) ^ (n - 1 - (j : ℕ))).det =
+      (Matrix.of fun i j : Fin n => z i ^ (n - 1 - (j : ℕ))).det *
+        ∏ p ∈ prs n, (z p.1 + z p.2) := by
+  rw [det_rev_vandermonde (fun i => z i ^ 2), det_rev_vandermonde z, mul_assoc,
+    ← Finset.prod_mul_distrib]
+  congr 1
+  apply Finset.prod_congr rfl
+  intro p _
+  ring
+
+end GlobalTheory.CompanionTheory.CoefId
+end
+end
+end
+
+-- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VandermondeSquaresStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +101,5 @@ open Finset GlobalTheory.CompanionTheory.CoefId
 
 theorem _root_.GlobalTheory.T.vandermonde_squares : ∀ {n : ℕ} (z : Fin n → ℂ), (Matrix.of fun i j : Fin n => (z i ^ 2) ^ (n - 1 - (j : ℕ))).det = (Matrix.of fun i j : Fin n => z i ^ (n - 1 - (j : ℕ))).det * ∏ p ∈ prs n, (z p.1 + z p.2) := by
   first | exact @GlobalTheory.CompanionTheory.CoefId.det_vandermonde_sq | exact GlobalTheory.CompanionTheory.CoefId.det_vandermonde_sq | (intros; apply GlobalTheory.CompanionTheory.CoefId.det_vandermonde_sq <;> assumption)
+end
+end

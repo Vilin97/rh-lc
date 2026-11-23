@@ -2,13 +2,11 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
 public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusSemilinearMatrixIterateEqZeroOfNilpotenStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PerfectionExistsUniqueSubMatrixFrobeniusEqStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittVectorExistsUniqueSubMatrixFrobeniusEqStatement
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -24,7 +22,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.RingTheory.Noetherian.Nilpotent
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
@@ -46,7 +46,251 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.CharP.Frobenius
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Ideal.BigOperators
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.Nilpotent.Lemmas
+public import Mathlib.RingTheory.Perfection
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WittVectorExistsUniqueSubMatrixFrobeniusEqStatement
+import Mathlib.Algebra.Order.Star.Real
 import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusSemilinearMatrixIterateEqZeroOfNilpoten
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open Matrix
+
+theorem frobSemilinear_iterate_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p] (ι : Type) [Fintype ι] [DecidableEq ι] (Q : Matrix ι ι S) (N : ℕ), (∀ j i, IsNilpotent ((fun w : ι → S => Q.mulVec fun k => frobenius S p (w k))^[N] (Pi.single j 1) i)) → ∃ K : ℕ, ∀ z : ι → S, (fun w : ι → S => Q.mulVec fun k => frobenius S p (w k))^[K] z = 0 := by
+  intro p _ S _ _ ι _ _ Q N hN
+  set L : (ι → S) → (ι → S) := fun w => Q.mulVec fun k => frobenius S p (w k) with hL
+  let F : AddMonoid.End (ι → S) :=
+    { toFun := L
+      map_zero' := by
+        simp only [L, Pi.zero_apply, map_zero]
+        exact Matrix.mulVec_zero Q
+      map_add' := by
+        intro x y
+        simp only [L, Pi.add_apply, map_add (f := _)]
+        exact Matrix.mulVec_add Q _ _ }
+  have hF : ∀ n, ⇑(F ^ n) = L^[n] := fun n => AddMonoid.End.coe_pow (M := ι → S) F n
+  have hsmul : ∀ (a : S) (w : ι → S), L (a • w) = a ^ p • L w := by
+    intro a w
+    simp only [L]
+    rw [← Matrix.mulVec_smul]
+    congr 1
+    ext k
+    simp [frobenius_def, mul_pow]
+  have hsmulN : ∀ n (a : S) (w : ι → S), L^[n] (a • w) = a ^ (p ^ n) • L^[n] w := by
+    intro n
+    induction n with
+    | zero => intro a w; simp
+    | succ n ih =>
+      intro a w
+      rw [Function.iterate_succ_apply, hsmul, ih, ← pow_mul, ← pow_succ', Function.iterate_succ_apply]
+  have hdecomp : ∀ w : ι → S, L^[N] w = ∑ j, (w j) ^ (p ^ N) • L^[N] (Pi.single j 1) := by
+    intro w
+    conv_lhs => rw [← Finset.univ_sum_single w]
+
+    rw [← hF, map_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [hF, ← hsmulN]
+    congr 1
+    ext i
+    by_cases h : i = j
+    · subst h; simp
+    · simp [Pi.single_apply, h]
+  let J : Ideal S := Ideal.span (Set.range fun ji : ι × ι => L^[N] (Pi.single ji.1 1) ji.2)
+  have hJnil : IsNilpotent J := by
+    refine (Ideal.FG.isNilpotent_iff_le_nilradical (Submodule.fg_span (Set.finite_range _))).2 ?_
+    rw [Ideal.span_le]
+    rintro _ ⟨⟨j, i⟩, rfl⟩
+    exact (mem_nilradical).2 (hN j i)
+  have hstep : ∀ k (w : ι → S), (∀ i, w i ∈ J ^ k) → ∀ i, L^[N] w i ∈ J ^ (k + 1) := by
+    intro k w hw i
+    rw [hdecomp w, Finset.sum_apply]
+    refine Ideal.sum_mem _ fun j _ => ?_
+    rw [Pi.smul_apply, smul_eq_mul, pow_succ]
+    exact Ideal.mul_mem_mul
+      (Ideal.pow_mem_of_mem _ (hw j) _ (pow_pos (Fact.out : p.Prime).pos _))
+      (Ideal.subset_span ⟨(j, i), rfl⟩)
+  have hall : ∀ k (z : ι → S), ∀ i, L^[N * k] z i ∈ J ^ k := by
+    intro k
+    induction k with
+    | zero => intro z i; simp
+    | succ k ih =>
+      intro z i
+      rw [show N * (k + 1) = N + N * k by ring, Function.iterate_add_apply]
+      exact hstep k _ (ih z) i
+  obtain ⟨m, hm⟩ := hJnil
+  refine ⟨N * m, fun z => ?_⟩
+  funext i
+  have h := hall m z i
+  rw [hm, Ideal.zero_eq_bot, Ideal.mem_bot] at h
+  exact h
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusSemilinearMatrixIterateEqZeroOfNilpotenStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.frobeniusSemilinearMatrix_iterate_eq_zero_of_nilpotent : ∀ (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p] (ι : Type) [Fintype ι] [DecidableEq ι] (Q : Matrix ι ι S) (N : ℕ), (∀ j i, IsNilpotent ((fun w : ι → S => Q.mulVec fun k => frobenius S p (w k))^[N] (Pi.single j 1) i)) → ∃ K : ℕ, ∀ z : ι → S, (fun w : ι → S => Q.mulVec fun k => frobenius S p (w k))^[K] z = 0 := by
+  first | exact @GlobalTheory.frobSemilinear_iterate_eq_zero | exact GlobalTheory.frobSemilinear_iterate_eq_zero | (intros; apply GlobalTheory.frobSemilinear_iterate_eq_zero <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PerfectionExistsUniqueSubMatrixFrobeniusEq
+
+section
+
+@[expose] public section
+
+namespace GlobalTheory
+
+open Matrix
+
+theorem sub_apply_bijective_of_iterate_eq_zero {M : Type} [AddCommGroup M] (L : M →+ M) (K : ℕ)
+    (hK : ∀ z, (⇑L)^[K] z = 0) : Function.Bijective (fun z => z - L z) := by
+  constructor
+  · intro a b hab
+    have hab' : a - L a = b - L b := hab
+    have hfix : L (a - b) = a - b := by
+      rw [map_sub]
+      rw [sub_eq_sub_iff_sub_eq_sub] at hab'
+      exact hab'.symm
+    have h1 : ∀ m, (⇑L)^[m] (a - b) = a - b := by
+      intro m
+      induction m with
+      | zero => rfl
+      | succ m ih => rw [Function.iterate_succ_apply', ih, hfix]
+    exact sub_eq_zero.mp ((h1 K).symm.trans (hK _))
+  · intro c
+    refine ⟨∑ k ∈ Finset.range K, (⇑L)^[k] c, ?_⟩
+    show (∑ k ∈ Finset.range K, (⇑L)^[k] c) - L (∑ k ∈ Finset.range K, (⇑L)^[k] c) = c
+
+    rw [map_sum]
+    have hs : ∀ k, L ((⇑L)^[k] c) = (⇑L)^[k + 1] c := fun k =>
+      (Function.iterate_succ_apply' (⇑L) k c).symm
+    simp only [hs]
+    rw [← Finset.sum_sub_distrib, Finset.sum_range_sub', hK, sub_zero]
+    rfl
+
+noncomputable def perfLevelOp (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p]
+    {ι : Type} [Fintype ι] (Q : Matrix ι ι (Perfection S p)) (n : ℕ) : (ι → S) →+ (ι → S) where
+  toFun w := (Q.map (Perfection.coeff S p n)).mulVec fun k => frobenius S p (w k)
+  map_zero' := by ext i; simp [Matrix.mulVec, dotProduct]
+  map_add' a b := by ext i; simp [Matrix.mulVec, dotProduct, mul_add, Finset.sum_add_distrib]
+
+theorem perfLevelOp_apply (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p]
+    {ι : Type} [Fintype ι] (Q : Matrix ι ι (Perfection S p)) (n : ℕ) (w : ι → S) :
+    perfLevelOp p S Q n w = (Q.map (Perfection.coeff S p n)).mulVec fun k => frobenius S p (w k) :=
+  rfl
+
+theorem perfLevelOp_coeff (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p]
+    {ι : Type} [Fintype ι] (Q : Matrix ι ι (Perfection S p)) (n : ℕ) (x : ι → Perfection S p) :
+    (fun i => Perfection.coeff S p n ((x - Q.mulVec (fun k => frobenius (Perfection S p) p (x k))) i))
+      = (fun i => Perfection.coeff S p n (x i))
+        - perfLevelOp p S Q n (fun i => Perfection.coeff S p n (x i)) := by
+  ext i
+  simp only [Pi.sub_apply, map_sub, perfLevelOp_apply]
+  congr 1
+  rw [RingHom.map_mulVec]
+  have hc : (Perfection.coeff S p n) ∘ (fun k => frobenius (Perfection S p) p (x k))
+      = fun k => frobenius S p (Perfection.coeff S p n (x k)) := by
+    funext k
+    simp [frobenius_def, map_pow]
+  rw [hc]
+
+theorem perfLevelOp_frobenius (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p]
+    {ι : Type} [Fintype ι] (Q : Matrix ι ι (Perfection S p)) (n : ℕ) (w : ι → S) :
+    (fun i => frobenius S p ((w - perfLevelOp p S Q (n + 1) w) i))
+      = (fun i => frobenius S p (w i)) - perfLevelOp p S Q n (fun i => frobenius S p (w i)) := by
+  ext i
+  simp only [perfLevelOp_apply, Pi.sub_apply, map_sub]
+  congr 1
+
+  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+  congr 1
+  ext j
+  congr 1
+  rw [frobenius_def, Perfection.coeff_pow_p']
+
+theorem perfection_frobenius_solve : ∀ (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p] (ι : Type) [Fintype ι] (Q : Matrix ι ι (Perfection S p)), (∀ n : ℕ, ∃ K : ℕ, ∀ z : ι → S, (fun w : ι → S => (Q.map (Perfection.coeff S p n)).mulVec fun k => frobenius S p (w k))^[K] z = 0) → ∀ c : ι → Perfection S p, ∃! x : ι → Perfection S p, x - Q.mulVec (fun k => frobenius (Perfection S p) p (x k)) = c := by
+  intro p _ S _ _ ι _ Q hnil c
+  have bij : ∀ n, Function.Bijective (fun z => z - perfLevelOp p S Q n z) := by
+    intro n
+    obtain ⟨K, hK⟩ := hnil n
+    exact sub_apply_bijective_of_iterate_eq_zero _ K hK
+  let z : ℕ → ι → S := fun n => Function.surjInv (bij n).2 (fun i => Perfection.coeff S p n (c i))
+  have hz : ∀ n, z n - perfLevelOp p S Q n (z n) = fun i => Perfection.coeff S p n (c i) :=
+    fun n => Function.surjInv_eq (bij n).2 _
+  have compat : ∀ n k, z (n + 1) k ^ p = z n k := by
+    intro n
+    have h : (fun k => frobenius S p (z (n + 1) k)) = z n := by
+      apply (bij n).1
+      show (fun k => frobenius S p (z (n + 1) k))
+          - perfLevelOp p S Q n (fun k => frobenius S p (z (n + 1) k)) = z n - perfLevelOp p S Q n (z n)
+      rw [← perfLevelOp_frobenius, hz (n + 1), hz n]
+      ext i
+      simp [frobenius_def, Perfection.coeff_pow_p']
+    intro k
+    have := congrFun h k
+    simpa [frobenius_def] using this
+  let x : ι → Perfection S p := fun k => ⟨fun n => z n k, fun n => compat n k⟩
+  refine ⟨x, ?_, ?_⟩
+  · funext i
+    apply Perfection.ext
+    intro n
+    have h1 := congrFun (perfLevelOp_coeff p S Q n x) i
+    have hx : (fun i => Perfection.coeff S p n (x i)) = z n := rfl
+    rw [hx, hz n] at h1
+    exact h1
+  · intro y hy
+    funext k
+    apply Perfection.ext
+    intro n
+    have h2 : (fun i => Perfection.coeff S p n (y i)) = z n := by
+      apply (bij n).1
+      show (fun i => Perfection.coeff S p n (y i))
+          - perfLevelOp p S Q n (fun i => Perfection.coeff S p n (y i)) = z n - perfLevelOp p S Q n (z n)
+      rw [← perfLevelOp_coeff, hy, hz n]
+    exact congrFun h2 k
+
+end GlobalTheory
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PerfectionExistsUniqueSubMatrixFrobeniusEqStatement
+
+section
+
+@[expose] public section
+
+
+theorem _root_.GlobalTheory.T.perfection_existsUnique_sub_matrix_frobenius_eq : ∀ (p : ℕ) [Fact p.Prime] (S : Type) [CommRing S] [CharP S p] (ι : Type) [Fintype ι] (Q : Matrix ι ι (Perfection S p)), (∀ n : ℕ, ∃ K : ℕ, ∀ z : ι → S, (fun w : ι → S => (Q.map (Perfection.coeff S p n)).mulVec fun k => frobenius S p (w k))^[K] z = 0) → ∀ c : ι → Perfection S p, ∃! x : ι → Perfection S p, x - Q.mulVec (fun k => frobenius (Perfection S p) p (x k)) = c := by
+  first | exact @GlobalTheory.perfection_frobenius_solve | exact GlobalTheory.perfection_frobenius_solve | (intros; apply GlobalTheory.perfection_frobenius_solve <;> assumption)
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AinfFrobeniusSemilinearEquationExistsUnique
+
+section
 
 @[expose] public section
 
@@ -186,3 +430,5 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
   exact this
 
 end GlobalTheory.WSolve
+end
+end

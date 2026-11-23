@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.RingTheory.TensorProduct.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsReducedFieldTensorIntFiniteReduced
+public import Mathlib.RingTheory.Unramified.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +20,13 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -28,6 +34,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,6 +48,65 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.Algebra.Algebra.ZMod
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Unramified.Pi
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsReducedFieldTensorIntFiniteReduced
+
+section
+
+@[expose] public section
+
+open NumberField
+open scoped TensorProduct
+
+namespace GlobalTheory.FinRedTensor
+
+theorem formallyUnramified_int_of_finite_field (K : Type) [Field K] [Finite K] :
+    Algebra.FormallyUnramified ℤ K := by
+  obtain ⟨p, hp⟩ := CharP.exists K
+  haveI : NeZero p := ⟨CharP.char_ne_zero_of_finite K p⟩
+  haveI : Fact p.Prime := CharP.char_is_prime_of_pos K p
+  letI : Algebra (ZMod p) K := ZMod.algebra K p
+  haveI : Module.Finite (ZMod p) K := Module.Finite.of_finite
+  haveI : Algebra.IsSeparable (ZMod p) K := inferInstance
+  haveI : Algebra.FormallyUnramified (ZMod p) K := Algebra.FormallyUnramified.of_isSeparable _ _
+  haveI : Algebra.FormallyUnramified ℤ (ZMod p) :=
+    Algebra.FormallyUnramified.of_surjective (Algebra.ofId ℤ (ZMod p)) (ZMod.intCast_surjective)
+  exact Algebra.FormallyUnramified.comp ℤ (ZMod p) K
+
+theorem formallyUnramified_int_of_finite_isReduced (A : Type) [CommRing A] [Finite A]
+    [IsReduced A] : Algebra.FormallyUnramified ℤ A := by
+  haveI : IsArtinianRing A := inferInstance
+  have h : Algebra.FormallyUnramified ℤ (∀ I : MaximalSpectrum A, A ⧸ I.asIdeal) := by
+    rw [Algebra.FormallyUnramified.pi_iff]
+    intro I
+    have := I.isMaximal
+    letI := Ideal.Quotient.field I.asIdeal
+    haveI : Finite (A ⧸ I.asIdeal) :=
+      Finite.of_surjective (Ideal.Quotient.mk I.asIdeal) Ideal.Quotient.mk_surjective
+    exact formallyUnramified_int_of_finite_field _
+  exact Algebra.FormallyUnramified.of_equiv ((IsArtinianRing.equivPi A).restrictScalars ℤ).symm
+
+theorem isReduced_field_tensor_finite :
+    ∀ (A : Type) [CommRing A] [Finite A] [IsReduced A] (k : Type) [Field k],
+      IsReduced (k ⊗[ℤ] A) := by
+  intro A _ _ _ k _
+  haveI := formallyUnramified_int_of_finite_isReduced A
+  haveI : Algebra.FormallyUnramified k (k ⊗[ℤ] A) := Algebra.FormallyUnramified.base_change k
+  haveI : Module.Finite ℤ A := Module.Finite.of_finite
+  haveI : Algebra.EssFiniteType k (k ⊗[ℤ] A) := inferInstance
+  exact Algebra.FormallyUnramified.isReduced_of_field k _
+
+end GlobalTheory.FinRedTensor
+end
+end
+
+-- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsReducedFieldTensorIntFiniteReducedStatement
+
+section
 
 @[expose] public section
 
@@ -49,3 +115,5 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.isReduced_field_tensor_int_finite_reduced : ∀ (A : Type) [CommRing A] [Finite A] [IsReduced A] (k : Type) [Field k], IsReduced (k ⊗[ℤ] A) := by
   first | exact @GlobalTheory.FinRedTensor.isReduced_field_tensor_finite | exact GlobalTheory.FinRedTensor.isReduced_field_tensor_finite | (intros; apply GlobalTheory.FinRedTensor.isReduced_field_tensor_finite <;> assumption)
+end
+end

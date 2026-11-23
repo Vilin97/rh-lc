@@ -4,9 +4,12 @@ public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.Gaug
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdECut
 import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.IsUpUniMul
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxAd
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxCloseAt
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxCong
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ZsVolGrp
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxLoc
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.EntInSandwich
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxAt
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.StabilizerIndexVolumes.StabLoc
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.StabilizerIndexVolumes.StabMul
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.GlobalConditionOfLocalAgreement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +26,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -42,8 +46,263 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxAt
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxCong
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ZsVolGrp
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxModes
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open IsDedekindDomain NumberField ValuativeRel Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.Pf.StabShape
+
+namespace Formalism.L2.SG.Pf.ProdEApprox
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+section Split
+
+variable {F K : Type*} [Field F] [CommRing K] [Algebra F K] {r : ℕ}
+
+theorem smul_eq_of_cx (e : K ≃ₐ[F] F × F) {X Y : Matrix (Fin (r + 1)) (Fin (r + 1)) K} (h : cx e X = cx e Y) :
+    e.symm (1, 0) • X = e.symm (1, 0) • Y := by
+  ext i j
+  simp only [Matrix.smul_apply, smul_eq_mul]
+  apply e.injective
+  rw [map_mul, map_mul, AlgEquiv.apply_symm_apply]
+  have := congrFun (congrFun h i) j
+  simp only [cx, Matrix.map_apply, RingHom.comp_apply, RingHom.coe_fst, RingHom.coe_coe] at this
+  ext
+  · simp [this]
+  · simp
+
+theorem smul_eq_of_cy (e : K ≃ₐ[F] F × F) {X Y : Matrix (Fin (r + 1)) (Fin (r + 1)) K} (h : cy e X = cy e Y) :
+    e.symm (0, 1) • X = e.symm (0, 1) • Y := by
+  ext i j
+  simp only [Matrix.smul_apply, smul_eq_mul]
+  apply e.injective
+  rw [map_mul, map_mul, AlgEquiv.apply_symm_apply]
+  have := congrFun (congrFun h i) j
+  simp only [cy, Matrix.map_apply, RingHom.comp_apply, RingHom.coe_snd, RingHom.coe_coe] at this
+  ext
+  · simp
+  · simp [this]
+
+theorem cx_diag (e : K ≃ₐ[F] F × F) (d : Fin (r + 1) → F) :
+    cx e (Matrix.diagonal fun i => algebraMap F K (d i)) = Matrix.diagonal d := by
+  ext i j
+  simp only [cx, Matrix.map_apply, Matrix.diagonal_apply, RingHom.comp_apply, RingHom.coe_fst, RingHom.coe_coe]
+  split_ifs <;> simp [AlgEquiv.commutes]
+
+theorem cy_diag (e : K ≃ₐ[F] F × F) (d : Fin (r + 1) → F) :
+    cy e (Matrix.diagonal fun i => algebraMap F K (d i)) = Matrix.diagonal d := by
+  ext i j
+  simp only [cy, Matrix.map_apply, Matrix.diagonal_apply, RingHom.comp_apply, RingHom.coe_snd, RingHom.coe_coe]
+  split_ifs <;> simp [AlgEquiv.commutes]
+
+end Split
+
+section Data
+
+variable {D : D7} (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)
+  (δ : ∀ p : PlF D, (D.s.atP p).Fp)
+
+theorem mode_data {p : PlF D} (hA : Agree δ M p) :
+    ∃ (ex ey : (D.s.atP p).Ep) (d di gg ggi : Fin (D.R.rS + 1) → (D.s.atP p).Ep),
+      ex ∈ (D.s.atP p).O ∧ ey ∈ (D.s.atP p).O ∧ ex * ex = ex ∧ ey * ey = ey ∧ ex + ey = 1 ∧ ex * ey = 0 ∧
+      (∀ i, d i * di i = 1) ∧ (∀ i, gg i * ggi i = 1) ∧
+      ∀ a b : Formalism.L2.SG.PairVal.MatR D,
+        ex • lOf δ M p a b = ex • (Matrix.diagonal d * a.map (D.s.atP p).ιE * Matrix.diagonal di) ∧
+        ey • ρOf δ M p a b = ey • (Matrix.diagonal ggi * (a.map (D.s.atP p).ιE).transpose * Matrix.diagonal gg) := by
+  obtain ⟨-, -, -, -, -, hsp⟩ := id hA
+  cases hM : (M p).split with
+  | none =>
+    refine ⟨1, 0, fun i => (M p).L.cj (frFac δ p i), fun i => Ring.inverse ((M p).L.cj (frFac δ p i)),
+      fun _ => 1, fun _ => 1, (D.s.atP p).O.one_mem, (D.s.atP p).O.zero_mem, mul_one 1, mul_zero 0, add_zero 1,
+      mul_zero 1, fun i => Ring.mul_inverse_cancel _ ((frFac_unit δ M hA i).map _), fun _ => mul_one 1, fun a b => ⟨?_, ?_⟩⟩
+    · simp only [lOf, hM, one_smul]
+      exact lL_eq _ _ _ a
+    · simp only [zero_smul]
+  | some g =>
+    rcases hR : (D.s.atP p).split with _ | sg
+    · simp [hM, hR] at hsp
+    · have hsp' : g.e = sg.e ∧ g.q = sg.q := by simpa [hM, hR] using hsp
+      have hx := fun i => (split_units δ M hA g i).1
+      have hy := fun i => (split_units δ M hA g i).2
+      have hmemO : ∀ a b : (D.s.atP p).Fp, a ∈ 𝒪[(D.s.atP p).Fp] → b ∈ 𝒪[(D.s.atP p).Fp] →
+          g.e.symm (a, b) ∈ (D.s.atP p).O := by
+        intro a b ha hb
+        rw [Formalism.MainNotions.BridgeLemma.O_split (D.s.atP p) sg, ← hsp'.1, AlgEquiv.apply_symm_apply]
+        exact ⟨ha, hb⟩
+      refine ⟨g.e.symm (1, 0), g.e.symm (0, 1),
+        fun i => algebraMap _ _ ((g.e (frFac δ p i)).2), fun i => algebraMap _ _ ((g.e (frFac δ p i)).2)⁻¹,
+        fun i => algebraMap _ _ ((g.e (frFac δ p i)).1), fun i => algebraMap _ _ ((g.e (frFac δ p i)).1)⁻¹,
+        hmemO 1 0 (Subring.one_mem _) (Subring.zero_mem _), hmemO 0 1 (Subring.zero_mem _) (Subring.one_mem _),
+        ?_, ?_, ?_, ?_, fun i => by rw [← map_mul, mul_inv_cancel₀ (hy i), map_one],
+        fun i => by rw [← map_mul, mul_inv_cancel₀ (hx i), map_one], fun a b => ⟨?_, ?_⟩⟩
+      · apply g.e.injective; simp
+      · apply g.e.injective; simp
+      · apply g.e.injective; simp
+      · apply g.e.injective; simp
+      · simp only [lOf, hM]
+        apply smul_eq_of_cx
+        rw [cx_lG, cx_mul, cx_mul, cx_diag, cx_diag]
+        rfl
+      · simp only [ρOf, hM]
+        apply smul_eq_of_cy
+        rw [cy_ρG, cy_mul, cy_mul, cy_diag, cy_diag]
+        rfl
+
+end Data
+
+end Formalism.L2.SG.Pf.ProdEApprox
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxCloseAt
+
+section
+
+@[expose] public section
+
+noncomputable section
+
+open IsDedekindDomain NumberField ValuativeRel Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.Pf.StabShape
+
+namespace Formalism.L2.SG.Pf.ProdEApprox
+
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+section CloseAt
+
+variable {D : D7} (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)
+  (δ : ∀ p : PlF D, (D.s.atP p).Fp) (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1))
+
+theorem diag_mul_diag_apply {K : Type*} [CommRing K] {n : ℕ} (a b : Fin n → K) (X : Matrix (Fin n) (Fin n) K)
+    (i j : Fin n) : (Matrix.diagonal a * X * Matrix.diagonal b) i j = a i * X i j * b j := by
+  simp [Matrix.diagonal_mul, Matrix.mul_diagonal]
+
+
+theorem close_at {p : PlF D} (hA : Agree δ M p) (h : ProdE.StP M δ u u' w p) (c : (D.s.atP p).Fp) (hc0 : c ≠ 0)
+    (hc : c ∈ 𝒪[(D.s.atP p).Fp]) :
+    ∃ τ : ProdE.MP p, (∀ i j, i < j → τ i j = 0) ∧ (∀ i, τ i i = 1) ∧
+      (∀ i j, Formalism.L2.SG.Pf.fσ w j < Formalism.L2.SG.Pf.fσ w i → τ i j = 0) ∧
+      ∃ c' : (D.s.atP p).Fp, c' ≠ 0 ∧ c' ∈ 𝒪[(D.s.atP p).Fp] ∧ ∀ g : Formalism.L2.SG.Pf.VolPinAsm.StG w,
+        EntIn (latS (D.s.atP p) c') (((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D).map (D.s.atP p).ιE - τ) →
+        EntIn (latS (D.s.atP p) c) (((h⁻¹ * ProdE.πP M δ u u' w hA g).1.1 : ProdE.MP p) - 1) ∧
+          EntIn (latS (D.s.atP p) c) (((h⁻¹ * ProdE.πP M δ u u' w hA g).1.2.unop : ProdE.MP p) - 1) := by
+  obtain ⟨ex, ey, d, di, gg, ggi, hexO, heyO, hxx, hyy, hsum, hxy, hd, hg, hlin⟩ := mode_data M δ hA
+  obtain ⟨N, Ni, hN, hN', ⟨ν, hν, hNν⟩, hfix⟩ := exists_unit_monomial_stable_of_Y0 M δ u u' w hA
+  set σ := Formalism.L2.SG.Pf.fσ w with hσd
+  have hσ : ∀ a, σ (σ a) = a := Formalism.L2.SG.Pf.fσ_fσ w
+  set h1 : ProdE.GLp p := h.1.1 with hh1d
+  set h2 : ProdE.GLp p := h.1.2.unop with hh2d
+  obtain ⟨hh1, hh2, hh3⟩ := h.2
+  have hh : (h1 : ProdE.MP p) * N * (h2 : ProdE.MP p) = N := hfix _ _ hh1 hh2 hh3
+  obtain ⟨hi1, hi2, -⟩ := (h⁻¹).2
+  have hΔ : Matrix.diagonal d * Matrix.diagonal di = 1 := by
+    rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i; exact hd i
+  have hΓ : Matrix.diagonal gg * Matrix.diagonal ggi = 1 := by
+    rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i; exact hg i
+  have hΓ' : Matrix.diagonal ggi * Matrix.diagonal gg = 1 := by
+    rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i; rw [mul_comm]; exact hg i
+  obtain ⟨c', hc'0, hc'O, hcl⟩ := close ex ey hexO heyO hxx hyy hsum hxy N Ni (Matrix.diagonal d) (Matrix.diagonal di)
+    (Matrix.diagonal gg) (Matrix.diagonal ggi) hN hN' hΔ hΓ hΓ' h1 h2 hh c hc0 hc
+
+  have h1inv : ((h1⁻¹ : ProdE.GLp p) : ProdE.MP p) * (h1 : ProdE.MP p) = 1 := by
+    rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
+  have h2inv : (h2 : ProdE.MP p) * ((h2⁻¹ : ProdE.GLp p) : ProdE.MP p) = 1 := by
+    rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
+  have rel1 : (h1 : ProdE.MP p) * mono σ ν = mono σ ν * ((h2⁻¹ : ProdE.GLp p) : ProdE.MP p) := by
+    rw [← hNν]
+    calc (h1 : ProdE.MP p) * N = (h1 : ProdE.MP p) * N * ((h2 : ProdE.MP p) * ((h2⁻¹ : ProdE.GLp p) : ProdE.MP p)) := by
+          rw [h2inv, Matrix.mul_one]
+      _ = N * ((h2⁻¹ : ProdE.GLp p) : ProdE.MP p) := by rw [← Matrix.mul_assoc, hh]
+  have rel2 : ((h1⁻¹ : ProdE.GLp p) : ProdE.MP p) * mono σ ν = mono σ ν * (h2 : ProdE.MP p) := by
+    rw [← hNν]
+    calc ((h1⁻¹ : ProdE.GLp p) : ProdE.MP p) * N
+        = ((h1⁻¹ : ProdE.GLp p) : ProdE.MP p) * ((h1 : ProdE.MP p) * N * (h2 : ProdE.MP p)) := by rw [hh]
+      _ = N * (h2 : ProdE.MP p) := by rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, h1inv, Matrix.one_mul]
+  refine ⟨ex • (Matrix.diagonal di * (h1 : ProdE.MP p) * Matrix.diagonal d) +
+      ey • (Matrix.diagonal gg * (h2 : ProdE.MP p) * Matrix.diagonal ggi).transpose, ?_, ?_, ?_, c', hc'0, hc'O, ?_⟩
+  · intro i j hij
+    have a1 : (h1 : ProdE.MP p) i j = 0 := (hh1 i j).1 hij
+    have a2 : (h2 : ProdE.MP p) j i = 0 := (hh2 j i).1 hij
+    rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, Matrix.transpose_apply, diag_mul_diag_apply,
+      diag_mul_diag_apply, a1, a2]
+    simp
+  · intro i
+    have a1 : (h1 : ProdE.MP p) i i = 1 := (hh1 i i).2 rfl
+    have a2 : (h2 : ProdE.MP p) i i = 1 := (hh2 i i).2 rfl
+    have t1 : (Matrix.diagonal di * (h1 : ProdE.MP p) * Matrix.diagonal d) i i = 1 := by
+      rw [diag_mul_diag_apply, a1, mul_one, mul_comm, hd i]
+    have t2 : (Matrix.diagonal gg * (h2 : ProdE.MP p) * Matrix.diagonal ggi) i i = 1 := by
+      rw [diag_mul_diag_apply, a2, mul_one, hg i]
+    rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, Matrix.transpose_apply, t1, t2, smul_eq_mul,
+      smul_eq_mul, mul_one, mul_one, hsum]
+  · intro i j hij
+    have e1 : (h1 : ProdE.MP p) i j = 0 :=
+      fix_pat hσ ν hν (fun a b hab => (hi2 a b).1 hab) rel1 i j hij
+    have e2 : (h2 : ProdE.MP p) j i = 0 := by
+      have z : ((h1⁻¹ : ProdE.GLp p) : ProdE.MP p) (σ j) (σ i) = 0 := (hi1 (σ j) (σ i)).1 hij
+      have := fix_entry hσ ν rel2 (σ j) (σ i)
+      rw [hσ, hσ, z, zero_mul] at this
+      exact (hν (σ j)).mul_right_eq_zero.1 this.symm
+    rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, Matrix.transpose_apply, diag_mul_diag_apply,
+      diag_mul_diag_apply, e1, e2]
+    simp
+  · intro g hG
+    set π := ProdE.πP M δ u u' w hA g with hπd
+    set l : ProdE.GLp p := π.1.1 with hld
+    set ρ : ProdE.GLp p := π.1.2.unop with hρd
+    obtain ⟨hk1, hk2, -⟩ := (h⁻¹ * π).2
+    obtain ⟨hπl, hπρ, hπ⟩ := π.2
+    have ek1 : ((h⁻¹ * π).1.1 : ProdE.GLp p) = h1⁻¹ * l := rfl
+    have ek2 : ((h⁻¹ * π).1.2.unop : ProdE.GLp p) = ρ * h2⁻¹ := rfl
+    have hk1' : Formalism.MainNotions.S.IsLoUni (((h1⁻¹ * l : ProdE.GLp p)) : ProdE.MP p) := by rw [← ek1]; exact hk1
+    have hk2' : Formalism.MainNotions.S.IsUpUni (((ρ * h2⁻¹ : ProdE.GLp p)) : ProdE.MP p) := by rw [← ek2]; exact hk2
+    have hl : ex • ((l : ProdE.GLp p) : ProdE.MP p) =
+        ex • (Matrix.diagonal d * ((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D).map (D.s.atP p).ιE *
+          Matrix.diagonal di) :=
+      (hlin (g : Formalism.L2.SG.PairVal.GLR D) (Formalism.L2.SG.Pf.VolPinAsm.bOf w g)).1
+    have hρ : ey • ((ρ : ProdE.GLp p) : ProdE.MP p) =
+        ey • (Matrix.diagonal ggi * (((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D).map
+          (D.s.atP p).ιE).transpose * Matrix.diagonal gg) :=
+      (hlin (g : Formalism.L2.SG.PairVal.GLR D) (Formalism.L2.SG.Pf.VolPinAsm.bOf w g)).2
+    have hlN : ((l : ProdE.GLp p) : ProdE.MP p) * N * ((ρ : ProdE.GLp p) : ProdE.MP p) = N := hfix _ _ hπl hπρ hπ
+    have res := hcl l ρ (((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D).map (D.s.atP p).ιE)
+      (fun i j hij => by
+        rcases lt_or_eq_of_le hij with h' | h'
+        · rw [Matrix.sub_apply, (hk1' i j).1 h', Matrix.one_apply_ne (ne_of_lt h'), sub_zero]
+        · subst h'
+          rw [Matrix.sub_apply, (hk1' i i).2 rfl, Matrix.one_apply_eq, sub_self])
+      (fun i j hij => by
+        rcases lt_or_eq_of_le hij with h' | h'
+        · rw [Matrix.sub_apply, (hk2' i j).1 h', Matrix.one_apply_ne (ne_of_gt h'), sub_zero]
+        · subst h'
+          rw [Matrix.sub_apply, (hk2' j j).2 rfl, Matrix.one_apply_eq, sub_self])
+      hlN hl hρ hG
+    rw [ek1, ek2]
+    exact res
+
+end CloseAt
+
+end Formalism.L2.SG.Pf.ProdEApprox
+end
+end
+end
+
+-- Source module: Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ProdEApproxMain
+
+section
 
 @[expose] public section
 
@@ -149,3 +408,6 @@ theorem approx_core (hA : ∀ p, Agree δ M p) (L U : Formalism.L2.SG.PairVal.Ma
 end Main
 
 end Formalism.L2.SG.Pf.ProdEApprox
+end
+end
+end

@@ -9,9 +9,10 @@ public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomolo
 public import Development.AutomorphicArithmetic.EtaleIdempotents.CrystallineExpansionRelationOfScaledEndomorphism
 public import Development.AutomorphicArithmetic.EtaleIdempotents.ExistsCrystallineLatticeExpansion
 public import Development.AutomorphicArithmetic.EtaleIdempotents.HeckeCorrespondenceProduct
-public import Development.AutomorphicArithmetic.EtaleIdempotents.LinearCombinationTransferOfProjectorRelations
-public import Development.AutomorphicArithmetic.EtaleIdempotents.NatCastPrimeNeZeroAndNotIsUnitIntegers
-import GroundTheory.PAdicHodge.ACrisPhi
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Sigma
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -23,6 +24,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -37,7 +39,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -50,6 +51,75 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
+import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.ZeroPull
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.GenericMulOfProd
+import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.CechPairings.InstAddCommGroup
+import GroundTheory.PAdicHodge.LogPowSeries
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Topology.Sheaves.Presheaf
+public import Development.AutomorphicArithmetic.EtaleIdempotents.NatCastPrimeNeZeroAndNotIsUnitIntegers
+import GroundTheory.PAdicHodge.ACrisPhi
+import Mathlib.Tactic.Lemma
+
+-- Source module: Development.AutomorphicArithmetic.EtaleIdempotents.LinearCombinationTransferOfProjectorRelations
+
+section
+
+@[expose] public section
+
+
+set_option backward.isDefEq.respectTransparency false
+
+open CategoryTheory Limits AlgebraicGeometry GroundTheory.PAdicHodge CrystallineSemistableComparison TensorProduct UpperTheory.Gal.crystallineComparison UpperTheory.Ru.crystallineComparison
+
+theorem UpperTheory.linear_combination_transfer_of_projector_relations :
+    ∀ {A : Type} [CommRing A] {H H' : Type 1} [AddCommGroup H] [Module A H] [AddCommGroup H'] [Module A H']
+        {J ι : Type} [Fintype J] [Fintype ι] {I : J → Type} [∀ i, Fintype (I i)] (G : H →ₗ[A] H') (P : ∀ i, I i → (H →ₗ[A] H'))
+        (Ev : ι → H) (Wc : J → ι → H) (β γ L R : A) (σ : J → ℤ) (ρ : J → A) (cc : J → ι → A) (Z : J → H)
+        (_ : ∀ i k, β • G (Wc i k) = γ • ∑ a, P i a (Ev k))
+        (_ : ∀ i, (L * ρ i) • ∑ k, cc i k • Ev k = R • Z i)
+        (_ : ∑ x : Σ i, I i, σ x.1 • P x.1 x.2 (Z x.1) = 0),
+        (L * β) • G (∑ q : J × ι, ((σ q.1 : A) * ρ q.1 * cc q.1 q.2) • Wc q.1 q.2) = 0 := by
+  intro A _ H H' _ _ _ _ J ι _ _ I _ G P Ev Wc β γ L R σ ρ cc Z h1 h2 h3
+  have hi : ∀ i, ∑ k, (L * ρ i * cc i k) • (β • G (Wc i k)) = (γ * R) • ∑ a, P i a (Z i) := by
+    intro i
+    have e1 : ∀ a, ∑ k, (L * ρ i * cc i k) • P i a (Ev k) = R • P i a (Z i) := by
+      intro a
+      have := congrArg (P i a) (h2 i)
+
+      simp only [map_smul, map_sum, Finset.smul_sum, smul_smul] at this
+      simpa only [mul_assoc] using this
+    calc ∑ k, (L * ρ i * cc i k) • (β • G (Wc i k))
+        = ∑ k, (L * ρ i * cc i k) • (γ • ∑ a, P i a (Ev k)) := by simp only [h1]
+      _ = γ • ∑ a, ∑ k, (L * ρ i * cc i k) • P i a (Ev k) := by
+          rw [Finset.sum_comm]
+          simp only [Finset.smul_sum, smul_comm γ]
+      _ = (γ * R) • ∑ a, P i a (Z i) := by
+          rw [Finset.sum_congr rfl fun a _ => e1 a, mul_smul, ← Finset.smul_sum]
+  have h3' : ∑ i, (σ i : A) • ∑ a, P i a (Z i) = 0 := by
+    rw [Fintype.sum_sigma] at h3
+    simpa only [Finset.smul_sum, Int.cast_smul_eq_zsmul] using h3
+  calc (L * β) • G (∑ q : J × ι, ((σ q.1 : A) * ρ q.1 * cc q.1 q.2) • Wc q.1 q.2)
+      = ∑ i, (σ i : A) • ∑ k, (L * ρ i * cc i k) • (β • G (Wc i k)) := by
+        rw [Fintype.sum_prod_type]
+
+        simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
+        refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
+        congr 1
+        ring
+    _ = (γ * R) • ∑ i, (σ i : A) • ∑ a, P i a (Z i) := by
+        simp only [hi, Finset.smul_sum (s := Finset.univ) (r := γ * R), smul_comm (γ * R)]
+    _ = 0 := by rw [h3', smul_zero]
+end
+end
+
+-- Source module: Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PhiHIterSmul
+
+section
 
 @[expose] public section
 
@@ -272,3 +342,6 @@ theorem UpperTheory.Ru.crystallineComparison.top : UpperTheory.Ru.crystallineCom
     mul_ne_zero (mul_ne_zero Fintype.card_ne_zero (pow_ne_zero _ (Fact.out : l.Prime).ne_zero)) (pow_ne_zero _ (Fact.out : l.Prime).ne_zero)
   exact hxvec.symm ▸ UpperTheory.crystalline_expansion_relation_of_scaled_endomorphisms
     B M j f n (N0 + N1) r s _ hκ A v c w σ hw.1 h0
+end
+end
+end
