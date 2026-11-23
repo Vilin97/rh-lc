@@ -70,6 +70,7 @@ import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.CoeSelfD
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.PermutesRefl
 import Development.AbelianVarietyTheory.Definitions.HeightFunctions.XiValIffXiAt
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IntFormsSubset
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

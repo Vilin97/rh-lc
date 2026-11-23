@@ -52,6 +52,7 @@ import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.UnramifiedCocycleIsCoboundaryOfBernoulliUnit
 public import Mathlib.Data.FunLike.Fintype
+import Mathlib.Tactic.ReduceModChar
 
 @[expose] public section
 

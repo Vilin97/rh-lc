@@ -46,6 +46,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FnAlgC
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLieBase
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

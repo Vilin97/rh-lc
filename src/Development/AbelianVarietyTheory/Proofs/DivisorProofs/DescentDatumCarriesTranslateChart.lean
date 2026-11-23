@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChartSome
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield

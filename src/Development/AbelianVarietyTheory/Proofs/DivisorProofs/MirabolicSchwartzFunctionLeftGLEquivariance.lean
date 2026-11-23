@@ -2,7 +2,8 @@ module
 
 public import Mathlib.Analysis.Matrix.MeasurableSpace
 public import Formalism.DoubleCosetMeasures.StatementZ
-public import Mathlib
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsINeZeroKind
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.NotIsCompactUnivFv
 

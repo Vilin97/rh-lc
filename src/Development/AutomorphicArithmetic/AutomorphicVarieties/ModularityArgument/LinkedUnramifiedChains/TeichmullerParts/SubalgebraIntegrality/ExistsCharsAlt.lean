@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.Tactic
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCharsOfTameLpDim
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.JointEigenDecomposition

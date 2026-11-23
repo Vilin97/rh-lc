@@ -46,6 +46,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.RegTiePfA
 import Development.AbelianVarietyTheory.Definitions.Divisors.UnifAlong
 public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsMoveMap
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

@@ -51,6 +51,7 @@ import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.DenseInter
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ToroidalCompactification
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.ChartAway
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

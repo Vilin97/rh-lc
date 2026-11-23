@@ -64,6 +64,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.CharacterExtendScalarsRep
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

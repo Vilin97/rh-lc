@@ -55,6 +55,7 @@ import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 public import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Topology.Sheaves.Presheaf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

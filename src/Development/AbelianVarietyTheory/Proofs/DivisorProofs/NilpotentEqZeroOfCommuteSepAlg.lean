@@ -49,6 +49,7 @@ import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.NonFie
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasTypeVec
 import Development.AbelianVarietyTheory.Definitions.Foundations.InnerEqZeroOfNotUEquiv
 import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

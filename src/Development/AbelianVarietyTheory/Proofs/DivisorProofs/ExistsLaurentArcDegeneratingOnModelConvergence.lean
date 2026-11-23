@@ -74,6 +74,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsoOverOfIsOpenImme
 import Development.AbelianVarietyTheory.Definitions.Divisors.LinearIndependentBasisCoords
 import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEqAtAllEmbeddings
 public import Development.AbelianVarietyTheory.Definitions.Divisors.UnitaryWeightExponentVectorSignatureWeightMuZero
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

@@ -61,6 +61,7 @@ import ReciprocityTheory.AnalyticForms.PotentialTheory.Partition
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeE
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRed
 public import Development.AbelianVarietyTheory.Definitions.Divisors.AnalyticOnNhdFinChartIff
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

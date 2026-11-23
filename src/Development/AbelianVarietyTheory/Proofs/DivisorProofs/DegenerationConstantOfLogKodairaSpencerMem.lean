@@ -47,6 +47,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsLinearHomPull
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsTailMore
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopLePreimageOfClosedPoint
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

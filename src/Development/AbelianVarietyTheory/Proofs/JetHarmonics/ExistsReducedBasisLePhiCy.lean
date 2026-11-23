@@ -65,6 +65,7 @@ import Formalism.SharpRestriction.Divisibility.GeneratorPowers.BidegreeTwoJet
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.BoxTuple
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpBijectiveUniformisation
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LemmaBStatement
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

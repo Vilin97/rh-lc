@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PullbackAndTensorModule
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormalTwistingNeTrivial
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsGrpPullbackAbVarModel

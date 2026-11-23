@@ -53,6 +53,7 @@ import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 public import Mathlib.AlgebraicGeometry.Scheme
 public import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

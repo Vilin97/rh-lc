@@ -50,6 +50,7 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Gl2LocalToAdelicEmb
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsConstAlongSingleton
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+import Mathlib.RingTheory.Etale.Weakly
 
 @[expose] public section
 

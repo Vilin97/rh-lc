@@ -53,6 +53,7 @@ import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 public import Mathlib.RingTheory.Filtration
 public import Mathlib.RingTheory.HopkinsLevitzki
 import ReciprocityTheory.GaloisValuations.GlobalA
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

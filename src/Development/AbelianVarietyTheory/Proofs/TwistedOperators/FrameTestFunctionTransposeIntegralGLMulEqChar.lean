@@ -2,7 +2,8 @@ module
 
 public import Mathlib.Analysis.Matrix.MeasurableSpace
 public import Formalism.DoubleCosetMeasures.StatementZ
-public import Mathlib
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ValuationGdetKapAt
 
 @[expose] public section

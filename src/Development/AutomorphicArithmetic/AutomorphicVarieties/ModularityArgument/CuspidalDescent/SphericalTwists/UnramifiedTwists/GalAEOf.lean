@@ -66,6 +66,7 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsSatVecUOfIsSphericalU
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CyclicStrongAtCusp
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RestrictsSelf
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

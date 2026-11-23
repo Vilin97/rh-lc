@@ -57,6 +57,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsVanBdOfMemExtVanZ
 public import Development.WeilBound.CoreStatements.ProjectiveValuations.ExistsChartFrBor
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

@@ -51,6 +51,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.
 import Development.AbelianVarietyTheory.Definitions.Jets.ExistsSecTieFOfTies
 import Development.AbelianVarietyTheory.Definitions.PlaceAdaptation.AdaptStd
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMember
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.FinalTheorems
 public import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.GoodClass

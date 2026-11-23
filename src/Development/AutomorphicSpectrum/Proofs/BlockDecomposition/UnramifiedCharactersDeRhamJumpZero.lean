@@ -56,6 +56,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormSub
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 import ReciprocityTheory.NeutralLocalFields.Reciprocity
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

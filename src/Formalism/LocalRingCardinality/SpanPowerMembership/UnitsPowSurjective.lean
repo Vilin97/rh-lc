@@ -25,14 +25,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 public import Mathlib.RingTheory.Algebraic.Cardinality
-import Mathlib.RingTheory.Henselian
 public import Mathlib.RingTheory.Localization.Cardinality
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Mathlib.RingTheory.SimpleRing.Principal
 public import Mathlib.RingTheory.WittVector.Compare
-import Mathlib.RingTheory.WittVector.Domain
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -61,7 +56,14 @@ public import Mathlib.Algebra.Category.Grp.Injective
 public import Mathlib.Analysis.Complex.Cardinality
 public import Mathlib.RingTheory.RootsOfUnity.Complex
 public import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
-public import Mathlib
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.WittVector.Domain
 
 @[expose] public section
 

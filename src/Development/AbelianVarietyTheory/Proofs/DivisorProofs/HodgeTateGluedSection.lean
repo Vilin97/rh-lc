@@ -42,6 +42,7 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PtMapDualBCLeft
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTangentPresentationPrime
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

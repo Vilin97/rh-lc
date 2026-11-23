@@ -56,6 +56,7 @@ public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValue
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FnAlgClosedOfFixedPoints
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalModelStructureMap
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrbitThickSt
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

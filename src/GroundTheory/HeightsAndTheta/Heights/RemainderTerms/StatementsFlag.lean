@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.Algebra.CharP.Algebra
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Inhabitants
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PowerSums

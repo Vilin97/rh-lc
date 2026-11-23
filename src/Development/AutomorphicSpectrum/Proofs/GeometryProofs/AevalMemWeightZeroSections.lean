@@ -67,6 +67,7 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabi
 public import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
 public import Development.AbelianVarietyTheory.Definitions.ShimuraVarieties.IsOpenOfMemIrreducibleComponentsOfFinite
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.DefiniteFormStabilizerFiniteAwayFromP
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

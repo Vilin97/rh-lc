@@ -61,6 +61,7 @@ import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsCyclotomicExtensionQI
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemIntV
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

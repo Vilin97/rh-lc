@@ -49,6 +49,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsProperToroidalMod
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsUnimodMod
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDominantToUnitLeft
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SepAtBIff
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

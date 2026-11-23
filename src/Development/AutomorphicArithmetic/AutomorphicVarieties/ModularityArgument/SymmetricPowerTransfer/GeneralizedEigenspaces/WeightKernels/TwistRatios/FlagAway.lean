@@ -69,6 +69,7 @@ import Formalism.ConjugateSelfDual.Statement
 import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
 import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 import ReciprocityTheory.GaloisValuations.GlobalA
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

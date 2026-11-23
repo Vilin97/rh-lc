@@ -54,6 +54,7 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolum
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.OntoStatementPfB
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.OntoWeightStatementPfA
 import Development.AbelianVarietyTheory.Definitions.ThetaValues.Generic
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

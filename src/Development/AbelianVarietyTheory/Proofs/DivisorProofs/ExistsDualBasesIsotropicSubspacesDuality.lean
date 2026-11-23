@@ -50,6 +50,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.IsHilbertSchmidt
 import Development.AbelianVarietyTheory.Definitions.Foundations.MeasurePreservingRmulQuotMeas
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.LinearIndependentE
 import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

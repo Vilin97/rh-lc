@@ -55,6 +55,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PolyApproxZeroPadic
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EcoefQNormLe
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

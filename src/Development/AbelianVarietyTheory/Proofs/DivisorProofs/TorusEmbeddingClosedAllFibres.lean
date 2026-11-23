@@ -55,6 +55,7 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.LieBridgeB
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

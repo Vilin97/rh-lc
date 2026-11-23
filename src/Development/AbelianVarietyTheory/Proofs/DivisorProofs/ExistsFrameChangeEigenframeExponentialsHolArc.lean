@@ -41,6 +41,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.Lie
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsBlockMetricDiagForm
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsNatDiagIffIsDiag
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ToroidalBoundaryMetricData
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

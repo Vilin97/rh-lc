@@ -57,6 +57,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.InnerEqZeroOfNot
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsHilbertSchmidtOfFiniteDimensional
 import Development.AbelianVarietyTheory.Definitions.Foundations.MeasurePreservingRmulQuotMeas
 import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

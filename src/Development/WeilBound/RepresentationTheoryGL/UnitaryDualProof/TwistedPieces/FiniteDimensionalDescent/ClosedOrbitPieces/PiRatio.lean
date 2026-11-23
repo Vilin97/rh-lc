@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.PieceGood
 public import Mathlib.LinearAlgebra.Matrix.Rank
 public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.ClosedOrbitPieces.PsiMulVec

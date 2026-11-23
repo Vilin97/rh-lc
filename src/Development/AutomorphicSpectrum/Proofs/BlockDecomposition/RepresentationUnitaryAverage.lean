@@ -66,6 +66,7 @@ public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 public import Mathlib.MeasureTheory.Function.LocallyIntegrable
 public import Mathlib.MeasureTheory.Group.Integral
 public import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

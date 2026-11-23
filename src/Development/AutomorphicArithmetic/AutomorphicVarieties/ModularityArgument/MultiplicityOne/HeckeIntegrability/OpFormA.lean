@@ -48,6 +48,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Separation.Connected
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.DiscreteGroups.PiInvariants.CasimirInfinity.CasInfOfIm
+import Mathlib.MeasureTheory.Measure.HasOuterApproxClosedProd
 
 @[expose] public section
 

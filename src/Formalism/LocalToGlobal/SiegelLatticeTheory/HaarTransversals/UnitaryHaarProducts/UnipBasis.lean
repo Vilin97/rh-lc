@@ -53,6 +53,7 @@ import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.PoincareInHH
 public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.MarkSpec
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

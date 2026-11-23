@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.RealAdelicFockSpace.FinOneMulEqZeroIff
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.THeis
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.RealAdelicFockSpace.FinRealAdSmulAlt

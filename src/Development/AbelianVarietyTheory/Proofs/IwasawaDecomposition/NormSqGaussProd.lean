@@ -57,6 +57,7 @@ import Mathlib.Tactic.ReduceModChar
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsUnitaryOnTheta
 import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.DatEqZero
+import Mathlib.MeasureTheory.Measure.HasOuterApproxClosedProd
 
 @[expose] public section
 

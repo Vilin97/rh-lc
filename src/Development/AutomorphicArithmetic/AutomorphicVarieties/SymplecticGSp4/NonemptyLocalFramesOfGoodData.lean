@@ -56,6 +56,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.ClopenNhdofOne
 import Mathlib.Topology.Algebra.ProperAction.Basic
 import Mathlib.Topology.Compactness.Paracompact
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

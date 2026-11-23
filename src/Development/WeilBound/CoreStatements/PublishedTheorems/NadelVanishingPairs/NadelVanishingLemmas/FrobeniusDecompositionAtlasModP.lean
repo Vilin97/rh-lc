@@ -49,6 +49,8 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Algebra.Azumaya.Basic
+import Mathlib.GroupTheory.Nilpotent
 
 @[expose] public section
 

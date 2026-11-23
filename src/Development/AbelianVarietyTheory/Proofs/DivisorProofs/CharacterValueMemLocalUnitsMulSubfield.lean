@@ -42,6 +42,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGenOfIsoRel
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SepAtBIff
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

@@ -45,6 +45,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.Topology.Sheaves.Init
+public import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

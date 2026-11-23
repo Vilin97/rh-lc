@@ -52,6 +52,7 @@ import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteWeightData
 import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
 public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

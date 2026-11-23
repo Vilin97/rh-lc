@@ -53,6 +53,7 @@ import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
 import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -56,6 +56,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.Co
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.SphericalOfHasSat
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -44,6 +44,7 @@ import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SetUnipotentT
 import Development.AutomorphicArithmetic.PrimeDiscriminants.Scales
 import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
 import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

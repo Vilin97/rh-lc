@@ -58,6 +58,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.FromBase
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefTwistPull
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

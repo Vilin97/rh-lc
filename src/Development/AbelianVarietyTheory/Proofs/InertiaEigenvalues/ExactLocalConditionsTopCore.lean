@@ -59,6 +59,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ResBound
 import ReciprocityTheory.BasicDefinitions.ExistsUnique
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

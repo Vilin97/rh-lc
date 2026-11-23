@@ -43,6 +43,7 @@ import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpBijectiveUnifo
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LemmaBStatement
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.LBLocal
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.WchartLePreimage
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

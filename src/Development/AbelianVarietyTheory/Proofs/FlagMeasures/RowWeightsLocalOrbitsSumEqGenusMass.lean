@@ -56,6 +56,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.GFrames
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.PlacesOf
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

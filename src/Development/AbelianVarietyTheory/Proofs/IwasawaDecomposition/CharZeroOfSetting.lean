@@ -58,6 +58,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import Formalism.PolynomialDimension.WeylDim
+public import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

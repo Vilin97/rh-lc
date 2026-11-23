@@ -49,6 +49,7 @@ import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RestrictsSelf
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsPstAtOfIsSstAt
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.MonodromyVanishesWeilTwistIff
+public import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

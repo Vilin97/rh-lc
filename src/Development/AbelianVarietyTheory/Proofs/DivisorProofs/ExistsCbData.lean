@@ -48,6 +48,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.FactorBounds
 import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
 import Formalism.LocalToGlobal.Divisibility.CoefMod
 import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

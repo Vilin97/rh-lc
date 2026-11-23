@@ -9,7 +9,6 @@ public import Mathlib.NumberTheory.Padics.PadicIntegers
 public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 public import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.Algebra.Azumaya.Basic
-import Mathlib.Algebra.Central.Matrix
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,7 +34,6 @@ import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Matrix
 import Mathlib.RingTheory.TotallySplit
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
@@ -66,7 +64,9 @@ import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
-public import Mathlib
+public import Mathlib.Algebra.Central.Matrix
+public import Mathlib.RingTheory.SimpleRing.Matrix
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

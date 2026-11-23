@@ -52,6 +52,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassField
+import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
 
 @[expose] public section
 

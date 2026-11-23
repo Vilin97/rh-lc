@@ -53,6 +53,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Formalism.LocalToGlobal.IndefiniteReal.CxPassSk
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

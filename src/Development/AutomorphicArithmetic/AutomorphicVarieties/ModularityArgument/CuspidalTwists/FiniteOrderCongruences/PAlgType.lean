@@ -53,6 +53,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.Co
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.CuspidalTwists.TnOne
 import Development.AutomorphicArithmetic.AutomorphicVarieties.SymplecticGSp4.MapRepApply
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.RedIdeal
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

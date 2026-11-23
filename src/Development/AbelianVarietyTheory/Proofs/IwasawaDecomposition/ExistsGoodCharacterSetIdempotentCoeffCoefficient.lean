@@ -55,6 +55,7 @@ import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 import Formalism.LocalToGlobal.HilbertRowConditions.IsHilbertCF
 import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

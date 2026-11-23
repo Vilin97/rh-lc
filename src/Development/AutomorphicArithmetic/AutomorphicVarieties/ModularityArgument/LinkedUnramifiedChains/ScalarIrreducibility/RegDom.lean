@@ -55,6 +55,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecializa
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.RedDefs
 import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeGroups.UnitaryThreeReflectionRight
 public import Lean.Meta.ExprDefEq
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

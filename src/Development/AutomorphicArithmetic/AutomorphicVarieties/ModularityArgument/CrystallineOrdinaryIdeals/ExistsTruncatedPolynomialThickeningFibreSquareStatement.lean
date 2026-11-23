@@ -59,6 +59,7 @@ public import Mathlib.Algebra.Polynomial.AlgebraMap
 public import Mathlib.Algebra.Polynomial.Div
 public import Mathlib.RingTheory.AdjoinRoot
 import ReciprocityTheory.GaloisValuations.GlobalA
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

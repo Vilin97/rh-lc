@@ -47,6 +47,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.HermitianLattices.HermitianLatticesProofs.UnimodularSpan
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

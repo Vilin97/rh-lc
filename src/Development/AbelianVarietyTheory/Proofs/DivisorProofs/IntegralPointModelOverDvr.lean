@@ -51,6 +51,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRan
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
 public import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProof
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

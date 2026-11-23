@@ -50,6 +50,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Connected.Separation
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

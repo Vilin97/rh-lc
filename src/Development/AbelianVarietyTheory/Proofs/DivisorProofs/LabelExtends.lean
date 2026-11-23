@@ -56,6 +56,7 @@ import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
 public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.AlWellDefSt
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

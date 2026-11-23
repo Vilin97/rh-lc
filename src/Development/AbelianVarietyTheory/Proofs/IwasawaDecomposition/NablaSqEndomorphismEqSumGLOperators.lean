@@ -53,6 +53,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NStage
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExponentAndTwistData
 import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

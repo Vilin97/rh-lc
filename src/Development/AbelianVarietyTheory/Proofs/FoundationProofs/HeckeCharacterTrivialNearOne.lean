@@ -45,6 +45,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Foundations.NormSumPairRankZeroOfCurveCoordNorm
 import Formalism.SharpRestriction.GlobalSchurBounds.StandardLatticesGL3
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

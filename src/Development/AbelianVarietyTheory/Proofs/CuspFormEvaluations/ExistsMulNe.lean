@@ -59,6 +59,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.F
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.EqZeroOfMulEqZero
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.GGConn
 import Development.AbelianVarietyTheory.Definitions.ThetaValues.Generic
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

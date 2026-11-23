@@ -1,6 +1,7 @@
 module
 
-public import Mathlib
+import Mathlib.Tactic
+import Mathlib.Tactic.Basify
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.Placed
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
 public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.DiscreteSeriesClassificationIff

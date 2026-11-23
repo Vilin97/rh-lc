@@ -57,6 +57,8 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSumPolAV
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinHomIffLinEnd
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HomExtNormalSt
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import Mathlib.Algebra.Azumaya.Basic
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

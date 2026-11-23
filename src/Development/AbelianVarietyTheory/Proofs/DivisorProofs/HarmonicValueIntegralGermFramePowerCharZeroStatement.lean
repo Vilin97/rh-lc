@@ -55,6 +55,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.UnitaryWeigh
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsCombinationIntegers
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

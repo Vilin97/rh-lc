@@ -57,6 +57,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsCyclotomicExtensi
 import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.TwOrbMEqTwOrbUOfNormal
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Minpoly
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

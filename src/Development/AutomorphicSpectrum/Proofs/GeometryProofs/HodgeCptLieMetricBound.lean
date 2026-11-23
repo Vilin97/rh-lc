@@ -60,6 +60,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabComp
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsOrthFull
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

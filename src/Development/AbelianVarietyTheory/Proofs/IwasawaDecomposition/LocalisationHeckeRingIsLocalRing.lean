@@ -45,6 +45,7 @@ import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

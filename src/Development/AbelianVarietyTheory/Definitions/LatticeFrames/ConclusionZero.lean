@@ -44,6 +44,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.AestronglyMeasur
 import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyEqOfIsPreconnected
 import Development.AbelianVarietyTheory.Definitions.Foundations.WittIndexEqZeroIff
 import Formalism.LocalToGlobal.IndefiniteReal.LocalNewformFunction
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

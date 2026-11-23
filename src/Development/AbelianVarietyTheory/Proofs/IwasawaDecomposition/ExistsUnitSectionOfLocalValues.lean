@@ -53,6 +53,7 @@ import Formalism.SharpRestriction.CuspSpanNormBounds.Point
 import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
 public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

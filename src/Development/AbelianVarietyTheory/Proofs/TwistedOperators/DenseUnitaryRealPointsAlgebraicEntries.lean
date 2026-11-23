@@ -50,6 +50,7 @@ import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsM
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TwistPlacesOffPrimeQZero
 import Development.AbelianVarietyTheory.Statements.HeckeThetaIntegrals.FormulaAt
 import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

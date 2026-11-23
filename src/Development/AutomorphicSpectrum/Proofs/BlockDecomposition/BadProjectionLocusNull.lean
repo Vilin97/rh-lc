@@ -54,6 +54,7 @@ import ReciprocityTheory.AnalyticForms.AnalyticCharts.NullZero
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

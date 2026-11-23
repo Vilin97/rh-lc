@@ -46,6 +46,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsMinAt
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsToricRankOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.GalRigidOfSurjective
 public import Development.AbelianVarietyTheory.Definitions.Divisors.TateProductRigidificationTrivial
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

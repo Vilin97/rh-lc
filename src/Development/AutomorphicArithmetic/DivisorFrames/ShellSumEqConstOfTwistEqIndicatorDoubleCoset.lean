@@ -50,6 +50,7 @@ import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsVacFO
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.BlkGLMem
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsReading
 import Development.AutomorphicArithmetic.LocalEmbeddings.FinMatchDefs
+import Mathlib.Analysis.Matrix.MeasurableSpace
 
 @[expose] public section
 

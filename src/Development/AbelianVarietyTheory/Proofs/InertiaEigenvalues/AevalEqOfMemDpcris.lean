@@ -1,6 +1,8 @@
 module
 
-public import Mathlib
+public import Mathlib.Algebra.Order.Star.Int
+public import Mathlib.Tactic.Polynomial.Basic
+public import Mathlib.Tactic.ReduceModChar
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaThroughOfPolyPow
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InerDecomp

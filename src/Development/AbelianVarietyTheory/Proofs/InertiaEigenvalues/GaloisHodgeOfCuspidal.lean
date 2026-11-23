@@ -62,6 +62,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NStage
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsAttachedHodge
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasExponentZeroIff
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

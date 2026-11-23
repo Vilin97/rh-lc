@@ -54,6 +54,7 @@ import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomology
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.HodgeSurjectivity.CosieveRes
 public import Mathlib.Algebra.GroupWithZero.Action.Regular
 import Mathlib.Topology.Sheaves.Presheaf
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

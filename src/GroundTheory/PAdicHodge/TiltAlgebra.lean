@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib
 public import GroundTheory.PAdicHodge.TiltMap
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield

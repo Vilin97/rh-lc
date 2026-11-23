@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+public import Mathlib.Topology.Algebra.Star.Unitary
 public import Formalism.PeriodIntegrals.WeylForU
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CompactGroupIntegrability.InstCompactUG
 import Mathlib.Algebra.Order.Floor.Extended
@@ -48,7 +48,6 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.Topology.Sheaves.Init
 import Mathlib.Topology.UniformSpace.Matrix
 import Mathlib.Topology.UniformSpace.Uniformizable

@@ -47,6 +47,7 @@ import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
 import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
 public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

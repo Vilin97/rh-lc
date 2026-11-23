@@ -58,6 +58,7 @@ import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 public import Mathlib.Algebra.MvPolynomial.Funext
 import ReciprocityTheory.Automorphisms.PlaceA
 import ReciprocityTheory.GaloisValuations.GlobalA
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

@@ -52,6 +52,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.Divisors.CompEqOneIffPush
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GermSystemHeightFree
 import Development.AutomorphicArithmetic.SpecialMaps.QuotObjDefs
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

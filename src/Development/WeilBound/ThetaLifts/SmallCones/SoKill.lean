@@ -55,6 +55,7 @@ import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
+import Mathlib.Topology.Connected.Separation
 
 @[expose] public section
 

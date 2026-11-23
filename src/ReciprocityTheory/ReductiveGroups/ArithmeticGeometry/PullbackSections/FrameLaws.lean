@@ -46,6 +46,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.Gen
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.RdIndepOf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.TanAddPf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.WtFieldPf
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

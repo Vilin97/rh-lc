@@ -43,6 +43,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LintegralImageEqLintegralNormSqDetMul
 import ReciprocityTheory.AnalyticForms.PotentialTheory.LocDens
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

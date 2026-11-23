@@ -53,6 +53,7 @@ import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.AllTorsMap
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CharBundlePrimitive
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.FinitePartImageGeneric
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

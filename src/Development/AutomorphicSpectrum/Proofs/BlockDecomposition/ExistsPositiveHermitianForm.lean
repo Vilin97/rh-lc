@@ -49,6 +49,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.SimpleTwistedTraceF
 public import Development.AbelianVarietyTheory.Definitions.Foundations.ContinuousOfMemCcSmooth
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeDefiniteUnitary
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

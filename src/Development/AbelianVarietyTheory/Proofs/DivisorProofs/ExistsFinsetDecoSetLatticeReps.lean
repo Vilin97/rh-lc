@@ -50,6 +50,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.Bad
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClassFam
 import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

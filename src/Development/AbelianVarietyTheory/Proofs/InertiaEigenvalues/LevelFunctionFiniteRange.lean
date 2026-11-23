@@ -44,6 +44,7 @@ import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IntFormsSub
 import Formalism.LocalToGlobal.Divisibility.CoefMod
 import Formalism.LocalToGlobal.IndefiniteReal.ExistsChosenExtremalVector
 import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

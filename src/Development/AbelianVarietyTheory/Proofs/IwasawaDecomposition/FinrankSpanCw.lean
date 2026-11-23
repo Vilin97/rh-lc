@@ -50,6 +50,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.Positi
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RowsRestWordColumnUnitBaseTupleAlt
 import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
 import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -57,6 +57,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing
 import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
 import ReciprocityTheory.GaloisValuations.GlobalA
+import Mathlib.NumberTheory.Padics.LocalField
 
 @[expose] public section
 

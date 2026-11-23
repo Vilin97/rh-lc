@@ -54,6 +54,8 @@ public import Mathlib.Algebra.Module.Lattice.Basic
 public import Mathlib.RingTheory.DedekindDomain.Factorization
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ConnectionKillsSeries
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

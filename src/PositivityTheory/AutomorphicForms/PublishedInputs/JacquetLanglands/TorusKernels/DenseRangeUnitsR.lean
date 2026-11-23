@@ -57,6 +57,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BcDefs
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.IsoOfFrob
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RChar2
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -66,6 +66,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.Ni
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.PairedDualFirstOrderDualMatrixSpace
 import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

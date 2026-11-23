@@ -61,6 +61,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ChartGen
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

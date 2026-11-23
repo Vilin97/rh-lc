@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.Tactic
 public import Formalism.DoubleCosetMeasures.StatementZ
 public import Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.AmpOrbOfAmpDD
 public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen

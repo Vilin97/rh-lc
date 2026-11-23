@@ -53,6 +53,7 @@ import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.PolarHaarA
 import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.PolarInv
 import Std.Tactic.BVDecide.Normalize.Prop
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.AdKMeasurePreserving
+import Mathlib.Analysis.Matrix.MeasurableSpace
 
 @[expose] public section
 

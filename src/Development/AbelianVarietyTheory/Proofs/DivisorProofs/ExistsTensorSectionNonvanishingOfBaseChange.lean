@@ -61,6 +61,7 @@ import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanon
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

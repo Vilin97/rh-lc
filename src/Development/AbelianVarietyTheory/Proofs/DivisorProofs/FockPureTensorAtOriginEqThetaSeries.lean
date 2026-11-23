@@ -58,6 +58,8 @@ import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.ColTorusA
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.L2NormFundamentalDomain
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.RingTheory.MvPolynomial
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -49,7 +49,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Complex
-public import Mathlib
+import Mathlib
 
 @[expose] public section
 

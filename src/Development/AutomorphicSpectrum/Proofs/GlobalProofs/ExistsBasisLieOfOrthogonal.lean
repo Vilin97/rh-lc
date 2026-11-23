@@ -51,6 +51,7 @@ import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.Ex
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsSmoothVec
 import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

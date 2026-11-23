@@ -61,6 +61,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.JumpDic
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WdOfMono0L
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasExponentZeroIff
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

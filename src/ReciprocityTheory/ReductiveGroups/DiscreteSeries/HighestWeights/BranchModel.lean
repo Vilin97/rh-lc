@@ -58,6 +58,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Formalism.LocalRingCardinality.Params
 public import Formalism.PeriodIntegrals.HwIrred
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

@@ -57,6 +57,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.IsLocallyConstan
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.TrivialOnInertiaOfUnr
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Newform
 import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.DirichletPrimeToLPartMulLPowerPart
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

@@ -55,6 +55,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.NumberTheory.Padics.ProperSpace
 
 @[expose] public section
 

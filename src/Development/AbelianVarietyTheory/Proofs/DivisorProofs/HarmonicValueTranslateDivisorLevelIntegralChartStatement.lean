@@ -51,6 +51,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.TupleReadBaseTupleE
 public import Development.AbelianVarietyTheory.Definitions.Divisors.UnitaryWeightExponentVectorSignatureWeightMuZero
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsCombinationIntegers
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

@@ -51,6 +51,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.N
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.FlipTwoThree
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.RedDefs
 import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeGroups.UnitaryThreeReflectionRight
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

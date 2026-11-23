@@ -55,6 +55,7 @@ import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.Ex
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvalMod
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 import ReciprocityTheory.NeutralLocalFields.Reciprocity
+public import Mathlib.NumberTheory.Padics.LocalField
 
 @[expose] public section
 

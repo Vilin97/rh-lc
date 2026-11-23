@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompleteLocalBaseAtClosedPointGroupImports
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsLastTail
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsDominantOfGeneric

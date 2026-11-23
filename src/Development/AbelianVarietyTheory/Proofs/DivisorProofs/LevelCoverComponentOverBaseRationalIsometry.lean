@@ -52,6 +52,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMea
 import Development.AbelianVarietyTheory.Definitions.ThetaValues.LeCovCoeff
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.FramedPointsLiftToLevelCover
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPinnedOfIsUnf
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

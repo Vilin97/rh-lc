@@ -56,6 +56,7 @@ import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.LocalToGlobal.IndefiniteReal.PartsOrth
 import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowsJoinPinned
 import Formalism.QuotientMetricDivisors.Statement
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

@@ -47,6 +47,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsChartO
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrTanAlg
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

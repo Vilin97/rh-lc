@@ -59,6 +59,7 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLieB
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MultOfNotMem
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValRSpMapFromSpecStalk
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.InterPolyProdSum
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

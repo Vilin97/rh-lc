@@ -42,6 +42,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FnAlgC
 import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernLeviEqConstant
 import Development.AbelianVarietyTheory.Definitions.Divisors.SlopeTestRemainingChoices
 import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

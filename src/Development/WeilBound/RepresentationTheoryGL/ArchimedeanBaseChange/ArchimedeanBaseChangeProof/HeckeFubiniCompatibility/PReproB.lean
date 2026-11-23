@@ -52,6 +52,8 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DifferentiableAtOfSmooth
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Topology.UniformSpace.Uniformizable
 
 @[expose] public section
 

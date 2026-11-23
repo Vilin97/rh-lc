@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+import Mathlib
 public import Formalism.SharpRestriction.LevelLetterCocycles.LamPS
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocalFormOfThreeInputs
 import Mathlib.Algebra.Order.Floor.Extended

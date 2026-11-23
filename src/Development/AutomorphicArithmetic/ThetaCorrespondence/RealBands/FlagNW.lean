@@ -47,6 +47,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Presheaf
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsStandardIndModule
 import Development.AutomorphicArithmetic.ThetaCorrespondence.RealBands.IsBand
+import Mathlib.RingTheory.PicardGroup
 
 @[expose] public section
 

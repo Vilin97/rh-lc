@@ -52,6 +52,7 @@ import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
 import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.IsBichar
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

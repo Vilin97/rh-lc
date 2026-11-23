@@ -41,6 +41,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Formalism.SharpRestriction.Divisibility.WeightAlgebra
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

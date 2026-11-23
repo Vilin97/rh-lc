@@ -59,6 +59,7 @@ import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRan
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
 import Development.AbelianVarietyTheory.Definitions.Foundations.NonnegOfMemCStarSet
 import Development.AbelianVarietyTheory.Definitions.PlaceAdaptation.AdaptStd
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

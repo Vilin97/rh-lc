@@ -51,6 +51,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEq
 public import Development.AbelianVarietyTheory.Definitions.Divisors.UnitaryWeightExponentVectorSignatureWeightMuZero
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegreeLeOfPullbackLePowFiniteEtale
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GapGeSubKapBase
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 

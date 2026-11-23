@@ -58,6 +58,7 @@ import Std.Tactic.BVDecide.Normalize.Prop
 import Development.AbelianVarietyTheory.Definitions.Divisors.CompEqOneIffPush
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDimEqOne
 import Development.AutomorphicArithmetic.SpecialMaps.QuotObjDefs
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 
