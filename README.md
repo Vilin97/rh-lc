@@ -33,7 +33,8 @@ Run it from the repository root, with Mathlib's prebuilt outputs already in `.la
 modules and any module whose imported public interfaces changed. Outputs go to `.lake/build`, and compiler errors go
 to `.lake/cbuild/errs/<module>.log`.
 
-The outputs are byte-identical to Lake's. `--lake-traces` also writes Lake's `.hash` and `.trace` files, so stock Lake
+For the same checkout path, the outputs are byte-identical to Lake's (Lean records the absolute source path in
+`.olean.server` and `.olean.private`). `--lake-traces` also writes Lake's `.hash` and `.trace` files, so stock Lake
 accepts the build without compiling anything:
 
 ```bash

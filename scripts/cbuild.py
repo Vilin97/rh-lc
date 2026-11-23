@@ -111,7 +111,7 @@ def stamp_path(artifact):
     return artifact.removesuffix('.olean') + '.cbuild-source'
 
 def stamp_data(source, artifact):
-    return json.dumps([LEAN, 'lake-identical-v1', source, artifact]) + '\n'
+    return json.dumps([LEAN, 'lake-identical-v2', source, artifact]) + '\n'
 
 def source_is_stale(artifact, source_info, artifact_info):
     if artifact_info is None or source_info is None:
@@ -256,7 +256,7 @@ def same(a, b):
 
 def build(m):
     """returns (rc, secs, public_olean_changed)"""
-    rel = os.path.relpath(mods[m], REPO); o = olean(m)
+    o = olean(m)
     os.makedirs(os.path.dirname(o), exist_ok=True)
     tdir = os.path.join(TMP, m); os.makedirs(tdir, exist_ok=True)
     to = os.path.join(tdir, 'X.olean')
@@ -267,7 +267,7 @@ def build(m):
     with open(mods[m], encoding='utf-8') as source, open(setup, 'w') as out:
         json.dump({'name': m, 'package': PACKAGE, 'isModule': bool(_MODULE_HEADER.match(source.read(20000))),
                    'importArts': {}, 'dynlibs': [], 'plugins': [], 'options': options}, out)
-    r = subprocess.run([LEAN] + args + ['--json', rel, '-o', to, '-i', os.path.join(tdir, 'X.ilean'),
+    r = subprocess.run([LEAN] + args + ['--json', mods[m], '-o', to, '-i', os.path.join(tdir, 'X.ilean'),
                         '-c', os.path.join(tdir, 'X.c'), '--setup', setup], cwd=REPO, env=env, capture_output=True)
     secs = time.time() - s
     if r.returncode != 0:
