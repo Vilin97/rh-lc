@@ -1,5 +1,5 @@
 name: Build PR
-run-name: "${{ inputs.mode == 'quick-check' && 'Quick check' || inputs.mode == 'native-proof' && 'Proof shard' || 'Build PR' }} #${{ github.event.pull_request.number || inputs.pr_number }} ${{ github.event.pull_request.head.sha || 'manual' }}"
+run-name: "${{ inputs.mode == 'fragment' && format('Fragment {0} on {1}', inputs.fragment_commit, inputs.fragment_runner) || inputs.mode == 'quick-check' && 'Quick check' || inputs.mode == 'native-proof' && 'Proof shard' || 'Build PR' }} #${{ github.event.pull_request.number || inputs.pr_number }} ${{ github.event.pull_request.head.sha || 'manual' }}"
 
 on:
   pull_request_target:
@@ -14,6 +14,7 @@ on:
           - build
           - native-proof
           - quick-check
+          - fragment
       quick_head:
         description: Optional immutable PR head selected by the small-runner scheduler
         type: string
@@ -40,6 +41,22 @@ on:
         default: rh-build
         options:
           - rh-build
+      fragment_commit:
+        description: "Fragment: commit SHA, or 'SHA BASE HEAD DATE PR' for an rh-buildq PR merge"
+        type: string
+        default: ''
+      fragment_targets:
+        description: "Fragment: module names, gz:<base64>, https://URL or git:REF:PATH (plans take #CHUNK)"
+        type: string
+        default: ''
+      fragment_runner:
+        description: "Fragment: runner label in the RiemannHypothesisBuild group"
+        type: string
+        default: ''
+      fragment_jobs:
+        description: "Fragment: LEAN_NUM_THREADS (empty: all cores)"
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -49,12 +66,12 @@ permissions:
 # heads may use separate available runners; repeat events for one head coalesce.
 # Manual dispatches serialize separately because they resolve the head at runtime.
 concurrency:
-  group: ${{ inputs.mode == 'quick-check' && format('rh-quick-{0}', inputs.quick_runner) || format('rh-build-pr-{0}-{1}', github.event.pull_request.number || inputs.pr_number, inputs.mode == 'native-proof' && format('native-proof-{0}', inputs.proof_seed_sha256) || github.event.pull_request.head.sha || 'manual') }}
+  group: ${{ inputs.mode == 'fragment' && format('rh-fragment-{0}', github.run_id) || inputs.mode == 'quick-check' && format('rh-quick-{0}', inputs.quick_runner) || format('rh-build-pr-{0}-{1}', github.event.pull_request.number || inputs.pr_number, inputs.mode == 'native-proof' && format('native-proof-{0}', inputs.proof_seed_sha256) || github.event.pull_request.head.sha || 'manual') }}
   cancel-in-progress: false
 
 jobs:
   resolve:
-    if: ${{ inputs.mode != 'native-proof' && inputs.mode != 'quick-check' && (github.event_name == 'workflow_dispatch' || vars.RH_CI_MANUAL_ONLY != 'true') }}
+    if: ${{ inputs.mode != 'native-proof' && inputs.mode != 'quick-check' && inputs.mode != 'fragment' && (github.event_name == 'workflow_dispatch' || vars.RH_CI_MANUAL_ONLY != 'true') }}
     runs-on: ubuntu-latest
     outputs:
       candidate: ${{ steps.resolve.outputs.candidate }}
@@ -453,3 +470,113 @@ jobs:
               print(result.read_text() if result.exists() else json.dumps({'status':'infrastructure_or_outer_budget_failure','full_build':False}),file=out)
               print('```',file=out)
           PYTHON
+
+  # Build a list of Lake targets of one commit on a chosen runner, against the shared R2 cache:
+  # restore (Mathlib, the nearest CI cache, the rh-buildq pool), `lake build`, and publish
+  # finished modules to the pool while building. See scripts/rh-buildq/README.md.
+  fragment:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.mode == 'fragment' }}
+    runs-on:
+      group: RiemannHypothesisBuild
+      labels: ${{ inputs.fragment_runner }}
+    environment: ci-cache-publish
+    timeout-minutes: 1440
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout trusted harness
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: trusted
+          persist-credentials: false
+          sparse-checkout: scripts/rh-buildq
+      - name: Describe the host
+        run: |
+          umask 077
+          # RUNNER_TEMP is emptied after every job: the derived keys never outlive it.
+          printf 'FRAGMENT_SECRET=%s\nFRAGMENT_TMP=%s\n' "$RUNNER_TEMP/rh-fragment-secret" "$RUNNER_TEMP/rh-fragment" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/rh-fragment"
+          root="${RH_FRAGMENT_ROOT:-$HOME/rh-fragments}"
+          mkdir -p "$root"
+          echo "RH_FRAGMENT_ROOT=$root" >> "$GITHUB_ENV"
+          # Trees of failed runs are kept for reruns; drop those untouched for a week.
+          find "$root" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
+            -regex '.*/[0-9a-f]{40}-[0-9]+' -mtime +7 -print -exec rm -rf -- {} + || true
+          echo "runner $RUNNER_NAME, $(nproc) cpus, $(awk '/MemTotal/ {printf "%d GiB", $2/1048576}' /proc/meminfo)"
+          sed -n 's/^PRETTY_NAME=//p' /etc/os-release; uname -r
+          df -h "$root" | tail -n 1
+          for tool in git curl python3 bwrap elan; do printf '%s: %s\n' "$tool" "$(command -v "$tool" || echo missing)"; done
+          if bwrap --dev-bind / / --proc /proc --unshare-pid true 2>/dev/null; then echo "bwrap sandbox: usable"; else echo "bwrap sandbox: unavailable"; fi
+      - name: Install elan if missing
+        run: |
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            d="$FRAGMENT_TMP/elan-install"; mkdir -p "$d"
+            curl --fail --silent --show-error --location --retry 5 --retry-all-errors \
+              https://github.com/leanprover/elan/releases/download/v4.2.4/elan-x86_64-unknown-linux-gnu.tar.gz --output "$d/elan.tar.gz"
+            printf '%s  %s\n' 42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63 "$d/elan.tar.gz" | sha256sum --check
+            tar --extract --gzip --file "$d/elan.tar.gz" --directory "$d"
+            "$d/elan-init" -y --default-toolchain none --no-modify-path
+          fi
+          printf '%s\n' "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve targets
+        env:
+          SPEC: ${{ inputs.fragment_targets }}
+          COMMIT: ${{ inputs.fragment_commit }}
+        run: |
+          python3 -I trusted/scripts/rh-buildq/fragment.py targets "$SPEC" --out "$FRAGMENT_TMP/targets.txt"
+          target="${COMMIT%% *}"
+          [[ "$target" =~ ^[0-9a-f]{40}$ ]] || { echo "fragment_commit must start with a 40-hex SHA"; exit 1; }
+          # One tree per run: concurrent fragments of a commit never share one; reruns resume it.
+          echo "FRAGMENT_QUEUE=$RH_FRAGMENT_ROOT/$target-$GITHUB_RUN_ID" >> "$GITHUB_ENV"
+      - name: Restore Mathlib, the nearest CI cache and the rh-buildq pool
+        env:
+          COMMIT: ${{ inputs.fragment_commit }}
+        run: |
+          python3 -I trusted/scripts/rh-buildq/fragment.py restore --queue "$FRAGMENT_QUEUE" --commit "$COMMIT" \
+            --timings "$FRAGMENT_TMP/timings.json"
+      # Only after the restore: it runs the target commit's lakefile (`lake cache add`) outside
+      # the sandbox, so the derived keys must not exist yet.
+      - name: Prepare publisher credentials
+        env:
+          R2_ACCOUNT_TOKEN: ${{ secrets.R2_ACCOUNT_TOKEN }}
+        run: python3 -I trusted/scripts/rh-buildq/fragment.py credentials --out "$FRAGMENT_SECRET/r2.json"
+      - name: Build the targets and publish while building
+        env:
+          JOBS: ${{ inputs.fragment_jobs }}
+        run: |
+          python3 -I trusted/scripts/rh-buildq/fragment.py build --queue "$FRAGMENT_QUEUE" \
+            --targets "$FRAGMENT_TMP/targets.txt" --log "$FRAGMENT_TMP/build.log" --jobs "${JOBS:-0}" \
+            --creds "$FRAGMENT_SECRET/r2.json" --hide "$FRAGMENT_SECRET" --timings "$FRAGMENT_TMP/timings.json"
+      - name: Publish what is left, even after a failure
+        if: ${{ always() }}
+        run: |
+          if [[ -n "${FRAGMENT_QUEUE:-}" ]]; then
+            python3 -I trusted/scripts/rh-buildq/fragment.py flush --queue "$FRAGMENT_QUEUE" \
+              --creds "$FRAGMENT_SECRET/r2.json" --tmp "$FRAGMENT_SECRET/flush-tmp" --timings "$FRAGMENT_TMP/timings.json"
+          fi
+      - name: Summarize built and failed modules
+        if: ${{ always() }}
+        run: |
+          if [[ -n "${FRAGMENT_QUEUE:-}" ]]; then
+            python3 -I trusted/scripts/rh-buildq/fragment.py result --queue "$FRAGMENT_QUEUE" \
+              --targets "$FRAGMENT_TMP/targets.txt" --log "$FRAGMENT_TMP/build.log" \
+              --out "$FRAGMENT_TMP/result.json" --timings "$FRAGMENT_TMP/timings.json"
+            gzip -kf "$FRAGMENT_TMP/build.log" 2>/dev/null || true
+          fi
+      - name: Upload the result
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fragment-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.FRAGMENT_TMP }}/result.json
+            ${{ env.FRAGMENT_TMP }}/build.log.gz
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Remove credentials and scratch files
+        if: ${{ always() }}
+        run: rm -rf -- "$FRAGMENT_SECRET" "$FRAGMENT_TMP"
+      - name: Remove the tree of a successful run
+        if: ${{ success() }}
+        run: rm -rf -- "$FRAGMENT_QUEUE"
