@@ -4,7 +4,10 @@
 Rebuild changed sources and modules with interface errors or changed transitive interfaces.
 Track successfully compiled source revisions separately from the published public .olean.
 Scheduling is topological with longest-remaining-path priority.
-usage: cbuild.py [-j N] [--defer-failed-dependents | --fallback-artifacts]
+usage: cbuild.py [-j N] [--lake-traces] [--defer-failed-dependents | --fallback-artifacts]
+
+Each module is compiled with Lake's arguments and a small --setup file, so its outputs match Lake's byte for byte.
+--lake-traces also runs scripts/lake_traces.py after a clean build, so stock `lake build --no-build` accepts the outputs.
 
 Outputs go to .lake/build/lib/lean. Compiler errors go to .lake/cbuild/errs/<module>.log.
 Environment overrides: CBUILD_REPO, CBUILD_LEAN, LEANWRAP_ERRDIR, CBUILD_LOG, CBUILD_FAILED, CBUILD_TMP.
@@ -31,8 +34,28 @@ if not (DEFER_FAILED or FALLBACK_ARTIFACTS) and Path(LEAN).name == 'lean.final':
         DEFER_FAILED = os.path.realpath(REPO) in defaults_path.read_text().splitlines()
     except FileNotFoundError:
         pass
-OPTS = ['--tstack=400000', '-DautoImplicit=false', '-DrelaxedAutoImplicit=false', '-DmaxSynthPendingDepth=3',
-        '-Dpp.unicode.fun=true', '-DmaxHeartbeats=4000000', '--json']
+import tomllib
+_lake = tomllib.load(open(f'{REPO}/lakefile.toml', 'rb'))
+PACKAGE = _lake['name']
+def _flatten(d, prefix=''):
+    out = {}
+    for k, v in d.items():
+        if isinstance(v, dict): out.update(_flatten(v, f'{prefix}{k}.'))
+        else: out[prefix + k] = v
+    return out
+def _glob(g, m):
+    if g.endswith('.+'): return m.startswith(g[:-1])
+    if g.endswith('.*'): return m == g[:-2] or m.startswith(g[:-1])
+    return m == g
+_LIBS = [(l.get('globs', l.get('roots', [l['name']])),
+          {**_flatten(_lake.get('leanOptions', {})), **_flatten(l.get('leanOptions', {}))},
+          list(_lake.get('moreLeanArgs', [])) + list(l.get('moreLeanArgs', []))) for l in _lake.get('lean_lib', [])]
+_DEFAULT = (_flatten(_lake.get('leanOptions', {})), list(_lake.get('moreLeanArgs', [])))
+def module_config(m):
+    for globs, options, args in _LIBS:
+        if any(_glob(g, m) for g in globs): return options, args
+    return _DEFAULT
+_MODULE_HEADER = re.compile(r'(?:\s+|--[^\n]*\n|/-.*?-/)*module\b', re.S)
 env = dict(os.environ)
 env.setdefault('LEANWRAP_ERRDIR', f'{STATE}/errs'); os.makedirs(env['LEANWRAP_ERRDIR'], exist_ok=True)
 if DEFER_FAILED:
@@ -88,7 +111,7 @@ def stamp_path(artifact):
     return artifact.removesuffix('.olean') + '.cbuild-source'
 
 def stamp_data(source, artifact):
-    return json.dumps([LEAN, source, artifact]) + '\n'
+    return json.dumps([LEAN, 'lake-identical-v1', source, artifact]) + '\n'
 
 def source_is_stale(artifact, source_info, artifact_info):
     if artifact_info is None or source_info is None:
@@ -187,6 +210,12 @@ for m in order:
 _ns = sum(1 for m, stored in stored_inputs.items() if stored is None and m not in seeded)
 print(f'transitive check: {len(seeded)} seeded current, {_ns} without an input fingerprint', flush=True)
 
+def write_lake_traces():
+    if '--lake-traces' not in sys.argv: return
+    tool = str(Path(__file__).with_name('lake_traces.py'))
+    rc = subprocess.run([sys.executable, tool, '-j', str(min(J, 48))], env=dict(os.environ, CBUILD_REPO=REPO, CBUILD_LEAN=LEAN)).returncode
+    if rc: sys.exit(rc)
+
 def finish(built, changed, failed, deferred=()):
     failure_path = os.environ.get('CBUILD_FAILED', f'{STATE}/failed')
     with open(failure_path, 'w') as failures:
@@ -204,6 +233,7 @@ TMP = os.environ.get('CBUILD_TMP', f'{STATE}/tmp'); os.makedirs(TMP, exist_ok=Tr
 # Missing fingerprints still go through the scheduler so eligible stamps get written.
 if all_current:
     finish(0, (), ())
+    write_lake_traces()
     sys.exit(0)
 
 # The search path Lake would use, computed without running Lake.
@@ -232,9 +262,13 @@ def build(m):
     to = os.path.join(tdir, 'X.olean')
     s = time.time()
     source_revision = signature(artifact_stat(mods[m]))
-    extra = ['-DsynthInstance.maxHeartbeats=400000'] if m.startswith(('GroundTheory.LocalFields.', 'GroundTheory.GlobalFields.')) else []
-    r = subprocess.run([LEAN] + OPTS + extra + [rel, '-o', to, '-i', os.path.join(tdir, 'X.ilean')], cwd=REPO, env=env,
-                       capture_output=True)
+    options, args = module_config(m)
+    setup = os.path.join(tdir, 'setup.json')
+    with open(mods[m], encoding='utf-8') as source, open(setup, 'w') as out:
+        json.dump({'name': m, 'package': PACKAGE, 'isModule': bool(_MODULE_HEADER.match(source.read(20000))),
+                   'importArts': {}, 'dynlibs': [], 'plugins': [], 'options': options}, out)
+    r = subprocess.run([LEAN] + args + ['--json', rel, '-o', to, '-i', os.path.join(tdir, 'X.ilean'),
+                        '-c', os.path.join(tdir, 'X.c'), '--setup', setup], cwd=REPO, env=env, capture_output=True)
     secs = time.time() - s
     if r.returncode != 0:
         with open(os.path.join(env['LEANWRAP_ERRDIR'], f'{m}.log'), 'wb') as diagnostics:
@@ -247,6 +281,9 @@ def build(m):
             continue
         suffix = f[1:]   # 'X.olean.private' -> '.olean.private'
         dst = base + suffix
+        if suffix == '.c':
+            dst = f"{REPO}/.lake/build/ir/{m.replace('.', '/')}.c"
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
         if suffix == '.olean' and not ch:
             continue      # keep old public olean (and its mtime)
         os.replace(os.path.join(tdir, f), dst)
@@ -316,5 +353,6 @@ for t in ths: t.join()
 if settled != len(mods):
     sys.exit(f'build settled {settled}/{len(mods)} modules')
 finish(built, changed, failed, unavailable - failed)
-if DEFER_FAILED and failed:
+if failed:
     sys.exit(1)
+write_lake_traces()

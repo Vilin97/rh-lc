@@ -2,14 +2,14 @@
 
 ## Building
 
-- **Never run `lake build`.** Build only with the custom driver, from the repository root:
+- **Never compile with `lake build`.** Build only with the custom driver, from the repository root:
 
   ```bash
   python3 scripts/cbuild.py -j 90
   ```
 
-- The driver writes outputs to `.lake/build/lib/lean` and compiler errors to `.lake/cbuild/errs/<module>.log`.
-- Lake does not recognize the driver's outputs, so a `lake build` would recompile the whole project.
+- The driver writes outputs to `.lake/build` and compiler errors to `.lake/cbuild/errs/<module>.log`.
+- Add `--lake-traces` when the outputs will be shared or cached. Stock `lake build --no-build` then accepts them.
 
 ## Compile as little as possible
 

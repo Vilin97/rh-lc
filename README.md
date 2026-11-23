@@ -21,19 +21,27 @@ repository also adds Comparator files and cache infrastructure:
 
 ## Building this fork
 
-**Build with `scripts/cbuild.py`. Do not run `lake build`.** The driver runs the same `lean` compiler with the
-project's options, but without Lake's per-module bookkeeping. On 96 vCPUs it built all 149,215 modules in 3h06m, while
+**Compile with `scripts/cbuild.py`, not `lake build`.** The driver runs the same `lean` compiler with the options in
+`lakefile.toml`, without Lake's per-module bookkeeping. On 96 vCPUs it built all 149,215 modules in 3h06m, while
 `lake build` was on pace for about 12 hours.
 
 ```bash
-python3 scripts/cbuild.py -j 90
+python3 scripts/cbuild.py -j 90 --lake-traces
 ```
 
 Run it from the repository root, with Mathlib's prebuilt outputs already in `.lake/packages`. It rebuilds changed
-modules and any module whose imported public interfaces changed. Outputs go to `.lake/build/lib/lean`, and compiler
-errors go to `.lake/cbuild/errs/<module>.log`.
+modules and any module whose imported public interfaces changed. Outputs go to `.lake/build`, and compiler errors go
+to `.lake/cbuild/errs/<module>.log`.
 
-Lake does not recognize these outputs, so running `lake build` afterwards would recompile everything.
+The outputs are byte-identical to Lake's. `--lake-traces` also writes Lake's `.hash` and `.trace` files, so stock Lake
+accepts the build without compiling anything:
+
+```bash
+lake build --no-build
+```
+
+The trace writer reimplements Lake 4.36's input hash. After a toolchain bump, run
+`python3 scripts/lake_traces.py --check` in a tree built by real Lake before relying on it.
 
 ## Using the build cache
 
