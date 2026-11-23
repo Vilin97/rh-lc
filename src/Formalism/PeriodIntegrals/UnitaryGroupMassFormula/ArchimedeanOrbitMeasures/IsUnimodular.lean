@@ -1,7 +1,7 @@
 module
 
-public import Mathlib.Algebra.Algebra.Operations
-public import Mathlib.Algebra.Module.LinearMap.Star
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ArchimedeanOrbitMeasures.Imports
+public import Mathlib.LinearAlgebra.DFinsupp
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -42,33 +42,6 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-public import Mathlib.LinearAlgebra.DFinsupp
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ArchimedeanOrbitMeasures.Imports
-
-section
-
-@[expose] public section
-
-open Matrix LinearMap Module
-
-noncomputable section
-
-namespace HcS.E
-
-def hdual {S K V : Type*} [CommRing S] [Field K] [StarRing K] [Algebra S K] [AddCommGroup V]
-    [Module K V] [Module S V] [IsScalarTower S K V] (B : V →ₗ⋆[K] V →ₗ[K] K)
-    (L : Submodule S V) : Submodule S V :=
-  ⨅ y ∈ L, (1 : Submodule S K).comap ((B y).restrictScalars S)
-
-end HcS.E
-end
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ArchimedeanOrbitMeasures.IsUnimodular
-
-section
 
 @[expose] public section
 
@@ -105,6 +78,3 @@ def IsUnimodular (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule R V) : Prop :
 end Defs
 
 end HcS.HermitianLatticesTheory
-end
-end
-end

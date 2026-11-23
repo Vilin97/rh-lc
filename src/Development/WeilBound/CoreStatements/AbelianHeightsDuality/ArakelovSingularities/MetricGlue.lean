@@ -1,6 +1,11 @@
 module
 
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DetJacMatCoordsEqTransitionJacobianDet
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.MetricConj
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqOfIsometricTrivShift
+public import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernIntegralEqDegree
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsConjFsBasisOfUnitary
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialIsomClassInt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsClosedImmersionGenericPoint
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -38,48 +43,11 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqOfIsometricTrivShift
-public import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernIntegralEqDegree
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsConjFsBasisOfUnitary
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialIsomClassInt
-public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsClosedImmersionGenericPoint
 public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.MetricPart
 import Mathlib.Algebra.Ring.IsFormallyReal
 import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Linter.Style
-
--- Source module: Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.MetricConj
-
-section
-
-@[expose] public section
-
-set_option autoImplicit false
-
-noncomputable section
-
-open CategoryTheory AlgebraicGeometry TopologicalSpace
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.CxPts
-
-namespace GlobalTheory.AmbMetric
-
-variable {k : Type} [CommRing k] {Y : Scheme.{0}} {σ σ' : k →+* ℂ}
-
-noncomputable def conjPts (p : Y ⟶ Sp k) (h : σ = (starRingEnd ℂ).comp σ') : CxPts p σ' ≃ₜ CxPts p σ :=
-  (Points.conjHomeomorph Y).subtype fun y => by
-    have e : spMap σ = spMap (starRingEnd ℂ) ≫ spMap σ' := by
-      rw [h, spMap, spMap, spMap, ← Spec.map_comp]
-      rfl
-    change y ≫ p = _ ↔ (spMap (starRingEnd ℂ) ≫ y) ≫ p = _
-    rw [e, Category.assoc]
-    exact (Points.conjHomeomorph (Sp k)).injective.eq_iff.symm
-
-end GlobalTheory.AmbMetric
-end
-end
-end
 
 -- Source module: Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.MetricLoc
 

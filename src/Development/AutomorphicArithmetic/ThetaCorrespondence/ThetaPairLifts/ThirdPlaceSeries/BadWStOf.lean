@@ -2,20 +2,22 @@ module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ShareWSt
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsWt
-public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-public import Mathlib.NumberTheory.LSeries.DirichletContinuation
-public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
+public import Formalism.Statement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadPartDimLeSumLocalSharesWhittakerStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadShareSizeBoundsAlongFamilyStatement
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsArchOne
+public import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteCuspFormsFiniteRegularRepresentationStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelCuspFormsEmbedRegularRepresentationCopieStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelFlagDomainCuspFormRanksShiftedWeightsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelFlagDomainEigenspaceShareStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -39,72 +41,26 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadPartDimLeSumLocalSharesWhittakerStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadShareSizeBoundsAlongFamilyStatement
-public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsArchOne
-public import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteCuspFormsFiniteRegularRepresentationStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelCuspFormsEmbedRegularRepresentationCopieStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelFlagDomainCuspFormRanksShiftedWeightsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoLevelFlagDomainEigenspaceShareStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullRepTwist
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EmbedsInRegularRepresentationCopiesComplexEmbeddStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWhittakerDatumAndHalfLevels
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWhittakerDatumAndHalfLevelsStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIInfKerSemilinearStandardBasisStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeLineMultipleLeFamilyThresholdStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullRepTwist
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightedIdempotentLocalShareBadTuplesLeStatement
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LabelDatum
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LemmaLSeriesWeightsOfGreenCuspidalParametrisatio
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Topology.Sheaves.Init
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.BaseLevelIsWhitStatement
 import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
-
--- Source module: Formalism.Statement
-
-section
-
-@[expose] public section
-
-open Complex MeasureTheory Set Filter Topology
-
-noncomputable section
-
-namespace Formalism
-
-
-open ArithmeticFunction in
-def LamF {N : ℕ} (χ : DirichletCharacter ℂ N) (n : ℕ) : ℝ :=
-  Λ n * (1 + (χ n).re)
-
-def S {N : ℕ} (χ : DirichletCharacter ℂ N) (x : ℝ) : ℝ :=
-  ∑ n ∈ Finset.Icc 1 ⌊x⌋₊, LamF χ n * (x / n - 1)
-
-def gammaF {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) : ℝ :=
-  Real.eulerMascheroniConstant +
-    (deriv (DirichletCharacter.LFunction χ) 1 / DirichletCharacter.LFunction χ 1).re
-
-def G {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (x : ℝ) : ℝ :=
-  S χ x - x * Real.log x + (1 + gammaF χ) * x
-
-instance fact_prime_seven : Fact (Nat.Prime 7) := ⟨by norm_num⟩
-
-def quadraticCharFour : DirichletCharacter ℂ 4 := ZMod.χ₄.ringHomComp (Int.castRingHom ℂ)
-
-def quadraticCharThree : DirichletCharacter ℂ 3 := (quadraticChar (ZMod 3)).ringHomComp (Int.castRingHom ℂ)
-
-def quadraticCharacterMod7 : DirichletCharacter ℂ 7 := (quadraticChar (ZMod 7)).ringHomComp (Int.castRingHom ℂ)
-
-end Formalism
-end
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BadWStOfRegular
 
@@ -165,19 +121,6 @@ end Point
 end GlobalTheory.BadWOn
 
 end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWhittakerDatumAndHalfLevelsStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.ArithmeticCylinders GlobalTheory.BadCount Module
-
-theorem _root_.GlobalTheory.T.exists_whittakerDatum_and_halfLevels : ∀ (D : D7) (ψ : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), AddChar (ZMod (D.host.g kv.1)) ℂ), (∀ kv, ψ kv ≠ 1) → (∃ (P : Subgroup (G0g D.nd)) (lam : P →* ℂˣ), IsWhit D P lam ψ) ∧ ∀ k, ∃ H, IsHalf D k H := by
-  first | exact @GlobalTheory.BadCount.Inh.exists_whit_half | exact GlobalTheory.BadCount.Inh.exists_whit_half | (intros; apply GlobalTheory.BadCount.Inh.exists_whit_half <;> assumption)
 end
 end
 

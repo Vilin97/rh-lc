@@ -1,6 +1,7 @@
 module
 
 public import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyPoints
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,37 +42,6 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
--- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
-
-section
-
-@[expose] public section
-
-namespace GroundTheory.Arith.Abelian
-
-open Polynomial WeierstrassCurve WeierstrassCurve.Affine IntermediateField
-
-universe u
-
-variable {F : Type u} [Field F] [IsAlgClosed F] [DecidableEq F] {E E' : WeierstrassCurve F}
-  [E.IsElliptic] [E'.IsElliptic]
-
-theorem mulIsogeny_toHom (n : ℤ) (hn : n ≠ 0) :
-    (mulIsogeny E n hn).toHom = n • (homId : isogEnd E) :=
-  Subtype.ext (by rw [Isogeny.toHom_val, Isogeny.mulIsogeny_val]; rfl)
-
-namespace Isogeny
-
-end Isogeny
-
-end GroundTheory.Arith.Abelian
-end
-end
-
--- Source module: GroundTheory.ArithmeticGeometry.AbelianVarieties.Endomorphisms
-
-section
-
 @[expose] public section
 
 namespace GroundTheory.Arith.Abelian
@@ -88,5 +58,3 @@ theorem isogEnd_one_eq_mulIsogeny :
   rw [mulIsogeny_toHom, one_smul]; rfl
 
 end GroundTheory.Arith.Abelian
-end
-end

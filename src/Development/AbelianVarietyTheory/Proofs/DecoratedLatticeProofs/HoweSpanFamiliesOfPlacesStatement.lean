@@ -2,9 +2,12 @@ module
 
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.EvalAtOneExtremalMul
 public import Mathlib.LinearAlgebra.PiTensorProduct.Basic
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsPiTensorMvPolynomialEquivBlocksStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FockSubstitutionIdentitiesStatement
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HoweDualityUnitarySubstitutionSpanUnitStatement
 public import Mathlib.Basic.Complex.Basic
-public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsPiTensorMvPolynomialEquivBlocks
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemSpanTprodOfCommuteAtEachPlace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -48,27 +51,9 @@ import Development.AbelianVarietyTheory.Definitions.LatticeFrames.EvalAtOneExtre
 import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
 import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FockSubstitutionIdentitiesStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HoweDualityUnitarySubstitutionSpanUnitStatement
-public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemSpanTprodOfCommuteAtEachPlace
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeylDeterminantTwistTensorFiniteDimensionalStablStatement
 import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsPiTensorMvPolynomialEquivBlocksStatement
-
-section
-
-@[expose] public section
-
-open MvPolynomial Formalism.BasicNotions Formalism.L2.Forms Formalism.L2.Ker GlobalTheory.KJInf MeasureTheory
-open scoped TensorProduct
-
-theorem _root_.GlobalTheory.T.exists_piTensorMvPolynomialEquiv_blocks : ∀ (ι σ : Type) [Fintype ι] [DecidableEq ι], ∃ e : PiTensorProduct ℂ (fun _ : ι => MvPolynomial σ ℂ) ≃ₗ[ℂ] MvPolynomial (ι × σ) ℂ, (∀ f : ι → MvPolynomial σ ℂ, e (PiTensorProduct.tprod ℂ f) = ∏ τ, rename (Prod.mk τ) (f τ)) ∧ ∀ U : ι → Submodule ℂ (MvPolynomial σ ℂ), Function.Injective (e.toLinearMap ∘ₗ PiTensorProduct.map fun τ => (U τ).subtype) ∧ LinearMap.range (e.toLinearMap ∘ₗ PiTensorProduct.map fun τ => (U τ).subtype) = Submodule.span ℂ {p | ∃ f : ι → MvPolynomial σ ℂ, (∀ τ, f τ ∈ U τ) ∧ p = ∏ τ, rename (Prod.mk τ) (f τ)} := by
-  first | exact @GlobalTheory.BlockPoly.exists_blockEquiv | exact GlobalTheory.BlockPoly.exists_blockEquiv | (intros; apply GlobalTheory.BlockPoly.exists_blockEquiv <;> assumption)
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemSpanTprodOfCommuteAtEachPlaceStatement
 

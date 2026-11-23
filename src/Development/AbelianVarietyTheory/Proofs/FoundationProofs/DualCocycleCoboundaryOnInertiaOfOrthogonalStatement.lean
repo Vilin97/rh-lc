@@ -6,16 +6,12 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 public import Mathlib.RingTheory.AdicCompletion.Noetherian
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CardDualZmodModuleEqCard
-public import Mathlib.RingTheory.Coalgebra.IsFrobenius
-public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import ReciprocityTheory.Hypotheses.GalCohDefs
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedH1CardInvariants
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedH1CardInvariantsStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardKerMulCardEq
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistedDualEvalBidualApply
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -34,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,33 +40,13 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.Foundations.FinalTheorems
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.TrivialOnInertiaOfUnr
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Newform
 import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.DirichletPrimeToLPartMulLPowerPart
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardKerMulCardEq
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistedDualEvalBidualApply
-import Mathlib.Tactic.Linter.Style
-import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ContinuousMatQApply
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedH1CardInvariantsStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2
-open scoped Matrix
-
-theorem _root_.GlobalTheory.T.unramified_h1_card_invariants : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ) (M : Type) [AddCommGroup M] [Module (ZMod (l ^ r)) M] [Finite M] [TopologicalSpace M] [DiscreteTopology M] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 F)) (ρ : Representation (ZMod (l ^ r)) (Dec (F := F) A) M) (hρ : ContAction ρ), IsPlaceOver A v → Nat.card (H1ur ρ ((Ine (F := F) A).subgroupOf (Dec (F := F) A))) = Nat.card (H0 ρ) := by
-  first | exact @GlobalTheory.Ord2.UrCard.card_unramified_h1_eq_card_h0 | exact GlobalTheory.Ord2.UrCard.card_unramified_h1_eq_card_h0 | (intros; apply GlobalTheory.Ord2.UrCard.card_unramified_h1_eq_card_h0 <;> assumption)
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.CupProductFixedSubmoduleRestrictDual
 

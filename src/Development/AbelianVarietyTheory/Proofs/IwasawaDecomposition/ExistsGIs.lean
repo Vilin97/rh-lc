@@ -7,9 +7,8 @@ public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.Exists
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.EisGEqZeroOfInfinite
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsOkPins
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsTiedOfIsRecG
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ResCharThetaJetPlaceDegOne
-public import Development.AbelianVarietyTheory.Definitions.Foundations.CdScaleTieIff
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsHalfPtIff
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WithTrue
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,6 +24,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -44,9 +44,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
-import Mathlib.Tactic.Basify
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsColInJetsIn
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StdLvPr
@@ -59,30 +56,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Volum
 public import Formalism.LocalToGlobal.HermitianColumns.HermCols
 public import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
 public import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
-
--- Source module: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WithTrue
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open Formalism.BasicNotions NumberField
-
-namespace GlobalTheory.Mem
-
-def GJStage.withTrue {B : Base} {C : Cols B} (G : GJStage B C) : GJStage B C :=
-  letI := B.host.cmStar
-  { G with
-    vol := fun W => Vol.trueVol B.sp.cm (fun g : Tau B.R => B.host.emb g.1) G.cd W
-    vol_pos := fun W => Vol.trueVol_pos B.sp.cm (fun g : Tau B.R => B.host.emb g.1) G.cd W
-    gx := Per.trueGx B.host B.embLL B.embE (Equiv.refl _) }
-
-end GlobalTheory.Mem
-end
-end
-end
+import Mathlib.Topology.Sheaves.Init
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AdditiveCharacterTypePrimesValuesCoefficientFiel
 

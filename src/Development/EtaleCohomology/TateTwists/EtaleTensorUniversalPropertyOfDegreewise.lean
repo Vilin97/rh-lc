@@ -1,6 +1,6 @@
 module
 
-public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
+public import Development.EtaleCohomology.TateTwists.EtaleTensorPairUniversalProperty
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,23 +39,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-
--- Source module: Development.EtaleCohomology.TateTwists.EtaleTensorPairUniversalProperty
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
-
-def LateralTheory.EtaleFoundations.EtaleTensorPairUniversalProperty : Prop :=
-  ∀ (R : Type) [CommRing R] {I J K : Cx R} (τ : Pair I J K), τ.IsTensor → (∀ {I' J' K' : Cx R} (ν : Pair I' J' K') (f : I ⟶ I') (g : J ⟶ J'), ∃! u : K ⟶ K', τ.Compat ν f g u) ∧ (I.IsStrictlyGE 0 → J.IsStrictlyGE 0 → K.IsStrictlyGE 0) ∧ ∀ {K' : Cx R} (u : K ⟶ K'), ∃ ν : Pair I J K', τ.Compat ν (𝟙 I) (𝟙 J) u
-end
-end
-
--- Source module: Development.EtaleCohomology.TateTwists.EtaleTensorUniversalPropertyOfDegreewise
-
-section
 
 @[expose] public section
 
@@ -214,5 +197,3 @@ theorem LateralTheory.EtaleFoundations.etale_tensor_universal_property_of_degree
   obtain ⟨u, hu⟩ := LateralTheory.EtaleFoundations.TensUnivPf.exists_of_degreewise τ hτ ν f g
     (fun w => (hdeg R τ hτ ν f g w).choose) (fun U s t w h a b => (hdeg R τ hτ ν f g w).choose_spec U s t h a b)
   exact ⟨u, hu, fun v hv => LateralTheory.EtaleFoundations.TensUnivPf.uniq τ hτ ν f g v u hv hu⟩
-end
-end

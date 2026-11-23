@@ -53,12 +53,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsRe
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SymmetricSquareMixedExists
 import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.RatTorsionFree
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.HolomorphicIrreducibility.ShapeFacts
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.ConjStableShaFam
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.QuadraticSplitting.Imports
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.QuadraticSplitting.IndGlobOfKill
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.AutomorphyLifting.PrimeIndexConstruction.ConjEquivApply
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.InducedFinalStatement
@@ -114,21 +109,6 @@ theorem UpperTheory.exists_ribet_lattice :
   · rw [e ⟨u, huH⟩]; exact q2
   · rw [e ⟨h, hh⟩]; exact q3 ⟨h, hh⟩
   · rw [e s]; exact q4
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.QuadraticSplitting.Imports
-
-section
-
-@[expose] public section
-
-open Formalism.ConjugateSelfDual UpperTheory.V.Base
-
-theorem UpperTheory.V.Sd.S2.emb (k F Ω : Type) [Field k] [NumberField k] [Field F] [NumberField F] [Field Ω] [Algebra k F] [Algebra k Ω]
-    [Algebra F Ω] [IsScalarTower k F Ω] [IsAlgClosure k Ω] : Topology.IsEmbedding (galEmb k F Ω) :=
-  haveI : IsAlgClosure F Ω := ⟨IsAlgClosure.isAlgClosed k, Algebra.IsAlgebraic.tower_top (K := k) F⟩
-  (galEmbTop k F Ω).1
 end
 end
 

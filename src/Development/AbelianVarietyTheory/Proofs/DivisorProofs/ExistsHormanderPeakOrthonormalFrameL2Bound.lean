@@ -46,25 +46,14 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEq
 import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
 import Development.AbelianVarietyTheory.Definitions.Divisors.TupleReadBaseTupleEqFamily
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
-public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-public import Mathlib.Topology.Separation.CompletelyRegular
-public import ReciprocityTheory.L2DbarEstimates.IsLocalHomeomorph
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicWeightedSquareIntegrableVanishesStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PeakExtensionVanishOtherOrbitPointsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlurisubharmonicDecreasingLimitExtensionStatement
 import Mathlib.Algebra.Order.Star.Real
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Linter.Style
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.VanishAtSStatementPf
-import Std.Tactic.BVDecide.Normalize.Prop
-import Formalism.LocalRingCardinality.DataTheta
-import Formalism.LocalRingCardinality.SpanPowerMembership.HasStrictFDerivAtExpZero
-import Formalism.LocalToGlobal.BesselHermitianTheta.NoncompactGapAtLeastRange
-import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
-import Formalism.SharpRestriction.CuspSpanNormBounds.Point
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PeakExtensionVanishOtherOrbitPointsStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlurisubharmonicDecreasingLimitExtensionStatement
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.ExhaustFStatementPfD
@@ -86,75 +75,6 @@ open scoped ContDiff
 
 theorem _root_.GlobalTheory.T.exists_hormanderPeak_cutoff_singularWeights : ∃ C1 : ℝ, 0 ≤ C1 ∧ ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (la : ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r) (x : Frame X.Ψ r), 0 < X.p0 → X.p0 < r → ReciprocityTheory.ChartRestriction.G.AR.Up.IsOrth X x → (∀ τ (a b : Fin r), (b : ℕ) = a + 1 → (b : ℕ) ≠ X.p0 → C1 * ((X.Ψ.card : ℝ) * r) ^ 8 ≤ (la τ a : ℝ) - la τ b) → (∀ τ (a b : Fin r), (a : ℕ) = 0 → (b : ℕ) = r - 1 → C1 * ((X.Ψ.card : ℝ) * r) ^ 8 ≤ (la τ b : ℝ) - la τ a) → (∀ γ ∈ X.Γ, ∀ z z' : ReciprocityTheory.L2DbarEstimates.V (ReciprocityTheory.ChartRestriction.G.AR.Inst.nd X), ‖z‖ ≤ 1 / (100 * (r : ℝ) ^ 2) → ‖z'‖ ≤ 1 / (100 * (r : ℝ) ^ 2) → ∀ b ∈ Bor X.Ψ r, lact γ (ReciprocityTheory.ChartRestriction.G.AR.Inst.cpt X x z) = rmul (ReciprocityTheory.ChartRestriction.G.AR.Inst.cpt X x z') b → γ = 1) → ∃ (ρ c : ℝ) (F0 : V (nd X) → ℂ) (ψ : ℕ → Frame X.Ψ r → ℝ) (φ : ℕ → V (nd X) → ℝ) (h : V (nd X) → ℝ≥0∞), 0 < ρ ∧ ρ ≤ 1 / (100 * (r : ℝ) ^ 2) ∧ 0 < c ∧ Metric.closedBall (0 : V (nd X)) ρ ⊆ OmF X x ∧ muF X x (Metric.ball 0 (1 / (100 * (r : ℝ) ^ 2)) ∩ OmF X x) < ⊤ ∧ ContDiffOn ℝ ∞ F0 (OmF X x) ∧ (∀ z, ‖z‖ ≤ ρ / 2 → F0 z = 1) ∧ (∀ z, ρ ≤ ‖z‖ → F0 z = 0) ∧ (∀ z, ‖F0 z‖ ≤ 1) ∧ (∀ k, Measurable (ψ k)) ∧ (∀ k, ∀ y ∈ X.dom, ∀ b ∈ Bor X.Ψ r, ψ k (rmul y b) = ψ k y) ∧ (∀ k, ∀ γ ∈ X.Γ, ∀ y ∈ X.dom, ψ k (lact γ y) = ψ k y) ∧ (∀ k y, ψ k y ≤ 0) ∧ (∀ k, ∀ z ∈ OmF X x, φ k z = phla X la (cpt X x z) - (4 * (X.Ψ.card : ℝ) * (r : ℝ) ^ 2 + 1) * rhF X x z - Real.log (densF X x z) + ψ k (cpt X x z)) ∧ (∀ k, ContDiffOn ℝ ∞ (φ k) (OmF X x)) ∧ (∀ k, ∀ z ∈ OmF X x, ∀ ξ : Fin (nd X) → ℂ, 0 ≤ (leviV (nd X) (fun w => ((φ k w : ℝ) : ℂ)) z ξ).re) ∧ (∀ k, ∀ z ∈ OmF X x, φ (k + 1) z ≤ φ k z) ∧ Measurable h ∧ (∀ k, ∀ z ∈ OmF X x, ∀ ξ : Fin (nd X) → ℂ, ENNReal.ofReal (‖∑ j, wdb (nd X) j F0 z * (starRingEnd ℂ) (ξ j)‖ ^ 2) ≤ h z * ENNReal.ofReal (leviV (nd X) (fun w => ((φ k w : ℝ) : ℂ)) z ξ).re) ∧ (∀ k, ∫⁻ z in OmF X x, h z * ENNReal.ofReal (Real.exp (-φ k z)) ≤ ENNReal.ofReal (Real.exp (C1 * ((∑ τ, ∑ a, |(la τ a : ℝ)|) + ((X.Ψ.card : ℝ) * r) ^ 8))) * muF X x (Metric.ball 0 ρ ∩ OmF X x)) ∧ (∀ z ∈ Metric.ball (0 : V (nd X)) ρ, Real.exp (-phla X la (cpt X x z)) * Real.exp ((4 * (X.Ψ.card : ℝ) * (r : ℝ) ^ 2 + 1) * rhF X x z) ≤ Real.exp (C1 * ((∑ τ, ∑ a, |(la τ a : ℝ)|) + ((X.Ψ.card : ℝ) * r) ^ 8))) ∧ (∀ w ∈ Metric.ball (0 : V (nd X)) (ρ / 2), ENNReal.ofReal (c * ‖w‖ ^ (-(2 * (nd X : ℝ)))) ≤ ⨆ k, ENNReal.ofReal (Real.exp (-ψ k (cpt X x w)))) ∧ (∀ w ∈ Metric.ball (0 : V (nd X)) (ρ / 2), ENNReal.ofReal (c * ‖w‖ ^ (-(2 * (nd X : ℝ)))) ≤ ⨆ k, ENNReal.ofReal (Real.exp (-φ k w))) := by
   first | exact @GlobalTheory.PeakWeight.peak_weight | exact GlobalTheory.PeakWeight.peak_weight | (intros; apply GlobalTheory.PeakWeight.peak_weight <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicWeightedSquareIntegrableVanishes
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.BasicNotions.TH Formalism.L2.Theta ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.CovHt
-open ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.L2DbarEstimates MeasureTheory
-open scoped ENNReal
-open scoped ContDiff
-
-namespace GlobalTheory
-
-theorem holo_vanish_of_critical_integrable : ∀ {n : ℕ}, 0 < n → ∀ (u : V n → ℂ) (ρ : ℝ), 0 < ρ → DifferentiableOn ℂ u (Metric.ball 0 ρ) → ∫⁻ z in Metric.ball (0 : V n) ρ, ENNReal.ofReal (‖u z‖ ^ 2 * ‖z‖ ^ (-(2 * (n : ℝ)))) < ⊤ → u 0 = 0 := by
-  intro n hn u ρ hρ hu hint
-  by_contra hne
-  have hb : Metric.ball (0 : V n) ρ ∈ nhds (0 : V n) := Metric.ball_mem_nhds 0 hρ
-  set a := ‖u 0‖ with ha
-  have ha0 : 0 < a := norm_pos_iff.mpr hne
-  have hc : ContinuousAt u 0 := hu.continuousOn.continuousAt hb
-  have ev1 : ∀ᶠ z in nhds (0 : V n), a / 2 < ‖u z‖ :=
-    hc.norm.eventually (Ioi_mem_nhds (by show a / 2 < a; linarith))
-  obtain ⟨δ0, hδ0, hall⟩ := Metric.eventually_nhds_iff.mp (ev1.and (Filter.eventually_of_mem hb fun z hz => hz))
-  set δ := min δ0 ρ with hδ
-  have hδpos : 0 < δ := lt_min hδ0 hρ
-  have hsub : Metric.ball (0 : V n) δ ⊆ Metric.ball (0 : V n) ρ := Metric.ball_subset_ball (min_le_right _ _)
-  have hpt : ∀ z ∈ Metric.ball (0 : V n) δ,
-      ENNReal.ofReal ((a / 2) ^ 2) * ENNReal.ofReal (‖z‖ ^ (-2 * (n : ℝ))) ≤
-        ENNReal.ofReal (‖u z‖ ^ 2 * ‖z‖ ^ (-(2 * (n : ℝ)))) := by
-    intro z hz
-    have hz0 : dist z 0 < δ0 := by
-      rw [Metric.mem_ball] at hz; exact lt_of_lt_of_le hz (min_le_left _ _)
-    have h1 := (hall hz0).1
-    rw [← ENNReal.ofReal_mul (by positivity), neg_mul]
-    refine ENNReal.ofReal_le_ofReal ?_
-    have hr : 0 ≤ ‖z‖ ^ (-(2 * (n : ℝ))) := Real.rpow_nonneg (norm_nonneg _) _
-    have h2 : (a / 2) ^ 2 ≤ ‖u z‖ ^ 2 := pow_le_pow_left₀ (by positivity) h1.le 2
-    exact mul_le_mul_of_nonneg_right h2 hr
-  have hlow : ENNReal.ofReal ((a / 2) ^ 2) * ∫⁻ z in Metric.ball (0 : V n) δ, ENNReal.ofReal (‖z‖ ^ (-2 * (n : ℝ)))
-      ≤ ∫⁻ z in Metric.ball (0 : V n) ρ, ENNReal.ofReal (‖u z‖ ^ 2 * ‖z‖ ^ (-(2 * (n : ℝ)))) := by
-    rw [← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
-    calc ∫⁻ z in Metric.ball (0 : V n) δ, ENNReal.ofReal ((a / 2) ^ 2) * ENNReal.ofReal (‖z‖ ^ (-2 * (n : ℝ)))
-        ≤ ∫⁻ z in Metric.ball (0 : V n) δ, ENNReal.ofReal (‖u z‖ ^ 2 * ‖z‖ ^ (-(2 * (n : ℝ)))) :=
-          setLIntegral_mono' Metric.isOpen_ball.measurableSet hpt
-      _ ≤ _ := lintegral_mono_set hsub
-  rw [ReciprocityTheory.ChartRestriction.G.AR.Up.VanishPf.crit_div hn hδpos,
-    ENNReal.mul_top (by simp [ENNReal.ofReal_eq_zero, not_le]; positivity)] at hlow
-  exact absurd (lt_of_le_of_lt hlow hint) (lt_irrefl _)
-
-end GlobalTheory
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicWeightedSquareIntegrableVanishesStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.BasicNotions.TH Formalism.L2.Theta ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.CovHt
-open ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.L2DbarEstimates MeasureTheory
-open scoped ENNReal
-open scoped ContDiff
-
-theorem _root_.GlobalTheory.T.holomorphic_weighted_square_integrable_vanishes : ∀ {n : ℕ}, 0 < n → ∀ (u : V n → ℂ) (ρ : ℝ), 0 < ρ → DifferentiableOn ℂ u (Metric.ball 0 ρ) → ∫⁻ z in Metric.ball (0 : V n) ρ, ENNReal.ofReal (‖u z‖ ^ 2 * ‖z‖ ^ (-(2 * (n : ℝ)))) < ⊤ → u 0 = 0 := by
-  first | exact @GlobalTheory.holo_vanish_of_critical_integrable | exact GlobalTheory.holo_vanish_of_critical_integrable | (intros; apply GlobalTheory.holo_vanish_of_critical_integrable <;> assumption)
 end
 end
 

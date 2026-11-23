@@ -92,9 +92,7 @@ public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Sub
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.SubrepresentationTransport
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TensorVector
 public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.TranslationCoordinates
-public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.NonzeroLeviEigenvectorExists
-import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
-import Mathlib.Tactic.Lemma
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Uniformizer₂
 import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.UnramifiedTwist
 
 -- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TypesNZeroPJacFin
@@ -279,38 +277,6 @@ theorem twistedSphericalRepresentative_holds : TwistedSphericalRepresentative :=
   exact ⟨fun h => TwistedSphericalEquivalence.isTwSphProd_of_equiv e h, fun h => TwistedSphericalEquivalence.isTwSphProd_of_equiv (Representation.Equiv.symm e) h⟩
 
 end UpperTheory.NonzeroTypeTheory
-end
-end
-end
-
--- Source module: PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.Uniformizer₂
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open ValuativeRel
-
-namespace UpperTheory.TNZ.Grp
-
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-
-namespace Uniformizer₂
-
-lemma algebraMap_ne_zero {w : 𝒪[k]} (hw : w ≠ 0) : algebraMap 𝒪[k] k w ≠ 0 := by
-  intro h
-  apply hw
-  exact Subtype.ext (by simpa using h)
-
-end Uniformizer₂
-
-theorem step_unif : UniformizerProp (k := k) := by
-  obtain ⟨w, hw⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
-  exact ⟨Units.mk0 _ (Uniformizer₂.algebraMap_ne_zero hw.ne_zero), w, hw, rfl⟩
-
-end UpperTheory.TNZ.Grp
 end
 end
 end

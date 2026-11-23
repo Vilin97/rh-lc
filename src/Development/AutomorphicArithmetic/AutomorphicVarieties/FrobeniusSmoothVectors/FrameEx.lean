@@ -51,15 +51,7 @@ import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSmoothVec
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.B1p
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.CastToZModPowOne
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.EqOneOfPow
-public import Mathlib.RingTheory.AdicCompletion.Noetherian
-public import Mathlib.RingTheory.Coalgebra.IsFrobenius
-public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.PhiGam
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.Imports
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.PsiLocalPairEqLocal
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.ResH1SurjectiveOfIsomorphism
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.ToZModEqOne
@@ -103,21 +95,6 @@ theorem UpperTheory.V.Fr.clrk_tr :
   unfold GC.clRk
   rw [← key]
   exact ((LinearEquiv.funCongrLeft (ZMod l) (ZMod l) e).submoduleMap _).rank_eq.symm
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.Imports
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module UpperTheory.V UpperTheory.V.Fr UpperTheory.V.GC
-
-theorem UpperTheory.V.GC.phi :
-    ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (k : Type) [Field k] [CharP k l] (Φ : Fr.Frame l k) (S : Finset (HeightOneSpectrum (𝓞 F))) (K : Subgroup (G F Ω)) (π : G F Ω →* Φ.Γ) (ι : ∀ v, Φ.Gv v →* G F Ω) (A : Φ.V → ValuationSubring Ω) (pl : Φ.V → HeightOneSpectrum (𝓞 F)) (e : Φ.Inf ≃ InfinitePlace F) (c : Φ.Inf → G F Ω), FLink l Φ S K π ι A pl e c → Alg.PhiCond Φ.Γ l := by
-  intro F Ω _ _ _ _ _ l _ k _ _ Φ S K π ι A pl e c h
-  exact UpperTheory.V.GC.phiGam F Ω l S K Φ.Γ π h.g
 end
 end
 

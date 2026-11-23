@@ -38,7 +38,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.LocalToGlobal.HermitianColumns.SymAll
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermRe
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FormsRe
 
@@ -73,36 +73,6 @@ def formsRe {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.
     valP := { T.valP with }
     til := { T.til with }
     tilAd := { T.tilAd with } }
-
-end GlobalTheory.Mem.SRe.ColRe
-
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermRe
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace GlobalTheory.Mem.SRe.ColRe
-
-open Formalism.BasicNotions Formalism.L2.Forms GlobalTheory.Mem GlobalTheory.Mem.SRe NumberField IsDedekindDomain
-
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-variable {D : D7} (Z : New D)
-
-
-
-def hermRe (H : Formalism.L2.Herm.ColsHermS D) : Formalism.L2.Herm.ColsHermS (reD D Z) :=
-  { H with
-    base := { H.base with }
-    atT := fun u => { H.atT u with }
-    ad := { H.ad with } }
 
 end GlobalTheory.Mem.SRe.ColRe
 

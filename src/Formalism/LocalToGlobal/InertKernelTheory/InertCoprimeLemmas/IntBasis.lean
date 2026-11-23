@@ -1,19 +1,19 @@
 module
 
 public import Formalism.LocalToGlobal.InertKernelTheory.DefsBasis
-public import Mathlib.NumberTheory.Padics.Complex
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntRing
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
+import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.IsometryLinkageTrivialLevel
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -21,6 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -41,51 +43,10 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-public import Formalism.LocalToGlobal.GlobalTheory.GL3.IsometryLinkageTrivialLevel
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-
--- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntRing
-
-section
-
-@[expose] public section
-
-noncomputable def UpperTheory.Reformulated.B.CapelliIdentity₂.intRing :
-    (p : ℕ) → [inst : Fact (Nat.Prime p)] → Subring ℂ_[p] :=
-  fun p _ =>
-    { carrier := {x : ℂ_[p] | ‖x‖ ≤ 1}
-      mul_mem' := fun {a b} ha hb => by
-        have ha' : ‖a‖ ≤ 1 := ha
-        have hb' : ‖b‖ ≤ 1 := hb
-        show ‖a * b‖ ≤ 1
-        rw [norm_mul]
-        exact mul_le_one₀ ha' (norm_nonneg b) hb'
-      one_mem' := by
-        show ‖(1 : ℂ_[p])‖ ≤ 1
-        exact norm_one.le
-      add_mem' := fun {a b} ha hb =>
-        (IsUltrametricDist.norm_add_le_max a b).trans (max_le ha hb)
-      zero_mem' := by
-        show ‖(0 : ℂ_[p])‖ ≤ 1
-        rw [norm_zero]
-        exact zero_le_one
-      neg_mem' := fun {a} ha => by
-        show ‖-a‖ ≤ 1
-        rw [norm_neg]
-        exact ha }
-end
-end
-
--- Source module: Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntBasis
-
-section
+import Mathlib.Topology.Sheaves.Init
 
 @[expose] public section
 
@@ -364,6 +325,3 @@ theorem orthonormal_change_unitary_integral : OrthChange := IntegralOrthonormalC
 theorem basisInv_of_unitSubst (hU : UnitSubst) : BasisInv := basisInv_of orthonormal_change_unitary_integral hU
 
 end Formalism.L2.KerInert
-end
-end
-end

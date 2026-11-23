@@ -60,13 +60,11 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PolarisedVarietyIntegerActionStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.NonzeroLocus
-import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.NotGoodClassZeroSucc
-public import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.Tactic.Linter.HaveILetI
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TrivialPolarizedAbelianPointEqOneStatement
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.RingTheory.SimpleRing.Principal
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 public import ReciprocityTheory.DualLattices.IsLocalOfIntegers
@@ -157,57 +155,6 @@ open GlobalTheory.CompanionTheory.Ar.GR
 
 theorem _root_.GlobalTheory.T.hodge_tate_datum_reduce_scalars : ∀ (p : ℕ) [Fact p.Prime] (g : ℕ) (C : Type) [Field C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C] [Algebra ℤ_[p] R] (Oe : Type) [CommRing Oe] [Algebra ℤ_[p] Oe] (σ : Oe ≃ₐ[ℤ_[p]] Oe) (cp : R), HodgeTateSetting p v R Oe σ cp → ∀ H : HodgeTateDatum p g v R Oe σ cp, HodgeTateSetting p v R ℤ_[p] AlgEquiv.refl cp ∧ ∃ H' : HodgeTateDatum p g v R ℤ_[p] AlgEquiv.refl cp, H'.AA = H.AA ∧ H'.Ht = H.Ht ∧ H'.Bt = H.Bt ∧ H'.E = H.E := by
   first | exact @GlobalTheory.CompanionTheory.Ar.GR.htd_restrict_coefficients | exact GlobalTheory.CompanionTheory.Ar.GR.htd_restrict_coefficients | (intros; apply GlobalTheory.CompanionTheory.Ar.GR.htd_restrict_coefficients <;> assumption)
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TrivialPolarizedAbelianPointEqOne
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi
-open ReciprocityTheory.ChartRestriction.G.Chart (sp spMap)
-attribute [local instance] Over.cartesianMonoidalCategory
-
-noncomputable section
-
-namespace GlobalTheory.CompanionTheory.Ar.DimZero
-
-theorem isIso_hom_of_relDim_zero {S : Scheme.{0}} (A : Over S) [GrpObj A] (h : IsAbelianScheme A)
-    (hd : SmoothOfRelativeDimension 0 A.hom) : IsIso A.hom := by
-  apply GlobalTheory.ZM.Model.isIso_of_dim_zero <;> assumption
-
-theorem over_hom_eq_of_mono {S : Scheme.{0}} {T A : Over S} [Mono A.hom] (x y : T ⟶ A) : x = y := by
-  ext1
-  rw [← cancel_mono A.hom, Over.w x, Over.w y]
-
-theorem eq_one_of_g_eq_zero (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R]
-    (P : Out.PolAV (Spec (CommRingCat.of R))) (hg : P.g = 0) (z : sp (R₀ := R) R ⟶ P.A) :
-    z = 1 := by
-  have hd : SmoothOfRelativeDimension 0 P.A.hom := hg ▸ P.smoothDim
-  haveI := isIso_hom_of_relDim_zero P.A P.isAb hd
-  exact over_hom_eq_of_mono _ _
-
-end GlobalTheory.CompanionTheory.Ar.DimZero
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TrivialPolarizedAbelianPointEqOneStatement
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi
-open ReciprocityTheory.ChartRestriction.G.Chart (sp spMap)
-attribute [local instance] Over.cartesianMonoidalCategory
-
-theorem _root_.GlobalTheory.T.trivial_polarized_abelian_point_eq_one : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (P : Out.PolAV (Spec (CommRingCat.of R))), P.g = 0 → ∀ z : sp (R₀ := R) R ⟶ P.A, z = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.DimZero.eq_one_of_g_eq_zero | exact GlobalTheory.CompanionTheory.Ar.DimZero.eq_one_of_g_eq_zero | (intros; apply GlobalTheory.CompanionTheory.Ar.DimZero.eq_one_of_g_eq_zero <;> assumption)
 end
 end
 

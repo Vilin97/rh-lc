@@ -1,10 +1,16 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DegFrame
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AmpleOnAbelianBase
+public import Development.AbelianVarietyTheory.Statements.HeightBoundStatement.HTBoundSt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NonemptyValExtOfOverLa
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentVectorsUniversalBasis
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntOIsLocalRing
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatDRSubsetLatHT
+import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.AlgebraicGeometry.ValuativeCriterion
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
@@ -17,6 +23,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,69 +43,10 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
-public import Development.AbelianVarietyTheory.Definitions.Divisors.NonemptyValExtOfOverLa
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentVectorsUniversalBasis
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntOIsLocalRing
-import Mathlib.Algebra.GroupWithZero.Submonoid.CancelMulZero
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
+import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.AbelianAt
 import Mathlib.Algebra.Azumaya.Basic
 import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
-
--- Source module: Development.AbelianVarietyTheory.Statements.HeightBoundStatement.HTBoundSt
-
-section
-
-@[expose] public section
-
-open AlgebraicGeometry CategoryTheory Limits NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
-open Formalism.MainNotions.DIV.Cons (intO)
-
-namespace GlobalTheory.ShFam.Pad
-
-def HTBoundSt : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CompleteSpace C] [CharZero C], ‖(p : C)‖ = (p : ℝ)⁻¹ → ∀ (xO : Sp ↥(intO C) ⟶ X), (∀ xO' : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO' = spMap (intO C).subtype ≫ xO → xO' = xO) → ∀ v ∈ latHT t p (spMap (intO C).subtype ≫ xO), ∀ a : C, ‖a‖ ≤ (p : ℝ) ^ (-(1 / ((p : ℝ) - 1))) → spMap (epsMul a) ≫ v ∈ latDR t (spMap (intO C).subtype ≫ xO)
-
-end GlobalTheory.ShFam.Pad
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatDRSubsetLatHT
-
-section
-
-@[expose] public section
-
-open AlgebraicGeometry CategoryTheory Limits NumberField IsDedekindDomain
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.Geo GlobalTheory.Toroidal GlobalTheory.ShFam GlobalTheory.ShFam.Pad
-open Formalism.MainNotions.DIV.Cons (intO)
-
-namespace GlobalTheory.ShFam.Pad
-
-theorem latDR_subset_latHT :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] (p : ℕ) (x : Sp C ⟶ X), latDR t x ⊆ latHT t p x := by
-  intro E _ _ _ H X t C _ _ p x v hv
-  obtain ⟨xO, hx, vO, htan, hvO⟩ := hv
-  have h1 : epsMul (1 : C) = RingHom.id (DualNumber C) := by
-    ext a <;> simp [epsMul]
-  have h2 : spMap (RingHom.id (DualNumber C)) = 𝟙 _ := by
-    simp [spMap]
-  refine ⟨xO, hx, 0, vO, htan, ?_, ?_⟩
-  · rw [pow_zero, h1, h2, Category.id_comp, hvO]
-  · intro n c g _
-    rw [pow_zero, Ideal.span_singleton_one]
-    exact Submodule.mem_top
-
-end GlobalTheory.ShFam.Pad
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GrNormPosOfBasis
-
-section
 
 @[expose] public section
 
@@ -418,6 +366,3 @@ end Pts
 variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} (s : FinalTheorems S κ)
 
 end GlobalTheory.ShFam.Pad.Guard
-end
-end
-end

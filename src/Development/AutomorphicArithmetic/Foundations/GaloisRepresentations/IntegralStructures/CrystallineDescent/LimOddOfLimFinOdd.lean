@@ -46,10 +46,8 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.DownPhi
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPlaceNormVEq
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.ExistsQuadraticCMExtSplitAt
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AbsNormPrimeIffInertiaDegEqOneAndFiniteRamified
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ChebotarevDegreeOne
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DenseSplitFrobInvAway
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSplitAtOfDegOne
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.IsoOne
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.JoinAll
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.JoinEndHolds
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.OneConj
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.OneTower
@@ -148,78 +146,6 @@ theorem UpperTheory.Gal.Int.Core.downUnr_holds :
     have e := hcl.2 σ' hσ
     rw [← map_inv]
     exact e
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.IsoOne
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.CongL GlobalTheory.RealGal
-open UpperTheory.V.Af (FrobEig algSat RepIso)
-open UpperTheory.V.Af.Bc (res)
-open UpperTheory.Gal.Int.Core
-
-theorem UpperTheory.Gal.Int.Core.isoOne_holds :
-    IsoOne := by
-  intro F Ω _ _ _ _ _ l _ ι a r r' hr hr' hs hs' hev
-  rw [Filter.eventually_cofinite] at hev
-  have hD := GlobalTheory.Published.ChebotarevDegreeOne.dense (F := F) (Ω := Ω) GlobalTheory.Published.chebotarevDegreeOne' hev
-  refine GlobalTheory.SplitAttUniq.repIso_of_dense r r' hr hr' hs hs' _ (hD.preimage (Homeomorph.inv (G F Ω)).isOpenMap) ?_
-  intro g hg
-  obtain ⟨v, hv, hdeg, B, hB, hfr⟩ := hg
-  have hprime : Nat.Prime (normV v) := by
-    have h := ((GlobalTheory.absNorm_prime_iff_inertiaDeg_eq_one_and_finite_ramified F).1 v).2 hdeg
-    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using h
-  have hv' : ¬¬(Nat.Prime (normV v) → ∃ S, FrobEig ι r v S ∧ FrobEig ι r' v S) := hv
-  obtain ⟨S, h1, h2⟩ := (not_not.1 hv') hprime
-  have e1 := (h1 B hB).2 _ hfr
-  have e2 := (h2 B hB).2 _ hfr
-  simp only [Homeomorph.coe_inv, inv_inv] at e1 e2
-  exact Polynomial.map_injective _ ι.injective (e1.trans e2.symm)
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.JoinAll
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.CongL GlobalTheory.RealGal
-open UpperTheory.V.Af (FrobEig algSat RepIso)
-open UpperTheory.V.Af.Bc (res)
-open UpperTheory.Gal.Int.Core
-open UpperTheory.Gal.TP
-
-namespace UpperTheory.Gal.Int.Core
-
-theorem goodGuard_usPl (h1 : OneUs) (E Ω : Type) [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω]
-    [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (d : ℕ) (hd : ImQ E d) : GoodGuard Ω l (UsPl (E := E) d) := by
-  refine ⟨fun _ h => h.1, fun S hS => ?_⟩
-  have hT := hS.union (Filter.eventually_cofinite.1 ((h1 E d hd).and (GlobalTheory.CongEx.eventually_not_mem_l E l)))
-  have hD := GlobalTheory.Published.ChebotarevDegreeOne.dense (F := E) (Ω := Ω) GlobalTheory.Published.chebotarevDegreeOne' hT
-  refine (hD.preimage (Homeomorph.inv (G E Ω)).isOpenMap).mono ?_
-  rintro g ⟨v, hv, hdeg, A, hA, hσ⟩
-  simp only [Set.mem_union, Set.mem_setOf_eq, not_or, not_not] at hv
-  have hp : (normV v).Prime := by
-    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
-      (((GlobalTheory.absNorm_prime_iff_inertiaDeg_eq_one_and_finite_ramified E).1 v).2 hdeg)
-  exact ⟨v, hv.1, hv.2.1 hp, hv.2.2, A, hA, hσ⟩
-
-theorem joinAll_of (h1 : OneUs) (hS : SubtractQ) : JoinAll := by
-  intro hT hU E Ω _ _ _ _ _ _ l _ ι hF hI d hd hsq n hn
-  exact allCoreQ_of hS hT E Ω l ι hF hI _ (goodGuard_usPl h1 E Ω l d hd) (fun m hm => hU m hm E Ω l ι hF d hd hsq) n hn
-
-end UpperTheory.Gal.Int.Core
 end
 end
 

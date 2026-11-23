@@ -50,12 +50,7 @@ import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CoeffRingsHaveRootsOfUnity
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RingSpecNormalisedCharacterEq
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsComplEquiv
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceCompletionEquivUnique
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceLocalComponentExistsUniqueClass
-import Mathlib.Tactic.Linter.Style
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceLocalComponentConjEqInverseTransposeStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneDualTransportMonodromyDimWildStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneLabelTransportDualInverseRootsStatement
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceLocalComponentExistsUniqueClassStatement
@@ -63,19 +58,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.Conjugate
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.EquivContra
 import Development.AutomorphicArithmetic.Foundations.LocalLanglands.Multi
 import Development.AutomorphicArithmetic.Foundations.UnitarySphericalFixing.SatakeParameters.AbsCentralAlt
-public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.IsRecTOfIsRec
-public import GroundTheory.LocalFields.PadicLogSeries
-public import CompanionTheory.AutomorphicTheory.TemperedLocalSpectra.BernsteinZelevinsky.TopAdm
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.UnitarisableOfSquareIntegrable
-public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.ClBasic
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContragredientPreservesSubquotient
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContragredientProductIrreducible
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DualClassCuspidal
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DualClassTwistNeg
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CuspLaws
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SmoothContragredientIrreducibleAndReflexive
+public import Development.AutomorphicArithmetic.Foundations.UnitarySphericalFixing.SatakeParameters.ClsEqOfLocVEqG
 public import Development.AutomorphicArithmetic.Foundations.UnitarySphericalFixing.SatakeParameters.Imports
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.MAvGood
 
@@ -97,171 +80,6 @@ theorem conjPl_symm (D : D7) {w w' : PlE D.host} (h : IsConjPl D.host w w') : Is
   exact (h y x hx).symm
 
 end GlobalTheory.ConjPlaceDual
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceLocalComponentConjEqInverseTranspose
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-
-namespace GlobalTheory.ConjLocComp
-
-open GlobalTheory.TypeTame
-
-theorem map_invTranspose {A B : Type} [CommRing A] [CommRing B] (n : ℕ) (f : A →+* B) (g : GL (Fin n) A) :
-    Matrix.GeneralLinearGroup.map f (invTranspose n g) = invTranspose n (Matrix.GeneralLinearGroup.map f g) := by
-  apply Units.ext
-  rw [invTranspose_val, ← map_inv]
-  rfl
-
-theorem exists_conj {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
-    (S : Submodule ℂ (GAf L n → W)) (s : SplitPlace L) (σ : GlobalTheory.SmGL.IrrRep (GL (Fin n) (s.w.adicCompletion L)))
-    (hσ : IsLocS S s σ) :
-    ∃ (κ : s.w.adicCompletion L ≃+* (conjSP s).w.adicCompletion L)
-      (σ' : GlobalTheory.SmGL.IrrRep (GL (Fin n) ((conjSP s).w.adicCompletion L))) (e : σ.V ≃ₗ[ℂ] σ'.V),
-      Continuous κ ∧ (∀ x : L, κ (algebraMap L _ x) = algebraMap L _ (IsCMField.complexConj L x)) ∧
-      IsLocS S (conjSP s) σ' ∧
-      ∀ g a, e (σ.ρ (invTranspose n g) a) = σ'.ρ (Matrix.GeneralLinearGroup.map κ.toRingHom g) (e a) := by
-  obtain ⟨i, T, hi, hiL, hTi, hTm, hTe⟩ := hσ
-  obtain ⟨i₀, hi₀, hi₀', hi₀L⟩ := GlobalTheory.SplitComplHomeo.exists_complEquiv L s
-  obtain rfl := GlobalTheory.splitPlace_completion_equiv_unique L s i₀ i hi₀ hi hi₀L hiL
-  obtain ⟨i', hi', hi'', hi'L⟩ := GlobalTheory.SplitComplHomeo.exists_complEquiv L (conjSP s)
-  let j : s.v.adicCompletion (maximalRealSubfield L) ≃+* (conjSP s).w.adicCompletion L := i'
-  let κ : s.w.adicCompletion L ≃+* (conjSP s).w.adicCompletion L := i₀.symm.trans j
-  have hκ : Continuous κ := hi'.comp hi₀'
-  have hκ' : Continuous κ.symm := hi₀.comp hi''
-  let ψ : GL (Fin n) ((conjSP s).w.adicCompletion L) →* GL (Fin n) (s.w.adicCompletion L) :=
-    (invTranspose n).comp (Matrix.GeneralLinearGroup.map κ.symm.toRingHom)
-  have hψc : Continuous ψ :=
-    (continuous_invTranspose n).comp (Continuous.units_map _ (continuous_id.matrix_map hκ'))
-  have hψκ : ∀ g, ψ (Matrix.GeneralLinearGroup.map κ.toRingHom g) = invTranspose n g := fun g =>
-    congrArg (invTranspose n) (GlobalTheory.LocCompSplit.gl_map_symm_map κ g)
-  have hψs : Function.Surjective ψ := fun g =>
-    ⟨Matrix.GeneralLinearGroup.map κ.toRingHom (invTranspose n g), by rw [hψκ, invTranspose_invTranspose]⟩
-  have hj : ∀ g : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L)),
-      Matrix.GeneralLinearGroup.map j.toRingHom g =
-        Matrix.GeneralLinearGroup.map κ.toRingHom (Matrix.GeneralLinearGroup.map i₀.toRingHom g) := fun g => by
-    refine Units.ext (Matrix.ext fun a b => ?_)
-    show j (g.val a b) = j (i₀.symm (i₀ (g.val a b)))
-    rw [RingEquiv.symm_apply_apply]
-  let σ' : GlobalTheory.SmGL.IrrRep (GL (Fin n) ((conjSP s).w.adicCompletion L)) :=
-    ⟨σ.V, σ.ρ.comp ψ, fun v => (σ.smooth v).preimage hψc,
-      GlobalTheory.LocCompSplit.isIrreducible_comp_of_surjective σ.ρ ψ hψs σ.irr⟩
-  refine ⟨κ, σ', LinearEquiv.refl ℂ σ.V, hκ, fun x => ?_, ⟨i', T, hi', hi'L, hTi, hTm, fun x hx a => ?_⟩, fun g a => ?_⟩
-  · rw [← hi'L, conjSP_i, IsCMField.complexConj_apply_apply, ← hiL]
-    show j (i₀.symm (i₀ (s.i x))) = j (s.i x)
-    rw [RingEquiv.symm_apply_apply]
-  · have h1 : ψ (Matrix.GeneralLinearGroup.map j.toRingHom (invTranspose n (s.loc n x))) =
-        Matrix.GeneralLinearGroup.map i₀.toRingHom (s.loc n x) := by
-      rw [hj, hψκ, map_invTranspose, invTranspose_invTranspose]
-    have h2 := hTe x hx a
-    rw [← h1, ← conjSP_loc] at h2
-    exact h2
-  · show σ.ρ (invTranspose n g) a = σ.ρ (ψ (Matrix.GeneralLinearGroup.map κ.toRingHom g)) a
-    rw [hψκ]
-
-theorem exists_isLocS_conjSP : ∀ (D : D7) (n : ℕ) (π : NG.AutRep D.host.E n) (s : SplitPlace D.host.E)
-    (σ : GlobalTheory.SmGL.IrrRep (GL (Fin n) (s.w.adicCompletion D.host.E))), IsLocS π.S s σ →
-    ∃ (κ : s.w.adicCompletion D.host.E ≃+* (GlobalTheory.TypeTame.conjSP s).w.adicCompletion D.host.E)
-      (σ' : GlobalTheory.SmGL.IrrRep (GL (Fin n) ((GlobalTheory.TypeTame.conjSP s).w.adicCompletion D.host.E))) (e : σ.V ≃ₗ[ℂ] σ'.V),
-      Continuous κ ∧ (∀ x : D.host.E, κ (algebraMap D.host.E _ x) = algebraMap D.host.E _ (D.host.conj x)) ∧
-      IsLocS π.S (GlobalTheory.TypeTame.conjSP s) σ' ∧
-      ∀ g a, e (σ.ρ (GlobalTheory.TypeTame.invTranspose n g) a) = σ'.ρ (Matrix.GeneralLinearGroup.map κ.toRingHom g) (e a) := by
-  intro D n π s σ hσ
-  obtain ⟨κ, σ', e, h1, h2, h3, h4⟩ := exists_conj π.S s σ hσ
-  exact ⟨κ, σ', e, h1, fun x => by rw [h2, GlobalTheory.SplitPlaceOver.host_conj_eq'], h3, h4⟩
-
-end GlobalTheory.ConjLocComp
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceLocalComponentConjEqInverseTransposeStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin GlobalTheory.PendOf
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-
-theorem _root_.GlobalTheory.T.splitPlaceLocalComponent_conj_eq_inverseTranspose : ∀ (D : D7) (n : ℕ) (π : NG.AutRep D.host.E n) (s : SplitPlace D.host.E)
-    (σ : GlobalTheory.SmGL.IrrRep (GL (Fin n) (s.w.adicCompletion D.host.E))), IsLocS π.S s σ →
-    ∃ (κ : s.w.adicCompletion D.host.E ≃+* (GlobalTheory.TypeTame.conjSP s).w.adicCompletion D.host.E)
-      (σ' : GlobalTheory.SmGL.IrrRep (GL (Fin n) ((GlobalTheory.TypeTame.conjSP s).w.adicCompletion D.host.E))) (e : σ.V ≃ₗ[ℂ] σ'.V),
-      Continuous κ ∧ (∀ x : D.host.E, κ (algebraMap D.host.E _ x) = algebraMap D.host.E _ (D.host.conj x)) ∧
-      IsLocS π.S (GlobalTheory.TypeTame.conjSP s) σ' ∧
-      ∀ g a, e (σ.ρ (GlobalTheory.TypeTame.invTranspose n g) a) = σ'.ρ (Matrix.GeneralLinearGroup.map κ.toRingHom g) (e a) := by
-  first | exact @GlobalTheory.ConjLocComp.exists_isLocS_conjSP | exact GlobalTheory.ConjLocComp.exists_isLocS_conjSP | (intros; apply GlobalTheory.ConjLocComp.exists_isLocS_conjSP <;> assumption)
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.UnitarySphericalFixing.SatakeParameters.ClsEqOfLocVEqG
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.NPin GlobalTheory.PendOf GlobalTheory.PRep GlobalTheory.LocGL GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.WeilDeligne GlobalTheory.LocLanglands UpperTheory.Zero.LLC
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-
-namespace UpperTheory.One.M
-
-section
-
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-
-theorem good_contra {n : ℕ} (π π' : IrrRep (GL (Fin n) k)) (e : Nonempty (π'.ρ.Equiv (contra π.ρ))) (hg : Good (cls π)) :
-    Good (cls π') := by
-  obtain ⟨s, h1, h2⟩ := hg
-  obtain ⟨φ⟩ := e
-  have hA := CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
-  have h3 : HasSupport π.ρ s := h1.of_equiv (equivRep π).symm
-  have hdual : HasSupport (contra π.ρ) (s.map Zc.dualCl) := by
-    have hsm := h3.isSmooth
-    obtain ⟨m, x, hs, hirr, hcusp, P, hsub⟩ := h3
-    have hcs : IsCuspSupport (contra π.ρ) (fun a => (x a).1) (fun a => contra (x a).rep) := by
-      refine ⟨GlobalTheory.ContraRefl.contra_isIrreducible (GlobalTheory.SqIntUnit.compactOpen_basis k n)
-        (hA k n π.V π.ρ hsm hirr) hirr, fun a => ?_, P, ?_⟩
-      · have hc := (GlobalTheory.CompanionTheory.DualCusp.dualCl_isCusp hA (x a)
-          ⟨(hcusp a).1, (hcusp a).2.2⟩).1
-        rw [GlobalTheory.CompanionTheory.ZcDual.dualCl_eq hA, IrrGL.isCusp_of] at hc
-        exact ⟨(hcusp a).1, GlobalTheory.CompanionTheory.ContraProd.contra_rep_isIrreducible hA (x a), hc.2⟩
-      · have hsub' := GlobalTheory.CompanionTheory.ContraSub.main k n _ _ π.ρ
-          (parInd P (piTensor fun a => (x a).rep)) hsm (isSmooth_parInd P _) hsub
-        obtain ⟨E⟩ := GlobalTheory.CompanionTheory.ContraProd.parInd_equiv_contra
-          (σ := piTensor fun a => contra (x a).rep) (ρ := piTensor fun a => (x a).rep) P
-          (isSmooth_piTensor fun a => (x a).2.rep.smooth)
-          (GlobalTheory.CompanionTheory.ContraProd.contra_piTensor_rep hA x)
-        exact hsub'.trans (IsSubquotient.of_surjective E.toIntertwiningMap E.toLinearEquiv.surjective)
-    rw [← hs, Multiset.map_map]
-    simpa only [Function.comp_apply, GlobalTheory.CompanionTheory.ZcDual.dualCl_eq hA] using
-      hasSupport_of_isCuspSupport hcs
-  refine ⟨s.map Zc.dualCl, (hdual.of_equiv φ.symm).of_equiv (equivRep π'), fun y hy => ?_⟩
-  obtain ⟨z, hz, rfl⟩ := Multiset.mem_map.1 hy
-  have hc := h2 z hz
-  rcases hc with h | ⟨⟨p, hp, i, hi⟩, _⟩
-  · apply Or.inl
-    rw [GlobalTheory.CompanionTheory.ZcDual.dualCl_eq hA z]
-    exact h
-  · let : CharZero k := charZero_of_injective_ringHom (f := i.toRingHom) i.injective
-    have hd : DualCl z (Zc.dualCl z) :=
-      ⟨z.1, z.2.rep, ⟨_, contra z.rep, isSmooth_contra z.rep,
-        GlobalTheory.CompanionTheory.ZcDual.isIrreducible_contra hA _ z.2.rep.smooth z.2.rep.irr⟩,
-        congrArg (Sigma.mk z.1) z.2.cl_rep.symm,
-        GlobalTheory.CompanionTheory.ZcDual.dualCl_eq hA z, ⟨.refl _⟩⟩
-    exact ((clBasic k z).2.2.2.2.2.2 _ hd).2.2.2.1.mpr (h2 z hz)
-
-end
-
-end UpperTheory.One.M
-end
 end
 end
 

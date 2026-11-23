@@ -47,12 +47,7 @@ import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Antiton
 import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.SqChar
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-public import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.AltBranchStatement
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.TypeStar
+public import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Branch
 
 -- Source module: Development.AutomorphicArithmetic.Foundations.Convolution.WeightRankUnits.RealSigned
 
@@ -284,36 +279,6 @@ theorem UpperTheory.ConvolutionTheory.G2.realProd :
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib]
   simp only [Units.coe_prod, Int.cast_prod, hs]
-end
-end
-
--- Source module: ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Branch
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open Finset
-
-namespace ReciprocityTheory.ChartRestriction.TR.Weyl
-
-theorem gtChar_zero {K : Type*} [Field K] : ∀ (n : ℕ) (t : Fin n → K), gtChar n 0 t = 1
-  | 0, _ => rfl
-  | n + 1, t => by
-    rw [gtChar]
-    have h : interl (0 : Fin (n + 1) → ℤ) = {0} := by
-      ext mu
-      simp only [interl, Fintype.mem_piFinset, Pi.zero_apply, Finset.mem_Icc, Finset.mem_singleton]
-      constructor
-      · intro h; funext i; have := h i; simp only [Pi.zero_apply]; omega
-      · rintro rfl i; simp
-    rw [h, Finset.sum_singleton, gtChar_zero n]
-    simp [wsum]
-
-end ReciprocityTheory.ChartRestriction.TR.Weyl
-end
 end
 end
 

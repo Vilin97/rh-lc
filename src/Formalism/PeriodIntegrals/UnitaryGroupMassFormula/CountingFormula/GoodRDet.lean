@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.CntLocal
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.GzNeOfTotPos
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,6 +17,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -36,40 +38,11 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.GzNeOfTotPos
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace PI.UnitaryGroupMassFormula.CntFormula
-
-open NumberField Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.LocalSplitGroups Formalism.L2.SG.CntLocal IsDedekindDomain
-open Classical ValuativeRel
-
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-def DetGaNe : Prop :=
-  ∀ (D : Formalism.BasicNotions.D7) (T T' : D.host.E) (Z : MatZ D), GZ T T' Z ≠ 0 → (Ga T T' Z).det ≠ 0
-
-end PI.UnitaryGroupMassFormula.CntFormula
-end
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.GoodRDet
-
-section
 
 @[expose] public section
 
@@ -213,6 +186,3 @@ theorem gram_determinant_ne_zero : DetGaNe := by
     rw [h] <;> simp
 
 end PI.UnitaryGroupMassFormula.CntFormula
-end
-end
-end

@@ -37,16 +37,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Mathlib.Analysis.Normed.Field.Instances
-public import Mathlib.NumberTheory.NumberField.Basic
-public import Mathlib.NumberTheory.Padics.Complex
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Linter.HaveILetI
-public import Mathlib.Algebra.Algebra.Hom.Rat
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NumberFieldEmbMemAlgebraicClosure
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SigWSubPowDvd
 import Mathlib.Tactic.Linter.Style
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GidxFacts
@@ -63,53 +54,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_adelicDatum_with_laws_at_joint : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G.LatInst D} {Kc : G.Consts} {Dx : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Dx cX} (t : KerEntTied ex) {u : D.what₂.Word} {μ : D.what₂.Tup} {w : D.what₂.places.Pl} {hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Lv : Levels (Gl.Fl u w hg)} {I : CmpJIn ex.tw u μ w hg Lv} {H : CmpJHyp ex.cmp I} {X : LabIn I} [Fact (D.what₂.places.resChar w).Prime] (std : Lt.StdAtW D Gl u w hg) (J : Joint t H X), ∃ Xi muT, AdLawAt J.A J.dtU J.a Xi muT := by
   first | exact @GlobalTheory.TwV.exists_adLawAt_joint | exact GlobalTheory.TwV.exists_adLawAt_joint | (intros; apply GlobalTheory.TwV.exists_adLawAt_joint <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.NumberFieldEmbMemAlgebraicClosure
-
-section
-
-@[expose] public section
-
-namespace GlobalTheory
-
-open IntermediateField
-
-theorem numberField_emb_mem_algebraicClosure {LL : Type} [Field LL] [NumberField LL]
-    (e : LL →+* ℂ) (z : LL) : e z ∈ algebraicClosure ℚ ℂ := by
-  rw [mem_algebraicClosure_iff]
-  have hz : IsAlgebraic ℚ z := Algebra.IsAlgebraic.isAlgebraic z
-  simpa using hz.algHom e.toRatAlgHom
-
-theorem padic_emb_extends_algebraicClosure (p : ℕ) [Fact p.Prime] (LL : Type) [Field LL]
-    [NumberField LL] (e : LL →+* ℂ) (i : LL →+* ℂ_[p]) :
-    ∃ lam : (algebraicClosure ℚ ℂ) →+* ℂ_[p],
-      ∀ (z : LL) (hz : e z ∈ algebraicClosure ℚ ℂ), i z = lam ⟨e z, hz⟩ := by
-  let e' : LL →+* algebraicClosure ℚ ℂ :=
-    (e.codRestrict (algebraicClosure ℚ ℂ).toSubring
-      (fun z => numberField_emb_mem_algebraicClosure e z))
-  letI : Algebra LL (algebraicClosure ℚ ℂ) := e'.toAlgebra
-  letI : Algebra LL ℂ_[p] := i.toAlgebra
-  haveI : IsScalarTower ℚ LL (algebraicClosure ℚ ℂ) :=
-    IsScalarTower.of_algebraMap_eq (fun x =>
-      (RingHom.congr_fun (Subsingleton.elim ((algebraMap LL (algebraicClosure ℚ ℂ)).comp
-        (algebraMap ℚ LL)) (algebraMap ℚ (algebraicClosure ℚ ℂ))) x).symm)
-  haveI : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ ℂ) := algebraicClosure.isAlgebraic ℚ ℂ
-  haveI : Algebra.IsAlgebraic LL (algebraicClosure ℚ ℂ) :=
-    Algebra.IsAlgebraic.tower_top (K := ℚ) LL
-  let lamA : algebraicClosure ℚ ℂ →ₐ[LL] ℂ_[p] := (by
-    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
-    solve_by_elim* (maxDepth := 2) only [*,
-      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
-      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
-  refine ⟨lamA.toRingHom, fun z hz => ?_⟩
-  have h1 : (⟨e z, hz⟩ : algebraicClosure ℚ ℂ) = algebraMap LL (algebraicClosure ℚ ℂ) z := rfl
-  rw [h1]
-  simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, AlgHom.commutes]
-  rfl
-
-end GlobalTheory
 end
 end
 

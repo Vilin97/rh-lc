@@ -34,8 +34,20 @@ public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PConeSlic
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PDiscriminantSheetCover
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceMassFiniteDirect
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsHorizontalOfDimOne
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PConsequences
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ArIntMul
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.DeEqZeroOfSemiPosOff
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeLeSemiPos
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeSlotAdd
+import GroundTheory.HeightsAndTheta.Heights.Intersections.PGeoNumCut
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsMeasurable
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAddFirst
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsRegLimit
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PSwapCycles
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsWellDefined
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ThmIExistsFamily
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -54,7 +66,6 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -62,7 +73,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -75,25 +85,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.Assembly
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.NoCommonComponentCoordinatesPlane
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeLeSemiPos
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeSlotAdd
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PGeoNumCut
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsIntegrable
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsMeasurable
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAddFirst
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsRegLimit
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.PSwapCycles
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsWellDefined
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.ThmIExistsFamily
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmISymm
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.PWellDefined
 public import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.HilbertSamuelIrreducibleBasicOpenConnected
@@ -131,141 +123,6 @@ import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartZeroSet
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSheetLift
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.Stokes
 public import GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.PtsIntegrable
-
--- Source module: GroundTheory.HeightsAndTheta.Heights.Intersections.ArIntMul
-
-section
-
-@[expose] public section
-
-set_option maxSynthPendingDepth 1
-
-noncomputable section
-
-namespace GroundTheory.Heights₂.Heights.Inter
-
-open MvPolynomial MeasureTheory ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2
-
-variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-
-theorem arInt_mul (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι)} {n : ℕ}
-    (hP : IsArithVar P (n + 1)) {L : Fin n → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
-    {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) {s t : MRing ι}
-    (hs : IsSectionOn P A s) (ht : IsSectionOn P B t) :
-    arInt P (s * t) (A.tensor B) L = arInt P s A L + arInt P t B L := by
-  obtain ⟨a, -, hsa, hsP⟩ := id hs
-  obtain ⟨b, -, htb, htP⟩ := id ht
-  show ptsIntegral P (pot L) _ = ptsIntegral P (pot L) _ + ptsIntegral P (pot L) _
-  unfold ptsIntegral
-  split_ifs with hΨ
-  · have hΨg : IsGoodProj P hΨ.choose := hΨ.choose_spec
-    unfold ptsIntegralAt
-    rw [← integral_add (hInt K ι P n _ L A s hP hΨg hL hA hs) (hInt K ι P n _ L B t hP hΨg hL hB ht)]
-    refine integral_congr_ae ?_
-    filter_upwards [ae_eval_ne_zero hP hΨg ⟨a, hsa⟩ hsP, ae_eval_ne_zero hP hΨg ⟨b, htb⟩ htP]
-      with y hys hyt
-    rw [← finsum_mem_add_distrib' ((fibreFinite K ι P n _ hP hΨg y).subset Set.inter_subset_left)
-      ((fibreFinite K ι P n _ hP hΨg y).subset Set.inter_subset_left)]
-    refine finsum_mem_congr rfl fun w _ ↦ ?_
-    unfold sheetDensity
-    split_ifs with hγ
-    · have hsh := hγ.choose_spec.2.self_of_nhds
-      set z := hγ.choose y
-      have hz : z ∈ mcPts P := hsh.2.1
-      have hs0 := norm_pos_iff.mpr (hys z hz hsh.2.2)
-      have ht0 := norm_pos_iff.mpr (hyt z hz hsh.2.2)
-      have hA0 := A.pos z hz.1
-      have hB0 := B.pos z hz.1
-      rw [← add_mul]
-      congr 1
-      show Real.log (‖eval z (map (Int.castRingHom ℂ) (s * t))‖ / (A.h z * B.h z)) =
-        Real.log (‖eval z (map (Int.castRingHom ℂ) s)‖ / A.h z) +
-          Real.log (‖eval z (map (Int.castRingHom ℂ) t)‖ / B.h z)
-      rw [map_mul, map_mul, norm_mul, mul_div_mul_comm]
-      exact Real.log_mul (div_pos hs0 hA0).ne' (div_pos ht0 hB0).ne'
-    · simp
-  · simp
-
-theorem RMul.proof (hInt : PtsIntegrableStatement) : RMulStatement := by
-  intro K _ ι _ I P n L A B s t hP hL hA hB hs ht
-  obtain ⟨-, -, -, hsP⟩ := id hs
-  obtain ⟨-, -, -, htP⟩ := id ht
-  rw [recR_eq, recR_eq, recR_eq, cycR_mul I hP.2.1.1 L hsP htP, arInt_mul hInt hP hL hA hB hs ht]
-  ring
-
-end GroundTheory.Heights₂.Heights.Inter
-end
-end
-end
-
--- Source module: GroundTheory.HeightsAndTheta.Heights.Intersections.DeEqZeroOfSemiPosOff
-
-section
-
-@[expose] public section
-
-set_option maxSynthPendingDepth 1
-
-namespace GroundTheory.Heights₂.Heights.Inter
-
-open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
-
-variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι)} {n : ℕ}
-  {A A' : HermLine ι} {s s' : MRing ι}
-
-theorem De_eq_zero_of_semiPos (hLe : DeLeSemiPos.Statement) {L : Fin n → HermLine ι}
-    (hP : IsArithVar P (n + 2)) (hL : ∀ j, IsSmoothHerm (L j)) (hLp : ∀ j, IsSemiPosHerm (L j))
-    (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') (hs : IsSectionOn P A s) (hs' : IsSectionOn P A' s')
-    (hnc : ∀ W, W ∈ divSupp P s → W ∈ divSupp P s' → ¬ IsHorizontal W) :
-    De P L A A' s s' = 0 := by
-  have h1 := hLe K ι P n L A A' s s' hP hL hLp hA hA' hs hs' hnc
-  have h2 := hLe K ι P n L A' A s' s hP hL hLp hA' hA hs' hs (fun W h h' => hnc W h' h)
-  rw [De_swap] at h2
-  linarith
-
-theorem De_eq_zero_of_semiPos_off (hAdd : DeSlotAdd.Statement) (hTw : SemiPosTwist.Statement)
-    (hLe : DeLeSemiPos.Statement) (hP : IsArithVar P (n + 2)) (hA : IsSmoothHerm A)
-    (hA' : IsSmoothHerm A') (hs : IsSectionOn P A s) (hs' : IsSectionOn P A' s')
-    (hnc : ∀ W, W ∈ divSupp P s → W ∈ divSupp P s' → ¬ IsHorizontal W) (S : Finset (Fin n)) :
-    ∀ L : Fin n → HermLine ι, (∀ j, IsSmoothHerm (L j)) → (∀ j, j ∉ S → IsSemiPosHerm (L j)) →
-      De P L A A' s s' = 0 := by
-  induction S using Finset.induction_on with
-  | empty =>
-    intro L hL hLp
-    exact De_eq_zero_of_semiPos hLe hP hL (fun j => hLp j (Finset.notMem_empty j)) hA hA' hs hs' hnc
-  | @insert j S hj ih =>
-    intro L hL hLp
-    obtain ⟨T, hT, hTp, hLTp⟩ := hTw K ι (L j) (hL j)
-    have hadd := hAdd K ι P n L j (L j) T A A' s s' hP hL (hL j) hT hA hA' hs hs' hnc
-    rw [Function.update_eq_self] at hadd
-    have hsm : ∀ X : HermLine ι, IsSmoothHerm X → ∀ i, IsSmoothHerm (Function.update L j X i) := by
-      intro X hX i
-      rcases eq_or_ne i j with rfl | hij
-      · simpa using hX
-      · rw [Function.update_of_ne hij]
-        exact hL i
-    have hpos : ∀ X : HermLine ι, IsSemiPosHerm X → ∀ i, i ∉ S →
-        IsSemiPosHerm (Function.update L j X i) := by
-      intro X hX i hi
-      rcases eq_or_ne i j with rfl | hij
-      · simpa using hX
-      · rw [Function.update_of_ne hij]
-        exact hLp i (by simp [Finset.mem_insert, hij, hi])
-    rw [ih _ (hsm _ (isSmoothHerm_tensor (hL j) hT)) (hpos _ hLTp),
-      ih _ (hsm _ hT) (hpos _ hTp)] at hadd
-    linarith
-
-theorem ProjectiveLineTwo.proof (hAdd : DeSlotAdd.Statement) (hTw : SemiPosTwist.Statement)
-    (hLe : DeLeSemiPos.Statement) : SectionSpaceSymmetry := by
-  intro K _ ι _ P n L A A' s s' hP hL hA hA' hs hs' hnc
-  have h := De_eq_zero_of_semiPos_off hAdd hTw hLe hP hA hA' hs hs' hnc Finset.univ L hL
-    (fun j hj => absurd (Finset.mem_univ j) hj)
-  unfold De at h
-  linarith
-
-end GroundTheory.Heights₂.Heights.Inter
-end
-end
 
 -- Source module: GroundTheory.HeightsAndTheta.Heights.Intersections.PThmIExists
 

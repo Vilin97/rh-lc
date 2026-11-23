@@ -52,7 +52,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDescen
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.CanonGenIsGen
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteSectionTranslatesCoverSemiAbelianStatement
-import Mathlib.RingTheory.Henselian
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothNeighbourhoodTranslatesCoverGroupStatement
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChartIsOpenImmersionOverBase
 
@@ -137,78 +137,6 @@ open GlobalTheory.Mum
 
 theorem _root_.GlobalTheory.T.exists_descent_of_charts_pulled_back_from_flat : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] (S X : Scheme.{0}) (π : S ⟶ Sp R) (f : X ⟶ S), IsProper π → Surjective π → IsIntegral S → ∀ (Φ : pullback f (pullback.fst π π) ⟶ pullback f (pullback.snd π π)), Φ ≫ pullback.snd _ _ = pullback.snd _ _ → ∀ (U : Over (Sp R)), Flat U.hom → ∀ (J : Type) (e : J → (pullback U.hom π ⟶ X)), (∀ j, IsOpenImmersion (e j)) → (∀ j, e j ≫ f = pullback.snd _ _) → (∀ x : X, ∃ j, x ∈ Set.range (e j)) → (∀ (j : J) (T : Scheme.{0}) (y₁ y₂ : T ⟶ pullback U.hom π) (s : T ⟶ pullback π π), y₁ ≫ pullback.fst _ _ = y₂ ≫ pullback.fst _ _ → y₁ ≫ pullback.snd _ _ = s ≫ pullback.fst π π → y₂ ≫ pullback.snd _ _ = s ≫ pullback.snd π π → ∀ z : T ⟶ pullback f (pullback.fst π π), z ≫ pullback.fst _ _ = y₁ ≫ e j → z ≫ pullback.snd _ _ = s → z ≫ Φ ≫ pullback.fst _ _ = y₂ ≫ e j) → ∃ (G : Over (Sp R)) (β : X ⟶ G.left) (ψ : J → (U.left ⟶ G.left)), (∀ j, IsOpenImmersion (ψ j) ∧ ψ j ≫ G.hom = U.hom ∧ e j ≫ β = pullback.fst _ _ ≫ ψ j) ∧ (∀ g : G.left, ∃ j, g ∈ Set.range (ψ j)) ∧ IsPullback β f G.hom π ∧ pullback.fst f (pullback.fst π π) ≫ β = Φ ≫ pullback.fst f (pullback.snd π π) ≫ β := by
   first | exact @GlobalTheory.Mum.ChartDescent.exists_descent | exact GlobalTheory.Mum.ChartDescent.exists_descent | (intros; apply GlobalTheory.Mum.ChartDescent.exists_descent <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothNeighbourhoodTranslatesCoverGroup
-
-section
-
-@[expose] public section
-
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj IsLocalRing NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open scoped CategoryTheory.Obj
-attribute [local instance] Over.cartesianMonoidalCategory
-open GlobalTheory.Mum
-
-namespace GlobalTheory.Mum
-
-theorem chartCover_toTerm {S : Scheme.{0}} {A : Over S} (f : A ⟶ Over.mk (𝟙 S)) :
-    f = Over.homMk A.hom (by simp) := by
-  ext1
-  simpa using Over.w f
-
-theorem comp_transl {S : Scheme.{0}} {G A : Over S} [GrpObj G] (y : Over.mk (𝟙 S) ⟶ G) (h : A ⟶ G) :
-    h ≫ transl y = h * (Over.homMk A.hom (by simp) ≫ y) := by
-  unfold transl
-  rw [comp_mul, Category.comp_id, ← Category.assoc]
-  congr 2
-  exact chartCover_toTerm _
-
-theorem chart_cover : ∀ {R : Type} [CommRing R] [IsLocalRing R] (S : Scheme.{0}) (π : S ⟶ Sp R) (G' : Over S) [GrpObj G']
-    (N : Near π G') (n : ℕ) (x : Fin n → (Over.mk (𝟙 S) ⟶ G')),
-    (∀ (Ω : Type) [Field Ω] (s : Sp Ω ⟶ S) (g : Over.mk s ⟶ G'), Set.range g.left ⊆ Set.range N.u ∨
-      ∃ i, Set.range (g * (Over.homMk s (by simp) : Over.mk s ⟶ Over.mk (𝟙 S)) ≫ x i).left ⊆ Set.range N.u) →
-    ∀ p : G'.left, ∃ j, p ∈ Set.range (N.chart x j) := by
-  intro R _ _ S π G' _ N n x H p
-  let t : Sp (G'.left.residueField p) ⟶ G'.left := G'.left.fromSpecResidueField p
-  let s : Sp (G'.left.residueField p) ⟶ S := t ≫ G'.hom
-  let g : Over.mk s ⟶ G' := Over.homMk t rfl
-  have hp : g.left (IsLocalRing.closedPoint _) = p := Scheme.fromSpecResidueField_apply p _
-  rcases H (G'.left.residueField p) s g with h1 | ⟨i, h2⟩
-  · exact ⟨none, by simpa [Near.chart] using h1 ⟨_, hp⟩⟩
-  · let c : Over.mk s ⟶ G' := (Over.homMk s (by simp) : Over.mk s ⟶ Over.mk (𝟙 S)) ≫ x i
-    obtain ⟨b, hb⟩ := h2 ⟨IsLocalRing.closedPoint _, rfl⟩
-    have key : (g * c) ≫ transl (x i)⁻¹ = g := by
-      rw [comp_transl]
-      have e : (Over.homMk (Over.mk s).hom (by simp) : Over.mk s ⟶ Over.mk (𝟙 S)) ≫ (x i)⁻¹ = c⁻¹ := by
-        rw [GrpObj.comp_inv]; rfl
-      rw [e, mul_inv_cancel_right]
-    refine ⟨some i, b, ?_⟩
-    rw [Near.chart_some, Scheme.Hom.comp_apply, hb]
-    have e2 : ((g * c) ≫ transl (x i)⁻¹).left (IsLocalRing.closedPoint _) = p := by rw [key]; exact hp
-    rw [Over.comp_left] at e2
-    exact (Scheme.Hom.comp_apply _ _ _).symm.trans e2
-
-end GlobalTheory.Mum
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothNeighbourhoodTranslatesCoverGroupStatement
-
-section
-
-@[expose] public section
-
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj IsLocalRing NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open scoped CategoryTheory.Obj
-attribute [local instance] Over.cartesianMonoidalCategory
-open GlobalTheory.Mum
-
-theorem _root_.GlobalTheory.T.smoothNeighbourhood_translates_cover_group : ∀ {R : Type} [CommRing R] [IsLocalRing R] (S : Scheme.{0}) (π : S ⟶ Sp R) (G' : Over S) [GrpObj G'] (N : Near π G') (n : ℕ) (x : Fin n → (Over.mk (𝟙 S) ⟶ G')), (∀ (Ω : Type) [Field Ω] (s : Sp Ω ⟶ S) (g : Over.mk s ⟶ G'), Set.range g.left ⊆ Set.range N.u ∨ ∃ i, Set.range (g * (Over.homMk s (by simp) : Over.mk s ⟶ Over.mk (𝟙 S)) ≫ x i).left ⊆ Set.range N.u) → ∀ p : G'.left, ∃ j, p ∈ Set.range (N.chart x j) := by
-  first | exact @GlobalTheory.Mum.chart_cover | exact GlobalTheory.Mum.chart_cover | (intros; apply GlobalTheory.Mum.chart_cover <;> assumption)
 end
 end
 

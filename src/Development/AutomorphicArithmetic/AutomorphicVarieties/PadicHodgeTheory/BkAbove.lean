@@ -1,16 +1,11 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BlochKatoSelmerVanishes
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.IotaSpec
-public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocC
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CovariantDegrees
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.DecJFacts
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -30,6 +25,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,121 +38,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Connected.Separation
-import Mathlib.Topology.Sheaves.Init
-import Mathlib.Tactic.Linter.HaveILetI
-public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocB
-
--- Source module: Formalism.LocalRingCardinality.SpanPowerMembership.NDLocD
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace Formalism.BasicNotions.Examples₂.LB
-
-open NumberField IsDedekindDomain Polynomial Formalism.ConjugateSelfDual ReciprocityTheory.Gal Pointwise Formalism.BasicNotions Formalism.BasicNotions.Loc
-
-variable {l : ℕ} [hl : Fact l.Prime] {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
-  [IsAlgClosure E Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {j : Ω →+* PadicAlgCl l}
-  {A : ValuationSubring Ω} (hj : ∀ x, x ∈ A ↔ ‖j x‖ ≤ 1)
-
-theorem continuous_rHom : Continuous (rHom (E := E) hj) :=
-  by apply _root_.UpperTheory.Reformulated.B.CovariantDegrees.continuous_rHom <;> assumption
-
-instance compact_GK (K : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] K] :
-    CompactSpace ↥K.fixingSubgroup :=
-  isCompact_iff_compactSpace.mp (IntermediateField.fixingSubgroup_isClosed K).isCompact
-
-def eDec : ↥(Dec (F := E) A) ≃* ↥(KwF (E := E) j).fixingSubgroup :=
-  (MulEquiv.ofBijective (rHom hj) ⟨rHom_injective hj, rHom_surjective hj⟩).symm
-
-theorem eDec_comm (g : ↥(Dec (F := E) A)) (x : Ω) :
-    ((eDec hj g : ↥(KwF (E := E) j).fixingSubgroup) : GQ l) (j x) = j ((g : G E Ω) x) := by
-  rw [← j_rHom hj]
-  congr 2
-  exact congrArg Subtype.val ((MulEquiv.ofBijective (rHom hj) ⟨rHom_injective hj, rHom_surjective hj⟩).apply_symm_apply g)
-
-theorem continuous_eDec_symm : Continuous (eDec (E := E) hj).symm := continuous_rHom hj
-
-theorem continuous_eDec : Continuous (eDec (E := E) hj) :=
-  Continuous.continuous_symm_of_equiv_compact_to_t2
-    (f := (MulEquiv.ofBijective (rHom hj) ⟨rHom_injective hj, rHom_surjective hj⟩).toEquiv)
-    (continuous_rHom hj)
-
-end Formalism.BasicNotions.Examples₂.LB
-
-namespace Formalism.BasicNotions.Examples₂
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc LB
-
-end Formalism.BasicNotions.Examples₂
-end
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.DecJFacts
-
-section
-
-@[expose] public section
-
-open Formalism.ConjugateSelfDual Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Module UpperTheory.V.Loc Topology NumberField IsDedekindDomain
-
-theorem UpperTheory.V.Loc.decJFacts :
-    ∀ {F Ω : Type} [Field F] [NumberField F] [Field Ω] [CharZero Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l : ℕ} [Fact l.Prime] (j : Ω →+* Om l), IsOpenEmbedding ((MonoidHom.snd _ _).comp (UpperTheory.V.Af.decJ F j).subtype) ∧ IsEmbedding ((MonoidHom.fst _ _).comp (UpperTheory.V.Af.decJ F j).subtype) ∧ ((MonoidHom.fst _ _).comp (UpperTheory.V.Af.decJ F j).subtype).range = Dec (F := F) (placeJ j) := by
-  intro F Ω _ _ _ _ _ _ l _ j
-  haveI : IsAlgClosure ℚ Ω := Examples₂.LB.isAlgClosureQ F Ω
-  have hj : ∀ x : Ω, x ∈ placeJ j ↔ ‖j x‖ ≤ 1 := by
-    intro x
-    change (Valued.v : Valuation (Om l) NNReal) (j x) ≤ 1 ↔ _
-    rw [← NNReal.coe_le_coe]
-    exact Iff.rfl
-  let e := Examples₂.LB.eDec (E := F) hj
-  have he : Continuous e := Examples₂.LB.continuous_eDec hj
-  have hes : Continuous e.symm := Examples₂.LB.continuous_eDec_symm hj
-  have hc : ∀ g x, ((e g : _) : GQ l) (j x) = j ((g : G F Ω) x) := Examples₂.LB.eDec_comm hj
-  have hK : ∀ x : ↥(UpperTheory.V.Af.decJ F j), x.1.2 ∈ (Examples₂.LB.KwF (E := F) j).fixingSubgroup := by
-    intro x
-    refine Examples₂.LB.mem_GK_of_fix j _ fun y => ?_
-    have := x.2 (algebraMap F Ω y)
-    rw [AlgEquiv.commutes] at this
-    exact this
-  have hfst : ∀ x : ↥(UpperTheory.V.Af.decJ F j), ((e.symm ⟨x.1.2, hK x⟩ : _) : G F Ω) = x.1.1 := by
-    intro x
-    refine AlgEquiv.ext fun y => j.injective ?_
-    rw [← hc, MulEquiv.apply_symm_apply]
-    exact x.2 y
-  let h : ↥(UpperTheory.V.Af.decJ F j) ≃ₜ ↥(Examples₂.LB.KwF (E := F) j).fixingSubgroup :=
-    { toFun := fun x => ⟨x.1.2, hK x⟩
-      invFun := fun σ => ⟨(((e.symm σ : _) : G F Ω), σ.1), fun y => by
-        have := hc (e.symm σ) y
-        rw [MulEquiv.apply_symm_apply] at this
-        exact this⟩
-      left_inv := fun x => Subtype.ext (Prod.ext (hfst x) rfl)
-      right_inv := fun σ => rfl
-      continuous_toFun := (continuous_snd.comp continuous_subtype_val).subtype_mk _
-      continuous_invFun := ((continuous_subtype_val.comp hes).prodMk continuous_subtype_val).subtype_mk _ }
-  let e' : ↥(Examples₂.LB.KwF (E := F) j).fixingSubgroup ≃ₜ ↥(Dec (F := F) (placeJ j)) :=
-    { toEquiv := e.symm.toEquiv, continuous_toFun := hes, continuous_invFun := he }
-  have h1 : ⇑((MonoidHom.fst _ _).comp (UpperTheory.V.Af.decJ F j).subtype) = Subtype.val ∘ (h.trans e') :=
-    funext fun x => (hfst x).symm
-  refine ⟨?_, ?_, ?_⟩
-  · exact (IntermediateField.fixingSubgroup_isOpen (Examples₂.LB.KwF (E := F) j)).isOpenEmbedding_subtypeVal.comp
-      h.isOpenEmbedding
-  · rw [h1]
-    exact IsEmbedding.subtypeVal.comp (h.trans e').isEmbedding
-  · apply SetLike.coe_injective
-    rw [MonoidHom.coe_range, h1, Set.range_comp, (h.trans e').surjective.range_eq, Set.image_univ, Subtype.range_coe_subtype]
-    rfl
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.BkAbove
-
-section
 
 @[expose] public section
 
@@ -238,5 +119,3 @@ theorem UpperTheory.V.Loc.bkAbove :
       exact hx h
   · rintro ⟨-, x, hx⟩
     exact ⟨⟨hc.1.comp hψ, fun g h => (congrArg c (map_mul ψ g h)).trans (hc.2 _ _)⟩, x, fun h => hx (θ h)⟩
-end
-end

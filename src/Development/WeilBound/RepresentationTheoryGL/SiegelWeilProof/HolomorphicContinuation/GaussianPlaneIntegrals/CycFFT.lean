@@ -1,6 +1,7 @@
 module
 
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFTA
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFTC
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFTB
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -18,6 +19,7 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -26,6 +28,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -38,206 +41,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ReduceModChar
-import Std.Tactic.BVDecide.Normalize.Prop
-import Mathlib.RingTheory.PiTensorProduct
-import Mathlib.Tactic.Linter.HaveILetI
-
--- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFTC
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open MvPolynomial
-
-namespace PositivityTheory.Rg.Sw.FFTSteps.CycF
-
-variable {m n : ℕ} (ε : Fin m → Bool)
-
-def eqv : Fin m × Fin n × Bool ≃ VV (Rw ε false) n ⊕ VV (Rw ε true) n where
-  toFun k := if h : ε k.1 = true then Sum.inr (if k.2.2 then Sum.inr (⟨k.1, h⟩, k.2.1) else Sum.inl (⟨k.1, h⟩, k.2.1))
-    else Sum.inl (if k.2.2 then Sum.inr (⟨k.1, by simpa using h⟩, k.2.1) else Sum.inl (⟨k.1, by simpa using h⟩, k.2.1))
-  invFun := Sum.elim (jv ε false) (jv ε true)
-  left_inv k := by
-    obtain ⟨a, i, t⟩ := k
-    by_cases h : ε a = true <;> cases t <;> simp [h, jv]
-  right_inv x := by
-    rcases x with (⟨⟨a, ha⟩, i⟩ | ⟨⟨a, ha⟩, i⟩) | (⟨⟨a, ha⟩, i⟩ | ⟨⟨a, ha⟩, i⟩) <;> simp [jv, ha]
-
-def Th : PX m n ≃ₐ[ℂ] MvPolynomial (VV (Rw ε false) n) (PV (Rw ε true) (Fin n) (Fin n)) :=
-  (renameEquiv ℂ (eqv ε)).trans (sumAlgEquiv ℂ _ _)
-
-variable {ε}
-
-theorem th_X (k : Fin m × Fin n × Bool) : Th ε (X k) = sumAlgEquiv ℂ _ _ (X (eqv ε k)) := by
-  simp [Th]
-
-theorem th_embT (c : PV (Rw ε true) (Fin n) (Fin n)) : Th ε (emb ε true c) = C c := by
-  induction c using MvPolynomial.induction_on with
-  | C a =>
-    simp [emb, Th]
-  | add p q hp hq => simp only [map_add (f := _), hp, hq]
-  | mul_X p v hp =>
-    have e : eqv ε (jv ε true v) = Sum.inr v := (eqv ε).apply_symm_apply (Sum.inr v)
-    have hx : Th ε (emb ε true (X v)) = C (X v) := by
-      simp only [emb, rename_X]
-      rw [th_X, e]
-      exact sumRingEquiv_X_inr ℂ _ _ v
-    rw [map_mul, map_mul, hp, hx, C_mul]
-
-theorem th_embF (t : PV (Rw ε false) (Fin n) (Fin n)) :
-    Th ε (emb ε false t) = map (algebraMap ℂ (PV (Rw ε true) (Fin n) (Fin n))) t := by
-  induction t using MvPolynomial.induction_on with
-  | C a =>
-    simp [emb, Th]
-  | add p q hp hq => simp only [map_add (f := _), hp, hq]
-  | mul_X p v hp =>
-    have e : eqv ε (jv ε false v) = Sum.inl v := (eqv ε).apply_symm_apply (Sum.inl v)
-    have hx : Th ε (emb ε false (X v)) = X v := by
-      simp only [emb, rename_X]
-      rw [th_X, e]
-      exact sumRingEquiv_X_inl ℂ _ _ v
-    rw [map_mul, map_mul, hp, hx, map_mul, map_X]
-
-theorem th_prod (c : PV (Rw ε true) (Fin n) (Fin n)) (μ : VV (Rw ε false) n →₀ ℕ) :
-    Th ε (emb ε true c * emb ε false (monomial μ 1)) = monomial μ c := by
-  rw [map_mul, th_embT, th_embF, map_monomial, map_one, C_mul_monomial, mul_one]
-
-theorem decomp (Q : PX m n) :
-    Q = ∑ μ ∈ (Th ε Q).support, emb ε true ((Th ε Q).coeff μ) * emb ε false (monomial μ 1) := by
-  apply (Th ε).injective
-
-  rw [map_sum]
-  simp_rw [th_prod]
-  exact (Th ε Q).as_sum
-
-theorem coeff_sum_monomial {σ R : Type*} [CommSemiring R] [DecidableEq σ] (S : Finset (σ →₀ ℕ)) (f : (σ →₀ ℕ) → R) (μ : σ →₀ ℕ) :
-    AddMonoidAlgebra.coeff (∑ ν ∈ S, monomial ν (f ν)) μ = if μ ∈ S then f μ else 0 := by
-  rw [coeff_sum]
-  simp only [coeff_monomial]
-  split_ifs with h
-  · rw [Finset.sum_eq_single μ]
-    · simp
-    · intro b _ hb
-      simp [hb]
-    · intro h'
-      exact absurd h h'
-  · apply Finset.sum_eq_zero
-    intro b hb
-    have : b ≠ μ := fun e => h (e ▸ hb)
-    simp [this]
-
-theorem indep {J : Type} [Fintype J] (b : J → PV (Rw ε true) (Fin n) (Fin n)) (hb : LinearIndependent ℂ b)
-    (t : J → PV (Rw ε false) (Fin n) (Fin n)) (h : ∑ j, emb ε true (b j) * emb ε false (t j) = 0) : ∀ j, t j = 0 := by
-  have h2 := congrArg (Th ε) h
-
-  rw [map_sum, map_zero] at h2
-  simp_rw [map_mul, th_embT, th_embF] at h2
-  intro j
-  ext μ
-  have h3 := congrArg (AddMonoidAlgebra.coeff · μ) h2
-  rw [coeff_sum] at h3
-  change _ = 0 at h3
-  simp_rw [coeff_C_mul, coeff_map] at h3
-  have h4 : ∑ i, (AddMonoidAlgebra.coeff (t i) μ) • b i = 0 := by
-    rw [← h3]
-    refine Finset.sum_congr rfl (fun i _ => ?_)
-    rw [Algebra.smul_def, mul_comm]
-  have := Fintype.linearIndependent_iff.1 hb _ h4 j
-  change AddMonoidAlgebra.coeff (t j) μ = 0
-  exact this
-
-end PositivityTheory.Rg.Sw.FFTSteps.CycF
-end
-end
-end
-
--- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFTB
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open MvPolynomial
-
-namespace PositivityTheory.Rg.Sw.FFTSteps.CycF
-
-variable {m n : ℕ} {ε : Fin m → Bool}
-
-theorem sum_blk (β : Bool) (v : Matrix (Rw ε β) (Rw ε β) ℂ) (a : Rw ε β) (i : Fin n) (t : Bool) :
-    ∑ b, C (blk ε β v a.1 b) * (X (b, i, t) : PX m n) = ∑ j : Rw ε β, C (v a j) * X (j.1, i, t) := by
-  rw [← sum_rw β (fun j => C (v a j) * (X (j.1, i, t) : PX m n))]
-  refine Finset.sum_congr rfl fun b _ => ?_
-  rw [blk_of β v a.2]
-  split_ifs <;> simp
-
-theorem sum_blk_star (β : Bool) (v : Matrix (Rw ε β) (Rw ε β) ℂ) (a : Rw ε β) (i : Fin n) (t : Bool) :
-    ∑ b, C (star (blk ε β v a.1 b)) * (X (b, i, t) : PX m n) = ∑ j : Rw ε β, C (star (v a j)) * X (j.1, i, t) := by
-  rw [← sum_rw β (fun j => C (star (v a j)) * (X (j.1, i, t) : PX m n))]
-  refine Finset.sum_congr rfl fun b _ => ?_
-  rw [blk_of β v a.2]
-  split_ifs <;> simp
-
-theorem sum_blk_other (β : Bool) (v : Matrix (Rw ε β) (Rw ε β) ℂ) {a : Fin m} (ha : ¬ ε a = β) (i : Fin n)
-    (t : Bool) (st : Bool) :
-    ∑ b, C (if st then star (blk ε β v a b) else blk ε β v a b) * (X (b, i, t) : PX m n) = X (a, i, t) := by
-  simp only [blk_of_not β v ha]
-  cases st <;> simp [apply_ite star, ite_mul]
-
-theorem act_emb_same (β : Bool) (v : Matrix (Rw ε β) (Rw ε β) ℂ) :
-    (act (n := n) (blk ε β v)).comp (emb ε β) = (emb ε β).comp (sub v (v.map star)) := by
-  refine MvPolynomial.algHom_ext fun x => ?_
-  rcases x with ⟨i, a⟩ | ⟨i, a⟩
-
-  · simp [act, emb, sub, jv, sum_blk, map_sum]
-
-  · simpa [act, emb, sub, jv, map_sum] using sum_blk_star (n := n) β v i a true
-
-theorem act_emb_other (β β' : Bool) (hne : β' ≠ β) (v : Matrix (Rw ε β) (Rw ε β) ℂ) :
-    (act (n := n) (blk ε β v)).comp (emb ε β') = emb ε β' := by
-  refine MvPolynomial.algHom_ext fun x => ?_
-  rcases x with ⟨i, a⟩ | ⟨i, a⟩
-  · have hi : ¬ ε i.1 = β := fun h => hne (i.2.symm.trans h)
-    have := sum_blk_other (n := n) β v hi a false false
-    simp only [Bool.false_eq_true, if_false] at this
-    simp [act, emb, jv, this]
-  · have hi : ¬ ε i.1 = β := fun h => hne (i.2.symm.trans h)
-    have := sum_blk_other (n := n) β v hi a true true
-    simp only [if_true] at this
-    simpa [act, emb, jv] using this
-
-theorem emb_pair (β : Bool) (a b : Fin n) :
-    emb ε β (∑ i : Rw ε β, (X (Sum.inl (i, a)) : PV (Rw ε β) (Fin n) (Fin n)) * X (Sum.inr (i, b))) = Qb ε β b a := by
-
-  simp only [map_sum, map_mul, emb, rename_X, jv, Sum.elim_inl, Sum.elim_inr, Qb]
-  rw [Finset.sum_subtype (Finset.univ.filter (fun x : Fin m => ε x = β)) (p := fun x => ε x = β) (by simp)]
-  exact Finset.sum_congr rfl (fun i _ => mul_comm _ _)
-
-theorem emb_pairAlg (β : Bool) {p : PV (Rw ε β) (Fin n) (Fin n)} (hp : p ∈ pairAlg (Rw ε β) (Fin n) (Fin n)) :
-    emb ε β p ∈ Algebra.adjoin ℂ (Set.range fun k : Bool × Fin n × Fin n => (Qb ε k.1 k.2.1 k.2.2 : PX m n)) := by
-  have h1 : emb ε β p ∈ (pairAlg (Rw ε β) (Fin n) (Fin n)).map (emb ε β) := Subalgebra.mem_map.2 ⟨p, hp, rfl⟩
-  rw [pairAlg, AlgHom.map_adjoin] at h1
-  refine Algebra.adjoin_mono ?_ h1
-  rintro _ ⟨_, ⟨⟨a, b⟩, rfl⟩, rfl⟩
-  exact ⟨(β, b, a), (emb_pair β a b).symm⟩
-
-end PositivityTheory.Rg.Sw.FFTSteps.CycF
-end
-end
-end
-
--- Source module: Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.CycFFT
-
-section
 
 @[expose] public section
 
@@ -335,6 +139,3 @@ theorem cycFFT : CycFFT := by
   · exact emb_pairAlg false (hr j)
 
 end PositivityTheory.Rg.Sw.FFTSteps
-end
-end
-end

@@ -3,8 +3,9 @@ module
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.CuspSemisimpleReal
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Hypotheses2
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.CycCOfCyclic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.CongruenceNumberRankThree
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.SplitDescentOfImagQuadDescent
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.Down2
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.CuspidalDescent.DescWeak
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -35,41 +36,8 @@ import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
 import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.CuspidalDescent.DescWeak
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMemAdmissibleAtIffCocycle
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.Down2
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af
-
-namespace UpperTheory.V.Z.Bc
-
-def Down2 : Prop :=
-  ∀ (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [IsAbelianGalois ℚ L] [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω]
-    [Algebra L Ω] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (W : G ℚ Ω →* GL (Fin 2) (Qbar l)), Continuous W →
-    IsCycWt l 0 (Matrix.GeneralLinearGroup.det.comp W) → IsIrr (W.comp (resG ℚ L Ω)) →
-    (∃ (η : G ℚ Ω →* ℤˣ) (σ : G ℚ Ω), IsConjEl σ ∧ η σ = -1 ∧ ∀ s : G L Ω, η (resG ℚ L Ω s) = 1) →
-    (∃ π : CuspSub L 2, (CG.mk π).IsRegAlg ∧ AttC ι (W.comp (resG ℚ L Ω)) π) → IsAutR ι W
-
-def Desc2 : Prop := DescS ∨ Down2
-
-end UpperTheory.V.Z.Bc
-end
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.GalUnitary
-
-section
 
 @[expose] public section
 
@@ -217,6 +185,3 @@ def GalUnitary : Prop :=
           ∀ φ lam, HasWeightAt σ φ lam → π.HasInfChar φ (infOfWeight lam))
 
 end UpperTheory.V.Af
-end
-end
-end

@@ -46,9 +46,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ClsLinCombSingle
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankHomologyModPrimeUniversalCoefficientsStatement
-public import Mathlib.LinearAlgebra.Dimension.Finrank
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyHomologyEquiv
-import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRatHomologyStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankZmodTensorHomologyZeroOfNoPTorsionStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyHomologyEquiv
 import Mathlib.Tactic.Basify
@@ -120,49 +118,6 @@ open GlobalTheory.LB (toMod)
 
 theorem _root_.GlobalTheory.T.cechComplexLineBundle_term_torsionFree_charZero : ∀ {X : Scheme.{0}} [AlgebraicGeometry.IsIntegral X], CharZero Γ(X, ⊤) → ∀ (f : X ⟶ Sp ℤ) (M : LB X) {κ : Type} [LinearOrder κ] (D : κ → X.Opens) (n : ℕ) (m : ℤ), m ≠ 0 → ∀ x : (GlobalTheory.AbLaw.cechLB f M D).X n, m • x = 0 → x = 0 := by
   first | exact @GlobalTheory.CechPic.cechLB_X_noZSMulDivisors | exact GlobalTheory.CechPic.cechLB_X_noZSMulDivisors | (intros; apply GlobalTheory.CechPic.cechLB_X_noZSMulDivisors <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRatHomology
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits TensorProduct
-
-namespace GlobalTheory.RatHomology
-
-theorem finrank_rat_tensor (M : Type) [AddCommGroup M] [Module ℤ M] :
-    Module.finrank ℚ (ℚ ⊗[ℤ] M) = Module.finrank ℤ M := by
-  rw [← IsLocalizedModule.finrank_eq (nonZeroDivisors ℤ) (TensorProduct.mk ℤ ℚ M 1) le_rfl,
-    ← IsFractionRing.finrank_right_eq ℤ ℚ]
-
-theorem finrank_rat_homology (C : CochainComplex (ModuleCat.{0} ℤ) ℕ) (n : ℕ)
-    (_ : Module.Finite ℤ (C.homology n)) :
-    Module.finrank ℚ ((((ModuleCat.extendScalars (Int.castRingHom ℚ)).mapHomologicalComplex
-      (ComplexShape.up ℕ)).obj C).homology n) = Module.finrank ℤ (C.homology n) := by
-  obtain ⟨e⟩ := GlobalTheory.FieldChangeInter.nonempty_homology_equiv ℚ C n
-  have h := e.finrank_eq
-  have hφ : algebraMap ℤ ℚ = Int.castRingHom ℚ := rfl
-  rw [hφ] at h
-  rw [h]
-  exact finrank_rat_tensor (C.homology n)
-
-end GlobalTheory.RatHomology
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRatHomologyStatement
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits
-
-theorem _root_.GlobalTheory.T.finrank_rat_homology_eq_finrank_int : ∀ (C : CochainComplex (ModuleCat.{0} ℤ) ℕ) (n : ℕ), Module.Finite ℤ (C.homology n) → Module.finrank ℚ ((((ModuleCat.extendScalars (Int.castRingHom ℚ)).mapHomologicalComplex (ComplexShape.up ℕ)).obj C).homology n) = Module.finrank ℤ (C.homology n) := by
-  first | exact @GlobalTheory.RatHomology.finrank_rat_homology | exact GlobalTheory.RatHomology.finrank_rat_homology | (intros; apply GlobalTheory.RatHomology.finrank_rat_homology <;> assumption)
 end
 end
 

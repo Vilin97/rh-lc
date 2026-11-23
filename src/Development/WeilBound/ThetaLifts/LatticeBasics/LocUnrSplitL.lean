@@ -8,7 +8,8 @@ public import Mathlib.Data.Matrix.ColumnRowPartitioned
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.MeasureTheory.Integral.IntegrableOn
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearIntegralCompactOpen
-public import Mathlib.MeasureTheory.Group.Measure
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearUnimodularHaar
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SphericalZetaCosets
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -48,9 +49,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import GroundTheory.AutomorphicForms.MeasuresGL
-import Mathlib.Tactic.Linter.HaveILetI
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SphericalZetaCosets
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOfValILeOne
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.LocalFieldUniformizerNormProperties
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.MemIntegralGLIffIntegralUnitDet
@@ -63,52 +61,6 @@ import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Algebra.Group.Units
-
--- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearIntegralCompactOpenStatement
-
-section
-
-@[expose] public section
-
-open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
-open scoped ComplexConjugate ValuativeRel
-
-theorem _root_.GlobalTheory.T.generalLinear_integral_compact_open : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}, LF O ϖ nrm q → ∀ n : ℕ, IsOpen (GLint O n : Set (GL (Fin n) F)) ∧ IsCompact (GLint O n : Set (GL (Fin n) F)) ∧ LocallyCompactSpace (GL (Fin n) F) ∧ SecondCountableTopology (GL (Fin n) F) ∧ T2Space (GL (Fin n) F) ∧ IsOpen (Mint O n) ∧ IsClosed (Mint O n) := by
-  first | exact @GlobalTheory.CompanionTheory.QLTop.gl_topology | exact GlobalTheory.CompanionTheory.QLTop.gl_topology | (intros; apply GlobalTheory.CompanionTheory.QLTop.gl_topology <;> assumption)
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeneralLinearUnimodularHaar
-
-section
-
-@[expose] public section
-
-open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
-open scoped ComplexConjugate ValuativeRel
-
-namespace GlobalTheory.CompanionTheory.QL.HaarGL
-
-theorem exists_haar_unimodular : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {O : Subring F} {ϖ : F} {nrm : AbsoluteValue F ℝ} {q : ℕ}, LF O ϖ nrm q → ∀ n : ℕ, (∃ κ : Measure (GL (Fin n) F), κ.IsMulLeftInvariant ∧ κ (GLint O n : Set (GL (Fin n) F)) = 1) ∧ ∀ μ : Measure (GL (Fin n) F), μ.IsHaarMeasure → μ.IsMulRightInvariant ∧ μ.IsInvInvariant := by
-  intro F _ _ _ _ O ϖ nrm q hLF n
-  obtain ⟨hKo, hKc, hlc, _hsc, ht2, -, -⟩ := GlobalTheory.T.generalLinear_integral_compact_open hLF n
-  haveI := hlc
-  haveI := ht2
-  haveI : BorelSpace (GL (Fin n) F) := GlobalTheory.CompanionTheory.QL.instBorelGL n
-  refine ⟨?_, fun μ hμ => ?_⟩
-  · let μ₀ : Measure (GL (Fin n) F) := Measure.haar
-    have hpos : μ₀ (GLint O n : Set (GL (Fin n) F)) ≠ 0 :=
-      hKo.measure_ne_zero μ₀ ⟨1, (GLint O n).one_mem⟩
-    have hfin : μ₀ (GLint O n : Set (GL (Fin n) F)) ≠ ⊤ := hKc.measure_lt_top.ne
-    refine ⟨(μ₀ (GLint O n : Set (GL (Fin n) F)))⁻¹ • μ₀, inferInstance, ?_⟩
-    rw [Measure.smul_apply, smul_eq_mul, ENNReal.inv_mul_cancel hpos hfin]
-  · haveI := hμ
-    exact ⟨GroundTheory.Automorphic.Measures.isMulRightInvariant_GL F n μ,
-      ⟨GroundTheory.Automorphic.Measures.inv_eq_self_GL F n μ⟩⟩
-
-end GlobalTheory.CompanionTheory.QL.HaarGL
-end
-end
 
 -- Source module: Development.AutomorphicSpectrum.Proofs.GlobalProofs.IntegrandEqOnPiece
 

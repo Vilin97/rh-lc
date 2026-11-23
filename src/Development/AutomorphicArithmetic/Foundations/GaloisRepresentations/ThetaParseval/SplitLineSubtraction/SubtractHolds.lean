@@ -4,14 +4,8 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DeRhamPotentiallySemistable
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GlobalArtinReciprocityHolds
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.ClTwHolds
-public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.HeckeLAdicCharacterDeRham
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalArtinExistsHolds
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WdParameterMonodromyZeroIffPotentiallyCrystallin
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRecLawsSuppUnitSurj
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFixedIff
-public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsSteinberg
-public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.MetAndHolds
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry₂.ConclusionFinite
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PCharAbove
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PCharEx
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -46,7 +40,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TripleAtt
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DenseRangeUnits
 import Mathlib.Tactic.Basify
@@ -58,6 +51,7 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PDgFacts
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PEigSum
 public import Formalism.SharpRestriction.LevelLetterCocycles.ExistsInertiaCharpolyFactorOfTameType
+import Mathlib.Tactic.ReduceModChar
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PFrobSub
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PPeelAll
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AwayRepIsoLoc
@@ -71,94 +65,6 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.AlgebraicCharacters.AlgebraicCharacterWD
 public import Development.WeilBound.CoreStatements.PublishedTheorems.HeckeLAdicCharacters.Outright
 public import Development.WeilBound.CoreStatements.StandardPublishedResults.StandardTheoremStatements.GlobalArtinReciprocity
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PCharAbove
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.HeckeGal GlobalTheory.UnitaryBC
-open Formalism.MainNotions.SumRepresentations.At (sumRep)
-open GlobalTheory.TripleGal (rk1)
-open UpperTheory.V.Af (FrobEig algSat RepIso tw)
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open UpperTheory.Gal.TP.Sub
-
-theorem UpperTheory.Gal.TP.Sub.charAbove_holds :
-    GlobalTheory.Published.HeckeLAdicCharacter → GlobalTheory.Published.HeckeLAdicCharacterDeRham → GlobalTheory.Published.AlgebraicCharacterWD → PstOfDR → ContLeft → CharAbove := by
-  intro H hD hW hP hC E Ω _ _ _ _ _ l _ ι art ha χ n μ h1 h2 h3 w hu P AI hT A h O _ _ _ Bw hj
-  obtain ⟨a, ha'⟩ := GlobalTheory.localArtinExists_holds E Ω A w h
-  have hξ := GlobalTheory.Published.ParamAboveModel.isComp_loc (w := w) χ
-  have d := hD E Ω l P AI hT ι art ha χ n μ h1 h2 h3 w A h O Bw hj
-  have hc : Continuous ((rk1 μ).comp (Dec (F := E) A).subtype) :=
-    ((hC (G E Ω) (Qbar l) 0 0).2.2.2 μ h2).comp continuous_subtype_val
-  have hr := hP l P AI hT E Ω A O Bw 1 _ hc d.1
-  have e := hW E Ω l P AI hT ι art ha χ n μ h1 h2 h3 w A h O Bw hj _ hξ a ha'
-  have hun := (GlobalTheory.Published.CharCrysModel.isUnram_iff χ w).2 hu
-  refine ⟨?_, d.1, d.2, fun g => ?_⟩
-  · rw [← GlobalTheory.PstLaws.unr_wdAt_iff Bw h hj P ι _ hr, e, GlobalTheory.LocLanglands.Test.unr_lpOfChar_iff ha' hξ.1]
-    exact hun
-  · have hv : (χ.loc w (a g) : ℂ) = ((χ.val w : ℂˣ) : ℂ) ^ (-deg g) := by
-      have ho : GlobalTheory.SmGL.ord (w.adicCompletion E) (atFin w (unif w)) = 1 := by
-        rw [GlobalTheory.SmGL.SphCompletion.ord_completion, show Valued.v ((atFin w (unif w) : (w.adicCompletion E)ˣ) : w.adicCompletion E) = _ from unif_spec w]
-        simp
-      have h1 : ∀ x : (w.adicCompletion E)ˣ, χ.loc w x = χ.val w ^ GlobalTheory.SmGL.ord (w.adicCompletion E) x := fun x => by
-        have h0 : GlobalTheory.SmGL.ord (w.adicCompletion E) (x * (atFin w (unif w) ^ GlobalTheory.SmGL.ord (w.adicCompletion E) x)⁻¹) = 0 := by
-          have hz : ∀ (y : (w.adicCompletion E)ˣ), GlobalTheory.SmGL.unrChar (w.adicCompletion E) (Units.mk0 2 two_ne_zero) y =
-              (Units.mk0 (2:ℂ) two_ne_zero) ^ GlobalTheory.SmGL.ord _ y := fun _ => rfl
-          let φ : (w.adicCompletion E)ˣ →* Multiplicative ℤ := MonoidHom.mk' (fun y => Multiplicative.ofAdd (GlobalTheory.SmGL.ord _ y))
-            fun y z => by rw [GlobalTheory.SmGL.ord_mul, ofAdd_add]
-          have : φ (x * (atFin w (unif w) ^ GlobalTheory.SmGL.ord (w.adicCompletion E) x)⁻¹) = 1 := by
-            rw [map_mul, map_inv, map_zpow]
-            simp [φ, ho, ← ofAdd_zsmul]
-          exact this
-        have := hun _ ((GlobalTheory.SmGL.ord_eq_zero_iff).1 h0)
-        rw [map_mul, map_inv, map_zpow, mul_inv_eq_one] at this
-        exact this
-      rw [h1, ha'.ord_eq, Units.val_zpow_eq_zpow_val]
-    rw [e, WD.charPol_eq_prod, GlobalTheory.LocLanglands.eig_lpOfChar]
-    simp [unrPol, hv]
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PCharEx
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.HeckeGal GlobalTheory.UnitaryBC
-open Formalism.MainNotions.SumRepresentations.At (sumRep)
-open GlobalTheory.TripleGal (rk1)
-open UpperTheory.V.Af (FrobEig algSat RepIso tw)
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open UpperTheory.Gal.TP.Sub
-
-theorem UpperTheory.Gal.TP.Sub.charEx_holds :
-    GlobalTheory.Published.HeckeLAdicCharacter → CharFrob → CharAbove → CharInj → CharEx := by
-  classical
-  intro H hF hA hI E Ω _ _ _ _ _ l _ ι
-  obtain ⟨art, hart, hex⟩ := H E Ω
-  have hL : ∀ (χ : HChar E) (n : (E →+* ℂ) → ℤ), IsAlgPos χ n →
-      ∃ r : G E Ω →* (Qbar l)ˣ, Continuous r ∧ IsLAdicOf art ι χ n r :=
-    fun χ n h => (hex l ι χ n h).exists
-  let L : HChar E → ((E →+* ℂ) → ℤ) → (G E Ω →* (Qbar l)ˣ) :=
-    fun χ n => if h : IsAlgPos χ n then (hL χ n h).choose else 1
-  have hspec : ∀ (χ : HChar E) (n : (E →+* ℂ) → ℤ), IsAlgPos χ n →
-      Continuous (L χ n) ∧ IsLAdicOf art ι χ n (L χ n) := by
-    intro χ n h
-    have e : L χ n = (hL χ n h).choose := dif_pos h
-    rw [e]
-    exact (hL χ n h).choose_spec
-  refine ⟨L, fun χ n h => ⟨(hspec χ n h).1, fun w hw => ⟨fun hl => ?_, ?_⟩⟩, fun χ n χ' n' h h' e => ?_⟩
-  · exact hF E Ω l ι art hart χ n (L χ n) (hspec χ n h).2 w hl hw
-  · exact hA E Ω l ι art hart χ n (L χ n) h (hspec χ n h).1 (hspec χ n h).2 w hw
-  · exact hI E Ω l ι art hart χ χ' n n' (L χ n) (hspec χ n h).2 (e ▸ (hspec χ' n' h').2)
-end
-end
 
 -- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PCharFrob
 

@@ -52,10 +52,9 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerI3O
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerT1LimitStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerT2Statement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerTheoremBAveragedStatement
-public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
-public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
-public import Development.WeilBound.CoreStatements.FlagImmersions.AntisymmetryTowerTheorem
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerTheoremBStatement
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.KleimanSt
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerWeilTheorem
@@ -124,36 +123,6 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology Globa
 
 theorem _root_.GlobalTheory.T.flag_height_I9_properties : PB.FlagHeight → PB.Inputs → ∀ II : IntersectionSystem, IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) [Nonempty Ψ], 2 ≤ N → I9 (Ψ := Ψ) (N := N) (hhFl Ψ N II) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Top.flag_height_I9 | exact GlobalTheory.CompanionTheory.Ar.Top.flag_height_I9 | (intros; apply GlobalTheory.CompanionTheory.Ar.Top.flag_height_I9 <;> assumption)
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerTheoremB
-
-section
-
-@[expose] public section
-
-open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology GlobalTheory.CompanionTheory.Ar.Top
-
-namespace GlobalTheory.CompanionTheory.Ar.Top
-
-theorem thmB_functional : GroundTheory.Heights₂.Heights.AntisymPerturbation.Statement → ∀ II : IntersectionSystem, ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (T : RootTower Ψ N) (hh : RP Ψ N →ₗ[ℝ] ℝ), T.Proportional → T.ThmW II → T.I8 II hh → I9 (Ψ := Ψ) (N := N) hh → T.ThmB II hh :=
-  @RootFieldNumerics.antisymmetry_tower_theorem
-
-end GlobalTheory.CompanionTheory.Ar.Top
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerTheoremBStatement
-
-section
-
-@[expose] public section
-
-open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology GlobalTheory.CompanionTheory.Ar.Top
-
-theorem _root_.GlobalTheory.T.tower_theorem_B : GroundTheory.Heights₂.Heights.AntisymPerturbation.Statement → ∀ II : IntersectionSystem, ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (T : RootTower Ψ N) (hh : RP Ψ N →ₗ[ℝ] ℝ), T.Proportional → T.ThmW II → T.I8 II hh → I9 (Ψ := Ψ) (N := N) hh → T.ThmB II hh := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Top.thmB_functional | exact GlobalTheory.CompanionTheory.Ar.Top.thmB_functional | (intros; apply GlobalTheory.CompanionTheory.Ar.Top.thmB_functional <;> assumption)
 end
 end
 

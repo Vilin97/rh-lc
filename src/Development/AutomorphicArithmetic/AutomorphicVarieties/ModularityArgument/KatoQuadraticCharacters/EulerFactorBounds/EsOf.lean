@@ -50,16 +50,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.KatoQuadraticCharacters.EulerFactorBounds.OfDesc
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.KatoQuadraticCharacters.EulerFactorBounds.SCls
 public import Development.AbelianVarietyTheory.Definitions.Foundations.OpLDOneSubMemTriv
-public import Development.AbelianVarietyTheory.Definitions.Foundations.Letter
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
-public import Mathlib.RingTheory.AdicCompletion.Noetherian
-public import Mathlib.RingTheory.Coalgebra.IsFrobenius
-public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-public import Mathlib.RingTheory.Flat.TorsionFree
-public import Mathlib.RingTheory.Henselian
-public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.GaloisCommutesHeckeAction
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DiagMod
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.GaloisCommutesHeckeActionStatement
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SlMulToRingEquiv
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.KatoQuadraticCharacters.EulerFactorBounds.KatoTwistedClassNormCompatibleCyclotomic
 import Mathlib.Algebra.Order.Star.Int
@@ -107,20 +98,6 @@ theorem UpperTheory.V.Z.Kato.Nb.sEsFrob : UpperTheory.V.Z.Kato.Nb.SEsFrob := by
       intro hd
       exact hql ((Nat.prime_dvd_prime_iff_eq hq Fact.out).mp hd)
     exact cycZ_of_isFrob hl hB ⟨hσ, hfr⟩
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.GaloisCommutesHeckeActionStatement
-
-section
-
-@[expose] public section
-
-open scoped MatrixGroups TensorProduct
-open Matrix GlobalTheory.KZ GlobalTheory.KZ.ES
-
-theorem _root_.GlobalTheory.T.galois_commutes_hecke_action : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε), ∀ (N l w : ℕ) [Fact l.Prime], 1 ≤ N → ∀ b ∈ X.BSet N l w, ∀ δ ∈ CongruenceSubgroup.Gamma0 N ⊓ CongruenceSubgroup.Gamma0 l, ∀ s : Ω ≃ₐ[ℚ] Ω, X.act l (δ : Matrix (Fin 2) (Fin 2) ℤ) (X.galB l s b) = X.galB l s (X.act l (δ : Matrix (Fin 2) (Fin 2) ℤ) b) := by
-  first | exact @GlobalTheory.KZ.GamComm.act_galB_comm | exact GlobalTheory.KZ.GamComm.act_galB_comm | (intros; apply GlobalTheory.KZ.GamComm.act_galB_comm <;> assumption)
 end
 end
 

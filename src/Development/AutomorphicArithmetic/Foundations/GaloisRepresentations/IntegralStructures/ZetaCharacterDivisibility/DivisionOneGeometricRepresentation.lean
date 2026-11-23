@@ -46,7 +46,7 @@ import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.Integ
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PDivDet
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PDivOne
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PDivSet
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DenseSplitFrobInvAway
+import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PDivUniq
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PGenPin
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PInFacts
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PIsoMove
@@ -63,8 +63,7 @@ import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.Integ
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSchurU
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSepPin
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSmall
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeilDeligneParamAboveLDirectSumPotSemistableStatement
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.PWDFacts
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSubLoc
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSubSplit
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PZetaEx
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PZetaLoc
@@ -133,44 +132,6 @@ theorem UpperTheory.Gal.Int.Div.denseUs_of :
   refine ⟨w, fun h => hw (Finset.mem_union_left _ h), hus, hl, ?_, A, hA, hg⟩
   by_contra hB
   exact hw (Finset.mem_union_right _ (hfin.mem_toFinset.2 ⟨hus.1, hB⟩))
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PDivUniq
-
-section
-
-section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.HeckeGal GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.CongL GlobalTheory.RoadWGeo
-open Formalism.MainNotions.SumRepresentations.At (sumRep)
-open GlobalTheory.TripleGal (rk1)
-open UpperTheory.V.Af (FrobEig algSat RepIso)
-open UpperTheory.Gal.TP.Sub (Cl Above unrPol)
-open UpperTheory.Gal.crystallineComparison (GenericMul rootPol)
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open GlobalTheory.BlockSum (blockRep)
-open PositivityTheory.AutomorphicGaloisHodgeTate.Div (DivWCoreLac SenWLac HTLac IsSSMat)
-open UpperTheory.Gal.Int.Div
-
-theorem UpperTheory.Gal.Int.Div.divUniq_of :
-    DenseUs → DivUniq := by
-  classical
-  intro hD E Ω _ _ _ _ _ _ l _ ι a d hd U hU r r' hr hr'
-  obtain ⟨hc, hs, V, X, hVo, hVd, h⟩ := hr
-  obtain ⟨hc', hs', V', X', hVo', hVd', h'⟩ := hr'
-  have hS := hD E Ω l a d hd U hU (X ∪ X')
-  have hI := (hS.inter_of_isOpen_right hVd hVo).inter_of_isOpen_right hVd' hVo'
-  refine GlobalTheory.SplitAttUniq.repIso_of_dense r r' hc hc' hs hs' _
-    (hI.preimage (Homeomorph.inv (G E Ω)).isOpenMap) ?_
-  rintro g ⟨⟨⟨w, hw, hus, hl, ⟨B, hB⟩, A, hP, hF⟩, hV⟩, hV'⟩
-  have hwX : w ∉ X := fun hx => hw (Finset.mem_union_left _ hx)
-  have hwX' : w ∉ X' := fun hx => hw (Finset.mem_union_right _ hx)
-  have e1 := (h w hwX hus hl B hB A hP).2 g⁻¹ hF hV
-  have e2 := (h' w hwX' hus hl B hB A hP).2 g⁻¹ hF hV'
-  rw [inv_inv] at e1 e2
-  exact Polynomial.map_injective ι.toRingHom ι.injective (e1.trans e2.symm)
 end
 end
 
@@ -295,53 +256,6 @@ theorem UpperTheory.Gal.Int.Div.rootPin_of :
   have heq : p.roots = s := hgen _ hcard hmem hprod
   rw [hspl.eq_prod_roots_of_monic hp, heq]
   rfl
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.PSubLoc
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
-open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.HeckeGal GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.CongL GlobalTheory.RoadWGeo
-open Formalism.MainNotions.SumRepresentations.At (sumRep)
-open GlobalTheory.TripleGal (rk1)
-open UpperTheory.V.Af (FrobEig algSat RepIso)
-open UpperTheory.Gal.TP.Sub (Cl Above unrPol)
-open UpperTheory.Gal.crystallineComparison (GenericMul rootPol)
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-open GlobalTheory.BlockSum (blockRep)
-open PositivityTheory.AutomorphicGaloisHodgeTate.Div (DivWCoreLac SenWLac HTLac IsSSMat)
-open UpperTheory.Gal.Int.Div
-
-theorem UpperTheory.Gal.Int.Div.subLoc_of :
-    SubSplit → InFacts → LocConj → LocSum → JumpCard → SubLoc := by
-  intro hS hI hC hL _ E Ω _ _ _ _ _ l _ a d r ρ hss hin ι w P AI hT A h O _ _ _ Bw hj
-  obtain ⟨had, -, -⟩ := hI _ _ a d r ρ hin
-  obtain ⟨b, rfl⟩ := Nat.exists_eq_add_of_le had
-  obtain ⟨s, g, hg⟩ := hS _ _ a b r ρ hss hin
-  have e : (sumRep r s).comp (Dec (F := E) A).subtype =
-      sumRep (r.comp (Dec (F := E) A).subtype) (s.comp (Dec (F := E) A).subtype) := by
-    ext; rfl
-  have hiso : RepIso (ρ.comp (Dec (F := E) A).subtype)
-      (sumRep (r.comp (Dec (F := E) A).subtype) (s.comp (Dec (F := E) A).subtype)) := by
-    refine ⟨g, fun x => ?_⟩
-    rw [← e]
-    exact hg x
-  have hconj := (hC l P AI hT E Ω A O Bw (a + b) (ρ.comp (Dec (F := E) A).subtype) _).2 hiso
-  have hsum := hL l P AI hT E Ω A O Bw a b (r.comp (Dec (F := E) A).subtype) (s.comp (Dec (F := E) A).subtype)
-  refine ⟨fun hc => ?_, fun τ J J' h1 h2 => hsum.2 τ J J' (hconj.2.2.1 τ J h1) h2⟩
-  have hcS := hconj.1 hc
-  obtain ⟨cr, cs⟩ := hsum.1 hcS
-  refine ⟨cr, fun x => ?_⟩
-  have pr := ((hC l P AI hT E Ω A O Bw a _ (r.comp (Dec (F := E) A).subtype)).1 cr).2
-  have ps := ((hC l P AI hT E Ω A O Bw b _ (s.comp (Dec (F := E) A).subtype)).1 cs).2
-  have pT := ((hC l P AI hT E Ω A O Bw (a + b) _ (ρ.comp (Dec (F := E) A).subtype)).1 hcS).2
-  have hw := GlobalTheory.T.weilDeligneParamAboveL_directSum_potSemistable l P AI hT ι E Ω A w O Bw h hj a b _ _ pr ps pT
-  rw [← hconj.2.2.2 ι w h hj hc, hw, (UpperTheory.Gal.TP.Sub.wDFacts_holds E Ω A w h _ _).2.1 x]
-  exact Dvd.intro _ rfl
 end
 end
 

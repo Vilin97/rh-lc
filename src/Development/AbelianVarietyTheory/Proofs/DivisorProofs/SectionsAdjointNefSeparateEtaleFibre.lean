@@ -64,12 +64,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsRightActFunPull
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntersectionNumberCurveOfClassEqSmulAdd
 public import Development.AbelianVarietyTheory.Definitions.Divisors.LineBundleGlobalSectionsDimCongrPicardClass
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntersectionNumberPullbackProportionalOfProporti
-public import Mathlib.RingTheory.Henselian
-public import Mathlib.RingTheory.RegularLocalRing.Defs
-public import Mathlib.RingTheory.SimpleRing.Principal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClosedImageSectionProjectiveOverField
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClosedImageSectionProjectiveOverFieldStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsolatedInFibreOfEtaleRestrictionStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KawamataLogTerminalIffEtalePullbackStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LineBundleValueAtPointNeZeroIffMemNonzeroLocus
@@ -148,29 +143,6 @@ open GlobalTheory.Discrepancy GlobalTheory.QCoh
 
 theorem _root_.GlobalTheory.T.intersectionNumber_pullback_proportional_of_proportional : ∀ (M W : Scheme.{0}) [IsIntegral M] [IsIntegral W] (p : W ⟶ Sp ℂ) (f : M ⟶ W), IsProjOver p → IsProjOver (f ≫ p) → letI := algebraΓOfHom p; letI := algebraΓOfHom (f ≫ p); ∀ (L L' : LB W), L.IsLB → L'.IsLB → ∀ (a b : ℕ), (∀ C : Closeds W, IsCompleteCurve ℂ C → (a : ℤ) * interNumRed ℂ C ![L] = b * interNumRed ℂ C ![L']) → ∀ C : Closeds M, IsCompleteCurve ℂ C → (a : ℤ) * interNumRed ℂ C ![L.pull f] = b * interNumRed ℂ C ![L'.pull f] := by
   first | exact @GlobalTheory.NumPull.interNumRed_pull_proportional | exact GlobalTheory.NumPull.interNumRed_pull_proportional | (intros; apply GlobalTheory.NumPull.interNumRed_pull_proportional <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClosedImageSectionProjectiveOverFieldStatement
-
-section
-
-@[expose] public section
-
-open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions
-open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
-open GlobalTheory GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.CompHS GlobalTheory.CovTop GlobalTheory.HSApp GlobalTheory.Cartier
-open GlobalTheory.AllWt (Psi wtOf cuspOn cuspW secZ ptF LiesOn)
-open GlobalTheory.FlagMod (FlagCover)
-open GlobalTheory.CompHt (hodgeWt)
-open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR levDet secRing move)
-open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
-open GlobalTheory.OrbitSep
-open GlobalTheory.Discrepancy GlobalTheory.QCoh
-
-theorem _root_.GlobalTheory.T.isClosed_image_section_projective_over_field : ∀ (K : Type) [Field K] (X : Scheme.{0}) (q : X ⟶ Sp K) (z : Sp K ⟶ X), IsProjOver q → z ≫ q = 𝟙 _ → IsClosed ({z (IsLocalRing.closedPoint K)} : Set X) := by
-  first | exact @GlobalTheory.secClosed_closedPoint | exact GlobalTheory.secClosed_closedPoint | (intros; apply GlobalTheory.secClosed_closedPoint <;> assumption)
 end
 end
 

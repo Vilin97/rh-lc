@@ -41,17 +41,17 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TwistPlacesOffPrimeQZero
 import Development.AbelianVarietyTheory.Statements.HeckeThetaIntegrals.FormulaAt
-public import Development.AbelianVarietyTheory.Definitions.Divisors.KernelNormConstantSpec
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeisenbergCombinationCommFockPolynomialVectors
-import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.UnitCharTriangle
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsMatchOver
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DictionarySizeBound
 public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.InfClassAt
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrT
 public import Development.AbelianVarietyTheory.Definitions.Divisors.InvVolConjLevelOne
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteHeisenbergTranslateSelfDualVacuumFockJets
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsMatchOver
+public import Development.AbelianVarietyTheory.Definitions.Divisors.KernelNormConstantSpec
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompAtMtOfMemGfC
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfPartOneSubEInfSmul
+import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.UnitCharTriangle
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrT
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.MovedVacuumVectorCorrespondence
 import Mathlib.Tactic.Linter.Style
@@ -72,86 +72,6 @@ open GlobalTheory.RowEx
 
 theorem _root_.GlobalTheory.T.cosetDatumVector_finite_heisenbergCombination : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {W : G.Weil} (S : GridChoice W Set.univ) (t : T) (p : Pair T), DefPair D.R.m p → ∀ (k : ℕ) (d : FinDatum G t p), 0 < k → IsCosetDatum k d → d.z = 1 → d.P = locPl G t → ∃ (n : ℕ) (c : Fin n → Formalism.MainNotions.TaylorLogMetric.Qbar) (w : Fin n → WO (G.pS p) (G.pT p)), (∀ i, k • w i ∈ latO (G.pS p) (G.pT p) (S.N.latS p : Set _) (S.N.latT p : Set _) fun _ => True) ∧ (∀ i, (w i).map (infPart D) = 0) ∧ (∀ i, IsIntegral ℤ ((k : Formalism.MainNotions.TaylorLogMetric.Qbar) ^ (D.R.f * (G.pS p).rank * (G.pT p).rank) * c i)) ∧ (∀ ρ : Formalism.MainNotions.TaylorLogMetric.Qbar →+* ℂ, ∑ i, ‖ρ (c i)‖ ≤ 1) ∧ S.Z.vec d = ∑ i, (c i : ℂ) • heisO W.ψ (G.pS p) (G.pT p) (w i) (S.Z.vac p) := by
   first | exact @GlobalTheory.RowEx.fourierVec | exact GlobalTheory.RowEx.fourierVec | (intros; apply GlobalTheory.RowEx.fourierVec <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DictionarySizeBound
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.L2.DIV
-open IsDedekindDomain NumberField GlobalTheory.ChiGrid GlobalTheory.FunObj GlobalTheory.RowTest GlobalTheory.RowClaim
-open Formalism.L2.Host (HChar)
-open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (Tri)
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.RowEx
-
-namespace GlobalTheory.DictFree
-
-open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3
-
-noncomputable def conjQ : Qbar →+* Qbar where
-  toFun x := ⟨starRingEnd ℂ x, by
-    have h : IsAlgebraic ℚ (x : ℂ) := (mem_algebraicClosure_iff).1 x.2
-    exact (mem_algebraicClosure_iff).2
-      (h.algHom ((Complex.conjAe.restrictScalars ℚ : ℂ ≃ₐ[ℚ] ℂ) : ℂ →ₐ[ℚ] ℂ))⟩
-  map_one' := by ext; simp
-  map_mul' x y := by ext; simp
-  map_zero' := by ext; simp
-  map_add' x y := by ext; simp
-
-noncomputable def oppQ {T : Type} : Pair T → (Qbar →+* Qbar)
-  | .chi _ _ => conjQ
-  | .core _ => conjQ
-  | _ => RingHom.id _
-
-theorem oppQ_coe {T : Type} (p : Pair T) (x : Qbar) : ((oppQ p x : Qbar) : ℂ) = opp p (x : ℂ) := by
-  cases p <;> rfl
-
-theorem opp_opp {T : Type} (p : Pair T) (z : ℂ) : opp p (opp p z) = z := by
-  cases p <;> simp [opp]
-
-end GlobalTheory.DictFree
-
-namespace GlobalTheory.DictFree
-open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 MvPolynomial
-
-theorem jetTab_comb {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} (W : G.Weil)
-    (B : VertexFrames G) (p : Pair T) {f : WO (G.pS p) (G.pT p) → ℂ} (hf : IsThetaFunO W.ψ _ _ f) {n : ℕ}
-    (a : Fin n → ℂ) (w : Fin n → WO (G.pS p) (G.pT p)) (hw : ∀ i, (w i).map (infPart D) = 0)
-    (X : FinPt G p.small) (Y : FinPt G p.big) (mon : Formalism.L2.Ker.DVar D.what₂.Tau (G.V p.small).rank (G.V p.big).rank →₀ ℕ) :
-    jetTab W B p (∑ i, a i • heisO W.ψ _ _ (w i) f) X Y mon = ∑ i, a i * jetTab W B p (heisO W.ψ _ _ (w i) f) X Y mon := by
-  have h1 := (GlobalTheory.FockFiniteHeis.heis_comb_pureTensorO D W.ψ W.θ (G.pS p) (G.pT p) W.ψ_std W.θ_is
-    (G.cartS W.cart p) (G.onT W.cart p) (G.onS B p) (G.onT B p) f hf n a w hw (monomial (mon.mapDomain (fvar G p)) 1)).1
-  have h2 : ∀ i, heisO W.ψ _ _ (w i) (pureTensorO W.ψ W.θ _ _ (G.cartS W.cart p) (G.onT W.cart p) (G.onS B p) (G.onT B p) f
-      (monomial (mon.mapDomain (fvar G p)) 1)) = pureTensorO W.ψ W.θ _ _ (G.cartS W.cart p) (G.onT W.cart p) (G.onS B p)
-      (G.onT B p) (heisO W.ψ _ _ (w i) f) (monomial (mon.mapDomain (fvar G p)) 1) := fun i => by
-    have := (GlobalTheory.FockFiniteHeis.heis_comb_pureTensorO D W.ψ W.θ (G.pS p) (G.pT p) W.ψ_std W.θ_is
-      (G.cartS W.cart p) (G.onT W.cart p) (G.onS B p) (G.onT B p) f hf 1 (fun _ => 1) (fun _ => w i) (fun _ => hw i)
-      (monomial (mon.mapDomain (fvar G p)) 1)).1
-    simpa using this
-  simp only [jetTab, kerFin, fockIn, GridData.Weil.ker, thetaKO]
-  rw [← h1]
-
-  simp only [← h2, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-
-end GlobalTheory.DictFree
-
-namespace GlobalTheory.DictFree
-open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 MvPolynomial
-
-theorem differentiable_U {D : D7} (Tr : Tor D) {N N' : ℕ} (s : VC D N N') {G : VC D N N' → ℂ} (hG : Differentiable ℂ G) :
-    Differentiable ℂ (Formalism.MainNotions.TaylorLogMetric.U D Tr s G) := by
-  unfold Formalism.MainNotions.TaylorLogMetric.U Formalism.MainNotions.TaylorLogMetric.Hf
-  fun_prop
-
-end GlobalTheory.DictFree
-
-end
 end
 end
 

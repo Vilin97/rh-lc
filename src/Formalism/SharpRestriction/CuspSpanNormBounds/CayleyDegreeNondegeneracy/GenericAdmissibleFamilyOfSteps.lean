@@ -1,7 +1,7 @@
 module
 
-public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-public import Mathlib.NumberTheory.NumberField.ClassNumber
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.GenericAdmissibleAllConstants
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -39,60 +39,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 import Formalism.FlagUnipotentLattices.DetIndexProductHyperbolicInequality
-public import Formalism.LocalRingCardinality.DataParams₂
 import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.OwnEvIntro
-import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
-import Formalism.SharpRestriction.CuspSpanNormBounds.IsPrimitiveSub
-public import Formalism.SharpRestriction.ParConsts
-public import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
-
--- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.GenericAdmissibleAllConstants
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open scoped Classical
-
-namespace Formalism.MainNotions.BridgeLemma₂
-
-open NumberField Module Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.Cnt Formalism.MainNotions.BridgeLemma Formalism.HermitianLatticeCounting
-open scoped ENNReal
-
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-section SW
-
-variable (D : D7) (large₂ : SizeData₂ D) (u u' : D.what₂.Word)
-
-def classWeightAlt : ℝ :=
-  (2 * (D.R.k : ℝ) * D.host.rdE ^ ((1 : ℝ) / 2)) ^ D.R.f * (classNumber D.host.E : ℝ) * 2 ^ D.R.f
-
-end SW
-
-section W0
-
-variable (D : D7) (large₂ : SizeData₂ D)
-
-end W0
-
-section SWF
-
-variable {eps : ℝ} (Fm : FamP eps)
-
-end SWF
-
-end Formalism.MainNotions.BridgeLemma₂
-
-end
-end
-end
-
--- Source module: Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.GenericAdmissibleFamilyOfSteps
-
-section
 
 @[expose] public section
 
@@ -141,6 +88,4 @@ end Fam
 
 end Formalism.MainNotions.BridgeLemma₂
 
-end
-end
 end

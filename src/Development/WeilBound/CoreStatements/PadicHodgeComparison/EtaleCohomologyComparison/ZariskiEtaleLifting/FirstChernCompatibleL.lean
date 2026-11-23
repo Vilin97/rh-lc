@@ -52,6 +52,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullFrob
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PullTransport
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedCmp
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedHcOneH
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedHcPullHc
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ReductionCommutesGaloisAction
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmulFil
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SquarePull
@@ -231,39 +232,6 @@ theorem redHc_cup : ∀ {l : ℕ} [Fact l.Prime], ∀ {O : Type} [CommRing O] (F
   exact omMor_cup _ _ e x y
 
 end GlobalTheory.CompanionTheory.CupTrans
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RedHcPullHc
-
-section
-
-@[expose] public section
-
-set_option backward.isDefEq.respectTransparency false
-
-noncomputable section
-
-open CategoryTheory AlgebraicGeometry DividedPowers GroundTheory.PAdicHodge GlobalTheory.LogCris CrystallineSemistableComparison CrystallineSemistableComparison.PAlg CrystallineSemistableComparison.B
-
-namespace GlobalTheory.CompanionTheory.CrisTransition
-
-variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O]
-
-def redFn (F : Fn O) (κ : O →+* OC l) (k : Bool) {m n : ℕ} (h : n ≤ m) :
-    Mor (Lc F κ k m) (Lc F κ k n) ((base l).red h) :=
-  B.crMor (F := F) (F' := F) (b := bs l k m) (b' := bs l k n) (ht := rfl) (ht' := rfl) ((base l).red h) rfl
-    (dd_red k _ h) (basePt F _ (red_κb κ k h)) fun _ _ _ => rfl
-
-theorem redHc_pullHc {F F' : Fn O} (κ : O →+* OC l) (u : Fn.Map F F') (k : Bool) {m n : ℕ} (h : n ≤ m) (j : ℕ)
-    (x : Hc F' κ k m j) : redHc F κ k h j (pullHc κ u k m j x) = pullHc κ u k n j (redHc F' κ k h j x) := by
-  unfold redHc pullHc redMor pullMorC
-  exact cr_square (SH.pullM κ u k m) (redFn F κ k h) (redFn F' κ k h) (SH.pullM κ u k n) (SH.idc _)
-    (red_cris _ h) (red_cris _ h) (SH.idc _) (fun r => (SH.idc ((base l).red h) r).symm)
-    (SH.base_map u (red_κb κ k h)) j x
-
-end GlobalTheory.CompanionTheory.CrisTransition
-end
 end
 end
 

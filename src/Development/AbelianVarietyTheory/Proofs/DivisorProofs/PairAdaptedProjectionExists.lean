@@ -1,6 +1,8 @@
 module
 
-public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AveragedIntegralFunctional
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledDarbouxCoordsCompat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceOrth
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -24,7 +26,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,220 +39,10 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledDarbouxCoordsCompat
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Std.Tactic.BVDecide.Normalize.Prop
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
-import Mathlib.Tactic.Linter.HaveILetI
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AveragedIntegralFunctional
-
-section
-
-@[expose] public section
-
-open scoped TensorProduct NNReal Matrix
-open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
-open GlobalTheory.Doubling (absE)
-
-noncomputable section
-namespace GlobalTheory.DblSiegelX
-
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-
-def zs {n n₁ d : ℕ} (H : Plane E n n₁) (u : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
-  Matrix.vecMulVec (incV F H.y) ((diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ u)
-
-variable {κ : Type} [Fintype κ] {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → V → AF F} {d : ℕ}
-
-theorem rho_add (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (w : V) (Φ Ψ : (κ → AF F) → ℂ) :
-    dd.rho ψ w (Φ + Ψ) = dd.rho ψ w Φ + dd.rho ψ w Ψ := by
-  funext x; simp [Darboux.rho, schr, mul_add]
-
-theorem rho_smul (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (w : V) (c : ℂ) (Φ : (κ → AF F) → ℂ) :
-    dd.rho ψ w (c • Φ) = c • dd.rho ψ w Φ := by
-  funext x; simp [Darboux.rho, schr]; ring
-
-def avgFun (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V) (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ)
-    (Φ : (κ → AF F) → ℂ) : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → ℂ :=
-  fun u => lam (dd.rho ψ (z u) Φ)
-
-theorem avgFun_add (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V)
-    (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (Φ Ψ : (κ → AF F) → ℂ) :
-    avgFun dd ψ z lam (Φ + Ψ) = avgFun dd ψ z lam Φ + avgFun dd ψ z lam Ψ := by
-  funext u; simp [avgFun, rho_add]
-
-theorem avgFun_smul (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V)
-    (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (c : ℂ) (Φ : (κ → AF F) → ℂ) :
-    avgFun dd ψ z lam (c • Φ) = c • avgFun dd ψ z lam Φ := by
-  funext u; simp [avgFun, rho_smul]
-
-def avgSub (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V) (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ)
-    (μ : @Measure (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _)) : Submodule ℂ ((κ → AF F) → ℂ) where
-  carrier := {Φ | Integrable (avgFun dd ψ z lam Φ) μ}
-  zero_mem' := by
-    show Integrable (avgFun dd ψ z lam 0) μ
-    have : avgFun dd ψ z lam 0 = 0 := by
-      have h := avgFun_smul dd ψ z lam 0 0
-      simpa using h
-    rw [this]; exact integrable_zero _ _ _
-  add_mem' := fun {Φ Ψ} hΦ hΨ => by
-    show Integrable (avgFun dd ψ z lam (Φ + Ψ)) μ
-    rw [avgFun_add]; exact hΦ.add hΨ
-  smul_mem' := fun c Φ hΦ => by
-    show Integrable (avgFun dd ψ z lam (c • Φ)) μ
-    rw [avgFun_smul]; exact hΦ.smul c
-
-def averagedIntegralIntegrable (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V) (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ)
-    (μ : @Measure (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _)) : avgSub dd ψ z lam μ →ₗ[ℂ] ℂ where
-  toFun Φ := ∫ u, avgFun dd ψ z lam Φ.1 u ∂μ
-  map_add' Φ Ψ := by
-    simp only [Submodule.coe_add, avgFun_add, Pi.add_apply]
-    exact integral_add Φ.2 Ψ.2
-  map_smul' c Φ := by
-    simp only [Submodule.coe_smul, avgFun_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
-    exact integral_const_mul c _
-
-def avgL (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V) (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ)
-    (μ : @Measure (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _)) : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ :=
-  (LinearMap.exists_extend (averagedIntegralIntegrable dd ψ z lam μ)).choose
-
-theorem avgL_apply (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (z : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → V)
-    (lam : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (μ : @Measure (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _)) (Φ : (κ → AF F) → ℂ)
-    (h : Integrable (avgFun dd ψ z lam Φ) μ) : avgL dd ψ z lam μ Φ = ∫ u, avgFun dd ψ z lam Φ u ∂μ := by
-  have := congrArg (fun f => f ⟨Φ, h⟩) (LinearMap.exists_extend (averagedIntegralIntegrable dd ψ z lam μ)).choose_spec
-  exact this
-
-end GlobalTheory.DblSiegelX
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceOrth
-
-section
-
-@[expose] public section
-
-open scoped TensorProduct Matrix
-open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ArchSch
-
-noncomputable section
-
-namespace GlobalTheory.ArchTraceNondeg
-
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-
-theorem det_ne_zero_of_hasSig {n : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} {r s : ℕ} (h : HasSig M r s) : M.det ≠ 0 := by
-  obtain ⟨hrs, A, hA⟩ := h
-  let e : Fin r ⊕ Fin s ≃ Fin n := finSumFinEquiv.trans (finCongr hrs)
-  let A' : Matrix (Fin n) (Fin n) ℂ := A.submatrix id e.symm
-  have h1 : A'ᵀ * M * A'.map star = (Matrix.fromBlocks 1 0 0 (-1) : Matrix (Fin r ⊕ Fin s) (Fin r ⊕ Fin s) ℂ).submatrix e.symm e.symm := by
-    rw [← hA]
-    ext i j
-    simp [A', Matrix.mul_apply, Matrix.submatrix, Matrix.transpose_apply, Matrix.map_apply]
-  have h2 : (A'ᵀ * M * A'.map star).det ≠ 0 := by
-    rw [h1, Matrix.det_submatrix_equiv_self, Matrix.det_fromBlocks_zero₂₁]
-    simp [Matrix.det_neg]
-  intro hM
-  apply h2
-  simp [Matrix.det_mul, hM]
-
-theorem det_J_ne_zero {σ : E →ₐ[F] E} (B : Base F E) {n : ℕ} {X : Spc F E n} {r s : ℕ} (hX : X.IsHerm σ B r s) :
-    X.J.det ≠ 0 := by
-  obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
-  have h := det_ne_zero_of_hasSig (hX.sig w)
-  intro h0
-  apply h
-  have := RingHom.map_det (B.emb w).1 X.J
-  rw [h0, map_zero] at this
-  exact this.symm
-
-theorem sigma_surjective (σ : E →ₐ[F] E) : Function.Surjective σ := by
-  have hinj : Function.Injective ((σ : E →+* E).toRatAlgHom.toLinearMap) := (σ : E →+* E).injective
-  exact LinearMap.injective_iff_surjective.1 hinj
-
-def cAinv (σ : E →ₐ[F] E) : AE F E →ₐ[AF F] AE F E :=
-  Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F))
-    (AlgEquiv.ofBijective σ ⟨(σ : E →+* E).injective, sigma_surjective σ⟩).symm.toAlgHom
-
-theorem cA_cAinv (σ : E →ₐ[F] E) (x : AE F E) : cA σ (cAinv σ x) = x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | tmul a y =>
-    simp only [cAinv, cA, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
-    congr 1
-    exact AlgEquiv.apply_symm_apply (AlgEquiv.ofBijective σ ⟨(σ : E →+* E).injective, sigma_surjective σ⟩) y
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
-
-theorem at_cAinv (σ : E →ₐ[F] E) {t : AE F E} (ht : At (evI F) t) : At (evI F) (cAinv σ t) := by
-  intro u hu
-  rw [← map_smul, ht u hu, map_zero]
-
-theorem at_single {n : ℕ} (k : Fin n) {t : AE F E} (ht : At (evI F) t) :
-    At (evI F) (Pi.single k t : Fin n → AE F E) := by
-  intro u hu
-  funext j
-  by_cases hj : j = k
-  · subst hj; simp [ht u hu]
-  · simp [Pi.single_apply, hj]
-
-theorem at_vecMul {n : ℕ} {b : Fin n → AE F E} (hb : At (evI F) b) (A : Matrix (Fin n) (Fin n) (AE F E)) (k : Fin n) :
-    At (evI F) ((b ᵥ* A) k) := by
-  intro u hu
-  have h := hb u hu
-  simp only [Matrix.vecMul, dotProduct, Finset.smul_sum, smul_mul_assoc]
-  refine Finset.sum_eq_zero fun i _ => ?_
-  rw [← smul_mul_assoc]
-  have : u • b i = 0 := by simpa using congrFun h i
-  rw [this, zero_mul]
-
-theorem eq_zero_of_trace_orth : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} (B : Base F E)
-    {n : ℕ} (X : Spc F E n) (r s : ℕ),
-    (∀ β : AE F E, At (evI F) β → (∀ t : AE F E, At (evI F) t →
-      Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (Algebra.trace (AF F) (AE F E) (β * t))) = 0) → β = 0) →
-    X.IsHerm σ B r s → ∀ b : Fin n → AE F E, At (evI F) b →
-    (∀ c : Fin n → AE F E, At (evI F) c → Algebra.trace ℝ (mixedEmbedding.mixedSpace F)
-      (evI F (Algebra.trace (AF F) (AE F E) (b ⬝ᵥ (incM F X.J *ᵥ fun k => cA σ (c k))))) = 0) → b = 0 := by
-  intro F E _ _ _ _ _ σ B n X r s hβ hX b hb hc
-  have hdet : IsUnit (incM F X.J).det := by
-    have h : (incM F X.J).det = inclR (F := F) (AF F) X.J.det := by
-      rw [RingHom.map_det]; rfl
-    rw [h]
-    exact (isUnit_iff_ne_zero.2 (det_J_ne_zero B hX)).map _
-  have hv : b ᵥ* incM F X.J = 0 := by
-    funext k
-    apply hβ _ (at_vecMul hb _ k)
-    intro t ht
-    have h := hc (Pi.single k (cAinv σ t)) (at_single k (at_cAinv σ ht))
-    rw [Matrix.dotProduct_mulVec] at h
-    have hw : (fun j => cA σ ((Pi.single k (cAinv σ t) : Fin n → AE F E) j)) = Pi.single k t := by
-      funext j
-      by_cases hj : j = k
-      · subst hj; simp [cA_cAinv]
-      · simp [Pi.single_apply, hj]
-    rw [hw, dotProduct_single] at h
-    exact h
-  calc b = b ᵥ* (incM F X.J * (incM F X.J)⁻¹) := by rw [Matrix.mul_nonsing_inv _ hdet, Matrix.vecMul_one]
-    _ = (b ᵥ* incM F X.J) ᵥ* (incM F X.J)⁻¹ := (Matrix.vecMul_vecMul _ _ _).symm
-    _ = 0 := by rw [hv, Matrix.zero_vecMul]
-
-end GlobalTheory.ArchTraceNondeg
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PairAdaptedProjectionExists
-
-section
+import Mathlib.Topology.Sheaves.Init
+import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
 
 @[expose] public section
 
@@ -414,6 +206,3 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     fun u hu => sep σ hψ _ hdet u hu⟩
 
 end GlobalTheory.DblSiegelChar
-end
-end
-end

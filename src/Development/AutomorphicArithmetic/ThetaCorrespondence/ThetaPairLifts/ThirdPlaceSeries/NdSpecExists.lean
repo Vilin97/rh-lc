@@ -3,10 +3,27 @@ module
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HeckeOpen
 public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStd
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCoefficientLinearLiftDoubleCosetOperatorsStatement
-public import Formalism.AlgebraicWeights.IsAlgWeight
-public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
-public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SplitExEveryDatum
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConjugateSplitPlaceAndUniformizerStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicFiniteExtContainingAllHeckeEigenvalueStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicFiniteExtContainingCoeffFieldAndNumbeStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTwistRingMapLargeCoefficientRingsStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalLocalisationSpaceAllStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeEigenspaceNeBotEveryLocalisationPointStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeGeneratorPlacesOutsideLevelOfStableStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeOperatorIntegralOnLatticeAtTwistedPlacesStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeOperatorsOnLocalisationSpaceSemisimpleStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeRingActsFaithfullyOnLocalisedLatticeStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeRingActsOnLatticeAsOperatorsStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeStandardFactsOnLocalisationBaseStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatticeBaseChangeFreeOverLocalisationCoeffRingStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftedHeckeOperatorsAtGeneratorsCommuteStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalBridgesAtPlacesOverResidueCharOfLargeCoeffStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalisationGaloisCharacterContinuousStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalisationHeckeRingIsLocalRingStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NonemptySpec
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SideRationalEigenData
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceDoubleCosetOperatorSemisimpleTypeSpace
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -41,6 +58,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NStageTrivialCharacterCoeffEqAlt
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitsLiftSpec
 import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
@@ -48,112 +66,12 @@ import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
 import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
 import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNd
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicFiniteExtContainingAllHeckeEigenvalueStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitsLiftSpec
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalAdjoinRange
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTwistRingMapLargeCoefficientRingsStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalLocalisationSpaceAllStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeEigenspaceNeBotEveryLocalisationPointStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeGeneratorPlacesOutsideLevelOfStableStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeOperatorIntegralOnLatticeAtTwistedPlacesStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeOperatorsOnLocalisationSpaceSemisimpleStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeRingActsFaithfullyOnLocalisedLatticeStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeRingActsOnLatticeAsOperatorsStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeStandardFactsOnLocalisationBaseStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatticeBaseChangeFreeOverLocalisationCoeffRingStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftedHeckeOperatorsAtGeneratorsCommuteStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalBridgesAtPlacesOverResidueCharOfLargeCoeffStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalisationGaloisCharacterContinuousStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalisationHeckeRingIsLocalRingStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NonemptySpec
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SideRationalEigenData
-public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceDoubleCosetOperatorSemisimpleTypeSpace
-import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistCharacterRamifiedAtConductorTrivialAboveLStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitsLiftSpec
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistConductorsOverRealPlacesAndConjStableStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TypePrimePlacesIsSplitPlaceStatement
 import Formalism.LocalToGlobal.NumberFieldFamilies.IsLocalizedOfSpan
 import Formalism.LocalToGlobal.NumberFieldFamilies.JMtInjective
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConjugateSplitPlaceAndUniformizer
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
-open Formalism.L2.Fam.NPC Formalism.L2.Fam.NPC.BaseC GlobalTheory.HeckeLocN
-
-namespace GlobalTheory.SplitExConj
-
-theorem exists_splitPlace_conj_unif : ∀ (D : D7), (∀ v : PlE D.host, IsSplitPl D.host v → ∃ (s : SplitPlace D.host.E) (ϖ : s.v.adicCompletion (maximalRealSubfield D.host.E)), IsConjPl D.host v s.w ∧ IsUnif D.host.E s.v ϖ) :=
-  fun D => GlobalTheory.SplitConjPlace.splitEx_all D
-
-end GlobalTheory.SplitExConj
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConjugateSplitPlaceAndUniformizerStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
-open Formalism.L2.Fam.NPC Formalism.L2.Fam.NPC.BaseC GlobalTheory.HeckeLocN
-
-theorem _root_.GlobalTheory.T.exists_conjugate_splitPlace_and_uniformizer : ∀ (D : D7), (∀ v : PlE D.host, IsSplitPl D.host v → ∃ (s : SplitPlace D.host.E) (ϖ : s.v.adicCompletion (maximalRealSubfield D.host.E)), IsConjPl D.host v s.w ∧ IsUnif D.host.E s.v ϖ) := by
-  first | exact @GlobalTheory.SplitExConj.exists_splitPlace_conj_unif | exact GlobalTheory.SplitExConj.exists_splitPlace_conj_unif | (intros; apply GlobalTheory.SplitExConj.exists_splitPlace_conj_unif <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicFiniteExtContainingCoeffFieldAndNumbe
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
-open Formalism.L2.Fam.NPC Formalism.L2.Fam.NPC.BaseC GlobalTheory.HeckeLocN
-
-noncomputable section
-namespace GlobalTheory.HeckeLocN
-
-theorem exists_finExt_big (D : D7) (pl : PlSide D) (big : D.what₂.places.Pl → Finset ℂ) (w : D.what₂.places.Pl) :
-    ∃ F0 : Loc.FinExt (D.what₂.places.resChar w), (∀ x, (plEmb pl).emb w x ∈ F0.1) ∧
-      ∀ z ∈ big w, (pl.ι w).symm z ∈ F0.1 := by
-  classical
-  let c := (plEmb pl).emb w
-  let S : Finset (Loc.Om (D.what₂.places.resChar w)) := (big w).image (fun z => (pl.ι w).symm z)
-  have h1 := GlobalTheory.PlaceBridge.finiteDimensional_adjoin_range c
-  have h2 : FiniteDimensional ℚ_[D.what₂.places.resChar w]
-      (IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (S : Set (Loc.Om (D.what₂.places.resChar w)))) :=
-    IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
-  refine ⟨⟨IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (Set.range c) ⊔
-      IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (S : Set (Loc.Om (D.what₂.places.resChar w))),
-      IntermediateField.finiteDimensional_sup _ _⟩, fun x => ?_, fun z hz => ?_⟩
-  · exact (le_sup_left (a := IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (Set.range c)) (b := IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (S : Set (Loc.Om (D.what₂.places.resChar w))))) (IntermediateField.subset_adjoin _ _ ⟨x, rfl⟩)
-  · exact (le_sup_right (a := IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (Set.range c)) (b := IntermediateField.adjoin ℚ_[D.what₂.places.resChar w] (S : Set (Loc.Om (D.what₂.places.resChar w))))) (IntermediateField.subset_adjoin _ _ (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hz)))
-
-end GlobalTheory.HeckeLocN
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicFiniteExtContainingCoeffFieldAndNumbeStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
-open Formalism.L2.Fam.NPC Formalism.L2.Fam.NPC.BaseC GlobalTheory.HeckeLocN
-
-theorem _root_.GlobalTheory.T.exists_padicFiniteExt_containing_coeffField_and_numbers : ∀ (D : D7) (pl : PlSide D) (big : D.what₂.places.Pl → Finset ℂ) (w : D.what₂.places.Pl), ∃ F0 : Loc.FinExt (D.what₂.places.resChar w), (∀ x, (plEmb pl).emb w x ∈ F0.1) ∧ ∀ z ∈ big w, (pl.ι w).symm z ∈ F0.1 := by
-  first | exact @GlobalTheory.HeckeLocN.exists_finExt_big | exact GlobalTheory.HeckeLocN.exists_finExt_big | (intros; apply GlobalTheory.HeckeLocN.exists_finExt_big <;> assumption)
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceDoubleCosetOperatorSemisimpleTypeSpaceStatement
 

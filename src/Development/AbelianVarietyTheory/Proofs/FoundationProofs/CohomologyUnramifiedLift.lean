@@ -9,14 +9,28 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ColRepApp
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CupProductCoboundaryModStatement
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CupProductUnramifiedClassesVanishesStatement
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsAuxiliaryPrimeFrobeniusNearCommutatorStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsCharacterPrimeConductorDegreePrimePow
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsCharacterPrimeConductorDegreePrimePowStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.InertiaFixesRootOfUnity
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IntegralTwoCocycleReciprocityTrivialAtLastPlaceStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsOpenKerAndIsLocallyConstant
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LocalConditionsIndependentOfPlaceOverStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LocalHeightFrobeniusPlaceStatement
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemOfFinTwo
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormNatCastOfCoprime
+public import Mathlib.NumberTheory.Padics.Complex
+public import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -31,6 +45,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -43,23 +58,8 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.InertiaFixesRootOfUnity
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IntegralTwoCocycleReciprocityTrivialAtLastPlaceStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsOpenKerAndIsLocallyConstant
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LocalConditionsIndependentOfPlaceOver
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LocalHeightFrobeniusPlaceStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemOfFinTwo
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormNatCastOfCoprime
-public import Mathlib.NumberTheory.Padics.Complex
-public import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Tactic.Lemma
 import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedCocycleKillsRoots
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedCocycleKillsRootsStatement
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CongruenceMulOfUnitFactor
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EqOfNatCastMem
 import Mathlib.Tactic.Basify
@@ -69,34 +69,6 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Connected.Separation
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Std.Tactic.BVDecide.Normalize.Prop
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsCharacterPrimeConductorDegreePrimePowStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2
-open scoped Matrix
-
-theorem _root_.GlobalTheory.T.exists_character_primeConductor_degree_prime_pow : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (n : ℕ) (w : Pl), 1 ≤ n → l ^ n ∣ normV w - 1 → ∃ ψ : G ℚ Ω →* Multiplicative (ZMod (l ^ n)), KillsMu (normV w) ψ ∧ Function.Surjective ψ ∧ (∀ B : ValuationSubring Ω, IsPlaceOver B w → ∃ τ ∈ Ine (F := ℚ) B, (ψ τ).toAdd = 1) ∧ ∀ v : Pl, v ≠ w → (∃ x : ZMod (normV w), x ^ (l ^ n) = (normV v : ZMod (normV w))) → ∀ B : ValuationSubring Ω, IsPlaceOver B v → Dec (F := ℚ) B ≤ ψ.ker := by
-  first | exact @GlobalTheory.Ord2.PrimeChar.exists_prime_char | exact GlobalTheory.Ord2.PrimeChar.exists_prime_char | (intros; apply GlobalTheory.Ord2.PrimeChar.exists_prime_char <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.LocalConditionsIndependentOfPlaceOverStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2
-open scoped Matrix
-
-theorem _root_.GlobalTheory.T.localConditions_independent_of_place_over : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (W : R2 Ω l) (z : G ℚ Ω → Fin 2 → Qbar l), z ∈ Z1 (Loc.colRep W) → ∀ (w : Pl) (B B' : ValuationSubring Ω), IsPlaceOver B w → IsPlaceOver B' w → ((∃ x : Fin 2 → Qbar l, ∀ s ∈ Ine (F := ℚ) B, z s = mat W s *ᵥ x - x) → ∃ x : Fin 2 → Qbar l, ∀ s ∈ Ine (F := ℚ) B', z s = mat W s *ᵥ x - x) ∧ (Triv W B z → Triv W B' z) := by
-  first | exact @GlobalTheory.Ord2.place_indep | exact GlobalTheory.Ord2.place_indep | (intros; apply GlobalTheory.Ord2.place_indep <;> assumption)
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormAlgebraMapLeOne
 
@@ -125,20 +97,6 @@ theorem main : ∀ {l : ℕ} [inst : Fact (Nat.Prime l)] (x : PadicAlgCl l),
   fun x hx => norm_le_one_of_isIntegral x hx
 
 end GlobalTheory.IntegralAlgebraMapNormBound
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnramifiedCocycleKillsRootsStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2
-open scoped Matrix
-
-theorem _root_.GlobalTheory.T.unramified_cocycle_kills_roots : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (c : Coef l) (n : ℕ) (S : Finset Pl) (W : R2 Ω l) (y : G ℚ Ω → Fin 2 → Qbar l) (w : Pl) (ψ : G ℚ Ω →* Multiplicative (ZMod (l ^ n))), Continuous W → (∀ s i j, mat W s i j ∈ c.O) → ContainsAbove S l → (∀ v, v ∉ S → ∀ B : ValuationSubring Ω, IsPlaceOver B v → Ine (F := ℚ) B ≤ W.ker) → (∀ s i, y s i ∈ c.O) → KillsMu (normV w) ψ → w ∉ S → Tame c W y n w ψ → ∃ (P un : Qbar l) (d : G ℚ Ω → Fin 2 → Qbar l), P ∈ c.O ∧ ‖un‖ = 1 ∧ (∀ (B : ValuationSubring Ω) (σ : G ℚ Ω), IsPlaceOver B w → IsFrob B (normV w) σ → Cg n P (un * (mat W σ - 1).det)) ∧ Continuous d ∧ (∀ s i, d s i ∈ c.O) ∧ (∀ s t, Cv n (d (s * t)) (d s + mat W s *ᵥ d t + ((((ψ s).toAdd.val : ℕ) : Qbar l) * P) • (mat W s *ᵥ y t))) ∧ (∀ a ∈ (toGS Ω (insert w (S : Set Pl))).ker, Cv n (d a) 0) ∧ ∀ q ∈ S, ((l : ℕ) : 𝓞 ℚ) ∉ q.asIdeal → ∃ B : ValuationSubring Ω, IsPlaceOver B q ∧ Cob1 c n W (Ine (F := ℚ) B) d := by
-  first | exact @GlobalTheory.Ord2.FirstDer.main | exact GlobalTheory.Ord2.FirstDer.main | (intros; apply GlobalTheory.Ord2.FirstDer.main <;> assumption)
 end
 end
 

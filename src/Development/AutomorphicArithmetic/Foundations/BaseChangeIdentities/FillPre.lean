@@ -3,7 +3,8 @@ module
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.StrictJoinCandidates.CandSt
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameBoundSpaces.FrameBound
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.BlockCandidates.PowNeOf
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.SetupExOf
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.CharacterIntegrability.ChiPin
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.ProjAlg
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,7 +27,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,8 +39,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.FiniteDiscreteFamilies.PeakCone
 public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FrameMatching.GelfandReading.InfMatchOf
 import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
@@ -67,107 +65,6 @@ public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.GelfandValueContinuity.ReadLimitOfEfinal
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.RunFinChain
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.BciOfAlt
-
--- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.CharacterIntegrability.ChiPin
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open NumberField IsDedekindDomain
-open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.BcB.One PositivityTheory.Rg.BcB.F.F5
-
-namespace PositivityTheory.Rg.BcB.F.R3
-
-variable {ι : Type} {H : ι → Type} [∀ s, NormedAddCommGroup (H s)] [∀ s, InnerProductSpace ℂ (H s)]
-  [∀ s, CompleteSpace (H s)] {d : ℕ} {Γ : Type}
-
-theorem chi_pin (gen : Γ → Prod' H d) (a₀ : Γ) (v : EuclideanSpace ℂ (Fin d)) (hv : v ≠ 0) (ha₀ : (gen a₀).2 v = v)
-    (s : ι) (X : H s →L[ℂ] H s)
-    (χ : StarAlgebra.adjoin ℂ (Set.range (fun a : StarAlgebra.adjoin ℂ (Set.range gen) => (a : Prod' H d).1 s) ∪ {X})
-      →⋆ₐ[ℂ] ℂ)
-    (heig : ∀ a : StarAlgebra.adjoin ℂ (Set.range gen), a.1.2 v ≠ 0 → ∃ c : ℂ, a.1.2 v = c • v ∧
-      χ ⟨a.1.1 s, StarAlgebra.subset_adjoin ℂ _ (Or.inl ⟨a, rfl⟩)⟩ = c)
-    (a : StarAlgebra.adjoin ℂ (Set.range gen)) (c : ℂ) (hc : a.1.2 v = c • v) :
-    χ ⟨a.1.1 s, StarAlgebra.subset_adjoin ℂ _ (Or.inl ⟨a, rfl⟩)⟩ = c := by
-  have hinj : ∀ {c₁ c₂ : ℂ}, c₁ • v = c₂ • v → c₁ = c₂ := fun h => smul_left_injective ℂ hv h
-  let A₀ : StarAlgebra.adjoin ℂ (Set.range gen) := ⟨gen a₀, StarAlgebra.subset_adjoin ℂ _ ⟨a₀, rfl⟩⟩
-  have hA₀ : A₀.1.2 v = v := ha₀
-  obtain ⟨c₀, hc₀, hχ₀⟩ := heig A₀ (by rw [hA₀]; exact hv)
-  have hc₀1 : c₀ = 1 := hinj (by rw [← hc₀, hA₀, one_smul])
-  by_cases hc0 : c = 0
-  · subst hc0
-    have hsum : (a + A₀).1.2 v = v := by
-      show a.1.2 v + A₀.1.2 v = v
-      rw [hc, hA₀, zero_smul, zero_add]
-    obtain ⟨c₁, hc₁, hχ₁⟩ := heig (a + A₀) (by rw [hsum]; exact hv)
-    have hc₁1 : c₁ = 1 := hinj (by rw [← hc₁, hsum, one_smul])
-    have hsplit : χ ⟨(a + A₀).1.1 s, StarAlgebra.subset_adjoin ℂ _ (Or.inl ⟨a + A₀, rfl⟩)⟩ =
-        χ ⟨a.1.1 s, StarAlgebra.subset_adjoin ℂ _ (Or.inl ⟨a, rfl⟩)⟩ +
-          χ ⟨A₀.1.1 s, StarAlgebra.subset_adjoin ℂ _ (Or.inl ⟨A₀, rfl⟩)⟩ := by
-      rw [← map_add (f := _)]; exact congrArg χ (Subtype.ext rfl)
-    rw [hsplit, hχ₀, hc₀1, hc₁1] at hχ₁
-    linear_combination hχ₁
-  · obtain ⟨c', hc', hχ'⟩ := heig a (by rw [hc]; exact smul_ne_zero hc0 hv)
-    rw [hχ']; exact hinj (hc'.symm.trans hc)
-
-end PositivityTheory.Rg.BcB.F.R3
-
-end
-end
-end
-
--- Source module: Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.ProjAlg
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace PositivityTheory.Rg.BcB.F.Rd
-
-variable {ι : Type} {H : ι → Type} [∀ s, NormedAddCommGroup (H s)] [∀ s, InnerProductSpace ℂ (H s)]
-  [∀ s, CompleteSpace (H s)] {d : ℕ} {Γ : Type}
-
-def blockEvaluation (s : ι) : Prod' H d →⋆ₐ[ℂ] (H s →L[ℂ] H s) where
-  toFun a := a.1 s
-  map_one' := rfl
-  map_mul' _ _ := rfl
-  map_zero' := rfl
-  map_add' _ _ := rfl
-  commutes' _ := rfl
-  map_star' _ := rfl
-
-theorem projAdjoin (gen : Γ → Prod' H d) (s : ι) (X : H s →L[ℂ] H s) :
-    StarAlgebra.adjoin ℂ (Set.range (fun a : StarAlgebra.adjoin ℂ (Set.range gen) => (a : Prod' H d).1 s) ∪ {X}) =
-      StarAlgebra.adjoin ℂ (Set.range (fun x => (gen x).1 s) ∪ {X}) := by
-  apply le_antisymm
-  · apply StarAlgebra.adjoin_le
-    rintro y (⟨a, rfl⟩ | hy)
-    · have hmem : blockEvaluation (H := H) (d := d) s (a : Prod' H d) ∈
-          StarSubalgebra.map (blockEvaluation (H := H) (d := d) s) (StarAlgebra.adjoin ℂ (Set.range gen)) :=
-        StarSubalgebra.mem_map.2 ⟨a, a.2, rfl⟩
-      rw [StarAlgHom.map_adjoin] at hmem
-      have hle : StarAlgebra.adjoin ℂ (⇑(blockEvaluation (H := H) (d := d) s) '' Set.range gen) ≤
-          StarAlgebra.adjoin ℂ (Set.range (fun x => (gen x).1 s) ∪ {X}) := by
-        apply StarAlgebra.adjoin_mono
-        rintro _ ⟨_, ⟨x, rfl⟩, rfl⟩
-        exact Or.inl ⟨x, rfl⟩
-      exact hle hmem
-    · exact StarAlgebra.subset_adjoin ℂ _ (Or.inr hy)
-  · apply StarAlgebra.adjoin_mono
-    rintro y (⟨x, rfl⟩ | hy)
-    · exact Or.inl ⟨⟨gen x, StarAlgebra.subset_adjoin ℂ _ ⟨x, rfl⟩⟩, rfl⟩
-    · exact Or.inr hy
-
-end PositivityTheory.Rg.BcB.F.Rd
-
-end
-end
-end
 
 -- Source module: Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FrameMatching.GelfandReading.GReadOf
 

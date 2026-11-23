@@ -2,15 +2,13 @@ module
 
 public import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
 public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CyclotomicCharacterPadicBasicProperties
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousCyclotomicCharacterPeriodDatumStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -21,6 +19,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -41,59 +41,12 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Alternates
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NotDvdCondN
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry₂.TateDualCrystalline
 import Mathlib.Tactic.Linter.HaveILetI
-
--- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousCyclotomicCharacterPeriodDatum
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain GlobalTheory.HTW GlobalTheory.HTW.Rec Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.FrobeniusOrbits
-
-noncomputable section
-
-namespace GlobalTheory.HTW.Rec
-
-theorem continuous_cycLL_period : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K LL : FinExt l),
-    Continuous (fun s => ((cycLL (P.PD K) ↥LL.1 s : (↥LL.1)ˣ) : ↥LL.1)) := by
-  intro l _ P K LL
-  have h := (GlobalTheory.Cyc.cyc_basic l P.χQ P.χQ_cyc).2.1
-  have e : (fun g => ((cycLL (P.PD K) ↥LL.1 g : (↥LL.1)ˣ) : ↥LL.1)) =
-      fun g : ↥(GK K) => algebraMap ℚ_[l] ↥LL.1 (P.χQ (g : GQ l) : ℚ_[l]) := by
-    funext g
-    change algebraMap ℚ_[l] ↥LL.1 (((P.PD K).χ g : ℚ_[l]ˣ) : ℚ_[l]) = _
-    rw [P.PD_χ]
-  rw [e]
-  refine Continuous.subtype_mk (f := fun g : ↥(GK K) =>
-    algebraMap ℚ_[l] (Om l) (P.χQ (g : GQ l) : ℚ_[l])) ?_ _
-  exact (continuous_algebraMap ℚ_[l] (Om l)).comp (h.comp continuous_subtype_val)
-
-end GlobalTheory.HTW.Rec
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousCyclotomicCharacterPeriodDatumStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain GlobalTheory.HTW GlobalTheory.HTW.Rec Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.FrobeniusOrbits
-
-theorem _root_.GlobalTheory.T.continuous_cyclotomicCharacter_periodDatum : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K LL : FinExt l), Continuous (fun s => ((cycLL (P.PD K) ↥LL.1 s : (↥LL.1)ˣ) : ↥LL.1)) := by
-  first | exact @GlobalTheory.HTW.Rec.continuous_cycLL_period | exact GlobalTheory.HTW.Rec.continuous_cycLL_period | (intros; apply GlobalTheory.HTW.Rec.continuous_cycLL_period <;> assumption)
-end
-end
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NotDvdCondN
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsJumpVOfMultVNeZero
 

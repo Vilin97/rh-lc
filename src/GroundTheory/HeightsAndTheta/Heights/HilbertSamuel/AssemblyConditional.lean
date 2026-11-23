@@ -24,9 +24,10 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockComplexGr
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockDefectMetricChange
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageDatum
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageTop
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockMetricChange
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockMeasureChange
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockDefectMetricChange
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockMetricChange
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockRealGramComparison
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockResolutionDegree
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockSectionsRank
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -65,9 +66,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockRealGramComparison
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockResolutionDegree
-public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockSectionsRank
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockResolutionMixedIntegral
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockResolutionInterpIntegral
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockResolutionSupBound
@@ -96,39 +94,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PTwoBlockTop
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PVeroneseChi
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PVeroneseTop
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsIntegrable
-
--- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockMetricChange
-
-section
-
-@[expose] public section
-
-set_option maxSynthPendingDepth 1
-
-namespace GroundTheory.Heights₂.Heights.HilbertSamuel
-
-open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.ArakelovGeometry ReciprocityTheory.GeometryOfNumbersTheory Filter Asymptotics
-
-noncomputable section
-
-theorem BlockMetricChange.proof (hMeas : BlockMeasureChange.Statement)
-    (hMet : BlockDefectMetricChange.Statement) : BlockMetricChange.Statement := by
-  intro D K _ _ ι _ Ω _ _ I d d' hI hy hk
-  have hdeg : d'.A.a = unitDeg d.k₀ := hk ▸ d'.deg
-  have hle : d'.P0 ≤ mCoordIdeal d.y := hy ▸ d'.normalForm_baseLattice_le_dualSpan_sup_line
-  have hp : IsSemipositiveRel d'.P0 (mCoordIdeal d.y) d'.A := hy ▸ d'.semipos
-
-  have h1 := hMeas D K ι Ω (d.withMetric d'.A d'.P0 hdeg d'.conjInv hle hp) d' hy hk rfl
-  have h2 := hMet D K ι Ω I d d'.A d'.P0 hdeg d'.conjInv hle hp hI
-  refine (h1.add h2).congr_left fun n => ?_
-  simp only [hsDefect, hy]
-  ring
-
-end
-
-end GroundTheory.Heights₂.Heights.HilbertSamuel
-end
-end
 
 -- Source module: GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockResolutionDegree
 

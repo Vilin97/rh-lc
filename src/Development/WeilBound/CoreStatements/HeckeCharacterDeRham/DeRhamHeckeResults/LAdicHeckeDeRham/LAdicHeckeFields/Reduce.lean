@@ -53,18 +53,14 @@ import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 import ReciprocityTheory.NeutralLocalFields.Reciprocity
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsOpenUnitSubgroupKerStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaloisCharacterArtinCompatStatement
-public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaloisOpenSubgroupLocalUnits
-import Mathlib.Data.Nat.Choose.Multinomial
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaloisOpenSubgroupLocalUnitsStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ImportsTer
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalCharacterFiniteExtensionStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalCharacterInducedTiedSixStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalCharacterInducedTiedStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalGaloisEmbeddingExtensionStatement
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniqueEmbeddingExtension
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FiniteDimensionalWdSpace
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniqueEmbeddingExtension
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniqueEmbeddingExtensionStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnramifiedCharactersDeRhamJumpZeroStatement
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
@@ -119,48 +115,6 @@ open scoped Classical
 theorem _root_.GlobalTheory.T.exists_lubin_tate_character_unitary : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l), ∃ χ : ↥(GK K) →* (↥K.1)ˣ, IsLTChar K χ ∧
     Continuous (fun g => (((χ g : (↥K.1)ˣ) : ↥K.1) : Om l)) ∧ ∀ g, ‖(((χ g : (↥K.1)ˣ) : ↥K.1) : Om l)‖ = 1 := by
   first | exact @GlobalTheory.CompanionTheory.LTHodge.exists_lubinTateChar | exact GlobalTheory.CompanionTheory.LTHodge.exists_lubinTateChar | (intros; apply GlobalTheory.CompanionTheory.LTHodge.exists_lubinTateChar <;> assumption)
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GaloisOpenSubgroupLocalUnitsStatement
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
-open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal
-open scoped Classical
-
-theorem _root_.GlobalTheory.T.galois_open_subgroup_local_units : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (art : Ideles E →* Gab E Ω), IsGlobalArtin art →
-    ∀ (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω), IsPlaceOver A w →
-    ∀ (U : Subgroup (w.adicCompletion E)ˣ), IsOpen (U : Set (w.adicCompletion E)ˣ) → (∀ x ∈ U, IsUnitAt w x) →
-    ∃ V : Subgroup (G E Ω), IsOpen (V : Set (G E Ω)) ∧
-      ∀ σ ∈ V, σ ∈ Ine (F := E) A → ∃ x ∈ U, art (localIdele E w x) = toAb E Ω σ := by
-  first | exact @GlobalTheory.CompanionTheory.InertOpen.exists_openSubgroup_ine_art_units | exact GlobalTheory.CompanionTheory.InertOpen.exists_openSubgroup_ine_art_units | (intros; apply GlobalTheory.CompanionTheory.InertOpen.exists_openSubgroup_ine_art_units <;> assumption)
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UniqueEmbeddingExtensionStatement
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
-open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal
-open scoped Classical
-
-theorem _root_.GlobalTheory.T.unique_embedding_extension : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω), IsPlaceOver A w →
-    ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O),
-      GlobalTheory.Pst.Induces Bw → ∀ (LL' : FinExt l) (τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1),
-      ∃! j : {j : w.adicCompletion E →+* Qbar l // Continuous j},
-        IsInduced Bw (j.1.comp (algebraMap E (w.adicCompletion E))) τ' := by
-  first | exact @GlobalTheory.CompanionTheory.EmbUniq.existsUnique_continuous_induced | exact GlobalTheory.CompanionTheory.EmbUniq.existsUnique_continuous_induced | (intros; apply GlobalTheory.CompanionTheory.EmbUniq.existsUnique_continuous_induced <;> assumption)
 end
 end
 end

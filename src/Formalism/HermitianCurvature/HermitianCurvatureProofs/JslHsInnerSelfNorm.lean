@@ -3,13 +3,16 @@ module
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEJSliceCut
 public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEPairAtDeriv
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.FsvMulFsvNeg
-import Formalism.HermitianCurvature.CompositeFormulaLevelZero
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtFsvSelf
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableOfContinuousOnZero
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.SfiniteOfIsHaarOn
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -22,6 +25,9 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +35,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,56 +48,10 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableOfContinuousOnZero
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SfiniteOfIsHaarOn
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.Linter.Style
-import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Algebra.Order.Chebyshev
-
--- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtFsvSelf
-
-section
-
-section
-
-open scoped ComplexConjugate ContDiff
-
-noncomputable section
-
-namespace Formalism.FourierDecayAlt.P5
-
-open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.Q Formalism.FourierDecayAlt.Wd
-
-theorem contDiff_fsv (s : ℂ) : ContDiff ℝ ∞ (fsv s) := by
-  have hL : ContDiff ℝ ∞ (fun t : ℂ => s * t - conj s * conj t) :=
-    (contDiff_const.mul contDiff_id).sub (contDiff_const.mul Complex.conjCLE.contDiff)
-  exact Complex.contDiff_exp.comp hL
-
-section PairNeg
-
-variable {V : Type*} [AddCommGroup V] [Module ℂ V]
-
-theorem pr_neg_fst (a : Pr V) : (-a).1 = -a.1 := rfl
-theorem pr_neg_snd (a : Pr V) : (-a).2.unop = -a.2.unop := rfl
-
-end PairNeg
-
-end Formalism.FourierDecayAlt.P5
-end
-end
-end
-
--- Source module: Formalism.HermitianCurvature.HermitianCurvatureProofs.JslHsInnerSelfNorm
-
-section
 
 @[expose] public section
 
@@ -325,6 +286,3 @@ theorem jSL2Loc_of : JSWordNF → JSRadLoc → SpectralL2Locality := by
     exact mul_le_mul (pow_le_pow_left₀ (norm_nonneg _) (hP i).2 2) (hP i).1.2 (norm_nonneg _) (by positivity)
 
 end Formalism.FourierDecayAlt.P.CutSE
-end
-end
-end

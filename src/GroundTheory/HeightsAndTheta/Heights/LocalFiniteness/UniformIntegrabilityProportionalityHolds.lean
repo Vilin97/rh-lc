@@ -5,9 +5,13 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartConeLength
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorComponents
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongWeightDiff
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.OfLeaves
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PAdmissibleAE
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PAdmissibleAENrm
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PBallVolume
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
@@ -18,14 +22,15 @@ import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.MeasureTheory.Measure.RegularityCompacts
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.PiTensorProduct
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -45,15 +50,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.ReduceModChar
-import Mathlib.Topology.Separation.CompletelyRegular
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PBallVolume
-import Mathlib.MeasureTheory.Measure.RegularityCompacts
 import Mathlib.Topology.UniformSpace.Uniformizable
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PEvalSpecFirst
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PMahlerIntegrand
@@ -67,129 +64,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PChartDivisorComp
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PChartSectionNotMem
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PConeRingLaurent
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLelongWeightDiff
-
--- Source module: GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PAdmissibleAE
-
-section
-
-@[expose] public section
-
-set_option maxSynthPendingDepth 1
-
-namespace GroundTheory.Heights₂.Heights
-
-open MvPolynomial MeasureTheory
-
-noncomputable section
-
-namespace AdmissibleAE
-
-variable {n : ℕ}
-
-def formsIn (W : Ideal (MvPolynomial (Fin n) ℂ)) : Submodule ℝ (Fin n → ℂ) where
-  carrier := {u | linForm u ∈ W}
-  zero_mem' := by simp [linForm]
-  add_mem' := by
-    intro a b ha hb
-    have : linForm (a + b) = linForm a + linForm b := by
-      simp [linForm, Finset.sum_add_distrib, add_mul]
-    simp only [Set.mem_ofPred_eq, this] at ha hb ⊢
-    exact W.add_mem ha hb
-  smul_mem' := by
-    intro c u hu
-    have : linForm (c • u) = C (c : ℂ) * linForm u := by
-      simp [linForm, Finset.mul_sum, ← mul_assoc, Complex.real_smul]
-    simp only [Set.mem_ofPred_eq, this] at hu ⊢
-    exact W.mul_mem_left _ hu
-
-theorem linForm_single (j : Fin n) :
-    linForm (Pi.single j (1 : ℂ)) = (X j : MvPolynomial (Fin n) ℂ) := by
-  simp [linForm, Pi.single_apply]
-
-theorem formsIn_ne_top {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : IsRelevant W) : formsIn W ≠ ⊤ := by
-  obtain ⟨j, hj⟩ := hW
-  intro htop
-  have hmem : Pi.single j (1 : ℂ) ∈ formsIn W := htop ▸ Submodule.mem_top
-  exact hj (linForm_single j ▸ hmem)
-
-end AdmissibleAE
-
-
-open AdmissibleAE in
-theorem AdmissibleAE.proof : AdmissibleAE.Statement := by
-  intro n Z hrel
-  unfold IsAdmissible
-  refine (Filter.eventually_all_finset _).2 fun W hW => ?_
-  rw [ae_iff]
-  have hnull : volume (formsIn W : Set (Fin n → ℂ)) = 0 :=
-    Measure.addHaar_submodule volume _ (formsIn_ne_top (hrel W hW))
-  simp only [not_not]
-  exact hnull
-
-end
-
-end GroundTheory.Heights₂.Heights
-end
-end
-
--- Source module: GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PAdmissibleAENrm
-
-section
-
-@[expose] public section
-
-set_option maxSynthPendingDepth 1
-
-namespace GroundTheory.Heights₂.Heights
-
-open MvPolynomial MeasureTheory Matrix
-
-noncomputable section
-
-variable {n : ℕ}
-
-theorem linForm_const_mul (c : ℂ) (v : Fin n → ℂ) :
-    linForm (fun j => c * v j) = C c * linForm v := by
-  simp only [linForm, Finset.mul_sum, map_mul, mul_assoc]
-
-theorem HermNorm.norm_ne_zero (h : HermNorm n) {v : Fin n → ℂ} (hv : v ≠ 0) : h.norm v ≠ 0 := by
-  intro h0
-  apply hv
-  have hs : ∑ i, ‖(h.mat *ᵥ v) i‖ ^ 2 = 0 :=
-    (Real.sqrt_eq_zero (Finset.sum_nonneg fun i _ => sq_nonneg _)).mp h0
-  have hm : h.mat *ᵥ v = 0 := by
-    funext i
-    have := (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => sq_nonneg ‖(h.mat *ᵥ v) i‖)).mp hs i
-      (Finset.mem_univ i)
-    simpa using this
-  exact Matrix.eq_zero_of_mulVec_eq_zero h.isUnit_det.ne_zero hm
-
-theorem IsAdmissible.nrmv (h : HermNorm n) {Z : ProjCycle ℂ n} {v : Fin n → ℂ}
-    (hv : IsAdmissible Z v) : IsAdmissible Z (nrmv h v) := by
-  intro W hW hmem
-  apply hv W hW
-  have hv0 : v ≠ 0 := by
-    rintro rfl
-    apply hv W hW
-    simp [linForm]
-  have hc : ((h.norm v : ℝ) : ℂ)⁻¹ ≠ 0 :=
-    inv_ne_zero (Complex.ofReal_ne_zero.mpr (h.norm_ne_zero hv0))
-  have hmem' : C ((h.norm v : ℝ) : ℂ)⁻¹ * linForm v ∈ W := by
-    rw [← linForm_const_mul]; exact hmem
-  have : linForm v = C (((h.norm v : ℝ) : ℂ)⁻¹)⁻¹ * (C ((h.norm v : ℝ) : ℂ)⁻¹ * linForm v) := by
-    rw [← mul_assoc, ← map_mul, inv_mul_cancel₀ hc, map_one, one_mul]
-  rw [this]
-  exact W.mul_mem_left _ hmem'
-
-theorem AdmissibleAENrm.proof (h1 : AdmissibleAE.Statement) : AdmissibleAENrm.Statement := by
-  intro n h Z hrel
-  exact ae_restrict_of_ae ((h1 n Z hrel).mono fun v hv => hv.nrmv h)
-
-end
-
-end GroundTheory.Heights₂.Heights
-end
-end
 
 -- Source module: GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeFubini
 

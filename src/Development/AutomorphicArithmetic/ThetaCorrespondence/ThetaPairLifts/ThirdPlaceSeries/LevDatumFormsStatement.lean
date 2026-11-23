@@ -5,10 +5,16 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsSplitPlOfNotIsConjPl
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AuxiliaryPrimePlacesNonemptyStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChosenHalfSplitPlacesMeetsConjugatePairOnceStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLevelGroupWithCharacterAtTypePlaces
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLevelGroupWithCharacterAtTypePlacesStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsResidueHomZmodAtTypePlaceStatement
+public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
+public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsSplitPlaceEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -39,122 +45,16 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Formalism.LocalToGlobal.NormalizedHeckeFactors.RingHomOfBaseOrderToFraction
-public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DepthZeroLabelsOfLabelLaws
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Tactic.Linter.HaveILetI
-public import ReciprocityTheory.ResidueCardinality.ArtinOntoB
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NStageTrivialCharacterCoeffEqAlt
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExponentAndTwistData
 import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
 import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
-public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsSplitPlaceEq
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FifteenNotMemAndDeltaInertiaOrderDividesFifteenPStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PlacesOverRealSubfieldSplit
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlacesAvoidAuxiliaryStatement
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TameValuesGaloisCharFormResidueUnitCharacter
-import Mathlib.Topology.Sheaves.Init
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLevelGroupWithCharacterAtTypePlacesStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
-open scoped TensorProduct
-
-theorem _root_.GlobalTheory.T.exists_levelGroup_with_character_at_type_places : ∀ (D : D7) (T : TwR D.LL0 D.nd) (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ)
-    (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (Q : Finset (PlE D.host)) (ψ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om →* (T.Ok i k)ˣ)
-    (QP DP : Finset (PlE D.host)) (sp : PlE D.host → SplitPlace D.host.E)
-    (redG : ∀ kv : (Σ kk : Fin 2, D.nd.PlG kk),
-      (sp (NX.pG D kv)).v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1)),
-    (∀ P, (P ∈ QP ∨ P ∈ DP ∨ ∃ kv, P = NX.pG D kv) → (sp P).w = P) →
-    (∀ P P', (P ∈ QP ∨ P ∈ DP ∨ ∃ kv, P = NX.pG D kv) → (P' ∈ QP ∨ P' ∈ DP ∨ ∃ kv, P' = NX.pG D kv) →
-      (sp P).v = (sp P').v → P = P') →
-    (∀ P ∈ QP, P ∉ DP) → (∀ kv, NX.pG D kv ∉ QP ∧ NX.pG D kv ∉ DP) → (∀ kv kv', NX.pG D kv = NX.pG D kv' → kv = kv') →
-    QP ⊆ Q → DP ⊆ T.pD i →
-    (∀ P ∈ QP, (∀ u u' : 𝓞 D.host.E, u ∉ P.asIdeal → u' ∉ P.asIdeal →
-        NX.tameVal ψ P 1 (u * u') = NX.tameVal ψ P 1 u * NX.tameVal ψ P 1 u') ∧
-      ∀ u u' : 𝓞 D.host.E, u ∉ P.asIdeal → u - u' ∈ P.asIdeal → NX.tameVal ψ P 1 u = NX.tameVal ψ P 1 u') →
-    (∀ P ∈ DP, (∀ u u' : 𝓞 D.host.E, u ∉ P.asIdeal → u' ∉ P.asIdeal →
-        NX.tameVal (T.delta i) P (if b then 1 else -1) (u * u') =
-          NX.tameVal (T.delta i) P (if b then 1 else -1) u * NX.tameVal (T.delta i) P (if b then 1 else -1) u') ∧
-      ∀ u u' : 𝓞 D.host.E, u ∉ P.asIdeal → u - u' ∈ P.asIdeal →
-        NX.tameVal (T.delta i) P (if b then 1 else -1) u = NX.tameVal (T.delta i) P (if b then 1 else -1) u') →
-    ∃ (J : Subgroup (GAf D.host.E D.R.nV)) (χ : J →* (FractionRing (T.Ok i k))ˣ),
-      (∃ N : ℕ, 0 < N ∧ ∀ κ, NG.Cong D.host.E D.R.nV N κ → ∃ h : κ ∈ J, χ ⟨κ, h⟩ = 1) ∧
-      NX.HypOutsideF J χ (badVT D T i Q) ∧
-      (∀ κ : GAf D.host.E D.R.nV, κ ∈ J ↔ κ ∈ Umax D.host.E D.R.nV ∧
-        (∀ kv, NX.InLevG (sp (NX.pG D kv)).v D.R.r (NX.locM (sp (NX.pG D kv)) κ)) ∧
-        (∀ P ∈ QP, NX.InParah (sp P).v D.R.r (NX.locM (sp P) κ)) ∧
-        (∀ P ∈ DP, NX.InParah (sp P).v D.R.r (NX.locM (sp P) κ))) ∧
-      ∀ κ (h : κ ∈ J), ((χ ⟨κ, h⟩ : (FractionRing (T.Ok i k))ˣ) : FractionRing (T.Ok i k)) =
-        (∏ kv : (Σ kk : Fin 2, D.nd.PlG kk), gValT D T θ i k b kv (sp (NX.pG D kv)) (redG kv) (tauT D T i j b kv)
-          (NX.locM (sp (NX.pG D kv)) κ)) *
-        (∏ P ∈ QP, algebraMap (T.Ok i k) (FractionRing (T.Ok i k))
-          (NX.tameVal ψ P 1 (NX.resRep (sp P) P (NX.detT D.R.r (NX.locM (sp P) κ)))).1) *
-        (∏ P ∈ DP, baseCoeffToExtFractionRing D T i k (NX.tameVal (T.delta i) P (if b then 1 else -1)
-          (NX.resRep (sp P) P (NX.detT D.R.r (NX.locM (sp P) κ)))).1) := by
-  first | exact @GlobalTheory.LevGChar.levGroup_exists | exact GlobalTheory.LevGChar.levGroup_exists | (intros; apply GlobalTheory.LevGChar.levGroup_exists <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsResidueHomZmodAtTypePlace
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
-open scoped TensorProduct
-
-noncomputable section
-
-namespace GlobalTheory.TypePlaceResidue
-
-theorem residueHom_zmod : ∀ (D : D7) (kv : Σ k : Fin 2, D.nd.PlG k) (s : SplitPlace D.host.E), s.w = NX.pG D kv →
-    Nonempty (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1)) := by
-  intro D kv s hs
-  have hp := D.host.g_prime kv.1
-  haveI : Fact (D.host.g kv.1).Prime := ⟨hp⟩
-  have hN := GlobalTheory.TameLabels.normV_eq_of_split hp (D.nd.g_split kv.1) (D.naut.plGw_over kv.1 kv.2)
-  have hc : Nat.card (IsLocalRing.ResidueField (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E))) =
-      D.host.g kv.1 := by
-    rw [ReciprocityTheory.Bridge.ResidueFieldCardinality.card_residue, ← s.card_quot, hs]
-    rw [← hN]
-    rfl
-  haveI : Finite (IsLocalRing.ResidueField (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E))) :=
-    Nat.finite_of_card_ne_zero (by rw [hc]; exact hp.ne_zero)
-  letI := Fintype.ofFinite (IsLocalRing.ResidueField (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E)))
-  have hcF : Fintype.card (IsLocalRing.ResidueField (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E))) =
-      D.host.g kv.1 := by rw [Fintype.card_eq_nat_card]; exact hc
-  haveI := charP_of_card_eq_prime hcF
-  exact ⟨(ZMod.ringEquiv _ hcF).symm.toRingHom.comp (IsLocalRing.residue _)⟩
-
-end GlobalTheory.TypePlaceResidue
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsResidueHomZmodAtTypePlaceStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
-open scoped TensorProduct
-
-theorem _root_.GlobalTheory.T.exists_residueHom_zmod_at_typePlace : ∀ (D : D7) (kv : Σ k : Fin 2, D.nd.PlG k) (s : SplitPlace D.host.E), s.w = NX.pG D kv →
-    Nonempty (s.v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1)) := by
-  first | exact @GlobalTheory.TypePlaceResidue.residueHom_zmod | exact GlobalTheory.TypePlaceResidue.residueHom_zmod | (intros; apply GlobalTheory.TypePlaceResidue.residueHom_zmod <;> assumption)
-end
-end
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TameValuesGaloisCharFormResidueUnitCharacterStatement
+import Mathlib.Tactic.Linter.HaveILetI
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSplitPlaceOfIsSplitPlaceCmField
 
@@ -186,25 +86,6 @@ open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_splitPlace_of_isSplitPlace_cmField : ∀ (D : D7) (P : PlE D.host), IsSplitPl D.host P → ∃ s : SplitPlace D.host.E, s.w = P := by
   first | exact @GlobalTheory.HeightCounting.SplitPlaceOf.exists_splitPlace | exact GlobalTheory.HeightCounting.SplitPlaceOf.exists_splitPlace | (intros; apply GlobalTheory.HeightCounting.SplitPlaceOf.exists_splitPlace <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TameValuesGaloisCharFormResidueUnitCharacterStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.FormsStep NumberField IsDedekindDomain Polynomial
-open scoped TensorProduct
-
-theorem _root_.GlobalTheory.T.tameValues_galoisChar_form_residue_unit_character : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {M : Type} [CommGroup M]
-    (φ : Formalism.ConjugateSelfDual.G E Ω →* M) (P : HeightOneSpectrum (𝓞 E)) (e : ℤ) (m : ℕ),
-    IsOpen (φ.ker : Set (Formalism.ConjugateSelfDual.G E Ω)) → ((m : ℕ) : 𝓞 E) ∉ P.asIdeal →
-    (∀ A : ValuationSubring Ω, IsPlaceOver A P → ∀ σ ∈ Ine (F := E) A, ∃ N : ℕ, φ σ ^ (m ^ N) = 1) →
-    (∀ u u' : 𝓞 E, u ∉ P.asIdeal → u' ∉ P.asIdeal → NX.tameVal φ P e (u * u') = NX.tameVal φ P e u * NX.tameVal φ P e u') ∧
-    ∀ u u' : 𝓞 E, u ∉ P.asIdeal → u - u' ∈ P.asIdeal → NX.tameVal φ P e u = NX.tameVal φ P e u' := by
-  first | exact @GlobalTheory.TameValChar.main | exact GlobalTheory.TameValChar.main | (intros; apply GlobalTheory.TameValChar.main <;> assumption)
 end
 end
 

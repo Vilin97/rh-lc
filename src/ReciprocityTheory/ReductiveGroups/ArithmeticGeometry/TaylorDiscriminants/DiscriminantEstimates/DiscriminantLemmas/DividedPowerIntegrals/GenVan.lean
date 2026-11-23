@@ -1,0 +1,138 @@
+module
+
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.WickFormula.GenVan
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.DiscriminantEstimates.DiscriminantLemmas.DividedPowerIntegrals.GenDefs
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
+import Mathlib.Topology.Sheaves.Init
+
+@[expose] public section
+
+open MvPolynomial
+
+namespace PI.DivPowInteg.Gen
+
+section
+variable {K σ ι : Type} [CommRing K] [Fintype ι]
+
+noncomputable def lowDeg (f : ι → σ) (t : ℕ) : Submodule K (MvPolynomial σ K) :=
+  restrictSupport K {m | ∑ i, m (f i) < t}
+
+theorem mem_lowDeg {f : ι → σ} {t : ℕ} {R : MvPolynomial σ K} :
+    R ∈ lowDeg f t ↔ ∀ m ∈ R.support, ∑ i, m (f i) < t := by
+  unfold lowDeg
+  rw [mem_restrictSupport_iff]
+  exact ⟨fun h m hm => h (Finset.mem_coe.mpr hm), fun h m hm => h m (Finset.mem_coe.mp hm)⟩
+
+theorem eq_zero_of_mem_lowDeg_zero {f : ι → σ} {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f 0) : R = 0 := by
+  rw [mem_lowDeg] at h
+  by_contra hR
+  obtain ⟨m, hm⟩ := Finset.nonempty_of_ne_empty (mt MvPolynomial.support_eq_empty.mp hR)
+  exact absurd (h m hm) (Nat.not_lt_zero _)
+
+theorem pderiv_mem_lowDeg {f : ι → σ} {t : ℕ} (k : σ) {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f t) : pderiv k R ∈ lowDeg f t := by
+  rw [mem_lowDeg] at h
+
+  rw [R.as_sum, map_sum]
+  refine Submodule.sum_mem _ (fun m hm => ?_)
+  rw [pderiv_monomial, mem_lowDeg]
+  intro m' hm'
+  rw [Finset.mem_singleton.mp (support_monomial_subset hm')]
+  calc ∑ i, (m - Finsupp.single k 1 : σ →₀ ℕ) (f i) ≤ ∑ i, m (f i) :=
+        Finset.sum_le_sum (fun i _ => by rw [Finsupp.tsub_apply]; exact Nat.sub_le _ _)
+    _ < t := h m hm
+
+theorem pderiv_mem_lowDeg_of_succ {f : ι → σ} {t : ℕ} (i : ι) {R : MvPolynomial σ K}
+    (h : R ∈ lowDeg f (t + 1)) : pderiv (f i) R ∈ lowDeg f t := by
+  apply PI.WickFormula.Gen.pderiv_mem_lowDeg_of_succ <;> assumption
+
+theorem pow_apply_eq_zero_of_lowDeg (D : Module.End K (MvPolynomial σ K)) (f : ι → σ)
+    (hD : ∀ t R, R ∈ lowDeg f (t + 1) → D R ∈ lowDeg f t) :
+    ∀ n R, R ∈ lowDeg f n → (D ^ n) R = 0 := by
+  intro n
+  induction n with
+  | zero =>
+    intro R hR
+    rw [pow_zero]
+    exact eq_zero_of_mem_lowDeg_zero hR
+  | succ n ih =>
+    intro R hR
+    rw [pow_succ, Module.End.mul_apply]
+    exact ih _ (hD n R hR)
+
+end
+
+section
+variable {K I J : Type} [CommRing K] [Fintype I] [Fintype J]
+
+theorem gdelta_apply (κ : I → J → K) (R : MvPolynomial (I ⊕ J) K) :
+    gdelta κ R = ∑ i, ∑ j, κ i j • pderiv (Sum.inl i) (pderiv (Sum.inr j) R) := by
+  simp [gdelta, LinearMap.sum_apply]
+
+theorem gdelta_mem_lowDeg_inl (κ : I → J → K) {t : ℕ} {R : MvPolynomial (I ⊕ J) K}
+    (h : R ∈ lowDeg (Sum.inl : I → I ⊕ J) (t + 1)) :
+    gdelta κ R ∈ lowDeg (Sum.inl : I → I ⊕ J) t := by
+  rw [gdelta_apply]
+  refine Submodule.sum_mem _ (fun i _ => Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ ?_))
+  exact pderiv_mem_lowDeg_of_succ (f := Sum.inl) i (pderiv_mem_lowDeg (Sum.inr j) h)
+
+theorem gdelta_mem_lowDeg_inr (κ : I → J → K) {t : ℕ} {R : MvPolynomial (I ⊕ J) K}
+    (h : R ∈ lowDeg (Sum.inr : J → I ⊕ J) (t + 1)) :
+    gdelta κ R ∈ lowDeg (Sum.inr : J → I ⊕ J) t := by
+  rw [gdelta_apply]
+  refine Submodule.sum_mem _ (fun i _ => Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ ?_))
+  exact pderiv_mem_lowDeg (Sum.inl i) (pderiv_mem_lowDeg_of_succ (f := Sum.inr) j h)
+
+end
+
+theorem vanL_holds : VanL := by
+  intro K I J _ _ _ κ R n h
+  exact pow_apply_eq_zero_of_lowDeg (gdelta κ) Sum.inl (fun t R hR => gdelta_mem_lowDeg_inl κ hR) n R
+    (mem_lowDeg.mpr h)
+
+theorem vanR_holds : VanR := by
+  intro K I J _ _ _ κ R n h
+  exact pow_apply_eq_zero_of_lowDeg (gdelta κ) Sum.inr (fun t R hR => gdelta_mem_lowDeg_inr κ hR) n R
+    (mem_lowDeg.mpr h)
+
+end PI.DivPowInteg.Gen

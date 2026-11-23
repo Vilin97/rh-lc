@@ -43,7 +43,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormD
 import Mathlib.Algebra.Order.Archimedean.Real.Hom
 import Development.AbelianVarietyTheory.Proofs.HeightProofs.FiniteDimensionalPolyV
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.L2normLeIntegralKernelMulTranslateDiffStatement
-import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.OrthogonalLowerDegreeKernelTranslates
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.PolyTranslationL2BoundStatement
 public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CompactExponentialSurjective
 import Mathlib.Tactic.Linter.Style
@@ -165,49 +165,6 @@ open GlobalTheory.KFourier MeasureTheory
 
 theorem _root_.GlobalTheory.T.exists_spanning_lieAlgebra_coef_sq_bound : ∀ {n : ℕ} (ε : Fin n → Bool) {r : ℕ} (X : Fin r → Mx n), (∀ Y, inK ε Y → ∃ c : Fin r → ℝ, Y = ∑ j, (c j : ℂ) • X j) → ∃ C : ℝ, 0 ≤ C ∧ ∀ Y, inK ε Y → ∃ c : Fin r → ℝ, Y = ∑ j, (c j : ℂ) • X j ∧ ∑ j, c j ^ 2 ≤ C * Formalism.REAL.hs Y := by
   first | exact @GlobalTheory.KGap.spanning_coef_bound | exact GlobalTheory.KGap.spanning_coef_bound | (intros; apply GlobalTheory.KGap.spanning_coef_bound <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.HeightProofs.OrthogonalLowerDegreeKernelTranslates
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S Formalism.L2.Theta Matrix
-open Formalism.REAL GlobalTheory.SmoothGlob GlobalTheory.TypeSum
-open scoped TensorProduct
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.KFourier MeasureTheory
-
-namespace GlobalTheory.KFourier
-
-theorem orth_translate_lowV {n : ℕ} (ε : Fin n → Bool) (i : ℕ) (p κ : KG ε → ℂ) (hκ : κ ∈ lowV ε i)
-    (h : ∀ q ∈ lowV ε i, ∫ k, q k * p k ∂(muK ε) = 0) (k : KG ε) :
-    ∫ x, star (p x) * κ (x⁻¹ * k) ∂(muK ε) = 0 := by
-  cases i with
-  | zero =>
-    have h0 : κ = 0 := by simpa [lowV] using hκ
-    subst h0
-    simp
-  | succ i =>
-    have hq : (fun x : KG ε => star (κ (x⁻¹ * k))) ∈ lowV ε (i + 1) := by
-      have h1 : κ ∈ polyV ε i := hκ
-      have h2 := mul_right_mem k h1
-      have h3 := inv_mem h2
-      exact star_mem h3
-    have h4 := h _ hq
-    have h5 : ∫ x, star (star (κ (x⁻¹ * k)) * p x) ∂(muK ε) = 0 := by
-      have := congrArg star h4
-      rw [star_zero] at this
-      rw [← this]
-      exact integral_conj
-    rw [← h5]
-    refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)
-    simp only [star_mul', star_star]
-    ring
-
-end GlobalTheory.KFourier
 end
 end
 

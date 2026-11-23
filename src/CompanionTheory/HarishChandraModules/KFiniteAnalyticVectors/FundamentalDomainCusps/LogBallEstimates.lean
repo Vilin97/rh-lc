@@ -2,19 +2,18 @@ module
 
 public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.FundamentalDomainCusps.ShortIsot
 public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.FundamentalDomainCusps.HeightBoundSetup
-public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoveringRadius.CoverRad
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -22,6 +21,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,87 +43,9 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Formalism.PeriodIntegrals.Transference
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.KeySmall
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.NumericMain
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.Poisson
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.Skeleton
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Algebra.Module.StablyFree.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-
--- Source module: Formalism.PeriodIntegrals.TransferenceCoverRad
-
-section
-
-@[expose] public section
-
-open scoped InnerProductSpace
-
-noncomputable section
-
-namespace PI
-
-def TransferenceCoverDiv : Prop :=
-  ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
-    (M : Submodule ℤ V), DiscreteTopology M → Submodule.span ℝ (M : Set V) = ⊤ →
-    ∀ κ : ℝ, 0 < κ → (∀ y : V, (∀ x ∈ M, ∃ z : ℤ, inner ℝ x y = (z : ℝ)) → y ≠ 0 → κ ≤ ‖y‖) →
-    ∀ x : V, ∃ y ∈ M, ‖x - y‖ ≤ (Module.finrank ℝ V : ℝ) / (2 * κ)
-
-def dualLat {N : ℕ} (L : Submodule ℤ (EuclideanSpace ℝ (Fin N))) : Set (EuclideanSpace ℝ (Fin N)) :=
-  {y | ∀ x ∈ L, ∃ z : ℤ, inner ℝ x y = (z : ℝ)}
-
-end PI
-end
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TransferenceCover
-
-section
-
-@[expose] public section
-
-theorem transference_covering : PI.TransferenceCover :=
-  PI.Tr.transferenceCover_of' PI.Tr.poissonGauss PI.Tr.gaussStep PI.Tr.keySmall
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoveringRadius.CoverRad
-
-section
-
-@[expose] public section
-
-open scoped InnerProductSpace
-
-noncomputable section
-
-namespace PI.Tr2
-
-theorem coverDiv : PI.TransferenceCoverDiv := by
-  intro V _ _ _ M hd hspan κ hκ hdual x
-  haveI := hd
-  haveI : IsZLattice ℝ M := ⟨hspan⟩
-  obtain ⟨l, hl, hle⟩ := transference_covering V M κ hκ (fun y hy0 hy => hdual y hy hy0) x
-  refine ⟨l, hl, ?_⟩
-  rw [le_div_iff₀ (by positivity)]
-  linarith
-
-end PI.Tr2
-end
-end
-end
-
--- Source module: CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.FundamentalDomainCusps.LogBallEstimates
-
-section
+import Mathlib.Topology.Sheaves.Init
 
 @[expose] public section
 
@@ -492,6 +416,3 @@ theorem covolume_orthogonal_complement : Transp → CovPerp := by
     nlinarith [(Nat.cast_nonneg (Module.finrank ℝ X) : (0 : ℝ) ≤ _)]
 
 end CompanionTheory.D.gk.RF
-end
-end
-end

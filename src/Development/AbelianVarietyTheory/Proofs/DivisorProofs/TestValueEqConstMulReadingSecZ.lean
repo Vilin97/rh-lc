@@ -5,19 +5,19 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmCon
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.GlobalSectionsRankAlgClosed
 import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.AbelianSchemeLawsUnconditional
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsFramedPointBaseChangeAlgebraMap
-public import Formalism.LocalToGlobal.ProjectiveLattices.JFDFree
-public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FiniteDimensionalCuspSectionsVanishingOffDomain
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FiniteDimensionalCuspSectionsVanishingOffDomainStatement
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedModuliAlgebraicLawsChartWeightIntegralityStatement
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedPointReducedFromTestRingStatement
+public import Formalism.LocalToGlobal.ProjectiveLattices.ReadAlg
+import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -32,6 +32,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,17 +45,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.NormConst
-import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
-import Formalism.LocalToGlobal.ProjectiveLattices.AlgebraMapCAt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubeSymmetricSwapFirst
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedModuliAlgebraicLawsChartWeightIntegralityStatement
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedPointReducedFromTestRingStatement
-public import Formalism.LocalToGlobal.ProjectiveLattices.ReadAlg
-import Mathlib.Algebra.Module.StablyFree.Basic
-import Mathlib.Tactic.Linter.Style
 import Development.AbelianVarietyTheory.Definitions.Divisors.CommGroupMulMulEqMulInvMulMulMul
 import Development.AbelianVarietyTheory.Definitions.Divisors.CuspIso
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsChartOfIsLocalRing
@@ -64,25 +54,6 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsoOverOfIsOpenImme
 import Development.AbelianVarietyTheory.Definitions.Divisors.LinearIndependentBasisCoords
 public import Development.AbelianVarietyTheory.Definitions.Divisors.UnitaryWeightExponentVectorSignatureWeightMuZero
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
-
--- Source module: Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FiniteDimensionalCuspSectionsVanishingOffDomainStatement
-
-section
-
-@[expose] public section
-
-open NumberField ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj Formalism.L2.PjFree
-open AlgebraicGeometry CategoryTheory Limits ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Frames GlobalTheory.FrameUnif
-open scoped Matrix nonZeroDivisors
-
-theorem _root_.GlobalTheory.T.finiteDimensional_cuspSections_vanishing_offDomain : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Comp : Type) [Fintype Comp] (X : Comp → Data E r) (la : ∀ k, Wt (X k).Ψ r) (W : Submodule ℂ (FDSec X)), W ≤ holSub X la → (∀ P ∈ W, ∀ k, ∀ x ∉ (X k).dom, P k x = 0) → FiniteDimensional ℂ W := by
-  first | exact @GlobalTheory.CuspSecFinData.finiteDimensional_of_le_holSub | exact GlobalTheory.CuspSecFinData.finiteDimensional_of_le_holSub | (intros; apply GlobalTheory.CuspSecFinData.finiteDimensional_of_le_holSub <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TestValueEqConstMulReadingSecZ
-
-section
 
 @[expose] public section
 
@@ -239,5 +210,3 @@ theorem GlobalTheory.Deep.finiteDimensional_V_of_good : ∀ (D : D7) (T : Core D
   have hσ : Formalism.L2.Pj.GoodEmb Y.d.c₂ (Formalism.L2.Pj.goodOf Y.d.c₂ Y.d.c₂.F.val.toRingHom) :=
     Formalism.L2.Pj.goodEmb_goodOf _ _
   exact GlobalTheory.cuspW_finiteDimensional_of_isUnf GlobalTheory.abelianSchemeLaws_all.1.secBaseChange Y.U _ hσ (hY.unf _ hσ) G
-end
-end

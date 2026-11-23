@@ -64,17 +64,11 @@ import GroundTheory.LocalFields.FilteredSurj
 import GroundTheory.LocalFields.FormalGroups.Truncation
 import GroundTheory.PAdicHodge.FieldOfNormsCyclBase
 import ReciprocityTheory.GaloisValuations.GlobalA
-public import GroundTheory.LocalFields.MaximalUnramified
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalBridgeLubinTateField
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalBridgeLubinTateFieldStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalEmbeddingRangeEqFieldStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalGlobalArtinCompatibleStatement
-public import GroundTheory.LocalFields.LocalArtinMap
-public import GroundTheory.LocalFields.LubinTatePoints
-public import GroundTheory.LocalFields.UnramifiedHensel
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LubinTateUnramifiedDegreeOne
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-public import Mathlib.NumberTheory.LocalField.Basic
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationLeIffNormEmbedding
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LubinTateUnramifiedDegreeOneStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationLeIffNormEmbeddingStatement
 
 -- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsUniformizerGaloisActionStatement
 
@@ -164,80 +158,6 @@ open scoped GroundTheory.PAdicHodge.CyclNorms
 theorem _root_.GlobalTheory.T.is_sep_closure_of_range_eq : ∀ {l : ℕ} [Fact l.Prime] {F : Type} [Field F] [Algebra F (Om l)] (K : FinExt l),
     Set.range (algebraMap F (Om l)) = (K.1 : Set (Om l)) → IsSepClosure F (Om l) := by
   first | exact @GlobalTheory.CompanionTheory.LTHodge.isSepClosure_Om_of_range | exact GlobalTheory.CompanionTheory.LTHodge.isSepClosure_Om_of_range | (intros; apply GlobalTheory.CompanionTheory.LTHodge.isSepClosure_Om_of_range <;> assumption)
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalBridgeLubinTateFieldStatement
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
-open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge
-open scoped Classical
-open ValuativeRel GroundTheory.LocalField GroundTheory.LocalField.FormalGroup
-open scoped GroundTheory.PAdicHodge.CyclNorms
-
-
-theorem _root_.GlobalTheory.T.local_bridge_lubin_tate_field : ∀ {l : ℕ} [Fact l.Prime] {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
-    {A : ValuationSubring Ω} {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]
-    (Bw : LocBridge l E Ω (Dec (F := E) A) O), GlobalTheory.Pst.Induces Bw →
-    ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
-    [Algebra F (Om l)] [ValuativeExtension F (Om l)] [IsSepClosure F (Om l)]
-    (σ : ↥(Dec (F := E) A)), (σ : G E Ω) ∈ Ine (F := E) A → ∀ g : Om l ≃ₐ[F] Om l,
-    (∀ y, g y = ((Bw.e σ : ↥(GK Bw.Kw)) : GQ l) y) → unramifiedDegree F (Om l) g = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.LTLink.unramifiedDegree_eq_one_of_mem_inertia | exact GlobalTheory.CompanionTheory.LTLink.unramifiedDegree_eq_one_of_mem_inertia | (intros; apply GlobalTheory.CompanionTheory.LTLink.unramifiedDegree_eq_one_of_mem_inertia <;> assumption)
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LubinTateUnramifiedDegreeOneStatement
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
-open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge
-open scoped Classical
-open ValuativeRel GroundTheory.LocalField GroundTheory.LocalField.FormalGroup
-open scoped GroundTheory.PAdicHodge.CyclNorms
-
-
-theorem _root_.GlobalTheory.T.lubin_tate_unramified_degree_one : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
-    {Ωv : Type} [Field Ωv] [ValuativeRel Ωv] [TopologicalSpace Ωv] [IsValuativeTopology Ωv]
-    [Algebra F Ωv] [ValuativeExtension F Ωv] [IsSepClosure F Ωv] [IsSepClosed Ωv]
-    {π : 𝒪[F]} (hπ : Irreducible π) {f : PowerSeries 𝒪[F]} (hf : IsLubinTateSeries π f)
-    (u : 𝒪[F]ˣ) (τ : Ωv ≃ₐ[F] Ωv), unramifiedDegree F Ωv τ = 1 →
-    (∀ n, ∀ x ∈ lubinTateTorsion Ωv (hπ := hπ) hf n,
-      lubinTateGalPointMap (hπ := hπ) hf τ x = (u : 𝒪[F]) • x) →
-    ∀ (y : Ωv) (hy : y ∈ maximalAbelianExtension F Ωv),
-    ((localArtinMap F Ωv (unitsIncl F u⁻¹) ⟨y, hy⟩ : maximalAbelianExtension F Ωv) : Ωv) = τ y := by
-  first | exact @GlobalTheory.CompanionTheory.LTLink.lt_local_artin_inertia | exact GlobalTheory.CompanionTheory.LTLink.lt_local_artin_inertia | (intros; apply GlobalTheory.CompanionTheory.LTLink.lt_local_artin_inertia <;> assumption)
-end
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ValuationLeIffNormEmbeddingStatement
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
-open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge
-open scoped Classical
-open ValuativeRel GroundTheory.LocalField GroundTheory.LocalField.FormalGroup
-open scoped GroundTheory.PAdicHodge.CyclNorms
-
-
-theorem _root_.GlobalTheory.T.valuation_le_iff_norm_embedding : ∀ {l : ℕ} [Fact l.Prime] {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] (φ : F →+* Om l), Continuous φ → ∀ a b : F, a ≤ᵥ b ↔ ‖φ a‖ ≤ ‖φ b‖ := by
-  first | exact @GlobalTheory.CompanionTheory.LocalNorm.vle_iff_norm_le | exact GlobalTheory.CompanionTheory.LocalNorm.vle_iff_norm_le | (intros; apply GlobalTheory.CompanionTheory.LocalNorm.vle_iff_norm_le <;> assumption)
 end
 end
 end

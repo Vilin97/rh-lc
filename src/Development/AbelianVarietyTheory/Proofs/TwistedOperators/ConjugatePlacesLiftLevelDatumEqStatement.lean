@@ -8,8 +8,11 @@ public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AdjointFrameRowReductionConjLinearIntegersStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AdjointFrameRowReductionEqZeroIffMemStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIntegerConjPrescribedResiduesPlacesStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LamHomApply
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IdempotentMulEqZeroOfOrthogonal
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrameAdjointPartAtMovedRationalPointRowStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeVectorAdjointRowIntegralStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LevelDatumConjugatePlacesLevelEqCharactersStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemConjugatePlacesProductIdealOfForallConjPlaceStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowReductionSurjectiveLatticeVectorsPlacesStatement
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -25,6 +28,7 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -32,7 +36,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,149 +48,10 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RevPosRevPos
-import Formalism.LocalToGlobal.IndefiniteReal.ExistsChosenExtremalVector
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeVectorAdjointRowIntegralStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LevelDatumConjugatePlacesLevelEqCharactersStatement
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.LevelStructureProperties
-import Mathlib.Tactic.Linter.HaveILetI
-import Formalism.LocalToGlobal.IndefiniteReal.LinksDefs
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowReductionSurjectiveLatticeVectorsPlacesStatement
-import Mathlib.Tactic.Basify
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrameAdjointPartAtMovedRationalPointRow
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT Formalism.L2.Pj
-open MeasureTheory IsDedekindDomain NumberField Matrix Complex
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Ker GlobalTheory.AdSpan
-open GlobalTheory.SW hiding Level
-open scoped TensorProduct ComplexConjugate Classical
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-namespace GlobalTheory.LiftDat
-
-theorem frMapAdj_partAt_actO_finW : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (hn : T.rank ≤ S.rank) (ΛT : Lt D.host.E T.rank), IsSelfDualC T ΛT → IsAA C.X.Λ ΛT → ∀ (βS : GL (Fin S.rank) (Lev.EAf D)) (βT : GL (Fin T.rank) (Lev.EAf D)), Formalism.L2.DIV.IsFrame βS (stdL D.host.E S.rank) → Formalism.L2.DIV.IsFrame βT ΛT → ∀ (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (ξ : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ), Pg.Nonempty → (∀ PP, PP ∈ Pg ∨ PP ∈ Q → (2 : 𝓞 D.host.E) ∉ PP.asIdeal) → ∀ e : AE D, IsIdemSum e (Pg ∪ Q) → ∀ (a : AE D) (k₀ : GA D S), (∃ b : AE D, a * b = e) → GlobalTheory.LiftLevel.IsMover S T βS βT e a k₀ → GlobalTheory.LiftLevel.IsGen C βS βT Pg Q e a → GlobalTheory.LiftLevel.liftI Pg Q ≠ ⊤ → GlobalTheory.LiftLevel.liftI Pg Q ≠ ⊥ → IsCoprime (GlobalTheory.LiftLevel.liftI Pg Q) (conjI (GlobalTheory.LiftLevel.liftI Pg Q)) → IsCoprime (GlobalTheory.LiftLevel.liftI Pg Q) (Ideal.span {2}) → ∀ y : Matrix (Fin S.rank) (Fin T.rank) D.host.E, frMapAdj S T βS βT (GlobalTheory.LiftLevel.partAt (cA D e) (actO S T k₀ 1 (finW S T y))) = Matrix.of fun i j => GlobalTheory.LiftDat.rowAdj T βT a e (y i) 0 j := by
-  intro D S T C hn ΛT hsd hAA βS βT hfS hfT Pg Q ξ hPg h2 e he a k₀ hab hmov hgen h1 h2' h3 h4 y
-  have hee : e * e = e := GlobalTheory.PlaceDatum.idemSum_mul_self he
-  have hcc : cA D e * cA D e = cA D e := by rw [← map_mul, hee]
-  have hp : ∀ (c : AE D) (z : WO S T), GlobalTheory.LiftLevel.partAt c z = c • z := fun c z => by
-    ext i j; simp [GlobalTheory.LiftLevel.partAt, smul_eq_mul]
-  have hcomm : GlobalTheory.LiftLevel.partAt (cA D e) (actO S T k₀ 1 (finW S T y)) =
-      actO S T k₀ 1 (GlobalTheory.LiftLevel.partAt (cA D e) (finW S T y)) := by
-    rw [hp, hp]
-    show _ = HMul.hMul (HMul.hMul (mt T 1) ((cA D e • finW S T y : WO S T) : Matrix (Fin T.rank) (Fin S.rank) (AE D))) (mt S k₀⁻¹)
-    rw [Matrix.mul_smul, Matrix.smul_mul]
-    rfl
-  have hx : IsHalf (cA D e) (GlobalTheory.LiftLevel.partAt (cA D e) (finW S T y)) := fun i j => by
-    simp only [GlobalTheory.LiftLevel.partAt, Matrix.map_apply, ← mul_assoc, hcc]
-  rw [hcomm, hmov.2.2 _ hx]
-  unfold GlobalTheory.LiftLevel.adjA frMapAdj
-  rw [C.m.gS]
-  rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Units.mul_inv, Matrix.one_mul]
-  have hi : ((1 : Matrix (Fin S.rank) (Fin S.rank) D.host.E)⁻¹).map (incA D) = 1 := by
-    rw [inv_one]; exact Matrix.map_one (incA D) (map_zero _) (map_one _)
-  rw [hi, Matrix.one_mul]
-  ext i j
-  simp only [rowAdj, Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, Matrix.transpose_apply,
-    GlobalTheory.LiftLevel.partAt, finW]
-
-end GlobalTheory.LiftDat
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrameAdjointPartAtMovedRationalPointRowStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT Formalism.L2.Pj
-open MeasureTheory IsDedekindDomain NumberField Matrix Complex
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Ker GlobalTheory.AdSpan
-open GlobalTheory.SW hiding Level
-open scoped TensorProduct ComplexConjugate Classical
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-
-theorem _root_.GlobalTheory.T.frameAdjoint_partAt_movedRationalPoint_row : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (hn : T.rank ≤ S.rank) (ΛT : Lt D.host.E T.rank), IsSelfDualC T ΛT → IsAA C.X.Λ ΛT → ∀ (βS : GL (Fin S.rank) (Lev.EAf D)) (βT : GL (Fin T.rank) (Lev.EAf D)), Formalism.L2.DIV.IsFrame βS (stdL D.host.E S.rank) → Formalism.L2.DIV.IsFrame βT ΛT → ∀ (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (ξ : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ), Pg.Nonempty → (∀ PP, PP ∈ Pg ∨ PP ∈ Q → (2 : 𝓞 D.host.E) ∉ PP.asIdeal) → ∀ e : AE D, IsIdemSum e (Pg ∪ Q) → ∀ (a : AE D) (k₀ : GA D S), (∃ b : AE D, a * b = e) → GlobalTheory.LiftLevel.IsMover S T βS βT e a k₀ → GlobalTheory.LiftLevel.IsGen C βS βT Pg Q e a → GlobalTheory.LiftLevel.liftI Pg Q ≠ ⊤ → GlobalTheory.LiftLevel.liftI Pg Q ≠ ⊥ → IsCoprime (GlobalTheory.LiftLevel.liftI Pg Q) (conjI (GlobalTheory.LiftLevel.liftI Pg Q)) → IsCoprime (GlobalTheory.LiftLevel.liftI Pg Q) (Ideal.span {2}) → ∀ y : Matrix (Fin S.rank) (Fin T.rank) D.host.E, frMapAdj S T βS βT (GlobalTheory.LiftLevel.partAt (cA D e) (actO S T k₀ 1 (finW S T y))) = Matrix.of fun i j => GlobalTheory.LiftDat.rowAdj T βT a e (y i) 0 j := by
-  first | exact @GlobalTheory.LiftDat.frMapAdj_partAt_actO_finW | exact GlobalTheory.LiftDat.frMapAdj_partAt_actO_finW | (intros; apply GlobalTheory.LiftDat.frMapAdj_partAt_actO_finW <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemConjugatePlacesProductIdealOfForallConjPlace
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT Formalism.L2.Pj
-open MeasureTheory IsDedekindDomain NumberField Matrix Complex
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Ker GlobalTheory.AdSpan
-open GlobalTheory.SW hiding Level
-open scoped TensorProduct ComplexConjugate Classical
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-namespace GlobalTheory.LiftLevel.InfMem
-
-theorem conjI_eq_comap (D : D7) (P : Ideal (𝓞 D.host.E)) : conjI P = P.comap GlobalTheory.SW.Lev.bar := by
-  ext a; rw [GlobalTheory.SW.Lev.mem_conjI, Ideal.mem_comap]
-
-theorem bar_surj (D : D7) : Function.Surjective (GlobalTheory.SW.Lev.bar : 𝓞 D.host.E →+* 𝓞 D.host.E) :=
-  fun a => ⟨GlobalTheory.SW.Lev.bar a, GlobalTheory.SW.Lev.bar_bar a⟩
-
-theorem conjI_isMaximal (D : D7) (PP : Formalism.L2.DIV.Pl D.host.E) : (conjI PP.asIdeal).IsMaximal := by
-  rw [conjI_eq_comap]
-  haveI := PP.isMaximal
-  exact Ideal.comap_isMaximal_of_surjective _ (bar_surj D)
-
-theorem conjI_inj (D : D7) {PP PP' : Formalism.L2.DIV.Pl D.host.E} (h : conjI PP.asIdeal = conjI PP'.asIdeal) : PP = PP' := by
-  apply HeightOneSpectrum.ext
-  ext a
-  have := congrArg (fun I => GlobalTheory.SW.Lev.bar a ∈ I) h
-  simp only [GlobalTheory.SW.Lev.mem_conjI, GlobalTheory.SW.Lev.bar_bar] at this
-  exact Iff.of_eq this
-
-theorem mem_liftI (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (x : 𝓞 D.host.E)
-    (hx : ∀ PP ∈ Pg ∪ Q, x ∈ conjI PP.asIdeal) : x ∈ GlobalTheory.LiftLevel.liftI Pg Q := by
-  unfold GlobalTheory.LiftLevel.liftI
-  rw [Ideal.prod_eq_iInf_of_pairwise_isCoprime]
-  · simp only [Submodule.mem_iInf]
-    exact hx
-  · intro PP _ PP' _ hne
-    have hne' : conjI PP.asIdeal ≠ conjI PP'.asIdeal := fun h => hne (conjI_inj D h)
-    rw [Function.onFun, Ideal.isCoprime_iff_sup_eq]
-    exact Ideal.IsMaximal.coprime_of_ne (conjI_isMaximal D PP) (conjI_isMaximal D PP') hne'
-
-theorem main : ∀ (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (x : 𝓞 D.host.E), (∀ PP ∈ Pg ∪ Q, x ∈ conjI PP.asIdeal) → x ∈ GlobalTheory.LiftLevel.liftI Pg Q := fun D Pg Q x hx => mem_liftI D Pg Q x hx
-
-end GlobalTheory.LiftLevel.InfMem
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemConjugatePlacesProductIdealOfForallConjPlaceStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT Formalism.L2.Pj
-open MeasureTheory IsDedekindDomain NumberField Matrix Complex
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Ker GlobalTheory.AdSpan
-open GlobalTheory.SW hiding Level
-open scoped TensorProduct ComplexConjugate Classical
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-
-theorem _root_.GlobalTheory.T.mem_conjugatePlacesProductIdeal_of_forall_conj_place : ∀ (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (x : 𝓞 D.host.E), (∀ PP ∈ Pg ∪ Q, x ∈ conjI PP.asIdeal) → x ∈ GlobalTheory.LiftLevel.liftI Pg Q := by
-  first | exact @GlobalTheory.LiftLevel.InfMem.main | exact GlobalTheory.LiftLevel.InfMem.main | (intros; apply GlobalTheory.LiftLevel.InfMem.main <;> assumption)
-end
-end
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.LevelStructureProperties
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RevPosRevPos
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjugatePlacesLiftLevelDatumEq
 

@@ -1,8 +1,16 @@
 module
 
 public import Formalism.LocalToGlobal.IndefiniteReal.InBlock
-public import Formalism.LocalToGlobal.IndefiniteReal.CxPass
-public import Formalism.LocalToGlobal.IndefiniteReal.PrimitiveStatementsWithPassage
+public import Formalism.LocalToGlobal.IndefiniteReal.CutPassage3S
+import Formalism.LocalToGlobal.Divisibility.RowLatLemmas
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
+public import Formalism.LocalToGlobal.GlobalTheory.PassageBaseSymmetricLevels
+public import Formalism.LocalToGlobal.IndefiniteReal.CxPassA
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelAmbTransfer
+public import Formalism.LocalToGlobal.IndefiniteReal.RowGSurj
+import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
+import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
+import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -26,6 +34,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -39,191 +49,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-import Formalism.LocalToGlobal.Divisibility.RowLatLemmas
-public import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
-public import Formalism.LocalToGlobal.GlobalTheory.PassageBaseSymmetricLevels
-public import Formalism.LocalToGlobal.IndefiniteReal.IndefiniteEpsilonOperator
-public import Formalism.LocalToGlobal.IndefiniteReal.TransferStatement
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Formalism.LocalToGlobal.GlobalTheory.DivPassage
-import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
-public import Formalism.LocalToGlobal.IndefiniteReal.CxPassSk
-import Formalism.LocalToGlobal.IndefiniteReal.PartsOrth
-import Formalism.QuotientMetricDivisors.Statement
-public import Formalism.LocalToGlobal.GlobalTheory.DivPassage
-public import Formalism.LocalToGlobal.IndefiniteReal.AllPartsTransferHolds
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.ReduceModChar
-public import Formalism.LocalToGlobal.IndefiniteReal.RowGSurj
-import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
-
--- Source module: Formalism.LocalToGlobal.IndefiniteReal.CutPassage3S
-
-section
-
-@[expose] public section
-
-open Module NumberField IsDedekindDomain
-open scoped Matrix ComplexOrder InnerProductSpace
-
-noncomputable section
-
-namespace Formalism.IndefR.CxPass
-
-open Formalism.DivisionValues Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx
-
-def CutPassage3S : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (G : Type) [Group G] [Fintype G]
-    (Pl0 I0 Ty T : Type) (m : ℕ) (A3 : FamIn3 K G Pl0 I0 Ty T m) (s : ℕ) (P0 : Subgroup G) (ψ0 : P0 →* Kˣ)
-    (P1 : Subgroup G) (ψ1 : P1 →* Kˣ) (Dc : ∀ Zs : DefSub A3.fam3.amb3, DefCols (A3.side3 P1 ψ1 Zs))
-    (Sp : ∀ Zs : DefSub A3.fam3.amb3, SPer (Dc Zs)) (Zsc : DefSub A3.fam3.amb3 → IndefScale A3.fam3.base3)
-    (X : CxData A3.fam3.amb3) (C CH : ℝ)
-    (gE : Representation ℂ G X.EE) (S : Type) [Fintype S] (Ws : S → Type) [∀ s, AddCommGroup (Ws s)]
-    [∀ s, Module K (Ws s)] [∀ s, FiniteDimensional K (Ws s)] (τ : ∀ s, Representation K G (Ws s)) (nbar : ℝ),
-    A3.fam3.Ok3 s → A3.fam3.TypesSep3 →
-    X.zs.Stable → X.zs.InBlock → X.H4pos →
-    (A3.side3 P0 ψ0 X.zs).Pos → (A3.side3 P1 ψ1 X.zs).Pos →
-    (∀ b, X.H2 (crdOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc) b) → (∀ b, X.RATmu (crdOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc) b) →
-    PrincipalLevelBijectivity A3 X (P1 := P1) (ψ1 := ψ1) (Dc := Dc) (Sp := Sp) (Zsc := Zsc) →
-    X.RATmu (crdOf3 A3 ⊥ 1 P1 ψ1 Dc Sp Zsc) false →
-    (∀ (g : G) (x y : X.EE), ⟪gE g x, gE g y⟫_ℂ = ⟪x, y⟫_ℂ) → GEquiv3 A3 X gE →
-    X.nP false = (Nat.card P0 : ℝ) → X.nP true = (Nat.card P1 : ℝ) →
-    Formalism.IndefR.TransferLatticeStatement.IsGood τ → CharsX τ A3.A.fam.X → Formalism.IndefR.IndefiniteEpsilonOperator.M1 τ ⟨P0, ψ0⟩ → 0 < nbar →
-    NearConstantMultiplicities τ ⟨P1, ψ1⟩ nbar ((faceOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc X.zs).Z.num C CH).de →
-    ((faceOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc X.zs).Z.num C CH).la = Formalism.IndefR.IndefiniteEpsilonOperator.la G →
-      Passage ((faceOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc X.zs).Z.num C CH)
-        (X.data (crdOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc) false) (X.data (crdOf3 A3 P0 ψ0 P1 ψ1 Dc Sp Zsc) true)
-
-end Formalism.IndefR.CxPass
-end
-end
-end
-
--- Source module: Formalism.LocalToGlobal.IndefiniteReal.CxPassA
-
-section
-
-@[expose] public section
-
-open Module NumberField IsDedekindDomain
-open scoped Matrix ComplexOrder InnerProductSpace
-
-noncomputable section
-
-namespace Formalism.IndefR.CxPass
-
-open Formalism.DivisionValues Formalism.L2.Indef Formalism.L2.DIV Formalism.IndefR.Cx Formalism.L2.GlobalTheoryTheory.DivPassage
-
-section Bridge
-
-variable {K : Type} [Field K] [NumberField K] {G : Type} [Group G] [Fintype G]
-  {U : Type} [AddCommGroup U] [Module K U]
-
-theorem epOp_eq_epP (σ : Representation K G U) (P : Subgroup G) (ψ : P →* Kˣ) (χ : P →* (𝓞 K)ˣ)
-    (hχ : ∀ h, (((χ h : (𝓞 K)ˣ) : 𝓞 K) : K) = ((ψ h : Kˣ) : K)) :
-    Formalism.IndefR.IndefiniteEpsilonOperator.epOp σ ⟨P, ψ⟩ = Formalism.IndefR.TransferLatticeStatement.epP P χ σ := by
-  unfold Formalism.IndefR.IndefiniteEpsilonOperator.epOp Formalism.IndefR.TransferLatticeStatement.epP
-  simp only [hχ]
-  congr
-  exact Subsingleton.elim _ _
-
-theorem nOf_eq_nS {W : Type} [AddCommGroup W] [Module K W] (τ : Representation K G W) (P : Subgroup G) (ψ : P →* Kˣ)
-    (χ : P →* (𝓞 K)ˣ) (hχ : ∀ h, (((χ h : (𝓞 K)ˣ) : 𝓞 K) : K) = ((ψ h : Kˣ) : K)) :
-    Formalism.IndefR.IndefiniteEpsilonOperator.nOf τ ⟨P, ψ⟩ = Formalism.IndefR.TransferLatticeStatement.nS τ P χ := by
-  unfold Formalism.IndefR.IndefiniteEpsilonOperator.nOf Formalism.IndefR.TransferLatticeStatement.nS
-  first
-  | (unfold Formalism.IndefR.IndefiniteEpsilonOperator.epSp; rw [epOp_eq_epP τ P ψ χ hχ])
-  | (simp only [Formalism.IndefR.IndefiniteEpsilonOperator.epSp, epOp_eq_epP τ P ψ χ hχ])
-  | (rw [← epOp_eq_epP τ P ψ χ hχ]; rfl)
-
-end Bridge
-
-namespace In
-
-variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {m : ℕ}
-  (I : In K G Pl0 T m)
-
-end In
-
-end Formalism.IndefR.CxPass
-end
-end
-end
-
--- Source module: Formalism.LocalToGlobal.IndefiniteReal.LevelAmbTransfer
-
-section
-
-@[expose] public section
-
-open Module NumberField IsDedekindDomain
-
-noncomputable section
-
-namespace Formalism.IndefR.LatticeTransfer
-
-open Formalism.IndefR.TransferLatticeStatement Formalism.HN Formalism.L2.GlobalTheoryTheory.DivPassage
-
-theorem levelAmb_transfer
-    {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] {D0 D1 : ℕ}
-    (A : LevelAmb K D0 D1) {G : Type} [Group G] [Fintype G] {T : A.S → Type}
-    [∀ s, AddCommGroup (T s)] [∀ s, Module K (T s)] [∀ s, FiniteDimensional K (T s)]
-    (τ : ∀ s, Representation K G (T s)) (H₀ : Subgroup G) (χ₀ : H₀ →* (𝓞 K)ˣ) (H : Subgroup G)
-    (χ : H →* (𝓞 K)ˣ) (ρ : Representation K G (Fin A.Dg → K))
-    (hτ : IsGood τ) (hM : M1 τ H₀ χ₀)
-    (h0 : A.ep0.mulVecLin = epP H₀ χ₀ ρ) (h1 : A.ep1.mulVecLin = epP H χ ρ)
-    (hs : ∀ s, (A.es s).mulVecLin = eS (τ s) ρ) (hn : ∀ s, A.nS s = nS (τ s) H χ)
-    (hG : A.G = Fintype.card G) (hgood : eGood τ ρ = LinearMap.id)
-    (hX : A.FramesG) (hL : Submodule.IsFullLattice K A.Rg) (hst : ∀ g : G, ∀ a ∈ A.Rg, ρ g a ∈ A.Rg)
-    (hU : IsUnitaryRep (Pi.basisFun K (Fin A.Dg)) A.Xg ρ) :
-    A.Ranks ∧ A.Deg0 ∧ A.Deg1 ∧ (A.latticeAtSharpLevel ≠ ⊥ → A.MaxT) := by
-  have h15 := all_parts_transfer_holds
-  have hlat : IsGLat ρ A.Rg := by
-    have : Submodule.IsFullLattice K A.Rg := hL
-    exact ⟨Submodule.IsLattice.fg K A.Rg, Submodule.IsFullLattice.span_eq_top, hst⟩
-  have p := h15 K G A.S T τ H₀ χ₀ H χ hτ hM _ _ (Pi.basisFun K (Fin A.Dg)) A.Xg ρ hX hU A.Rg hlat
-  have q := h15 K G A.S T τ H₀ χ₀ H₀ χ₀ hτ hM _ _ (Pi.basisFun K (Fin A.Dg)) A.Xg ρ hX hU A.Rg hlat
-  have e0 : A.latticeAtBaseLevel = cut A.Rg (epP H₀ χ₀ ρ ∘ₗ eGood τ ρ) := by
-    rw [hgood, LinearMap.comp_id, ← h0]; rfl
-  have e1 : A.latticeAtSharpLevel = cut A.Rg (epP H χ ρ ∘ₗ eGood τ ρ) := by
-    rw [hgood, LinearMap.comp_id, ← h1]; rfl
-  have es : ∀ s, A.Rs s = cut A.Rg (epP H₀ χ₀ ρ ∘ₗ eS (τ s) ρ) := fun s => by
-    rw [← h0, ← hs, ← Matrix.mulVecLin_mul]; rfl
-  unfold TransferLatticeConditions at p q
-  dsimp only at p q
-  simp only [← e0, ← e1, ← es, ← hn, ← hG] at p
-  have hM' : ∀ s, nS (τ s) H₀ χ₀ = 1 := hM
-  simp only [← e0, ← es, hM', one_mul] at q
-  obtain ⟨⟨-, r1⟩, ⟨-, -, -, -, -, -, d0⟩, -, ⟨d1, -⟩, m⟩ := p
-  have r0 := q.1.2
-  have h85 : (8.5 : ℝ) = 17 / 2 := by norm_num
-  rw [h85] at d1 m
-  refine ⟨⟨r0, r1⟩, ?_, ?_, fun h => (m h).1⟩
-  · unfold LevelAmb.Deg0
-    rw [r0, Nat.cast_sum]
-    exact sub_le_iff_le_add'.1 d0
-  · unfold LevelAmb.Deg1
-    rw [r1]
-    have := (abs_le.1 d1).1
-    exact sub_le_iff_le_add.2 (by
-      have h2 := neg_le_sub_iff_le_add.1 this
-      exact h2)
-
-end Formalism.IndefR.LatticeTransfer
-end
-end
-end
-
--- Source module: Formalism.LocalToGlobal.IndefiniteReal.CutPassage3SOfSteps
-
-section
 
 @[expose] public section
 
@@ -386,6 +211,3 @@ theorem cutPassage3S_of_steps (h : Steps3) : CutPassage3S := by
     τ nbar _ hρ hJ hR hMet hFr hU hLat hGL hS (hG S Ws τ) hτ hX hM1 hn hM2 hla
 
 end Formalism.IndefR.CxPass
-end
-end
-end

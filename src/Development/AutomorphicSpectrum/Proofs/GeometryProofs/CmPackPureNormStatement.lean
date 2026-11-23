@@ -42,9 +42,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AutomorphicSpectrum.Proofs.AdelicProofs.PadicEmbeddingDiscreteValuationRingStatement
-public import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
-public import Mathlib.RingTheory.DedekindDomain.Different
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DifferentTwistedGeneratorExists
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DifferentTwistedGeneratorExistsStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigenLocalBasisLogNormStatement
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsTransition
 public import Development.WeilBound.CoreStatements.SesquilinearFractions.DOkBasis
@@ -84,22 +82,6 @@ theorem UpperTheory.Reformulated.B.Ga10.rt0_conj_neg_ne_zero :
     rw [him] at h1
     nlinarith [mul_self_nonneg H.rt0.re]
   apply Complex.ext <;> simp [hre]
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DifferentTwistedGeneratorExistsStatement
-
-section
-
-@[expose] public section
-
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
-open scoped ComplexOrder
-
-theorem _root_.GlobalTheory.T.different_twisted_generator_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (ℓ : Nat.Primes), ∃ δ : E, δ ≠ 0 ∧ ∀ j : E →+* ℂ_[ℓ], Real.log ‖j δ‖ = logIdeal (j.comp (algebraMap (𝓞 E) E)) (differentIdeal ℤ (𝓞 E)) - Real.log ‖j (H.rt : E)‖ ∧ Real.log ‖j (IsCMField.complexConj E δ)‖ = Real.log ‖j δ‖ := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Fl.RelDiff.exists_local_generator | exact GlobalTheory.CompanionTheory.Ar.Fl.RelDiff.exists_local_generator | (intros; apply GlobalTheory.CompanionTheory.Ar.Fl.RelDiff.exists_local_generator <;> assumption)
 end
 end
 

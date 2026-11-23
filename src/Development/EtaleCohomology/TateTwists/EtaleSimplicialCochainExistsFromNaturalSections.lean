@@ -1,7 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
-public import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
+public import Development.EtaleCohomology.TateTwists.EtaleSchemeGlobalSectionCohomologyClass
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -28,6 +28,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Lemma
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -40,32 +42,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Linter.Style
-
--- Source module: Development.EtaleCohomology.TateTwists.EtaleSchemeGlobalSectionCohomologyClass
-
-section
-
-@[expose] public section
-
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
-
-def LateralTheory.EtaleFoundations.EtaleSchemeGlobalSectionCohomologyClass : Prop :=
-  ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (I : Cx R) (m n k : ℤ), m + 1 = n → n + 1 = k →
-    (∀ z : Sec (I.X n) X, Sec.map (I.d n k) z = 0 → ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n,
-      (∀ (U : Scheme.{0}) (x : U ⟶ X), ev (R := R) α.1 0 n (by simp) U x = Sec.res x z) ∧
-      ∀ (p : ℕ) s h U x, ev (R := R) α.1 (p + 1) s h U x = 0) ∧
-    ∀ α : Cocycle ((chains R).obj (sch.obj X)) I n,
-      Sec.map (I.d n k) (ev (R := R) α.1 0 n (by simp) X (𝟙 X)) = 0 ∧
-      (CohomologyClass.mk α = 0 ↔ ∃ y : Sec (I.X m) X,
-        Sec.map (I.d m n) y = ev (R := R) α.1 0 n (by simp) X (𝟙 X))
-end
-end
-
--- Source module: Development.EtaleCohomology.TateTwists.EtaleSimplicialCochainExistsFromNaturalSections
-
-section
 
 @[expose] public section
 
@@ -173,5 +149,3 @@ theorem LateralTheory.EtaleFoundations.etaleSimplicialCochain_scheme_class_of_ev
       rw [δ_add, hβ]
       show α.1 - δ m n γ + δ m n γ = α.1
       abel
-end
-end

@@ -1,8 +1,7 @@
 module
 
 public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
-public import Mathlib.Analysis.Normed.Field.Basic
-public import Mathlib.Topology.MetricSpace.Ultra.Basic
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.QuadRoot
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -21,9 +20,11 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -31,9 +32,6 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
-import Mathlib.Tactic.Monotonicity.Lemmas
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -46,80 +44,11 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.TypeStar
-public import Mathlib.Topology.MetricSpace.Contracting
-import Mathlib.Topology.Sheaves.Presheaf
-public import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Tactic.TypeStar
 import Mathlib.Topology.Sheaves.Init
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.QuadRoot
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace MassDataIdxEmb
-
-open Metric
-
-theorem quad_root {K : Type*} [NormedField K] [IsUltrametricDist K] [CompleteSpace K]
-    (c0 c1 : K) (h1 : ‖c1‖ = 1) (h0 : ‖c0‖ < 1) :
-    ∃ x : K, x * x + c1 * x + c0 = 0 := by
-  have hnorm : ∀ x : K, ‖x‖ ≤ ‖c0‖ → ‖c1 + x‖ = 1 := by
-    intro x hx
-    have hne : ‖c1‖ ≠ ‖x‖ := by rw [h1]; exact (lt_of_le_of_lt hx h0).ne'
-    rw [IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hne, h1]
-    exact max_eq_left (hx.trans h0.le)
-  have hne0 : ∀ x : K, ‖x‖ ≤ ‖c0‖ → c1 + x ≠ 0 := fun x hx h => by
-    have h' := hnorm x hx
-    rw [h, norm_zero] at h'
-    exact zero_ne_one h'
-  set f : K → K := fun x => -c0 / (c1 + x) with hf
-  have hmaps : Set.MapsTo f (closedBall 0 ‖c0‖) (closedBall 0 ‖c0‖) := by
-    intro x hx
-    rw [mem_closedBall_zero_iff] at hx ⊢
-    simp only [hf, norm_div, norm_neg, hnorm x hx, div_one, le_refl]
-  haveI : IsClosed (closedBall (0 : K) ‖c0‖) := isClosed_closedBall
-  haveI : CompleteSpace (closedBall (0 : K) ‖c0‖) := IsClosed.completeSpace_coe
-  haveI : Nonempty (closedBall (0 : K) ‖c0‖) := ⟨⟨0, mem_closedBall_self (norm_nonneg _)⟩⟩
-  have hcon : ContractingWith ⟨‖c0‖, norm_nonneg _⟩ (hmaps.restrict f _ _) := by
-    refine ⟨NNReal.coe_lt_coe.1 (by rw [NNReal.coe_one]; exact h0),
-      LipschitzWith.of_dist_le_mul fun a b => ?_⟩
-    have ha := mem_closedBall_zero_iff.1 a.2
-    have hb := mem_closedBall_zero_iff.1 b.2
-    rw [Subtype.dist_eq, Subtype.dist_eq, dist_eq_norm, dist_eq_norm]
-    show ‖f a - f b‖ ≤ ‖c0‖ * ‖(a : K) - b‖
-    have he : f a - f b = c0 * ((a : K) - b) / ((c1 + a) * (c1 + b)) := by
-      simp only [hf]
-      field_simp [hne0 _ ha, hne0 _ hb]
-      ring
-    rw [he, norm_div, norm_mul, norm_mul, hnorm _ ha, hnorm _ hb, mul_one, div_one]
-  obtain ⟨x0, hx0e⟩ : ∃ x0 : closedBall (0 : K) ‖c0‖, hmaps.restrict f _ _ x0 = x0 :=
-    ⟨_, hcon.fixedPoint_isFixedPt⟩
-  have hfix : f (x0 : K) = x0 := congrArg Subtype.val hx0e
-  refine ⟨(x0 : K), ?_⟩
-  have hx0 := hne0 _ (mem_closedBall_zero_iff.1 x0.2)
-  simp only [hf] at hfix
-  rw [div_eq_iff hx0] at hfix
-  linear_combination -hfix
-
-end MassDataIdxEmb
-end
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.GenOfTwo
-
-section
 
 @[expose] public section
 
@@ -248,6 +177,3 @@ theorem emb_of_two (h2 : Module.finrank F E = 2) (p : HeightOneSpectrum (𝓞 F)
   exact ⟨((IntermediateField.adjoin.powerBasis hbint).lift x hpb).comp e.symm.toAlgHom⟩
 
 end MassDataIdxEmb
-end
-end
-end

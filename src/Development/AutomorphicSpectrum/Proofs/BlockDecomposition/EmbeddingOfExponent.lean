@@ -53,11 +53,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Congruen
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeckeOperatorExists
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ModulusTrivialOnLeviCompactStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviEmbLeviProjMemKm
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Development.AbelianVarietyTheory.Definitions.Foundations.SmoothPartStable
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyEquivOfRangeEq
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.LeviEmbMemNormalizerLower
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SupportOfExponentOfCasselman
 
 -- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DeepLevelSubgroupsFiltration
 
@@ -229,36 +225,6 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.SplitWe
 
 theorem _root_.GlobalTheory.T.jacquet_vector_fixed_deep_level : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ) (hd : ∑ _a : Fin n, 1 = n) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin n) k) V), IsSmooth π → ∀ w : Jacquet π (unipRad k (stdBlocks (fun _ : Fin n => 1) hd)), ∃ m, 1 ≤ m ∧ ∀ u ∈ PositivityTheory.Lbc.KM k n (Zls.Km k n m) (fun _ : Fin n => 1) hd, jac (stdBlocks (fun _ : Fin n => 1) hd) π u w = w := by
   first | exact @GlobalTheory.CompanionTheory.JacSmooth.jac_fixed_of_smooth | exact GlobalTheory.CompanionTheory.JacSmooth.jac_fixed_of_smooth | (intros; apply GlobalTheory.CompanionTheory.JacSmooth.jac_fixed_of_smooth <;> assumption)
-end
-end
-
--- Source module: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SupportOfExponentOfCasselman
-
-section
-
-@[expose] public section
-
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.SplitWeil ValuativeRel
-
-namespace GlobalTheory.CompanionTheory.PinLift
-
-theorem gl_one_comm {k : Type} [Field k] (a b : GL (Fin 1) k) : a * b = b * a := by
-  apply Units.ext
-  ext i j
-  have hi : i = 0 := Subsingleton.elim _ _
-  have hj : j = 0 := Subsingleton.elim _ _
-  subst hi
-  subst hj
-  simp only [Units.val_mul, Matrix.mul_apply, Fin.sum_univ_one]
-  exact mul_comm _ _
-
-noncomputable def torusCharHom {k : Type} [Field k] {n : ℕ} (ξ : Fin n → (kˣ →* ℂˣ)) :
-    (∀ _ : Fin n, GL (Fin 1) k) →* ℂ where
-  toFun := PositivityTheory.Lbc.torusChar ξ
-  map_one' := by simp [PositivityTheory.Lbc.torusChar]
-  map_mul' a b := by simp [PositivityTheory.Lbc.torusChar, Finset.prod_mul_distrib]
-
-end GlobalTheory.CompanionTheory.PinLift
 end
 end
 

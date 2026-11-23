@@ -1,7 +1,8 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
-public import Mathlib.RingTheory.KrullDimension.Basic
+public import Lemmata.FirstBlockLemmaB.Imports
+public import Lemmata.GeneralBFactBis.Imports
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -16,12 +17,21 @@ import Mathlib.Data.NNRat.Floor
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
-public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+public import Mathlib.RingTheory.GradedAlgebra.Radical
+import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -29,6 +39,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -41,95 +52,14 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Mathlib.Data.ENat.Basic
-public import Mathlib.Algebra.Order.AddGroupWithTop
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-public import Mathlib.RingTheory.GradedAlgebra.Radical
-import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
+import Mathlib.Topology.Sheaves.Init
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAA
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAC
 import Std.Tactic.BVDecide.Normalize.Prop
 public import Mathlib.RingTheory.Ideal.Height
-
--- Source module: Lemmata.FirstBlockLemmaB.Imports
-
-section
-
-@[expose] public section
-
-universe u_4
-
-namespace Bl.FirstBlockLemmaB
-
-theorem goal1 :
-  ∀ {R : Type u_4} [inst : CommRing.{u_4} R] {P Q : Ideal.{u_4} R} [Ideal.IsPrime.{u_4} P],
-  LE.le.{u_4} P Q →
-    ∀ {x : R},
-      Membership.mem.{u_4, u_4} Q x →
-        Not (Membership.mem.{u_4, u_4} P x) →
-          LE.le.{0} (HAdd.hAdd.{0, 0, 0} (ringKrullDim.{u_4} (HasQuotient.Quotient.{u_4, u_4} R Q)) 1)
-            (ringKrullDim.{u_4} (HasQuotient.Quotient.{u_4, u_4} R P)) := by
-  intro R _ P Q _ hPQ x hxQ hxP
-  have hne : Ideal.Quotient.mk P x ≠ 0 := by
-    rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
-  refine ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hPQ)
-    (Ideal.Quotient.factor_surjective hPQ) (r := Ideal.Quotient.mk P x)
-    (mem_nonZeroDivisors_of_ne_zero hne) ?_
-  rw [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem]
-  exact hxQ
-
-end Bl.FirstBlockLemmaB
-end
-end
-
--- Source module: Lemmata.GeneralBFactBis.Imports
-
-section
-
-@[expose] public section
-
-namespace Bl.general_b_fact_bis
-
-theorem goal1 :
-  ∀ {x : WithBot.{0} ENat} {m : Nat},
-  Eq.{1} (HAdd.hAdd.{0, 0, 0} x 1) (Nat.cast.{0} (HAdd.hAdd.{0, 0, 0} m 1)) → Eq.{1} x (Nat.cast.{0} m) := by
-  intro x m h
-  induction x using WithBot.recBotCoe with
-  | bot =>
-    rw [WithBot.bot_add, ← WithBot.coe_natCast] at h
-    exact absurd h.symm WithBot.coe_ne_bot
-  | coe e =>
-    rw [← WithBot.coe_one, ← WithBot.coe_add, ← WithBot.coe_natCast, WithBot.coe_inj] at h
-    rw [← WithBot.coe_natCast, WithBot.coe_inj]
-    induction e using ENat.recTopCoe with
-    | top =>
-      rw [top_add] at h
-      exact absurd h.symm (ENat.natCast_ne_top _)
-    | coe n =>
-      rw [← ENat.natCast_one, ← ENat.natCast_add, ENat.natCast_inj] at h
-      rw [ENat.natCast_inj]
-      omega
-
-end Bl.general_b_fact_bis
-end
-end
-
--- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
-
-section
 
 @[expose] public section
 
@@ -333,6 +263,3 @@ theorem mk_chartIdeal_X_self (V : Ideal (MRingOver F ι)) (j : ∀ k, ι k) (k :
 end CycChart
 
 end ReciprocityTheory.ChartRestriction.G.AI.I1
-end
-end
-end

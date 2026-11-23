@@ -59,9 +59,7 @@ import ReciprocityTheory.Automorphisms.PlaceA
 import Mathlib.RingTheory.PicardGroup
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PotSemistableOfPotCrystallineDecompositionGroupStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsPotSemistableIndependentOfInducingEmbeddingStatement
-public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousIotaOQOfData
-import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousIotaOQOfDataStatement
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeilDeligneParamAboveLIndependentLocalEmbedding
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaPolynomialKillsPotentiallyCrystallineModu
@@ -168,19 +166,6 @@ theorem _root_.GlobalTheory.T.inertiaPolynomial_kills_potentiallyCrystalline_mod
     exact hd'
   refine (Finset.sum_congr rfl fun n _ => ?_).trans hsum
   rw [map_pow, GlobalTheory.KillLocal.actPow]
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ContinuousIotaOQOfDataStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain
-
-theorem _root_.GlobalTheory.T.continuous_iotaOQ' : ∀ {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) (A : NAut N) (i : N.Loc), Continuous (iotaOQ N A i) := by
-  first | exact @GlobalTheory.CoeffEmbedding.continuous_iotaOQ_of_data | exact GlobalTheory.CoeffEmbedding.continuous_iotaOQ_of_data | (intros; apply GlobalTheory.CoeffEmbedding.continuous_iotaOQ_of_data <;> assumption)
 end
 end
 

@@ -1,0 +1,305 @@
+module
+
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.DCompl
+import Mathlib.Algebra.Order.Floor.Extended
+import Mathlib.Algebra.Order.Floor.Semifield
+import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandRadius
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Combinatorics.Enumerative.DyckWord
+import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
+import Mathlib.Data.NNRat.Floor
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Geometry.Euclidean.Volume.Basic
+import Mathlib.NumberTheory.Chebyshev
+import Mathlib.NumberTheory.Height.NumberField
+import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Echelon.Zsqrtd
+import Mathlib.Tactic.Inclusion.Extension.Core.Core
+import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
+import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
+import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.DOkBasis
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsCommonDenominatorCoeffs
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.PiTensorProduct
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.ReduceModChar
+
+-- Source module: Development.WeilBound.CoreStatements.SesquilinearFractions.AlgebraMapIntegralCoeffsRaw
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
+open scoped ComplexOrder
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.Fl
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
+
+theorem algebraMap_bar_eq_conj (a : 𝓞 E) :
+    algebraMap (𝓞 E) E (H.bar a) = IsCMField.complexConj E (algebraMap (𝓞 E) E a) := H.bar_eq a
+
+def familyCombination (D : Datum H) {p : ℕ} (x' : Fin p → D.La) : (Fin p → 𝓞 E) →ₗ[𝓞 E] D.La where
+  toFun c := ∑ a, c a • x' a
+  map_add' c c' := by simp [add_smul, Finset.sum_add_distrib]
+  map_smul' r c := by simp [Finset.smul_sum, smul_smul]
+
+section Maps
+
+variable (D : Datum H) {p : ℕ} (x' : Fin p → D.La) (m : ℕ)
+  (hm : ∀ y a, ∃ g : 𝓞 E, (g : E) = m * projectionCoeffs D x' y a)
+
+def integralCoeffsRaw (y : D.La) (a : Fin p) : 𝓞 E := Classical.choose (hm y a)
+
+theorem algebraMap_integralCoeffsRaw (y : D.La) (a : Fin p) :
+    algebraMap (𝓞 E) E (integralCoeffsRaw D x' m hm y a) = m * projectionCoeffs D x' y a := Classical.choose_spec (hm y a)
+
+def integralCoeffs : D.La →ₗ[𝓞 E] (Fin p → 𝓞 E) where
+  toFun y a := H.bar (integralCoeffsRaw D x' m hm y a)
+  map_add' y y' := by
+    funext a
+    apply IsFractionRing.injective (𝓞 E) E
+    simp only [Pi.add_apply]
+    rw [map_add (f := _), algebraMap_bar_eq_conj, algebraMap_bar_eq_conj, algebraMap_bar_eq_conj, algebraMap_integralCoeffsRaw, algebraMap_integralCoeffsRaw, algebraMap_integralCoeffsRaw, projectionCoeffs_add,
+      Pi.add_apply, mul_add, map_add]
+  map_smul' c y := by
+    funext a
+    apply IsFractionRing.injective (𝓞 E) E
+    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
+    rw [map_mul, algebraMap_bar_eq_conj, algebraMap_bar_eq_conj, algebraMap_integralCoeffsRaw, algebraMap_integralCoeffsRaw, projectionCoeffs_smul, Pi.smul_apply, smul_eq_mul,
+      map_mul, map_mul, map_mul, IsCMField.complexConj_apply_apply, map_natCast]
+    show _ = ((c : 𝓞 E) : E) * _
+    ring
+
+theorem conj_integralCoeffs (y : D.La) (a : Fin p) :
+    IsCMField.complexConj E (algebraMap (𝓞 E) E (integralCoeffs D x' m hm y a)) = m * projectionCoeffs D x' y a := by
+  show IsCMField.complexConj E (algebraMap (𝓞 E) E (H.bar (integralCoeffsRaw D x' m hm y a))) = _
+  rw [algebraMap_bar_eq_conj, IsCMField.complexConj_apply_apply, algebraMap_integralCoeffsRaw]
+
+def orthogonalComponent : D.La →ₗ[𝓞 E] D.La := (m : 𝓞 E) • LinearMap.id - familyCombination D x' ∘ₗ integralCoeffs D x' m hm
+
+theorem orthogonalComponent_mem (hdet : (gramE D x').det ≠ 0) (y : D.La) : orthogonalComponent D x' m hm y ∈ orthogonalFamilyAlt D x' := by
+  show ∀ a, sesq D (x' a) (orthogonalComponent D x' m hm y) = 0
+  intro b
+  have hsub : ∀ u v w : D.La, sesq D u (v - w) = sesq D u v - sesq D u w := by
+    intro u v w
+    simp only [sesq, map_sub, Int.cast_sub, sub_mul, Finset.sum_sub_distrib]
+  have hsm : ∀ u v : D.La, sesq D u ((m : 𝓞 E) • v) = m * sesq D u v := by
+    intro u v
+    rw [Nat.cast_smul_eq_nsmul]
+    simp only [sesq, map_nsmul, nsmul_eq_mul, Int.cast_mul, Int.cast_natCast, Finset.mul_sum,
+      _root_.mul_assoc]
+  have hcomb : familyCombination D x' (integralCoeffs D x' m hm y) =
+      ∑ a, integralCoeffs D x' m hm y a • x' a := rfl
+  have hG := congrFun (gram_mulVec_projection_coeffs D x' hdet y) b
+  simp only [Matrix.mulVec, dotProduct, pairingVector] at hG
+  have hd : ∀ a, IsCMField.complexConj E ((integralCoeffs D x' m hm y a : 𝓞 E) : E) =
+      m * projectionCoeffs D x' y a := fun a => conj_integralCoeffs D x' m hm y a
+  simp only [orthogonalComponent, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply,
+    LinearMap.comp_apply]
+  rw [hsub, hsm, hcomb, sesq_integral_combination]
+  simp only [hd]
+  rw [← hG, Finset.mul_sum]
+  apply sub_eq_zero.mpr
+  apply Finset.sum_congr rfl
+  intro a _
+  ring
+
+end Maps
+
+end GlobalTheory.CompanionTheory.Ar.Fl
+
+end
+end
+end
+
+-- Source module: Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsOrthogonalLocalBasisExtension
+
+section
+
+@[expose] public section
+
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
+open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
+open scoped ComplexOrder
+
+noncomputable section
+
+namespace GlobalTheory.CompanionTheory.Ar.Fl
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
+
+theorem rank_free_prod (L : Type) [AddCommGroup L] [Module (𝓞 E) L] (p : ℕ) :
+    Module.rank (𝓞 E) ((Fin p → 𝓞 E) × L) = p + Module.rank (𝓞 E) L := by
+  have h := LinearMap.rank_range_add_rank_ker (LinearMap.fst (𝓞 E) (Fin p → 𝓞 E) L)
+  rw [LinearMap.range_eq_top_of_surjective _ LinearMap.fst_surjective, rank_top, rank_fin_fun,
+    LinearMap.ker_fst] at h
+  rw [← h, ← (LinearEquiv.ofInjective (LinearMap.inr (𝓞 E) (Fin p → 𝓞 E) L)
+    LinearMap.inr_injective).rank_eq]
+
+theorem family_orthogonal_sum_injective (D : Datum H) {p : ℕ} (x' : Fin p → D.La) (hdet : (gramE D x').det ≠ 0)
+    (c : Fin p → 𝓞 E) (z : orthogonalFamilyAlt D x') (h : familyCombination D x' c + (z : D.La) = 0) : c = 0 ∧ z = 0 := by
+  have hadd : ∀ u v w : D.La, sesq D u (v + w) = sesq D u v + sesq D u w := by
+    intro u v w
+    simp only [sesq, map_add (f := _), Int.cast_add, add_mul, Finset.sum_add_distrib]
+  have hcomb : familyCombination D x' c = ∑ a, c a • x' a := rfl
+  have hv : (gramE D x') *ᵥ (fun a => IsCMField.complexConj E ((c a : 𝓞 E) : E)) = 0 := by
+    funext b
+    have hb := congrArg (sesq D (x' b)) h
+    have h0 : sesq D (x' b) 0 = 0 := by simp [sesq]
+    have hz : sesq D (x' b) (z : D.La) = 0 := z.2 b
+    rw [hadd, hcomb, sesq_integral_combination, hz, h0, _root_.add_zero] at hb
+    simpa [Matrix.mulVec, dotProduct] using hb
+  have hc0 := Matrix.eq_zero_of_mulVec_eq_zero hdet hv
+  have hc : c = 0 := by
+    funext a
+    have ha := congrFun hc0 a
+    simp only [Pi.zero_apply, map_eq_zero] at ha
+    first
+      | simpa using ha
+      | exact RingOfIntegers.coe_eq_zero_iff.mp ha
+      | exact_mod_cast ha
+  refine ⟨hc, ?_⟩
+  subst hc
+  have h1 : familyCombination D x' 0 = 0 := map_zero _
+  rw [h1, _root_.zero_add] at h
+  exact Submodule.coe_eq_zero.mp h
+
+theorem finrank_orthogonal_family (D : Datum H) {p q : ℕ} (x' : Fin p → D.La) (ℓ : Nat.Primes) (hpq : p + q = D.p + D.q)
+    (hdet : (gramE D x').det ≠ 0) (m : ℕ) (hm0 : m ≠ 0) (hm : ∀ y a, ∃ g : 𝓞 E, (g : E) = m * projectionCoeffs D x' y a) :
+    Module.finrank (𝓞 E) (orthogonalFamilyAlt D x') = q := by
+  classical
+  haveI := D.fin
+  set L2 := orthogonalFamilyAlt D x' with hL2
+  let ψ : ((Fin p → 𝓞 E) × L2) →ₗ[𝓞 E] D.La := (familyCombination D x').coprod L2.subtype
+  have hψ : Function.Injective ψ := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    rintro ⟨c, z⟩ h
+    obtain ⟨hc, hz⟩ := family_orthogonal_sum_injective D x' hdet c z h
+    rw [hc, hz]
+    rfl
+  have hyp : ∀ y, orthogonalComponent D x' m hm y = m • y - familyCombination D x' (integralCoeffs D x' m hm y) := by
+    intro y
+    simp only [orthogonalComponent, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply,
+      LinearMap.comp_apply, Nat.cast_smul_eq_nsmul]
+  let φ : D.La →ₗ[𝓞 E] (Fin p → 𝓞 E) × L2 :=
+    (integralCoeffs D x' m hm).prod
+      ((orthogonalComponent D x' m hm).codRestrict L2 (fun y => orthogonalComponent_mem D x' m hm hdet y))
+  have hφ : Function.Injective φ := by
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+    intro y hy
+    have h1 : integralCoeffs D x' m hm y = 0 := congrArg Prod.fst hy
+    have h2 : orthogonalComponent D x' m hm y = 0 := by
+      have h3 := congrArg (fun w => (w.2 : D.La)) hy
+      simpa [φ] using h3
+    rw [hyp, h1, map_zero, sub_zero] at h2
+    exact nsmul_injective_lattice D hm0 (by rw [h2, smul_zero])
+  have hr : Module.rank (𝓞 E) ((Fin p → 𝓞 E) × L2) = Module.rank (𝓞 E) D.La :=
+    le_antisymm (LinearMap.rank_le_of_injective ψ hψ) (LinearMap.rank_le_of_injective φ hφ)
+  rw [rank_free_prod, ← Module.finrank_eq_rank (𝓞 E) D.La, D.rank, ← hpq,
+    ← Module.finrank_eq_rank (𝓞 E) L2] at hr
+  norm_cast at hr
+  omega
+
+theorem exists_orthogonal_local_basis_extension (D : Datum H) (p q : ℕ) (ℓ : Nat.Primes) (x' : Fin p → D.La) (hpq : p + q = D.p + D.q)
+    (hdet : (gramE D x').det ≠ 0) (hlog : ∀ j : E →+* ℂ_[ℓ], Real.log ‖j (gramE D x').det‖ =
+      -(p : ℝ) * logIdeal (j.comp (algebraMap (𝓞 E) E)) (differentIdeal ℤ (𝓞 E))) :
+    ∃ x : Fin p ⊕ Fin q → D.La, x ∘ Sum.inl = x' ∧ IsLocBasis (𝓞 E) ℓ x ∧
+      ∀ a b, sesq D (x (.inl a)) (x (.inr b)) = 0 := by
+  classical
+  obtain ⟨m, hmℓ, hm⟩ := exists_common_denominator_coeffs D x' ℓ hdet hlog
+  have hm0 : m ≠ 0 := by
+    rintro rfl
+    exact hmℓ (dvd_zero _)
+  haveI := D.fin
+  haveI := D.proj
+  set L2 := orthogonalFamilyAlt D x' with hL2
+  have hfr : Module.finrank (𝓞 E) L2 = q := finrank_orthogonal_family D x' ℓ hpq hdet m hm0 hm
+  obtain ⟨b0, hb0⟩ := exists_local_basis_cm_order.locBasis' (𝓞 E) (ℓ : ℕ) ℓ.prop (M := L2)
+  let b : Fin q → L2 := b0 ∘ Fin.cast hfr.symm
+  have hbli : LinearIndependent (𝓞 E) b := hb0.1.comp _ (Fin.cast_injective _)
+  obtain ⟨n, hnℓ, hn⟩ := hb0.2
+  have hrange : Set.range b = Set.range b0 := Function.Surjective.range_comp (fun i => ⟨Fin.cast hfr i, by ext; simp⟩) _
+  have hyp : ∀ y, orthogonalComponent D x' m hm y = m • y - familyCombination D x' (integralCoeffs D x' m hm y) := by
+    intro y
+    simp only [orthogonalComponent, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply,
+      LinearMap.comp_apply, Nat.cast_smul_eq_nsmul]
+  refine ⟨Sum.elim x' (fun j => (b j : D.La)), rfl, ⟨?_, ?_⟩, ?_⟩
+  · rw [Fintype.linearIndependent_iff]
+    intro g hg
+    rw [Fintype.sum_sum_type] at hg
+    simp only [Sum.elim_inl, Sum.elim_inr] at hg
+    set z : L2 := ∑ j, g (Sum.inr j) • b j with hz
+    have hzc : (z : D.La) = ∑ j, g (Sum.inr j) • (b j : D.La) := by simp [hz]
+    have hpsi := family_orthogonal_sum_injective D x' hdet (fun a => g (Sum.inl a)) z (by rw [hzc]; exact hg)
+    have hg2 : ∀ j, g (Sum.inr j) = 0 := Fintype.linearIndependent_iff.mp hbli _ hpsi.2
+    rintro (a | j)
+    · exact congrFun hpsi.1 a
+    · exact hg2 j
+  · refine ⟨m * n, ?_, ?_⟩
+    · rw [ℓ.prop.dvd_mul]
+      push_neg
+      exact ⟨hmℓ, hnℓ⟩
+    · intro y
+      have hdec : m • y = familyCombination D x' (integralCoeffs D x' m hm y) + orthogonalComponent D x' m hm y := by
+        rw [hyp]
+        abel
+      rw [_root_.mul_comm m n, mul_smul, hdec, smul_add]
+      apply Submodule.add_mem
+      · apply nsmul_mem
+        show ∑ a, integralCoeffs D x' m hm y a • x' a ∈ _
+        refine Submodule.sum_mem _ (fun a _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨Sum.inl a, rfl⟩))
+      · have h1 := hn ⟨_, orthogonalComponent_mem D x' m hm hdet y⟩
+        rw [← hrange] at h1
+        have h2 := Submodule.mem_map_of_mem (f := L2.subtype) h1
+        rw [Submodule.map_span] at h2
+        have h3 := Submodule.span_mono (R := 𝓞 E) (s := L2.subtype '' Set.range b)
+          (t := Set.range (Sum.elim x' (fun j => (b j : D.La)))) (by
+            rintro _ ⟨_, ⟨j, rfl⟩, rfl⟩
+            exact ⟨Sum.inr j, rfl⟩) h2
+        simpa using h3
+  · intro a j
+    exact (b j).2 a
+
+end GlobalTheory.CompanionTheory.Ar.Fl
+
+end
+
+namespace PositivityTheory.Xgf
+
+theorem exists_orthogonal_local_basis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (p q : ℕ) (ℓ : Nat.Primes) (x' : Fin p → D.La), p + q = D.p + D.q → (gramE D x').det ≠ 0 → (∀ j : E →+* ℂ_[ℓ], Real.log ‖j (gramE D x').det‖ = -(p : ℝ) * logIdeal (j.comp (algebraMap (𝓞 E) E)) (differentIdeal ℤ (𝓞 E))) → ∃ x : Fin p ⊕ Fin q → D.La, x ∘ Sum.inl = x' ∧ IsLocBasis (𝓞 E) ℓ x ∧ ∀ a b, sesq D (x (.inl a)) (x (.inr b)) = 0 :=
+  fun _ _ _ _ _ D p q ℓ x' hpq hdet hlog => GlobalTheory.CompanionTheory.Ar.Fl.exists_orthogonal_local_basis_extension D p q ℓ x' hpq hdet hlog
+
+end PositivityTheory.Xgf
+end
+end

@@ -55,15 +55,7 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsTwistRingsCharactersClassGroups
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwDefs
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameForm
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SetUnipotentTranslate
-import Development.AutomorphicArithmetic.PrimeDiscriminants.Scales
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-import Formalism.SharpRestriction.InertJacobiLevels.HostFam
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormLeOneOfMemClC
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.ExistsGridAtMember
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.GalExOfCgTrue
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RestageStatement
@@ -145,66 +137,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 
 theorem _root_.GlobalTheory.T.exists_twistRings_characters_classGroups : GlobalTheory.Published.GlobalArtinReciprocity → ∀ (D : D7) (cf : CharFrame D) (J : ∀ (l : ℕ) [Fact l.Prime] (w : HeightOneSpectrum (𝓞 ↥D.LL0)), ((l : ℕ) : 𝓞 ↥D.LL0) ∈ w.asIdeal → (↥D.LL0 →+* PadicAlgCl l)), (∀ (l : ℕ) [Fact l.Prime] w h (x : 𝓞 ↥D.LL0), x ∈ w.asIdeal ↔ ‖J l w h x‖ < 1) → ValLL0 D cf → (∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) → (∀ j g, ∃ z : ℤ, eExp D j g = z) → ∃ c0 : Big D, ∀ (b0 b1 : Big D) (Sx : Finset (PlE D.host)), (∀ (l : ℕ) [Fact l.Prime] j, (c0 l j).1 ≤ (b0 l j).1) → ∃ (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T), ∀ i, Sp.j0 i = J (T.l i) (Sp.eTw i) (Sp.pl_emb i).1 ∧ Sp.K0 i = b0 (T.l i) (Sp.j0 i) ∧ Sp.Lw i = b1 (T.l i) (Sp.j0 i) := by
   first | exact @GlobalTheory.TwRing.exists_ringSpec | exact GlobalTheory.TwRing.exists_ringSpec | (intros; apply GlobalTheory.TwRing.exists_ringSpec <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormLeOneOfMemClC
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.Df NumberField IsDedekindDomain
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-noncomputable section
-
-namespace GlobalTheory.Mem.Df
-
-open Formalism.L2.TwC
-
-theorem norm_le_one_of_mem_clC' (l : ℕ) [Fact l.Prime] (F : IntermediateField ℚ_[l] (PadicAlgCl l)) {z : ℂ_[l]}
-    (hz : z ∈ clC l F) : ‖z‖ ≤ 1 := by
-  have hm : z ∈ PadicComplexInt l := (Subring.mem_inf.1 hz).2
-  rw [PadicComplexInt, Valuation.mem_valuationSubring_iff] at hm
-  rw [PadicComplex.norm_eq_norm]
-  exact (Valued.toNormedField.norm_le_one_iff).2 hm
-
-theorem exists_iC_of_clC (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsDomain O]
-    (F : IntermediateField ℚ_[l] (PadicAlgCl l)) (e : O ≃+* clC l F)
-    (hratio : ∀ x ∈ clC l F, ∀ y ∈ clC l F, ‖x‖ ≤ ‖y‖ → x / y ∈ clC l F) :
-    ∃ iC : FractionRing O →+* ℂ_[l],
-      ∀ x, ‖iC x‖ ≤ 1 ↔ x ∈ (algebraMap O (FractionRing O)).range := by
-  let ψ : O →+* ℂ_[l] := (clC l F).subtype.comp e.toRingHom
-  have hψ : Function.Injective ψ := fun a b h => e.injective (Subtype.ext h)
-  let iC : FractionRing O →+* ℂ_[l] := IsFractionRing.lift hψ
-  have hiC : ∀ a : O, iC (algebraMap O (FractionRing O) a) = ψ a := fun a => IsFractionRing.lift_algebraMap hψ a
-  refine ⟨iC, fun x => ⟨fun hx => ?_, ?_⟩⟩
-  · obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective (A := O) x
-    have hb0 : algebraMap O (FractionRing O) b ≠ 0 :=
-      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hb
-    have hψb : ψ b ≠ 0 := by
-      rw [← hiC]; exact (map_ne_zero iC).2 hb0
-    rw [map_div₀, hiC, hiC, norm_div, div_le_one (norm_pos_iff.2 hψb)] at hx
-    have hmem := hratio _ (e a).2 _ (e b).2 hx
-    refine ⟨e.symm ⟨_, hmem⟩, ?_⟩
-    apply iC.injective
-    rw [hiC, map_div₀, hiC, hiC]
-    show ((e (e.symm ⟨_, hmem⟩) : clC l F) : ℂ_[l]) = _
-    rw [e.apply_symm_apply]
-    rfl
-  · rintro ⟨a, rfl⟩
-    rw [hiC]
-    exact norm_le_one_of_mem_clC' l F (e a).2
-
-end GlobalTheory.Mem.Df
-
-namespace GlobalTheory.Mem.Df
-
-open Formalism.L2.TwC
-
-end GlobalTheory.Mem.Df
-end
 end
 end
 

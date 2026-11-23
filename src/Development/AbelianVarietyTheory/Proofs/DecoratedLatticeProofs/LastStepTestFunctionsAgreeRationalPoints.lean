@@ -1,6 +1,9 @@
 module
 
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ZPosIxSuccInl
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IteratedDepthOneLevelCharacterClosedFormStatement
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PhiTopAgree
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemIntegralGLIffIsUnitDetAtPrime
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,8 +40,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IteratedDepthOneLevelCharacterClosedFormStatement
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ResiduesOfCompletionAtPrimeWithUniformizerStatement
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ResiduesOfCompletionAtPrimeWithUniformizerStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SymChainPatternIffPlaceConditionsStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SymmetricLevelChainPatternIteratedStatement
@@ -46,132 +47,6 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Sym
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ZPosIxSuccInl
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain MeasureTheory ValuativeRel Matrix Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.L2.DIV Formalism.L2.Col GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain GlobalTheory.SymBridge
-
-noncomputable section
-namespace GlobalTheory.SymBridge.TopAgree
-
-def zEquiv (κ l τ j : ℕ) : Ix (Fin κ ⊕ Fin l) (Fin τ) j ≃ Fin (κ + l + j * τ) :=
-  (Equiv.sumCongr finSumFinEquiv finProdFinEquiv).trans finSumFinEquiv
-
-theorem zEquiv_val {κ l τ j : ℕ} (a : Ix (Fin κ ⊕ Fin l) (Fin τ) j) : (zEquiv κ l τ j a).val = zPos a := by
-  rcases a with (i | i) | ⟨i, u⟩
-  · simp [zEquiv, zPos]
-  · simp [zEquiv, zPos]
-  · simp [zEquiv, zPos]; ring
-
-variable {E K : Type} [Field E] [NumberField E] [Field K] {P : HeightOneSpectrum (𝓞 E)}
-
-
-open Classical in
-def phiM (q : ℕ) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (k₀ rS r t j N : ℕ)
-    (M : ℕ → ℕ → E) : K :=
-  if (∀ p p', p < N → p' < r + j * t → IntAt P (M p p')) ∧
-      (∀ p p', r + j * t ≤ p → p < N → p' < r + j * t → IntAt P (M p p' / (q : E))) ∧
-      (∀ p', p' < r → redP P (M p' p') = 1 ∧ ∀ p, p < r + j * t → p ≠ p' →
-        (r ≤ p ∨ symIdx k₀ rS p' < symIdx k₀ rS p ∨ (p' = k₀ + rS ∧ p < k₀)) → redP P (M p p') = 0) ∧
-      (∀ p p', r ≤ p' → p' < r + j * t → p < r + j * t → (p' - r) / t < (p - r) / t → redP P (M p p') = 0)
-  then LocE.lamGvS ψ₀ χ k₀ r t j M *
-    (LocE.unitV (χ j) (Matrix.det (Matrix.of fun s s' : Fin (r + j * t) => M s.1 s'.1)))⁻¹ else 0
-
-theorem PhiGS_eq (q : ℕ) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ)
-    (k₀ rS r t j c' n' c n : ℕ) (x : (Fin (n' + c') → E) →ₗ[E] (Fin (n + c) → E)) :
-    LocE.PhiGS q ψ₀ χ k₀ rS r t (j + 1) c' n' c n x =
-      phiM q ψ₀ χ k₀ rS r t j (n + c) (LocE.entB q k₀ c' n' c n (fun i => i + 1) (fun i => i + 1) x) := by
-  rfl
-
-variable {k : Type} [Field k]
-
-theorem zPos_ixSucc_inl {κ l τ j : ℕ} (a : Ix (Fin κ ⊕ Fin l) (Fin τ) j) :
-    zPos (ixSucc (Fin κ ⊕ Fin l) (Fin τ) j (Sum.inl a)) = zPos a := by
-  rcases a with (i | i) | ⟨i, u⟩ <;> rfl
-
-theorem zPos_ixSucc_inr {κ l τ j : ℕ} (u : Fin τ) :
-    zPos (ixSucc (Fin κ ⊕ Fin l) (Fin τ) j (Sum.inr u)) = κ + l + j * τ + u := rfl
-
-theorem zPos_lt {κ l τ j : ℕ} (a : Ix (Fin κ ⊕ Fin l) (Fin τ) j) : zPos a < κ + l + j * τ := by
-  rw [← zEquiv_val]; exact (zEquiv κ l τ j a).isLt
-
-theorem det_of_places (ι : E →+* k) {X : Type} [Fintype X] [DecidableEq X] {n : ℕ} (f : X ≃ Fin n) (pos : X → ℕ)
-    (off : ℕ) (h : ∀ x, pos x = off + (f x).val) (M : ℕ → ℕ → E) :
-    Matrix.det (Matrix.of fun x y => ι (M (pos x) (pos y))) =
-      ι (Matrix.det (Matrix.of fun s s' : Fin n => M (off + s.1) (off + s'.1))) := by
-  rw [RingHom.map_det, ← Matrix.det_submatrix_equiv_self f]
-  congr 1
-  ext x y
-  simp [h]
-
-end GlobalTheory.SymBridge.TopAgree
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemIntegralGLIffIsUnitDetAtPrime
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain MeasureTheory ValuativeRel Matrix Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.L2.DIV Formalism.L2.Col GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain GlobalTheory.SymBridge
-
-namespace GlobalTheory.SymBridge
-
-theorem mem_KO_iff_intAt_isUnit_det : ∀ (E k : Type) [Field E] [NumberField E] [StarRing E] [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (ι : E →+* k) (ϖ : kˣ), IsCompl P q ι ϖ → GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsUnif ϖ → ∀ (κ l τ j : ℕ) (M : ℕ → ℕ → E), (∃ g ∈ KO k (Ix (Fin κ ⊕ Fin l) (Fin τ) j), g.val = Matrix.of fun a b => ι (M (zPos a) (zPos b))) ↔ (∀ p p', p < κ + l + j * τ → p' < κ + l + j * τ → IntAt P (M p p')) ∧ IsUnit (redP P (Matrix.det (Matrix.of fun s s' : Fin (κ + l + j * τ) => M s.1 s'.1))) := by
-  intro E k _ _ _ _ _ _ _ P q ι ϖ hC hU κ l τ j M
-  obtain ⟨-, -, h3, -⟩ := GlobalTheory.T.residues_of_completionAtPrimeWithUniformizer E k P q ι ϖ hC hU
-  let e : Ix (Fin κ ⊕ Fin l) (Fin τ) j ≃ Fin (κ + l + j * τ) :=
-    (Equiv.sumCongr finSumFinEquiv finProdFinEquiv).trans finSumFinEquiv
-  have he : ∀ a, ((e a : Fin _) : ℕ) = zPos a := by
-    rintro ((i | i) | ⟨i, u⟩) <;> simp [e, zPos, finProdFinEquiv] <;> ring
-  let A : Matrix (Fin (κ + l + j * τ)) (Fin (κ + l + j * τ)) E := Matrix.of fun s s' => M s.1 s'.1
-  let T : Matrix (Ix (Fin κ ⊕ Fin l) (Fin τ) j) (Ix (Fin κ ⊕ Fin l) (Fin τ) j) k :=
-    Matrix.of fun a b => ι (M (zPos a) (zPos b))
-  have hT : T = (A.map ι).submatrix e e := by
-    ext a b; simp [T, A, he]
-  have hdet : T.det = ι A.det := by
-    rw [hT, Matrix.det_submatrix_equiv_self, RingHom.map_det]; rfl
-  have hint : ∀ x : k, valuation k x = 1 → x ∈ 𝒪[k] := fun x hx =>
-    (Valuation.mem_integer_iff (valuation k) x).2 hx.le
-  change (∃ g ∈ KO k (Ix (Fin κ ⊕ Fin l) (Fin τ) j), g.val = T) ↔ _
-  constructor
-  · rintro ⟨g, hg, hgv⟩
-    have hI := intM_of_mem_KO hg
-    rw [hgv] at hI
-    refine ⟨fun p p' hp hp' => ?_, ?_⟩
-    · have h := hI (e.symm ⟨p, hp⟩) (e.symm ⟨p', hp'⟩)
-      simp only [T, Matrix.of_apply] at h
-      rw [← he, ← he, Equiv.apply_symm_apply, Equiv.apply_symm_apply] at h
-      exact (hC.int _).1 h
-    · have hv := valuation_det_of_mem_KO hg
-      rw [Matrix.GeneralLinearGroup.val_det_apply, hgv, hdet] at hv
-      exact (h3 _ ((hC.int _).1 (hint _ hv))).1 hv
-  · rintro ⟨hent, hunit⟩
-    have hTint : ∀ a b, T a b ∈ 𝒪[k] := fun a b =>
-      (hC.int _).2 (hent _ _ (he a ▸ (e a).2) (he b ▸ (e b).2))
-    let B : Matrix (Ix (Fin κ ⊕ Fin l) (Fin τ) j) (Ix (Fin κ ⊕ Fin l) (Fin τ) j) 𝒪[k] :=
-      Matrix.of fun a b => ⟨T a b, hTint a b⟩
-    have hB : B.map (algebraMap 𝒪[k] k) = T := by ext a b; rfl
-    have hBdet : algebraMap 𝒪[k] k B.det = ι A.det := by
-      rw [RingHom.map_det]; change (B.map (algebraMap 𝒪[k] k)).det = _; rw [hB, hdet]
-    have hAint : IntAt P A.det := (hC.int _).1 (hBdet ▸ (B.det).2)
-    have hv : valuation k (ι A.det) = 1 := (h3 _ hAint).2 hunit
-    have hBu : IsUnit B.det :=
-      (Valuation.integer.integers (valuation k)).isUnit_iff_valuation_eq_one.2 (by rw [hBdet]; exact hv)
-    refine ⟨Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) (B.nonsingInvUnit hBu), ⟨_, rfl⟩, ?_⟩
-    ext a b
-    rw [Matrix.GeneralLinearGroup.map_apply]
-    rfl
-
-end GlobalTheory.SymBridge
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemIntegralGLIffIsUnitDetAtPrimeStatement
 

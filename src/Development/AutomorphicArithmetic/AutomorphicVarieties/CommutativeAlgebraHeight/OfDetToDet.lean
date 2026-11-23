@@ -2,7 +2,7 @@ module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
 public import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
-public import Mathlib.RingTheory.TensorProduct.Basic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnopSMul
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -30,6 +30,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,44 +44,9 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
-import Mathlib.Tactic.Polynomial.Basic
-
--- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnopSMul
-
-section
-
-@[expose] public section
-
-namespace UpperTheory.Reformulated.B.Qk3
-
-theorem aux1 {A : Type} [CommRing A] : RingHomInvPair (RingHom.id A) (RingHom.id A) :=
-  RingHomInvPair.ids
-
-noncomputable def unopS (A E S : Type) [CommRing A] [Ring E] [Algebra A E]
-    [CommRing S] [Algebra A S] : TensorProduct A S Eᵐᵒᵖ →ₗ[S] TensorProduct A S E :=
-  LinearMap.baseChange S (MulOpposite.opLinearEquiv A).symm.toLinearMap
-
-theorem unopS_mul {A E : Type} [CommRing A] [Ring E] [Algebra A E]
-    (S : Type) [CommRing S] [Algebra A S] (x y : TensorProduct A S Eᵐᵒᵖ) :
-    unopS A E S (x * y) = unopS A E S y * unopS A E S x := by
-  induction x using TensorProduct.inductionOn with
-  | add x₁ x₂ h₁ h₂ => rw [add_mul, map_add (f := _), map_add (f := _), h₁, h₂, mul_add]
-  | tmul s e =>
-    induction y using TensorProduct.inductionOn with
-    | add y₁ y₂ h₁ h₂ => rw [mul_add, map_add (f := _), map_add (f := _), h₁, h₂, add_mul]
-    | tmul t f => simp [unopS, Algebra.TensorProduct.tmul_mul_tmul, mul_comm s t]
-
-end UpperTheory.Reformulated.B.Qk3
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebraHeight.OfDetToDet
-
-section
 
 @[expose] public section
 
@@ -305,6 +272,3 @@ def toQuot (D : GDet n A G) (Z : Set (MonoidAlgebra A G)) : MonoidAlgebra A G �
 end GDet
 
 end UpperTheory.V.W
-end
-end
-end

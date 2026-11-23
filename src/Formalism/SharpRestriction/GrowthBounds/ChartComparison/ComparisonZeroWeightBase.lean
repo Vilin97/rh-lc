@@ -1,11 +1,13 @@
 module
 
-public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MRatSpanRec
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageEq
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ComparisonZeroEmbedding
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageOfSurj
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -24,6 +26,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -37,51 +40,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.LocalRingCardinality.DataKerP
-public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
-public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ComparisonZeroEmbedding
-public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageOfSurj
-import Mathlib.Tactic.Linter.Style
-
--- Source module: Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageEq
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace Formalism.L2.G.Cmp
-
-open Formalism.MainNotions.G Formalism.BasicNotions NumberField
-
-section Gen
-
-variable {p : ℕ} {O Kf : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field Kf] [Algebra O Kf]
-  (P : Places p O Kf) (α : Type) {LL : Type} [Field LL] (e : LL →+* Kf) (Mi : Submodule O (FnP P α))
-
-end Gen
-
-variable {D : D7} (c : LatCmp D) (Tw : TwForms D) (u : D.what₂.Word) (w : D.what₂.places.Pl)
-  (h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) {Fl : Fills (D.gat u w h)} (Lv : Levels Fl)
-
-abbrev FormsJ (j : ℕ) : Type := FormsLL (Fl.Pj j) (Lv.comp j) (c.embW u w h) (Lv.Int j)
-
-variable {c Tw u w h Lv}
-
-
-def DescUp (c : LatCmp D) (u : D.what₂.Word) (w : D.what₂.places.Pl)
-    (h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) {Fl : Fills (D.gat u w h)} (Lv : Levels Fl) : Prop :=
-  ∀ j, j + 1 ≤ D.R.m → MRatSpan (Fl.Pj (j + 1)) (Lv.comp (j + 1)) (c.embW u w h) (Lv.Int (j + 1))
-
-end Formalism.L2.G.Cmp
-end
-end
-end
-
--- Source module: Formalism.SharpRestriction.GrowthBounds.ChartComparison.ComparisonZeroWeightBase
-
-section
 
 @[expose] public section
 
@@ -373,6 +331,4 @@ end Val
 
 end Formalism.MainNotions.G.CmpJ
 
-end
-end
 end

@@ -1,7 +1,9 @@
 module
 
 public import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
-public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
+public import Formalism.CorankShare.StatementFR
+public import Formalism.HarderNarasimhan.StatementPl
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,6 +22,8 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.Coalgebra.IsFrobenius
+import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -41,52 +45,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Formalism.RankGapBounds.MeanBoundSecondForm
-public import Formalism.CorankShare.StatementFR
-public import Formalism.HarderNarasimhan.StatementPl
-import Mathlib.RingTheory.Coalgebra.IsFrobenius
-import Mathlib.RingTheory.HopfAlgebra.Basic
-
--- Source module: Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
-
-section
-
-@[expose] public section
-
-open Real
-
-namespace Formalism.LFunctionChainParameters.PhiMonotonicityLemmas
-
-noncomputable section
-
-def phi (H u : ℝ) : ℝ := u * Real.log (1 + H / u)
-
-def ErrF (del u HH η e : ℝ) : ℝ :=
-  (1 - del)⁻¹ * (4 * phi HH u + (η + 4 * Real.sqrt e) * HH)
-
-def ConclF (s mu logI del u HH η e : ℝ) : Prop :=
-  s - logI - ErrF del u HH η e ≤ mu
-
-
-section SizeData₂
-
-open Formalism.RankGapBounds.WeightedMeanData
-
-variable {U0 : Type} [Fintype U0] {W : U0 → Type} [∀ u0, Fintype (W u0)]
-  [∀ u0, Nonempty (W u0)] {Top : Type} [Fintype Top] {m f : ℕ}
-variable (D : Data U0 W Top m f) (C : Consts)
-
-end SizeData₂
-
-end
-
-end Formalism.LFunctionChainParameters.PhiMonotonicityLemmas
-end
-end
-
--- Source module: Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
-
-section
 
 @[expose] public section
 
@@ -294,6 +252,3 @@ def WordsR : Prop :=
     (∀ i, Dstar * (Gam ^ 2)⁻¹ / C0 ≤ (Fintype.card (ιf i) : ℝ)) → Dstar / sg ≤ RsG ιf
 
 end Formalism.LFunctionChainParameters.MatrixLatticeEstimates
-end
-end
-end

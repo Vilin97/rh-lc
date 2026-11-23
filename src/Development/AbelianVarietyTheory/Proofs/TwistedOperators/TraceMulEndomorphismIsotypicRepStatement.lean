@@ -43,15 +43,8 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.InjectiveSumOfLinIndepIntertwinersStatement
-public import Mathlib.Basic.Complex.Basic
-public import Mathlib.Order.CompletePartialOrder
-public import Mathlib.RepresentationTheory.Intertwining
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-public import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.ReduceModChar
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntertwinerMemISupRangeEqSumSmulStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TraceMatrixPiOperatorStatement
 import Mathlib.Tactic.Linter.HaveILetI
 public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.EllipticPartTestData
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasTypeVec
@@ -70,141 +63,6 @@ theorem _root_.GlobalTheory.T.hasFiniteRankTraceOf_of_range_le_finiteDimensional
     GlobalTheory.IndefiniteRowSideFullHecke.IwahoriDoubleCosets.HasFinTrace T (LinearMap.trace ℂ Z (T.restrict (p := Z) (q := Z)
       fun x _ => hT (LinearMap.mem_range_self T x))) := by
   first | exact @GlobalTheory.IndefiniteRowSideFullHecke.RangeTrace.hasFinTrace_of_range_le | exact GlobalTheory.IndefiniteRowSideFullHecke.RangeTrace.hasFinTrace_of_range_le | (intros; apply GlobalTheory.IndefiniteRowSideFullHecke.RangeTrace.hasFinTrace_of_range_le <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntertwinerMemISupRangeEqSumSmul
-
-section
-
-@[expose] public section
-
-namespace GlobalTheory
-
-open Representation
-
-theorem intertwiner_mem_iSup_range_eq_sum_smul (G : Type) [Group G] (N X : Type) [AddCommGroup N] [Module ℂ N]
-    [AddCommGroup X] [Module ℂ X] (π : Representation ℂ G N) (ρ : Representation ℂ G X)
-    (hS : ∀ φ : π.IntertwiningMap π, ∃ c : ℂ, φ.toLinearMap = c • LinearMap.id)
-    (m : ℕ) (φ : Fin m → π.IntertwiningMap ρ)
-    (hinj : Function.Injective (fun w : Fin m → N => ∑ j, φ j (w j)))
-    (ψ : π.IntertwiningMap ρ)
-    (hψ : LinearMap.range ψ.toLinearMap ≤ ⨆ j, LinearMap.range (φ j).toLinearMap) :
-    ∃ c : Fin m → ℂ, ∀ n, ψ n = ∑ j, c j • φ j n := by
-  classical
-  let Φ : (Fin m → N) →ₗ[ℂ] X := ∑ j, (φ j).toLinearMap ∘ₗ LinearMap.proj j
-  have hΦ : ∀ w, Φ w = ∑ j, φ j (w j) := by
-    intro w; simp [Φ, LinearMap.sum_apply]
-  have hΦinj : Function.Injective Φ := by
-    intro a b h; apply hinj; simpa [hΦ] using h
-  have hle : (⨆ j, LinearMap.range (φ j).toLinearMap) ≤ LinearMap.range Φ := by
-    refine iSup_le fun j => ?_
-    rintro _ ⟨n, rfl⟩
-    refine ⟨Pi.single j n, ?_⟩
-    rw [hΦ]
-    rw [Finset.sum_eq_single j]
-    · simp
-    · intro b _ hb; simp [Pi.single_apply, hb]
-    · simp
-  have hmem : ∀ n, ψ.toLinearMap n ∈ LinearMap.range Φ := fun n =>
-    hle (hψ ⟨n, rfl⟩)
-  let e := LinearEquiv.ofInjective Φ hΦinj
-  let Wm : N →ₗ[ℂ] (Fin m → N) := e.symm.toLinearMap ∘ₗ ψ.toLinearMap.codRestrict _ hmem
-  have hW : ∀ n, Φ (Wm n) = ψ n := by
-    intro n
-    simp only [Wm, LinearMap.comp_apply, LinearEquiv.coe_coe]
-    have h2 : e (e.symm ⟨ψ.toLinearMap n, hmem n⟩) = ⟨ψ.toLinearMap n, hmem n⟩ := e.apply_symm_apply _
-    have h3 := congrArg Subtype.val h2
-    change Φ (e.symm ⟨ψ.toLinearMap n, hmem n⟩) = ψ n
-    rw [← LinearEquiv.ofInjective_apply Φ (h := hΦinj)]
-    exact h3
-  have hWg : ∀ g n, Wm (π g n) = fun j => π g (Wm n j) := by
-    intro g n
-    apply hΦinj
-
-    rw [hW, hΦ, ψ.isIntertwining, ← hW, hΦ, map_sum]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [(φ j).isIntertwining]
-  have hc : ∀ j, ∃ c : ℂ, ∀ n, Wm n j = c • n := by
-    intro j
-    let θ : π.IntertwiningMap π :=
-      (LinearMap.proj j ∘ₗ Wm).intertwiningMap_of_isIntertwiningMap π π (by
-        intro g v
-        simp [hWg])
-    obtain ⟨c, hc⟩ := hS θ
-    refine ⟨c, fun n => ?_⟩
-    have h1 : Wm n j = θ.toLinearMap n := rfl
-    rw [h1, hc]
-    simp
-  choose c hc using hc
-  refine ⟨c, fun n => ?_⟩
-  rw [← hW, hΦ]
-  refine Finset.sum_congr rfl fun j _ => ?_
-  rw [hc, map_smul]
-
-end GlobalTheory
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntertwinerMemISupRangeEqSumSmulStatement
-
-section
-
-@[expose] public section
-
-
-theorem _root_.GlobalTheory.T.exists_eq_sum_smul_of_range_le_iSup_range : ∀ (G : Type) [Group G] (N X : Type) [AddCommGroup N] [Module ℂ N]
-    [AddCommGroup X] [Module ℂ X] (π : Representation ℂ G N) (ρ : Representation ℂ G X),
-    (∀ φ : π.IntertwiningMap π, ∃ c : ℂ, φ.toLinearMap = c • LinearMap.id) →
-    ∀ (m : ℕ) (φ : Fin m → π.IntertwiningMap ρ), Function.Injective (fun w : Fin m → N => ∑ j, φ j (w j)) →
-    ∀ ψ : π.IntertwiningMap ρ, LinearMap.range ψ.toLinearMap ≤ ⨆ j, LinearMap.range (φ j).toLinearMap →
-    ∃ c : Fin m → ℂ, ∀ n, ψ n = ∑ j, c j • φ j n := by
-  first | exact @GlobalTheory.intertwiner_mem_iSup_range_eq_sum_smul | exact GlobalTheory.intertwiner_mem_iSup_range_eq_sum_smul | (intros; apply GlobalTheory.intertwiner_mem_iSup_range_eq_sum_smul <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TraceMatrixPiOperator
-
-section
-
-@[expose] public section
-
-namespace GlobalTheory
-
-theorem trace_matrix_pi_operator : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (m : ℕ)
-    (h : Matrix (Fin m) (Fin m) ℂ) (A : W →ₗ[ℂ] W),
-    LinearMap.trace ℂ (Fin m → W) (∑ k, ∑ j, h k j • (LinearMap.single ℂ (fun _ : Fin m => W) k ∘ₗ A ∘ₗ
-      LinearMap.proj j)) = h.trace * LinearMap.trace ℂ W A := by
-  intro W _ _ _ m h A
-  have key : ∀ k j : Fin m, LinearMap.trace ℂ (Fin m → W)
-      (LinearMap.single ℂ (fun _ : Fin m => W) k ∘ₗ A ∘ₗ LinearMap.proj j)
-      = if k = j then LinearMap.trace ℂ W A else 0 := by
-    intro k j
-    rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc]
-    by_cases hkj : k = j
-    · subst hkj
-      rw [LinearMap.proj_comp_single_same, LinearMap.comp_id, if_pos rfl]
-    · rw [LinearMap.proj_comp_single_ne (R := ℂ) (φ := fun _ : Fin m => W) j k (Ne.symm hkj), LinearMap.comp_zero, map_zero, if_neg hkj]
-
-  simp only [map_sum, map_smul, key, smul_eq_mul, mul_ite, mul_zero, Finset.sum_ite_eq,
-  Finset.mem_univ, if_true, Matrix.trace, Matrix.diag, Finset.sum_mul]
-
-end GlobalTheory
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TraceMatrixPiOperatorStatement
-
-section
-
-@[expose] public section
-
-
-theorem _root_.GlobalTheory.T.trace_sum_single_comp_proj_eq : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (m : ℕ)
-    (h : Matrix (Fin m) (Fin m) ℂ) (A : W →ₗ[ℂ] W),
-    LinearMap.trace ℂ (Fin m → W) (∑ k, ∑ j, h k j • (LinearMap.single ℂ (fun _ : Fin m => W) k ∘ₗ A ∘ₗ
-      LinearMap.proj j)) = h.trace * LinearMap.trace ℂ W A := by
-  first | exact @GlobalTheory.trace_matrix_pi_operator | exact GlobalTheory.trace_matrix_pi_operator | (intros; apply GlobalTheory.trace_matrix_pi_operator <;> assumption)
 end
 end
 

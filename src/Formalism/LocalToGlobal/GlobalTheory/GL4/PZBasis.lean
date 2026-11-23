@@ -1,18 +1,22 @@
 module
 
-public import Formalism.LocalToGlobal.Columns.BrpAevalScaleMonomial
-public import Formalism.LocalToGlobal.GlobalTheory.GL4.PDetAll
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.KronDetScalar
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColSlopeEq
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColStd
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.GramMatrixDuality
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.Inhabit
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.NablaOperatorBasis
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -20,6 +24,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -40,156 +46,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
-public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColSlopeEq
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
-public import Formalism.LocalToGlobal.Columns.CoefficientsModP
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
-public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColStd
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.GramMatrixDuality
-public import Formalism.PeriodIntegrals.HookBound
-public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-public import Formalism.LocalToGlobal.Columns.CoefficientsModP.WeTransposeWordTransposeWord
-import Mathlib.Algebra.AffineMonoid.Basic
-import Mathlib.RingTheory.RegularLocalRing.Defs
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.NablaOperatorBasis
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.ReduceModChar
-
--- Source module: Formalism.LocalToGlobal.GlobalTheory.GL4.KronDetScalar
-
-section
-
-@[expose] public section
-
-open scoped Matrix
-
-noncomputable section
-
-namespace Formalism.L2.GlobalTheoryTheory.TraceIntegrality
-
-open Formalism.L2.Col
-
-section Kron
-
-variable {ι : Type} [Fintype ι] [DecidableEq ι] {r : ι → ℕ}
-
-def kron (A : ∀ τ, Matrix (Fin (r τ)) (Fin (r τ)) ℝ) : Matrix (∀ τ, Fin (r τ)) (∀ τ, Fin (r τ)) ℝ :=
-  Matrix.of fun I I' => ∏ τ, A τ (I τ) (I' τ)
-
-theorem kron_mul (A B : ∀ τ, Matrix (Fin (r τ)) (Fin (r τ)) ℝ) : kron A * kron B = kron fun τ => A τ * B τ := by
-  ext I I''
-  simp only [kron, Matrix.mul_apply, Matrix.of_apply]
-  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
-  exact Finset.sum_congr rfl fun I' _ => Finset.prod_mul_distrib.symm
-
-theorem kron_one : kron (fun τ => (1 : Matrix (Fin (r τ)) (Fin (r τ)) ℝ)) = 1 := by
-  ext I I'
-  simp only [kron, Matrix.of_apply]
-  by_cases h : I = I'
-  · subst h
-    simp
-  · rw [Matrix.one_apply_ne h]
-    obtain ⟨τ, hτ⟩ := Function.ne_iff.1 h
-    exact Finset.prod_eq_zero (Finset.mem_univ τ) (Matrix.one_apply_ne hτ)
-
-theorem kron_smul (c : ι → ℝ) (A : ∀ τ, Matrix (Fin (r τ)) (Fin (r τ)) ℝ) : kron (fun τ => c τ • A τ) = (∏ τ, c τ) • kron A := by
-  ext I I'
-  simp only [kron, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
-  exact Finset.prod_mul_distrib
-
-def kronDet : (∀ τ, GL (Fin (r τ)) ℝ) →* ℝ where
-  toFun g := (kron fun τ => ((g τ : GL (Fin (r τ)) ℝ) : Matrix (Fin (r τ)) (Fin (r τ)) ℝ)).det
-  map_one' := by
-    have : (fun τ => (((1 : ∀ τ, GL (Fin (r τ)) ℝ) τ : GL (Fin (r τ)) ℝ) : Matrix (Fin (r τ)) (Fin (r τ)) ℝ)) = fun τ => 1 := by
-      funext τ; rfl
-    rw [this, kron_one, Matrix.det_one]
-  map_mul' g h := by
-    rw [← Matrix.det_mul, kron_mul]
-    rfl
-
-theorem kronDet_scalar (τ : ι) (t : ℝˣ) :
-    kronDet (r := r) (Pi.mulSingle τ (brpSc ℝ t)) = (t : ℝ) ^ ((Fintype.card (∀ τ, Fin (r τ)) : ℕ) : ℤ) := by
-  show (kron fun σ => (((Pi.mulSingle τ (brpSc ℝ t) : ∀ τ, GL (Fin (r τ)) ℝ) σ : GL (Fin (r σ)) ℝ) :
-    Matrix (Fin (r σ)) (Fin (r σ)) ℝ)).det = _
-  have h : (fun σ => (((Pi.mulSingle τ (brpSc ℝ t) : ∀ τ, GL (Fin (r τ)) ℝ) σ : GL (Fin (r σ)) ℝ) :
-      Matrix (Fin (r σ)) (Fin (r σ)) ℝ)) = fun σ => (if σ = τ then (t : ℝ) else 1) • (1 : Matrix (Fin (r σ)) (Fin (r σ)) ℝ) := by
-    funext σ
-    by_cases hσ : σ = τ
-    · subst hσ
-      rw [Pi.mulSingle_eq_same, if_pos rfl, brpSc_coe]
-    · rw [Pi.mulSingle_eq_of_ne hσ, if_neg hσ, one_smul]; rfl
-  rw [h, kron_smul, kron_one, Finset.prod_ite_eq' Finset.univ τ, if_pos (Finset.mem_univ τ), Matrix.det_smul, Matrix.det_one, mul_one,
-    zpow_natCast]
-
-theorem log_kron (A : ∀ τ, Matrix (Fin (r τ)) (Fin (r τ)) ℝ) (hA : ∀ τ, (A τ).det ≠ 0) (hr : ∀ τ, 0 < r τ) :
-    Real.log (kron A).det / (Fintype.card (∀ τ, Fin (r τ)) : ℝ) = ∑ τ, Real.log (A τ).det / (r τ : ℝ) := by
-  let g : ∀ τ, GL (Fin (r τ)) ℝ := fun τ => brpGL ℝ (A τ) (isUnit_iff_ne_zero.2 (hA τ))
-  have h0 := Finset.map_noncommProd Finset.univ (fun i => Pi.mulSingle i (g i))
-    (fun i _ j _ _ => Pi.mulSingle_apply_commute g i j) (kronDet (r := r))
-  rw [Finset.noncommProd_mulSingle g, Finset.noncommProd_eq_prod] at h0
-  have h1 : kronDet g = (kron A).det := rfl
-  rw [h1] at h0
-  have h2 : ∀ τ, kronDet (r := r) (Pi.mulSingle τ (g τ)) ^ r τ = (A τ).det ^ ((Fintype.card (∀ τ, Fin (r τ)) : ℕ) : ℤ) := fun τ =>
-    glChar_pow ℝ ((kronDet (r := r)).comp (MonoidHom.mulSingle (fun τ => GL (Fin (r τ)) ℝ) τ)) _ (kronDet_scalar τ) (g τ)
-  have hne : ∀ τ, kronDet (r := r) (Pi.mulSingle τ (g τ)) ≠ 0 := by
-    intro τ h
-    have := h2 τ
-    rw [h, zero_pow (hr τ).ne'] at this
-    exact (zpow_ne_zero _ (hA τ)) this.symm
-  have hD : (0 : ℝ) < (Fintype.card (∀ τ, Fin (r τ)) : ℝ) := by
-    have : Nonempty (∀ τ, Fin (r τ)) := ⟨fun τ => ⟨0, hr τ⟩⟩
-    exact_mod_cast Fintype.card_pos
-  rw [h0, Real.log_prod (fun τ _ => hne τ), Finset.sum_div]
-  refine Finset.sum_congr rfl fun τ _ => ?_
-  have h3 := congrArg Real.log (h2 τ)
-  rw [Real.log_pow, Real.log_zpow] at h3
-  have hrτ : (0 : ℝ) < (r τ : ℝ) := by exact_mod_cast hr τ
-  push_cast at h3
-  field_simp
-  linarith
-
-end Kron
-
-end Formalism.L2.GlobalTheoryTheory.TraceIntegrality
-
-end
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.Inhabit
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace PI.SlopeSteps
-
-open MvPolynomial Formalism.GradedWeylDivisibility
-
-theorem muStd_exists (N : ℕ) (ν : Fin N → ℕ) (hν : Antitone ν) : ∃ μ, PI.MuStd ν μ := by
-  have hfg : (weyl ℤ N N le_rfl ν).FG :=
-    (Formalism.L2.DIV.we_nabla_fg N N ν).of_le (weylLeDual ℤ N N le_rfl ν hν)
-  have : Module.Finite ℤ (weyl ℤ N N le_rfl ν) := Module.Finite.iff_fg.mpr hfg
-  let e := (Module.Free.chooseBasis ℤ (weyl ℤ N N le_rfl ν)).reindex (Fintype.equivFin _)
-  have hmem : hw ℤ le_rfl ν ∈ weyl ℤ N N le_rfl ν := Submodule.subset_span ⟨[], rfl⟩
-  have hne : (⟨hw ℤ le_rfl ν, hmem⟩ : weyl ℤ N N le_rfl ν) ≠ 0 := fun h0 =>
-    hwNe ℤ N N le_rfl ν (congrArg Subtype.val h0)
-  have : Nontrivial (weyl ℤ N N le_rfl ν) := nontrivial_of_ne _ _ hne
-  exact ⟨_, _, e, Fin.pos_iff_nonempty.mpr e.index_nonempty, rfl⟩
-
-end PI.SlopeSteps
-end
-end
-end
-
--- Source module: Formalism.LocalToGlobal.GlobalTheory.GL4.PZBasis
-
-section
 
 @[expose] public section
 
@@ -501,6 +358,4 @@ theorem colSlopeEq_of_Q (D : D7) (h3 : QSlope D) : ColSlopeEq D := colSlopeEq_of
 
 end Formalism.L2.GlobalTheoryTheory.TraceIntegrality
 
-end
-end
 end

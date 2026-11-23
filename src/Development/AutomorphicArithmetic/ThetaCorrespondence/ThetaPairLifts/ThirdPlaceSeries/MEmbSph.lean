@@ -46,12 +46,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceUnderFixedSplitPlace
-public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FixedVectorOfMemIsotypicComponent
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Topology.Sheaves.Init
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FixedVectorOfMemIsotypicComponentStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GaloisFamilyPolarized
 public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.Multi
 import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
@@ -107,19 +102,6 @@ end Level
 end GlobalTheory.RecT.Thread
 
 end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FixedVectorOfMemIsotypicComponentStatement
-
-section
-
-@[expose] public section
-
-open Formalism.L2 Formalism.AUTREP ReciprocityTheory.Aut NumberField
-
-theorem _root_.GlobalTheory.T.fixed_vector_of_mem_isotypic_component : ∀ {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GQ L n) W) (S : Submodule ℂ (GAf L n → W)) (K : Set (GAf L n)), NG.IsIrrRep ρ S → ∀ f ∈ NG.isoTyp ρ S, f ≠ 0 → (∀ κ ∈ K, NG.rt L n κ f = f) → ∃ f' ∈ S, f' ≠ 0 ∧ ∀ κ ∈ K, NG.rt L n κ f' = f' := by
-  first | exact @GlobalTheory.IsoFix.fixed_of_isoTyp | exact GlobalTheory.IsoFix.fixed_of_isoTyp | (intros; apply GlobalTheory.IsoFix.fixed_of_isoTyp <;> assumption)
 end
 end
 

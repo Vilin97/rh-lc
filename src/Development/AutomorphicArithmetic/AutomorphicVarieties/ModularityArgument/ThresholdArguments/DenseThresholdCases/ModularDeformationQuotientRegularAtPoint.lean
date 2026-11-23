@@ -79,10 +79,7 @@ import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Zsm
 import ReciprocityTheory.GaloisValuations.GlobalA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.AcClosed
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CoefRes
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.PsPair
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.LevEps
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.TowerGal
-import Mathlib.Tactic.Linter.Style
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CondA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CondC
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CondDRoots
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.ContinuousLinearClosed
@@ -91,10 +88,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimura
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.IneTriv
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.MapsPt
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.PsPairAlt
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeterminantRepresentations.RepApi
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.PhiCharacterResidues.ConjPlace
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CpSmul
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.DetExt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.RedDet
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.RedPsi
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.TraceOfCp
 
@@ -275,94 +269,6 @@ theorem UpperTheory.V.Ws.h4 :
     refine ⟨y, hy, (Polynomial.separable_map (algebraMap x.Fr x.Fb)).1 ?_⟩
     rw [← Matrix.charpoly_map]
     exact hs
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.CondA
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws GlobalTheory.GalOfCusp
-
-theorem UpperTheory.V.Ws.P1.condA :
-    ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c) (T : Tower D), T.Fit → T.Deep → ∀ (c' : Coef l) (h : c.O ≤ c'.O) (K : Link T c' h) (R : Type) [CommRing R] [Algebra c'.O R] (Q : PD T.ι (G T.F Ω) R) (ψ : ∀ v : K.V.frame.Vl, Fin 4 → K.V.frame.Gv v →* Rˣ), K.IsPsi ψ Q → (∀ v i j, i ≠ j → ∃ s ∈ T.U1 v, Q.ψ v i s ≠ Q.ψ v j s) →
-          Nonempty K.V.frame.Vl ∧ ∀ v i j, i ≠ j → ∃ g, K.V.frame.φ v g ∈ K.V.frame.G' ∧ K.r.psib v i g = K.r.psib v j g ∧ ψ v i g ≠ ψ v j g := by
-  intro Ω _ _ _ l _ c D T hfit _ c' h K R _ _ Q ψ hψ hsep
-  obtain ⟨hrange, -, -, -, hres, hloc⟩ := P1.towerGal D T
-  haveI : IsLocalHom (inc h) := (P1.coefRes c).2.2.1 c' h
-  have hlev := P1.levEps K.V
-  refine ⟨hlev.2.2.1, fun v i j hij => ?_⟩
-  obtain ⟨s, ⟨hsI, hscyc, hsr⟩, hne⟩ := hsep (K.e v) i j hij
-  have hsL : s ∈ T.GalL := hfit.1.unr _ hsI
-  rw [← hrange] at hsL
-  obtain ⟨g', rfl⟩ := hsL
-  have hgD : g' ∈ (Dec (K.s.A (show W.Vl l T.L from v).1) : Subgroup (G T.L Ω)) := by
-    rw [K.hA v]
-    exact Ine_le_Dec _ (((hloc _ g').2).1 hsI)
-  have hr : D.rbar (resQ T.L g') = 1 := by rw [← (hres g').1]; exact hsr
-  have hk : ∀ k, residue c'.O (inc h ↑(chi D T.pr k (resQ T.L g'))) = 1 := by
-    intro k
-    have e := congrArg (fun M => M (lab T.pr k) (lab T.pr k)) hr
-    simp [Raw.rbar, Raw.r0, mapRep, diagRep] at e
-    rw [← ResidueField.map_residue]
-    simp [chi, e]
-  refine ⟨⟨g', hgD⟩, ?_, ?_, ?_⟩
-  · show K.V.pr g' ∈ K.V.frame.G'
-    rw [(hlev.2.1 g'), ← (hres g').2.1]
-    exact hscyc
-  · have hc : K.r.chib i (K.V.pr g') = K.r.chib j (K.V.pr g') := by
-      apply Units.ext
-      rw [K.chib, K.chib, map_mul, map_mul, hk, hk]
-    exact (K.psib v i ⟨g', hgD⟩).trans (hc.trans (K.psib v j ⟨g', hgD⟩).symm)
-  · intro heq
-    apply hne
-    have e1 := hψ v i ⟨g', hgD⟩
-    have e2 := hψ v j ⟨g', hgD⟩
-    rw [heq] at e1
-    have hu : IsUnit (algebraMap c'.O R ↑(K.κ g')) := (K.κ g').isUnit.map _
-    exact hu.mul_left_cancel (e1.symm.trans e2)
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ProjectiveLineFlags.RedDet
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws GlobalTheory.GalOfCusp
-
-theorem UpperTheory.V.Ws.P1.redDet :
-    ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c) (T : Tower D) (c' : Coef l) (h : c.O ≤ c'.O) (K : Link T c' h) (k : Type) [Field k] [Algebra (ResidueField c'.O) k] [Algebra c'.O k] [IsScalarTower c'.O (ResidueField c'.O) k] (Q : PD T.ι (G T.F Ω) (PowerSeries k)), T.PsPair h k Q → ∀ ρ : K.V.frame.G₀ →* GL (Fin 4) (PowerSeries k), K.IsRho ρ Q →
-          (W.GDet.ofRep (W.mat ρ)).map (PowerSeries.constantCoeff : PowerSeries k →+* k) = K.r.Dbar.map (algebraMap (ResidueField c'.O) k) := by
-  intro Ω _ _ _ l _ c D T c' h K k _ _ _ _ Q hQ ρ hρ
-  have hc : ∀ a : c'.O, PowerSeries.constantCoeff (algebraMap c'.O (PowerSeries k) a) = algebraMap c'.O k a := by
-    intro a
-    first
-      | rfl
-      | simp
-  rw [W.Resid.Dbar, (AlgebraTools.Det.repApi (W.diagRep K.r.chib)).2.2.2.2.2.1 (algebraMap (ResidueField c'.O) k)]
-  apply P1.detExt
-  intro g
-  rw [(AlgebraTools.Det.repApi (W.mat ρ)).2.1, (AlgebraTools.Det.repApi _).2.1]
-  obtain ⟨g', hg'⟩ := (phiKer K.V).1 g
-  subst hg'
-  have hlc : ∀ M : Matrix (Fin 4) (Fin 4) (PowerSeries k),
-      (PowerSeries.constantCoeff : PowerSeries k →+* k) M.charpoly.leadingCoeff ≠ 0 := by
-    intro M
-    rw [(Matrix.charpoly_monic M).leadingCoeff, map_one]
-    exact one_ne_zero
-  rw [hρ g', (P1.cpSmul _ _).1, map_scaleRoots _ _ _ (hlc _), hQ.cp,
-    (P1.cpSmul _ (0 : Matrix (Fin 4) (Fin 4) k)).2]
-  change _ = ((Matrix.diagonal fun i => ((K.r.chib i (K.V.pr g') : (ResidueField c'.O)ˣ) : ResidueField c'.O)).map
-    (algebraMap (ResidueField c'.O) k)).charpoly
-  rw [Matrix.diagonal_map (map_zero _), Matrix.charpoly_diagonal]
-  refine Finset.prod_congr rfl fun i _ => ?_
-  rw [K.chib i g', hc, ← IsLocalRing.ResidueField.algebraMap_eq,
-    ← IsScalarTower.algebraMap_apply (↥c'.O) (ResidueField ↥c'.O) k, map_mul (algebraMap c'.O k)]
-  rfl
 end
 end
 

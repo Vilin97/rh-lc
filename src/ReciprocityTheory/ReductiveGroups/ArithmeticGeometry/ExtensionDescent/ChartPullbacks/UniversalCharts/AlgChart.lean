@@ -1,7 +1,7 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.SpanXLeKerAevalZero
-public import Mathlib.RingTheory.Ideal.Maps
+public import Lemmata.FirstBlockLemmaK.Imports
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -20,7 +20,9 @@ import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Radical.NatInt
+public import Mathlib.RingTheory.Unramified.LocalStructure
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
@@ -29,6 +31,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -42,50 +46,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
-public import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
-public import Mathlib.RingTheory.Unramified.LocalStructure
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
-
--- Source module: Lemmata.FirstBlockLemmaK.Imports
-
-section
-
-@[expose] public section
-
-namespace Bl.FirstBlockLemmaK
-
-theorem goal1 :
-  ∀ {R : Type} [inst : CommRing.{0} R] {A : Type} [inst_1 : CommRing.{0} A] [inst_2 : Algebra.{0, 0} R A]
-  (aug : AlgHom.{0, 0, 0} R A R),
-  IsNilpotent.{0} (RingHom.ker.{0, 0, 0} aug) → ∀ (a : A), IsUnit.{0} (DFunLike.coe.{1, 1, 1} aug a) → IsUnit.{0} a := by
-  intro R _ A _ _ aug hI a ha
-  obtain ⟨u, hu⟩ := ha
-  obtain ⟨n, hn⟩ := hI
-  set c : A := a * algebraMap R A (↑u⁻¹ : R) with hc
-  have hker : c - 1 ∈ RingHom.ker aug := by
-    rw [RingHom.mem_ker]
-    simp only [hc, map_sub, map_mul, AlgHom.commutes, map_one, Algebra.algebraMap_self, RingHom.id_apply]
-    rw [← hu]
-    simp
-  have hnil : IsNilpotent (c - 1) := by
-    refine ⟨n, ?_⟩
-    have h1 : (c - 1) ^ n ∈ (RingHom.ker aug) ^ n := Ideal.pow_mem_pow hker n
-    rw [hn] at h1
-    simpa using h1
-  have hcu : IsUnit c := by
-    have := hnil.isUnit_one_add
-    simpa using this
-  exact isUnit_of_mul_isUnit_left hcu
-
-end Bl.FirstBlockLemmaK
-end
-end
-
--- Source module: ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.AlgChart
-
-section
 
 @[expose] public section
 
@@ -215,6 +175,3 @@ theorem algChart [IsLocalRing R] (B : Type) [CommRing B] [Algebra R B] [Algebra.
       rw [← this, add_sub_cancel_left]
 
 end ReciprocityTheory.ChartRestriction.G.Chart
-end
-end
-end

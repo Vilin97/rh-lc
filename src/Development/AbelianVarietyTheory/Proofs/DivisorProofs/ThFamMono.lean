@@ -1,8 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NormNegCmConstantEqAtAllEmbeddings
-public import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
-public import Formalism.LocalToGlobal.ProjectiveLattices.IsThRule
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.AdaptedStandardBasis
+public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -37,7 +37,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import Formalism.LocalToGlobal.ProjectiveLattices.HalfOneAddSqrtNegIsIntegral
 public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LevelCarrying
 import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
 import Development.AbelianVarietyTheory.Definitions.Divisors.CuspIso
@@ -47,69 +46,6 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.IsRightActFunPull
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsoOverOfIsOpenImmersion
 public import Development.AbelianVarietyTheory.Definitions.Divisors.MemLevEigenIffTransl
 import Development.AbelianVarietyTheory.Definitions.Divisors.Multiplier
-
--- Source module: Development.AbelianVarietyTheory.BlockTheory.DivisorBase.AdaptedStandardBasis
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-namespace GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightData
-
-open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt
-
-section Weights
-
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (Dw : Datum H)
-
-def IsThetaWt (la : Weight Dw) (n : ℕ) : Prop :=
-  8 ∣ n ∧ (∀ τ, Antitone (la τ)) ∧
-    (∀ τ (i : Fin (Dw.p + Dw.q)), (i : ℕ) < Dw.p → ((n / 2 : ℕ) : ℤ) ≤ la τ i) ∧
-    (∀ τ (i : Fin (Dw.p + Dw.q)), Dw.p ≤ (i : ℕ) → la τ i ≤ -((n / 2 : ℕ) : ℤ)) ∧
-    ∀ τ (i k : Fin (Dw.p + Dw.q)), (i : ℕ) + 1 = Dw.p → (k : ℕ) = Dw.p → (n : ℤ) + 2 < la τ i - la τ k
-
-end Weights
-
-section Family
-
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
-  {l : Level H}
-
-variable (Xo : Moduli Dw l) (c : Coeff l)
-
-def polyNorm {n : ℕ} (P : MvPolynomial (LtN Dw n) c.F) : ℝ :=
-  Real.sqrt (∑ s : c.F →+* ℂ, ∑ m ∈ P.support, ‖s (P.coeff m)‖ ^ 2)
-
-
-
-variable {Xo c} {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
-
-end Family
-
-section Constants
-
-variable (D : D7) (large₂ : SizeData₂ D)
-
-end Constants
-
-section Statement
-
-variable (D : D7) (large₂ : SizeData₂ D)
-
-variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H}
-
-end Statement
-
-end GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightData
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThFamMono
-
-section
 
 @[expose] public section
 
@@ -148,6 +84,3 @@ def thFam {D : D7} {T : Core D} {j : ℕ} (Y : Deep T j) (nab : NabV Y.d.Xo₂ Y
         thLaValAt Y.d.Xo₂ Y.d.c₂ nab (phiHat Y.d.c₂ (indPhi Y.d.c₂ x0)) La N P y' ((y : Rul Y.d.Xo₂ Y.d.c₂) p y')}
 
 end GlobalTheory.CovGmin
-end
-end
-end

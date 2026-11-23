@@ -10,8 +10,10 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AlmostPur
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ApproxRootFixedFieldInertiaCyclotomicKernelStatement
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CosetRepresentativeTraceFixedProperties
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsAlmostDualTraceDataTowerUnionAdjoin
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IwasawaDecompositionFact
-public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocA
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDecompositionInvariantRealValuationStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsNormalFiniteIndexFixing
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemInertiaInvariantsCyclotomicAlgebraIffStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SumMulCosetRepresentativeTraceEq
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -33,6 +35,8 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.HaveILetI
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -45,65 +49,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Development.AbelianVarietyTheory.Definitions.Foundations.CosetTrace
 import Development.AbelianVarietyTheory.Definitions.Foundations.ExpUpper
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemCycAlgOfPow
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsNormalFiniteIndexFixing
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MemInertiaInvariantsCyclotomicAlgebraIffStatement
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SumMulCosetRepresentativeTraceEq
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Tactic.Linter.Style
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDecompositionInvariantRealValuation
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2 GlobalTheory.KZ GlobalTheory.RecOne GlobalTheory.AlmostEt
-open scoped Matrix NNReal
-
-namespace GlobalTheory.RecOne
-
-theorem exists_real_valuation : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), OverL l A → ∃ v : Valuation Ω ℝ≥0, (∀ x : Ω, v x ≤ 1 ↔ x ∈ A) ∧ (∀ s ∈ Dec (F := ℚ) A, ∀ x : Ω, v (s x) = v x) ∧ 0 < v (l : Ω) ∧ v (l : Ω) < 1 := by
-  intro l _ Ω _ _ _ A h
-  have hA : A.valuation (l : Ω) < 1 := by
-    obtain ⟨w, hw, hl⟩ := h
-    simpa using (hw ((l : ℕ) : 𝓞 ℚ)).2 hl
-  obtain ⟨j, hj⟩ := Formalism.BasicNotions.Examples₂.LB.exists_emb (l := l) A hA
-  let v : Valuation Ω ℝ≥0 := (NormedField.valuation (K := PadicAlgCl l)).comap j
-  have hv : ∀ x : Ω, v x ≤ 1 ↔ x ∈ A := by
-    intro x
-    rw [hj]
-    exact Iff.rfl
-  have he : v.IsEquiv A.valuation := by
-    rw [Valuation.isEquiv_iff_val_le_one]
-    intro x
-    rw [hv, A.valuation_le_one_iff]
-  refine ⟨v, hv, fun s hs x => ?_, ?_, ?_⟩
-  · exact he.eq_iff.2 (GlobalTheory.Dec_valuation_apply_eq ℚ Ω A s hs x)
-  · have : CharZero Ω := j.charZero
-    have hl : (l : Ω) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : l.Prime).ne_zero
-    exact zero_lt_iff.mpr ((v.ne_zero_iff).2 hl)
-  · exact he.lt_one_iff_lt_one.2 hA
-
-end GlobalTheory.RecOne
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDecompositionInvariantRealValuationStatement
-
-section
-
-@[expose] public section
-
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2 GlobalTheory.KZ GlobalTheory.RecOne GlobalTheory.AlmostEt
-open scoped Matrix NNReal
-
-theorem _root_.GlobalTheory.T.exists_decomposition_invariant_real_valuation : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), OverL l A → ∃ v : Valuation Ω ℝ≥0, (∀ x : Ω, v x ≤ 1 ↔ x ∈ A) ∧ (∀ s ∈ Dec (F := ℚ) A, ∀ x : Ω, v (s x) = v x) ∧ 0 < v (l : Ω) ∧ v (l : Ω) < 1 := by
-  first | (exact @GlobalTheory.RecOne.exists_real_valuation) | (exact GlobalTheory.RecOne.exists_real_valuation) | (intros; apply GlobalTheory.RecOne.exists_real_valuation  <;> assumption)
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsAlmostDualTraceDataCyclotomicAlgebra
 

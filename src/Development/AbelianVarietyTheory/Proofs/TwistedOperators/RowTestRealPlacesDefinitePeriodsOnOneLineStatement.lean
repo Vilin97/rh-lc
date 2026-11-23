@@ -50,7 +50,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsoOuterD
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsoTwistDetIrrShift
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsoUnitaryIrrepConjDualStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NonemptyInvFunDualTprodEquivStatement
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.OuterIrrIsoWeylRep
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.OuterIrrIsoWeylRepStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.OuterTensorFockOnePlaceIsoUnitaryFockStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PiTensorMapSurjectiveAndKerStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.StrictInterlaceGanGrossPrasadBigSmallStatement
@@ -89,20 +89,6 @@ open scoped TensorProduct DirectSum
 
 theorem _root_.GlobalTheory.T.iso_twist_detU_pow_irr_of_weight_shift : ∀ (n : ℕ) (c : ℤ) (lam lam' : DomWeight n), (∀ i, lam'.w i = lam.w i + c) → Iso (twist (detU n ^ c) (irr n lam)) (irr n lam') := by
   first | exact @GlobalTheory.OneFunctional.iso_twist_det_irr_shift | exact GlobalTheory.OneFunctional.iso_twist_det_irr_shift | (intros; apply GlobalTheory.OneFunctional.iso_twist_det_irr_shift <;> assumption)
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OuterIrrIsoWeylRepStatement
-
-section
-
-@[expose] public section
-
-open MvPolynomial GlobalTheory.IndefiniteRowSideFullHecke.MinorOrderedEntries GlobalTheory.OneFunctional Formalism.BasicNotions GlobalTheory.Branching
-open scoped TensorProduct DirectSum
-
-theorem _root_.GlobalTheory.T.outer_irr_iso_weylRep_of_pos : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ℕ), 0 < n → ∀ (lam : ι → ℕ → ℤ) (μ : ι → DomWeight n), (∀ τ (i : Fin n), (μ τ).w i = lam τ i) → Iso (outer fun τ => irr n (μ τ)) (weylRep n lam) := by
-  first | exact @GlobalTheory.OneFunctional.WeylTensor.outer_irr_iso_weylRep | exact GlobalTheory.OneFunctional.WeylTensor.outer_irr_iso_weylRep | (intros; apply GlobalTheory.OneFunctional.WeylTensor.outer_irr_iso_weylRep <;> assumption)
 end
 end
 

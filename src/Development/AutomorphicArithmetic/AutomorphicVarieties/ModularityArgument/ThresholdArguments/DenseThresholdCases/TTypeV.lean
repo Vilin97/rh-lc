@@ -2,38 +2,33 @@ module
 
 import Mathlib
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.PotentiallySemistableType
-public import Mathlib.Analysis.Complex.Polynomial.Basic
-public import Mathlib.LinearAlgebra.Charpoly.Basic
-public import Mathlib.LinearAlgebra.Semisimple
-public import Mathlib.RingTheory.Coalgebra.IsFrobenius
-public import Mathlib.RingTheory.HopfAlgebra.Basic
-public import Mathlib.RingTheory.TotallySplit
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCharsOfTameLpDim
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.NotIsGenericDetRepTwo
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSplitAdelicMatrixLocalComponentStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsStandardAdelicAddCharStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGenericOfIsLocComp
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageOfIsCuspFormStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalUpperUnipotentAdelicUpperUnipotentStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WhittakerLawUpperTriangularUnipotentAdelicStatement
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsGenericIffIsGenericFor
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
-public import Mathlib.LinearAlgebra.Charpoly.ToMatrix
-public import Mathlib.LinearAlgebra.Eigenspace.Pi
-public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -53,23 +48,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsNotCongPow
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasExponentZeroIff
-public import Formalism.ConjugateSelfDual.Statement
-public import Mathlib.LinearAlgebra.Eigenspace.Basic
-import ReciprocityTheory.GaloisValuations.GlobalA
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
-public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.NotIsGenericDetRepTwo
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSplitAdelicMatrixLocalComponentStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsStandardAdelicAddCharStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGenericOfIsLocComp
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageOfIsCuspFormStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalUpperUnipotentAdelicUpperUnipotentStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WhittakerLawUpperTriangularUnipotentAdelicStatement
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsGenericIffIsGenericFor
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsContinuousPadic
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsGenericIffIsGenericFor
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
@@ -78,67 +57,12 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ToGAdMat
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsSmoothModerateOfIsAutFunSm
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ChevalleyUnits
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GlobalArtinLocalIdeleInjective
-public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-public import Mathlib.Basic.Complex.Basic
-public import Mathlib.Data.Finset.Card
-import Mathlib.RingTheory.SimpleRing.Principal
-import Std.Tactic.BVDecide.Normalize.Prop
-public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-public import Mathlib.Algebra.BigOperators.Pi
-public import Mathlib.Algebra.Module.Defs
-public import Mathlib.Algebra.Module.NatInt
-public import Mathlib.LinearAlgebra.LinearIndependent.Basic
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.JointEigenDecomposition
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TTypeVLoc
 import Mathlib.Tactic.Linter.Style
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialOfIsSubquotient
-
--- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCharsOfTameLpDim
-
-section
-
-@[expose] public section
-
-noncomputable section
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.SmGL
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-
-namespace GlobalTheory.TameInertiaChars
-
-theorem exists_basis_eigen {n : ℕ} {Γ : Type} (f : Γ → Module.End ℂ (Fin n → ℂ))
-    (hs : ∀ g, (f g).IsSemisimple) (hc : ∀ g k, Commute (f g) (f k)) :
-    ∃ B : Module.Basis (Fin n) ℂ (Fin n → ℂ), ∀ j g, ∃ c : ℂ, f g (B j) = c • B j := by
-  have h1 := Module.End.iSup_iInf_maxGenEigenspace_eq_top_of_iSup_maxGenEigenspace_eq_top_of_commute f
-    (fun g k _ => hc g k) fun g => Module.End.iSup_maxGenEigenspace_eq_top _
-  simp only [fun g => (hs g).isFinitelySemisimple.maxGenEigenspace_eq_eigenspace] at h1
-  let T : Set (Fin n → ℂ) := {v | ∀ g, ∃ c : ℂ, f g v = c • v}
-  have h2 : ⊤ ≤ Submodule.span ℂ T := by
-    rw [← h1]
-    exact iSup_le fun χ v hv => Submodule.subset_span fun g =>
-      ⟨χ g, Module.End.mem_eigenspace_iff.1 ((Submodule.mem_iInf _).1 hv g)⟩
-  let B := Module.Basis.ofSpan h2
-  have h3 := Module.Basis.ofSpan_subset h2
-  refine ⟨B.reindex (B.indexEquiv (Pi.basisFun ℂ (Fin n))), fun j => ?_⟩
-  rw [Module.Basis.reindex_apply]
-  exact h3 ⟨_, rfl⟩
-
-theorem charpoly_of_basis {n : ℕ} (f : Module.End ℂ (Fin n → ℂ)) (B : Module.Basis (Fin n) ℂ (Fin n → ℂ))
-    (c : Fin n → ℂ) (hB : ∀ j, f (B j) = c j • B j) : f.charpoly = ∏ j, (X - C (c j)) := by
-  rw [← LinearMap.charpoly_toMatrix f B, ← Matrix.charpoly_diagonal]
-  congr 1
-  ext i j
-  rw [LinearMap.toMatrix_apply, hB, map_smul, B.repr_self, Matrix.diagonal_apply]
-  by_cases e : i = j
-  · subst e; simp
-  · simp [Finsupp.single_apply, Ne.symm e, e]
-
-variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
-  {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-
-end GlobalTheory.TameInertiaChars
-
-end
-end
-end
 
 -- Source module: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericSubquotientPrincipalSeries
 
@@ -247,46 +171,6 @@ theorem exists_isGeneric_of_isLocComp {E : Type} [Field E] [NumberField E] [_roo
 end GlobalTheory.ThK.DetProd
 
 end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.SatakeParameters.JointEigenDecomposition
-
-section
-
-@[expose] public section
-
-open Polynomial
-
-namespace GlobalTheory.CommSemisimpleChars
-
-
-open Classical in
-theorem card_eq_of_sum_eq {H ι κ : Type} [Monoid H] [Fintype ι] [Fintype κ]
-    (a : ι → (H →* ℂ)) (c : κ → (H →* ℂ)) (h : ∀ g, ∑ j, a j g = ∑ i, c i g) (ψ : H →* ℂ) :
-    (Finset.univ.filter fun j => a j = ψ).card = (Finset.univ.filter fun i => c i = ψ).card := by
-  classical
-  let F : Finset (H →* ℂ) := insert ψ (Finset.univ.image a ∪ Finset.univ.image c)
-  have li := linearIndependent_iff'.1 (linearIndependent_monoidHom H ℂ) F
-    (fun φ => ((Finset.univ.filter fun j => a j = φ).card : ℂ) - (Finset.univ.filter fun i => c i = φ).card)
-  have key : ∀ {τ : Type} [Fintype τ] (e : τ → (H →* ℂ)), (∀ t, e t ∈ F) →
-      ∑ φ ∈ F, ((Finset.univ.filter fun t => e t = φ).card : ℂ) • (φ : H → ℂ) = ∑ t, (e t : H → ℂ) := by
-    intro τ _ e he
-    rw [← Finset.sum_fiberwise_of_maps_to (s := Finset.univ) (t := F) (g := e) (fun t _ => he t)]
-    refine Finset.sum_congr rfl fun φ _ => ?_
-    rw [Finset.sum_congr rfl (fun t ht => by rw [(Finset.mem_filter.1 ht).2]), Finset.sum_const,
-      Nat.cast_smul_eq_nsmul]
-  have hz : ∑ φ ∈ F, (((Finset.univ.filter fun j => a j = φ).card : ℂ) -
-      (Finset.univ.filter fun i => c i = φ).card) • (φ : H → ℂ) = 0 := by
-    simp only [sub_smul, Finset.sum_sub_distrib]
-    rw [key a (fun j => by simp [F]), key c (fun i => by simp [F]), sub_eq_zero]
-    funext g
-    simp only [Finset.sum_apply]
-    exact h g
-  have := li hz ψ (Finset.mem_insert_self _ _)
-  exact_mod_cast sub_eq_zero.1 this
-
-end GlobalTheory.CommSemisimpleChars
 end
 end
 

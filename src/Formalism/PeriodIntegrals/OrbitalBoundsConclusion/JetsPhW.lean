@@ -4,8 +4,7 @@ public import Formalism.PeriodIntegrals.JetsPhW
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.TwoUnit
 public import Mathlib.Analysis.Normed.Field.Instances
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.CoeffPowEqZeroOfDegreeLt
-public import Mathlib.RingTheory.MvPowerSeries.Derivative
-public import Mathlib.NumberTheory.Padics.Complex
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.ExpLog
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -17,7 +16,6 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
 import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
@@ -32,6 +30,7 @@ import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
 import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
+import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
@@ -44,182 +43,12 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-public import Mathlib.RingTheory.MvPowerSeries.Basic
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnitBall
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.TypeStar
-import Mathlib.Tactic.Linter.Style
+import Mathlib.Topology.Sheaves.Init
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.FirstJetIntegralGeneralHolds
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.HighGOf
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.InvOmega
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.SecondJetIntegralGeneralHolds
-
--- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntMvPderiv
-
-section
-
-@[expose] public section
-
-noncomputable def UpperTheory.Reformulated.B.Gwb7.IsIntP :
-    {p : ℕ} → [inst : Fact (Nat.Prime p)] → ℂ_[p] → Prop :=
-    fun {p : ℕ} [Fact (Nat.Prime p)] (x : ℂ_[p]) ↦ ‖x‖ ≤ (1 : ℝ)
-
-noncomputable def UpperTheory.Reformulated.B.Gwb7.IntegralMv.{u_1} :
-    {σ : Type u_1} → {p : ℕ} → [inst : Fact (Nat.Prime p)] → MvPowerSeries σ ℂ_[p] → Prop :=
-    fun {σ : Type u_1} {p : ℕ} [Fact (Nat.Prime p)] (F : MvPowerSeries σ ℂ_[p]) ↦
-      ∀ (n : σ →₀ ℕ), UpperTheory.Reformulated.B.Gwb7.IsIntP ((MvPowerSeries.coeff n : MvPowerSeries σ ℂ_[p] → ℂ_[p]) F)
-
-theorem UpperTheory.Reformulated.B.Gwb7.intMv_pderiv.{u_1} :
-    ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {σ : Type u_1} {F : MvPowerSeries σ ℂ_[p]} (i : σ),
-      UpperTheory.Reformulated.B.Gwb7.IntegralMv F →
-        UpperTheory.Reformulated.B.Gwb7.IntegralMv ((MvPowerSeries.pderiv (R := ℂ_[p]) i : MvPowerSeries σ ℂ_[p] → MvPowerSeries σ ℂ_[p]) F) := by
-  intro p _ σ F i hF n
-  have h1 : ‖MvPowerSeries.coeff (n + Finsupp.single i 1) F‖ ≤ 1 := hF _
-  have h2 : ‖((n i : ℕ) : ℂ_[p]) + 1‖ ≤ 1 := by
-    have h := IsUltrametricDist.norm_natCast_le_one ℂ_[p] (n i + 1)
-    rwa [Nat.cast_add, Nat.cast_one] at h
-  change ‖MvPowerSeries.coeff n (MvPowerSeries.pderiv (R := ℂ_[p]) i F)‖ ≤ 1
-  rw [MvPowerSeries.coeff_pderiv, norm_mul]
-  exact mul_le_one₀ h1 (norm_nonneg _) h2
-end
-end
-
--- Source module: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntegralPolynomialSecond
-
-section
-
-@[expose] public section
-
-noncomputable def UpperTheory.Reformulated.B.IntegralPolynomialSecond.IsIntP :
-    {p : ℕ} → [inst : Fact (Nat.Prime p)] → ℂ_[p] → Prop :=
-    fun {p : ℕ} [Fact (Nat.Prime p)] (x : ℂ_[p]) ↦ ‖x‖ ≤ (1 : ℝ)
-
-noncomputable def UpperTheory.Reformulated.B.IntegralPolynomialSecond.IntegralMv.{u_1} :
-    {σ : Type u_1} → {p : ℕ} → [inst : Fact (Nat.Prime p)] → MvPowerSeries σ ℂ_[p] → Prop :=
-    fun {σ : Type u_1} {p : ℕ} [Fact (Nat.Prime p)] (F : MvPowerSeries σ ℂ_[p]) ↦
-      ∀ (n : σ →₀ ℕ), UpperTheory.Reformulated.B.IntegralPolynomialSecond.IsIntP ((MvPowerSeries.coeff n : MvPowerSeries σ ℂ_[p] → ℂ_[p]) F)
-
-theorem UpperTheory.Reformulated.B.IntegralPolynomialSecond.intMv_mul.{u_1} :
-    ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {σ : Type u_1} {F G : MvPowerSeries σ ℂ_[p]},
-      UpperTheory.Reformulated.B.IntegralPolynomialSecond.IntegralMv F → UpperTheory.Reformulated.B.IntegralPolynomialSecond.IntegralMv G → UpperTheory.Reformulated.B.IntegralPolynomialSecond.IntegralMv (F * G) := by
-  intro p _ σ F G hF hG n
-  classical
-  change ‖MvPowerSeries.coeff n (F * G)‖ ≤ 1
-  rw [MvPowerSeries.coeff_mul]
-  refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one ?_
-  intro q _
-  rw [norm_mul]
-  exact mul_le_one₀ (hF q.1) (norm_nonneg _) (hG q.2)
-end
-end
-
--- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.ExpLog
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open Classical
-
-namespace PI.JetsPhW.W
-
-open PI.JetsPhW MvPowerSeries
-
-variable {p : ℕ} [Fact p.Prime] {σ : Type*}
-
-theorem intMv_mul {F G : MvPowerSeries σ ℂ_[p]} (hF : IntegralMv F) (hG : IntegralMv G) :
-    IntegralMv (F * G) :=
-  _root_.UpperTheory.Reformulated.B.IntegralPolynomialSecond.intMv_mul hF hG
-
-theorem intMv_pderiv {F : MvPowerSeries σ ℂ_[p]} (i : σ) (hF : IntegralMv F) :
-    IntegralMv (pderiv (R := ℂ_[p]) i F) :=
-  _root_.UpperTheory.Reformulated.B.Gwb7.intMv_pderiv i hF
-
-theorem intMv_inv {F : MvPowerSeries σ ℂ_[p]} (hF : IntegralMv F) (h1 : constantCoeff F = 1) :
-    ∃ G : MvPowerSeries σ ℂ_[p], IntegralMv G ∧ F * G = 1 :=
-  _root_.UpperTheory.Reformulated.B.UnitBallLemmas.intMv_inv hF h1
-
-theorem coeff_pow_eq_zero {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) {n : ℕ}
-    {α : σ →₀ ℕ} (h : Finsupp.degree α < n) : coeff α (f ^ n) = 0 := by
-  apply coeff_of_lt_order
-  exact lt_of_lt_of_le (by exact_mod_cast h) (le_order_pow_of_constantCoeff_eq_zero n hf)
-
-def expT (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) : MvPowerSeries σ ℂ_[p] :=
-  ∑ n ∈ Finset.range N, ((n.factorial : ℂ_[p])⁻¹) • f ^ n
-
-theorem coeff_expMv (f : MvPowerSeries σ ℂ_[p]) (α : σ →₀ ℕ) :
-    coeff α (expMv f) =
-      ∑ n ∈ Finset.range (Finsupp.degree α + 1), coeff α (f ^ n) / (n.factorial : ℂ_[p]) := rfl
-
-theorem coeff_expT (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) (α : σ →₀ ℕ) :
-    coeff α (expT f N) = ∑ n ∈ Finset.range N, coeff α (f ^ n) / (n.factorial : ℂ_[p]) := by
-
-  simp only [expT, map_sum, map_smul, smul_eq_mul, div_eq_inv_mul]
-
-theorem coeff_expMv_eq_expT {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) {α : σ →₀ ℕ}
-    {N : ℕ} (hN : Finsupp.degree α < N) : coeff α (expMv f) = coeff α (expT f N) := by
-  rw [coeff_expMv, coeff_expT]
-  apply Finset.sum_subset
-  · intro n hn; simp only [Finset.mem_range] at *; omega
-  · intro n _ hn
-    simp only [Finset.mem_range, not_lt] at hn
-    rw [coeff_pow_eq_zero hf (by omega), zero_div]
-
-theorem pderiv_expT (f : MvPowerSeries σ ℂ_[p]) (i : σ) (N : ℕ) :
-    pderiv (R := ℂ_[p]) i (expT f (N + 1)) = pderiv (R := ℂ_[p]) i f * expT f N := by
-
-  simp only [expT, map_sum, Derivation.map_smul, Finset.mul_sum]
-  rw [Finset.sum_range_succ']
-  simp only [pow_zero, Derivation.map_one_eq_zero, smul_zero, add_zero]
-  refine Finset.sum_congr rfl fun n _ => ?_
-  rw [pderiv_pow, Nat.add_sub_cancel, smul_eq_C_mul, smul_eq_C_mul]
-  have hn : ((n + 1 : ℕ) : MvPowerSeries σ ℂ_[p]) = C ((n + 1 : ℕ) : ℂ_[p]) := (map_natCast C _).symm
-  have key : ((n + 1).factorial : ℂ_[p])⁻¹ * ((n + 1 : ℕ) : ℂ_[p]) = (n.factorial : ℂ_[p])⁻¹ := by
-    have h1 : ((n + 1 : ℕ) : ℂ_[p]) ≠ 0 := by exact_mod_cast n.succ_ne_zero
-    rw [Nat.factorial_succ, Nat.cast_mul, mul_inv, mul_comm, ← mul_assoc, mul_inv_cancel₀ h1, one_mul]
-  rw [hn]
-  calc C ((n + 1).factorial : ℂ_[p])⁻¹ * (C ((n + 1 : ℕ) : ℂ_[p]) * f ^ n * pderiv (R := ℂ_[p]) i f)
-      = C (((n + 1).factorial : ℂ_[p])⁻¹ * ((n + 1 : ℕ) : ℂ_[p])) * (f ^ n * pderiv (R := ℂ_[p]) i f) := by
-        rw [map_mul]; ring
-    _ = pderiv (R := ℂ_[p]) i f * (C (n.factorial : ℂ_[p])⁻¹ * f ^ n) := by rw [key]; ring
-
-theorem pderiv_expMv {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) (i : σ) :
-    pderiv (R := ℂ_[p]) i (expMv f) = pderiv (R := ℂ_[p]) i f * expMv f := by
-  ext α
-  have h1 : coeff α (pderiv (R := ℂ_[p]) i (expMv f)) =
-      coeff α (pderiv (R := ℂ_[p]) i (expT f (Finsupp.degree α + 1 + 1))) := by
-    rw [coeff_pderiv, coeff_pderiv, coeff_expMv_eq_expT hf]
-    rw [map_add (f := _), Finsupp.degree_single]; omega
-  rw [h1, pderiv_expT, coeff_mul, coeff_mul]
-  refine Finset.sum_congr rfl fun x hx => ?_
-  congr 1
-  refine (coeff_expMv_eq_expT hf ?_).symm
-  have := congrArg Finsupp.degree (Finset.HasAntidiagonal.mem_antidiagonal.1 hx)
-  rw [map_add (f := _)] at this; omega
-
-theorem constantCoeff_expMv (f : MvPowerSeries σ ℂ_[p]) : constantCoeff (expMv f) = 1 := by
-  rw [← coeff_zero_eq_constantCoeff_apply, coeff_expMv]
-  simp
-
-theorem L0 {f c : MvPowerSeries σ ℂ_[p]} (i : σ) (hf : constantCoeff f = 0)
-    (hE : IntegralMv (expMv f)) (hc : IntegralMv c) : IntegralMv (c * pderiv (R := ℂ_[p]) i f) := by
-  obtain ⟨G, hG, hEG⟩ := intMv_inv hE (constantCoeff_expMv f)
-  have : c * pderiv (R := ℂ_[p]) i f = c * pderiv (R := ℂ_[p]) i (expMv f) * G := by
-    rw [pderiv_expMv hf, mul_assoc, mul_assoc, hEG, mul_one]
-  rw [this]
-  exact intMv_mul (intMv_mul hc (intMv_pderiv i hE)) hG
-
-end PI.JetsPhW.W
-end
-end
-end
 
 -- Source module: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.ChainSt
 

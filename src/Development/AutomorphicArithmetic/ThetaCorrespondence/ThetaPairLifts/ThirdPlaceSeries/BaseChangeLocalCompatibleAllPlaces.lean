@@ -56,8 +56,7 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MkMe
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OverRowsAndMono
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.NormalIntegrality
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SphericalInertiaOfIsotypic
-public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StandardFrameNonsplitMaxCompactInLevel
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StandardFrameNonsplitMaxCompactInLevelStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GaloisFamilyIrreducible
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.MGoodRef
 
@@ -158,30 +157,6 @@ theorem _root_.GlobalTheory.T.infG_embTau_eq_neg_half_and_embTauBar_eq_half : _r
   first | exact @_root_.GlobalTheory.LiftChar.locComp_of_isRc_classMapD_cenLoc | exact _root_.GlobalTheory.LiftChar.locComp_of_isRc_classMapD_cenLoc | (intros; apply _root_.GlobalTheory.LiftChar.locComp_of_isRc_classMapD_cenLoc <;> assumption)
 end
 end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StandardFrameNonsplitMaxCompactInLevelStatement
-
-section
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX NumberField IsDedekindDomain GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.R3 GlobalTheory.Mem.R3.Rw GlobalTheory.HeightCounting GlobalTheory.HeightCounting.Up
-open ReciprocityTheory.Aut Formalism.AUTREP
-attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
-
-theorem _root_.GlobalTheory.T.standardFrame_nonsplit_maxCompact_in_level : OverRows fun _ _ _ _ w Z _ _ z _ Y => ∀ (i : Fin (w.st Z).toD7.R.m)
-      (P : Formalism.IndefR.principalLevelFrame.RowPsi (Formalism.IndefR.Links.Vc (w.st Z).toD7 i) (w.st Z).toD7.R.nV), StdFrame Y.hF P →
-      ∀ w' : PlE (w.st Z).toD7.host, ¬ IsSplitPl (w.st Z).toD7.host w' →
-      ∀ κ ∈ Umax (w.st Z).toD7.host.E (w.st Z).toD7.R.nV,
-        TrivOutside {HeightOneSpectrum.under (𝓞 (maximalRealSubfield (w.st Z).toD7.host.E)) w'} κ →
-        P.ψ κ ∈ Formalism.IndefR.Links.levS _ (z.R.toRealDat.βV i)
-            (Formalism.IndefR.RecTie.datVP z.R.toRealDat i (Y.tupT (w.st Z).toD7.what₂.mu0) (z.R.toRealDat.levR z.F.lv2 false)) ∧
-          Formalism.IndefR.Lev.levChi _ (z.R.toRealDat.βV i)
-            (Formalism.IndefR.RecTie.datVP z.R.toRealDat i (Y.tupT (w.st Z).toD7.what₂.mu0) (z.R.toRealDat.levR z.F.lv2 false))
-            (P.ψ κ) = 1 := by
-  first | exact @GlobalTheory.NonSplitLevel.lift_level | exact GlobalTheory.NonSplitLevel.lift_level | (intros; apply GlobalTheory.NonSplitLevel.lift_level <;> assumption)
 end
 end
 

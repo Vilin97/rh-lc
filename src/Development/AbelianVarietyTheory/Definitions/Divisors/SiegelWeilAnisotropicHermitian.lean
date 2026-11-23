@@ -50,12 +50,9 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
 public import Development.AbelianVarietyTheory.Definitions.Foundations.AnalyticOnNhdTsumNpow
 public import Development.AbelianVarietyTheory.Definitions.Foundations.MemSiegelOfIffRightAct
 import Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.RamificationIdxEqOneOfIsSquare
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousConjFin
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsConstAlongSingleton
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviBlockCentreFinite
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsSquareIntegrableIffMemL2
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EisensteinIsotropicLine
-import Development.AbelianVarietyTheory.Definitions.Divisors.LocallyCompactUnipFlag
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EisensteinResidueLine
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.RallisTowerUnitary
 
 -- Source module: Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.AutomorphicFormsFiniteUnitaryIff
@@ -118,44 +115,6 @@ def SiegelEisensteinDoubled : Prop :=
         (∀ g, DifferentiableOn ℂ (fun s => H s g) (Metric.ball s₀ r)) ∧
         ContinuousOn (fun x : ℂ × UA σ W₂.J => H x.1 x.2) (Metric.ball s₀ r ×ˢ Set.univ) ∧
         ∃ (C : ℝ) (N : ℕ), ∀ s ∈ Metric.ball s₀ r, ∀ g, ‖H s g‖ ≤ C * (ht g : ℝ) ^ N
-
-end GlobalTheory.Published
-
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviBlockCentreFinite
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open NumberField IsDedekindDomain Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut
-open Formalism.UG (cT)
-open scoped TensorProduct
-
-namespace GlobalTheory.Published
-
-def LeviBlockCentreFinite : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
-    (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
-    ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (K : Subgroup (GAd σ J)), IsMaxCpt σ J K →
-    ∀ (S : Finset (Fin r)) (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J) (Xb Yb : Matrix (Fin n) (Fin d) E),
-      Xb = X.submatrix id (fun j => ⟨l + j.val, by omega⟩) → Yb = Y.submatrix id (fun j => ⟨l + j.val, by omega⟩) →
-      (∃ (Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E) (j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E),
-        Continuous Φ ∧ Continuous Φ.symm ∧ (∀ x : E, j ((1 : Ainf F) ⊗ₜ[F] x) = algebraMap E (InfiniteAdeleRing E) x) ∧
-        (∀ z, Φ z = (j (GlobalTheory.LFun.infTens F E z), GlobalTheory.LFun.finAdEquiv F E (GlobalTheory.LFun.finTens F E z))) ∧
-        ∀ g : GlobalTheory.CuspRep.GA E d, (matHom _ σ J (ι g)).1 =
-          1 + adMat F Xb * (g.1.map Φ.symm - 1) * adMat F (cT (σ : E →+* E) Yb * J) +
-            adMat F Yb * (cT (sigR (AF F) σ) ((g⁻¹).1.map Φ.symm) - 1) * adMat F (cT (σ : E →+* E) Xb * J)) →
-      1 ≤ d → (∀ j : Fin r, l ≤ j.val → j.val + 1 < l + d → j ∉ S) → (∃ k ∈ S, k.val + 1 = l + d) →
-      (l = 0 ∨ ∃ p ∈ S, p.val + 1 = l) →
-      ∀ (φ : GAd σ J → ℂ), GlobalTheory.StdPar.IsAutOn σ J X Y S K φ → ∀ g₀ : GAd σ J,
-        ∀ f : GlobalTheory.CuspRep.Sm E d, (∀ x, f.1 x = φ (ι x * g₀)) →
-          FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (GlobalTheory.CuspRep.Sm E d) => z f) '' GlobalTheory.CuspRep.Zalg E d))
 
 end GlobalTheory.Published
 
@@ -228,46 +187,6 @@ def LeviCentreInducedUnitary : Prop :=
       (∀ k ∈ Kc, ∃ v ∈ V, ∀ (h₁ : UA σ Y₁.J) (m : UA σ Y.J) (g' : GAd σ (c • Y₁.J.map σ)),
         IsLevi (W₁ := Y₁) H 1 h₁ m → h₁.1 = g'.1 → v g' = ψ (m * k)) →
       FiniteDimensional ℂ (Submodule.span ℂ {u | ∃ z, GlobalTheory.UAut.IsCentral σ (c • Y.J.map σ) z ∧ u = GlobalTheory.UAut.dop z φ})
-
-end GlobalTheory.Published
-
-end
-end
-end
-
--- Source module: Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EisensteinResidueLine
-
-section
-
-@[expose] public section
-
-noncomputable section
-
-open NumberField MeasureTheory Matrix Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut
-open GlobalTheory.Doubling (absE)
-open scoped TensorProduct NNReal
-
-namespace GlobalTheory.Published
-
-
-open GlobalTheory.EisLine in
-def EisensteinResidueLine : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →
-    Algebra.Unramified (𝓞 F) (𝓞 E) →
-    ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
-      ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin (r + 1)) E), IsWittFrame σ J X Y →
-      ∀ (x : Matrix (Fin n) (Fin 1) E), x = X.submatrix id (fun _ => 0) →
-      ∀ (L : Submodule (𝓞 E) (Fin n → E)) (a : GL (Fin n) (AF F ⊗[F] E)), IsAdapted σ J X Y L a →
-      ∀ h : GAd σ J → ℝ,
-        (∀ g, ∃ p, ∃ l : (AF F ⊗[F] E)ˣ, (matHom _ σ J p).1 * adMat F x = l.1 • adMat F x ∧
-          ∃ k ∈ levelAll σ J L a, g = p * k) →
-        (∀ p, ∀ l : (AF F ⊗[F] E)ˣ, (matHom _ σ J p).1 * adMat F x = l.1 • adMat F x →
-          ∀ k ∈ levelAll σ J L a, h (p * k) = absE F E l) →
-      ∀ T : Set (ratPts σ J), (∀ γ : ratPts σ J, ∃! t, t ∈ T ∧ ∃ l : (AF F ⊗[F] E)ˣ,
-            (matHom _ σ J (γ * t⁻¹ : ratPts σ J).1).1 * adMat F x = l.1 • adMat F x) →
-      ∃ R : ℂ, R ≠ 0 ∧ ∀ g : GAd σ J,
-        Tendsto (fun s : ℂ => (s - ((n : ℂ) - 1) / 2) * ∑' t : T, (h (t.1.1 * g) : ℂ) ^ (s + ((n : ℂ) - 1) / 2))
-          (𝓝[{s : ℂ | ((n : ℝ) - 1) / 2 < s.re}] (((n : ℂ) - 1) / 2)) (𝓝 R)
 
 end GlobalTheory.Published
 
